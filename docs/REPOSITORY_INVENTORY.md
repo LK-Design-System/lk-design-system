@@ -28,6 +28,17 @@
 - `templates/`: 재사용 가능한 starter template
 - `templates-cards/`: starter template 정적 카드
 
+## Storybook 전수조사 기준
+
+`stories/Audit.stories.jsx`의 `문서/전수조사` 항목은 원본 디자인 시스템과 현재 패키지 표면을 대조하는 기준입니다.
+
+- 원본 지침: `guidelines/*.html` 20개
+- 원본 요소 카드: `components/**/*.card.html` 83개
+- 템플릿 카드: `templates-cards/*.html` 4개
+- 현재 React export: 145개
+
+원본 카드나 지침을 추가, 삭제, 재분류하면 이 Storybook 전수조사표도 같이 갱신합니다.
+
 ## 생성 영역
 
 - `dist/`: 패키지 빌드 결과물. 내부 Git 소비자가 별도 publish 없이 import할 수 있도록 커밋합니다.
@@ -53,5 +64,5 @@
 - 정식 package publishing workflow로 전환하기 전까지 `dist/`는 Git에 유지합니다.
 - `tokens/source.json`은 `tokens/*.css`와 맞춰야 합니다. `npm run check:tokens`가 component-token 참조를 검증합니다.
 - `components/` 아래에 컴포넌트를 추가하면 대응 `.d.ts`를 추가하고 `npm run build`를 실행합니다.
-- 사용자에게 노출되는 컴포넌트는 Storybook 스토리를 추가하거나 수정합니다.
+- 사용자에게 노출되는 컴포넌트는 Storybook 스토리를 추가하거나 수정하고, 원본 기준과 대응되면 `문서/전수조사` 표도 갱신합니다.
 - push 전 `npm run check`와 `npm run check:audit`를 실행합니다.

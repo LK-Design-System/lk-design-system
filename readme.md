@@ -67,6 +67,7 @@ npm run build:storybook
 ```
 
 현재 Storybook은 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 데이터/상태 예시, 로보틱스 상태 카드, 아이콘, 내비게이션을 다룹니다.
+`문서/전수조사` 스토리는 원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개가 현재 Storybook/React 표면에 어떻게 대응되는지 확인하는 기준표입니다.
 
 ## AI 및 Figma 토큰 워크플로
 
