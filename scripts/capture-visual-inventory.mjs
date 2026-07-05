@@ -140,9 +140,10 @@ function storySpecificity(story, exports) {
   return exports.reduce((score, exportName) => {
     const token = normalizedIdentifier(exportName);
     if (!token) return score;
+    if (storyTokens.some((storyToken) => storyToken === `${token}card` || storyToken.endsWith(`${token}card`))) return score + 20;
+    if (cardTokens.some((storyToken) => storyToken.endsWith(`${token}card`))) return score + 20;
+    if (storyTokens.some((storyToken) => storyToken.endsWith('card') && storyToken.includes(token))) return score + 12;
     if (storyTokens.some((storyToken) => storyToken === token)) return score + 8;
-    if (storyTokens.some((storyToken) => storyToken === `${token}card` || storyToken.endsWith(`${token}card`))) return score + 6;
-    if (cardTokens.some((storyToken) => storyToken.endsWith(`${token}card`))) return score + 6;
     if (storyTokens.some((storyToken) => storyToken.includes(token))) return score + 2;
     return score;
   }, 0);
@@ -256,6 +257,42 @@ async function mapComponentCardsToStories(entries, componentCards) {
   return pairs;
 }
 
+
+
+async function screenshotPrimaryViewport(page, filePath, viewport) {
+  const hasVisibleFixedElement = await page.evaluate(() => [...document.body.querySelectorAll('*')].some((element) => {
+    const style = getComputedStyle(element);
+    if (style.position !== 'fixed' || style.visibility === 'hidden' || style.display === 'none') return false;
+    const rect = element.getBoundingClientRect();
+    return rect.width > 1 && rect.height > 1;
+  }));
+
+  if (hasVisibleFixedElement) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.waitForTimeout(100);
+    await page.screenshot({ path: filePath, clip: { x: 0, y: 0, width: viewport.width, height: viewport.height }, animations: 'disabled' });
+    return;
+  }
+
+  const clip = await page.evaluate(({ width, height }) => {
+    const shell = document.querySelector('#storybook-root > div') || document.querySelector('#storybook-root') || document.body;
+    const rect = shell.getBoundingClientRect();
+    const style = getComputedStyle(shell);
+    const paddingLeft = Number.parseFloat(style.paddingLeft) || 0;
+    const paddingTop = Number.parseFloat(style.paddingTop) || 0;
+    const x = Math.max(0, Math.round(rect.left + paddingLeft));
+    const y = Math.max(0, Math.round(rect.top + paddingTop));
+    return {
+      x,
+      y,
+      width: Math.max(1, Math.min(width, Math.floor(window.innerWidth - x))),
+      height: Math.max(1, Math.min(height, Math.floor(window.innerHeight - y))),
+    };
+  }, { width: viewport.width, height: viewport.height });
+
+  await page.screenshot({ path: filePath, clip, animations: 'disabled' });
+}
+
 async function ensureVisibleScreenshot(filePath, metadata) {
   const fileStat = await stat(filePath);
   assert(fileStat.size >= 1024, `Screenshot is unexpectedly small: ${filePath} (${fileStat.size} bytes)`);
@@ -334,7 +371,7 @@ async function main() {
       await page.waitForTimeout(350);
 
       const primaryOutputPath = path.join(outDir, 'react-primary', `${slug(selected)}.png`);
-      await page.screenshot({ path: primaryOutputPath, fullPage: true, animations: 'disabled' });
+      await screenshotPrimaryViewport(page, primaryOutputPath, viewport);
       manifest.primaryReactCards.push(
         await ensureVisibleScreenshot(primaryOutputPath, {
           selected,

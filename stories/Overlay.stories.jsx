@@ -2,16 +2,20 @@ import React from 'react';
 import {
   Alert,
   Button,
+  FormField,
   CommandPalette,
   Dimmer,
   Drawer,
   DropdownMenu,
   HoverCard,
+  Input,
   Icon,
   Lightbox,
+  Link,
   Modal,
   Popover,
   Sheet,
+  Slider,
   Toast,
   ToastStack,
 } from '../src/index.js';
@@ -223,4 +227,113 @@ export const DimmerCard = {
       <Dimmer open blur><span style={{ color: 'var(--text-on-inverse)' }}>처리 중…</span></Dimmer>
     </div>
   ),
+};
+
+export const PopoverCard = {
+  name: 'Popover card parity',
+  render: () => (
+    <Popover trigger={<Button variant="ghost">탐지 반경</Button>} width={260}>
+      <FormField label="반경 (m)"><Slider defaultValue={30} min={0} max={100} showValue /></FormField>
+    </Popover>
+  ),
+};
+
+export const AlertCard = {
+  name: 'Alert card parity',
+  render: () => {
+    const [open, setOpen] = React.useState(false);
+    return (
+      <div>
+        <Button variant="dark" onClick={() => setOpen(true)}>로봇 정지 확인 열기</Button>
+        <Alert open={open} title="로봇을 정지할까요?" tone="danger" confirmLabel="정지" cancelLabel="취소"
+          onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} onClose={() => setOpen(false)}>
+          현재 순찰 중인 LKR-T1 3대가 즉시 정지됩니다. 정지 후에는 관제 화면에서 재개할 수 있습니다.
+        </Alert>
+      </div>
+    );
+  },
+};
+
+export const AlertToastCard = {
+  name: 'Alert Toast card parity',
+  render: () => {
+    const [open, setOpen] = React.useState(false);
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>
+          <Toast tone="info" onClose={() => {}}>관제 화면으로 이동했습니다.</Toast>
+        </div>
+        <div>
+          <Button variant="dark" onClick={() => setOpen(true)}>로봇 정지 확인 열기</Button>
+          <Alert open={open} title="로봇을 정지할까요?" tone="danger" confirmLabel="정지" cancelLabel="취소"
+            onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} onClose={() => setOpen(false)}>
+            현재 순찰 중인 LKR-T1 3대가 즉시 정지됩니다. 정지 후에는 관제 화면에서 재개할 수 있습니다.
+          </Alert>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const HoverCardCard = {
+  name: 'HoverCard card parity',
+  render: () => (
+    <HoverCard trigger={<Link>LKR-T1</Link>}>
+      <b>LKR-T1</b> ? 안전 순찰 로봇 ? 최대 8시간 연속 운영.
+    </HoverCard>
+  ),
+};
+
+export const CommandPaletteCard = {
+  name: 'CommandPalette card parity',
+  render: () => {
+    const [open, setOpen] = React.useState(false);
+    return (
+      <div>
+        <Button variant="dark" onClick={() => setOpen(true)}>명령 검색 (⌘K)</Button>
+        <CommandPalette open={open} onClose={() => setOpen(false)} commands={[
+          { label: '전체 로봇 정지', shortcut: 'Space', onSelect: () => {} },
+          { label: '관제 화면으로 이동', shortcut: 'G', onSelect: () => {} },
+          { label: '설비 상태 보기', shortcut: 'E', onSelect: () => {} },
+        ]} />
+      </div>
+    );
+  },
+};
+
+export const ToastStackCard = {
+  name: 'ToastStack card parity',
+  render: () => {
+    const [items, setItems] = React.useState([
+      { id: 1, tone: 'success', msg: '설비 점검이 완료되었습니다.' },
+      { id: 2, tone: 'info', msg: '관제 화면으로 이동했습니다.' },
+    ]);
+    return (
+      <ToastStack position="bottom-right">
+        {items.map((toast) => (
+          <Toast key={toast.id} tone={toast.tone} onClose={() => setItems((prev) => prev.filter((item) => item.id !== toast.id))}>{toast.msg}</Toast>
+        ))}
+      </ToastStack>
+    );
+  },
+};
+
+export const ModalCard = {
+  name: 'Modal card parity',
+  render: () => {
+    const [open, setOpen] = React.useState(false);
+    return (
+      <div>
+        <Button variant="primary" onClick={() => setOpen(true)}>설비 정보 수정</Button>
+        <Modal open={open} title="설비 정보 수정" onClose={() => setOpen(false)}
+          footer={<><Button variant="ghost" onClick={() => setOpen(false)}>취소</Button><Button variant="signal" onClick={() => setOpen(false)}>저장</Button></>}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <Input label="설비명" defaultValue="3동 정문 게이트" />
+            <Input label="설치 위치" defaultValue="3동 1층 로비" />
+          </div>
+        </Modal>
+      </div>
+    );
+  },
 };
