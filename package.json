@@ -50,7 +50,8 @@
     "check": "npm run build && npm run check:tokens && npm run check:parity && npm run check:coverage && npm run check:map && tsc --noEmit && npm run check:entry && npm run check:generated && npm run build:storybook && npm pack --dry-run --ignore-scripts",
     "storybook": "storybook dev -p 6006 --no-open",
     "build:storybook": "storybook build",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "check:visual-inventory": "npm run build:storybook && node scripts/capture-visual-inventory.mjs"
   },
   "peerDependencies": {
     "react": ">=18 <20",

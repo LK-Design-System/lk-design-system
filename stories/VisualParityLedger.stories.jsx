@@ -34,6 +34,7 @@ const fixedRows = [
   ['P1', 'Component map guard', '원본 component card 83개가 Audit 매핑, React export, dist type, legacy bundle, React Storybook에 연결되는지 검증'],
   ['P1', 'Visual smoke', 'Playwright로 대표 원본 preview와 React Storybook 화면 9개를 실제 브라우저 PNG로 캡처'],
   ['P1', 'Legacy render sweep', 'Playwright로 전체 원본 preview 107개(20/83/4)가 빈 화면 없이 렌더되는지 전수 검증'],
+  ['P1', 'Visual inventory', 'Playwright PNG inventory for all 83 original component cards and every React implementation story'],
   ['P0', 'Original previews', '원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출'],
 ];
 
@@ -60,6 +61,7 @@ const debtItems = [
   'npm run check:map은 원본 component card 83개가 97개 React export와 연결되고, 각 export가 src/index.js, dist/index.d.ts, _ds_bundle.js, React Storybook 소스에 존재하는지 검증합니다.',
   'npm run check:visual은 Storybook 정적 빌드 후 대표 9개 화면을 visual-artifacts/smoke/에 캡처합니다. 전체 원본 대비 pixel diff baseline은 다음 단계입니다.',
   'npm run check:legacy-render는 전체 107개 원본 preview가 Storybook 정적 빌드에서 실제 DOM/visible element로 렌더되는지 검사합니다.',
+  'npm run check:visual-inventory captures all 83 original component cards and every React implementation story into visual-artifacts/inventory/ with a manifest. This is evidence collection before pixel diff baseline enforcement.',
 ];
 
 const page = {

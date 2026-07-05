@@ -57,3 +57,19 @@ npx playwright install chromium
 - baseline PNG를 버전 관리할지, CI artifact로만 유지할지 결정
 - pixel diff threshold와 masking 규칙 정의
 - 라이트/다크 theme query를 명시한 양쪽 캡처 추가
+
+## Full PNG visual inventory
+
+Before enforcing pixel diff baselines, capture the complete visual inventory of the original component cards and the React implementation stories.
+
+```powershell
+npm.cmd run check:visual-inventory
+```
+
+The command writes local artifacts under `visual-artifacts/inventory/`; this directory is ignored by git. Current coverage:
+
+- `legacy-components/`: all 83 original `components/**/*.card.html` files captured through the Storybook Legacy Preview iframe
+- `react-stories/`: every React implementation story, excluding docs/Audit/Legacy Preview pages
+- `manifest.json`: image path, byte size, SHA-256 hash, Storybook story id, and original viewport metadata
+
+This is not yet a pixel diff pass. It creates the evidence set needed to decide baseline storage, thresholds, and masking rules next.
