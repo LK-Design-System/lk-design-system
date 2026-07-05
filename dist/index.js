@@ -200,7 +200,7 @@ function ButtonGroup({ options = [], value, defaultValue, onChange, size = "md",
           borderBottomLeftRadius: first ? "var(--radius-md)" : 0,
           borderTopRightRadius: last ? "var(--radius-md)" : 0,
           borderBottomRightRadius: last ? "var(--radius-md)" : 0,
-          transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)",
+          transition: "var(--component-button-transition)",
           whiteSpace: "nowrap"
         },
         children: o.label
@@ -229,7 +229,7 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
     {
       type: "button",
       onClick: copy,
-      style: { display: "inline-flex", alignItems: "center", gap: 7, height: h, padding: "0 14px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", background: copied ? "var(--lk-accent-tint-2)" : "var(--bw-indigo-tint)", color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)", ...style },
+      style: { display: "inline-flex", alignItems: "center", gap: 7, height: h, padding: "0 14px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", background: copied ? "var(--lk-accent-tint-2)" : "var(--bw-indigo-tint)", color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", transition: "var(--component-button-transition)", ...style },
       ...rest,
       children: [
         copied ? /* @__PURE__ */ jsx4("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx4("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ jsxs2("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
@@ -246,7 +246,6 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
 import React6 from "react";
 import { jsx as jsx5 } from "react/jsx-runtime";
 function Fab({ children, variant = "signal", size = "md", label, style, ...rest }) {
-  const [hover, setHover] = React6.useState(false);
   const d = size === "sm" ? 48 : size === "lg" ? 64 : 56;
   const palettes = {
     signal: { bg: "var(--lk-accent-ink)", fg: "var(--text-on-signal)", sh: "var(--shadow-accent)" },
@@ -261,8 +260,6 @@ function Fab({ children, variant = "signal", size = "md", label, style, ...rest 
     {
       type: "button",
       "aria-label": label,
-      onMouseEnter: () => setHover(true),
-      onMouseLeave: () => setHover(false),
       style: {
         display: "inline-flex",
         alignItems: "center",
@@ -274,9 +271,9 @@ function Fab({ children, variant = "signal", size = "md", label, style, ...rest 
         background: p.bg,
         color: p.fg,
         cursor: "pointer",
-        boxShadow: hover ? p.sh : "var(--shadow-md)",
-        transform: hover ? "translateY(-2px)" : "none",
-        transition: "box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out)",
+        boxShadow: p.sh || "var(--shadow-md)",
+        transform: "none",
+        transition: "var(--component-button-transition)",
         ...style
       },
       ...rest,
@@ -336,7 +333,7 @@ function IconButton({
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.45 : 1,
         boxShadow: hover && !disabled && (variant === "solid" || variant === "signal") ? "var(--shadow-sm)" : "none",
-        transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
+        transition: "var(--component-button-transition)",
         WebkitTapHighlightColor: "transparent",
         ...style
       },
@@ -413,7 +410,6 @@ function SocialButton({
   ...rest
 }) {
   const [hover, setHover] = React9.useState(false);
-  const [press, setPress] = React9.useState(false);
   const KIT_SHADOW = "0px 0px 3px 0px rgba(0,0,0,0.084), 0px 2px 3px 0px rgba(0,0,0,0.168)";
   const brandFills = {
     google: { bg: "rgb(255,255,255)", bgHover: "rgb(248,248,248)", fg: "rgba(0,0,0,0.54)", bd: "none", shadow: KIT_SHADOW, mono: false },
@@ -452,10 +448,10 @@ function SocialButton({
     border: active && hover && p.bdHover ? p.bdHover : p.bd,
     borderRadius: iconOnly ? "999px" : "var(--radius-md)",
     boxShadow: p.shadow,
-    transform: press && active ? "scale(0.97)" : "none",
+    transform: "none",
     cursor: disabled ? "not-allowed" : "pointer",
     opacity: disabled ? 0.45 : 1,
-    transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out)",
+    transition: "var(--component-button-transition)",
     whiteSpace: "nowrap",
     textDecoration: "none",
     WebkitTapHighlightColor: "transparent",
@@ -477,15 +473,12 @@ function SocialButton({
       },
       onMouseLeave: (e) => {
         setHover(false);
-        setPress(false);
         onMouseLeave && onMouseLeave(e);
       },
       onMouseDown: (e) => {
-        setPress(true);
         onMouseDown && onMouseDown(e);
       },
       onMouseUp: (e) => {
-        setPress(false);
         onMouseUp && onMouseUp(e);
       },
       ...rest,
@@ -579,7 +572,7 @@ function TextButton({
         cursor: disabled ? "not-allowed" : "pointer",
         textDecoration: underline ? "underline" : "none",
         textUnderlineOffset: "3px",
-        transition: "opacity var(--dur-fast) var(--ease-out)",
+        transition: "var(--component-button-transition)",
         ...style
       },
       ...rest,
@@ -3148,11 +3141,11 @@ function Select({
             fontSize: "15px",
             letterSpacing: "-0.1px",
             textAlign: "left",
-            transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
+            transition: "var(--component-button-transition)"
           },
           children: [
             /* @__PURE__ */ jsx73("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder }),
-            /* @__PURE__ */ jsx73("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx73("path", { d: "m6 9 6 6 6-6" }) })
+            /* @__PURE__ */ jsx73("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ jsx73("path", { d: "m6 9 6 6 6-6" }) })
           ]
         }
       ),
@@ -5808,7 +5801,7 @@ function ThemeToggle({
               fontSize: fs,
               fontWeight: "var(--fw-bold)",
               letterSpacing: "-0.1px",
-              transition: "color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
+              transition: "var(--component-button-transition)"
             },
             children: [
               /* @__PURE__ */ jsx129("svg", { width: isz, height: isz, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", dangerouslySetInnerHTML: { __html: ICONS[v] || "" } }),

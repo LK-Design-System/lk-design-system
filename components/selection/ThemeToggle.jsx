@@ -91,7 +91,7 @@ export function ThemeToggle({
               boxShadow: on ? 'var(--shadow-xs)' : 'none',
               color: on ? 'var(--accent-text)' : 'var(--label-alternative)',
               fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.1px',
-              transition: 'color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
+              transition: 'var(--component-button-transition)',
             }}
           >
             <svg width={isz} height={isz} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: ICONS[v] || '' }} />

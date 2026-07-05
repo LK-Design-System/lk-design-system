@@ -49,7 +49,7 @@ export function IconButton({
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.45 : 1,
         boxShadow: hover && !disabled && (variant === 'solid' || variant === 'signal') ? 'var(--shadow-sm)' : 'none',
-        transition: 'background var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
+        transition: 'var(--component-button-transition)',
         WebkitTapHighlightColor: 'transparent',
         ...style,
       }}

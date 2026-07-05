@@ -42,7 +42,7 @@ export function ButtonGroup({ options = [], value, defaultValue, onChange, size 
               marginLeft: first ? 0 : -1, zIndex: active ? 1 : 0,
               borderTopLeftRadius: first ? 'var(--radius-md)' : 0, borderBottomLeftRadius: first ? 'var(--radius-md)' : 0,
               borderTopRightRadius: last ? 'var(--radius-md)' : 0, borderBottomRightRadius: last ? 'var(--radius-md)' : 0,
-              transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)',
+              transition: 'var(--component-button-transition)',
               whiteSpace: 'nowrap',
             }}
           >

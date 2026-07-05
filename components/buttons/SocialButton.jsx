@@ -7,7 +7,7 @@ import { BrandLogo } from '../brand/BrandLogo.jsx';
  * Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로
  * 통합하되, 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법을 따른다 —
  * 높이 52(=Button md) · var(--radius-md) · 16px/var(--fw-bold) ·
- * 토큰 모션(호버 뮤트 필, 프레스 scale 0.97).
+ * 토큰 상태 변화(호버 뮤트 필, 위치/크기 모션 없음).
  *
  * tone:
  * - 'outline' (기본, DS 네이티브) — 서피스 + 헤어라인 + 풀컬러 마크.
@@ -33,7 +33,6 @@ export function SocialButton({
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
-  const [press, setPress] = React.useState(false);
 
   const KIT_SHADOW = '0px 0px 3px 0px rgba(0,0,0,0.084), 0px 2px 3px 0px rgba(0,0,0,0.168)';
   const brandFills = {
@@ -70,10 +69,10 @@ export function SocialButton({
     border: (active && hover && p.bdHover) ? p.bdHover : p.bd,
     borderRadius: iconOnly ? '999px' : 'var(--radius-md)',
     boxShadow: p.shadow,
-    transform: press && active ? 'scale(0.97)' : 'none',
+    transform: 'none',
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.45 : 1,
-    transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out)',
+    transition: 'var(--component-button-transition)',
     whiteSpace: 'nowrap',
     textDecoration: 'none',
     WebkitTapHighlightColor: 'transparent',
@@ -90,9 +89,9 @@ export function SocialButton({
       aria-label={iconOnly ? label : undefined}
       title={iconOnly ? label : undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
-      onMouseLeave={(e) => { setHover(false); setPress(false); onMouseLeave && onMouseLeave(e); }}
-      onMouseDown={(e) => { setPress(true); onMouseDown && onMouseDown(e); }}
-      onMouseUp={(e) => { setPress(false); onMouseUp && onMouseUp(e); }}
+      onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
+      onMouseDown={(e) => { onMouseDown && onMouseDown(e); }}
+      onMouseUp={(e) => { onMouseUp && onMouseUp(e); }}
       {...rest}
     >
       <BrandLogo name={provider} size={iconOnly ? 22 : 20} mono={p.mono} decorative style={{ flexShrink: 0 }} />
