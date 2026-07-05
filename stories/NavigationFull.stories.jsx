@@ -1,0 +1,156 @@
+import React from 'react';
+import {
+  Anchor,
+  Badge,
+  BottomNav,
+  Breadcrumb,
+  Button,
+  FloorSelector,
+  Footer,
+  Icon,
+  IconButton,
+  Lockup,
+  Menubar,
+  NavRail,
+  Pagination,
+  SideNav,
+  Steps,
+  Tabs,
+  TextButton,
+  Toolbar,
+  TopBar,
+  UserMenu,
+  Wizard,
+} from '../src/index.js';
+
+const meta = {
+  title: '컴포넌트/내비게이션 상세',
+  parameters: {
+    docs: {
+      description: {
+        component: '상단, 측면, 하단, 경로, 단계, 페이지 이동을 구성하는 내비게이션 컴포넌트입니다.',
+      },
+    },
+  },
+};
+
+export default meta;
+
+const navItems = [
+  { heading: '운영' },
+  { value: 'dashboard', label: '대시보드', icon: <Icon name="home" size={18} /> },
+  {
+    value: 'fleet',
+    label: '플릿',
+    icon: <Icon name="robot" size={18} />,
+    children: [
+      { value: 'robots', label: '로봇', badge: 24 },
+      { value: 'missions', label: '미션', badge: 8 },
+    ],
+  },
+  { value: 'map', label: '지도', icon: <Icon name="map" size={18} /> },
+  { heading: '시스템' },
+  { value: 'settings', label: '설정', icon: <Icon name="setting" size={18} /> },
+];
+
+export const AppNavigation = {
+  name: '앱 내비게이션',
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1100 }}>
+      <div style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-card)' }}>
+        <TopBar
+          brand={<Lockup variant="inline" height={22} />}
+          actions={<Button size="sm">새 미션</Button>}
+        >
+          <TextButton>플릿</TextButton>
+          <TextButton>지도</TextButton>
+          <TextButton>알림</TextButton>
+        </TopBar>
+      </div>
+
+      <section style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 'var(--space-5)', alignItems: 'start' }}>
+        <SideNav
+          items={navItems}
+          defaultValue="robots"
+          collapsible
+          header={<Lockup variant="inline" height={22} />}
+          headerCollapsed={<Lockup variant="mark" height={22} />}
+          footer={<UserMenu name="운영자" detail="Fleet Manager" status="online" items={[{ label: '프로필' }, { label: '로그아웃', danger: true }]} />}
+        />
+        <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+          <Breadcrumb items={[{ label: '홈', href: '#' }, { label: '플릿', href: '#' }, { label: 'AMR-07' }]} />
+          <Tabs items={[{ value: 'status', label: '상태', count: 3 }, { value: 'log', label: '로그' }, { value: 'setting', label: '설정' }]} defaultValue="status" />
+          <Steps steps={['설정', '검증', '배포']} current={1} />
+          <Toolbar>
+            <IconButton label="확대" size={36}><Icon name="plus" size={17} /></IconButton>
+            <IconButton label="축소" size={36}><Icon name="minus" size={17} /></IconButton>
+            <IconButton label="레이어" size={36}><Icon name="layers" size={17} /></IconButton>
+          </Toolbar>
+        </div>
+      </section>
+    </main>
+  ),
+};
+
+export const CompactNavigation = {
+  name: '컴팩트 내비게이션',
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
+      <section style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'start', flexWrap: 'wrap' }}>
+        <NavRail
+          defaultValue="map"
+          items={[
+            { value: 'home', label: '홈', icon: <Icon name="home" /> },
+            { value: 'map', label: '지도', icon: <Icon name="map" /> },
+            { value: 'robot', label: '로봇', icon: <Icon name="robot" /> },
+          ]}
+        />
+        <div style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 280 }}>
+          <Anchor
+            active="#map"
+            items={[
+              { href: '#summary', label: '요약' },
+              { href: '#map', label: '지도' },
+              { href: '#history', label: '기록', level: 1 },
+            ]}
+          />
+          <FloorSelector floors={['B1', '1F', '2F', '3F']} defaultValue="2F" />
+          <Pagination page={4} count={12} />
+        </div>
+      </section>
+
+      <div style={{ width: 360, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+        <BottomNav
+          defaultValue="mission"
+          items={[
+            { value: 'home', label: '홈', icon: <Icon name="home" size={19} /> },
+            { value: 'mission', label: '미션', icon: <Icon name="route" size={19} /> },
+            { value: 'alert', label: '알림', icon: <Icon name="bell" size={19} /> },
+          ]}
+        />
+      </div>
+    </main>
+  ),
+};
+
+export const MenusAndWizard = {
+  name: '메뉴와 위저드',
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
+      <Menubar
+        menus={[
+          { label: '파일', items: [{ label: '새 미션' }, { label: '내보내기', shortcut: '⌘E' }] },
+          { label: '보기', items: [{ label: '지도 레이어' }, { label: '텔레메트리' }] },
+        ]}
+      />
+      <Wizard steps={['미션', '로봇', '검증']} defaultCurrent={1}>
+        {(current) => (
+          <div style={{ padding: 'var(--space-5)', background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+            현재 단계: <Badge>{current + 1}</Badge>
+          </div>
+        )}
+      </Wizard>
+      <Footer compact />
+    </main>
+  ),
+};

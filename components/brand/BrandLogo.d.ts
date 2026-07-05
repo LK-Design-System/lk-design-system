@@ -9,6 +9,8 @@ export interface BrandLogoProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
   /** 단색 `currentColor` 실루엣으로 렌더(라이트/다크에 맞게 반전 — 푸터·다크 바에 적합). @default false */
   mono?: boolean;
+  /** 장식용 마크로 렌더해 접근성 트리에서 숨김. @default false */
+  decorative?: boolean;
   /** 접근성 라벨(기본값 "<name> logo"). */
   title?: string;
 }

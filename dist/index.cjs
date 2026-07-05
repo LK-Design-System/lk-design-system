@@ -198,19 +198,19 @@ var MONO = {
   youtube: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
   google: "M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
 };
-function BrandLogo({ name, size = 24, title, mono = false, style, ...rest }) {
+function BrandLogo({ name, size = 24, title, mono = false, decorative = false, style, ...rest }) {
   const g = LOGOS[name];
   if (!g) return import_react.default.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", style, ...rest });
   let body = g.body;
   if (mono) {
     body = MONO[name] ? '<path d="' + MONO[name] + '" fill="currentColor"/>' : g.body.replace(/fill="(#[0-9A-Fa-f]{3,8}|rgb\([^)]*\))"/g, 'fill="currentColor"');
   }
+  const a11y = decorative ? { "aria-hidden": true } : { role: "img", "aria-label": title || name + " logo" };
   return import_react.default.createElement("svg", {
     width: size,
     height: size,
     viewBox: g.viewBox,
-    role: "img",
-    "aria-label": title || name + " logo",
+    ...a11y,
     style: { display: "block", flexShrink: 0, ...style },
     dangerouslySetInnerHTML: { __html: body },
     ...rest
