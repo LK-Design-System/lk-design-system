@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.org/TR/drafts/format/",
-  "name": "LK Robotics Core Design Tokens",
+  "name": "LK Robotics 코어 디자인 토큰",
   "version": "0.1.0",
   "metadata": {
     "status": "initial-machine-readable-source",
@@ -15,16 +15,16 @@
       "tokens/components.css",
       "tokens/base.css"
     ],
-    "rule": "primitive tokens define raw decisions, semantic tokens define product meaning, component tokens define reusable component contracts."
+    "rule": "primitive 토큰은 원천 결정을, semantic 토큰은 제품 의미를, component 토큰은 재사용 가능한 컴포넌트 계약을 정의한다."
   },
   "primitive": {
-    "description": "Raw brand, scale, and effect values. Use primitive tokens only when defining or revising semantic tokens.",
+    "description": "브랜드 원값, 스케일, 효과 값입니다. primitive 토큰은 semantic 토큰을 정의하거나 수정할 때만 사용합니다.",
     "color": {
       "brandNavy": {
         "$type": "color",
         "$value": "#0E1329",
         "css": "--bw-ink",
-        "$description": "LK Robotics navy ink."
+        "$description": "LK Robotics navy ink 원값입니다."
       },
       "brandNavyDeep": {
         "$type": "color",
@@ -261,7 +261,7 @@
     }
   },
   "semantic": {
-    "description": "Product-facing meanings. Use semantic tokens before primitive tokens in product UI.",
+    "description": "제품 UI에서 쓰는 의미 기반 토큰입니다. 제품 화면에서는 primitive보다 semantic 토큰을 우선 사용합니다.",
     "surface": {
       "page": {
         "$type": "color",
@@ -422,7 +422,7 @@
     }
   },
   "component": {
-    "description": "Component-specific decisions. Component implementations should use these instead of hardcoded hex, rgba, px, or shadows.",
+    "description": "컴포넌트별 시각 결정입니다. 컴포넌트 구현은 hardcoded hex, rgba, px, shadow 대신 이 토큰을 사용해야 합니다.",
     "button": {
       "component": "components/buttons/Button.jsx",
       "tokens": {
@@ -612,15 +612,15 @@
   "modes": {
     "light": {
       "selector": ":root, [data-theme=\"light\"], .theme-light",
-      "description": "Default product mode. Light variables are explicit so nested light islands can override dark pages."
+      "description": "기본 제품 모드입니다. dark 페이지 안의 light island가 정상 동작하도록 light 값을 명시합니다."
     },
     "dark": {
       "selector": "[data-theme=\"dark\"], .theme-dark",
-      "description": "Deep navy product mode for control surfaces and inverse sections."
+      "description": "control surface와 inverse section을 위한 deep navy 제품 모드입니다."
     },
     "auto": {
       "selector": "[data-theme=\"auto\"], .theme-auto",
-      "description": "Follows prefers-color-scheme through the existing CSS media query."
+      "description": "기존 CSS media query를 통해 prefers-color-scheme을 따릅니다."
     }
   }
 }

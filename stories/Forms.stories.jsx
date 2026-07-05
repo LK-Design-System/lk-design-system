@@ -2,11 +2,11 @@ import React from 'react';
 import { Checkbox, Icon, Input, Select } from '../src/index.js';
 
 const meta = {
-  title: 'Components/Forms',
+  title: '컴포넌트/폼',
   parameters: {
     docs: {
       description: {
-        component: 'Representative form controls for robotics/product workflows.',
+        component: '로보틱스/제품 워크플로에 사용하는 대표 form control입니다.',
       },
     },
   },
@@ -15,29 +15,31 @@ const meta = {
 export default meta;
 
 export const TextAndSelect = {
+  name: '텍스트와 Select',
   render: () => (
     <div style={{ display: 'grid', gap: 18, width: 'min(420px, 100%)' }}>
-      <Input label="Robot name" defaultValue="AMR-07" iconLeft={<Icon name="robot" size={18} />} required />
+      <Input label="로봇 이름" defaultValue="AMR-07" iconLeft={<Icon name="robot" size={18} />} required />
       <Select
-        label="Operating mode"
+        label="운영 모드"
         defaultValue="mapping"
         options={[
-          { value: 'mapping', label: 'Mapping' },
-          { value: 'delivery', label: 'Delivery' },
-          { value: 'inspection', label: 'Inspection' },
+          { value: 'mapping', label: '매핑' },
+          { value: 'delivery', label: '배송' },
+          { value: 'inspection', label: '점검' },
         ]}
       />
-      <Input label="Validation error" defaultValue="172.16.0." invalid />
+      <Input label="검증 오류" defaultValue="172.16.0." invalid />
     </div>
   ),
 };
 
 export const CheckboxStates = {
+  name: 'Checkbox 상태',
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <Checkbox label="Enable remote diagnostics" defaultChecked />
-      <Checkbox label="Send mission logs after completion" />
-      <Checkbox label="Disabled option" disabled />
+      <Checkbox label="원격 진단 활성화" defaultChecked />
+      <Checkbox label="완료 후 미션 로그 전송" />
+      <Checkbox label="비활성 옵션" disabled />
     </div>
   ),
 };

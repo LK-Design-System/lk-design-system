@@ -2,11 +2,11 @@ import React from 'react';
 import tokenSource from '../tokens/source.json';
 
 const meta = {
-  title: 'Foundations/Token Strategy',
+  title: '파운데이션/토큰 전략',
   parameters: {
     docs: {
       description: {
-        component: 'Machine-readable token hierarchy used by AI, Figma workflows, CSS runtime tokens, and component contracts.',
+        component: 'AI, Figma 워크플로, CSS 런타임 토큰, 컴포넌트 계약이 함께 사용하는 기계 판독용 토큰 계층입니다.',
       },
     },
   },
@@ -16,17 +16,17 @@ export default meta;
 
 const layerSummaries = [
   {
-    name: 'Primitive',
+    name: 'Primitive 원천 토큰',
     description: tokenSource.primitive.description,
     example: 'primitive.color.brandNavy -> --bw-ink',
   },
   {
-    name: 'Semantic',
+    name: 'Semantic 의미 토큰',
     description: tokenSource.semantic.description,
     example: 'semantic.action.primary -> --color-primary',
   },
   {
-    name: 'Component',
+    name: 'Component 컴포넌트 토큰',
     description: tokenSource.component.description,
     example: 'component.button.tokens.primaryBg -> --component-button-primary-bg',
   },
@@ -66,17 +66,18 @@ function TokenSwatch({ token }) {
 }
 
 export const Hierarchy = {
+  name: '토큰 계층',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1040 }}>
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
-          Token strategy
+          토큰 전략
         </p>
         <h1 style={{ margin: 0, fontSize: 'var(--title1-size)', lineHeight: 'var(--title1-line)' }}>
-          Primitive to semantic to component
+          Primitive에서 semantic, component까지
         </h1>
         <p style={{ margin: 0, maxWidth: 760, color: 'var(--label-neutral)' }}>
-          `tokens/source.json` gives AI tools and Figma workflows a structured map of the runtime CSS contract.
+          `tokens/source.json`은 AI 도구와 Figma 워크플로가 런타임 CSS 계약을 구조적으로 이해하도록 돕습니다.
         </p>
       </section>
 
@@ -96,6 +97,7 @@ export const Hierarchy = {
 };
 
 export const ComponentContracts = {
+  name: '컴포넌트 계약',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 1080 }}>
       {componentNames.map((componentName) => {
@@ -131,10 +133,11 @@ export const ComponentContracts = {
 };
 
 export const RuntimeFiles = {
+  name: '런타임 파일',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 720 }}>
       <h1 style={{ margin: 0, fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-        Runtime import order
+        런타임 import 순서
       </h1>
       <ol style={{ margin: 0, paddingLeft: 22, display: 'grid', gap: 'var(--space-2)' }}>
         {tokenSource.metadata.runtimeCssFiles.map((file) => (

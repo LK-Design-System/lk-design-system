@@ -2,11 +2,11 @@ import React from 'react';
 import { BRAND_LOGO_NAMES, BrandLogo, ICON_NAMES, Icon } from '../src/index.js';
 
 const meta = {
-  title: 'Foundations/Iconography',
+  title: '파운데이션/아이콘',
   parameters: {
     docs: {
       description: {
-        component: 'Core monochrome icons and full-color platform brand marks.',
+        component: '핵심 monochrome icon과 full-color platform brand mark입니다.',
       },
     },
   },
@@ -15,6 +15,7 @@ const meta = {
 export default meta;
 
 export const IconRegistry = {
+  name: '아이콘 레지스트리',
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(132px, 1fr))', gap: 12, width: 'min(920px, 100%)' }}>
       {ICON_NAMES.map((name) => (
@@ -41,6 +42,7 @@ export const IconRegistry = {
 };
 
 export const BrandLogos = {
+  name: '브랜드 로고',
   render: () => (
     <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', maxWidth: 760 }}>
       {BRAND_LOGO_NAMES.map((name) => (

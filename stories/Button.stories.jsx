@@ -2,10 +2,10 @@ import React from 'react';
 import { Button, Icon } from '../src/index.js';
 
 const meta = {
-  title: 'Components/Button',
+  title: '컴포넌트/버튼',
   component: Button,
   args: {
-    children: 'Start mission',
+    children: '미션 시작',
     variant: 'primary',
     size: 'md',
     arrow: false,
@@ -25,7 +25,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Token-driven action button with variants for brand, dashboard, ghost, and inverse surfaces.',
+        component: '브랜드, 대시보드, ghost, inverse surface 변형을 갖춘 토큰 기반 액션 버튼입니다.',
       },
     },
   },
@@ -34,10 +34,12 @@ const meta = {
 export default meta;
 
 export const Playground = {
+  name: '플레이그라운드',
   render: (args) => <Button {...args} />,
 };
 
 export const Variants = {
+  name: '변형',
   render: () => (
     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
       {['primary', 'secondary', 'signal', 'dark', 'flat', 'ghost'].map((variant) => (
@@ -50,25 +52,26 @@ export const Variants = {
 };
 
 export const SizesAndStates = {
+  name: '크기와 상태',
   render: () => (
     <div style={{ display: 'grid', gap: 18, maxWidth: 720 }}>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-        <Button size="sm">Small</Button>
-        <Button size="md">Medium</Button>
+        <Button size="sm">작게</Button>
+        <Button size="md">중간</Button>
         <Button size="lg" arrow>
-          Large
+          크게
         </Button>
       </div>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-        <Button disabled>Disabled</Button>
+        <Button disabled>비활성</Button>
         <Button variant="ghost">
           <Icon name="download" size={18} />
-          Export
+          내보내기
         </Button>
       </div>
       <div style={{ width: 'min(360px, 100%)' }}>
         <Button full variant="signal">
-          Full width
+          전체 너비
         </Button>
       </div>
     </div>
@@ -76,13 +79,14 @@ export const SizesAndStates = {
 };
 
 export const OnDark = {
+  name: '다크 배경',
   parameters: {
     backgrounds: { default: 'Navy' },
   },
   render: () => (
     <div style={{ background: 'var(--surface-inverse)', padding: 28, borderRadius: 'var(--radius-lg)' }}>
       <Button variant="on-dark" arrow>
-        View telemetry
+        텔레메트리 보기
       </Button>
     </div>
   ),

@@ -2,12 +2,12 @@ import React from 'react';
 import { Button, Icon, MetricCard } from '../src/index.js';
 
 const meta = {
-  title: 'Documentation/Overview',
+  title: '문서/개요',
   parameters: {
     docs: {
       description: {
         component:
-          'LK Design System Core is the package entry for LK Robotics tokens, React components, assets, templates, and static previews.',
+          'LK 디자인 시스템 코어는 LK Robotics 토큰, React 컴포넌트, 자산, 템플릿, 정적 미리보기의 패키지 진입점입니다.',
       },
     },
   },
@@ -30,7 +30,7 @@ const panelStyle = {
 };
 
 export const RepositoryBaseline = {
-  name: 'Repository baseline',
+  name: '레포 기준',
   render: () => (
     <main style={sectionStyle}>
       <header style={{ display: 'grid', gap: 10 }}>
@@ -38,21 +38,21 @@ export const RepositoryBaseline = {
           <Icon name="robot" size={22} />
           LK Robotics
         </div>
-        <h1 style={{ margin: 0, fontSize: 40, lineHeight: 1.08, color: 'var(--label-strong)' }}>Design System Core</h1>
+        <h1 style={{ margin: 0, fontSize: 40, lineHeight: 1.08, color: 'var(--label-strong)' }}>디자인 시스템 코어</h1>
         <p style={{ margin: 0, maxWidth: 760, color: 'var(--label-neutral)', lineHeight: 1.65 }}>
-          This Storybook documents the core package surface: CSS tokens, reusable React components,
-          robotics-specific UI patterns, iconography, and package usage rules.
+          이 Storybook은 CSS 토큰, 재사용 React 컴포넌트, 로보틱스 전용 UI 패턴,
+          아이콘, 패키지 사용 규칙을 문서화합니다.
         </p>
       </header>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
-        <MetricCard label="Components" value="145" caption="React component sources" />
-        <MetricCard label="Groups" value="16" caption="Component directories" />
-        <MetricCard label="Package" value="0.1.0" caption="@lk-robotics/design-system-core" />
+        <MetricCard label="컴포넌트" value="145" caption="React 컴포넌트 소스" />
+        <MetricCard label="그룹" value="16" caption="컴포넌트 디렉터리" />
+        <MetricCard label="패키지" value="0.1.0" caption="@lk-robotics/design-system-core" />
       </section>
 
       <section style={panelStyle}>
-        <h2 style={{ margin: '0 0 12px', fontSize: 20 }}>Consumer import</h2>
+        <h2 style={{ margin: '0 0 12px', fontSize: 20 }}>사용 앱 import</h2>
         <pre style={{ margin: 0, overflowX: 'auto', background: 'var(--fill-normal)', padding: 16, borderRadius: 'var(--radius-md)' }}>
           <code>{`import { Button, ProductCard, TopBar } from '@lk-robotics/design-system-core';
 import '@lk-robotics/design-system-core/styles.css';`}</code>
@@ -60,10 +60,10 @@ import '@lk-robotics/design-system-core/styles.css';`}</code>
       </section>
 
       <section style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-        <Button>Primary action</Button>
-        <Button variant="ghost">Secondary action</Button>
+        <Button>주요 액션</Button>
+        <Button variant="ghost">보조 액션</Button>
         <Button variant="dark" arrow>
-          Robot console
+          로봇 콘솔
         </Button>
       </section>
     </main>

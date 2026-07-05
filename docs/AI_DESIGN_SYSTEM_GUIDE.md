@@ -1,48 +1,48 @@
-# AI Design System Guide
+# AI 디자인 시스템 가이드
 
-Use this guide as the first context file when asking an AI tool to design or implement LK Robotics UI. The goal is to make the design system a shared language for designers, engineers, and AI instead of a loose collection of CSS values.
+AI 도구에게 LK Robotics UI 설계나 구현을 맡길 때 가장 먼저 제공할 문서입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
 
-## Source Of Truth
+## 기준 소스
 
-- Runtime CSS entry: `styles.css`
-- Machine-readable token source: `tokens/source.json`
-- Component token runtime layer: `tokens/components.css`
-- Component implementations: `components/**`
-- Interactive documentation: `stories/**`
+- 런타임 CSS 진입점: `styles.css`
+- 기계가 읽을 수 있는 토큰 소스: `tokens/source.json`
+- 컴포넌트 토큰 런타임 레이어: `tokens/components.css`
+- 컴포넌트 구현: `components/**`
+- 인터랙티브 문서: `stories/**`
 
-`styles.css` is the runtime contract that product apps import. `tokens/source.json` is the structured token map that AI tools, Figma workflows, and future token transforms should read.
+`styles.css`는 제품 앱이 import하는 런타임 계약입니다. `tokens/source.json`은 AI 도구, Figma 워크플로, 향후 토큰 변환 파이프라인이 읽을 구조화된 토큰 맵입니다.
 
-## Token Layers
+## 토큰 계층
 
-1. Primitive tokens define raw decisions: brand colors, spacing scale, radii, typography, shadows, and motion.
-2. Semantic tokens define product meaning: surface, text, action, status, border, focus, and control size.
-3. Component tokens define reusable component contracts: Button, Input, Card, and future component families.
+1. Primitive 토큰은 브랜드 색상, 간격 스케일, radius, 타이포그래피, 그림자, 모션 같은 원천 결정을 정의합니다.
+2. Semantic 토큰은 표면, 텍스트, 액션, 상태, 테두리, 포커스, 컨트롤 크기 같은 제품 의미를 정의합니다.
+3. Component 토큰은 Button, Input, Card 및 향후 컴포넌트 패밀리가 재사용할 계약을 정의합니다.
 
-Use the highest useful layer:
+가능한 한 높은 계층의 토큰을 사용하세요.
 
-- Product UI should prefer semantic tokens.
-- Component source should prefer component tokens.
-- Primitive tokens should be used only when defining or revising semantic/component tokens.
+- 제품 UI는 semantic 토큰을 우선 사용합니다.
+- 컴포넌트 소스는 component 토큰을 우선 사용합니다.
+- primitive 토큰은 semantic/component 토큰을 정의하거나 수정할 때만 사용합니다.
 
-## AI Usage Rules
+## AI 사용 규칙
 
-When generating UI code:
+UI 코드를 생성할 때:
 
-- Import `@lk-robotics/design-system-core/styles.css` once at the app entry.
-- Use exported React components before recreating common UI.
-- Use component tokens for Button/Input/Card internals.
-- Use semantic tokens for product layout, copy, status, and surfaces.
-- Do not invent new hex colors, arbitrary shadows, or one-off spacing unless the design system is being extended.
-- Do not bypass `tokens/source.json` when describing token hierarchy to another AI tool.
-- Keep LK Robotics visual tone: cool navy base, restrained azure signal, muted status colors, dense but calm operational UI.
+- 앱 진입점에서 `@lk-robotics/design-system-core/styles.css`를 한 번 import합니다.
+- 공통 UI를 새로 만들기 전에 패키지가 export하는 React 컴포넌트를 먼저 사용합니다.
+- Button/Input/Card 내부 동작과 시각 값은 component 토큰을 사용합니다.
+- 제품 레이아웃, 카피, 상태, surface는 semantic 토큰을 사용합니다.
+- 디자인 시스템을 확장하는 작업이 아니라면 새 hex 색상, 임의 그림자, 일회성 spacing을 만들지 않습니다.
+- 다른 AI 도구에게 토큰 계층을 설명할 때 `tokens/source.json`을 우회하지 않습니다.
+- LK Robotics 시각 톤을 유지합니다: 차가운 navy 기반, 절제된 azure signal, 차분한 상태 색상, 밀도 있지만 안정적인 운영 UI.
 
-## Component Token Contracts
+## 컴포넌트 토큰 계약
 
 ### Button
 
-Implementation: `components/buttons/Button.jsx`
+구현 파일: `components/buttons/Button.jsx`
 
-Primary component tokens:
+주요 컴포넌트 토큰:
 
 - `--component-button-height-sm`
 - `--component-button-height-md`
@@ -57,9 +57,9 @@ Primary component tokens:
 
 ### Input
 
-Implementation: `components/forms/Input.jsx`
+구현 파일: `components/forms/Input.jsx`
 
-Primary component tokens:
+주요 컴포넌트 토큰:
 
 - `--component-input-height`
 - `--component-input-padding-x`
@@ -72,9 +72,9 @@ Primary component tokens:
 
 ### Card
 
-Implementation: `components/cards/Card.jsx`
+구현 파일: `components/cards/Card.jsx`
 
-Primary component tokens:
+주요 컴포넌트 토큰:
 
 - `--component-card-bg`
 - `--component-card-bg-dark`
@@ -85,9 +85,9 @@ Primary component tokens:
 - `--component-card-shadow-md`
 - `--component-card-shadow-lg`
 
-## Prompt Template
+## 프롬프트 템플릿
 
-Use this structure when prompting an AI tool:
+AI 도구에 요청할 때 아래 구조를 사용하세요.
 
 ```text
 You are designing with the LK Robotics design system.
@@ -99,17 +99,19 @@ Do not invent colors, spacing, shadows, or control dimensions unless adding a re
 Output production React code.
 ```
 
-## Extension Rules
+프롬프트 자체는 영어로 유지해도 됩니다. 많은 AI 도구가 코드 생성 지시를 영어로 더 안정적으로 처리하기 때문입니다.
 
-When adding a token:
+## 확장 규칙
 
-1. Add or update the runtime CSS token in `tokens/*.css`.
-2. Add the structured token entry in `tokens/source.json`.
-3. If the token is component-specific, place it in `tokens/components.css`.
-4. Use the token in the relevant component implementation.
-5. Add or update a Storybook story that shows the token behavior.
-6. Run `npm run check` before pushing.
+토큰을 추가할 때:
 
-## Current Scope
+1. `tokens/*.css`에 런타임 CSS 토큰을 추가하거나 수정합니다.
+2. `tokens/source.json`에 구조화된 토큰 항목을 추가합니다.
+3. 컴포넌트 전용 토큰이면 `tokens/components.css`에 둡니다.
+4. 관련 컴포넌트 구현에서 해당 토큰을 사용합니다.
+5. 토큰 동작을 보여주는 Storybook 스토리를 추가하거나 수정합니다.
+6. push 전에 `npm run check`를 실행합니다.
 
-The first structured component-token pass covers Button, Input, and Card. The rest of the component library still uses a mix of semantic tokens and local values. Future passes should move each component family to the same primitive -> semantic -> component structure.
+## 현재 범위
+
+첫 번째 구조화된 component-token 적용 범위는 Button, Input, Card입니다. 나머지 컴포넌트 라이브러리는 아직 semantic 토큰과 로컬 값을 함께 사용합니다. 이후 작업에서는 각 컴포넌트 패밀리를 같은 primitive -> semantic -> component 구조로 옮기면 됩니다.
