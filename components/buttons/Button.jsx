@@ -3,9 +3,9 @@ import React from 'react';
 /**
  * LK ROBOTICS — Button
  * Solid, rounded-rect CTAs driven entirely by design-system tokens.
- * Calm by default: hover changes color and border tone immediately. No
- * animation, positional lift, or press scale. `arrow` is deprecated and kept
- * as a no-op for compatibility.
+ * Calm by default: hover keeps solid fills visually stable, with only minimal
+ * tone changes for low-emphasis variants. No animation, positional lift, or
+ * press scale. `arrow` is deprecated and kept as a no-op for compatibility.
  *
  * variant: primary (LK azure — brand) · secondary (graphite) · signal (LK cyan-ink) ·
  *          dark (navy) · flat (cool-gray) · ghost (hairline) · on-dark (translucent, for navy sections)

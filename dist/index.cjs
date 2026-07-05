@@ -481,11 +481,11 @@ function IconButton({
 }) {
   const [hover, setHover] = import_react7.default.useState(false);
   const palettes = {
-    soft: { bg: "var(--bw-indigo-tint)", bgHover: "var(--fill-strong)", fg: "var(--bw-ink)", bd: "none" },
-    solid: { bg: "var(--bw-indigo)", bgHover: "var(--bw-indigo-600)", fg: "#fff", bd: "none" },
-    signal: { bg: "var(--lk-accent-ink)", bgHover: "#005793", fg: "var(--text-on-signal)", bd: "none" },
-    ghost: { bg: "var(--bw-white)", bgHover: "var(--bw-mist)", fg: "var(--bw-ink)", bd: "1px solid var(--bw-border)" },
-    "on-dark": { bg: "rgba(255,255,255,0.12)", bgHover: "rgba(255,255,255,0.2)", fg: "#fff", bd: "1px solid rgba(255,255,255,0.22)" }
+    soft: { bg: "var(--bw-indigo-tint)", bgHover: "var(--bw-indigo-tint)", fg: "var(--bw-ink)", bd: "none" },
+    solid: { bg: "var(--bw-indigo)", bgHover: "var(--bw-indigo)", fg: "#fff", bd: "none" },
+    signal: { bg: "var(--lk-accent-ink)", bgHover: "var(--lk-accent-ink)", fg: "var(--text-on-signal)", bd: "none" },
+    ghost: { bg: "var(--bw-white)", bgHover: "var(--bw-white)", fg: "var(--bw-ink)", bd: "1px solid var(--bw-border)" },
+    "on-dark": { bg: "rgba(255,255,255,0.12)", bgHover: "rgba(255,255,255,0.14)", fg: "#fff", bd: "1px solid rgba(255,255,255,0.22)" }
   };
   const p = palettes[variant] || palettes.soft;
   return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
@@ -514,7 +514,7 @@ function IconButton({
         borderRadius: round ? "var(--radius-pill)" : "var(--radius-md)",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.45 : 1,
-        boxShadow: hover && !disabled && (variant === "solid" || variant === "signal") ? "var(--shadow-sm)" : "none",
+        boxShadow: "none",
         transition: "var(--component-button-transition)",
         WebkitTapHighlightColor: "transparent",
         ...style
@@ -594,16 +594,16 @@ function SocialButton({
   const [hover, setHover] = import_react9.default.useState(false);
   const KIT_SHADOW = "0px 0px 3px 0px rgba(0,0,0,0.084), 0px 2px 3px 0px rgba(0,0,0,0.168)";
   const brandFills = {
-    google: { bg: "rgb(255,255,255)", bgHover: "rgb(248,248,248)", fg: "rgba(0,0,0,0.54)", bd: "none", shadow: KIT_SHADOW, mono: false },
+    google: { bg: "rgb(255,255,255)", bgHover: "rgb(255,255,255)", fg: "rgba(0,0,0,0.54)", bd: "none", shadow: KIT_SHADOW, mono: false },
     apple: { bg: "rgb(0,0,0)", bgHover: "rgb(0,0,0)", fg: "#FFFFFF", bd: "none", shadow: KIT_SHADOW, mono: false },
     facebook: { bg: "rgb(24,119,242)", bgHover: "rgb(24,119,242)", fg: "#FFFFFF", bd: "none", shadow: "none", mono: true }
   };
   const outline = {
     bg: "var(--surface-raised, #FFFFFF)",
-    bgHover: "var(--bw-mist)",
+    bgHover: "var(--surface-raised, #FFFFFF)",
     fg: "var(--label-normal)",
     bd: "1px solid var(--bw-border)",
-    bdHover: "1px solid var(--bw-gray-300)",
+    bdHover: "1px solid var(--bw-border)",
     shadow: "none",
     mono: false
   };
@@ -750,7 +750,7 @@ function TextButton({
         fontWeight: "var(--fw-semibold)",
         letterSpacing: "0.006em",
         color,
-        opacity: disabled ? 0.45 : hover ? 0.72 : 1,
+        opacity: disabled ? 0.45 : hover ? "var(--component-button-text-hover-opacity)" : 1,
         cursor: disabled ? "not-allowed" : "pointer",
         textDecoration: underline ? "underline" : "none",
         textUnderlineOffset: "3px",

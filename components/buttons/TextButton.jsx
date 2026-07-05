@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * LK ROBOTICS — TextButton
  * A no-chrome text action — inline links, card footers, "더보기". Takes the
- * signal ink (or neutral / danger); dims instantly to ~72% on hover. `arrow` is
+ * signal ink (or neutral / danger); dims slightly on hover. `arrow` is
  * deprecated and kept as a no-op for compatibility. Render as an anchor with
  * `as="a"`.
  */
@@ -24,7 +24,7 @@ export function TextButton({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 4, padding: 0, border: 'none', background: 'transparent',
         fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-semibold)', letterSpacing: '0.006em',
-        color, opacity: disabled ? 0.45 : (hover ? 0.72 : 1), cursor: disabled ? 'not-allowed' : 'pointer',
+        color, opacity: disabled ? 0.45 : (hover ? 'var(--component-button-text-hover-opacity)' : 1), cursor: disabled ? 'not-allowed' : 'pointer',
         textDecoration: underline ? 'underline' : 'none', textUnderlineOffset: '3px',
         transition: 'var(--component-button-transition)', ...style,
       }}

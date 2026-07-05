@@ -7,7 +7,7 @@ import { BrandLogo } from '../brand/BrandLogo.jsx';
  * Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로
  * 통합하되, 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법을 따른다 —
  * 높이 52(=Button md) · var(--radius-md) · 16px/var(--fw-bold) ·
- * 토큰 상태 변화(호버 뮤트 필, 위치/크기 모션 없음).
+ * 토큰 상태 변화(호버 색 변화 최소화, 위치/크기 모션 없음).
  *
  * tone:
  * - 'outline' (기본, DS 네이티브) — 서피스 + 헤어라인 + 풀컬러 마크.
@@ -36,14 +36,14 @@ export function SocialButton({
 
   const KIT_SHADOW = '0px 0px 3px 0px rgba(0,0,0,0.084), 0px 2px 3px 0px rgba(0,0,0,0.168)';
   const brandFills = {
-    google:   { bg: 'rgb(255,255,255)', bgHover: 'rgb(248,248,248)', fg: 'rgba(0,0,0,0.54)', bd: 'none', shadow: KIT_SHADOW, mono: false },
+    google:   { bg: 'rgb(255,255,255)', bgHover: 'rgb(255,255,255)', fg: 'rgba(0,0,0,0.54)', bd: 'none', shadow: KIT_SHADOW, mono: false },
     apple:    { bg: 'rgb(0,0,0)',       bgHover: 'rgb(0,0,0)',       fg: '#FFFFFF',          bd: 'none', shadow: KIT_SHADOW, mono: false },
     facebook: { bg: 'rgb(24,119,242)',  bgHover: 'rgb(24,119,242)',  fg: '#FFFFFF',          bd: 'none', shadow: 'none',     mono: true },
   };
   const outline = {
-    bg: 'var(--surface-raised, #FFFFFF)', bgHover: 'var(--bw-mist)',
+    bg: 'var(--surface-raised, #FFFFFF)', bgHover: 'var(--surface-raised, #FFFFFF)',
     fg: 'var(--label-normal)', bd: '1px solid var(--bw-border)',
-    bdHover: '1px solid var(--bw-gray-300)', shadow: 'none', mono: false,
+    bdHover: '1px solid var(--bw-border)', shadow: 'none', mono: false,
   };
   const labels = { google: 'Google로 계속하기', apple: 'Apple로 계속하기', facebook: 'Facebook으로 계속하기' };
   const p = tone === 'brand' ? (brandFills[provider] || brandFills.google) : outline;

@@ -465,7 +465,7 @@
           "$type": "color",
           "$value": "var(--component-button-primary-bg-hover)",
           "css": "--component-button-primary-bg-hover",
-          "ref": "semantic.action.primaryHover"
+          "ref": "component.button.tokens.primaryBg"
         },
         "primaryFg": {
           "$type": "color",
@@ -489,6 +489,11 @@
           "$type": "number",
           "$value": 0.45,
           "css": "--component-button-disabled-opacity"
+        },
+        "textHoverOpacity": {
+          "$type": "number",
+          "$value": 0.9,
+          "css": "--component-button-text-hover-opacity"
         },
         "transition": {
           "$type": "transition",

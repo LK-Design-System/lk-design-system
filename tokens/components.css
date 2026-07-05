@@ -22,43 +22,44 @@
   --component-button-radius: var(--radius-md);
   --component-button-icon-size: 18px;
   --component-button-disabled-opacity: 0.45;
+  --component-button-text-hover-opacity: 0.9;
   --component-button-shadow-rest: var(--shadow-xs);
   --component-button-transition: none;
   --component-button-transform-hover: none;
   --component-button-transform-pressed: none;
 
   --component-button-primary-bg: var(--color-primary);
-  --component-button-primary-bg-hover: var(--color-primary-hover);
+  --component-button-primary-bg-hover: var(--component-button-primary-bg);
   --component-button-primary-fg: var(--text-on-signal);
   --component-button-primary-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-secondary-bg: var(--color-secondary);
-  --component-button-secondary-bg-hover: var(--color-secondary-hover);
+  --component-button-secondary-bg-hover: var(--component-button-secondary-bg);
   --component-button-secondary-fg: var(--text-on-inverse);
   --component-button-secondary-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-signal-bg: var(--lk-accent-ink);
-  --component-button-signal-bg-hover: var(--lk-primary-strong);
+  --component-button-signal-bg-hover: var(--component-button-signal-bg);
   --component-button-signal-fg: var(--text-on-signal);
   --component-button-signal-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-dark-bg: var(--surface-inverse);
-  --component-button-dark-bg-hover: var(--bw-slate);
+  --component-button-dark-bg-hover: var(--component-button-dark-bg);
   --component-button-dark-fg: var(--text-on-inverse);
   --component-button-dark-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-flat-bg: var(--bw-indigo-tint);
-  --component-button-flat-bg-hover: var(--fill-strong);
+  --component-button-flat-bg-hover: var(--component-button-flat-bg);
   --component-button-flat-fg: var(--bw-ink);
 
   --component-button-ghost-bg: transparent;
-  --component-button-ghost-bg-hover: var(--bw-mist);
+  --component-button-ghost-bg-hover: var(--component-button-ghost-bg);
   --component-button-ghost-fg: var(--bw-ink);
   --component-button-ghost-border: var(--border-thin) solid var(--bw-border);
-  --component-button-ghost-border-hover: var(--border-thin) solid var(--bw-gray-300);
+  --component-button-ghost-border-hover: var(--component-button-ghost-border);
 
   --component-button-on-dark-bg: rgba(255, 255, 255, 0.14);
-  --component-button-on-dark-bg-hover: rgba(255, 255, 255, 0.22);
+  --component-button-on-dark-bg-hover: rgba(255, 255, 255, 0.16);
   --component-button-on-dark-fg: #FFFFFF;
   --component-button-on-dark-border: var(--border-thin) solid rgba(255, 255, 255, 0.28);
 
