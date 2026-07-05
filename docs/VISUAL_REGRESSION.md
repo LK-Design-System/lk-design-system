@@ -73,3 +73,13 @@ The command writes local artifacts under `visual-artifacts/inventory/`; this dir
 - `manifest.json`: image path, byte size, SHA-256 hash, Storybook story id, original viewport metadata, and component-card-to-React-story pairing candidates
 
 This is not yet a pixel diff pass. It creates the evidence set and traceability map needed to decide baseline storage, thresholds, and masking rules next.
+
+## Paired visual review report
+
+To review original cards beside their mapped React implementation stories, run:
+
+```powershell
+npm.cmd run check:visual-review
+```
+
+This refreshes the inventory and writes `visual-artifacts/inventory/review.html`. The report is a local QA aid: it validates that every original component card has a legacy screenshot, at least one paired React story, and screenshot files for those stories before writing the side-by-side review page.

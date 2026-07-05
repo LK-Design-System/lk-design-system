@@ -41,6 +41,7 @@
 | P1 | Visual smoke | Playwright로 대표 원본 preview와 React Storybook 화면 9개를 실제 브라우저 PNG로 캡처 |
 | P1 | Legacy render sweep | Playwright로 전체 원본 preview 107개(20/83/4)가 빈 화면 없이 렌더되는지 전수 검증 |
 | P1 | Visual inventory | Playwright PNG inventory plus card-to-story traceability for all 83 original component cards and every React implementation story |
+| P1 | Visual review report | Local side-by-side HTML report for original component card screenshots and paired React story screenshots |
 | P0 | Original previews | 원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출 |
 
 ## 남은 전수조사 보정표
@@ -70,6 +71,7 @@
 - `npm run check:visual`은 Storybook 정적 빌드 후 대표 9개 화면을 `visual-artifacts/smoke/`에 캡처합니다. 산출물은 git에 포함하지 않으며, 전체 baseline 비교는 다음 단계입니다.
 - `npm run check:legacy-render`는 전체 107개 원본 preview가 Storybook 정적 빌드에서 실제 DOM/visible element로 렌더되는지 검사합니다.
 - `npm run check:visual-inventory` captures all 83 original component cards and every React implementation story into `visual-artifacts/inventory/` with a manifest and card/story pairing candidates. This is evidence collection before pixel diff baseline enforcement.
+- `npm run check:visual-review` refreshes that inventory and writes `visual-artifacts/inventory/review.html`, a local side-by-side QA report for each original card and its paired React story screenshots.
 - 토큰 source-of-truth는 `tokens/source.json`, CSS 토큰, generated dist가 맞물립니다. Figma Tokens 연동 전에는 수동 변경 후 `npm run check:tokens`로 계속 막아야 합니다.
 - 자동 시각 회귀 테스트는 smoke 캡처 단계까지 마련했습니다. 아직 전체 원본 대비 pixel diff baseline은 없습니다.
 

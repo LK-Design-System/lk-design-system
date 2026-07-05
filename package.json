@@ -51,7 +51,8 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "build:storybook": "storybook build",
     "prepack": "npm run build",
-    "check:visual-inventory": "npm run build:storybook && node scripts/capture-visual-inventory.mjs"
+    "check:visual-inventory": "npm run build:storybook && node scripts/capture-visual-inventory.mjs",
+    "check:visual-review": "npm run check:visual-inventory && node scripts/generate-visual-review-report.mjs"
   },
   "peerDependencies": {
     "react": ">=18 <20",
