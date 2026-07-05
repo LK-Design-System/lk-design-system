@@ -37,6 +37,7 @@
 | P1 | Non-button typography | React 컴포넌트에 남아 있던 음수 자간을 0으로 정규화 |
 | P1 | Card motion | 원본 미리보기 번들(`_ds_bundle.js`) 기준으로 Card/NewsCard/ProductCard hover motion 유지 여부 검증 |
 | P1 | Coverage guard | 원본 guideline/component/template 카드가 Audit와 Legacy Preview에 모두 잡히는지 자동 검증 |
+| P1 | Component map guard | 원본 component card 83개가 Audit 매핑, React export, dist type, legacy bundle, React Storybook에 연결되는지 검증 |
 | P1 | Visual smoke | Playwright로 대표 원본 preview와 React Storybook 화면 9개를 실제 브라우저 PNG로 캡처 |
 | P1 | Legacy render sweep | Playwright로 전체 원본 preview 107개(20/83/4)가 빈 화면 없이 렌더되는지 전수 검증 |
 | P0 | Original previews | 원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출 |
@@ -64,6 +65,7 @@
 - React 컴포넌트의 음수 자간은 0으로 정규화했습니다. 원본 정적 HTML(`*.card.html`)은 비교 기준으로 보존하므로 기존 자간이 그대로 남아 있을 수 있습니다.
 - 카드 계열의 hover movement와 이미지 scale은 원본 미리보기 번들의 Card/NewsCard/ProductCard 동작과 일치하므로 유지합니다. 이후 변경 시 `npm run check:parity`의 motion contract와 함께 제품 결정 기록을 갱신해야 합니다.
 - `npm run check:coverage`가 원본 20개 guideline, 83개 component card, 4개 template card의 Audit/Legacy Preview 누락과 `@dsCard` 메타 누락을 차단합니다.
+- `npm run check:map`은 원본 component card 83개가 97개 React export와 연결되고, 각 export가 `src/index.js`, `dist/index.d.ts`, `_ds_bundle.js`, React Storybook 소스에 존재하는지 검증합니다.
 - `npm run check:visual`은 Storybook 정적 빌드 후 대표 9개 화면을 `visual-artifacts/smoke/`에 캡처합니다. 산출물은 git에 포함하지 않으며, 전체 baseline 비교는 다음 단계입니다.
 - `npm run check:legacy-render`는 전체 107개 원본 preview가 Storybook 정적 빌드에서 실제 DOM/visible element로 렌더되는지 검사합니다.
 - 토큰 source-of-truth는 `tokens/source.json`, CSS 토큰, generated dist가 맞물립니다. Figma Tokens 연동 전에는 수동 변경 후 `npm run check:tokens`로 계속 막아야 합니다.
@@ -76,6 +78,6 @@
 3. `npm run check:legacy-render`를 유지해 원본 preview 전수 렌더가 깨지지 않는지 확인합니다.
 4. `npm run check:visual`의 smoke set을 전체 83개 원본 카드와 대응 React story baseline으로 확장합니다.
 5. `npm run check:parity`를 유지해 React 컴포넌트의 음수 자간 재유입과 카드 motion contract 변경을 차단합니다.
-6. `npm run check:coverage`를 유지해 원본 파일 추가/삭제 시 Audit와 Legacy Preview 누락을 즉시 잡습니다.
+6. `npm run check:coverage`와 `npm run check:map`을 유지해 원본 파일 추가/삭제와 component card 매핑 drift를 즉시 잡습니다.
 7. 소비 앱 예시 페이지에서 `@lk-robotics/design-system-core` package export와 `styles.css`만 사용해 화면을 구성합니다.
 8. visual parity ledger의 Watch 항목을 Fixed 또는 Gap으로 계속 이동합니다.
