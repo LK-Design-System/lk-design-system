@@ -1,0 +1,49 @@
+import React from 'react';
+
+/**
+ * LK ROBOTICS — NewsCard
+ * An article/press card — optional cover image, an UPPERCASE category kicker,
+ * a headline, an excerpt, and a source · date footer. Hairline surface that
+ * lifts on hover. Renders as a link to the article.
+ */
+export function NewsCard({ image, category, title, excerpt, source, date, cta, href = '#', style, ...rest }) {
+  const [hover, setHover] = React.useState(false);
+  const ArrowR = (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+  );
+  return (
+    <a
+      href={href}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: 'flex', flexDirection: 'column', background: 'var(--surface-card)',
+        border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', overflow: 'hidden',
+        textDecoration: 'none', boxShadow: hover ? 'var(--shadow-md)' : 'var(--shadow-xs)',
+        transform: hover ? 'translateY(-2px)' : 'none',
+        transition: 'transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
+        ...style,
+      }}
+      {...rest}
+    >
+      {image && (
+        <div style={{ aspectRatio: '16 / 9', overflow: 'hidden', background: 'var(--surface-subtle)' }}>
+          <img src={image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', transform: hover ? 'scale(1.03)' : 'scale(1)', transition: 'transform 520ms var(--ease-out)' }} />
+        </div>
+      )}
+      <div style={{ padding: '18px 20px 20px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
+        {category && <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--label-alternative)' }}>{category}</span>}
+        {title && <h3 style={{ margin: 0, fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: '-0.4px', lineHeight: 1.36, color: 'var(--text-strong)', wordBreak: 'keep-all' }}>{title}</h3>}
+        {excerpt && <p style={{ margin: 0, fontSize: 14, lineHeight: 1.62, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{excerpt}</p>}
+        {(source || date || cta) && (
+          <div style={{ marginTop: 'auto', paddingTop: 12, display: 'flex', alignItems: 'center', gap: 8, fontSize: 12.5, color: 'var(--label-alternative)' }}>
+            {source && <span style={{ fontWeight: 600 }}>{source}</span>}
+            {source && date && <span aria-hidden="true">·</span>}
+            {date && <span style={{ fontVariantNumeric: 'tabular-nums' }}>{date}</span>}
+            {cta && <span style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 5, fontWeight: 700, color: 'var(--accent-text)', whiteSpace: 'nowrap' }}>{cta}<span style={{ display: 'inline-flex', transform: hover ? 'translateX(2px)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)' }}>{ArrowR}</span></span>}
+          </div>
+        )}
+      </div>
+    </a>
+  );
+}

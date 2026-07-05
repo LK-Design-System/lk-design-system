@@ -1,0 +1,23 @@
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.thumbnail binary
+
+# Generated bundle and manifest are useful to keep, but noisy in diffs.
+_ds_bundle.js linguist-generated=true
+_ds_manifest.json linguist-generated=true
+_adherence.oxlintrc.json linguist-generated=true
+
+# Static preview cards are part of the design-system artifact.
+*.card.html linguist-generated=false
+*.dc.html linguist-generated=false

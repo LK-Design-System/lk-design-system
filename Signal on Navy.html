@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="design_doc_mode" content="canvas" />
+<title>Signal × Navy — 시그널 색 정련</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body {
+    margin: 0;
+    position: relative;
+    width: 1480px;
+    height: 1380px;
+    background: var(--bw-band);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Doc header ---- */
+  .doc-head { position: absolute; left: 64px; top: 44px; width: 1180px; }
+  .doc-kicker { font-size: 12px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--accent-text); margin: 0 0 10px; }
+  .doc-title { font-size: 30px; font-weight: 800; letter-spacing: -0.9px; color: var(--text-strong); margin: 0 0 8px; }
+  .doc-sub { font-size: 15px; line-height: 1.65; color: var(--label-neutral); margin: 0; max-width: 1080px; word-break: keep-all; }
+  .doc-sub b { color: var(--text-strong); }
+
+  /* ---- Product tile (navy stage replica) ---- */
+  .tile { position: absolute; top: 250px; width: 300px; }
+  .card {
+    background: linear-gradient(180deg, #161D33 0%, #0E1329 100%);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 4px 12px rgba(8,14,33,0.28), 0 24px 52px rgba(8,14,33,0.30);
+  }
+  .photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0B1020; }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
+  .photo .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,13,28,0) 40%, rgba(10,13,28,0.55) 100%); }
+  .cbody { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; line-height: 1.2; }
+  .eyebrow .mark { display: none; }
+  .title { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+  .desc { margin: 0; font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,0.62); word-break: keep-all; }
+  .cta {
+    align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 8px;
+    height: 32px; padding: 0 20px; border: 1px solid rgba(255,255,255,0.28); border-radius: 12px;
+    font-size: 14px; font-weight: 700; letter-spacing: -0.3px; color: #fff;
+    background: rgba(255,255,255,0.14); white-space: nowrap;
+  }
+  .cta svg { width: 15px; height: 15px; }
+
+  /* ---- Per-option accent ---- */
+  #a .eyebrow { color: #3FC4F0; }                 /* current bright cyan */
+  #b .eyebrow { color: #3E96A6; }                 /* muted deep teal */
+  #c .eyebrow { color: #2E9BD4; }                 /* bluer azure-cyan (existing dark token) */
+  #d .eyebrow { color: rgba(255,255,255,0.72); padding-bottom: 5px; border-bottom: 2px solid #3FC4F0; align-self: flex-start; } /* muted text + minimal cyan mark */
+  #e .eyebrow { color: #7E9BC8; }                 /* steel blue */
+  #f .eyebrow { color: #8FA4C4; }                 /* gray-blue */
+  #g .eyebrow { color: #A3AFC6; }                 /* cool gray, blue hint */
+
+  /* ---- Label strip under each tile ---- */
+  .meta { margin-top: 16px; }
+  .meta .swatch-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .meta .sw { width: 18px; height: 18px; border-radius: 5px; border: 1px solid rgba(14,19,41,0.12); flex: none; }
+  .meta .nm { font-size: 13px; font-weight: 800; letter-spacing: -0.2px; color: var(--text-strong); }
+  .meta .hex { font-size: 11.5px; font-weight: 600; color: var(--label-alternative); font-variant-numeric: tabular-nums; }
+  .meta .note { font-size: 12px; line-height: 1.55; color: var(--label-neutral); margin: 0; word-break: keep-all; }
+  .rec { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: #fff; background: var(--accent-text); padding: 3px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }
+</style>
+</head>
+<body>
+
+  <div class="doc-head">
+    <p class="doc-kicker">Signal × Navy · 색 정련</p>
+    <h1 class="doc-title">시그널 시안을 네이비 위에서 정련합니다</h1>
+    <p class="doc-sub">현재 시그널 <b>#3FC4F0</b>은 명도·채도가 둘 다 높아, 딥 네이비 스테이지 위에서 "네온 온 다크"로 튀어 다소 촌스럽게 읽힙니다. 라벨 텍스트·구조는 그대로 두고 <b>아이브로우 색만</b> 바꿔 비교합니다 — 톤을 낮추는 두 방향(B·C)과, 시안을 큰 텍스트에서 빼고 작은 마크로만 남기는 방향(D)입니다. 이건 다크 면 적용에 한정할 수도, 시그널 토큰 자체를 조정할 수도 있습니다.</p>
+  </div>
+
+  <!-- A — CURRENT -->
+  <div class="tile" id="a" style="left:64px;">
+    <div class="card">
+      <div class="photo"><img src="assets/products/lkr-cp.webp" alt="LKR-CP" /><div class="scrim"></div></div>
+      <div class="cbody">
+        <span class="eyebrow">Patrol &amp; Cleaning Robot</span>
+        <h3 class="title">LKR-CP</h3>
+        <p class="desc">순찰과 청소를 하나의 플랫폼에서 수행하는 시설관리 통합 로봇.</p>
+        <span class="cta">자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="swatch-row"><span class="sw" style="background:#3FC4F0;"></span><span class="nm">A · 현재</span><span class="hex">#3FC4F0</span></div>
+      <p class="note">밝은 시안. 네이비와 대비가 과격 — 지금 촌스럽게 느껴지는 값.</p>
+    </div>
+  </div>
+
+  <!-- B — DEEP TEAL -->
+  <div class="tile" id="b" style="left:396px;">
+    <div class="card">
+      <div class="photo"><img src="assets/products/lkr-cp.webp" alt="LKR-CP" /><div class="scrim"></div></div>
+      <div class="cbody">
+        <span class="eyebrow">Patrol &amp; Cleaning Robot</span>
+        <h3 class="title">LKR-CP</h3>
+        <p class="desc">순찰과 청소를 하나의 플랫폼에서 수행하는 시설관리 통합 로봇.</p>
+        <span class="cta">자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="swatch-row"><span class="sw" style="background:#3E96A6;"></span><span class="nm">B · 딥 틸</span><span class="hex">#3E96A6</span></div>
+      <p class="note">채도·명도를 낮춘 페트롤 틸. 차분하고 프리미엄. 같은 시안 계열 유지.</p>
+    </div>
+  </div>
+
+  <!-- C — BLUER AZURE-CYAN -->
+  <div class="tile" id="c" style="left:728px;">
+    <div class="card">
+      <div class="photo"><img src="assets/products/lkr-cp.webp" alt="LKR-CP" /><div class="scrim"></div></div>
+      <div class="cbody">
+        <span class="eyebrow">Patrol &amp; Cleaning Robot</span>
+        <h3 class="title">LKR-CP</h3>
+        <p class="desc">순찰과 청소를 하나의 플랫폼에서 수행하는 시설관리 통합 로봇.</p>
+        <span class="cta">자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="swatch-row"><span class="sw" style="background:#2E9BD4;"></span><span class="nm">C · 애저-시안</span><span class="rec">토큰 존재</span><span class="hex">#2E9BD4</span></div>
+      <p class="note">시안에서 브랜드 애저 쪽으로. 네온기가 빠져 덜 촌스러움. 이미 다크모드 토큰으로 존재.</p>
+    </div>
+  </div>
+
+  <!-- D — MUTED + MINIMAL CYAN -->
+  <div class="tile" id="d" style="left:1060px;">
+    <div class="card">
+      <div class="photo"><img src="assets/products/lkr-cp.webp" alt="LKR-CP" /><div class="scrim"></div></div>
+      <div class="cbody">
+        <span class="eyebrow">Patrol &amp; Cleaning Robot</span>
+        <h3 class="title">LKR-CP</h3>
+        <p class="desc">순찰과 청소를 하나의 플랫폼에서 수행하는 시설관리 통합 로봇.</p>
+        <span class="cta">자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="swatch-row"><span class="sw" style="background:linear-gradient(90deg,rgba(255,255,255,0.72) 60%,#3FC4F0 60%);"></span><span class="nm">D · 뮤티드 + 미니멀</span><span class="hex">화이트 72% + 시안 마크</span></div>
+      <p class="note">아이브로우는 화이트로, 시안은 작은 밑줄 마크로만. "한 화면 한 시그널"에 가장 안전.</p>
+    </div>
+  </div>
+  <!-- ROW 2 header -->
+  <div style="position:absolute; left:64px; top:790px; width:1180px;">
+    <p style="font-size:12px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent-text);margin:0 0 6px;">회색 블루 · Gray-blue</p>
+    <p style="font-size:14px;line-height:1.55;color:var(--label-neutral);margin:0;max-width:1080px;word-break:keep-all;">채도를 더 낙춰 그레이로 당깁니다. 왼쪽(E)이 가장 블루, 오른쪽(G)이 가장 그레이 — 그레이로 갈수록 차분하지만 <b style="color:var(--text-strong);">'시그널'로서의 힘은 약해집니다</b>(거의 보조 텍스트처럼 읽힘).</p>
+  </div>
+
+  <!-- E — STEEL BLUE -->
+  <div class="tile" id="e" style="left:64px; top:846px;">
+    <div class="card">
+      <div class="photo"><img src="assets/products/lkr-cp.webp" alt="LKR-CP" /><div class="scrim"></div></div>
+      <div class="cbody">
+        <span class="eyebrow">Patrol &amp; Cleaning Robot</span>
+        <h3 class="title">LKR-CP</h3>
+        <p class="desc">순찰과 청소를 하나의 플랫폼에서 수행하는 시설관리 통합 로봇.</p>
+        <span class="cta">자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="swatch-row"><span class="sw" style="background:#7E9BC8;"></span><span class="nm">E · 스틸 블루</span><span class="hex">#7E9BC8</span></div>
+      <p class="note">블루는 살아있되 채도를 낮춘 스틸. 시안기는 완전히 사라짐.</p>
+    </div>
+  </div>
+
+  <!-- F — GRAY BLUE -->
+  <div class="tile" id="f" style="left:396px; top:846px;">
+    <div class="card">
+      <div class="photo"><img src="assets/products/lkr-cp.webp" alt="LKR-CP" /><div class="scrim"></div></div>
+      <div class="cbody">
+        <span class="eyebrow">Patrol &amp; Cleaning Robot</span>
+        <h3 class="title">LKR-CP</h3>
+        <p class="desc">순찰과 청소를 하나의 플랫폼에서 수행하는 시설관리 통합 로봇.</p>
+        <span class="cta">자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="swatch-row"><span class="sw" style="background:#8FA4C4;"></span><span class="nm">F · 그레이 블루</span><span class="hex">#8FA4C4</span></div>
+      <p class="note">블루와 그레이의 중간. 차분하고 중립적.</p>
+    </div>
+  </div>
+
+  <!-- G — COOL GRAY -->
+  <div class="tile" id="g" style="left:728px; top:846px;">
+    <div class="card">
+      <div class="photo"><img src="assets/products/lkr-cp.webp" alt="LKR-CP" /><div class="scrim"></div></div>
+      <div class="cbody">
+        <span class="eyebrow">Patrol &amp; Cleaning Robot</span>
+        <h3 class="title">LKR-CP</h3>
+        <p class="desc">순찰과 청소를 하나의 플랫폼에서 수행하는 시설관리 통합 로봇.</p>
+        <span class="cta">자세히 보기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="swatch-row"><span class="sw" style="background:#A3AFC6;"></span><span class="nm">G · 쿨 그레이</span><span class="hex">#A3AFC6</span></div>
+      <p class="note">거의 뉴트럴, 블루는 힌트만. 가장 조용함 — 시그널보다는 메타 텍스트에 가까움.</p>
+    </div>
+  </div>
+
+</body>
+</html>

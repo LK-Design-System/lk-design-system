@@ -1,0 +1,28 @@
+<!-- @dsCard group="1 파운데이션 · 색상" viewport="700x172" name="상태색" subtitle="차분한 계기판 톤의 상태색 — 과하지 않게." -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  body { margin: 0; background: var(--bw-paper); padding: 22px; font-family: var(--font-sans); }
+  .row { display: flex; gap: 14px; }
+  .sw { flex: 1; display: flex; flex-direction: column; gap: 9px; }
+  .chip { height: 88px; border-radius: var(--radius-lg); }
+  .meta { display: flex; flex-direction: column; gap: 2px; }
+  .nm { font-size: 13px; font-weight: 800; letter-spacing: -0.2px; color: var(--bw-ink); }
+  .hex { font-size: 12px; font-weight: 600; color: var(--bw-gray); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw"><div class="chip" style="background:var(--bw-green)"></div><div class="meta"><span class="nm">Positive</span><span class="hex">--bw-green · #4F765D</span></div></div>
+  <div class="sw"><div class="chip" style="background:var(--bw-amber)"></div><div class="meta"><span class="nm">Caution</span><span class="hex">--bw-amber · #C29A52</span></div></div>
+  <div class="sw"><div class="chip" style="background:var(--bw-red)"></div><div class="meta"><span class="nm">Danger</span><span class="hex">--bw-red · #CF6360</span></div></div>
+  <div class="sw"><div class="chip" style="background:var(--bw-coral)"></div><div class="meta"><span class="nm">Warm accent</span><span class="hex">--bw-coral · #C2897A</span></div></div>
+</div>
+<div id="__om-theme-toggle" aria-label="theme" style="position:fixed;top:10px;right:10px;z-index:99999;display:inline-flex;gap:2px;background:var(--surface-raised,#fff);border:1px solid var(--border-subtle,#E1E2E4);border-radius:999px;padding:3px;box-shadow:var(--shadow-1,0 1px 4px rgba(0,0,0,.08));font-family:var(--font-sans,sans-serif)"></div>
+<script>(function(){var r=document.documentElement,w=document.getElementById("__om-theme-toggle");if(!w)return;var modes=[["light","라이트"],["dark","다크"]];function paint(){var c=r.getAttribute("data-theme")==="dark"?"dark":"light";[].forEach.call(w.children,function(b){var on=b.dataset.m===c;b.style.background=on?"var(--surface-inverse,#0E1329)":"transparent";b.style.color=on?"var(--text-on-inverse,#fff)":"var(--label-alternative,#70737C)";});}modes.forEach(function(o){var b=document.createElement("button");b.type="button";b.textContent=o[1];b.dataset.m=o[0];b.style.cssText="border:0;cursor:pointer;font:600 11px/1 inherit;letter-spacing:.3px;padding:6px 11px;border-radius:999px;background:transparent;color:var(--label-alternative,#70737C)";b.onclick=function(){r.setAttribute("data-theme",o[0]);paint();};w.appendChild(b);});paint();})();</script>
+<script id="__om-font-warmup">window.addEventListener("load",function(){if(document.fonts&&document.fonts.load){["400","500","600","700","800"].forEach(function(w){document.fonts.load(w+' 1em "Pretendard JP"',"한글Aa08");});}});</script>
+</body>
+</html>

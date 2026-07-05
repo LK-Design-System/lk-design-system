@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+
+<helmet><script src="./ds-base.js"></script></helmet>
+<div style="font-family:var(--font-sans);color:var(--label-normal);padding:22px;min-height:100%;box-sizing:border-box">
+  <div style="max-width:640px;margin:0 auto">
+    <div style="font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--label-assistive);font-family:var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);margin:0 0 10px">TEMPLATE · FORM</div>
+    <h1 style="font-size:24px;font-weight:800;letter-spacing:-0.01em;margin:0 0 6px;color:var(--label-strong)">로봇 설정</h1>
+    <p style="font-size:14px;line-height:1.5;color:var(--label-assistive);margin:0 0 20px">배치·운영 파라미터를 설정합니다. 변경 사항은 저장 시 적용됩니다.</p>
+
+    <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);padding:24px">
+      <div style="font-size:14px;font-weight:700;color:var(--label-strong);margin:0 0 14px">기본 정보</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px">
+        <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.Input" label="로봇 이름" default-value="LKR-T1" hint-size="100%,74px"></x-import>
+        <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.Select" label="구역" options="{{ zoneOptions }}" default-value="물류동" hint-size="100%,74px"></x-import>
+      </div>
+      <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.Input" label="담당자" placeholder="이름 입력" hint-size="100%,74px"></x-import>
+
+      <div style="border-top:1px solid var(--line-subtle, #F0EEE9);margin:22px 0"></div>
+
+      <div style="font-size:14px;font-weight:700;color:var(--label-strong);margin:0 0 12px">운영</div>
+      <label style="font-size:13px;font-weight:600;color:var(--label-normal);display:block;margin:0 0 10px">운영 모드</label>
+      <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.RadioGroup" options="{{ modeOptions }}" default-value="patrol" name="mode" hint-size="100%,172px"></x-import>
+
+      <div style="margin-top:14px">
+        <sc-for list="{{ toggles }}" as="t" hint-placeholder-count="3">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:11px 0;border-top:1px solid var(--line-subtle, #F0EEE9)">
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--label-normal)">{{ t.title }}</div>
+              <div style="font-size:12.5px;color:var(--label-assistive);margin-top:2px">{{ t.desc }}</div>
+            </div>
+            <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.Switch" default-checked="{{ t.on }}" hint-size="46px,26px"></x-import>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="border-top:1px solid var(--line-subtle, #F0EEE9);margin:22px 0"></div>
+
+      <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.Textarea" label="메모" placeholder="특이사항이나 인수인계 내용을 남기세요." hint-size="100%,120px"></x-import>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+      <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.Button" variant="ghost" hint-size="80px,44px">취소</x-import>
+      <x-import component-from-global-scope="LKRoboticsDesignSystem_4f14ff.Button" variant="primary" hint-size="90px,44px">저장</x-import>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      zoneOptions: [
+        { value: '물류동', label: '물류동' },
+        { value: '본관', label: '본관' },
+        { value: '주차장', label: '주차장' },
+      ],
+      modeOptions: [
+        { value: 'patrol', label: '순찰', description: '지정 경로를 자동 순회' },
+        { value: 'standby', label: '대기', description: '스테이션에서 호출 대기' },
+        { value: 'manual', label: '수동', description: '조작자가 직접 제어' },
+      ],
+      toggles: [
+        { title: '자동 복귀', desc: '배터리 20% 이하 시 스테이션 복귀', on: true },
+        { title: '야간 순찰', desc: '22:00–06:00 저속 순찰', on: false },
+        { title: '이상 알림', desc: '충돌·통신 끊김 즉시 푸시', on: true },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

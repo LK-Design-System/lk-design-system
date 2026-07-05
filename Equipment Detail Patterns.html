@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>설비 상태 — 세부 보기 패턴</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  :root { --mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface-subtle, #F4F5F7); font-family: var(--font-sans); color: var(--label-normal); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 34px 28px 80px; }
+  .kick { font-size: 11px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--lk-accent-ink); margin: 0 0 6px; font-family: var(--mono); }
+  h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.6px; color: var(--label-strong); margin: 0 0 4px; }
+  .lede { font-size: 13.5px; color: var(--label-alternative); margin: 0 0 22px; line-height: 1.6; }
+  .bar { display: flex; align-items: center; gap: 12px; margin: 0 0 22px; flex-wrap: wrap; }
+  .seg { display: inline-flex; background: var(--fill-normal); border-radius: var(--radius-pill); padding: 3px; gap: 2px; }
+  .seg button { border: 0; cursor: pointer; font: 700 13px/1 var(--font-sans); padding: 8px 16px; border-radius: var(--radius-pill); background: transparent; color: var(--label-alternative); white-space: nowrap; transition: all var(--dur-base, .18s) var(--ease-out, ease); }
+  .seg button[aria-pressed="true"] { background: var(--surface-raised); color: var(--label-strong); box-shadow: var(--shadow-xs); }
+  .seg-hint { font-size: 12.5px; color: var(--label-assistive); flex-basis: 100%; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="_ds_bundle.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="equipment-detail-v3.jsx"></script>
+</body>
+</html>

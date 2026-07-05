@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LK Robotics Control (Full) × LK 디자인 시스템 — 커버리지 갭 분석</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  body { margin: 0; background: var(--surface-subtle); color: var(--label-normal); font-family: var(--font-sans); word-break: keep-all; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 56px 32px 96px; }
+  .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--lk-accent-ink); margin: 0 0 12px; }
+  h1 { font-size: 38px; line-height: 1.15; letter-spacing: -1.2px; margin: 0 0 14px; color: var(--label-strong); }
+  .lede { font-size: 17px; line-height: 1.7; color: var(--label-neutral); max-width: 76ch; margin: 0 0 22px; }
+  .verdict { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: var(--radius-pill); background: var(--lk-accent-tint); color: var(--lk-accent-ink); font-weight: 800; font-size: 13.5px; max-width: 100%; }
+  h2 { font-size: 21px; letter-spacing: -0.5px; margin: 44px 0 4px; color: var(--label-strong); display: flex; align-items: baseline; gap: 10px; }
+  h2 .n { font-size: 13px; font-weight: 800; color: var(--lk-accent-ink); font-variant-numeric: tabular-nums; }
+  .cap { font-size: 13.5px; color: var(--label-alternative); margin: 0 0 18px; }
+  .card { background: var(--surface-raised); border: 1px solid var(--bw-border); border-radius: var(--radius-xl); padding: 20px 22px; margin-bottom: 14px; box-shadow: var(--shadow-xs); }
+  .kv { display: grid; grid-template-columns: 132px 1fr; gap: 8px 16px; font-size: 14px; line-height: 1.6; }
+  .kv dt { color: var(--label-alternative); font-weight: 700; }
+  .kv dd { margin: 0; color: var(--label-neutral); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; background: var(--fill-normal); padding: 1px 6px; border-radius: 6px; color: var(--label-normal); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--bw-band); vertical-align: top; line-height: 1.55; }
+  th { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--label-alternative); border-top: none; }
+  td b { color: var(--label-strong); }
+  .chip { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .3px; padding: 3px 9px; border-radius: var(--radius-pill); white-space: nowrap; }
+  .c-ok { background: var(--lk-accent-tint); color: var(--lk-accent-ink); }
+  .c-part { background: var(--fill-strong); color: var(--label-neutral); }
+  .c-out { background: transparent; color: var(--label-assistive); box-shadow: inset 0 0 0 1px var(--line-normal); }
+  .gap { border-left: 3px solid var(--bw-red); }
+  .gap.p1 { border-left-color: var(--lk-accent-ink); }
+  .gap h3 { margin: 0 0 3px; font-size: 15.5px; color: var(--label-strong); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .gap .pr { font-size: 10.5px; font-weight: 800; letter-spacing: .5px; padding: 2px 7px; border-radius: 5px; background: var(--lk-accent-ink); color: #fff; }
+  .gap.p2 .pr { background: var(--bw-amber); }
+  .gap.p3 .pr { background: var(--label-assistive); }
+  .gap .new { font-size: 10.5px; font-weight: 800; letter-spacing: .3px; padding: 2px 8px; border-radius: 5px; background: var(--bw-ink); color: #fff; }
+  .gap p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.65; color: var(--label-neutral); }
+  .gap p .src { color: var(--label-alternative); font-size: 12.5px; }
+  .gap .rec { margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: var(--label-alternative); padding: 8px 10px; background: var(--fill-alt); border-radius: 8px; }
+  .gap .rec b { color: var(--label-strong); }
+  ul.rec { margin: 8px 0 0; padding-left: 20px; font-size: 14px; line-height: 1.75; color: var(--label-neutral); }
+  ul.rec b { color: var(--label-strong); }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 26px 0 0; font-size: 12.5px; color: var(--label-alternative); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; }
+  .foot { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--bw-border); font-size: 12.5px; color: var(--label-assistive); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="eyebrow">DESIGN SYSTEM · COVERAGE AUDIT</p>
+  <h1>LK Robotics Control (Full)<br />× LK 디자인 시스템 — 커버리지 갭 분석</h1>
+  <p class="lede"><code>LK-ROBOTICS/lkrobotics-control-full</code>(관제 풀버전 — backend + frontend)의 프론트엔드를 실제 코드 기준으로 전수 분석했습니다. 이 레포는 <code>lk_web_viz</code>(Tailwind, UI 킷 없음)와 달리 <b>MUI 6 어드민 템플릿</b> 위에 지어졌고, 화면 구성도 다릅니다 — 설비(도어·엘리베이터·계단리프트) 상태, PTZ 짐벌 텔레옵, 가스 센서 텔레메트리, 일정 캘린더가 새로 등장합니다. 결론: <b>제네릭 UI(폼·테이블·오버레이·내비·상태카드)는 이미 전부 커버</b>되고, <b>새로 발견된 갭은 7개</b> — 이 중 2개(설비 상태 카드, 비디오 스트림 타일)가 우선순위 P1입니다.</p>
+  <div class="verdict">◆ 제네릭 UI = 커버 · 신규 갭 7개(P1 2 · P2 3 · P3 2) — P1 2개 구현 완료(2026-07-04) · 범위 밖 3건</div>
+
+  <h2><span class="n">01</span> 스택 &amp; 구성</h2>
+  <p class="cap">frontend/가 실제로 쓰는 기술과 화면 (package.json · src/ 기준)</p>
+  <div class="card">
+    <dl class="kv">
+      <dt>프레임워크</dt><dd>React 18.3 · Vite 6 · <b>MUI 6</b>(<code>@mui/material</code> + <code>@mui/icons-material</code>) + <code>@tabler/icons-react</code> — UI 킷 <b>있음(MUI)</b>, LK DS 미도입(0%)</dd>
+      <dt>레이아웃 뼈대</dt><dd>Berry/Mantis 계열 MUI 어드민 템플릿 — <code>MainLayout · Sidebar · MenuList/NavItem · Header(Profile/Notification/Search) · Customization</code> 보일러플레이트</dd>
+      <dt>상태·통신</dt><dd>zustand · swr · axios · dayjs · yup · <code>@stomp/stompjs</code> + <code>sockjs-client</code>(STOMP/WebSocket — lk_web_viz의 mqtt와 다른 프로토콜)</dd>
+      <dt>시각화</dt><dd><b>@react-three/fiber + drei + three</b>(3D, GLB 건물 모델 로드) · <b>react-apexcharts</b>(가스 센서 차트) · <b>@fullcalendar/*</b>(일정 — day/week/list 뷰)</dd>
+      <dt>화면(12개 도메인)</dt><dd>대시보드(RobotDashboard: 2D/3D 실시간 맵 · 라이브 모니터링 · 로봇 목록/상태 · 작업지시 모달 · 가스센서 · 설비상태 그리드) · 시설관리(기관/건물/층/구역·로봇/모듈) · 수동조작(WASD+PTZ 짐벌) · 작업지시(TRON 전용 상시패널) · 작업관리 · 일정 · 알람 · 사용자 · 내계정 · 유틸리티</dd>
+    </dl>
+  </div>
+
+  <h2><span class="n">02</span> DS가 이미 덮는 영역</h2>
+  <p class="cap">현재 MUI로 만든 것 → 대체 가능한 LK DS 컴포넌트</p>
+  <div class="card" style="padding:6px 22px">
+    <table>
+      <thead><tr><th>app 영역</th><th>대체할 DS 컴포넌트</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr><td><b>관리자 셸</b> — Sidebar · Header · Breadcrumbs · Customization</td><td><code>NavRail · TopBar · Breadcrumb</code></td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>폼</b> — 로그인 · 스케줄 · 모듈설정 · 시설 CRUD 다이얼로그</td><td><code>Input · Select · Switch · Checkbox · RadioGroup · AutoComplete · FormField</code></td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>데이터 테이블</b> — RobotList · AlarmBoard · 시설/로봇/모듈 목록</td><td><code>Table · Pagination · StatusBadge · Chip</code></td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>오버레이</b> — 모듈설정 · 작업추가 · 로봇 작업현황 팝업</td><td><code>Modal · Dialog류(overlay 그룹)</code></td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>상태 카드</b> — RobotStatus 4-up 카드 · 미니 통계 pill</td><td><code>Stat · MetricCard · StatusBadge</code></td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>날짜/반복 입력</b> — ScheduleForm 날짜·시간·요일 다중선택</td><td><code>Input(date/time) · AutoComplete · Chip</code></td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>층 퀵버튼</b> — LiveMonitoring/작업지시 층 선택 레일</td><td><code>FloorSelector</code></td><td><span class="chip c-ok">커버(기본형)</span></td></tr>
+        <tr><td><b>태스크 시퀀스</b> — 작업 지시 행(순서변경·삭제·추가)</td><td><code>StepList</code>(셸) + <code>Select · Input · IconButton</code>(행 내부)</td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>연결 상태 Chip</b> — 로봇 통신 ONLINE/OFFLINE</td><td><code>ConnectionBadge</code></td><td><span class="chip c-part">대체 가능</span></td></tr>
+        <tr><td><b>PTZ 드래그 조이스틱</b> — 원형 노브, dead-zone</td><td><code>Joystick</code></td><td><span class="chip c-ok">커버</span></td></tr>
+        <tr><td><b>2D 맵 캔버스</b> — 팬/줌 없는 고정 occupancy 캔버스</td><td><code>Map2DCanvas</code>(셸)</td><td><span class="chip c-part">채택 시 개선</span></td></tr>
+        <tr><td><b>3D 씬</b> — react-three-fiber 건물 GLB 뷰어</td><td><code>Scene3DFrame</code>(셸, 렌더는 children)</td><td><span class="chip c-ok">커버</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="n">03</span> 신규 갭 — 이 레포에서 처음 발견</h2>
+  <p class="cap">lk_web_viz 감사 때는 없던 화면들. 우선순위 P1(반복·상시 노출) → P3</p>
+
+  <div class="card gap p1">
+    <h3><span class="pr" style="background:var(--bw-green)">구현 완료</span> 설비 상태 카드(도어 · 엘리베이터 · 계단리프트) <span class="new" style="background:var(--bw-green)">robotics/EquipmentStatusCard · 2026-07-04</span></h3>
+    <p>아이콘+타이틀 헤더, 큰 원형 상태 링(OPEN/CLOSE/LOCK·층수·위치 라벨), 점멸 방향 화살표(이동 중), 하단 상태 칩 로우 — <b>세 컴포넌트가 토씨 하나 안 틀리고 같은 골격</b>을 각자 구현했습니다. 대시보드에 그리드로 상시 노출되는 실사용 패턴(주석 처리된 죽은 코드 아님). <span class="src">AutoDoorStatus · ElevatorStatus · StairLiftStatus</span></p>
+    <p class="rec"><b>구현됨</b> — <code>robotics/EquipmentStatusCard</code>: 아이콘 · 타이틀 · 원형 상태 링(라벨+톤) · 옵션 방향 화살표(점멸) · 상태 칩 배열 — 제안된 prop 그대로 구현. 세 화면을 prop 조합 하나로 흡수.</p>
+  </div>
+
+  <div class="card gap p1">
+    <h3><span class="pr" style="background:var(--bw-green)">구현 완료</span> 라이브 비디오 스트림 타일 <span class="new" style="background:var(--bw-green)">viz/VideoStreamTile · 2026-07-04</span></h3>
+    <p>RTSP/WebRTC <code>&lt;iframe&gt;</code> + 코너 라벨 배지 조합이 로딩/에러 상태 없이 반복됩니다. RGB/IR/EO 스트림을 나란히 배치하는 레이아웃도 3곳에서 동일하게 손으로 재구현. <span class="src">LiveMonitoring · ManualControl(TRON/PATROL 레이아웃)</span></p>
+    <p class="rec"><b>구현됨</b> — <code>viz/VideoStreamTile</code>: iframe/video 래퍼 + 코너 라벨 칩 + 로딩·연결끊김 상태 — 제안대로 구현. 렌더 소스(iframe src)는 그대로 앱이 주입 — viz 그룹의 기존 경계 계약과 동일.</p>
+  </div>
+
+  <div class="card gap p2">
+    <h3><span class="pr">P2</span> PTZ/짐벌 제어판</h3>
+    <p>드래그 조이스틱 자체는 <code>Joystick</code>과 일치하지만, 이를 감싸는 줌 홀드 버튼 · 오토포커스 토글 · 모드 세그먼트(follow/lock/reset/off) · 홈 버튼까지 묶는 전용 컴포지트가 없습니다. LKWebViz 감사에서 P3로 남았던 "짐벌 팬/틸트 컨트롤" 갭과 같은 계열입니다. <span class="src">manual-control(TRON PTZ 패널)</span></p>
+    <p class="rec"><b>현재로도 조합 가능</b> — <code>Joystick</code> + <code>SegmentedControl</code> + <code>Button</code> + <code>Switch</code>. 반복 빈도가 높아지면 <code>robotics/GimbalControl</code> 프리셋으로 굳히는 걸 권장.</p>
+  </div>
+
+  <div class="card gap p2">
+    <h3><span class="pr">P2</span> 이산형 방향 키패드(WASD/D-패드)</h3>
+    <p><code>Joystick</code>은 아날로그 드래그 전용(연속 −1..1). 실제 앱은 이와 별개로 <b>이산 키 그리드</b>를 씁니다 — 눌림 상태가 실제 키보드 이벤트와 실시간 동기화되는 시각적 키캡(W/A/S/D + Space/Enter), 별도 화면에서는 원형 IconButton D-패드. <span class="src">manual-control(Key 컴포넌트) · Controls(구버전, 현재 미사용)</span></p>
+    <p class="rec"><b>제안</b> — <code>Joystick</code>에 <code>mode="pad"</code> 변형 추가(키캡 그리드 + active 하이라이트), 별도 컴포넌트 신설보다 프롭 확장이 적합.</p>
+  </div>
+
+  <div class="card gap p2">
+    <h3><span class="pr">P2</span> 일정/이벤트 캘린더</h3>
+    <p>DS의 <code>Calendar</code>는 <b>날짜 선택용 월 그리드</b>(데이트피커)입니다. 앱은 <code>@fullcalendar/react</code>로 월/주/일/목록 뷰 전환 + 이벤트 블록 렌더 + prev/next/today 툴바를 갖춘 <b>어젠다형 캘린더</b>가 필요합니다 — 근본적으로 다른 컴포넌트입니다. <span class="src">schedule/CalendarView</span></p>
+    <p class="rec"><b>viz/editor와 같은 경계 계약 권장</b> — 무거운 캘린더 렌더(FullCalendar)는 앱에 남기고, DS는 툴바 버튼 스타일 · 뷰 전환 세그먼트 · 이벤트 칩 톤 같은 크롬 토큰만 제공.</p>
+  </div>
+
+  <div class="card gap p3">
+    <h3><span class="pr">P3</span> 차트 임계값 주석선</h3>
+    <p><code>TelemetryGauge</code>엔 <code>thresholds</code>(색상 구간)가 있지만 <code>BarChart</code>엔 없습니다. 가스 센서처럼 "위험선"을 막대 위에 그어야 하는 케이스에 대응 안 됨(현재는 ApexCharts <code>annotations</code>로 앱이 직접 구현). <span class="src">GasSensorChart</span></p>
+    <p class="rec"><b>제안</b> — <code>BarChart</code>에 <code>thresholdLine?: number</code> 프롭 추가.</p>
+  </div>
+
+  <div class="card gap p3">
+    <h3><span class="pr">P3</span> 아이코노그래피 · FloorSelector 배지</h3>
+    <p>배터리 세부 단계 아이콘(7단계 충전율)과 도어·엘리베이터·계단 전용 글리프가 78종 세트에 없습니다(배터리는 <code>TelemetryGauge</code>가 이미 더 나은 대체재). <code>FloorSelector</code>엔 층별 보조 상태(엘리베이터 도착/이동 표시)를 얹을 슬롯도 없습니다 — 현재는 층 이름만 표시. <span class="src">RobotList 배터리 아이콘 · LiveMonitoring 층 레일의 점멸 화살표</span></p>
+    <p class="rec"><b>제안</b> — 아이콘 확장은 선택 사항(배터리는 게이지로 대체 권장); <code>FloorSelector</code>엔 <code>floors</code> 항목에 옵션 <code>badge</code> 노드 슬롯 추가.</p>
+  </div>
+
+  <h2><span class="n">04</span> 범위 밖</h2>
+  <div class="card">
+    <ul class="rec" style="margin:0">
+      <li><b>ControlSocketTest</b> — 순수 HTML <code>&lt;input&gt;</code>/<code>&lt;button&gt;</code>로 짠 소켓 프로토콜 테스트 도구. MUI조차 쓰지 않는 dev/QA 전용 화면 → 감사 범위 제외.</li>
+      <li><b>Berry 템플릿 보일러플레이트</b> — <code>dashboard/Default</code>(샘플 차트 4종) · <code>Customization</code>(폰트/반경 테마 패널) · <code>sample-page</code> — 실제 프로덕트 화면(RobotDashboard)과 별개인 어드민 템플릿 기본 스캐폴드로 판단 → 제외.</li>
+      <li><b>MUI 테마 자체</b> — <code>src/themes/</code> 커스터마이징은 UI 프레임워크 레벨 선택이라 컴포넌트 커버리지 범위 밖(05 권고에서 별도로 다룸).</li>
+    </ul>
+  </div>
+
+  <h2><span class="n">05</span> 권고</h2>
+  <div class="card">
+    <ul class="rec">
+      <li><b>즉시 채택 가능</b> — 폼 · 테이블 · 오버레이 · 내비 · 상태카드는 이미 대응 컴포넌트가 있으니, 신규 화면부터 LK DS로 직접 작성.</li>
+      <li><b>스택 유의</b> — 이 레포는 <b>MUI 6 전면 도입</b> 상태라 (UI 킷이 없던 lk_web_viz와 달리) 전환 비용 성격이 다릅니다. 신규 화면은 DS로, 기존 MUI 화면은 화면 단위로 점진 교체를 권장하고 — 사이트 전역에 LK 토큰을 입히려면 MUI <code>ThemeProvider</code> 팔레트/타이포를 LK 토큰에 매핑하는 별도 작업이 필요합니다(둘 중 무엇을 할지는 별도 결정 사항).</li>
+      <li><b>신규 컴포넌트 2개(P1) — 구현 완료</b> — <code>robotics/EquipmentStatusCard</code>, <code>viz/VideoStreamTile</code> (2026-07-04). 세 화면이 이미 손으로 중복 구현한 패턴이라 ROI가 가장 높았습니다.</li>
+      <li><b>기존 컴포넌트 보강(P2)</b> — <code>Joystick</code>에 이산 키그리드 모드, <code>FloorSelector</code>에 배지 슬롯, <code>BarChart</code>에 임계값 라인.</li>
+      <li><b>캘린더는 경계 계약으로</b> — FullCalendar는 앱에 남기고 DS는 툴바/이벤트 칩 크롬 토큰만(viz/editor와 동일한 원칙).</li>
+    </ul>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:var(--lk-accent-ink)"></i>커버 — LK에 동등 컴포넌트</span>
+    <span><i class="dot" style="background:var(--fill-strong)"></i>대체 가능 / 채택 시 개선 — 지금도 되지만 전환 여지 있음</span>
+    <span><i class="dot" style="background:var(--bw-ink)"></i>신규 패턴 — 이번 감사에서 처음 확인, 미구현</span>
+    <span><i class="dot" style="border:1px solid var(--line-normal);background:transparent"></i>범위 밖</span>
+  </div>
+
+  <div class="foot">분석 대상 <code>LK-ROBOTICS/lkrobotics-control-full@main</code> · frontend(React 18 · Vite · MUI 6) · 12개 도메인 화면 순회, 핵심 컴포넌트 파일 20+개 정독(InteractiveMap 2D/3D · LiveMonitoring · RobotList/Status · TaskCommandModal · GasSensorChart · 설비상태 3종 · manual-control · 시설/모듈 CRUD · ScheduleForm/CalendarView 등). 백엔드(Spring/Gradle)와 dev 전용 도구는 UI 범위 밖이라 제외. 커버 매핑은 시각적·구조적 대체 가능성 기준이며, 실제 이관 시 라이브 데이터 바인딩 및 react-three-fiber/ApexCharts/FullCalendar 등 개별 라이브러리 연동은 별도 검토가 필요합니다.</div>
+</div>
+</body>
+</html>

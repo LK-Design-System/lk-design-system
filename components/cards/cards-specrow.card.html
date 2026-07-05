@@ -1,0 +1,58 @@
+<!-- @dsCard group="2 컴포넌트 · 카드" viewport="820x400" name="SpecRow" subtitle="제원 표 행 — 시맨틱 토큰, 두 표면 공용" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" href="../../styles.css" />
+<style>
+  body { margin: 0; background: var(--bw-mist); padding: 24px; font-family: var(--font-sans); }
+  .row { display: flex; gap: 16px; align-items: stretch; }
+  .sheet { flex: 1; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); box-shadow: var(--shadow-xs); padding: 22px 24px; }
+  .stage { flex: 1; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-2xl); box-shadow: var(--shadow-xl); padding: 22px 24px;
+    background: radial-gradient(120% 82% at 100% 0%, rgba(78, 124, 168, 0.20), transparent 56%), linear-gradient(158deg, var(--lk-stage-from) 0%, var(--lk-stage-to) 100%); }
+  .specs-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 6px; }
+  .specs-eyebrow { font-size: var(--fs-caption); font-weight: var(--fw-bold); letter-spacing: var(--ls-overline); text-transform: uppercase; }
+  .sheet .specs-eyebrow { color: var(--label-alternative); }
+  .stage .specs-eyebrow { color: var(--lk-accent); }
+  .specs-code { font-size: 12px; font-weight: 700; letter-spacing: 0.4px; font-variant-numeric: tabular-nums; }
+  .sheet .specs-code { color: var(--label-assistive); }
+  .stage .specs-code { color: rgba(255, 255, 255, 0.42); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel">
+  const { SpecRow } = window.LKRoboticsDesignSystem_4f14ff;
+  const rows = [
+    { label: '크기', value: '520 × 420 × 490 mm' },
+    { label: '배터리', value: '20Ah · 25.6V' },
+    { label: '작동 시간', value: '습식 3.5h · 건식 8h' },
+    { label: '청소 모드', value: '스위핑 · 진공 · 물청소' },
+  ];
+  function Specs() {
+    return (
+      <div>
+        <div className="specs-head">
+          <span className="specs-eyebrow">제원 · Specifications</span>
+          <span className="specs-code">LKR-CP</span>
+        </div>
+        {rows.map((r) => <SpecRow key={r.label} label={r.label} value={r.value} />)}
+      </div>
+    );
+  }
+  function Demo() {
+    return (
+      <div className="row">
+        <div className="sheet"><Specs /></div>
+        <div className="stage"><div data-theme="dark"><Specs /></div></div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+<script id="__om-font-warmup">window.addEventListener("load",function(){if(document.fonts&&document.fonts.load){["400","500","600","700","800"].forEach(function(w){document.fonts.load(w+' 1em "Pretendard JP"',"한글Aa08");});}});</script>
+</body>
+</html>

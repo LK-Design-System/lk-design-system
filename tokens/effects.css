@@ -1,0 +1,94 @@
+/* ==========================================================================
+   LK ROBOTICS — Effects: elevation, borders, motion
+   --------------------------------------------------------------------------
+   Shadows are soft, diffuse and NAVY-TINTED — never hard black (LK identity).
+   Motion uses timings (120/200/320ms · cubic-bezier(.4,0,.2,1), plus an
+   emphasized ease. Elevation is
+   restrained; cards lift gently on hover. Respects prefers-reduced-motion.
+   ========================================================================== */
+
+:root {
+  /* ---- Elevation ramp (navy-tinted, diffuse) --------------------------- */
+  --shadow-xs:  0 2px 4px rgba(14, 19, 41, 0.06);
+  --shadow-sm:  0 4px 12px rgba(8, 14, 33, 0.06);
+  --shadow-md:  0 16px 40px rgba(14, 19, 41, 0.10);
+  --shadow-lg:  0 24px 64px rgba(14, 19, 41, 0.13);
+  --shadow-xl:  0 40px 80px rgba(14, 19, 41, 0.16);
+
+  /* CTA lift — graphite primary gets a soft navy lift (not a bright glow);
+     the signal accent gets a restrained cyan glint for emphasis moments. */
+  --shadow-indigo: 0 12px 28px rgba(14, 19, 41, 0.20);
+  --shadow-green:  0 12px 26px rgba(94, 110, 134, 0.24);
+  --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.30);
+
+  /* ---- Borders --------------------------------------------------------- */
+  --border-hairline:      1px solid var(--bw-border);
+  --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.08); /* @kind other */
+
+  /* ---- Glass / overlay ------------------------------------------------- */
+  --blur-panel:  blur(14px) saturate(150%); /* @kind other */
+  --scrim-dark:  rgba(14, 19, 41, 0.86);       /* solid nav over hero     */
+
+  /* ---- Motion (timings + easing) ------- */
+  --ease-out:        cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-standard:   cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);   /* @kind other */
+  --ease-in-out:     cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-fast:   120ms; /* @kind other */
+  --dur-base:   200ms; /* @kind other */
+  --dur-slow:   320ms; /* @kind other */
+  --duration-fast:   120ms; /* @kind other */
+  --duration-normal: 200ms; /* @kind other */
+  --duration-slow:   320ms; /* @kind other */
+  --transition-base: all var(--dur-base) var(--ease-out);
+}
+
+/* ==========================================================================
+   DARK THEME — elevation & scrim
+   Navy-tinted shadows disappear on a navy-black canvas, so dark mode swaps to
+   deeper near-black shadows (a touch more opaque, since cards must read
+   against the page); the accent glow keeps its cyan. Duplicated across the OS
+   media query and the explicit selector so a manual toggle always wins.
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"], .theme-auto {
+    --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.40);
+    --shadow-sm:  0 4px 12px rgba(0, 0, 0, 0.46);
+    --shadow-md:  0 16px 40px rgba(0, 0, 0, 0.52);
+    --shadow-lg:  0 24px 64px rgba(0, 0, 0, 0.58);
+    --shadow-xl:  0 40px 80px rgba(0, 0, 0, 0.64);
+    --shadow-indigo: 0 12px 28px rgba(0, 0, 0, 0.55);
+    --shadow-green:  0 12px 26px rgba(0, 0, 0, 0.50);
+    --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.34);
+    --scrim-dark:  rgba(2, 4, 9, 0.72);
+    --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.12); /* @kind other */
+  }
+}
+
+[data-theme="dark"], .theme-dark {
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.40);
+  --shadow-sm:  0 4px 12px rgba(0, 0, 0, 0.46);
+  --shadow-md:  0 16px 40px rgba(0, 0, 0, 0.52);
+  --shadow-lg:  0 24px 64px rgba(0, 0, 0, 0.58);
+  --shadow-xl:  0 40px 80px rgba(0, 0, 0, 0.64);
+  --shadow-indigo: 0 12px 28px rgba(0, 0, 0, 0.55);
+  --shadow-green:  0 12px 26px rgba(0, 0, 0, 0.50);
+  --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.34);
+  --scrim-dark:  rgba(2, 4, 9, 0.72);
+  --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.12); /* @kind other */
+}
+
+/* LIGHT ISLAND — explicit light elevation so a [data-theme="light"] subtree
+   inside a dark/OS-dark page gets light shadows. Mirrors :root. */
+[data-theme="light"], .theme-light {
+  --shadow-xs:  0 2px 4px rgba(14, 19, 41, 0.06);
+  --shadow-sm:  0 4px 12px rgba(8, 14, 33, 0.06);
+  --shadow-md:  0 16px 40px rgba(14, 19, 41, 0.10);
+  --shadow-lg:  0 24px 64px rgba(14, 19, 41, 0.13);
+  --shadow-xl:  0 40px 80px rgba(14, 19, 41, 0.16);
+  --shadow-indigo: 0 12px 28px rgba(14, 19, 41, 0.20);
+  --shadow-green:  0 12px 26px rgba(94, 110, 134, 0.24);
+  --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.30);
+  --scrim-dark:  rgba(14, 19, 41, 0.86);
+  --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.08); /* @kind other */
+}
