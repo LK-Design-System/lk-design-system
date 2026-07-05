@@ -110,7 +110,7 @@ export function TopBarNavItem({ children, active = false, href, menuItems, menuT
           fontFamily: 'var(--font-sans)',
           fontSize: 14.5,
           fontWeight: 700,
-          letterSpacing: '-0.1px',
+          letterSpacing: 0,
           textDecoration: 'none',
           whiteSpace: 'nowrap',
           transition: 'color var(--dur-fast) var(--ease-out)',

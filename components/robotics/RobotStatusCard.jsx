@@ -26,15 +26,15 @@ export function RobotStatusCard({ name, image, status = 'online', battery, mode,
       borderRadius: 'var(--radius-xl)', boxShadow: selected ? '0 0 0 3px var(--focus-ring)' : 'var(--shadow-sm)',
       cursor: onClick ? 'pointer' : 'default', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       <div style={{ width: 48, height: 48, borderRadius: 'var(--radius-md)', flexShrink: 0, overflow: 'hidden',
-        background: 'var(--fill-normal)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        background: 'var(--fill-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {image ? <img src={image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          : <span style={{ fontSize: 17, fontWeight: 800, color: 'var(--label-assistive)' }}>{String(name || '?').slice(0, 2)}</span>}
+          : <span style={{ fontSize: 17, fontWeight: 800, color: 'var(--label-neutral)' }}>{String(name || '?').slice(0, 2)}</span>}
       </div>
       <span style={{ flex: 1, minWidth: 0, fontSize: 16, fontWeight: 700, color: 'var(--label-strong)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 7, flexShrink: 0 }}>
-        {mode != null && <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.3px', padding: '2px 8px', borderRadius: 'var(--radius-pill)', background: 'var(--lk-accent-tint)', color: 'var(--lk-accent-ink)', whiteSpace: 'nowrap' }}>{mode}</span>}
+        {mode != null && <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0, padding: '2px 8px', borderRadius: 'var(--radius-pill)', background: 'var(--lk-accent-tint)', color: 'var(--label-normal)', whiteSpace: 'nowrap' }}>{mode}</span>}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span title={status} aria-label={status} style={{ display: 'inline-flex', alignItems: 'flex-end', gap: 2, height: 12 }}>
+          <span role="img" title={status} aria-label={status} style={{ display: 'inline-flex', alignItems: 'flex-end', gap: 2, height: 12 }}>
             {[0, 1, 2].map((i) => (
               <span key={i} style={{ width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : 'var(--fill-strong)' }} />
             ))}

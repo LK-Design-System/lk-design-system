@@ -4369,7 +4369,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
               fontFamily: "var(--font-sans)",
               fontSize: 14.5,
               fontWeight: 700,
-              letterSpacing: "-0.1px",
+              letterSpacing: 0,
               textDecoration: "none",
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)"
@@ -5313,16 +5313,16 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
       borderRadius: "var(--radius-md)",
       flexShrink: 0,
       overflow: "hidden",
-      background: "var(--fill-normal)",
+      background: "var(--fill-strong)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }, children: image ? /* @__PURE__ */ jsx121("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx121("span", { style: { fontSize: 17, fontWeight: 800, color: "var(--label-assistive)" }, children: String(name || "?").slice(0, 2) }) }),
+    }, children: image ? /* @__PURE__ */ jsx121("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx121("span", { style: { fontSize: 17, fontWeight: 800, color: "var(--label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
     /* @__PURE__ */ jsx121("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: 700, color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
     /* @__PURE__ */ jsxs85("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
-      mode != null && /* @__PURE__ */ jsx121("span", { style: { fontSize: 11, fontWeight: 700, letterSpacing: ".3px", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", whiteSpace: "nowrap" }, children: mode }),
+      mode != null && /* @__PURE__ */ jsx121("span", { style: { fontSize: 11, fontWeight: 700, letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--label-normal)", whiteSpace: "nowrap" }, children: mode }),
       /* @__PURE__ */ jsxs85("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-        /* @__PURE__ */ jsx121("span", { title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx121("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--fill-strong)" } }, i)) }),
+        /* @__PURE__ */ jsx121("span", { role: "img", title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx121("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--fill-strong)" } }, i)) }),
         hasBat && /* @__PURE__ */ jsxs85("span", { style: { display: "inline-flex", alignItems: "center", gap: 6 }, children: [
           /* @__PURE__ */ jsxs85("span", { style: { position: "relative", width: 24, height: 12, border: "1.5px solid var(--label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
             /* @__PURE__ */ jsx121("span", { style: { display: "block", height: "100%", width: `${b}%`, background: batC, borderRadius: 1 } }),
