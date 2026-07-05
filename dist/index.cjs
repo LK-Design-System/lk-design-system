@@ -256,6 +256,7 @@ function Button({
   ...rest
 }) {
   const [hover, setHover] = import_react3.default.useState(false);
+  const content = import_react3.default.Children.toArray(children).map((child, index) => typeof child === "string" || typeof child === "number" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: child }, `text-${index}`) : child);
   const heights = {
     sm: "var(--component-button-height-sm)",
     md: "var(--component-button-height-md)",
@@ -330,7 +331,7 @@ function Button({
         onMouseUp && onMouseUp(e);
       },
       ...rest,
-      children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children })
+      children: content
     }
   );
 }

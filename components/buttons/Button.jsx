@@ -26,6 +26,11 @@ export function Button({
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
+  const content = React.Children.toArray(children).map((child, index) => (
+    typeof child === 'string' || typeof child === 'number'
+      ? <span key={`text-${index}`}>{child}</span>
+      : child
+  ));
 
   const heights = {
     sm: 'var(--component-button-height-sm)',
@@ -94,7 +99,7 @@ export function Button({
       onMouseUp={(e) => { onMouseUp && onMouseUp(e); }}
       {...rest}
     >
-      <span>{children}</span>
+      {content}
     </Comp>
   );
 }
