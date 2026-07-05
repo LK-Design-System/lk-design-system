@@ -52,7 +52,8 @@
     "build:storybook": "storybook build",
     "prepack": "npm run build",
     "check:visual-inventory": "npm run build:storybook && node scripts/capture-visual-inventory.mjs",
-    "check:visual-review": "npm run check:visual-inventory && node scripts/generate-visual-review-report.mjs"
+    "check:visual-review": "npm run check:visual-inventory && node scripts/generate-visual-review-report.mjs",
+    "check:visual-diff": "npm run check:visual-review && node scripts/generate-visual-diff-report.mjs"
   },
   "peerDependencies": {
     "react": ">=18 <20",

@@ -84,3 +84,21 @@ npm.cmd run check:visual-review
 ```
 
 This refreshes the inventory and writes `visual-artifacts/inventory/review.html`. The report is a local QA aid: it validates that every original component card has a legacy screenshot, a same-viewport primary React screenshot, a primary paired React story, at least one paired React story, and screenshot files for those stories before writing the side-by-side review page. It renders the original card and primary React capture side by side, then keeps the broader paired story screenshots below for traceability. It then opens the report in Playwright, checks that all 83 pairs use strict story-block primary matches, their paired Storybook export blocks cover every mapped React export, all 83 `primaryReactCards` match their selected primary story, all Storybook links are present, and all images render, then writes `visual-artifacts/inventory/review-smoke.png`.
+
+
+## Original-to-primary pixel diff report
+
+To compute pixel-level differences between every original component card screenshot and its same-viewport primary React counterpart, run:
+
+```powershell
+npm.cmd run check:visual-diff
+```
+
+This command refreshes `check:visual-review`, then writes local artifacts under `visual-artifacts/inventory/diffs/`:
+
+- `images/*.diff.png`: red-highlight pixel diff image for each of the 83 original-to-primary pairs
+- `manifest.json`: per-card dimensions, mismatch pixels, mismatch ratio, mean/max channel delta, and top mismatch summary
+- `report.html`: visual QA report sorted by highest mismatch ratio, with original, primary React, and diff images side by side
+- `report-smoke.png`: Playwright-rendered smoke screenshot proving the diff report loads and all images resolve
+
+The diff report is currently an evidence generator, not a release-blocking zero-diff gate. It establishes the measured mismatch ledger needed to decide masks, thresholds, and the exact baseline storage policy before enforcing strict pixel parity.
