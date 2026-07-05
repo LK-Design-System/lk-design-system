@@ -70,7 +70,7 @@ The command writes local artifacts under `visual-artifacts/inventory/`; this dir
 
 - `legacy-components/`: all 83 original `components/**/*.card.html` files captured through the Storybook Legacy Preview iframe
 - `react-stories/`: every React implementation story, excluding docs/Audit/Legacy Preview pages
-- `manifest.json`: image path, byte size, SHA-256 hash, Storybook story id, original viewport metadata, and component-card-to-React-story pairing candidates
+- `manifest.json`: image path, byte size, SHA-256 hash, Storybook story id, original viewport metadata, and component-card-to-React-story pairing candidates, primary story selection, and local review anchors
 
 This is not yet a pixel diff pass. It creates the evidence set and traceability map needed to decide baseline storage, thresholds, and masking rules next.
 
@@ -82,4 +82,4 @@ To review original cards beside their mapped React implementation stories, run:
 npm.cmd run check:visual-review
 ```
 
-This refreshes the inventory and writes `visual-artifacts/inventory/review.html`. The report is a local QA aid: it validates that every original component card has a legacy screenshot, at least one paired React story, and screenshot files for those stories before writing the side-by-side review page. It then opens the report in Playwright, checks that all 83 pairs and all images render, and writes `visual-artifacts/inventory/review-smoke.png`.
+This refreshes the inventory and writes `visual-artifacts/inventory/review.html`. The report is a local QA aid: it validates that every original component card has a legacy screenshot, a primary paired React story, at least one paired React story, and screenshot files for those stories before writing the side-by-side review page. It then opens the report in Playwright, checks that all 83 pairs and all images render, and writes `visual-artifacts/inventory/review-smoke.png`.

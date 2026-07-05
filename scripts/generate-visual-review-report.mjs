@@ -35,11 +35,13 @@ async function assertFile(filePath, label) {
 }
 
 function renderStoryCard(story, screenshot) {
+  const isPrimary = story.primary ? '<em>Primary</em>' : '';
   return `
-    <figure class="story">
+    <figure class="story${story.primary ? ' primary' : ''}">
       <figcaption>
-        <strong>${escapeHtml(story.title || story.importPath)}</strong>
+        <strong>${escapeHtml(story.title || story.importPath)} ${isPrimary}</strong>
         <span>${escapeHtml(story.name || story.exportName)} · ${escapeHtml(story.id)}</span>
+        <span>${escapeHtml(story.matchMode || 'story-module')} · ${escapeHtml((story.matchedExports || []).join(', '))}</span>
       </figcaption>
       <img src="${escapeHtml(relFromReport(screenshot.path))}" alt="${escapeHtml(story.id)}" />
     </figure>
@@ -47,12 +49,14 @@ function renderStoryCard(story, screenshot) {
 }
 
 function renderPair(pair, legacyScreenshot, reactScreenshots) {
+  const anchorId = (pair.reviewAnchor || '').replace(/^#/, '');
   return `
-    <section class="pair">
+    <section class="pair" id="${escapeHtml(anchorId)}">
       <header>
         <div>
           <p class="eyebrow">${escapeHtml(pair.card)}</p>
           <h2>${escapeHtml(pair.exports.join(', '))}</h2>
+          <p class="primary">Primary story: ${escapeHtml(pair.primaryStory?.id || 'n/a')}</p>
         </div>
         <span class="count">${reactScreenshots.length} React story${reactScreenshots.length === 1 ? '' : 'ies'}</span>
       </header>
@@ -135,6 +139,8 @@ async function main() {
     const legacyScreenshot = legacyByCard.get(pair.card);
     if (!legacyScreenshot) failures.push(`${pair.card}: missing legacy screenshot`);
     if (!pair.stories?.length) failures.push(`${pair.card}: no paired React stories`);
+    if (!pair.primaryStory?.id) failures.push(`${pair.card}: missing primary React story`);
+    if (pair.primaryStory?.id && !reactById.has(pair.primaryStory.id)) failures.push(`${pair.card}: primary story has no screenshot (${pair.primaryStory.id})`);
     for (const story of pair.stories || []) {
       if (!reactById.has(story.id)) failures.push(`${pair.card}: paired story has no screenshot (${story.id})`);
     }
@@ -145,7 +151,10 @@ async function main() {
   const renderedPairs = pairs
     .map((pair) => {
       const legacyScreenshot = legacyByCard.get(pair.card);
-      const reactScreenshots = pair.stories.map((story) => ({ story, screenshot: reactById.get(story.id) }));
+      const reactScreenshots = pair.stories.map((story) => ({
+        story: { ...story, primary: story.id === pair.primaryStory?.id },
+        screenshot: reactById.get(story.id),
+      }));
       return renderPair(pair, legacyScreenshot, reactScreenshots);
     })
     .join('\n');
@@ -235,6 +244,11 @@ async function main() {
       font-size: 12px;
       font-weight: 700;
     }
+    .primary {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
     .grid {
       display: grid;
       grid-template-columns: minmax(320px, .92fr) minmax(360px, 1.08fr);
@@ -260,6 +274,22 @@ async function main() {
       color: var(--muted);
       font-size: 12px;
       word-break: break-all;
+    }
+    figcaption em {
+      display: inline-flex;
+      margin-left: 6px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #e8f5ee;
+      color: #247047;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+    .story.primary {
+      border-color: #8fc7a5;
+      box-shadow: 0 0 0 2px rgba(36, 112, 71, .08);
     }
     img {
       display: block;

@@ -129,6 +129,15 @@ function hasWord(source, name) {
   return new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(source);
 }
 
+function storyBlock(source, exportName) {
+  const marker = `export const ${exportName}`;
+  const start = source.indexOf(marker);
+  if (start === -1) return '';
+
+  const next = source.indexOf('\nexport const ', start + marker.length);
+  return source.slice(start, next === -1 ? source.length : next);
+}
+
 function implementationStories(entries) {
   const excluded = new Set([
     './stories/Audit.stories.jsx',
@@ -154,25 +163,39 @@ async function mapComponentCardsToStories(entries, componentCards) {
 
   const stories = implementationStories(entries);
   const sourceByImportPath = new Map();
+  const blockByStoryId = new Map();
   for (const story of stories) {
     if (!sourceByImportPath.has(story.importPath)) {
       sourceByImportPath.set(story.importPath, await read(story.importPath.replace(/^\.\//, '')));
     }
+    blockByStoryId.set(story.id, storyBlock(sourceByImportPath.get(story.importPath), story.exportName));
   }
 
   const failures = [];
   const pairs = rows.map((row) => {
     const matchedStories = stories
-      .filter((story) => {
+      .map((story) => {
         const source = sourceByImportPath.get(story.importPath) || '';
-        return row.exports.some((name) => hasWord(source, name));
+        const block = blockByStoryId.get(story.id) || '';
+        const blockExports = row.exports.filter((name) => hasWord(block, name));
+        const moduleExports = row.exports.filter((name) => hasWord(source, name));
+        if (blockExports.length > 0) return { story, matchedExports: blockExports, matchMode: 'story-block' };
+        if (moduleExports.length > 0) return { story, matchedExports: moduleExports, matchMode: 'story-module' };
+        return null;
       })
-      .map((story) => ({
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (a.matchMode !== b.matchMode) return a.matchMode === 'story-block' ? -1 : 1;
+        return b.matchedExports.length - a.matchedExports.length || a.story.id.localeCompare(b.story.id, 'ko');
+      })
+      .map(({ story, matchedExports, matchMode }) => ({
         id: story.id,
         importPath: story.importPath,
         exportName: story.exportName,
         title: story.title,
         name: story.name,
+        matchMode,
+        matchedExports,
       }));
 
     if (matchedStories.length === 0) failures.push(`${row.card}: no React implementation story source references ${row.exports.join(', ')}`);
@@ -180,6 +203,8 @@ async function mapComponentCardsToStories(entries, componentCards) {
     return {
       card: row.card,
       exports: row.exports,
+      primaryStory: matchedStories[0],
+      reviewAnchor: `#${slug(row.card)}`,
       stories: matchedStories,
     };
   });
