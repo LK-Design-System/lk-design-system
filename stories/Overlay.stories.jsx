@@ -199,3 +199,28 @@ export const SheetCard = {
     );
   },
 };
+
+export const DimmerCard = {
+  name: 'Dimmer card parity',
+  render: () => (
+    <div
+      style={{
+        position: 'relative',
+        width: 220,
+        height: 130,
+        background: 'var(--bw-white)',
+        border: '1px solid var(--bw-border)',
+        borderRadius: 'var(--radius-xl)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'var(--font-sans)',
+        color: 'var(--label-alternative)',
+        fontSize: 14,
+      }}
+    >
+      ???
+      <Dimmer open blur><span style={{ color: 'var(--text-on-inverse)' }}>?? ?</span></Dimmer>
+    </div>
+  ),
+};

@@ -111,3 +111,13 @@ export const SpinnerCard = {
     </div>
   ),
 };
+
+export const ProgressBarCard = {
+  name: 'ProgressBar card parity',
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+      <ProgressBar value={68} label="???" showValue />
+      <ProgressBar indeterminate />
+    </div>
+  ),
+};

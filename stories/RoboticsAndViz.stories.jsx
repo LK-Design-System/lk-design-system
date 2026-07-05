@@ -146,3 +146,69 @@ export const EditorShell = {
     </CanvasEditorShell>
   ),
 };
+
+const parityCloudPoints = Array.from({ length: 130 }, (_, index) => {
+  const x = (index * 37) % 100;
+  const y = (index * 53) % 100;
+  return {
+    x,
+    y,
+    r: 0.6 + ((index * 7) % 12) / 10,
+    opacity: 0.25 + ((index * 11) % 7) / 12,
+  };
+});
+
+function ParityCloudPlaceholder() {
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 90% at 50% 20%, rgba(132,146,164,0.14), transparent 60%)' }}>
+      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+        {parityCloudPoints.map((point, index) => (
+          <circle
+            key={`${point.x}-${point.y}-${index}`}
+            cx={point.x}
+            cy={point.y}
+            r={point.r}
+            fill={index % 5 === 0 ? 'var(--lk-accent)' : '#fff'}
+            opacity={point.opacity}
+          />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+export const Scene3DFrameCard = {
+  name: 'Scene3DFrame card parity',
+  render: () => (
+    <Scene3DFrame
+      title="POINT CLOUD"
+      badges={<ConnectionBadge status="online" size="sm" />}
+      toolbar={(
+        <ViewerToolbar orientation="horizontal">
+          <ViewerToolbarButton label="?"><Icon name="home" size={16} /></ViewerToolbarButton>
+          <ViewerToolbarButton label="???" active><Icon name="filter" size={16} /></ViewerToolbarButton>
+        </ViewerToolbar>
+      )}
+      style={{ height: 300 }}
+    >
+      <ParityCloudPlaceholder />
+    </Scene3DFrame>
+  ),
+};
+
+export const TelemetryGaugeCard = {
+  name: 'TelemetryGauge card parity',
+  render: () => (
+    <div>
+      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+        TelemetryGauge
+      </div>
+      <div style={{ display: 'flex', gap: 26, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        <TelemetryGauge value={82} unit="%" label="???" thresholds={{ low: 20, high: 50 }} />
+        <TelemetryGauge value={14} unit="%" label="???" thresholds={{ low: 20, high: 50 }} />
+        <TelemetryGauge value={1.4} max={2} unit="m/s" label="??" tone="signal" size={104} />
+        <TelemetryGauge value={68} unit="%" label="??" tone="positive" size={104} />
+      </div>
+    </div>
+  ),
+};
