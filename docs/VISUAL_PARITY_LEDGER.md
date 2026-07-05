@@ -36,6 +36,7 @@
 | P0 | Footer | BackToTop 호버 상승 제거, Footer 링크/헤딩 자간 0으로 정규화 |
 | P1 | Non-button typography | React 컴포넌트에 남아 있던 음수 자간을 0으로 정규화 |
 | P1 | Card motion | 원본 미리보기 번들(`_ds_bundle.js`) 기준으로 Card/NewsCard/ProductCard hover motion 유지 여부 검증 |
+| P1 | Coverage guard | 원본 guideline/component/template 카드가 Audit와 Legacy Preview에 모두 잡히는지 자동 검증 |
 | P0 | Original previews | 원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출 |
 
 ## 남은 전수조사 보정표
@@ -60,6 +61,7 @@
 
 - React 컴포넌트의 음수 자간은 0으로 정규화했습니다. 원본 정적 HTML(`*.card.html`)은 비교 기준으로 보존하므로 기존 자간이 그대로 남아 있을 수 있습니다.
 - 카드 계열의 hover movement와 이미지 scale은 원본 미리보기 번들의 Card/NewsCard/ProductCard 동작과 일치하므로 유지합니다. 이후 변경 시 `npm run check:parity`의 motion contract와 함께 제품 결정 기록을 갱신해야 합니다.
+- `npm run check:coverage`가 원본 20개 guideline, 83개 component card, 4개 template card의 Audit/Legacy Preview 누락과 `@dsCard` 메타 누락을 차단합니다.
 - 토큰 source-of-truth는 `tokens/source.json`, CSS 토큰, generated dist가 맞물립니다. Figma Tokens 연동 전에는 수동 변경 후 `npm run check:tokens`로 계속 막아야 합니다.
 - 자동 시각 회귀 테스트는 아직 없습니다. Storybook build와 a11y만으로는 원본 대비 시각 편차를 완전히 잡지 못합니다.
 
@@ -69,5 +71,6 @@
 2. 버튼, 내비게이션, 로보틱스 상태 컴포넌트에 interaction test를 추가합니다.
 3. Playwright 또는 Storybook test-runner 기반으로 주요 스토리 screenshot baseline을 생성합니다.
 4. `npm run check:parity`를 유지해 React 컴포넌트의 음수 자간 재유입과 카드 motion contract 변경을 차단합니다.
-5. 소비 앱 예시 페이지에서 `@lk-robotics/design-system-core` package export와 `styles.css`만 사용해 화면을 구성합니다.
-6. visual parity ledger의 Watch 항목을 Fixed 또는 Gap으로 계속 이동합니다.
+5. `npm run check:coverage`를 유지해 원본 파일 추가/삭제 시 Audit와 Legacy Preview 누락을 즉시 잡습니다.
+6. 소비 앱 예시 페이지에서 `@lk-robotics/design-system-core` package export와 `styles.css`만 사용해 화면을 구성합니다.
+7. visual parity ledger의 Watch 항목을 Fixed 또는 Gap으로 계속 이동합니다.
