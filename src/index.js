@@ -105,7 +105,7 @@ export { SideNav } from '../components/navigation/SideNav.jsx';
 export { Steps } from '../components/navigation/Steps.jsx';
 export { Tabs } from '../components/navigation/Tabs.jsx';
 export { Toolbar } from '../components/navigation/Toolbar.jsx';
-export { TopBar } from '../components/navigation/TopBar.jsx';
+export { TopBar, TopBarNavItem } from '../components/navigation/TopBar.jsx';
 export { UserMenu } from '../components/navigation/UserMenu.jsx';
 export { Wizard } from '../components/navigation/Wizard.jsx';
 export { Alert } from '../components/overlay/Alert.jsx';

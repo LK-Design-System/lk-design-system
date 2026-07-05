@@ -16,9 +16,9 @@ import {
   SideNav,
   Steps,
   Tabs,
-  TextButton,
   Toolbar,
   TopBar,
+  TopBarNavItem,
   UserMenu,
   Wizard,
 } from '../src/index.js';
@@ -53,18 +53,26 @@ const navItems = [
   { value: 'settings', label: '설정', icon: <Icon name="setting" size={18} /> },
 ];
 
+const topBarMenuItems = [
+  { label: '로봇', href: '#' },
+  { label: '미션', href: '#' },
+  { label: '관제 플랫폼', href: '#' },
+];
+
 export const AppNavigation = {
   name: '앱 내비게이션',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1100 }}>
-      <div style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-card)' }}>
+      <div style={{ position: 'relative', zIndex: 2, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
         <TopBar
+          navAlign="center"
           brand={<Lockup variant="inline" height={22} />}
           actions={<Button size="sm">새 미션</Button>}
+          style={{ borderRadius: 'var(--radius-lg)' }}
         >
-          <TextButton>플릿</TextButton>
-          <TextButton>지도</TextButton>
-          <TextButton>알림</TextButton>
+          <TopBarNavItem active href="#" menuItems={topBarMenuItems}>플릿</TopBarNavItem>
+          <TopBarNavItem href="#">지도</TopBarNavItem>
+          <TopBarNavItem href="#">알림</TopBarNavItem>
         </TopBar>
       </div>
 

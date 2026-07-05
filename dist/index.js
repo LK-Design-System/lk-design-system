@@ -4275,7 +4275,9 @@ function Toolbar({ children, style, ...rest }) {
 // components/navigation/TopBar.jsx
 import React105 from "react";
 import { jsx as jsx103, jsxs as jsxs69 } from "react/jsx-runtime";
+var TopBarToneContext = React105.createContext("light");
 function TopBar({ brand, children, actions, navAlign = "start", sticky = false, bordered = true, dark = false, height = 64, style, ...rest }) {
+  const tone = dark ? "dark" : "light";
   return /* @__PURE__ */ jsxs69(
     "header",
     {
@@ -4289,7 +4291,7 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
         height,
         paddingInline: "clamp(16px, 4vw, 32px)",
         boxSizing: "border-box",
-        background: dark ? "var(--surface-inverse)" : sticky ? "color-mix(in srgb, var(--surface-card) 88%, transparent)" : "var(--surface-card)",
+        background: dark ? "linear-gradient(135deg, var(--lk-navy-from), var(--lk-navy-to))" : sticky ? "color-mix(in srgb, var(--surface-card) 88%, transparent)" : "var(--surface-card)",
         color: dark ? "var(--text-on-inverse)" : "var(--text-body)",
         borderBottom: bordered ? `1px solid ${dark ? "rgba(255,255,255,0.10)" : "var(--border-subtle)"}` : "none",
         backdropFilter: sticky ? "saturate(150%) blur(8px)" : "none",
@@ -4300,8 +4302,163 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
       ...rest,
       children: [
         brand != null && /* @__PURE__ */ jsx103("div", { style: { display: "flex", alignItems: "center", flexShrink: 0 }, children: brand }),
-        children != null ? /* @__PURE__ */ jsx103("nav", { style: { display: "flex", alignItems: "center", alignSelf: "stretch", gap: 4, flex: 1, minWidth: 0, justifyContent: navAlign === "center" ? "center" : "flex-start" }, children }) : /* @__PURE__ */ jsx103("div", { style: { flex: 1 } }),
+        children != null ? /* @__PURE__ */ jsx103(TopBarToneContext.Provider, { value: tone, children: /* @__PURE__ */ jsx103("nav", { style: { display: "flex", alignItems: "center", alignSelf: "stretch", gap: 4, flex: 1, minWidth: 0, justifyContent: navAlign === "center" ? "center" : "flex-start" }, children }) }) : /* @__PURE__ */ jsx103("div", { style: { flex: 1 } }),
         actions != null && /* @__PURE__ */ jsx103("div", { style: { display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: actions })
+      ]
+    }
+  );
+}
+function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = "light", style, onClick, ...rest }) {
+  const tone = React105.useContext(TopBarToneContext);
+  const onDark = tone === "dark";
+  const [hover, setHover] = React105.useState(false);
+  const [focusWithin, setFocusWithin] = React105.useState(false);
+  const [clickOpen, setClickOpen] = React105.useState(false);
+  const hasMenu = !!menuItems?.length;
+  const open = hasMenu && (hover || focusWithin || clickOpen);
+  const activeOrHover = active || hover || focusWithin || clickOpen;
+  const Comp = href ? "a" : "button";
+  const fg = active ? onDark ? "#fff" : "var(--lk-accent-ink)" : activeOrHover ? onDark ? "#fff" : "var(--label-strong)" : onDark ? "rgba(255,255,255,0.66)" : "var(--label-alternative)";
+  return /* @__PURE__ */ jsxs69(
+    "span",
+    {
+      style: { position: "relative", display: "inline-flex", alignSelf: "stretch", ...style },
+      onMouseEnter: () => setHover(true),
+      onMouseLeave: () => setHover(false),
+      onFocus: () => setFocusWithin(true),
+      onBlur: (event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setFocusWithin(false);
+          setClickOpen(false);
+        }
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ jsxs69(
+          Comp,
+          {
+            href,
+            type: href ? void 0 : "button",
+            "aria-current": active ? "page" : void 0,
+            "aria-haspopup": hasMenu ? "menu" : void 0,
+            "aria-expanded": hasMenu ? open : void 0,
+            onClick: (event) => {
+              if (hasMenu) {
+                event.preventDefault();
+                setClickOpen((value) => !value);
+              }
+              onClick && onClick(event);
+            },
+            onFocus: () => setFocusWithin(true),
+            onBlur: (event) => {
+              if (!event.currentTarget.parentElement?.contains(event.relatedTarget)) {
+                setFocusWithin(false);
+                setClickOpen(false);
+              }
+            },
+            style: {
+              position: "relative",
+              display: "inline-flex",
+              alignItems: "center",
+              alignSelf: "stretch",
+              padding: "0 14px",
+              border: "none",
+              background: "transparent",
+              color: fg,
+              cursor: "pointer",
+              fontFamily: "var(--font-sans)",
+              fontSize: 14.5,
+              fontWeight: 700,
+              letterSpacing: "-0.1px",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              transition: "color var(--dur-fast) var(--ease-out)"
+            },
+            children: [
+              children,
+              /* @__PURE__ */ jsx103(
+                "span",
+                {
+                  "aria-hidden": "true",
+                  style: {
+                    position: "absolute",
+                    left: 14,
+                    right: 14,
+                    bottom: 0,
+                    height: 2.5,
+                    borderRadius: "2px 2px 0 0",
+                    background: onDark ? "var(--lk-accent)" : "var(--lk-accent-ink)",
+                    transform: activeOrHover ? "scaleX(1)" : "scaleX(0)",
+                    transformOrigin: "center",
+                    transition: "transform var(--dur-fast) var(--ease-out)"
+                  }
+                }
+              )
+            ]
+          }
+        ),
+        menuItems?.length ? /* @__PURE__ */ jsx103(
+          "div",
+          {
+            role: "menu",
+            "data-theme": menuTheme,
+            className: `theme-${menuTheme}`,
+            style: {
+              position: "absolute",
+              top: "100%",
+              left: "50%",
+              zIndex: 60,
+              minWidth: 176,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              padding: 8,
+              background: "var(--surface-card)",
+              border: "1px solid var(--line-normal)",
+              borderRadius: 14,
+              boxShadow: "var(--shadow-md)",
+              opacity: open ? 1 : 0,
+              visibility: open ? "visible" : "hidden",
+              transform: open ? "translate(-50%, 0)" : "translate(-50%, 4px)",
+              transition: "opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), visibility 0s linear"
+            },
+            children: menuItems.map((item) => {
+              const ItemComp = item.href ? "a" : "button";
+              return /* @__PURE__ */ jsx103(
+                ItemComp,
+                {
+                  href: item.href,
+                  type: item.href ? void 0 : "button",
+                  role: "menuitem",
+                  onClick: item.onClick,
+                  style: {
+                    display: "block",
+                    width: "100%",
+                    padding: "10px 12px",
+                    border: "none",
+                    borderRadius: 10,
+                    background: "transparent",
+                    color: "var(--label-normal)",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    textAlign: "left",
+                    textDecoration: "none"
+                  },
+                  onMouseEnter: (event) => {
+                    event.currentTarget.style.background = "var(--bw-mist)";
+                  },
+                  onMouseLeave: (event) => {
+                    event.currentTarget.style.background = "transparent";
+                  },
+                  children: item.label
+                },
+                item.label
+              );
+            })
+          }
+        ) : null
       ]
     }
   );
@@ -6553,6 +6710,7 @@ export {
   Toolbar,
   Tooltip,
   TopBar,
+  TopBarNavItem,
   TopicTree,
   Tree,
   UserMenu,
