@@ -23,7 +23,7 @@ Package metadata:
 | Path | Purpose |
 | --- | --- |
 | `components/` | React component sources, `.d.ts` contracts, prompt notes, and static component cards. |
-| `tokens/` | CSS design tokens for fonts, colors, typography, spacing, grid, effects, and base styles. |
+| `tokens/` | CSS design tokens plus `source.json`, the machine-readable primitive/semantic/component token map. |
 | `styles.css` | CSS entry that imports the token files. |
 | `assets/` | Brand SVGs, Pretendard fonts, product images, industry images, and technology images. |
 | `src/` | Generated package entry files. |
@@ -44,6 +44,7 @@ npm run build
 Useful checks:
 
 ```powershell
+npm run check:tokens
 npm run check
 npm run check:audit
 ```
@@ -65,7 +66,18 @@ npm run storybook
 npm run build:storybook
 ```
 
-The initial Storybook coverage includes foundations, buttons, form controls, data/status examples, robotics status cards, iconography, and navigation.
+The Storybook coverage includes foundations, token strategy, buttons, cards, form controls, data/status examples, robotics status cards, iconography, and navigation.
+
+## AI And Figma Token Workflow
+
+Use `docs/AI_DESIGN_SYSTEM_GUIDE.md` when prompting AI tools to generate LK Robotics UI.
+Use `docs/FIGMA_TOKEN_WORKFLOW.md` when exporting or importing Figma Variables.
+
+Token hierarchy:
+
+- Primitive: raw brand values, scales, typography, shadows, and motion.
+- Semantic: product meaning such as surface, text, action, status, border, and focus.
+- Component: Button, Input, Card, and future component-family contracts.
 
 ## CI
 

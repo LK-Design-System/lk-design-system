@@ -17,32 +17,36 @@ export function Input({
 }) {
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, '-').toLowerCase()}` : undefined);
   const [focused, setFocused] = React.useState(false);
-  const ring = invalid ? 'var(--bw-red)' : focused ? 'var(--lk-accent-ink)' : 'var(--bw-border)';
+  const ring = invalid
+    ? 'var(--component-input-border-color-invalid)'
+    : focused
+      ? 'var(--component-input-border-color-focus)'
+      : 'var(--component-input-border-color)';
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
       {label && (
-        <label htmlFor={inputId} style={{ fontWeight: 'var(--fw-semibold)', fontSize: '14px', lineHeight: 1.43, letterSpacing: '0.015em', color: 'var(--bw-ink)' }}>
-          {label}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
+        <label htmlFor={inputId} style={{ fontWeight: 'var(--component-input-label-font-weight)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', letterSpacing: 'var(--component-input-label-letter-spacing)', color: 'var(--component-input-label-color)' }}>
+          {label}{required && <span style={{ color: 'var(--component-input-required-color)' }}> *</span>}
         </label>
       )}
       <div style={{
-        position: 'relative', display: 'flex', alignItems: 'center', gap: '8px',
-        height: 'var(--control-h-md)', padding: '0 12px',
-        background: 'var(--bw-white)',
-        border: `1px solid ${ring}`,
-        borderRadius: 'var(--radius-input)',
-        boxShadow: focused && !invalid ? '0 0 0 4px var(--focus-ring)' : 'none',
+        position: 'relative', display: 'flex', alignItems: 'center', gap: 'var(--component-input-gap)',
+        height: 'var(--component-input-height)', padding: '0 var(--component-input-padding-x)',
+        background: 'var(--component-input-bg)',
+        border: `var(--component-input-border-width) solid ${ring}`,
+        borderRadius: 'var(--component-input-radius)',
+        boxShadow: focused && !invalid ? 'var(--component-input-focus-shadow)' : 'none',
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
       }}>
-        {iconLeft && <span style={{ color: 'var(--bw-gray)', display: 'inline-flex', flex: '0 0 auto' }}>{iconLeft}</span>}
+        {iconLeft && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{iconLeft}</span>}
         <input
           id={inputId}
           {...rest}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
-          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: '16px', lineHeight: 1.5, letterSpacing: '0.006em', color: 'var(--bw-ink)' }}
+          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: 'var(--component-input-text-color)' }}
         />
-        {iconRight && <span style={{ color: 'var(--bw-gray)', display: 'inline-flex', flex: '0 0 auto' }}>{iconRight}</span>}
+        {iconRight && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{iconRight}</span>}
       </div>
     </div>
   );

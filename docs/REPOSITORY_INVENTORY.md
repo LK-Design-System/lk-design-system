@@ -14,7 +14,7 @@ This repository is the package-oriented LK Robotics core design system.
 ## Primary Source Areas
 
 - `components/`: React components, component type declarations, prompt notes, and static component cards.
-- `tokens/`: CSS design tokens and base styles.
+- `tokens/`: CSS design tokens, component tokens, base styles, and the machine-readable `source.json` token map.
 - `assets/`: brand SVGs, Pretendard font files, product images, industry images, and technology images.
 - `styles.css`: top-level CSS entry for token imports.
 - `src/`: generated package entry files.
@@ -22,6 +22,8 @@ This repository is the package-oriented LK Robotics core design system.
 - `.storybook/`: Storybook runtime configuration.
 - `stories/`: interactive component documentation and visual examples.
 - `.github/workflows/ci.yml`: GitHub Actions CI gate.
+- `docs/AI_DESIGN_SYSTEM_GUIDE.md`: AI-readable usage rules and token hierarchy.
+- `docs/FIGMA_TOKEN_WORKFLOW.md`: Figma Variables export/import strategy.
 - `guidelines/`: static foundation cards.
 - `templates/`: reusable starter templates.
 - `templates-cards/`: static cards for starter templates.
@@ -49,6 +51,7 @@ The initial raw export is still available in the repository history. The current
 - Do not edit `src/index.js` or `src/index.d.ts` manually. Run `npm run generate:entry`.
 - Keep `_ds_bundle.js` while static preview cards and templates load it directly.
 - Keep `dist/` in Git unless the team switches to a formal package publishing workflow.
+- Keep `tokens/source.json` aligned with `tokens/*.css`; `npm run check:tokens` validates the component-token references.
 - If a component is added under `components/`, add the matching `.d.ts` and run `npm run build`.
 - Add or update Storybook stories for user-facing components.
 - Run `npm run check` and `npm run check:audit` before pushing.

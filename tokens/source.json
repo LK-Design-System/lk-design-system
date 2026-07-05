@@ -1,0 +1,626 @@
+{
+  "$schema": "https://design-tokens.org/TR/drafts/format/",
+  "name": "LK Robotics Core Design Tokens",
+  "version": "0.1.0",
+  "metadata": {
+    "status": "initial-machine-readable-source",
+    "runtimeEntry": "styles.css",
+    "runtimeCssFiles": [
+      "tokens/fonts.css",
+      "tokens/colors.css",
+      "tokens/typography.css",
+      "tokens/spacing.css",
+      "tokens/grid.css",
+      "tokens/effects.css",
+      "tokens/components.css",
+      "tokens/base.css"
+    ],
+    "rule": "primitive tokens define raw decisions, semantic tokens define product meaning, component tokens define reusable component contracts."
+  },
+  "primitive": {
+    "description": "Raw brand, scale, and effect values. Use primitive tokens only when defining or revising semantic tokens.",
+    "color": {
+      "brandNavy": {
+        "$type": "color",
+        "$value": "#0E1329",
+        "css": "--bw-ink",
+        "$description": "LK Robotics navy ink."
+      },
+      "brandNavyDeep": {
+        "$type": "color",
+        "$value": "#080B1C",
+        "css": "--bw-ink-deep"
+      },
+      "brandAzure": {
+        "$type": "color",
+        "$value": "#0067A8",
+        "css": "--lk-primary"
+      },
+      "brandAzureStrong": {
+        "$type": "color",
+        "$value": "#005A93",
+        "css": "--lk-primary-strong"
+      },
+      "signalSteelAzure": {
+        "$type": "color",
+        "$value": "#4E7CA8",
+        "css": "--lk-accent-ink"
+      },
+      "graphite": {
+        "$type": "color",
+        "$value": "#2C3547",
+        "css": "--bw-indigo"
+      },
+      "graphiteStrong": {
+        "$type": "color",
+        "$value": "#1F2735",
+        "css": "--bw-indigo-600"
+      },
+      "paper": {
+        "$type": "color",
+        "$value": "#FFFFFF",
+        "css": "--bw-paper"
+      },
+      "mist": {
+        "$type": "color",
+        "$value": "#F7F7F8",
+        "css": "--bw-mist"
+      },
+      "band": {
+        "$type": "color",
+        "$value": "#F4F4F5",
+        "css": "--bw-band"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "#E1E2E4",
+        "css": "--bw-border"
+      },
+      "gray": {
+        "$type": "color",
+        "$value": "#70737C",
+        "css": "--bw-gray"
+      },
+      "successMuted": {
+        "$type": "color",
+        "$value": "#4F765D",
+        "css": "--bw-green"
+      },
+      "cautionMuted": {
+        "$type": "color",
+        "$value": "#C29A52",
+        "css": "--bw-amber"
+      },
+      "dangerMuted": {
+        "$type": "color",
+        "$value": "#CF6360",
+        "css": "--bw-red"
+      }
+    },
+    "space": {
+      "0": {
+        "$type": "dimension",
+        "$value": "0px",
+        "css": "--space-0"
+      },
+      "1": {
+        "$type": "dimension",
+        "$value": "4px",
+        "css": "--space-1"
+      },
+      "2": {
+        "$type": "dimension",
+        "$value": "8px",
+        "css": "--space-2"
+      },
+      "3": {
+        "$type": "dimension",
+        "$value": "12px",
+        "css": "--space-3"
+      },
+      "4": {
+        "$type": "dimension",
+        "$value": "16px",
+        "css": "--space-4"
+      },
+      "5": {
+        "$type": "dimension",
+        "$value": "20px",
+        "css": "--space-5"
+      },
+      "6": {
+        "$type": "dimension",
+        "$value": "24px",
+        "css": "--space-6"
+      },
+      "8": {
+        "$type": "dimension",
+        "$value": "32px",
+        "css": "--space-8"
+      },
+      "10": {
+        "$type": "dimension",
+        "$value": "40px",
+        "css": "--space-10"
+      },
+      "12": {
+        "$type": "dimension",
+        "$value": "48px",
+        "css": "--space-12"
+      }
+    },
+    "radius": {
+      "sm": {
+        "$type": "dimension",
+        "$value": "6px",
+        "css": "--radius-sm"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "12px",
+        "css": "--radius-md"
+      },
+      "input": {
+        "$type": "dimension",
+        "$value": "12px",
+        "css": "--radius-input"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "16px",
+        "css": "--radius-xl"
+      },
+      "pill": {
+        "$type": "dimension",
+        "$value": "999px",
+        "css": "--radius-pill"
+      }
+    },
+    "typography": {
+      "fontSans": {
+        "$type": "fontFamily",
+        "$value": "Pretendard JP, Pretendard, system-ui, sans-serif",
+        "css": "--font-sans"
+      },
+      "body1": {
+        "$type": "typography",
+        "$value": {
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "letterSpacing": "0.0057em"
+        },
+        "css": [
+          "--body1-size",
+          "--body1-line",
+          "--body1-spacing"
+        ]
+      },
+      "label1": {
+        "$type": "typography",
+        "$value": {
+          "fontSize": "14px",
+          "lineHeight": "20px",
+          "letterSpacing": "0.0145em"
+        },
+        "css": [
+          "--label1-size",
+          "--label1-line",
+          "--label1-spacing"
+        ]
+      },
+      "headline2": {
+        "$type": "typography",
+        "$value": {
+          "fontSize": "17px",
+          "lineHeight": "24px",
+          "letterSpacing": "0em"
+        },
+        "css": [
+          "--headline2-size",
+          "--headline2-line",
+          "--headline2-spacing"
+        ]
+      }
+    },
+    "effect": {
+      "shadowXs": {
+        "$type": "shadow",
+        "$value": "0 2px 4px rgba(14, 19, 41, 0.06)",
+        "css": "--shadow-xs"
+      },
+      "shadowSm": {
+        "$type": "shadow",
+        "$value": "0 4px 12px rgba(8, 14, 33, 0.06)",
+        "css": "--shadow-sm"
+      },
+      "shadowMd": {
+        "$type": "shadow",
+        "$value": "0 16px 40px rgba(14, 19, 41, 0.10)",
+        "css": "--shadow-md"
+      },
+      "shadowLg": {
+        "$type": "shadow",
+        "$value": "0 24px 64px rgba(14, 19, 41, 0.13)",
+        "css": "--shadow-lg"
+      },
+      "durationFast": {
+        "$type": "duration",
+        "$value": "120ms",
+        "css": "--dur-fast"
+      },
+      "durationBase": {
+        "$type": "duration",
+        "$value": "200ms",
+        "css": "--dur-base"
+      },
+      "easeOut": {
+        "$type": "cubicBezier",
+        "$value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "css": "--ease-out"
+      }
+    }
+  },
+  "semantic": {
+    "description": "Product-facing meanings. Use semantic tokens before primitive tokens in product UI.",
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "var(--surface-page)",
+        "css": "--surface-page",
+        "ref": "primitive.color.paper"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "var(--surface-raised)",
+        "css": "--surface-raised",
+        "ref": "primitive.color.paper"
+      },
+      "card": {
+        "$type": "color",
+        "$value": "var(--surface-card)",
+        "css": "--surface-card"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "var(--surface-inverse)",
+        "css": "--surface-inverse",
+        "ref": "primitive.color.brandNavy"
+      }
+    },
+    "text": {
+      "strong": {
+        "$type": "color",
+        "$value": "var(--text-strong)",
+        "css": "--text-strong"
+      },
+      "body": {
+        "$type": "color",
+        "$value": "var(--text-body)",
+        "css": "--text-body"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "var(--text-muted)",
+        "css": "--text-muted"
+      },
+      "onInverse": {
+        "$type": "color",
+        "$value": "var(--text-on-inverse)",
+        "css": "--text-on-inverse"
+      },
+      "onSignal": {
+        "$type": "color",
+        "$value": "var(--text-on-signal)",
+        "css": "--text-on-signal"
+      }
+    },
+    "action": {
+      "primary": {
+        "$type": "color",
+        "$value": "var(--color-primary)",
+        "css": "--color-primary",
+        "ref": "primitive.color.brandAzure"
+      },
+      "primaryHover": {
+        "$type": "color",
+        "$value": "var(--color-primary-hover)",
+        "css": "--color-primary-hover",
+        "ref": "primitive.color.brandAzureStrong"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "var(--color-secondary)",
+        "css": "--color-secondary",
+        "ref": "primitive.color.graphite"
+      },
+      "secondaryHover": {
+        "$type": "color",
+        "$value": "var(--color-secondary-hover)",
+        "css": "--color-secondary-hover",
+        "ref": "primitive.color.graphiteStrong"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "var(--color-accent)",
+        "css": "--color-accent",
+        "ref": "primitive.color.signalSteelAzure"
+      }
+    },
+    "status": {
+      "positive": {
+        "$type": "color",
+        "$value": "var(--color-positive)",
+        "css": "--color-positive"
+      },
+      "cautionary": {
+        "$type": "color",
+        "$value": "var(--color-cautionary)",
+        "css": "--color-cautionary"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "var(--color-danger)",
+        "css": "--color-danger"
+      }
+    },
+    "control": {
+      "heightSm": {
+        "$type": "dimension",
+        "$value": "var(--control-h-sm)",
+        "css": "--control-h-sm"
+      },
+      "heightMd": {
+        "$type": "dimension",
+        "$value": "var(--control-h-md)",
+        "css": "--control-h-md"
+      },
+      "heightLg": {
+        "$type": "dimension",
+        "$value": "var(--control-h-lg)",
+        "css": "--control-h-lg"
+      },
+      "focusRing": {
+        "$type": "shadow",
+        "$value": "0 0 0 4px var(--focus-ring)",
+        "css": "--focus-ring"
+      }
+    },
+    "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "var(--border-subtle)",
+        "css": "--border-subtle"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "var(--border-strong)",
+        "css": "--border-strong"
+      },
+      "hairline": {
+        "$type": "border",
+        "$value": "var(--border-hairline)",
+        "css": "--border-hairline"
+      }
+    },
+    "motion": {
+      "fastOut": {
+        "$type": "transition",
+        "$value": "var(--dur-fast) var(--ease-out)",
+        "css": [
+          "--dur-fast",
+          "--ease-out"
+        ]
+      },
+      "baseOut": {
+        "$type": "transition",
+        "$value": "var(--dur-base) var(--ease-out)",
+        "css": [
+          "--dur-base",
+          "--ease-out"
+        ]
+      }
+    }
+  },
+  "component": {
+    "description": "Component-specific decisions. Component implementations should use these instead of hardcoded hex, rgba, px, or shadows.",
+    "button": {
+      "component": "components/buttons/Button.jsx",
+      "tokens": {
+        "heightSm": {
+          "$type": "dimension",
+          "$value": "var(--component-button-height-sm)",
+          "css": "--component-button-height-sm",
+          "ref": "semantic.control.heightSm"
+        },
+        "heightMd": {
+          "$type": "dimension",
+          "$value": "var(--component-button-height-md)",
+          "css": "--component-button-height-md",
+          "ref": "semantic.control.heightLg"
+        },
+        "heightLg": {
+          "$type": "dimension",
+          "$value": "var(--component-button-height-lg)",
+          "css": "--component-button-height-lg",
+          "ref": "semantic.control.heightLg"
+        },
+        "radius": {
+          "$type": "dimension",
+          "$value": "var(--component-button-radius)",
+          "css": "--component-button-radius",
+          "ref": "primitive.radius.md"
+        },
+        "gap": {
+          "$type": "dimension",
+          "$value": "var(--component-button-gap)",
+          "css": "--component-button-gap"
+        },
+        "primaryBg": {
+          "$type": "color",
+          "$value": "var(--component-button-primary-bg)",
+          "css": "--component-button-primary-bg",
+          "ref": "semantic.action.primary"
+        },
+        "primaryBgHover": {
+          "$type": "color",
+          "$value": "var(--component-button-primary-bg-hover)",
+          "css": "--component-button-primary-bg-hover",
+          "ref": "semantic.action.primaryHover"
+        },
+        "primaryFg": {
+          "$type": "color",
+          "$value": "var(--component-button-primary-fg)",
+          "css": "--component-button-primary-fg",
+          "ref": "semantic.text.onSignal"
+        },
+        "secondaryBg": {
+          "$type": "color",
+          "$value": "var(--component-button-secondary-bg)",
+          "css": "--component-button-secondary-bg",
+          "ref": "semantic.action.secondary"
+        },
+        "signalBg": {
+          "$type": "color",
+          "$value": "var(--component-button-signal-bg)",
+          "css": "--component-button-signal-bg",
+          "ref": "primitive.color.signalSteelAzure"
+        },
+        "disabledOpacity": {
+          "$type": "number",
+          "$value": 0.45,
+          "css": "--component-button-disabled-opacity"
+        }
+      }
+    },
+    "input": {
+      "component": "components/forms/Input.jsx",
+      "tokens": {
+        "height": {
+          "$type": "dimension",
+          "$value": "var(--component-input-height)",
+          "css": "--component-input-height",
+          "ref": "semantic.control.heightMd"
+        },
+        "paddingX": {
+          "$type": "dimension",
+          "$value": "var(--component-input-padding-x)",
+          "css": "--component-input-padding-x",
+          "ref": "primitive.space.3"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "var(--component-input-bg)",
+          "css": "--component-input-bg",
+          "ref": "semantic.surface.raised"
+        },
+        "borderColor": {
+          "$type": "color",
+          "$value": "var(--component-input-border-color)",
+          "css": "--component-input-border-color",
+          "ref": "semantic.border.subtle"
+        },
+        "borderColorFocus": {
+          "$type": "color",
+          "$value": "var(--component-input-border-color-focus)",
+          "css": "--component-input-border-color-focus",
+          "ref": "semantic.action.accent"
+        },
+        "borderColorInvalid": {
+          "$type": "color",
+          "$value": "var(--component-input-border-color-invalid)",
+          "css": "--component-input-border-color-invalid",
+          "ref": "semantic.status.danger"
+        },
+        "focusShadow": {
+          "$type": "shadow",
+          "$value": "var(--component-input-focus-shadow)",
+          "css": "--component-input-focus-shadow",
+          "ref": "semantic.control.focusRing"
+        },
+        "labelTypography": {
+          "$type": "typography",
+          "$value": "label1",
+          "css": [
+            "--component-input-label-font-size",
+            "--component-input-label-line-height",
+            "--component-input-label-letter-spacing"
+          ],
+          "ref": "primitive.typography.label1"
+        }
+      }
+    },
+    "card": {
+      "component": "components/cards/Card.jsx",
+      "tokens": {
+        "background": {
+          "$type": "color",
+          "$value": "var(--component-card-bg)",
+          "css": "--component-card-bg",
+          "ref": "semantic.surface.card"
+        },
+        "backgroundDark": {
+          "$type": "color",
+          "$value": "var(--component-card-bg-dark)",
+          "css": "--component-card-bg-dark",
+          "ref": "semantic.surface.inverse"
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "var(--component-card-fg)",
+          "css": "--component-card-fg",
+          "ref": "semantic.text.body"
+        },
+        "foregroundDark": {
+          "$type": "color",
+          "$value": "var(--component-card-fg-dark)",
+          "css": "--component-card-fg-dark",
+          "ref": "semantic.text.onInverse"
+        },
+        "border": {
+          "$type": "border",
+          "$value": "var(--component-card-border)",
+          "css": "--component-card-border",
+          "ref": "semantic.border.subtle"
+        },
+        "radius": {
+          "$type": "dimension",
+          "$value": "var(--component-card-radius)",
+          "css": "--component-card-radius",
+          "ref": "primitive.radius.xl"
+        },
+        "padding": {
+          "$type": "dimension",
+          "$value": "var(--component-card-padding)",
+          "css": "--component-card-padding",
+          "ref": "primitive.space.8"
+        },
+        "shadowMd": {
+          "$type": "shadow",
+          "$value": "var(--component-card-shadow-md)",
+          "css": "--component-card-shadow-md",
+          "ref": "primitive.effect.shadowMd"
+        },
+        "shadowLg": {
+          "$type": "shadow",
+          "$value": "var(--component-card-shadow-lg)",
+          "css": "--component-card-shadow-lg",
+          "ref": "primitive.effect.shadowLg"
+        }
+      }
+    }
+  },
+  "modes": {
+    "light": {
+      "selector": ":root, [data-theme=\"light\"], .theme-light",
+      "description": "Default product mode. Light variables are explicit so nested light islands can override dark pages."
+    },
+    "dark": {
+      "selector": "[data-theme=\"dark\"], .theme-dark",
+      "description": "Deep navy product mode for control surfaces and inverse sections."
+    },
+    "auto": {
+      "selector": "[data-theme=\"auto\"], .theme-auto",
+      "description": "Follows prefers-color-scheme through the existing CSS media query."
+    }
+  }
+}

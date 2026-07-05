@@ -75,17 +75,29 @@ function Button({
 }) {
   const [hover, setHover] = React3.useState(false);
   const [press, setPress] = React3.useState(false);
-  const heights = { sm: "var(--control-h-sm)", md: "52px", lg: "var(--control-h-lg)" };
-  const pads = { sm: "0 20px", md: "0 26px", lg: "0 32px" };
-  const fonts = { sm: "14px", md: "16px", lg: "17px" };
+  const heights = {
+    sm: "var(--component-button-height-sm)",
+    md: "var(--component-button-height-md)",
+    lg: "var(--component-button-height-lg)"
+  };
+  const pads = {
+    sm: "var(--component-button-padding-sm)",
+    md: "var(--component-button-padding-md)",
+    lg: "var(--component-button-padding-lg)"
+  };
+  const fonts = {
+    sm: "var(--component-button-font-size-sm)",
+    md: "var(--component-button-font-size-md)",
+    lg: "var(--component-button-font-size-lg)"
+  };
   const palettes = {
-    primary: { bg: "var(--color-primary)", bgHover: "var(--color-primary-hover)", fg: "#fff", bd: "none", lift: true, shadow: "var(--shadow-accent)" },
-    secondary: { bg: "var(--bw-indigo)", bgHover: "var(--bw-indigo-600)", fg: "#fff", bd: "none", lift: true, shadow: "var(--shadow-indigo)" },
-    signal: { bg: "var(--lk-accent-ink)", bgHover: "#005793", fg: "var(--text-on-signal)", bd: "none", lift: true, shadow: "var(--shadow-accent)" },
-    dark: { bg: "var(--surface-inverse)", bgHover: "var(--bw-slate)", fg: "var(--text-on-inverse)", bd: "none", lift: true, shadow: "var(--shadow-md)" },
-    flat: { bg: "var(--bw-indigo-tint)", bgHover: "var(--fill-strong)", fg: "var(--bw-ink)", bd: "none", lift: false, shadow: "none" },
-    ghost: { bg: "transparent", bgHover: "var(--bw-mist)", fg: "var(--bw-ink)", bd: "1px solid var(--bw-border)", bdHover: "1px solid var(--bw-gray-300)", lift: false, shadow: "none" },
-    "on-dark": { bg: "rgba(255,255,255,0.14)", bgHover: "rgba(255,255,255,0.22)", fg: "#fff", bd: "1px solid rgba(255,255,255,0.28)", lift: false, shadow: "none" }
+    primary: { bg: "var(--component-button-primary-bg)", bgHover: "var(--component-button-primary-bg-hover)", fg: "var(--component-button-primary-fg)", bd: "none", lift: true, shadow: "var(--component-button-primary-shadow-hover)" },
+    secondary: { bg: "var(--component-button-secondary-bg)", bgHover: "var(--component-button-secondary-bg-hover)", fg: "var(--component-button-secondary-fg)", bd: "none", lift: true, shadow: "var(--component-button-secondary-shadow-hover)" },
+    signal: { bg: "var(--component-button-signal-bg)", bgHover: "var(--component-button-signal-bg-hover)", fg: "var(--component-button-signal-fg)", bd: "none", lift: true, shadow: "var(--component-button-signal-shadow-hover)" },
+    dark: { bg: "var(--component-button-dark-bg)", bgHover: "var(--component-button-dark-bg-hover)", fg: "var(--component-button-dark-fg)", bd: "none", lift: true, shadow: "var(--component-button-dark-shadow-hover)" },
+    flat: { bg: "var(--component-button-flat-bg)", bgHover: "var(--component-button-flat-bg-hover)", fg: "var(--component-button-flat-fg)", bd: "none", lift: false, shadow: "none" },
+    ghost: { bg: "var(--component-button-ghost-bg)", bgHover: "var(--component-button-ghost-bg-hover)", fg: "var(--component-button-ghost-fg)", bd: "var(--component-button-ghost-border)", bdHover: "var(--component-button-ghost-border-hover)", lift: false, shadow: "none" },
+    "on-dark": { bg: "var(--component-button-on-dark-bg)", bgHover: "var(--component-button-on-dark-bg-hover)", fg: "var(--component-button-on-dark-fg)", bd: "var(--component-button-on-dark-border)", lift: false, shadow: "none" }
   };
   const p = palettes[variant] || palettes.primary;
   const active = !disabled;
@@ -93,22 +105,22 @@ function Button({
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: "9px",
+    gap: "var(--component-button-gap)",
     height: heights[size] || heights.md,
     padding: pads[size] || pads.md,
     width: full ? "100%" : void 0,
     fontFamily: "var(--font-sans)",
     fontSize: fonts[size] || fonts.md,
-    fontWeight: "var(--fw-bold)",
-    letterSpacing: "-0.3px",
+    fontWeight: "var(--component-button-font-weight)",
+    letterSpacing: "var(--component-button-letter-spacing)",
     color: p.fg,
     background: active && hover ? p.bgHover : p.bg,
     border: active && hover && p.bdHover ? p.bdHover : p.bd,
-    borderRadius: "var(--radius-md)",
-    boxShadow: active && hover && p.shadow !== "none" ? p.shadow : p.lift ? "var(--shadow-xs)" : "none",
-    transform: press && active ? "translateY(0) scale(0.97)" : active && hover && p.lift ? "translateY(-2px)" : "none",
+    borderRadius: "var(--component-button-radius)",
+    boxShadow: active && hover && p.shadow !== "none" ? p.shadow : p.lift ? "var(--component-button-shadow-rest)" : "none",
+    transform: press && active ? "var(--component-button-transform-pressed)" : active && hover && p.lift ? "var(--component-button-transform-hover)" : "none",
     cursor: disabled ? "not-allowed" : "pointer",
-    opacity: disabled ? 0.45 : 1,
+    opacity: disabled ? "var(--component-button-disabled-opacity)" : 1,
     transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out)",
     whiteSpace: "nowrap",
     textDecoration: "none",
@@ -145,8 +157,8 @@ function Button({
         arrow && /* @__PURE__ */ jsxs2(
           "svg",
           {
-            width: "18",
-            height: "18",
+            width: "var(--component-button-icon-size)",
+            height: "var(--component-button-icon-size)",
             viewBox: "0 0 24 24",
             fill: "none",
             stroke: "currentColor",
@@ -621,7 +633,12 @@ function Card({
   onMouseLeave,
   ...rest
 }) {
-  const shadows = { none: "none", sm: "var(--shadow-sm)", md: "var(--shadow-md)", lg: "var(--shadow-lg)" };
+  const shadows = {
+    none: "var(--component-card-shadow-none)",
+    sm: "var(--component-card-shadow-sm)",
+    md: "var(--component-card-shadow-md)",
+    lg: "var(--component-card-shadow-lg)"
+  };
   const [hover, setHover] = React12.useState(false);
   return /* @__PURE__ */ jsx11(
     "div",
@@ -635,14 +652,14 @@ function Card({
         onMouseLeave && onMouseLeave(e);
       },
       style: {
-        background: dark ? "var(--surface-inverse)" : "var(--surface-card)",
-        color: dark ? "var(--text-on-dark)" : "var(--text-body)",
-        border: dark ? "1px solid rgba(255,255,255,0.08)" : "1px solid var(--bw-border)",
-        borderRadius: "var(--radius-xl)",
-        boxShadow: interactive && hover ? "var(--shadow-lg)" : shadows[elevation],
-        transform: interactive && hover ? "translateY(-4px)" : "none",
-        transition: "var(--transition-base)",
-        padding: padding != null ? padding : "var(--space-8)",
+        background: dark ? "var(--component-card-bg-dark)" : "var(--component-card-bg)",
+        color: dark ? "var(--component-card-fg-dark)" : "var(--component-card-fg)",
+        border: dark ? "var(--component-card-border-dark)" : "var(--component-card-border)",
+        borderRadius: "var(--component-card-radius)",
+        boxShadow: interactive && hover ? "var(--component-card-shadow-lg)" : shadows[elevation],
+        transform: interactive && hover ? "var(--component-card-hover-transform)" : "none",
+        transition: "var(--component-card-transition)",
+        padding: padding != null ? padding : "var(--component-card-padding)",
         ...style
       },
       ...rest,
@@ -2683,26 +2700,26 @@ function Input({
 }) {
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, "-").toLowerCase()}` : void 0);
   const [focused, setFocused] = React65.useState(false);
-  const ring = invalid ? "var(--bw-red)" : focused ? "var(--lk-accent-ink)" : "var(--bw-border)";
-  return /* @__PURE__ */ jsxs49("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ jsxs49("label", { htmlFor: inputId, style: { fontWeight: "var(--fw-semibold)", fontSize: "14px", lineHeight: 1.43, letterSpacing: "0.015em", color: "var(--bw-ink)" }, children: [
+  const ring = invalid ? "var(--component-input-border-color-invalid)" : focused ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)";
+  return /* @__PURE__ */ jsxs49("div", { style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
+    label && /* @__PURE__ */ jsxs49("label", { htmlFor: inputId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
-      required && /* @__PURE__ */ jsx64("span", { style: { color: "var(--bw-red)" }, children: " *" })
+      required && /* @__PURE__ */ jsx64("span", { style: { color: "var(--component-input-required-color)" }, children: " *" })
     ] }),
     /* @__PURE__ */ jsxs49("div", { style: {
       position: "relative",
       display: "flex",
       alignItems: "center",
-      gap: "8px",
-      height: "var(--control-h-md)",
-      padding: "0 12px",
-      background: "var(--bw-white)",
-      border: `1px solid ${ring}`,
-      borderRadius: "var(--radius-input)",
-      boxShadow: focused && !invalid ? "0 0 0 4px var(--focus-ring)" : "none",
+      gap: "var(--component-input-gap)",
+      height: "var(--component-input-height)",
+      padding: "0 var(--component-input-padding-x)",
+      background: "var(--component-input-bg)",
+      border: `var(--component-input-border-width) solid ${ring}`,
+      borderRadius: "var(--component-input-radius)",
+      boxShadow: focused && !invalid ? "var(--component-input-focus-shadow)" : "none",
       transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
     }, children: [
-      iconLeft && /* @__PURE__ */ jsx64("span", { style: { color: "var(--bw-gray)", display: "inline-flex", flex: "0 0 auto" }, children: iconLeft }),
+      iconLeft && /* @__PURE__ */ jsx64("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: iconLeft }),
       /* @__PURE__ */ jsx64(
         "input",
         {
@@ -2716,10 +2733,10 @@ function Input({
             setFocused(false);
             rest.onBlur && rest.onBlur(e);
           },
-          style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "16px", lineHeight: 1.5, letterSpacing: "0.006em", color: "var(--bw-ink)" }
+          style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: "var(--component-input-text-color)" }
         }
       ),
-      iconRight && /* @__PURE__ */ jsx64("span", { style: { color: "var(--bw-gray)", display: "inline-flex", flex: "0 0 auto" }, children: iconRight })
+      iconRight && /* @__PURE__ */ jsx64("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: iconRight })
     ] })
   ] });
 }

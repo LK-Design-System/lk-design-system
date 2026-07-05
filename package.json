@@ -40,8 +40,9 @@
     "build": "npm run generate:entry && tsup && node scripts/copy-types.mjs",
     "check:entry": "npm run generate:entry && git diff --exit-code -- src/index.js src/index.d.ts",
     "check:generated": "git diff --exit-code -- src dist",
+    "check:tokens": "node scripts/check-token-source.mjs",
     "check:audit": "npm audit --omit=dev",
-    "check": "npm run build && tsc --noEmit && npm run check:entry && npm run check:generated && npm run build:storybook && npm pack --dry-run --ignore-scripts",
+    "check": "npm run build && npm run check:tokens && tsc --noEmit && npm run check:entry && npm run check:generated && npm run build:storybook && npm pack --dry-run --ignore-scripts",
     "storybook": "storybook dev -p 6006 --no-open",
     "build:storybook": "storybook build",
     "prepack": "npm run build"

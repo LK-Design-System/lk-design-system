@@ -17,21 +17,26 @@ export function Card({
   onMouseLeave,
   ...rest
 }) {
-  const shadows = { none: 'none', sm: 'var(--shadow-sm)', md: 'var(--shadow-md)', lg: 'var(--shadow-lg)' };
+  const shadows = {
+    none: 'var(--component-card-shadow-none)',
+    sm: 'var(--component-card-shadow-sm)',
+    md: 'var(--component-card-shadow-md)',
+    lg: 'var(--component-card-shadow-lg)',
+  };
   const [hover, setHover] = React.useState(false);
   return (
     <div
       onMouseEnter={(e) => { if (interactive) setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { if (interactive) setHover(false); onMouseLeave && onMouseLeave(e); }}
       style={{
-        background: dark ? 'var(--surface-inverse)' : 'var(--surface-card)',
-        color: dark ? 'var(--text-on-dark)' : 'var(--text-body)',
-        border: dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid var(--bw-border)',
-        borderRadius: 'var(--radius-xl)',
-        boxShadow: interactive && hover ? 'var(--shadow-lg)' : shadows[elevation],
-        transform: interactive && hover ? 'translateY(-4px)' : 'none',
-        transition: 'var(--transition-base)',
-        padding: padding != null ? padding : 'var(--space-8)',
+        background: dark ? 'var(--component-card-bg-dark)' : 'var(--component-card-bg)',
+        color: dark ? 'var(--component-card-fg-dark)' : 'var(--component-card-fg)',
+        border: dark ? 'var(--component-card-border-dark)' : 'var(--component-card-border)',
+        borderRadius: 'var(--component-card-radius)',
+        boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[elevation],
+        transform: interactive && hover ? 'var(--component-card-hover-transform)' : 'none',
+        transition: 'var(--component-card-transition)',
+        padding: padding != null ? padding : 'var(--component-card-padding)',
         ...style,
       }}
       {...rest}
