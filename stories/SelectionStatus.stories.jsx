@@ -87,3 +87,27 @@ export const StatusInventory = {
     </main>
   ),
 };
+
+export const SkeletonCard = {
+  name: 'Skeleton card parity',
+  render: () => (
+    <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 16, width: 300 }}>
+      <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+        <Skeleton variant="circle" width={44} />
+        <div style={{ flex: 1 }}>
+          <Skeleton variant="text" lines={2} />
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const SpinnerCard = {
+  name: 'Spinner card parity',
+  render: () => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+      <Spinner />
+      <Spinner size={18} label="???? ?" />
+    </div>
+  ),
+};

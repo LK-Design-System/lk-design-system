@@ -101,4 +101,4 @@ This command refreshes `check:visual-review`, then writes local artifacts under 
 - `report.html`: visual QA report sorted by highest mismatch ratio, with original, primary React, and diff images side by side
 - `report-smoke.png`: Playwright-rendered smoke screenshot proving the diff report loads and all images resolve
 
-The diff report is currently an evidence generator, not a release-blocking zero-diff gate. It establishes the measured mismatch ledger needed to decide masks, thresholds, and the exact baseline storage policy before enforcing strict pixel parity.
+The diff report is currently an evidence generator, not a release-blocking zero-diff gate. It establishes the measured mismatch ledger needed to decide masks, thresholds, and the exact baseline storage policy before enforcing strict pixel parity. Dedicated parity stories are preferred over broad inventory stories when a card maps to a single component, reducing false mismatch from unrelated components in the same Storybook page.

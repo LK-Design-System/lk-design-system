@@ -107,3 +107,26 @@ export const SelectorsAndGroups = {
     </main>
   ),
 };
+
+export const AutoCompleteCard = {
+  name: 'AutoComplete card parity',
+  render: () => <AutoComplete placeholder="?? ??" options={['LKR-CP', 'LKR-T1', 'LKR-VisionX', 'LKR-SSAI', 'LKR-S1']} />,
+};
+
+export const DatePickerCard = {
+  name: 'DatePicker card parity',
+  render: () => <DatePicker placeholder="?? ??" />,
+};
+
+export const SearchFieldCard = {
+  name: 'SearchField card parity',
+  render: () => <SearchField placeholder="????? ??" defaultValue="LKR-T1" />,
+};
+
+export const SliderCard = {
+  name: 'Slider card parity',
+  render: () => {
+    const [value, setValue] = React.useState(40);
+    return <Slider value={value} onChange={setValue} showValue />;
+  },
+};

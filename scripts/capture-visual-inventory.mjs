@@ -129,6 +129,21 @@ function parseComponentRows(auditSource) {
   );
 }
 
+
+function normalizedIdentifier(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+}
+
+function storySpecificity(story, exports) {
+  const storyTokens = [story.exportName, story.name, story.id].map(normalizedIdentifier).filter(Boolean);
+  return exports.reduce((score, exportName) => {
+    const token = normalizedIdentifier(exportName);
+    if (!token) return score;
+    if (storyTokens.some((storyToken) => storyToken === token || storyToken.includes(token))) return score + 2;
+    return score;
+  }, 0);
+}
+
 function hasWord(source, name) {
   return new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(source);
 }
@@ -191,7 +206,8 @@ async function mapComponentCardsToStories(entries, componentCards) {
       .filter(Boolean)
       .sort((a, b) => {
         if (a.matchMode !== b.matchMode) return a.matchMode === 'story-block' ? -1 : 1;
-        return b.matchedExports.length - a.matchedExports.length || a.story.id.localeCompare(b.story.id, 'ko');
+        const specificity = storySpecificity(b.story, row.exports) - storySpecificity(a.story, row.exports);
+        return specificity || b.matchedExports.length - a.matchedExports.length || a.story.id.localeCompare(b.story.id, 'ko');
       })
       .map(({ story, matchedExports, matchMode }) => ({
         id: story.id,

@@ -143,3 +143,59 @@ export const LightboxOpen = {
     />
   ),
 };
+
+export const LightboxCard = {
+  name: 'Lightbox card parity',
+  render: () => {
+    const [open, setOpen] = React.useState(false);
+    const [index, setIndex] = React.useState(0);
+    const photos = [
+      { src: '/assets/products/lkr-t1.webp', alt: 'LKR-T1' },
+      { src: '/assets/products/lkr-s1.webp', alt: 'LKR-S1' },
+      { src: '/assets/products/lkr-visionx.webp', alt: 'LKR-VisionX' },
+    ];
+    return (
+      <div>
+        <Button variant="flat" onClick={() => setOpen(true)}>???? ??</Button>
+        <Lightbox open={open} images={photos} index={index} onClose={() => setOpen(false)} onIndexChange={setIndex} />
+      </div>
+    );
+  },
+};
+
+export const SheetCard = {
+  name: 'Sheet card parity',
+  render: () => {
+    const [open, setOpen] = React.useState(false);
+    const options = ['???', '???', '???'];
+    return (
+      <div>
+        <Button variant="secondary" onClick={() => setOpen(true)}>?? ??</Button>
+        <Sheet open={open} title="??" onClose={() => setOpen(false)}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {options.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setOpen(false)}
+                style={{
+                  textAlign: 'left',
+                  padding: '14px 4px',
+                  border: 'none',
+                  borderBottom: '1px solid var(--bw-border)',
+                  background: 'transparent',
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 15,
+                  color: 'var(--label-normal)',
+                  cursor: 'pointer',
+                }}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </Sheet>
+      </div>
+    );
+  },
+};
