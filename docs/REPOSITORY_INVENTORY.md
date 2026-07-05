@@ -1,54 +1,49 @@
 # Repository Inventory
 
-This document records the current shape of the design-system export without changing the design-system files.
+This repository is the package-oriented LK Robotics core design system.
 
-## Snapshot
+## Package Scope
 
-- Root path: `C:\Users\seoul\Downloads\LK Design System`
-- Total files at cleanup time: 668
-- Approximate size: 11 MB
+- Package name: `@lk-robotics/design-system-core`
 - React component source files: 145
-- `.jsx` files with matching `.d.ts`: 145 / 145
-- `.jsx` files with matching `.prompt.md`: 145 / 145
-- Manifest namespace: `LKRoboticsDesignSystem_4f14ff`
-- Manifest capture timestamp: `2026-07-04T15:55:21.505Z`
+- Component groups: `brand`, `buttons`, `cards`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
+- Runtime peer dependency: `react`
+- Optional peer dependency: `react-dom`
+- Build output: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`
 
 ## Primary Source Areas
 
-- `tokens/`: design tokens and base CSS.
-- `components/`: React component implementation files.
-- `assets/`: brand, font, product, industry, and technology assets.
+- `components/`: React components, component type declarations, prompt notes, and static component cards.
+- `tokens/`: CSS design tokens and base styles.
+- `assets/`: brand SVGs, Pretendard font files, product images, industry images, and technology images.
+- `styles.css`: top-level CSS entry for token imports.
+- `src/`: generated package entry files.
+- `scripts/`: package maintenance scripts.
+- `guidelines/`: static foundation cards.
 - `templates/`: reusable starter templates.
-- `guidelines/`: design foundation preview cards.
+- `templates-cards/`: static cards for starter templates.
 
-## Generated Or Derived Areas
+## Generated Areas
 
-- `_ds_bundle.js`: generated browser bundle.
-- `_ds_manifest.json`: generated metadata inventory. It is useful as an index, but some localized card metadata appears corrupted enough that strict JSON parsing may fail.
-- `_adherence.oxlintrc.json`: generated adherence rules.
-- `screenshots/`: visual review output.
-- `scratch/`: temporary previews and visual experiments.
-- `uploads/`: reference images from the export workflow.
-- `templates-cards/`: generated or curated previews for templates.
+- `dist/`: package build output committed so internal Git consumers can import the package without a publish step.
+- `_ds_bundle.js`: legacy browser bundle used by static HTML preview cards and starter templates.
 
-## Original Corrupted Docs
+## Removed From Current Head
 
-The original exported docs with mojibake-corrupted Korean text were preserved here:
+The initial raw export is still available in the repository history. The current `main` removes export-only clutter that is not needed for the design-system package:
 
-- `docs/original-mojibake/readme.md`
-- `docs/original-mojibake/SKILL.md`
-- `docs/original-mojibake/TODO.md`
-- `docs/original-mojibake/COVERAGE.md`
+- `scratch/`
+- `screenshots/`
+- `uploads/`
+- root audit, gap-analysis, and direction HTML documents
+- corrupted/export-only Markdown documents
+- invalid `_ds_manifest.json`
+- generated adherence config
+- ad hoc equipment-detail demo files
 
-The root `readme.md` was replaced with a clean repository overview so a private Git host shows useful project context.
+## Maintenance Notes
 
-## Known Issues
-
-- Several original Markdown and HTML documents contain mojibake-corrupted Korean text.
-- `_ds_manifest.json` is useful for simple inventory extraction, but strict JSON parsers can fail because some localized card strings appear malformed.
-- Package metadata and a repeatable build command now exist on the package-conversion branch.
-- The package entry is generated from component source files by `scripts/generate-entry.mjs`.
-
-## Non-Destructive Cleanup Policy
-
-This cleanup intentionally did not delete, rename, or move existing design-system folders. Relative paths in static preview cards are preserved.
+- Do not edit `src/index.js` or `src/index.d.ts` manually. Run `npm run generate:entry`.
+- Keep `_ds_bundle.js` while static preview cards and templates load it directly.
+- Keep `dist/` in Git unless the team switches to a formal package publishing workflow.
+- If a component is added under `components/`, add the matching `.d.ts` and run `npm run build`.

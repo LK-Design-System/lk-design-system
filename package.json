@@ -28,7 +28,6 @@
     "templates",
     "templates-cards",
     "_ds_bundle.js",
-    "_ds_manifest.json",
     "readme.md"
   ],
   "sideEffects": [
