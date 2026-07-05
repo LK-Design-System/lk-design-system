@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * LK ROBOTICS — IconButton
  * Square (or circular) control wrapping a single icon glyph. Pass an inline
- * SVG as children. Matches Button's calm hover (tint shift + faint lift).
+ * SVG as children. Matches Button's calm hover (tint shift, no lift).
  *
  * variant: soft (cool-gray) · solid (graphite) · signal (cyan-ink) ·
  *          ghost (hairline) · on-dark (translucent white, for navy)

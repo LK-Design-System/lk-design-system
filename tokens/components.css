@@ -23,28 +23,28 @@
   --component-button-icon-size: 18px;
   --component-button-disabled-opacity: 0.45;
   --component-button-shadow-rest: var(--shadow-xs);
-  --component-button-transform-hover: translateY(-2px);
-  --component-button-transform-pressed: translateY(0) scale(0.97);
+  --component-button-transform-hover: none;
+  --component-button-transform-pressed: none;
 
   --component-button-primary-bg: var(--color-primary);
   --component-button-primary-bg-hover: var(--color-primary-hover);
   --component-button-primary-fg: var(--text-on-signal);
-  --component-button-primary-shadow-hover: var(--shadow-accent);
+  --component-button-primary-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-secondary-bg: var(--color-secondary);
   --component-button-secondary-bg-hover: var(--color-secondary-hover);
   --component-button-secondary-fg: var(--text-on-inverse);
-  --component-button-secondary-shadow-hover: var(--shadow-indigo);
+  --component-button-secondary-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-signal-bg: var(--lk-accent-ink);
   --component-button-signal-bg-hover: var(--lk-primary-strong);
   --component-button-signal-fg: var(--text-on-signal);
-  --component-button-signal-shadow-hover: var(--shadow-accent);
+  --component-button-signal-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-dark-bg: var(--surface-inverse);
   --component-button-dark-bg-hover: var(--bw-slate);
   --component-button-dark-fg: var(--text-on-inverse);
-  --component-button-dark-shadow-hover: var(--shadow-md);
+  --component-button-dark-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-flat-bg: var(--bw-indigo-tint);
   --component-button-flat-bg-hover: var(--fill-strong);
