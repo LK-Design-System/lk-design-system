@@ -10,6 +10,12 @@
 npm.cmd run check:visual
 ```
 
+원본 preview 전체가 Storybook 정적 빌드 안에서 실제로 선택·렌더되는지 전수 확인하려면 아래를 실행합니다.
+
+```powershell
+npm.cmd run check:legacy-render
+```
+
 처음 실행하는 환경에서 Chromium이 없으면 먼저 실행합니다.
 
 ```powershell
@@ -19,6 +25,12 @@ npx playwright install chromium
 ## 산출물
 
 `visual-artifacts/smoke/` 아래에 PNG와 `manifest.json`이 생성됩니다. 이 폴더는 로컬 검증 산출물이므로 git에는 포함하지 않습니다.
+
+`check:legacy-render`는 `visual-artifacts/legacy-render/manifest.json`을 생성합니다. 현재 검증 범위는 다음 107개 원본 preview입니다.
+
+- Foundation guideline HTML 20개
+- Component card HTML 83개
+- Template card HTML 4개
 
 현재 smoke set은 다음을 캡처합니다.
 
@@ -37,6 +49,7 @@ npx playwright install chromium
 - Storybook 정적 빌드가 실제 브라우저에서 열리는지 검증합니다.
 - 원본 preview iframe과 React story가 최소 대표 화면에서 렌더링되는지 검증합니다.
 - screenshot 파일 크기와 manifest hash를 남겨 육안 검토와 추후 baseline 비교의 출발점으로 사용합니다.
+- `check:legacy-render`는 전체 원본 preview가 nested iframe 안에서 빈 화면이 아닌 실제 DOM/visible element로 렌더되는지 검증합니다.
 
 ## 아직 남은 일
 

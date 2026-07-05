@@ -44,6 +44,7 @@
     "check:parity": "node scripts/check-visual-parity.mjs",
     "check:coverage": "node scripts/check-audit-coverage.mjs",
     "check:visual": "npm run build:storybook && node scripts/capture-visual-smoke.mjs",
+    "check:legacy-render": "npm run build:storybook && node scripts/check-legacy-preview-render.mjs",
     "check:audit": "npm audit --omit=dev",
     "check": "npm run build && npm run check:tokens && npm run check:parity && npm run check:coverage && tsc --noEmit && npm run check:entry && npm run check:generated && npm run build:storybook && npm pack --dry-run --ignore-scripts",
     "storybook": "storybook dev -p 6006 --no-open",
