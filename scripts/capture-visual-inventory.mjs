@@ -113,6 +113,22 @@ function findStory(entries, importPath, exportName) {
   return found;
 }
 
+function parseComponentRows(auditSource) {
+  return [...auditSource.matchAll(/\[\s*'[^']*',\s*'[^']*',\s*'(components\/[^']+\.card\.html)',\s*'([^']*)'/g)].map(
+    (match) => ({
+      card: match[1],
+      exports: match[2]
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean),
+    })
+  );
+}
+
+function hasWord(source, name) {
+  return new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(source);
+}
+
 function implementationStories(entries) {
   const excluded = new Set([
     './stories/Audit.stories.jsx',
@@ -124,6 +140,52 @@ function implementationStories(entries) {
   return Object.values(entries)
     .filter((entry) => entry.type === 'story' && !excluded.has(entry.importPath))
     .sort((a, b) => `${a.importPath} ${a.exportName}`.localeCompare(`${b.importPath} ${b.exportName}`, 'ko'));
+}
+
+async function mapComponentCardsToStories(entries, componentCards) {
+  const rows = parseComponentRows(await read('stories/Audit.stories.jsx'));
+  const rowCards = rows.map((row) => row.card).sort();
+  const missingRows = componentCards.filter((file) => !rowCards.includes(file));
+  const staleRows = rowCards.filter((file) => !componentCards.includes(file));
+
+  assert(rows.length === componentCards.length, `Expected ${componentCards.length} Audit component rows, found ${rows.length}.`);
+  assert(missingRows.length === 0, `Visual inventory card/story map is missing Audit rows:\n${missingRows.join('\n')}`);
+  assert(staleRows.length === 0, `Visual inventory card/story map has stale Audit rows:\n${staleRows.join('\n')}`);
+
+  const stories = implementationStories(entries);
+  const sourceByImportPath = new Map();
+  for (const story of stories) {
+    if (!sourceByImportPath.has(story.importPath)) {
+      sourceByImportPath.set(story.importPath, await read(story.importPath.replace(/^\.\//, '')));
+    }
+  }
+
+  const failures = [];
+  const pairs = rows.map((row) => {
+    const matchedStories = stories
+      .filter((story) => {
+        const source = sourceByImportPath.get(story.importPath) || '';
+        return row.exports.some((name) => hasWord(source, name));
+      })
+      .map((story) => ({
+        id: story.id,
+        importPath: story.importPath,
+        exportName: story.exportName,
+        title: story.title,
+        name: story.name,
+      }));
+
+    if (matchedStories.length === 0) failures.push(`${row.card}: no React implementation story source references ${row.exports.join(', ')}`);
+
+    return {
+      card: row.card,
+      exports: row.exports,
+      stories: matchedStories,
+    };
+  });
+
+  assert(failures.length === 0, `Visual inventory card/story pairing failed:\n${failures.join('\n')}`);
+  return pairs;
 }
 
 async function ensureVisibleScreenshot(filePath, metadata) {
@@ -145,6 +207,7 @@ async function main() {
 
   const legacyStory = findStory(entries, './stories/LegacyPreviews.stories.jsx', 'ComponentCards');
   const reactStories = implementationStories(entries);
+  const cardStoryPairs = await mapComponentCardsToStories(entries, componentCards);
   await mkdir(path.join(outDir, 'legacy-components'), { recursive: true });
   await mkdir(path.join(outDir, 'react-stories'), { recursive: true });
 
@@ -156,7 +219,9 @@ async function main() {
     counts: {
       legacyComponentCards: componentCards.length,
       reactStories: reactStories.length,
+      cardStoryPairs: cardStoryPairs.length,
     },
+    cardStoryPairs,
     legacyComponentCards: [],
     reactStories: [],
   };
@@ -219,7 +284,7 @@ async function main() {
   const manifestPath = path.join(outDir, 'manifest.json');
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   console.log(
-    `Captured visual inventory: ${manifest.legacyComponentCards.length} legacy component cards and ${manifest.reactStories.length} React stories.`
+    `Captured visual inventory: ${manifest.legacyComponentCards.length} legacy component cards, ${manifest.reactStories.length} React stories, and ${manifest.cardStoryPairs.length} card/story pairs.`
   );
 }
 

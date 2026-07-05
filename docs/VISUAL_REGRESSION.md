@@ -70,6 +70,6 @@ The command writes local artifacts under `visual-artifacts/inventory/`; this dir
 
 - `legacy-components/`: all 83 original `components/**/*.card.html` files captured through the Storybook Legacy Preview iframe
 - `react-stories/`: every React implementation story, excluding docs/Audit/Legacy Preview pages
-- `manifest.json`: image path, byte size, SHA-256 hash, Storybook story id, and original viewport metadata
+- `manifest.json`: image path, byte size, SHA-256 hash, Storybook story id, original viewport metadata, and component-card-to-React-story pairing candidates
 
-This is not yet a pixel diff pass. It creates the evidence set needed to decide baseline storage, thresholds, and masking rules next.
+This is not yet a pixel diff pass. It creates the evidence set and traceability map needed to decide baseline storage, thresholds, and masking rules next.
