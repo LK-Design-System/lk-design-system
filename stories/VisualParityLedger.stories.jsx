@@ -37,7 +37,7 @@ const fixedRows = [
   ['P1', 'Visual inventory', 'Playwright PNG inventory plus card-to-story traceability for all 83 original component cards, all 83 same-viewport primary React captures, and every React implementation story'],
   ['P1', 'Visual review report', 'Local HTML report comparing each original card with its same-viewport primary React capture and paired React story screenshots'],
   ['P1', 'Visual pixel diff', 'Local pixel-diff manifest, diff PNGs, and HTML report for all 83 original-to-primary visual pairs'],
-  ['P1', 'Targeted parity stories', 'Dedicated Storybook parity stories added for high-mismatch form/status/overlay/viz/navigation cards so primary matching no longer falls back to broad inventory stories'],
+  ['P1', 'Targeted parity stories', 'Dedicated Storybook parity stories added for high-mismatch form/status/overlay/viz/navigation/layout/cards/selection cards so primary matching no longer falls back to broad inventory stories'],
   ['P0', 'Original previews', '원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출'],
 ];
 
@@ -66,7 +66,7 @@ const debtItems = [
   'npm run check:legacy-render는 전체 107개 원본 preview가 Storybook 정적 빌드에서 실제 DOM/visible element로 렌더되는지 검사합니다.',
   'npm run check:visual-inventory captures all 83 original component cards, all 83 same-viewport primary React counterparts, and every React implementation story into visual-artifacts/inventory/ with a manifest and card/story pairing candidates, strict story-block primary story selections, full story-block export coverage, Storybook iframe paths, and local review anchors. This is evidence collection before pixel diff baseline enforcement.',
   'npm run check:visual-review refreshes that inventory and writes visual-artifacts/inventory/review.html, a local QA report that places each original card beside its same-viewport primary React capture and keeps paired React story screenshots with primary-story badges below, then verifies that the report renders 83 strict pairs with 83 matching primaryReactCards, full export-block coverage, no broken images, and complete Storybook links.',
-  'npm run check:visual-diff refreshes the review inventory, computes pixel-level original-to-primary differences for all 83 pairs, writes visual-artifacts/inventory/diffs/manifest.json, red-highlight diff PNGs, and report.html, then verifies the report renders all 83 comparisons with no broken images. This is the measured mismatch ledger before a strict zero-diff or threshold gate is enforced. High-mismatch AutoComplete, DatePicker, SearchField, Slider, Skeleton, Spinner, Lightbox, Sheet, Scene3DFrame, Dimmer, ProgressBar, TelemetryGauge, and Breadcrumb cards now have dedicated parity stories so their primary visual pairs are no longer broad inventory pages.',
+  'npm run check:visual-diff refreshes the review inventory, computes pixel-level original-to-primary differences for all 83 pairs, writes visual-artifacts/inventory/diffs/manifest.json, red-highlight diff PNGs, and report.html, then verifies the report renders all 83 comparisons with no broken images. This is the measured mismatch ledger before a strict zero-diff or threshold gate is enforced. High-mismatch AutoComplete, DatePicker, SearchField, Slider, Skeleton, Spinner, Lightbox, Sheet, Scene3DFrame, Dimmer, ProgressBar, TelemetryGauge, Breadcrumb, Stack, ChecklistItem, Stat, Map2DCanvas, and Stepper cards now have dedicated parity stories so their primary visual pairs are no longer broad inventory pages.',
 ];
 
 const page = {

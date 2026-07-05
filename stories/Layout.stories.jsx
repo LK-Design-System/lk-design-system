@@ -97,3 +97,21 @@ export const PrimitiveInventory = {
     </main>
   ),
 };
+
+const parityBox = (children) => (
+  <div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 14, color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 600, textAlign: 'center' }}>
+    {children}
+  </div>
+);
+
+export const StackCard = {
+  name: 'Stack card parity',
+  render: () => (
+    <Stack direction="row" gap={12} align="center">
+      {parityBox('A')}
+      {parityBox('B')}
+      <Spacer />
+      {parityBox('?')}
+    </Stack>
+  ),
+};

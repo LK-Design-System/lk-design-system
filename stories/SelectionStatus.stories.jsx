@@ -107,7 +107,7 @@ export const SpinnerCard = {
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
       <Spinner />
-      <Spinner size={18} label="???? ?" />
+      <Spinner size={18} label="불러오는 중…" />
     </div>
   ),
 };
@@ -116,8 +116,16 @@ export const ProgressBarCard = {
   name: 'ProgressBar card parity',
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-      <ProgressBar value={68} label="???" showValue />
+      <ProgressBar value={68} label="업로드" showValue />
       <ProgressBar indeterminate />
     </div>
   ),
+};
+
+export const StepperCard = {
+  name: 'Stepper card parity',
+  render: () => {
+    const [count, setCount] = React.useState(2);
+    return <Stepper value={count} min={0} max={9} onChange={setCount} />;
+  },
 };

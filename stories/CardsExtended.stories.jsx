@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Card,
   ChecklistItem,
   FeatureCard,
   Icon,
@@ -88,5 +89,30 @@ export const FeatureSpecAndStats = {
         </div>
       </section>
     </main>
+  ),
+};
+
+export const ChecklistItemCard = {
+  name: 'ChecklistItem card parity',
+  render: () => (
+    <Card elevation="sm" padding={22} style={{ width: 260 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <ChecklistItem>순찰·청소 통합 운용</ChecklistItem>
+        <ChecklistItem>EO/IR 영상 감시</ChecklistItem>
+        <ChecklistItem cross muted>가격 · 장바구니</ChecklistItem>
+      </div>
+    </Card>
+  ),
+};
+
+export const StatCard = {
+  name: 'Stat card parity',
+  render: () => (
+    <Card elevation="sm" padding={22} style={{ width: 260 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <Stat value="2024" label="LK ROBOTICS 설립" accent="signal" />
+        <Stat value="7" label="보유 핵심기술" accent="ink" />
+      </div>
+    </Card>
   ),
 };

@@ -156,7 +156,7 @@ export const LightboxCard = {
     ];
     return (
       <div>
-        <Button variant="flat" onClick={() => setOpen(true)}>???? ??</Button>
+        <Button variant="flat" onClick={() => setOpen(true)}>이미지로 보기</Button>
         <Lightbox open={open} images={photos} index={index} onClose={() => setOpen(false)} onIndexChange={setIndex} />
       </div>
     );
@@ -167,11 +167,11 @@ export const SheetCard = {
   name: 'Sheet card parity',
   render: () => {
     const [open, setOpen] = React.useState(false);
-    const options = ['???', '???', '???'];
+    const options = ['최신순', '이름순', '상태순'];
     return (
       <div>
-        <Button variant="secondary" onClick={() => setOpen(true)}>?? ??</Button>
-        <Sheet open={open} title="??" onClose={() => setOpen(false)}>
+        <Button variant="secondary" onClick={() => setOpen(true)}>정렬 선택</Button>
+        <Sheet open={open} title="정렬" onClose={() => setOpen(false)}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {options.map((option) => (
               <button
@@ -219,8 +219,8 @@ export const DimmerCard = {
         fontSize: 14,
       }}
     >
-      ???
-      <Dimmer open blur><span style={{ color: 'var(--text-on-inverse)' }}>?? ?</span></Dimmer>
+      콘텐츠
+      <Dimmer open blur><span style={{ color: 'var(--text-on-inverse)' }}>처리 중…</span></Dimmer>
     </div>
   ),
 };

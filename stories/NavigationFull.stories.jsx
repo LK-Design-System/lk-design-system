@@ -165,5 +165,5 @@ export const MenusAndWizard = {
 
 export const BreadcrumbCard = {
   name: 'Breadcrumb card parity',
-  render: () => <Breadcrumb items={[{ label: '?', href: '#' }, { label: '??', href: '#' }, { label: 'LKR-T1' }]} />,
+  render: () => <Breadcrumb items={[{ label: '홈', href: '#' }, { label: '제품', href: '#' }, { label: 'LKR-T1' }]} />,
 };

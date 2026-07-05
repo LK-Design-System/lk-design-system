@@ -110,17 +110,17 @@ export const SelectorsAndGroups = {
 
 export const AutoCompleteCard = {
   name: 'AutoComplete card parity',
-  render: () => <AutoComplete placeholder="?? ??" options={['LKR-CP', 'LKR-T1', 'LKR-VisionX', 'LKR-SSAI', 'LKR-S1']} />,
+  render: () => <AutoComplete placeholder="모델 검색" options={['LKR-CP', 'LKR-T1', 'LKR-VisionX', 'LKR-SSAI', 'LKR-S1']} />,
 };
 
 export const DatePickerCard = {
   name: 'DatePicker card parity',
-  render: () => <DatePicker placeholder="?? ??" />,
+  render: () => <DatePicker placeholder="실사 희망일" />,
 };
 
 export const SearchFieldCard = {
   name: 'SearchField card parity',
-  render: () => <SearchField placeholder="????? ??" defaultValue="LKR-T1" />,
+  render: () => <SearchField placeholder="제품·산업 검색" defaultValue="LKR-T1" />,
 };
 
 export const SliderCard = {

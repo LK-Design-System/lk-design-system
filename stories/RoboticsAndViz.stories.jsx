@@ -186,7 +186,7 @@ export const Scene3DFrameCard = {
       toolbar={(
         <ViewerToolbar orientation="horizontal">
           <ViewerToolbarButton label="?"><Icon name="home" size={16} /></ViewerToolbarButton>
-          <ViewerToolbarButton label="???" active><Icon name="filter" size={16} /></ViewerToolbarButton>
+          <ViewerToolbarButton label="레이어" active><Icon name="filter" size={16} /></ViewerToolbarButton>
         </ViewerToolbar>
       )}
       style={{ height: 300 }}
@@ -204,11 +204,32 @@ export const TelemetryGaugeCard = {
         TelemetryGauge
       </div>
       <div style={{ display: 'flex', gap: 26, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        <TelemetryGauge value={82} unit="%" label="???" thresholds={{ low: 20, high: 50 }} />
-        <TelemetryGauge value={14} unit="%" label="???" thresholds={{ low: 20, high: 50 }} />
-        <TelemetryGauge value={1.4} max={2} unit="m/s" label="??" tone="signal" size={104} />
-        <TelemetryGauge value={68} unit="%" label="??" tone="positive" size={104} />
+        <TelemetryGauge value={82} unit="%" label="배터리" thresholds={{ low: 20, high: 50 }} />
+        <TelemetryGauge value={14} unit="%" label="배터리" thresholds={{ low: 20, high: 50 }} />
+        <TelemetryGauge value={1.4} max={2} unit="m/s" label="속도" tone="signal" size={104} />
+        <TelemetryGauge value={68} unit="%" label="신호" tone="positive" size={104} />
       </div>
     </div>
   ),
+};
+
+function ParityMapPlaceholder() {
+  const points = [[80, 210], [200, 110], [340, 70]];
+  return (
+    <svg width="440" height="280" viewBox="0 0 440 280" style={{ display: 'block' }}>
+      <rect x="30" y="26" width="380" height="228" fill="none" stroke="var(--label-normal)" strokeWidth="3" opacity="0.85" />
+      <path d="M30 150 H150 M150 26 V150 M250 150 V254 M250 200 H410" fill="none" stroke="var(--label-normal)" strokeWidth="3" opacity="0.6" />
+      <polyline points="80,210 80,110 200,110 200,70 340,70" fill="none" stroke="var(--accent-text)" strokeWidth="2.5" strokeDasharray="6 6" opacity="0.9" />
+      {points.map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="4" fill="var(--accent-text)" />)}
+      <g transform="translate(80,210)">
+        <circle r="9" fill="var(--lk-accent-ink)" />
+        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="#fff" transform="rotate(30)" />
+      </g>
+    </svg>
+  );
+}
+
+export const Map2DCanvasCard = {
+  name: 'Map2DCanvas card parity',
+  render: () => <Map2DCanvas style={{ height: 300 }}><ParityMapPlaceholder /></Map2DCanvas>,
 };

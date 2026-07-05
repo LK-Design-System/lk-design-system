@@ -136,10 +136,14 @@ function normalizedIdentifier(value) {
 
 function storySpecificity(story, exports) {
   const storyTokens = [story.exportName, story.name, story.id].map(normalizedIdentifier).filter(Boolean);
+  const cardTokens = [`${normalizedIdentifier(story.exportName)}card`, `${normalizedIdentifier(story.name)}card`, normalizedIdentifier(story.id)];
   return exports.reduce((score, exportName) => {
     const token = normalizedIdentifier(exportName);
     if (!token) return score;
-    if (storyTokens.some((storyToken) => storyToken === token || storyToken.includes(token))) return score + 2;
+    if (storyTokens.some((storyToken) => storyToken === token)) return score + 8;
+    if (storyTokens.some((storyToken) => storyToken === `${token}card` || storyToken.endsWith(`${token}card`))) return score + 6;
+    if (cardTokens.some((storyToken) => storyToken.endsWith(`${token}card`))) return score + 6;
+    if (storyTokens.some((storyToken) => storyToken.includes(token))) return score + 2;
     return score;
   }, 0);
 }
