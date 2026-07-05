@@ -44,9 +44,8 @@ npm run build
 Useful checks:
 
 ```powershell
-npx tsc --noEmit
-npm audit --omit=dev
-npm pack --dry-run
+npm run check
+npm run check:audit
 ```
 
 The package entry files are generated from `components/**/*.jsx`:
@@ -56,6 +55,22 @@ npm run generate:entry
 ```
 
 Do not edit `src/index.js` or `src/index.d.ts` by hand.
+
+## Storybook
+
+Storybook is the interactive component documentation surface.
+
+```powershell
+npm run storybook
+npm run build:storybook
+```
+
+The initial Storybook coverage includes foundations, buttons, form controls, data/status examples, robotics status cards, iconography, and navigation.
+
+## CI
+
+GitHub Actions runs `.github/workflows/ci.yml` on `main`, pull requests, and manual dispatch.
+The CI gate installs dependencies with `npm ci`, runs the package build, typecheck, generated-file drift checks, Storybook static build, package dry run, and runtime dependency audit.
 
 ## Component Coverage
 
@@ -87,3 +102,4 @@ Open `.html` files under `guidelines/`, `components/**`, or `templates-cards/` d
 The initial raw export is preserved in Git history. Current `main` is package-oriented and intentionally excludes export-only clutter such as scratch previews, uploaded references, screenshots, gap analyses, and invalid generated manifests.
 
 More details are in `docs/REPOSITORY_INVENTORY.md`.
+Component documentation and CI maintenance notes are in `docs/COMPONENT_WORKFLOW.md`.

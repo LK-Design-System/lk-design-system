@@ -57,7 +57,7 @@
   --ls-overline: 1.8px;  /* eyebrow / overline tracking (refined 700-weight) */
 
   /* ---- 7-tier type scale (Display/Title/Heading/Headline/Body/Label/
-     Caption) — provided alongside the LK --fs-*/--lh-*/--ls-* tokens so
+     Caption) provided alongside the LK fs/lh/ls token families so
      consumers can use this vocabulary directly. ---------------------- */
   --display1-size: 56px;  --display1-line: 72px;  --display1-spacing: -0.031em;
   --display2-size: 40px;  --display2-line: 52px;  --display2-spacing: -0.0282em;

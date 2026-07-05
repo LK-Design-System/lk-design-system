@@ -5,6 +5,7 @@ build/
 .nuxt/
 .vite/
 coverage/
+storybook-static/
 
 # Logs
 *.log
