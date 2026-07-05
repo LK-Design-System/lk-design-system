@@ -1,10 +1,13 @@
 import { access, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { chromium } from '@playwright/test';
 
 const root = process.cwd();
 const inventoryDir = path.join(root, 'visual-artifacts', 'inventory');
 const manifestPath = path.join(inventoryDir, 'manifest.json');
 const reportPath = path.join(inventoryDir, 'review.html');
+const reportSmokePath = path.join(inventoryDir, 'review-smoke.png');
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -38,7 +41,7 @@ function renderStoryCard(story, screenshot) {
         <strong>${escapeHtml(story.title || story.importPath)}</strong>
         <span>${escapeHtml(story.name || story.exportName)} · ${escapeHtml(story.id)}</span>
       </figcaption>
-      <img src="${escapeHtml(relFromReport(screenshot.path))}" alt="${escapeHtml(story.id)}" loading="lazy" />
+      <img src="${escapeHtml(relFromReport(screenshot.path))}" alt="${escapeHtml(story.id)}" />
     </figure>
   `;
 }
@@ -59,7 +62,7 @@ function renderPair(pair, legacyScreenshot, reactScreenshots) {
             <strong>Original component card</strong>
             <span>${escapeHtml(legacyScreenshot.viewport?.raw || '')}</span>
           </figcaption>
-          <img src="${escapeHtml(relFromReport(legacyScreenshot.path))}" alt="${escapeHtml(pair.card)}" loading="lazy" />
+          <img src="${escapeHtml(relFromReport(legacyScreenshot.path))}" alt="${escapeHtml(pair.card)}" />
         </figure>
         <div class="stories">
           ${reactScreenshots.map(({ story, screenshot }) => renderStoryCard(story, screenshot)).join('\n')}
@@ -67,6 +70,51 @@ function renderPair(pair, legacyScreenshot, reactScreenshots) {
       </div>
     </section>
   `;
+}
+
+async function verifyRenderedReport(expectedPairs) {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1100 }, deviceScaleFactor: 1 });
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
+
+  try {
+    await page.goto(pathToFileURL(reportPath).href, { waitUntil: 'load', timeout: 30000 });
+    await page.waitForLoadState('networkidle', { timeout: 30000 });
+    await page.waitForSelector('.pair', { timeout: 15000 });
+
+    const title = await page.title();
+    assert(title === 'LK ROBOTICS Visual Inventory Review', `Unexpected visual review title: ${title}`);
+
+    const pairCount = await page.locator('.pair').count();
+    assert(pairCount === expectedPairs, `Expected ${expectedPairs} rendered review pairs, found ${pairCount}.`);
+
+    const brokenImages = await page.$$eval('img', (images) =>
+      images
+        .map((image) => ({
+          src: image.getAttribute('src') || '',
+          width: image.naturalWidth,
+          height: image.naturalHeight,
+        }))
+        .filter((image) => image.width <= 0 || image.height <= 0)
+    );
+    assert(brokenImages.length === 0, `Visual review report has broken images:\n${brokenImages.map((image) => image.src).join('\n')}`);
+
+    const firstPairText = await page.locator('.pair').first().innerText();
+    assert(firstPairText.includes('Original component card'), 'Rendered report is missing the original-card label.');
+    assert(firstPairText.includes('React story') || firstPairText.includes('React stories'), 'Rendered report is missing React story labels.');
+
+    await page.screenshot({ path: reportSmokePath, fullPage: false, animations: 'disabled' });
+  } finally {
+    await page.close();
+    await browser.close();
+  }
+
+  assert(errors.length === 0, `Visual review report emitted browser errors:\n${errors.join('\n')}`);
+  await assertFile(path.relative(root, reportSmokePath).replaceAll('\\', '/'), 'Visual review smoke screenshot');
 }
 
 async function main() {
@@ -250,7 +298,12 @@ async function main() {
 `;
 
   await writeFile(reportPath, html, 'utf8');
-  console.log(`Generated visual review report: ${path.relative(root, reportPath).replaceAll('\\', '/')}`);
+  await verifyRenderedReport(pairs.length);
+  console.log(
+    `Generated visual review report: ${path.relative(root, reportPath).replaceAll('\\', '/')} and ${path
+      .relative(root, reportSmokePath)
+      .replaceAll('\\', '/')}`
+  );
 }
 
 main().catch((error) => {

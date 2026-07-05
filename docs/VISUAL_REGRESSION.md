@@ -82,4 +82,4 @@ To review original cards beside their mapped React implementation stories, run:
 npm.cmd run check:visual-review
 ```
 
-This refreshes the inventory and writes `visual-artifacts/inventory/review.html`. The report is a local QA aid: it validates that every original component card has a legacy screenshot, at least one paired React story, and screenshot files for those stories before writing the side-by-side review page.
+This refreshes the inventory and writes `visual-artifacts/inventory/review.html`. The report is a local QA aid: it validates that every original component card has a legacy screenshot, at least one paired React story, and screenshot files for those stories before writing the side-by-side review page. It then opens the report in Playwright, checks that all 83 pairs and all images render, and writes `visual-artifacts/inventory/review-smoke.png`.

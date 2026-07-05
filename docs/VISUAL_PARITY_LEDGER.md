@@ -71,7 +71,7 @@
 - `npm run check:visual`은 Storybook 정적 빌드 후 대표 9개 화면을 `visual-artifacts/smoke/`에 캡처합니다. 산출물은 git에 포함하지 않으며, 전체 baseline 비교는 다음 단계입니다.
 - `npm run check:legacy-render`는 전체 107개 원본 preview가 Storybook 정적 빌드에서 실제 DOM/visible element로 렌더되는지 검사합니다.
 - `npm run check:visual-inventory` captures all 83 original component cards and every React implementation story into `visual-artifacts/inventory/` with a manifest and card/story pairing candidates. This is evidence collection before pixel diff baseline enforcement.
-- `npm run check:visual-review` refreshes that inventory and writes `visual-artifacts/inventory/review.html`, a local side-by-side QA report for each original card and its paired React story screenshots.
+- `npm run check:visual-review` refreshes that inventory and writes `visual-artifacts/inventory/review.html`, a local side-by-side QA report for each original card and its paired React story screenshots, then verifies that the report renders 83 pairs with no broken images.
 - 토큰 source-of-truth는 `tokens/source.json`, CSS 토큰, generated dist가 맞물립니다. Figma Tokens 연동 전에는 수동 변경 후 `npm run check:tokens`로 계속 막아야 합니다.
 - 자동 시각 회귀 테스트는 smoke 캡처 단계까지 마련했습니다. 아직 전체 원본 대비 pixel diff baseline은 없습니다.
 
