@@ -23,7 +23,7 @@ export const TopBarDefault = {
         brand={
           <strong style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--label-strong)' }}>
             <Icon name="robot" size={22} color="var(--lk-accent-ink)" />
-            LK Robotics
+            LK ROBOTICS
           </strong>
         }
         actions={<Button size="sm">새 미션</Button>}

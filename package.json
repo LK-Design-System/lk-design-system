@@ -2,7 +2,7 @@
   "name": "@lk-robotics/design-system-core",
   "version": "0.1.0",
   "private": true,
-  "description": "LK Robotics core design system: tokens, components, assets, templates, and static previews.",
+  "description": "LK ROBOTICS core design system: tokens, components, assets, templates, and static previews.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

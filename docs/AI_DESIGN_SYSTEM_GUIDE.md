@@ -1,6 +1,6 @@
 # AI 디자인 시스템 가이드
 
-AI 도구에게 LK Robotics UI 설계나 구현을 맡길 때 가장 먼저 제공할 문서입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
+AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제공할 문서입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
 
 ## 기준 소스
 
@@ -34,7 +34,7 @@ UI 코드를 생성할 때:
 - 제품 레이아웃, 카피, 상태, surface는 semantic 토큰을 사용합니다.
 - 디자인 시스템을 확장하는 작업이 아니라면 새 hex 색상, 임의 그림자, 일회성 spacing을 만들지 않습니다.
 - 다른 AI 도구에게 토큰 계층을 설명할 때 `tokens/source.json`을 우회하지 않습니다.
-- LK Robotics 시각 톤을 유지합니다: 차가운 navy 기반, 절제된 azure signal, 차분한 상태 색상, 밀도 있지만 안정적인 운영 UI.
+- LK ROBOTICS 시각 톤을 유지합니다: 차가운 navy 기반, 절제된 azure signal, 차분한 상태 색상, 밀도 있지만 안정적인 운영 UI.
 
 ## 컴포넌트 토큰 계약
 
@@ -90,7 +90,7 @@ UI 코드를 생성할 때:
 AI 도구에 요청할 때 아래 구조를 사용하세요.
 
 ```text
-You are designing with the LK Robotics design system.
+You are designing with the LK ROBOTICS design system.
 Read docs/AI_DESIGN_SYSTEM_GUIDE.md and tokens/source.json first.
 Import @lk-robotics/design-system-core/styles.css.
 Prefer exported components from @lk-robotics/design-system-core.

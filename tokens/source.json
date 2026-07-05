@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.org/TR/drafts/format/",
-  "name": "LK Robotics 코어 디자인 토큰",
+  "name": "LK ROBOTICS 코어 디자인 토큰",
   "version": "0.1.0",
   "metadata": {
     "status": "initial-machine-readable-source",
@@ -24,7 +24,7 @@
         "$type": "color",
         "$value": "#0E1329",
         "css": "--bw-ink",
-        "$description": "LK Robotics navy ink 원값입니다."
+        "$description": "LK ROBOTICS navy ink 원값입니다."
       },
       "brandNavyDeep": {
         "$type": "color",

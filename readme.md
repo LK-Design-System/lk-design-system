@@ -70,7 +70,7 @@ npm run build:storybook
 
 ## AI 및 Figma 토큰 워크플로
 
-AI 도구로 LK Robotics UI를 생성할 때는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`를 먼저 사용하세요.
+AI 도구로 LK ROBOTICS UI를 생성할 때는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`를 먼저 사용하세요.
 Figma Variables를 내보내거나 가져올 때는 `docs/FIGMA_TOKEN_WORKFLOW.md`를 기준으로 삼으세요.
 
 토큰 계층:
