@@ -55,7 +55,7 @@ function renderStoryCard(story, screenshot) {
   `;
 }
 
-function renderPair(pair, legacyScreenshot, reactScreenshots) {
+function renderPair(pair, legacyScreenshot, primaryScreenshot, reactScreenshots) {
   const anchorId = (pair.reviewAnchor || '').replace(/^#/, '');
   const legacyLink = storybookRelPath(pair.legacyStoryPath);
   const primaryLink = storybookRelPath(pair.primaryStoryPath);
@@ -82,6 +82,15 @@ function renderPair(pair, legacyScreenshot, reactScreenshots) {
           </figcaption>
           <img src="${escapeHtml(relFromReport(legacyScreenshot.path))}" alt="${escapeHtml(pair.card)}" />
         </figure>
+        <figure class="primary-capture">
+          <figcaption>
+            <strong>Primary React capture</strong>
+            <span>${escapeHtml(primaryScreenshot.id)} / ${escapeHtml(primaryScreenshot.viewport?.raw || '')}</span>
+          </figcaption>
+          <img src="${escapeHtml(relFromReport(primaryScreenshot.path))}" alt="${escapeHtml(`${pair.card} primary React capture`)}" />
+        </figure>
+      </div>
+      <div class="story-grid">
         <div class="stories">
           ${reactScreenshots.map(({ story, screenshot }) => renderStoryCard(story, screenshot)).join('\n')}
         </div>
@@ -123,6 +132,7 @@ async function verifyRenderedReport(expectedPairs) {
 
     const firstPairText = await page.locator('.pair').first().innerText();
     assert(firstPairText.includes('Original component card'), 'Rendered report is missing the original-card label.');
+    assert(firstPairText.includes('Primary React capture'), 'Rendered report is missing the primary React capture label.');
     assert(firstPairText.includes('React story') || firstPairText.includes('React stories'), 'Rendered report is missing React story labels.');
 
     const pairLinkCount = await page.locator('.pair > header .links a').count();
@@ -151,20 +161,29 @@ async function verifyRenderedReport(expectedPairs) {
 async function main() {
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
   const legacyByCard = new Map(manifest.legacyComponentCards.map((item) => [item.selected, item]));
+  const primaryByCard = new Map((manifest.primaryReactCards || []).map((item) => [item.selected, item]));
   const reactById = new Map(manifest.reactStories.map((item) => [item.id, item]));
   const pairs = manifest.cardStoryPairs || [];
   const failures = [];
 
   assert(manifest.counts?.legacyComponentCards === 83, `Expected 83 legacy component cards, found ${manifest.counts?.legacyComponentCards}.`);
+  assert(manifest.counts?.primaryReactCards === 83, `Expected 83 primary React card captures, found ${manifest.counts?.primaryReactCards}.`);
   assert(manifest.counts?.cardStoryPairs === 83, `Expected 83 card/story pairs, found ${manifest.counts?.cardStoryPairs}.`);
   assert(pairs.length === 83, `Expected 83 card/story pair records, found ${pairs.length}.`);
+  assert((manifest.primaryReactCards || []).length === 83, `Expected 83 primary React screenshot records, found ${(manifest.primaryReactCards || []).length}.`);
 
   for (const legacy of manifest.legacyComponentCards) await assertFile(legacy.path, 'Legacy screenshot');
+  for (const primary of manifest.primaryReactCards || []) await assertFile(primary.path, 'Primary React screenshot');
   for (const react of manifest.reactStories) await assertFile(react.path, 'React screenshot');
 
   for (const pair of pairs) {
     const legacyScreenshot = legacyByCard.get(pair.card);
+    const primaryScreenshot = primaryByCard.get(pair.card);
     if (!legacyScreenshot) failures.push(`${pair.card}: missing legacy screenshot`);
+    if (!primaryScreenshot) failures.push(`${pair.card}: missing same-viewport primary React screenshot`);
+    if (primaryScreenshot && primaryScreenshot.id !== pair.primaryStory?.id) {
+      failures.push(`${pair.card}: primary React screenshot id ${primaryScreenshot.id} does not match primary story ${pair.primaryStory?.id}`);
+    }
     if (!pair.stories?.length) failures.push(`${pair.card}: no paired React stories`);
     if (!pair.primaryStory?.id) failures.push(`${pair.card}: missing primary React story`);
     if (pair.primaryStory?.matchMode !== 'story-block') failures.push(`${pair.card}: primary React story is not a strict story-block match`);
@@ -188,11 +207,12 @@ async function main() {
   const renderedPairs = pairs
     .map((pair) => {
       const legacyScreenshot = legacyByCard.get(pair.card);
+      const primaryScreenshot = primaryByCard.get(pair.card);
       const reactScreenshots = pair.stories.map((story) => ({
         story: { ...story, primary: story.id === pair.primaryStory?.id },
         screenshot: reactById.get(story.id),
       }));
-      return renderPair(pair, legacyScreenshot, reactScreenshots);
+      return renderPair(pair, legacyScreenshot, primaryScreenshot, reactScreenshots);
     })
     .join('\n');
 
@@ -306,7 +326,7 @@ async function main() {
     a:hover { text-decoration: underline; }
     .grid {
       display: grid;
-      grid-template-columns: minmax(320px, .92fr) minmax(360px, 1.08fr);
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
       gap: 16px;
       align-items: start;
     }
@@ -355,6 +375,9 @@ async function main() {
       height: auto;
       background: white;
     }
+    .story-grid {
+      margin-top: 16px;
+    }
     .stories {
       display: grid;
       gap: 16px;
@@ -371,12 +394,13 @@ async function main() {
   <main>
     <section class="hero">
       <strong>LK ROBOTICS VISUAL INVENTORY REVIEW</strong>
-      <h1>Original component cards ↔ React implementation stories</h1>
+      <h1>Original component cards to React implementation stories</h1>
       <p class="summary">
         <span>Generated from <code>visual-artifacts/inventory/manifest.json</code></span>
-        <span>· ${escapeHtml(manifest.counts.legacyComponentCards)} original cards</span>
-        <span>· ${escapeHtml(manifest.counts.reactStories)} React stories</span>
-        <span>· ${escapeHtml(manifest.counts.cardStoryPairs)} traceability pairs</span>
+        <span>- ${escapeHtml(manifest.counts.legacyComponentCards)} original cards</span>
+        <span>- ${escapeHtml(manifest.counts.primaryReactCards)} primary React card captures</span>
+        <span>- ${escapeHtml(manifest.counts.reactStories)} React stories</span>
+        <span>- ${escapeHtml(manifest.counts.cardStoryPairs)} traceability pairs</span>
       </p>
     </section>
     ${renderedPairs}

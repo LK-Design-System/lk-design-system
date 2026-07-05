@@ -256,8 +256,10 @@ async function main() {
   const legacyStory = findStory(entries, './stories/LegacyPreviews.stories.jsx', 'ComponentCards');
   const reactStories = implementationStories(entries);
   const cardStoryPairs = await mapComponentCardsToStories(entries, componentCards);
+  const pairByCard = new Map(cardStoryPairs.map((pair) => [pair.card, pair]));
   await mkdir(path.join(outDir, 'legacy-components'), { recursive: true });
   await mkdir(path.join(outDir, 'react-stories'), { recursive: true });
+  await mkdir(path.join(outDir, 'react-primary'), { recursive: true });
 
   const { server, origin } = await startStaticServer();
   const browser = await chromium.launch();
@@ -267,11 +269,13 @@ async function main() {
     counts: {
       legacyComponentCards: componentCards.length,
       reactStories: reactStories.length,
+      primaryReactCards: componentCards.length,
       cardStoryPairs: cardStoryPairs.length,
     },
     cardStoryPairs,
     legacyComponentCards: [],
     reactStories: [],
+    primaryReactCards: [],
   };
 
   try {
@@ -298,6 +302,25 @@ async function main() {
           selected,
           id: legacyStory.id,
           viewport: { width: viewport.width, height: viewport.height, raw: viewport.raw },
+        })
+      );
+
+      const pair = pairByCard.get(selected);
+      assert(pair?.primaryStory?.id, `Unable to find primary React story for ${selected}`);
+      await page.goto(storyUrl(origin, pair.primaryStory.id), { waitUntil: 'networkidle', timeout: 30000 });
+      await page.evaluate(async () => {
+        if (document.fonts?.ready) await document.fonts.ready;
+      });
+      await page.waitForTimeout(350);
+
+      const primaryOutputPath = path.join(outDir, 'react-primary', `${slug(selected)}.png`);
+      await page.screenshot({ path: primaryOutputPath, fullPage: true, animations: 'disabled' });
+      manifest.primaryReactCards.push(
+        await ensureVisibleScreenshot(primaryOutputPath, {
+          selected,
+          id: pair.primaryStory.id,
+          viewport: { width: viewport.width, height: viewport.height, raw: viewport.raw },
+          primaryStory: pair.primaryStory,
         })
       );
     }
@@ -332,7 +355,7 @@ async function main() {
   const manifestPath = path.join(outDir, 'manifest.json');
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   console.log(
-    `Captured visual inventory: ${manifest.legacyComponentCards.length} legacy component cards, ${manifest.reactStories.length} React stories, and ${manifest.cardStoryPairs.length} card/story pairs.`
+    `Captured visual inventory: ${manifest.legacyComponentCards.length} legacy component cards, ${manifest.primaryReactCards.length} primary React cards, ${manifest.reactStories.length} React stories, and ${manifest.cardStoryPairs.length} card/story pairs.`
   );
 }
 
