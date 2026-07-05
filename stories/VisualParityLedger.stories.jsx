@@ -31,6 +31,7 @@ const fixedRows = [
   ['P1', 'Non-button typography', 'React 컴포넌트에 남아 있던 음수 자간을 0으로 정규화'],
   ['P1', 'Card motion', '원본 미리보기 번들(_ds_bundle.js) 기준으로 Card/NewsCard/ProductCard hover motion 유지 여부 검증'],
   ['P1', 'Coverage guard', '원본 guideline/component/template 카드가 Audit와 Legacy Preview에 모두 잡히는지 자동 검증'],
+  ['P1', 'Visual smoke', 'Playwright로 대표 원본 preview와 React Storybook 화면 9개를 실제 브라우저 PNG로 캡처'],
   ['P0', 'Original previews', '원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출'],
 ];
 
@@ -54,7 +55,7 @@ const debtItems = [
   'React 컴포넌트의 음수 자간은 0으로 정규화했습니다. 원본 정적 HTML(*.card.html)은 비교 기준으로 보존하므로 기존 자간이 그대로 남아 있을 수 있습니다.',
   '카드 계열의 hover movement와 이미지 scale은 원본 미리보기 번들의 Card/NewsCard/ProductCard 동작과 일치하므로 유지합니다. 이후 변경 시 npm run check:parity의 motion contract와 함께 제품 결정 기록을 갱신해야 합니다.',
   'npm run check:coverage가 원본 20개 guideline, 83개 component card, 4개 template card의 Audit/Legacy Preview 누락과 @dsCard 메타 누락을 차단합니다.',
-  '자동 시각 회귀 테스트는 아직 없습니다. Storybook build와 a11y만으로는 원본 대비 시각 편차를 완전히 잡지 못합니다.',
+  'npm run check:visual은 Storybook 정적 빌드 후 대표 9개 화면을 visual-artifacts/smoke/에 캡처합니다. 전체 원본 대비 pixel diff baseline은 다음 단계입니다.',
 ];
 
 const page = {
