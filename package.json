@@ -1,0 +1,68 @@
+{
+  "name": "@lk-robotics/design-system-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LK Robotics core design system: tokens, components, assets, templates, and static previews.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./styles.css",
+    "./tokens/*": "./tokens/*",
+    "./assets/*": "./assets/*",
+    "./components/*": "./components/*"
+  },
+  "files": [
+    "dist",
+    "components",
+    "tokens",
+    "assets",
+    "styles.css",
+    "guidelines",
+    "templates",
+    "templates-cards",
+    "_ds_bundle.js",
+    "_ds_manifest.json",
+    "readme.md"
+  ],
+  "sideEffects": [
+    "*.css",
+    "styles.css",
+    "tokens/*.css"
+  ],
+  "scripts": {
+    "generate:entry": "node scripts/generate-entry.mjs",
+    "build": "npm run generate:entry && tsup && node scripts/copy-types.mjs",
+    "check:entry": "npm run generate:entry && git diff --exit-code -- src/index.js src/index.d.ts",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

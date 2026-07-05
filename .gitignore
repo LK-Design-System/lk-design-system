@@ -1,6 +1,5 @@
 # Local dependency and build output
 node_modules/
-dist/
 build/
 .next/
 .nuxt/

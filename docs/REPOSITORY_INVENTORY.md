@@ -46,8 +46,8 @@ The root `readme.md` was replaced with a clean repository overview so a private 
 
 - Several original Markdown and HTML documents contain mojibake-corrupted Korean text.
 - `_ds_manifest.json` is useful for simple inventory extraction, but strict JSON parsers can fail because some localized card strings appear malformed.
-- No package metadata exists yet. This is currently an artifact repository, not an installable library.
-- No automated build/test command exists yet.
+- Package metadata and a repeatable build command now exist on the package-conversion branch.
+- The package entry is generated from component source files by `scripts/generate-entry.mjs`.
 
 ## Non-Destructive Cleanup Policy
 
