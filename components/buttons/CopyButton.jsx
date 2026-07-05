@@ -16,7 +16,7 @@ export function CopyButton({ value, children = '복사', copiedLabel = '복사�
   return (
     <button
       type="button" onClick={copy}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: 7, height: h, padding: '0 14px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', background: copied ? 'var(--lk-accent-tint-2)' : 'var(--bw-indigo-tint)', color: copied ? 'var(--lk-accent-ink)' : 'var(--label-normal)', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.1px', transition: 'var(--component-button-transition)', ...style }}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 7, height: h, padding: '0 14px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', background: copied ? 'var(--lk-accent-tint-2)' : 'var(--bw-indigo-tint)', color: copied ? 'var(--lk-accent-ink)' : 'var(--label-normal)', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 'var(--fw-bold)', letterSpacing: 0, transition: 'var(--component-button-transition)', ...style }}
       {...rest}
     >
       {copied

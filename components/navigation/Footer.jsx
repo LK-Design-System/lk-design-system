@@ -42,10 +42,8 @@ function BackToTopButton() {
       style={{ position: 'fixed', right: 28, bottom: 28, zIndex: 60, width: 50, height: 50, borderRadius: 999,
         border: '1px solid var(--bw-border)', background: 'var(--bw-white)', color: 'var(--bw-ink)', cursor: 'pointer',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-md)',
-        opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(12px)', pointerEvents: show ? 'auto' : 'none',
-        transition: 'opacity 240ms var(--ease-out), transform 240ms var(--ease-out), box-shadow 200ms var(--ease-out)' }}
-      onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = 'var(--shadow-lg)'; }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}>
+        opacity: show ? 1 : 0, transform: show ? 'none' : 'translateY(8px)', pointerEvents: show ? 'auto' : 'none',
+        transition: 'opacity 180ms var(--ease-out), transform 180ms var(--ease-out)' }}>
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6" /></svg>
     </button>
   );
@@ -59,13 +57,13 @@ export function Footer({
   const [hov, setHov] = React.useState(null);
   const linkEl = (key, l, base, hover, size, weight) => (
     <a key={key} href={l.href || '#'} onMouseEnter={() => setHov(key)} onMouseLeave={() => setHov(null)}
-      style={{ fontFamily: 'var(--font-sans)', fontSize: size, fontWeight: weight || 'var(--fw-medium)', lineHeight: 1.5, letterSpacing: '-0.1px', textDecoration: 'none', whiteSpace: 'nowrap', color: hov === key ? hover : base, transition: 'color 160ms ease', wordBreak: 'keep-all' }}>{l.label}</a>
+      style={{ fontFamily: 'var(--font-sans)', fontSize: size, fontWeight: weight || 'var(--fw-medium)', lineHeight: 1.5, letterSpacing: 0, textDecoration: 'none', whiteSpace: 'nowrap', color: hov === key ? hover : base, transition: 'color 160ms ease', wordBreak: 'keep-all' }}>{l.label}</a>
   );
 
   if (compact) {
     return (
       <footer style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px 24px', flexWrap: 'wrap', padding: '14px 2px', borderTop: '1px solid var(--border-subtle)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-        <span style={{ fontSize: 12.5, letterSpacing: '-0.1px', color: 'var(--label-assistive)' }}>{copyright}</span>
+        <span style={{ fontSize: 12.5, letterSpacing: 0, color: 'var(--label-assistive)' }}>{copyright}</span>
         {links.length > 0 && (
           <span style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
             {links.map((l, i) => linkEl('c' + i, l, 'var(--label-alternative)', 'var(--label-normal)', 12.5))}
@@ -95,7 +93,7 @@ export function Footer({
               {brand != null && <div style={{ flex: '1 1 240px', minWidth: 220 }}>{brand}</div>}
               {columns.map((col, ci) => (
                 <nav key={ci} aria-label={typeof col.heading === 'string' ? col.heading : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 11, minWidth: 108 }}>
-                  {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: '-0.2px', lineHeight: 1.5, color: '#fff', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
+                  {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: '#fff', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
                   {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.92)', 13.5))}
                 </nav>
               ))}

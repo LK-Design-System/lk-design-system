@@ -1,0 +1,206 @@
+import React from 'react';
+
+const meta = {
+  title: '문서/보정표',
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '기존 정적 디자인 시스템 카드와 현재 React/Storybook 구현의 일치 여부를 추적하는 보정표입니다.',
+      },
+    },
+  },
+};
+
+export default meta;
+
+const coverageRows = [
+  ['Foundation guidelines', '20', 'Storybook 원본 미리보기 노출'],
+  ['Component cards', '83', '원본 카드와 React export 매핑 완료'],
+  ['Template cards', '4', '원본 카드와 starter 폴더 매핑 완료'],
+  ['Runtime export gaps', '0', '카드에서 필요한 public export 누락 없음'],
+  ['React exports', '145', '패키지 엔트리에서 배포 대상 생성'],
+];
+
+const fixedRows = [
+  ['P0', 'Button', 'CTA 화살표 제거, 호버 상승 제거, 호버 색상 변화 폭 축소'],
+  ['P0', 'Button family', 'ButtonGroup, CopyButton, Link, SocialButton, SplitButton, TextButton 자간 0 정규화'],
+  ['P0', 'TopBar', '기존 디자인 시스템 상단바 구조 기준으로 라이트/다크 대비 보정'],
+  ['P0', 'RobotStatusCard', '다크 배경 카드, 배지, 상태 수치 대비 보정 및 접근성 점검'],
+  ['P0', 'Footer', 'BackToTop 호버 상승 제거, Footer 링크/헤딩 자간 0 정규화'],
+  ['P0', 'Original previews', '원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출'],
+];
+
+const ledgerRows = [
+  ['P0', 'Navigation: Footer, TopBar', 'Fixed', '실제 소비 앱에서 높이, sticky, dark surface 재검증'],
+  ['P0', 'Navigation details', 'Watch', 'SideNav, Tabs, Breadcrumb, Pagination, BottomNav, Steps, UserMenu spacing/상태 검증'],
+  ['P0', 'Buttons', 'Fixed / Watch', 'hover/focus/disabled 상태를 Storybook interaction 기준으로 고정'],
+  ['P0', 'Robotics: RobotStatusCard', 'Fixed', '라이트/다크, selected, status별 시각 회귀 테스트 추가'],
+  ['P0', 'Robotics details', 'Watch', 'EquipmentStatusCard, ConnectionBadge, TopicTree, Joystick 상태색/밀도/대비 검증'],
+  ['P1', 'Forms', 'Watch', 'AutoComplete, DatePicker, SearchField, Slider, Input 계열 focus/error/dark 검증'],
+  ['P1', 'Data', 'Watch', 'Table, Calendar, AvatarGroup 행 높이, sticky, empty/loading 보강'],
+  ['P1', 'Overlay', 'Watch', 'Modal, Drawer, Sheet, Popover, DropdownMenu, Toast, Alert focus/dark 검증'],
+  ['P1', 'Selection', 'Watch', 'selected/pressed/disabled 상태의 토큰 일관성 검증'],
+  ['P2', 'Cards', 'Watch', 'ProductCard, NewsCard, FeatureCard, MetricCard, Stat hover movement 재판정'],
+  ['P2', 'Content', 'Watch', 'Accordion, ListCell, Tooltip, Badge, Timeline, Divider 타이포/상호작용 검증'],
+  ['P2', 'Layout', 'Watch', 'Section, Grid, Stack, Cluster, Split, Columns, ScrollArea section gap 검증'],
+  ['P2', 'Viz', 'Watch', 'Map2DCanvas, Scene3DFrame, ViewerToolbar, TelemetryGauge, VideoStreamTile resize/dark 검증'],
+];
+
+const debtItems = [
+  '일부 비버튼 컴포넌트에는 기존 음수 자간이 남아 있습니다. 다음 라운드에서 forms, overlay, content, navigation 세부 컴포넌트를 같은 기준으로 정리합니다.',
+  '카드 계열의 hover movement와 이미지 scale은 아직 남아 있습니다. 버튼과 같은 원칙을 카드에도 적용할지 제품 톤 기준으로 결정해야 합니다.',
+  'tokens/components.css에는 --component-card-hover-transform이 남아 있습니다. 카드 모션 표준을 확정할 때 함께 정리합니다.',
+  '자동 시각 회귀 테스트는 아직 없습니다. Storybook build와 a11y만으로는 원본 대비 시각 편차를 완전히 잡지 못합니다.',
+];
+
+const page = {
+  maxWidth: 1180,
+  margin: '0 auto',
+  display: 'grid',
+  gap: 'var(--space-8)',
+  color: 'var(--label-normal)',
+  letterSpacing: 0,
+};
+
+const panel = {
+  background: 'var(--surface-card)',
+  border: '1px solid var(--border-subtle)',
+  borderRadius: 'var(--radius-xl)',
+  boxShadow: 'var(--shadow-xs)',
+};
+
+function Pill({ children, tone = 'neutral' }) {
+  const styles = {
+    Fixed: ['rgba(79, 118, 93, 0.16)', 'var(--bw-green-600)'],
+    Watch: ['rgba(0, 103, 168, 0.12)', 'var(--color-primary-hover)'],
+    Gap: ['rgba(207, 99, 96, 0.16)', '#9B3D3A'],
+    Deferred: ['var(--fill-alt)', 'var(--label-alternative)'],
+    neutral: ['var(--fill-alt)', 'var(--label-neutral)'],
+  };
+  const [background, color] = styles[children] || styles[tone] || styles.neutral;
+  return (
+    <span
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        minHeight: 24,
+        padding: '2px 9px',
+        borderRadius: 'var(--radius-pill)',
+        background,
+        color,
+        fontSize: 12,
+        fontWeight: 800,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function Section({ title, description, children }) {
+  return (
+    <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+      <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+        <h2 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--fs-h3)', lineHeight: 'var(--lh-h3)' }}>
+          {title}
+        </h2>
+        {description ? (
+          <p style={{ margin: 0, maxWidth: 860, color: 'var(--label-neutral)', lineHeight: 1.65 }}>{description}</p>
+        ) : null}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function Table({ columns, rows, statusColumn = -1 }) {
+  return (
+    <div style={{ ...panel, overflowX: 'auto' }}>
+      <table style={{ width: '100%', minWidth: 820, borderCollapse: 'collapse', fontSize: 14 }}>
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th
+                key={column}
+                scope="col"
+                style={{
+                  padding: '14px 16px',
+                  textAlign: 'left',
+                  color: 'var(--label-normal)',
+                  borderBottom: '1px solid var(--border-subtle)',
+                  background: 'var(--fill-alt)',
+                  fontSize: 13,
+                }}
+              >
+                {column}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.join('-')}>
+              {row.map((cell, index) => (
+                <td
+                  key={`${row[1]}-${index}`}
+                  style={{
+                    padding: '14px 16px',
+                    borderBottom: '1px solid var(--border-subtle)',
+                    color: index === 1 ? 'var(--label-normal)' : 'var(--label-neutral)',
+                    fontWeight: index === 1 ? 700 : 500,
+                    verticalAlign: 'top',
+                    lineHeight: 1.55,
+                  }}
+                >
+                  {index === statusColumn ? <Pill>{cell}</Pill> : cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export const CurrentLedger = {
+  name: '현재 보정표',
+  render: () => (
+    <main style={page}>
+      <header style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <strong style={{ color: 'var(--color-primary)', fontSize: 13 }}>LK ROBOTICS DESIGN SYSTEM</strong>
+        <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--fs-h1)', lineHeight: 'var(--lh-h1)' }}>
+          원본 대비 현재 구현 보정표
+        </h1>
+        <p style={{ margin: 0, maxWidth: 900, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
+          기존 정적 카드와 현재 React/Storybook 구현을 맞춰 보기 위한 기준표입니다. 원본을 살리면서 실제 패키지로 쓸 수 있는
+          디자인 시스템 상태로 옮기는 데 필요한 작업을 Fixed, Watch, Gap, Deferred로 추적합니다.
+        </p>
+      </header>
+
+      <Section title="현재 커버리지">
+        <Table columns={['영역', '수량', '현재 상태']} rows={coverageRows} />
+      </Section>
+
+      <Section title="이번 보정 완료">
+        <Table columns={['우선순위', '영역', '조치']} rows={fixedRows} />
+      </Section>
+
+      <Section title="남은 전수조사 보정표" description="Watch 항목은 원본과 매핑은 됐지만 라이트/다크, 반응형, 상호작용 검증이 남은 영역입니다.">
+        <Table columns={['우선순위', '영역', '판정', '다음 작업']} rows={ledgerRows} statusColumn={2} />
+      </Section>
+
+      <Section title="알려진 기술 부채">
+        <div style={{ ...panel, padding: 'var(--space-5)' }}>
+          <ul style={{ margin: 0, paddingLeft: 20, display: 'grid', gap: 'var(--space-3)', color: 'var(--label-neutral)', lineHeight: 1.65 }}>
+            {debtItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+    </main>
+  ),
+};

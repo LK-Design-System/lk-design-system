@@ -35,7 +35,7 @@ export function ButtonGroup({ options = [], value, defaultValue, onChange, size 
             onClick={() => pick(o.value)}
             style={{
               height: h, padding: '0 16px', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
-              fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-semibold)', letterSpacing: '-0.1px',
+              fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-semibold)', letterSpacing: 0,
               color: active ? 'var(--lk-accent-ink)' : 'var(--label-neutral)',
               background: active ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)',
               border: `1px solid ${active ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`,

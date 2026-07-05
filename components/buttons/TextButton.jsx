@@ -23,7 +23,7 @@ export function TextButton({
       onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 4, padding: 0, border: 'none', background: 'transparent',
-        fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-semibold)', letterSpacing: '0.006em',
+        fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
         color, opacity: disabled ? 0.45 : (hover ? 'var(--component-button-text-hover-opacity)' : 1), cursor: disabled ? 'not-allowed' : 'pointer',
         textDecoration: underline ? 'underline' : 'none', textUnderlineOffset: '3px',
         transition: 'var(--component-button-transition)', ...style,

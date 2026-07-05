@@ -374,7 +374,7 @@ function ButtonGroup({ options = [], value, defaultValue, onChange, size = "md",
           fontFamily: "var(--font-sans)",
           fontSize: fs,
           fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)",
-          letterSpacing: "-0.1px",
+          letterSpacing: 0,
           color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
           background: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
           border: `1px solid ${active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
@@ -413,7 +413,7 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
     {
       type: "button",
       onClick: copy,
-      style: { display: "inline-flex", alignItems: "center", gap: 7, height: h, padding: "0 14px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", background: copied ? "var(--lk-accent-tint-2)" : "var(--bw-indigo-tint)", color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", transition: "var(--component-button-transition)", ...style },
+      style: { display: "inline-flex", alignItems: "center", gap: 7, height: h, padding: "0 14px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", background: copied ? "var(--lk-accent-tint-2)" : "var(--bw-indigo-tint)", color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, transition: "var(--component-button-transition)", ...style },
       ...rest,
       children: [
         copied ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
@@ -555,7 +555,7 @@ function Link({ children, href, tone = "signal", underline = "hover", external =
         color,
         fontFamily: "var(--font-sans)",
         fontWeight: "var(--fw-semibold)",
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         textDecoration: showUnderline ? "underline" : "none",
         textUnderlineOffset: "2px",
         cursor: "pointer",
@@ -625,7 +625,7 @@ function SocialButton({
     fontFamily: "var(--font-sans)",
     fontSize: "16px",
     fontWeight: "var(--fw-bold)",
-    letterSpacing: "-0.3px",
+    letterSpacing: 0,
     lineHeight: 1,
     color: p.fg,
     background: active && hover ? p.bgHover : p.bg,
@@ -691,7 +691,7 @@ function SplitButton({ children, onClick, items = [], variant = "primary", size 
   const pal = variant === "signal" ? { bg: "var(--lk-accent-ink)", fg: "var(--text-on-signal)" } : variant === "dark" ? { bg: "var(--surface-inverse)", fg: "var(--text-on-inverse)" } : variant === "secondary" ? { bg: "var(--bw-indigo)", fg: "#fff" } : { bg: "var(--color-primary)", fg: "#fff" };
   const h = size === "sm" ? 44 : 52;
   return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { ref, style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", onClick, style: { height: h, padding: "0 20px", border: "none", borderTopLeftRadius: "var(--radius-md)", borderBottomLeftRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: "-0.3px" }, children }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", onClick, style: { height: h, padding: "0 20px", border: "none", borderTopLeftRadius: "var(--radius-md)", borderBottomLeftRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children }),
     /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", "aria-label": "more actions", onClick: () => setOpen((o) => !o), style: { height: h, width: 42, border: "none", borderLeft: "1px solid rgba(255,255,255,0.22)", borderTopRightRadius: "var(--radius-md)", borderBottomRightRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("path", { d: "m6 9 6 6 6-6" }) }) }),
     open && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: items.map((it, i) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("button", { type: "button", role: "menuitem", onClick: () => {
       setOpen(false);
@@ -750,7 +750,7 @@ function TextButton({
         fontFamily: "var(--font-sans)",
         fontSize: fs,
         fontWeight: "var(--fw-semibold)",
-        letterSpacing: "0.006em",
+        letterSpacing: 0,
         color,
         opacity: disabled ? 0.45 : hover ? "var(--component-button-text-hover-opacity)" : 1,
         cursor: disabled ? "not-allowed" : "pointer",
@@ -3940,17 +3940,9 @@ function BackToTopButton() {
         justifyContent: "center",
         boxShadow: "var(--shadow-md)",
         opacity: show ? 1 : 0,
-        transform: show ? "translateY(0)" : "translateY(12px)",
+        transform: show ? "none" : "translateY(8px)",
         pointerEvents: show ? "auto" : "none",
-        transition: "opacity 240ms var(--ease-out), transform 240ms var(--ease-out), box-shadow 200ms var(--ease-out)"
-      },
-      onMouseEnter: (e) => {
-        e.currentTarget.style.transform = "translateY(-2px)";
-        e.currentTarget.style.boxShadow = "var(--shadow-lg)";
-      },
-      onMouseLeave: (e) => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "var(--shadow-md)";
+        transition: "opacity 180ms var(--ease-out), transform 180ms var(--ease-out)"
       },
       children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("path", { d: "m18 15-6-6-6 6" }) })
     }
@@ -3976,14 +3968,14 @@ function Footer({
       href: l.href || "#",
       onMouseEnter: () => setHov(key),
       onMouseLeave: () => setHov(null),
-      style: { fontFamily: "var(--font-sans)", fontSize: size, fontWeight: weight || "var(--fw-medium)", lineHeight: 1.5, letterSpacing: "-0.1px", textDecoration: "none", whiteSpace: "nowrap", color: hov === key ? hover : base, transition: "color 160ms ease", wordBreak: "keep-all" },
+      style: { fontFamily: "var(--font-sans)", fontSize: size, fontWeight: weight || "var(--fw-medium)", lineHeight: 1.5, letterSpacing: 0, textDecoration: "none", whiteSpace: "nowrap", color: hov === key ? hover : base, transition: "color 160ms ease", wordBreak: "keep-all" },
       children: l.label
     },
     key
   );
   if (compact) {
     return /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--border-subtle)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { style: { fontSize: 12.5, letterSpacing: "-0.1px", color: "var(--label-assistive)" }, children: copyright }),
+      /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { style: { fontSize: 12.5, letterSpacing: 0, color: "var(--label-assistive)" }, children: copyright }),
       links.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--label-alternative)", "var(--label-normal)", 12.5)) })
     ] });
   }
@@ -3999,7 +3991,7 @@ function Footer({
         /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
           brand != null && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("div", { style: { flex: "1 1 240px", minWidth: 220 }, children: brand }),
           columns.map((col, ci) => /* @__PURE__ */ (0, import_jsx_runtime95.jsxs)("nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: 11, minWidth: 108 }, children: [
-            col.heading != null && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: "-0.2px", lineHeight: 1.5, color: "#fff", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
+            col.heading != null && /* @__PURE__ */ (0, import_jsx_runtime95.jsx)("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "#fff", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
             (col.links || []).map((l, li) => linkEl(ci + "-" + li, l, "rgba(255, 255, 255, 0.5)", "rgba(255, 255, 255, 0.92)", 13.5))
           ] }, ci))
         ] }),

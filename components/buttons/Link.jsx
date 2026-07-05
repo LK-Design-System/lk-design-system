@@ -18,7 +18,7 @@ export function Link({ children, href, tone = 'signal', underline = 'hover', ext
       onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 3, color, fontFamily: 'var(--font-sans)',
-        fontWeight: 'var(--fw-semibold)', letterSpacing: '-0.1px', textDecoration: showUnderline ? 'underline' : 'none',
+        fontWeight: 'var(--fw-semibold)', letterSpacing: 0, textDecoration: showUnderline ? 'underline' : 'none',
         textUnderlineOffset: '2px', cursor: 'pointer', ...style,
       }}
       {...rest}

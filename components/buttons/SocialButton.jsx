@@ -62,7 +62,7 @@ export function SocialButton({
     fontFamily: 'var(--font-sans)',
     fontSize: '16px',
     fontWeight: 'var(--fw-bold)',
-    letterSpacing: '-0.3px',
+    letterSpacing: 0,
     lineHeight: 1,
     color: p.fg,
     background: active && hover ? p.bgHover : p.bg,
