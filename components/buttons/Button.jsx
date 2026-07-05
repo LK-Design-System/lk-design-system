@@ -4,7 +4,7 @@ import React from 'react';
  * LK ROBOTICS — Button
  * Solid, rounded-rect CTAs driven entirely by design-system tokens.
  * Calm by default: a subtle lift + shadow on hover, a small press-in — no
- * bounce. Pair `arrow` with imperative copy ("도입 문의 →").
+ * bounce. `arrow` is deprecated and kept as a no-op for compatibility.
  *
  * variant: primary (LK azure — brand) · secondary (graphite) · signal (LK cyan-ink) ·
  *          dark (navy) · flat (cool-gray) · ghost (hairline) · on-dark (translucent, for navy sections)
@@ -95,13 +95,6 @@ export function Button({
       {...rest}
     >
       <span>{children}</span>
-      {arrow && (
-        <svg width="var(--component-button-icon-size)" height="var(--component-button-icon-size)" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
-          style={{ transform: hover && active ? 'translateX(3px)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)' }}>
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
-      )}
     </Comp>
   );
 }

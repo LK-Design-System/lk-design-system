@@ -5,7 +5,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'primary' | 'secondary' | 'signal' | 'dark' | 'flat' | 'ghost' | 'on-dark';
   /** 컨트롤 높이 + 패딩. @default "md" */
   size?: 'sm' | 'md' | 'lg';
-  /** 끝에 오른쪽 화살표를 더해 호버 시 살짝 움직임. @default false */
+  /** @deprecated 더 이상 시각 요소를 렌더하지 않습니다. 호환성 유지를 위한 no-op입니다. */
   arrow?: boolean;
   /** 컨테이너 전체 폭으로 늘림. @default false */
   full?: boolean;

@@ -310,7 +310,7 @@ function Button({
     ...style
   };
   const Comp = as;
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
     Comp,
     {
       className: `lk-btn lk-btn--${variant}`,
@@ -334,28 +334,7 @@ function Button({
         onMouseUp && onMouseUp(e);
       },
       ...rest,
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children }),
-        arrow && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
-          "svg",
-          {
-            width: "var(--component-button-icon-size)",
-            height: "var(--component-button-icon-size)",
-            viewBox: "0 0 24 24",
-            fill: "none",
-            stroke: "currentColor",
-            strokeWidth: "2.2",
-            strokeLinecap: "round",
-            strokeLinejoin: "round",
-            "aria-hidden": "true",
-            style: { transform: hover && active ? "translateX(3px)" : "none", transition: "transform var(--dur-base) var(--ease-out)" },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M5 12h14" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "m12 5 7 7-7 7" })
-            ]
-          }
-        )
-      ]
+      children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children })
     }
   );
 }
@@ -757,7 +736,7 @@ function TextButton({
   const color = tone === "neutral" ? "var(--label-neutral)" : tone === "danger" ? "var(--bw-red)" : "var(--lk-accent-ink)";
   const fs = size === "sm" ? 14 : size === "lg" ? 17 : 16;
   const Comp = as;
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
     Comp,
     {
       className: "lk-textbtn",
@@ -790,13 +769,7 @@ function TextButton({
         ...style
       },
       ...rest,
-      children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children }),
-        arrow && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { transform: hover && !disabled ? "translateX(3px)" : "none", transition: "transform var(--dur-base) var(--ease-out)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("path", { d: "M5 12h14" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("path", { d: "m12 5 7 7-7 7" })
-        ] })
-      ]
+      children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children })
     }
   );
 }

@@ -5,7 +5,7 @@ export interface TextButtonProps extends React.HTMLAttributes<HTMLElement> {
   tone?: 'signal' | 'neutral' | 'danger';
   /** @default "md" */
   size?: 'sm' | 'md' | 'lg';
-  /** 호버 시 움직이는 끝 화살표. @default false */
+  /** @deprecated 더 이상 시각 요소를 렌더하지 않습니다. 호환성 유지를 위한 no-op입니다. */
   arrow?: boolean;
   /** 라벨에 밑줄. @default false */
   underline?: boolean;
@@ -15,5 +15,5 @@ export interface TextButtonProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
 }
 
-/** 크롬 없는 텍스트 액션 — 시그널 잉크, 호버 시 흐려짐, 선택적 화살표. */
+/** 크롬 없는 텍스트 액션 — 시그널 잉크, 호버 시 흐려짐. */
 export function TextButton(props: TextButtonProps): JSX.Element;

@@ -56,7 +56,7 @@ function Lockup({ variant = "inline", tone = "ink", color, height, title = "LK R
 
 // components/buttons/Button.jsx
 import React3 from "react";
-import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
+import { jsx as jsx2 } from "react/jsx-runtime";
 function Button({
   children,
   variant = "primary",
@@ -128,7 +128,7 @@ function Button({
     ...style
   };
   const Comp = as;
-  return /* @__PURE__ */ jsxs2(
+  return /* @__PURE__ */ jsx2(
     Comp,
     {
       className: `lk-btn lk-btn--${variant}`,
@@ -152,28 +152,7 @@ function Button({
         onMouseUp && onMouseUp(e);
       },
       ...rest,
-      children: [
-        /* @__PURE__ */ jsx2("span", { children }),
-        arrow && /* @__PURE__ */ jsxs2(
-          "svg",
-          {
-            width: "var(--component-button-icon-size)",
-            height: "var(--component-button-icon-size)",
-            viewBox: "0 0 24 24",
-            fill: "none",
-            stroke: "currentColor",
-            strokeWidth: "2.2",
-            strokeLinecap: "round",
-            strokeLinejoin: "round",
-            "aria-hidden": "true",
-            style: { transform: hover && active ? "translateX(3px)" : "none", transition: "transform var(--dur-base) var(--ease-out)" },
-            children: [
-              /* @__PURE__ */ jsx2("path", { d: "M5 12h14" }),
-              /* @__PURE__ */ jsx2("path", { d: "m12 5 7 7-7 7" })
-            ]
-          }
-        )
-      ]
+      children: /* @__PURE__ */ jsx2("span", { children })
     }
   );
 }
@@ -237,7 +216,7 @@ function ButtonGroup({ options = [], value, defaultValue, onChange, size = "md",
 
 // components/buttons/CopyButton.jsx
 import React5 from "react";
-import { jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
+import { jsx as jsx4, jsxs as jsxs2 } from "react/jsx-runtime";
 function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC0AC\uB428", size = "md", style, ...rest }) {
   const [copied, setCopied] = React5.useState(false);
   const copy = async () => {
@@ -249,7 +228,7 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
     setTimeout(() => setCopied(false), 1400);
   };
   const h = size === "sm" ? 36 : 44;
-  return /* @__PURE__ */ jsxs3(
+  return /* @__PURE__ */ jsxs2(
     "button",
     {
       type: "button",
@@ -257,7 +236,7 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
       style: { display: "inline-flex", alignItems: "center", gap: 7, height: h, padding: "0 14px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", background: copied ? "var(--lk-accent-tint-2)" : "var(--bw-indigo-tint)", color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)", ...style },
       ...rest,
       children: [
-        copied ? /* @__PURE__ */ jsx4("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx4("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ jsxs3("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+        copied ? /* @__PURE__ */ jsx4("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx4("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ jsxs2("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
           /* @__PURE__ */ jsx4("rect", { x: "9", y: "9", width: "11", height: "11", rx: "2.5" }),
           /* @__PURE__ */ jsx4("path", { d: "M5 15V5a2 2 0 0 1 2-2h10" })
         ] }),
@@ -373,12 +352,12 @@ function IconButton({
 
 // components/buttons/Link.jsx
 import React8 from "react";
-import { jsx as jsx7, jsxs as jsxs4 } from "react/jsx-runtime";
+import { jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
 function Link({ children, href, tone = "signal", underline = "hover", external = false, style, onMouseEnter, onMouseLeave, ...rest }) {
   const [hover, setHover] = React8.useState(false);
   const color = tone === "neutral" ? "var(--label-neutral)" : tone === "inherit" ? "inherit" : "var(--lk-accent-ink)";
   const showUnderline = underline === "always" || underline === "hover" && hover;
-  return /* @__PURE__ */ jsxs4(
+  return /* @__PURE__ */ jsxs3(
     "a",
     {
       href,
@@ -416,7 +395,7 @@ function Link({ children, href, tone = "signal", underline = "hover", external =
 
 // components/buttons/SocialButton.jsx
 import React9 from "react";
-import { jsx as jsx8, jsxs as jsxs5 } from "react/jsx-runtime";
+import { jsx as jsx8, jsxs as jsxs4 } from "react/jsx-runtime";
 function SocialButton({
   provider = "google",
   // google | apple | facebook
@@ -488,7 +467,7 @@ function SocialButton({
   };
   const Comp = as;
   const label = typeof children === "string" ? children : labels[provider];
-  return /* @__PURE__ */ jsxs5(
+  return /* @__PURE__ */ jsxs4(
     Comp,
     {
       className: `lk-social-btn lk-social-btn--${provider}`,
@@ -524,7 +503,7 @@ function SocialButton({
 
 // components/buttons/SplitButton.jsx
 import React10 from "react";
-import { jsx as jsx9, jsxs as jsxs6 } from "react/jsx-runtime";
+import { jsx as jsx9, jsxs as jsxs5 } from "react/jsx-runtime";
 function SplitButton({ children, onClick, items = [], variant = "primary", size = "md", style, ...rest }) {
   const [open, setOpen] = React10.useState(false);
   const ref = React10.useRef(null);
@@ -538,10 +517,10 @@ function SplitButton({ children, onClick, items = [], variant = "primary", size 
   }, [open]);
   const pal = variant === "signal" ? { bg: "var(--lk-accent-ink)", fg: "var(--text-on-signal)" } : variant === "dark" ? { bg: "var(--surface-inverse)", fg: "var(--text-on-inverse)" } : variant === "secondary" ? { bg: "var(--bw-indigo)", fg: "#fff" } : { bg: "var(--color-primary)", fg: "#fff" };
   const h = size === "sm" ? 44 : 52;
-  return /* @__PURE__ */ jsxs6("div", { ref, style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs5("div", { ref, style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx9("button", { type: "button", onClick, style: { height: h, padding: "0 20px", border: "none", borderTopLeftRadius: "var(--radius-md)", borderBottomLeftRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: "-0.3px" }, children }),
     /* @__PURE__ */ jsx9("button", { type: "button", "aria-label": "more actions", onClick: () => setOpen((o) => !o), style: { height: h, width: 42, border: "none", borderLeft: "1px solid rgba(255,255,255,0.22)", borderTopRightRadius: "var(--radius-md)", borderBottomRightRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx9("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx9("path", { d: "m6 9 6 6 6-6" }) }) }),
-    open && /* @__PURE__ */ jsx9("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: items.map((it, i) => /* @__PURE__ */ jsxs6("button", { type: "button", role: "menuitem", onClick: () => {
+    open && /* @__PURE__ */ jsx9("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: items.map((it, i) => /* @__PURE__ */ jsxs5("button", { type: "button", role: "menuitem", onClick: () => {
       setOpen(false);
       it.onClick && it.onClick();
     }, onMouseEnter: (e) => {
@@ -557,7 +536,7 @@ function SplitButton({ children, onClick, items = [], variant = "primary", size 
 
 // components/buttons/TextButton.jsx
 import React11 from "react";
-import { jsx as jsx10, jsxs as jsxs7 } from "react/jsx-runtime";
+import { jsx as jsx10 } from "react/jsx-runtime";
 function TextButton({
   children,
   tone = "signal",
@@ -575,7 +554,7 @@ function TextButton({
   const color = tone === "neutral" ? "var(--label-neutral)" : tone === "danger" ? "var(--bw-red)" : "var(--lk-accent-ink)";
   const fs = size === "sm" ? 14 : size === "lg" ? 17 : 16;
   const Comp = as;
-  return /* @__PURE__ */ jsxs7(
+  return /* @__PURE__ */ jsx10(
     Comp,
     {
       className: "lk-textbtn",
@@ -608,13 +587,7 @@ function TextButton({
         ...style
       },
       ...rest,
-      children: [
-        /* @__PURE__ */ jsx10("span", { children }),
-        arrow && /* @__PURE__ */ jsxs7("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { transform: hover && !disabled ? "translateX(3px)" : "none", transition: "transform var(--dur-base) var(--ease-out)" }, children: [
-          /* @__PURE__ */ jsx10("path", { d: "M5 12h14" }),
-          /* @__PURE__ */ jsx10("path", { d: "m12 5 7 7-7 7" })
-        ] })
-      ]
+      children: /* @__PURE__ */ jsx10("span", { children })
     }
   );
 }
@@ -670,7 +643,7 @@ function Card({
 
 // components/cards/ChecklistItem.jsx
 import React13 from "react";
-import { jsx as jsx12, jsxs as jsxs8 } from "react/jsx-runtime";
+import { jsx as jsx12, jsxs as jsxs6 } from "react/jsx-runtime";
 function ChecklistItem({
   children,
   cross = false,
@@ -681,8 +654,8 @@ function ChecklistItem({
 }) {
   const ok = !cross;
   const color = ok ? dark ? "var(--lk-accent)" : "var(--lk-accent-ink)" : "var(--bw-red)";
-  return /* @__PURE__ */ jsxs8("div", { style: { display: "flex", alignItems: "flex-start", gap: "11px", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx12("span", { style: { display: "inline-flex", flexShrink: 0, marginTop: 2, color }, children: ok ? /* @__PURE__ */ jsx12("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx12("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ jsxs8("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: [
+  return /* @__PURE__ */ jsxs6("div", { style: { display: "flex", alignItems: "flex-start", gap: "11px", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx12("span", { style: { display: "inline-flex", flexShrink: 0, marginTop: 2, color }, children: ok ? /* @__PURE__ */ jsx12("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx12("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ jsxs6("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: [
       /* @__PURE__ */ jsx12("path", { d: "M18 6 6 18" }),
       /* @__PURE__ */ jsx12("path", { d: "m6 6 12 12" })
     ] }) }),
@@ -701,7 +674,7 @@ function ChecklistItem({
 
 // components/cards/FeatureCard.jsx
 import React14 from "react";
-import { jsx as jsx13, jsxs as jsxs9 } from "react/jsx-runtime";
+import { jsx as jsx13, jsxs as jsxs7 } from "react/jsx-runtime";
 var ICON_TONES = {
   signal: { fg: "var(--lk-accent-ink)", bg: "var(--lk-accent-tint)" },
   // teal tile (default)
@@ -719,7 +692,7 @@ function FeatureCard({
   ...rest
 }) {
   const t = ICON_TONES[tone] || ICON_TONES.signal;
-  return /* @__PURE__ */ jsxs9(
+  return /* @__PURE__ */ jsxs7(
     "div",
     {
       style: {
@@ -736,7 +709,7 @@ function FeatureCard({
       ...rest,
       children: [
         icon && /* @__PURE__ */ jsx13("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: 14, color: t.fg, background: t.bg }, children: icon }),
-        /* @__PURE__ */ jsxs9("div", { style: { display: "flex", flexDirection: "column", gap: "8px" }, children: [
+        /* @__PURE__ */ jsxs7("div", { style: { display: "flex", flexDirection: "column", gap: "8px" }, children: [
           /* @__PURE__ */ jsx13("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: "-0.5px", color: "var(--bw-ink)", margin: 0, wordBreak: "keep-all" }, children: title }),
           /* @__PURE__ */ jsx13("p", { style: { fontSize: "15.5px", lineHeight: 1.7, color: "var(--bw-gray)", margin: 0, wordBreak: "keep-all" }, children })
         ] })
@@ -747,20 +720,20 @@ function FeatureCard({
 
 // components/cards/MetricCard.jsx
 import React15 from "react";
-import { jsx as jsx14, jsxs as jsxs10 } from "react/jsx-runtime";
+import { jsx as jsx14, jsxs as jsxs8 } from "react/jsx-runtime";
 function MetricCard({ label, value, delta, deltaTone = "auto", caption, icon, style, ...rest }) {
   const tone = deltaTone === "auto" ? typeof delta === "number" ? delta >= 0 ? "up" : "down" : "flat" : deltaTone;
   const up = tone === "up";
   const dc = up ? "var(--bw-green)" : tone === "down" ? "var(--bw-red)" : "var(--label-alternative)";
   const deltaText = typeof delta === "number" ? `${delta > 0 ? "+" : ""}${delta}%` : delta;
-  return /* @__PURE__ */ jsxs10("div", { style: { background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: "22px 24px", boxShadow: "var(--shadow-xs)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs10("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14 }, children: [
+  return /* @__PURE__ */ jsxs8("div", { style: { background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: "22px 24px", boxShadow: "var(--shadow-xs)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs8("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14 }, children: [
       /* @__PURE__ */ jsx14("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "1.4px", textTransform: "uppercase", color: "var(--label-alternative)" }, children: label }),
       icon && /* @__PURE__ */ jsx14("span", { style: { color: "var(--lk-accent-ink)", display: "inline-flex" }, children: icon })
     ] }),
-    /* @__PURE__ */ jsxs10("div", { style: { display: "flex", alignItems: "flex-end", gap: 10, flexWrap: "wrap" }, children: [
+    /* @__PURE__ */ jsxs8("div", { style: { display: "flex", alignItems: "flex-end", gap: 10, flexWrap: "wrap" }, children: [
       /* @__PURE__ */ jsx14("span", { style: { fontSize: 34, fontWeight: "var(--fw-extra)", letterSpacing: "-1px", color: "var(--label-normal)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
-      delta != null && /* @__PURE__ */ jsxs10("span", { style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: 13, fontWeight: "var(--fw-bold)", color: dc }, children: [
+      delta != null && /* @__PURE__ */ jsxs8("span", { style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: 13, fontWeight: "var(--fw-bold)", color: dc }, children: [
         (tone === "up" || tone === "down") && /* @__PURE__ */ jsx14("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx14("path", { d: up ? "M7 17 17 7M9 7h8v8" : "M7 7l10 10M17 9v8H9" }) }),
         deltaText
       ] })
@@ -771,14 +744,14 @@ function MetricCard({ label, value, delta, deltaTone = "auto", caption, icon, st
 
 // components/cards/NewsCard.jsx
 import React16 from "react";
-import { jsx as jsx15, jsxs as jsxs11 } from "react/jsx-runtime";
+import { jsx as jsx15, jsxs as jsxs9 } from "react/jsx-runtime";
 function NewsCard({ image, category, title, excerpt, source, date, cta, href = "#", style, ...rest }) {
   const [hover, setHover] = React16.useState(false);
-  const ArrowR = /* @__PURE__ */ jsxs11("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.3", strokeLinecap: "round", strokeLinejoin: "round", children: [
+  const ArrowR = /* @__PURE__ */ jsxs9("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.3", strokeLinecap: "round", strokeLinejoin: "round", children: [
     /* @__PURE__ */ jsx15("path", { d: "M5 12h14" }),
     /* @__PURE__ */ jsx15("path", { d: "m12 5 7 7-7 7" })
   ] });
-  return /* @__PURE__ */ jsxs11(
+  return /* @__PURE__ */ jsxs9(
     "a",
     {
       href,
@@ -800,15 +773,15 @@ function NewsCard({ image, category, title, excerpt, source, date, cta, href = "
       ...rest,
       children: [
         image && /* @__PURE__ */ jsx15("div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--surface-subtle)" }, children: /* @__PURE__ */ jsx15("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
-        /* @__PURE__ */ jsxs11("div", { style: { padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9, flex: 1 }, children: [
+        /* @__PURE__ */ jsxs9("div", { style: { padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9, flex: 1 }, children: [
           category && /* @__PURE__ */ jsx15("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--label-alternative)" }, children: category }),
           title && /* @__PURE__ */ jsx15("h3", { style: { margin: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: "-0.4px", lineHeight: 1.36, color: "var(--text-strong)", wordBreak: "keep-all" }, children: title }),
           excerpt && /* @__PURE__ */ jsx15("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--label-neutral)", wordBreak: "keep-all" }, children: excerpt }),
-          (source || date || cta) && /* @__PURE__ */ jsxs11("div", { style: { marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--label-alternative)" }, children: [
+          (source || date || cta) && /* @__PURE__ */ jsxs9("div", { style: { marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--label-alternative)" }, children: [
             source && /* @__PURE__ */ jsx15("span", { style: { fontWeight: 600 }, children: source }),
             source && date && /* @__PURE__ */ jsx15("span", { "aria-hidden": "true", children: "\xB7" }),
             date && /* @__PURE__ */ jsx15("span", { style: { fontVariantNumeric: "tabular-nums" }, children: date }),
-            cta && /* @__PURE__ */ jsxs11("span", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 700, color: "var(--accent-text)", whiteSpace: "nowrap" }, children: [
+            cta && /* @__PURE__ */ jsxs9("span", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 700, color: "var(--accent-text)", whiteSpace: "nowrap" }, children: [
               cta,
               /* @__PURE__ */ jsx15("span", { style: { display: "inline-flex", transform: hover ? "translateX(2px)" : "none", transition: "transform var(--dur-base) var(--ease-out)" }, children: ArrowR })
             ] })
@@ -821,7 +794,7 @@ function NewsCard({ image, category, title, excerpt, source, date, cta, href = "
 
 // components/cards/ProductCard.jsx
 import React17 from "react";
-import { jsx as jsx16, jsxs as jsxs12 } from "react/jsx-runtime";
+import { jsx as jsx16, jsxs as jsxs10 } from "react/jsx-runtime";
 var PC_FADE = "linear-gradient(180deg, #000 46%, transparent 96%)";
 function ProductCard({
   id,
@@ -835,7 +808,7 @@ function ProductCard({
   ...rest
 }) {
   const [hover, setHover] = React17.useState(false);
-  return /* @__PURE__ */ jsxs12(
+  return /* @__PURE__ */ jsxs10(
     "a",
     {
       href,
@@ -858,7 +831,7 @@ function ProductCard({
       },
       ...rest,
       children: [
-        image && /* @__PURE__ */ jsxs12(
+        image && /* @__PURE__ */ jsxs10(
           "div",
           {
             "aria-hidden": "true",
@@ -893,8 +866,8 @@ function ProductCard({
             ]
           }
         ),
-        /* @__PURE__ */ jsxs12("div", { style: { position: "relative", padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9 }, children: [
-          /* @__PURE__ */ jsxs12("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
+        /* @__PURE__ */ jsxs10("div", { style: { position: "relative", padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9 }, children: [
+          /* @__PURE__ */ jsxs10("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
             category && /* @__PURE__ */ jsx16("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--lk-accent)" }, children: category }),
             /* @__PURE__ */ jsx16("h3", { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: 800, letterSpacing: "var(--ls-h5)", color: "#fff", whiteSpace: "nowrap" }, children: id })
           ] }),
@@ -919,9 +892,9 @@ function ProductCard({
 
 // components/cards/SpecRow.jsx
 import React18 from "react";
-import { jsx as jsx17, jsxs as jsxs13 } from "react/jsx-runtime";
+import { jsx as jsx17, jsxs as jsxs11 } from "react/jsx-runtime";
 function SpecRow({ label, value, labelWidth = "34%", style, ...rest }) {
-  return /* @__PURE__ */ jsxs13(
+  return /* @__PURE__ */ jsxs11(
     "div",
     {
       style: {
@@ -944,7 +917,7 @@ function SpecRow({ label, value, labelWidth = "34%", style, ...rest }) {
 
 // components/cards/Stat.jsx
 import React19 from "react";
-import { jsx as jsx18, jsxs as jsxs14 } from "react/jsx-runtime";
+import { jsx as jsx18, jsxs as jsxs12 } from "react/jsx-runtime";
 function Stat({
   value,
   label,
@@ -957,7 +930,7 @@ function Stat({
   const colors = { ink: "var(--bw-ink)", signal: "var(--lk-accent-ink)", steel: "var(--bw-green-600)" };
   const valColor = dark ? "var(--text-on-dark)" : colors[accent] || colors.ink;
   const labColor = dark ? "var(--text-on-dark-muted)" : "var(--bw-gray)";
-  return /* @__PURE__ */ jsxs14(
+  return /* @__PURE__ */ jsxs12(
     "div",
     {
       style: {
@@ -978,7 +951,7 @@ function Stat({
 
 // components/content/Accordion.jsx
 import React20 from "react";
-import { jsx as jsx19, jsxs as jsxs15 } from "react/jsx-runtime";
+import { jsx as jsx19, jsxs as jsxs13 } from "react/jsx-runtime";
 function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...rest }) {
   const [open, setOpen] = React20.useState(() => new Set(defaultOpen));
   const toggle = (i) => setOpen((prev) => {
@@ -989,8 +962,8 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
   });
   return /* @__PURE__ */ jsx19("div", { style: { borderTop: "1px solid var(--bw-border)", ...style }, ...rest, children: items.map((it, i) => {
     const isOpen = open.has(i);
-    return /* @__PURE__ */ jsxs15("div", { style: { borderBottom: "1px solid var(--bw-border)" }, children: [
-      /* @__PURE__ */ jsxs15(
+    return /* @__PURE__ */ jsxs13("div", { style: { borderBottom: "1px solid var(--bw-border)" }, children: [
+      /* @__PURE__ */ jsxs13(
         "button",
         {
           type: "button",
@@ -1042,11 +1015,11 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
 
 // components/content/Blockquote.jsx
 import React21 from "react";
-import { jsx as jsx20, jsxs as jsxs16 } from "react/jsx-runtime";
+import { jsx as jsx20, jsxs as jsxs14 } from "react/jsx-runtime";
 function Blockquote({ children, cite, style, ...rest }) {
-  return /* @__PURE__ */ jsxs16("blockquote", { style: { margin: 0, padding: "6px 0 6px 20px", borderLeft: "3px solid var(--lk-accent-ink)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs14("blockquote", { style: { margin: 0, padding: "6px 0 6px 20px", borderLeft: "3px solid var(--lk-accent-ink)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx20("div", { style: { fontSize: 17, lineHeight: 1.7, letterSpacing: "-0.2px", color: "var(--label-normal)", wordBreak: "keep-all" }, children }),
-    cite != null && /* @__PURE__ */ jsxs16("div", { style: { marginTop: 8, fontSize: 13.5, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: [
+    cite != null && /* @__PURE__ */ jsxs14("div", { style: { marginTop: 8, fontSize: 13.5, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: [
       "\u2014 ",
       cite
     ] })
@@ -1103,7 +1076,7 @@ function Bookmark({ active, defaultActive, onChange, size = 24, disabled = false
 
 // components/content/Bubble.jsx
 import React23 from "react";
-import { jsx as jsx22, jsxs as jsxs17 } from "react/jsx-runtime";
+import { jsx as jsx22, jsxs as jsxs15 } from "react/jsx-runtime";
 function Bubble({ children, tone = "navy", tail = "bottom", style, ...rest }) {
   const dark = tone === "navy";
   const bg = dark ? "var(--surface-inverse)" : "var(--surface-card)";
@@ -1116,7 +1089,7 @@ function Bubble({ children, tone = "navy", tail = "bottom", style, ...rest }) {
     left: { ...tailBase, left: -6, top: "50%", marginTop: -6, borderLeft: bd, borderBottom: bd },
     right: { ...tailBase, right: -6, top: "50%", marginTop: -6, borderRight: bd, borderTop: bd }
   };
-  return /* @__PURE__ */ jsxs17(
+  return /* @__PURE__ */ jsxs15(
     "div",
     {
       style: {
@@ -1158,11 +1131,11 @@ function Code({ children, block = false, style, ...rest }) {
 
 // components/content/Collapsible.jsx
 import React25 from "react";
-import { jsx as jsx24, jsxs as jsxs18 } from "react/jsx-runtime";
+import { jsx as jsx24, jsxs as jsxs16 } from "react/jsx-runtime";
 function Collapsible({ title, children, defaultOpen = false, style, ...rest }) {
   const [open, setOpen] = React25.useState(defaultOpen);
-  return /* @__PURE__ */ jsxs18("div", { style: { ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs18(
+  return /* @__PURE__ */ jsxs16("div", { style: { ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs16(
       "button",
       {
         type: "button",
@@ -1225,7 +1198,7 @@ function ContentBadge({ children, tone = "signal", variant = "soft", size = "md"
 
 // components/content/Divider.jsx
 import React27 from "react";
-import { jsx as jsx26, jsxs as jsxs19 } from "react/jsx-runtime";
+import { jsx as jsx26, jsxs as jsxs17 } from "react/jsx-runtime";
 function Divider({ vertical = false, label, inset = 0, style, ...rest }) {
   if (vertical) {
     return /* @__PURE__ */ jsx26(
@@ -1240,7 +1213,7 @@ function Divider({ vertical = false, label, inset = 0, style, ...rest }) {
   }
   if (label != null) {
     const rule = { flex: 1, height: 1, background: "var(--line-neutral)" };
-    return /* @__PURE__ */ jsxs19("div", { role: "separator", style: { display: "flex", alignItems: "center", gap: 14, ...style }, ...rest, children: [
+    return /* @__PURE__ */ jsxs17("div", { role: "separator", style: { display: "flex", alignItems: "center", gap: 14, ...style }, ...rest, children: [
       /* @__PURE__ */ jsx26("span", { style: rule }),
       /* @__PURE__ */ jsx26("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", letterSpacing: "-0.1px", color: "var(--label-alternative)", whiteSpace: "nowrap" }, children: label }),
       /* @__PURE__ */ jsx26("span", { style: rule })
@@ -1282,11 +1255,11 @@ function Kbd({ children, style, ...rest }) {
 
 // components/content/ListCell.jsx
 import React29 from "react";
-import { jsx as jsx28, jsxs as jsxs20 } from "react/jsx-runtime";
+import { jsx as jsx28, jsxs as jsxs18 } from "react/jsx-runtime";
 function ListCell({ leading, title, description, trailing, onClick, divider = false, style, ...rest }) {
   const clickable = !!onClick;
   const [hover, setHover] = React29.useState(false);
-  return /* @__PURE__ */ jsxs20(
+  return /* @__PURE__ */ jsxs18(
     "div",
     {
       role: clickable ? "button" : void 0,
@@ -1315,7 +1288,7 @@ function ListCell({ leading, title, description, trailing, onClick, divider = fa
       ...rest,
       children: [
         leading != null && /* @__PURE__ */ jsx28("div", { style: { flexShrink: 0, display: "flex", alignItems: "center", color: "var(--lk-accent-ink)" }, children: leading }),
-        /* @__PURE__ */ jsxs20("div", { style: { flex: 1, minWidth: 0 }, children: [
+        /* @__PURE__ */ jsxs18("div", { style: { flex: 1, minWidth: 0 }, children: [
           /* @__PURE__ */ jsx28("div", { style: { fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
           description != null && /* @__PURE__ */ jsx28("div", { style: { marginTop: 2, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-alternative)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: description })
         ] }),
@@ -1352,14 +1325,14 @@ function Overline({ children, as = "div", tone = "muted", onDark = false, style,
 
 // components/content/SourceTag.jsx
 import React31 from "react";
-import { jsx as jsx30, jsxs as jsxs21 } from "react/jsx-runtime";
+import { jsx as jsx30, jsxs as jsxs19 } from "react/jsx-runtime";
 var MONO3 = "var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace)";
 function SourceTag({ children, label = "SOURCE", href, tone = "default", style, ...rest }) {
   const isLink = href != null;
   const Comp = isLink ? "a" : "span";
   const [hover, setHover] = React31.useState(false);
   const onDark = tone === "onDark";
-  return /* @__PURE__ */ jsxs21(
+  return /* @__PURE__ */ jsxs19(
     Comp,
     {
       href,
@@ -1398,7 +1371,7 @@ function SourceTag({ children, label = "SOURCE", href, tone = "default", style, 
 
 // components/content/StatusBadge.jsx
 import React32 from "react";
-import { jsx as jsx31, jsxs as jsxs22 } from "react/jsx-runtime";
+import { jsx as jsx31, jsxs as jsxs20 } from "react/jsx-runtime";
 var DOT = {
   positive: "var(--bw-green)",
   online: "var(--bw-green)",
@@ -1418,7 +1391,7 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
     document.head.appendChild(el);
   }, []);
   const c = DOT[tone] || DOT.positive;
-  return /* @__PURE__ */ jsxs22(
+  return /* @__PURE__ */ jsxs20(
     "span",
     {
       style: {
@@ -1443,7 +1416,7 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
 
 // components/content/StepList.jsx
 import React33 from "react";
-import { jsx as jsx32, jsxs as jsxs23 } from "react/jsx-runtime";
+import { jsx as jsx32, jsxs as jsxs21 } from "react/jsx-runtime";
 function Mini({ children, onClick, disabled, label }) {
   return /* @__PURE__ */ jsx32(
     "button",
@@ -1484,20 +1457,20 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
   const remove = (i) => {
     onChange && onChange(steps.filter((_, k) => k !== i));
   };
-  return /* @__PURE__ */ jsxs23("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    steps.map((st, i) => /* @__PURE__ */ jsxs23("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", background: "var(--surface-raised)", marginBottom: 8 }, children: [
+  return /* @__PURE__ */ jsxs21("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    steps.map((st, i) => /* @__PURE__ */ jsxs21("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", background: "var(--surface-raised)", marginBottom: 8 }, children: [
       /* @__PURE__ */ jsx32("span", { style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", fontSize: 12, fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
-      /* @__PURE__ */ jsxs23("div", { style: { flex: 1, minWidth: 0 }, children: [
+      /* @__PURE__ */ jsxs21("div", { style: { flex: 1, minWidth: 0 }, children: [
         /* @__PURE__ */ jsx32("div", { style: { fontSize: 14, fontWeight: 700, color: "var(--label-strong)" }, children: st.label }),
         st.detail != null && /* @__PURE__ */ jsx32("div", { style: { fontSize: 12.5, color: "var(--label-alternative)", marginTop: 1 }, children: st.detail })
       ] }),
-      editable && /* @__PURE__ */ jsxs23("div", { style: { display: "inline-flex", gap: 2, flexShrink: 0 }, children: [
+      editable && /* @__PURE__ */ jsxs21("div", { style: { display: "inline-flex", gap: 2, flexShrink: 0 }, children: [
         /* @__PURE__ */ jsx32(Mini, { onClick: () => move(i, -1), disabled: i === 0, label: "\uC704\uB85C", children: "\u2191" }),
         /* @__PURE__ */ jsx32(Mini, { onClick: () => move(i, 1), disabled: i === steps.length - 1, label: "\uC544\uB798\uB85C", children: "\u2193" }),
         /* @__PURE__ */ jsx32(Mini, { onClick: () => remove(i), label: "\uC0AD\uC81C", children: "\u2715" })
       ] })
     ] }, st.id != null ? st.id : i)),
-    editable && onAdd && /* @__PURE__ */ jsxs23(
+    editable && onAdd && /* @__PURE__ */ jsxs21(
       "button",
       {
         type: "button",
@@ -1514,7 +1487,7 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
 
 // components/content/Thumbnail.jsx
 import React34 from "react";
-import { jsx as jsx33, jsxs as jsxs24 } from "react/jsx-runtime";
+import { jsx as jsx33, jsxs as jsxs22 } from "react/jsx-runtime";
 var toLen = (v) => typeof v === "number" ? v + "px" : v;
 var ALIGN = {
   "top-left": { top: 8, left: 8 },
@@ -1536,7 +1509,7 @@ function Thumbnail({
 }) {
   const r = radius === true ? "var(--radius-md)" : radius === false ? "0" : toLen(radius);
   const pos = ALIGN[overlayAlign] || ALIGN["top-left"];
-  return /* @__PURE__ */ jsxs24(
+  return /* @__PURE__ */ jsxs22(
     "div",
     {
       style: {
@@ -1551,7 +1524,7 @@ function Thumbnail({
       ...rest,
       children: [
         src && /* @__PURE__ */ jsx33("img", { src, alt, style: { width: "100%", height: "100%", objectFit: fit, display: "block" } }),
-        (overlay || children) && /* @__PURE__ */ jsxs24("div", { style: { position: "absolute", display: "flex", gap: 6, ...pos }, children: [
+        (overlay || children) && /* @__PURE__ */ jsxs22("div", { style: { position: "absolute", display: "flex", gap: 6, ...pos }, children: [
           overlay,
           children
         ] })
@@ -1562,7 +1535,7 @@ function Thumbnail({
 
 // components/content/Timeline.jsx
 import React35 from "react";
-import { jsx as jsx34, jsxs as jsxs25 } from "react/jsx-runtime";
+import { jsx as jsx34, jsxs as jsxs23 } from "react/jsx-runtime";
 var DOT2 = {
   signal: "var(--lk-accent-ink)",
   positive: "var(--bw-green)",
@@ -1574,12 +1547,12 @@ function Timeline({ items = [], style, ...rest }) {
   return /* @__PURE__ */ jsx34("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => {
     const last = i === items.length - 1;
     const c = DOT2[it.tone] || DOT2.signal;
-    return /* @__PURE__ */ jsxs25("div", { style: { display: "flex", gap: 14 }, children: [
-      /* @__PURE__ */ jsxs25("div", { style: { display: "flex", flexDirection: "column", alignItems: "center" }, children: [
+    return /* @__PURE__ */ jsxs23("div", { style: { display: "flex", gap: 14 }, children: [
+      /* @__PURE__ */ jsxs23("div", { style: { display: "flex", flexDirection: "column", alignItems: "center" }, children: [
         /* @__PURE__ */ jsx34("span", { style: { width: 12, height: 12, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxShadow: `0 0 0 1px ${c}`, flexShrink: 0, marginTop: 4 } }),
         !last && /* @__PURE__ */ jsx34("span", { style: { flex: 1, width: 2, background: "var(--bw-border)", marginTop: 4 } })
       ] }),
-      /* @__PURE__ */ jsxs25("div", { style: { paddingBottom: last ? 0 : 22 }, children: [
+      /* @__PURE__ */ jsxs23("div", { style: { paddingBottom: last ? 0 : 22 }, children: [
         it.time != null && /* @__PURE__ */ jsx34("div", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--label-assistive)", marginBottom: 3 }, children: it.time }),
         /* @__PURE__ */ jsx34("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)" }, children: it.title }),
         it.description != null && /* @__PURE__ */ jsx34("div", { style: { marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: it.description })
@@ -1590,7 +1563,7 @@ function Timeline({ items = [], style, ...rest }) {
 
 // components/content/Tooltip.jsx
 import React36 from "react";
-import { jsx as jsx35, jsxs as jsxs26 } from "react/jsx-runtime";
+import { jsx as jsx35, jsxs as jsxs24 } from "react/jsx-runtime";
 function Tooltip({ content, placement = "top", children, style, ...rest }) {
   const [show, setShow] = React36.useState(false);
   const pos = {
@@ -1599,7 +1572,7 @@ function Tooltip({ content, placement = "top", children, style, ...rest }) {
     left: { right: "100%", top: "50%", transform: "translateY(-50%) translateX(-8px)" },
     right: { left: "100%", top: "50%", transform: "translateY(-50%) translateX(8px)" }
   }[placement] || {};
-  return /* @__PURE__ */ jsxs26(
+  return /* @__PURE__ */ jsxs24(
     "span",
     {
       style: { position: "relative", display: "inline-flex", ...style },
@@ -1643,10 +1616,10 @@ function Tooltip({ content, placement = "top", children, style, ...rest }) {
 
 // components/data/BarChart.jsx
 import React37 from "react";
-import { jsx as jsx36, jsxs as jsxs27 } from "react/jsx-runtime";
+import { jsx as jsx36, jsxs as jsxs25 } from "react/jsx-runtime";
 function BarChart({ data = [], height = 160, gap = 12, showValue = true, color = "var(--lk-accent-ink)", style, ...rest }) {
   const max = Math.max(...data.map((d) => d.value), 1);
-  return /* @__PURE__ */ jsx36("div", { style: { display: "flex", alignItems: "flex-end", gap, height, fontFamily: "var(--font-sans)", ...style }, ...rest, children: data.map((d, i) => /* @__PURE__ */ jsxs27("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%", justifyContent: "flex-end" }, children: [
+  return /* @__PURE__ */ jsx36("div", { style: { display: "flex", alignItems: "flex-end", gap, height, fontFamily: "var(--font-sans)", ...style }, ...rest, children: data.map((d, i) => /* @__PURE__ */ jsxs25("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%", justifyContent: "flex-end" }, children: [
     showValue && /* @__PURE__ */ jsx36("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: d.value }),
     /* @__PURE__ */ jsx36("div", { style: { width: "100%", maxWidth: 48, height: `${d.value / max * 100}%`, minHeight: 2, background: d.color || color, borderRadius: "var(--radius-md) var(--radius-md) 0 0", transition: "height var(--dur-slow) var(--ease-out)" } }),
     /* @__PURE__ */ jsx36("span", { style: { fontSize: 12, color: "var(--label-alternative)", whiteSpace: "nowrap" }, children: d.label })
@@ -1655,7 +1628,7 @@ function BarChart({ data = [], height = 160, gap = 12, showValue = true, color =
 
 // components/data/Calendar.jsx
 import React38 from "react";
-import { jsx as jsx37, jsxs as jsxs28 } from "react/jsx-runtime";
+import { jsx as jsx37, jsxs as jsxs26 } from "react/jsx-runtime";
 var WD = ["\uC77C", "\uC6D4", "\uD654", "\uC218", "\uBAA9", "\uAE08", "\uD1A0"];
 function ymd(d) {
   return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
@@ -1708,15 +1681,15 @@ function Calendar({ value, defaultValue, onChange, style, ...rest }) {
   };
   const navMonth = (delta) => setView(new Date(view.getFullYear(), view.getMonth() + delta, 1));
   const navBtn = { width: 32, height: 32, display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", cursor: "pointer", color: "var(--label-neutral)" };
-  return /* @__PURE__ */ jsxs28("div", { style: { width: 300, fontFamily: "var(--font-sans)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 16, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs28("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }, children: [
-      /* @__PURE__ */ jsxs28("div", { style: { fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: "-0.3px", color: "var(--label-normal)" }, children: [
+  return /* @__PURE__ */ jsxs26("div", { style: { width: 300, fontFamily: "var(--font-sans)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 16, ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs26("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }, children: [
+      /* @__PURE__ */ jsxs26("div", { style: { fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: "-0.3px", color: "var(--label-normal)" }, children: [
         view.getFullYear(),
         "\uB144 ",
         view.getMonth() + 1,
         "\uC6D4"
       ] }),
-      /* @__PURE__ */ jsxs28("div", { style: { display: "flex", gap: 4 }, children: [
+      /* @__PURE__ */ jsxs26("div", { style: { display: "flex", gap: 4 }, children: [
         /* @__PURE__ */ jsx37("button", { type: "button", "aria-label": "previous month", onClick: () => navMonth(-1), style: navBtn, children: /* @__PURE__ */ jsx37("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx37("path", { d: "m15 18-6-6 6-6" }) }) }),
         /* @__PURE__ */ jsx37("button", { type: "button", "aria-label": "next month", onClick: () => navMonth(1), style: navBtn, children: /* @__PURE__ */ jsx37("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx37("path", { d: "m9 18 6-6-6-6" }) }) })
       ] })
@@ -1728,7 +1701,7 @@ function Calendar({ value, defaultValue, onChange, style, ...rest }) {
 
 // components/data/Carousel.jsx
 import React39 from "react";
-import { jsx as jsx38, jsxs as jsxs29 } from "react/jsx-runtime";
+import { jsx as jsx38, jsxs as jsxs27 } from "react/jsx-runtime";
 function navBtnStyle(side) {
   return { position: "absolute", top: "50%", [side]: 12, transform: "translateY(-50%)", width: 40, height: 40, borderRadius: "50%", border: "none", background: "rgba(14,19,41,0.5)", color: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 2 };
 }
@@ -1736,9 +1709,9 @@ function Carousel({ slides = [], showDots = true, showArrows = true, style, ...r
   const [i, setI] = React39.useState(0);
   const n = slides.length;
   const go = (d) => setI((p) => (p + d + n) % n);
-  return /* @__PURE__ */ jsxs29("div", { style: { position: "relative", overflow: "hidden", borderRadius: "var(--radius-2xl)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs27("div", { style: { position: "relative", overflow: "hidden", borderRadius: "var(--radius-2xl)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx38("div", { style: { display: "flex", transform: `translateX(-${i * 100}%)`, transition: "transform var(--dur-slow) var(--ease-out)" }, children: slides.map((s, idx) => /* @__PURE__ */ jsx38("div", { style: { flex: "0 0 100%", minWidth: "100%" }, children: s }, idx)) }),
-    showArrows && n > 1 && /* @__PURE__ */ jsxs29(React39.Fragment, { children: [
+    showArrows && n > 1 && /* @__PURE__ */ jsxs27(React39.Fragment, { children: [
       /* @__PURE__ */ jsx38("button", { type: "button", "aria-label": "previous", onClick: () => go(-1), style: navBtnStyle("left"), children: /* @__PURE__ */ jsx38("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx38("path", { d: "m15 18-6-6 6-6" }) }) }),
       /* @__PURE__ */ jsx38("button", { type: "button", "aria-label": "next", onClick: () => go(1), style: navBtnStyle("right"), children: /* @__PURE__ */ jsx38("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx38("path", { d: "m9 18 6-6-6-6" }) }) })
     ] }),
@@ -1748,7 +1721,7 @@ function Carousel({ slides = [], showDots = true, showArrows = true, style, ...r
 
 // components/data/DataGrid.jsx
 import React40 from "react";
-import { jsx as jsx39, jsxs as jsxs30 } from "react/jsx-runtime";
+import { jsx as jsx39, jsxs as jsxs28 } from "react/jsx-runtime";
 function sortRows(rows, key, dir) {
   if (!key) return rows;
   const s = [...rows].sort((a, b) => {
@@ -1786,15 +1759,15 @@ function DataGrid({ columns = [], rows = [], selectable = false, onSelectionChan
     return n;
   });
   const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
-  return /* @__PURE__ */ jsx39("div", { style: { overflowX: "auto", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ jsxs30("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
-    /* @__PURE__ */ jsx39("thead", { children: /* @__PURE__ */ jsxs30("tr", { children: [
+  return /* @__PURE__ */ jsx39("div", { style: { overflowX: "auto", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ jsxs28("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
+    /* @__PURE__ */ jsx39("thead", { children: /* @__PURE__ */ jsxs28("tr", { children: [
       selectable && /* @__PURE__ */ jsx39("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44 }, children: /* @__PURE__ */ jsx39("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "select all" }) }),
-      columns.map((c) => /* @__PURE__ */ jsx39("th", { onClick: () => toggleSort(c), style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", cursor: c.sortable ? "pointer" : "default", whiteSpace: "nowrap", userSelect: "none" }, children: /* @__PURE__ */ jsxs30("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: [
+      columns.map((c) => /* @__PURE__ */ jsx39("th", { onClick: () => toggleSort(c), style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", cursor: c.sortable ? "pointer" : "default", whiteSpace: "nowrap", userSelect: "none" }, children: /* @__PURE__ */ jsxs28("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: [
         c.label,
         c.sortable && /* @__PURE__ */ jsx39("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { opacity: sort.key === c.key ? 1 : 0.3 }, children: /* @__PURE__ */ jsx39("path", { d: sort.key === c.key && sort.dir === "desc" ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
       ] }) }, c.key))
     ] }) }),
-    /* @__PURE__ */ jsx39("tbody", { children: sorted.map((r, ri) => /* @__PURE__ */ jsxs30("tr", { style: { background: sel.has(ri) ? "var(--lk-accent-tint)" : "transparent" }, children: [
+    /* @__PURE__ */ jsx39("tbody", { children: sorted.map((r, ri) => /* @__PURE__ */ jsxs28("tr", { style: { background: sel.has(ri) ? "var(--lk-accent-tint)" : "transparent" }, children: [
       selectable && /* @__PURE__ */ jsx39("td", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsx39("input", { type: "checkbox", checked: sel.has(ri), onChange: () => toggleRow(ri), "aria-label": `select row ${ri + 1}` }) }),
       columns.map((c) => /* @__PURE__ */ jsx39("td", { style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14.5, color: "var(--label-neutral)", whiteSpace: "nowrap" }, children: typeof c.render === "function" ? c.render(r) : r[c.key] }, c.key))
     ] }, ri)) })
@@ -1803,9 +1776,9 @@ function DataGrid({ columns = [], rows = [], selectable = false, onSelectionChan
 
 // components/data/DescriptionList.jsx
 import React41 from "react";
-import { jsx as jsx40, jsxs as jsxs31 } from "react/jsx-runtime";
+import { jsx as jsx40, jsxs as jsxs29 } from "react/jsx-runtime";
 function DescriptionList({ items = [], columns = 1, style, ...rest }) {
-  return /* @__PURE__ */ jsx40("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ jsxs31("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid var(--bw-border)" }, children: [
+  return /* @__PURE__ */ jsx40("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ jsxs29("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid var(--bw-border)" }, children: [
     /* @__PURE__ */ jsx40("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: it.term }),
     /* @__PURE__ */ jsx40("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--label-normal)", wordBreak: "keep-all" }, children: it.description })
   ] }, i)) });
@@ -1813,16 +1786,16 @@ function DescriptionList({ items = [], columns = 1, style, ...rest }) {
 
 // components/data/DonutChart.jsx
 import React42 from "react";
-import { jsx as jsx41, jsxs as jsxs32 } from "react/jsx-runtime";
+import { jsx as jsx41, jsxs as jsxs30 } from "react/jsx-runtime";
 var PALETTE = ["var(--lk-accent-ink)", "var(--bw-blue)", "var(--bw-amber)", "var(--bw-green)", "var(--bw-red)", "var(--bw-gray-300)"];
 function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = true, centerLabel, legend = true, style, ...rest }) {
   const total = segments.reduce((s, x) => s + (x.value || 0), 0) || 1;
   const r = (size - thickness) / 2;
   const circ = 2 * Math.PI * r;
   let offset = 0;
-  return /* @__PURE__ */ jsxs32("div", { style: { display: "inline-flex", alignItems: "center", gap: 20, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs32("span", { style: { position: "relative", width: size, height: size }, children: [
-      /* @__PURE__ */ jsxs32("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
+  return /* @__PURE__ */ jsxs30("div", { style: { display: "inline-flex", alignItems: "center", gap: 20, ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs30("span", { style: { position: "relative", width: size, height: size }, children: [
+      /* @__PURE__ */ jsxs30("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
         /* @__PURE__ */ jsx41("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness }),
         segments.map((s, i) => {
           const dash = (s.value || 0) / total * circ;
@@ -1833,10 +1806,10 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
       ] }),
       (showTotal || centerLabel != null) && /* @__PURE__ */ jsx41("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
     ] }),
-    legend && segments.length > 0 && /* @__PURE__ */ jsx41("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs32("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-neutral)" }, children: [
+    legend && segments.length > 0 && /* @__PURE__ */ jsx41("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs30("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-neutral)" }, children: [
       /* @__PURE__ */ jsx41("span", { style: { width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] } }),
       s.label,
-      /* @__PURE__ */ jsxs32("b", { style: { marginLeft: 2, color: "var(--label-normal)" }, children: [
+      /* @__PURE__ */ jsxs30("b", { style: { marginLeft: 2, color: "var(--label-normal)" }, children: [
         Math.round(s.value / total * 100),
         "%"
       ] })
@@ -1846,7 +1819,7 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
 
 // components/data/Sparkline.jsx
 import React43 from "react";
-import { jsx as jsx42, jsxs as jsxs33 } from "react/jsx-runtime";
+import { jsx as jsx42, jsxs as jsxs31 } from "react/jsx-runtime";
 function Sparkline({ data = [], width = 120, height = 32, color = "var(--lk-accent-ink)", fill = true, strokeWidth = 2, style, ...rest }) {
   if (!data.length) return /* @__PURE__ */ jsx42("svg", { width, height, style, ...rest });
   const min = Math.min(...data);
@@ -1855,7 +1828,7 @@ function Sparkline({ data = [], width = 120, height = 32, color = "var(--lk-acce
   const pts = data.map((d, i) => [i / (data.length - 1 || 1) * width, height - (d - min) / range * (height - 4) - 2]);
   const line = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
   const area = `${line} L${width} ${height} L0 ${height} Z`;
-  return /* @__PURE__ */ jsxs33("svg", { width, height, viewBox: `0 0 ${width} ${height}`, style: { display: "block", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs31("svg", { width, height, viewBox: `0 0 ${width} ${height}`, style: { display: "block", ...style }, ...rest, children: [
     fill && /* @__PURE__ */ jsx42("path", { d: area, fill: color, opacity: "0.12" }),
     /* @__PURE__ */ jsx42("path", { d: line, fill: "none", stroke: color, strokeWidth, strokeLinecap: "round", strokeLinejoin: "round" })
   ] });
@@ -1863,7 +1836,7 @@ function Sparkline({ data = [], width = 120, height = 32, color = "var(--lk-acce
 
 // components/data/Table.jsx
 import React44 from "react";
-import { jsx as jsx43, jsxs as jsxs34 } from "react/jsx-runtime";
+import { jsx as jsx43, jsxs as jsxs32 } from "react/jsx-runtime";
 function TableRow({ columns, row, pad: pad2, hover }) {
   const [h, setH] = React44.useState(false);
   return /* @__PURE__ */ jsx43(
@@ -1878,7 +1851,7 @@ function TableRow({ columns, row, pad: pad2, hover }) {
 }
 function Table({ columns = [], rows = [], size = "md", hover = true, style, ...rest }) {
   const pad2 = size === "sm" ? "10px 12px" : "14px 16px";
-  return /* @__PURE__ */ jsx43("div", { style: { overflowX: "auto", ...style }, ...rest, children: /* @__PURE__ */ jsxs34("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
+  return /* @__PURE__ */ jsx43("div", { style: { overflowX: "auto", ...style }, ...rest, children: /* @__PURE__ */ jsxs32("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
     /* @__PURE__ */ jsx43("thead", { children: /* @__PURE__ */ jsx43("tr", { children: columns.map((c) => /* @__PURE__ */ jsx43("th", { style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", width: c.width, whiteSpace: "nowrap" }, children: c.label }, c.key)) }) }),
     /* @__PURE__ */ jsx43("tbody", { children: rows.map((r, ri) => /* @__PURE__ */ jsx43(TableRow, { columns, row: r, pad: pad2, hover }, ri)) })
   ] }) });
@@ -1886,13 +1859,13 @@ function Table({ columns = [], rows = [], size = "md", hover = true, style, ...r
 
 // components/data/Tree.jsx
 import React45 from "react";
-import { jsx as jsx44, jsxs as jsxs35 } from "react/jsx-runtime";
+import { jsx as jsx44, jsxs as jsxs33 } from "react/jsx-runtime";
 function TreeNode({ node, level, expandedSet, toggle, onSelect }) {
   const key = node.id != null ? node.id : node.label;
   const has = node.children && node.children.length > 0;
   const open = expandedSet.has(key);
-  return /* @__PURE__ */ jsxs35("div", { children: [
-    /* @__PURE__ */ jsxs35(
+  return /* @__PURE__ */ jsxs33("div", { children: [
+    /* @__PURE__ */ jsxs33(
       "button",
       {
         type: "button",
@@ -1930,9 +1903,9 @@ function Tree({ nodes = [], defaultExpanded = [], onSelect, style, ...rest }) {
 
 // components/editor/CanvasEditorShell.jsx
 import React46 from "react";
-import { jsx as jsx45, jsxs as jsxs36 } from "react/jsx-runtime";
+import { jsx as jsx45, jsxs as jsxs34 } from "react/jsx-runtime";
 function CanvasEditorShell({ title, tools, children, panel, status, panelWidth = 280, style, ...rest }) {
-  return /* @__PURE__ */ jsxs36("div", { style: {
+  return /* @__PURE__ */ jsxs34("div", { style: {
     display: "flex",
     flexDirection: "column",
     height: "100%",
@@ -1945,7 +1918,7 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
     ...style
   }, ...rest, children: [
     title != null && /* @__PURE__ */ jsx45("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--bw-band)", fontSize: 13, fontWeight: 700, color: "var(--label-strong)" }, children: title }),
-    /* @__PURE__ */ jsxs36("div", { style: { display: "flex", flex: 1, minHeight: 0 }, children: [
+    /* @__PURE__ */ jsxs34("div", { style: { display: "flex", flex: 1, minHeight: 0 }, children: [
       tools != null && /* @__PURE__ */ jsx45("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--bw-band)", background: "var(--surface-subtle)" }, children: tools }),
       /* @__PURE__ */ jsx45("div", { style: { flex: 1, minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
       panel != null && /* @__PURE__ */ jsx45("div", { style: { width: panelWidth, flexShrink: 0, borderLeft: "1px solid var(--bw-band)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
@@ -2000,7 +1973,7 @@ function EditorToolbar({ items = [], value, defaultValue, onChange, orientation 
 
 // components/editor/HistoryToolbar.jsx
 import React48 from "react";
-import { jsx as jsx47, jsxs as jsxs37 } from "react/jsx-runtime";
+import { jsx as jsx47, jsxs as jsxs35 } from "react/jsx-runtime";
 function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onReset, count, style, ...rest }) {
   const base = {
     width: 34,
@@ -2015,11 +1988,11 @@ function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onRe
     fontSize: 15,
     fontWeight: 700
   };
-  return /* @__PURE__ */ jsxs37("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs35("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx47("button", { type: "button", disabled: !canUndo, onClick: onUndo, title: "\uC2E4\uD589 \uCDE8\uC18C", "aria-label": "\uC2E4\uD589 \uCDE8\uC18C", style: { ...base, cursor: canUndo ? "pointer" : "not-allowed", opacity: canUndo ? 1 : 0.4 }, children: "\u21B6" }),
     /* @__PURE__ */ jsx47("button", { type: "button", disabled: !canRedo, onClick: onRedo, title: "\uB2E4\uC2DC \uC2E4\uD589", "aria-label": "\uB2E4\uC2DC \uC2E4\uD589", style: { ...base, cursor: canRedo ? "pointer" : "not-allowed", opacity: canRedo ? 1 : 0.4 }, children: "\u21B7" }),
     onReset && /* @__PURE__ */ jsx47("button", { type: "button", onClick: onReset, title: "\uCD08\uAE30\uD654", "aria-label": "\uCD08\uAE30\uD654", style: { ...base, cursor: "pointer" }, children: "\u27F2" }),
-    typeof count === "number" && /* @__PURE__ */ jsxs37("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums", marginLeft: 4 }, children: [
+    typeof count === "number" && /* @__PURE__ */ jsxs35("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums", marginLeft: 4 }, children: [
       count,
       " \uB2E8\uACC4"
     ] })
@@ -2028,7 +2001,7 @@ function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onRe
 
 // components/feedback/Avatar.jsx
 import React49 from "react";
-import { jsx as jsx48, jsxs as jsxs38 } from "react/jsx-runtime";
+import { jsx as jsx48, jsxs as jsxs36 } from "react/jsx-runtime";
 function Avatar({
   src,
   alt = "",
@@ -2041,7 +2014,7 @@ function Avatar({
 }) {
   const initials = name ? name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase() : "";
   const statusColor = status === "online" ? "var(--lk-accent-ink)" : status === "busy" ? "var(--bw-red)" : "var(--bw-gray-300)";
-  return /* @__PURE__ */ jsxs38("span", { style: { position: "relative", display: "inline-flex", width: size, height: size, ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs36("span", { style: { position: "relative", display: "inline-flex", width: size, height: size, ...style }, ...rest, children: [
     src ? /* @__PURE__ */ jsx48(
       "img",
       {
@@ -2079,7 +2052,7 @@ function Avatar({
 
 // components/feedback/AvatarGroup.jsx
 import React50 from "react";
-import { jsx as jsx49, jsxs as jsxs39 } from "react/jsx-runtime";
+import { jsx as jsx49, jsxs as jsxs37 } from "react/jsx-runtime";
 function AvatarGroup({ items = [], max = 4, size = 36, style, ...rest }) {
   const shown = items.slice(0, max);
   const extra = items.length - shown.length;
@@ -2099,9 +2072,9 @@ function AvatarGroup({ items = [], max = 4, size = 36, style, ...rest }) {
     fontSize: Math.round(size * 0.36),
     fontWeight: "var(--fw-bold)"
   };
-  return /* @__PURE__ */ jsxs39("div", { style: { display: "inline-flex", alignItems: "center", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs37("div", { style: { display: "inline-flex", alignItems: "center", ...style }, ...rest, children: [
     shown.map((it, i) => /* @__PURE__ */ jsx49("span", { title: it.name, style: { ...base, marginLeft: i ? overlap : 0, background: it.src ? "var(--bw-mist)" : "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", zIndex: i }, children: it.src ? /* @__PURE__ */ jsx49("img", { src: it.src, alt: it.name || "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : it.name ? String(it.name).slice(0, 1) : "" }, i)),
-    extra > 0 && /* @__PURE__ */ jsxs39("span", { style: { ...base, marginLeft: overlap, background: "var(--surface-inverse)", color: "var(--text-on-inverse)", zIndex: shown.length }, children: [
+    extra > 0 && /* @__PURE__ */ jsxs37("span", { style: { ...base, marginLeft: overlap, background: "var(--surface-inverse)", color: "var(--text-on-inverse)", zIndex: shown.length }, children: [
       "+",
       extra
     ] })
@@ -2205,9 +2178,9 @@ function Chip({
 
 // components/feedback/Notification.jsx
 import React53 from "react";
-import { jsx as jsx52, jsxs as jsxs40 } from "react/jsx-runtime";
+import { jsx as jsx52, jsxs as jsxs38 } from "react/jsx-runtime";
 function Notification({ icon, title, description, time, unread = false, onClick, style, ...rest }) {
-  return /* @__PURE__ */ jsxs40(
+  return /* @__PURE__ */ jsxs38(
     "div",
     {
       role: onClick ? "button" : void 0,
@@ -2217,8 +2190,8 @@ function Notification({ icon, title, description, time, unread = false, onClick,
       ...rest,
       children: [
         icon != null && /* @__PURE__ */ jsx52("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--lk-accent-ink)" }, children: icon }),
-        /* @__PURE__ */ jsxs40("div", { style: { flex: 1, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs40("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+        /* @__PURE__ */ jsxs38("div", { style: { flex: 1, minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs38("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
             /* @__PURE__ */ jsx52("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)" }, children: title }),
             unread && /* @__PURE__ */ jsx52("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "var(--bw-red)", flexShrink: 0 } })
           ] }),
@@ -2232,12 +2205,12 @@ function Notification({ icon, title, description, time, unread = false, onClick,
 
 // components/feedback/PushBadge.jsx
 import React54 from "react";
-import { jsx as jsx53, jsxs as jsxs41 } from "react/jsx-runtime";
+import { jsx as jsx53, jsxs as jsxs39 } from "react/jsx-runtime";
 function PushBadge({ children, count, dot = false, max = 99, tone = "negative", style, ...rest }) {
   const c = tone === "signal" ? "var(--lk-accent-ink)" : tone === "navy" ? "var(--surface-inverse)" : "var(--bw-red)";
   const show = dot || count != null && count > 0;
   const label = count > max ? `${max}+` : count;
-  return /* @__PURE__ */ jsxs41("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs39("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     children,
     show && (dot ? /* @__PURE__ */ jsx53("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxSizing: "content-box" } }) : /* @__PURE__ */ jsx53("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "#fff", borderRadius: "var(--radius-pill)", border: "2px solid var(--bw-white)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
   ] });
@@ -2324,7 +2297,7 @@ function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
 
 // components/forms/AutoComplete.jsx
 import React57 from "react";
-import { jsx as jsx56, jsxs as jsxs42 } from "react/jsx-runtime";
+import { jsx as jsx56, jsxs as jsxs40 } from "react/jsx-runtime";
 function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, placeholder = "\uC785\uB825\uD558\uC138\uC694", size = "md", style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React57.useState(defaultValue || "");
@@ -2342,7 +2315,7 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
     setOpen(false);
   };
   const h = size === "sm" ? 40 : 48;
-  return /* @__PURE__ */ jsxs42("div", { style: { position: "relative", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs40("div", { style: { position: "relative", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx56(
       "input",
       {
@@ -2381,7 +2354,7 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
 
 // components/forms/Checkbox.jsx
 import React58 from "react";
-import { jsx as jsx57, jsxs as jsxs43 } from "react/jsx-runtime";
+import { jsx as jsx57, jsxs as jsxs41 } from "react/jsx-runtime";
 function Checkbox({
   label,
   checked,
@@ -2399,7 +2372,7 @@ function Checkbox({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  return /* @__PURE__ */ jsxs43(
+  return /* @__PURE__ */ jsxs41(
     "label",
     {
       htmlFor: id,
@@ -2454,7 +2427,7 @@ function Checkbox({
 
 // components/forms/CheckboxGroup.jsx
 import React59 from "react";
-import { jsx as jsx58, jsxs as jsxs44 } from "react/jsx-runtime";
+import { jsx as jsx58, jsxs as jsxs42 } from "react/jsx-runtime";
 function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direction = "column", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
@@ -2468,10 +2441,10 @@ function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direc
   };
   return /* @__PURE__ */ jsx58("div", { role: "group", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = Array.isArray(val) && val.includes(o.value);
-    return /* @__PURE__ */ jsxs44("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+    return /* @__PURE__ */ jsxs42("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
       /* @__PURE__ */ jsx58("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
       /* @__PURE__ */ jsx58("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "var(--bw-white)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx58("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "#fff", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx58("path", { d: "M20 6 9 17l-5-5" }) }) }),
-      /* @__PURE__ */ jsxs44("span", { children: [
+      /* @__PURE__ */ jsxs42("span", { children: [
         /* @__PURE__ */ jsx58("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: o.label }),
         o.description != null && /* @__PURE__ */ jsx58("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
       ] })
@@ -2508,7 +2481,7 @@ function ColorSwatch({ colors = [], value, defaultValue, onChange, size = 28, sh
 
 // components/forms/Combobox.jsx
 import React61 from "react";
-import { jsx as jsx60, jsxs as jsxs45 } from "react/jsx-runtime";
+import { jsx as jsx60, jsxs as jsxs43 } from "react/jsx-runtime";
 function Combobox({ options = [], value, defaultValue = [], onChange, placeholder = "\uC120\uD0DD", size = "md", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
@@ -2534,14 +2507,14 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
     return o ? o.label : v;
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs45("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs45("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--label-normal)" : "var(--label-assistive)" }, children: [
+  return /* @__PURE__ */ jsxs43("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs43("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--label-normal)" : "var(--label-assistive)" }, children: [
       /* @__PURE__ */ jsx60("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ jsx60("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
       /* @__PURE__ */ jsx60("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx60("path", { d: "m6 9 6 6 6-6" }) })
     ] }),
     open && /* @__PURE__ */ jsx60("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
       const on = sel.includes(o.value);
-      return /* @__PURE__ */ jsxs45(
+      return /* @__PURE__ */ jsxs43(
         "div",
         {
           role: "option",
@@ -2567,7 +2540,7 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
 
 // components/forms/DatePicker.jsx
 import React62 from "react";
-import { jsx as jsx61, jsxs as jsxs46 } from "react/jsx-runtime";
+import { jsx as jsx61, jsxs as jsxs44 } from "react/jsx-runtime";
 function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC \uC120\uD0DD", size = "md", style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React62.useState(defaultValue || null);
@@ -2593,15 +2566,15 @@ function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC
     onChange && onChange(d);
     setOpen(false);
   };
-  return /* @__PURE__ */ jsxs46("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs46(
+  return /* @__PURE__ */ jsxs44("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs44(
       "button",
       {
         type: "button",
         onClick: () => setOpen((o) => !o),
         style: { display: "inline-flex", alignItems: "center", gap: 10, height: h, padding: "0 14px", minWidth: 200, background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel ? "var(--label-normal)" : "var(--label-assistive)" },
         children: [
-          /* @__PURE__ */ jsxs46("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+          /* @__PURE__ */ jsxs44("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
             /* @__PURE__ */ jsx61("rect", { x: "3", y: "4.5", width: "18", height: "17", rx: "2.5" }),
             /* @__PURE__ */ jsx61("path", { d: "M3 9.5h18M8 2.5v4M16 2.5v4" })
           ] }),
@@ -2615,7 +2588,7 @@ function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC
 
 // components/forms/FileUpload.jsx
 import React63 from "react";
-import { jsx as jsx62, jsxs as jsxs47 } from "react/jsx-runtime";
+import { jsx as jsx62, jsxs as jsxs45 } from "react/jsx-runtime";
 function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD558\uAC70\uB098 \uD30C\uC77C\uC744 \uB04C\uC5B4\uB2E4 \uB193\uC73C\uC138\uC694", disabled = false, style, ...rest }) {
   const inputRef = React63.useRef(null);
   const [drag, setDrag] = React63.useState(false);
@@ -2625,7 +2598,7 @@ function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD
     setNames(arr.map((f) => f.name));
     onFiles && onFiles(arr);
   };
-  return /* @__PURE__ */ jsxs47(
+  return /* @__PURE__ */ jsxs45(
     "div",
     {
       onClick: () => {
@@ -2660,7 +2633,7 @@ function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx62("span", { style: { display: "inline-flex", width: 44, height: 44, borderRadius: "var(--radius-lg)", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxs47("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+        /* @__PURE__ */ jsx62("span", { style: { display: "inline-flex", width: 44, height: 44, borderRadius: "var(--radius-lg)", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxs45("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
           /* @__PURE__ */ jsx62("path", { d: "M12 16V4M7 9l5-5 5 5" }),
           /* @__PURE__ */ jsx62("path", { d: "M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" })
         ] }) }),
@@ -2673,10 +2646,10 @@ function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD
 
 // components/forms/FormField.jsx
 import React64 from "react";
-import { jsx as jsx63, jsxs as jsxs48 } from "react/jsx-runtime";
+import { jsx as jsx63, jsxs as jsxs46 } from "react/jsx-runtime";
 function FormField({ label, required = false, helper, error, htmlFor, children, style, ...rest }) {
-  return /* @__PURE__ */ jsxs48("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    label != null && /* @__PURE__ */ jsxs48("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: [
+  return /* @__PURE__ */ jsxs46("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    label != null && /* @__PURE__ */ jsxs46("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: [
       label,
       required && /* @__PURE__ */ jsx63("span", { style: { color: "var(--bw-red)", marginLeft: 3 }, children: "*" })
     ] }),
@@ -2687,7 +2660,7 @@ function FormField({ label, required = false, helper, error, htmlFor, children, 
 
 // components/forms/Input.jsx
 import React65 from "react";
-import { jsx as jsx64, jsxs as jsxs49 } from "react/jsx-runtime";
+import { jsx as jsx64, jsxs as jsxs47 } from "react/jsx-runtime";
 function Input({
   label,
   iconLeft,
@@ -2701,12 +2674,12 @@ function Input({
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, "-").toLowerCase()}` : void 0);
   const [focused, setFocused] = React65.useState(false);
   const ring = invalid ? "var(--component-input-border-color-invalid)" : focused ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)";
-  return /* @__PURE__ */ jsxs49("div", { style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
-    label && /* @__PURE__ */ jsxs49("label", { htmlFor: inputId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
+  return /* @__PURE__ */ jsxs47("div", { style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
+    label && /* @__PURE__ */ jsxs47("label", { htmlFor: inputId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
       required && /* @__PURE__ */ jsx64("span", { style: { color: "var(--component-input-required-color)" }, children: " *" })
     ] }),
-    /* @__PURE__ */ jsxs49("div", { style: {
+    /* @__PURE__ */ jsxs47("div", { style: {
       position: "relative",
       display: "flex",
       alignItems: "center",
@@ -2743,7 +2716,7 @@ function Input({
 
 // components/forms/InputGroup.jsx
 import React66 from "react";
-import { jsx as jsx65, jsxs as jsxs50 } from "react/jsx-runtime";
+import { jsx as jsx65, jsxs as jsxs48 } from "react/jsx-runtime";
 function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder, size = "md", disabled = false, inputProps, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React66.useState(defaultValue || "");
@@ -2754,7 +2727,7 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
   };
   const h = size === "sm" ? 40 : 50;
   const Addon = ({ node, side }) => /* @__PURE__ */ jsx65("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--fill-normal)", color: "var(--label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--bw-border)" }, children: node });
-  return /* @__PURE__ */ jsxs50("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs48("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
     prefix != null && /* @__PURE__ */ jsx65(Addon, { node: prefix, side: "left" }),
     /* @__PURE__ */ jsx65(
       "input",
@@ -2773,7 +2746,7 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
 
 // components/forms/NumberField.jsx
 import React67 from "react";
-import { jsx as jsx66, jsxs as jsxs51 } from "react/jsx-runtime";
+import { jsx as jsx66, jsxs as jsxs49 } from "react/jsx-runtime";
 function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = "md", disabled = false, placeholder, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React67.useState(defaultValue);
@@ -2799,7 +2772,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
       }
     );
   };
-  return /* @__PURE__ */ jsxs51("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, overflow: "hidden", ...style }, children: [
+  return /* @__PURE__ */ jsxs49("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, overflow: "hidden", ...style }, children: [
     /* @__PURE__ */ jsx66(
       "input",
       {
@@ -2815,7 +2788,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
         ...rest
       }
     ),
-    /* @__PURE__ */ jsxs51("div", { style: { display: "flex", flexDirection: "column", width: 28 }, children: [
+    /* @__PURE__ */ jsxs49("div", { style: { display: "flex", flexDirection: "column", width: 28 }, children: [
       /* @__PURE__ */ jsx66(Arrow, { dir: 1 }),
       /* @__PURE__ */ jsx66(Arrow, { dir: -1 })
     ] })
@@ -2824,7 +2797,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
 
 // components/forms/PasswordInput.jsx
 import React68 from "react";
-import { jsx as jsx67, jsxs as jsxs52 } from "react/jsx-runtime";
+import { jsx as jsx67, jsxs as jsxs50 } from "react/jsx-runtime";
 function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uBC00\uBC88\uD638", size = "md", disabled = false, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React68.useState(defaultValue || "");
@@ -2836,7 +2809,7 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs52("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
+  return /* @__PURE__ */ jsxs50("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
     /* @__PURE__ */ jsx67(
       "input",
       {
@@ -2851,10 +2824,10 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
         ...rest
       }
     ),
-    /* @__PURE__ */ jsx67("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: show ? /* @__PURE__ */ jsxs52("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+    /* @__PURE__ */ jsx67("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: show ? /* @__PURE__ */ jsxs50("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
       /* @__PURE__ */ jsx67("path", { d: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" }),
       /* @__PURE__ */ jsx67("circle", { cx: "12", cy: "12", r: "3" })
-    ] }) : /* @__PURE__ */ jsxs52("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+    ] }) : /* @__PURE__ */ jsxs50("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
       /* @__PURE__ */ jsx67("path", { d: "M3 3l18 18" }),
       /* @__PURE__ */ jsx67("path", { d: "M10.6 10.6a3 3 0 0 0 4.2 4.2" }),
       /* @__PURE__ */ jsx67("path", { d: "M9.4 5.2A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a15.9 15.9 0 0 1-3.4 4.3M6.6 6.6A15.8 15.8 0 0 0 2 12s3.5 7 10 7a9.5 9.5 0 0 0 2.6-.35" })
@@ -2909,7 +2882,7 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
 
 // components/forms/Radio.jsx
 import React70 from "react";
-import { jsx as jsx69, jsxs as jsxs53 } from "react/jsx-runtime";
+import { jsx as jsx69, jsxs as jsxs51 } from "react/jsx-runtime";
 function Radio({
   label,
   checked,
@@ -2920,7 +2893,7 @@ function Radio({
   id,
   ...rest
 }) {
-  return /* @__PURE__ */ jsxs53(
+  return /* @__PURE__ */ jsxs51(
     "label",
     {
       htmlFor: id,
@@ -2970,7 +2943,7 @@ function Radio({
 
 // components/forms/RadioGroup.jsx
 import React71 from "react";
-import { jsx as jsx70, jsxs as jsxs54 } from "react/jsx-runtime";
+import { jsx as jsx70, jsxs as jsxs52 } from "react/jsx-runtime";
 function RadioGroup({ options = [], value, defaultValue, onChange, name, direction = "column", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
@@ -2984,10 +2957,10 @@ function RadioGroup({ options = [], value, defaultValue, onChange, name, directi
   const gname = name || autoId;
   return /* @__PURE__ */ jsx70("div", { role: "radiogroup", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = o.value === val;
-    return /* @__PURE__ */ jsxs54("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+    return /* @__PURE__ */ jsxs52("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
       /* @__PURE__ */ jsx70("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
       /* @__PURE__ */ jsx70("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-gray-300)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx70("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--lk-accent-ink)" } }) }),
-      /* @__PURE__ */ jsxs54("span", { children: [
+      /* @__PURE__ */ jsxs52("span", { children: [
         /* @__PURE__ */ jsx70("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: o.label }),
         o.description != null && /* @__PURE__ */ jsx70("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
       ] })
@@ -2997,7 +2970,7 @@ function RadioGroup({ options = [], value, defaultValue, onChange, name, directi
 
 // components/forms/RangeSlider.jsx
 import React72 from "react";
-import { jsx as jsx71, jsxs as jsxs55 } from "react/jsx-runtime";
+import { jsx as jsx71, jsxs as jsxs53 } from "react/jsx-runtime";
 function useRangeStyles() {
   React72.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-rangeslider-css")) return;
@@ -3026,14 +2999,14 @@ function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step 
   };
   const pctLo = (lo - min) / (max - min) * 100;
   const pctHi = (hi - min) / (max - min) * 100;
-  return /* @__PURE__ */ jsxs55("div", { style: { ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs55("div", { style: { position: "relative", height: 24 }, children: [
+  return /* @__PURE__ */ jsxs53("div", { style: { ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs53("div", { style: { position: "relative", height: 24 }, children: [
       /* @__PURE__ */ jsx71("div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--fill-strong)" } }),
       /* @__PURE__ */ jsx71("div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: "var(--lk-accent-ink)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
       /* @__PURE__ */ jsx71("input", { className: "lk-rangeslider", type: "range", min, max, step, value: lo, onChange: (e) => set(Number(e.target.value), hi), "aria-label": "minimum" }),
       /* @__PURE__ */ jsx71("input", { className: "lk-rangeslider", type: "range", min, max, step, value: hi, onChange: (e) => set(lo, Number(e.target.value)), "aria-label": "maximum" })
     ] }),
-    showValue && /* @__PURE__ */ jsxs55("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
+    showValue && /* @__PURE__ */ jsxs53("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
       /* @__PURE__ */ jsx71("span", { children: lo }),
       /* @__PURE__ */ jsx71("span", { children: hi })
     ] })
@@ -3042,7 +3015,7 @@ function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step 
 
 // components/forms/SearchField.jsx
 import React73 from "react";
-import { jsx as jsx72, jsxs as jsxs56 } from "react/jsx-runtime";
+import { jsx as jsx72, jsxs as jsxs54 } from "react/jsx-runtime";
 function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\uAC80\uC0C9", size = "md", disabled = false, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React73.useState(defaultValue || "");
@@ -3053,7 +3026,7 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs56("div", { style: {
+  return /* @__PURE__ */ jsxs54("div", { style: {
     display: "inline-flex",
     alignItems: "center",
     gap: 10,
@@ -3069,7 +3042,7 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
     transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
     ...style
   }, children: [
-    /* @__PURE__ */ jsxs56("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
+    /* @__PURE__ */ jsxs54("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
       /* @__PURE__ */ jsx72("circle", { cx: "11", cy: "11", r: "7" }),
       /* @__PURE__ */ jsx72("path", { d: "m21 21-4.3-4.3" })
     ] }),
@@ -3089,7 +3062,7 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
         ...rest
       }
     ),
-    val && /* @__PURE__ */ jsx72("button", { type: "button", "aria-label": "clear", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ jsxs56("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
+    val && /* @__PURE__ */ jsx72("button", { type: "button", "aria-label": "clear", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ jsxs54("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
       /* @__PURE__ */ jsx72("circle", { cx: "12", cy: "12", r: "10" }),
       /* @__PURE__ */ jsx72("path", { d: "M15 9l-6 6M9 9l6 6", stroke: "var(--bw-white)", strokeWidth: "2", strokeLinecap: "round" })
     ] }) })
@@ -3098,7 +3071,7 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
 
 // components/forms/Select.jsx
 import React74 from "react";
-import { jsx as jsx73, jsxs as jsxs57 } from "react/jsx-runtime";
+import { jsx as jsx73, jsxs as jsxs55 } from "react/jsx-runtime";
 function Select({
   label,
   options,
@@ -3141,13 +3114,13 @@ function Select({
   const curr = norm.find((x) => x.value === sel);
   const h = size === "sm" ? 40 : "var(--control-h-md)";
   const ring = invalid ? "var(--bw-red)" : open ? "var(--lk-accent-ink)" : "var(--bw-border)";
-  return /* @__PURE__ */ jsxs57("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ jsxs57("label", { htmlFor: selId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: [
+  return /* @__PURE__ */ jsxs55("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
+    label && /* @__PURE__ */ jsxs55("label", { htmlFor: selId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: [
       label,
       required && /* @__PURE__ */ jsx73("span", { style: { color: "var(--bw-red)" }, children: " *" })
     ] }),
-    /* @__PURE__ */ jsxs57("div", { ref, style: { position: "relative" }, children: [
-      /* @__PURE__ */ jsxs57(
+    /* @__PURE__ */ jsxs55("div", { ref, style: { position: "relative" }, children: [
+      /* @__PURE__ */ jsxs55(
         "button",
         {
           id: selId,
@@ -3189,7 +3162,7 @@ function Select({
       ),
       open && /* @__PURE__ */ jsx73("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--surface-overlay)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
         const on = o.value === sel;
-        return /* @__PURE__ */ jsxs57(
+        return /* @__PURE__ */ jsxs55(
           "div",
           {
             role: "option",
@@ -3216,7 +3189,7 @@ function Select({
 
 // components/forms/Slider.jsx
 import React75 from "react";
-import { jsx as jsx74, jsxs as jsxs58 } from "react/jsx-runtime";
+import { jsx as jsx74, jsxs as jsxs56 } from "react/jsx-runtime";
 function useSliderStyles() {
   React75.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-slider-css")) return;
@@ -3239,7 +3212,7 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
     onChange && onChange(v);
   };
   const pct = (val - min) / (max - min) * 100;
-  return /* @__PURE__ */ jsxs58("div", { style: { display: "flex", alignItems: "center", gap: 14, ...style }, children: [
+  return /* @__PURE__ */ jsxs56("div", { style: { display: "flex", alignItems: "center", gap: 14, ...style }, children: [
     /* @__PURE__ */ jsx74(
       "input",
       {
@@ -3270,7 +3243,7 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
 
 // components/forms/TagInput.jsx
 import React76 from "react";
-import { jsx as jsx75, jsxs as jsxs59 } from "react/jsx-runtime";
+import { jsx as jsx75, jsxs as jsxs57 } from "react/jsx-runtime";
 function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB825 \uD6C4 Enter", disabled = false, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React76.useState(defaultValue);
@@ -3286,8 +3259,8 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
     setDraft("");
   };
   const remove = (t) => set(tags.filter((x) => x !== t));
-  return /* @__PURE__ */ jsxs59("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
-    tags.map((t) => /* @__PURE__ */ jsxs59("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-semibold)" }, children: [
+  return /* @__PURE__ */ jsxs57("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
+    tags.map((t) => /* @__PURE__ */ jsxs57("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-semibold)" }, children: [
       t,
       /* @__PURE__ */ jsx75("button", { type: "button", "aria-label": "remove", onClick: () => remove(t), style: { display: "inline-flex", border: "none", background: "transparent", cursor: "pointer", color: "var(--lk-accent-ink)", padding: 2 }, children: /* @__PURE__ */ jsx75("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", children: /* @__PURE__ */ jsx75("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
     ] }, t)),
@@ -3312,7 +3285,7 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
 
 // components/forms/Textarea.jsx
 import React77 from "react";
-import { jsx as jsx76, jsxs as jsxs60 } from "react/jsx-runtime";
+import { jsx as jsx76, jsxs as jsxs58 } from "react/jsx-runtime";
 function Textarea({
   label,
   required = false,
@@ -3325,8 +3298,8 @@ function Textarea({
   const taId = id || (label ? `ta-${String(label).replace(/\s+/g, "-").toLowerCase()}` : void 0);
   const [focused, setFocused] = React77.useState(false);
   const ring = invalid ? "var(--bw-red)" : focused ? "var(--lk-accent-ink)" : "var(--bw-border)";
-  return /* @__PURE__ */ jsxs60("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ jsxs60("label", { htmlFor: taId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: "-0.1px", color: "var(--bw-ink)" }, children: [
+  return /* @__PURE__ */ jsxs58("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
+    label && /* @__PURE__ */ jsxs58("label", { htmlFor: taId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: "-0.1px", color: "var(--bw-ink)" }, children: [
       label,
       required && /* @__PURE__ */ jsx76("span", { style: { color: "var(--bw-red)" }, children: " *" })
     ] }),
@@ -3369,7 +3342,7 @@ function Textarea({
 
 // components/forms/TimePicker.jsx
 import React78 from "react";
-import { jsx as jsx77, jsxs as jsxs61 } from "react/jsx-runtime";
+import { jsx as jsx77, jsxs as jsxs59 } from "react/jsx-runtime";
 function pad(n) {
   return String(n).padStart(2, "0");
 }
@@ -3384,8 +3357,8 @@ function TimeDropdown({ value, options, onChange, height, ariaLabel }) {
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  return /* @__PURE__ */ jsxs61("div", { ref, style: { position: "relative" }, children: [
-    /* @__PURE__ */ jsxs61(
+  return /* @__PURE__ */ jsxs59("div", { ref, style: { position: "relative" }, children: [
+    /* @__PURE__ */ jsxs59(
       "button",
       {
         type: "button",
@@ -3438,7 +3411,7 @@ function TimePicker({ value, defaultValue = "09:00", onChange, minuteStep = 5, s
   const height = size === "sm" ? 40 : 50;
   const hours = Array.from({ length: 24 }, (_, i) => i);
   const mins = Array.from({ length: Math.ceil(60 / minuteStep) }, (_, i) => i * minuteStep);
-  return /* @__PURE__ */ jsxs61("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs59("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, ...style }, ...rest, children: [
     /* @__PURE__ */ jsx77(TimeDropdown, { value: h, options: hours, onChange: (nh) => set(nh, m), height, ariaLabel: "hour" }),
     /* @__PURE__ */ jsx77("span", { style: { fontFamily: "var(--font-sans)", fontWeight: "var(--fw-bold)", color: "var(--label-alternative)" }, children: ":" }),
     /* @__PURE__ */ jsx77(TimeDropdown, { value: m, options: mins, onChange: (nm) => set(h, nm), height, ariaLabel: "minute" })
@@ -3637,7 +3610,7 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
 
 // components/navigation/BottomNav.jsx
 import React94 from "react";
-import { jsx as jsx92, jsxs as jsxs62 } from "react/jsx-runtime";
+import { jsx as jsx92, jsxs as jsxs60 } from "react/jsx-runtime";
 function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React94.useState(defaultValue != null ? defaultValue : items[0] && items[0].value);
@@ -3648,7 +3621,7 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
   };
   return /* @__PURE__ */ jsx92("nav", { style: { display: "flex", alignItems: "stretch", background: "var(--bw-white)", borderTop: "1px solid var(--bw-border)", ...style }, ...rest, children: items.map((o) => {
     const active = o.value === val;
-    return /* @__PURE__ */ jsxs62(
+    return /* @__PURE__ */ jsxs60(
       "button",
       {
         type: "button",
@@ -3681,11 +3654,11 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
 
 // components/navigation/Breadcrumb.jsx
 import React95 from "react";
-import { jsx as jsx93, jsxs as jsxs63 } from "react/jsx-runtime";
+import { jsx as jsx93, jsxs as jsxs61 } from "react/jsx-runtime";
 function Breadcrumb({ items = [], style, ...rest }) {
   return /* @__PURE__ */ jsx93("nav", { "aria-label": "breadcrumb", style: { display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13.5, ...style }, ...rest, children: items.map((it, i) => {
     const last = i === items.length - 1;
-    return /* @__PURE__ */ jsxs63(React95.Fragment, { children: [
+    return /* @__PURE__ */ jsxs61(React95.Fragment, { children: [
       last || !it.href ? /* @__PURE__ */ jsx93("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--label-normal)" : "var(--label-alternative)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: "-0.1px" }, children: it.label }) : /* @__PURE__ */ jsx93("a", { href: it.href, style: { color: "var(--label-alternative)", fontWeight: "var(--fw-medium)", letterSpacing: "-0.1px", textDecoration: "none" }, children: it.label }),
       !last && /* @__PURE__ */ jsx93("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx93("path", { d: "m9 18 6-6-6-6" }) })
     ] }, i);
@@ -3748,7 +3721,7 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...r
 
 // components/navigation/Footer.jsx
 import React97 from "react";
-import { jsx as jsx95, jsxs as jsxs64 } from "react/jsx-runtime";
+import { jsx as jsx95, jsxs as jsxs62 } from "react/jsx-runtime";
 var DEFAULT_CONTACT = [
   { label: "\uB300\uD45C\uC804\uD654", value: "02-3159-2865" },
   { label: "\uC0AC\uC5C5\uC790\uB4F1\uB85D\uBC88\uD638", value: "391-81-03300" }
@@ -3836,33 +3809,33 @@ function Footer({
     key
   );
   if (compact) {
-    return /* @__PURE__ */ jsxs64("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--border-subtle)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    return /* @__PURE__ */ jsxs62("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--border-subtle)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
       /* @__PURE__ */ jsx95("span", { style: { fontSize: 12.5, letterSpacing: "-0.1px", color: "var(--label-assistive)" }, children: copyright }),
       links.length > 0 && /* @__PURE__ */ jsx95("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--label-alternative)", "var(--label-normal)", 12.5)) })
     ] });
   }
-  const entryRow = (items) => /* @__PURE__ */ jsx95("div", { style: { display: "flex", flexWrap: "wrap", gap: "4px 14px" }, children: items.map((it, i) => /* @__PURE__ */ jsxs64("span", { style: { whiteSpace: "nowrap" }, children: [
+  const entryRow = (items) => /* @__PURE__ */ jsx95("div", { style: { display: "flex", flexWrap: "wrap", gap: "4px 14px" }, children: items.map((it, i) => /* @__PURE__ */ jsxs62("span", { style: { whiteSpace: "nowrap" }, children: [
     /* @__PURE__ */ jsx95("span", { style: { color: "rgba(255, 255, 255, 0.62)", fontWeight: 700 }, children: it.label }),
     " ",
     it.value
   ] }, i)) });
-  return /* @__PURE__ */ jsxs64("footer", { style: { background: "var(--surface-inverse)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs62("footer", { style: { background: "var(--surface-inverse)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     backToTop && /* @__PURE__ */ jsx95(BackToTopButton, {}),
-    /* @__PURE__ */ jsxs64("div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
-      (brand != null || columns.length > 0) && /* @__PURE__ */ jsxs64(React97.Fragment, { children: [
-        /* @__PURE__ */ jsxs64("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
+    /* @__PURE__ */ jsxs62("div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
+      (brand != null || columns.length > 0) && /* @__PURE__ */ jsxs62(React97.Fragment, { children: [
+        /* @__PURE__ */ jsxs62("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
           brand != null && /* @__PURE__ */ jsx95("div", { style: { flex: "1 1 240px", minWidth: 220 }, children: brand }),
-          columns.map((col, ci) => /* @__PURE__ */ jsxs64("nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: 11, minWidth: 108 }, children: [
+          columns.map((col, ci) => /* @__PURE__ */ jsxs62("nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: 11, minWidth: 108 }, children: [
             col.heading != null && /* @__PURE__ */ jsx95("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: "-0.2px", lineHeight: 1.5, color: "#fff", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
             (col.links || []).map((l, li) => linkEl(ci + "-" + li, l, "rgba(255, 255, 255, 0.5)", "rgba(255, 255, 255, 0.92)", 13.5))
           ] }, ci))
         ] }),
         /* @__PURE__ */ jsx95("div", { style: { height: 1, background: "rgba(255, 255, 255, 0.14)", margin: "32px 0 24px" } })
       ] }),
-      /* @__PURE__ */ jsxs64("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, fontSize: 13, lineHeight: 1.6, color: "rgba(255, 255, 255, 0.45)", wordBreak: "keep-all" }, children: [
+      /* @__PURE__ */ jsxs62("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, fontSize: 13, lineHeight: 1.6, color: "rgba(255, 255, 255, 0.45)", wordBreak: "keep-all" }, children: [
         contact.length > 0 && entryRow(contact),
         locations.length > 0 && entryRow(locations),
-        /* @__PURE__ */ jsxs64("span", { style: { marginTop: 18, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "4px 20px", color: "rgba(255, 255, 255, 0.38)" }, children: [
+        /* @__PURE__ */ jsxs62("span", { style: { marginTop: 18, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "4px 20px", color: "rgba(255, 255, 255, 0.38)" }, children: [
           copyright,
           links.length > 0 && /* @__PURE__ */ jsx95("span", { style: { display: "flex", alignItems: "center", gap: 16 }, children: links.map((l, i) => linkEl("p" + i, l, "rgba(255, 255, 255, 0.5)", "rgba(255, 255, 255, 0.92)", 12.5)) })
         ] })
@@ -3873,7 +3846,7 @@ function Footer({
 
 // components/navigation/Menubar.jsx
 import React98 from "react";
-import { jsx as jsx96, jsxs as jsxs65 } from "react/jsx-runtime";
+import { jsx as jsx96, jsxs as jsxs63 } from "react/jsx-runtime";
 function Menubar({ menus = [], style, ...rest }) {
   const [open, setOpen] = React98.useState(-1);
   const ref = React98.useRef(null);
@@ -3885,7 +3858,7 @@ function Menubar({ menus = [], style, ...rest }) {
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  return /* @__PURE__ */ jsx96("div", { ref, role: "menubar", style: { display: "inline-flex", alignItems: "center", gap: 2, padding: 4, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", ...style }, ...rest, children: menus.map((m, i) => /* @__PURE__ */ jsxs65("div", { style: { position: "relative" }, children: [
+  return /* @__PURE__ */ jsx96("div", { ref, role: "menubar", style: { display: "inline-flex", alignItems: "center", gap: 2, padding: 4, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", ...style }, ...rest, children: menus.map((m, i) => /* @__PURE__ */ jsxs63("div", { style: { position: "relative" }, children: [
     /* @__PURE__ */ jsx96(
       "button",
       {
@@ -3898,7 +3871,7 @@ function Menubar({ menus = [], style, ...rest }) {
         children: m.label
       }
     ),
-    open === i && /* @__PURE__ */ jsx96("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: (m.items || []).map((it, j) => it.divider ? /* @__PURE__ */ jsx96("div", { style: { height: 1, background: "var(--bw-border)", margin: "6px 4px" } }, j) : /* @__PURE__ */ jsxs65(
+    open === i && /* @__PURE__ */ jsx96("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: (m.items || []).map((it, j) => it.divider ? /* @__PURE__ */ jsx96("div", { style: { height: 1, background: "var(--bw-border)", margin: "6px 4px" } }, j) : /* @__PURE__ */ jsxs63(
       "button",
       {
         type: "button",
@@ -3925,7 +3898,7 @@ function Menubar({ menus = [], style, ...rest }) {
 
 // components/navigation/NavRail.jsx
 import React99 from "react";
-import { jsx as jsx97, jsxs as jsxs66 } from "react/jsx-runtime";
+import { jsx as jsx97, jsxs as jsxs64 } from "react/jsx-runtime";
 function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React99.useState(defaultValue != null ? defaultValue : items[0] && items[0].value);
@@ -3936,7 +3909,7 @@ function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) 
   };
   return /* @__PURE__ */ jsx97("nav", { style: { display: "inline-flex", flexDirection: "column", gap: 6, padding: 10, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", ...style }, ...rest, children: items.map((o) => {
     const active = o.value === val;
-    return /* @__PURE__ */ jsxs66(
+    return /* @__PURE__ */ jsxs64(
       "button",
       {
         type: "button",
@@ -3956,7 +3929,7 @@ function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) 
 
 // components/navigation/Pagination.jsx
 import React100 from "react";
-import { jsx as jsx98, jsxs as jsxs67 } from "react/jsx-runtime";
+import { jsx as jsx98, jsxs as jsxs65 } from "react/jsx-runtime";
 function Pagination({ page = 1, count = 1, onChange, siblingCount = 1, style, ...rest }) {
   const go = (p) => {
     if (p >= 1 && p <= count && p !== page && onChange) onChange(p);
@@ -3984,7 +3957,7 @@ function Pagination({ page = 1, count = 1, onChange, siblingCount = 1, style, ..
       children: /* @__PURE__ */ jsx98("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx98("path", { d: dir === "prev" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6" }) })
     }
   );
-  return /* @__PURE__ */ jsxs67("nav", { "aria-label": "pagination", style: { display: "inline-flex", alignItems: "center", gap: 4, ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs65("nav", { "aria-label": "pagination", style: { display: "inline-flex", alignItems: "center", gap: 4, ...style }, ...rest, children: [
     /* @__PURE__ */ jsx98(Arrow, { dir: "prev", disabled: page <= 1 }),
     pages.map((p, i) => typeof p === "string" ? /* @__PURE__ */ jsx98("span", { style: { minWidth: 20, textAlign: "center", color: "var(--label-assistive)", fontFamily: "var(--font-sans)" }, children: "\u2026" }, p + i) : /* @__PURE__ */ jsx98(
       "button",
@@ -4017,7 +3990,7 @@ function Pagination({ page = 1, count = 1, onChange, siblingCount = 1, style, ..
 
 // components/navigation/SideNav.jsx
 import React101 from "react";
-import { jsx as jsx99, jsxs as jsxs68 } from "react/jsx-runtime";
+import { jsx as jsx99, jsxs as jsxs66 } from "react/jsx-runtime";
 var Chevron = ({ open }) => /* @__PURE__ */ jsx99("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx99("path", { d: "M6 9l6 6 6-6" }) });
 function SideNav({
   items = [],
@@ -4118,8 +4091,8 @@ function SideNav({
   const dot = /* @__PURE__ */ jsx99("span", { style: { position: "absolute", top: 7, right: 7, width: 7, height: 7, borderRadius: "50%", background: "var(--lk-accent-ink)" } });
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
   const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
-  const inner = /* @__PURE__ */ jsxs68(React101.Fragment, { children: [
-    (brand != null || collapsible) && /* @__PURE__ */ jsxs68("div", { style: { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 24, padding: col ? "14px 10px 10px" : "14px 10px 18px" }, children: [
+  const inner = /* @__PURE__ */ jsxs66(React101.Fragment, { children: [
+    (brand != null || collapsible) && /* @__PURE__ */ jsxs66("div", { style: { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 24, padding: col ? "14px 10px 10px" : "14px 10px 18px" }, children: [
       brand,
       collapsible && /* @__PURE__ */ jsx99(
         "button",
@@ -4129,7 +4102,7 @@ function SideNav({
           title: col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
           "aria-label": col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
           style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: 8, background: "transparent", color: "var(--label-assistive)", cursor: "pointer" },
-          children: /* @__PURE__ */ jsxs68("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
+          children: /* @__PURE__ */ jsxs66("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
             /* @__PURE__ */ jsx99("rect", { x: "3", y: "4", width: "18", height: "16", rx: "3" }),
             /* @__PURE__ */ jsx99("path", { d: "M9.5 4v16" }),
             /* @__PURE__ */ jsx99("path", { d: col ? "M13.5 9l3 3-3 3" : "M17 9l-3 3 3 3" })
@@ -4152,8 +4125,8 @@ function SideNav({
             setOpen((s) => ({ ...s, [o.value]: !s[o.value] }));
           }
         };
-        return /* @__PURE__ */ jsxs68(React101.Fragment, { children: [
-          /* @__PURE__ */ jsxs68(
+        return /* @__PURE__ */ jsxs66(React101.Fragment, { children: [
+          /* @__PURE__ */ jsxs66(
             "button",
             {
               type: "button",
@@ -4173,7 +4146,7 @@ function SideNav({
           ),
           !col && isOpen && /* @__PURE__ */ jsx99("div", { style: { display: "flex", flexDirection: "column", gap: 2, margin: "0 0 4px" }, children: kids.map((c) => {
             const ca = c.value === val;
-            return /* @__PURE__ */ jsxs68(
+            return /* @__PURE__ */ jsxs66(
               "button",
               {
                 type: "button",
@@ -4193,7 +4166,7 @@ function SideNav({
         ] }, o.value);
       }
       const active = o.value === val;
-      return /* @__PURE__ */ jsxs68(
+      return /* @__PURE__ */ jsxs66(
         "button",
         {
           type: "button",
@@ -4233,7 +4206,7 @@ function SideNav({
 
 // components/navigation/Steps.jsx
 import React102 from "react";
-import { jsx as jsx100, jsxs as jsxs69 } from "react/jsx-runtime";
+import { jsx as jsx100, jsxs as jsxs67 } from "react/jsx-runtime";
 function Steps({ steps = [], current = 0, style, ...rest }) {
   return /* @__PURE__ */ jsx100("div", { style: { display: "flex", alignItems: "flex-start", ...style }, ...rest, children: steps.map((s, i) => {
     const label = typeof s === "string" ? s : s.label;
@@ -4242,8 +4215,8 @@ function Steps({ steps = [], current = 0, style, ...rest }) {
     const bg = done ? "var(--lk-accent-ink)" : "var(--bw-white)";
     const bd = done || active ? "var(--lk-accent-ink)" : "var(--bw-border)";
     const fg = done ? "#fff" : active ? "var(--lk-accent-ink)" : "var(--label-assistive)";
-    return /* @__PURE__ */ jsxs69(React102.Fragment, { children: [
-      /* @__PURE__ */ jsxs69("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
+    return /* @__PURE__ */ jsxs67(React102.Fragment, { children: [
+      /* @__PURE__ */ jsxs67("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
         /* @__PURE__ */ jsx100("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx100("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx100("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
         /* @__PURE__ */ jsx100("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: "-0.1px", color: active ? "var(--label-normal)" : "var(--label-alternative)", whiteSpace: "nowrap" }, children: label })
       ] }),
@@ -4254,7 +4227,7 @@ function Steps({ steps = [], current = 0, style, ...rest }) {
 
 // components/navigation/Tabs.jsx
 import React103 from "react";
-import { jsx as jsx101, jsxs as jsxs70 } from "react/jsx-runtime";
+import { jsx as jsx101, jsxs as jsxs68 } from "react/jsx-runtime";
 function Tabs({ items = [], value, defaultValue, onChange, full = false, style, ...rest }) {
   const norm = items.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
@@ -4266,7 +4239,7 @@ function Tabs({ items = [], value, defaultValue, onChange, full = false, style, 
   };
   return /* @__PURE__ */ jsx101("div", { role: "tablist", style: { display: "flex", gap: full ? 0 : 24, borderBottom: "1px solid var(--bw-border)", ...style }, ...rest, children: norm.map((o) => {
     const active = o.value === val;
-    return /* @__PURE__ */ jsxs70(
+    return /* @__PURE__ */ jsxs68(
       "button",
       {
         type: "button",
@@ -4311,9 +4284,9 @@ function Toolbar({ children, style, ...rest }) {
 
 // components/navigation/TopBar.jsx
 import React105 from "react";
-import { jsx as jsx103, jsxs as jsxs71 } from "react/jsx-runtime";
+import { jsx as jsx103, jsxs as jsxs69 } from "react/jsx-runtime";
 function TopBar({ brand, children, actions, navAlign = "start", sticky = false, bordered = true, dark = false, height = 64, style, ...rest }) {
-  return /* @__PURE__ */ jsxs71(
+  return /* @__PURE__ */ jsxs69(
     "header",
     {
       style: {
@@ -4346,7 +4319,7 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
 
 // components/navigation/UserMenu.jsx
 import React106 from "react";
-import { jsx as jsx104, jsxs as jsxs72 } from "react/jsx-runtime";
+import { jsx as jsx104, jsxs as jsxs70 } from "react/jsx-runtime";
 function UserMenu({ name, detail, src, status, items = [], collapsed = false, style, ...rest }) {
   const [open, setOpen] = React106.useState(false);
   const [hov, setHov] = React106.useState(-1);
@@ -4366,8 +4339,8 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
       document.removeEventListener("keydown", k);
     };
   }, [open]);
-  return /* @__PURE__ */ jsxs72("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    open && /* @__PURE__ */ jsx104("div", { role: "menu", style: { position: "absolute", bottom: "calc(100% + 8px)", left: 0, minWidth: collapsed ? 200 : "100%", boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", padding: 5, boxShadow: "0 12px 32px rgba(14, 19, 41, 0.12)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx104("div", { style: { height: 1, background: "var(--bw-border)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ jsxs72(
+  return /* @__PURE__ */ jsxs70("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
+    open && /* @__PURE__ */ jsx104("div", { role: "menu", style: { position: "absolute", bottom: "calc(100% + 8px)", left: 0, minWidth: collapsed ? 200 : "100%", boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", padding: 5, boxShadow: "0 12px 32px rgba(14, 19, 41, 0.12)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx104("div", { style: { height: 1, background: "var(--bw-border)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ jsxs70(
       "button",
       {
         type: "button",
@@ -4387,7 +4360,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
       },
       i
     )) }),
-    /* @__PURE__ */ jsxs72(
+    /* @__PURE__ */ jsxs70(
       "button",
       {
         type: "button",
@@ -4398,7 +4371,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         style: { display: "flex", alignItems: "center", justifyContent: collapsed ? "center" : "flex-start", gap: 10, width: "100%", padding: collapsed ? "6px 0" : "6px 8px", boxSizing: "border-box", border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", background: open ? "var(--lk-accent-tint)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
         children: [
           /* @__PURE__ */ jsx104(Avatar, { name: typeof name === "string" ? name : void 0, src, status, size: 30, style: { flexShrink: 0 } }),
-          !collapsed && /* @__PURE__ */ jsxs72("span", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }, children: [
+          !collapsed && /* @__PURE__ */ jsxs70("span", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }, children: [
             /* @__PURE__ */ jsx104("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", color: "var(--label-normal, #0E1329)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
             detail != null && /* @__PURE__ */ jsx104("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
           ] }),
@@ -4411,7 +4384,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
 
 // components/navigation/Wizard.jsx
 import React107 from "react";
-import { jsx as jsx105, jsxs as jsxs73 } from "react/jsx-runtime";
+import { jsx as jsx105, jsxs as jsxs71 } from "react/jsx-runtime";
 function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, children, footer, style, ...rest }) {
   const isControlled = current !== void 0;
   const [internal, setInternal] = React107.useState(defaultCurrent);
@@ -4421,13 +4394,13 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, childre
     if (!isControlled) setInternal(c);
     onStepChange && onStepChange(c);
   };
-  return /* @__PURE__ */ jsxs73("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs71("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx105("div", { style: { display: "flex", alignItems: "flex-start", marginBottom: 28 }, children: steps.map((s, i) => {
       const label = typeof s === "string" ? s : s.label;
       const done = i < cur;
       const active = i === cur;
-      return /* @__PURE__ */ jsxs73(React107.Fragment, { children: [
-        /* @__PURE__ */ jsxs73("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
+      return /* @__PURE__ */ jsxs71(React107.Fragment, { children: [
+        /* @__PURE__ */ jsxs71("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
           /* @__PURE__ */ jsx105("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: done ? "var(--lk-accent-ink)" : "var(--bw-white)", border: `2px solid ${done || active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, color: done ? "#fff" : active ? "var(--lk-accent-ink)" : "var(--label-assistive)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx105("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx105("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
           /* @__PURE__ */ jsx105("span", { style: { fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", color: active ? "var(--label-normal)" : "var(--label-alternative)", whiteSpace: "nowrap" }, children: label })
         ] }),
@@ -4435,7 +4408,7 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, childre
       ] }, i);
     }) }),
     /* @__PURE__ */ jsx105("div", { children: typeof children === "function" ? children(cur) : children }),
-    footer !== null && /* @__PURE__ */ jsxs73("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
+    footer !== null && /* @__PURE__ */ jsxs71("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
       /* @__PURE__ */ jsx105("button", { type: "button", onClick: () => go(cur - 1), disabled: cur === 0, style: { height: 44, padding: "0 18px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", color: "var(--label-normal)", cursor: cur === 0 ? "not-allowed" : "pointer", opacity: cur === 0 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
       /* @__PURE__ */ jsx105("button", { type: "button", onClick: () => go(cur + 1), disabled: cur === steps.length - 1, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--lk-accent-ink)", color: "#fff", cursor: cur === steps.length - 1 ? "not-allowed" : "pointer", opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uB2E4\uC74C" })
     ] })
@@ -4444,7 +4417,7 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, childre
 
 // components/overlay/Alert.jsx
 import React108 from "react";
-import { jsx as jsx106, jsxs as jsxs74 } from "react/jsx-runtime";
+import { jsx as jsx106, jsxs as jsxs72 } from "react/jsx-runtime";
 function Alert({
   open = false,
   title,
@@ -4481,7 +4454,7 @@ function Alert({
         if (e.target === e.currentTarget && dismiss) dismiss();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--scrim-dark)", backdropFilter: "blur(2px)" },
-      children: /* @__PURE__ */ jsxs74(
+      children: /* @__PURE__ */ jsxs72(
         "div",
         {
           role: "dialog",
@@ -4492,7 +4465,7 @@ function Alert({
           children: [
             title != null && /* @__PURE__ */ jsx106("div", { style: { fontSize: 20, fontWeight: "var(--fw-extra)", letterSpacing: "-0.5px", color: "var(--label-normal)", marginBottom: 10 }, children: title }),
             children != null && /* @__PURE__ */ jsx106("div", { style: { fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
-            /* @__PURE__ */ jsx106("div", { style: { display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 24 }, children: actions != null ? actions : /* @__PURE__ */ jsxs74(React108.Fragment, { children: [
+            /* @__PURE__ */ jsx106("div", { style: { display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 24 }, children: actions != null ? actions : /* @__PURE__ */ jsxs72(React108.Fragment, { children: [
               cancelLabel && /* @__PURE__ */ jsx106("button", { type: "button", style: cancelStyle, onClick: onCancel || dismiss, children: cancelLabel }),
               /* @__PURE__ */ jsx106("button", { type: "button", style: confirmStyle, onClick: onConfirm || dismiss, children: confirmLabel })
             ] }) })
@@ -4505,7 +4478,7 @@ function Alert({
 
 // components/overlay/CommandPalette.jsx
 import React109 from "react";
-import { jsx as jsx107, jsxs as jsxs75 } from "react/jsx-runtime";
+import { jsx as jsx107, jsxs as jsxs73 } from "react/jsx-runtime";
 function CommandPalette({ open = false, onClose, commands = [], placeholder = "\uBA85\uB839 \uAC80\uC0C9\u2026", style, ...rest }) {
   const [q, setQ] = React109.useState("");
   React109.useEffect(() => {
@@ -4521,15 +4494,15 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
   const filtered = q ? commands.filter((c) => String(c.label).toLowerCase().includes(q.toLowerCase())) : commands;
   return /* @__PURE__ */ jsx107("div", { role: "presentation", onClick: (e) => {
     if (e.target === e.currentTarget && onClose) onClose();
-  }, style: { position: "fixed", inset: 0, zIndex: 110, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "12vh", background: "var(--scrim-dark)", backdropFilter: "blur(2px)" }, children: /* @__PURE__ */ jsxs75("div", { role: "dialog", "aria-modal": "true", style: { width: "100%", maxWidth: 560, background: "var(--bw-white)", borderRadius: "var(--radius-2xl)", boxShadow: "var(--shadow-xl)", overflow: "hidden", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs75("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: "1px solid var(--bw-border)" }, children: [
-      /* @__PURE__ */ jsxs75("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+  }, style: { position: "fixed", inset: 0, zIndex: 110, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "12vh", background: "var(--scrim-dark)", backdropFilter: "blur(2px)" }, children: /* @__PURE__ */ jsxs73("div", { role: "dialog", "aria-modal": "true", style: { width: "100%", maxWidth: 560, background: "var(--bw-white)", borderRadius: "var(--radius-2xl)", boxShadow: "var(--shadow-xl)", overflow: "hidden", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs73("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: "1px solid var(--bw-border)" }, children: [
+      /* @__PURE__ */ jsxs73("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
         /* @__PURE__ */ jsx107("circle", { cx: "11", cy: "11", r: "7" }),
         /* @__PURE__ */ jsx107("path", { d: "m21 21-4.3-4.3" })
       ] }),
       /* @__PURE__ */ jsx107("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--label-normal)" } })
     ] }),
-    /* @__PURE__ */ jsx107("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ jsx107("div", { style: { padding: 28, textAlign: "center", color: "var(--label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ jsxs75(
+    /* @__PURE__ */ jsx107("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ jsx107("div", { style: { padding: 28, textAlign: "center", color: "var(--label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ jsxs73(
       "button",
       {
         type: "button",
@@ -4585,7 +4558,7 @@ function Dimmer({ open = false, children, onClick, blur = false, style, ...rest 
 
 // components/overlay/Drawer.jsx
 import React111 from "react";
-import { jsx as jsx109, jsxs as jsxs76 } from "react/jsx-runtime";
+import { jsx as jsx109, jsxs as jsxs74 } from "react/jsx-runtime";
 function Drawer({ open = false, side = "right", width = 380, title, children, footer, onClose, closeOnScrim = true, style, ...rest }) {
   const [shown, setShown] = React111.useState(false);
   React111.useEffect(() => {
@@ -4615,7 +4588,7 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
         if (e.target === e.currentTarget && onClose) onClose();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: 100, background: "var(--scrim-dark)", backdropFilter: "blur(2px)", opacity: shown ? 1 : 0, transition: "opacity var(--dur-base) var(--ease-out)" },
-      children: /* @__PURE__ */ jsxs76(
+      children: /* @__PURE__ */ jsxs74(
         "div",
         {
           role: "dialog",
@@ -4624,7 +4597,7 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
           style: { position: "absolute", top: 0, bottom: 0, [isRight ? "right" : "left"]: 0, width, maxWidth: "92vw", display: "flex", flexDirection: "column", background: "var(--bw-white)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", transform: shown ? "none" : hidden, transition: "transform var(--dur-slow) var(--ease-out)", ...style },
           ...rest,
           children: [
-            (title != null || onClose) && /* @__PURE__ */ jsxs76("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 22px", borderBottom: "1px solid var(--bw-border)" }, children: [
+            (title != null || onClose) && /* @__PURE__ */ jsxs74("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 22px", borderBottom: "1px solid var(--bw-border)" }, children: [
               /* @__PURE__ */ jsx109("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: "-0.4px", color: "var(--label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
               onClose && /* @__PURE__ */ jsx109("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ jsx109("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx109("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
@@ -4639,7 +4612,7 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
 
 // components/overlay/DropdownMenu.jsx
 import React112 from "react";
-import { jsx as jsx110, jsxs as jsxs77 } from "react/jsx-runtime";
+import { jsx as jsx110, jsxs as jsxs75 } from "react/jsx-runtime";
 function DropdownMenu({ trigger, items = [], align = "left", style, ...rest }) {
   const [open, setOpen] = React112.useState(false);
   const ref = React112.useRef(null);
@@ -4651,9 +4624,9 @@ function DropdownMenu({ trigger, items = [], align = "left", style, ...rest }) {
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  return /* @__PURE__ */ jsxs77("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs75("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx110("span", { onClick: () => setOpen((o) => !o), style: { display: "inline-flex" }, children: trigger }),
-    open && /* @__PURE__ */ jsx110("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", [align]: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx110("div", { style: { height: 1, background: "var(--bw-border)", margin: "6px 4px" } }, i) : /* @__PURE__ */ jsxs77(
+    open && /* @__PURE__ */ jsx110("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", [align]: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx110("div", { style: { height: 1, background: "var(--bw-border)", margin: "6px 4px" } }, i) : /* @__PURE__ */ jsxs75(
       "button",
       {
         type: "button",
@@ -4682,7 +4655,7 @@ function DropdownMenu({ trigger, items = [], align = "left", style, ...rest }) {
 
 // components/overlay/HoverCard.jsx
 import React113 from "react";
-import { jsx as jsx111, jsxs as jsxs78 } from "react/jsx-runtime";
+import { jsx as jsx111, jsxs as jsxs76 } from "react/jsx-runtime";
 function HoverCard({ trigger, children, align = "left", width = 280, style, ...rest }) {
   const [open, setOpen] = React113.useState(false);
   const t = React113.useRef(null);
@@ -4694,7 +4667,7 @@ function HoverCard({ trigger, children, align = "left", width = 280, style, ...r
     clearTimeout(t.current);
     t.current = setTimeout(() => setOpen(false), 120);
   };
-  return /* @__PURE__ */ jsxs78("span", { style: { position: "relative", display: "inline-flex" }, onMouseEnter: show, onMouseLeave: hide, ...rest, children: [
+  return /* @__PURE__ */ jsxs76("span", { style: { position: "relative", display: "inline-flex" }, onMouseEnter: show, onMouseLeave: hide, ...rest, children: [
     trigger,
     open && /* @__PURE__ */ jsx111("div", { style: { position: "absolute", top: "calc(100% + 8px)", [align]: 0, zIndex: 40, width, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 16, fontFamily: "var(--font-sans)", fontSize: 14, lineHeight: 1.6, color: "var(--label-neutral)", ...style }, children })
   ] });
@@ -4702,7 +4675,7 @@ function HoverCard({ trigger, children, align = "left", width = 280, style, ...r
 
 // components/overlay/Lightbox.jsx
 import React114 from "react";
-import { jsx as jsx112, jsxs as jsxs79 } from "react/jsx-runtime";
+import { jsx as jsx112, jsxs as jsxs77 } from "react/jsx-runtime";
 function lbArrow(side) {
   return { position: "absolute", [side]: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.42)", color: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" };
 }
@@ -4741,11 +4714,11 @@ function LightboxStage({ url, alt, count, go, onClose, style, rest }) {
     const el = imgRef.current;
     if (el && el.complete && el.naturalWidth > 0) setLoaded(true);
   }, [url]);
-  return /* @__PURE__ */ jsxs79("div", { role: "dialog", "aria-modal": "true", onClick: (e) => {
+  return /* @__PURE__ */ jsxs77("div", { role: "dialog", "aria-modal": "true", onClick: (e) => {
     if (e.target === e.currentTarget && onClose) onClose();
   }, style: { position: "fixed", inset: 0, zIndex: 130, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(8,11,28,0.92)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx112("button", { type: "button", "aria-label": "close", onClick: onClose, style: { position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "rgba(255,255,255,0.12)", color: "#fff", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx112("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx112("path", { d: "M18 6 6 18M6 6l12 12" }) }) }),
-    /* @__PURE__ */ jsxs79("div", { style: { position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: loaded ? 0 : 280, minHeight: loaded ? 0 : 200 }, children: [
+    /* @__PURE__ */ jsxs77("div", { style: { position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: loaded ? 0 : 280, minHeight: loaded ? 0 : 200 }, children: [
       /* @__PURE__ */ jsx112("img", { ref: imgRef, src: url, alt, onLoad: () => setLoaded(true), style: { display: "block", maxWidth: "86vw", maxHeight: "86vh", borderRadius: "var(--radius-lg)", boxShadow: loaded ? "var(--shadow-xl)" : "none", opacity: loaded ? 1 : 0, transition: "opacity .18s ease" } }),
       !loaded && /* @__PURE__ */ jsx112("span", { "aria-hidden": "true", style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", display: "inline-flex" }, children: /* @__PURE__ */ jsx112("svg", { width: "34", height: "34", viewBox: "0 0 24 24", fill: "none", stroke: "rgba(255,255,255,0.75)", strokeWidth: "2.4", strokeLinecap: "round", children: /* @__PURE__ */ jsx112("path", { d: "M12 2a10 10 0 1 0 10 10", children: /* @__PURE__ */ jsx112("animateTransform", { attributeName: "transform", type: "rotate", from: "0 12 12", to: "360 12 12", dur: "0.8s", repeatCount: "indefinite" }) }) }) }),
       loaded && count > 1 && /* @__PURE__ */ jsx112("button", { type: "button", "aria-label": "previous", onClick: () => go(-1), style: lbArrow("left"), children: /* @__PURE__ */ jsx112("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx112("path", { d: "m15 18-6-6 6-6" }) }) }),
@@ -4756,7 +4729,7 @@ function LightboxStage({ url, alt, count, go, onClose, style, rest }) {
 
 // components/overlay/Modal.jsx
 import React115 from "react";
-import { jsx as jsx113, jsxs as jsxs80 } from "react/jsx-runtime";
+import { jsx as jsx113, jsxs as jsxs78 } from "react/jsx-runtime";
 function Modal({ open = false, title, children, footer, onClose, width = 520, closeOnScrim = true, style, ...rest }) {
   React115.useEffect(() => {
     if (!open) return void 0;
@@ -4775,7 +4748,7 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
         if (e.target === e.currentTarget && onClose) onClose();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--scrim-dark)", backdropFilter: "blur(2px)" },
-      children: /* @__PURE__ */ jsxs80(
+      children: /* @__PURE__ */ jsxs78(
         "div",
         {
           role: "dialog",
@@ -4784,7 +4757,7 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
           style: { width: "100%", maxWidth: width, maxHeight: "86vh", display: "flex", flexDirection: "column", background: "var(--bw-white)", borderRadius: "var(--radius-4xl)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", overflow: "hidden", ...style },
           ...rest,
           children: [
-            (title != null || onClose) && /* @__PURE__ */ jsxs80("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--bw-border)" }, children: [
+            (title != null || onClose) && /* @__PURE__ */ jsxs78("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--bw-border)" }, children: [
               /* @__PURE__ */ jsx113("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: "-0.4px", color: "var(--label-normal)" }, children: title }),
               onClose && /* @__PURE__ */ jsx113("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ jsx113("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx113("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
@@ -4799,7 +4772,7 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
 
 // components/overlay/Popover.jsx
 import React116 from "react";
-import { jsx as jsx114, jsxs as jsxs81 } from "react/jsx-runtime";
+import { jsx as jsx114, jsxs as jsxs79 } from "react/jsx-runtime";
 function Popover({ trigger, children, align = "left", width = 260, style, ...rest }) {
   const [open, setOpen] = React116.useState(false);
   const ref = React116.useRef(null);
@@ -4811,7 +4784,7 @@ function Popover({ trigger, children, align = "left", width = 260, style, ...res
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  return /* @__PURE__ */ jsxs81("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs79("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx114("span", { onClick: () => setOpen((o) => !o), style: { display: "inline-flex" }, children: trigger }),
     open && /* @__PURE__ */ jsx114("div", { role: "dialog", style: { position: "absolute", top: "calc(100% + 8px)", [align]: 0, zIndex: 40, width, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 16, fontFamily: "var(--font-sans)", fontSize: 14, lineHeight: 1.6, color: "var(--label-neutral)" }, children })
   ] });
@@ -4819,7 +4792,7 @@ function Popover({ trigger, children, align = "left", width = 260, style, ...res
 
 // components/overlay/Sheet.jsx
 import React117 from "react";
-import { jsx as jsx115, jsxs as jsxs82 } from "react/jsx-runtime";
+import { jsx as jsx115, jsxs as jsxs80 } from "react/jsx-runtime";
 function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = true, height, style, ...rest }) {
   const [shown, setShown] = React117.useState(false);
   React117.useEffect(() => {
@@ -4847,7 +4820,7 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
         if (e.target === e.currentTarget && onClose) onClose();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: 100, background: "var(--scrim-dark)", backdropFilter: "blur(2px)", opacity: shown ? 1 : 0, transition: "opacity var(--dur-base) var(--ease-out)" },
-      children: /* @__PURE__ */ jsxs82(
+      children: /* @__PURE__ */ jsxs80(
         "div",
         {
           role: "dialog",
@@ -4869,7 +4842,7 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
 
 // components/overlay/Toast.jsx
 import React118 from "react";
-import { jsx as jsx116, jsxs as jsxs83 } from "react/jsx-runtime";
+import { jsx as jsx116, jsxs as jsxs81 } from "react/jsx-runtime";
 var TT = {
   info: { c: "var(--lk-accent-ink)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
   success: { c: "var(--bw-green)", d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
@@ -4878,7 +4851,7 @@ var TT = {
 };
 function Toast({ tone = "info", children, action, onClose, style, ...rest }) {
   const t = TT[tone] || TT.info;
-  return /* @__PURE__ */ jsxs83(
+  return /* @__PURE__ */ jsxs81(
     "div",
     {
       role: "status",
@@ -4923,7 +4896,7 @@ function ToastStack({ children, position = "bottom-right", gap = 10, style, ...r
 
 // components/robotics/ConnectionBadge.jsx
 import React120 from "react";
-import { jsx as jsx118, jsxs as jsxs84 } from "react/jsx-runtime";
+import { jsx as jsx118, jsxs as jsxs82 } from "react/jsx-runtime";
 var CFG = {
   online: { c: "var(--bw-green)", bars: 3, label: "\uC628\uB77C\uC778" },
   reconnecting: { c: "var(--bw-amber)", bars: 2, label: "\uC7AC\uC5F0\uACB0" },
@@ -4941,7 +4914,7 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
   const cfg = CFG[status] || CFG.online;
   const h = size === "sm" ? 11 : 14;
   const bw = size === "sm" ? 3 : 4;
-  return /* @__PURE__ */ jsxs84("span", { style: {
+  return /* @__PURE__ */ jsxs82("span", { style: {
     display: "inline-flex",
     alignItems: "center",
     gap: 7,
@@ -4969,7 +4942,7 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
 
 // components/robotics/EquipmentStatusCard.jsx
 import React121 from "react";
-import { jsx as jsx119, jsxs as jsxs85 } from "react/jsx-runtime";
+import { jsx as jsx119, jsxs as jsxs83 } from "react/jsx-runtime";
 var TONE = {
   positive: "var(--bw-green)",
   cautionary: "var(--bw-amber)",
@@ -4991,7 +4964,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
   const c = TONE[tone] || TONE.neutral;
   const moving = direction != null;
   const hasChips = chips && chips.length > 0;
-  return /* @__PURE__ */ jsxs85(
+  return /* @__PURE__ */ jsxs83(
     "div",
     {
       style: {
@@ -5021,11 +4994,11 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           justifyContent: "center",
           color: "var(--label-alternative)"
         }, children: icon }),
-        /* @__PURE__ */ jsxs85("div", { style: { flex: 1, minWidth: 0 }, children: [
+        /* @__PURE__ */ jsxs83("div", { style: { flex: 1, minWidth: 0 }, children: [
           title != null && /* @__PURE__ */ jsx119("div", { style: { fontSize: 15, fontWeight: 700, color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
           (hasChips || ringCaption != null) && /* @__PURE__ */ jsx119("div", { style: { marginTop: 3, fontSize: 12, fontWeight: 600, color: "var(--label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
         ] }),
-        ringLabel != null && /* @__PURE__ */ jsxs85("span", { style: {
+        ringLabel != null && /* @__PURE__ */ jsxs83("span", { style: {
           display: "inline-flex",
           alignItems: "center",
           gap: 6,
@@ -5047,7 +5020,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
 
 // components/robotics/Joystick.jsx
 import React122 from "react";
-import { jsx as jsx120, jsxs as jsxs86 } from "react/jsx-runtime";
+import { jsx as jsx120, jsxs as jsxs84 } from "react/jsx-runtime";
 function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = false, label, style, ...rest }) {
   const ref = React122.useRef(null);
   const [pos, setPos] = React122.useState({ x: 0, y: 0 });
@@ -5106,8 +5079,8 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
     }
     emit(x, y);
   };
-  return /* @__PURE__ */ jsxs86("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 10, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs86(
+  return /* @__PURE__ */ jsxs84("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 10, ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs84(
       "div",
       {
         ref,
@@ -5160,7 +5133,7 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
 
 // components/robotics/RobotStatusCard.jsx
 import React123 from "react";
-import { jsx as jsx121, jsxs as jsxs87 } from "react/jsx-runtime";
+import { jsx as jsx121, jsxs as jsxs85 } from "react/jsx-runtime";
 var CONN = {
   online: { c: "var(--bw-green)", bars: 3 },
   reconnecting: { c: "var(--bw-amber)", bars: 2 },
@@ -5172,7 +5145,7 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
   const b = Math.max(0, Math.min(100, battery));
   const batC = b <= 20 ? "var(--bw-red)" : b <= 50 ? "var(--bw-amber)" : "var(--bw-green)";
   const conn = CONN[status] || CONN.offline;
-  return /* @__PURE__ */ jsxs87("div", { onClick, style: {
+  return /* @__PURE__ */ jsxs85("div", { onClick, style: {
     display: "flex",
     gap: 16,
     alignItems: "center",
@@ -5199,16 +5172,16 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
       justifyContent: "center"
     }, children: image ? /* @__PURE__ */ jsx121("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx121("span", { style: { fontSize: 17, fontWeight: 800, color: "var(--label-assistive)" }, children: String(name || "?").slice(0, 2) }) }),
     /* @__PURE__ */ jsx121("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: 700, color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
-    /* @__PURE__ */ jsxs87("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
+    /* @__PURE__ */ jsxs85("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
       mode != null && /* @__PURE__ */ jsx121("span", { style: { fontSize: 11, fontWeight: 700, letterSpacing: ".3px", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", whiteSpace: "nowrap" }, children: mode }),
-      /* @__PURE__ */ jsxs87("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+      /* @__PURE__ */ jsxs85("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
         /* @__PURE__ */ jsx121("span", { title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx121("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--fill-strong)" } }, i)) }),
-        hasBat && /* @__PURE__ */ jsxs87("span", { style: { display: "inline-flex", alignItems: "center", gap: 6 }, children: [
-          /* @__PURE__ */ jsxs87("span", { style: { position: "relative", width: 24, height: 12, border: "1.5px solid var(--label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
+        hasBat && /* @__PURE__ */ jsxs85("span", { style: { display: "inline-flex", alignItems: "center", gap: 6 }, children: [
+          /* @__PURE__ */ jsxs85("span", { style: { position: "relative", width: 24, height: 12, border: "1.5px solid var(--label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
             /* @__PURE__ */ jsx121("span", { style: { display: "block", height: "100%", width: `${b}%`, background: batC, borderRadius: 1 } }),
             /* @__PURE__ */ jsx121("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--label-alternative)", borderRadius: "0 1px 1px 0" } })
           ] }),
-          /* @__PURE__ */ jsxs87("span", { style: { fontSize: 12, fontWeight: 700, color: batC, fontVariantNumeric: "tabular-nums" }, children: [
+          /* @__PURE__ */ jsxs85("span", { style: { fontSize: 12, fontWeight: 700, color: batC, fontVariantNumeric: "tabular-nums" }, children: [
             b,
             "%"
           ] })
@@ -5223,7 +5196,7 @@ import React125 from "react";
 
 // components/selection/Switch.jsx
 import React124 from "react";
-import { jsx as jsx122, jsxs as jsxs88 } from "react/jsx-runtime";
+import { jsx as jsx122, jsxs as jsxs86 } from "react/jsx-runtime";
 function Switch({
   checked,
   defaultChecked,
@@ -5244,7 +5217,7 @@ function Switch({
     onChange && onChange(!on);
   };
   const d = size === "sm" ? { w: 40, h: 24, k: 18, tx: 16 } : { w: 52, h: 32, k: 26, tx: 20 };
-  return /* @__PURE__ */ jsxs88(
+  return /* @__PURE__ */ jsxs86(
     "label",
     {
       htmlFor: id,
@@ -5313,15 +5286,15 @@ function Switch({
 }
 
 // components/robotics/TopicTree.jsx
-import { jsx as jsx123, jsxs as jsxs89 } from "react/jsx-runtime";
+import { jsx as jsx123, jsxs as jsxs87 } from "react/jsx-runtime";
 function TopicNode({ node, depth, onToggle }) {
   const kids = node.children || [];
   const has = kids.length > 0;
   const [open, setOpen] = React125.useState(depth < 1);
   const [hover, setHover] = React125.useState(false);
   const hasHz = typeof node.hz === "number";
-  return /* @__PURE__ */ jsxs89("div", { children: [
-    /* @__PURE__ */ jsxs89(
+  return /* @__PURE__ */ jsxs87("div", { children: [
+    /* @__PURE__ */ jsxs87(
       "div",
       {
         onClick: () => has && setOpen(!open),
@@ -5350,8 +5323,8 @@ function TopicNode({ node, depth, onToggle }) {
           }, children: has && /* @__PURE__ */ jsx123(Icon, { name: "chevron-down", size: 14 }) }),
           /* @__PURE__ */ jsx123("span", { style: { fontSize: 13.5, fontWeight: has ? 700 : 500, color: "var(--label-normal)" }, children: node.name }),
           node.type && /* @__PURE__ */ jsx123("code", { style: { fontSize: 11, color: "var(--label-alternative)", fontFamily: "ui-monospace,SFMono-Regular,monospace" }, children: node.type }),
-          (hasHz || node.subscribable) && /* @__PURE__ */ jsxs89("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }, children: [
-            hasHz && /* @__PURE__ */ jsxs89("span", { style: { fontSize: 11, color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
+          (hasHz || node.subscribable) && /* @__PURE__ */ jsxs87("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }, children: [
+            hasHz && /* @__PURE__ */ jsxs87("span", { style: { fontSize: 11, color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
               node.hz,
               " Hz"
             ] }),
@@ -5369,7 +5342,7 @@ function TopicTree({ nodes = [], onToggleSubscribe, style, ...rest }) {
 
 // components/selection/ChoiceCard.jsx
 import React126 from "react";
-import { jsx as jsx124, jsxs as jsxs90 } from "react/jsx-runtime";
+import { jsx as jsx124, jsxs as jsxs88 } from "react/jsx-runtime";
 function ChoiceCard({
   children,
   selected = false,
@@ -5387,7 +5360,7 @@ function ChoiceCard({
   const toggle = () => {
     if (!disabled && onSelect) onSelect(!selected);
   };
-  return /* @__PURE__ */ jsxs90(
+  return /* @__PURE__ */ jsxs88(
     "div",
     {
       role: multiple ? "checkbox" : "radio",
@@ -5421,7 +5394,7 @@ function ChoiceCard({
       ...rest,
       children: [
         icon != null && /* @__PURE__ */ jsx124("span", { style: { flexShrink: 0, color: selected ? "var(--color-accent)" : "var(--label-neutral)", display: "inline-flex" }, children: icon }),
-        /* @__PURE__ */ jsxs90("div", { style: { flex: 1, minWidth: 0 }, children: [
+        /* @__PURE__ */ jsxs88("div", { style: { flex: 1, minWidth: 0 }, children: [
           title != null && /* @__PURE__ */ jsx124("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-strong)", wordBreak: "keep-all" }, children: title }),
           description != null && /* @__PURE__ */ jsx124("div", { style: { marginTop: 3, fontSize: 13, lineHeight: 1.55, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
           children
@@ -5453,7 +5426,7 @@ function ChoiceCard({
 
 // components/selection/FilterChip.jsx
 import React127 from "react";
-import { jsx as jsx125, jsxs as jsxs91 } from "react/jsx-runtime";
+import { jsx as jsx125, jsxs as jsxs89 } from "react/jsx-runtime";
 function FilterChip({
   children,
   active = false,
@@ -5465,7 +5438,7 @@ function FilterChip({
   ...rest
 }) {
   const [hover, setHover] = React127.useState(false);
-  return /* @__PURE__ */ jsxs91(
+  return /* @__PURE__ */ jsxs89(
     "button",
     {
       type: "button",
@@ -5506,7 +5479,7 @@ function FilterChip({
 
 // components/selection/MultiSelectChip.jsx
 import React128 from "react";
-import { jsx as jsx126, jsxs as jsxs92 } from "react/jsx-runtime";
+import { jsx as jsx126, jsxs as jsxs90 } from "react/jsx-runtime";
 function MultiSelectChip({
   children,
   selected,
@@ -5524,7 +5497,7 @@ function MultiSelectChip({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  return /* @__PURE__ */ jsxs92(
+  return /* @__PURE__ */ jsxs90(
     "button",
     {
       type: "button",
@@ -5634,7 +5607,7 @@ function SegmentedControl({
 
 // components/selection/Stepper.jsx
 import React130 from "react";
-import { jsx as jsx128, jsxs as jsxs93 } from "react/jsx-runtime";
+import { jsx as jsx128, jsxs as jsxs91 } from "react/jsx-runtime";
 function Stepper({
   value,
   defaultValue = 0,
@@ -5685,14 +5658,14 @@ function Stepper({
           borderRadius: "var(--radius-md)",
           transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
         },
-        children: /* @__PURE__ */ jsxs93("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
+        children: /* @__PURE__ */ jsxs91("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
           /* @__PURE__ */ jsx128("path", { d: "M5 12h14" }),
           !isMinus && /* @__PURE__ */ jsx128("path", { d: "M12 5v14" })
         ] })
       }
     );
   };
-  return /* @__PURE__ */ jsxs93(
+  return /* @__PURE__ */ jsxs91(
     "div",
     {
       style: {
@@ -5733,7 +5706,7 @@ function Stepper({
 
 // components/selection/ThemeToggle.jsx
 import React131 from "react";
-import { jsx as jsx129, jsxs as jsxs94 } from "react/jsx-runtime";
+import { jsx as jsx129, jsxs as jsxs92 } from "react/jsx-runtime";
 var ICONS = {
   light: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>',
   dark: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
@@ -5813,7 +5786,7 @@ function ThemeToggle({
       ...rest,
       children: options.map((v) => {
         const on = cur === v;
-        return /* @__PURE__ */ jsxs94(
+        return /* @__PURE__ */ jsxs92(
           "button",
           {
             type: "button",
@@ -5855,7 +5828,7 @@ function ThemeToggle({
 
 // components/selection/ToggleButton.jsx
 import React132 from "react";
-import { jsx as jsx130, jsxs as jsxs95 } from "react/jsx-runtime";
+import { jsx as jsx130, jsxs as jsxs93 } from "react/jsx-runtime";
 function ToggleButton({
   children,
   pressed,
@@ -5877,7 +5850,7 @@ function ToggleButton({
   };
   const h = size === "sm" ? 36 : 44;
   const iconOnly = children == null;
-  return /* @__PURE__ */ jsxs95(
+  return /* @__PURE__ */ jsxs93(
     "button",
     {
       type: "button",
@@ -5917,7 +5890,7 @@ function ToggleButton({
 
 // components/status/Banner.jsx
 import React133 from "react";
-import { jsx as jsx131, jsxs as jsxs96 } from "react/jsx-runtime";
+import { jsx as jsx131, jsxs as jsxs94 } from "react/jsx-runtime";
 var TONES3 = {
   info: { c: "var(--lk-accent-ink)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
   success: { c: "var(--bw-green)", d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
@@ -5926,7 +5899,7 @@ var TONES3 = {
 };
 function Banner({ tone = "info", title, children, action, onClose, style, ...rest }) {
   const t = TONES3[tone] || TONES3.info;
-  return /* @__PURE__ */ jsxs96(
+  return /* @__PURE__ */ jsxs94(
     "div",
     {
       role: "status",
@@ -5944,7 +5917,7 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
       ...rest,
       children: [
         /* @__PURE__ */ jsx131("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, marginTop: 1 }, dangerouslySetInnerHTML: { __html: t.d } }),
-        /* @__PURE__ */ jsxs96("div", { style: { flex: 1, minWidth: 0 }, children: [
+        /* @__PURE__ */ jsxs94("div", { style: { flex: 1, minWidth: 0 }, children: [
           title != null && /* @__PURE__ */ jsx131("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
           children != null && /* @__PURE__ */ jsx131("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
         ] }),
@@ -5957,13 +5930,13 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
 
 // components/status/Callout.jsx
 import React134 from "react";
-import { jsx as jsx132, jsxs as jsxs97 } from "react/jsx-runtime";
+import { jsx as jsx132, jsxs as jsxs95 } from "react/jsx-runtime";
 var CT = { signal: "var(--lk-accent-ink)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)", navy: "var(--bw-ink)" };
 function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
   const c = CT[tone] || CT.signal;
-  return /* @__PURE__ */ jsxs97("div", { style: { display: "flex", gap: 14, padding: "16px 18px", background: `color-mix(in srgb, ${c} 8%, var(--surface-card))`, borderRadius: "var(--radius-lg)", borderLeft: `3px solid ${c}`, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs95("div", { style: { display: "flex", gap: 14, padding: "16px 18px", background: `color-mix(in srgb, ${c} 8%, var(--surface-card))`, borderRadius: "var(--radius-lg)", borderLeft: `3px solid ${c}`, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     icon && /* @__PURE__ */ jsx132("span", { style: { color: c, flexShrink: 0, marginTop: 1 }, children: icon }),
-    /* @__PURE__ */ jsxs97("div", { style: { flex: 1, minWidth: 0 }, children: [
+    /* @__PURE__ */ jsxs95("div", { style: { flex: 1, minWidth: 0 }, children: [
       title != null && /* @__PURE__ */ jsx132("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
       children != null && /* @__PURE__ */ jsx132("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
     ] })
@@ -5972,14 +5945,14 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
 
 // components/status/CircularProgress.jsx
 import React135 from "react";
-import { jsx as jsx133, jsxs as jsxs98 } from "react/jsx-runtime";
+import { jsx as jsx133, jsxs as jsxs96 } from "react/jsx-runtime";
 function CircularProgress({ value = 0, max = 100, size = 48, thickness = 5, tone = "signal", showValue = false, style, ...rest }) {
   const c = tone === "positive" ? "var(--bw-green)" : tone === "cautionary" ? "var(--bw-amber)" : tone === "negative" ? "var(--bw-red)" : "var(--lk-accent-ink)";
   const pct = Math.max(0, Math.min(100, value / max * 100));
   const r = (size - thickness) / 2;
   const circ = 2 * Math.PI * r;
-  return /* @__PURE__ */ jsxs98("span", { style: { position: "relative", display: "inline-flex", width: size, height: size, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs98("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
+  return /* @__PURE__ */ jsxs96("span", { style: { position: "relative", display: "inline-flex", width: size, height: size, ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs96("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
       /* @__PURE__ */ jsx133("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness }),
       /* @__PURE__ */ jsx133("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: circ, strokeDashoffset: circ * (1 - pct / 100), style: { transition: "stroke-dashoffset var(--dur-base) var(--ease-out)" } })
     ] }),
@@ -5989,9 +5962,9 @@ function CircularProgress({ value = 0, max = 100, size = 48, thickness = 5, tone
 
 // components/status/EmptyState.jsx
 import React136 from "react";
-import { jsx as jsx134, jsxs as jsxs99 } from "react/jsx-runtime";
+import { jsx as jsx134, jsxs as jsxs97 } from "react/jsx-runtime";
 function EmptyState({ icon, title, description, action, style, ...rest }) {
-  return /* @__PURE__ */ jsxs99(
+  return /* @__PURE__ */ jsxs97(
     "div",
     {
       style: {
@@ -6029,7 +6002,7 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
 
 // components/status/Meter.jsx
 import React137 from "react";
-import { jsx as jsx135, jsxs as jsxs100 } from "react/jsx-runtime";
+import { jsx as jsx135, jsxs as jsxs98 } from "react/jsx-runtime";
 function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue = true, style, ...rest }) {
   const pct = Math.max(0, Math.min(100, value / max * 100));
   let c = "var(--lk-accent-ink)";
@@ -6039,10 +6012,10 @@ function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue
     else c = "var(--bw-green)";
   }
   const h = size === "sm" ? 6 : 10;
-  return /* @__PURE__ */ jsxs100("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs100("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
+  return /* @__PURE__ */ jsxs98("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs98("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
       /* @__PURE__ */ jsx135("span", { children: label }),
-      showValue && /* @__PURE__ */ jsxs100("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--label-alternative)" }, children: [
+      showValue && /* @__PURE__ */ jsxs98("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--label-alternative)" }, children: [
         value,
         "/",
         max
@@ -6054,7 +6027,7 @@ function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue
 
 // components/status/ProgressBar.jsx
 import React138 from "react";
-import { jsx as jsx136, jsxs as jsxs101 } from "react/jsx-runtime";
+import { jsx as jsx136, jsxs as jsxs99 } from "react/jsx-runtime";
 function useKeyframes(id, css) {
   React138.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
@@ -6075,10 +6048,10 @@ function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "sign
   const c = TONES4[tone] || TONES4.signal;
   const h = size === "sm" ? 4 : size === "lg" ? 10 : 6;
   const pct = Math.max(0, Math.min(100, value / max * 100));
-  return /* @__PURE__ */ jsxs101("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs101("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
+  return /* @__PURE__ */ jsxs99("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs99("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
       /* @__PURE__ */ jsx136("span", { children: label }),
-      showValue && /* @__PURE__ */ jsxs101("span", { style: { color: "var(--label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
+      showValue && /* @__PURE__ */ jsxs99("span", { style: { color: "var(--label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
         Math.round(pct),
         "%"
       ] })
@@ -6131,7 +6104,7 @@ function Skeleton({ variant = "rect", width = "100%", height, radius, lines = 1,
 
 // components/status/Spinner.jsx
 import React140 from "react";
-import { jsx as jsx138, jsxs as jsxs102 } from "react/jsx-runtime";
+import { jsx as jsx138, jsxs as jsxs100 } from "react/jsx-runtime";
 function useKeyframes3(id, css) {
   React140.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
@@ -6157,7 +6130,7 @@ function Spinner({ size = 24, thickness, color = "var(--lk-accent-ink)", label, 
   if (label == null) {
     return /* @__PURE__ */ jsx138("span", { role: "status", "aria-label": "loading", style: { display: "inline-flex", ...style }, ...rest, children: ring });
   }
-  return /* @__PURE__ */ jsxs102("span", { role: "status", style: { display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-sans)", fontSize: 14, color: "inherit", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs100("span", { role: "status", style: { display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-sans)", fontSize: 14, color: "inherit", ...style }, ...rest, children: [
     ring,
     /* @__PURE__ */ jsx138("span", { children: label })
   ] });
@@ -6165,7 +6138,7 @@ function Spinner({ size = 24, thickness, color = "var(--lk-accent-ink)", label, 
 
 // components/viz/Map2DCanvas.jsx
 import React141 from "react";
-import { jsx as jsx139, jsxs as jsxs103 } from "react/jsx-runtime";
+import { jsx as jsx139, jsxs as jsxs101 } from "react/jsx-runtime";
 function ZBtn({ children, onClick, label }) {
   return /* @__PURE__ */ jsx139(
     "button",
@@ -6215,7 +6188,7 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
     setT((p) => ({ ...p, z: clamp(p.z * (e.deltaY < 0 ? 1.1 : 0.9)) }));
   };
   const zoom = (f) => setT((p) => ({ ...p, z: clamp(p.z * f) }));
-  return /* @__PURE__ */ jsxs103(
+  return /* @__PURE__ */ jsxs101(
     "div",
     {
       onPointerDown: down,
@@ -6243,12 +6216,12 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
       ...rest,
       children: [
         /* @__PURE__ */ jsx139("div", { style: { position: "absolute", left: "50%", top: "50%", transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, transformOrigin: "0 0" }, children }),
-        controls && /* @__PURE__ */ jsxs103("div", { style: { position: "absolute", right: 10, bottom: 10, display: "flex", flexDirection: "column", gap: 4 }, children: [
+        controls && /* @__PURE__ */ jsxs101("div", { style: { position: "absolute", right: 10, bottom: 10, display: "flex", flexDirection: "column", gap: 4 }, children: [
           /* @__PURE__ */ jsx139(ZBtn, { label: "\uD655\uB300", onClick: () => zoom(1.2), children: "+" }),
           /* @__PURE__ */ jsx139(ZBtn, { label: "\uCD95\uC18C", onClick: () => zoom(0.8), children: "\u2212" }),
           /* @__PURE__ */ jsx139(ZBtn, { label: "\uCD08\uAE30\uD654", onClick: () => setT({ x: 0, y: 0, z: 1 }), children: "\u293E" })
         ] }),
-        controls && /* @__PURE__ */ jsxs103("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: 700, color: "var(--label-alternative)", background: "var(--surface-raised)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
+        controls && /* @__PURE__ */ jsxs101("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: 700, color: "var(--label-alternative)", background: "var(--surface-raised)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
           Math.round(t.z * 100),
           "%"
         ] })
@@ -6259,9 +6232,9 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
 
 // components/viz/Scene3DFrame.jsx
 import React142 from "react";
-import { jsx as jsx140, jsxs as jsxs104 } from "react/jsx-runtime";
+import { jsx as jsx140, jsxs as jsxs102 } from "react/jsx-runtime";
 function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty, style, ...rest }) {
-  return /* @__PURE__ */ jsxs104("div", { style: {
+  return /* @__PURE__ */ jsxs102("div", { style: {
     position: "relative",
     width: "100%",
     height: "100%",
@@ -6274,7 +6247,7 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
     ...style
   }, ...rest, children: [
     children,
-    (title != null || badges != null) && /* @__PURE__ */ jsxs104("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 8, pointerEvents: "none" }, children: [
+    (title != null || badges != null) && /* @__PURE__ */ jsxs102("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 8, pointerEvents: "none" }, children: [
       title != null && /* @__PURE__ */ jsx140("span", { style: { fontSize: 12, fontWeight: 800, letterSpacing: "1px", textTransform: "uppercase", color: "var(--text-on-inverse)", opacity: 0.9 }, children: title }),
       badges
     ] }),
@@ -6286,7 +6259,7 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
 
 // components/viz/TelemetryGauge.jsx
 import React143 from "react";
-import { jsx as jsx141, jsxs as jsxs105 } from "react/jsx-runtime";
+import { jsx as jsx141, jsxs as jsxs103 } from "react/jsx-runtime";
 var TONE2 = { signal: "var(--lk-accent-ink)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)" };
 function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size = 120, thickness = 10, thresholds, tone, style, ...rest }) {
   const pct = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
@@ -6297,13 +6270,13 @@ function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size 
     c = p <= thresholds.low ? "var(--bw-red)" : p <= thresholds.high ? "var(--bw-amber)" : "var(--bw-green)";
   }
   const r = (size - thickness) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r, arc = 0.75, dash = C * arc;
-  return /* @__PURE__ */ jsxs105("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs105("div", { style: { position: "relative", width: size, height: size }, children: [
-      /* @__PURE__ */ jsxs105("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, style: { transform: "rotate(135deg)" }, children: [
+  return /* @__PURE__ */ jsxs103("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs103("div", { style: { position: "relative", width: size, height: size }, children: [
+      /* @__PURE__ */ jsxs103("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, style: { transform: "rotate(135deg)" }, children: [
         /* @__PURE__ */ jsx141("circle", { cx, cy, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
         /* @__PURE__ */ jsx141("circle", { cx, cy, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash * pct} ${C}`, style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" } })
       ] }),
-      /* @__PURE__ */ jsxs105("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }, children: [
+      /* @__PURE__ */ jsxs103("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }, children: [
         /* @__PURE__ */ jsx141("span", { style: { fontSize: size * 0.24, fontWeight: 800, color: "var(--label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
         unit && /* @__PURE__ */ jsx141("span", { style: { fontSize: size * 0.11, fontWeight: 600, color: "var(--label-alternative)", marginTop: 2 }, children: unit })
       ] })
@@ -6314,7 +6287,7 @@ function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size 
 
 // components/viz/VideoStreamTile.jsx
 import React144 from "react";
-import { jsx as jsx142, jsxs as jsxs106 } from "react/jsx-runtime";
+import { jsx as jsx142, jsxs as jsxs104 } from "react/jsx-runtime";
 function usePulseKeyframes() {
   React144.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-stream-kf")) return;
@@ -6327,7 +6300,7 @@ function usePulseKeyframes() {
 function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 / 9", style, ...rest }) {
   usePulseKeyframes();
   const showHud = label != null;
-  return /* @__PURE__ */ jsxs106(
+  return /* @__PURE__ */ jsxs104(
     "div",
     {
       style: {
@@ -6344,7 +6317,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
       ...rest,
       children: [
         children,
-        showHud && /* @__PURE__ */ jsxs106(React144.Fragment, { children: [
+        showHud && /* @__PURE__ */ jsxs104(React144.Fragment, { children: [
           /* @__PURE__ */ jsx142("div", { style: {
             position: "absolute",
             left: 0,
@@ -6354,7 +6327,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
             pointerEvents: "none",
             background: "linear-gradient(180deg, rgba(8,8,8,0.5), transparent)"
           } }),
-          /* @__PURE__ */ jsxs106("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 7, pointerEvents: "none" }, children: [
+          /* @__PURE__ */ jsxs104("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 7, pointerEvents: "none" }, children: [
             status === "live" && /* @__PURE__ */ jsx142("span", { style: {
               width: 6,
               height: 6,
@@ -6381,7 +6354,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
           justifyContent: "center",
           background: "rgba(8,14,33,0.45)"
         }, children: /* @__PURE__ */ jsx142("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid rgba(255,255,255,0.22)", borderTopColor: "var(--lk-accent)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
-        status === "disconnected" && /* @__PURE__ */ jsxs106("div", { style: {
+        status === "disconnected" && /* @__PURE__ */ jsxs104("div", { style: {
           position: "absolute",
           inset: 0,
           display: "flex",
@@ -6395,7 +6368,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
           fontWeight: 600,
           whiteSpace: "nowrap"
         }, children: [
-          /* @__PURE__ */ jsxs106("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
+          /* @__PURE__ */ jsxs104("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
             /* @__PURE__ */ jsx142("path", { d: "M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
             /* @__PURE__ */ jsx142("path", { d: "M12 9v4" }),
             /* @__PURE__ */ jsx142("path", { d: "M12 17h.01" })
