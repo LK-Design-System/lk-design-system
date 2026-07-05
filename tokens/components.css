@@ -23,6 +23,7 @@
   --component-button-icon-size: 18px;
   --component-button-disabled-opacity: 0.45;
   --component-button-shadow-rest: var(--shadow-xs);
+  --component-button-transition: none;
   --component-button-transform-hover: none;
   --component-button-transform-pressed: none;
 

@@ -302,7 +302,7 @@ function Button({
     transform: "none",
     cursor: disabled ? "not-allowed" : "pointer",
     opacity: disabled ? "var(--component-button-disabled-opacity)" : 1,
-    transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out)",
+    transition: "var(--component-button-transition)",
     whiteSpace: "nowrap",
     textDecoration: "none",
     WebkitTapHighlightColor: "transparent",

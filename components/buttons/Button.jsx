@@ -3,8 +3,9 @@ import React from 'react';
 /**
  * LK ROBOTICS — Button
  * Solid, rounded-rect CTAs driven entirely by design-system tokens.
- * Calm by default: hover changes color and border tone only. No positional
- * lift or press scale. `arrow` is deprecated and kept as a no-op for compatibility.
+ * Calm by default: hover changes color and border tone immediately. No
+ * animation, positional lift, or press scale. `arrow` is deprecated and kept
+ * as a no-op for compatibility.
  *
  * variant: primary (LK azure — brand) · secondary (graphite) · signal (LK cyan-ink) ·
  *          dark (navy) · flat (cool-gray) · ghost (hairline) · on-dark (translucent, for navy sections)
@@ -74,7 +75,7 @@ export function Button({
     transform: 'none',
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 'var(--component-button-disabled-opacity)' : 1,
-    transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out)',
+    transition: 'var(--component-button-transition)',
     whiteSpace: 'nowrap',
     textDecoration: 'none',
     WebkitTapHighlightColor: 'transparent',
