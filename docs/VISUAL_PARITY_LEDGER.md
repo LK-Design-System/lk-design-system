@@ -35,6 +35,7 @@
 | P0 | RobotStatusCard | 다크 배경에서 카드, 배지, 상태 수치 대비 보정 및 접근성 점검 |
 | P0 | Footer | BackToTop 호버 상승 제거, Footer 링크/헤딩 자간 0으로 정규화 |
 | P1 | Non-button typography | React 컴포넌트에 남아 있던 음수 자간을 0으로 정규화 |
+| P1 | Card motion | 원본 미리보기 번들(`_ds_bundle.js`) 기준으로 Card/NewsCard/ProductCard hover motion 유지 여부 검증 |
 | P0 | Original previews | 원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출 |
 
 ## 남은 전수조사 보정표
@@ -50,7 +51,7 @@
 | P1 | Data: Table, Calendar, AvatarGroup | Watch | 행 높이, sticky header, empty/loading 상태 보강 |
 | P1 | Overlay: Modal, Drawer, Sheet, Popover, DropdownMenu, Toast, Alert | Watch | 자간 0 정규화 완료, focus trap, escape/overlay close, dark surface 대비 검증 |
 | P1 | Selection: FilterChip, MultiSelectChip, SegmentedControl, Switch, ToggleButton, ThemeToggle, Stepper | Watch | 자간 0 정규화 완료, selected/pressed/disabled 상태의 토큰 일관성 검증 |
-| P2 | Cards: ProductCard, NewsCard, FeatureCard, MetricCard, Stat | Watch | 자간 0 정규화 완료, 카드 hover movement와 이미지 scale을 제품 톤에 맞게 재판정 |
+| P2 | Cards: ProductCard, NewsCard, FeatureCard, MetricCard, Stat | Fixed / Watch | 자간 0 정규화 완료, Card/NewsCard/ProductCard hover motion은 원본 번들과 일치 확인. FeatureCard/MetricCard/Stat 라이트/다크 대비와 실제 배치 검증 |
 | P2 | Content: Accordion, ListCell, Tooltip, Badge, Timeline, Divider | Watch | 자간 0 정규화 완료, hover/focus, 말줄임/줄바꿈 검증 |
 | P2 | Layout: Section, Grid, Stack, Cluster, Split, Columns, ScrollArea | Watch | 실제 예시 화면에서 section gap과 page rhythm 검증 |
 | P2 | Viz: Map2DCanvas, Scene3DFrame, ViewerToolbar, TelemetryGauge, VideoStreamTile | Watch | 캔버스/뷰어 resize, dark overlay, toolbar contrast 검증 |
@@ -58,8 +59,7 @@
 ## 알려진 기술 부채
 
 - React 컴포넌트의 음수 자간은 0으로 정규화했습니다. 원본 정적 HTML(`*.card.html`)은 비교 기준으로 보존하므로 기존 자간이 그대로 남아 있을 수 있습니다.
-- 카드 계열의 hover movement와 이미지 scale은 아직 남아 있습니다. 버튼과 같은 원칙을 카드에도 적용할지 제품 톤 기준으로 결정해야 합니다.
-- `tokens/components.css`에는 `--component-card-hover-transform`이 남아 있습니다. 카드 모션 표준을 확정할 때 함께 정리해야 합니다.
+- 카드 계열의 hover movement와 이미지 scale은 원본 미리보기 번들의 Card/NewsCard/ProductCard 동작과 일치하므로 유지합니다. 이후 변경 시 `npm run check:parity`의 motion contract와 함께 제품 결정 기록을 갱신해야 합니다.
 - 토큰 source-of-truth는 `tokens/source.json`, CSS 토큰, generated dist가 맞물립니다. Figma Tokens 연동 전에는 수동 변경 후 `npm run check:tokens`로 계속 막아야 합니다.
 - 자동 시각 회귀 테스트는 아직 없습니다. Storybook build와 a11y만으로는 원본 대비 시각 편차를 완전히 잡지 못합니다.
 
@@ -68,5 +68,6 @@
 1. P0/P1 스토리를 라이트/다크 모두 열어 원본 카드와 육안 비교합니다.
 2. 버튼, 내비게이션, 로보틱스 상태 컴포넌트에 interaction test를 추가합니다.
 3. Playwright 또는 Storybook test-runner 기반으로 주요 스토리 screenshot baseline을 생성합니다.
-4. 소비 앱 예시 페이지에서 `@lk-robotics/design-system-core` package export와 `styles.css`만 사용해 화면을 구성합니다.
-5. visual parity ledger의 Watch 항목을 Fixed 또는 Gap으로 계속 이동합니다.
+4. `npm run check:parity`를 유지해 React 컴포넌트의 음수 자간 재유입과 카드 motion contract 변경을 차단합니다.
+5. 소비 앱 예시 페이지에서 `@lk-robotics/design-system-core` package export와 `styles.css`만 사용해 화면을 구성합니다.
+6. visual parity ledger의 Watch 항목을 Fixed 또는 Gap으로 계속 이동합니다.

@@ -29,6 +29,7 @@ const fixedRows = [
   ['P0', 'RobotStatusCard', '다크 배경 카드, 배지, 상태 수치 대비 보정 및 접근성 점검'],
   ['P0', 'Footer', 'BackToTop 호버 상승 제거, Footer 링크/헤딩 자간 0 정규화'],
   ['P1', 'Non-button typography', 'React 컴포넌트에 남아 있던 음수 자간을 0으로 정규화'],
+  ['P1', 'Card motion', '원본 미리보기 번들(_ds_bundle.js) 기준으로 Card/NewsCard/ProductCard hover motion 유지 여부 검증'],
   ['P0', 'Original previews', '원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출'],
 ];
 
@@ -42,7 +43,7 @@ const ledgerRows = [
   ['P1', 'Data', 'Watch', 'Table, Calendar, AvatarGroup 행 높이, sticky, empty/loading 보강'],
   ['P1', 'Overlay', 'Watch', '자간 0 정규화 완료, Modal, Drawer, Sheet, Popover, DropdownMenu, Toast, Alert focus/dark 검증'],
   ['P1', 'Selection', 'Watch', '자간 0 정규화 완료, selected/pressed/disabled 상태의 토큰 일관성 검증'],
-  ['P2', 'Cards', 'Watch', '자간 0 정규화 완료, ProductCard, NewsCard, FeatureCard, MetricCard, Stat hover movement 재판정'],
+  ['P2', 'Cards', 'Fixed / Watch', '자간 0 정규화 완료, Card/NewsCard/ProductCard hover motion은 원본 번들과 일치 확인. FeatureCard/MetricCard/Stat 대비/배치 검증'],
   ['P2', 'Content', 'Watch', '자간 0 정규화 완료, Accordion, ListCell, Tooltip, Badge, Timeline, Divider 상호작용 검증'],
   ['P2', 'Layout', 'Watch', 'Section, Grid, Stack, Cluster, Split, Columns, ScrollArea section gap 검증'],
   ['P2', 'Viz', 'Watch', 'Map2DCanvas, Scene3DFrame, ViewerToolbar, TelemetryGauge, VideoStreamTile resize/dark 검증'],
@@ -50,8 +51,7 @@ const ledgerRows = [
 
 const debtItems = [
   'React 컴포넌트의 음수 자간은 0으로 정규화했습니다. 원본 정적 HTML(*.card.html)은 비교 기준으로 보존하므로 기존 자간이 그대로 남아 있을 수 있습니다.',
-  '카드 계열의 hover movement와 이미지 scale은 아직 남아 있습니다. 버튼과 같은 원칙을 카드에도 적용할지 제품 톤 기준으로 결정해야 합니다.',
-  'tokens/components.css에는 --component-card-hover-transform이 남아 있습니다. 카드 모션 표준을 확정할 때 함께 정리합니다.',
+  '카드 계열의 hover movement와 이미지 scale은 원본 미리보기 번들의 Card/NewsCard/ProductCard 동작과 일치하므로 유지합니다. 이후 변경 시 npm run check:parity의 motion contract와 함께 제품 결정 기록을 갱신해야 합니다.',
   '자동 시각 회귀 테스트는 아직 없습니다. Storybook build와 a11y만으로는 원본 대비 시각 편차를 완전히 잡지 못합니다.',
 ];
 
