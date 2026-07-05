@@ -26,7 +26,21 @@ const colors = [
   ['Red', 'var(--bw-red)'],
 ];
 
-const spacings = ['--space-2', '--space-3', '--space-4', '--space-5', '--space-6', '--space-7'];
+const spacings = [
+  ['--space-1', '4px', 'micro gap'],
+  ['--space-2', '8px', 'tight pair'],
+  ['--space-3', '12px', 'control gap'],
+  ['--space-4', '16px', 'card inner gap'],
+  ['--space-5', '20px', 'compact padding'],
+  ['--space-6', '24px', 'section group gap'],
+  ['--space-8', '32px', 'page rhythm'],
+  ['--space-10', '40px', 'large group gap'],
+  ['--space-12', '48px', 'band rhythm'],
+  ['--space-16', '64px', 'wide section gap'],
+  ['--space-20', '80px', 'large section padding'],
+  ['--space-28', '112px', 'light section padding'],
+  ['--space-32', '128px', 'hero / dark-band padding'],
+];
 
 export const ColorAndSpacing = {
   name: '색상과 간격',
@@ -50,10 +64,12 @@ export const ColorAndSpacing = {
       <section>
         <h2 style={{ margin: '0 0 16px', fontSize: 22, color: 'var(--label-strong)' }}>간격 스케일</h2>
         <div style={{ display: 'grid', gap: 12 }}>
-          {spacings.map((token) => (
-            <div key={token} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', gap: 16 }}>
+          {spacings.map(([token, value, usage]) => (
+            <div key={token} style={{ display: 'grid', gridTemplateColumns: '112px 160px 56px minmax(0, 1fr)', alignItems: 'center', gap: 12 }}>
               <code style={{ color: 'var(--label-alternative)' }}>{token}</code>
               <div style={{ height: 14, width: `var(${token})`, background: 'var(--lk-accent-ink)', borderRadius: 'var(--radius-pill)' }} />
+              <code style={{ color: 'var(--label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{value}</code>
+              <span style={{ color: 'var(--label-alternative)', fontSize: 13 }}>{usage}</span>
             </div>
           ))}
         </div>

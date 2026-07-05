@@ -147,6 +147,26 @@
         "$type": "dimension",
         "$value": "48px",
         "css": "--space-12"
+      },
+      "16": {
+        "$type": "dimension",
+        "$value": "64px",
+        "css": "--space-16"
+      },
+      "20": {
+        "$type": "dimension",
+        "$value": "80px",
+        "css": "--space-20"
+      },
+      "28": {
+        "$type": "dimension",
+        "$value": "112px",
+        "css": "--space-28"
+      },
+      "32": {
+        "$type": "dimension",
+        "$value": "128px",
+        "css": "--space-32"
       }
     },
     "radius": {
