@@ -27,7 +27,7 @@ export function CheckboxGroup({ options = [], value, defaultValue = [], onChange
               {on && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
             </span>
             <span>
-              <span style={{ fontSize: 15, fontWeight: 'var(--fw-semibold)', letterSpacing: '-0.1px', color: 'var(--label-normal)' }}>{o.label}</span>
+              <span style={{ fontSize: 15, fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--label-normal)' }}>{o.label}</span>
               {o.description != null && <span style={{ display: 'block', marginTop: 2, fontSize: 13, color: 'var(--label-alternative)' }}>{o.description}</span>}
             </span>
           </label>

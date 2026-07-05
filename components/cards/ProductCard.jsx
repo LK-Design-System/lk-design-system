@@ -69,7 +69,7 @@ export function ProductCard({
         {cta && (
           <span style={{
             alignSelf: 'flex-end', marginTop: 4, whiteSpace: 'nowrap',
-            fontSize: 12.5, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.1px',
+            fontSize: 12.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
             color: hover ? '#fff' : 'rgba(255,255,255,0.66)',
             textDecoration: hover ? 'underline' : 'none', textUnderlineOffset: 3,
             transition: 'color var(--dur-fast) var(--ease-out)',

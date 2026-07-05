@@ -24,7 +24,7 @@ export function RadioGroup({ options = [], value, defaultValue, onChange, name, 
               {on && <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--lk-accent-ink)' }} />}
             </span>
             <span>
-              <span style={{ fontSize: 15, fontWeight: 'var(--fw-semibold)', letterSpacing: '-0.1px', color: 'var(--label-normal)' }}>{o.label}</span>
+              <span style={{ fontSize: 15, fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--label-normal)' }}>{o.label}</span>
               {o.description != null && <span style={{ display: 'block', marginTop: 2, fontSize: 13, color: 'var(--label-alternative)' }}>{o.description}</span>}
             </span>
           </label>

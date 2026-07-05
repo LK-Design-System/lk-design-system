@@ -836,7 +836,7 @@ function ChecklistItem({
       fontSize: "16.5px",
       fontWeight: "var(--fw-semibold)",
       lineHeight: 1.5,
-      letterSpacing: "-0.2px",
+      letterSpacing: 0,
       color: dark ? "var(--text-on-dark)" : muted ? "var(--bw-gray)" : "var(--bw-gray-700)",
       opacity: dark && muted ? 0.7 : 1,
       textDecoration: cross ? "line-through" : "none",
@@ -883,7 +883,7 @@ function FeatureCard({
       children: [
         icon && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: 14, color: t.fg, background: t.bg }, children: icon }),
         /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "8px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: "-0.5px", color: "var(--bw-ink)", margin: 0, wordBreak: "keep-all" }, children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--bw-ink)", margin: 0, wordBreak: "keep-all" }, children: title }),
           /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { style: { fontSize: "15.5px", lineHeight: 1.7, color: "var(--bw-gray)", margin: 0, wordBreak: "keep-all" }, children })
         ] })
       ]
@@ -905,7 +905,7 @@ function MetricCard({ label, value, delta, deltaTone = "auto", caption, icon, st
       icon && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { color: "var(--lk-accent-ink)", display: "inline-flex" }, children: icon })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { display: "flex", alignItems: "flex-end", gap: 10, flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { fontSize: 34, fontWeight: "var(--fw-extra)", letterSpacing: "-1px", color: "var(--label-normal)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { fontSize: 34, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
       delta != null && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: 13, fontWeight: "var(--fw-bold)", color: dc }, children: [
         (tone === "up" || tone === "down") && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { d: up ? "M7 17 17 7M9 7h8v8" : "M7 7l10 10M17 9v8H9" }) }),
         deltaText
@@ -948,7 +948,7 @@ function NewsCard({ image, category, title, excerpt, source, date, cta, href = "
         image && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--surface-subtle)" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
         /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9, flex: 1 }, children: [
           category && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--label-alternative)" }, children: category }),
-          title && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { style: { margin: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: "-0.4px", lineHeight: 1.36, color: "var(--text-strong)", wordBreak: "keep-all" }, children: title }),
+          title && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { style: { margin: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1.36, color: "var(--text-strong)", wordBreak: "keep-all" }, children: title }),
           excerpt && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--label-neutral)", wordBreak: "keep-all" }, children: excerpt }),
           (source || date || cta) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--label-alternative)" }, children: [
             source && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { fontWeight: 600 }, children: source }),
@@ -1051,7 +1051,7 @@ function ProductCard({
             whiteSpace: "nowrap",
             fontSize: 12.5,
             fontWeight: "var(--fw-bold)",
-            letterSpacing: "-0.1px",
+            letterSpacing: 0,
             color: hover ? "#fff" : "rgba(255,255,255,0.66)",
             textDecoration: hover ? "underline" : "none",
             textUnderlineOffset: 3,
@@ -1115,7 +1115,7 @@ function Stat({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: "40px", fontWeight: "var(--fw-extra)", letterSpacing: "-1.6px", lineHeight: 1, color: valColor, fontVariantNumeric: "tabular-nums" }, children: value }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: "40px", fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1, color: valColor, fontVariantNumeric: "tabular-nums" }, children: value }),
         /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: "15px", lineHeight: 1.5, maxWidth: stacked ? "none" : 160, color: labColor, wordBreak: "keep-all" }, children: label })
       ]
     }
@@ -1156,7 +1156,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
             fontFamily: "var(--font-sans)",
             fontSize: 17,
             fontWeight: "var(--fw-bold)",
-            letterSpacing: "-0.3px",
+            letterSpacing: 0,
             color: isOpen ? "var(--lk-accent-ink)" : "var(--label-normal)",
             transition: "color var(--dur-fast) var(--ease-out)"
           },
@@ -1191,7 +1191,7 @@ var import_react21 = __toESM(require("react"), 1);
 var import_jsx_runtime20 = require("react/jsx-runtime");
 function Blockquote({ children, cite, style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("blockquote", { style: { margin: 0, padding: "6px 0 6px 20px", borderLeft: "3px solid var(--lk-accent-ink)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { fontSize: 17, lineHeight: 1.7, letterSpacing: "-0.2px", color: "var(--label-normal)", wordBreak: "keep-all" }, children }),
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { style: { fontSize: 17, lineHeight: 1.7, letterSpacing: 0, color: "var(--label-normal)", wordBreak: "keep-all" }, children }),
     cite != null && /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { style: { marginTop: 8, fontSize: 13.5, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: [
       "\u2014 ",
       cite
@@ -1278,7 +1278,7 @@ function Bubble({ children, tone = "navy", tail = "bottom", style, ...rest }) {
         fontFamily: "var(--font-sans)",
         fontSize: 14,
         lineHeight: 1.6,
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         wordBreak: "keep-all",
         ...style
       },
@@ -1314,7 +1314,7 @@ function Collapsible({ title, children, defaultOpen = false, style, ...rest }) {
         type: "button",
         "aria-expanded": open,
         onClick: () => setOpen((o) => !o),
-        style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 4px", border: "none", background: "transparent", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)" },
+        style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 4px", border: "none", background: "transparent", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { children: title }),
           /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-base) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("path", { d: "m6 9 6 6 6-6" }) })
@@ -1388,7 +1388,7 @@ function Divider({ vertical = false, label, inset = 0, style, ...rest }) {
     const rule = { flex: 1, height: 1, background: "var(--line-neutral)" };
     return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { role: "separator", style: { display: "flex", alignItems: "center", gap: 14, ...style }, ...rest, children: [
       /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { style: rule }),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", letterSpacing: "-0.1px", color: "var(--label-alternative)", whiteSpace: "nowrap" }, children: label }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-alternative)", whiteSpace: "nowrap" }, children: label }),
       /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("span", { style: rule })
     ] });
   }
@@ -1462,7 +1462,7 @@ function ListCell({ leading, title, description, trailing, onClick, divider = fa
       children: [
         leading != null && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { flexShrink: 0, display: "flex", alignItems: "center", color: "var(--lk-accent-ink)" }, children: leading }),
         /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
           description != null && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { marginTop: 2, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-alternative)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: description })
         ] }),
         trailing != null && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { flexShrink: 0, display: "flex", alignItems: "center", gap: 8, color: "var(--label-alternative)" }, children: trailing })
@@ -1574,7 +1574,7 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
         fontFamily: "var(--font-sans)",
         fontSize: 13,
         fontWeight: "var(--fw-semibold)",
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         color: "var(--label-neutral)",
         ...style
       },
@@ -1727,7 +1727,7 @@ function Timeline({ items = [], style, ...rest }) {
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { style: { paddingBottom: last ? 0 : 22 }, children: [
         it.time != null && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--label-assistive)", marginBottom: 3 }, children: it.time }),
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)" }, children: it.title }),
+        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: it.title }),
         it.description != null && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", { style: { marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: it.description })
       ] })
     ] }, i);
@@ -1771,7 +1771,7 @@ function Tooltip({ content, placement = "top", children, style, ...rest }) {
               fontFamily: "var(--font-sans)",
               fontSize: 12.5,
               fontWeight: "var(--fw-semibold)",
-              letterSpacing: "-0.1px",
+              letterSpacing: 0,
               lineHeight: 1.4,
               borderRadius: "var(--radius-md)",
               whiteSpace: "nowrap",
@@ -1856,7 +1856,7 @@ function Calendar({ value, defaultValue, onChange, style, ...rest }) {
   const navBtn = { width: 32, height: 32, display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", cursor: "pointer", color: "var(--label-neutral)" };
   return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { width: 300, fontFamily: "var(--font-sans)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 16, ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: "-0.3px", color: "var(--label-normal)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: [
         view.getFullYear(),
         "\uB144 ",
         view.getMonth() + 1,
@@ -2365,7 +2365,7 @@ function Notification({ icon, title, description, time, unread = false, onClick,
         icon != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--lk-accent-ink)" }, children: icon }),
         /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)" }, children: title }),
+            /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
             unread && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "var(--bw-red)", flexShrink: 0 } })
           ] }),
           description != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { marginTop: 2, fontSize: 13, lineHeight: 1.55, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
@@ -2558,7 +2558,7 @@ function Checkbox({
         opacity: disabled ? 0.5 : 1,
         fontFamily: "var(--font-sans)",
         fontSize: "15px",
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         color: "var(--bw-ink)"
       },
       children: [
@@ -2618,7 +2618,7 @@ function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direc
       /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
       /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "var(--bw-white)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "#fff", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime58.jsxs)("span", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: o.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
         o.description != null && /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
@@ -2822,7 +2822,7 @@ var import_react64 = __toESM(require("react"), 1);
 var import_jsx_runtime63 = require("react/jsx-runtime");
 function FormField({ label, required = false, helper, error, htmlFor, children, style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    label != null && /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: [
+    label != null && /* @__PURE__ */ (0, import_jsx_runtime63.jsxs)("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: [
       label,
       required && /* @__PURE__ */ (0, import_jsx_runtime63.jsx)("span", { style: { color: "var(--bw-red)", marginLeft: 3 }, children: "*" })
     ] }),
@@ -3078,7 +3078,7 @@ function Radio({
         opacity: disabled ? 0.5 : 1,
         fontFamily: "var(--font-sans)",
         fontSize: "15px",
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         color: "var(--bw-ink)"
       },
       children: [
@@ -3134,7 +3134,7 @@ function RadioGroup({ options = [], value, defaultValue, onChange, name, directi
       /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
       /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-gray-300)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--lk-accent-ink)" } }) }),
       /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)("span", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: o.label }),
+        /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
         o.description != null && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
@@ -3288,7 +3288,7 @@ function Select({
   const h = size === "sm" ? 40 : "var(--control-h-md)";
   const ring = invalid ? "var(--bw-red)" : open ? "var(--lk-accent-ink)" : "var(--bw-border)";
   return /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("label", { htmlFor: selId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: "-0.1px", color: "var(--label-normal)" }, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime73.jsxs)("label", { htmlFor: selId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: 0, color: "var(--label-normal)" }, children: [
       label,
       required && /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("span", { style: { color: "var(--bw-red)" }, children: " *" })
     ] }),
@@ -3323,7 +3323,7 @@ function Select({
             opacity: disabled ? 0.5 : 1,
             fontFamily: "var(--font-sans)",
             fontSize: "15px",
-            letterSpacing: "-0.1px",
+            letterSpacing: 0,
             textAlign: "left",
             transition: "var(--component-button-transition)"
           },
@@ -3472,7 +3472,7 @@ function Textarea({
   const [focused, setFocused] = import_react77.default.useState(false);
   const ring = invalid ? "var(--bw-red)" : focused ? "var(--lk-accent-ink)" : "var(--bw-border)";
   return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)("label", { htmlFor: taId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: "-0.1px", color: "var(--bw-ink)" }, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)("label", { htmlFor: taId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: 0, color: "var(--bw-ink)" }, children: [
       label,
       required && /* @__PURE__ */ (0, import_jsx_runtime76.jsx)("span", { style: { color: "var(--bw-red)" }, children: " *" })
     ] }),
@@ -3503,7 +3503,7 @@ function Textarea({
           transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
           fontFamily: "var(--font-sans)",
           fontSize: "15px",
-          letterSpacing: "-0.1px",
+          letterSpacing: 0,
           lineHeight: 1.6,
           outline: "none",
           boxSizing: "border-box"
@@ -3817,7 +3817,7 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
         },
         children: [
           o.icon,
-          /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: "-0.1px" }, children: o.label })
+          /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: o.label })
         ]
       },
       o.value
@@ -3832,7 +3832,7 @@ function Breadcrumb({ items = [], style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("nav", { "aria-label": "breadcrumb", style: { display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13.5, ...style }, ...rest, children: items.map((it, i) => {
     const last = i === items.length - 1;
     return /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(import_react95.default.Fragment, { children: [
-      last || !it.href ? /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--label-normal)" : "var(--label-alternative)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: "-0.1px" }, children: it.label }) : /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("a", { href: it.href, style: { color: "var(--label-alternative)", fontWeight: "var(--fw-medium)", letterSpacing: "-0.1px", textDecoration: "none" }, children: it.label }),
+      last || !it.href ? /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--label-normal)" : "var(--label-alternative)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: it.label }) : /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("a", { href: it.href, style: { color: "var(--label-alternative)", fontWeight: "var(--fw-medium)", letterSpacing: 0, textDecoration: "none" }, children: it.label }),
       !last && /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime93.jsx)("path", { d: "m9 18 6-6-6-6" }) })
     ] }, i);
   }) });
@@ -4141,7 +4141,7 @@ function Pagination({ page = 1, count = 1, onChange, siblingCount = 1, style, ..
           fontFamily: "var(--font-sans)",
           fontSize: 15,
           fontWeight: "var(--fw-bold)",
-          letterSpacing: "-0.2px",
+          letterSpacing: 0,
           fontVariantNumeric: "tabular-nums",
           color: p === page ? "var(--lk-accent-ink)" : "var(--label-neutral)"
         },
@@ -4251,7 +4251,7 @@ function SideNav({
     transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
     ...extra
   });
-  const labelSpan = (active, children) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: "-0.1px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children });
+  const labelSpan = (active, children) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children });
   const pill = (active, badge) => /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", { style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: 9, fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? "var(--lk-accent-ink)" : "var(--lk-accent-tint-2)", color: active ? "var(--bw-white)" : "var(--lk-accent-ink)" }, children: badge });
   const dot = /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", { style: { position: "absolute", top: 7, right: 7, width: 7, height: 7, borderRadius: "50%", background: "var(--lk-accent-ink)" } });
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
@@ -4321,7 +4321,7 @@ function SideNav({
                 ...hoverProps(c.value),
                 style: row(ca, c.disabled, { padding: "8px 12px 8px 42px" }, hovKey === c.value),
                 children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: "-0.1px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: c.label }),
+                  /* @__PURE__ */ (0, import_jsx_runtime99.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: c.label }),
                   c.badge != null && pill(ca, c.badge)
                 ]
               },
@@ -4383,7 +4383,7 @@ function Steps({ steps = [], current = 0, style, ...rest }) {
     return /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)(import_react102.default.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime100.jsxs)("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
-        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: "-0.1px", color: active ? "var(--label-normal)" : "var(--label-alternative)", whiteSpace: "nowrap" }, children: label })
+        /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, color: active ? "var(--label-normal)" : "var(--label-alternative)", whiteSpace: "nowrap" }, children: label })
       ] }),
       i < steps.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime100.jsx)("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < current ? "var(--lk-accent-ink)" : "var(--bw-border)", minWidth: 24 } })
     ] }, i);
@@ -4425,7 +4425,7 @@ function Tabs({ items = [], value, defaultValue, onChange, full = false, style, 
           fontFamily: "var(--font-sans)",
           fontSize: 16,
           fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)",
-          letterSpacing: "-0.3px",
+          letterSpacing: 0,
           color: active ? "var(--label-normal)" : "var(--label-alternative)",
           transition: "color var(--dur-fast) var(--ease-out)"
         },
@@ -4674,7 +4674,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         },
         onMouseEnter: () => setHov(i),
         onMouseLeave: () => setHov(-1),
-        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: "-0.1px", background: hov === i && !it.disabled ? "var(--lk-accent-tint)" : "transparent", color: it.danger ? "var(--status-danger, #CF6360)" : "var(--label-normal, #0E1329)", transition: "background var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--lk-accent-tint)" : "transparent", color: it.danger ? "var(--status-danger, #CF6360)" : "var(--label-normal, #0E1329)", transition: "background var(--dur-fast) var(--ease-out)" },
         children: [
           it.icon != null && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { flexShrink: 0, display: "inline-flex", color: it.danger ? "inherit" : "var(--label-alternative)" }, children: it.icon }),
           /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { flex: 1, minWidth: 0 }, children: it.label })
@@ -4694,7 +4694,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(Avatar, { name: typeof name === "string" ? name : void 0, src, status, size: 30, style: { flexShrink: 0 } }),
           !collapsed && /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("span", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: "-0.1px", color: "var(--label-normal, #0E1329)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
+            /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal, #0E1329)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
             detail != null && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
           ] }),
           !collapsed && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("path", { d: "M6 15l6-6 6 6" }) })
@@ -4766,8 +4766,8 @@ function Alert({
   }, [open, dismiss]);
   if (!open) return null;
   const accent = tone === "danger" ? "var(--bw-red)" : "var(--color-primary)";
-  const confirmStyle = { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "#fff", background: accent };
-  const cancelStyle = { height: 44, padding: "0 20px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)", background: "var(--bw-white)" };
+  const confirmStyle = { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "#fff", background: accent };
+  const cancelStyle = { height: 44, padding: "0 20px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", background: "var(--bw-white)" };
   return /* @__PURE__ */ (0, import_jsx_runtime106.jsx)(
     "div",
     {
@@ -4785,7 +4785,7 @@ function Alert({
           style: { width: "100%", maxWidth: 420, background: "var(--bw-white)", borderRadius: "var(--radius-3xl)", boxShadow: "var(--shadow-xl)", padding: "28px 28px 24px", fontFamily: "var(--font-sans)", ...style },
           ...rest,
           children: [
-            title != null && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { style: { fontSize: 20, fontWeight: "var(--fw-extra)", letterSpacing: "-0.5px", color: "var(--label-normal)", marginBottom: 10 }, children: title }),
+            title != null && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { style: { fontSize: 20, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)", marginBottom: 10 }, children: title }),
             children != null && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { style: { fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
             /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 24 }, children: actions != null ? actions : /* @__PURE__ */ (0, import_jsx_runtime106.jsxs)(import_react108.default.Fragment, { children: [
               cancelLabel && /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("button", { type: "button", style: cancelStyle, onClick: onCancel || dismiss, children: cancelLabel }),
@@ -4920,7 +4920,7 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
           ...rest,
           children: [
             (title != null || onClose) && /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 22px", borderBottom: "1px solid var(--bw-border)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: "-0.4px", color: "var(--label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
               onClose && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { style: { flex: 1, padding: "20px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
@@ -4964,7 +4964,7 @@ function DropdownMenu({ trigger, items = [], align = "left", style, ...rest }) {
         onMouseLeave: (e) => {
           e.currentTarget.style.background = "transparent";
         },
-        style: { width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", border: "none", background: "transparent", cursor: it.disabled ? "not-allowed" : "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 14.5, fontWeight: "var(--fw-medium)", letterSpacing: "-0.1px", color: it.danger ? "var(--bw-red)" : "var(--label-normal)", opacity: it.disabled ? 0.5 : 1 },
+        style: { width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", border: "none", background: "transparent", cursor: it.disabled ? "not-allowed" : "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 14.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, color: it.danger ? "var(--bw-red)" : "var(--label-normal)", opacity: it.disabled ? 0.5 : 1 },
         children: [
           it.icon,
           /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("span", { children: it.label })
@@ -5080,7 +5080,7 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
           ...rest,
           children: [
             (title != null || onClose) && /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--bw-border)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: "-0.4px", color: "var(--label-normal)" }, children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
               onClose && /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime113.jsx)("div", { style: { padding: "20px 24px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
@@ -5152,7 +5152,7 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
           ...rest,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { style: { display: "flex", justifyContent: "center", paddingTop: 10 }, children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { style: { width: 40, height: 4, borderRadius: "var(--radius-pill)", background: "var(--bw-gray-300)" } }) }),
-            title != null && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { style: { padding: "14px 22px 4px", fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: "-0.4px", color: "var(--label-normal)" }, children: title }),
+            title != null && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { style: { padding: "14px 22px 4px", fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
             /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { style: { flex: 1, padding: "14px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
             footer != null && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { style: { padding: "14px 22px 22px", display: "flex", gap: 10 }, children: footer })
           ]
@@ -5194,7 +5194,7 @@ function Toast({ tone = "info", children, action, onClose, style, ...rest }) {
       ...rest,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, dangerouslySetInnerHTML: { __html: t.d } }),
-        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("span", { style: { flex: 1, fontSize: 14, lineHeight: 1.5, letterSpacing: "-0.1px", color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
+        /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("span", { style: { flex: 1, fontSize: 14, lineHeight: 1.5, letterSpacing: 0, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
         action != null && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("span", { style: { flexShrink: 0, color: "var(--accent-text)", fontSize: 14, fontWeight: "var(--fw-bold)", cursor: "pointer" }, children: action }),
         onClose && /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime116.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
       ]
@@ -5328,7 +5328,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           whiteSpace: "nowrap",
           fontSize: 13,
           fontWeight: 600,
-          letterSpacing: "-0.1px",
+          letterSpacing: 0,
           color: "var(--label-neutral)",
           fontVariantNumeric: "tabular-nums"
         }, children: [
@@ -5552,7 +5552,7 @@ function Switch({
         opacity: disabled ? 0.5 : 1,
         fontFamily: "var(--font-sans)",
         fontSize: 15,
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         color: "var(--label-normal)"
       },
       children: [
@@ -5717,7 +5717,7 @@ function ChoiceCard({
       children: [
         icon != null && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("span", { style: { flexShrink: 0, color: selected ? "var(--color-accent)" : "var(--label-neutral)", display: "inline-flex" }, children: icon }),
         /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-strong)", wordBreak: "keep-all" }, children: title }),
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-strong)", wordBreak: "keep-all" }, children: title }),
           description != null && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { marginTop: 3, fontSize: 13, lineHeight: 1.55, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
           children
         ] }),
@@ -5783,7 +5783,7 @@ function FilterChip({
         fontFamily: "var(--font-sans)",
         fontSize: 14,
         fontWeight: "var(--fw-semibold)",
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
         transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
         whiteSpace: "nowrap",
@@ -5840,7 +5840,7 @@ function MultiSelectChip({
         fontFamily: "var(--font-sans)",
         fontSize: 14,
         fontWeight: "var(--fw-semibold)",
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         color: on ? "var(--lk-accent-ink)" : "var(--label-neutral)",
         transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), padding var(--dur-fast) var(--ease-out)",
         whiteSpace: "nowrap",
@@ -5910,7 +5910,7 @@ function SegmentedControl({
               fontFamily: "var(--font-sans)",
               fontSize: fs,
               fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)",
-              letterSpacing: "-0.1px",
+              letterSpacing: 0,
               color: active ? "var(--label-normal)" : "var(--label-alternative)",
               background: active ? "var(--bw-white)" : "transparent",
               borderRadius: "var(--radius-sm)",
@@ -6013,7 +6013,7 @@ function Stepper({
               fontFamily: "var(--font-sans)",
               fontSize: size === "sm" ? 15 : 16,
               fontWeight: "var(--fw-bold)",
-              letterSpacing: "-0.2px",
+              letterSpacing: 0,
               color: "var(--label-normal)",
               fontVariantNumeric: "tabular-nums"
             },
@@ -6133,7 +6133,7 @@ function ThemeToggle({
               fontFamily: "var(--font-sans)",
               fontSize: fs,
               fontWeight: "var(--fw-bold)",
-              letterSpacing: "-0.1px",
+              letterSpacing: 0,
               transition: "var(--component-button-transition)"
             },
             children: [
@@ -6195,7 +6195,7 @@ function ToggleButton({
         fontFamily: "var(--font-sans)",
         fontSize: 15,
         fontWeight: "var(--fw-semibold)",
-        letterSpacing: "-0.1px",
+        letterSpacing: 0,
         color: on ? "var(--lk-accent-ink)" : "var(--label-neutral)",
         transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
         whiteSpace: "nowrap",
@@ -6240,7 +6240,7 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, marginTop: 1 }, dangerouslySetInnerHTML: { __html: t.d } }),
         /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
           children != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
         ] }),
         action != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { flexShrink: 0 }, children: action }),
@@ -6259,7 +6259,7 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)("div", { style: { display: "flex", gap: 14, padding: "16px 18px", background: `color-mix(in srgb, ${c} 8%, var(--surface-card))`, borderRadius: "var(--radius-lg)", borderLeft: `3px solid ${c}`, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     icon && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { color: c, flexShrink: 0, marginTop: 1 }, children: icon }),
     /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-      title != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: "-0.2px", color: "var(--label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
+      title != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
       children != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
     ] })
   ] });
@@ -6314,7 +6314,7 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
           color: "var(--lk-accent-ink)",
           marginBottom: 12
         }, children: icon }),
-        title != null && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: "-0.3px", color: "var(--label-normal)" }, children: title }),
+        title != null && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
         description != null && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
         action != null && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { style: { marginTop: 14 }, children: action })
       ]

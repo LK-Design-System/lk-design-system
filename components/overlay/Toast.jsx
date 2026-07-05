@@ -28,7 +28,7 @@ export function Toast({ tone = 'info', children, action, onClose, style, ...rest
       {...rest}
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }} dangerouslySetInnerHTML={{ __html: t.d }} />
-      <span style={{ flex: 1, fontSize: 14, lineHeight: 1.5, letterSpacing: '-0.1px', color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</span>
+      <span style={{ flex: 1, fontSize: 14, lineHeight: 1.5, letterSpacing: 0, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</span>
       {action != null && <span style={{ flexShrink: 0, color: 'var(--accent-text)', fontSize: 14, fontWeight: 'var(--fw-bold)', cursor: 'pointer' }}>{action}</span>}
       {onClose && (
         <button type="button" aria-label="close" onClick={onClose} style={{ flexShrink: 0, display: 'inline-flex', padding: 2, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--label-assistive)' }}>

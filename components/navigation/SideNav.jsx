@@ -64,7 +64,7 @@ export function SideNav({
     transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra,
   });
   const labelSpan = (active, children) => (
-    <span style={{ flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: '-0.1px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{children}</span>
+    <span style={{ flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{children}</span>
   );
   const pill = (active, badge) => (
     <span style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 9, fontSize: 11, fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--lk-accent-ink)' : 'var(--lk-accent-tint-2)', color: active ? 'var(--bw-white)' : 'var(--lk-accent-ink)' }}>{badge}</span>
@@ -120,7 +120,7 @@ export function SideNav({
                       return (
                         <button key={c.value} type="button" aria-current={ca ? 'page' : undefined} disabled={c.disabled} onClick={() => pick(c.value)} {...hoverProps(c.value)}
                           style={row(ca, c.disabled, { padding: '8px 12px 8px 42px' }, hovKey === c.value)}>
-                          <span style={{ flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: '-0.1px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.label}</span>
+                          <span style={{ flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.label}</span>
                           {c.badge != null && pill(ca, c.badge)}
                         </button>
                       );

@@ -22,7 +22,7 @@ export function Divider({ vertical = false, label, inset = 0, style, ...rest }) 
     return (
       <div role="separator" style={{ display: 'flex', alignItems: 'center', gap: 14, ...style }} {...rest}>
         <span style={rule} />
-        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: '-0.1px', color: 'var(--label-alternative)', whiteSpace: 'nowrap' }}>{label}</span>
+        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--label-alternative)', whiteSpace: 'nowrap' }}>{label}</span>
         <span style={rule} />
       </div>
     );

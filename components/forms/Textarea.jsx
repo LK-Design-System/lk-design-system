@@ -20,7 +20,7 @@ export function Textarea({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
       {label && (
-        <label htmlFor={taId} style={{ fontWeight: 'var(--fw-bold)', fontSize: '15px', letterSpacing: '-0.1px', color: 'var(--bw-ink)' }}>
+        <label htmlFor={taId} style={{ fontWeight: 'var(--fw-bold)', fontSize: '15px', letterSpacing: 0, color: 'var(--bw-ink)' }}>
           {label}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
         </label>
       )}
@@ -36,7 +36,7 @@ export function Textarea({
           border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
           boxShadow: focused && !invalid ? '0 0 0 4px var(--focus-ring)' : 'none',
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
-          fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: '-0.1px', lineHeight: 1.6,
+          fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, lineHeight: 1.6,
           outline: 'none', boxSizing: 'border-box',
         }}
       />

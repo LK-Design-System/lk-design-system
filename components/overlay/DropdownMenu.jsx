@@ -27,7 +27,7 @@ export function DropdownMenu({ trigger, items = [], align = 'left', style, ...re
               onClick={() => { setOpen(false); it.onClick && it.onClick(); }}
               onMouseEnter={(e) => { if (!it.disabled) e.currentTarget.style.background = 'var(--fill-normal)'; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', border: 'none', background: 'transparent', cursor: it.disabled ? 'not-allowed' : 'pointer', borderRadius: 'var(--radius-md)', textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 14.5, fontWeight: 'var(--fw-medium)', letterSpacing: '-0.1px', color: it.danger ? 'var(--bw-red)' : 'var(--label-normal)', opacity: it.disabled ? 0.5 : 1 }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', border: 'none', background: 'transparent', cursor: it.disabled ? 'not-allowed' : 'pointer', borderRadius: 'var(--radius-md)', textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 14.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, color: it.danger ? 'var(--bw-red)' : 'var(--label-normal)', opacity: it.disabled ? 0.5 : 1 }}
             >
               {it.icon}
               <span>{it.label}</span>

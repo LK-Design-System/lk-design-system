@@ -20,7 +20,7 @@ export function EmptyState({ icon, title, description, action, style, ...rest })
           borderRadius: 'var(--radius-xl)', background: 'var(--lk-accent-tint)', color: 'var(--lk-accent-ink)', marginBottom: 12,
         }}>{icon}</div>
       )}
-      {title != null && <div style={{ fontSize: 18, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.3px', color: 'var(--label-normal)' }}>{title}</div>}
+      {title != null && <div style={{ fontSize: 18, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)' }}>{title}</div>}
       {description != null && <div style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
       {action != null && <div style={{ marginTop: 14 }}>{action}</div>}
     </div>

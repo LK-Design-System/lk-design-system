@@ -18,7 +18,7 @@ export function Notification({ icon, title, description, time, unread = false, o
       {icon != null && <span style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 'var(--radius-md)', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--lk-accent-ink)' }}>{icon}</span>}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', color: 'var(--label-normal)' }}>{title}</span>
+          <span style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)' }}>{title}</span>
           {unread && <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--bw-red)', flexShrink: 0 }} />}
         </div>
         {description != null && <div style={{ marginTop: 2, fontSize: 13, lineHeight: 1.55, color: 'var(--label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}

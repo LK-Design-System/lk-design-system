@@ -22,7 +22,7 @@ export function Bubble({ children, tone = 'navy', tail = 'bottom', style, ...res
       style={{
         position: 'relative', display: 'inline-block', maxWidth: 280, padding: '12px 15px',
         background: bg, color: fg, border: bd, borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-md)',
-        fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.6, letterSpacing: '-0.1px', wordBreak: 'keep-all', ...style,
+        fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.6, letterSpacing: 0, wordBreak: 'keep-all', ...style,
       }}
       {...rest}
     >

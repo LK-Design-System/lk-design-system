@@ -49,7 +49,7 @@ export function Select({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
       {label && (
-        <label htmlFor={selId} style={{ fontWeight: 'var(--fw-bold)', fontSize: '15px', letterSpacing: '-0.1px', color: 'var(--label-normal)' }}>
+        <label htmlFor={selId} style={{ fontWeight: 'var(--fw-bold)', fontSize: '15px', letterSpacing: 0, color: 'var(--label-normal)' }}>
           {label}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
         </label>
       )}
@@ -69,7 +69,7 @@ export function Select({
             border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
             boxShadow: open ? '0 0 0 4px var(--focus-ring)' : 'none',
             cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.5 : 1,
-            fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: '-0.1px', textAlign: 'left',
+            fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, textAlign: 'left',
             transition: 'var(--component-button-transition)',
           }}
         >

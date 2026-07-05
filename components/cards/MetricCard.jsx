@@ -18,7 +18,7 @@ export function MetricCard({ label, value, delta, deltaTone = 'auto', caption, i
         {icon && <span style={{ color: 'var(--lk-accent-ink)', display: 'inline-flex' }}>{icon}</span>}
       </div>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 34, fontWeight: 'var(--fw-extra)', letterSpacing: '-1px', color: 'var(--label-normal)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{value}</span>
+        <span style={{ fontSize: 34, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-normal)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{value}</span>
         {delta != null && (
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, fontSize: 13, fontWeight: 'var(--fw-bold)', color: dc }}>
             {(tone === 'up' || tone === 'down') && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d={up ? 'M7 17 17 7M9 7h8v8' : 'M7 7l10 10M17 9v8H9'} /></svg>}

@@ -13,7 +13,7 @@ export function Callout({ tone = 'signal', title, children, icon, style, ...rest
     <div style={{ display: 'flex', gap: 14, padding: '16px 18px', background: `color-mix(in srgb, ${c} 8%, var(--surface-card))`, borderRadius: 'var(--radius-lg)', borderLeft: `3px solid ${c}`, fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {icon && <span style={{ color: c, flexShrink: 0, marginTop: 1 }}>{icon}</span>}
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <div style={{ fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', color: 'var(--label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</div>}
+        {title != null && <div style={{ fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</div>}
         {children != null && <div style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
       </div>
     </div>

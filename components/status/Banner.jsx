@@ -28,7 +28,7 @@ export function Banner({ tone = 'info', title, children, action, onClose, style,
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 1 }} dangerouslySetInnerHTML={{ __html: t.d }} />
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <div style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', color: 'var(--label-normal)', marginBottom: children != null ? 3 : 0 }}>{title}</div>}
+        {title != null && <div style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)', marginBottom: children != null ? 3 : 0 }}>{title}</div>}
         {children != null && <div style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
       </div>
       {action != null && <div style={{ flexShrink: 0 }}>{action}</div>}

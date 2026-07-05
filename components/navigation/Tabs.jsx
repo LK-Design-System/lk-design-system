@@ -26,7 +26,7 @@ export function Tabs({ items = [], value, defaultValue, onChange, full = false, 
             style={{
               flex: full ? 1 : undefined, position: 'relative', padding: '0 2px 14px', border: 'none', background: 'transparent', cursor: 'pointer',
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 7,
-              fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-semibold)', letterSpacing: '-0.3px',
+              fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-semibold)', letterSpacing: 0,
               color: active ? 'var(--label-normal)' : 'var(--label-alternative)',
               transition: 'color var(--dur-fast) var(--ease-out)',
             }}

@@ -33,7 +33,7 @@ export function NewsCard({ image, category, title, excerpt, source, date, cta, h
       )}
       <div style={{ padding: '18px 20px 20px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
         {category && <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--label-alternative)' }}>{category}</span>}
-        {title && <h3 style={{ margin: 0, fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: '-0.4px', lineHeight: 1.36, color: 'var(--text-strong)', wordBreak: 'keep-all' }}>{title}</h3>}
+        {title && <h3 style={{ margin: 0, fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, lineHeight: 1.36, color: 'var(--text-strong)', wordBreak: 'keep-all' }}>{title}</h3>}
         {excerpt && <p style={{ margin: 0, fontSize: 14, lineHeight: 1.62, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{excerpt}</p>}
         {(source || date || cta) && (
           <div style={{ marginTop: 'auto', paddingTop: 12, display: 'flex', alignItems: 'center', gap: 8, fontSize: 12.5, color: 'var(--label-alternative)' }}>

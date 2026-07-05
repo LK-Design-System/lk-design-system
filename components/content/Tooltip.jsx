@@ -28,7 +28,7 @@ export function Tooltip({ content, placement = 'top', children, style, ...rest }
         style={{
           position: 'absolute', ...pos, zIndex: 40, pointerEvents: 'none',
           padding: '7px 11px', background: 'var(--surface-inverse)', color: 'var(--text-on-inverse)',
-          fontFamily: 'var(--font-sans)', fontSize: 12.5, fontWeight: 'var(--fw-semibold)', letterSpacing: '-0.1px',
+          fontFamily: 'var(--font-sans)', fontSize: 12.5, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
           lineHeight: 1.4, borderRadius: 'var(--radius-md)', whiteSpace: 'nowrap', boxShadow: 'var(--shadow-md)',
           opacity: show ? 1 : 0, transition: 'opacity var(--dur-fast) var(--ease-out)',
         }}

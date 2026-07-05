@@ -21,7 +21,7 @@ export function Radio({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: '12px',
         cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.5 : 1,
-        fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: '-0.1px', color: 'var(--bw-ink)',
+        fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, color: 'var(--bw-ink)',
       }}
     >
       <input

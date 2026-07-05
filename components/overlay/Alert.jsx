@@ -20,8 +20,8 @@ export function Alert({
   }, [open, dismiss]);
   if (!open) return null;
   const accent = tone === 'danger' ? 'var(--bw-red)' : 'var(--color-primary)';
-  const confirmStyle = { height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', color: '#fff', background: accent };
-  const cancelStyle = { height: 44, padding: '0 20px', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', color: 'var(--label-normal)', background: 'var(--bw-white)' };
+  const confirmStyle = { height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: '#fff', background: accent };
+  const cancelStyle = { height: 44, padding: '0 20px', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)', background: 'var(--bw-white)' };
   return (
     <div
       role="presentation"
@@ -35,7 +35,7 @@ export function Alert({
         style={{ width: '100%', maxWidth: 420, background: 'var(--bw-white)', borderRadius: 'var(--radius-3xl)', boxShadow: 'var(--shadow-xl)', padding: '28px 28px 24px', fontFamily: 'var(--font-sans)', ...style }}
         {...rest}
       >
-        {title != null && <div style={{ fontSize: 20, fontWeight: 'var(--fw-extra)', letterSpacing: '-0.5px', color: 'var(--label-normal)', marginBottom: 10 }}>{title}</div>}
+        {title != null && <div style={{ fontSize: 20, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-normal)', marginBottom: 10 }}>{title}</div>}
         {children != null && <div style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 24 }}>
           {actions != null ? actions : (

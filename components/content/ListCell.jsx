@@ -30,7 +30,7 @@ export function ListCell({ leading, title, description, trailing, onClick, divid
     >
       {leading != null && <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', color: 'var(--lk-accent-ink)' }}>{leading}</div>}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 15.5, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', color: 'var(--label-normal)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>
+        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 15.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>
         {description != null && <div style={{ marginTop: 2, fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{description}</div>}
       </div>
       {trailing != null && <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 8, color: 'var(--label-alternative)' }}>{trailing}</div>}

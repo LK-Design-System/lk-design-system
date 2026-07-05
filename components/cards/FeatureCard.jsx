@@ -41,7 +41,7 @@ export function FeatureCard({
         </span>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <h4 style={{ fontSize: '19px', fontWeight: 'var(--fw-extra)', letterSpacing: '-0.5px', color: 'var(--bw-ink)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
+        <h4 style={{ fontSize: '19px', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--bw-ink)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
         <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: 'var(--bw-gray)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
       </div>
     </div>

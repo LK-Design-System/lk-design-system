@@ -34,7 +34,7 @@ export function Switch({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 12,
         cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.5 : 1,
-        fontFamily: 'var(--font-sans)', fontSize: 15, letterSpacing: '-0.1px', color: 'var(--label-normal)',
+        fontFamily: 'var(--font-sans)', fontSize: 15, letterSpacing: 0, color: 'var(--label-normal)',
       }}
     >
       <span

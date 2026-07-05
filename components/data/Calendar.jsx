@@ -53,7 +53,7 @@ export function Calendar({ value, defaultValue, onChange, style, ...rest }) {
   return (
     <div style={{ width: 300, fontFamily: 'var(--font-sans)', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 16, ...style }} {...rest}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-        <div style={{ fontSize: 16, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.3px', color: 'var(--label-normal)' }}>{view.getFullYear()}년 {view.getMonth() + 1}월</div>
+        <div style={{ fontSize: 16, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)' }}>{view.getFullYear()}년 {view.getMonth() + 1}월</div>
         <div style={{ display: 'flex', gap: 4 }}>
           <button type="button" aria-label="previous month" onClick={() => navMonth(-1)} style={navBtn}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg></button>
           <button type="button" aria-label="next month" onClick={() => navMonth(1)} style={navBtn}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg></button>

@@ -90,7 +90,7 @@ export function ThemeToggle({
               background: on ? 'var(--surface-card)' : 'transparent',
               boxShadow: on ? 'var(--shadow-xs)' : 'none',
               color: on ? 'var(--accent-text)' : 'var(--label-alternative)',
-              fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.1px',
+              fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
               transition: 'var(--component-button-transition)',
             }}
           >

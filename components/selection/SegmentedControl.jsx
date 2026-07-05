@@ -44,7 +44,7 @@ export function SegmentedControl({
             style={{
               flex: full ? 1 : undefined, height: h, padding: '0 18px', border: 'none',
               cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
-              fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: '-0.1px',
+              fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0,
               color: active ? 'var(--label-normal)' : 'var(--label-alternative)',
               background: active ? 'var(--bw-white)' : 'transparent',
               borderRadius: 'var(--radius-sm)', boxShadow: active ? 'var(--shadow-xs)' : 'none',

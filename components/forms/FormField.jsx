@@ -9,7 +9,7 @@ export function FormField({ label, required = false, helper, error, htmlFor, chi
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {label != null && (
-        <label htmlFor={htmlFor} style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.1px', color: 'var(--label-normal)' }}>
+        <label htmlFor={htmlFor} style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)' }}>
           {label}
           {required && <span style={{ color: 'var(--bw-red)', marginLeft: 3 }}>*</span>}
         </label>

@@ -45,7 +45,7 @@ export function Pagination({ page = 1, count = 1, onChange, siblingCount = 1, st
               minWidth: 32, height: 32, padding: '0 6px', borderRadius: 'var(--radius-md)', cursor: 'pointer',
               border: `1px solid ${p === page ? 'var(--lk-accent-ink)' : 'transparent'}`,
               background: p === page ? 'var(--lk-accent-tint-2)' : 'transparent',
-              fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', fontVariantNumeric: 'tabular-nums',
+              fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, fontVariantNumeric: 'tabular-nums',
               color: p === page ? 'var(--lk-accent-ink)' : 'var(--label-neutral)',
             }}
           >

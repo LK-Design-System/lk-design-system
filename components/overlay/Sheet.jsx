@@ -33,7 +33,7 @@ export function Sheet({ open = false, title, children, footer, onClose, closeOnS
         <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 10 }}>
           <span style={{ width: 40, height: 4, borderRadius: 'var(--radius-pill)', background: 'var(--bw-gray-300)' }} />
         </div>
-        {title != null && <div style={{ padding: '14px 22px 4px', fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: '-0.4px', color: 'var(--label-normal)' }}>{title}</div>}
+        {title != null && <div style={{ padding: '14px 22px 4px', fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-normal)' }}>{title}</div>}
         <div style={{ flex: 1, padding: '14px 22px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         {footer != null && <div style={{ padding: '14px 22px 22px', display: 'flex', gap: 10 }}>{footer}</div>}
       </div>

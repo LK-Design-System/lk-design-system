@@ -26,7 +26,7 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], styl
               style={{
                 width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
                 padding: '18px 4px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left',
-                fontFamily: 'var(--font-sans)', fontSize: 17, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.3px',
+                fontFamily: 'var(--font-sans)', fontSize: 17, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
                 color: isOpen ? 'var(--lk-accent-ink)' : 'var(--label-normal)',
                 transition: 'color var(--dur-fast) var(--ease-out)',
               }}

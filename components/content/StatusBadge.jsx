@@ -30,7 +30,7 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
     <span
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 7,
-        fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: '-0.1px',
+        fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
         color: 'var(--label-neutral)', ...style,
       }}
       {...rest}

@@ -66,7 +66,7 @@ export function Stepper({
         aria-live="polite"
         style={{
           minWidth: 40, textAlign: 'center', fontFamily: 'var(--font-sans)',
-          fontSize: size === 'sm' ? 15 : 16, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px',
+          fontSize: size === 'sm' ? 15 : 16, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
           color: 'var(--label-normal)', fontVariantNumeric: 'tabular-nums',
         }}
       >

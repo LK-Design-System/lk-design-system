@@ -53,7 +53,7 @@ export function ChoiceCard({
     >
       {icon != null && <span style={{ flexShrink: 0, color: selected ? 'var(--color-accent)' : 'var(--label-neutral)', display: 'inline-flex' }}>{icon}</span>}
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <div style={{ fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: '-0.2px', color: 'var(--label-strong)', wordBreak: 'keep-all' }}>{title}</div>}
+        {title != null && <div style={{ fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-strong)', wordBreak: 'keep-all' }}>{title}</div>}
         {description != null && <div style={{ marginTop: 3, fontSize: 13, lineHeight: 1.55, color: 'var(--label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
         {children}
       </div>

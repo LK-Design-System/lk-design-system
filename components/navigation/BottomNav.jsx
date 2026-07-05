@@ -30,7 +30,7 @@ export function BottomNav({ items = [], value, defaultValue, onChange, style, ..
             }}
           >
             {o.icon}
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: '-0.1px' }}>{o.label}</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0 }}>{o.label}</span>
           </button>
         );
       })}

@@ -31,7 +31,7 @@ export function FilterChip({
         border: `1px solid ${active ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`,
         borderRadius: 'var(--radius-pill)', cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 14,
-        fontWeight: 'var(--fw-semibold)', letterSpacing: '-0.1px',
+        fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
         color: active ? 'var(--lk-accent-ink)' : 'var(--label-neutral)',
         transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
         whiteSpace: 'nowrap', ...style,
