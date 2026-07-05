@@ -88,10 +88,14 @@ function slug(value) {
     .slice(0, 160);
 }
 
-function storyUrl(origin, id, query = {}) {
+function storyPath(id, query = {}) {
   const params = new URLSearchParams({ id, viewMode: 'story' });
   for (const [key, value] of Object.entries(query)) params.set(key, value);
-  return `${origin}/iframe.html?${params.toString()}`;
+  return `storybook-static/iframe.html?${params.toString()}`;
+}
+
+function storyUrl(origin, id, query = {}) {
+  return `${origin}/${storyPath(id, query).replace(/^storybook-static\//, '')}`;
 }
 
 async function sha256(filePath) {
@@ -171,6 +175,7 @@ async function mapComponentCardsToStories(entries, componentCards) {
     blockByStoryId.set(story.id, storyBlock(sourceByImportPath.get(story.importPath), story.exportName));
   }
 
+  const legacyStory = findStory(entries, './stories/LegacyPreviews.stories.jsx', 'ComponentCards');
   const failures = [];
   const pairs = rows.map((row) => {
     const matchedStories = stories
@@ -199,13 +204,21 @@ async function mapComponentCardsToStories(entries, componentCards) {
       }));
 
     if (matchedStories.length === 0) failures.push(`${row.card}: no React implementation story source references ${row.exports.join(', ')}`);
+    if (matchedStories[0]?.matchMode !== 'story-block') {
+      failures.push(`${row.card}: primary React story is not matched inside a Storybook export block`);
+    }
 
     return {
       card: row.card,
       exports: row.exports,
       primaryStory: matchedStories[0],
       reviewAnchor: `#${slug(row.card)}`,
-      stories: matchedStories,
+      legacyStoryPath: storyPath(legacyStory.id, { selected: row.card }),
+      primaryStoryPath: matchedStories[0] ? storyPath(matchedStories[0].id) : null,
+      stories: matchedStories.map((story) => ({
+        ...story,
+        storyPath: storyPath(story.id),
+      })),
     };
   });
 

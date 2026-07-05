@@ -26,6 +26,11 @@ function relFromReport(filePath) {
   return path.relative(inventoryDir, path.join(root, filePath)).replaceAll('\\', '/');
 }
 
+function storybookRelPath(storybookPath) {
+  if (!storybookPath) return '';
+  return `../../${storybookPath}`;
+}
+
 async function assertFile(filePath, label) {
   const fullPath = path.join(root, filePath);
   await access(fullPath);
@@ -36,12 +41,14 @@ async function assertFile(filePath, label) {
 
 function renderStoryCard(story, screenshot) {
   const isPrimary = story.primary ? '<em>Primary</em>' : '';
+  const storyLink = storybookRelPath(story.storyPath);
   return `
     <figure class="story${story.primary ? ' primary' : ''}">
       <figcaption>
         <strong>${escapeHtml(story.title || story.importPath)} ${isPrimary}</strong>
         <span>${escapeHtml(story.name || story.exportName)} · ${escapeHtml(story.id)}</span>
         <span>${escapeHtml(story.matchMode || 'story-module')} · ${escapeHtml((story.matchedExports || []).join(', '))}</span>
+        <a href="${escapeHtml(storyLink)}">Open React story</a>
       </figcaption>
       <img src="${escapeHtml(relFromReport(screenshot.path))}" alt="${escapeHtml(story.id)}" />
     </figure>
@@ -50,6 +57,8 @@ function renderStoryCard(story, screenshot) {
 
 function renderPair(pair, legacyScreenshot, reactScreenshots) {
   const anchorId = (pair.reviewAnchor || '').replace(/^#/, '');
+  const legacyLink = storybookRelPath(pair.legacyStoryPath);
+  const primaryLink = storybookRelPath(pair.primaryStoryPath);
   return `
     <section class="pair" id="${escapeHtml(anchorId)}">
       <header>
@@ -57,6 +66,10 @@ function renderPair(pair, legacyScreenshot, reactScreenshots) {
           <p class="eyebrow">${escapeHtml(pair.card)}</p>
           <h2>${escapeHtml(pair.exports.join(', '))}</h2>
           <p class="primary">Primary story: ${escapeHtml(pair.primaryStory?.id || 'n/a')}</p>
+          <p class="links">
+            <a href="${escapeHtml(legacyLink)}">Open original preview</a>
+            <a href="${escapeHtml(primaryLink)}">Open primary React story</a>
+          </p>
         </div>
         <span class="count">${reactScreenshots.length} React story${reactScreenshots.length === 1 ? '' : 'ies'}</span>
       </header>
@@ -111,6 +124,19 @@ async function verifyRenderedReport(expectedPairs) {
     assert(firstPairText.includes('Original component card'), 'Rendered report is missing the original-card label.');
     assert(firstPairText.includes('React story') || firstPairText.includes('React stories'), 'Rendered report is missing React story labels.');
 
+    const pairLinkCount = await page.locator('.pair > header .links a').count();
+    assert(pairLinkCount === expectedPairs * 2, `Expected ${expectedPairs * 2} original/primary links, found ${pairLinkCount}.`);
+
+    const emptyLinks = await page.$$eval('a', (links) =>
+      links
+        .map((link) => ({
+          text: link.textContent?.trim() || '',
+          href: link.getAttribute('href') || '',
+        }))
+        .filter((link) => link.href.length === 0 || link.href.includes('null') || link.href.includes('undefined'))
+    );
+    assert(emptyLinks.length === 0, `Visual review report has invalid links:\n${emptyLinks.map((link) => `${link.text}: ${link.href}`).join('\n')}`);
+
     await page.screenshot({ path: reportSmokePath, fullPage: false, animations: 'disabled' });
   } finally {
     await page.close();
@@ -140,9 +166,15 @@ async function main() {
     if (!legacyScreenshot) failures.push(`${pair.card}: missing legacy screenshot`);
     if (!pair.stories?.length) failures.push(`${pair.card}: no paired React stories`);
     if (!pair.primaryStory?.id) failures.push(`${pair.card}: missing primary React story`);
+    if (pair.primaryStory?.matchMode !== 'story-block') failures.push(`${pair.card}: primary React story is not a strict story-block match`);
+    if (!pair.primaryStory?.matchedExports?.length) failures.push(`${pair.card}: primary React story has no matched exports`);
+    if (!pair.legacyStoryPath) failures.push(`${pair.card}: missing original preview Storybook path`);
+    if (!pair.primaryStoryPath) failures.push(`${pair.card}: missing primary React story Storybook path`);
+    if (!pair.reviewAnchor) failures.push(`${pair.card}: missing review anchor`);
     if (pair.primaryStory?.id && !reactById.has(pair.primaryStory.id)) failures.push(`${pair.card}: primary story has no screenshot (${pair.primaryStory.id})`);
     for (const story of pair.stories || []) {
       if (!reactById.has(story.id)) failures.push(`${pair.card}: paired story has no screenshot (${story.id})`);
+      if (!story.storyPath) failures.push(`${pair.card}: paired story has no Storybook path (${story.id})`);
     }
   }
 
@@ -249,6 +281,19 @@ async function main() {
       color: var(--muted);
       font-size: 13px;
     }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    a {
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    a:hover { text-decoration: underline; }
     .grid {
       display: grid;
       grid-template-columns: minmax(320px, .92fr) minmax(360px, 1.08fr);
@@ -274,6 +319,9 @@ async function main() {
       color: var(--muted);
       font-size: 12px;
       word-break: break-all;
+    }
+    figcaption a {
+      font-size: 12px;
     }
     figcaption em {
       display: inline-flex;
