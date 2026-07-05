@@ -207,11 +207,21 @@ async function mapComponentCardsToStories(entries, componentCards) {
     if (matchedStories[0]?.matchMode !== 'story-block') {
       failures.push(`${row.card}: primary React story is not matched inside a Storybook export block`);
     }
+    const storyBlockCoverage = new Set(
+      matchedStories.filter((story) => story.matchMode === 'story-block').flatMap((story) => story.matchedExports)
+    );
+    const storyBlockCoverageGaps = row.exports.filter((name) => !storyBlockCoverage.has(name));
+    if (storyBlockCoverageGaps.length > 0) {
+      failures.push(`${row.card}: Storybook export blocks do not cover mapped exports ${storyBlockCoverageGaps.join(', ')}`);
+    }
 
     return {
       card: row.card,
       exports: row.exports,
       primaryStory: matchedStories[0],
+      storyBlockCoverage: [...storyBlockCoverage].sort((a, b) => a.localeCompare(b, 'ko')),
+      storyBlockCoverageComplete: storyBlockCoverageGaps.length === 0,
+      storyBlockCoverageGaps,
       reviewAnchor: `#${slug(row.card)}`,
       legacyStoryPath: storyPath(legacyStory.id, { selected: row.card }),
       primaryStoryPath: matchedStories[0] ? storyPath(matchedStories[0].id) : null,

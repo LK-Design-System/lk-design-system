@@ -66,6 +66,7 @@ function renderPair(pair, legacyScreenshot, reactScreenshots) {
           <p class="eyebrow">${escapeHtml(pair.card)}</p>
           <h2>${escapeHtml(pair.exports.join(', '))}</h2>
           <p class="primary">Primary story: ${escapeHtml(pair.primaryStory?.id || 'n/a')}</p>
+          <p class="coverage">Story-block coverage: ${escapeHtml((pair.storyBlockCoverage || []).join(', '))}</p>
           <p class="links">
             <a href="${escapeHtml(legacyLink)}">Open original preview</a>
             <a href="${escapeHtml(primaryLink)}">Open primary React story</a>
@@ -168,6 +169,10 @@ async function main() {
     if (!pair.primaryStory?.id) failures.push(`${pair.card}: missing primary React story`);
     if (pair.primaryStory?.matchMode !== 'story-block') failures.push(`${pair.card}: primary React story is not a strict story-block match`);
     if (!pair.primaryStory?.matchedExports?.length) failures.push(`${pair.card}: primary React story has no matched exports`);
+    if (!pair.storyBlockCoverageComplete) failures.push(`${pair.card}: Storybook export block coverage is incomplete`);
+    const coverage = new Set(pair.storyBlockCoverage || []);
+    const coverageGaps = pair.exports.filter((name) => !coverage.has(name));
+    if (coverageGaps.length > 0) failures.push(`${pair.card}: missing Storybook export block coverage for ${coverageGaps.join(', ')}`);
     if (!pair.legacyStoryPath) failures.push(`${pair.card}: missing original preview Storybook path`);
     if (!pair.primaryStoryPath) failures.push(`${pair.card}: missing primary React story Storybook path`);
     if (!pair.reviewAnchor) failures.push(`${pair.card}: missing review anchor`);
@@ -278,6 +283,11 @@ async function main() {
     }
     .primary {
       margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .coverage {
+      margin-top: 6px;
       color: var(--muted);
       font-size: 13px;
     }
