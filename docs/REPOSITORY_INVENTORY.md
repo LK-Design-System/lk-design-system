@@ -31,13 +31,14 @@
 ## Storybook 전수조사 기준
 
 `stories/Audit.stories.jsx`의 `문서/전수조사` 항목은 원본 디자인 시스템과 현재 패키지 표면을 대조하는 기준입니다.
+`stories/LegacyPreviews.stories.jsx`의 `문서/원본 미리보기` 항목은 같은 원본 HTML을 Storybook iframe으로 직접 렌더링하는 시각 비교 표면입니다.
 
 - 원본 지침: `guidelines/*.html` 20개
 - 원본 요소 카드: `components/**/*.card.html` 83개
 - 템플릿 카드: `templates-cards/*.html` 4개
 - 현재 React export: 145개
 
-원본 카드나 지침을 추가, 삭제, 재분류하면 이 Storybook 전수조사표도 같이 갱신합니다.
+원본 카드나 지침을 추가, 삭제, 재분류하면 이 Storybook 전수조사표와 원본 미리보기 목록을 같이 갱신합니다.
 
 ## 생성 영역
 
