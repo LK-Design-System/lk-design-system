@@ -35,7 +35,7 @@ const meta = {
 export default meta;
 
 const sampleImage =
-  'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 640 360%22%3E%3Crect width=%22640%22 height=%22360%22 fill=%22%230E1329%22/%3E%3Cpath d=%22M70 260 220 120l110 86 90-62 150 116%22 fill=%22none%22 stroke=%22%232F6FAE%22 stroke-width=%2218%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%22484%22 cy=%2294%22 r=%2242%22 fill=%22%23527F62%22/%3E%3C/svg%3E';
+  'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22640%22 height=%22360%22 viewBox=%220 0 640 360%22%3E%3Crect width=%22640%22 height=%22360%22 rx=%2224%22 fill=%22%230E1329%22/%3E%3Cpath d=%22M70 260 220 120l110 86 90-62 150 116%22 fill=%22none%22 stroke=%22%232F6FAE%22 stroke-width=%2218%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%22484%22 cy=%2294%22 r=%2242%22 fill=%22%23527F62%22/%3E%3Ctext x=%2252%22 y=%2258%22 fill=%22white%22 font-family=%22Arial%22 font-size=%2222%22 font-weight=%22700%22%3ELK ROBOTICS MAP CAPTURE%3C/text%3E%3C/svg%3E';
 
 export const AnchoredAndToast = {
   name: '앵커드 오버레이와 토스트',

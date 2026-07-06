@@ -77,7 +77,7 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 public Storybook sidebar는 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 대시보드 지표, 선택/상태, 로보틱스/뷰어, 아이콘, 내비게이션을 50개 public story로 다룹니다.
+현재 public Storybook sidebar는 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 대시보드 지표, 선택/상태, 로보틱스/뷰어, 아이콘, 내비게이션을 51개 public story로 다룹니다.
 보고/감사/보정표 UI는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
 원본 카드와 1:1 비교하기 위한 82개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
 `문서/원본 미리보기` 스토리는 원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개를 Storybook iframe 안에서 직접 렌더링해 예전 기준과 현재 구현을 시각적으로 대조할 수 있게 합니다.

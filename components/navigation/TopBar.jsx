@@ -16,7 +16,8 @@ export function TopBar({ brand, children, actions, navAlign = 'start', sticky = 
     <header
       style={{
         position: sticky ? 'sticky' : 'static', top: 0, zIndex: 50,
-        display: 'flex', alignItems: 'center', gap: 20,
+        display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 20px)',
+        width: '100%', maxWidth: '100%', minWidth: 0, overflow: 'hidden',
         height, paddingInline: 'clamp(16px, 4vw, 32px)', boxSizing: 'border-box',
         background: dark ? 'linear-gradient(135deg, var(--lk-navy-from), var(--lk-navy-to))' : (sticky ? 'color-mix(in srgb, var(--surface-card) 88%, transparent)' : 'var(--surface-card)'),
         color: dark ? 'var(--text-on-inverse)' : 'var(--text-body)',
@@ -31,7 +32,7 @@ export function TopBar({ brand, children, actions, navAlign = 'start', sticky = 
       {children != null
         ? (
           <TopBarToneContext.Provider value={tone}>
-            <nav style={{ display: 'flex', alignItems: 'center', alignSelf: 'stretch', gap: 4, flex: 1, minWidth: 0, justifyContent: navAlign === 'center' ? 'center' : 'flex-start' }}>{children}</nav>
+            <nav style={{ display: 'flex', alignItems: 'center', alignSelf: 'stretch', gap: 4, flex: '1 1 auto', minWidth: 0, overflowX: 'auto', overflowY: 'hidden', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', justifyContent: navAlign === 'center' ? 'safe center' : 'flex-start' }}>{children}</nav>
           </TopBarToneContext.Provider>
         )
         : <div style={{ flex: 1 }} />}

@@ -45,10 +45,10 @@ const spacings = [
 export const ColorAndSpacing = {
   name: '색상과 간격',
   render: () => (
-    <main style={{ display: 'grid', gap: 32, maxWidth: 1040 }}>
+    <main style={{ display: 'grid', gap: 32, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <section>
         <h1 style={{ margin: '0 0 16px', fontSize: 28, color: 'var(--label-strong)' }}>색상 토큰</h1>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 14, minWidth: 0 }}>
           {colors.map(([label, value]) => (
             <div key={label} style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', overflow: 'hidden' }}>
               <div style={{ height: 72, background: value }} />
@@ -65,11 +65,11 @@ export const ColorAndSpacing = {
         <h2 style={{ margin: '0 0 16px', fontSize: 22, color: 'var(--label-strong)' }}>간격 스케일</h2>
         <div style={{ display: 'grid', gap: 12 }}>
           {spacings.map(([token, value, usage]) => (
-            <div key={token} style={{ display: 'grid', gridTemplateColumns: '112px 160px 56px minmax(0, 1fr)', alignItems: 'center', gap: 12 }}>
+            <div key={token} style={{ display: 'grid', gridTemplateColumns: 'minmax(88px, 112px) minmax(0, 1fr) auto', alignItems: 'center', gap: '8px 12px', minWidth: 0 }}>
               <code style={{ color: 'var(--label-alternative)' }}>{token}</code>
-              <div style={{ height: 14, width: `var(${token})`, background: 'var(--lk-accent-ink)', borderRadius: 'var(--radius-pill)' }} />
+              <div style={{ height: 14, width: `min(var(${token}), 100%)`, background: 'var(--lk-accent-ink)', borderRadius: 'var(--radius-pill)' }} />
               <code style={{ color: 'var(--label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{value}</code>
-              <span style={{ color: 'var(--label-alternative)', fontSize: 13 }}>{usage}</span>
+              <span style={{ gridColumn: '1 / -1', color: 'var(--label-alternative)', fontSize: 13 }}>{usage}</span>
             </div>
           ))}
         </div>

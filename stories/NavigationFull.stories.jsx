@@ -59,15 +59,36 @@ const topBarMenuItems = [
   { label: '관제 플랫폼', href: '#' },
 ];
 
+function AccentTintAction({ children }) {
+  const [hover, setHover] = React.useState(false);
+
+  return (
+    <Button
+      size="sm"
+      variant="ghost"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        background: hover ? 'var(--lk-accent-tint-2)' : 'var(--lk-accent-tint)',
+        color: 'var(--accent-text)',
+        border: 'none',
+        boxShadow: 'none',
+      }}
+    >
+      {children}
+    </Button>
+  );
+}
+
 export const AppNavigation = {
   name: '앱 내비게이션',
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1100 }}>
-      <div style={{ position: 'relative', zIndex: 2, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1100, minWidth: 0 }}>
+      <div style={{ position: 'relative', zIndex: 2, width: '100%', minWidth: 0, overflow: 'hidden', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
         <TopBar
           navAlign="center"
           brand={<Lockup variant="inline" height={22} />}
-          actions={<Button size="sm">새 미션</Button>}
+          actions={<AccentTintAction>새 미션</AccentTintAction>}
           style={{ borderRadius: 'var(--radius-lg)' }}
         >
           <TopBarNavItem active href="#" menuItems={topBarMenuItems}>플릿</TopBarNavItem>
@@ -76,7 +97,7 @@ export const AppNavigation = {
         </TopBar>
       </div>
 
-      <section style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 'var(--space-5)', alignItems: 'start' }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-5)', alignItems: 'start', minWidth: 0, overflow: 'hidden' }}>
         <SideNav
           items={navItems}
           defaultValue="robots"
@@ -85,7 +106,7 @@ export const AppNavigation = {
           headerCollapsed={<Lockup variant="mark" height={22} />}
           footer={<UserMenu name="운영자" detail="Fleet Manager" status="online" items={[{ label: '프로필' }, { label: '로그아웃', danger: true }]} />}
         />
-        <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <div style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0 }}>
           <Breadcrumb items={[{ label: '홈', href: '#' }, { label: '플릿', href: '#' }, { label: 'AMR-07' }]} />
           <Tabs items={[{ value: 'status', label: '상태', count: 3 }, { value: 'log', label: '로그' }, { value: 'setting', label: '설정' }]} defaultValue="status" />
           <Steps steps={['설정', '검증', '배포']} current={1} />

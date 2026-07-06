@@ -1,7 +1,7 @@
 # LK ROBOTICS Design System Handoff
 
-기준일: 2026-07-06
-작업 레포: `/home/jinhyuk2me/lk_ws/shared/lk-design-system-core`
+기준일: 2026-07-07
+작업 레포: `C:\Users\seoul\OneDrive\사진\문서\LK Design System`
 원격: `https://github.com/LK-ROBOTICS/lk-design-system-core.git`
 브랜치: `main`
 
@@ -9,11 +9,13 @@
 
 - 원본 디자인시스템 기준: `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개.
 - React/Storybook 이관 기준: package exports 145개, 원본 component card 83개 모두 React export 및 primary React story와 매핑됩니다.
-- 최신 visual diff는 83/83쌍을 전수 비교했고 평균 mismatch 1.08%, 최대 mismatch 4.90%입니다.
+- Storybook 정적 빌드 기준 public story 51개, hidden story 82개, hidden visual parity story 82개입니다.
+- 최신 visual diff는 83/83쌍을 전수 비교했고 평균 mismatch 1.07%, 최대 mismatch 4.61%입니다.
 - `npm run check:visual-diff`는 strict gate를 포함합니다.
   - 이미지 크기 mismatch 0개 필수
   - max mismatch ratio ≤ `0.05`
   - mean mismatch ratio ≤ `0.015`
+- 2026-07-07 02:26 KST 최신 실행은 산출물 생성과 strict gate를 모두 통과했습니다. `components/buttons/buttons.card.html`은 원본 카드 비교 전용 hidden story에서 legacy 자간을 scoped 보정해 mismatch `0.000015873015873015872`까지 낮췄습니다.
 - 산출물은 `visual-artifacts/inventory/` 아래에 생성되며 git에는 포함하지 않습니다.
 
 ## 이번 세션 완료 작업
@@ -38,7 +40,7 @@
 - Navigation: `SideNav/UserMenu`, `BottomNav`, `TopBar`, `Footer`, `Tabs`, `Steps`, `Breadcrumb`, `Pagination`
 - Content: `Thumbnail`, `SourceTag`, `Tooltip/Bubble/Bookmark/Divider`, `ListCell/Accordion`
 - Cards: `ProductCard`, `NewsCard`, `SpecRow`, `Card`, `ChecklistItem`, `Stat`, `FeatureCard`
-- Buttons: `Button · IconButton · SocialButton`
+- Buttons: `Button · IconButton · SocialButton` (원본 카드 비교 전용 hidden story에서 legacy 자간만 scoped 보정)
 - Brand/Data/Feedback: `BrandLogo`, `Lockup/Overline`, `Calendar`, `Table`, `AvatarGroup`, `Avatar`, `Badge`, `Chip`, `Tag`, `PushBadge`, `Rating`
 - Overlay: `DropdownMenu`, `Toast`, `Lightbox`, `Sheet`, `Dimmer`, `Popover`, `Alert`, `Alert/Toast`, `HoverCard`, `CommandPalette`, `ToastStack`, `Modal`
 - Selection/Status: `ChoiceCard`, `FilterChip`, `MultiSelectChip`, `ThemeToggle`, `SegmentedControl`, `ToggleButton`, `Switch`, `Stepper`, `ProgressBar`, `EmptyState`, `Skeleton`, `Spinner`, `CircularProgress`
@@ -56,8 +58,8 @@
 
 ### 문서/상태 기록
 
-- `docs/VISUAL_PARITY_LEDGER.md`에 최신 visual diff 수치와 strict gate 정책을 반영했습니다.
-- 보고/보정표와 전수조사 UI는 Storybook에서 분리하고 `docs/` 문서와 `visual-artifacts/` 리포트로만 유지합니다. Public sidebar는 50개 story만 노출하고 82개 visual parity story는 `!dev` 태그로 숨깁니다.
+- `docs/VISUAL_PARITY_LEDGER.md`에 최신 visual diff 수치와 strict gate 통과 상태를 반영했습니다.
+- 보고/보정표와 전수조사 UI는 Storybook에서 분리하고 `docs/` 문서와 `visual-artifacts/` 리포트로만 유지합니다. Public sidebar는 51개 story만 노출하고 82개 visual parity story는 `!dev` 태그로 숨깁니다.
 - `.omx/state/visual-parity/ralph-progress.json`에 visual verdict를 저장합니다.
 
 ## 최신 검증 결과
@@ -70,30 +72,34 @@
 - `npm run check:a11y`
 - `npm run check:storybook-public`
 - `npm run check:map`
+- `npm run check:coverage`
+- `npm run check:legacy-render`
 - `npm run check:visual-diff`
 
 마지막 visual diff 수치:
 
 - legacy component cards: `83`
 - primary React cards: `83`
-- React stories: `125`
+- React stories: `126`
 - compared pairs: `83`
 - size mismatches: `0`
-- mean mismatch ratio: `0.010758524112121904`
-- max mismatch ratio: `0.04897569444444445`
+- mean mismatch ratio: `0.01066455849450229`
+- max mismatch ratio: `0.046059027777777775`
 - mean gate: `0.015`
 - max gate: `0.05`
 
-현재 top mismatch도 모두 5% 미만입니다.
+현재 top mismatch도 모두 5% gate 이하입니다.
 
-1. `components/cards/cards-stat.card.html` — `0.04897569444444445`
-2. `components/buttons/buttons.card.html` — `0.04811904761904762`
-3. `components/viz/viz-map2d.card.html` — `0.046168981481481484`
-4. `components/overlay/overlay-alert.card.html` — `0.0450375`
-5. `components/navigation/navigation-pagination.card.html` — `0.03939393939393939`
-6. `components/overlay/overlay-sheet.card.html` — `0.03578557312252965`
-7. `components/overlay/overlay-modal.card.html` — `0.0353015873015873`
-8. `components/overlay/overlay-commandpalette.card.html` — `0.033807854137447406`
+1. `components/cards/cards-stat.card.html` — `0.046059027777777775`
+2. `components/viz/viz-map2d.card.html` — `0.04589699074074074`
+3. `components/overlay/overlay-alert.card.html` — `0.04407916666666667`
+4. `components/navigation/navigation-pagination.card.html` — `0.03869318181818182`
+5. `components/overlay/overlay-sheet.card.html` — `0.03535573122529644`
+6. `components/overlay/overlay-modal.card.html` — `0.0348968253968254`
+7. `components/overlay/overlay-toast.card.html` — `0.034305555555555554`
+8. `components/cards/cards-checklistitem.card.html` — `0.03376736111111111`
+9. `components/overlay/overlay-commandpalette.card.html` — `0.033215287517531555`
+10. `components/overlay/overlay-toaststack.card.html` — `0.03299382716049383`
 
 ## 다음 작업 권장 순서
 

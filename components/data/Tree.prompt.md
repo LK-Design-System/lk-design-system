@@ -6,4 +6,4 @@
 ]} />
 ```
 
-- **nodes** — `{ id, label, icon, children }`. **defaultExpanded** — 열린 키. **onSelect(node)**.
+- **nodes** — `{ id, label, icon, children }`. **defaultExpanded** — 열린 키. **openOnHover** — hover/focus 시 임시 확장. **onSelect(node)**.

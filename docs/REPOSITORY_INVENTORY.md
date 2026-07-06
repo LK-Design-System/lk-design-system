@@ -37,6 +37,11 @@
 - 원본 요소 카드: `components/**/*.card.html` 83개
 - 템플릿 카드: `templates-cards/*.html` 4개
 - 현재 React export: 145개
+- Storybook 전체 story: 133개
+- Storybook public story: 51개
+- 숨김 visual parity story: 82개
+- visual inventory React story: 126개
+- 접근성 guard 검사 대상 implementation story: 129개
 
 원본 카드나 지침을 추가, 삭제, 재분류하면 `stories/Audit.data.jsx`와 원본 미리보기 목록을 같이 갱신합니다.
 
@@ -66,4 +71,5 @@
 - `tokens/source.json`은 `tokens/*.css`와 맞춰야 합니다. `npm run check:tokens`가 component-token 참조를 검증합니다.
 - `components/` 아래에 컴포넌트를 추가하면 대응 `.d.ts`를 추가하고 `npm run build`를 실행합니다.
 - 사용자에게 노출되는 컴포넌트는 Storybook 스토리를 추가하거나 수정하고, 원본 기준과 대응되면 `stories/Audit.data.jsx`도 갱신합니다.
+- 현재 최신 `npm run check:visual-diff`는 83쌍 산출물을 생성하고 strict gate를 통과합니다. 최신 수치는 mean mismatch `0.01066455849450229`, max mismatch `0.046059027777777775`입니다.
 - push 전 `npm run check`, `npm run check:audit`, 필요 시 `npm run check:ops-release`를 실행합니다.

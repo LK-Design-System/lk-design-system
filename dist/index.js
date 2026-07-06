@@ -1775,6 +1775,23 @@ function sortRows(rows, key, dir) {
   });
   return dir === "desc" ? s.reverse() : s;
 }
+function checkboxStyle(checked) {
+  return {
+    appearance: "none",
+    WebkitAppearance: "none",
+    width: 16,
+    height: 16,
+    margin: 0,
+    borderRadius: 4,
+    border: `1px solid ${checked ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+    backgroundColor: checked ? "var(--lk-accent-ink)" : "var(--surface-card)",
+    backgroundImage: checked ? `url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8.2L6.7 10.8L12 5.2' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")` : "none",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    cursor: "pointer",
+    verticalAlign: "middle"
+  };
+}
 function DataGrid({ columns = [], rows = [], selectable = false, onSelectionChange, size = "md", style, ...rest }) {
   const [sort, setSort] = React40.useState({ key: null, dir: "asc" });
   const [sel, setSel] = React40.useState(() => /* @__PURE__ */ new Set());
@@ -1802,14 +1819,14 @@ function DataGrid({ columns = [], rows = [], selectable = false, onSelectionChan
   const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
   return /* @__PURE__ */ jsx39("div", { style: { overflowX: "auto", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ jsxs28("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
     /* @__PURE__ */ jsx39("thead", { children: /* @__PURE__ */ jsxs28("tr", { children: [
-      selectable && /* @__PURE__ */ jsx39("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44 }, children: /* @__PURE__ */ jsx39("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "select all" }) }),
+      selectable && /* @__PURE__ */ jsx39("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44 }, children: /* @__PURE__ */ jsx39("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "select all", style: checkboxStyle(allOn) }) }),
       columns.map((c) => /* @__PURE__ */ jsx39("th", { onClick: () => toggleSort(c), style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", cursor: c.sortable ? "pointer" : "default", whiteSpace: "nowrap", userSelect: "none" }, children: /* @__PURE__ */ jsxs28("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: [
         c.label,
         c.sortable && /* @__PURE__ */ jsx39("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { opacity: sort.key === c.key ? 1 : 0.3 }, children: /* @__PURE__ */ jsx39("path", { d: sort.key === c.key && sort.dir === "desc" ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
       ] }) }, c.key))
     ] }) }),
     /* @__PURE__ */ jsx39("tbody", { children: sorted.map((r, ri) => /* @__PURE__ */ jsxs28("tr", { style: { background: sel.has(ri) ? "var(--lk-accent-tint)" : "transparent" }, children: [
-      selectable && /* @__PURE__ */ jsx39("td", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsx39("input", { type: "checkbox", checked: sel.has(ri), onChange: () => toggleRow(ri), "aria-label": `select row ${ri + 1}` }) }),
+      selectable && /* @__PURE__ */ jsx39("td", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsx39("input", { type: "checkbox", checked: sel.has(ri), onChange: () => toggleRow(ri), "aria-label": `select row ${ri + 1}`, style: checkboxStyle(sel.has(ri)) }) }),
       columns.map((c) => /* @__PURE__ */ jsx39("td", { style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14.5, color: "var(--label-neutral)", whiteSpace: "nowrap" }, children: typeof c.render === "function" ? c.render(r) : r[c.key] }, c.key))
     ] }, ri)) })
   ] }) });
@@ -1901,26 +1918,50 @@ function Table({ columns = [], rows = [], size = "md", hover = true, style, ...r
 // components/data/Tree.jsx
 import React45 from "react";
 import { jsx as jsx44, jsxs as jsxs33 } from "react/jsx-runtime";
-function TreeNode({ node, level, expandedSet, toggle, onSelect }) {
+function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle, onSelect, openOnHover }) {
   const key = node.id != null ? node.id : node.label;
   const has = node.children && node.children.length > 0;
-  const open = expandedSet.has(key);
-  return /* @__PURE__ */ jsxs33("div", { children: [
+  const open = expandedSet.has(key) || previewSet.has(key);
+  const [hovered, setHovered] = React45.useState(false);
+  const previewHandlers = openOnHover && has ? {
+    onMouseEnter: () => setPreviewKey(key, true),
+    onMouseLeave: () => setPreviewKey(key, false),
+    onFocus: () => setPreviewKey(key, true),
+    onBlur: (event) => {
+      if (!event.currentTarget.contains(event.relatedTarget)) setPreviewKey(key, false);
+    }
+  } : {};
+  return /* @__PURE__ */ jsxs33("div", { ...previewHandlers, children: [
     /* @__PURE__ */ jsxs33(
       "button",
       {
         type: "button",
+        "aria-expanded": has ? open : void 0,
         onClick: () => {
           if (has) toggle(key);
           onSelect && onSelect(node);
         },
-        onMouseEnter: (e) => {
-          e.currentTarget.style.background = "var(--fill-normal)";
+        onMouseEnter: () => setHovered(true),
+        onMouseLeave: () => setHovered(false),
+        style: {
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          minHeight: 36,
+          padding: "8px 10px",
+          paddingLeft: 10 + level * 20,
+          border: "1px solid transparent",
+          background: hovered ? "var(--surface-subtle)" : "transparent",
+          cursor: "pointer",
+          borderRadius: "var(--radius-md)",
+          textAlign: "left",
+          fontFamily: "var(--font-sans)",
+          fontSize: 14,
+          fontWeight: level === 0 ? "var(--fw-semibold)" : "var(--fw-medium)",
+          color: level === 0 ? "var(--label-strong)" : "var(--label-normal)",
+          transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
         },
-        onMouseLeave: (e) => {
-          e.currentTarget.style.background = "transparent";
-        },
-        style: { width: "100%", display: "flex", alignItems: "center", gap: 7, padding: "7px 8px", paddingLeft: 8 + level * 18, border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--label-normal)" },
         children: [
           has ? /* @__PURE__ */ jsx44("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ jsx44("path", { d: "m9 18 6-6-6-6" }) }) : /* @__PURE__ */ jsx44("span", { style: { width: 14, flexShrink: 0 } }),
           node.icon,
@@ -1928,25 +1969,61 @@ function TreeNode({ node, level, expandedSet, toggle, onSelect }) {
         ]
       }
     ),
-    has && open && node.children.map((c, i) => /* @__PURE__ */ jsx44(TreeNode, { node: c, level: level + 1, expandedSet, toggle, onSelect }, i))
+    has && open && node.children.map((c, i) => /* @__PURE__ */ jsx44(
+      TreeNode,
+      {
+        node: c,
+        level: level + 1,
+        expandedSet,
+        previewSet,
+        setPreviewKey,
+        toggle,
+        onSelect,
+        openOnHover
+      },
+      i
+    ))
   ] });
 }
-function Tree({ nodes = [], defaultExpanded = [], onSelect, style, ...rest }) {
+function Tree({ nodes = [], defaultExpanded = [], onSelect, openOnHover = false, style, ...rest }) {
   const [expanded, setExpanded] = React45.useState(() => new Set(defaultExpanded));
+  const [preview, setPreview] = React45.useState(() => /* @__PURE__ */ new Set());
   const toggle = (k) => setExpanded((prev) => {
     const n = new Set(prev);
     if (n.has(k)) n.delete(k);
     else n.add(k);
     return n;
   });
-  return /* @__PURE__ */ jsx44("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx44(TreeNode, { node: n, level: 0, expandedSet: expanded, toggle, onSelect }, i)) });
+  const setPreviewKey = (key, active) => setPreview((prev) => {
+    const next = new Set(prev);
+    if (active) next.add(key);
+    else next.delete(key);
+    return next;
+  });
+  return /* @__PURE__ */ jsx44("div", { style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx44(
+    TreeNode,
+    {
+      node: n,
+      level: 0,
+      expandedSet: expanded,
+      previewSet: preview,
+      setPreviewKey,
+      toggle,
+      onSelect,
+      openOnHover
+    },
+    i
+  )) });
 }
 
 // components/editor/CanvasEditorShell.jsx
 import React46 from "react";
 import { jsx as jsx45, jsxs as jsxs34 } from "react/jsx-runtime";
 function CanvasEditorShell({ title, tools, children, panel, status, panelWidth = 280, style, ...rest }) {
-  return /* @__PURE__ */ jsxs34("div", { style: {
+  const shellClass = "lk-canvas-editor-shell";
+  const bodyClass = `lk-canvas-editor-shell__body${tools != null ? " lk-canvas-editor-shell__body--tools" : ""}`;
+  return /* @__PURE__ */ jsxs34("div", { className: shellClass, style: {
+    "--lk-editor-panel-width": `${panelWidth}px`,
     display: "flex",
     flexDirection: "column",
     height: "100%",
@@ -1958,11 +2035,28 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
     fontFamily: "var(--font-sans)",
     ...style
   }, ...rest, children: [
+    /* @__PURE__ */ jsx45("style", { children: `@media (max-width: 640px) {
+          .${shellClass} .lk-canvas-editor-shell__body--tools {
+            grid-template-columns: auto minmax(0, 1fr) !important;
+            grid-template-rows: minmax(260px, 1fr) auto !important;
+          }
+          .${shellClass} .lk-canvas-editor-shell__body:not(.lk-canvas-editor-shell__body--tools) {
+            grid-template-columns: minmax(0, 1fr) !important;
+            grid-template-rows: minmax(260px, 1fr) auto !important;
+          }
+          .${shellClass} .lk-canvas-editor-shell__panel {
+            grid-column: 1 / -1 !important;
+            width: auto !important;
+            max-height: 180px !important;
+            border-left: 0 !important;
+            border-top: 1px solid var(--bw-band) !important;
+          }
+        }` }),
     title != null && /* @__PURE__ */ jsx45("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--bw-band)", fontSize: 13, fontWeight: 700, color: "var(--label-strong)" }, children: title }),
-    /* @__PURE__ */ jsxs34("div", { style: { display: "flex", flex: 1, minHeight: 0 }, children: [
+    /* @__PURE__ */ jsxs34("div", { className: bodyClass, style: { display: "grid", gridTemplateColumns: `${tools != null ? "auto " : ""}minmax(0, 1fr)${panel != null ? " var(--lk-editor-panel-width)" : ""}`, flex: 1, minHeight: 0 }, children: [
       tools != null && /* @__PURE__ */ jsx45("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--bw-band)", background: "var(--surface-subtle)" }, children: tools }),
-      /* @__PURE__ */ jsx45("div", { style: { flex: 1, minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
-      panel != null && /* @__PURE__ */ jsx45("div", { style: { width: panelWidth, flexShrink: 0, borderLeft: "1px solid var(--bw-band)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
+      /* @__PURE__ */ jsx45("div", { style: { minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
+      panel != null && /* @__PURE__ */ jsx45("div", { className: "lk-canvas-editor-shell__panel", style: { width: panelWidth, borderLeft: "1px solid var(--bw-band)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
     ] }),
     status != null && /* @__PURE__ */ jsx45("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "6px 14px", borderTop: "1px solid var(--bw-band)", fontSize: 12, color: "var(--label-alternative)", background: "var(--surface-subtle)" }, children: status })
   ] });
@@ -4342,7 +4436,11 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
         zIndex: 50,
         display: "flex",
         alignItems: "center",
-        gap: 20,
+        gap: "clamp(8px, 2vw, 20px)",
+        width: "100%",
+        maxWidth: "100%",
+        minWidth: 0,
+        overflow: "hidden",
         height,
         paddingInline: "clamp(16px, 4vw, 32px)",
         boxSizing: "border-box",
@@ -4357,7 +4455,7 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
       ...rest,
       children: [
         brand != null && /* @__PURE__ */ jsx103("div", { style: { display: "flex", alignItems: "center", flexShrink: 0 }, children: brand }),
-        children != null ? /* @__PURE__ */ jsx103(TopBarToneContext.Provider, { value: tone, children: /* @__PURE__ */ jsx103("nav", { style: { display: "flex", alignItems: "center", alignSelf: "stretch", gap: 4, flex: 1, minWidth: 0, justifyContent: navAlign === "center" ? "center" : "flex-start" }, children }) }) : /* @__PURE__ */ jsx103("div", { style: { flex: 1 } }),
+        children != null ? /* @__PURE__ */ jsx103(TopBarToneContext.Provider, { value: tone, children: /* @__PURE__ */ jsx103("nav", { style: { display: "flex", alignItems: "center", alignSelf: "stretch", gap: 4, flex: "1 1 auto", minWidth: 0, overflowX: "auto", overflowY: "hidden", scrollbarWidth: "none", WebkitOverflowScrolling: "touch", justifyContent: navAlign === "center" ? "safe center" : "flex-start" }, children }) }) : /* @__PURE__ */ jsx103("div", { style: { flex: 1 } }),
         actions != null && /* @__PURE__ */ jsx103("div", { style: { display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: actions })
       ]
     }
@@ -6140,13 +6238,46 @@ import { jsx as jsx132, jsxs as jsxs95 } from "react/jsx-runtime";
 var CT = { signal: "var(--lk-accent-ink)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)", navy: "var(--bw-ink)" };
 function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
   const c = CT[tone] || CT.signal;
-  return /* @__PURE__ */ jsxs95("div", { style: { display: "flex", gap: 14, padding: "16px 18px", background: `color-mix(in srgb, ${c} 8%, var(--surface-card))`, borderRadius: "var(--radius-lg)", borderLeft: `3px solid ${c}`, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    icon && /* @__PURE__ */ jsx132("span", { style: { color: c, flexShrink: 0, marginTop: 1 }, children: icon }),
-    /* @__PURE__ */ jsxs95("div", { style: { flex: 1, minWidth: 0 }, children: [
-      title != null && /* @__PURE__ */ jsx132("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
-      children != null && /* @__PURE__ */ jsx132("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
-    ] })
-  ] });
+  return /* @__PURE__ */ jsxs95(
+    "div",
+    {
+      style: {
+        display: "flex",
+        gap: 14,
+        padding: "16px 18px",
+        background: `color-mix(in srgb, ${c} 7%, var(--surface-card))`,
+        border: `1px solid color-mix(in srgb, ${c} 32%, var(--border-subtle))`,
+        borderRadius: "var(--radius-lg)",
+        boxShadow: `inset 0 1px 0 color-mix(in srgb, ${c} 12%, transparent)`,
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
+      ...rest,
+      children: [
+        icon && /* @__PURE__ */ jsx132(
+          "span",
+          {
+            style: {
+              width: 28,
+              height: 24,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: c,
+              lineHeight: 0,
+              flexShrink: 0,
+              marginTop: 1
+            },
+            children: icon
+          }
+        ),
+        /* @__PURE__ */ jsxs95("div", { style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ jsx132("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ jsx132("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
+        ] })
+      ]
+    }
+  );
 }
 
 // components/status/CircularProgress.jsx

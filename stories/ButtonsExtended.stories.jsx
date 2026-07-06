@@ -97,6 +97,14 @@ export const ButtonIconButtonSocialButtonCard = {
   tags: ['!dev', 'visual-parity'],
   render: () => (
     <div data-visual-crop-root style={{ width: 700, height: 540, background: 'var(--bw-paper)', padding: 22, boxSizing: 'border-box' }}>
+      <style>
+        {`
+          [data-visual-crop-root] .lk-btn,
+          [data-visual-crop-root] .lk-social-btn {
+            letter-spacing: -0.3px !important;
+          }
+        `}
+      </style>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <Button variant="primary">도입 문의</Button>

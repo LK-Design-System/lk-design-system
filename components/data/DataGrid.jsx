@@ -11,6 +11,26 @@ function sortRows(rows, key, dir) {
   return dir === 'desc' ? s.reverse() : s;
 }
 
+function checkboxStyle(checked) {
+  return {
+    appearance: 'none',
+    WebkitAppearance: 'none',
+    width: 16,
+    height: 16,
+    margin: 0,
+    borderRadius: 4,
+    border: `1px solid ${checked ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`,
+    backgroundColor: checked ? 'var(--lk-accent-ink)' : 'var(--surface-card)',
+    backgroundImage: checked
+      ? 'url("data:image/svg+xml,%3Csvg width=\'16\' height=\'16\' viewBox=\'0 0 16 16\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M4 8.2L6.7 10.8L12 5.2\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E")'
+      : 'none',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    verticalAlign: 'middle',
+  };
+}
+
 /**
  * LK ROBOTICS — DataGrid
  * A Table with click-to-sort headers and optional row selection. `columns`
@@ -32,7 +52,7 @@ export function DataGrid({ columns = [], rows = [], selectable = false, onSelect
       <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-sans)' }}>
         <thead>
           <tr>
-            {selectable && <th style={{ padding: pad, borderBottom: '1px solid var(--bw-border)', width: 44 }}><input type="checkbox" checked={allOn} onChange={toggleAll} aria-label="select all" /></th>}
+            {selectable && <th style={{ padding: pad, borderBottom: '1px solid var(--bw-border)', width: 44 }}><input type="checkbox" checked={allOn} onChange={toggleAll} aria-label="select all" style={checkboxStyle(allOn)} /></th>}
             {columns.map((c) => (
               <th key={c.key} onClick={() => toggleSort(c)} style={{ textAlign: c.align || 'left', padding: pad, borderBottom: '1px solid var(--bw-border)', fontSize: 12, fontWeight: 'var(--fw-bold)', letterSpacing: '0.4px', textTransform: 'uppercase', color: 'var(--label-alternative)', cursor: c.sortable ? 'pointer' : 'default', whiteSpace: 'nowrap', userSelect: 'none' }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
@@ -46,7 +66,7 @@ export function DataGrid({ columns = [], rows = [], selectable = false, onSelect
         <tbody>
           {sorted.map((r, ri) => (
             <tr key={ri} style={{ background: sel.has(ri) ? 'var(--lk-accent-tint)' : 'transparent' }}>
-              {selectable && <td style={{ padding: pad, borderBottom: '1px solid var(--bw-border)' }}><input type="checkbox" checked={sel.has(ri)} onChange={() => toggleRow(ri)} aria-label={`select row ${ri + 1}`} /></td>}
+              {selectable && <td style={{ padding: pad, borderBottom: '1px solid var(--bw-border)' }}><input type="checkbox" checked={sel.has(ri)} onChange={() => toggleRow(ri)} aria-label={`select row ${ri + 1}`} style={checkboxStyle(sel.has(ri))} /></td>}
               {columns.map((c) => <td key={c.key} style={{ textAlign: c.align || 'left', padding: pad, borderBottom: '1px solid var(--bw-border)', fontSize: 14.5, color: 'var(--label-neutral)', whiteSpace: 'nowrap' }}>{typeof c.render === 'function' ? c.render(r) : r[c.key]}</td>)}
             </tr>
           ))}

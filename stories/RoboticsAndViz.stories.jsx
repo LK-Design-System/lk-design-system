@@ -48,7 +48,7 @@ const topicNodes = [
 export const RoboticsStatus = {
   name: '로보틱스 상태',
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1040 }}>
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <section style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' }}>
         <ConnectionBadge status="online" />
         <ConnectionBadge status="weak" />
@@ -69,7 +69,7 @@ export const RoboticsStatus = {
         />
       </section>
 
-      <section style={{ display: 'grid', gridTemplateColumns: '260px minmax(320px, 1fr)', gap: 'var(--space-5)', alignItems: 'start' }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-5)', alignItems: 'start', minWidth: 0 }}>
         <Joystick label="수동 조작" />
         <TopicTree nodes={topicNodes} />
       </section>
@@ -206,39 +206,60 @@ export const TopicTreeCard = {
 export const ViewerAndTelemetry = {
   name: '뷰어와 텔레메트리',
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1040 }}>
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
-        <TelemetryGauge value={72} unit="%" label="배터리" thresholds={{ low: 20, high: 50 }} />
-        <VideoStreamTile label="RGB" status="live">
-          <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: 'rgba(255,255,255,0.72)', background: 'linear-gradient(135deg, #0E1329, #273A5E)' }}>
-            live stream
-          </div>
+    <main style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', alignItems: 'center', minWidth: 0 }}>
+        <TelemetryGauge value={72} unit="%" label="배터리" size={132} thresholds={{ low: 20, high: 50 }} />
+        <VideoStreamTile label="현장 녹화 · AMR-07" status="idle">
+          <FeedPlaceholder>RECORDED · 1280x720</FeedPlaceholder>
+          <PlayerBar progress={0.58} current="12:04" total="42:30" />
         </VideoStreamTile>
       </section>
 
-      <Map2DCanvas style={{ height: 320 }}>
-        <svg width="360" height="240" viewBox="-180 -120 360 240" aria-label="map overlay">
-          <rect x="-150" y="-90" width="300" height="180" rx="12" fill="rgba(47,111,174,0.14)" stroke="var(--lk-accent-ink)" />
-          <path d="M-110 40 C-20 -40 60 70 120 -30" fill="none" stroke="var(--bw-green)" strokeWidth="6" strokeLinecap="round" />
-          <circle cx="120" cy="-30" r="10" fill="var(--bw-red)" />
-        </svg>
-      </Map2DCanvas>
-
-      <Scene3DFrame
-        title="3D VIEW"
-        badges={<StatusBadge tone="online">live</StatusBadge>}
-        toolbar={
-          <ViewerToolbar>
-            <ViewerToolbarButton label="줌" active><Icon name="search" size={16} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="레이어"><Icon name="layers" size={16} /></ViewerToolbarButton>
-          </ViewerToolbar>
-        }
-        style={{ height: 300 }}
-      >
-        <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: 'rgba(255,255,255,0.52)', background: 'linear-gradient(180deg, #101828, #0E1329)' }}>
-          3D canvas slot
+      <section style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>
+        <div>
+          <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-strong)' }}>영상 스트림 상태</h3>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--label-alternative)' }}>원본 VideoStreamTile의 라이브, 로딩, 연결 끊김 상태와 화면 비율 변형을 함께 확인합니다.</p>
         </div>
-      </Scene3DFrame>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 'var(--space-3)', minWidth: 0 }}>
+          <VideoStreamTile label="RGB" status="live"><FeedPlaceholder>RTSP · 1280x720</FeedPlaceholder></VideoStreamTile>
+          <VideoStreamTile label="IR" status="loading"><FeedPlaceholder /></VideoStreamTile>
+          <VideoStreamTile label="EO-1" status="disconnected"><FeedPlaceholder /></VideoStreamTile>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 'var(--space-3)', minWidth: 0 }}>
+          <VideoStreamTile label="THERMAL" status="live" aspectRatio="4 / 3"><FeedPlaceholder>4:3</FeedPlaceholder></VideoStreamTile>
+          <VideoStreamTile label="PANO" status="live" aspectRatio="21 / 9"><FeedPlaceholder>21:9 · WIDE</FeedPlaceholder></VideoStreamTile>
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--space-4)', minWidth: 0 }}>
+        <Map2DCanvas style={{ height: 260 }}>
+          <div style={{ transform: 'translate(-180px, -120px)' }}>
+            <svg width="360" height="240" viewBox="-180 -120 360 240" aria-label="map overlay">
+              <rect x="-150" y="-90" width="300" height="180" rx="12" fill="rgba(47,111,174,0.14)" stroke="var(--lk-accent-ink)" />
+              <path d="M-110 40 C-20 -40 60 70 120 -30" fill="none" stroke="var(--bw-green)" strokeWidth="6" strokeLinecap="round" />
+              <circle cx="120" cy="-30" r="10" fill="var(--bw-red)" />
+            </svg>
+          </div>
+        </Map2DCanvas>
+
+        <Scene3DFrame
+          title="3D VIEW"
+          badges={<StatusBadge tone="online">live</StatusBadge>}
+          toolbar={
+            <ViewerToolbar orientation="horizontal">
+              <ViewerToolbarButton label="확대"><Icon name="plus" size={16} /></ViewerToolbarButton>
+              <ViewerToolbarButton label="축소"><Icon name="minus" size={16} /></ViewerToolbarButton>
+              <ViewerToolbarButton label="홈"><Icon name="home" size={16} /></ViewerToolbarButton>
+              <ViewerToolbarButton label="레이어" active><Icon name="filter" size={16} /></ViewerToolbarButton>
+            </ViewerToolbar>
+          }
+          style={{ height: 260 }}
+        >
+          <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: 'rgba(255,255,255,0.52)', background: 'linear-gradient(180deg, #101828, #0E1329)' }}>
+            3D canvas slot
+          </div>
+        </Scene3DFrame>
+      </section>
     </main>
   ),
 };
@@ -381,17 +402,64 @@ export const EditorShell = {
         />
       }
       panel={
-        <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
-          <strong>속성</strong>
-          <span style={{ color: 'var(--label-neutral)' }}>웨이포인트 12개</span>
-          <Badge tone="navy">draft</Badge>
+        <div style={{ display: 'grid', gap: 14, padding: 16, boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+            <div style={{ display: 'grid', gap: 4, minWidth: 0 }}>
+              <strong style={{ fontSize: 13, color: 'var(--label-strong)' }}>속성</strong>
+              <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>미션 경로</span>
+            </div>
+            <Badge tone="navy" style={{ flexShrink: 0 }}>draft</Badge>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+            {[
+              ['웨이포인트', '12'],
+              ['예상 거리', '84m'],
+            ].map(([label, value]) => (
+              <div key={label} style={{ padding: '10px 11px', border: '1px solid var(--bw-band)', borderRadius: 'var(--radius-md)', background: 'var(--surface-subtle)' }}>
+                <div style={{ fontSize: 11, color: 'var(--label-assistive)', marginBottom: 4 }}>{label}</div>
+                <div style={{ fontSize: 18, lineHeight: 1.1, fontWeight: 800, color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'grid', gap: 0, borderTop: '1px solid var(--bw-band)' }}>
+            {[
+              ['시작 지점', 'Dock A'],
+              ['경유 구역', 'Zone 3'],
+              ['검증 상태', '경로 검증 중'],
+            ].map(([label, value]) => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '9px 0', borderBottom: '1px solid var(--bw-band)', fontSize: 12 }}>
+                <span style={{ color: 'var(--label-alternative)' }}>{label}</span>
+                <strong style={{ color: 'var(--label-strong)', fontWeight: 700, textAlign: 'right' }}>{value}</strong>
+              </div>
+            ))}
+          </div>
         </div>
       }
       status={<HistoryToolbar canUndo canRedo count={8} onReset={() => {}} />}
-      style={{ minHeight: 420 }}
+      style={{ height: 480 }}
     >
-      <div style={{ display: 'grid', placeItems: 'center', height: '100%', color: 'var(--label-alternative)' }}>
-        캔버스 영역
+      <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: 'var(--surface-sunken)' }}>
+        <svg width="100%" height="100%" viewBox="0 0 640 300" aria-label="mission route canvas" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="editor-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+              <path d="M 24 0 L 0 0 0 24" fill="none" stroke="var(--line-neutral)" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="640" height="300" fill="url(#editor-grid)" />
+          <rect x="108" y="58" width="168" height="78" rx="10" fill="var(--surface-raised)" stroke="var(--border-subtle)" />
+          <rect x="362" y="72" width="156" height="64" rx="10" fill="var(--surface-raised)" stroke="var(--border-subtle)" />
+          <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="rgba(0,113,188,0.22)" strokeWidth="24" strokeLinecap="round" />
+          <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--lk-accent)" strokeWidth="6" strokeLinecap="round" strokeDasharray="12 12" />
+          <circle cx="132" cy="220" r="11" fill="var(--bw-green)" stroke="var(--bw-white)" strokeWidth="4" />
+          <circle cx="344" cy="166" r="11" fill="var(--bw-amber)" stroke="var(--bw-white)" strokeWidth="4" />
+          <circle cx="502" cy="88" r="11" fill="var(--lk-accent)" stroke="var(--bw-white)" strokeWidth="4" />
+        </svg>
+        <div style={{ position: 'absolute', left: 16, bottom: 16, display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--radius-pill)', background: 'var(--surface-raised)', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-sm)', fontSize: 12, fontWeight: 700 }}>
+          <Badge dot tone="green" />
+          경로 검증 중
+        </div>
       </div>
     </CanvasEditorShell>
   ),

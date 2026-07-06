@@ -31,8 +31,8 @@ const SearchIcon = (
 export const TopBarDefault = {
   name: '기본 TopBar',
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-7)', width: 'min(880px, 100%)' }}>
-      <div data-theme="light" className="theme-light" style={{ position: 'relative', zIndex: 2, borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>
+    <main style={{ display: 'grid', gap: 'var(--space-7)', width: 'min(880px, 100%)', minWidth: 0 }}>
+      <div data-theme="light" className="theme-light" style={{ position: 'relative', zIndex: 2, width: '100%', minWidth: 0, overflow: 'hidden', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>
         <TopBar
           navAlign="center"
           brand={<Lockup variant="inline" tone="ink" height={22} />}
@@ -46,7 +46,7 @@ export const TopBarDefault = {
         </TopBar>
       </div>
 
-      <div style={{ position: 'relative', zIndex: 1, borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>
+      <div style={{ position: 'relative', zIndex: 1, width: '100%', minWidth: 0, overflow: 'hidden', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>
         <TopBar
           dark
           navAlign="center"

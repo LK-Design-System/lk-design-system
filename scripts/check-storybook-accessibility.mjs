@@ -69,6 +69,59 @@ function implementationStories(entries) {
     .sort((a, b) => `${a.title} ${a.name}`.localeCompare(`${b.title} ${b.name}`, 'ko'));
 }
 
+async function waitForStoryReady(page, storyId) {
+  try {
+    await page.waitForLoadState('domcontentloaded', { timeout: 30000 }).catch(() => {});
+    await page.waitForSelector('#storybook-root, #root', { state: 'attached', timeout: 30000 });
+    await page.waitForFunction(
+      (expectedId) => {
+        const root = document.querySelector('#storybook-root') || document.querySelector('#root');
+        if (!root) return false;
+
+        const text = document.body?.innerText || '';
+        if (text.includes('Not found') || text.includes('No Preview') || text.includes('Cannot load story')) return false;
+
+        const href = new URL(window.location.href);
+        if (href.searchParams.get('id') !== expectedId) return false;
+
+        const rootRect = root.getBoundingClientRect();
+        return rootRect.width > 0 && rootRect.height > 0 && root.children.length > 0;
+      },
+      storyId,
+      { timeout: 30000 }
+    );
+  } catch (error) {
+    const diagnostics = await page
+      .evaluate(() => ({
+        readyState: document.readyState,
+        rootExists: Boolean(document.querySelector('#storybook-root') || document.querySelector('#root')),
+        bodyText: document.body?.innerText?.slice(0, 240) || '',
+      }))
+      .catch(() => null);
+    throw new Error(
+      `${storyId}: Storybook story did not become render-ready at ${page.url()}: ${error.message}${
+        diagnostics ? ` Diagnostics: ${JSON.stringify(diagnostics)}` : ''
+      }`
+    );
+  }
+}
+
+async function gotoStoryReady(page, url, storyId) {
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      await waitForStoryReady(page, storyId);
+      return;
+    } catch (error) {
+      lastError = error;
+      await page.goto('about:blank', { waitUntil: 'domcontentloaded', timeout: 5000 }).catch(() => {});
+      await page.waitForTimeout(800);
+    }
+  }
+  throw lastError;
+}
+
 async function main() {
   const index = JSON.parse(await readFile(path.join(staticDir, 'index.json'), 'utf8'));
   const stories = implementationStories(index.entries || {});
@@ -89,8 +142,7 @@ async function main() {
     });
 
     for (const story of stories) {
-      await page.goto(storyUrl(origin, story.id), { waitUntil: 'networkidle' });
-      await page.waitForSelector('#storybook-root', { timeout: 15000 });
+      await gotoStoryReady(page, storyUrl(origin, story.id), story.id);
       const storyFailures = await page.evaluate(() => {
         const root = document.querySelector('#storybook-root') || document.body;
         const controlSelector = [

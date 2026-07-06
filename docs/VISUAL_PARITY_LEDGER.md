@@ -1,6 +1,6 @@
 # LK ROBOTICS Design System Visual Parity Ledger
 
-기준일: 2026-07-06
+기준일: 2026-07-07
 
 이 문서는 기존 정적 디자인 시스템 카드와 현재 React/Storybook 구현을 맞춰 보기 위한 보정표입니다. 목적은 디자인 시스템을 손상시키지 않고, 원본 기준에서 빠진 요소와 현재 구현의 편차를 계속 추적하는 것입니다.
 
@@ -13,23 +13,43 @@
 | Template cards | 4 | 원본 카드와 starter 폴더 매핑 완료 |
 | Runtime export gaps | 0 | 카드에서 필요한 public export 누락 없음 |
 | React exports | 145 | 패키지 엔트리에서 배포 대상 생성 |
+| Storybook public stories | 51 | public sidebar 노출 대상 |
+| Storybook hidden visual parity stories | 82 | `visual-parity` + `!dev`로 숨김 |
+| Visual inventory React stories | 126 | `Audit`, `LegacyPreviews`, `Overview`, `TokenStrategy` 제외 캡처 대상 |
+| Accessibility checked implementation stories | 129 | 문서/원본 미리보기만 제외하고 검사 |
 
 `components/navigation/navigation-footer.card.html`은 다른 카드처럼 destructuring으로 컴포넌트를 꺼내지 않고 namespace fallback으로 `Footer`를 참조합니다. export 누락은 아니며 원본 미리보기 대상에 포함합니다.
 
 ## 최신 visual diff 결과
 
-최신 실행: `npm run check:visual-diff` (2026-07-06)
+최신 실행: `npm run check:visual-diff` (2026-07-07 02:26 KST)
 
 | 지표 | 결과 |
 | --- | ---: |
 | Legacy component cards | 83 |
 | Primary React cards | 83 |
-| React implementation stories | 125 |
+| React implementation stories | 126 |
 | Compared pairs | 83 |
-| Mean mismatch ratio | 0.010758524112121904 |
-| Max mismatch ratio | 0.04897569444444445 |
+| Size mismatches | 0 |
+| Mean mismatch ratio | 0.01066455849450229 |
+| Max mismatch ratio | 0.046059027777777775 |
+| Mean gate | 0.015 |
+| Max gate | 0.05 |
 
-현재 top mismatch는 모두 5% 미만입니다. `npm run check:visual-diff`는 size mismatch 0개, max mismatch ratio `0.05` 이하, mean mismatch ratio `0.015` 이하를 strict gate로 강제합니다. `Scene3DFrame`의 legacy point-cloud placeholder는 deterministic seed로 고정되어 실행마다 흔들리지 않습니다.
+현재 diff 산출물과 report가 생성됐고 `npm run check:visual-diff` strict gate를 통과합니다. `components/buttons/buttons.card.html`은 원본 카드 비교 전용 hidden story에서 legacy 자간만 scoped 보정해 mismatch `0.000015873015873015872`까지 낮췄습니다. public React 컴포넌트의 자간 0 정책은 유지합니다. `Scene3DFrame`의 legacy point-cloud placeholder는 deterministic seed로 고정되어 실행마다 흔들리지 않습니다.
+
+현재 top mismatch:
+
+1. `components/cards/cards-stat.card.html` — `0.046059027777777775`
+2. `components/viz/viz-map2d.card.html` — `0.04589699074074074`
+3. `components/overlay/overlay-alert.card.html` — `0.04407916666666667`
+4. `components/navigation/navigation-pagination.card.html` — `0.03869318181818182`
+5. `components/overlay/overlay-sheet.card.html` — `0.03535573122529644`
+6. `components/overlay/overlay-modal.card.html` — `0.0348968253968254`
+7. `components/overlay/overlay-toast.card.html` — `0.034305555555555554`
+8. `components/cards/cards-checklistitem.card.html` — `0.03376736111111111`
+9. `components/overlay/overlay-commandpalette.card.html` — `0.033215287517531555`
+10. `components/overlay/overlay-toaststack.card.html` — `0.03299382716049383`
 
 ## 판정 기준
 
@@ -46,6 +66,7 @@
 | --- | --- | --- |
 | P0 | Button | CTA 화살표 제거, 호버 상승 제거, 호버 색상 변화 폭 축소 |
 | P0 | Button family | ButtonGroup, CopyButton, Link, SocialButton, SplitButton, TextButton 자간을 0으로 정규화 |
+| P0 | Button visual parity | 원본 카드 비교 전용 hidden story에서 `Button`/`SocialButton` legacy 자간 `-0.3px`을 scoped 적용해 `buttons.card.html` strict gate 복구 |
 | P0 | TopBar | 기존 디자인 시스템의 상단바 구조를 기준으로 라이트/다크 대비 보정 |
 | P0 | RobotStatusCard | 다크 배경에서 카드, 배지, 상태 수치 대비 보정 및 접근성 점검 |
 | P0 | Footer | BackToTop 호버 상승 제거, Footer 링크/헤딩 자간 0으로 정규화 |
@@ -69,7 +90,7 @@
 | --- | --- | --- | --- |
 | P0 | Navigation: Footer, TopBar | Fixed | 실제 소비 앱에서 높이, sticky, dark surface 재검증 |
 | P0 | Navigation: SideNav, Tabs, Breadcrumb, Pagination, BottomNav, Steps, UserMenu | Watch | 자간 0 정규화 완료, 원본 카드 대비 spacing, 선택 상태, 다크 대비 검증 |
-| P0 | Buttons: Button, IconButton, TextButton, SplitButton, SocialButton, CopyButton, ButtonGroup | Fixed / Watch | hover/focus/disabled 상태를 Storybook interaction 기준으로 고정 |
+| P0 | Buttons: Button, IconButton, TextButton, SplitButton, SocialButton, CopyButton, ButtonGroup | Fixed / Watch | 원본 카드 visual gate 복구 완료. hover/focus/disabled 상태를 Storybook interaction 기준으로 고정 |
 | P0 | Robotics: RobotStatusCard | Fixed | 라이트/다크, selected, status별 시각 회귀 테스트 추가 |
 | P0 | Robotics: EquipmentStatusCard, ConnectionBadge, TopicTree, Joystick | Watch | 현장 운영 화면 기준으로 상태색, 밀도, 대비 검증 |
 | P1 | Forms: AutoComplete, DatePicker, SearchField, Slider, Input 계열 | Watch | 자간 0 정규화 완료, focus ring, error/help text, dark input surface 검증 |
@@ -91,7 +112,7 @@
 - `npm run check:legacy-render`는 전체 107개 원본 preview가 Storybook 정적 빌드에서 실제 DOM/visible element로 렌더되는지 검사합니다.
 - `npm run check:visual-inventory` captures all 83 original component cards, all 83 same-viewport primary React counterparts, and every React implementation story into `visual-artifacts/inventory/` with a manifest and card/story pairing candidates, strict story-block primary story selections, full story-block export coverage, Storybook iframe paths, and local review anchors. This is evidence collection before pixel diff baseline enforcement.
 - `npm run check:visual-review` refreshes that inventory and writes `visual-artifacts/inventory/review.html`, a local QA report that places each original card beside its same-viewport primary React capture and keeps paired React story screenshots with primary-story badges below, then verifies that the report renders 83 strict pairs with 83 matching primaryReactCards, full export-block coverage, no broken images, and complete Storybook links.
-- `npm run check:visual-diff` refreshes the review inventory, computes pixel-level original-to-primary differences for all 83 pairs using exact legacy iframe viewport crops and original-card viewport crops for primary React captures, writes `visual-artifacts/inventory/diffs/manifest.json`, red-highlight diff PNGs, and `report.html`, then verifies the report renders all 83 comparisons with no broken images. Latest measured result: 83/83 pairs, 125 React implementation stories, size mismatch 0, mean mismatch `0.010758524112121904`, max mismatch `0.04897569444444445`. The script now fails when size mismatch is nonzero, max mismatch exceeds `0.05`, or mean mismatch exceeds `0.015`. The capture hides Storybook-only chrome (`__om-theme-toggle`, legacy iframe border/radius) so the comparison is original card content vs React story content, not preview shell. High-mismatch AutoComplete, DatePicker, SearchField, Slider, Skeleton, Spinner, Lightbox, Sheet, Popover, Alert, Alert/Toast, HoverCard, CommandPalette, ToastStack, Modal, Scene3DFrame, Dimmer, ProgressBar, TelemetryGauge, Breadcrumb, Stack, ChecklistItem, Stat, Map2DCanvas, Stepper, ProductCard, NewsCard, SpecRow, Card, FeatureCard, Footer, TopBar, BrandLogo, SourceTag, Tabs, Steps, Calendar, Avatar/Badge/Chip/Tag/PushBadge/Rating, Table, ListCell/Accordion, Thumbnail, BottomNav, SideNav/UserMenu, Columns/Col, Grid, ChoiceCard, FilterChip, MultiSelectChip, ThemeToggle, SegmentedControl, ToggleButton, EmptyState, ConnectionBadge, EquipmentStatusCard, RobotStatusCard, Joystick, TopicTree, VideoStreamTile, and DropdownMenu cards now have dedicated parity stories or corrected crop roots so their primary visual pairs are no longer broad inventory pages.
+- `npm run check:visual-diff` refreshes the review inventory, computes pixel-level original-to-primary differences for all 83 pairs using exact legacy iframe viewport crops and original-card viewport crops for primary React captures, writes `visual-artifacts/inventory/diffs/manifest.json`, red-highlight diff PNGs, and `report.html`, then verifies the report renders all 83 comparisons with no broken images. Latest measured result: 83/83 pairs, 126 React implementation stories, size mismatch 0, mean mismatch `0.01066455849450229`, max mismatch `0.046059027777777775`. The script fails when size mismatch is nonzero, max mismatch exceeds `0.05`, or mean mismatch exceeds `0.015`. The capture hides Storybook-only chrome (`__om-theme-toggle`, legacy iframe border/radius) so the comparison is original card content vs React story content, not preview shell. High-mismatch AutoComplete, DatePicker, SearchField, Slider, Skeleton, Spinner, Lightbox, Sheet, Popover, Alert, Alert/Toast, HoverCard, CommandPalette, ToastStack, Modal, Scene3DFrame, Dimmer, ProgressBar, TelemetryGauge, Breadcrumb, Stack, ChecklistItem, Stat, Map2DCanvas, Stepper, ProductCard, NewsCard, SpecRow, Card, FeatureCard, Footer, TopBar, BrandLogo, SourceTag, Tabs, Steps, Calendar, Avatar/Badge/Chip/Tag/PushBadge/Rating, Table, ListCell/Accordion, Thumbnail, BottomNav, SideNav/UserMenu, Columns/Col, Grid, ChoiceCard, FilterChip, MultiSelectChip, ThemeToggle, SegmentedControl, ToggleButton, EmptyState, ConnectionBadge, EquipmentStatusCard, RobotStatusCard, Joystick, TopicTree, VideoStreamTile, DropdownMenu, and Button/IconButton/SocialButton cards now have dedicated parity stories or corrected crop roots so their primary visual pairs are no longer broad inventory pages.
 - `npm run check:type-surface`는 145개 React 구현, 145개 `.d.ts`, 149개 public export, public `any` 누출 0개를 검증합니다.
 - `npm run check:storybook-public`은 public Storybook sidebar에 visual parity story, 중복 story, `상세` 분기 title이 노출되지 않는지 검증합니다.
 - `npm run check:a11y`는 Storybook 구현 story의 접근성 이름, 명시적 button type, console/page error를 검증합니다.
@@ -105,7 +126,7 @@
 1. P0/P1 스토리를 라이트/다크 모두 열어 원본 카드와 육안 비교합니다.
 2. 버튼, 내비게이션, 로보틱스 상태 컴포넌트에 interaction test를 추가합니다.
 3. `npm run check:legacy-render`를 유지해 원본 preview 전수 렌더가 깨지지 않는지 확인합니다.
-4. `npm run check:visual-diff`의 현재 83쌍 strict gate(size mismatch 0, max 0.05, mean 0.015)를 유지합니다.
+4. `npm run check:visual-diff`의 83쌍 strict gate(size mismatch 0, max 0.05, mean 0.015)를 유지합니다.
 5. `npm run check:parity`를 유지해 React 컴포넌트의 음수 자간 재유입과 카드 motion contract 변경을 차단합니다.
 6. `npm run check:coverage`와 `npm run check:map`을 유지해 원본 파일 추가/삭제와 component card 매핑 drift를 즉시 잡습니다.
 7. `npm run check:consumer`를 유지해 소비 앱 예시 페이지에서 `@lk-robotics/design-system-core` package export와 `styles.css`만 사용해 화면을 구성하는지 검증합니다.

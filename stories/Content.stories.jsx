@@ -41,6 +41,34 @@ const steps = [
   { id: 'dispatch', label: '미션 배포', detail: 'AMR-07 대상' },
 ];
 
+const miniMapPreviewSrc = `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 236">
+    <defs>
+      <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+        <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#d1dbe5" stroke-width="1"/>
+      </pattern>
+      <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.12"/>
+      </filter>
+    </defs>
+    <rect width="420" height="236" fill="#eef3f7"/>
+    <rect width="420" height="236" fill="url(#grid)" opacity="0.72"/>
+    <rect x="32" y="30" width="150" height="70" rx="8" fill="#ffffff" stroke="#aebdca" stroke-width="1.4"/>
+    <rect x="236" y="38" width="120" height="50" rx="8" fill="#ffffff" stroke="#b8c5d1" stroke-width="1.3" opacity="0.92"/>
+    <rect x="74" y="142" width="218" height="58" rx="8" fill="#ffffff" stroke="#b8c5d1" stroke-width="1.3" opacity="0.9"/>
+    <path d="M66 174 C120 132 150 134 190 154 S274 185 342 78" fill="none" stroke="#bfd6ee" stroke-width="18" stroke-linecap="round"/>
+    <path d="M66 174 C120 132 150 134 190 154 S274 185 342 78" fill="none" stroke="#1769aa" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 10"/>
+    <circle cx="66" cy="174" r="9" fill="#1d8f5f" stroke="#ffffff" stroke-width="4" filter="url(#shadow)"/>
+    <circle cx="190" cy="154" r="7" fill="#d39b23" stroke="#ffffff" stroke-width="3" filter="url(#shadow)"/>
+    <circle cx="342" cy="78" r="9" fill="#1769aa" stroke="#ffffff" stroke-width="4" filter="url(#shadow)"/>
+    <g filter="url(#shadow)">
+      <rect x="14" y="190" width="94" height="28" rx="14" fill="#ffffff" fill-opacity="0.88"/>
+      <circle cx="31" cy="204" r="4" fill="#1d8f5f"/>
+      <text x="42" y="208" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#182234">2F Patrol</text>
+    </g>
+  </svg>
+`)}`;
+
 export const TextAndDisclosure = {
   name: '텍스트와 디스클로저',
   render: () => (
@@ -108,8 +136,8 @@ export const ContentBadgeStatusBadgeCard = {
 export const ListsAndMedia = {
   name: '리스트와 미디어',
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 980 }}>
-      <section style={{ display: 'grid', gridTemplateColumns: 'minmax(260px, 1fr) minmax(260px, 1fr)', gap: 'var(--space-5)' }}>
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980, minWidth: 0 }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-5)', minWidth: 0 }}>
         <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
           <ListCell leading={<Icon name="robot" size={18} />} title="AMR-07" description="순찰 미션 진행 중" trailing={<StatusBadge tone="online">온라인</StatusBadge>} onClick={() => {}} divider />
           <ListCell leading={<Icon name="map" size={18} />} title="대덕 연구소 2F" description="지도 동기화 완료" trailing={<Kbd>⌘ K</Kbd>} onClick={() => {}} divider />
@@ -117,17 +145,15 @@ export const ListsAndMedia = {
         </div>
 
         <Thumbnail
+          src={miniMapPreviewSrc}
+          alt="대덕 연구소 2층 실시간 순찰 지도"
           ratio={16 / 9}
           overlay={<ContentBadge tone="navy">LIVE</ContentBadge>}
           overlayAlign="top-right"
-        >
-          <div style={{ display: 'grid', placeItems: 'center', width: '100%', height: '100%', color: 'var(--label-alternative)', background: 'linear-gradient(135deg, #d9e2ec, #eef3f8)' }}>
-            map preview
-          </div>
-        </Thumbnail>
+        />
       </section>
 
-      <section style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 360px) 1fr', gap: 'var(--space-5)', alignItems: 'start' }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 'var(--space-5)', alignItems: 'start', minWidth: 0 }}>
         <StepList steps={steps} editable={false} />
         <Timeline
           items={[

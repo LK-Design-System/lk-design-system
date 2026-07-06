@@ -11,6 +11,8 @@ export interface TreeProps extends React.HTMLAttributes<HTMLDivElement> {
   nodes: TreeNodeData[];
   /** 마운트 시 펼쳐진 키(id 또는 label). */
   defaultExpanded?: string[];
+  /** Opens branch children while the branch is hovered or keyboard-focused. */
+  openOnHover?: boolean;
   onSelect?: (node: TreeNodeData) => void;
 }
 
