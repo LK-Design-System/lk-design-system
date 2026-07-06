@@ -71,6 +71,7 @@ function Button({
   onMouseLeave,
   onMouseDown,
   onMouseUp,
+  type,
   ...rest
 }) {
   const [hover, setHover] = React3.useState(false);
@@ -134,6 +135,7 @@ function Button({
       className: `lk-btn lk-btn--${variant}`,
       style: composed,
       disabled: as === "button" ? disabled : void 0,
+      type: as === "button" ? type ?? "button" : void 0,
       onMouseEnter: (e) => {
         setHover(true);
         onMouseEnter && onMouseEnter(e);
@@ -296,6 +298,7 @@ function IconButton({
   disabled = false,
   onMouseEnter,
   onMouseLeave,
+  type,
   ...rest
 }) {
   const [hover, setHover] = React7.useState(false);
@@ -310,6 +313,7 @@ function IconButton({
   return /* @__PURE__ */ jsx6(
     "button",
     {
+      type: type ?? "button",
       "aria-label": label,
       className: `lk-iconbtn lk-iconbtn--${variant}`,
       disabled,
@@ -408,6 +412,7 @@ function SocialButton({
   onMouseLeave,
   onMouseDown,
   onMouseUp,
+  type,
   ...rest
 }) {
   const [hover, setHover] = React9.useState(false);
@@ -466,6 +471,7 @@ function SocialButton({
       className: `lk-social-btn lk-social-btn--${provider}`,
       style: composed,
       disabled: as === "button" ? disabled : void 0,
+      type: as === "button" ? type ?? "button" : void 0,
       "aria-label": iconOnly ? label : void 0,
       title: iconOnly ? label : void 0,
       onMouseEnter: (e) => {
@@ -538,6 +544,7 @@ function TextButton({
   style,
   onMouseEnter,
   onMouseLeave,
+  type,
   ...rest
 }) {
   const [hover, setHover] = React11.useState(false);
@@ -549,6 +556,7 @@ function TextButton({
     {
       className: "lk-textbtn",
       disabled: as === "button" ? disabled : void 0,
+      type: as === "button" ? type ?? "button" : void 0,
       onMouseEnter: (e) => {
         setHover(true);
         onMouseEnter && onMouseEnter(e);
@@ -1230,8 +1238,10 @@ function Kbd({ children, style, ...rest }) {
         fontSize: 12,
         fontWeight: "var(--fw-bold)",
         color: "var(--label-neutral)",
-        background: "var(--bw-white)",
-        border: "1px solid var(--bw-border)",
+        background: "var(--surface-raised)",
+        borderColor: "var(--border-subtle)",
+        borderStyle: "solid",
+        borderWidth: 1,
         borderBottomWidth: 2,
         borderRadius: "var(--radius-sm)",
         lineHeight: 1,
@@ -1249,6 +1259,9 @@ import { jsx as jsx28, jsxs as jsxs18 } from "react/jsx-runtime";
 function ListCell({ leading, title, description, trailing, onClick, divider = false, style, ...rest }) {
   const clickable = !!onClick;
   const [hover, setHover] = React29.useState(false);
+  const [focus, setFocus] = React29.useState(false);
+  const dividerLeft = leading != null ? 62 : 14;
+  const dividerRight = trailing != null ? 62 : 14;
   return /* @__PURE__ */ jsxs18(
     "div",
     {
@@ -1257,6 +1270,8 @@ function ListCell({ leading, title, description, trailing, onClick, divider = fa
       onClick,
       onMouseEnter: () => setHover(true),
       onMouseLeave: () => setHover(false),
+      onFocus: () => setFocus(true),
+      onBlur: () => setFocus(false),
       onKeyDown: clickable ? (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -1264,25 +1279,61 @@ function ListCell({ leading, title, description, trailing, onClick, divider = fa
         }
       } : void 0,
       style: {
+        position: "relative",
         display: "flex",
         alignItems: "center",
-        gap: 8,
-        padding: "14px 4px",
+        gap: 12,
+        minHeight: 62,
+        padding: "12px 14px",
+        boxSizing: "border-box",
         cursor: clickable ? "pointer" : "default",
-        background: clickable && hover ? "var(--fill-alt)" : "transparent",
-        borderRadius: "var(--radius-md)",
-        borderBottom: divider ? "1px solid var(--bw-border)" : "none",
-        transition: "background var(--dur-fast) var(--ease-out)",
+        background: clickable && hover ? "var(--lk-accent-tint)" : "transparent",
+        borderRadius: "var(--radius-lg)",
+        outline: focus ? "2px solid var(--focus-ring)" : "none",
+        outlineOffset: -2,
+        transition: "background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out)",
         ...style
       },
       ...rest,
       children: [
-        leading != null && /* @__PURE__ */ jsx28("div", { style: { flexShrink: 0, display: "flex", alignItems: "center", color: "var(--lk-accent-ink)" }, children: leading }),
+        leading != null && /* @__PURE__ */ jsx28(
+          "div",
+          {
+            style: {
+              width: 36,
+              height: 36,
+              flexShrink: 0,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "var(--lk-accent-ink)",
+              background: "var(--lk-accent-tint)",
+              borderRadius: "var(--radius-md)"
+            },
+            children: leading
+          }
+        ),
         /* @__PURE__ */ jsxs18("div", { style: { flex: 1, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx28("div", { style: { fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
-          description != null && /* @__PURE__ */ jsx28("div", { style: { marginTop: 2, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-alternative)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: description })
+          /* @__PURE__ */ jsx28("div", { style: { fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)", lineHeight: 1.35, letterSpacing: 0, color: "var(--label-normal)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
+          description != null && /* @__PURE__ */ jsx28("div", { style: { marginTop: 3, fontFamily: "var(--font-sans)", fontSize: 12.5, lineHeight: 1.45, color: "var(--label-alternative)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: description })
         ] }),
-        trailing != null && /* @__PURE__ */ jsx28("div", { style: { flexShrink: 0, display: "flex", alignItems: "center", gap: 8, color: "var(--label-alternative)" }, children: trailing })
+        trailing != null && /* @__PURE__ */ jsx28("div", { style: { flexShrink: 0, display: "flex", alignItems: "center", gap: 8, color: "var(--label-alternative)" }, children: trailing }),
+        divider && /* @__PURE__ */ jsx28(
+          "span",
+          {
+            "aria-hidden": "true",
+            style: {
+              position: "absolute",
+              left: dividerLeft,
+              right: dividerRight,
+              bottom: 0,
+              height: 1,
+              background: "var(--border-subtle)",
+              opacity: 0.72,
+              pointerEvents: "none"
+            }
+          }
+        )
       ]
     }
   );
@@ -2288,7 +2339,7 @@ function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
 // components/forms/AutoComplete.jsx
 import React57 from "react";
 import { jsx as jsx56, jsxs as jsxs40 } from "react/jsx-runtime";
-function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, placeholder = "\uC785\uB825\uD558\uC138\uC694", size = "md", style, ...rest }) {
+function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, placeholder = "\uC785\uB825\uD558\uC138\uC694", size = "md", style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React57.useState(defaultValue || "");
   const [open, setOpen] = React57.useState(false);
@@ -2311,6 +2362,7 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
       {
         value: val,
         placeholder,
+        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uC785\uB825"),
         onChange: (e) => {
           set(e.target.value);
           setOpen(true);
@@ -2352,6 +2404,7 @@ function Checkbox({
   onChange,
   disabled = false,
   id,
+  "aria-label": ariaLabel,
   ...rest
 }) {
   const isControlled = checked !== void 0;
@@ -2384,6 +2437,7 @@ function Checkbox({
           {
             role: "checkbox",
             "aria-checked": on,
+            "aria-label": ariaLabel ?? (typeof label === "string" ? label : "\uCCB4\uD06C\uBC15\uC2A4"),
             id,
             tabIndex: 0,
             onKeyDown: (e) => {
@@ -2659,6 +2713,7 @@ function Input({
   required = false,
   id,
   style,
+  "aria-label": ariaLabel,
   ...rest
 }) {
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, "-").toLowerCase()}` : void 0);
@@ -2687,6 +2742,7 @@ function Input({
         "input",
         {
           id: inputId,
+          "aria-label": ariaLabel ?? (!label && typeof rest.placeholder === "string" ? rest.placeholder : void 0),
           ...rest,
           onFocus: (e) => {
             setFocused(true);
@@ -2707,7 +2763,7 @@ function Input({
 // components/forms/InputGroup.jsx
 import React66 from "react";
 import { jsx as jsx65, jsxs as jsxs48 } from "react/jsx-runtime";
-function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder, size = "md", disabled = false, inputProps, style, ...rest }) {
+function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder, size = "md", disabled = false, inputProps, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React66.useState(defaultValue || "");
   const val = isControlled ? value : internal;
@@ -2725,6 +2781,7 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
         value: val,
         disabled,
         placeholder,
+        "aria-label": ariaLabel ?? inputProps?.["aria-label"] ?? (typeof placeholder === "string" ? placeholder : "\uC785\uB825"),
         onChange: (e) => set(e.target.value),
         style: { flex: 1, minWidth: 0, padding: "0 14px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--label-normal)" },
         ...inputProps
@@ -2737,7 +2794,7 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
 // components/forms/NumberField.jsx
 import React67 from "react";
 import { jsx as jsx66, jsxs as jsxs49 } from "react/jsx-runtime";
-function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = "md", disabled = false, placeholder, style, ...rest }) {
+function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = "md", disabled = false, placeholder, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React67.useState(defaultValue);
   const val = isControlled ? value : internal;
@@ -2773,6 +2830,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
         step,
         disabled,
         placeholder,
+        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uC22B\uC790 \uC785\uB825"),
         onChange: (e) => commit(e.target.value === "" ? 0 : Number(e.target.value)),
         style: { width: 92, padding: "0 12px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: "var(--label-normal)" },
         ...rest
@@ -2788,7 +2846,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
 // components/forms/PasswordInput.jsx
 import React68 from "react";
 import { jsx as jsx67, jsxs as jsxs50 } from "react/jsx-runtime";
-function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uBC00\uBC88\uD638", size = "md", disabled = false, style, ...rest }) {
+function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uBC00\uBC88\uD638", size = "md", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React68.useState(defaultValue || "");
   const [show, setShow] = React68.useState(false);
@@ -2806,6 +2864,7 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
         value: val,
         disabled,
         placeholder,
+        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uBE44\uBC00\uBC88\uD638"),
         type: show ? "text" : "password",
         onChange: (e) => set(e.target.value),
         onFocus: () => setFocus(true),
@@ -2828,7 +2887,7 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
 // components/forms/PinInput.jsx
 import React69 from "react";
 import { jsx as jsx68 } from "react/jsx-runtime";
-function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, mask = false, disabled = false, size = "md", style, ...rest }) {
+function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, mask = false, disabled = false, size = "md", style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React69.useState(defaultValue);
   const raw = (isControlled ? value : internal) || "";
@@ -2860,6 +2919,7 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
       value: raw[i] || "",
       disabled,
       inputMode: "numeric",
+      "aria-label": `${ariaLabel ?? "PIN"} ${i + 1}`,
       maxLength: 1,
       type: mask ? "password" : "text",
       onChange: (e) => onInput(i, e),
@@ -3006,7 +3066,7 @@ function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step 
 // components/forms/SearchField.jsx
 import React73 from "react";
 import { jsx as jsx72, jsxs as jsxs54 } from "react/jsx-runtime";
-function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\uAC80\uC0C9", size = "md", disabled = false, style, ...rest }) {
+function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\uAC80\uC0C9", size = "md", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React73.useState(defaultValue || "");
   const [focus, setFocus] = React73.useState(false);
@@ -3042,6 +3102,7 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
         value: val,
         disabled,
         placeholder,
+        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uAC80\uC0C9"),
         onChange: (e) => set(e.target.value),
         onFocus: () => setFocus(true),
         onBlur: () => setFocus(false),
@@ -3192,7 +3253,7 @@ input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--bw-gray-300);c
     document.head.appendChild(el);
   }, []);
 }
-function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChange, disabled = false, showValue = false, style, ...rest }) {
+function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChange, disabled = false, showValue = false, style, "aria-label": ariaLabel, ...rest }) {
   useSliderStyles();
   const isControlled = value !== void 0;
   const [internal, setInternal] = React75.useState(defaultValue);
@@ -3208,6 +3269,7 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
       {
         className: "lk-slider",
         type: "range",
+        "aria-label": ariaLabel ?? "\uAC12 \uC870\uC808",
         min,
         max,
         step,
@@ -3234,7 +3296,7 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
 // components/forms/TagInput.jsx
 import React76 from "react";
 import { jsx as jsx75, jsxs as jsxs57 } from "react/jsx-runtime";
-function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB825 \uD6C4 Enter", disabled = false, style, ...rest }) {
+function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB825 \uD6C4 Enter", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React76.useState(defaultValue);
   const tags = isControlled ? value : internal;
@@ -3260,6 +3322,7 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
         value: draft,
         disabled,
         placeholder: tags.length ? "" : placeholder,
+        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uD0DC\uADF8 \uC785\uB825"),
         onChange: (e) => setDraft(e.target.value),
         onKeyDown: (e) => {
           if (e.key === "Enter") {
@@ -4639,7 +4702,7 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
         /* @__PURE__ */ jsx107("circle", { cx: "11", cy: "11", r: "7" }),
         /* @__PURE__ */ jsx107("path", { d: "m21 21-4.3-4.3" })
       ] }),
-      /* @__PURE__ */ jsx107("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--label-normal)" } })
+      /* @__PURE__ */ jsx107("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--label-normal)" } })
     ] }),
     /* @__PURE__ */ jsx107("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ jsx107("div", { style: { padding: 28, textAlign: "center", color: "var(--label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ jsxs73(
       "button",
@@ -5344,6 +5407,7 @@ function Switch({
   size = "md",
   disabled = false,
   id,
+  "aria-label": ariaLabel,
   ...rest
 }) {
   const isControlled = checked !== void 0;
@@ -5378,6 +5442,7 @@ function Switch({
           {
             role: "switch",
             "aria-checked": on,
+            "aria-label": ariaLabel ?? (typeof label === "string" ? label : "\uC2A4\uC704\uCE58"),
             id,
             tabIndex: disabled ? -1 : 0,
             onFocus: () => setFocus(true),
@@ -5977,6 +6042,7 @@ function ToggleButton({
   size = "md",
   disabled = false,
   style,
+  "aria-label": ariaLabel,
   ...rest
 }) {
   const isControlled = pressed !== void 0;
@@ -5994,6 +6060,7 @@ function ToggleButton({
     {
       type: "button",
       "aria-pressed": on,
+      "aria-label": ariaLabel ?? (iconOnly ? "\uD1A0\uAE00" : void 0),
       disabled,
       onClick: toggle,
       style: {

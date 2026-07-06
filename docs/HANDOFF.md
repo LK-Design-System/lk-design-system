@@ -1,125 +1,115 @@
 # LK ROBOTICS Design System Handoff
 
-기준일: 2026-07-06  
-작업 레포: `C:\Users\seoul\Downloads\LK Design System`  
-원격: `https://github.com/LK-ROBOTICS/lk-design-system-core.git`  
+기준일: 2026-07-06
+작업 레포: `/home/jinhyuk2me/lk_ws/shared/lk-design-system-core`
+원격: `https://github.com/LK-ROBOTICS/lk-design-system-core.git`
 브랜치: `main`
-
-> 주의: `C:\Users\seoul\OneDrive\사진\문서\LK Design System` 경로도 존재하지만, 실제 원격 푸시 기준 레포는 `Downloads` 쪽입니다.
 
 ## 현재 상태
 
-- 문서 작성 직전 최신 구현 커밋: `d8ea937 Improve overlay visual parity captures`
-- `origin/main` 푸시 완료
-- 작업 트리에는 `.omx/`만 untracked로 남아 있으며 커밋 대상이 아닙니다.
-- PowerShell에서는 실행 정책 이슈를 피하기 위해 `npm.cmd`를 사용합니다.
+- 원본 디자인시스템 기준: `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개.
+- React/Storybook 이관 기준: package exports 145개, 원본 component card 83개 모두 React export 및 primary React story와 매핑됩니다.
+- 최신 visual diff는 83/83쌍을 전수 비교했고 평균 mismatch 1.08%, 최대 mismatch 4.90%입니다.
+- `npm run check:visual-diff`는 strict gate를 포함합니다.
+  - 이미지 크기 mismatch 0개 필수
+  - max mismatch ratio ≤ `0.05`
+  - mean mismatch ratio ≤ `0.015`
+- 산출물은 `visual-artifacts/inventory/` 아래에 생성되며 git에는 포함하지 않습니다.
 
-## 최근 완료된 작업
+## 이번 세션 완료 작업
 
-### 시각 검증 체계
+### 원본/React visual diff 리스크 제거
 
-- 원본 정적 component card 83개와 React Storybook primary story 83개를 비교하는 visual inventory / review / pixel diff 흐름을 구축했습니다.
-- `npm.cmd run check:visual-diff`는 다음 산출물을 갱신합니다.
-  - `visual-artifacts/inventory/manifest.json`
-  - `visual-artifacts/inventory/review.html`
-  - `visual-artifacts/inventory/diffs/manifest.json`
-  - `visual-artifacts/inventory/diffs/report.html`
-  - diff PNG 및 smoke screenshot
-- React primary 캡처는 원본 카드 viewport 기준 crop으로 비교하도록 개선했습니다.
-- `ToastStack`처럼 `position: fixed`를 사용하는 컴포넌트는 원본 viewport 크기로 리사이즈 후 캡처합니다.
-- card-specific parity story가 broad/open story보다 우선 선택되도록 story specificity 점수를 보정했습니다.
+- legacy preview 캡처에서 Storybook-only chrome을 제거했습니다.
+  - `#__om-theme-toggle` 숨김
+  - legacy iframe border/radius 제거
+- legacy iframe을 스크롤 후 정확한 원본 viewport 크기로 crop하여 1px/부분 캡처 오차를 제거했습니다.
+- React primary 캡처에서 `[data-visual-crop-root]`가 있으면 해당 root를 우선 캡처하도록 보정했습니다.
+- `Scene3DFrame` 원본 preview의 `Math.random()` point cloud를 deterministic seed로 고정했습니다.
+- original-to-primary diff에 strict release gate를 추가했습니다.
+- story matching은 같은 `story-block` 안에서 더 많은 mapped exports를 커버하는 story를 우선하도록 보정했습니다.
 
-### targeted parity story 추가
+### targeted parity story 추가/보강
 
-최근 추가/보정된 전용 parity story:
+원본 card HTML과 같은 viewport/배경/padding/초기 상태를 갖는 전용 Storybook story를 다수 추가했습니다. 대표 항목:
 
-- Forms/status/navigation/viz/layout/cards/selection
-  - `AutoComplete`
-  - `DatePicker`
-  - `SearchField`
-  - `Slider`
-  - `Skeleton`
-  - `Spinner`
-  - `ProgressBar`
-  - `Breadcrumb`
-  - `Scene3DFrame`
-  - `TelemetryGauge`
-  - `Map2DCanvas`
-  - `Stack`
-  - `ChecklistItem`
-  - `Stat`
-  - `Stepper`
-- Overlay
-  - `Lightbox`
-  - `Sheet`
-  - `Dimmer`
-  - `Popover`
-  - `Alert`
-  - `Alert/Toast`
-  - `HoverCard`
-  - `CommandPalette`
-  - `ToastStack`
-  - `Modal`
+- Forms: `AutoComplete`, `DatePicker`, `SearchField`, `Slider`
+- Layout: `Cluster`, `Columns/Col`, `Grid`, `Section`, `Split`
+- Navigation: `SideNav/UserMenu`, `BottomNav`, `TopBar`, `Footer`, `Tabs`, `Steps`, `Breadcrumb`, `Pagination`
+- Content: `Thumbnail`, `SourceTag`, `Tooltip/Bubble/Bookmark/Divider`, `ListCell/Accordion`
+- Cards: `ProductCard`, `NewsCard`, `SpecRow`, `Card`, `ChecklistItem`, `Stat`, `FeatureCard`
+- Buttons: `Button · IconButton · SocialButton`
+- Brand/Data/Feedback: `BrandLogo`, `Lockup/Overline`, `Calendar`, `Table`, `AvatarGroup`, `Avatar`, `Badge`, `Chip`, `Tag`, `PushBadge`, `Rating`
+- Overlay: `DropdownMenu`, `Toast`, `Lightbox`, `Sheet`, `Dimmer`, `Popover`, `Alert`, `Alert/Toast`, `HoverCard`, `CommandPalette`, `ToastStack`, `Modal`
+- Selection/Status: `ChoiceCard`, `FilterChip`, `MultiSelectChip`, `ThemeToggle`, `SegmentedControl`, `ToggleButton`, `Switch`, `Stepper`, `ProgressBar`, `EmptyState`, `Skeleton`, `Spinner`, `CircularProgress`
+- Robotics/Viz: `ConnectionBadge`, `EquipmentStatusCard`, `RobotStatusCard`, `Joystick`, `TopicTree`, `VideoStreamTile`, `Scene3DFrame`, `TelemetryGauge`, `Map2DCanvas`, `ViewerToolbar`
 
-### 문서
+### 운영 품질 마감
 
-- `docs/VISUAL_PARITY_LEDGER.md`와 `stories/VisualParityLedger.stories.jsx`에 visual diff / targeted parity 현황을 반영했습니다.
-- Storybook 문서 경로: `문서/보정표 > 현재 보정표`
+- stale Storybook 보고 문구를 제거하고, 감사/이관 매핑은 Storybook 밖의 `stories/Audit.data.jsx` 숨김 데이터로 고정했습니다.
+- `npm run check:type-surface`를 추가해 145개 React 구현과 145개 `.d.ts` 계약, 149개 public export, `any` 누출 0개를 검증합니다.
+- `npm run check:publish-policy`를 추가해 현재 `private: true` 내부 Git 소비 정책과 향후 GitHub Packages 전환 의도를 문서와 package metadata 양쪽에서 검증합니다.
+- `npm run check:consumer`를 추가해 `@lk-robotics/design-system-core` package-name import, `styles.css` export, Vite production build, 실제 운영형 조합 화면 렌더를 확인합니다.
+- `npm run check:a11y`를 추가해 Storybook 구현 story 전체의 접근성 이름, 명시적 button type, console/page error를 검사합니다.
+- `npm run check:storybook-public`을 추가해 public sidebar에 `card parity`/중복/`상세` 분기 story가 다시 노출되지 않도록 차단합니다.
+- `npm run check:ops-release`를 추가해 일반 check, audit, legacy render, visual diff를 한 번에 실행할 수 있게 했습니다.
 
-## 최근 검증 결과
+### 문서/상태 기록
+
+- `docs/VISUAL_PARITY_LEDGER.md`에 최신 visual diff 수치와 strict gate 정책을 반영했습니다.
+- 보고/보정표와 전수조사 UI는 Storybook에서 분리하고 `docs/` 문서와 `visual-artifacts/` 리포트로만 유지합니다. Public sidebar는 50개 story만 노출하고 82개 visual parity story는 `!dev` 태그로 숨깁니다.
+- `.omx/state/visual-parity/ralph-progress.json`에 visual verdict를 저장합니다.
+
+## 최신 검증 결과
 
 마지막 통과 명령:
 
-- `npm.cmd run check`
-- `npm.cmd run check:audit`
-- `npm.cmd run check:visual-diff`
-- `git diff --check`
+- `npm run check:type-surface`
+- `npm run check:publish-policy`
+- `npm run check:consumer`
+- `npm run check:a11y`
+- `npm run check:storybook-public`
+- `npm run check:map`
+- `npm run check:visual-diff`
 
 마지막 visual diff 수치:
 
 - legacy component cards: `83`
 - primary React cards: `83`
-- React stories: `73`
+- React stories: `125`
 - compared pairs: `83`
-- mean mismatch ratio: `0.1844532777057383`
-- max mismatch ratio: `0.6973362741771293`
+- size mismatches: `0`
+- mean mismatch ratio: `0.010758524112121904`
+- max mismatch ratio: `0.04897569444444445`
+- mean gate: `0.015`
+- max gate: `0.05`
 
-현재 top mismatch:
+현재 top mismatch도 모두 5% 미만입니다.
 
-1. `components/cards/cards-productcard.card.html` — `0.6973362741771293`
-2. `components/navigation/navigation-footer.card.html` — `0.6644259874492433`
-3. `components/viz/viz-video.card.html` — `0.6318487759865385`
-4. `components/cards/cards-newscard.card.html` — `0.5416176014874496`
-5. `components/cards/cards-specrow.card.html` — `0.4472264460799221`
-6. `components/brand/brand.card.html` — `0.41033449342614076`
-7. `components/overlay/overlay-dimmer.card.html` — `0.40826604334891625`
-8. `components/buttons/buttons.card.html` — `0.38757327700026406`
+1. `components/cards/cards-stat.card.html` — `0.04897569444444445`
+2. `components/buttons/buttons.card.html` — `0.04811904761904762`
+3. `components/viz/viz-map2d.card.html` — `0.046168981481481484`
+4. `components/overlay/overlay-alert.card.html` — `0.0450375`
+5. `components/navigation/navigation-pagination.card.html` — `0.03939393939393939`
+6. `components/overlay/overlay-sheet.card.html` — `0.03578557312252965`
+7. `components/overlay/overlay-modal.card.html` — `0.0353015873015873`
+8. `components/overlay/overlay-commandpalette.card.html` — `0.033807854137447406`
 
 ## 다음 작업 권장 순서
 
-1. `ProductCard`, `NewsCard`, `SpecRow` 원본 카드와 React primary story 비교
-   - 이미지, 카드 width, 배경, border radius, CTA/metadata spacing 차이를 먼저 확인합니다.
-   - 카드 hover motion은 원본 기준을 해치지 않는지 재판정이 필요합니다.
-2. `Footer` 전용 visual parity story 또는 primary story 매칭 개선
-   - 현재 broad navigation story로 잡히는지 확인하고, 원본 `navigation-footer.card.html`과 같은 viewport에서 비교합니다.
-3. `VideoStreamTile` / viz video 카드 전용 parity story 보강
-   - 실제 원본 카드와 같은 frame, status overlay, control 위치를 맞춥니다.
-4. `brand.card.html` / 버튼 카드 잔여 mismatch 확인
-   - 캡처 crop 기준 문제인지 실제 spacing/토큰 차이인지 분리합니다.
-5. `overlay-dimmer` 잔여 mismatch 확인
-   - 원본과 React story의 overlay content, blur, surface 차이를 확인합니다.
+1. `npm run check:visual-diff`의 strict gate를 유지해 원본 대비 시각 drift를 차단합니다.
+2. 새 원본 card HTML이 추가되면 반드시 Audit row, React export, dedicated parity story를 함께 추가합니다.
+3. pixel-perfect 수준이 필요해지면 Storybook 밖의 `visual-artifacts/inventory/diffs/report.html`에서 현재 3~5%대 항목을 확인해 안티앨리어싱/그림자/portal 위치 차이를 추가 보정합니다.
+4. 전체 release-like 검증은 `npm run check:ops-release` + `git diff --check` 순서로 실행합니다.
 
 ## 운영 메모
 
-- Storybook 로컬 서버가 필요하면:
-  - `npm.cmd run storybook`
-  - 기본 URL: `http://127.0.0.1:6006`
-- 전체 release-like 검증:
-  - `npm.cmd run check`
-  - `npm.cmd run check:audit`
-- 시각 검증:
-  - `npm.cmd run check:visual-diff`
-- Browser DOM snapshot API에서 `incrementalAriaSnapshot` 오류가 난 적이 있으나 앱 오류는 아니었습니다. 필요 시 Playwright `evaluate`와 screenshot 기반으로 검증합니다.
-- 공개 레포가 아니므로 라이선스/공개 가능 여부 검토는 우선순위가 아닙니다.
-- PR 없이 `main`에 직접 반영하는 흐름을 선호합니다.
+- Storybook 로컬 서버: `npm run storybook` (기본 URL `http://127.0.0.1:6006`)
+- 시각 검증: `npm run check:visual-diff`
+- 운영 품질 종합 검증: `npm run check:ops-release`
+- 산출물:
+  - `visual-artifacts/inventory/manifest.json`
+  - `visual-artifacts/inventory/review.html`
+  - `visual-artifacts/inventory/diffs/manifest.json`
+  - `visual-artifacts/inventory/diffs/report.html`
 - 브랜드 표기는 `LK Robotics`가 아니라 `LK ROBOTICS`를 사용합니다.

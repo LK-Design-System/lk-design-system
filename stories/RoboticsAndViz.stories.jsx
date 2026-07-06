@@ -9,9 +9,11 @@ import {
   Icon,
   Joystick,
   Map2DCanvas,
+  Popover,
   RobotStatusCard,
   Scene3DFrame,
   StatusBadge,
+  Switch,
   TelemetryGauge,
   TopicTree,
   VideoStreamTile,
@@ -75,6 +77,132 @@ export const RoboticsStatus = {
   ),
 };
 
+export const RobotStatusCardCard = {
+  name: 'RobotStatusCard card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [sel, setSel] = React.useState('t1');
+    return (
+      <div data-visual-crop-root style={{ width: 700, height: 160, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <RobotStatusCard name="LKR-T1" status="online" battery={82} mode="순찰" selected={sel === 't1'} onClick={() => setSel('t1')} />
+          </div>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <RobotStatusCard name="LKR-CP" status="reconnecting" battery={38} mode="수동" selected={sel === 'cp'} onClick={() => setSel('cp')} />
+          </div>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <RobotStatusCard name="OMO-01" status="offline" battery={14} selected={sel === 'om'} onClick={() => setSel('om')} />
+          </div>
+        </div>
+      </div>
+    );
+  },
+};
+
+const ElevatorGlyph = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="3" width="16" height="18" rx="2" />
+    <path d="M9.5 10l2.5-2.5 2.5 2.5" />
+    <path d="M9.5 14l2.5 2.5 2.5-2.5" />
+  </svg>
+);
+
+const StairsGlyph = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 19h4v-4h4v-4h4V7h4" />
+  </svg>
+);
+
+export const ConnectionBadgeCard = {
+  name: 'ConnectionBadge card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 700, height: 140, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+      <div style={{ display: 'flex', gap: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+        <ConnectionBadge status="online" />
+        <ConnectionBadge status="reconnecting" />
+        <ConnectionBadge status="weak" />
+        <ConnectionBadge status="offline" />
+      </div>
+    </div>
+  ),
+};
+
+export const EquipmentStatusCardCard = {
+  name: 'EquipmentStatusCard card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 480, height: 330, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <EquipmentStatusCard
+          icon={<Icon name="lock" size={16} />}
+          title="정문"
+          ringLabel="연결 끊김"
+          tone="negative"
+          connection="offline"
+          chips={[{ label: '센서 응답 없음', tone: 'negative' }, { label: '통신 끊김', tone: 'negative' }]}
+        />
+        <EquipmentStatusCard
+          icon={<Icon name="signal" size={16} />}
+          title="옥상 게이트웨이"
+          ringLabel="재연결"
+          connection="reconnecting"
+          chips={[{ label: '신호 약함', tone: 'cautionary' }]}
+        />
+        <EquipmentStatusCard
+          icon={<ElevatorGlyph />}
+          title="화물 엘리베이터 2호기"
+          ringLabel="3F"
+          ringCaption="이동중"
+          tone="signal"
+          direction="up"
+        />
+        <EquipmentStatusCard
+          icon={<StairsGlyph />}
+          title="계단리프트 A"
+          ringLabel="STOP"
+          tone="cautionary"
+          chips={[{ label: '점검중', tone: 'cautionary' }]}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const JoystickCard = {
+  name: 'Joystick card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [vec, setVec] = React.useState({ x: 0, y: 0 });
+    return (
+      <div data-visual-crop-root style={{ width: 420, height: 330, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 282 }}>
+        <Joystick size={180} label={`x ${vec.x.toFixed(2)} · y ${vec.y.toFixed(2)}`} onChange={setVec} />
+      </div>
+    );
+  },
+};
+
+export const TopicTreeCard = {
+  name: 'TopicTree card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [subs, setSubs] = React.useState({ '/scan': true, '/odom': false });
+    const topics = [
+      { name: '/scan', type: 'sensor_msgs/LaserScan', hz: 10, subscribable: true, subscribed: subs['/scan'] },
+      { name: '/odom', type: 'nav_msgs/Odometry', hz: 50, subscribable: true, subscribed: subs['/odom'] },
+      { name: 'tf', children: [{ name: 'map' }, { name: 'odom' }, { name: 'base_link' }] },
+    ];
+    return (
+      <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+        <div style={{ border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', padding: '6px 4px', background: 'var(--surface-raised)' }}>
+          <TopicTree nodes={topics} onToggleSubscribe={(node) => setSubs((prev) => ({ ...prev, [node.name]: !prev[node.name] }))} />
+        </div>
+      </div>
+    );
+  },
+};
+
 export const ViewerAndTelemetry = {
   name: '뷰어와 텔레메트리',
   render: () => (
@@ -115,6 +243,128 @@ export const ViewerAndTelemetry = {
   ),
 };
 
+const monoFont = 'var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace)';
+
+function FeedPlaceholder({ children }) {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 10px, rgba(255,255,255,0.02) 10px 20px)',
+      }}
+    >
+      {children != null && (
+        <span style={{ fontFamily: monoFont, fontSize: 11, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
+          {children}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function PlayerButton({ label, children }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      style={{
+        border: 0,
+        background: 'transparent',
+        color: '#fff',
+        cursor: 'pointer',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 5,
+        borderRadius: 8,
+        lineHeight: 0,
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
+function PlayerBar({ progress = 0.62, current = '12:04', total = '42:30' }) {
+  const buffered = 0.8;
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        padding: '38px 14px 12px',
+        background: 'linear-gradient(0deg, rgba(6,9,20,0.88), rgba(6,9,20,0.30) 55%, transparent)',
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ position: 'relative', height: 5, borderRadius: 3, background: 'rgba(255,255,255,0.20)' }}>
+          <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: `${buffered * 100}%`, borderRadius: 3, background: 'rgba(255,255,255,0.34)' }} />
+          <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: `${progress * 100}%`, borderRadius: 3, background: 'var(--lk-accent)' }} />
+          <div style={{ position: 'absolute', top: '50%', left: `${progress * 100}%`, width: 13, height: 13, borderRadius: '50%', background: '#fff', transform: 'translate(-50%,-50%)', boxShadow: '0 1px 6px rgba(0,0,0,0.5)' }} />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <PlayerButton label="일시정지"><Icon name="pause" size={20} /></PlayerButton>
+          <PlayerButton label="음소거"><Icon name="volume-2" size={19} /></PlayerButton>
+          <span style={{ marginLeft: 4, fontFamily: monoFont, fontSize: 12, color: 'rgba(255,255,255,0.9)', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.2px' }}>
+            {current} <span style={{ color: 'rgba(255,255,255,0.5)' }}>/ {total}</span>
+          </span>
+          <div style={{ flex: 1 }} />
+          <span style={{ fontFamily: monoFont, fontSize: 10.5, fontWeight: 700, letterSpacing: '0.5px', color: 'rgba(255,255,255,0.72)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 4, padding: '2px 6px' }}>
+            1080p
+          </span>
+          <PlayerButton label="설정"><Icon name="setting" size={18} /></PlayerButton>
+          <PlayerButton label="전체화면"><Icon name="maximize" size={18} /></PlayerButton>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const VideoStreamTileCard = {
+  name: 'VideoStreamTile card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 920, height: 800, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+        VideoStreamTile — 플레이어 컨트롤 바
+      </div>
+      <div style={{ maxWidth: 620, marginBottom: 28 }}>
+        <VideoStreamTile label="현장 실사 · 2026-06-30" status="idle">
+          <FeedPlaceholder>RECORDED · 1280×720</FeedPlaceholder>
+          <PlayerBar />
+        </VideoStreamTile>
+      </div>
+
+      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+        카메라 그리드 — live · loading · disconnected
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
+        <VideoStreamTile label="RGB" status="live"><FeedPlaceholder>RTSP · 1280×720</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="IR" status="loading"><FeedPlaceholder /></VideoStreamTile>
+        <VideoStreamTile label="EO-1" status="disconnected"><FeedPlaceholder /></VideoStreamTile>
+      </div>
+
+      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+        aspectRatio — 나란히 배치할 때 비율 조정
+      </div>
+      <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: 200, maxWidth: 300 }}>
+          <VideoStreamTile label="THERMAL" status="live" aspectRatio="4 / 3"><FeedPlaceholder>4∶3</FeedPlaceholder></VideoStreamTile>
+        </div>
+        <div style={{ flex: '1 1 420px', minWidth: 200 }}>
+          <VideoStreamTile label="PANO" status="live" aspectRatio="21 / 9"><FeedPlaceholder>21∶9 · WIDE</FeedPlaceholder></VideoStreamTile>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
 export const EditorShell = {
   name: '에디터 셸',
   render: () => (
@@ -147,14 +397,80 @@ export const EditorShell = {
   ),
 };
 
-const parityCloudPoints = Array.from({ length: 130 }, (_, index) => {
-  const x = (index * 37) % 100;
-  const y = (index * 53) % 100;
+export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
+  name: 'CanvasEditorShell · EditorToolbar · HistoryToolbar card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [tool, setTool] = React.useState('draw');
+    const [step, setStep] = React.useState(3);
+    const tools = [
+      { value: 'select', icon: <Icon name="search" size={18} />, label: '선택' },
+      { value: 'draw', icon: <Icon name="plus" size={18} />, label: '그리기' },
+      { value: 'zone', icon: <Icon name="square" size={18} />, label: '존' },
+      { value: 'point', icon: <Icon name="location" size={18} />, label: '웨이포인트' },
+      { value: 'erase', icon: <Icon name="trash" size={18} />, label: '지우기' },
+    ];
+    const panel = (
+      <div style={{ padding: 14 }}>
+        <h4 style={{ margin: '0 0 10px', fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--label-assistive)' }}>속성</h4>
+        {[
+          ['도구', tool],
+          ['해상도', '0.05 m/px'],
+          ['존', '3'],
+          ['웨이포인트', '12'],
+        ].map(([label, value]) => (
+          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, padding: '7px 0', borderTop: '1px solid var(--bw-band)', color: 'var(--label-neutral)' }}>
+            <span>{label}</span>
+            <b style={{ color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}</b>
+          </div>
+        ))}
+      </div>
+    );
+    const status = (
+      <>
+        <HistoryToolbar
+          canUndo={step > 0}
+          canRedo={step < 5}
+          count={step}
+          onUndo={() => setStep((value) => Math.max(0, value - 1))}
+          onRedo={() => setStep((value) => Math.min(5, value + 1))}
+          onReset={() => setStep(0)}
+        />
+        <span style={{ marginLeft: 'auto' }}>1200 × 800 px · 0.05 m/px</span>
+      </>
+    );
+    return (
+      <div data-visual-crop-root style={{ width: 900, height: 520, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+        <CanvasEditorShell title="지도 편집 — floor_1.pgm" style={{ height: 440 }} tools={<EditorToolbar value={tool} onChange={setTool} items={tools} />} panel={panel} status={status}>
+          <Map2DCanvas style={{ height: '100%', borderRadius: 0, border: 'none' }}>
+            <div style={{ width: 280, height: 200, background: 'repeating-linear-gradient(45deg,#c9cfdb,#c9cfdb 8px,#dfe3ec 8px,#dfe3ec 16px)', border: '2px solid #8b93a7', borderRadius: 4, position: 'relative' }}>
+              <div style={{ position: 'absolute', left: 40, top: 40, width: 120, height: 80, border: '2px solid var(--lk-accent-ink)', background: 'rgba(14,155,184,0.14)', borderRadius: 4 }} />
+              <span style={{ position: 'absolute', left: 180, top: 130, width: 12, height: 12, borderRadius: '50%', background: 'var(--lk-accent-ink)' }} />
+            </div>
+          </Map2DCanvas>
+        </CanvasEditorShell>
+      </div>
+    );
+  },
+};
+
+function createParityRandom() {
+  let seed = 0x4f14ff >>> 0;
+  return () => {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 0x100000000;
+  };
+}
+
+const parityRandom = createParityRandom();
+const parityCloudPoints = Array.from({ length: 130 }, () => {
+  const x = parityRandom() * 100;
+  const y = parityRandom() * 100;
   return {
     x,
     y,
-    r: 0.6 + ((index * 7) % 12) / 10,
-    opacity: 0.25 + ((index * 11) % 7) / 12,
+    r: parityRandom() * 1.6 + 0.5,
+    opacity: parityRandom() * 0.6 + 0.25,
   };
 });
 
@@ -179,27 +495,31 @@ function ParityCloudPlaceholder() {
 
 export const Scene3DFrameCard = {
   name: 'Scene3DFrame card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
-    <Scene3DFrame
-      title="POINT CLOUD"
-      badges={<ConnectionBadge status="online" size="sm" />}
-      toolbar={(
-        <ViewerToolbar orientation="horizontal">
-          <ViewerToolbarButton label="?"><Icon name="home" size={16} /></ViewerToolbarButton>
-          <ViewerToolbarButton label="레이어" active><Icon name="filter" size={16} /></ViewerToolbarButton>
-        </ViewerToolbar>
-      )}
-      style={{ height: 300 }}
-    >
-      <ParityCloudPlaceholder />
-    </Scene3DFrame>
+    <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <Scene3DFrame
+        title="POINT CLOUD"
+        badges={<ConnectionBadge status="online" size="sm" />}
+        toolbar={(
+          <ViewerToolbar orientation="horizontal">
+            <ViewerToolbarButton label="핏"><Icon name="home" size={16} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="레이어" active><Icon name="filter" size={16} /></ViewerToolbarButton>
+          </ViewerToolbar>
+        )}
+        style={{ height: 300 }}
+      >
+        <ParityCloudPlaceholder />
+      </Scene3DFrame>
+    </div>
   ),
 };
 
 export const TelemetryGaugeCard = {
   name: 'TelemetryGauge card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div>
+    <div data-visual-crop-root style={{ width: 920, height: 230, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
       <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
         TelemetryGauge
       </div>
@@ -231,5 +551,78 @@ function ParityMapPlaceholder() {
 
 export const Map2DCanvasCard = {
   name: 'Map2DCanvas card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => <Map2DCanvas style={{ height: 300 }}><ParityMapPlaceholder /></Map2DCanvas>,
+};
+
+function ViewerToolbarMapPlaceholder({ layers }) {
+  return (
+    <svg width="320" height="200" viewBox="0 0 320 200" style={{ display: 'block' }}>
+      {layers.map && <rect x="20" y="18" width="280" height="164" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2.5" />}
+      {layers.map && <path d="M20 110 H120 M120 18 V110 M190 110 V182 M190 140 H300" fill="none" stroke="rgba(255,255,255,0.34)" strokeWidth="2.5" />}
+      {layers.path && <polyline points="60,150 60,80 150,80 150,50 250,50" fill="none" stroke="var(--lk-accent)" strokeWidth="2.5" strokeDasharray="6 6" />}
+      {layers.robots && <circle cx="60" cy="150" r="6" fill="var(--lk-accent)" />}
+      {layers.robots && <circle cx="250" cy="50" r="6" fill="var(--lk-accent)" />}
+    </svg>
+  );
+}
+
+export const ViewerToolbarCard = {
+  name: 'ViewerToolbar card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const zoom = 100;
+    const layers = { map: true, path: true, robots: true };
+    const anyOff = !layers.map || !layers.path || !layers.robots;
+    return (
+      <div data-visual-crop-root style={{ width: 700, height: 460, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+          레이어 버튼 → Popover 패널 (눌러보세요)
+        </div>
+        <div style={{ position: 'relative', height: 240, marginBottom: 26 }}>
+          <div style={{ position: 'absolute', inset: 0, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-inverse)', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ transform: `scale(${zoom / 100})`, transition: 'transform .18s var(--ease-out, ease)' }}>
+                <ViewerToolbarMapPlaceholder layers={layers} />
+              </div>
+            </div>
+            <div style={{ position: 'absolute', left: 12, bottom: 12, fontFamily: monoFont, fontSize: 11, fontWeight: 600, letterSpacing: '0.4px', color: 'rgba(255,255,255,0.72)', background: 'rgba(6,9,20,0.55)', borderRadius: 6, padding: '4px 9px' }}>
+              {zoom}%
+            </div>
+          </div>
+          <ViewerToolbar orientation="horizontal" style={{ position: 'absolute', top: 12, right: 12 }}>
+            <ViewerToolbarButton label="확대"><Icon name="plus" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="핏"><Icon name="home" size={18} /></ViewerToolbarButton>
+            <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어" active={anyOff}><Icon name="filter" size={18} /></ViewerToolbarButton>}>
+              <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 8px 2px' }}>
+                레이어
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <Switch size="sm" label="맵" checked={layers.map} onChange={() => {}} />
+                <Switch size="sm" label="경로" checked={layers.path} onChange={() => {}} />
+                <Switch size="sm" label="로봇" checked={layers.robots} onChange={() => {}} />
+              </div>
+            </Popover>
+          </ViewerToolbar>
+        </div>
+
+        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+          orientation — horizontal · vertical
+        </div>
+        <div style={{ display: 'flex', gap: 26, alignItems: 'flex-start' }}>
+          <ViewerToolbar orientation="horizontal">
+            <ViewerToolbarButton label="확대"><Icon name="plus" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="레이어" active><Icon name="filter" size={18} /></ViewerToolbarButton>
+          </ViewerToolbar>
+          <ViewerToolbar orientation="vertical">
+            <ViewerToolbarButton label="확대"><Icon name="plus" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="가시성" active><Icon name="eye" size={18} /></ViewerToolbarButton>
+          </ViewerToolbar>
+        </div>
+      </div>
+    );
+  },
 };

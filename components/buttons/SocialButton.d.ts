@@ -17,7 +17,7 @@ export interface SocialButtonProps extends React.ButtonHTMLAttributes<HTMLButton
   /** 비활성(흐림, 상호작용 불가). @default false */
   disabled?: boolean;
   /** 렌더 요소(링크는 "a"). @default "button" */
-  as?: any;
+  as?: React.ElementType;
 }
 
 /**

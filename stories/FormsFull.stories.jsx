@@ -26,7 +26,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: '컴포넌트/폼 상세',
+  title: '컴포넌트/폼',
   parameters: {
     docs: {
       description: {
@@ -64,7 +64,7 @@ export const InputsAndPickers = {
 };
 
 export const SelectorsAndGroups = {
-  name: '선택 컨트롤',
+  name: '폼 선택기와 그룹',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
@@ -110,23 +110,43 @@ export const SelectorsAndGroups = {
 
 export const AutoCompleteCard = {
   name: 'AutoComplete card parity',
-  render: () => <AutoComplete placeholder="모델 검색" options={['LKR-CP', 'LKR-T1', 'LKR-VisionX', 'LKR-SSAI', 'LKR-S1']} />,
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <AutoComplete placeholder="모델 검색" options={['LKR-CP', 'LKR-T1', 'LKR-VisionX', 'LKR-SSAI', 'LKR-S1']} />
+    </div>
+  ),
 };
 
 export const DatePickerCard = {
   name: 'DatePicker card parity',
-  render: () => <DatePicker placeholder="실사 희망일" />,
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 320, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <DatePicker placeholder="실사 희망일" />
+    </div>
+  ),
 };
 
 export const SearchFieldCard = {
   name: 'SearchField card parity',
-  render: () => <SearchField placeholder="제품·산업 검색" defaultValue="LKR-T1" />,
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <SearchField placeholder="제품·산업 검색" defaultValue="LKR-T1" />
+    </div>
+  ),
 };
 
 export const SliderCard = {
   name: 'Slider card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [value, setValue] = React.useState(40);
-    return <Slider value={value} onChange={setValue} showValue />;
+    return (
+      <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <Slider value={value} onChange={setValue} showValue />
+      </div>
+    );
   },
 };

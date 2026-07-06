@@ -6,7 +6,7 @@ export interface StepItem {
   label: React.ReactNode;
   /** 보조 설명 줄. */
   detail?: React.ReactNode;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface StepListProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {

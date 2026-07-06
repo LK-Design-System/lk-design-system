@@ -41,6 +41,15 @@ const previewCss = [
   .replaceAll("../assets/", "/assets/");
 
 const previewScript = bundleSource.replaceAll('</script', '<\\/script');
+const seededRandomResetScript = `<script>
+(() => {
+  let seed = 0x4f14ff >>> 0;
+  Math.random = () => {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 0x100000000;
+  };
+})();
+</script>`;
 
 function fileName(path) {
   return path.split('/').pop()?.replace(/\.card\.html$/, '').replace(/\.html$/, '') || path;
@@ -104,6 +113,7 @@ function normalizeLegacyHtml(item) {
   return item.html
     .replace(/<link[^>]+href=["'][^"']*styles\.css["'][^>]*>/gi, `<style>${previewCss}</style>`)
     .replace(/<script[^>]+src=["'][^"']*_ds_bundle\.js["'][^>]*>\s*<\/script>/gi, `<script>${previewScript}</script>`)
+    .replace(/<script\s+type=["']text\/babel["']>/i, `${seededRandomResetScript}<script type="text/babel">`)
     .replace(/(src|href)=["'](?:\.\.\/)+assets\//gi, '$1="/assets/')
     .replace(/url\((['"]?)(?:\.\.\/)+assets\//gi, 'url($1/assets/');
 }

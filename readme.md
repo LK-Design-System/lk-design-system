@@ -12,6 +12,7 @@ import '@lk-robotics/design-system-core/styles.css';
 패키지 메타데이터:
 
 - 패키지명: `@lk-robotics/design-system-core`
+- 배포 정책: 현재 `private: true`로 유지하며 내부 Git 소비를 기본으로 합니다. npm publish 전환 시 GitHub Packages 정책과 함께 명시적으로 변경합니다.
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
 - ESM 진입점: `dist/index.js`
@@ -45,8 +46,18 @@ npm run build
 
 ```powershell
 npm run check:tokens
+npm run check:type-surface
+npm run check:publish-policy
+npm run check:consumer
+npm run check:a11y
 npm run check
 npm run check:audit
+```
+
+릴리스 직전 운영 품질 게이트는 아래를 사용합니다.
+
+```powershell
+npm run check:ops-release
 ```
 
 패키지 진입 파일은 `components/**/*.jsx` 기준으로 생성됩니다.
@@ -66,9 +77,10 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 Storybook은 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 데이터/상태 예시, 로보틱스 상태 카드, 아이콘, 내비게이션을 다룹니다.
-`문서/전수조사` 스토리는 원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개가 현재 Storybook/React 표면에 어떻게 대응되는지 확인하는 기준표입니다.
-`문서/원본 미리보기` 스토리는 같은 원본 HTML을 Storybook iframe 안에서 직접 렌더링해 예전 기준과 현재 구현을 시각적으로 대조할 수 있게 합니다.
+현재 public Storybook sidebar는 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 대시보드 지표, 선택/상태, 로보틱스/뷰어, 아이콘, 내비게이션을 50개 public story로 다룹니다.
+보고/감사/보정표 UI는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
+원본 카드와 1:1 비교하기 위한 82개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
+`문서/원본 미리보기` 스토리는 원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개를 Storybook iframe 안에서 직접 렌더링해 예전 기준과 현재 구현을 시각적으로 대조할 수 있게 합니다.
 
 ## AI 및 Figma 토큰 워크플로
 
@@ -84,7 +96,7 @@ Figma Variables를 내보내거나 가져올 때는 `docs/FIGMA_TOKEN_WORKFLOW.m
 ## CI
 
 GitHub Actions는 `main` push, pull request, manual dispatch에서 `.github/workflows/ci.yml`을 실행합니다.
-CI는 `npm ci`, 패키지 빌드, 타입체크, 생성 파일 차이 검사, Storybook 정적 빌드, 패키지 dry run, 런타임 dependency audit을 확인합니다.
+CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/publish policy/소비 앱 smoke, 타입체크, 생성 파일 차이 검사, Storybook 정적 빌드, Storybook public surface guard, Storybook 접근성 guard, 패키지 dry run, 런타임 dependency audit을 확인합니다.
 
 ## 컴포넌트 범위
 

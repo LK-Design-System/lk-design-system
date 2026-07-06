@@ -5,7 +5,7 @@ import React from 'react';
  * A numeric input with inline up/down steppers on the right. Clamps to
  * [min, max]. Controlled (`value`) or uncontrolled (`defaultValue`).
  */
-export function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = 'md', disabled = false, placeholder, style, ...rest }) {
+export function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = 'md', disabled = false, placeholder, style, 'aria-label': ariaLabel, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
   const val = isControlled ? value : internal;
@@ -24,6 +24,7 @@ export function NumberField({ value, defaultValue = 0, min = -Infinity, max = In
     <div style={{ display: 'inline-flex', alignItems: 'stretch', height: h, border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-input)', background: 'var(--bw-white)', opacity: disabled ? 0.5 : 1, overflow: 'hidden', ...style }}>
       <input
         type="number" value={val} min={min === -Infinity ? undefined : min} max={max === Infinity ? undefined : max} step={step} disabled={disabled} placeholder={placeholder}
+        aria-label={ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '숫자 입력')}
         onChange={(e) => commit(e.target.value === '' ? 0 : Number(e.target.value))}
         style={{ width: 92, padding: '0 12px', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-semibold)', color: 'var(--label-normal)' }}
         {...rest}

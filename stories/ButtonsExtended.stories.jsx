@@ -13,7 +13,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: '컴포넌트/버튼 상세',
+  title: '컴포넌트/버튼',
   parameters: {
     docs: {
       description: {
@@ -68,6 +68,78 @@ export const ActionControls = {
         </Fab>
       </section>
     </main>
+  ),
+};
+
+const ArrowLeftIcon = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m15 18-6-6 6-6" />
+  </svg>
+);
+const ArrowRightIcon = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m9 18 6-6-6-6" />
+  </svg>
+);
+const UpIcon = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m18 15-6-6-6 6" />
+  </svg>
+);
+const CloseIcon = (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 6 6 18M6 6l12 12" />
+  </svg>
+);
+
+export const ButtonIconButtonSocialButtonCard = {
+  name: 'Button · IconButton · SocialButton card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 700, height: 540, background: 'var(--bw-paper)', padding: 22, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <Button variant="primary">도입 문의</Button>
+          <Button variant="secondary">문서 보기</Button>
+          <Button variant="signal">제품 보기</Button>
+          <Button variant="dark">회사소개</Button>
+          <Button variant="flat">자세히 보기</Button>
+          <Button variant="ghost">Learn more</Button>
+          <Button variant="primary" disabled>Disabled</Button>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <Button variant="primary" size="sm">Small</Button>
+          <Button variant="primary" size="md">Medium</Button>
+          <Button variant="signal" size="lg">Large CTA</Button>
+          <IconButton variant="soft" label="prev">{ArrowLeftIcon}</IconButton>
+          <IconButton variant="solid" label="next">{ArrowRightIcon}</IconButton>
+          <IconButton variant="ghost" label="close">{CloseIcon}</IconButton>
+          <IconButton variant="signal" round label="top">{UpIcon}</IconButton>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <SocialButton provider="google" full />
+          <SocialButton provider="google" tone="brand" full />
+          <SocialButton provider="apple" full />
+          <SocialButton provider="apple" tone="brand" full />
+          <SocialButton provider="facebook" full />
+          <SocialButton provider="facebook" tone="brand" full />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <SocialButton provider="google" iconOnly />
+          <SocialButton provider="apple" iconOnly />
+          <SocialButton provider="facebook" iconOnly />
+          <SocialButton provider="google" iconOnly tone="brand" />
+          <SocialButton provider="apple" iconOnly tone="brand" />
+          <SocialButton provider="facebook" iconOnly tone="brand" />
+        </div>
+        <div style={{ background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <Button variant="on-dark">Learn more</Button>
+          <Button variant="signal">제품 문의</Button>
+          <IconButton variant="on-dark" label="prev">{ArrowLeftIcon}</IconButton>
+          <IconButton variant="on-dark" round label="next">{ArrowRightIcon}</IconButton>
+        </div>
+      </div>
+    </div>
   ),
 };
 

@@ -5,6 +5,7 @@ import {
   Badge,
   Chip,
   Icon,
+  IconButton,
   Notification,
   PushBadge,
   Rating,
@@ -57,6 +58,110 @@ export const IdentityAndBadges = {
         </PushBadge>
       </section>
     </main>
+  ),
+};
+
+export const AvatarCard = {
+  name: 'Avatar card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+        <Avatar name="LK" size={40} status="online" />
+        <Avatar name="Han Kim" size={40} />
+        <Avatar name="SS AI" size={40} status="busy" />
+        <Avatar name="대전 본사" size={40} status="offline" />
+      </div>
+    </div>
+  ),
+};
+
+export const AvatarGroupCard = {
+  name: 'AvatarGroup card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <AvatarGroup max={4} items={[{ name: '김' }, { name: '이' }, { name: '박' }, { name: '최' }, { name: '정' }, { name: '한' }]} />
+    </div>
+  ),
+};
+
+export const BadgeCard = {
+  name: 'Badge card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+        <Badge tone="signal">3</Badge>
+        <Badge tone="navy">12</Badge>
+        <Badge tone="red">!</Badge>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 14, color: 'var(--bw-gray)' }}>
+          <Badge tone="signal" dot /> 운영중
+        </span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 14, color: 'var(--bw-gray)' }}>
+          <Badge tone="red" dot /> 점검 필요
+        </span>
+      </div>
+    </div>
+  ),
+};
+
+export const ChipCard = {
+  name: 'Chip card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+        <Chip>자율주행</Chip>
+        <Chip>비전 AI</Chip>
+        <Chip selected>EO/IR</Chip>
+        <Chip as="a" href="#">LKR-CP</Chip>
+        <Chip as="a" href="#">LKR-SSAI</Chip>
+      </div>
+    </div>
+  ),
+};
+
+export const PushBadgeCard = {
+  name: 'PushBadge card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 480, height: 140, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 26, flexWrap: 'wrap' }}>
+        <PushBadge count={5}><IconButton variant="ghost" label="alerts"><Icon name="bell" /></IconButton></PushBadge>
+        <PushBadge count={128} max={99}><IconButton variant="ghost" label="mail"><Icon name="mail" /></IconButton></PushBadge>
+        <PushBadge dot tone="signal"><IconButton variant="ghost" label="home"><Icon name="home" /></IconButton></PushBadge>
+      </div>
+    </div>
+  ),
+};
+
+export const RatingCard = {
+  name: 'Rating card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 300, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 26, flexWrap: 'wrap' }}>
+        <Rating defaultValue={4} />
+        <Rating value={5} readOnly size={16} />
+      </div>
+    </div>
+  ),
+};
+
+export const TagCard = {
+  name: 'Tag card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+        <Tag tone="signal">Products</Tag>
+        <Tag tone="neutral">Technology</Tag>
+        <Tag tone="steel">R&amp;D</Tag>
+        <Tag tone="amber">CES 2026</Tag>
+        <Tag tone="signal" solid>NEW</Tag>
+      </div>
+    </div>
   ),
 };
 

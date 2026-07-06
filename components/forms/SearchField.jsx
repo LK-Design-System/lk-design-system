@@ -6,7 +6,7 @@ import React from 'react';
  * focus ring. Controlled (`value`) or uncontrolled (`defaultValue`); `onSearch`
  * fires on Enter.
  */
-export function SearchField({ value, defaultValue, onChange, onSearch, placeholder = '검색', size = 'md', disabled = false, style, ...rest }) {
+export function SearchField({ value, defaultValue, onChange, onSearch, placeholder = '검색', size = 'md', disabled = false, style, 'aria-label': ariaLabel, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue || '');
   const [focus, setFocus] = React.useState(false);
@@ -23,6 +23,7 @@ export function SearchField({ value, defaultValue, onChange, onSearch, placehold
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
       <input
         value={val} disabled={disabled} placeholder={placeholder}
+        aria-label={ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '검색')}
         onChange={(e) => set(e.target.value)}
         onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
         onKeyDown={(e) => { if (e.key === 'Enter' && onSearch) onSearch(val); }}

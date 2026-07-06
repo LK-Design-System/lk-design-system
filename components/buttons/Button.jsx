@@ -23,6 +23,7 @@ export function Button({
   onMouseLeave,
   onMouseDown,
   onMouseUp,
+  type,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
@@ -93,6 +94,7 @@ export function Button({
       className={`lk-btn lk-btn--${variant}`}
       style={composed}
       disabled={as === 'button' ? disabled : undefined}
+      type={as === 'button' ? (type ?? 'button') : undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
       onMouseDown={(e) => { onMouseDown && onMouseDown(e); }}

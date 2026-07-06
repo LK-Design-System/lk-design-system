@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface VisuallyHiddenProps extends React.HTMLAttributes<HTMLElement> {
   /** 렌더할 요소. @default "span" */
-  as?: any;
+  as?: React.ElementType;
   children?: React.ReactNode;
 }
 

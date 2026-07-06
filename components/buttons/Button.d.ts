@@ -12,7 +12,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   /** 비활성(흐림, 상호작용 불가). @default false */
   disabled?: boolean;
   /** 다른 요소/컴포넌트로 렌더(예: 링크 CTA는 "a"). @default "button" */
-  as?: any;
+  as?: React.ElementType;
   children?: React.ReactNode;
 }
 

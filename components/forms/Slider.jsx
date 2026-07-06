@@ -18,7 +18,7 @@ input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--bw-gray-300);c
  * A range control with a signal-ink filled track and a white knob. Controlled
  * (`value`) or uncontrolled (`defaultValue`); optional trailing `showValue`.
  */
-export function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChange, disabled = false, showValue = false, style, ...rest }) {
+export function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChange, disabled = false, showValue = false, style, 'aria-label': ariaLabel, ...rest }) {
   useSliderStyles();
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
@@ -29,7 +29,8 @@ export function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, 
     <div style={{ display: 'flex', alignItems: 'center', gap: 14, ...style }}>
       <input
         className="lk-slider"
-        type="range" min={min} max={max} step={step} value={val} disabled={disabled}
+        type="range"
+        aria-label={ariaLabel ?? '값 조절'} min={min} max={max} step={step} value={val} disabled={disabled}
         onChange={(e) => set(Number(e.target.value))}
         style={{
           flex: 1, WebkitAppearance: 'none', appearance: 'none', height: 6, borderRadius: 'var(--radius-pill)', outline: 'none',

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface ChipProps extends React.HTMLAttributes<HTMLElement> {
   /** 렌더 요소 — "span"(기본) 또는 링크 칩은 "a". @default "span" */
-  as?: any;
+  as?: React.ElementType;
   /** 고정/선택 상태(시그널 잉크 보더 + 틴트). @default false */
   selected?: boolean;
   href?: string;

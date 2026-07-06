@@ -58,6 +58,99 @@ export const SelectionControls = {
   ),
 };
 
+export const ChoiceCardCard = {
+  name: 'ChoiceCard card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [sel, setSel] = React.useState('field');
+    return (
+      <div data-visual-crop-root style={{ width: 700, height: 160, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+          <ChoiceCard title="현장 순찰" description="자율주행 순찰 로봇" selected={sel === 'patrol'} onSelect={() => setSel('patrol')} />
+          <ChoiceCard title="시설 점검" description="열화상 · 가스 탐지" selected={sel === 'field'} onSelect={() => setSel('field')} />
+          <ChoiceCard title="물류 이송" description="실내 자율 이송" disabled />
+        </div>
+      </div>
+    );
+  },
+};
+
+export const FilterChipCard = {
+  name: 'FilterChip card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+        <FilterChip active>시설관리</FilterChip>
+        <FilterChip count={3}>제품군</FilterChip>
+        <FilterChip caret>산업 전체</FilterChip>
+      </div>
+    </div>
+  ),
+};
+
+export const MultiSelectChipCard = {
+  name: 'MultiSelectChip card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+        <MultiSelectChip defaultSelected>자율주행</MultiSelectChip>
+        <MultiSelectChip>비전 AI</MultiSelectChip>
+        <MultiSelectChip>가스 센싱</MultiSelectChip>
+      </div>
+    </div>
+  ),
+};
+
+export const ThemeToggleCard = {
+  name: 'ThemeToggle card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [theme, setTheme] = React.useState('light');
+    return (
+      <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <ThemeToggle value={theme} onChange={setTheme} target={null} />
+          <ThemeToggle value={theme} onChange={setTheme} target={null} showLabels={false} size="sm" />
+        </div>
+      </div>
+    );
+  },
+};
+
+export const SegmentedControlCard = {
+  name: 'SegmentedControl card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [lang, setLang] = React.useState('KR');
+    return (
+      <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <SegmentedControl options={['KR', 'EN']} value={lang} onChange={setLang} />
+          <SegmentedControl options={[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }, { value: 'map', label: '지도' }]} defaultValue="grid" />
+        </div>
+      </div>
+    );
+  },
+};
+
+export const ToggleButtonCard = {
+  name: 'ToggleButton card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [route, setRoute] = React.useState(true);
+    return (
+      <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+          <ToggleButton pressed={route} onChange={setRoute} icon={<Icon name="location" size={18} />}>경로 표시</ToggleButton>
+          <ToggleButton defaultPressed icon={<Icon name="star" size={18} />} />
+        </div>
+      </div>
+    );
+  },
+};
+
 export const StatusInventory = {
   name: '상태 컴포넌트',
   render: () => (
@@ -88,8 +181,37 @@ export const StatusInventory = {
   ),
 };
 
+export const BannerCard = {
+  name: 'Banner card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 460, height: 180, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ width: 420, display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <Banner tone="info" title="펌웨어 업데이트" onClose={() => {}}>관제 시스템이 v2.4로 업데이트되었습니다.</Banner>
+        <Banner tone="warning">현장 통신이 불안정합니다.</Banner>
+      </div>
+    </div>
+  ),
+};
+
+export const CircularProgressCard = {
+  name: 'CircularProgress card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 560, height: 200, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap' }}>
+        <CircularProgress value={72} showValue />
+        <CircularProgress value={100} tone="positive" size={40} />
+        <CircularProgress value={34} tone="cautionary" size={40} />
+        <CircularProgress value={58} size={64} thickness={6} showValue />
+      </div>
+    </div>
+  ),
+};
+
 export const SkeletonCard = {
   name: 'Skeleton card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
     <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 16, width: 300 }}>
       <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
@@ -104,6 +226,7 @@ export const SkeletonCard = {
 
 export const SpinnerCard = {
   name: 'Spinner card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
       <Spinner />
@@ -114,16 +237,51 @@ export const SpinnerCard = {
 
 export const ProgressBarCard = {
   name: 'ProgressBar card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-      <ProgressBar value={68} label="업로드" showValue />
-      <ProgressBar indeterminate />
+    <div data-visual-crop-root style={{ width: 320, height: 140, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <ProgressBar value={68} label="업로드" showValue />
+        <ProgressBar indeterminate />
+      </div>
+    </div>
+  ),
+};
+
+export const EmptyStateCard = {
+  name: 'EmptyState card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 420, height: 260, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 16, width: 360 }}>
+        <EmptyState
+          icon={<Icon name="search" size={26} />}
+          title="검색 결과가 없습니다"
+          description="다른 산업이나 제품군으로 다시 검색해 보세요."
+          action={<Button variant="flat">필터 초기화</Button>}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const SwitchCard = {
+  name: 'Switch card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+        <Switch defaultChecked label="실시간 관제 알림" />
+        <Switch size="sm" defaultChecked />
+        <Switch label="준비 중" disabled />
+      </div>
     </div>
   ),
 };
 
 export const StepperCard = {
   name: 'Stepper card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [count, setCount] = React.useState(2);
     return <Stepper value={count} min={0} max={9} onChange={setCount} />;

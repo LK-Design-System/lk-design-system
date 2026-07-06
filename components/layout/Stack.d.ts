@@ -8,7 +8,7 @@ export interface StackProps extends React.HTMLAttributes<HTMLElement> {
   align?: React.CSSProperties['alignItems'];
   justify?: React.CSSProperties['justifyContent'];
   wrap?: boolean;
-  as?: any;
+  as?: React.ElementType;
   children?: React.ReactNode;
 }
 

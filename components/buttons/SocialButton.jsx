@@ -30,6 +30,7 @@ export function SocialButton({
   onMouseLeave,
   onMouseDown,
   onMouseUp,
+  type,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
@@ -86,6 +87,7 @@ export function SocialButton({
       className={`lk-social-btn lk-social-btn--${provider}`}
       style={composed}
       disabled={as === 'button' ? disabled : undefined}
+      type={as === 'button' ? (type ?? 'button') : undefined}
       aria-label={iconOnly ? label : undefined}
       title={iconOnly ? label : undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}

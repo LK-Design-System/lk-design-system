@@ -6,7 +6,7 @@ import React from 'react';
  * steps back on Backspace. `mask` hides characters. Controlled (`value`) or
  * uncontrolled; `onComplete` fires when full.
  */
-export function PinInput({ length = 6, value, defaultValue = '', onChange, onComplete, mask = false, disabled = false, size = 'md', style, ...rest }) {
+export function PinInput({ length = 6, value, defaultValue = '', onChange, onComplete, mask = false, disabled = false, size = 'md', style, 'aria-label': ariaLabel, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
   const raw = (isControlled ? value : internal) || '';
@@ -31,6 +31,7 @@ export function PinInput({ length = 6, value, defaultValue = '', onChange, onCom
           value={raw[i] || ''}
           disabled={disabled}
           inputMode="numeric"
+          aria-label={`${ariaLabel ?? 'PIN'} ${i + 1}`}
           maxLength={1}
           type={mask ? 'password' : 'text'}
           onChange={(e) => onInput(i, e)}

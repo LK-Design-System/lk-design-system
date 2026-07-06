@@ -28,17 +28,17 @@
 - `templates/`: 재사용 가능한 starter template
 - `templates-cards/`: starter template 정적 카드
 
-## Storybook 전수조사 기준
+## 원본 이관 검증 기준
 
-`stories/Audit.stories.jsx`의 `문서/전수조사` 항목은 원본 디자인 시스템과 현재 패키지 표면을 대조하는 기준입니다.
-`stories/LegacyPreviews.stories.jsx`의 `문서/원본 미리보기` 항목은 같은 원본 HTML을 Storybook iframe으로 직접 렌더링하는 시각 비교 표면입니다.
+보고/감사/보정표 UI는 Storybook에 노출하지 않습니다. `stories/Audit.data.jsx`는 원본 디자인 시스템과 현재 패키지 표면을 대조하기 위한 숨김 데이터 소스이며 `check:coverage`, `check:map`, visual inventory 스크립트가 읽습니다.
+`stories/LegacyPreviews.stories.jsx`의 `문서/원본 미리보기` 항목은 같은 원본 HTML을 Storybook iframe으로 직접 렌더링하는 시각 비교 표면입니다. 원본 카드 대응용 `visual-parity` stories는 direct iframe 캡처용으로 유지하되 `!dev` 태그로 public sidebar에서 숨깁니다.
 
 - 원본 지침: `guidelines/*.html` 20개
 - 원본 요소 카드: `components/**/*.card.html` 83개
 - 템플릿 카드: `templates-cards/*.html` 4개
 - 현재 React export: 145개
 
-원본 카드나 지침을 추가, 삭제, 재분류하면 이 Storybook 전수조사표와 원본 미리보기 목록을 같이 갱신합니다.
+원본 카드나 지침을 추가, 삭제, 재분류하면 `stories/Audit.data.jsx`와 원본 미리보기 목록을 같이 갱신합니다.
 
 ## 생성 영역
 
@@ -62,8 +62,8 @@
 
 - `src/index.js`와 `src/index.d.ts`는 직접 수정하지 않습니다. `npm run generate:entry`를 실행하세요.
 - 정적 preview card와 template이 직접 불러오므로 `_ds_bundle.js`는 유지합니다.
-- 정식 package publishing workflow로 전환하기 전까지 `dist/`는 Git에 유지합니다.
+- 배포 정책은 현재 `private: true`이며 내부 Git 소비를 기본으로 합니다. 정식 npm publish로 전환할 때만 `private` 값을 바꾸고 GitHub Packages 설정과 운영 문서를 함께 갱신합니다. 그 전까지 `dist/`는 Git에 유지합니다.
 - `tokens/source.json`은 `tokens/*.css`와 맞춰야 합니다. `npm run check:tokens`가 component-token 참조를 검증합니다.
 - `components/` 아래에 컴포넌트를 추가하면 대응 `.d.ts`를 추가하고 `npm run build`를 실행합니다.
-- 사용자에게 노출되는 컴포넌트는 Storybook 스토리를 추가하거나 수정하고, 원본 기준과 대응되면 `문서/전수조사` 표도 갱신합니다.
-- push 전 `npm run check`와 `npm run check:audit`를 실행합니다.
+- 사용자에게 노출되는 컴포넌트는 Storybook 스토리를 추가하거나 수정하고, 원본 기준과 대응되면 `stories/Audit.data.jsx`도 갱신합니다.
+- push 전 `npm run check`, `npm run check:audit`, 필요 시 `npm run check:ops-release`를 실행합니다.

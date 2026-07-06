@@ -5,7 +5,7 @@ import React from 'react';
  * A password field with a show/hide toggle. Signal-ink focus ring. Controlled
  * (`value`) or uncontrolled (`defaultValue`).
  */
-export function PasswordInput({ value, defaultValue, onChange, placeholder = '비밀번호', size = 'md', disabled = false, style, ...rest }) {
+export function PasswordInput({ value, defaultValue, onChange, placeholder = '비밀번호', size = 'md', disabled = false, style, 'aria-label': ariaLabel, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue || '');
   const [show, setShow] = React.useState(false);
@@ -15,7 +15,7 @@ export function PasswordInput({ value, defaultValue, onChange, placeholder = '�
   const h = size === 'sm' ? 40 : 50;
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, height: h, width: '100%', padding: '0 12px 0 14px', boxSizing: 'border-box', background: 'var(--bw-white)', border: `1px solid ${focus ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-input)', boxShadow: focus ? '0 0 0 4px var(--focus-ring)' : 'none', opacity: disabled ? 0.5 : 1, transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)', ...style }}>
-      <input value={val} disabled={disabled} placeholder={placeholder} type={show ? 'text' : 'password'} onChange={(e) => set(e.target.value)} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
+      <input value={val} disabled={disabled} placeholder={placeholder} aria-label={ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '비밀번호')} type={show ? 'text' : 'password'} onChange={(e) => set(e.target.value)} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
         style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 15, color: 'var(--label-normal)' }} {...rest} />
       <button type="button" aria-label={show ? 'hide' : 'show'} onClick={() => setShow((s) => !s)} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--label-assistive)' }}>
         {show

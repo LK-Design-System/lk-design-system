@@ -18,6 +18,7 @@ export function IconButton({
   disabled = false,
   onMouseEnter,
   onMouseLeave,
+  type,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
@@ -31,6 +32,7 @@ export function IconButton({
   const p = palettes[variant] || palettes.soft;
   return (
     <button
+      type={type ?? 'button'}
       aria-label={label}
       className={`lk-iconbtn lk-iconbtn--${variant}`}
       disabled={disabled}

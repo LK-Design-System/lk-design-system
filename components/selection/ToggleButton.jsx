@@ -15,6 +15,7 @@ export function ToggleButton({
   size = 'md',
   disabled = false,
   style,
+  'aria-label': ariaLabel,
   ...rest
 }) {
   const isControlled = pressed !== undefined;
@@ -31,6 +32,7 @@ export function ToggleButton({
     <button
       type="button"
       aria-pressed={on}
+      aria-label={ariaLabel ?? (iconOnly ? '토글' : undefined)}
       disabled={disabled}
       onClick={toggle}
       style={{

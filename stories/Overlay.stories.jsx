@@ -16,6 +16,7 @@ import {
   Popover,
   Sheet,
   Slider,
+  Spinner,
   Toast,
   ToastStack,
 } from '../src/index.js';
@@ -76,6 +77,38 @@ export const AnchoredAndToast = {
   ),
 };
 
+export const DropdownMenuCard = {
+  name: 'DropdownMenu card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 260, height: 220, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <DropdownMenu
+        align="left"
+        trigger={<Button variant="ghost">작업</Button>}
+        items={[
+          { label: '내보내기', icon: <Icon name="download" size={18} /> },
+          { label: '공유', icon: <Icon name="share" size={18} /> },
+          { divider: true },
+          { label: '삭제', danger: true, icon: <Icon name="trash" size={18} /> },
+        ]}
+      />
+    </div>
+  ),
+};
+
+export const ToastCard = {
+  name: 'Toast card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+        <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>
+        <Toast tone="info" onClose={() => {}}>관제 화면으로 이동했습니다.</Toast>
+      </div>
+    </div>
+  ),
+};
+
 export const AlertOpen = {
   name: 'Alert 열림',
   render: () => (
@@ -108,6 +141,32 @@ export const DrawerOpen = {
     >
       시설, 상태, 미션 타입을 좁히는 사이드 패널입니다.
     </Drawer>
+  ),
+};
+
+export const DrawerCard = {
+  name: 'Drawer card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 520, height: 460, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ position: 'relative', height: 400, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--border-subtle)', transform: 'translateZ(0)', background: 'var(--bw-paper)' }}>
+        <div style={{ padding: 20 }}>
+          <Button variant="secondary">필터 열기</Button>
+        </div>
+        <Drawer
+          open
+          side="right"
+          title="필터"
+          onClose={() => {}}
+          footer={<Button variant="signal" full>적용</Button>}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <Input label="현장" placeholder="전체" />
+            <Input label="설비 유형" placeholder="전체" />
+          </div>
+        </Drawer>
+      </div>
+    </div>
   ),
 };
 
@@ -150,6 +209,7 @@ export const LightboxOpen = {
 
 export const LightboxCard = {
   name: 'Lightbox card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [open, setOpen] = React.useState(false);
     const [index, setIndex] = React.useState(0);
@@ -169,6 +229,7 @@ export const LightboxCard = {
 
 export const SheetCard = {
   name: 'Sheet card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [open, setOpen] = React.useState(false);
     const options = ['최신순', '이름순', '상태순'];
@@ -206,31 +267,35 @@ export const SheetCard = {
 
 export const DimmerCard = {
   name: 'Dimmer card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div
-      style={{
-        position: 'relative',
-        width: 220,
-        height: 130,
-        background: 'var(--bw-white)',
-        border: '1px solid var(--bw-border)',
-        borderRadius: 'var(--radius-xl)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: 'var(--font-sans)',
-        color: 'var(--label-alternative)',
-        fontSize: 14,
-      }}
-    >
-      콘텐츠
-      <Dimmer open blur><span style={{ color: 'var(--text-on-inverse)' }}>처리 중…</span></Dimmer>
+    <div data-visual-crop-root style={{ width: 260, height: 180, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div
+        style={{
+          position: 'relative',
+          width: 220,
+          height: 130,
+          background: 'var(--bw-white)',
+          border: '1px solid var(--bw-border)',
+          borderRadius: 'var(--radius-xl)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontFamily: 'var(--font-sans)',
+          color: 'var(--label-alternative)',
+          fontSize: 14,
+        }}
+      >
+        콘텐츠
+        <Dimmer open blur><Spinner color="#fff" label="처리 중…" /></Dimmer>
+      </div>
     </div>
   ),
 };
 
 export const PopoverCard = {
   name: 'Popover card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
     <Popover trigger={<Button variant="ghost">탐지 반경</Button>} width={260}>
       <FormField label="반경 (m)"><Slider defaultValue={30} min={0} max={100} showValue /></FormField>
@@ -240,6 +305,7 @@ export const PopoverCard = {
 
 export const AlertCard = {
   name: 'Alert card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [open, setOpen] = React.useState(false);
     return (
@@ -256,20 +322,23 @@ export const AlertCard = {
 
 export const AlertToastCard = {
   name: 'Alert Toast card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [open, setOpen] = React.useState(false);
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>
-          <Toast tone="info" onClose={() => {}}>관제 화면으로 이동했습니다.</Toast>
-        </div>
-        <div>
-          <Button variant="dark" onClick={() => setOpen(true)}>로봇 정지 확인 열기</Button>
-          <Alert open={open} title="로봇을 정지할까요?" tone="danger" confirmLabel="정지" cancelLabel="취소"
-            onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} onClose={() => setOpen(false)}>
-            현재 순찰 중인 LKR-T1 3대가 즉시 정지됩니다. 정지 후에는 관제 화면에서 재개할 수 있습니다.
-          </Alert>
+      <div data-visual-crop-root style={{ width: 700, height: 360, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>
+            <Toast tone="info" onClose={() => {}}>관제 화면으로 이동했습니다.</Toast>
+          </div>
+          <div>
+            <Button variant="dark" onClick={() => setOpen(true)}>로봇 정지 확인 열기</Button>
+            <Alert open={open} title="로봇을 정지할까요?" tone="danger" confirmLabel="정지" cancelLabel="취소"
+              onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} onClose={() => setOpen(false)}>
+              현재 순찰 중인 LKR-T1 3대가 즉시 정지됩니다. 정지 후에는 관제 화면에서 재개할 수 있습니다.
+            </Alert>
+          </div>
         </div>
       </div>
     );
@@ -278,6 +347,7 @@ export const AlertToastCard = {
 
 export const HoverCardCard = {
   name: 'HoverCard card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => (
     <HoverCard trigger={<Link>LKR-T1</Link>}>
       <b>LKR-T1</b> ? 안전 순찰 로봇 ? 최대 8시간 연속 운영.
@@ -287,6 +357,7 @@ export const HoverCardCard = {
 
 export const CommandPaletteCard = {
   name: 'CommandPalette card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [open, setOpen] = React.useState(false);
     return (
@@ -304,6 +375,7 @@ export const CommandPaletteCard = {
 
 export const ToastStackCard = {
   name: 'ToastStack card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [items, setItems] = React.useState([
       { id: 1, tone: 'success', msg: '설비 점검이 완료되었습니다.' },
@@ -321,6 +393,7 @@ export const ToastStackCard = {
 
 export const ModalCard = {
   name: 'Modal card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => {
     const [open, setOpen] = React.useState(false);
     return (

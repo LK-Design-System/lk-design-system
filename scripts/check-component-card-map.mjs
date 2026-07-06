@@ -36,14 +36,14 @@ function hasWord(source, name) {
   return new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(source);
 }
 
-const auditSource = await read('stories/Audit.stories.jsx');
+const auditSource = await read('stories/Audit.data.jsx');
 const srcIndex = await read('src/index.js');
 const distTypes = await read('dist/index.d.ts');
 const bundleSource = await read('_ds_bundle.js');
 
 let storySource = '';
 for (const file of await collect('stories', (rel) => rel.endsWith('.stories.jsx'))) {
-  if (file.endsWith('Audit.stories.jsx') || file.endsWith('LegacyPreviews.stories.jsx') || file.endsWith('VisualParityLedger.stories.jsx')) {
+  if (file.endsWith('LegacyPreviews.stories.jsx')) {
     continue;
   }
   storySource += `\n// ${file}\n${await read(file)}`;
@@ -53,16 +53,16 @@ const componentCardFiles = await collect('components', (rel) => rel.endsWith('.c
 const rows = parseComponentRows(auditSource);
 
 assert(componentCardFiles.length === 83, `Expected 83 component card files, found ${componentCardFiles.length}.`);
-assert(rows.length === 83, `Expected 83 component card rows in Audit.stories.jsx, found ${rows.length}.`);
+assert(rows.length === 83, `Expected 83 component card rows in Audit.data.jsx, found ${rows.length}.`);
 
 const rowCards = rows.map((row) => row.card).sort();
 const missingRows = componentCardFiles.filter((file) => !rowCards.includes(file));
 const staleRows = rowCards.filter((file) => !componentCardFiles.includes(file));
-assert(missingRows.length === 0, `Audit component card map is missing files:\n${missingRows.join('\n')}`);
-assert(staleRows.length === 0, `Audit component card map references missing files:\n${staleRows.join('\n')}`);
+assert(missingRows.length === 0, `Audit data component card map is missing files:\n${missingRows.join('\n')}`);
+assert(staleRows.length === 0, `Audit data component card map references missing files:\n${staleRows.join('\n')}`);
 
 const duplicateRows = rowCards.filter((file, index) => rowCards.indexOf(file) !== index);
-assert(duplicateRows.length === 0, `Audit component card map has duplicate rows:\n${[...new Set(duplicateRows)].join('\n')}`);
+assert(duplicateRows.length === 0, `Audit data component card map has duplicate rows:\n${[...new Set(duplicateRows)].join('\n')}`);
 
 const failures = [];
 const allMappedExports = new Set();

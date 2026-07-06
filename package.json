@@ -47,13 +47,19 @@
     "check:visual": "npm run build:storybook && node scripts/capture-visual-smoke.mjs",
     "check:legacy-render": "npm run build:storybook && node scripts/check-legacy-preview-render.mjs",
     "check:audit": "npm audit --omit=dev",
-    "check": "npm run build && npm run check:tokens && npm run check:parity && npm run check:coverage && npm run check:map && tsc --noEmit && npm run check:entry && npm run check:generated && npm run build:storybook && npm pack --dry-run --ignore-scripts",
+    "check": "npm run build && npm run check:tokens && npm run check:type-surface && npm run check:parity && npm run check:coverage && npm run check:map && npm run check:publish-policy && tsc --noEmit && npm run check:entry && npm run check:generated && npm run check:consumer && npm run build:storybook && npm run check:storybook-public && npm run check:a11y && npm pack --dry-run --ignore-scripts",
     "storybook": "storybook dev -p 6006 --no-open",
     "build:storybook": "storybook build",
     "prepack": "npm run build",
     "check:visual-inventory": "npm run build:storybook && node scripts/capture-visual-inventory.mjs",
     "check:visual-review": "npm run check:visual-inventory && node scripts/generate-visual-review-report.mjs",
-    "check:visual-diff": "npm run check:visual-review && node scripts/generate-visual-diff-report.mjs"
+    "check:visual-diff": "npm run check:visual-review && node scripts/generate-visual-diff-report.mjs",
+    "check:type-surface": "node scripts/check-type-surface.mjs",
+    "check:publish-policy": "node scripts/check-publish-policy.mjs",
+    "check:consumer": "node scripts/check-consumer-smoke.mjs",
+    "check:a11y": "node scripts/check-storybook-accessibility.mjs",
+    "check:ops-release": "npm run check && npm run check:audit && npm run check:legacy-render && npm run check:visual-diff",
+    "check:storybook-public": "node scripts/check-storybook-public-surface.mjs"
   },
   "peerDependencies": {
     "react": ">=18 <20",

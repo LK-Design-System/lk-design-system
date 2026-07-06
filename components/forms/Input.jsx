@@ -13,6 +13,7 @@ export function Input({
   required = false,
   id,
   style,
+  'aria-label': ariaLabel,
   ...rest
 }) {
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, '-').toLowerCase()}` : undefined);
@@ -41,6 +42,7 @@ export function Input({
         {iconLeft && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{iconLeft}</span>}
         <input
           id={inputId}
+          aria-label={ariaLabel ?? (!label && typeof rest.placeholder === 'string' ? rest.placeholder : undefined)}
           {...rest}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}

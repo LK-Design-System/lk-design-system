@@ -12,6 +12,8 @@ const diffManifestPath = path.join(diffDir, 'manifest.json');
 const diffReportPath = path.join(diffDir, 'report.html');
 const diffSmokePath = path.join(diffDir, 'report-smoke.png');
 const pixelThreshold = 24;
+const maxMismatchRatioLimit = Number(process.env.VISUAL_MAX_MISMATCH_RATIO || '0.05');
+const meanMismatchRatioLimit = Number(process.env.VISUAL_MEAN_MISMATCH_RATIO || '0.015');
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -265,6 +267,9 @@ async function main() {
   }
 
   const sortedByMismatch = [...results].sort((a, b) => b.mismatchRatio - a.mismatchRatio || a.card.localeCompare(b.card, 'ko'));
+  const sizeMismatches = results.filter(
+    (result) => result.legacyWidth !== result.primaryWidth || result.legacyHeight !== result.primaryHeight
+  );
   const summary = {
     generatedAt: new Date().toISOString(),
     threshold: pixelThreshold,
@@ -278,7 +283,14 @@ async function main() {
       totalPixels: results.reduce((sum, result) => sum + result.totalPixels, 0),
       maxMismatchRatio: sortedByMismatch[0]?.mismatchRatio || 0,
       meanMismatchRatio: results.reduce((sum, result) => sum + result.mismatchRatio, 0) / results.length,
+      maxMismatchRatioLimit,
+      meanMismatchRatioLimit,
     },
+    sizeMismatches: sizeMismatches.map((result) => ({
+      card: result.card,
+      legacySize: `${result.legacyWidth}x${result.legacyHeight}`,
+      primarySize: `${result.primaryWidth}x${result.primaryHeight}`,
+    })),
     topMismatches: sortedByMismatch.slice(0, 10).map((result) => ({
       card: result.card,
       mismatchRatio: result.mismatchRatio,
@@ -343,6 +355,9 @@ async function main() {
 
   await writeFile(diffReportPath, html, 'utf8');
   await verifyRenderedReport(results.length);
+  assert(sizeMismatches.length === 0, `Visual pixel diff size gate failed:\n${sizeMismatches.map((result) => `${result.card}: ${result.legacyWidth}x${result.legacyHeight} vs ${result.primaryWidth}x${result.primaryHeight}`).join('\n')}`);
+  assert(summary.aggregate.maxMismatchRatio <= maxMismatchRatioLimit, `Visual pixel diff max mismatch gate failed: ${summary.aggregate.maxMismatchRatio} > ${maxMismatchRatioLimit}`);
+  assert(summary.aggregate.meanMismatchRatio <= meanMismatchRatioLimit, `Visual pixel diff mean mismatch gate failed: ${summary.aggregate.meanMismatchRatio} > ${meanMismatchRatioLimit}`);
   console.log(
     `Generated visual pixel diff report: ${relFromRoot(diffManifestPath)}, ${relFromRoot(diffReportPath)}, and ${relFromRoot(diffSmokePath)} (${results.length} pairs).`
   );

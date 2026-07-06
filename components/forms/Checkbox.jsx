@@ -12,6 +12,7 @@ export function Checkbox({
   onChange,
   disabled = false,
   id,
+  'aria-label': ariaLabel,
   ...rest
 }) {
   const isControlled = checked !== undefined;
@@ -35,6 +36,7 @@ export function Checkbox({
       <span
         role="checkbox"
         aria-checked={on}
+        aria-label={ariaLabel ?? (typeof label === 'string' ? label : '체크박스')}
         id={id}
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } }}

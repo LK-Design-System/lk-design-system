@@ -1,5 +1,5 @@
 import React from 'react';
-import { BRAND_LOGO_NAMES, BrandLogo, Lockup } from '../src/index.js';
+import { BRAND_LOGO_NAMES, BrandLogo, Lockup, Overline } from '../src/index.js';
 
 const meta = {
   title: '파운데이션/브랜드',
@@ -104,6 +104,101 @@ export const LKRoboticsLogo = {
         </div>
       </section>
     </main>
+  ),
+};
+
+export const LockupOverlineCard = {
+  name: 'Lockup · Overline card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div style={{ background: 'var(--bw-paper)', padding: '22px 24px', fontFamily: 'var(--font-sans)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--label-assistive)', marginBottom: 10 }}>
+            Lockup — mark · stacked · inline
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: '#FFFFFF', border: '1px solid var(--bw-border)' }}>
+            <Lockup variant="mark" tone="ink" height={46} />
+            <Lockup variant="stacked" tone="ink" height={66} />
+            <Lockup variant="inline" tone="ink" height={30} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: '#0E1329', marginTop: 12 }}>
+            <Lockup variant="mark" tone="white" height={46} />
+            <Lockup variant="stacked" tone="white" height={66} />
+            <Lockup variant="inline" tone="white" height={30} />
+          </div>
+        </div>
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--label-assistive)', marginBottom: 10 }}>
+            Overline (eyebrow kicker)
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <Overline>AI Robot Platform</Overline>
+            <div style={{ fontSize: 22, fontWeight: 800, letterSpacing: -0.5, color: 'var(--text-strong)' }}>
+              현장을 지키는 자율주행 로봇
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const BrandLogoCard = {
+  name: 'BrandLogo card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 680, height: 460, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+          Full-colour marks · 40px
+        </div>
+        <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22 }}>
+          {['apple', 'facebook', 'google'].map((name) => (
+            <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <BrandLogo name={name} size={40} />
+              <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--label-alternative)' }}>{name}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+          플랫폼 · 소셜 · 40px
+        </div>
+        <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22 }}>
+          {['github', 'huggingface', 'linkedin', 'x', 'youtube'].map((name) => (
+            <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <BrandLogo name={name} size={40} />
+              <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--label-alternative)' }}>{name}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+          In a sign-in button
+        </div>
+        <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--bw-border)', background: 'var(--bw-white)', fontSize: 15, fontWeight: 700, color: 'var(--label-normal)' }}>
+            <BrandLogo name="google" size={20} /> Google로 계속하기
+          </span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--bw-border)', background: 'var(--bw-white)', fontSize: 15, fontWeight: 700, color: 'var(--label-normal)' }}>
+            <BrandLogo name="apple" size={20} /> Apple로 계속하기
+          </span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--bw-border)', background: 'var(--bw-white)', fontSize: 15, fontWeight: 700, color: 'var(--label-normal)' }}>
+            <BrandLogo name="github" size={20} /> GitHub로 계속하기
+          </span>
+        </div>
+
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+          다크 서피스 · mono
+        </div>
+        <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22, background: 'var(--surface-inverse)', padding: '14px 18px', borderRadius: 'var(--radius-md)', color: 'var(--text-on-inverse)' }}>
+          {['github', 'huggingface', 'linkedin', 'x', 'youtube'].map((name) => (
+            <BrandLogo key={name} name={name} size={28} mono />
+          ))}
+        </div>
+      </div>
+    </div>
   ),
 };
 

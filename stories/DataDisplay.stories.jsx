@@ -8,6 +8,7 @@ import {
   DonutChart,
   Icon,
   Sparkline,
+  StatusBadge,
   Table,
   Tree,
 } from '../src/index.js';
@@ -76,6 +77,16 @@ export const ChartsAndCalendar = {
   ),
 };
 
+export const CalendarCard = {
+  name: 'Calendar card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 360, height: 340, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <Calendar defaultValue="2026-07-03" />
+    </div>
+  ),
+};
+
 export const TablesAndHierarchy = {
   name: '표와 계층',
   render: () => (
@@ -115,5 +126,28 @@ export const TablesAndHierarchy = {
         ]}
       />
     </main>
+  ),
+};
+
+export const TableCard = {
+  name: 'Table card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 440, height: 260, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 8 }}>
+        <Table
+          columns={[
+            { key: 'code', label: '모델' },
+            { key: 'site', label: '현장' },
+            { key: 'status', label: '상태', render: (row) => <StatusBadge tone={row.tone}>{row.status}</StatusBadge> },
+          ]}
+          rows={[
+            { code: 'LKR-T1', site: '판교 물류센터', status: '가동중', tone: 'positive' },
+            { code: 'LKR-CP', site: '인천공항 T2', status: '점검 중', tone: 'warning' },
+            { code: 'LKR-S1', site: '고리 발전소', status: '오프라인', tone: 'offline' },
+          ]}
+        />
+      </div>
+    </div>
   ),
 };

@@ -43,7 +43,7 @@ assert(guidelineFiles.length === 20, `Expected 20 guideline HTML files, found ${
 assert(componentCardFiles.length === 83, `Expected 83 component card HTML files, found ${componentCardFiles.length}.`);
 assert(templateCardFiles.length === 4, `Expected 4 template card HTML files, found ${templateCardFiles.length}.`);
 
-const auditSource = await read('stories/Audit.stories.jsx');
+const auditSource = await read('stories/Audit.data.jsx');
 const auditGuidelines = extractPaths(auditSource, /['"](guidelines\/[^'"]+\.html)['"]/g);
 const auditComponents = extractPaths(auditSource, /['"](components\/[^'"]+\.card\.html)['"]/g);
 const auditTemplates = extractPaths(auditSource, /['"](templates-cards\/[^'"]+\.card\.html)['"]/g);
@@ -55,12 +55,12 @@ const staleGuidelines = diff(auditGuidelines, guidelineFiles);
 const staleComponents = diff(auditComponents, componentCardFiles);
 const staleTemplates = diff(auditTemplates, templateCardFiles);
 
-assert(missingGuidelines.length === 0, `Audit story is missing guideline files:\n${missingGuidelines.join('\n')}`);
-assert(missingComponents.length === 0, `Audit story is missing component card files:\n${missingComponents.join('\n')}`);
-assert(missingTemplates.length === 0, `Audit story is missing template card files:\n${missingTemplates.join('\n')}`);
-assert(staleGuidelines.length === 0, `Audit story references missing guideline files:\n${staleGuidelines.join('\n')}`);
-assert(staleComponents.length === 0, `Audit story references missing component card files:\n${staleComponents.join('\n')}`);
-assert(staleTemplates.length === 0, `Audit story references missing template card files:\n${staleTemplates.join('\n')}`);
+assert(missingGuidelines.length === 0, `Audit data is missing guideline files:\n${missingGuidelines.join('\n')}`);
+assert(missingComponents.length === 0, `Audit data is missing component card files:\n${missingComponents.join('\n')}`);
+assert(missingTemplates.length === 0, `Audit data is missing template card files:\n${missingTemplates.join('\n')}`);
+assert(staleGuidelines.length === 0, `Audit data references missing guideline files:\n${staleGuidelines.join('\n')}`);
+assert(staleComponents.length === 0, `Audit data references missing component card files:\n${staleComponents.join('\n')}`);
+assert(staleTemplates.length === 0, `Audit data references missing template card files:\n${staleTemplates.join('\n')}`);
 
 const legacySource = await read('stories/LegacyPreviews.stories.jsx');
 for (const glob of [

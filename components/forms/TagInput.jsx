@@ -5,7 +5,7 @@ import React from 'react';
  * A field that turns typed entries into removable chips (핵심 기술, 태그). Enter
  * adds; Backspace on an empty field removes the last. Value is a string[].
  */
-export function TagInput({ value, defaultValue = [], onChange, placeholder = '입력 후 Enter', disabled = false, style, ...rest }) {
+export function TagInput({ value, defaultValue = [], onChange, placeholder = '입력 후 Enter', disabled = false, style, 'aria-label': ariaLabel, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
   const tags = isControlled ? value : internal;
@@ -25,6 +25,7 @@ export function TagInput({ value, defaultValue = [], onChange, placeholder = '�
       ))}
       <input
         value={draft} disabled={disabled} placeholder={tags.length ? '' : placeholder}
+        aria-label={ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '태그 입력')}
         onChange={(e) => setDraft(e.target.value)}
         onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); add(draft); } else if (e.key === 'Backspace' && !draft && tags.length) remove(tags[tags.length - 1]); }}
         style={{ flex: 1, minWidth: 90, height: 28, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--label-normal)' }}

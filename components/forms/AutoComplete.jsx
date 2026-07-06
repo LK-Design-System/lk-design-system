@@ -6,7 +6,7 @@ import React from 'react';
  * click / mousedown a row to select. Controlled (`value`) or uncontrolled.
  * `onSelect` returns the chosen option value.
  */
-export function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, placeholder = '입력하세요', size = 'md', style, ...rest }) {
+export function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, placeholder = '입력하세요', size = 'md', style, 'aria-label': ariaLabel, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue || '');
   const [open, setOpen] = React.useState(false);
@@ -20,6 +20,7 @@ export function AutoComplete({ options = [], value, defaultValue, onChange, onSe
     <div style={{ position: 'relative', ...style }} {...rest}>
       <input
         value={val} placeholder={placeholder}
+        aria-label={ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '입력')}
         onChange={(e) => { set(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 120)}

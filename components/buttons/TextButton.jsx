@@ -9,7 +9,7 @@ import React from 'react';
  */
 export function TextButton({
   children, tone = 'signal', size = 'md', arrow = false, underline = false,
-  disabled = false, as = 'button', style, onMouseEnter, onMouseLeave, ...rest
+  disabled = false, as = 'button', style, onMouseEnter, onMouseLeave, type, ...rest
 }) {
   const [hover, setHover] = React.useState(false);
   const color = tone === 'neutral' ? 'var(--label-neutral)' : tone === 'danger' ? 'var(--bw-red)' : 'var(--lk-accent-ink)';
@@ -19,6 +19,7 @@ export function TextButton({
     <Comp
       className="lk-textbtn"
       disabled={as === 'button' ? disabled : undefined}
+      type={as === 'button' ? (type ?? 'button') : undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
       style={{

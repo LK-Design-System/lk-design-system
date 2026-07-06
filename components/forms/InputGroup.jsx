@@ -5,7 +5,7 @@ import React from 'react';
  * An input flanked by prefix / suffix addons (units, protocols, currency). The
  * addons sit on a soft fill with hairline dividers.
  */
-export function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder, size = 'md', disabled = false, inputProps, style, ...rest }) {
+export function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder, size = 'md', disabled = false, inputProps, style, 'aria-label': ariaLabel, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue || '');
   const val = isControlled ? value : internal;
@@ -18,7 +18,7 @@ export function InputGroup({ prefix, suffix, value, defaultValue, onChange, plac
     <div style={{ display: 'inline-flex', alignItems: 'stretch', height: h, width: '100%', boxSizing: 'border-box', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-input)', background: 'var(--bw-white)', overflow: 'hidden', opacity: disabled ? 0.5 : 1, ...style }} {...rest}>
       {prefix != null && <Addon node={prefix} side="left" />}
       <input
-        value={val} disabled={disabled} placeholder={placeholder} onChange={(e) => set(e.target.value)}
+        value={val} disabled={disabled} placeholder={placeholder} aria-label={ariaLabel ?? inputProps?.['aria-label'] ?? (typeof placeholder === 'string' ? placeholder : '입력')} onChange={(e) => set(e.target.value)}
         style={{ flex: 1, minWidth: 0, padding: '0 14px', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 15, color: 'var(--label-normal)' }}
         {...inputProps}
       />

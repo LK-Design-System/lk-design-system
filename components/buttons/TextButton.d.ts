@@ -11,7 +11,7 @@ export interface TextButtonProps extends React.HTMLAttributes<HTMLElement> {
   underline?: boolean;
   disabled?: boolean;
   /** 렌더 요소. @default "button" */
-  as?: any;
+  as?: React.ElementType;
   children?: React.ReactNode;
 }
 

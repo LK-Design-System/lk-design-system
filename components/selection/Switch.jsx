@@ -15,6 +15,7 @@ export function Switch({
   size = 'md',
   disabled = false,
   id,
+  'aria-label': ariaLabel,
   ...rest
 }) {
   const isControlled = checked !== undefined;
@@ -40,6 +41,7 @@ export function Switch({
       <span
         role="switch"
         aria-checked={on}
+        aria-label={ariaLabel ?? (typeof label === 'string' ? label : '스위치')}
         id={id}
         tabIndex={disabled ? -1 : 0}
         onFocus={() => setFocus(true)}

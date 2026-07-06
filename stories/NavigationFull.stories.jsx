@@ -24,7 +24,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: '컴포넌트/내비게이션 상세',
+  title: '컴포넌트/내비게이션',
   parameters: {
     docs: {
       description: {
@@ -100,6 +100,62 @@ export const AppNavigation = {
   ),
 };
 
+export const SideNavUserMenuCard = {
+  name: 'SideNav · UserMenu card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [tab, setTab] = React.useState('fleet-patrol');
+    const [collapsed, setCollapsed] = React.useState(true);
+    return (
+      <div data-visual-crop-root style={{ width: 330, height: 650, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <SideNav
+          value={tab}
+          onChange={setTab}
+          width={252}
+          overlay
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+          style={{ height: 560 }}
+          header={<Lockup variant="inline" color="var(--label-normal)" height={24} />}
+          headerCollapsed={<Lockup variant="mark" color="var(--label-normal)" height={20} />}
+          items={[
+            { heading: '관제' },
+            { value: 'dash', label: '대시보드', icon: <Icon name="home" size={19} /> },
+            {
+              value: 'fleet',
+              label: '플릿',
+              icon: <Icon name="setting" size={19} />,
+              children: [
+                { value: 'fleet-patrol', label: '순찰 로봇', badge: '8' },
+                { value: 'fleet-clean', label: '청소 로봇' },
+                { value: 'fleet-logi', label: '물류 로봇' },
+              ],
+            },
+            { value: 'map', label: '맵', icon: <Icon name="location" size={19} /> },
+            { heading: '운영' },
+            { value: 'events', label: '이벤트', icon: <Icon name="bell" size={19} />, badge: '5' },
+            { value: 'plan', label: '일정', icon: <Icon name="calendar" size={19} /> },
+          ]}
+          footer={
+            <UserMenu
+              name="김도윤"
+              detail="관제 어드민"
+              status="online"
+              collapsed={collapsed}
+              items={[
+                { label: '프로필' },
+                { label: '환경설정' },
+                { divider: true },
+                { label: '로그아웃', danger: true },
+              ]}
+            />
+          }
+        />
+      </div>
+    );
+  },
+};
+
 export const CompactNavigation = {
   name: '컴팩트 내비게이션',
   render: () => (
@@ -141,6 +197,31 @@ export const CompactNavigation = {
   ),
 };
 
+export const BottomNavCard = {
+  name: 'BottomNav card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [nav, setNav] = React.useState('home');
+    return (
+      <div data-visual-crop-root style={{ width: 360, height: 220, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <div style={{ width: 320, border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ height: 90, background: 'var(--bw-mist)' }} />
+          <BottomNav
+            value={nav}
+            onChange={setNav}
+            items={[
+              { value: 'home', label: '홈', icon: <Icon name="home" size={22} /> },
+              { value: 'fleet', label: '로봇', icon: <Icon name="setting" size={22} /> },
+              { value: 'alerts', label: '알림', icon: <Icon name="bell" size={22} /> },
+              { value: 'me', label: '내정보', icon: <Icon name="person" size={22} /> },
+            ]}
+          />
+        </div>
+      </div>
+    );
+  },
+};
+
 export const MenusAndWizard = {
   name: '메뉴와 위저드',
   render: () => (
@@ -163,7 +244,59 @@ export const MenusAndWizard = {
   ),
 };
 
+export const FooterCard = {
+  name: 'Footer card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 900, height: 300, background: 'var(--bw-paper)' }}>
+      <Footer />
+      <div style={{ padding: '14px 20px 0' }}>
+        <Footer
+          compact
+          copyright="© 2026 LK ROBOTICS Inc. · 관제 플랫폼 v2.4"
+          links={[{ label: '고객지원', href: '#' }, { label: '릴리스 노트', href: '#' }]}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const TabsCard = {
+  name: 'Tabs card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => {
+    const [tab, setTab] = React.useState('all');
+    return (
+      <div data-visual-crop-root style={{ width: 520, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+        <Tabs
+          value={tab}
+          onChange={setTab}
+          items={[
+            { value: 'all', label: '전체', count: 24 },
+            { value: 'patrol', label: '순찰' },
+            { value: 'vision', label: '비전' },
+            { value: 'transport', label: '운반' },
+          ]}
+        />
+      </div>
+    );
+  },
+};
+
+export const StepsCard = {
+  name: 'Steps card parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => (
+    <div data-visual-crop-root style={{ width: 720, height: 180, background: 'var(--bw-paper)', padding: '28px 24px', boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: 560 }}>
+        <Steps current={2} steps={['문의', '현장 실사', '설치', '관제 연동']} />
+      </div>
+    </div>
+  ),
+};
+
 export const BreadcrumbCard = {
   name: 'Breadcrumb card parity',
+  tags: ['!dev', 'visual-parity'],
   render: () => <Breadcrumb items={[{ label: '홈', href: '#' }, { label: '제품', href: '#' }, { label: 'LKR-T1' }]} />,
 };

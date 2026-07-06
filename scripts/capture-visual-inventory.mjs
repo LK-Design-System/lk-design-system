@@ -8,6 +8,17 @@ import { chromium } from '@playwright/test';
 const root = process.cwd();
 const staticDir = path.join(root, 'storybook-static');
 const outDir = path.join(root, 'visual-artifacts', 'inventory');
+const visualRandomSeed = 0x4f14ff;
+
+const seededRandomInitScript = `
+(() => {
+  let seed = ${visualRandomSeed} >>> 0;
+  Math.random = () => {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 0x100000000;
+  };
+})();
+`;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -140,7 +151,8 @@ function storySpecificity(story, exports) {
   return exports.reduce((score, exportName) => {
     const token = normalizedIdentifier(exportName);
     if (!token) return score;
-    if (storyTokens.some((storyToken) => storyToken === `${token}card` || storyToken.endsWith(`${token}card`))) return score + 20;
+    if (storyTokens.some((storyToken) => storyToken === `${token}card`)) return score + 40;
+    if (storyTokens.some((storyToken) => storyToken.endsWith(`${token}card`))) return score + 20;
     if (cardTokens.some((storyToken) => storyToken.endsWith(`${token}card`))) return score + 20;
     if (storyTokens.some((storyToken) => storyToken.endsWith('card') && storyToken.includes(token))) return score + 12;
     if (storyTokens.some((storyToken) => storyToken === token)) return score + 8;
@@ -164,11 +176,10 @@ function storyBlock(source, exportName) {
 
 function implementationStories(entries) {
   const excluded = new Set([
-    './stories/Audit.stories.jsx',
+    './stories/Audit.data.jsx',
     './stories/LegacyPreviews.stories.jsx',
     './stories/Overview.stories.jsx',
     './stories/TokenStrategy.stories.jsx',
-    './stories/VisualParityLedger.stories.jsx',
   ]);
   return Object.values(entries)
     .filter((entry) => entry.type === 'story' && !excluded.has(entry.importPath))
@@ -176,7 +187,7 @@ function implementationStories(entries) {
 }
 
 async function mapComponentCardsToStories(entries, componentCards) {
-  const rows = parseComponentRows(await read('stories/Audit.stories.jsx'));
+  const rows = parseComponentRows(await read('stories/Audit.data.jsx'));
   const rowCards = rows.map((row) => row.card).sort();
   const missingRows = componentCards.filter((file) => !rowCards.includes(file));
   const staleRows = rowCards.filter((file) => !componentCards.includes(file));
@@ -211,8 +222,9 @@ async function mapComponentCardsToStories(entries, componentCards) {
       .filter(Boolean)
       .sort((a, b) => {
         if (a.matchMode !== b.matchMode) return a.matchMode === 'story-block' ? -1 : 1;
+        if (a.matchedExports.length !== b.matchedExports.length) return b.matchedExports.length - a.matchedExports.length;
         const specificity = storySpecificity(b.story, row.exports) - storySpecificity(a.story, row.exports);
-        return specificity || b.matchedExports.length - a.matchedExports.length || a.story.id.localeCompare(b.story.id, 'ko');
+        return specificity || a.story.id.localeCompare(b.story.id, 'ko');
       })
       .map(({ story, matchedExports, matchMode }) => ({
         id: story.id,
@@ -260,6 +272,12 @@ async function mapComponentCardsToStories(entries, componentCards) {
 
 
 async function screenshotPrimaryViewport(page, filePath, viewport) {
+  const cropRoot = page.locator('[data-visual-crop-root]').first();
+  if (await cropRoot.count()) {
+    await cropRoot.screenshot({ path: filePath, animations: 'disabled' });
+    return;
+  }
+
   const hasVisibleFixedElement = await page.evaluate(() => [...document.body.querySelectorAll('*')].some((element) => {
     const style = getComputedStyle(element);
     if (style.position !== 'fixed' || style.visibility === 'hidden' || style.display === 'none') return false;
@@ -291,6 +309,39 @@ async function screenshotPrimaryViewport(page, filePath, viewport) {
   }, { width: viewport.width, height: viewport.height });
 
   await page.screenshot({ path: filePath, clip, animations: 'disabled' });
+}
+
+async function hideLegacyPreviewChrome(page) {
+  await page.locator('iframe').first().evaluate((iframe) => {
+    iframe.style.border = '0';
+    iframe.style.borderRadius = '0';
+  });
+
+  const frameHandle = await page.locator('iframe').first().elementHandle();
+  const frame = await frameHandle?.contentFrame();
+  if (!frame) return;
+
+  await frame.evaluate(() => {
+    const themeToggle = document.getElementById('__om-theme-toggle');
+    if (themeToggle) themeToggle.style.display = 'none';
+  });
+}
+
+async function screenshotLegacyViewport(page, filePath, viewport) {
+  const iframe = page.locator('iframe').first();
+  await iframe.scrollIntoViewIfNeeded();
+  const box = await iframe.boundingBox();
+  assert(box, 'Unable to locate legacy preview iframe bounding box.');
+  await page.screenshot({
+    path: filePath,
+    clip: {
+      x: Math.round(box.x),
+      y: Math.round(box.y),
+      width: viewport.width,
+      height: viewport.height,
+    },
+    animations: 'disabled',
+  });
 }
 
 async function ensureVisibleScreenshot(filePath, metadata) {
@@ -337,13 +388,14 @@ async function main() {
 
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1 });
+    await page.addInitScript({ content: seededRandomInitScript });
 
     for (const selected of componentCards) {
       const source = await read(selected);
       const viewport = parseViewport(source);
       await page.setViewportSize({
-        width: Math.max(360, Math.min(1400, viewport.width + 80)),
-        height: Math.max(240, Math.min(1100, viewport.height + 160)),
+        width: Math.max(720, Math.min(1800, viewport.width + 360)),
+        height: Math.max(360, Math.min(1300, viewport.height + 260)),
       });
       await page.goto(storyUrl(origin, legacyStory.id, { selected }), { waitUntil: 'networkidle', timeout: 30000 });
       await page.evaluate(async () => {
@@ -351,9 +403,10 @@ async function main() {
       });
       await page.waitForSelector('iframe', { timeout: 15000 });
       await page.waitForTimeout(250);
+      await hideLegacyPreviewChrome(page);
 
       const outputPath = path.join(outDir, 'legacy-components', `${slug(selected)}.png`);
-      await page.locator('iframe').first().screenshot({ path: outputPath, animations: 'disabled' });
+      await screenshotLegacyViewport(page, outputPath, viewport);
       manifest.legacyComponentCards.push(
         await ensureVisibleScreenshot(outputPath, {
           selected,
