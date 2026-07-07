@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — CircularProgress
- * A determinate ring gauge (배터리, 가동률). Signal-ink arc on a faint track;
+ * A determinate ring gauge (완료율, 품질 점수). Signal-ink arc on a faint track;
  * optional centered `showValue` percentage. Calm fill transition.
  */
 export function CircularProgress({ value = 0, max = 100, size = 48, thickness = 5, tone = 'signal', showValue = false, style, ...rest }) {

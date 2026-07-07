@@ -3,7 +3,7 @@
 이 레포는 운영 품질 게이트를 기준으로 관리합니다.
 
 1. 패키지 빌드: `npm run build`
-2. 토큰/타입 surface/publish policy 검증: `npm run check:tokens`, `npm run check:type-surface`, `npm run check:publish-policy`
+2. 토큰/타입 surface/contract/publish policy 검증: `npm run check:tokens`, `npm run check:type-surface`, `npm run check:contracts`, `npm run check:publish-policy`
 3. 소비 앱 smoke: `npm run check:consumer`
 4. 정적 문서 빌드와 접근성 guard: `npm run build:storybook`, `npm run check:a11y`
 5. CI 게이트: `.github/workflows/ci.yml`
@@ -43,25 +43,29 @@ npm run check:ops-release
 4. `tokens/source.json`에 구조화된 토큰 항목을 추가합니다.
 5. `npm run build`로 `src/`와 `dist/`를 재생성합니다.
 6. `stories/` 아래에 대표 Storybook 스토리를 추가합니다.
-7. 원본 카드와 대응되면 `stories/Audit.data.jsx`에 숨김 매핑 데이터를 갱신합니다.
-8. push 전에 `npm run check`를 실행합니다.
+7. `docs/COMPONENT_API_STATE_MATRIX.md` 기준으로 API, state, token, accessibility 계약을 갱신합니다.
+8. `docs/ACCESSIBILITY_CONTRACTS.md` 기준으로 keyboard/focus/screen reader 근거를 확인합니다.
+9. 원본 카드와 대응되면 `stories/Audit.data.jsx`에 숨김 매핑 데이터를 갱신합니다.
+10. push 전에 `npm run check`를 실행합니다.
 
 ## 토큰 소스 범위
 
 AI/Figma가 읽는 토큰 맵은 `tokens/source.json`에 있습니다.
 런타임 component token layer는 `tokens/components.css`에 있습니다.
 AI 도구로 UI를 생성하기 전에는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`를, Figma Variables를 export/import하기 전에는 `docs/FIGMA_TOKEN_WORKFLOW.md`를 읽습니다.
+토큰 lifecycle, deprecation, breaking change 기준은 `docs/TOKEN_GOVERNANCE.md`를 우선합니다.
 
 ## Storybook 범위
 
 Storybook은 모든 구현 세부사항이 아니라 실제로 필요한 컴포넌트 상태를 문서화합니다. 원본 카드와 1:1 비교하기 위한 `visual-parity` story는 `!dev` 태그로 sidebar에서 숨기고, public story에는 대표 상태만 남깁니다.
+디자인 시스템 계약은 `문서/디자인 시스템 계약` 아래에 둡니다. 도메인별 기준은 별도 결과 화면을 만들지 않고 관련 컴포넌트 story와 `docs/ROBOTICS_PATTERNS.md` 같은 문서 계약에 반영합니다.
 우선순위:
 
 - 기본 상태
 - disabled 또는 error 상태
 - 밀도 높은 dashboard 상태
 - 관련 있는 경우 inverse/dark 상태
-- 로보틱스 운영에 특화된 상태
+- 도메인 운영에 특화된 상태
 
 ## CI 범위
 
@@ -72,6 +76,7 @@ GitHub Actions workflow는 `main` push, pull request, manual dispatch에서 실�
 - 패키지 빌드
 - 기계가 읽을 수 있는 토큰 소스 검증
 - public `.d.ts` surface와 `any` 누출 검증
+- 디자인 시스템 계약 문서와 Storybook public 계약 페이지 검증
 - `private: true` 내부 Git 소비 / GitHub Packages 전환 정책 검증
 - 실제 소비 앱 Vite production smoke
 - TypeScript typecheck

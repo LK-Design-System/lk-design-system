@@ -1,9 +1,9 @@
 import React from 'react';
 
 /**
- * LK ROBOTICS — AspectRatio
- * A ratio-locked box (media, map tiles, video). Children fill it; overflow is
- * clipped and corners inherit.
+ * LK ROBOTICS AspectRatio
+ * A ratio-locked box for media, map tiles, previews, and video.
+ * Accepts a number or any CSS aspect-ratio string.
  */
 export function AspectRatio({ children, ratio = 16 / 9, style, ...rest }) {
   return (

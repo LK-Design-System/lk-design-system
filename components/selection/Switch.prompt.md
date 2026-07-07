@@ -1,7 +1,7 @@
 **Switch** — 즉시 on/off 토글(설정, 기능 플래그, 실시간 알림). 켜지면 트랙이 LK 시그널 잉크로 채워지고, 화이트 노브가 바운스 없이 차분히 이동합니다.
 
 ```jsx
-<Switch defaultChecked label="실시간 관제 알림" />
+<Switch defaultChecked label="변경 알림" />
 <Switch size="sm" checked={on} onChange={setOn} />
 <Switch disabled label="준비 중" />
 ```

@@ -2,16 +2,15 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — Footer
- * The site footer, mirroring the live lkrobotics-homepage `LKFooter`: a navy
- * band with a compact legal/info block — contact rows (tel · business reg.),
+ * The site footer: a navy band with a compact legal/info block — contact rows (tel · business reg.),
  * location rows (HQ · R&D · factory), and a copyright line. Defaults carry the
- * real LK company data, so a bare `<Footer />` reproduces the production
- * footer. White-alpha text is fixed (not themed) so the band reads the same in
+ * real LK company data, so a bare `<Footer />` produces the standard footer.
+ * White-alpha text is fixed (not themed) so the band reads the same in
  * both themes; the surface uses `--surface-inverse` so dark mode lifts it off
  * the page like the rest of the system.
  * Extensions beyond the live site (all opt-in): `columns` link columns +
  * `brand` (marketing growth), `links` policy row, `compact` one-line app
- * footer, `backToTop` floating button (part of the live footer's render).
+ * footer, `backToTop` floating button.
  */
 
 const DEFAULT_CONTACT = [
@@ -77,7 +76,7 @@ export function Footer({
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px' }}>
       {items.map((it, i) => (
         <span key={i} style={{ whiteSpace: 'nowrap' }}>
-          <span style={{ color: 'rgba(255, 255, 255, 0.62)', fontWeight: 700 }}>{it.label}</span>{' '}{it.value}
+          <span style={{ color: 'var(--inverse-label-neutral)', fontWeight: 700 }}>{it.label}</span>{' '}{it.value}
         </span>
       ))}
     </div>
@@ -93,22 +92,22 @@ export function Footer({
               {brand != null && <div style={{ flex: '1 1 240px', minWidth: 220 }}>{brand}</div>}
               {columns.map((col, ci) => (
                 <nav key={ci} aria-label={typeof col.heading === 'string' ? col.heading : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 11, minWidth: 108 }}>
-                  {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: '#fff', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
-                  {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.92)', 13.5))}
+                  {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: 'var(--text-on-inverse)', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
+                  {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'var(--inverse-label-alternative)', 'var(--inverse-label-strong)', 13.5))}
                 </nav>
               ))}
             </div>
-            <div style={{ height: 1, background: 'rgba(255, 255, 255, 0.14)', margin: '32px 0 24px' }} />
+            <div style={{ height: 1, background: 'var(--inverse-line-normal)', margin: '32px 0 24px' }} />
           </React.Fragment>
         )}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.45)', wordBreak: 'keep-all' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: 'var(--inverse-label-assistive)', wordBreak: 'keep-all' }}>
           {contact.length > 0 && entryRow(contact)}
           {locations.length > 0 && entryRow(locations)}
-          <span style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 20px', color: 'rgba(255, 255, 255, 0.38)' }}>
+          <span style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 20px', color: 'var(--inverse-label-disable)' }}>
             {copyright}
             {links.length > 0 && (
               <span style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                {links.map((l, i) => linkEl('p' + i, l, 'rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.92)', 12.5))}
+                {links.map((l, i) => linkEl('p' + i, l, 'var(--inverse-label-alternative)', 'var(--inverse-label-strong)', 12.5))}
               </span>
             )}
           </span>

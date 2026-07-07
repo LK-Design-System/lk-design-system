@@ -2,6 +2,8 @@
 
 이 워크플로는 현재 디자인 시스템을 손상시키지 않으면서 Figma Variables, `tokens/source.json`, 런타임 CSS를 맞추기 위한 기준입니다.
 
+토큰 lifecycle, deprecation, breaking change 기준은 `docs/TOKEN_GOVERNANCE.md`가 우선합니다. 이 문서는 Figma와 code 사이의 작업 순서를 설명합니다.
+
 ## 컬렉션
 
 Figma Variables는 세 개의 컬렉션으로 나눕니다.

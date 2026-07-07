@@ -2,7 +2,7 @@
 
 ```jsx
 <Toast tone="success" action="확인">지원이 완료되었어요</Toast>
-<Toast tone="info" onClose={dismiss}>관제 화면으로 이동했습니다.</Toast>
+<Toast tone="info" onClose={dismiss}>대시보드로 이동했습니다.</Toast>
 ```
 
 - **tone** — `info · success · warning · error`. **action** — 끝의 링크 노드. **onClose** — 닫기 버튼. 인라인·지속 공지에는 `Banner`를 쓰세요.

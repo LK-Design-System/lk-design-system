@@ -1,8 +1,8 @@
 **Tree** — 펼칠 수 있는 계층(조직도, 파일 트리).
 
 ```jsx
-<Tree defaultExpanded={['fleet']} onSelect={pick} nodes={[
-  { id: 'fleet', label: '로봇', children: [{ label: 'LKR-T1' }, { label: 'LKR-CP' }] },
+<Tree defaultExpanded={['workspace']} onSelect={pick} nodes={[
+  { id: 'workspace', label: '문서', children: [{ label: '개요' }, { label: '컴포넌트' }] },
 ]} />
 ```
 

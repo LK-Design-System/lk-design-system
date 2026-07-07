@@ -59,7 +59,7 @@ export function Switch({
         <span
           style={{
             position: 'absolute', top: 3, left: 3, width: d.k, height: d.k, borderRadius: '50%',
-            background: '#fff', boxShadow: '0 1px 3px rgba(8,14,33,0.28)',
+            background: 'var(--text-on-signal)', boxShadow: 'var(--shadow-control)',
             transform: on ? `translateX(${d.tx}px)` : 'translateX(0)',
             transition: 'transform var(--dur-base) var(--ease-in-out)',
           }}

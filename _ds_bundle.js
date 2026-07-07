@@ -4203,8 +4203,7 @@ function HistoryToolbar({
     borderRadius: 'var(--radius-sm)',
     background: 'var(--surface-raised)',
     color: 'var(--label-neutral)',
-    fontSize: 15,
-    fontWeight: 700
+    lineHeight: 0
   };
   return /*#__PURE__*/React.createElement("div", _extends({
     style: {
@@ -4225,7 +4224,11 @@ function HistoryToolbar({
       cursor: canUndo ? 'pointer' : 'not-allowed',
       opacity: canUndo ? 1 : 0.4
     }
-  }, "\u21B6"), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement(__ds_scope.Icon, {
+    name: "arrow-left",
+    size: 16,
+    "aria-hidden": "true"
+  })), /*#__PURE__*/React.createElement("button", {
     type: "button",
     disabled: !canRedo,
     onClick: onRedo,
@@ -4236,7 +4239,11 @@ function HistoryToolbar({
       cursor: canRedo ? 'pointer' : 'not-allowed',
       opacity: canRedo ? 1 : 0.4
     }
-  }, "\u21B7"), onReset && /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement(__ds_scope.Icon, {
+    name: "arrow-right",
+    size: 16,
+    "aria-hidden": "true"
+  })), onReset && /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: onReset,
     title: "\uCD08\uAE30\uD654",
@@ -4245,7 +4252,11 @@ function HistoryToolbar({
       ...base,
       cursor: 'pointer'
     }
-  }, "\u27F2"), typeof count === 'number' && /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement(__ds_scope.Icon, {
+    name: "close",
+    size: 16,
+    "aria-hidden": "true"
+  })), typeof count === 'number' && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11.5,
       color: 'var(--label-assistive)',
@@ -7275,7 +7286,8 @@ function Icon({
   className,
   ...rest
 }) {
-  const inner = FILL_ICONS[name] != null ? FILL_ICONS[name] : LINE_ICONS[name] != null ? LINE_OPEN + LINE_ICONS[name] + LINE_CLOSE : undefined;
+  const lineInner = LINE_ICONS[name];
+  const inner = FILL_ICONS[name] != null ? FILL_ICONS[name] : lineInner != null ? LINE_OPEN + lineInner + LINE_CLOSE : undefined;
   if (!inner) {
     return React.createElement("svg", {
       width: size,
@@ -8756,7 +8768,7 @@ function SideNav({
     padding: 10,
     transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)'
   };
-  const inner = /*#__PURE__*/React.createElement(React.Fragment, null, (brand != null || collapsible) && /*#__PURE__*/React.createElement("div", {
+  const inner = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("style", null, ".lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}"), (brand != null || collapsible) && /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
       display: 'flex',
@@ -8809,11 +8821,17 @@ function SideNav({
   }), /*#__PURE__*/React.createElement("path", {
     d: col ? 'M13.5 9l3 3-3 3' : 'M17 9l-3 3 3 3'
   })))), /*#__PURE__*/React.createElement("div", {
+    className: "lk-sidenav__scroll",
     style: {
       display: 'flex',
       flexDirection: 'column',
       gap: 2,
-      overflow: 'hidden auto'
+      flex: '1 1 auto',
+      minHeight: 0,
+      overflowX: 'hidden',
+      overflowY: 'auto',
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none'
     }
   }, items.map((o, i) => {
     if (o.heading) return col ? /*#__PURE__*/React.createElement("div", {
@@ -11998,43 +12016,75 @@ function TopicNode({
   const [open, setOpen] = React.useState(depth < 1);
   const [hover, setHover] = React.useState(false);
   const hasHz = typeof node.hz === 'number';
+  const toggleOpen = () => {
+    if (has) setOpen(value => !value);
+  };
+  const handleKeyDown = event => {
+    if (event.target !== event.currentTarget) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggleOpen();
+    }
+  };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    onClick: () => has && setOpen(!open),
+    role: "treeitem",
+    tabIndex: has ? 0 : undefined,
+    "aria-expanded": has ? open : undefined,
+    onClick: toggleOpen,
+    onKeyDown: handleKeyDown,
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false),
     style: {
+      width: '100%',
       display: 'flex',
       alignItems: 'center',
       gap: 8,
-      padding: '7px 10px',
-      borderRadius: 'var(--radius-sm)',
+      minHeight: 36,
+      padding: '8px 10px',
+      paddingLeft: 10 + depth * 20,
+      border: '1px solid transparent',
+      borderRadius: 'var(--radius-md)',
+      boxSizing: 'border-box',
       cursor: has ? 'pointer' : 'default',
-      background: hover ? 'var(--fill-alt)' : 'transparent',
-      transition: 'background var(--dur-fast) var(--ease-out)'
+      background: hover ? 'var(--surface-subtle)' : 'transparent',
+      textAlign: 'left',
+      fontFamily: 'var(--font-sans)',
+      fontSize: 14,
+      fontWeight: depth === 0 ? 'var(--fw-semibold)' : 'var(--fw-medium)',
+      lineHeight: '18px',
+      color: depth === 0 ? 'var(--label-strong)' : 'var(--label-normal)',
+      transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)'
     }
   }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true",
     style: {
-      width: 16,
+      width: 14,
       flexShrink: 0,
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: 'var(--label-assistive)',
-      transform: open ? 'none' : 'rotate(-90deg)',
+      color: 'var(--label-alternative)',
+      transform: has && open ? 'rotate(90deg)' : 'none',
       transition: 'transform var(--dur-fast) var(--ease-out)'
     }
   }, has && /*#__PURE__*/React.createElement(__ds_scope.Icon, {
-    name: "chevron-down",
+    name: "chevron-right",
     size: 14
   })), /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: 13.5,
-      fontWeight: has ? 700 : 500,
-      color: 'var(--label-normal)'
+      minWidth: 0,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
     }
   }, node.name), node.type && /*#__PURE__*/React.createElement("code", {
     style: {
-      fontSize: 11,
+      maxWidth: '42%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      fontSize: 12,
+      lineHeight: '18px',
       color: 'var(--label-alternative)',
       fontFamily: 'ui-monospace,SFMono-Regular,monospace'
     }
@@ -12043,12 +12093,13 @@ function TopicNode({
       marginLeft: 'auto',
       display: 'flex',
       alignItems: 'center',
-      gap: 12,
+      gap: 10,
       flexShrink: 0
     }
   }, hasHz && /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: 11,
+      fontSize: 12,
+      lineHeight: '18px',
       color: 'var(--label-assistive)',
       fontVariantNumeric: 'tabular-nums'
     }
@@ -12062,11 +12113,6 @@ function TopicNode({
     checked: !!node.subscribed,
     onChange: () => onToggle && onToggle(node)
   })))), open && has && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginLeft: 18,
-      borderLeft: '1px solid var(--bw-band)',
-      paddingLeft: 2
-    }
   }, kids.map((k, i) => /*#__PURE__*/React.createElement(TopicNode, {
     key: i,
     node: k,
@@ -12078,7 +12124,7 @@ function TopicNode({
 /**
  * LK ROBOTICS — TopicTree
  * ROS topic / TF hierarchy — expandable rows (chevron via the DS `Icon`, hover
- * highlight, nested guide line) with type + Hz metadata and an optional
+ * highlight) with type + Hz metadata and an optional
  * per-topic subscribe toggle (DS `Switch`). Domain-specialized data tree.
  */
 function TopicTree({
@@ -12088,7 +12134,10 @@ function TopicTree({
   ...rest
 }) {
   return /*#__PURE__*/React.createElement("div", _extends({
+    role: "tree",
     style: {
+      display: 'grid',
+      gap: 2,
       fontFamily: 'var(--font-sans)',
       ...style
     }
@@ -12429,11 +12478,25 @@ const CT = {
   negative: 'var(--bw-red)',
   navy: 'var(--bw-ink)'
 };
+const ICON_SIZE = 20;
+function normalizeIcon(icon) {
+  if (!React.isValidElement(icon)) return icon;
+  return React.cloneElement(icon, {
+    size: icon.props.size ?? ICON_SIZE,
+    width: icon.props.width ?? ICON_SIZE,
+    height: icon.props.height ?? ICON_SIZE,
+    style: {
+      display: 'block',
+      ...icon.props.style
+    }
+  });
+}
 
 /**
  * LK ROBOTICS — Callout
- * An emphasized note block with a left accent bar and a soft tint. Heavier than
- * Banner — for guidance, tips, and important standing notes in body content.
+ * An emphasized note block with a tonal icon, soft tint, and outline.
+ * Heavier than Banner — for guidance, tips, and important standing notes in body
+ * content.
  */
 function Callout({
   tone = 'signal',
@@ -12444,24 +12507,32 @@ function Callout({
   ...rest
 }) {
   const c = CT[tone] || CT.signal;
+  const normalizedIcon = normalizeIcon(icon);
   return /*#__PURE__*/React.createElement("div", _extends({
     style: {
       display: 'flex',
       gap: 14,
       padding: '16px 18px',
-      background: `color-mix(in srgb, ${c} 8%, var(--surface-card))`,
+      background: `color-mix(in srgb, ${c} 7%, var(--surface-card))`,
+      border: `1px solid color-mix(in srgb, ${c} 32%, var(--border-subtle))`,
       borderRadius: 'var(--radius-lg)',
-      borderLeft: `3px solid ${c}`,
+      boxShadow: `inset 0 1px 0 color-mix(in srgb, ${c} 12%, transparent)`,
       fontFamily: 'var(--font-sans)',
       ...style
     }
   }, rest), icon && /*#__PURE__*/React.createElement("span", {
     style: {
+      width: ICON_SIZE,
+      height: ICON_SIZE,
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       color: c,
+      lineHeight: 0,
       flexShrink: 0,
       marginTop: 1
     }
-  }, icon), /*#__PURE__*/React.createElement("div", {
+  }, normalizedIcon), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
       minWidth: 0
@@ -12470,7 +12541,7 @@ function Callout({
     style: {
       fontSize: 15,
       fontWeight: 'var(--fw-bold)',
-      letterSpacing: '-0.2px',
+      letterSpacing: 0,
       color: 'var(--label-normal)',
       marginBottom: children != null ? 4 : 0
     }

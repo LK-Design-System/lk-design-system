@@ -6,8 +6,8 @@ function useSliderStyles() {
     const el = document.createElement('style');
     el.id = 'lk-slider-css';
     el.textContent = `
-input.lk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--lk-accent-ink);box-shadow:0 1px 3px rgba(8,14,33,0.28);cursor:pointer;margin-top:0;}
-input.lk-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--lk-accent-ink);box-shadow:0 1px 3px rgba(8,14,33,0.28);cursor:pointer;}
+input.lk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;margin-top:0;}
+input.lk-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;}
 input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--bw-gray-300);cursor:not-allowed;}`;
     document.head.appendChild(el);
   }, []);

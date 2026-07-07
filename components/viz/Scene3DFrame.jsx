@@ -19,12 +19,12 @@ export function Scene3DFrame({ children, title, badges, toolbar, loading = false
       )}
       {toolbar != null && <div style={{ position: 'absolute', right: 12, top: 12 }}>{toolbar}</div>}
       {loading && (
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: 'rgba(8,14,33,0.45)', color: 'var(--text-on-inverse)', fontSize: 13, fontWeight: 600 }}>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: 'var(--scrim-dark)', color: 'var(--text-on-inverse)', fontSize: 13, fontWeight: 600 }}>
           불러오는 중…
         </div>
       )}
       {!loading && empty != null && (
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.52)', fontSize: 13 }}>{empty}</div>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--inverse-label-alternative)', fontSize: 13 }}>{empty}</div>
       )}
     </div>
   );

@@ -3,7 +3,7 @@
 ```jsx
 <Menubar menus={[
   { label: '파일', items: [{ label: '새로 만들기', shortcut: '⌘N' }, { divider: true }, { label: '내보내기' }] },
-  { label: '보기', items: [{ label: '지도' }, { label: '리스트' }] },
+  { label: '보기', items: [{ label: '미리보기' }, { label: '리스트' }] },
 ]} />
 ```
 

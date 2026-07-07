@@ -1,8 +1,8 @@
 **HoverCard** — 호버 시(약간의 지연) 열리고 벗어나면 닫히는 팝오버.
 
 ```jsx
-<HoverCard trigger={<Link>LKR-T1</Link>}>
-  <b>LKR-T1</b> · 안전 순찰 로봇 — 최대 8시간 연속 운영.
+<HoverCard trigger={<Link>문서 A</Link>}>
+  <b>문서 A</b> · 검토 중 · 오늘 업데이트됨.
 </HoverCard>
 ```
 

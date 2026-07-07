@@ -169,6 +169,110 @@
         "css": "--space-32"
       }
     },
+    "ratio": {
+      "1-1": {
+        "$type": "ratio",
+        "$value": "1 / 1",
+        "css": "--ratio-1-1",
+        "wds": "Basic/Ratio"
+      },
+      "1-2": {
+        "$type": "ratio",
+        "$value": "1 / 2",
+        "css": "--ratio-1-2",
+        "wds": "Basic/Ratio"
+      },
+      "5-4": {
+        "$type": "ratio",
+        "$value": "5 / 4",
+        "css": "--ratio-5-4",
+        "wds": "Basic/Ratio"
+      },
+      "4-3": {
+        "$type": "ratio",
+        "$value": "4 / 3",
+        "css": "--ratio-4-3",
+        "wds": "Basic/Ratio"
+      },
+      "3-2": {
+        "$type": "ratio",
+        "$value": "3 / 2",
+        "css": "--ratio-3-2",
+        "wds": "Basic/Ratio"
+      },
+      "16-10": {
+        "$type": "ratio",
+        "$value": "16 / 10",
+        "css": "--ratio-16-10",
+        "wds": "Basic/Ratio"
+      },
+      "golden": {
+        "$type": "ratio",
+        "$value": "1.618 / 1",
+        "css": "--ratio-golden",
+        "wds": "Basic/Ratio"
+      },
+      "16-9": {
+        "$type": "ratio",
+        "$value": "16 / 9",
+        "css": "--ratio-16-9",
+        "wds": "Basic/Ratio"
+      },
+      "2-1": {
+        "$type": "ratio",
+        "$value": "2 / 1",
+        "css": "--ratio-2-1",
+        "wds": "Basic/Ratio"
+      },
+      "21-9": {
+        "$type": "ratio",
+        "$value": "21 / 9",
+        "css": "--ratio-21-9",
+        "wds": "Basic/Ratio"
+      },
+      "4-5": {
+        "$type": "ratio",
+        "$value": "4 / 5",
+        "css": "--ratio-4-5",
+        "wds": "Basic/Ratio"
+      },
+      "3-4": {
+        "$type": "ratio",
+        "$value": "3 / 4",
+        "css": "--ratio-3-4",
+        "wds": "Basic/Ratio"
+      },
+      "2-3": {
+        "$type": "ratio",
+        "$value": "2 / 3",
+        "css": "--ratio-2-3",
+        "wds": "Basic/Ratio"
+      },
+      "10-16": {
+        "$type": "ratio",
+        "$value": "10 / 16",
+        "css": "--ratio-10-16",
+        "wds": "Basic/Ratio"
+      },
+      "goldenVertical": {
+        "$type": "ratio",
+        "$value": "1 / 1.618",
+        "css": "--ratio-golden-vertical",
+        "wds": "Basic/Ratio"
+      },
+      "9-16": {
+        "$type": "ratio",
+        "$value": "9 / 16",
+        "css": "--ratio-9-16",
+        "wds": "Basic/Ratio"
+      },
+      "9-21": {
+        "$type": "ratio",
+        "$value": "9 / 21",
+        "css": "--ratio-9-21",
+        "wds": "Basic/Ratio"
+      }
+    },
     "radius": {
       "sm": {
         "$type": "dimension",
@@ -189,6 +293,30 @@
         "$type": "dimension",
         "$value": "16px",
         "css": "--radius-xl"
+      },
+      "frameSm": {
+        "$type": "dimension",
+        "$value": "12px",
+        "css": "--radius-frame-sm",
+        "wds": "Frame/Radius Small"
+      },
+      "frameMd": {
+        "$type": "dimension",
+        "$value": "14px",
+        "css": "--radius-frame-md",
+        "wds": "Frame/Radius Medium"
+      },
+      "frameLg": {
+        "$type": "dimension",
+        "$value": "16px",
+        "css": "--radius-frame-lg",
+        "wds": "Frame/Radius Large"
+      },
+      "frameXl": {
+        "$type": "dimension",
+        "$value": "20px",
+        "css": "--radius-frame-xl",
+        "wds": "Frame/Radius Xlarge"
       },
       "pill": {
         "$type": "dimension",
@@ -277,6 +405,126 @@
         "$type": "cubicBezier",
         "$value": "cubic-bezier(0.4, 0, 0.2, 1)",
         "css": "--ease-out"
+      },
+      "decorateGradientSolidTop": {
+        "$type": "gradient",
+        "$value": "linear-gradient(180deg, var(--surface-raised) 0%, transparent 100%)",
+        "css": "--decorate-gradient-solid-top",
+        "wds": "Decorate/Gradient/Solid"
+      },
+      "decorateGradientSolidRight": {
+        "$type": "gradient",
+        "$value": "linear-gradient(270deg, var(--surface-raised) 0%, transparent 100%)",
+        "css": "--decorate-gradient-solid-right",
+        "wds": "Decorate/Gradient/Solid"
+      },
+      "decorateGradientSolidBottom": {
+        "$type": "gradient",
+        "$value": "linear-gradient(0deg, var(--surface-raised) 0%, transparent 100%)",
+        "css": "--decorate-gradient-solid-bottom",
+        "wds": "Decorate/Gradient/Solid"
+      },
+      "decorateGradientSolidLeft": {
+        "$type": "gradient",
+        "$value": "linear-gradient(90deg, var(--surface-raised) 0%, transparent 100%)",
+        "css": "--decorate-gradient-solid-left",
+        "wds": "Decorate/Gradient/Solid"
+      },
+      "decorateGradientMultipleTop": {
+        "$type": "gradient",
+        "$value": "linear-gradient(180deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%)",
+        "css": "--decorate-gradient-multiple-top",
+        "wds": "Decorate/Gradient/Multiple"
+      },
+      "decorateGradientMultipleRight": {
+        "$type": "gradient",
+        "$value": "linear-gradient(270deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%)",
+        "css": "--decorate-gradient-multiple-right",
+        "wds": "Decorate/Gradient/Multiple"
+      },
+      "decorateGradientMultipleBottom": {
+        "$type": "gradient",
+        "$value": "linear-gradient(0deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%)",
+        "css": "--decorate-gradient-multiple-bottom",
+        "wds": "Decorate/Gradient/Multiple"
+      },
+      "decorateGradientMultipleLeft": {
+        "$type": "gradient",
+        "$value": "linear-gradient(90deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%)",
+        "css": "--decorate-gradient-multiple-left",
+        "wds": "Decorate/Gradient/Multiple"
+      },
+      "decorateMaskFadeTop": {
+        "$type": "gradient",
+        "$value": "linear-gradient(180deg, #000 0%, transparent 100%)",
+        "css": "--decorate-mask-fade-top",
+        "wds": "Decorate/Gradient/Mask"
+      },
+      "decorateMaskFadeRight": {
+        "$type": "gradient",
+        "$value": "linear-gradient(270deg, #000 0%, transparent 100%)",
+        "css": "--decorate-mask-fade-right",
+        "wds": "Decorate/Gradient/Mask"
+      },
+      "decorateMaskFadeBottom": {
+        "$type": "gradient",
+        "$value": "linear-gradient(0deg, #000 0%, transparent 100%)",
+        "css": "--decorate-mask-fade-bottom",
+        "wds": "Decorate/Gradient/Mask"
+      },
+      "decorateMaskFadeLeft": {
+        "$type": "gradient",
+        "$value": "linear-gradient(90deg, #000 0%, transparent 100%)",
+        "css": "--decorate-mask-fade-left",
+        "wds": "Decorate/Gradient/Mask"
+      },
+      "interactionLayerNormal": {
+        "$type": "color",
+        "$value": "transparent",
+        "css": "--interaction-layer-normal",
+        "wds": "Decorate/Interaction"
+      },
+      "interactionLayerDefault": {
+        "$type": "color",
+        "$value": "rgba(112, 115, 124, 0.08)",
+        "css": "--interaction-layer-default",
+        "wds": "Decorate/Interaction"
+      },
+      "interactionLayerLight": {
+        "$type": "color",
+        "$value": "rgba(112, 115, 124, 0.05)",
+        "css": "--interaction-layer-light",
+        "wds": "Decorate/Interaction"
+      },
+      "interactionLayerStrong": {
+        "$type": "color",
+        "$value": "rgba(112, 115, 124, 0.14)",
+        "css": "--interaction-layer-strong",
+        "wds": "Decorate/Interaction"
+      },
+      "interactionOpacityNormal": {
+        "$type": "number",
+        "$value": 1,
+        "css": "--interaction-opacity-normal",
+        "wds": "Decorate/Interaction"
+      },
+      "interactionOpacityHovered": {
+        "$type": "number",
+        "$value": 0.92,
+        "css": "--interaction-opacity-hovered",
+        "wds": "Decorate/Interaction"
+      },
+      "interactionOpacityFocused": {
+        "$type": "number",
+        "$value": 0.84,
+        "css": "--interaction-opacity-focused",
+        "wds": "Decorate/Interaction"
+      },
+      "interactionOpacityPressed": {
+        "$type": "number",
+        "$value": 0.76,
+        "css": "--interaction-opacity-pressed",
+        "wds": "Decorate/Interaction"
       }
     }
   },
@@ -422,6 +670,46 @@
         "css": "--border-hairline"
       }
     },
+    "layout": {
+      "mobile": {
+        "safeAreaTop": {
+          "$type": "dimension",
+          "$value": "env(safe-area-inset-top, 0px)",
+          "css": "--mobile-safe-area-top",
+          "wds": "Spacing/Status"
+        },
+        "safeAreaBottom": {
+          "$type": "dimension",
+          "$value": "env(safe-area-inset-bottom, 0px)",
+          "css": "--mobile-safe-area-bottom",
+          "wds": "Spacing/Bottom"
+        },
+        "statusBarMinHeight": {
+          "$type": "dimension",
+          "$value": "44px",
+          "css": "--mobile-status-bar-min-height",
+          "wds": "Spacing/Status"
+        },
+        "homeIndicatorHeight": {
+          "$type": "dimension",
+          "$value": "34px",
+          "css": "--mobile-home-indicator-height",
+          "wds": "Spacing/Bottom"
+        },
+        "bottomBarMinHeight": {
+          "$type": "dimension",
+          "$value": "64px",
+          "css": "--mobile-bottom-bar-min-height",
+          "wds": "Spacing/Bottom"
+        },
+        "bottomActionPaddingBottom": {
+          "$type": "dimension",
+          "$value": "calc(var(--space-4) + var(--mobile-safe-area-bottom))",
+          "css": "--mobile-bottom-action-padding-bottom",
+          "wds": "Spacing/Bottom"
+        }
+      }
+    },
     "motion": {
       "fastOut": {
         "$type": "transition",
@@ -519,6 +807,134 @@
           "$type": "transition",
           "$value": "none",
           "css": "--component-button-transition"
+        }
+      }
+    },
+    "actionArea": {
+      "component": "components/buttons/ActionArea.jsx",
+      "tokens": {
+        "background": {
+          "$type": "color",
+          "$value": "var(--component-action-area-bg)",
+          "css": "--component-action-area-bg",
+          "ref": "semantic.surface.card",
+          "wds": "Action/Action Area"
+        },
+        "paddingX": {
+          "$type": "dimension",
+          "$value": "var(--component-action-area-padding-x)",
+          "css": "--component-action-area-padding-x",
+          "ref": "primitive.space.4",
+          "wds": "Action/Action Area"
+        },
+        "paddingY": {
+          "$type": "dimension",
+          "$value": "var(--component-action-area-padding-y)",
+          "css": "--component-action-area-padding-y",
+          "ref": "primitive.space.4",
+          "wds": "Action/Action Area"
+        },
+        "gap": {
+          "$type": "dimension",
+          "$value": "var(--component-action-area-gap)",
+          "css": "--component-action-area-gap",
+          "ref": "primitive.space.3",
+          "wds": "Action/Action Area"
+        },
+        "border": {
+          "$type": "border",
+          "$value": "var(--component-action-area-border)",
+          "css": "--component-action-area-border",
+          "ref": "semantic.border.subtle",
+          "wds": "Action/Action Area"
+        }
+      }
+    },
+    "toggleIcon": {
+      "component": "components/buttons/ToggleIcon.jsx",
+      "tokens": {
+        "sizeSm": {
+          "$type": "dimension",
+          "$value": "var(--component-toggle-icon-size-sm)",
+          "css": "--component-toggle-icon-size-sm",
+          "ref": "semantic.control.heightSm",
+          "wds": "Action/Toggle Icon"
+        },
+        "sizeMd": {
+          "$type": "dimension",
+          "$value": "var(--component-toggle-icon-size-md)",
+          "css": "--component-toggle-icon-size-md",
+          "ref": "semantic.control.heightMd",
+          "wds": "Action/Toggle Icon"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "var(--component-toggle-icon-bg)",
+          "css": "--component-toggle-icon-bg",
+          "ref": "semantic.surface.card",
+          "wds": "Action/Toggle Icon"
+        },
+        "activeBackground": {
+          "$type": "color",
+          "$value": "var(--component-toggle-icon-bg-active)",
+          "css": "--component-toggle-icon-bg-active",
+          "ref": "semantic.action.primary",
+          "wds": "Action/Toggle Icon"
+        },
+        "border": {
+          "$type": "border",
+          "$value": "var(--component-toggle-icon-border)",
+          "css": "--component-toggle-icon-border",
+          "ref": "semantic.border.subtle",
+          "wds": "Action/Toggle Icon"
+        }
+      }
+    },
+    "divider": {
+      "component": "components/content/Divider.jsx",
+      "tokens": {
+        "color": {
+          "$type": "color",
+          "$value": "var(--component-divider-color)",
+          "css": "--component-divider-color",
+          "ref": "semantic.border.subtle",
+          "wds": "Layout/Divider"
+        },
+        "thicknessNormal": {
+          "$type": "dimension",
+          "$value": "var(--component-divider-thickness-normal)",
+          "css": "--component-divider-thickness-normal",
+          "wds": "Layout/Divider"
+        },
+        "thicknessThick": {
+          "$type": "dimension",
+          "$value": "var(--component-divider-thickness-thick)",
+          "css": "--component-divider-thickness-thick",
+          "wds": "Layout/Divider"
+        }
+      }
+    },
+    "mobileSystemBars": {
+      "component": "components/layout/MobileSystemBars.jsx",
+      "tokens": {
+        "foreground": {
+          "$type": "color",
+          "$value": "var(--component-system-bars-fg)",
+          "css": "--component-system-bars-fg",
+          "ref": "semantic.text.strong",
+          "wds": "Layout/Essential"
+        },
+        "homeWidth": {
+          "$type": "dimension",
+          "$value": "var(--component-system-bars-home-width)",
+          "css": "--component-system-bars-home-width",
+          "wds": "Layout/Essential"
+        },
+        "homeHeight": {
+          "$type": "dimension",
+          "$value": "var(--component-system-bars-home-height)",
+          "css": "--component-system-bars-home-height",
+          "wds": "Layout/Essential"
         }
       }
     },

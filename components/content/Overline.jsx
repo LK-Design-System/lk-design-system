@@ -10,7 +10,7 @@ import React from 'react';
 export function Overline({ children, as = 'div', tone = 'muted', onDark = false, style, ...rest }) {
   const Comp = as;
   const color = onDark
-    ? (tone === 'signal' ? 'var(--lk-accent)' : tone === 'ink' ? '#fff' : 'rgba(255,255,255,0.60)')
+    ? (tone === 'signal' ? 'var(--lk-accent)' : tone === 'ink' ? 'var(--text-on-signal)' : 'var(--inverse-label-neutral)')
     : (tone === 'signal' ? 'var(--accent-text)' : tone === 'ink' ? 'var(--label-strong)' : 'var(--label-alternative)');
   return (
     <Comp

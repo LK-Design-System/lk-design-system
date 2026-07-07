@@ -1,10 +1,10 @@
 **Alert** — 네이비 스크림 위 중앙 모달 확인 다이얼로그. `open`으로 제어합니다.
 
 ```jsx
-<Alert open={open} title="로봇을 정지할까요?" tone="danger"
-  confirmLabel="정지" cancelLabel="취소"
+<Alert open={open} title="작업을 중단할까요?" tone="danger"
+  confirmLabel="중단" cancelLabel="취소"
   onConfirm={stop} onCancel={() => setOpen(false)} onClose={() => setOpen(false)}>
-  현재 순찰 중인 LKR-T1 3대가 즉시 정지됩니다.
+  현재 처리 중인 항목 3개가 즉시 중단됩니다.
 </Alert>
 ```
 

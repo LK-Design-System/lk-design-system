@@ -1,9 +1,11 @@
-**Divider** — 쿨 그레이 `--line-neutral` 토큰의 헤어라인 룰.
+**Divider** separates layout regions or inline groups using the WDS Layout/Divider primitive.
 
 ```jsx
 <Divider />
-<Divider label="또는" />
+<Divider variant="thick" />
 <span>A</span><Divider vertical /><span>B</span>
 ```
 
-- **vertical** — 인라인 구분선(행 높이만큼 늘어남). **label** — 가운데 텍스트 구분선. **inset** — 양 끝 px 간격.
+- Use `variant="normal"` for hairline separation and `variant="thick"` for stronger section breaks.
+- Use `vertical` only inside horizontal groups where the parent controls height.
+- Use `label` for "or" style separators between equivalent actions.

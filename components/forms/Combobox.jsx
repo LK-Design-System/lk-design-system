@@ -37,7 +37,7 @@ export function Combobox({ options = [], value, defaultValue = [], onChange, pla
               <div key={o.value} role="option" aria-selected={on} onClick={() => toggle(o.value)} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--fill-normal)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
                 style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 10px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, color: 'var(--label-normal)' }}>
                 <span style={{ width: 18, height: 18, borderRadius: 'var(--radius-sm)', border: `1px solid ${on ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`, background: on ? 'var(--lk-accent-ink)' : 'transparent', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  {on && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
+                  {on && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--text-on-signal)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
                 </span>
                 {o.label}
               </div>

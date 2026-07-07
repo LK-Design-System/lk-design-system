@@ -76,6 +76,7 @@ export function SideNav({
   const shell = { display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const inner = (
     <React.Fragment>
+      <style>{`.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}`}</style>
       {(brand != null || collapsible) && (
         <div style={{ position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 24, padding: col ? '14px 10px 10px' : '14px 10px 18px' }}>
           {brand}
@@ -91,7 +92,7 @@ export function SideNav({
           )}
         </div>
       )}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 2, overflow: 'hidden auto' }}>
+      <div className="lk-sidenav__scroll" style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: '1 1 auto', minHeight: 0, overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {items.map((o, i) => {
           if (o.heading) return col
             ? <div key={'h' + i} style={{ height: 1, flexShrink: 0, background: 'var(--bw-border)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} />
@@ -155,7 +156,7 @@ export function SideNav({
       onMouseEnter={overlay ? () => peek(true) : undefined} onMouseLeave={overlay ? () => peek(false) : undefined}
       style={overlay ? { position: 'relative', width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style }} {...rest}>
       {overlay ? (
-        <div style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : '0 16px 48px rgba(14, 19, 41, 0.18)' }}>{inner}</div>
+        <div style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : 'var(--shadow-lg)' }}>{inner}</div>
       ) : inner}
     </nav>
   );

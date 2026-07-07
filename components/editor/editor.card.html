@@ -42,9 +42,10 @@
     );
     const status = (
       <>
+        <span>1200 × 800 px · 0.05 m/px</span>
         <HistoryToolbar canUndo={step > 0} canRedo={step < 5} count={step}
-          onUndo={() => setStep((s) => Math.max(0, s - 1))} onRedo={() => setStep((s) => Math.min(5, s + 1))} onReset={() => setStep(0)} />
-        <span style={{ marginLeft: 'auto' }}>1200 × 800 px · 0.05 m/px</span>
+          onUndo={() => setStep((s) => Math.max(0, s - 1))} onRedo={() => setStep((s) => Math.min(5, s + 1))} onReset={() => setStep(0)}
+          style={{ marginLeft: 'auto' }} />
       </>
     );
     return (

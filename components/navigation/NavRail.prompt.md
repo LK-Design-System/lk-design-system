@@ -1,9 +1,9 @@
 **NavRail** — 세로 아이콘+라벨 내비게이션 레일(데스크톱 사이드 내비).
 
 ```jsx
-<NavRail defaultValue="fleet" onChange={setTab} items={[
-  { value: 'fleet', label: '로봇', icon: <Icon name="setting" size={22} /> },
-  { value: 'map', label: '관제', icon: <Icon name="location" size={22} /> },
+<NavRail defaultValue="docs" onChange={setTab} items={[
+  { value: 'docs', label: '문서', icon: <Icon name="document" size={22} /> },
+  { value: 'components', label: '컴포넌트', icon: <Icon name="layers" size={22} /> },
   { value: 'alerts', label: '알림', icon: <Icon name="bell" size={22} /> },
 ]} />
 ```

@@ -2,12 +2,12 @@ import React from 'react';
 import { IconButton, Lockup, TopBar, TopBarNavItem } from '../src/index.js';
 
 const meta = {
-  title: '컴포넌트/내비게이션',
+  title: 'WDS Core/3 Component/6 Navigation/Top Bar',
   component: TopBar,
   parameters: {
     docs: {
       description: {
-        component: '제품 및 운영 화면을 위한 application shell navigation pattern입니다.',
+        component: '브랜드, 중앙 메뉴, 액션 영역을 갖는 TopBar 패턴입니다.',
       },
     },
   },
@@ -16,9 +16,9 @@ const meta = {
 export default meta;
 
 const productMenu = [
-  { label: '순찰 로봇', href: '#' },
-  { label: '방역 로봇', href: '#' },
-  { label: '관제 플랫폼', href: '#' },
+  { label: '문서', href: '#' },
+  { label: '컴포넌트', href: '#' },
+  { label: '토큰', href: '#' },
 ];
 
 const SearchIcon = (
@@ -39,9 +39,9 @@ export const TopBarDefault = {
           actions={<IconButton variant="ghost" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
-          <TopBarNavItem active href="#" menuItems={productMenu}>제품</TopBarNavItem>
-          <TopBarNavItem href="#">기술</TopBarNavItem>
-          <TopBarNavItem href="#">회사소개</TopBarNavItem>
+          <TopBarNavItem active href="#" menuItems={productMenu}>문서</TopBarNavItem>
+          <TopBarNavItem href="#">컴포넌트</TopBarNavItem>
+          <TopBarNavItem href="#">토큰</TopBarNavItem>
           <TopBarNavItem href="#">문의</TopBarNavItem>
         </TopBar>
       </div>
@@ -51,12 +51,12 @@ export const TopBarDefault = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: '#fff' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
-          <TopBarNavItem active href="#" menuItems={productMenu}>제품</TopBarNavItem>
-          <TopBarNavItem href="#">기술</TopBarNavItem>
-          <TopBarNavItem href="#">회사소개</TopBarNavItem>
+          <TopBarNavItem active href="#" menuItems={productMenu}>문서</TopBarNavItem>
+          <TopBarNavItem href="#">컴포넌트</TopBarNavItem>
+          <TopBarNavItem href="#">토큰</TopBarNavItem>
           <TopBarNavItem href="#">문의</TopBarNavItem>
         </TopBar>
       </div>
@@ -82,8 +82,8 @@ const topBarMenuStyle = {
   top: '100%',
   left: '50%',
   transform: 'translate(-50%, 4px)',
-  background: 'var(--surface-card, #fff)',
-  border: '1px solid var(--line-normal, #E1E2E4)',
+  background: 'var(--surface-card)',
+  border: '1px solid var(--line-normal)',
   borderRadius: 14,
   boxShadow: 'var(--shadow-md)',
   padding: 8,
@@ -97,8 +97,8 @@ const topBarMenuStyle = {
 };
 
 function TopBarStaticNav({ dark = false }) {
-  const activeColor = dark ? '#fff' : 'var(--lk-accent-ink)';
-  const idleColor = dark ? 'rgba(255,255,255,0.66)' : 'var(--label-alternative)';
+  const activeColor = dark ? 'var(--text-on-inverse)' : 'var(--lk-accent-ink)';
+  const idleColor = dark ? 'var(--inverse-label-neutral)' : 'var(--label-alternative)';
   const underline = dark ? 'var(--lk-accent)' : 'var(--lk-accent-ink)';
   const itemStyle = {
     padding: '10px 12px',
@@ -112,15 +112,15 @@ function TopBarStaticNav({ dark = false }) {
   return (
     <React.Fragment>
       <span style={{ position: 'relative', display: 'inline-flex', alignSelf: 'stretch' }}>
-        <a href="#" style={{ ...topBarNavStyle, color: activeColor, boxShadow: `inset 0 -2.5px 0 ${underline}` }}>제품</a>
+        <a href="#" style={{ ...topBarNavStyle, color: activeColor, boxShadow: `inset 0 -2.5px 0 ${underline}` }}>문서</a>
         <span style={topBarMenuStyle}>
-          <a href="#" style={itemStyle}>순찰 로봇</a>
-          <a href="#" style={itemStyle}>방역 로봇</a>
-          <a href="#" style={itemStyle}>관제 플랫폼</a>
+          <a href="#" style={itemStyle}>문서</a>
+          <a href="#" style={itemStyle}>컴포넌트</a>
+          <a href="#" style={itemStyle}>토큰</a>
         </span>
       </span>
-      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>기술</a>
-      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>회사소개</a>
+      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>컴포넌트</a>
+      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>토큰</a>
       <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>문의</a>
     </React.Fragment>
   );
@@ -145,7 +145,7 @@ export const TopBarCard = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="ghost" label="검색" style={{ background: 'transparent', border: 'none', color: '#fff' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="검색" style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
         >
           <TopBarStaticNav dark />
         </TopBar>

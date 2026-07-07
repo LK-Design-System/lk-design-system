@@ -3,8 +3,8 @@
 ```jsx
 <Tabs items={[
   { value: 'all', label: '전체', count: 24 },
-  { value: 'patrol', label: '순찰' },
-  { value: 'vision', label: '비전' },
+  { value: 'review', label: '검토' },
+  { value: 'approved', label: '승인' },
 ]} defaultValue="all" onChange={setTab} />
 ```
 

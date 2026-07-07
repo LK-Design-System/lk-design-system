@@ -12,11 +12,11 @@
 | Component cards | 83 | 원본 카드와 React export 매핑 완료 |
 | Template cards | 4 | 원본 카드와 starter 폴더 매핑 완료 |
 | Runtime export gaps | 0 | 카드에서 필요한 public export 누락 없음 |
-| React exports | 145 | 패키지 엔트리에서 배포 대상 생성 |
-| Storybook public stories | 51 | public sidebar 노출 대상 |
+| React exports | 150 | 패키지 엔트리에서 배포 대상 생성 |
+| Storybook public stories | 95 | public sidebar 노출 대상 |
 | Storybook hidden visual parity stories | 82 | `visual-parity` + `!dev`로 숨김 |
-| Visual inventory React stories | 126 | `Audit`, `LegacyPreviews`, `Overview`, `TokenStrategy` 제외 캡처 대상 |
-| Accessibility checked implementation stories | 129 | 문서/원본 미리보기만 제외하고 검사 |
+| Visual inventory React stories | 170 | `Audit`, `LegacyPreviews`, `Overview`, `TokenStrategy` 제외 캡처 대상 |
+| Accessibility checked implementation stories | 169 | 문서/원본 미리보기만 제외하고 검사 |
 
 `components/navigation/navigation-footer.card.html`은 다른 카드처럼 destructuring으로 컴포넌트를 꺼내지 않고 namespace fallback으로 `Footer`를 참조합니다. export 누락은 아니며 원본 미리보기 대상에 포함합니다.
 
@@ -79,7 +79,7 @@
 | P1 | Visual inventory | Playwright PNG inventory plus card-to-story traceability for all 83 original component cards, all 83 same-viewport primary React captures, and every React implementation story |
 | P1 | Visual review report | Local HTML report comparing each original card with its same-viewport primary React capture and paired React story screenshots |
 | P1 | Visual pixel diff | Local pixel-diff manifest, diff PNGs, and HTML report for all 83 original-to-primary visual pairs |
-| P1 | Targeted parity stories | Dedicated Storybook parity stories added for high-mismatch form/status/overlay/viz/navigation/layout/cards/selection/feedback/data/content/brand/robotics cards so primary matching no longer falls back to broad inventory stories; these stories are tagged `visual-parity` + `!dev` so they stay capturable but hidden from the public sidebar |
+| P1 | Targeted parity stories | Dedicated Storybook parity stories added for high-mismatch form/status/overlay/viz/navigation/layout/cards/selection/feedback/data/content/brand/domain cards so primary matching no longer falls back to broad inventory stories; these stories are tagged `visual-parity` + `!dev` so they stay capturable but hidden from the public sidebar |
 | P1 | Strict visual gate | `npm run check:visual-diff` now fails on size mismatch, max mismatch > 0.05, or mean mismatch > 0.015 |
 | P1 | Deterministic legacy previews | Legacy previews reset `Math.random()` before Babel demos so random visual placeholders remain stable across runs |
 | P0 | Original previews | 원본 guideline/component/template HTML을 Storybook에서 직접 확인 가능하게 노출 |
@@ -91,8 +91,8 @@
 | P0 | Navigation: Footer, TopBar | Fixed | 실제 소비 앱에서 높이, sticky, dark surface 재검증 |
 | P0 | Navigation: SideNav, Tabs, Breadcrumb, Pagination, BottomNav, Steps, UserMenu | Watch | 자간 0 정규화 완료, 원본 카드 대비 spacing, 선택 상태, 다크 대비 검증 |
 | P0 | Buttons: Button, IconButton, TextButton, SplitButton, SocialButton, CopyButton, ButtonGroup | Fixed / Watch | 원본 카드 visual gate 복구 완료. hover/focus/disabled 상태를 Storybook interaction 기준으로 고정 |
-| P0 | Robotics: RobotStatusCard | Fixed | 라이트/다크, selected, status별 시각 회귀 테스트 추가 |
-| P0 | Robotics: EquipmentStatusCard, ConnectionBadge, TopicTree, Joystick | Watch | 현장 운영 화면 기준으로 상태색, 밀도, 대비 검증 |
+| P0 | Domain: RobotStatusCard | Fixed | 라이트/다크, selected, status별 시각 회귀 테스트 추가 |
+| P0 | Domain: EquipmentStatusCard, ConnectionBadge, TopicTree, Joystick | Watch | 도메인 화면 기준으로 상태색, 밀도, 대비 검증 |
 | P1 | Forms: AutoComplete, DatePicker, SearchField, Slider, Input 계열 | Watch | 자간 0 정규화 완료, focus ring, error/help text, dark input surface 검증 |
 | P1 | Data: Table, Calendar, AvatarGroup | Watch | 행 높이, sticky header, empty/loading 상태 보강 |
 | P1 | Overlay: Modal, Drawer, Sheet, Popover, DropdownMenu, Toast, Alert | Watch | 자간 0 정규화 완료, focus trap, escape/overlay close, dark surface 대비 검증 |
@@ -113,7 +113,7 @@
 - `npm run check:visual-inventory` captures all 83 original component cards, all 83 same-viewport primary React counterparts, and every React implementation story into `visual-artifacts/inventory/` with a manifest and card/story pairing candidates, strict story-block primary story selections, full story-block export coverage, Storybook iframe paths, and local review anchors. This is evidence collection before pixel diff baseline enforcement.
 - `npm run check:visual-review` refreshes that inventory and writes `visual-artifacts/inventory/review.html`, a local QA report that places each original card beside its same-viewport primary React capture and keeps paired React story screenshots with primary-story badges below, then verifies that the report renders 83 strict pairs with 83 matching primaryReactCards, full export-block coverage, no broken images, and complete Storybook links.
 - `npm run check:visual-diff` refreshes the review inventory, computes pixel-level original-to-primary differences for all 83 pairs using exact legacy iframe viewport crops and original-card viewport crops for primary React captures, writes `visual-artifacts/inventory/diffs/manifest.json`, red-highlight diff PNGs, and `report.html`, then verifies the report renders all 83 comparisons with no broken images. Latest measured result: 83/83 pairs, 126 React implementation stories, size mismatch 0, mean mismatch `0.01066455849450229`, max mismatch `0.046059027777777775`. The script fails when size mismatch is nonzero, max mismatch exceeds `0.05`, or mean mismatch exceeds `0.015`. The capture hides Storybook-only chrome (`__om-theme-toggle`, legacy iframe border/radius) so the comparison is original card content vs React story content, not preview shell. High-mismatch AutoComplete, DatePicker, SearchField, Slider, Skeleton, Spinner, Lightbox, Sheet, Popover, Alert, Alert/Toast, HoverCard, CommandPalette, ToastStack, Modal, Scene3DFrame, Dimmer, ProgressBar, TelemetryGauge, Breadcrumb, Stack, ChecklistItem, Stat, Map2DCanvas, Stepper, ProductCard, NewsCard, SpecRow, Card, FeatureCard, Footer, TopBar, BrandLogo, SourceTag, Tabs, Steps, Calendar, Avatar/Badge/Chip/Tag/PushBadge/Rating, Table, ListCell/Accordion, Thumbnail, BottomNav, SideNav/UserMenu, Columns/Col, Grid, ChoiceCard, FilterChip, MultiSelectChip, ThemeToggle, SegmentedControl, ToggleButton, EmptyState, ConnectionBadge, EquipmentStatusCard, RobotStatusCard, Joystick, TopicTree, VideoStreamTile, DropdownMenu, and Button/IconButton/SocialButton cards now have dedicated parity stories or corrected crop roots so their primary visual pairs are no longer broad inventory pages.
-- `npm run check:type-surface`는 145개 React 구현, 145개 `.d.ts`, 149개 public export, public `any` 누출 0개를 검증합니다.
+- `npm run check:type-surface`는 150개 React 구현, 150개 `.d.ts`, 154개 public export, public `any` 누출 0개를 검증합니다.
 - `npm run check:storybook-public`은 public Storybook sidebar에 visual parity story, 중복 story, `상세` 분기 title이 노출되지 않는지 검증합니다.
 - `npm run check:a11y`는 Storybook 구현 story의 접근성 이름, 명시적 button type, console/page error를 검증합니다.
 - `npm run check:consumer`는 실제 소비 앱 Vite production build에서 package-name import와 `styles.css` export가 동작하는지 검증합니다.
@@ -124,7 +124,7 @@
 ## 다음 검증 순서
 
 1. P0/P1 스토리를 라이트/다크 모두 열어 원본 카드와 육안 비교합니다.
-2. 버튼, 내비게이션, 로보틱스 상태 컴포넌트에 interaction test를 추가합니다.
+2. 버튼, 내비게이션, 도메인 상태 컴포넌트에 interaction test를 추가합니다.
 3. `npm run check:legacy-render`를 유지해 원본 preview 전수 렌더가 깨지지 않는지 확인합니다.
 4. `npm run check:visual-diff`의 83쌍 strict gate(size mismatch 0, max 0.05, mean 0.015)를 유지합니다.
 5. `npm run check:parity`를 유지해 React 컴포넌트의 음수 자간 재유입과 카드 motion contract 변경을 차단합니다.

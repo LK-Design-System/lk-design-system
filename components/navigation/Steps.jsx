@@ -15,7 +15,7 @@ export function Steps({ steps = [], current = 0, style, ...rest }) {
         const active = i === current;
         const bg = done ? 'var(--lk-accent-ink)' : 'var(--bw-white)';
         const bd = done || active ? 'var(--lk-accent-ink)' : 'var(--bw-border)';
-        const fg = done ? '#fff' : active ? 'var(--lk-accent-ink)' : 'var(--label-assistive)';
+        const fg = done ? 'var(--text-on-signal)' : active ? 'var(--lk-accent-ink)' : 'var(--label-assistive)';
         return (
           <React.Fragment key={i}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, flexShrink: 0 }}>

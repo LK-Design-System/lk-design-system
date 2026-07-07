@@ -1,4 +1,4 @@
-**CircularProgress** — 값이 정해진 링 게이지(배터리, 가동률).
+**CircularProgress** — 값이 정해진 링 게이지(완료율, 품질 점수).
 
 ```jsx
 <CircularProgress value={72} showValue />

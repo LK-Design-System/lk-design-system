@@ -1,6 +1,17 @@
 import React from 'react';
 
 const CT = { signal: 'var(--lk-accent-ink)', positive: 'var(--bw-green)', cautionary: 'var(--bw-amber)', negative: 'var(--bw-red)', navy: 'var(--bw-ink)' };
+const ICON_SIZE = 20;
+
+function normalizeIcon(icon) {
+  if (!React.isValidElement(icon)) return icon;
+  return React.cloneElement(icon, {
+    size: icon.props.size ?? ICON_SIZE,
+    width: icon.props.width ?? ICON_SIZE,
+    height: icon.props.height ?? ICON_SIZE,
+    style: { display: 'block', ...icon.props.style },
+  });
+}
 
 /**
  * LK ROBOTICS — Callout
@@ -10,6 +21,7 @@ const CT = { signal: 'var(--lk-accent-ink)', positive: 'var(--bw-green)', cautio
  */
 export function Callout({ tone = 'signal', title, children, icon, style, ...rest }) {
   const c = CT[tone] || CT.signal;
+  const normalizedIcon = normalizeIcon(icon);
   return (
     <div
       style={{
@@ -28,8 +40,8 @@ export function Callout({ tone = 'signal', title, children, icon, style, ...rest
       {icon && (
         <span
           style={{
-            width: 28,
-            height: 24,
+            width: ICON_SIZE,
+            height: ICON_SIZE,
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -39,7 +51,7 @@ export function Callout({ tone = 'signal', title, children, icon, style, ...rest
             marginTop: 1,
           }}
         >
-          {icon}
+          {normalizedIcon}
         </span>
       )}
       <div style={{ flex: 1, minWidth: 0 }}>

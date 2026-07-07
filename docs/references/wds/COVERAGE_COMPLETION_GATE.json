@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "createdAt": "2026-07-07",
+    "purpose": "State whether LDS can truthfully claim complete WDS coverage parity."
+  },
+  "claimStatus": "not-ready",
+  "claimPolicy": "Full WDS coverage can only be claimed when every local evidence map is valid and every Figma node-level queue item is closed or explicitly accepted as a theme override.",
+  "currentCounts": {
+    "coverageRows": 13,
+    "foundationRows": 13,
+    "figmaNodeQueueRows": 14,
+    "confirmedFigmaNodeRows": 1,
+    "pendingFigmaNodeRows": 13,
+    "requiredExternalFigmaReads": 19,
+    "componentFamilyRows": 11,
+    "variantChecks": 39,
+    "publicExportsClassified": 157
+  },
+  "localEvidenceGates": [
+    {
+      "id": "section-coverage-matrix",
+      "status": "met",
+      "evidence": "docs/references/wds/COVERAGE_AUDIT.json",
+      "criteria": "All known WDS top-level Theme, Element, and Component sections are represented with LDS coverage references."
+    },
+    {
+      "id": "foundation-token-map",
+      "status": "met",
+      "evidence": "docs/references/wds/FOUNDATION_AUDIT.json",
+      "criteria": "WDS theme and element foundations are mapped to LDS tokens, stories, files, or LK theme overrides."
+    },
+    {
+      "id": "foundation-source-pdfs",
+      "status": "met",
+      "evidence": "docs/references/wds/FOUNDATION_SOURCE_PDFS.json",
+      "criteria": "Local PDF exports from Figma are preserved and mapped to LDS token/story evidence for Basic, Spacing, and Decorate foundations."
+    },
+    {
+      "id": "component-source-pdfs",
+      "status": "met",
+      "evidence": "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+      "criteria": "Local PDF exports from Figma are preserved and mapped to LDS component/story evidence for Layout and Action sections."
+    },
+    {
+      "id": "component-family-evidence",
+      "status": "met",
+      "evidence": "docs/references/wds/COVERAGE_DETAIL_AUDIT.json",
+      "criteria": "Every TOKEN_MAP component family has implementation and Storybook evidence."
+    },
+    {
+      "id": "public-export-classification",
+      "status": "met",
+      "evidence": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json",
+      "criteria": "Every public LDS export is classified as WDS core, theme override, product extension, or robotics extension."
+    },
+    {
+      "id": "variant-checklist",
+      "status": "met-local-pending-figma",
+      "evidence": "docs/references/wds/VARIANT_AUDIT_CHECKLIST.json",
+      "criteria": "Variant, state, slot, and behavior checks exist with Storybook evidence, but WDS source parity is still pending."
+    },
+    {
+      "id": "figma-node-queue",
+      "status": "met-local-pending-figma",
+      "evidence": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
+      "criteria": "Every coverage row has a concrete Figma source node, local evidence, closure criteria, and next Figma reads."
+    }
+  ],
+  "completionCriteria": [
+    "No coverage row remains `partial`, `needs-detail-audit`, or `not-covered`.",
+    "No foundation row remains `pending-figma-parity`.",
+    "No variant family remains `pending-figma-parity`.",
+    "Every Figma node audit queue row is `confirmed-covered` or has an explicitly approved theme override review.",
+    "Every required external Figma read has been performed and recorded in the corresponding audit row.",
+    "Storybook static build and WDS alignment scripts pass after the final Figma parity update."
+  ],
+  "notReadyReasons": [
+    {
+      "id": "figma-mcp-rate-limit",
+      "source": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
+      "detail": "Figma MCP Starter plan rate limit prevents reading the remaining WDS source nodes in this pass."
+    },
+    {
+      "id": "pending-node-parity",
+      "source": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
+      "detail": "13 node-level WDS reads remain pending, so current local evidence cannot prove full parity."
+    }
+  ],
+  "lastVerifiedCommands": [
+    "node scripts/check-wds-alignment.mjs",
+    "node scripts/check-token-source.mjs",
+    "node scripts/check-visual-token-drift.mjs",
+    "pnpm exec storybook build"
+  ]
+}

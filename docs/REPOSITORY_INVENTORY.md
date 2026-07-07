@@ -5,7 +5,7 @@
 ## 패키지 범위
 
 - 패키지명: `@lk-robotics/design-system-core`
-- React 컴포넌트 소스 파일: 145개
+- React 컴포넌트 소스 파일: 150개
 - 컴포넌트 그룹: `brand`, `buttons`, `cards`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
@@ -36,12 +36,12 @@
 - 원본 지침: `guidelines/*.html` 20개
 - 원본 요소 카드: `components/**/*.card.html` 83개
 - 템플릿 카드: `templates-cards/*.html` 4개
-- 현재 React export: 145개
-- Storybook 전체 story: 133개
-- Storybook public story: 51개
+- 현재 React export: 150개
+- Storybook 전체 story: 177개
+- Storybook public story: 95개
 - 숨김 visual parity story: 82개
-- visual inventory React story: 126개
-- 접근성 guard 검사 대상 implementation story: 129개
+- visual inventory React story: 170개
+- 접근성 guard 검사 대상 implementation story: 169개
 
 원본 카드나 지침을 추가, 삭제, 재분류하면 `stories/Audit.data.jsx`와 원본 미리보기 목록을 같이 갱신합니다.
 

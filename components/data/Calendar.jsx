@@ -7,7 +7,7 @@ function DayCell({ d, selected, today, onPick }) {
   const [h, setH] = React.useState(false);
   const dow = d.getDay();
   const bg = selected ? 'var(--lk-accent-ink)' : (h ? 'var(--fill-normal)' : 'transparent');
-  const color = selected ? '#fff' : (dow === 0 ? 'var(--bw-red)' : dow === 6 ? 'var(--lk-accent-ink)' : 'var(--label-normal)');
+  const color = selected ? 'var(--text-on-signal)' : (dow === 0 ? 'var(--bw-red)' : dow === 6 ? 'var(--lk-accent-ink)' : 'var(--label-normal)');
   return (
     <button
       type="button"

@@ -1,14 +1,14 @@
-**Footer** — 사이트 푸터. 실사이트(lkrobotics-homepage)의 `LKFooter`를 미러: 네이비 밴드 + 정보 블록(대표전화·사업자등록번호 → 본사·R&D·공장 주소 → 저작권). **기본값이 실제 LK 데이터라 `<Footer />`만으로 프로덕션 푸터가 재현**됩니다. `compact`는 대시보드 바닥용 한 줄 버전.
+**Footer** — 사이트 푸터. 네이비 밴드 + 정보 블록(대표전화·사업자등록번호 → 본사·R&D·공장 주소 → 저작권)을 일관된 토큰으로 렌더합니다. `compact`는 대시보드 바닥용 한 줄 버전.
 
 ```jsx
-<Footer />                                {/* 실사이트 푸터 그대로 */}
-<Footer backToTop />                      {/* 실사이트처럼 '맨 위로' 플로팅 버튼 포함 */}
+<Footer />                                {/* 기본 푸터 */}
+<Footer backToTop />                      {/* '맨 위로' 플로팅 버튼 포함 */}
 
-<Footer compact copyright="© 2026 LK ROBOTICS Inc. · v2.4" links={[{ label: '고객지원', href: '#' }]} />
+<Footer compact copyright="© 2026 LK ROBOTICS Inc. · Design System" links={[{ label: '고객지원', href: '#' }]} />
 ```
 
 - **contact / locations** — `{ label, value }[]`. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 `{ label: 'Tel', value: '02-3159-2865' }`처럼 번역해 전달.
 - **copyright** — 기본 `Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved.`
-- **backToTop** — 실사이트 푸터가 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동).
+- **backToTop** — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동).
 - **(확장, 실사이트엔 없음)** `brand` · `columns` — 마케팅 푸터가 커질 때만. `compact`는 페이지 서피스 위 한 줄 변형.
-- 서피스는 `--surface-inverse`(라이트에서 실사이트와 동일한 `#0E1329`, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)로 실사이트와 동일.
+- 서피스는 `--surface-inverse`(라이트에서 `#0E1329`, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다.

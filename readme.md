@@ -1,5 +1,36 @@
 # LK 디자인 시스템 코어
 
+## WDS and LDS relationship
+
+LDS means **LK Design System**. This package is based on **Wanted Design
+System (WDS) Community** as its source model, but it is not a one-to-one copy
+or an unrelated custom system.
+
+The intended relationship is:
+
+- **WDS Core**: keep WDS foundations, generic component structure, interaction
+  expectations, and documentation conventions as the baseline.
+- **LK Theme Override**: replace WDS visual identity with LK ROBOTICS color,
+  brand, typography, status, radius, and effect decisions.
+- **LK Product Extension**: add generic LK product components only when they are
+  reusable beyond a single robotics screen.
+- **LK Robotics Extension**: keep robotics, viewer, map, telemetry, joystick,
+  topic tree, and editor components separate from WDS core.
+- **Documents**: document contracts, audits, operating rules, and WDS alignment
+  evidence without treating them as product UI components.
+
+In short: **LDS should read as WDS structure recolored and extended for LK, not
+as arbitrary screens designed beside WDS.** New work should either map to WDS
+Core, be documented as an LK override, or live in an explicit LK extension
+layer.
+
+Authoritative references:
+
+- `docs/references/wds/TOKEN_MAP.json`
+- `docs/references/wds/LAYER_CLASSIFICATION.json`
+- `docs/references/wds/CONFLICT_AUDIT.md`
+- `docs/references/wds/VISUAL_TOKEN_EXCEPTIONS.json`
+
 LK ROBOTICS 핵심 디자인 시스템 패키지입니다. 토큰, React 컴포넌트, 브랜드 자산, 템플릿, 정적 미리보기 카드를 포함합니다.
 
 ## 패키지 사용
@@ -47,6 +78,7 @@ npm run build
 ```powershell
 npm run check:tokens
 npm run check:type-surface
+npm run check:contracts
 npm run check:publish-policy
 npm run check:consumer
 npm run check:a11y
@@ -77,15 +109,19 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 public Storybook sidebar는 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 대시보드 지표, 선택/상태, 로보틱스/뷰어, 아이콘, 내비게이션을 51개 public story로 다룹니다.
+현재 public Storybook sidebar는 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 대시보드 지표, 선택/상태, 도메인/뷰어, 아이콘, 내비게이션, 디자인 시스템 계약을 public story로 다룹니다.
 보고/감사/보정표 UI는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
 원본 카드와 1:1 비교하기 위한 82개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
 `문서/원본 미리보기` 스토리는 원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개를 Storybook iframe 안에서 직접 렌더링해 예전 기준과 현재 구현을 시각적으로 대조할 수 있게 합니다.
+`문서/디자인 시스템 계약`은 접근성, 토큰 lifecycle, 컴포넌트 상태 매트릭스, 도메인 컴포넌트 계약을 public 문서로 제공합니다. 릴리즈와 ownership 같은 레포 운영 기준은 Storybook이 아니라 `docs/OPERATING_MODEL.md`에서 관리합니다.
 
 ## AI 및 Figma 토큰 워크플로
 
 AI 도구로 LK ROBOTICS UI를 생성할 때는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`를 먼저 사용하세요.
 Figma Variables를 내보내거나 가져올 때는 `docs/FIGMA_TOKEN_WORKFLOW.md`를 기준으로 삼으세요.
+토큰 lifecycle과 deprecation은 `docs/TOKEN_GOVERNANCE.md`를 우선합니다.
+컴포넌트 API와 접근성 계약은 `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/ACCESSIBILITY_CONTRACTS.md`를 함께 봅니다.
+도메인 컴포넌트 계약은 `docs/ROBOTICS_PATTERNS.md`에 정리합니다.
 
 토큰 계층:
 
@@ -96,11 +132,11 @@ Figma Variables를 내보내거나 가져올 때는 `docs/FIGMA_TOKEN_WORKFLOW.m
 ## CI
 
 GitHub Actions는 `main` push, pull request, manual dispatch에서 `.github/workflows/ci.yml`을 실행합니다.
-CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/publish policy/소비 앱 smoke, 타입체크, 생성 파일 차이 검사, Storybook 정적 빌드, Storybook public surface guard, Storybook 접근성 guard, 패키지 dry run, 런타임 dependency audit을 확인합니다.
+CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/contract/publish policy/소비 앱 smoke, 타입체크, 생성 파일 차이 검사, Storybook 정적 빌드, Storybook public surface guard, Storybook 접근성 guard, 패키지 dry run, 런타임 dependency audit을 확인합니다.
 
 ## 컴포넌트 범위
 
-이 패키지는 다음 그룹에 걸쳐 145개의 React 컴포넌트 소스 파일을 export합니다.
+이 패키지는 다음 그룹에 걸쳐 149개의 React 컴포넌트 소스 파일을 export합니다.
 
 - `brand`
 - `buttons`
@@ -129,3 +165,4 @@ CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/publish policy/소비 �
 
 자세한 레포 구성은 `docs/REPOSITORY_INVENTORY.md`를 보세요.
 컴포넌트 문서화와 CI 유지보수 기준은 `docs/COMPONENT_WORKFLOW.md`를 보세요.
+디자인 시스템 계약 검증 기준은 `docs/COMPONENT_API_STATE_MATRIX.md`와 `npm run check:contracts`를 보세요.

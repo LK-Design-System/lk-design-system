@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community PDF exports",
+    "createdAt": "2026-07-07",
+    "purpose": "Record local PDF evidence exported from Figma for WDS foundation sections."
+  },
+  "pdfs": [
+    {
+      "id": "basic-ratio",
+      "wdsSource": "2 Element / 1 Basic / Ratio",
+      "file": "docs/references/wds/source-pdfs/1basic.pdf",
+      "extractedStructure": [
+        "Ratio",
+        "Vertical: 1/1, 1/2, customize = height",
+        "Horizontal: 1/1, 5/4, 4/3, 3/2, 16/10, 1.618/1, 16/9, 2/1, 21/9, and inverse ratios, customize = width"
+      ],
+      "localEvidence": [
+        "stories/FoundationBasic.stories.jsx#RatioTokens",
+        "components/layout/AspectRatio.jsx",
+        "components/layout/AspectRatio.d.ts",
+        "tokens/spacing.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds WDS Basic/Ratio token coverage and routes ratio usage through AspectRatio."
+    },
+    {
+      "id": "spacing-safe-area",
+      "wdsSource": "2 Element / 2 Spacing / Safe Area",
+      "file": "docs/references/wds/source-pdfs/2spacing.pdf",
+      "extractedStructure": [
+        "Safe Area",
+        "Status",
+        "Bottom"
+      ],
+      "localEvidence": [
+        "stories/FoundationSpacing.stories.jsx#MobileSafeAreaSpacing",
+        "tokens/spacing.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Confirms WDS Status/Bottom safe-area spacing coverage from local PDF evidence."
+    },
+    {
+      "id": "decorate-gradient-interaction",
+      "wdsSource": "2 Element / 3 Decorate / Gradient and Interaction",
+      "file": "docs/references/wds/source-pdfs/3decorate.pdf",
+      "extractedStructure": [
+        "Gradient: Solid, Multiple, Mask",
+        "Gradient direction: top, right, bottom, left",
+        "Interaction variants: normal, default, light, strong",
+        "Interaction states: normal, hovered, focused, pressed"
+      ],
+      "localEvidence": [
+        "stories/FoundationDecorate.stories.jsx#GradientTokens",
+        "stories/FoundationDecorate.stories.jsx#InteractionTokens",
+        "tokens/effects.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds WDS Decorate gradient, mask, and interaction-state token coverage."
+    }
+  ]
+}

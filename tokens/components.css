@@ -63,6 +63,38 @@
   --component-button-on-dark-fg: #FFFFFF;
   --component-button-on-dark-border: var(--border-thin) solid rgba(255, 255, 255, 0.28);
 
+  /* ---- Action Area ----------------------------------------------------- */
+  --component-action-area-bg: var(--surface-card);
+  --component-action-area-padding-x: var(--space-4);
+  --component-action-area-padding-y: var(--space-4);
+  --component-action-area-gap: var(--space-3);
+  --component-action-area-border: var(--border-thin) solid var(--border-subtle);
+  --component-action-area-shadow-sticky: var(--shadow-control);
+  --component-action-area-z-index: 20;
+
+  /* ---- Toggle Icon ----------------------------------------------------- */
+  --component-toggle-icon-size-sm: 32px;
+  --component-toggle-icon-size-md: 40px;
+  --component-toggle-icon-radius: var(--radius-md);
+  --component-toggle-icon-bg: var(--surface-card);
+  --component-toggle-icon-bg-hover: var(--fill-alt);
+  --component-toggle-icon-bg-active: var(--component-button-primary-bg);
+  --component-toggle-icon-fg: var(--label-normal);
+  --component-toggle-icon-fg-active: var(--component-button-primary-fg);
+  --component-toggle-icon-border: var(--border-thin) solid var(--border-subtle);
+  --component-toggle-icon-disabled-opacity: var(--component-button-disabled-opacity);
+
+  /* ---- Divider --------------------------------------------------------- */
+  --component-divider-color: var(--line-neutral);
+  --component-divider-thickness-normal: 1px;
+  --component-divider-thickness-thick: 8px;
+
+  /* ---- Mobile System Bars --------------------------------------------- */
+  --component-system-bars-fg: var(--label-strong);
+  --component-system-bars-muted-fg: var(--label-alternative);
+  --component-system-bars-home-width: 78px;
+  --component-system-bars-home-height: 4px;
+
   /* ---- Input ----------------------------------------------------------- */
   --component-input-stack-gap: var(--space-2);
   --component-input-gap: var(--space-2);

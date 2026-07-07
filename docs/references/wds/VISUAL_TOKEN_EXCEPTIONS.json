@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "allowedComponentFiles": {
+    "components/brand/BrandLogo.jsx": "Embedded third-party brand logo artwork must preserve provider colors.",
+    "components/buttons/SocialButton.jsx": "Social login provider colors and provider kit shadows are explicit brand requirements.",
+    "components/icon/Icon.jsx": "Imported WDS color brand icons preserve provider logo colors; monochrome icons still use currentColor."
+  },
+  "allowedStoryFiles": {
+    "stories/Content.shared.jsx": "The mini map preview is an encoded SVG media fixture. CSS variables do not resolve inside the encoded image payload, so its internal art colors are fixed sample asset data rather than component styling."
+  },
+  "rule": "Reusable component implementation files and Storybook examples must not introduce hardcoded hex/rgb/rgba visual values outside these exceptions. Use semantic, component, inverse, material, status, or effect tokens instead."
+}

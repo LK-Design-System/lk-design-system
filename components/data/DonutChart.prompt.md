@@ -2,7 +2,7 @@
 
 ```jsx
 <DonutChart segments={[
-  { value: 12, label: '순찰' }, { value: 7, label: '청소' }, { value: 5, label: '운반' },
+  { value: 12, label: '초안' }, { value: 7, label: '검토' }, { value: 5, label: '게시' },
 ]} />
 ```
 

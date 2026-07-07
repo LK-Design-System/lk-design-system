@@ -24,10 +24,10 @@ export function IconButton({
   const [hover, setHover] = React.useState(false);
   const palettes = {
     soft:    { bg: 'var(--bw-indigo-tint)', bgHover: 'var(--bw-indigo-tint)', fg: 'var(--bw-ink)', bd: 'none' },
-    solid:   { bg: 'var(--bw-indigo)', bgHover: 'var(--bw-indigo)', fg: '#fff', bd: 'none' },
+    solid:   { bg: 'var(--bw-indigo)', bgHover: 'var(--bw-indigo)', fg: 'var(--text-on-inverse)', bd: 'none' },
     signal:  { bg: 'var(--lk-accent-ink)', bgHover: 'var(--lk-accent-ink)', fg: 'var(--text-on-signal)', bd: 'none' },
     ghost:   { bg: 'var(--bw-white)', bgHover: 'var(--bw-white)', fg: 'var(--bw-ink)', bd: '1px solid var(--bw-border)' },
-    'on-dark': { bg: 'rgba(255,255,255,0.12)', bgHover: 'rgba(255,255,255,0.14)', fg: '#fff', bd: '1px solid rgba(255,255,255,0.22)' },
+    'on-dark': { bg: 'var(--inverse-fill-normal)', bgHover: 'var(--inverse-fill-hover)', fg: 'var(--text-on-inverse)', bd: '1px solid var(--inverse-line-strong)' },
   };
   const p = palettes[variant] || palettes.soft;
   return (

@@ -19,7 +19,7 @@ function useKeyframes(id, css) {
 export function Skeleton({ variant = 'rect', width = '100%', height, radius, lines = 1, align = 'leading', tone = 'normal', style, ...rest }) {
   useKeyframes('lk-skel-kf', '@keyframes lk-skel{0%{background-position:200% 0}100%{background-position:-200% 0}}');
   const shimmer = tone === 'light'
-    ? 'linear-gradient(90deg, rgba(255,255,255,0.10) 25%, rgba(255,255,255,0.20) 37%, rgba(255,255,255,0.10) 63%)'
+    ? 'linear-gradient(90deg, var(--inverse-fill-normal) 25%, var(--inverse-line-strong) 37%, var(--inverse-fill-normal) 63%)'
     : 'linear-gradient(90deg, var(--fill-normal) 25%, var(--fill-strong) 37%, var(--fill-normal) 63%)';
   const base = {
     background: shimmer,

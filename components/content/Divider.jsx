@@ -1,24 +1,27 @@
 import React from 'react';
 
 /**
- * LK ROBOTICS — Divider
- * A hairline rule on the cool-gray line token. Horizontal by default; pass
- * `vertical` for an inline separator, or `label` for a centered "or"-style
- * divider (핵심 기능 사이 구분).
+ * LK ROBOTICS Divider
+ * WDS Layout divider with normal/thick and horizontal/vertical variants.
  */
-export function Divider({ vertical = false, label, inset = 0, style, ...rest }) {
+export function Divider({ vertical = false, label, inset = 0, variant = 'normal', style, ...rest }) {
+  const thickness =
+    variant === 'thick' ? 'var(--component-divider-thickness-thick)' : 'var(--component-divider-thickness-normal)';
+  const color = 'var(--component-divider-color)';
+
   if (vertical) {
     return (
       <span
         role="separator"
         aria-orientation="vertical"
-        style={{ display: 'inline-block', width: 1, alignSelf: 'stretch', minHeight: 16, background: 'var(--line-neutral)', ...style }}
+        style={{ display: 'inline-block', width: thickness, alignSelf: 'stretch', minHeight: 16, background: color, ...style }}
         {...rest}
       />
     );
   }
+
   if (label != null) {
-    const rule = { flex: 1, height: 1, background: 'var(--line-neutral)' };
+    const rule = { flex: 1, height: thickness, background: color };
     return (
       <div role="separator" style={{ display: 'flex', alignItems: 'center', gap: 14, ...style }} {...rest}>
         <span style={rule} />
@@ -27,5 +30,6 @@ export function Divider({ vertical = false, label, inset = 0, style, ...rest }) 
       </div>
     );
   }
-  return <hr role="separator" style={{ border: 'none', height: 1, background: 'var(--line-neutral)', margin: `0 ${inset}px`, ...style }} {...rest} />;
+
+  return <hr role="separator" style={{ border: 'none', height: thickness, background: color, margin: `0 ${inset}px`, ...style }} {...rest} />;
 }

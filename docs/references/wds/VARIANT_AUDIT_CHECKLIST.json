@@ -1,0 +1,319 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "createdAt": "2026-07-07",
+    "purpose": "Track the exact variant, state, slot, and behavior checks still required to prove WDS-to-LDS parity.",
+    "limitations": [
+      "Local Storybook evidence is linked for every checklist item.",
+      "Figma parity remains pending until WDS source nodes can be inspected below section level."
+    ]
+  },
+  "statusLegend": {
+    "pending-figma-parity": "Local story evidence exists, but the WDS source variant still needs direct comparison.",
+    "extension-boundary": "The item is intentionally outside WDS core and must remain classified as an LK extension."
+  },
+  "families": [
+    {
+      "wdsFamily": "Layout/Essential, Divider",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "layout-essential-system-bars",
+          "label": "Essential system bars",
+          "wdsChecks": ["platform = ios", "platform = android", "status bar", "home bar", "not production OS chrome"],
+          "localEvidence": ["stories/LayoutEssentials.stories.jsx#EssentialAndDivider"]
+        },
+        {
+          "id": "layout-divider-variants",
+          "label": "Divider variants",
+          "wdsChecks": ["variant = normal", "variant = thick", "vertical = false", "vertical = true"],
+          "localEvidence": ["stories/LayoutEssentials.stories.jsx#EssentialAndDivider", "stories/ContentAnnotations.stories.jsx#Annotations"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "action-area-bottom-placement",
+          "label": "Action Area placement",
+          "wdsChecks": ["bottom placement", "divider true/false", "caption true/false", "sticky true/false", "safeArea"],
+          "localEvidence": ["stories/ActionArea.stories.jsx#BottomActionArea"]
+        },
+        {
+          "id": "button-visual-variants",
+          "label": "Visual variants",
+          "wdsChecks": ["primary", "secondary", "tertiary/ghost", "danger or destructive treatment if present"],
+          "localEvidence": ["stories/Button.stories.jsx#Variants", "stories/ButtonsExtended.stories.jsx#ActionControls"]
+        },
+        {
+          "id": "button-size-density",
+          "label": "Size and density",
+          "wdsChecks": ["small", "medium", "large", "minimum touch target", "text/icon alignment"],
+          "localEvidence": ["stories/Button.stories.jsx#SizesAndStates"]
+        },
+        {
+          "id": "button-interaction-states",
+          "label": "Interaction states",
+          "wdsChecks": ["default", "hover", "active/pressed", "focus-visible", "disabled", "loading if present"],
+          "localEvidence": ["stories/Button.stories.jsx#SizesAndStates", "stories/Button.stories.jsx#Playground"]
+        },
+        {
+          "id": "button-slots-and-groups",
+          "label": "Icon slots and grouped actions",
+          "wdsChecks": ["leading icon", "trailing icon", "icon-only", "button group", "split action", "floating action"],
+          "localEvidence": ["stories/ButtonsExtended.stories.jsx#ActionControls", "stories/ButtonsExtended.stories.jsx#ButtonIconButtonSocialButtonCard"]
+        },
+        {
+          "id": "action-toggle-icon",
+          "label": "Toggle Icon",
+          "wdsChecks": ["active = false", "active = true", "disable = false", "disable = true", "icon-only accessible label"],
+          "localEvidence": ["stories/ActionArea.stories.jsx#ActionTaxonomy", "stories/SelectionSegmentedToggle.stories.jsx#ToggleButtonCard"]
+        },
+        {
+          "id": "button-dark-surface",
+          "label": "Dark or inverse surface",
+          "wdsChecks": ["contrast", "disabled contrast", "focus ring on dark backgrounds"],
+          "localEvidence": ["stories/Button.stories.jsx#OnDark"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Textinput/Textfield",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "textfield-structure",
+          "label": "Field structure",
+          "wdsChecks": ["label", "placeholder", "value", "helper text", "required/optional marker"],
+          "localEvidence": ["stories/FormsFull.stories.jsx#TextInputs"]
+        },
+        {
+          "id": "textfield-validation-states",
+          "label": "Validation and interaction states",
+          "wdsChecks": ["default", "hover", "focus", "filled", "error", "success if present", "disabled", "read-only"],
+          "localEvidence": ["stories/FormsFull.stories.jsx#TextInputs"]
+        },
+        {
+          "id": "textfield-slots",
+          "label": "Prefix, suffix, and icon slots",
+          "wdsChecks": ["leading icon", "trailing icon", "clear action", "password visibility", "search icon"],
+          "localEvidence": ["stories/FormSearchAutocomplete.stories.jsx#SearchAndAutocomplete", "stories/FormSearchAutocomplete.stories.jsx#SearchFieldCard"]
+        },
+        {
+          "id": "textfield-multiline-and-grouping",
+          "label": "Textarea and grouped input",
+          "wdsChecks": ["textarea height", "resize behavior", "input group spacing", "unit suffix"],
+          "localEvidence": ["stories/FormsFull.stories.jsx#TextInputs"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Select/Select",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "select-trigger",
+          "label": "Select trigger",
+          "wdsChecks": ["placeholder", "selected value", "disabled", "error", "open state", "chevron treatment"],
+          "localEvidence": ["stories/FormsFull.stories.jsx#TextInputs"]
+        },
+        {
+          "id": "select-menu",
+          "label": "Option list",
+          "wdsChecks": ["option row", "selected option", "hovered option", "disabled option", "group label if present"],
+          "localEvidence": ["stories/FormSearchAutocomplete.stories.jsx#SearchAndAutocomplete", "stories/FormSearchAutocomplete.stories.jsx#AutoCompleteCard"]
+        },
+        {
+          "id": "select-search-and-multi",
+          "label": "Searchable and multivalue select",
+          "wdsChecks": ["combobox", "autocomplete", "tag input", "empty result", "clear selected token"],
+          "localEvidence": ["stories/FormSearchAutocomplete.stories.jsx#SearchAndAutocomplete"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "control-binary-states",
+          "label": "Binary control states",
+          "wdsChecks": ["unchecked", "checked", "indeterminate if present", "hover", "focus", "disabled"],
+          "localEvidence": ["stories/FormSelectionControls.stories.jsx#SelectionGroups", "stories/SelectionSwitchStepper.stories.jsx#SwitchAndStepper"]
+        },
+        {
+          "id": "control-group-layout",
+          "label": "Group layout and labels",
+          "wdsChecks": ["checkbox group", "radio group", "helper text", "error text", "vertical/horizontal layout"],
+          "localEvidence": ["stories/FormSelectionControls.stories.jsx#SelectionGroups"]
+        },
+        {
+          "id": "control-toggle-family",
+          "label": "Toggle and segmented controls",
+          "wdsChecks": ["toggle button", "segmented selection", "single selection", "multi selection if present"],
+          "localEvidence": ["stories/SelectionSegmentedToggle.stories.jsx#SegmentedAndToggle", "stories/SelectionChips.stories.jsx#ChipSelection"]
+        },
+        {
+          "id": "control-stepper-and-range",
+          "label": "Stepper, slider, and range",
+          "wdsChecks": ["stepper increment/decrement", "slider thumb", "track fill", "range endpoints", "disabled"],
+          "localEvidence": ["stories/SelectionSwitchStepper.stories.jsx#SwitchAndStepper", "stories/FormRangeControls.stories.jsx#RangeControls"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Card/Card, Card/List Card",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "card-surface-and-elevation",
+          "label": "Surface, radius, border, and elevation",
+          "wdsChecks": ["default surface", "outlined", "elevated", "dark surface", "interactive hover"],
+          "localEvidence": ["stories/Card.stories.jsx#Elevation", "stories/Card.stories.jsx#InteractiveAndDark"]
+        },
+        {
+          "id": "card-content-structure",
+          "label": "Content structure",
+          "wdsChecks": ["title", "description", "meta", "leading media", "trailing action", "badge"],
+          "localEvidence": ["stories/CardInfo.stories.jsx#FeatureCards", "stories/CardNews.stories.jsx#NewsCards", "stories/CardSpecs.stories.jsx#SpecRows"]
+        },
+        {
+          "id": "card-selection-and-list-card",
+          "label": "Selectable and list-card behavior",
+          "wdsChecks": ["selected", "disabled", "checkbox/radio marker", "list-card density", "keyboard focus"],
+          "localEvidence": ["stories/SelectionStatus.stories.jsx#ChoiceCards", "stories/ContentListsMedia.stories.jsx#Lists"]
+        },
+        {
+          "id": "card-product-extension-boundary",
+          "label": "Product extension boundary",
+          "wdsChecks": ["LK product card must not redefine WDS Card baseline", "metric/stat cards remain product extensions"],
+          "localEvidence": ["stories/CardsExtended.stories.jsx#ProductCards", "stories/CardStats.stories.jsx#Stats"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "List Cell/List Cell",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "list-cell-layout",
+          "label": "List cell layout",
+          "wdsChecks": ["leading content", "primary text", "secondary text", "trailing content", "divider"],
+          "localEvidence": ["stories/ContentListsMedia.stories.jsx#Lists", "stories/ContentListsMedia.stories.jsx#ListCellAccordionCard"]
+        },
+        {
+          "id": "list-cell-states",
+          "label": "List cell states",
+          "wdsChecks": ["default", "hover", "active", "selected", "disabled", "focus-visible"],
+          "localEvidence": ["stories/ContentListsMedia.stories.jsx#Lists"]
+        },
+        {
+          "id": "data-extension-boundary",
+          "label": "Data extension boundary",
+          "wdsChecks": ["Table/DataGrid/Tree are LDS product data extensions unless WDS source includes equivalent patterns"],
+          "localEvidence": ["stories/DataTablesHierarchy.stories.jsx#TablePatterns", "stories/DataTree.stories.jsx#TreeInteractionStates"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Toast/Toast, Snackbar/Snackbar, Alert/Alert",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "feedback-severity",
+          "label": "Severity and icon treatment",
+          "wdsChecks": ["info", "success", "warning", "error", "icon size", "icon color"],
+          "localEvidence": ["stories/StatusFeedback.stories.jsx#NoticesAndCallouts", "stories/FeedbackNotifications.stories.jsx#NotificationPatterns"]
+        },
+        {
+          "id": "feedback-actions",
+          "label": "Actions and dismissal",
+          "wdsChecks": ["primary action", "secondary action", "close button", "persistent vs temporary"],
+          "localEvidence": ["stories/OverlayToast.stories.jsx#ToastNotifications", "stories/OverlayFeedback.stories.jsx#AlertOpen"]
+        },
+        {
+          "id": "feedback-dialogs",
+          "label": "Modal feedback",
+          "wdsChecks": ["confirmation title", "description", "danger confirm", "cancel", "focus trap"],
+          "localEvidence": ["stories/OverlayConfirmDialog.stories.jsx#ConfirmationStates", "stories/OverlaySurfaces.stories.jsx#ModalOpen"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "tooltip-placement",
+          "label": "Tooltip placement and timing",
+          "wdsChecks": ["top", "right", "bottom", "left", "arrow if present", "delay", "max width"],
+          "localEvidence": ["stories/ContentAnnotations.stories.jsx#Annotations", "stories/Overlay.stories.jsx#AnchoredOverlays"]
+        },
+        {
+          "id": "menu-items",
+          "label": "Menu item states and structure",
+          "wdsChecks": ["default item", "hover", "active", "disabled", "checked", "danger", "separator", "shortcut"],
+          "localEvidence": ["stories/NavigationMenus.stories.jsx#MenuPatterns", "stories/Overlay.stories.jsx#DropdownMenuCard"]
+        },
+        {
+          "id": "anchored-overlay-behavior",
+          "label": "Anchored overlay behavior",
+          "wdsChecks": ["popover", "hover card", "dismiss on outside click", "keyboard escape", "collision handling"],
+          "localEvidence": ["stories/Overlay.stories.jsx#AnchoredOverlays", "stories/OverlayCommandPalette.stories.jsx#CommandPaletteOpen"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Skeleton, Circular",
+      "status": "pending-figma-parity",
+      "checks": [
+        {
+          "id": "skeleton-shapes",
+          "label": "Skeleton shapes and shimmer",
+          "wdsChecks": ["line", "block", "avatar/circle", "card skeleton", "animation timing"],
+          "localEvidence": ["stories/StatusLoading.stories.jsx#LoadingStates", "stories/StatusLoading.stories.jsx#SkeletonCard"]
+        },
+        {
+          "id": "progress-indicators",
+          "label": "Progress indicators",
+          "wdsChecks": ["linear determinate", "linear indeterminate", "circular determinate", "circular indeterminate", "label/value"],
+          "localEvidence": ["stories/StatusProgress.stories.jsx#ProgressIndicators", "stories/StatusProgress.stories.jsx#CircularProgressCard", "stories/StatusProgress.stories.jsx#ProgressBarCard"]
+        },
+        {
+          "id": "loading-accessibility",
+          "label": "Loading accessibility",
+          "wdsChecks": ["aria busy", "screen-reader label", "reduced motion handling"],
+          "localEvidence": ["stories/StatusLoading.stories.jsx#SpinnerCard"]
+        }
+      ]
+    },
+    {
+      "wdsFamily": "Robotics extension",
+      "status": "extension-boundary",
+      "checks": [
+        {
+          "id": "robotics-core-boundary",
+          "label": "Robotics extension boundary",
+          "wdsChecks": ["must remain LK Robotics Extension", "must not be renamed into WDS Core", "must reuse WDS tokens where possible"],
+          "localEvidence": ["stories/RoboticsAndViz.stories.jsx#RobotState", "stories/RoboticsEquipment.stories.jsx#EquipmentState"]
+        },
+        {
+          "id": "viewer-extension-boundary",
+          "label": "Viewer extension boundary",
+          "wdsChecks": ["map", "3D frame", "video stream", "telemetry", "viewer toolbar"],
+          "localEvidence": ["stories/ViewerMap.stories.jsx#MapCanvasOverview", "stories/Viewer3D.stories.jsx#Scene3DOverview", "stories/ViewerVideo.stories.jsx#VideoStreamOverview", "stories/ViewerTelemetry.stories.jsx#TelemetryOverview", "stories/ViewerToolbar.stories.jsx#ViewerToolbarOverview"]
+        },
+        {
+          "id": "editor-extension-boundary",
+          "label": "Canvas editor extension boundary",
+          "wdsChecks": ["history toolbar", "editor toolbar", "canvas shell", "icon choices must come from Icon registry"],
+          "localEvidence": ["stories/EditorShell.stories.jsx#EditorShell", "stories/EditorShell.stories.jsx#CanvasEditorShellEditorToolbarHistoryToolbarCard"]
+        }
+      ]
+    }
+  ]
+}

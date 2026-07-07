@@ -2,10 +2,10 @@ import React from 'react';
 import { Button, Icon } from '../src/index.js';
 
 const meta = {
-  title: '컴포넌트/버튼',
+  title: 'WDS Core/3 Component/2 Action/Button',
   component: Button,
   args: {
-    children: '미션 시작',
+    children: '저장',
     variant: 'primary',
     size: 'md',
     arrow: false,
@@ -25,7 +25,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '브랜드, 대시보드, ghost, inverse surface 변형을 갖춘 토큰 기반 액션 버튼입니다.',
+        component: 'Button의 변형, 크기, 상태, 다크 배경 사용을 확인합니다.',
       },
     },
   },
@@ -86,7 +86,7 @@ export const OnDark = {
   render: () => (
     <div style={{ background: 'var(--surface-inverse)', padding: 28, borderRadius: 'var(--radius-lg)' }}>
       <Button variant="on-dark" arrow>
-        텔레메트리 보기
+        상세 보기
       </Button>
     </div>
   ),

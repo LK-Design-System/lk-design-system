@@ -14,12 +14,12 @@ export function SplitButton({ children, onClick, items = [], variant = 'primary'
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, [open]);
-  const pal = variant === 'signal' ? { bg: 'var(--lk-accent-ink)', fg: 'var(--text-on-signal)' } : variant === 'dark' ? { bg: 'var(--surface-inverse)', fg: 'var(--text-on-inverse)' } : variant === 'secondary' ? { bg: 'var(--bw-indigo)', fg: '#fff' } : { bg: 'var(--color-primary)', fg: '#fff' };
+  const pal = variant === 'signal' ? { bg: 'var(--lk-accent-ink)', fg: 'var(--text-on-signal)' } : variant === 'dark' ? { bg: 'var(--surface-inverse)', fg: 'var(--text-on-inverse)' } : variant === 'secondary' ? { bg: 'var(--bw-indigo)', fg: 'var(--text-on-signal)' } : { bg: 'var(--color-primary)', fg: 'var(--text-on-signal)' };
   const h = size === 'sm' ? 44 : 52;
   return (
     <div ref={ref} style={{ position: 'relative', display: 'inline-flex', ...style }} {...rest}>
       <button type="button" onClick={onClick} style={{ height: h, padding: '0 20px', border: 'none', borderTopLeftRadius: 'var(--radius-md)', borderBottomLeftRadius: 'var(--radius-md)', background: pal.bg, color: pal.fg, cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 'var(--fw-bold)', letterSpacing: 0 }}>{children}</button>
-      <button type="button" aria-label="more actions" onClick={() => setOpen((o) => !o)} style={{ height: h, width: 42, border: 'none', borderLeft: '1px solid rgba(255,255,255,0.22)', borderTopRightRadius: 'var(--radius-md)', borderBottomRightRadius: 'var(--radius-md)', background: pal.bg, color: pal.fg, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+      <button type="button" aria-label="more actions" onClick={() => setOpen((o) => !o)} style={{ height: h, width: 42, border: 'none', borderLeft: '1px solid var(--inverse-line-strong)', borderTopRightRadius: 'var(--radius-md)', borderBottomRightRadius: 'var(--radius-md)', background: pal.bg, color: pal.fg, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
       </button>
       {open && (

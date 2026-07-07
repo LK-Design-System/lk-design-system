@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "inspectedAt": "2026-07-07",
+    "inspectionMethod": "Figma MCP metadata and use_figma page-section inspection",
+    "limitations": [
+      "Figma MCP Starter plan rate limit stopped subsection title extraction during this pass.",
+      "Rows with status `partial` or `needs-detail-audit` require a later node-level pass before they can be treated as complete."
+    ]
+  },
+  "statusLegend": {
+    "covered": "The WDS section has an LDS story, token, component, or document contract that directly covers the same design-system role.",
+    "theme-overridden": "The WDS role is intentionally retained, but color, logo, or brand expression is replaced by LK ROBOTICS theme values.",
+    "partial": "The LDS has relevant coverage, but the WDS node-level variants or examples have not all been verified.",
+    "needs-detail-audit": "The top-level WDS section is known, but exact subsection-level coverage still needs Figma node extraction.",
+    "not-covered": "No LDS coverage has been identified."
+  },
+  "pages": [
+    {
+      "wdsPage": "1 Theme",
+      "figmaNodeId": "16222:137703",
+      "sections": [
+        {
+          "wdsSection": "1 Icon",
+          "figmaNodeId": "16215:13694",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/Iconography.stories.jsx",
+            "assets/icons",
+            "assets/icons/manifest.json",
+            "components/icon/Icon.jsx",
+            "components/icon/icon.card.html"
+          ],
+          "notes": "The local WDS icon export folder is imported into assets/icons and exposed through Icon/ICON_NAMES. Full glyph parity still needs direct Figma node-level audit."
+        },
+        {
+          "wdsSection": "2 Logo",
+          "figmaNodeId": "16215:13483",
+          "status": "theme-overridden",
+          "ldsCoverage": [
+            "stories/Brand.stories.jsx",
+            "stories/BrandPlatform.stories.jsx",
+            "components/brand/BrandLogo.jsx",
+            "components/brand/Lockup.jsx",
+            "assets/brand/"
+          ],
+          "notes": "WDS logo structure is intentionally replaced by LK ROBOTICS marks while retaining a dedicated brand/theme layer."
+        }
+      ]
+    },
+    {
+      "wdsPage": "2 Element",
+      "figmaNodeId": "16222:137704",
+      "sections": [
+        {
+          "wdsSection": "1 Basic",
+          "figmaNodeId": "16215:17304",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/Foundations.stories.jsx",
+            "stories/FoundationBasic.stories.jsx",
+            "stories/FoundationsTypography.stories.jsx",
+            "components/layout/AspectRatio.jsx",
+            "tokens/colors.css",
+            "tokens/typography.css",
+            "tokens/spacing.css",
+            "tokens/source.json",
+            "docs/references/wds/TOKEN_MAP.json",
+            "docs/references/wds/source-pdfs/1basic.pdf",
+            "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+          ],
+          "notes": "Color, typography, radius, and PDF-confirmed Basic/Ratio foundations are mapped. Full WDS Basic node-level examples still need audit."
+        },
+        {
+          "wdsSection": "2 Spacing",
+          "figmaNodeId": "16215:17271",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/FoundationSpacing.stories.jsx",
+            "stories/LayoutGrid.stories.jsx",
+            "tokens/spacing.css",
+            "tokens/grid.css",
+            "tokens/source.json",
+            "docs/references/wds/source-pdfs/2spacing.pdf",
+            "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+          ],
+          "notes": "Base spacing, grid, and PDF-confirmed Safe Area Status/Bottom examples are represented. Remaining spacing subsections require a detail pass."
+        },
+        {
+          "wdsSection": "3 Decorate",
+          "figmaNodeId": "16215:17090",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/FoundationDecorate.stories.jsx",
+            "tokens/effects.css",
+            "stories/Foundations.stories.jsx",
+            "docs/references/wds/VISUAL_TOKEN_EXCEPTIONS.json",
+            "docs/references/wds/source-pdfs/3decorate.pdf",
+            "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+          ],
+          "notes": "PDF-confirmed Gradient, Mask, and Interaction tokens are represented. Other WDS decorative examples still need node-level comparison."
+        }
+      ]
+    },
+    {
+      "wdsPage": "3 Component",
+      "figmaNodeId": "16222:137705",
+      "sections": [
+        {
+          "wdsSection": "1 Layout",
+          "figmaNodeId": "16215:43042",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/LayoutEssentials.stories.jsx",
+            "stories/Layout.stories.jsx",
+            "stories/LayoutGrid.stories.jsx",
+            "stories/LayoutStack.stories.jsx",
+            "stories/LayoutScrollAccess.stories.jsx",
+            "components/layout/MobileSystemBars.jsx",
+            "components/content/Divider.jsx",
+            "docs/references/wds/source-pdfs/1layout.pdf",
+            "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+            "components/layout/"
+          ],
+          "notes": "Local PDF confirms WDS Layout Essential and Divider. Page-level layout primitives are covered, but remaining WDS layout subsection parity is not yet proven."
+        },
+        {
+          "wdsSection": "2 Action",
+          "figmaNodeId": "16215:35516",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/ActionArea.stories.jsx",
+            "stories/Button.stories.jsx",
+            "stories/ButtonsExtended.stories.jsx",
+            "stories/SocialButtons.stories.jsx",
+            "components/buttons/ActionArea.jsx",
+            "components/buttons/ToggleIcon.jsx",
+            "docs/references/wds/source-pdfs/2action.pdf",
+            "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+            "components/buttons/"
+          ],
+          "notes": "Local PDF confirms Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon. Button and action-control families are covered, while exact variant-level parity still needs a Figma detail audit."
+        },
+        {
+          "wdsSection": "3 Selection and Input",
+          "figmaNodeId": "16215:30100",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/FormsFull.stories.jsx",
+            "stories/FormSelectionControls.stories.jsx",
+            "stories/FormSearchAutocomplete.stories.jsx",
+            "stories/FormRangeControls.stories.jsx",
+            "stories/FormDateTime.stories.jsx",
+            "stories/SelectionChips.stories.jsx",
+            "stories/SelectionSegmentedToggle.stories.jsx",
+            "stories/SelectionStatus.stories.jsx",
+            "stories/SelectionSwitchStepper.stories.jsx",
+            "components/forms/",
+            "components/selection/"
+          ],
+          "notes": "Input, select, choice, chip, switch, stepper, segmented, and card-selection roles are covered. Exact WDS framed-style variants remain to be checked."
+        },
+        {
+          "wdsSection": "4 Content",
+          "figmaNodeId": "16215:25192",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/Card.stories.jsx",
+            "stories/CardInfo.stories.jsx",
+            "stories/CardNews.stories.jsx",
+            "stories/CardSpecs.stories.jsx",
+            "stories/Content.stories.jsx",
+            "stories/ContentListsMedia.stories.jsx",
+            "stories/ContentMedia.stories.jsx",
+            "stories/ContentDisclosure.stories.jsx",
+            "stories/ContentBadgesAnnotations.stories.jsx",
+            "stories/ContentAnnotations.stories.jsx",
+            "components/cards/",
+            "components/content/"
+          ],
+          "notes": "Text, list, media, card, badges, disclosure, annotation, and editor-adjacent content are represented. WDS exact card/list variants need detail audit."
+        },
+        {
+          "wdsSection": "5 Loading",
+          "figmaNodeId": "16215:24867",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/StatusLoading.stories.jsx",
+            "stories/StatusProgress.stories.jsx",
+            "components/status/Skeleton.jsx",
+            "components/status/Spinner.jsx",
+            "components/status/ProgressBar.jsx",
+            "components/status/CircularProgress.jsx",
+            "components/status/Meter.jsx"
+          ],
+          "notes": "Loading, skeleton, spinner, progress, circular progress, and meter are represented. WDS state/size variant parity still needs detail audit."
+        },
+        {
+          "wdsSection": "6 Navigation",
+          "figmaNodeId": "16215:20255",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/Navigation.stories.jsx",
+            "stories/NavigationFull.stories.jsx",
+            "stories/NavigationCompact.stories.jsx",
+            "stories/NavigationFlow.stories.jsx",
+            "stories/NavigationFooter.stories.jsx",
+            "stories/NavigationMenus.stories.jsx",
+            "stories/NavigationSteps.stories.jsx",
+            "components/navigation/"
+          ],
+          "notes": "Top bar, app navigation, compact navigation, tabs/routes, footer, menu, steps, and wizard coverage exists. Detail audit should verify WDS hover/collapse behavior and mobile navigation variants."
+        },
+        {
+          "wdsSection": "7 Feedback",
+          "figmaNodeId": "16215:19283",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/FeedbackNotifications.stories.jsx",
+            "stories/OverlayConfirmDialog.stories.jsx",
+            "stories/OverlayFeedback.stories.jsx",
+            "stories/OverlaySurfaces.stories.jsx",
+            "stories/OverlayToast.stories.jsx",
+            "stories/StatusEmpty.stories.jsx",
+            "stories/StatusFeedback.stories.jsx",
+            "components/feedback/",
+            "components/overlay/",
+            "components/status/"
+          ],
+          "notes": "Alert, toast, modal, confirm, empty, banner, callout, badge, avatar, and notification-like roles are represented. Exact WDS feedback taxonomy needs confirmation."
+        },
+        {
+          "wdsSection": "8 Presentation",
+          "figmaNodeId": "16215:17599",
+          "status": "partial",
+          "ldsCoverage": [
+            "stories/Overlay.stories.jsx",
+            "stories/OverlayDimmer.stories.jsx",
+            "stories/NavigationMenus.stories.jsx",
+            "stories/ContentAnnotations.stories.jsx",
+            "components/content/Tooltip.jsx",
+            "components/overlay/DropdownMenu.jsx",
+            "components/overlay/Popover.jsx",
+            "components/overlay/HoverCard.jsx"
+          ],
+          "notes": "Tooltip/menu/overlay presentation roles are represented. WDS has three top-level children here; exact component names and states need node-level audit."
+        }
+      ]
+    }
+  ],
+  "knownCoveredFindings": [
+    {
+      "wdsSource": "2 Element / 2 Spacing / Status and Bottom",
+      "figmaNodeId": "16285:163253",
+      "ldsCoverage": [
+        "stories/FoundationSpacing.stories.jsx",
+        "tokens/spacing.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/2spacing.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "notes": "Mobile status bar, home indicator, bottom bar, and bottom action safe-area spacing guidance added after direct Figma screenshot inspection and confirmed by local PDF export."
+    }
+  ],
+  "nextDetailAuditTargets": [
+    "1 Theme / 1 Icon: compare assets/icons/manifest.json and ICON_NAMES against the Figma source node.",
+    "2 Element / 1 Basic: PDF-confirmed Ratio is mapped; extract remaining Basic subsections and verify color, typography, radius, line, and fill semantics one by one.",
+    "2 Element / 3 Decorate: PDF-confirmed Gradient and Interaction are mapped; verify remaining radius, shadow/effect, and decorative treatment examples.",
+    "3 Component / 1 Layout: PDF-confirmed Essential and Divider are mapped; verify remaining layout subsections against layout primitives.",
+    "3 Component / 2 Action: PDF-confirmed Action Area and Toggle Icon are mapped; verify full WDS Action variants against Button, TextButton, IconButton, Chip, ToggleIcon, ButtonGroup, SplitButton, Fab, and SocialButton.",
+    "3 Component / 3 Selection and Input: verify framed-style and state variants against form/selection components.",
+    "3 Component / 6 Navigation: verify hover-collapse, mobile navigation, footer, menu, tabs, route, stepper, and wizard behavior against stories.",
+    "3 Component / 8 Presentation: verify Tooltip/Menu/Overlay roles and states."
+  ]
+}

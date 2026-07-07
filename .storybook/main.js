@@ -16,15 +16,26 @@ const config = {
     defaultName: 'Docs',
   },
   core: {
+    allowedHosts: ['localhost', '127.0.0.1'],
     disableTelemetry: true,
   },
-  viteFinal: async (config) => ({
-    ...config,
-    build: {
-      ...config.build,
-      chunkSizeWarningLimit: 1200,
-    },
-  }),
+  viteFinal: async (config) => {
+    const allowedHosts = config.server?.allowedHosts === true
+      ? true
+      : Array.from(new Set([...(config.server?.allowedHosts || []), 'localhost', '127.0.0.1']));
+
+    return {
+      ...config,
+      server: {
+        ...config.server,
+        allowedHosts,
+      },
+      build: {
+        ...config.build,
+        chunkSizeWarningLimit: 1200,
+      },
+    };
+  },
 };
 
 export default config;

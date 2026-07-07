@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "inspectedAt": "2026-07-07"
+  },
+  "principle": "Preserve WDS structure and component semantics; replace color values and brand expression with LK ROBOTICS theme values.",
+  "collections": {
+    "Atomic": {
+      "strategy": "Keep WDS neutral and accent roles as a reference scale. LK brand colors may replace the blue/primary decision points but should not rename semantic roles in component contracts."
+    },
+    "Theme": {
+      "strategy": "Map WDS semantic variables to LK semantic CSS aliases. Product code should consume LK semantic aliases, not primitive brand hex values."
+    },
+    "Frame": {
+      "strategy": "Expose WDS frame radius and padding decisions through LK aliases so component shape can stay WDS-compatible while remaining brandable."
+    },
+    "Component": {
+      "strategy": "Component-specific values belong under component tokens only when they are unique to that component family."
+    }
+  },
+  "theme": [
+    {
+      "wds": "Primary/Normal",
+      "lkToken": "semantic.action.primary",
+      "css": "--color-primary",
+      "light": "#0067A8",
+      "dark": "#0A78B2",
+      "status": "mapped",
+      "reason": "LK azure replaces WDS primary blue while preserving the primary role."
+    },
+    {
+      "wds": "Primary/Strong",
+      "lkToken": "semantic.action.primaryHover",
+      "css": "--color-primary-hover",
+      "light": "#005A93",
+      "dark": "#0A6698",
+      "status": "mapped",
+      "reason": "Hover/strong primary stays in the same semantic role."
+    },
+    {
+      "wds": "Primary/Heavy",
+      "lkToken": "primitive.color.brandAzureHeavy",
+      "css": "--lk-primary-heavy",
+      "light": "#004E7F",
+      "dark": "#084F78",
+      "status": "mapped",
+      "reason": "Pressed/heavy primary remains an LK brand ramp value."
+    },
+    {
+      "wds": "Label/Strong",
+      "lkToken": "semantic.text.strong",
+      "css": "--label-strong",
+      "light": "#080B1C",
+      "dark": "#FFFFFF",
+      "status": "mapped",
+      "reason": "LK uses brand navy as the light-mode label base."
+    },
+    {
+      "wds": "Label/Normal",
+      "lkToken": "semantic.text.body",
+      "css": "--label-normal",
+      "light": "#0E1329",
+      "dark": "#E7EAF2",
+      "status": "mapped",
+      "reason": "Normal text preserves WDS label hierarchy using LK navy."
+    },
+    {
+      "wds": "Label/Neutral",
+      "lkToken": "semantic.text.neutral",
+      "css": "--label-neutral",
+      "light": "rgba(14, 19, 41, 0.88)",
+      "dark": "rgba(255, 255, 255, 0.82)",
+      "status": "mapped",
+      "reason": "Alpha label hierarchy stays WDS-like with LK base colors."
+    },
+    {
+      "wds": "Label/Alternative",
+      "lkToken": "semantic.text.muted",
+      "css": "--label-alternative",
+      "light": "rgba(14, 19, 41, 0.61)",
+      "dark": "rgba(255, 255, 255, 0.60)",
+      "status": "mapped",
+      "reason": "Secondary/caption hierarchy maps to LK label alternative."
+    },
+    {
+      "wds": "Background/Normal/Normal",
+      "lkToken": "semantic.surface.page",
+      "css": "--surface-page",
+      "light": "#FFFFFF",
+      "dark": "#0A0E1A",
+      "status": "mapped",
+      "reason": "Page background keeps WDS normal background semantics."
+    },
+    {
+      "wds": "Background/Normal/Alternative",
+      "lkToken": "semantic.surface.subtle",
+      "css": "--surface-subtle",
+      "light": "#F7F7F8",
+      "dark": "#1E2438",
+      "status": "mapped",
+      "reason": "Subtle page bands map to WDS alternative backgrounds."
+    },
+    {
+      "wds": "Background/Elevated/Normal",
+      "lkToken": "semantic.surface.raised",
+      "css": "--surface-raised",
+      "light": "#FFFFFF",
+      "dark": "#232A40",
+      "status": "mapped",
+      "reason": "Floating panels and controls use elevated surfaces."
+    },
+    {
+      "wds": "Line/Solid/Normal",
+      "lkToken": "semantic.border.subtle",
+      "css": "--border-subtle",
+      "light": "#E1E2E4",
+      "dark": "rgba(255, 255, 255, 0.11)",
+      "status": "mapped",
+      "reason": "Default structural border follows WDS line semantics."
+    },
+    {
+      "wds": "Line/Normal/Normal",
+      "lkToken": "semantic.line.normal",
+      "css": "--line-normal",
+      "light": "rgba(112, 115, 124, 0.22)",
+      "dark": "rgba(112, 115, 124, 0.32)",
+      "status": "mapped",
+      "reason": "Alpha line values preserve WDS translucent line behavior."
+    },
+    {
+      "wds": "Fill/Normal",
+      "lkToken": "semantic.fill.normal",
+      "css": "--fill-normal",
+      "light": "rgba(112, 115, 124, 0.08)",
+      "dark": "rgba(112, 115, 124, 0.22)",
+      "status": "mapped",
+      "reason": "Neutral fills stay role-based rather than component-specific."
+    },
+    {
+      "wds": "Status/Positive",
+      "lkToken": "semantic.status.positive",
+      "css": "--color-positive",
+      "light": "#4F765D",
+      "dark": "#8FB79A",
+      "status": "mapped",
+      "reason": "LK intentionally uses a muted positive status color."
+    },
+    {
+      "wds": "Status/Cautionary",
+      "lkToken": "semantic.status.cautionary",
+      "css": "--color-cautionary",
+      "light": "#C29A52",
+      "dark": "#D2B06D",
+      "status": "mapped",
+      "reason": "LK caution is an ochre status value."
+    },
+    {
+      "wds": "Status/Negative",
+      "lkToken": "semantic.status.danger",
+      "css": "--color-danger",
+      "light": "#CF6360",
+      "dark": "#E08A88",
+      "status": "mapped",
+      "reason": "LK danger is a muted brick status value."
+    }
+  ],
+  "frame": [
+    {
+      "wds": "Frame/Radius Small",
+      "css": "--radius-frame-sm",
+      "value": "12px",
+      "status": "mapped"
+    },
+    {
+      "wds": "Frame/Radius Medium",
+      "css": "--radius-frame-md",
+      "value": "14px",
+      "status": "mapped"
+    },
+    {
+      "wds": "Frame/Radius Large",
+      "css": "--radius-frame-lg",
+      "value": "16px",
+      "status": "mapped"
+    },
+    {
+      "wds": "Frame/Radius Xlarge",
+      "css": "--radius-frame-xl",
+      "value": "20px",
+      "status": "mapped"
+    }
+  ],
+  "componentFamilies": [
+    {
+      "wds": "Layout/Essential, Divider",
+      "lk": "MobileSystemBars, Divider",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
+      "lk": "ActionArea, Button, TextButton, IconButton, ToggleIcon, ButtonGroup, SplitButton, Fab",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Textinput/Textfield",
+      "lk": "Input, SearchField, PasswordInput, Textarea, FormField, InputGroup",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Select/Select",
+      "lk": "Select, Combobox, AutoComplete, TagInput",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Control/Checkbox, Control/Radio, Switch/Switch",
+      "lk": "Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, ToggleButton, ThemeToggle",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Card/Card, Card/List Card",
+      "lk": "Card, MetricCard, FeatureCard, NewsCard, ChecklistItem, ChoiceCard",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "List Cell/List Cell",
+      "lk": "ListCell, DescriptionList, Table, DataGrid, Tree",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Toast/Toast, Snackbar/Snackbar, Alert/Alert",
+      "lk": "Toast, ToastStack, Notification, Banner, Callout, Alert, ConfirmDialog",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Tooltip/Tooltip, Menu/Menu",
+      "lk": "Tooltip, DropdownMenu, Menubar, Popover, HoverCard, CommandPalette",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Skeleton, Circular",
+      "lk": "Skeleton, Spinner, ProgressBar, CircularProgress, Meter",
+      "layer": "wds-core"
+    },
+    {
+      "wds": "Robotics extension",
+      "lk": "RobotStatusCard, EquipmentStatusCard, TopicTree, Joystick, Map2DCanvas, Scene3DFrame, TelemetryGauge, TelemetryValue, ViewerToolbar, VideoStreamTile, CanvasEditorShell",
+      "layer": "lk-robotics-extension"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ export function ContentBadge({ children, tone = 'signal', variant = 'soft', size
   const h = size === 'sm' ? 18 : size === 'lg' ? 26 : 22;
   const fs = size === 'sm' ? 11 : size === 'lg' ? 13 : 12;
   const looks = {
-    solid: { background: c, color: '#fff', border: '1px solid transparent' },
+    solid: { background: c, color: 'var(--text-on-signal)', border: '1px solid transparent' },
     soft: { background: `color-mix(in srgb, ${c} 14%, var(--surface-card))`, color: c, border: '1px solid transparent' },
     outline: { background: 'transparent', color: c, border: `1px solid color-mix(in srgb, ${c} 40%, var(--surface-card))` },
   }[variant] || {};

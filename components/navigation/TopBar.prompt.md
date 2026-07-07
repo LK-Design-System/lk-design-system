@@ -1,10 +1,10 @@
 **TopBar** — 상단 앱 바: 좌측 브랜드 슬롯, 가운데 내비(children), 우측 액션 슬롯. 헤어라인 베이스; `sticky`는 프로스티드 블러로 고정, `dark`는 네이비 마스트헤드.
 
 ```jsx
-<TopBar navAlign="center" brand={<Lockup variant="inline" height={22} />} actions={<Button size="sm">도입 문의</Button>}>
-  <TopBarNavItem active menuItems={[{ label: '순찰 로봇' }, { label: '관제 플랫폼' }]}>제품</TopBarNavItem>
-  <TopBarNavItem>기술</TopBarNavItem>
-  <TopBarNavItem>회사소개</TopBarNavItem>
+<TopBar navAlign="center" brand={<Lockup variant="inline" height={22} />} actions={<Button size="sm">새 항목</Button>}>
+  <TopBarNavItem active menuItems={[{ label: '문서' }, { label: '컴포넌트' }]}>문서</TopBarNavItem>
+  <TopBarNavItem>토큰</TopBarNavItem>
+  <TopBarNavItem>가이드</TopBarNavItem>
 </TopBar>
 <TopBar dark sticky brand={<Lockup variant="inline" tone="white" height={22} />} />
 ```

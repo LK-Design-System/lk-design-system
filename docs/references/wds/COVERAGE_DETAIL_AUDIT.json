@@ -1,0 +1,302 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "inspectedAt": "2026-07-07",
+    "basis": [
+      "docs/references/wds/TOKEN_MAP.json componentFamilies",
+      "src/index.js public exports",
+      "Storybook story files",
+      "component implementation files"
+    ],
+    "limitations": [
+      "This file proves local LDS evidence for each known WDS family mapping.",
+      "It does not prove complete Figma node-level variant parity while the Figma MCP rate limit is active."
+    ]
+  },
+  "statusLegend": {
+    "local-evidence": "LDS has component implementation files, public exports, and Storybook evidence for this WDS family; Figma variant parity remains pending.",
+    "extension-evidence": "The family is an explicit LK extension rather than WDS core, and local implementation/story evidence exists.",
+    "needs-figma-variant-audit": "Local evidence exists, but the WDS source has unresolved node-level variants or behavior details."
+  },
+  "families": [
+    {
+      "wdsFamily": "Layout/Essential, Divider",
+      "wdsSection": "3 Component / 1 Layout",
+      "status": "local-evidence",
+      "components": [
+        { "name": "MobileSystemBars", "file": "components/layout/MobileSystemBars.jsx", "publicExport": true },
+        { "name": "Divider", "file": "components/content/Divider.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/LayoutEssentials.stories.jsx"
+      ],
+      "pendingFigmaAudit": [
+        "Confirm Essential platform examples for iOS and Android status/home bars.",
+        "Verify Divider normal/thick and horizontal/vertical variants against the WDS Layout source."
+      ]
+    },
+    {
+      "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
+      "wdsSection": "3 Component / 2 Action",
+      "status": "local-evidence",
+      "components": [
+        { "name": "ActionArea", "file": "components/buttons/ActionArea.jsx", "publicExport": true },
+        { "name": "Button", "file": "components/buttons/Button.jsx", "publicExport": true },
+        { "name": "TextButton", "file": "components/buttons/TextButton.jsx", "publicExport": true },
+        { "name": "IconButton", "file": "components/buttons/IconButton.jsx", "publicExport": true },
+        { "name": "ToggleIcon", "file": "components/buttons/ToggleIcon.jsx", "publicExport": true },
+        { "name": "ButtonGroup", "file": "components/buttons/ButtonGroup.jsx", "publicExport": true },
+        { "name": "SplitButton", "file": "components/buttons/SplitButton.jsx", "publicExport": true },
+        { "name": "Fab", "file": "components/buttons/Fab.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/ActionArea.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ButtonsExtended.stories.jsx"
+      ],
+      "extensionComponents": [
+        { "name": "CopyButton", "file": "components/buttons/CopyButton.jsx", "publicExport": true },
+        { "name": "Link", "file": "components/buttons/Link.jsx", "publicExport": true },
+        { "name": "SocialButton", "file": "components/buttons/SocialButton.jsx", "publicExport": true, "story": "stories/SocialButtons.stories.jsx" }
+      ],
+      "pendingFigmaAudit": [
+        "Local PDF confirms Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon. Confirm exact state/size/icon variants once Figma reads are available.",
+        "Verify whether SocialButton belongs to WDS core or remains LK Product Extension/Auth."
+      ]
+    },
+    {
+      "wdsFamily": "Textinput/Textfield",
+      "wdsSection": "3 Component / 3 Selection and Input",
+      "status": "local-evidence",
+      "components": [
+        { "name": "Input", "file": "components/forms/Input.jsx", "publicExport": true },
+        { "name": "SearchField", "file": "components/forms/SearchField.jsx", "publicExport": true },
+        { "name": "PasswordInput", "file": "components/forms/PasswordInput.jsx", "publicExport": true },
+        { "name": "Textarea", "file": "components/forms/Textarea.jsx", "publicExport": true },
+        { "name": "FormField", "file": "components/forms/FormField.jsx", "publicExport": true },
+        { "name": "InputGroup", "file": "components/forms/InputGroup.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/FormsFull.stories.jsx",
+        "stories/FormSearchAutocomplete.stories.jsx"
+      ],
+      "extensionComponents": [
+        { "name": "NumberField", "file": "components/forms/NumberField.jsx", "publicExport": true },
+        { "name": "PinInput", "file": "components/forms/PinInput.jsx", "publicExport": true },
+        { "name": "FileUpload", "file": "components/forms/FileUpload.jsx", "publicExport": true }
+      ],
+      "pendingFigmaAudit": [
+        "Confirm WDS field labels, helper text, error text, disabled state, and icon slot variants.",
+        "Verify SearchField and PasswordInput are WDS-compatible variants, not unrelated extensions."
+      ]
+    },
+    {
+      "wdsFamily": "Select/Select",
+      "wdsSection": "3 Component / 3 Selection and Input",
+      "status": "local-evidence",
+      "components": [
+        { "name": "Select", "file": "components/forms/Select.jsx", "publicExport": true },
+        { "name": "Combobox", "file": "components/forms/Combobox.jsx", "publicExport": true },
+        { "name": "AutoComplete", "file": "components/forms/AutoComplete.jsx", "publicExport": true },
+        { "name": "TagInput", "file": "components/forms/TagInput.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/FormsFull.stories.jsx",
+        "stories/FormSearchAutocomplete.stories.jsx"
+      ],
+      "pendingFigmaAudit": [
+        "Confirm select, dropdown, autocomplete, and multivalue behavior against WDS component examples.",
+        "Verify option, selected, disabled, and empty-result states."
+      ]
+    },
+    {
+      "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
+      "wdsSection": "3 Component / 3 Selection and Input",
+      "status": "local-evidence",
+      "components": [
+        { "name": "Checkbox", "file": "components/forms/Checkbox.jsx", "publicExport": true },
+        { "name": "CheckboxGroup", "file": "components/forms/CheckboxGroup.jsx", "publicExport": true },
+        { "name": "Radio", "file": "components/forms/Radio.jsx", "publicExport": true },
+        { "name": "RadioGroup", "file": "components/forms/RadioGroup.jsx", "publicExport": true },
+        { "name": "Switch", "file": "components/selection/Switch.jsx", "publicExport": true },
+        { "name": "ToggleButton", "file": "components/selection/ToggleButton.jsx", "publicExport": true },
+        { "name": "ThemeToggle", "file": "components/selection/ThemeToggle.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/FormSelectionControls.stories.jsx",
+        "stories/SelectionSegmentedToggle.stories.jsx",
+        "stories/SelectionSwitchStepper.stories.jsx",
+        "stories/SelectionThemeToggle.stories.jsx"
+      ],
+      "extensionComponents": [
+        { "name": "ColorSwatch", "file": "components/forms/ColorSwatch.jsx", "publicExport": true },
+        { "name": "SegmentedControl", "file": "components/selection/SegmentedControl.jsx", "publicExport": true },
+        { "name": "Stepper", "file": "components/selection/Stepper.jsx", "publicExport": true }
+      ],
+      "pendingFigmaAudit": [
+        "Confirm control shape, checked, mixed, focus, disabled, and size variants.",
+        "Verify ThemeToggle remains LK Theme Override rather than WDS core."
+      ]
+    },
+    {
+      "wdsFamily": "Card/Card, Card/List Card",
+      "wdsSection": "3 Component / 4 Content",
+      "status": "local-evidence",
+      "components": [
+        { "name": "Card", "file": "components/cards/Card.jsx", "publicExport": true },
+        { "name": "MetricCard", "file": "components/cards/MetricCard.jsx", "publicExport": true },
+        { "name": "FeatureCard", "file": "components/cards/FeatureCard.jsx", "publicExport": true },
+        { "name": "NewsCard", "file": "components/cards/NewsCard.jsx", "publicExport": true },
+        { "name": "ChecklistItem", "file": "components/cards/ChecklistItem.jsx", "publicExport": true },
+        { "name": "ChoiceCard", "file": "components/selection/ChoiceCard.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/Card.stories.jsx",
+        "stories/CardInfo.stories.jsx",
+        "stories/CardNews.stories.jsx",
+        "stories/CardSpecs.stories.jsx",
+        "stories/CardStats.stories.jsx",
+        "stories/SelectionStatus.stories.jsx"
+      ],
+      "extensionComponents": [
+        { "name": "ProductCard", "file": "components/cards/ProductCard.jsx", "publicExport": true },
+        { "name": "SpecRow", "file": "components/cards/SpecRow.jsx", "publicExport": true },
+        { "name": "Stat", "file": "components/cards/Stat.jsx", "publicExport": true }
+      ],
+      "pendingFigmaAudit": [
+        "Confirm WDS Card and List Card density, thumbnail, action, and selection variants.",
+        "Separate WDS core card patterns from LK product cards and dashboard metrics."
+      ]
+    },
+    {
+      "wdsFamily": "List Cell/List Cell",
+      "wdsSection": "3 Component / 4 Content",
+      "status": "local-evidence",
+      "components": [
+        { "name": "ListCell", "file": "components/content/ListCell.jsx", "publicExport": true },
+        { "name": "DescriptionList", "file": "components/data/DescriptionList.jsx", "publicExport": true },
+        { "name": "Table", "file": "components/data/Table.jsx", "publicExport": true },
+        { "name": "DataGrid", "file": "components/data/DataGrid.jsx", "publicExport": true },
+        { "name": "Tree", "file": "components/data/Tree.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/ContentListsMedia.stories.jsx",
+        "stories/DataTablesHierarchy.stories.jsx",
+        "stories/DataTree.stories.jsx"
+      ],
+      "extensionComponents": [
+        { "name": "DataToolbar", "file": "components/data/DataToolbar.jsx", "publicExport": true },
+        { "name": "Calendar", "file": "components/data/Calendar.jsx", "publicExport": true }
+      ],
+      "pendingFigmaAudit": [
+        "Confirm list-cell leading/trailing content, density, selected, disabled, and divider variants.",
+        "Verify Table/DataGrid/Tree are LDS data extensions where WDS has only list cell semantics."
+      ]
+    },
+    {
+      "wdsFamily": "Toast/Toast, Snackbar/Snackbar, Alert/Alert",
+      "wdsSection": "3 Component / 7 Feedback",
+      "status": "local-evidence",
+      "components": [
+        { "name": "Toast", "file": "components/overlay/Toast.jsx", "publicExport": true },
+        { "name": "ToastStack", "file": "components/overlay/ToastStack.jsx", "publicExport": true },
+        { "name": "Notification", "file": "components/feedback/Notification.jsx", "publicExport": true },
+        { "name": "Banner", "file": "components/status/Banner.jsx", "publicExport": true },
+        { "name": "Callout", "file": "components/status/Callout.jsx", "publicExport": true },
+        { "name": "Alert", "file": "components/overlay/Alert.jsx", "publicExport": true },
+        { "name": "ConfirmDialog", "file": "components/overlay/ConfirmDialog.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/FeedbackNotifications.stories.jsx",
+        "stories/StatusFeedback.stories.jsx",
+        "stories/OverlayToast.stories.jsx",
+        "stories/OverlayFeedback.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx"
+      ],
+      "pendingFigmaAudit": [
+        "Confirm toast/snackbar/alert visual hierarchy and icon sizes against WDS.",
+        "Verify dismiss, action, persistent, and modal confirm behavior."
+      ]
+    },
+    {
+      "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
+      "wdsSection": "3 Component / 8 Presentation",
+      "status": "local-evidence",
+      "components": [
+        { "name": "Tooltip", "file": "components/content/Tooltip.jsx", "publicExport": true },
+        { "name": "DropdownMenu", "file": "components/overlay/DropdownMenu.jsx", "publicExport": true },
+        { "name": "Menubar", "file": "components/navigation/Menubar.jsx", "publicExport": true },
+        { "name": "Popover", "file": "components/overlay/Popover.jsx", "publicExport": true },
+        { "name": "HoverCard", "file": "components/overlay/HoverCard.jsx", "publicExport": true },
+        { "name": "CommandPalette", "file": "components/overlay/CommandPalette.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/Overlay.stories.jsx",
+        "stories/OverlayCommandPalette.stories.jsx",
+        "stories/NavigationMenus.stories.jsx",
+        "stories/OverlayDimmer.stories.jsx"
+      ],
+      "pendingFigmaAudit": [
+        "Confirm tooltip arrow, placement, delay, and size variants.",
+        "Verify menu item, submenu, command, separator, checked, disabled, and danger item states."
+      ]
+    },
+    {
+      "wdsFamily": "Skeleton, Circular",
+      "wdsSection": "3 Component / 5 Loading",
+      "status": "local-evidence",
+      "components": [
+        { "name": "Skeleton", "file": "components/status/Skeleton.jsx", "publicExport": true },
+        { "name": "Spinner", "file": "components/status/Spinner.jsx", "publicExport": true },
+        { "name": "ProgressBar", "file": "components/status/ProgressBar.jsx", "publicExport": true },
+        { "name": "CircularProgress", "file": "components/status/CircularProgress.jsx", "publicExport": true },
+        { "name": "Meter", "file": "components/status/Meter.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/StatusLoading.stories.jsx",
+        "stories/StatusProgress.stories.jsx"
+      ],
+      "pendingFigmaAudit": [
+        "Confirm skeleton line/block/avatar shapes and animation treatment.",
+        "Verify circular/progress sizes, labels, and indeterminate/determinate states."
+      ]
+    },
+    {
+      "wdsFamily": "Robotics extension",
+      "wdsSection": "LK Robotics Extension",
+      "status": "extension-evidence",
+      "components": [
+        { "name": "RobotStatusCard", "file": "components/robotics/RobotStatusCard.jsx", "publicExport": true },
+        { "name": "EquipmentStatusCard", "file": "components/robotics/EquipmentStatusCard.jsx", "publicExport": true },
+        { "name": "TopicTree", "file": "components/robotics/TopicTree.jsx", "publicExport": true },
+        { "name": "Joystick", "file": "components/robotics/Joystick.jsx", "publicExport": true },
+        { "name": "Map2DCanvas", "file": "components/viz/Map2DCanvas.jsx", "publicExport": true },
+        { "name": "Scene3DFrame", "file": "components/viz/Scene3DFrame.jsx", "publicExport": true },
+        { "name": "TelemetryGauge", "file": "components/viz/TelemetryGauge.jsx", "publicExport": true },
+        { "name": "TelemetryValue", "file": "components/viz/TelemetryValue.jsx", "publicExport": true },
+        { "name": "ViewerToolbar", "file": "components/viz/ViewerToolbar.jsx", "publicExport": true },
+        { "name": "VideoStreamTile", "file": "components/viz/VideoStreamTile.jsx", "publicExport": true },
+        { "name": "CanvasEditorShell", "file": "components/editor/CanvasEditorShell.jsx", "publicExport": true }
+      ],
+      "stories": [
+        "stories/RoboticsAndViz.stories.jsx",
+        "stories/RoboticsEquipment.stories.jsx",
+        "stories/RoboticsJoystick.stories.jsx",
+        "stories/RoboticsTopicTree.stories.jsx",
+        "stories/ViewerMap.stories.jsx",
+        "stories/Viewer3D.stories.jsx",
+        "stories/ViewerTelemetry.stories.jsx",
+        "stories/ViewerTelemetryValue.stories.jsx",
+        "stories/ViewerToolbar.stories.jsx",
+        "stories/ViewerVideo.stories.jsx",
+        "stories/EditorShell.stories.jsx"
+      ],
+      "pendingFigmaAudit": [
+        "These are not WDS core components; verify that each story remains under LK Robotics Extension and does not silently redefine WDS baseline.",
+        "Keep robotics-specific layout, telemetry, map, viewer, and editor decisions documented as extension contracts."
+      ]
+    }
+  ]
+}

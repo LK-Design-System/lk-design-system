@@ -28,7 +28,7 @@ export function Badge({ children, tone = 'signal', dot = false, style, ...rest }
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         minWidth: 20, height: 20, padding: '0 7px',
         fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', fontSize: 12,
-        color: '#fff', background: c, borderRadius: 'var(--radius-pill)',
+        color: 'var(--text-on-signal)', background: c, borderRadius: 'var(--radius-pill)',
         ...style,
       }}
       {...rest}

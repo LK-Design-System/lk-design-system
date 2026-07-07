@@ -2,7 +2,7 @@
 
 ```jsx
 <Fab label="문의 보내기"><Icon name="send" /></Fab>
-<Fab variant="dark" size="lg" label="새 순찰"><Icon name="plus" /></Fab>
+<Fab variant="dark" size="lg" label="새 항목"><Icon name="plus" /></Fab>
 ```
 
 - **variant** `signal · dark · primary · white`. **size** `sm 48 · md 56 · lg 64`. 항상 **label**을 전달하세요. 호버 시 떠오르며 그림자가 깊어집니다.

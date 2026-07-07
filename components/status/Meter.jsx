@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — Meter
- * A labelled value bar with optional thresholds (배터리, 신호). Without
+ * A labelled value bar with optional thresholds (완료율, 품질). Without
  * thresholds it uses the signal ink; with `{ low, high }` (percent) it steps
  * red → amber → steel-green.
  */

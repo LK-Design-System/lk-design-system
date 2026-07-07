@@ -11,6 +11,7 @@
 *.woff2 binary
 *.ttf binary
 *.otf binary
+*.fig binary
 *.thumbnail binary
 
 # Generated browser bundle is useful to keep, but noisy in diffs.

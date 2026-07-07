@@ -69,7 +69,7 @@ export function ChoiceCard({
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#fff',
+          color: 'var(--text-on-signal)',
           transition: 'background var(--dur-fast) var(--ease-out)',
         }}
       >

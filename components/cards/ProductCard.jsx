@@ -10,7 +10,7 @@ import React from 'react';
  * (promote the action to a section-level "전 제품 보기" link). Hover: image
  * zoom + deeper shadow only — the card itself stays put.
  */
-const PC_FADE = 'linear-gradient(180deg, #000 46%, transparent 96%)';
+const PC_FADE = 'linear-gradient(180deg, var(--static-black) 46%, transparent 96%)';
 
 export function ProductCard({
   id,
@@ -33,7 +33,7 @@ export function ProductCard({
         position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
         aspectRatio: '4 / 5',
         background: 'linear-gradient(180deg, var(--lk-stage-from) 0%, var(--lk-stage-to) 100%)',
-        border: '1px solid rgba(255,255,255,0.08)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden',
+        border: '1px solid var(--border-hairline-dark)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden',
         boxShadow: hover ? 'var(--shadow-xl)' : 'var(--shadow-sm)',
         transition: 'box-shadow var(--dur-base) var(--ease-out)',
         textDecoration: 'none',
@@ -57,20 +57,20 @@ export function ProductCard({
               transform: hover ? 'scale(1.05)' : 'scale(1)', transition: 'transform 600ms var(--ease-out)',
             }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 34%, rgba(14,19,41,0.5) 88%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 34%, var(--scrim-dark) 88%)' }} />
         </div>
       )}
       <div style={{ position: 'relative', padding: '18px 20px 20px', display: 'flex', flexDirection: 'column', gap: 9 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           {category && <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--lk-accent)' }}>{category}</span>}
-          <h3 style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 800, letterSpacing: 'var(--ls-h5)', color: '#fff', whiteSpace: 'nowrap' }}>{id}</h3>
+          <h3 style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 800, letterSpacing: 'var(--ls-h5)', color: 'var(--text-on-inverse)', whiteSpace: 'nowrap' }}>{id}</h3>
         </div>
-        {description && <p style={{ margin: 0, fontSize: 14, lineHeight: 1.62, color: 'rgba(255,255,255,0.72)', wordBreak: 'keep-all' }}>{description}</p>}
+        {description && <p style={{ margin: 0, fontSize: 14, lineHeight: 1.62, color: 'var(--label-on-dark-neutral)', wordBreak: 'keep-all' }}>{description}</p>}
         {cta && (
           <span style={{
             alignSelf: 'flex-end', marginTop: 4, whiteSpace: 'nowrap',
             fontSize: 12.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
-            color: hover ? '#fff' : 'rgba(255,255,255,0.66)',
+            color: hover ? 'var(--text-on-inverse)' : 'var(--inverse-label-neutral)',
             textDecoration: hover ? 'underline' : 'none', textUnderlineOffset: 3,
             transition: 'color var(--dur-fast) var(--ease-out)',
           }}>{cta}</span>

@@ -10,7 +10,7 @@ const MONO = 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospac
 export function Code({ children, block = false, style, ...rest }) {
   if (block) {
     return (
-      <pre style={{ margin: 0, padding: '14px 16px', background: 'var(--surface-inverse)', color: '#E6E9F2', borderRadius: 'var(--radius-lg)', overflowX: 'auto', fontFamily: MONO, fontSize: 13, lineHeight: 1.6, ...style }} {...rest}>
+      <pre style={{ margin: 0, padding: '14px 16px', background: 'var(--surface-inverse)', color: 'var(--label-on-dark)', borderRadius: 'var(--radius-lg)', overflowX: 'auto', fontFamily: MONO, fontSize: 13, lineHeight: 1.6, ...style }} {...rest}>
         <code>{children}</code>
       </pre>
     );

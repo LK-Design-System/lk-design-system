@@ -1,9 +1,9 @@
 **RadioGroup** — 단일 선택 라디오 세트(켜지면 시그널 잉크 점).
 
 ```jsx
-<RadioGroup defaultValue="patrol" onChange={setKind} options={[
-  { value: 'patrol', label: '순찰', description: '정기 경로 순찰' },
-  { value: 'clean', label: '청소' },
+<RadioGroup defaultValue="now" onChange={setKind} options={[
+  { value: 'now', label: '즉시 적용', description: '선택한 항목에 바로 반영' },
+  { value: 'schedule', label: '예약 적용' },
 ]} />
 ```
 

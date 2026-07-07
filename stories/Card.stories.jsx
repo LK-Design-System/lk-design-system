@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Icon } from '../src/index.js';
 
 const meta = {
-  title: '컴포넌트/카드',
+  title: 'WDS Core/3 Component/4 Content/Card',
   component: Card,
   args: {
     elevation: 'md',
@@ -18,7 +18,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '제품 카드, 대시보드 패널, inverse section에 쓰는 토큰 기반 neutral surface입니다.',
+        component: 'Card의 기본 구조, 그림자 단계, 인터랙티브 상태를 확인합니다.',
       },
     },
   },
@@ -32,13 +32,13 @@ export const Playground = {
     <Card {...args} style={{ maxWidth: 420 }}>
       <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-          <Icon name="robot" size={24} />
+          <Icon name="document" size={24} />
           <div>
             <h3 style={{ margin: 0, fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
-              AMR 상태 패널
+              항목 상태 패널
             </h3>
             <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--body2-size)' }}>
-              연결됨, mapping mode
+              검토 중, compact mode
             </p>
           </div>
         </div>

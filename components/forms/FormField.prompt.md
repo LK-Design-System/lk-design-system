@@ -2,7 +2,7 @@
 
 ```jsx
 <FormField label="회사명" required helper="공식 등록명으로 입력">
-  <Input placeholder="LK로보틱스" />
+  <Input placeholder="디자인 시스템" />
 </FormField>
 <FormField label="이메일" error="올바른 이메일을 입력하세요">
   <Input aria-invalid />

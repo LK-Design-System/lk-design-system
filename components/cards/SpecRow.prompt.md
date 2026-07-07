@@ -2,10 +2,10 @@
 
 ```jsx
 <SpecRow label="크기" value="520 × 420 × 490 mm" />
-<SpecRow label="배터리" value="20Ah · 25.6V" />
+<SpecRow label="밀도" value="compact · regular" />
 
 // 네이비 제품 무대 위:
 <div data-theme="dark">
-  <SpecRow label="작동 시간" value="습식 3.5h · 건식 8h" />
+  <SpecRow label="상태" value="active · review · disabled" />
 </div>
 ```

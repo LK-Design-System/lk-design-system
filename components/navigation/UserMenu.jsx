@@ -25,14 +25,14 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
   return (
     <div ref={ref} style={{ position: 'relative', ...style }} {...rest}>
       {open && (
-        <div role="menu" style={{ position: 'absolute', bottom: 'calc(100% + 8px)', left: 0, minWidth: collapsed ? 200 : '100%', boxSizing: 'border-box', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', padding: 5, boxShadow: '0 12px 32px rgba(14, 19, 41, 0.12)', zIndex: 30 }}>
+        <div role="menu" style={{ position: 'absolute', bottom: 'calc(100% + 8px)', left: 0, minWidth: collapsed ? 200 : '100%', boxSizing: 'border-box', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', padding: 5, boxShadow: 'var(--shadow-md)', zIndex: 30 }}>
           {items.map((it, i) => it.divider
             ? <div key={'d' + i} style={{ height: 1, background: 'var(--bw-border)', margin: '5px 4px' }} />
             : (
               <button key={i} type="button" role="menuitem" disabled={it.disabled}
                 onClick={() => { setOpen(false); it.onClick && it.onClick(); }}
                 onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(-1)}
-                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 8, cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--lk-accent-tint)' : 'transparent', color: it.danger ? 'var(--status-danger, #CF6360)' : 'var(--label-normal, #0E1329)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 8, cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--lk-accent-tint)' : 'transparent', color: it.danger ? 'var(--status-danger, var(--color-danger))' : 'var(--label-normal, var(--label-normal))', transition: 'background var(--dur-fast) var(--ease-out)' }}>
                 {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--label-alternative)' }}>{it.icon}</span>}
                 <span style={{ flex: 1, minWidth: 0 }}>{it.label}</span>
               </button>
@@ -45,7 +45,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
         <Avatar name={typeof name === 'string' ? name : undefined} src={src} status={status} size={30} style={{ flexShrink: 0 }} />
         {!collapsed && (
           <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <span style={{ fontSize: 13, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal, #0E1329)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
+            <span style={{ fontSize: 13, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal, var(--label-normal))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
             {detail != null && <span style={{ fontSize: 11.5, color: 'var(--label-assistive)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail}</span>}
           </span>
         )}

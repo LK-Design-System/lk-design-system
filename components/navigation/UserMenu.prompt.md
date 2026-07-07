@@ -8,7 +8,7 @@ const [col, setCol] = React.useState(false);
   collapsible collapsed={col} onCollapsedChange={setCol}
   footer={
     <UserMenu
-      name="김도윤" detail="관제 어드민" status="online" collapsed={col}
+      name="김도윤" detail="관리자" status="online" collapsed={col}
       items={[
         { label: '프로필', onClick: openProfile },
         { label: '환경설정' },

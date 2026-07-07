@@ -1,5 +1,12 @@
 import React from 'react';
-import '../styles.css';
+
+if (typeof document !== 'undefined' && !document.querySelector('link[data-lk-ds-styles]')) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = '/styles.css';
+  link.dataset.lkDsStyles = 'true';
+  document.head.appendChild(link);
+}
 
 const canvasShell = {
   minHeight: '100vh',
@@ -67,5 +74,17 @@ export const parameters = {
   },
   docs: {
     toc: true,
+  },
+  options: {
+    storySort: {
+      order: [
+        'WDS Core',
+        ['0 Foundation', '1 Theme', '2 Element', '3 Component'],
+        'LK Theme Override',
+        'LK Product Extension',
+        'LK Robotics Extension',
+        'Documents',
+      ],
+    },
   },
 };

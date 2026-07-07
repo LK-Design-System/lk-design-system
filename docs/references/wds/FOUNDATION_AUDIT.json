@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "createdAt": "2026-07-07",
+    "purpose": "Track WDS foundation and theme coverage in LDS token files, Storybook foundation pages, and LK theme overrides."
+  },
+  "statusLegend": {
+    "mapped": "The WDS foundation role is represented by LDS tokens and Storybook evidence.",
+    "theme-overridden": "The WDS foundation role is intentionally replaced by LK ROBOTICS brand expression while preserving the system boundary.",
+    "pending-figma-parity": "Local token/story evidence exists, but exact WDS source examples still need node-level comparison."
+  },
+  "foundations": [
+    {
+      "wdsSource": "1 Theme / 1 Icon",
+      "status": "pending-figma-parity",
+      "storyEvidence": ["stories/Iconography.stories.jsx#IconRegistry", "stories/Iconography.stories.jsx#IconCard"],
+      "fileEvidence": ["assets/icons", "assets/icons/manifest.json", "components/icon/Icon.jsx", "components/icon/Icon.d.ts", "components/icon/icon.card.html"],
+      "cssTokens": [],
+      "notes": "LDS imports the local WDS icon export folder into assets/icons and exposes it through the public Icon registry. Figma node-level glyph parity still needs direct source comparison."
+    },
+    {
+      "wdsSource": "1 Theme / 2 Logo",
+      "status": "theme-overridden",
+      "storyEvidence": ["stories/Brand.stories.jsx#LKRoboticsLogo", "stories/Brand.stories.jsx#LockupOverlineCard", "stories/BrandPlatform.stories.jsx#PlatformBrandMarks"],
+      "fileEvidence": ["components/brand/BrandLogo.jsx", "components/brand/Lockup.jsx", "assets/brand"],
+      "cssTokens": [],
+      "notes": "WDS logo structure is replaced by LK ROBOTICS marks. This is a theme override, not WDS Core parity."
+    },
+    {
+      "wdsSource": "2 Element / 1 Basic / Color",
+      "status": "mapped",
+      "storyEvidence": ["stories/Foundations.stories.jsx#ColorAndSpacing", "stories/TokenStrategy.stories.jsx#Hierarchy"],
+      "fileEvidence": ["tokens/colors.css", "tokens/source.json", "docs/references/wds/TOKEN_MAP.json"],
+      "cssTokens": [
+        "--color-primary",
+        "--color-primary-hover",
+        "--lk-primary-heavy",
+        "--label-strong",
+        "--label-normal",
+        "--label-neutral",
+        "--label-alternative",
+        "--surface-page",
+        "--surface-subtle",
+        "--surface-raised",
+        "--border-subtle",
+        "--line-normal",
+        "--fill-normal",
+        "--color-positive",
+        "--color-cautionary",
+        "--color-danger"
+      ],
+      "notes": "WDS color semantics are preserved; LK brand colors replace WDS color values in the same semantic roles."
+    },
+    {
+      "wdsSource": "2 Element / 1 Basic / Typography",
+      "status": "mapped",
+      "storyEvidence": ["stories/FoundationsTypography.stories.jsx#Typography", "stories/TokenStrategy.stories.jsx#Hierarchy"],
+      "fileEvidence": ["tokens/fonts.css", "tokens/typography.css", "tokens/source.json", "assets/fonts"],
+      "cssTokens": [
+        "--font-sans",
+        "--fw-regular",
+        "--fw-medium",
+        "--fw-semibold",
+        "--fw-bold",
+        "--fw-extra",
+        "--display1-size",
+        "--title1-size",
+        "--heading1-size",
+        "--headline1-size",
+        "--body1-size",
+        "--label1-size",
+        "--caption1-size"
+      ],
+      "notes": "LDS uses local Pretendard files and exposes the WDS-like display/title/heading/headline/body/label/caption type scale."
+    },
+    {
+      "wdsSource": "2 Element / 1 Basic / Ratio",
+      "status": "mapped",
+      "storyEvidence": ["stories/FoundationBasic.stories.jsx#RatioTokens"],
+      "fileEvidence": [
+        "components/layout/AspectRatio.jsx",
+        "components/layout/AspectRatio.d.ts",
+        "tokens/spacing.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/1basic.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "cssTokens": [
+        "--ratio-1-1",
+        "--ratio-1-2",
+        "--ratio-5-4",
+        "--ratio-4-3",
+        "--ratio-3-2",
+        "--ratio-16-10",
+        "--ratio-golden",
+        "--ratio-16-9",
+        "--ratio-2-1",
+        "--ratio-21-9",
+        "--ratio-4-5",
+        "--ratio-3-4",
+        "--ratio-2-3",
+        "--ratio-10-16",
+        "--ratio-golden-vertical",
+        "--ratio-9-16",
+        "--ratio-9-21"
+      ],
+      "notes": "Local PDF export 1basic.pdf confirms WDS Basic/Ratio presets. LDS exposes them as CSS aspect-ratio tokens and the AspectRatio primitive."
+    },
+    {
+      "wdsSource": "2 Element / 2 Spacing / Base Scale",
+      "status": "mapped",
+      "storyEvidence": ["stories/Foundations.stories.jsx#ColorAndSpacing", "stories/FoundationSpacing.stories.jsx#MobileSafeAreaSpacing"],
+      "fileEvidence": ["tokens/spacing.css", "tokens/source.json"],
+      "cssTokens": [
+        "--space-0",
+        "--space-1",
+        "--space-2",
+        "--space-3",
+        "--space-4",
+        "--space-5",
+        "--space-6",
+        "--space-8",
+        "--space-10",
+        "--space-12",
+        "--space-16",
+        "--space-20",
+        "--space-28",
+        "--space-32"
+      ],
+      "notes": "4px-based LDS spacing scale is exposed as runtime CSS tokens and token source entries."
+    },
+    {
+      "wdsSource": "2 Element / 2 Spacing / Status and Bottom",
+      "status": "mapped",
+      "storyEvidence": ["stories/FoundationSpacing.stories.jsx#MobileSafeAreaSpacing"],
+      "fileEvidence": [
+        "tokens/spacing.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/2spacing.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "cssTokens": [
+        "--mobile-safe-area-top",
+        "--mobile-safe-area-bottom",
+        "--mobile-status-bar-min-height",
+        "--mobile-home-indicator-height",
+        "--mobile-bottom-bar-min-height",
+        "--mobile-bottom-action-padding-bottom"
+      ],
+      "notes": "Added after direct inspection of WDS node 16285:163253 and confirmed by local PDF export 2spacing.pdf. Covers mobile status bar, home indicator, bottom bar, and bottom action safe-area spacing."
+    },
+    {
+      "wdsSource": "2 Element / 1 Basic / Frame Radius",
+      "status": "mapped",
+      "storyEvidence": ["stories/Foundations.stories.jsx#ColorAndSpacing", "stories/TokenStrategy.stories.jsx#Hierarchy"],
+      "fileEvidence": ["tokens/spacing.css", "tokens/source.json", "docs/references/wds/TOKEN_MAP.json"],
+      "cssTokens": [
+        "--radius-frame-sm",
+        "--radius-frame-md",
+        "--radius-frame-lg",
+        "--radius-frame-xl",
+        "--radius-sm",
+        "--radius-md",
+        "--radius-xl",
+        "--radius-pill"
+      ],
+      "notes": "WDS Frame/Radius Small/Medium/Large/Xlarge are exposed as LDS frame radius aliases."
+    },
+    {
+      "wdsSource": "2 Element / 3 Decorate / Effects",
+      "status": "pending-figma-parity",
+      "storyEvidence": ["stories/Foundations.stories.jsx#ColorAndSpacing", "stories/TokenStrategy.stories.jsx#Hierarchy"],
+      "fileEvidence": ["tokens/effects.css", "tokens/source.json", "docs/references/wds/VISUAL_TOKEN_EXCEPTIONS.json"],
+      "cssTokens": [
+        "--shadow-xs",
+        "--shadow-sm",
+        "--shadow-md",
+        "--shadow-lg",
+        "--shadow-xl",
+        "--border-hairline",
+        "--dur-fast",
+        "--dur-base",
+        "--dur-slow",
+        "--ease-out"
+      ],
+      "notes": "LDS elevation, border, scrim, and motion tokens are adjacent effects. PDF-confirmed WDS Decorate gradient and interaction primitives are mapped in separate rows."
+    },
+    {
+      "wdsSource": "2 Element / 3 Decorate / Gradient",
+      "status": "mapped",
+      "storyEvidence": ["stories/FoundationDecorate.stories.jsx#GradientTokens"],
+      "fileEvidence": [
+        "tokens/effects.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/3decorate.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "cssTokens": [
+        "--decorate-gradient-solid-top",
+        "--decorate-gradient-solid-right",
+        "--decorate-gradient-solid-bottom",
+        "--decorate-gradient-solid-left",
+        "--decorate-gradient-multiple-top",
+        "--decorate-gradient-multiple-right",
+        "--decorate-gradient-multiple-bottom",
+        "--decorate-gradient-multiple-left",
+        "--decorate-mask-fade-top",
+        "--decorate-mask-fade-right",
+        "--decorate-mask-fade-bottom",
+        "--decorate-mask-fade-left"
+      ],
+      "notes": "Local PDF export 3decorate.pdf confirms Solid, Multiple, and Mask gradient directions. LDS maps these to Decorate gradient and mask tokens."
+    },
+    {
+      "wdsSource": "2 Element / 3 Decorate / Interaction",
+      "status": "mapped",
+      "storyEvidence": ["stories/FoundationDecorate.stories.jsx#InteractionTokens"],
+      "fileEvidence": [
+        "tokens/effects.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/3decorate.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "cssTokens": [
+        "--interaction-layer-normal",
+        "--interaction-layer-default",
+        "--interaction-layer-light",
+        "--interaction-layer-strong",
+        "--interaction-opacity-normal",
+        "--interaction-opacity-hovered",
+        "--interaction-opacity-focused",
+        "--interaction-opacity-pressed"
+      ],
+      "notes": "Local PDF export 3decorate.pdf confirms Interaction variants and states. LDS maps those to layer and state opacity tokens."
+    },
+    {
+      "wdsSource": "2 Element / 2 Spacing / Grid",
+      "status": "mapped",
+      "storyEvidence": ["stories/LayoutGrid.stories.jsx#GridAndColumns", "stories/Layout.stories.jsx#PageStructure"],
+      "fileEvidence": ["tokens/grid.css", "components/layout/Grid.jsx", "components/layout/Columns.jsx", "components/layout/Col.jsx"],
+      "cssTokens": [
+        "--bp-sm",
+        "--bp-md",
+        "--bp-lg",
+        "--bp-xl",
+        "--grid-columns",
+        "--grid-gutter",
+        "--grid-margin",
+        "--container-lg",
+        "--container-xl",
+        "--gap-normal",
+        "--gap-section"
+      ],
+      "notes": "Responsive grid, content container widths, gutters, breakpoints, and section rhythm are represented in LDS."
+    },
+    {
+      "wdsSource": "Theme Modes / Light and Dark",
+      "status": "pending-figma-parity",
+      "storyEvidence": ["stories/Button.stories.jsx#OnDark", "stories/SelectionThemeToggle.stories.jsx#ThemeTogglePattern"],
+      "fileEvidence": ["tokens/colors.css", "tokens/effects.css", "tokens/source.json"],
+      "cssTokens": [
+        "--surface-page",
+        "--surface-raised",
+        "--surface-inverse",
+        "--text-on-inverse",
+        "--label-on-dark",
+        "--inverse-fill-normal",
+        "--inverse-line-normal"
+      ],
+      "notes": "LDS defines explicit light, dark, and auto token modes. WDS source mode examples still need direct parity inspection."
+    }
+  ]
+}

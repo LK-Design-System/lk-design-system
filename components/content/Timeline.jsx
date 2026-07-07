@@ -10,7 +10,7 @@ const DOT = {
 
 /**
  * LK ROBOTICS — Timeline
- * A vertical event timeline (도입 이력, 관제 로그). Each item is a tonal node on a
+ * A vertical event timeline (변경 이력, 활동 로그). Each item is a tonal node on a
  * hairline rail, with a time, title and optional description.
  */
 export function Timeline({ items = [], style, ...rest }) {

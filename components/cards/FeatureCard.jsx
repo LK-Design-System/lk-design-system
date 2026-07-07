@@ -2,8 +2,8 @@ import React from 'react';
 
 const ICON_TONES = {
   signal: { fg: 'var(--lk-accent-ink)', bg: 'var(--lk-accent-tint)' },     // teal tile (default)
-  steel:  { fg: 'var(--bw-green-600)', bg: 'rgba(94,110,134,0.14)' },
-  amber:  { fg: '#9A7424', bg: 'rgba(194,154,82,0.18)' },
+  steel:  { fg: 'var(--color-positive-strong)', bg: 'var(--status-positive-tint)' },
+  amber:  { fg: 'var(--color-cautionary-strong)', bg: 'var(--status-cautionary-tint)' },
   navy:   { fg: 'var(--bw-ink)', bg: 'var(--fill-strong)' },
 };
 

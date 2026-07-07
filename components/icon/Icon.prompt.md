@@ -1,11 +1,36 @@
-**Icon** — **93개 글리프 라인 세트**(로보틱스 글리프 포함)로, LK의 아이콘 컴포넌트로 통째로 채택했습니다. 모든 글리프는 24px `currentColor` SVG여서 맥락의 잉크 / 시그널 잉크 / 뮤트 톤을 그대로 취합니다. (LK의 *컴포넌트 내부* 아이코노그래피를 원본 킷에 맞춘 것이며, `guidelines/iconography`의 Lucide 안내는 마케팅 사이트용 대체 아이콘을 문서화합니다.)
+# Icon
+
+Use `Icon` for every product glyph before introducing a new drawing.
+
+## Source
+
+- The base registry is imported from Wanted Design System Community icon exports.
+- Normal and navigation icons are normalized to `currentColor`.
+- Color brand icons keep their original WDS fills and are exposed with the `color-` prefix.
+- LK Robotics-only glyphs remain as a small extension set when WDS has no matching asset.
+
+## Usage
 
 ```jsx
+import { Icon } from '@lk-robotics/design-system-core';
+
 <Icon name="search" />
-<Icon name="bookmark" size={20} color="var(--lk-accent-ink)" />
-<Icon name="circle-check-fill" color="var(--color-positive)" />
+<Icon name="route" color="var(--color-primary)" />
+<Icon name="color-logo-kakao" size={32} />
 ```
 
-- **name** — `ICON_NAMES` 중 하나: `search · bookmark(-fill) · check · circle-check(-fill) · circle-info · circle-exclamation · chevron-{up,down,left,right} · arrow-{up,down,left,right,up-right} · close · plus · minus · filter · location · mail · bell · star(-fill) · heart · eye(-slash) · lock · clock · calendar · document · download · upload · share · send · trash · setting · more-{horizontal,vertical} · verified-check · nav-{recruit,career,social,mypage,menu} · …` 알 수 없는 이름은 빈 24px 박스로 렌더됩니다.
-- **size** — px(기본 24). **color** — 임의의 CSS 색; 생략하면 `currentColor`로 상속.
-- 설계상 단색 — 멀티컬러 제품 아이콘은 없습니다. 기능 타일에서는 10% 시안 워시(`--lk-accent-tint`) 위에 시그널 잉크 글리프를 놓습니다.
+## Rules
+
+- Check `ICON_NAMES` first. Do not hand-draw an inline SVG for a common action, status, editor, navigation, or brand glyph.
+- Use semantic names from the registry instead of inventing local aliases.
+- Prefer WDS icons for general UI. Use LK Robotics extension icons only for robotics-specific concepts such as robot, route, waypoint, LiDAR, battery, or joystick.
+- Monochrome icons inherit `currentColor`; set color on the parent or with the `color` prop.
+- Icon-only controls must provide an accessible label through the wrapping control or `aria-label`.
+- New icons must be added to the source icon inventory and regenerated with `scripts/generate-icons.mjs`; do not edit `Icon.jsx` by hand.
+
+## Evidence
+
+- Source assets: `assets/icons/*.svg`
+- Inventory: `assets/icons/manifest.json`
+- Public registry: `components/icon/Icon.jsx`
+- Storybook: `stories/Iconography.stories.jsx`

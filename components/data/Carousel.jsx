@@ -1,7 +1,7 @@
 import React from 'react';
 
 function navBtnStyle(side) {
-  return { position: 'absolute', top: '50%', [side]: 12, transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', border: 'none', background: 'rgba(14,19,41,0.5)', color: '#fff', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)', zIndex: 2 };
+  return { position: 'absolute', top: '50%', [side]: 12, transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', border: 'none', background: 'var(--scrim-dark)', color: 'var(--text-on-signal)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)', zIndex: 2 };
 }
 
 /**
@@ -27,7 +27,7 @@ export function Carousel({ slides = [], showDots = true, showArrows = true, styl
       {showDots && n > 1 && (
         <div style={{ position: 'absolute', bottom: 14, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 8, zIndex: 2 }}>
           {slides.map((_, idx) => (
-            <button key={idx} type="button" aria-label={`slide ${idx + 1}`} onClick={() => setI(idx)} style={{ width: idx === i ? 22 : 8, height: 8, borderRadius: 'var(--radius-pill)', border: 'none', cursor: 'pointer', padding: 0, background: idx === i ? 'var(--bw-white)' : 'rgba(255,255,255,0.5)', transition: 'width var(--dur-base) var(--ease-out)' }} />
+            <button key={idx} type="button" aria-label={`slide ${idx + 1}`} onClick={() => setI(idx)} style={{ width: idx === i ? 22 : 8, height: 8, borderRadius: 'var(--radius-pill)', border: 'none', cursor: 'pointer', padding: 0, background: idx === i ? 'var(--bw-white)' : 'var(--inverse-label-alternative)', transition: 'width var(--dur-base) var(--ease-out)' }} />
           ))}
         </div>
       )}

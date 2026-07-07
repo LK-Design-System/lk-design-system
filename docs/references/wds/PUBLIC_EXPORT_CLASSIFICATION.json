@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "LK Design System public exports",
+    "entrypoint": "src/index.js",
+    "classifiedAt": "2026-07-07",
+    "purpose": "Ensure every public LDS export is explicitly classified as WDS core, LK theme override, LK product extension, or LK robotics extension."
+  },
+  "classificationLegend": {
+    "direct-wds": "A public export that directly supports a WDS core family or foundation role.",
+    "wds-adjacent": "A generic export that supports a WDS section but still needs Figma node-level confirmation before being treated as direct WDS parity.",
+    "theme-override": "A public export that applies LK ROBOTICS brand/theme decisions over WDS structure.",
+    "product-extension": "A reusable LK product export beyond direct WDS coverage.",
+    "robotics-extension": "A robotics, viewer, telemetry, map, or editor export beyond WDS core."
+  },
+  "groups": [
+    {
+      "name": "Brand theme override",
+      "layer": "lk-theme-override",
+      "classification": "theme-override",
+      "storyEvidence": ["stories/Brand.stories.jsx", "stories/BrandPlatform.stories.jsx"],
+      "exports": ["BRAND_LOGO_NAMES", "BrandLogo", "Lockup"]
+    },
+    {
+      "name": "Theme toggle override",
+      "layer": "lk-theme-override",
+      "classification": "theme-override",
+      "storyEvidence": ["stories/SelectionThemeToggle.stories.jsx"],
+      "exports": ["ThemeToggle"]
+    },
+    {
+      "name": "WDS action controls",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
+      "storyEvidence": ["stories/ActionArea.stories.jsx", "stories/Button.stories.jsx", "stories/ButtonsExtended.stories.jsx"],
+      "exports": ["ActionArea", "Button", "ButtonGroup", "Fab", "IconButton", "SplitButton", "TextButton", "ToggleIcon"]
+    },
+    {
+      "name": "Action product extensions",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": ["stories/ButtonsExtended.stories.jsx", "stories/SocialButtons.stories.jsx"],
+      "exports": ["CopyButton", "Link", "SocialButton"]
+    },
+    {
+      "name": "WDS cards and content containers",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "wdsFamily": "Card/Card, Card/List Card",
+      "storyEvidence": [
+        "stories/Card.stories.jsx",
+        "stories/CardInfo.stories.jsx",
+        "stories/CardNews.stories.jsx",
+        "stories/CardSpecs.stories.jsx",
+        "stories/SelectionStatus.stories.jsx"
+      ],
+      "exports": ["Card", "ChecklistItem", "FeatureCard", "NewsCard", "SpecRow", "ChoiceCard"]
+    },
+    {
+      "name": "Product cards and dashboard metrics",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": ["stories/CardStats.stories.jsx", "stories/CardsExtended.stories.jsx"],
+      "exports": ["MetricCard", "ProductCard", "Stat"]
+    },
+    {
+      "name": "WDS text, list, media, and disclosure content",
+      "layer": "wds-core",
+      "classification": "wds-adjacent",
+      "wdsFamily": "Card/Card, Card/List Card",
+      "storyEvidence": [
+        "stories/Content.stories.jsx",
+        "stories/ContentAnnotations.stories.jsx",
+        "stories/ContentBadgesAnnotations.stories.jsx",
+        "stories/ContentDisclosure.stories.jsx",
+        "stories/ContentListsMedia.stories.jsx",
+        "stories/ContentMedia.stories.jsx"
+      ],
+      "exports": [
+        "Accordion",
+        "Blockquote",
+        "Bookmark",
+        "Bubble",
+        "Code",
+        "Collapsible",
+        "ContentBadge",
+        "Kbd",
+        "ListCell",
+        "Overline",
+        "SourceTag",
+        "StatusBadge",
+        "StepList",
+        "Thumbnail",
+        "Timeline",
+        "Tooltip"
+      ]
+    },
+    {
+      "name": "Writing editor extension",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": ["stories/ContentEditor.stories.jsx"],
+      "exports": ["ContentEditor"]
+    },
+    {
+      "name": "Data visualization and data workflows",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": [
+        "stories/DataAndStatus.stories.jsx",
+        "stories/DataCalendar.stories.jsx",
+        "stories/DataDisplay.stories.jsx",
+        "stories/DataTablesHierarchy.stories.jsx",
+        "stories/DataToolbar.stories.jsx",
+        "stories/DataTree.stories.jsx"
+      ],
+      "exports": [
+        "BarChart",
+        "Calendar",
+        "Carousel",
+        "DataGrid",
+        "DataToolbar",
+        "DescriptionList",
+        "DonutChart",
+        "Sparkline",
+        "Table",
+        "Tree"
+      ]
+    },
+    {
+      "name": "Feedback atoms",
+      "layer": "wds-core",
+      "classification": "wds-adjacent",
+      "storyEvidence": [
+        "stories/Feedback.stories.jsx",
+        "stories/FeedbackBadgesTags.stories.jsx",
+        "stories/FeedbackNotifications.stories.jsx"
+      ],
+      "exports": ["Avatar", "AvatarGroup", "Badge", "Chip", "Notification", "PushBadge", "Tag"]
+    },
+    {
+      "name": "Rating extension",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": ["stories/FeedbackRating.stories.jsx"],
+      "exports": ["Rating"]
+    },
+    {
+      "name": "WDS text input and select controls",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "wdsFamily": "Textinput/Textfield",
+      "storyEvidence": [
+        "stories/FormsFull.stories.jsx",
+        "stories/FormSearchAutocomplete.stories.jsx"
+      ],
+      "exports": [
+        "AutoComplete",
+        "Combobox",
+        "FormField",
+        "Input",
+        "InputGroup",
+        "PasswordInput",
+        "SearchField",
+        "Select",
+        "TagInput",
+        "Textarea"
+      ]
+    },
+    {
+      "name": "Form product extensions",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": ["stories/FormDateTime.stories.jsx", "stories/FormsFull.stories.jsx"],
+      "exports": ["ColorSwatch", "DatePicker", "FileUpload", "NumberField", "PinInput", "TimePicker"]
+    },
+    {
+      "name": "WDS selection controls",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
+      "storyEvidence": [
+        "stories/FormSelectionControls.stories.jsx",
+        "stories/SelectionChips.stories.jsx",
+        "stories/SelectionSegmentedToggle.stories.jsx",
+        "stories/SelectionSwitchStepper.stories.jsx"
+      ],
+      "exports": [
+        "Checkbox",
+        "CheckboxGroup",
+        "FilterChip",
+        "MultiSelectChip",
+        "Radio",
+        "RadioGroup",
+        "RangeSlider",
+        "SegmentedControl",
+        "Slider",
+        "Stepper",
+        "Switch",
+        "ToggleButton"
+      ]
+    },
+    {
+      "name": "WDS icon foundation",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "storyEvidence": ["stories/Iconography.stories.jsx"],
+      "exports": ["Icon", "ICON_NAMES"]
+    },
+    {
+      "name": "WDS layout primitives",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "wdsFamily": "Layout/Essential, Divider",
+      "storyEvidence": [
+        "stories/LayoutEssentials.stories.jsx",
+        "stories/Layout.stories.jsx",
+        "stories/LayoutGrid.stories.jsx",
+        "stories/LayoutScrollAccess.stories.jsx",
+        "stories/LayoutStack.stories.jsx"
+      ],
+      "exports": [
+        "AspectRatio",
+        "Center",
+        "Cluster",
+        "Col",
+        "Columns",
+        "Container",
+        "Divider",
+        "Grid",
+        "MobileSystemBars",
+        "ScrollArea",
+        "Section",
+        "Spacer",
+        "Split",
+        "Stack",
+        "VisuallyHidden"
+      ]
+    },
+    {
+      "name": "Page header extension",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": ["stories/LayoutPageHeader.stories.jsx"],
+      "exports": ["PageHeader"]
+    },
+    {
+      "name": "WDS navigation",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "storyEvidence": [
+        "stories/Navigation.stories.jsx",
+        "stories/NavigationCompact.stories.jsx",
+        "stories/NavigationFlow.stories.jsx",
+        "stories/NavigationFooter.stories.jsx",
+        "stories/NavigationFull.stories.jsx",
+        "stories/NavigationMenus.stories.jsx",
+        "stories/NavigationSteps.stories.jsx"
+      ],
+      "exports": [
+        "Anchor",
+        "BottomNav",
+        "Breadcrumb",
+        "Footer",
+        "Menubar",
+        "NavRail",
+        "Pagination",
+        "SideNav",
+        "Steps",
+        "Tabs",
+        "Toolbar",
+        "TopBar",
+        "TopBarNavItem",
+        "UserMenu",
+        "Wizard"
+      ]
+    },
+    {
+      "name": "Navigation product extension",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": ["stories/NavigationCompact.stories.jsx"],
+      "exports": ["FloorSelector"]
+    },
+    {
+      "name": "WDS overlays and presentation",
+      "layer": "wds-core",
+      "classification": "wds-adjacent",
+      "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
+      "storyEvidence": [
+        "stories/Overlay.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/OverlayDimmer.stories.jsx",
+        "stories/OverlayFeedback.stories.jsx",
+        "stories/OverlaySurfaces.stories.jsx",
+        "stories/OverlayToast.stories.jsx"
+      ],
+      "exports": [
+        "Alert",
+        "ConfirmDialog",
+        "Dimmer",
+        "DropdownMenu",
+        "HoverCard",
+        "Modal",
+        "Popover",
+        "Toast",
+        "ToastStack"
+      ]
+    },
+    {
+      "name": "Overlay product extensions",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": [
+        "stories/OverlayCommandPalette.stories.jsx",
+        "stories/OverlayDrawerSheet.stories.jsx",
+        "stories/OverlayLightbox.stories.jsx"
+      ],
+      "exports": ["CommandPalette", "Drawer", "Lightbox", "Sheet"]
+    },
+    {
+      "name": "WDS status and loading",
+      "layer": "wds-core",
+      "classification": "direct-wds",
+      "wdsFamily": "Skeleton, Circular",
+      "storyEvidence": [
+        "stories/StatusEmpty.stories.jsx",
+        "stories/StatusFeedback.stories.jsx",
+        "stories/StatusLoading.stories.jsx",
+        "stories/StatusProgress.stories.jsx"
+      ],
+      "exports": [
+        "Banner",
+        "Callout",
+        "CircularProgress",
+        "EmptyState",
+        "Meter",
+        "ProgressBar",
+        "Skeleton",
+        "Spinner"
+      ]
+    },
+    {
+      "name": "Robotics and viewer extension",
+      "layer": "lk-robotics-extension",
+      "classification": "robotics-extension",
+      "wdsFamily": "Robotics extension",
+      "storyEvidence": [
+        "stories/EditorShell.stories.jsx",
+        "stories/RoboticsAndViz.stories.jsx",
+        "stories/RoboticsEquipment.stories.jsx",
+        "stories/RoboticsJoystick.stories.jsx",
+        "stories/RoboticsTopicTree.stories.jsx",
+        "stories/Viewer3D.stories.jsx",
+        "stories/ViewerMap.stories.jsx",
+        "stories/ViewerTelemetry.stories.jsx",
+        "stories/ViewerTelemetryValue.stories.jsx",
+        "stories/ViewerToolbar.stories.jsx",
+        "stories/ViewerVideo.stories.jsx"
+      ],
+      "exports": [
+        "CanvasEditorShell",
+        "EditorToolbar",
+        "HistoryToolbar",
+        "ConnectionBadge",
+        "EquipmentStatusCard",
+        "Joystick",
+        "RobotStatusCard",
+        "TopicTree",
+        "Map2DCanvas",
+        "Scene3DFrame",
+        "TelemetryGauge",
+        "TelemetryValue",
+        "VideoStreamTile",
+        "ViewerToolbar",
+        "ViewerToolbarButton"
+      ]
+    }
+  ]
+}

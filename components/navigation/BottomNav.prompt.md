@@ -3,7 +3,7 @@
 ```jsx
 <BottomNav defaultValue="home" onChange={setTab} items={[
   { value: 'home', label: '홈', icon: <Icon name="home" size={22} /> },
-  { value: 'fleet', label: '로봇', icon: <Icon name="setting" size={22} /> },
+  { value: 'docs', label: '문서', icon: <Icon name="document" size={22} /> },
   { value: 'alerts', label: '알림', icon: <Icon name="bell" size={22} /> },
   { value: 'me', label: '내정보', icon: <Icon name="person" size={22} /> },
 ]} />

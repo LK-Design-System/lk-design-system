@@ -20,7 +20,7 @@ export function Alert({
   }, [open, dismiss]);
   if (!open) return null;
   const accent = tone === 'danger' ? 'var(--bw-red)' : 'var(--color-primary)';
-  const confirmStyle = { height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: '#fff', background: accent };
+  const confirmStyle = { height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--text-on-signal)', background: accent };
   const cancelStyle = { height: 44, padding: '0 20px', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)', background: 'var(--bw-white)' };
   return (
     <div

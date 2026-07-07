@@ -21,7 +21,7 @@ export function TopBar({ brand, children, actions, navAlign = 'start', sticky = 
         height, paddingInline: 'clamp(16px, 4vw, 32px)', boxSizing: 'border-box',
         background: dark ? 'linear-gradient(135deg, var(--lk-navy-from), var(--lk-navy-to))' : (sticky ? 'color-mix(in srgb, var(--surface-card) 88%, transparent)' : 'var(--surface-card)'),
         color: dark ? 'var(--text-on-inverse)' : 'var(--text-body)',
-        borderBottom: bordered ? `1px solid ${dark ? 'rgba(255,255,255,0.10)' : 'var(--border-subtle)'}` : 'none',
+        borderBottom: bordered ? `1px solid ${dark ? 'var(--inverse-fill-normal)' : 'var(--border-subtle)'}` : 'none',
         backdropFilter: sticky ? 'saturate(150%) blur(8px)' : 'none',
         WebkitBackdropFilter: sticky ? 'saturate(150%) blur(8px)' : 'none',
         fontFamily: 'var(--font-sans)', ...style,
@@ -59,10 +59,10 @@ export function TopBarNavItem({ children, active = false, href, menuItems, menuT
   const Comp = href ? 'a' : 'button';
 
   const fg = active
-    ? (onDark ? '#fff' : 'var(--lk-accent-ink)')
+    ? (onDark ? 'var(--text-on-signal)' : 'var(--lk-accent-ink)')
     : activeOrHover
-      ? (onDark ? '#fff' : 'var(--label-strong)')
-      : (onDark ? 'rgba(255,255,255,0.66)' : 'var(--label-alternative)');
+      ? (onDark ? 'var(--text-on-signal)' : 'var(--label-strong)')
+      : (onDark ? 'var(--inverse-label-neutral)' : 'var(--label-alternative)');
 
   return (
     <span

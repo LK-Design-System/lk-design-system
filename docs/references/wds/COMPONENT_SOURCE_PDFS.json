@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community component PDF exports",
+    "createdAt": "2026-07-07",
+    "purpose": "Record local PDF evidence exported from Figma for WDS component sections."
+  },
+  "pdfs": [
+    {
+      "id": "layout-essential-divider",
+      "wdsSource": "3 Component / 1 Layout / Essential and Divider",
+      "file": "docs/references/wds/source-pdfs/1layout.pdf",
+      "extractedStructure": [
+        "Layout",
+        "Essential: platform = ios android, Status Bar and Home Bar display",
+        "Divider: variant = normal thick, vertical = false true"
+      ],
+      "localEvidence": [
+        "stories/LayoutEssentials.stories.jsx#EssentialAndDivider",
+        "components/layout/MobileSystemBars.jsx",
+        "components/content/Divider.jsx",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds WDS Layout/Essential and Divider evidence, including divider variants and mobile system bar preview primitive."
+    },
+    {
+      "id": "action-taxonomy",
+      "wdsSource": "3 Component / 2 Action / Action Area and Controls",
+      "file": "docs/references/wds/source-pdfs/2action.pdf",
+      "extractedStructure": [
+        "Action Area",
+        "Button",
+        "Text Button",
+        "Icon Button",
+        "Chip",
+        "Toggle Icon",
+        "Action Area: bottom placement, divider, caption, sticky, safeArea"
+      ],
+      "localEvidence": [
+        "stories/ActionArea.stories.jsx#ActionTaxonomy",
+        "stories/ActionArea.stories.jsx#BottomActionArea",
+        "components/buttons/ActionArea.jsx",
+        "components/buttons/Button.jsx",
+        "components/buttons/TextButton.jsx",
+        "components/buttons/IconButton.jsx",
+        "components/buttons/ToggleIcon.jsx",
+        "components/feedback/Chip.jsx",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds WDS Action Area and Toggle Icon primitives and records the PDF-confirmed Action taxonomy."
+    }
+  ]
+}

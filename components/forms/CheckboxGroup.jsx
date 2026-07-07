@@ -24,7 +24,7 @@ export function CheckboxGroup({ options = [], value, defaultValue = [], onChange
           <label key={o.value} style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 10, cursor: o.disabled ? 'not-allowed' : 'pointer', opacity: o.disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)' }}>
             <input type="checkbox" checked={on} disabled={o.disabled} onChange={() => toggle(o.value)} style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />
             <span style={{ marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: 'var(--radius-sm)', border: `1px solid ${on ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`, background: on ? 'var(--lk-accent-ink)' : 'var(--bw-white)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)' }}>
-              {on && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
+              {on && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-on-signal)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
             </span>
             <span>
               <span style={{ fontSize: 15, fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--label-normal)' }}>{o.label}</span>

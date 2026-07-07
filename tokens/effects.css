@@ -20,6 +20,7 @@
   --shadow-indigo: 0 12px 28px rgba(14, 19, 41, 0.20);
   --shadow-green:  0 12px 26px rgba(94, 110, 134, 0.24);
   --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.30);
+  --shadow-control: 0 1px 3px rgba(8, 14, 33, 0.28);
 
   /* ---- Borders --------------------------------------------------------- */
   --border-hairline:      1px solid var(--bw-border);
@@ -28,6 +29,32 @@
   /* ---- Glass / overlay ------------------------------------------------- */
   --blur-panel:  blur(14px) saturate(150%); /* @kind other */
   --scrim-dark:  rgba(14, 19, 41, 0.86);       /* solid nav over hero     */
+  --material-dimmer: rgba(8, 11, 28, 0.92);
+  --material-control-dimmer: rgba(0, 0, 0, 0.42);
+
+  /* ---- WDS Decorate / Gradient ---------------------------------------- */
+  --decorate-gradient-solid-top: linear-gradient(180deg, var(--surface-raised) 0%, transparent 100%);
+  --decorate-gradient-solid-right: linear-gradient(270deg, var(--surface-raised) 0%, transparent 100%);
+  --decorate-gradient-solid-bottom: linear-gradient(0deg, var(--surface-raised) 0%, transparent 100%);
+  --decorate-gradient-solid-left: linear-gradient(90deg, var(--surface-raised) 0%, transparent 100%);
+  --decorate-gradient-multiple-top: linear-gradient(180deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%);
+  --decorate-gradient-multiple-right: linear-gradient(270deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%);
+  --decorate-gradient-multiple-bottom: linear-gradient(0deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%);
+  --decorate-gradient-multiple-left: linear-gradient(90deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%);
+  --decorate-mask-fade-top: linear-gradient(180deg, #000 0%, transparent 100%);
+  --decorate-mask-fade-right: linear-gradient(270deg, #000 0%, transparent 100%);
+  --decorate-mask-fade-bottom: linear-gradient(0deg, #000 0%, transparent 100%);
+  --decorate-mask-fade-left: linear-gradient(90deg, #000 0%, transparent 100%);
+
+  /* ---- WDS Decorate / Interaction ------------------------------------- */
+  --interaction-layer-normal: transparent;
+  --interaction-layer-default: rgba(112, 115, 124, 0.08);
+  --interaction-layer-light: rgba(112, 115, 124, 0.05);
+  --interaction-layer-strong: rgba(112, 115, 124, 0.14);
+  --interaction-opacity-normal: 1;
+  --interaction-opacity-hovered: 0.92;
+  --interaction-opacity-focused: 0.84;
+  --interaction-opacity-pressed: 0.76;
 
   /* ---- Motion (timings + easing) ------- */
   --ease-out:        cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
@@ -60,7 +87,10 @@
     --shadow-indigo: 0 12px 28px rgba(0, 0, 0, 0.55);
     --shadow-green:  0 12px 26px rgba(0, 0, 0, 0.50);
     --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.34);
+    --shadow-control: 0 1px 3px rgba(0, 0, 0, 0.42);
     --scrim-dark:  rgba(2, 4, 9, 0.72);
+    --material-dimmer: rgba(2, 4, 9, 0.88);
+    --material-control-dimmer: rgba(0, 0, 0, 0.46);
     --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.12); /* @kind other */
   }
 }
@@ -74,7 +104,10 @@
   --shadow-indigo: 0 12px 28px rgba(0, 0, 0, 0.55);
   --shadow-green:  0 12px 26px rgba(0, 0, 0, 0.50);
   --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.34);
+  --shadow-control: 0 1px 3px rgba(0, 0, 0, 0.42);
   --scrim-dark:  rgba(2, 4, 9, 0.72);
+  --material-dimmer: rgba(2, 4, 9, 0.88);
+  --material-control-dimmer: rgba(0, 0, 0, 0.46);
   --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.12); /* @kind other */
 }
 
@@ -89,6 +122,9 @@
   --shadow-indigo: 0 12px 28px rgba(14, 19, 41, 0.20);
   --shadow-green:  0 12px 26px rgba(94, 110, 134, 0.24);
   --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.30);
+  --shadow-control: 0 1px 3px rgba(8, 14, 33, 0.28);
   --scrim-dark:  rgba(14, 19, 41, 0.86);
+  --material-dimmer: rgba(8, 11, 28, 0.92);
+  --material-control-dimmer: rgba(0, 0, 0, 0.42);
   --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.08); /* @kind other */
 }

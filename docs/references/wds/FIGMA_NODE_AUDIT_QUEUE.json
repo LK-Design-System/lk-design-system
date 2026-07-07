@@ -1,0 +1,366 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "createdAt": "2026-07-07",
+    "purpose": "Queue the exact Figma node-level reads required before LDS can claim complete WDS coverage parity."
+  },
+  "externalAccess": {
+    "method": "Figma MCP metadata, screenshot, and design-context reads",
+    "lastAttemptedAt": "2026-07-07",
+    "currentStatus": "blocked-by-figma-rate-limit",
+    "blockedTool": "mcp__codex_apps__figma._get_metadata",
+    "notes": "The local audit can validate LDS evidence and required read targets, but full WDS parity remains unproven until these source nodes are inspected through Figma."
+  },
+  "statusLegend": {
+    "source-node-known": "The WDS source node is known and ready for metadata or design-context extraction.",
+    "confirmed-covered": "The source node has already been checked directly and corresponding LDS coverage exists.",
+    "theme-override-review": "The WDS source role is intentionally replaced by LK theme assets, but structural usage still needs review.",
+    "local-evidence-pending-figma": "LDS evidence exists, but exact WDS child nodes, variants, or examples are not yet verified."
+  },
+  "queue": [
+    {
+      "id": "theme-icon-inventory",
+      "wdsSource": "1 Theme / 1 Icon",
+      "figmaNodeId": "16215:13694",
+      "status": "source-node-known",
+      "localEvidence": [
+        "stories/Iconography.stories.jsx",
+        "assets/icons",
+        "assets/icons/manifest.json",
+        "components/icon/Icon.jsx",
+        "components/icon/icon.card.html"
+      ],
+      "closureCriteria": [
+        "Compare the imported WDS icon folder and assets/icons/manifest.json against the Figma source node inventory.",
+        "Verify icon size, stroke/fill treatment, disabled/secondary coloring, and grid alignment.",
+        "Classify any missing WDS glyph as direct gap, LK rename, or intentionally excluded icon."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:13694)",
+        "get_screenshot(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:13694,maxDimension=4096)"
+      ]
+    },
+    {
+      "id": "theme-logo-structure",
+      "wdsSource": "1 Theme / 2 Logo",
+      "figmaNodeId": "16215:13483",
+      "status": "theme-override-review",
+      "localEvidence": [
+        "stories/Brand.stories.jsx",
+        "stories/BrandPlatform.stories.jsx",
+        "components/brand/BrandLogo.jsx",
+        "components/brand/Lockup.jsx",
+        "assets/brand"
+      ],
+      "closureCriteria": [
+        "Verify WDS logo sizing, clear-space, lockup, and contrast guidance.",
+        "Record which WDS logo rules are retained structurally and which are replaced by LK ROBOTICS brand rules.",
+        "Ensure LK brand stories do not imply visual parity with the WDS logo asset."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:13483)",
+        "get_design_context(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:13483)"
+      ]
+    },
+    {
+      "id": "element-basic-foundations",
+      "wdsSource": "2 Element / 1 Basic",
+      "figmaNodeId": "16215:17304",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/Foundations.stories.jsx",
+        "stories/FoundationBasic.stories.jsx",
+        "stories/FoundationsTypography.stories.jsx",
+        "stories/TokenStrategy.stories.jsx",
+        "components/layout/AspectRatio.jsx",
+        "tokens/colors.css",
+        "tokens/typography.css",
+        "tokens/spacing.css",
+        "tokens/effects.css",
+        "tokens/source.json",
+        "docs/references/wds/TOKEN_MAP.json",
+        "docs/references/wds/source-pdfs/1basic.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Extract exact WDS Basic child sections and map color, typography, line, fill, opacity, and radius examples one by one.",
+        "Confirm LK color overrides only change values, not semantic role names or hierarchy.",
+        "Identify any Basic subsection that is not represented in FOUNDATION_AUDIT.json."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:17304)",
+        "get_variable_defs(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:17304)"
+      ]
+    },
+    {
+      "id": "element-spacing-system",
+      "wdsSource": "2 Element / 2 Spacing",
+      "figmaNodeId": "16215:17271",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/FoundationSpacing.stories.jsx",
+        "stories/LayoutGrid.stories.jsx",
+        "tokens/spacing.css",
+        "tokens/grid.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/2spacing.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Extract all WDS spacing subsections beyond the confirmed mobile status and bottom example.",
+        "Verify base scale, component padding, section gap, responsive gutter, and safe-area behavior.",
+        "Ensure every WDS spacing primitive has either an LDS token or an explicit LK override note."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:17271)",
+        "get_screenshot(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:17271,maxDimension=4096)"
+      ]
+    },
+    {
+      "id": "element-spacing-status-bottom",
+      "wdsSource": "2 Element / 2 Spacing / Status and Bottom",
+      "figmaNodeId": "16285:163253",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/FoundationSpacing.stories.jsx",
+        "tokens/spacing.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/2spacing.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Keep mobile status bar, home indicator, bottom bar, and bottom action safe-area spacing represented in LDS.",
+        "Recheck this row only if WDS updates the source node or LDS spacing tokens change."
+      ],
+      "nextFigmaReads": []
+    },
+    {
+      "id": "element-decorate-effects",
+      "wdsSource": "2 Element / 3 Decorate",
+      "figmaNodeId": "16215:17090",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/FoundationDecorate.stories.jsx",
+        "stories/Foundations.stories.jsx",
+        "tokens/effects.css",
+        "docs/references/wds/VISUAL_TOKEN_EXCEPTIONS.json",
+        "docs/references/wds/source-pdfs/3decorate.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Extract WDS radius, shadow, divider, blur, overlay, and decorative treatment examples.",
+        "Map each effect to tokens/effects.css or an explicit visual-token exception.",
+        "Verify no component-specific decorative value silently overrides WDS Decorate guidance."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:17090)",
+        "get_screenshot(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:17090,maxDimension=4096)"
+      ]
+    },
+    {
+      "id": "component-layout-section",
+      "wdsSource": "3 Component / 1 Layout",
+      "figmaNodeId": "16215:43042",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/LayoutEssentials.stories.jsx",
+        "stories/Layout.stories.jsx",
+        "stories/LayoutGrid.stories.jsx",
+        "stories/LayoutStack.stories.jsx",
+        "stories/LayoutScrollAccess.stories.jsx",
+        "components/layout/MobileSystemBars.jsx",
+        "components/content/Divider.jsx",
+        "docs/references/wds/source-pdfs/1layout.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/layout"
+      ],
+      "closureCriteria": [
+        "Local PDF confirms Essential system bars and Divider variants; verify exact dimensions and source variants when Figma reads resume.",
+        "Extract remaining WDS layout child sections and examples.",
+        "Verify page shell, stack, alignment, grid, scroll, and accessibility behavior against LDS stories.",
+        "Keep PageHeader classified as product extension unless WDS has a matching component contract."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:43042)"
+      ]
+    },
+    {
+      "id": "component-action-seven-children",
+      "wdsSource": "3 Component / 2 Action",
+      "figmaNodeId": "16215:35516",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/ActionArea.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ButtonsExtended.stories.jsx",
+        "stories/SocialButtons.stories.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/buttons/ToggleIcon.jsx",
+        "docs/references/wds/source-pdfs/2action.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/buttons"
+      ],
+      "closureCriteria": [
+        "Local PDF confirms Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon.",
+        "Extract any remaining WDS Action child sections.",
+        "Map each child to ActionArea, Button, TextButton, IconButton, Chip, ToggleIcon, ButtonGroup, SplitButton, Fab, SocialButton, or an explicit extension boundary.",
+        "Verify variant, size, icon slot, loading, disabled, focus, and dark-surface states."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:35516)",
+        "get_context_for_code_connect(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:35516)"
+      ]
+    },
+    {
+      "id": "component-selection-input-section",
+      "wdsSource": "3 Component / 3 Selection and Input",
+      "figmaNodeId": "16215:30100",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/FormsFull.stories.jsx",
+        "stories/FormSelectionControls.stories.jsx",
+        "stories/FormSearchAutocomplete.stories.jsx",
+        "stories/FormRangeControls.stories.jsx",
+        "stories/SelectionChips.stories.jsx",
+        "stories/SelectionSegmentedToggle.stories.jsx",
+        "stories/SelectionStatus.stories.jsx",
+        "stories/SelectionSwitchStepper.stories.jsx",
+        "components/forms",
+        "components/selection"
+      ],
+      "closureCriteria": [
+        "Extract WDS input, select, checkbox, radio, switch, segmented, chip, and card-selection child nodes.",
+        "Verify framed-style, label/helper/error, filled, focus, disabled, readonly, hover, and size variants.",
+        "Classify DateTime, ColorSwatch, PinInput, and FileUpload as product extensions unless WDS source contains matching nodes."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:30100)"
+      ]
+    },
+    {
+      "id": "component-content-section",
+      "wdsSource": "3 Component / 4 Content",
+      "figmaNodeId": "16215:25192",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/Card.stories.jsx",
+        "stories/CardInfo.stories.jsx",
+        "stories/CardNews.stories.jsx",
+        "stories/CardSpecs.stories.jsx",
+        "stories/Content.stories.jsx",
+        "stories/ContentListsMedia.stories.jsx",
+        "stories/ContentMedia.stories.jsx",
+        "stories/ContentDisclosure.stories.jsx",
+        "stories/ContentBadgesAnnotations.stories.jsx",
+        "components/cards",
+        "components/content"
+      ],
+      "closureCriteria": [
+        "Extract WDS card, list cell, text, media, badge/tag, avatar, thumbnail, and disclosure examples.",
+        "Verify card/list density, thumbnail placement, action slots, title/subtitle/meta structure, and selected states.",
+        "Keep ProductCard, statistics cards, and writing editor classified as LK Product Extension unless WDS has an equivalent source contract."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:25192)"
+      ]
+    },
+    {
+      "id": "component-loading-section",
+      "wdsSource": "3 Component / 5 Loading",
+      "figmaNodeId": "16215:24867",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/StatusLoading.stories.jsx",
+        "stories/StatusProgress.stories.jsx",
+        "components/status/Skeleton.jsx",
+        "components/status/Spinner.jsx",
+        "components/status/ProgressBar.jsx",
+        "components/status/CircularProgress.jsx"
+      ],
+      "closureCriteria": [
+        "Extract WDS skeleton, spinner/loading, circular, and progress examples.",
+        "Verify size, determinate/indeterminate, label, empty/loading pairing, and reduced-motion behavior.",
+        "Map Meter to WDS only if the source includes the same semantic role; otherwise keep as product extension."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:24867)"
+      ]
+    },
+    {
+      "id": "component-navigation-section",
+      "wdsSource": "3 Component / 6 Navigation",
+      "figmaNodeId": "16215:20255",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/Navigation.stories.jsx",
+        "stories/NavigationFull.stories.jsx",
+        "stories/NavigationCompact.stories.jsx",
+        "stories/NavigationFlow.stories.jsx",
+        "stories/NavigationFooter.stories.jsx",
+        "stories/NavigationMenus.stories.jsx",
+        "stories/NavigationSteps.stories.jsx",
+        "components/navigation"
+      ],
+      "closureCriteria": [
+        "Extract WDS top bar, tab/category, pagination, menu, footer, side navigation, and stepper examples.",
+        "Verify hover-collapse behavior, mobile variants, route/selected states, badges, counters, and disabled/focus states.",
+        "Ensure LDS side navigation behavior follows WDS interaction guidance instead of an invented explicit close pattern."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:20255)"
+      ]
+    },
+    {
+      "id": "component-feedback-section",
+      "wdsSource": "3 Component / 7 Feedback",
+      "figmaNodeId": "16215:19283",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/FeedbackNotifications.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/OverlayFeedback.stories.jsx",
+        "stories/OverlaySurfaces.stories.jsx",
+        "stories/OverlayToast.stories.jsx",
+        "stories/StatusEmpty.stories.jsx",
+        "stories/StatusFeedback.stories.jsx",
+        "components/feedback",
+        "components/overlay",
+        "components/status"
+      ],
+      "closureCriteria": [
+        "Extract WDS alert, toast, snackbar, modal, confirm, empty, banner, callout, and notification examples.",
+        "Verify icon size alignment, severity color, title/body/action structure, close action, and timeout/persistent behavior.",
+        "Resolve whether Snackbar is covered by Toast or requires a separate LDS component/story."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:19283)"
+      ]
+    },
+    {
+      "id": "component-presentation-section",
+      "wdsSource": "3 Component / 8 Presentation",
+      "figmaNodeId": "16215:17599",
+      "status": "local-evidence-pending-figma",
+      "localEvidence": [
+        "stories/Overlay.stories.jsx",
+        "stories/OverlayDimmer.stories.jsx",
+        "stories/NavigationMenus.stories.jsx",
+        "stories/ContentAnnotations.stories.jsx",
+        "components/content/Tooltip.jsx",
+        "components/overlay/DropdownMenu.jsx",
+        "components/overlay/Popover.jsx",
+        "components/overlay/HoverCard.jsx"
+      ],
+      "closureCriteria": [
+        "Extract the three WDS Presentation child sections and exact component names.",
+        "Verify tooltip, menu, overlay, dimmer, anchored placement, keyboard/focus, and dismissal behavior.",
+        "Keep Lightbox and CommandPalette classified as product extensions unless WDS contains equivalent source nodes."
+      ],
+      "nextFigmaReads": [
+        "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:17599)"
+      ]
+    }
+  ]
+}

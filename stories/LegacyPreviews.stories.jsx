@@ -1,16 +1,7 @@
 import React from 'react';
-import bundleSource from '../_ds_bundle.js?raw';
-import baseCss from '../tokens/base.css?raw';
-import colorsCss from '../tokens/colors.css?raw';
-import componentsCss from '../tokens/components.css?raw';
-import effectsCss from '../tokens/effects.css?raw';
-import fontsCss from '../tokens/fonts.css?raw';
-import gridCss from '../tokens/grid.css?raw';
-import spacingCss from '../tokens/spacing.css?raw';
-import typographyCss from '../tokens/typography.css?raw';
 
 const meta = {
-  title: '문서/원본 미리보기',
+  title: 'Documents/Legacy/Original Preview',
   parameters: {
     docs: {
       description: {
@@ -27,20 +18,8 @@ const guidelineModules = import.meta.glob('../guidelines/**/*.html', { eager: tr
 const componentModules = import.meta.glob('../components/**/*.card.html', { eager: true, import: 'default', query: '?raw' });
 const templateModules = import.meta.glob('../templates-cards/**/*.html', { eager: true, import: 'default', query: '?raw' });
 
-const previewCss = [
-  fontsCss,
-  colorsCss,
-  typographyCss,
-  spacingCss,
-  gridCss,
-  effectsCss,
-  componentsCss,
-  baseCss,
-]
-  .join('\n\n')
-  .replaceAll("../assets/", "/assets/");
-
-const previewScript = bundleSource.replaceAll('</script', '<\\/script');
+const runtimeStylesheetTag = '<link rel="stylesheet" href="/styles.css" />';
+const runtimeBundleTag = '<script src="/_ds_bundle.js"></' + 'script>';
 const seededRandomResetScript = `<script>
 (() => {
   let seed = 0x4f14ff >>> 0;
@@ -111,8 +90,8 @@ function createLabels(items) {
 
 function normalizeLegacyHtml(item) {
   return item.html
-    .replace(/<link[^>]+href=["'][^"']*styles\.css["'][^>]*>/gi, `<style>${previewCss}</style>`)
-    .replace(/<script[^>]+src=["'][^"']*_ds_bundle\.js["'][^>]*>\s*<\/script>/gi, `<script>${previewScript}</script>`)
+    .replace(/<link[^>]+href=["'][^"']*styles\.css["'][^>]*>/gi, runtimeStylesheetTag)
+    .replace(/<script[^>]+src=["'][^"']*_ds_bundle\.js["'][^>]*>\s*<\/script>/gi, runtimeBundleTag)
     .replace(/<script\s+type=["']text\/babel["']>/i, `${seededRandomResetScript}<script type="text/babel">`)
     .replace(/(src|href)=["'](?:\.\.\/)+assets\//gi, '$1="/assets/')
     .replace(/url\((['"]?)(?:\.\.\/)+assets\//gi, 'url($1/assets/');
