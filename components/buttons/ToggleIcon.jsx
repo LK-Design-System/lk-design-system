@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 /**
- * WDS Toggle Icon
+ * Toggle Icon
  * Icon-only action that keeps an on/off pressed state.
  */
 export function ToggleIcon({
@@ -10,7 +10,7 @@ export function ToggleIcon({
   defaultPressed = false,
   onChange,
   label,
-  size = 'md',
+  size = "md",
   disabled = false,
   style,
   type,
@@ -18,7 +18,10 @@ export function ToggleIcon({
 }) {
   const [internal, setInternal] = React.useState(defaultPressed);
   const active = pressed ?? internal;
-  const side = size === 'sm' ? 'var(--component-toggle-icon-size-sm)' : 'var(--component-toggle-icon-size-md)';
+  const side =
+    size === "sm"
+      ? "var(--component-toggle-icon-size-sm)"
+      : "var(--component-toggle-icon-size-md)";
 
   const setNext = () => {
     if (disabled) return;
@@ -29,26 +32,32 @@ export function ToggleIcon({
 
   return (
     <button
-      type={type ?? 'button'}
+      type={type ?? "button"}
       aria-label={label}
       aria-pressed={active}
       disabled={disabled}
       className="lk-toggle-icon"
       onClick={setNext}
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
         width: side,
         height: side,
-        color: active ? 'var(--component-toggle-icon-fg-active)' : 'var(--component-toggle-icon-fg)',
-        background: active ? 'var(--component-toggle-icon-bg-active)' : 'var(--component-toggle-icon-bg)',
-        border: active ? 'var(--border-thin) solid transparent' : 'var(--component-toggle-icon-border)',
-        borderRadius: 'var(--component-toggle-icon-radius)',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 'var(--component-toggle-icon-disabled-opacity)' : 1,
-        transition: 'var(--component-button-transition)',
-        WebkitTapHighlightColor: 'transparent',
+        color: active
+          ? "var(--component-toggle-icon-fg-active)"
+          : "var(--component-toggle-icon-fg)",
+        background: active
+          ? "var(--component-toggle-icon-bg-active)"
+          : "var(--component-toggle-icon-bg)",
+        border: active
+          ? "var(--border-thin) solid transparent"
+          : "var(--component-toggle-icon-border)",
+        borderRadius: "var(--component-toggle-icon-radius)",
+        cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? "var(--component-toggle-icon-disabled-opacity)" : 1,
+        transition: "var(--component-button-transition)",
+        WebkitTapHighlightColor: "transparent",
         ...style,
       }}
       {...rest}

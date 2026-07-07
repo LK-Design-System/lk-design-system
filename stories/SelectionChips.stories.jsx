@@ -8,7 +8,7 @@ import {
 } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/3 Selection and Input/Chip',
+  title: 'LDS Core/3 Component/3 Selection and Input/Chip',
   parameters: {
     docs: {
       description: {

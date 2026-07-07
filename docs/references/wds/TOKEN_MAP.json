@@ -205,7 +205,7 @@
     },
     {
       "wds": "Textinput/Textfield",
-      "lk": "Input, SearchField, PasswordInput, Textarea, FormField, InputGroup",
+      "lk": "Input, SearchField, PasswordInput, Textarea, FormField, InputGroup, ChoiceCard[presentation=frame]",
       "layer": "wds-core"
     },
     {
@@ -215,7 +215,7 @@
     },
     {
       "wds": "Control/Checkbox, Control/Radio, Switch/Switch",
-      "lk": "Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, ToggleButton, ThemeToggle",
+      "lk": "Checkbox, CheckboxGroup, Radio, RadioGroup, Checkbox[variant=mark], Switch, ToggleButton, ThemeToggle, ChoiceCard[presentation=frame]",
       "layer": "wds-core"
     },
     {
@@ -229,8 +229,13 @@
       "layer": "wds-core"
     },
     {
+      "wds": "Navigation/Category, Tab, Page Indicator, Pagination",
+      "lk": "Category, Tabs, PageIndicator, Pagination",
+      "layer": "wds-core"
+    },
+    {
       "wds": "Toast/Toast, Snackbar/Snackbar, Alert/Alert",
-      "lk": "Toast, ToastStack, Notification, Banner, Callout, Alert, ConfirmDialog",
+      "lk": "Toast, ToastStack, Snackbar, Notification, Banner, Callout, Alert, ConfirmDialog",
       "layer": "wds-core"
     },
     {

@@ -2,7 +2,7 @@ import { TopicTree } from '../src/index.js';
 import { TopicTreeCard as TopicTreeCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Robotics/Topic Tree',
+  title: 'LDS Robotics/Robotics/Topic Tree',
   parameters: {
     docs: {
       description: {

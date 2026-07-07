@@ -15,9 +15,12 @@
     "confirmedFigmaNodeRows": 1,
     "pendingFigmaNodeRows": 13,
     "requiredExternalFigmaReads": 19,
-    "componentFamilyRows": 11,
-    "variantChecks": 39,
-    "publicExportsClassified": 157
+    "componentFamilyRows": 12,
+    "variantChecks": 46,
+    "publicExportsClassified": 160,
+    "localFigContentTargets": 35,
+    "localFigComponentSections": 57,
+    "localFigPages": 26
   },
   "localEvidenceGates": [
     {
@@ -57,6 +60,12 @@
       "criteria": "Every public LDS export is classified as WDS core, theme override, product extension, or robotics extension."
     },
     {
+      "id": "figma-local-content-audit",
+      "status": "met",
+      "evidence": "docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json",
+      "criteria": "The checked-in WDS .fig export is decoded into source node summaries for Foundation, Theme, Element, Component, Resource, Guidelines, and Updates with text, section labels, variant-like symbol names, dimensions, visual samples, and page section indexes."
+    },
+    {
       "id": "variant-checklist",
       "status": "met-local-pending-figma",
       "evidence": "docs/references/wds/VARIANT_AUDIT_CHECKLIST.json",
@@ -81,18 +90,25 @@
     {
       "id": "figma-mcp-rate-limit",
       "source": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
-      "detail": "Figma MCP Starter plan rate limit prevents reading the remaining WDS source nodes in this pass."
+      "detail": "Figma MCP Starter plan rate limit prevents live reads for the current Figma URL. Local .fig content extraction is available, but live source parity remains unconfirmed."
     },
     {
       "id": "pending-node-parity",
       "source": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
-      "detail": "13 node-level WDS reads remain pending, so current local evidence cannot prove full parity."
+      "detail": "Node-level local .fig content is extracted, but queue rows remain pending until live Figma reads are performed or the checked-in export is accepted as the authoritative source snapshot."
     }
   ],
   "lastVerifiedCommands": [
+    "npm run extract:wds-fig-content",
+    "npm run check:wds-local-fig",
     "node scripts/check-wds-alignment.mjs",
     "node scripts/check-token-source.mjs",
     "node scripts/check-visual-token-drift.mjs",
-    "pnpm exec storybook build"
+    "npm run check:visual",
+    "pnpm exec storybook build",
+    "npm run build:storybook",
+    "npm run check:tooltip-alignment",
+    "npm run check:storybook-public",
+    "npm run check:a11y"
   ]
 }

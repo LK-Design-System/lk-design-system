@@ -1,10 +1,11 @@
-**ContentBadge** — 콘텐츠에 붙는 작은 사각 라벨(NEW, 신규, 즉시지원). 뮤트 상태 톤에 걸쳐 세 가지 웨이트.
+**ContentBadge** — WDS Content Badge. 특정 콘텐츠의 상태나 속성을 짧게 강조하는 작은 라벨입니다.
 
 ```jsx
-<ContentBadge tone="signal" variant="solid">NEW</ContentBadge>
-<ContentBadge tone="positive" variant="soft">가동중</ContentBadge>
-<ContentBadge tone="cautionary" variant="outline">점검 예정</ContentBadge>
+<ContentBadge variant="solid" color="accent">Android</ContentBadge>
+<ContentBadge variant="outlined" color="neutral" leading={<Icon name="webinar" />}>Web</ContentBadge>
+<ContentBadge color="accent" accentBackgroundColor="#E4F6FB" accentContentColor="#007A9A">텍스트</ContentBadge>
 ```
 
-- **tone** — `signal · navy · neutral · positive · cautionary · negative`. **variant** — `solid · soft · outline`. **size** — `sm · md · lg`.
-- 카운트/점에는 `Badge`, 점 + 상태 텍스트에는 `StatusBadge`를 쓰세요.
+- WDS axes: **variant** `solid · default · outlined`, **size** `xsmall · small · medium`, **color** `neutral · accent`, **icon** via `icon`, `leading`, or `trailing`.
+- Legacy LDS aliases still work: `variant="soft"` maps to WDS `default`, `variant="outline"` maps to `outlined`, and `tone` can still be used for status-flavoured labels.
+- Count/dot badges belong to `Badge`; live status with dot/text belongs to `StatusBadge`.

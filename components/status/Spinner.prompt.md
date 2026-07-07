@@ -1,8 +1,13 @@
-**Spinner** — 차분한 원형 로딩 인디케이터(시그널 잉크 호, 일정한 회전).
+**Spinner** - WDS loading indicator for unknown-duration work.
 
 ```jsx
 <Spinner />
-<Spinner size={18} label="불러오는 중…" />
+<Spinner variant="wanted" size={36} />
+<Spinner size={18} label="Loading" />
 ```
 
-- **size / thickness / color** — 지오메트리. **label** — 끝 텍스트. 퍼센트를 아는 진행에는 `ProgressBar`를 쓰세요.
+- **variant**: `circular` or `wanted`.
+- **size / thickness / color** control the circular ring geometry and active arc.
+- **label** adds visible status text and lets assistive tech announce the loading state.
+- Use `ProgressBar` or `CircularProgress` when a value or completion percentage is known.
+- Motion respects `prefers-reduced-motion`.

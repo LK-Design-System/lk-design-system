@@ -1,9 +1,14 @@
-**ProgressBar** — 시그널 잉크로 채워지는 필 트랙.
+**ProgressBar** - linear progress indicator.
 
 ```jsx
-<ProgressBar value={68} label="업로드" showValue />
-<ProgressBar indeterminate />
+<ProgressBar value={68} label="Upload" showValue />
+<ProgressBar indeterminate label="Processing" />
 <ProgressBar value={3} max={5} tone="positive" size="lg" />
 ```
 
-- **value / max** — 결정형 채움. **indeterminate** — 미끄러지는 세그먼트. **tone** `signal · positive · cautionary · negative`. **size** `sm · md · lg`. **label / showValue** — 캡션 행.
+- **value / max** define determinate progress.
+- **indeterminate** renders an unknown-duration segment and omits `aria-valuenow`.
+- **tone**: `signal`, `positive`, `cautionary`, or `negative`.
+- **size**: `sm`, `md`, or `lg`.
+- **label / showValue** expose readable progress context.
+- Motion respects `prefers-reduced-motion`.

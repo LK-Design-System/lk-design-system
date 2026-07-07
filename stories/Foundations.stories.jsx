@@ -1,7 +1,7 @@
 import { ColorAndSpacing as ColorAndSpacingStory } from './Foundations.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/0 Foundation/Color and Spacing',
+  title: 'LDS Core/0 Foundation/Color and Spacing',
   parameters: {
     docs: {
       description: {

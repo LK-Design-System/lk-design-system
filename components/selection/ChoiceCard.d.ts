@@ -1,22 +1,39 @@
-import * as React from 'react';
+import * as React from "react";
 
-export interface ChoiceCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
-  /** 선택(강조) 상태. @default false */
+export interface ChoiceCardProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "onSelect"
+> {
+  /** Selected state. @default false */
   selected?: boolean;
-  /** 비활성(흐림, 상호작용 불가). @default false */
+  /** Blocks pointer and keyboard interaction. @default false */
   disabled?: boolean;
-  /** 라디오 대신 체크박스 인디케이터(다중 선택). @default false */
+  /** Uses checkbox semantics for multi-select choices. @default false */
   multiple?: boolean;
-  /** 토글 시 다음 선택 값과 함께 호출. */
+  /** Called with the next selected state. */
   onSelect?: (next: boolean) => void;
-  /** 표준 레이아웃 제목. */
+  /** Standard choice-card title. */
   title?: React.ReactNode;
-  /** 제목 아래의 표준 레이아웃 설명. */
+  /** Standard choice-card description. */
   description?: React.ReactNode;
-  /** 리딩 아이콘. */
+  /** Leading icon for the standard choice-card layout. */
   icon?: React.ReactNode;
+  /** `frame` renders the framed selection treatment. @default "choice" */
+  presentation?: "choice" | "frame";
+  /** Semantic status tone for frame presentation. @default "normal" */
+  status?: "normal" | "negative";
+  /** Forces visual interaction state for documentation matrices. */
+  interaction?: "normal" | "hovered" | "focused";
+  /** Frame presentation radius. @default "md" */
+  radius?: "sm" | "md" | "lg" | "xl";
+  /** Frame presentation padding. @default "md" */
+  padding?: "sm" | "md" | "lg" | "xl";
+  /** Frame presentation shadow. @default "none" */
+  shadow?: "none" | "xs" | "sm" | "md" | "lg";
+  /** Shows the trailing selected indicator in choice presentation. @default true */
+  showIndicator?: boolean;
   children?: React.ReactNode;
 }
 
-/** 선택형 프레임 옵션 — 라디오/체크박스 선택 타일. */
+/** Selectable LDS option card, with framed treatment via `presentation="frame"`. */
 export function ChoiceCard(props: ChoiceCardProps): JSX.Element;

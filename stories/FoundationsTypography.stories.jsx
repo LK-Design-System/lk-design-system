@@ -1,7 +1,7 @@
 import { Typography as TypographyStory } from './Foundations.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/0 Foundation/Typography',
+  title: 'LDS Core/0 Foundation/Typography',
   parameters: {
     docs: {
       description: {

@@ -5,7 +5,7 @@ import {
 import { StatCard as StatCardStory } from './CardsExtended.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Data/Stats',
+  title: 'LDS Product/Data/Stats',
   parameters: {
     docs: {
       description: {

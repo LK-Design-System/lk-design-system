@@ -10,6 +10,8 @@ import React from 'react';
  */
 export function Select({
   label,
+  helper,
+  error,
   options,
   value,
   defaultValue,
@@ -17,8 +19,20 @@ export function Select({
   onChange,
   required = false,
   invalid = false,
+  status = 'normal',
   disabled = false,
+  disable = false,
+  negative = false,
   size = 'md',
+  defaultOpen = false,
+  interaction,
+  active = false,
+  focus = false,
+  overflow,
+  platform,
+  variant,
+  render = 'text',
+  iconLeft,
   id,
   children,
   style,
@@ -33,9 +47,13 @@ export function Select({
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
   const sel = isControlled ? value : internal;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(defaultOpen);
+  const [hover, setHover] = React.useState(false);
   const ref = React.useRef(null);
-  const selId = id || (label ? `sel-${String(label).replace(/\s+/g, '-').toLowerCase()}` : undefined);
+  const autoId = React.useId();
+  const selId = id || (label ? `sel-${String(label).replace(/\s+/g, '-').toLowerCase()}` : `sel-${autoId}`);
+  const message = error ?? helper;
+  const messageId = message != null ? `${selId}-message` : undefined;
   React.useEffect(() => {
     if (!open) return undefined;
     const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
@@ -44,8 +62,14 @@ export function Select({
   }, [open]);
   const pick = (v) => { if (!isControlled) setInternal(v); onChange && onChange(v); setOpen(false); };
   const curr = norm.find((x) => x.value === sel);
-  const h = size === 'sm' ? 40 : 'var(--control-h-md)';
-  const ring = invalid ? 'var(--bw-red)' : open ? 'var(--lk-accent-ink)' : 'var(--bw-border)';
+  const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
+  const h = normalizedSize === 'sm' ? 'var(--control-h-sm)' : normalizedSize === 'lg' ? 'var(--control-h-lg)' : 'var(--control-h-md)';
+  const disabledState = disabled || disable || interaction === 'inactive';
+  const isInvalid = invalid || negative || status === 'negative' || error != null;
+  const visualOpen = open || interaction === 'open';
+  const activeFocus = visualOpen || focus || interaction === 'focused' || interaction === 'active-focused';
+  const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
+  const ring = isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-positive)' : activeFocus ? 'var(--lk-accent-ink)' : activeHover ? 'var(--border-strong)' : 'var(--bw-border)';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
       {label && (
@@ -53,30 +77,39 @@ export function Select({
           {label}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
         </label>
       )}
-      <div ref={ref} style={{ position: 'relative' }}>
+      <div ref={ref} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: 'relative' }}>
         <button
           id={selId}
           type="button"
-          disabled={disabled}
+          disabled={disabledState}
           aria-haspopup="listbox"
-          aria-expanded={open}
-          onClick={() => { if (!disabled) setOpen((o) => !o); }}
+          aria-expanded={visualOpen}
+          aria-describedby={messageId}
+          aria-invalid={isInvalid || undefined}
+          onClick={() => { if (!disabledState) setOpen((o) => !o); }}
           {...rest}
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, width: '100%',
             height: h, padding: '0 16px 0 18px', boxSizing: 'border-box',
-            background: 'var(--bw-white)', color: curr ? 'var(--label-normal)' : 'var(--label-assistive)',
+            background: disabledState ? 'var(--fill-normal)' : 'var(--bw-white)', color: curr ? 'var(--label-normal)' : 'var(--label-assistive)',
             border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
-            boxShadow: open ? '0 0 0 4px var(--focus-ring)' : 'none',
-            cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.5 : 1,
+            boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--focus-ring)' : 'none',
+            cursor: disabledState ? 'not-allowed' : 'pointer', opacity: disabledState ? 0.65 : 1,
             fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, textAlign: 'left',
             transition: 'var(--component-button-transition)',
           }}
         >
-          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{curr ? curr.label : placeholder}</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'var(--component-button-transition)' }}><path d="m6 9 6 6 6-6" /></svg>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minWidth: 0, overflow: 'hidden' }}>
+            {iconLeft && <span style={{ display: 'inline-flex', flex: '0 0 auto', color: 'var(--label-assistive)' }}>{iconLeft}</span>}
+            {curr && render === 'chip' ? (
+              <span style={{ display: 'inline-flex', alignItems: 'center', maxWidth: '100%', height: 24, padding: '0 9px', borderRadius: 'var(--radius-pill)', background: 'var(--lk-accent-tint-2)', color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{curr.label}</span>
+            ) : (
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{curr ? curr.label : placeholder}</span>
+            )}
+          </span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transform: visualOpen ? 'rotate(180deg)' : 'none', transition: 'var(--component-button-transition)' }}><path d="m6 9 6 6 6-6" /></svg>
         </button>
-        {open && (
+        {visualOpen && (
           <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: 'auto', background: 'var(--surface-overlay)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
             {norm.map((o) => {
               const on = o.value === sel;
@@ -96,8 +129,13 @@ export function Select({
               );
             })}
           </div>
-        )}
+          )}
       </div>
+      {message != null && (
+        <span id={messageId} style={{ fontSize: 13, lineHeight: 1.45, color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
+          {message}
+        </span>
+      )}
     </div>
   );
 }

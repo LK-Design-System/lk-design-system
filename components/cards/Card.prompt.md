@@ -4,3 +4,11 @@
 <Card elevation="md" interactive>…</Card>
 <Card dark padding={22}>…</Card>
 ```
+
+```jsx
+<Card platform="mobile" save title="Title" description="Description" />
+<Card platform="desktop" skeleton />
+```
+
+- WDS axes: `platform="desktop|mobile"`, `skeleton`, `save`, structured slots (`thumbnail`, `topContent`, `leadingContent`, `trailingContent`, `bottomContent`, `footer`) and text slots (`caption`, `title`, `description`, `subCaption`).
+- Plain children-only Card usage is still supported for generic LDS surfaces.

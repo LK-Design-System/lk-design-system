@@ -9,7 +9,7 @@ import {
 } from './Layout.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/1 Layout/Stack and Alignment',
+  title: 'LDS Core/3 Component/1 Layout/Stack and Alignment',
   parameters: {
     docs: {
       description: {

@@ -11,7 +11,7 @@ import {
 } from './Layout.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/1 Layout/Scroll and Accessibility',
+  title: 'LDS Core/3 Component/1 Layout/Scroll and Accessibility',
   parameters: {
     docs: {
       description: {

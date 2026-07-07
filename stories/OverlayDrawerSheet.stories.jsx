@@ -6,7 +6,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Overlay/Drawer and Sheet',
+  title: 'LDS Product/Overlay/Drawer and Sheet',
   parameters: {
     docs: {
       description: {

@@ -6,7 +6,7 @@ import {
 import { TableCard as TableCardStory } from './DataDisplay.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Data/Table',
+  title: 'LDS Product/Data/Table',
   parameters: {
     docs: {
       description: {

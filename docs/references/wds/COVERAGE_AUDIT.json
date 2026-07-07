@@ -157,10 +157,12 @@
             "stories/SelectionSegmentedToggle.stories.jsx",
             "stories/SelectionStatus.stories.jsx",
             "stories/SelectionSwitchStepper.stories.jsx",
+            "docs/references/wds/source-screenshots/3selectionandinput.png",
+            "docs/references/wds/COMPONENT_SOURCE_SCREENSHOTS.json",
             "components/forms/",
             "components/selection/"
           ],
-          "notes": "Input, select, choice, chip, switch, stepper, segmented, and card-selection roles are covered. Exact WDS framed-style variants remain to be checked."
+          "notes": "User-provided source screenshot confirms the visible WDS groups Textinput, Select, Control, Segmented Control, and Framed Style. Input, select, check mark, switch, segmented, and framed-style roles are represented through existing LDS components and state matrices, including Checkbox variant=\"mark\" and ChoiceCard presentation=\"frame\"; exact WDS child-node properties still need direct Figma node-level audit."
         },
         {
           "wdsSection": "4 Content",
@@ -177,10 +179,21 @@
             "stories/ContentDisclosure.stories.jsx",
             "stories/ContentBadgesAnnotations.stories.jsx",
             "stories/ContentAnnotations.stories.jsx",
+            "stories/Feedback.stories.jsx",
+            "assets/source/avatar/resource",
+            "docs/references/wds/source-pdfs/avatar-name.pdf",
+            "docs/references/wds/source-pdfs/content-card.pdf",
+            "docs/references/wds/source-pdfs/content-icon.pdf",
+            "docs/references/wds/source-pdfs/content-badge.pdf",
+            "docs/references/wds/source-pdfs/content-thumbnail.pdf",
+            "docs/references/wds/source-pdfs/content-list-cell.pdf",
+            "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
             "components/cards/",
-            "components/content/"
+            "components/content/",
+            "components/feedback/Avatar.jsx",
+            "components/feedback/AvatarGroup.jsx"
           ],
-          "notes": "Text, list, media, card, badges, disclosure, annotation, and editor-adjacent content are represented. WDS exact card/list variants need detail audit."
+          "notes": "Text, list, media, card, badges, disclosure, annotation, and avatar content are represented. User-provided WDS Avatar Resource assets and Avatar PDF are mirrored in the existing Avatar story and component props for person/company/academy variants, WDS size keys, placeholder, interaction, pushBadge, customize, deactivate, and Avatar Group trailingContent states. User-provided Content Card, Icon, Content Badge, Thumbnail, and List Cell PDFs are now mapped in COMPONENT_SOURCE_PDFS.json and reflected in the existing Card, Iconography, Content Badge, ContentMedia, and ContentLists stories. Exact Figma child-node parity still needs detail audit."
         },
         {
           "wdsSection": "5 Loading",
@@ -193,9 +206,11 @@
             "components/status/Spinner.jsx",
             "components/status/ProgressBar.jsx",
             "components/status/CircularProgress.jsx",
-            "components/status/Meter.jsx"
+            "components/status/Meter.jsx",
+            "docs/references/wds/source-pdfs/loading.pdf",
+            "docs/references/wds/COMPONENT_SOURCE_PDFS.json"
           ],
-          "notes": "Loading, skeleton, spinner, progress, circular progress, and meter are represented. WDS state/size variant parity still needs detail audit."
+          "notes": "Loading, skeleton, spinner, progress, circular progress, and meter are represented. User-provided Loading PDF is now mapped in COMPONENT_SOURCE_PDFS.json and reflected in the existing Loading State story with Wanted loading, Circular loading, Skeleton Text length/align, Rectangle customization, and Circle customization axes. WDS state/size variant parity still needs detail audit."
         },
         {
           "wdsSection": "6 Navigation",
@@ -209,9 +224,18 @@
             "stories/NavigationFooter.stories.jsx",
             "stories/NavigationMenus.stories.jsx",
             "stories/NavigationSteps.stories.jsx",
+            "docs/references/wds/source-pdfs/navigation-category.pdf",
+            "docs/references/wds/source-pdfs/navigation-tab.pdf",
+            "docs/references/wds/source-pdfs/navigation-page-indicator.pdf",
+            "docs/references/wds/source-pdfs/navigation-pagination.pdf",
+            "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+            "components/navigation/Category.jsx",
+            "components/navigation/PageIndicator.jsx",
+            "components/navigation/Tabs.jsx",
+            "components/navigation/Pagination.jsx",
             "components/navigation/"
           ],
-          "notes": "Top bar, app navigation, compact navigation, tabs/routes, footer, menu, steps, and wizard coverage exists. Detail audit should verify WDS hover/collapse behavior and mobile navigation variants."
+          "notes": "Top bar, app navigation, compact navigation, tabs/routes, footer, menu, steps, and wizard coverage exists. User-provided Navigation Category, Tab, Page Indicator, and Pagination PDFs are now mapped in COMPONENT_SOURCE_PDFS.json and reflected in the existing NavigationFlow and NavigationCompact stories. Detail audit should verify WDS hover/collapse behavior and mobile navigation variants."
         },
         {
           "wdsSection": "7 Feedback",
@@ -225,11 +249,16 @@
             "stories/OverlayToast.stories.jsx",
             "stories/StatusEmpty.stories.jsx",
             "stories/StatusFeedback.stories.jsx",
+            "docs/references/wds/source-pdfs/feedback-toast.pdf",
+            "docs/references/wds/source-pdfs/feedback-snackbar.pdf",
+            "docs/references/wds/source-pdfs/feedback-alert.pdf",
+            "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
             "components/feedback/",
+            "components/overlay/Snackbar.jsx",
             "components/overlay/",
             "components/status/"
           ],
-          "notes": "Alert, toast, modal, confirm, empty, banner, callout, badge, avatar, and notification-like roles are represented. Exact WDS feedback taxonomy needs confirmation."
+          "notes": "Alert, toast, snackbar, modal, confirm, empty, banner, callout, badge, avatar, and notification-like roles are represented. User-provided Toast, Snackbar, and Alert PDFs are now mapped in COMPONENT_SOURCE_PDFS.json and reflected in the existing Toast and Confirm Alert stories. Exact WDS feedback taxonomy needs confirmation."
         },
         {
           "wdsSection": "8 Presentation",
@@ -240,12 +269,16 @@
             "stories/OverlayDimmer.stories.jsx",
             "stories/NavigationMenus.stories.jsx",
             "stories/ContentAnnotations.stories.jsx",
+            "docs/references/wds/source-pdfs/presentation-tooltip.pdf",
+            "docs/references/wds/source-pdfs/presentation-menu.pdf",
+            "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
             "components/content/Tooltip.jsx",
             "components/overlay/DropdownMenu.jsx",
+            "components/navigation/Menubar.jsx",
             "components/overlay/Popover.jsx",
             "components/overlay/HoverCard.jsx"
           ],
-          "notes": "Tooltip/menu/overlay presentation roles are represented. WDS has three top-level children here; exact component names and states need node-level audit."
+          "notes": "Tooltip/menu/overlay presentation roles are represented. User-provided Tooltip and Menu PDFs are now mapped in COMPONENT_SOURCE_PDFS.json and reflected in the existing Annotations and Menu stories. WDS has three top-level children here; exact component names and states need node-level audit."
         }
       ]
     }
@@ -270,8 +303,9 @@
     "2 Element / 3 Decorate: PDF-confirmed Gradient and Interaction are mapped; verify remaining radius, shadow/effect, and decorative treatment examples.",
     "3 Component / 1 Layout: PDF-confirmed Essential and Divider are mapped; verify remaining layout subsections against layout primitives.",
     "3 Component / 2 Action: PDF-confirmed Action Area and Toggle Icon are mapped; verify full WDS Action variants against Button, TextButton, IconButton, Chip, ToggleIcon, ButtonGroup, SplitButton, Fab, and SocialButton.",
-    "3 Component / 3 Selection and Input: verify framed-style and state variants against form/selection components.",
-    "3 Component / 6 Navigation: verify hover-collapse, mobile navigation, footer, menu, tabs, route, stepper, and wizard behavior against stories.",
-    "3 Component / 8 Presentation: verify Tooltip/Menu/Overlay roles and states."
+    "3 Component / 3 Selection and Input: screenshot confirms Textinput, Select, Control, Segmented Control, and Framed Style groups; local stories cover the visible state matrices through existing LDS components, but exact child-node properties still require Figma node reads.",
+    "3 Component / 6 Navigation: PDF-confirmed Category, Tab, Page Indicator, and Pagination are mapped; verify hover-collapse, mobile navigation, footer, menu, tabs, route, stepper, and wizard behavior against stories.",
+    "3 Component / 7 Feedback: PDF-confirmed Toast, Snackbar, and Alert are mapped; verify timeout, action, dismissal, and platform behavior against source nodes.",
+    "3 Component / 8 Presentation: PDF-confirmed Tooltip and Menu are mapped; verify Tooltip/Menu/Overlay roles and states."
   ]
 }

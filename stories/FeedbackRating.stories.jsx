@@ -2,7 +2,7 @@ import { Rating } from '../src/index.js';
 import { RatingCard as RatingCardStory } from './Feedback.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Feedback/Rating',
+  title: 'LDS Product/Feedback/Rating',
   parameters: {
     docs: {
       description: {

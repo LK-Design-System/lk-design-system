@@ -43,9 +43,6 @@ const bundleSource = await read('_ds_bundle.js');
 
 let storySource = '';
 for (const file of await collect('stories', (rel) => rel.endsWith('.stories.jsx'))) {
-  if (file.endsWith('LegacyPreviews.stories.jsx')) {
-    continue;
-  }
   storySource += `\n// ${file}\n${await read(file)}`;
 }
 

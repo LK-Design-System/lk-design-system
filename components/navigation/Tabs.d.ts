@@ -1,17 +1,36 @@
-import * as React from 'react';
+import * as React from "react";
 
-export type TabItem = string | { value: string; label: React.ReactNode; count?: number };
+export type TabItem =
+  | string
+  | {
+      value: string;
+      label: React.ReactNode;
+      count?: number;
+      active?: boolean;
+      disabled?: boolean;
+      trailing?: React.ReactNode;
+      trailingIconButton?: boolean | React.ReactNode;
+      style?: React.CSSProperties;
+    };
 
-export interface TabsProps {
-  /** 탭 — 문자열 또는 `{ value, label, count }`. */
+export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
   items: TabItem[];
   value?: string;
   defaultValue?: string;
-  onChange?: (value: string) => void;
-  /** 탭을 폭까지 늘림. @default false */
+  onChange?: (value: string, item: Exclude<TabItem, string>) => void;
+  /** Legacy fill prop. Prefer `resize="fill"`. @default false */
   full?: boolean;
-  style?: React.CSSProperties;
+  /** resize axis. @default "hug" */
+  resize?: "hug" | "fill";
+  /** size axis. @default "medium" */
+  size?: "small" | "sm" | "medium" | "md" | "large" | "lg";
+  /** padding axis. @default false */
+  padding?: boolean;
+  /** trailingIconButton axis. @default false */
+  trailingIconButton?: boolean | React.ReactNode;
+  /** scroll axis. @default "auto" */
+  scroll?: "auto" | boolean;
 }
 
-/** 언더라인 탭 바 — 시그널 잉크 인디케이터, 탭별 카운트(선택). */
+/** underline tab navigation with hug/fill resize, size, padding, trailing icon, and scroll axes. */
 export function Tabs(props: TabsProps): JSX.Element;

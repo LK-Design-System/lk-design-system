@@ -4,7 +4,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/7 Feedback/Modal',
+  title: 'LDS Core/3 Component/7 Feedback/Modal',
   parameters: {
     docs: {
       description: {

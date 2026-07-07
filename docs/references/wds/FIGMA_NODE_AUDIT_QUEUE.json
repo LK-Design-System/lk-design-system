@@ -8,10 +8,22 @@
   },
   "externalAccess": {
     "method": "Figma MCP metadata, screenshot, and design-context reads",
-    "lastAttemptedAt": "2026-07-07",
-    "currentStatus": "blocked-by-figma-rate-limit",
+    "lastAttemptedAt": "2026-07-08",
+    "currentStatus": "blocked-by-figma-rate-limit-live-mcp-local-fig-content-extracted",
     "blockedTool": "mcp__codex_apps__figma._get_metadata",
-    "notes": "The local audit can validate LDS evidence and required read targets, but full WDS parity remains unproven until these source nodes are inspected through Figma."
+    "notes": "Live Figma MCP metadata reads are still blocked by the Starter plan call limit. The checked-in WDS .fig export has been decoded locally and now records text, section labels, variant-like symbol names, dimensions, and visual samples, but it does not prove a newer live Figma URL is unchanged.",
+    "attemptedLiveFigmaFileKey": "9ztwRZsoXNAuTP7TYSFO1e",
+    "attemptedLiveFigmaNodeId": "16222:137705",
+    "localFigExtraction": {
+      "status": "succeeded",
+      "command": "npm run extract:wds-fig-content",
+      "evidence": "docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json",
+      "exportedAt": "2026-07-07T06:12:53.434Z",
+      "nodeChangeCount": 101534,
+      "targetSummaries": 35,
+      "componentSectionSummaries": 57,
+      "pageSectionIndexes": 26
+    }
   },
   "statusLegend": {
     "source-node-known": "The WDS source node is known and ready for metadata or design-context extraction.",
@@ -73,7 +85,7 @@
         "stories/Foundations.stories.jsx",
         "stories/FoundationBasic.stories.jsx",
         "stories/FoundationsTypography.stories.jsx",
-        "stories/TokenStrategy.stories.jsx",
+        "docs/TOKEN_GOVERNANCE.md",
         "components/layout/AspectRatio.jsx",
         "tokens/colors.css",
         "tokens/typography.css",
@@ -227,12 +239,21 @@
         "stories/SelectionSegmentedToggle.stories.jsx",
         "stories/SelectionStatus.stories.jsx",
         "stories/SelectionSwitchStepper.stories.jsx",
+        "docs/references/wds/source-screenshots/3selectionandinput.png",
+        "docs/references/wds/COMPONENT_SOURCE_SCREENSHOTS.json",
+        "components/forms/Checkbox.jsx",
+        "components/selection/ChoiceCard.jsx",
         "components/forms",
         "components/selection"
       ],
       "closureCriteria": [
-        "Extract WDS input, select, checkbox, radio, switch, segmented, chip, and card-selection child nodes.",
-        "Verify framed-style, label/helper/error, filled, focus, disabled, readonly, hover, and size variants.",
+        "Use the source screenshot and local state matrices as section-level evidence for Textinput, Select, Control, Segmented Control, Check Mark, Switch, and Framed Style, but do not close parity until exact Figma child nodes are read.",
+        "Extract WDS input, textarea, select, checkbox, radio, check mark, switch, segmented control, framed style, chip, and card-selection child nodes.",
+        "Verify Textinput field status, size, height, icon slot, right-button slot, autocomplete, active/focus/disabled, helper/required/description, and resource examples.",
+        "Verify Select render mode, active/open, focus, status, disabled, heading, required, description, overflow, leading icon, preview, and resource examples.",
+        "Verify Control size, checked/unchecked/indeterminate, tight, label on/off, disabled, customization, interaction, and resource examples across Checkbox, Radio, Check Mark, and Switch.",
+        "Verify Segmented Control solid/outlined variants, small/medium/large sizes, icon variants, inactive/active/focus/active-focus compositions, and resource examples.",
+        "Verify Framed Style selected, disabled, normal/negative status, interaction normal/hovered/focused, radius, padding, shadow, and composed resource examples.",
         "Classify DateTime, ColorSwatch, PinInput, and FileUpload as product extensions unless WDS source contains matching nodes."
       ],
       "nextFigmaReads": [
@@ -254,11 +275,27 @@
         "stories/ContentMedia.stories.jsx",
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentBadgesAnnotations.stories.jsx",
+        "stories/Feedback.stories.jsx",
+        "assets/source/avatar/resource",
+        "docs/references/wds/source-pdfs/avatar-name.pdf",
+        "docs/references/wds/source-pdfs/content-card.pdf",
+        "docs/references/wds/source-pdfs/content-icon.pdf",
+        "docs/references/wds/source-pdfs/content-badge.pdf",
+        "docs/references/wds/source-pdfs/content-thumbnail.pdf",
+        "docs/references/wds/source-pdfs/content-list-cell.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
         "components/cards",
-        "components/content"
+        "components/content",
+        "components/feedback"
       ],
       "closureCriteria": [
         "Extract WDS card, list cell, text, media, badge/tag, avatar, thumbnail, and disclosure examples.",
+        "Verify the user-provided Avatar PDF matrix for person/company/academy variants, size, placeholder, interaction, pushBadge, customize, and Avatar Group trailingContent against exact Figma child-node properties.",
+        "Verify the user-provided Avatar Resource placeholder and deactivate assets against exact Figma child-node properties.",
+        "Verify the user-provided Content Card PDF for thumbnailOverlay, caption, toggleIcon, extraCaption, topContent, bottomContent, skeleton, List Card leading/trailing content, width, and thumbnailAspectRatio.",
+        "Verify the user-provided Content Badge PDF for variant, icon, size, color, and accent customization axes.",
+        "Verify the user-provided Thumbnail PDF for all ratio presets plus radius and border toggles.",
+        "Verify the user-provided List Cell PDF for verticalPadding, verticalAlign, fillWidth, textEllipsis, divider, chevron, selected, disabled, interaction, leadingContent, and trailingContent axes.",
         "Verify card/list density, thumbnail placement, action slots, title/subtitle/meta structure, and selected states.",
         "Keep ProductCard, statistics cards, and writing editor classified as LK Product Extension unless WDS has an equivalent source contract."
       ],
@@ -277,9 +314,12 @@
         "components/status/Skeleton.jsx",
         "components/status/Spinner.jsx",
         "components/status/ProgressBar.jsx",
-        "components/status/CircularProgress.jsx"
+        "components/status/CircularProgress.jsx",
+        "docs/references/wds/source-pdfs/loading.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json"
       ],
       "closureCriteria": [
+        "Local PDF confirms Wanted loading, Circular loading, Skeleton Text length, Skeleton align, Rectangle customization, and Circle customization axes.",
         "Extract WDS skeleton, spinner/loading, circular, and progress examples.",
         "Verify size, determinate/indeterminate, label, empty/loading pairing, and reduced-motion behavior.",
         "Map Meter to WDS only if the source includes the same semantic role; otherwise keep as product extension."
@@ -301,9 +341,19 @@
         "stories/NavigationFooter.stories.jsx",
         "stories/NavigationMenus.stories.jsx",
         "stories/NavigationSteps.stories.jsx",
+        "docs/references/wds/source-pdfs/navigation-category.pdf",
+        "docs/references/wds/source-pdfs/navigation-tab.pdf",
+        "docs/references/wds/source-pdfs/navigation-page-indicator.pdf",
+        "docs/references/wds/source-pdfs/navigation-pagination.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/navigation/Category.jsx",
+        "components/navigation/PageIndicator.jsx",
+        "components/navigation/Tabs.jsx",
+        "components/navigation/Pagination.jsx",
         "components/navigation"
       ],
       "closureCriteria": [
+        "Local PDFs confirm Category variant/size/padding/verticalPadding/scroll, Tab resize/size/padding/trailingIconButton/scroll, Page Indicator counter/size/alternative, and Pagination extended/compact/minimize plus slot controls.",
         "Extract WDS top bar, tab/category, pagination, menu, footer, side navigation, and stepper examples.",
         "Verify hover-collapse behavior, mobile variants, route/selected states, badges, counters, and disabled/focus states.",
         "Ensure LDS side navigation behavior follows WDS interaction guidance instead of an invented explicit close pattern."
@@ -325,14 +375,20 @@
         "stories/OverlayToast.stories.jsx",
         "stories/StatusEmpty.stories.jsx",
         "stories/StatusFeedback.stories.jsx",
+        "docs/references/wds/source-pdfs/feedback-toast.pdf",
+        "docs/references/wds/source-pdfs/feedback-snackbar.pdf",
+        "docs/references/wds/source-pdfs/feedback-alert.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
         "components/feedback",
         "components/overlay",
+        "components/overlay/Snackbar.jsx",
         "components/status"
       ],
       "closureCriteria": [
+        "Local PDFs confirm Toast severity/icon axes, Snackbar heading/description/icon/close/action axes, and Alert iOS/Android/web platform treatments.",
         "Extract WDS alert, toast, snackbar, modal, confirm, empty, banner, callout, and notification examples.",
         "Verify icon size alignment, severity color, title/body/action structure, close action, and timeout/persistent behavior.",
-        "Resolve whether Snackbar is covered by Toast or requires a separate LDS component/story."
+        "Keep Snackbar represented as a separate LDS component/story unless WDS node-level reads prove it should collapse into Toast."
       ],
       "nextFigmaReads": [
         "get_metadata(fileKey=4e0301GrjO6P8fOQpLUrrG,nodeId=16215:19283)"
@@ -348,12 +404,18 @@
         "stories/OverlayDimmer.stories.jsx",
         "stories/NavigationMenus.stories.jsx",
         "stories/ContentAnnotations.stories.jsx",
+        "scripts/check-tooltip-alignment.mjs",
+        "docs/references/wds/source-pdfs/presentation-tooltip.pdf",
+        "docs/references/wds/source-pdfs/presentation-menu.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
         "components/content/Tooltip.jsx",
         "components/overlay/DropdownMenu.jsx",
+        "components/navigation/Menubar.jsx",
         "components/overlay/Popover.jsx",
         "components/overlay/HoverCard.jsx"
       ],
       "closureCriteria": [
+        "Local PDFs confirm Tooltip size/position/arrow alignment/shortcut axes and Menu normal/radio/checkbox/action-area/scroll/item-state axes.",
         "Extract the three WDS Presentation child sections and exact component names.",
         "Verify tooltip, menu, overlay, dimmer, anchored placement, keyboard/focus, and dismissal behavior.",
         "Keep Lightbox and CommandPalette classified as product extensions unless WDS contains equivalent source nodes."

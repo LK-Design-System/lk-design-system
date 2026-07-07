@@ -55,8 +55,8 @@ function startStaticServer() {
     try {
       const requestUrl = new URL(req.url || '/', 'http://127.0.0.1');
       const safePath = decodeURIComponent(requestUrl.pathname).replace(/^\/+/, '') || 'index.html';
-      const filePath = path.resolve(staticDir, safePath);
-      if (!filePath.startsWith(staticDir)) {
+      const filePath = path.resolve(root, safePath);
+      if (!filePath.startsWith(root)) {
         res.writeHead(403);
         res.end('Forbidden');
         return;
@@ -106,7 +106,15 @@ function storyPath(id, query = {}) {
 }
 
 function storyUrl(origin, id, query = {}) {
-  return `${origin}/${storyPath(id, query).replace(/^storybook-static\//, '')}`;
+  return `${origin}/${storyPath(id, query)}`;
+}
+
+function legacyPath(file) {
+  return file.replaceAll('\\', '/');
+}
+
+function legacyUrl(origin, file) {
+  return `${origin}/${legacyPath(file)}`;
 }
 
 async function sha256(filePath) {
@@ -177,9 +185,6 @@ function storyBlock(source, exportName) {
 function implementationStories(entries) {
   const excluded = new Set([
     './stories/Audit.data.jsx',
-    './stories/LegacyPreviews.stories.jsx',
-    './stories/Overview.stories.jsx',
-    './stories/TokenStrategy.stories.jsx',
   ]);
   return Object.values(entries)
     .filter((entry) => entry.type === 'story' && !excluded.has(entry.importPath))
@@ -206,7 +211,6 @@ async function mapComponentCardsToStories(entries, componentCards) {
     blockByStoryId.set(story.id, storyBlock(sourceByImportPath.get(story.importPath), story.exportName));
   }
 
-  const legacyStory = findStory(entries, './stories/LegacyPreviews.stories.jsx', 'ComponentCards');
   const failures = [];
   const pairs = rows.map((row) => {
     const matchedStories = stories
@@ -256,7 +260,7 @@ async function mapComponentCardsToStories(entries, componentCards) {
       storyBlockCoverageComplete: storyBlockCoverageGaps.length === 0,
       storyBlockCoverageGaps,
       reviewAnchor: `#${slug(row.card)}`,
-      legacyStoryPath: storyPath(legacyStory.id, { selected: row.card }),
+      legacyStoryPath: legacyPath(row.card),
       primaryStoryPath: matchedStories[0] ? storyPath(matchedStories[0].id) : null,
       stories: matchedStories.map((story) => ({
         ...story,
@@ -312,36 +316,65 @@ async function screenshotPrimaryViewport(page, filePath, viewport) {
 }
 
 async function hideLegacyPreviewChrome(page) {
-  await page.locator('iframe').first().evaluate((iframe) => {
-    iframe.style.border = '0';
-    iframe.style.borderRadius = '0';
-  });
-
-  const frameHandle = await page.locator('iframe').first().elementHandle();
-  const frame = await frameHandle?.contentFrame();
-  if (!frame) return;
-
-  await frame.evaluate(() => {
+  await page.evaluate(() => {
     const themeToggle = document.getElementById('__om-theme-toggle');
     if (themeToggle) themeToggle.style.display = 'none';
   });
 }
 
 async function screenshotLegacyViewport(page, filePath, viewport) {
-  const iframe = page.locator('iframe').first();
-  await iframe.scrollIntoViewIfNeeded();
-  const box = await iframe.boundingBox();
-  assert(box, 'Unable to locate legacy preview iframe bounding box.');
   await page.screenshot({
     path: filePath,
     clip: {
-      x: Math.round(box.x),
-      y: Math.round(box.y),
+      x: 0,
+      y: 0,
       width: viewport.width,
       height: viewport.height,
     },
     animations: 'disabled',
   });
+}
+
+async function waitForLegacyHtmlReady(page, selected) {
+  try {
+    await page.waitForLoadState('domcontentloaded', { timeout: 30000 }).catch(() => {});
+    await page.evaluate(async () => {
+      if (document.fonts?.ready) await document.fonts.ready;
+    });
+    await page.waitForFunction(
+      () => {
+        const root = document.querySelector('#root');
+        const body = document.body;
+        if (!body) return false;
+        if (root && root.children.length > 0) return true;
+        return [...body.querySelectorAll('*')].some((element) => {
+          const rect = element.getBoundingClientRect();
+          const style = window.getComputedStyle(element);
+          return (
+            rect.width > 1 &&
+            rect.height > 1 &&
+            style.display !== 'none' &&
+            style.visibility !== 'hidden' &&
+            Number(style.opacity || 1) !== 0
+          );
+        });
+      },
+      { timeout: 30000 }
+    );
+  } catch (error) {
+    const diagnostics = await page
+      .evaluate(() => ({
+        readyState: document.readyState,
+        rootChildCount: document.querySelector('#root')?.children.length || 0,
+        bodyText: document.body?.innerText?.slice(0, 240) || '',
+      }))
+      .catch(() => null);
+    throw new Error(
+      `${selected}: legacy HTML did not become render-ready at ${page.url()}: ${error.message}${
+        diagnostics ? ` Diagnostics: ${JSON.stringify(diagnostics)}` : ''
+      }`
+    );
+  }
 }
 
 async function ensureVisibleScreenshot(filePath, metadata) {
@@ -426,7 +459,6 @@ async function main() {
   const componentCards = await collect('components', (rel) => rel.endsWith('.card.html'));
   assert(componentCards.length === 83, `Expected 83 component cards, found ${componentCards.length}.`);
 
-  const legacyStory = findStory(entries, './stories/LegacyPreviews.stories.jsx', 'ComponentCards');
   const reactStories = implementationStories(entries);
   const cardStoryPairs = await mapComponentCardsToStories(entries, componentCards);
   const pairByCard = new Map(cardStoryPairs.map((pair) => [pair.card, pair]));
@@ -459,14 +491,14 @@ async function main() {
       const source = await read(selected);
       const viewport = parseViewport(source);
       await page.setViewportSize({
-        width: Math.max(720, Math.min(1800, viewport.width + 360)),
-        height: Math.max(360, Math.min(1300, viewport.height + 260)),
+        width: Math.max(320, Math.min(1800, viewport.width)),
+        height: Math.max(160, Math.min(1300, viewport.height)),
       });
-      await page.goto(storyUrl(origin, legacyStory.id, { selected }), { waitUntil: 'networkidle', timeout: 30000 });
+      await page.goto(legacyUrl(origin, selected), { waitUntil: 'networkidle', timeout: 30000 });
+      await waitForLegacyHtmlReady(page, selected);
       await page.evaluate(async () => {
         if (document.fonts?.ready) await document.fonts.ready;
       });
-      await page.waitForSelector('iframe', { timeout: 15000 });
       await page.waitForTimeout(250);
       await hideLegacyPreviewChrome(page);
 
@@ -475,7 +507,7 @@ async function main() {
       manifest.legacyComponentCards.push(
         await ensureVisibleScreenshot(outputPath, {
           selected,
-          id: legacyStory.id,
+          sourcePath: legacyPath(selected),
           viewport: { width: viewport.width, height: viewport.height, raw: viewport.raw },
         })
       );

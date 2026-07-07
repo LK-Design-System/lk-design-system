@@ -7,16 +7,36 @@ import React from 'react';
  */
 export function Textarea({
   label,
+  helper,
+  error,
   required = false,
   invalid = false,
+  status = 'normal',
+  size = 'md',
+  interaction,
+  active = false,
+  focus = false,
+  disable = false,
+  resize = 'normal',
   rows = 5,
   id,
   style,
   ...rest
 }) {
-  const taId = id || (label ? `ta-${String(label).replace(/\s+/g, '-').toLowerCase()}` : undefined);
+  const autoId = React.useId();
+  const taId = id || (label ? `ta-${String(label).replace(/\s+/g, '-').toLowerCase()}` : `ta-${autoId}`);
+  const message = error ?? helper;
+  const messageId = message != null ? `${taId}-message` : undefined;
   const [focused, setFocused] = React.useState(false);
-  const ring = invalid ? 'var(--bw-red)' : focused ? 'var(--lk-accent-ink)' : 'var(--bw-border)';
+  const [hover, setHover] = React.useState(false);
+  const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
+  const disabled = !!rest.disabled || disable || interaction === 'inactive';
+  const activeFocus = focused || focus || interaction === 'focused' || interaction === 'active-focused';
+  const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
+  const isInvalid = invalid || status === 'negative' || error != null;
+  const ring = isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-positive)' : activeFocus ? 'var(--lk-accent-ink)' : activeHover ? 'var(--border-strong)' : 'var(--bw-border)';
+  const minHeight = normalizedSize === 'sm' ? 96 : normalizedSize === 'lg' ? 160 : 120;
+  const resizeMode = resize === 'fixed' ? 'none' : resize === 'limit' ? 'vertical' : 'vertical';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
       {label && (
@@ -28,18 +48,29 @@ export function Textarea({
         id={taId}
         rows={rows}
         {...rest}
+        disabled={disabled}
+        aria-describedby={messageId ?? rest['aria-describedby']}
+        aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
         onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
         onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
+        onMouseEnter={(e) => { setHover(true); rest.onMouseEnter && rest.onMouseEnter(e); }}
+        onMouseLeave={(e) => { setHover(false); rest.onMouseLeave && rest.onMouseLeave(e); }}
         style={{
-          width: '100%', resize: 'vertical', minHeight: 120, padding: '14px 18px',
-          background: 'var(--bw-white)', color: 'var(--bw-ink)',
+          width: '100%', resize: resizeMode, minHeight, maxHeight: resize === 'limit' ? minHeight * 2 : undefined, padding: '14px 18px',
+          background: disabled ? 'var(--fill-normal)' : 'var(--bw-white)', color: 'var(--bw-ink)',
           border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
-          boxShadow: focused && !invalid ? '0 0 0 4px var(--focus-ring)' : 'none',
+          boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--focus-ring)' : 'none',
+          opacity: disabled ? 0.65 : 1,
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
           fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, lineHeight: 1.6,
           outline: 'none', boxSizing: 'border-box',
         }}
       />
+      {message != null && (
+        <span id={messageId} style={{ fontSize: 13, lineHeight: 1.45, color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
+          {message}
+        </span>
+      )}
     </div>
   );
 }

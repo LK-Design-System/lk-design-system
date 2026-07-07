@@ -11,17 +11,28 @@ import React from 'react';
 export function IconButton({
   children,
   variant = 'soft',
-  size = 44,
+  size = 'medium',
+  alternative = false,
   round = false,
   label,
   style,
   disabled = false,
+  disable = false,
   onMouseEnter,
   onMouseLeave,
   type,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
+  const resolvedSize = typeof size === 'number'
+    ? size
+    : ({
+        custom: 28,
+        small: 32,
+        sm: 32,
+        medium: 40,
+        md: 40,
+      }[size] || 40);
   const palettes = {
     soft:    { bg: 'var(--bw-indigo-tint)', bgHover: 'var(--bw-indigo-tint)', fg: 'var(--bw-ink)', bd: 'none' },
     solid:   { bg: 'var(--bw-indigo)', bgHover: 'var(--bw-indigo)', fg: 'var(--text-on-inverse)', bd: 'none' },
@@ -29,27 +40,28 @@ export function IconButton({
     ghost:   { bg: 'var(--bw-white)', bgHover: 'var(--bw-white)', fg: 'var(--bw-ink)', bd: '1px solid var(--bw-border)' },
     'on-dark': { bg: 'var(--inverse-fill-normal)', bgHover: 'var(--inverse-fill-hover)', fg: 'var(--text-on-inverse)', bd: '1px solid var(--inverse-line-strong)' },
   };
-  const p = palettes[variant] || palettes.soft;
+  const p = palettes[alternative ? 'on-dark' : variant] || palettes.soft;
+  const disabledState = disabled || disable;
   return (
     <button
       type={type ?? 'button'}
       aria-label={label}
       className={`lk-iconbtn lk-iconbtn--${variant}`}
-      disabled={disabled}
+      disabled={disabledState}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: size,
-        height: size,
+        width: resolvedSize,
+        height: resolvedSize,
         color: p.fg,
-        background: hover && !disabled ? p.bgHover : p.bg,
+        background: hover && !disabledState ? p.bgHover : p.bg,
         border: p.bd,
         borderRadius: round ? 'var(--radius-pill)' : 'var(--radius-md)',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.45 : 1,
+        cursor: disabledState ? 'not-allowed' : 'pointer',
+        opacity: disabledState ? 0.45 : 1,
         boxShadow: 'none',
         transition: 'var(--component-button-transition)',
         WebkitTapHighlightColor: 'transparent',

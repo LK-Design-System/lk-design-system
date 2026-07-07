@@ -1,28 +1,28 @@
 /* ==========================================================================
-   LK ROBOTICS — Spacing, radii, sizing, layout
-   --------------------------------------------------------------------------
-   8-pt soft grid. Sections breathe (generous vertical rhythm). A 1280px
-   page container with 24–32px gutters; inner reading bands narrow to ~1080px.
-   ========================================================================== */
+ LK ROBOTICS — Spacing, radii, sizing, layout
+ --------------------------------------------------------------------------
+ 8-pt soft grid. Sections breathe (generous vertical rhythm). A 1280px
+ page container with 24–32px gutters; inner reading bands narrow to ~1080px.
+ ========================================================================== */
 
 :root {
   /* ---- Spacing scale --------------------------------------------------- */
-  --space-0:   0px;
-  --space-1:   4px;
-  --space-2:   8px;
-  --space-3:   12px;
-  --space-4:   16px;
-  --space-5:   20px;
-  --space-6:   24px;
-  --space-8:   32px;
-  --space-10:  40px;
-  --space-12:  48px;
-  --space-16:  64px;
-  --space-20:  80px;
-  --space-28:  112px;  /* light section vertical padding   */
-  --space-32:  128px;  /* hero / dark-band vertical padding */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-28: 112px; /* light section vertical padding */
+  --space-32: 128px; /* hero / dark-band vertical padding */
 
-  /* ---- WDS Basic / Ratio ---------------------------------------------- */
+  /* ---- Basic / Ratio ---------------------------------------------- */
   --ratio-1-1: 1 / 1;
   --ratio-1-2: 1 / 2;
   --ratio-5-4: 5 / 4;
@@ -42,59 +42,61 @@
   --ratio-9-21: 9 / 21;
 
   /* ---- Radii ------------------------------------------- */
-  --radius-sm:    6px;    /* checkbox, tags, small chips      */
-  --radius-md:    12px;   /* buttons, tabs, controls (base radius = 12) */
-  --radius-input: 12px;   /* text inputs, selects (kit-exact)  */
-  --radius-lg:    12px;   /* menus, popovers                  */
-  --radius-xl:    16px;   /* feature cards, panels (card) */
-  --radius-2xl:   18px;   /* product / location cards        */
-  --radius-3xl:   24px;   /* large cards / sheets       */
-  --radius-4xl:   32px;   /* containers / modals        */
-  --radius-pill:  999px;  /* tags, avatars, dots, nav pills  */
+  --radius-sm: 6px; /* checkbox, tags, small chips */
+  --radius-md: 12px; /* buttons, tabs, controls (base radius = 12) */
+  --radius-input: 12px; /* text inputs, selects (kit-exact) */
+  --radius-lg: 12px; /* menus, popovers */
+  --radius-xl: 16px; /* feature cards, panels (card) */
+  --radius-2xl: 18px; /* product / location cards */
+  --radius-3xl: 24px; /* large cards / sheets */
+  --radius-4xl: 32px; /* containers / modals */
+  --radius-pill: 999px; /* tags, avatars, dots, nav pills */
 
   /* Radius aliases (pt values) */
-  --radius-5:   5px;
-  --radius-6:   6px;
-  --radius-8:   8px;
-  --radius-10:  10px;
-  --radius-12:  12px;
-  --radius-14:  14px;
-  --radius-16:  16px;
-  --radius-20:  20px;
-  --radius-24:  24px;
-  --radius-32:  32px;
+  --radius-5: 5px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-14: 14px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-32: 32px;
   --radius-full: 9999px;
 
-  /* WDS Frame/Radius aliases: Small 12, Medium 14, Large 16, Xlarge 20 */
+  /* Frame/Radius aliases: Small 12, Medium 14, Large 16, Xlarge 20 */
   --radius-frame-sm: var(--radius-12);
   --radius-frame-md: var(--radius-14);
   --radius-frame-lg: var(--radius-16);
   --radius-frame-xl: var(--radius-20);
 
   /* ---- Layout (grid — container 1440 / content 1100, 20px margin) --- */
-  --container:        1440px;   /* page container max-width   */
-  --container-read:   1100px;   /* inner reading band */
-  --container-wide:   1500px;   /* full-bleed carousels / rails     */
-  --gutter:           20px;     /* page margin / gutter              */
-  --gutter-lg:        32px;     /* wide margin (xlarge)         */
-  --header-h:         76px;     /* sticky GNB height               */
+  --container: 1440px; /* page container max-width */
+  --container-read: 1100px; /* inner reading band */
+  --container-wide: 1500px; /* full-bleed carousels / rails */
+  --gutter: 20px; /* page margin / gutter */
+  --gutter-lg: 32px; /* wide margin (xlarge) */
+  --header-h: 76px; /* sticky GNB height */
 
-  /* ---- Mobile safe-area spacing (WDS Spacing / Status + Bottom) ------- */
+  /* ---- Mobile safe-area spacing (Spacing / Status + Bottom) ------- */
   --mobile-safe-area-top: env(safe-area-inset-top, 0px);
   --mobile-safe-area-bottom: env(safe-area-inset-bottom, 0px);
   --mobile-status-bar-min-height: 44px;
   --mobile-home-indicator-height: 34px;
   --mobile-bottom-bar-min-height: 64px;
   --mobile-bottom-action-padding-y: var(--space-4);
-  --mobile-bottom-action-padding-bottom: calc(var(--space-4) + var(--mobile-safe-area-bottom));
+  --mobile-bottom-action-padding-bottom: calc(
+    var(--space-4) + var(--mobile-safe-area-bottom)
+  );
 
   /* ---- Control sizing -------------------------------------------------- */
-  --control-h-sm:   32px;   /* small controls (kit-exact)     */
-  --control-h-md:   48px;   /* inputs, selects (kit-exact)    */
-  --control-h-lg:   52px;   /* primary buttons                */
+  --control-h-sm: 32px; /* small controls (kit-exact) */
+  --control-h-md: 48px; /* inputs, selects (kit-exact) */
+  --control-h-lg: 52px; /* primary buttons */
 
   /* ---- Border widths --------------------------------------------- */
-  --border-thin:    1px;
-  --border-medium:  1.5px;
-  --border-thick:   2px;
+  --border-thin: 1px;
+  --border-medium: 1.5px;
+  --border-thick: 2px;
 }

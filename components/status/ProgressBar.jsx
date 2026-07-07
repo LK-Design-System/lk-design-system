@@ -18,16 +18,16 @@ const TONES = {
 };
 
 /**
- * LK ROBOTICS — ProgressBar
- * A pill track with a signal-ink fill. Determinate (`value`/`max`) grows the
- * fill; `indeterminate` slides a segment for unknown-duration work. Optional
- * `label` + `showValue`.
+ * LDS Core - ProgressBar
+ * Linear determinate or indeterminate progress indicator.
  */
 export function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = 'signal', size = 'md', label, showValue = false, style, ...rest }) {
-  useKeyframes('lk-prog-kf', '@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}');
+  useKeyframes('lk-prog-kf', '@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none}}');
   const c = TONES[tone] || TONES.signal;
   const h = size === 'sm' ? 4 : size === 'lg' ? 10 : 6;
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
+  const ariaLabel = typeof label === 'string' ? label : undefined;
+
   return (
     <div style={{ ...style }} {...rest}>
       {(label != null || showValue) && (
@@ -38,13 +38,16 @@ export function ProgressBar({ value = 0, max = 100, indeterminate = false, tone 
       )}
       <div
         role="progressbar"
+        aria-label={ariaLabel}
+        aria-busy={indeterminate || undefined}
         aria-valuenow={indeterminate ? undefined : Math.round(pct)}
         aria-valuemin={0}
         aria-valuemax={100}
+        aria-valuetext={indeterminate ? 'loading' : `${Math.round(pct)}%`}
         style={{ position: 'relative', height: h, borderRadius: 'var(--radius-pill)', background: 'var(--fill-strong)', overflow: 'hidden' }}
       >
         {indeterminate ? (
-          <span style={{ position: 'absolute', top: 0, bottom: 0, background: c, borderRadius: 'var(--radius-pill)', animation: 'lk-prog-indet 1.3s var(--ease-in-out) infinite' }} />
+          <span data-lds-progress-indeterminate style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '45%', background: c, borderRadius: 'var(--radius-pill)', animation: 'lk-prog-indet 1.3s var(--ease-in-out) infinite' }} />
         ) : (
           <span style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: 'var(--radius-pill)', transition: 'width var(--dur-base) var(--ease-out)' }} />
         )}

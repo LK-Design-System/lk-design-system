@@ -1,15 +1,16 @@
 import {
   ContentBadge,
+  Icon,
   StatusBadge,
 } from '../src/index.js';
 import { ContentBadgeStatusBadgeCard as ContentBadgeStatusBadgeCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/4 Content/Badges',
+  title: 'LDS Core/3 Component/4 Content/Content Badge',
   parameters: {
     docs: {
       description: {
-        component: '문장이나 콘텐츠 블록 안에서 상태와 맥락을 짧게 표시하는 ContentBadge, StatusBadge 패턴입니다.',
+        component: 'ContentBadge and StatusBadge patterns for compact content metadata and state labels.',
       },
     },
   },
@@ -17,18 +18,41 @@ const meta = {
 
 export default meta;
 
-export const ContentBadges = {
-  name: '콘텐츠 배지',
+export const ContentBadgePatterns = {
+  name: 'Content badge patterns',
   render: () => (
-    <main style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap', maxWidth: 720 }}>
-      <ContentBadge>검증됨</ContentBadge>
-      <ContentBadge tone="positive">운영 가능</ContentBadge>
-      <ContentBadge tone="warning">주의</ContentBadge>
-      <ContentBadge tone="negative" variant="outline">제한</ContentBadge>
-      <StatusBadge tone="online" pulse>실시간 연결</StatusBadge>
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
+      <section style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center', flexWrap: 'wrap' }}>
+        <ContentBadge variant="solid" color="accent" leading={<Icon name="android" />}>Android</ContentBadge>
+        <ContentBadge variant="solid" color="accent" leading={<Icon name="apple" />}>iOS</ContentBadge>
+        <ContentBadge variant="solid" color="accent" leading={<Icon name="globe" />}>Web</ContentBadge>
+        <StatusBadge tone="online" pulse>Live</StatusBadge>
+      </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+          <ContentBadge variant="solid">Text</ContentBadge>
+          <ContentBadge>Text</ContentBadge>
+          <ContentBadge variant="outlined">Text</ContentBadge>
+        </div>
+        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+          <ContentBadge size="xsmall" leading={<Icon name="square" />}>Text</ContentBadge>
+          <ContentBadge size="small" leading={<Icon name="square" />}>Text</ContentBadge>
+          <ContentBadge size="medium" leading={<Icon name="square" />} trailing={<Icon name="square" />}>Text</ContentBadge>
+        </div>
+        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+          <ContentBadge color="neutral">Text</ContentBadge>
+          <ContentBadge color="accent">Text</ContentBadge>
+          <ContentBadge color="accent" variant="outlined">Text</ContentBadge>
+          <ContentBadge color="accent" accentBackgroundColor="var(--lk-accent-tint-2)" accentContentColor="var(--accent-foreground-cyan)">Text</ContentBadge>
+        </div>
+      </section>
     </main>
   ),
 };
 
-export const ContentBadgeStatusBadgeCard = { ...ContentBadgeStatusBadgeCardStory, name: 'ContentBadge · StatusBadge card parity', tags: ['!dev', 'visual-parity'] };
-
+export const ContentBadgeStatusBadgeCard = {
+  ...ContentBadgeStatusBadgeCardStory,
+  name: 'ContentBadge · StatusBadge card parity',
+  tags: ['!dev', 'visual-parity'],
+};

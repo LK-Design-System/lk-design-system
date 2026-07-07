@@ -3,7 +3,7 @@ import { TelemetryGauge } from '../src/index.js';
 import { TelemetryGaugeCard as TelemetryGaugeCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Viewer/Telemetry',
+  title: 'LDS Robotics/Viewer/Telemetry',
   parameters: {
     docs: {
       description: {

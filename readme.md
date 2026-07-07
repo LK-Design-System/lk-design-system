@@ -118,8 +118,7 @@ npm run build:storybook
 ## AI 및 Figma 토큰 워크플로
 
 AI 도구로 LK ROBOTICS UI를 생성할 때는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`를 먼저 사용하세요.
-Figma Variables를 내보내거나 가져올 때는 `docs/FIGMA_TOKEN_WORKFLOW.md`를 기준으로 삼으세요.
-토큰 lifecycle과 deprecation은 `docs/TOKEN_GOVERNANCE.md`를 우선합니다.
+Figma Variables export/import, 토큰 lifecycle, deprecation은 `docs/TOKEN_GOVERNANCE.md`를 기준으로 삼으세요.
 컴포넌트 API와 접근성 계약은 `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/ACCESSIBILITY_CONTRACTS.md`를 함께 봅니다.
 도메인 컴포넌트 계약은 `docs/ROBOTICS_PATTERNS.md`에 정리합니다.
 

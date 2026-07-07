@@ -1,7 +1,8 @@
 # WDS Conflict Audit
 
 This audit compares the LK ROBOTICS design system against the Wanted Design
-System Community file using the Figma connector, not local `.fig` parsing.
+System Community file using the Figma connector and the checked-in local `.fig`
+export.
 
 Source:
 - Figma file: Wanted Design System Community
@@ -13,6 +14,13 @@ Source:
 The full WDS page metadata is too large for a single `get_metadata` request and
 timed out at page scope. A read-only `use_figma` inspection succeeded and
 returned pages, variable collections, styles, and component-set names.
+
+On 2026-07-08, a live Figma MCP read against file key
+`9ztwRZsoXNAuTP7TYSFO1e` and node `16222:137705` was blocked by the Figma MCP
+Starter plan call limit. As a fallback, `npm run extract:wds-fig-content`
+decoded the checked-in `Wanted Design System (Community).fig` export and wrote
+`FIGMA_LOCAL_CONTENT_AUDIT.json` with node text, section labels, variant-like
+symbol names, dimensions, and visual samples.
 
 Observed WDS structure:
 - Pages include `Overview`, `1 Theme`, `2 Element`, `3 Component`, `Resource`,
@@ -153,7 +161,9 @@ Recommended taxonomy:
 - LK Theme Override
 - LK Product Extension
 - LK Robotics Extension
-- Documents
+
+Evidence, governance, and audit records should stay under `docs/` rather than
+being exposed as Storybook pages.
 
 ## Recommended Cleanup Order
 

@@ -3,7 +3,7 @@ import { ConnectionBadge, Icon, Scene3DFrame, ViewerToolbar, ViewerToolbarButton
 import { Scene3DFrameCard as Scene3DFrameCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Viewer/3D Frame',
+  title: 'LDS Robotics/Viewer/3D Frame',
   parameters: {
     docs: {
       description: {

@@ -1,10 +1,8 @@
-**Menubar** — 메뉴들의 가로 바(앱 상단 메뉴).
+**Menubar** - WDS horizontal menu bar for grouped commands.
 
 ```jsx
-<Menubar menus={[
-  { label: '파일', items: [{ label: '새로 만들기', shortcut: '⌘N' }, { divider: true }, { label: '내보내기' }] },
-  { label: '보기', items: [{ label: '미리보기' }, { label: '리스트' }] },
-]} />
+<Menubar menus={[{ label: 'File', items: [{ label: 'New' }, { label: 'Open', shortcut: '⌘O' }] }]} />
 ```
 
-- **menus** — `{ label, items: [{ label, shortcut, onClick } | { divider }] }`. 한 번에 하나만 열리며, 열린 상태에서 호버로 전환됩니다.
+- Use for command groups. Menu items support normal, radio, checkbox, disabled, danger, divider, description, and shortcut states.
+- WDS axes: `variant`, `menuActionArea`, and scroll via `maxHeight`.

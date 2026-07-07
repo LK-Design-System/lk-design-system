@@ -30,12 +30,18 @@
       "file": "docs/references/wds/source-pdfs/2action.pdf",
       "extractedStructure": [
         "Action Area",
+        "Action Area: extra true/false, divider true/false, variant strong/neutral/compact/cancel, compactContent true/false",
+        "Action Area: caption true/false, sticky true/false, safeArea",
         "Button",
+        "Button: variant solid/default/outlined, color primary/assistive, size small/medium/large, icon, iconOnly, disable, loading, interaction normal/hovered/focused/pressed",
         "Text Button",
+        "Text Button: color primary/assistive, size small/medium, icon, disable, loading, interaction normal/hovered/focused/pressed",
         "Icon Button",
+        "Icon Button: Normal, Background, Outlined, Solid; disable, pushBadge, alternative, size, interaction normal/hovered/focused/pressed",
         "Chip",
+        "Chip: size xsmall/small/medium/large, variant solid/default/outlined, active, content icon/thumbnail, disable, interaction normal/hovered/focused/pressed",
         "Toggle Icon",
-        "Action Area: bottom placement, divider, caption, sticky, safeArea"
+        "Toggle Icon: active true/false, interaction normal/hovered/focused/pressed"
       ],
       "localEvidence": [
         "stories/ActionArea.stories.jsx#ActionTaxonomy",
@@ -50,6 +56,382 @@
         "tokens/source.json"
       ],
       "coverageImpact": "Adds WDS Action Area and Toggle Icon primitives and records the PDF-confirmed Action taxonomy."
+    },
+    {
+      "id": "content-avatar",
+      "wdsSource": "3 Component / 4 Content / Avatar",
+      "file": "docs/references/wds/source-pdfs/avatar-name.pdf",
+      "extractedStructure": [
+        "Avatar",
+        "Person: variant = person/default, company, academy",
+        "Person: size = xsmall, small, default, medium, large, xlarge",
+        "Person: placeholder = false/default, true",
+        "Person: interaction = false/default, true with normal, hovered, focused, pressed",
+        "Person: pushBadge = false/default, true",
+        "Person: customize = borderColor, borderWeight, size",
+        "Avatar Group: variant = person/default, company, academy",
+        "Avatar Group: size = xsmall/default, small",
+        "Avatar Group: trailingContent = false/default, true",
+        "Resource: placeholder/deactivate assets supplied separately by the user"
+      ],
+      "localEvidence": [
+        "stories/Feedback.stories.jsx#AvatarPatterns",
+        "components/feedback/Avatar.jsx",
+        "components/feedback/AvatarGroup.jsx",
+        "assets/source/avatar/resource",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Avatar and Avatar Group property matrices to the existing Avatar story and component APIs."
+    },
+    {
+      "id": "content-card-list-card",
+      "wdsSource": "3 Component / 4 Content / Card and List Card",
+      "file": "docs/references/wds/source-pdfs/content-card.pdf",
+      "extractedStructure": [
+        "Card",
+        "Card: platform = desktop, mobile",
+        "Card: thumbnailOverlay = false/default, true",
+        "Card: caption = true/default, false",
+        "Card: toggleIcon = true/default, false",
+        "Card: extraCaption = false/default, true",
+        "Card: topContent, bottomContent, skeleton",
+        "Card: customize = width, thumbnailAspectRatio",
+        "List Card",
+        "List Card: platform = desktop, mobile",
+        "List Card: extraCaption, caption, topContent, bottomContent, leadingContent, trailingContent, skeleton",
+        "List Card: customize = width, thumbnailAspectRatio"
+      ],
+      "localEvidence": [
+        "stories/Card.stories.jsx#ContentCardPatterns",
+        "stories/ContentListsMedia.stories.jsx#Lists",
+        "stories/ContentMedia.stories.jsx#MediaThumbnails",
+        "components/cards/Card.jsx",
+        "components/content/ListCell.jsx",
+        "components/content/Thumbnail.jsx",
+        "components/content/ContentBadge.jsx",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Content Card and List Card composition evidence while keeping Card as the neutral LDS surface primitive."
+    },
+    {
+      "id": "content-icon",
+      "wdsSource": "3 Component / 4 Content / Icon",
+      "file": "docs/references/wds/source-pdfs/content-icon.pdf",
+      "extractedStructure": [
+        "Icon",
+        "Icon supplies supplemental visual information inside content",
+        "Icon examples show multiple square sizes and currentColor-style rendering"
+      ],
+      "localEvidence": [
+        "stories/Iconography.stories.jsx#IconSizingAndColor",
+        "stories/Iconography.stories.jsx#IconRegistry",
+        "components/icon/Icon.jsx",
+        "components/icon/Icon.d.ts",
+        "components/icon/Icon.prompt.md",
+        "assets/icons/manifest.json"
+      ],
+      "coverageImpact": "Records the Content/Icon PDF as usage evidence for the existing WDS icon registry rather than a new component."
+    },
+    {
+      "id": "content-badge",
+      "wdsSource": "3 Component / 4 Content / Content Badge",
+      "file": "docs/references/wds/source-pdfs/content-badge.pdf",
+      "extractedStructure": [
+        "Content Badge",
+        "variant = solid/default, outlined",
+        "icon",
+        "size = xsmall, small/default, medium",
+        "color = neutral/default, accent",
+        "customize = accentBackgroundColor, accentContentColor"
+      ],
+      "localEvidence": [
+        "stories/ContentBadgesAnnotations.stories.jsx#ContentBadgePatterns",
+        "stories/ContentBadgesAnnotations.stories.jsx#ContentBadgeStatusBadgeCard",
+        "components/content/ContentBadge.jsx",
+        "components/content/ContentBadge.d.ts",
+        "components/content/ContentBadge.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Content Badge axes to the existing ContentBadge component API and story."
+    },
+    {
+      "id": "content-thumbnail",
+      "wdsSource": "3 Component / 4 Content / Thumbnail",
+      "file": "docs/references/wds/source-pdfs/content-thumbnail.pdf",
+      "extractedStructure": [
+        "Thumbnail",
+        "ratio = 1/1, 5/4, 4/3, 3/2, 16/10, 1.618/1, 16/9, 2/1, 21/9, 4/5, 3/4, 2/3, 10/16, 1/1.618, 9/16, 1/2, 9/21",
+        "radius = false/default, true",
+        "border = false/default, true",
+        "Resource: media thumbnail/play resource example"
+      ],
+      "localEvidence": [
+        "stories/ContentMedia.stories.jsx#MediaThumbnails",
+        "stories/ContentMedia.stories.jsx#ThumbnailCard",
+        "components/content/Thumbnail.jsx",
+        "components/content/Thumbnail.d.ts",
+        "components/content/Thumbnail.prompt.md",
+        "tokens/spacing.css",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Thumbnail ratio, radius, and border axes to the existing Thumbnail component API and story."
+    },
+    {
+      "id": "content-list-cell",
+      "wdsSource": "3 Component / 4 Content / List Cell",
+      "file": "docs/references/wds/source-pdfs/content-list-cell.pdf",
+      "extractedStructure": [
+        "List Cell",
+        "verticalPadding = none, small, medium/default, large, custom",
+        "verticalAlign = top/default, center",
+        "fillWidth = false, true/default",
+        "textEllipsis = false/default, true",
+        "divider = false/default, true",
+        "chevron = false/default, true",
+        "selected = false/default, true",
+        "disable = false/default, true",
+        "interaction = false/default, true with normal, hovered, focused, pressed",
+        "leadingContent, trailingContent",
+        "customize = typography, interactionExtraPadding, verticalAlign"
+      ],
+      "localEvidence": [
+        "stories/ContentListsMedia.stories.jsx#Lists",
+        "stories/ContentListsMedia.stories.jsx#ListCellStates",
+        "stories/ContentListsMedia.stories.jsx#ListCellAccordionCard",
+        "components/content/ListCell.jsx",
+        "components/content/ListCell.d.ts",
+        "components/content/ListCell.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed List Cell layout, state, slot, and interaction axes to the existing ListCell component API and story."
+    },
+    {
+      "id": "navigation-category",
+      "wdsSource": "3 Component / 6 Navigation / Category",
+      "file": "docs/references/wds/source-pdfs/navigation-category.pdf",
+      "extractedStructure": [
+        "Category",
+        "variant = normal/default, alternative",
+        "size = small, medium/default, large, xlarge",
+        "padding = false/default, true",
+        "verticalPadding = false/default, true",
+        "scroll = auto",
+        "Resource: active false/default and true category chips"
+      ],
+      "localEvidence": [
+        "stories/NavigationFlow.stories.jsx#TabAndCategoryPatterns",
+        "components/navigation/Category.jsx",
+        "components/navigation/Category.d.ts",
+        "components/navigation/Category.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Navigation Category axes to the existing navigation Storybook section and a public LDS Category primitive."
+    },
+    {
+      "id": "navigation-tab",
+      "wdsSource": "3 Component / 6 Navigation / Tab",
+      "file": "docs/references/wds/source-pdfs/navigation-tab.pdf",
+      "extractedStructure": [
+        "Tab",
+        "resize = hug, fill",
+        "size = small, medium/default, large",
+        "padding = false/default, true",
+        "trailingIconButton = false/default, true",
+        "scroll = auto"
+      ],
+      "localEvidence": [
+        "stories/NavigationFlow.stories.jsx#TabAndCategoryPatterns",
+        "components/navigation/Tabs.jsx",
+        "components/navigation/Tabs.d.ts",
+        "components/navigation/Tabs.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed WDS Tab resize, size, padding, trailing icon button, and scroll axes to the existing Tabs component and story."
+    },
+    {
+      "id": "navigation-page-indicator",
+      "wdsSource": "3 Component / 6 Navigation / Page Indicator",
+      "file": "docs/references/wds/source-pdfs/navigation-page-indicator.pdf",
+      "extractedStructure": [
+        "Page Indicator",
+        "counter indicator",
+        "size = small, medium/default",
+        "alternative = false/default, true",
+        "dot resource treatment"
+      ],
+      "localEvidence": [
+        "stories/NavigationCompact.stories.jsx#PaginationPatterns",
+        "components/navigation/PageIndicator.jsx",
+        "components/navigation/PageIndicator.d.ts",
+        "components/navigation/PageIndicator.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Page Indicator counter, size, alternative, and dot resource treatment to LDS navigation."
+    },
+    {
+      "id": "navigation-pagination",
+      "wdsSource": "3 Component / 6 Navigation / Pagination",
+      "file": "docs/references/wds/source-pdfs/navigation-pagination.pdf",
+      "extractedStructure": [
+        "Pagination Dot: variant = normal/default, white",
+        "Pagination Dot: size = small, medium/default",
+        "Pagination Navigation: variant = extended/default, compact, minimize",
+        "leadingContent and trailingContent slots",
+        "page-size and page-jump controls"
+      ],
+      "localEvidence": [
+        "stories/NavigationCompact.stories.jsx#PaginationPatterns",
+        "components/navigation/Pagination.jsx",
+        "components/navigation/Pagination.d.ts",
+        "components/navigation/Pagination.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Pagination extended, compact, minimize, dot, and auxiliary control axes to the existing Pagination component and story."
+    },
+    {
+      "id": "feedback-toast",
+      "wdsSource": "3 Component / 7 Feedback / Toast",
+      "file": "docs/references/wds/source-pdfs/feedback-toast.pdf",
+      "extractedStructure": [
+        "Toast",
+        "variant = normal/default, positive, cautionary, negative",
+        "leadingIcon = true/default, false",
+        "customize = icon",
+        "dark grey feedback surface"
+      ],
+      "localEvidence": [
+        "stories/OverlayToast.stories.jsx#ToastNotifications",
+        "components/overlay/Toast.jsx",
+        "components/overlay/Toast.d.ts",
+        "components/overlay/Toast.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Toast severity, icon, and dark-surface treatment to the existing Toast component and story."
+    },
+    {
+      "id": "feedback-snackbar",
+      "wdsSource": "3 Component / 7 Feedback / Snackbar",
+      "file": "docs/references/wds/source-pdfs/feedback-snackbar.pdf",
+      "extractedStructure": [
+        "Snackbar",
+        "heading = true/default, false",
+        "description = false/default, true",
+        "icon = false/default, true",
+        "closeButton = false/default, true",
+        "action text slot",
+        "dark grey feedback surface"
+      ],
+      "localEvidence": [
+        "stories/OverlayToast.stories.jsx#SnackbarPatterns",
+        "components/overlay/Snackbar.jsx",
+        "components/overlay/Snackbar.d.ts",
+        "components/overlay/Snackbar.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds the WDS Snackbar component as an LDS feedback primitive under the existing Feedback/Toast Storybook section."
+    },
+    {
+      "id": "feedback-alert",
+      "wdsSource": "3 Component / 7 Feedback / Alert",
+      "file": "docs/references/wds/source-pdfs/feedback-alert.pdf",
+      "extractedStructure": [
+        "Alert",
+        "platform = ios, android, web",
+        "heading = true/default, false",
+        "iOS centered button treatment",
+        "Android and web text action treatment",
+        "grey scrim modal surface"
+      ],
+      "localEvidence": [
+        "stories/OverlayFeedback.stories.jsx#AlertOpen",
+        "stories/OverlayFeedback.stories.jsx#AlertPlatformPreview",
+        "components/overlay/Alert.jsx",
+        "components/overlay/Alert.d.ts",
+        "components/overlay/Alert.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Alert platform and heading axes to the existing Alert component and Confirm Alert story."
+    },
+    {
+      "id": "presentation-tooltip",
+      "wdsSource": "3 Component / 8 Presentation / Tooltip",
+      "file": "docs/references/wds/source-pdfs/presentation-tooltip.pdf",
+      "extractedStructure": [
+        "Tooltip",
+        "size = medium/default, small",
+        "position = top, left, right, bottom",
+        "arrow vertical align = leading/default, center, trailing",
+        "arrow horizontal align = top/default, center, bottom",
+        "shortcut = false/default, true"
+      ],
+      "localEvidence": [
+        "stories/ContentAnnotations.stories.jsx#TooltipPatterns",
+        "scripts/check-tooltip-alignment.mjs",
+        "components/content/Tooltip.jsx",
+        "components/content/Tooltip.d.ts",
+        "components/content/Tooltip.prompt.md",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Tooltip size, placement, arrow alignment, and shortcut axes to the existing annotation story."
+    },
+    {
+      "id": "presentation-menu",
+      "wdsSource": "3 Component / 8 Presentation / Menu",
+      "file": "docs/references/wds/source-pdfs/presentation-menu.pdf",
+      "extractedStructure": [
+        "Menu",
+        "variant = normal/default, radio, checkbox",
+        "menuActionArea = false/default, true",
+        "scroll",
+        "menu item resource includes active, disabled, checked, description/caption, action area, and shortcut"
+      ],
+      "localEvidence": [
+        "stories/NavigationMenus.stories.jsx#MenuPatterns",
+        "components/overlay/DropdownMenu.jsx",
+        "components/navigation/Menubar.jsx",
+        "components/overlay/DropdownMenu.d.ts",
+        "components/navigation/Menubar.d.ts",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed Menu variant, action area, scroll, and item-state axes to the existing Menu story and components."
+    },
+    {
+      "id": "loading",
+      "wdsSource": "3 Component / 5 Loading / Loading",
+      "file": "docs/references/wds/source-pdfs/loading.pdf",
+      "extractedStructure": [
+        "Loading",
+        "Wanted loading indicator with blue circle, magenta diamond, and orange triangle",
+        "Circular loading",
+        "Skeleton Text length = 100/default, 75, 50, 25",
+        "Skeleton align = leading/default, center, trailing",
+        "Skeleton Rectangle customize = width, height, color, borderRadius, opacity",
+        "Skeleton Circle customize = width, height, color, opacity"
+      ],
+      "localEvidence": [
+        "stories/StatusLoading.stories.jsx#LoadingStates",
+        "components/status/Spinner.jsx",
+        "components/status/Skeleton.jsx",
+        "components/status/Spinner.d.ts",
+        "components/status/Skeleton.d.ts",
+        "tokens/components.css",
+        "tokens/source.json"
+      ],
+      "coverageImpact": "Adds PDF-confirmed WDS Loading, Circular loading, and Skeleton customization axes to the existing Loading story and status components."
     }
   ]
 }

@@ -1,9 +1,9 @@
 const meta = {
-  title: 'WDS Core/0 Foundation/Decorate',
+  title: 'LDS Core/0 Foundation/Decorate',
   parameters: {
     docs: {
       description: {
-        component: 'WDS Decorate coverage for gradient, mask, and interaction overlay primitives.',
+        component: 'Decorate coverage for gradient, mask, and interaction overlay primitives.',
       },
     },
   },
@@ -113,13 +113,13 @@ export const GradientTokens = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1120 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
-          WDS Decorate / Gradient
+          Decorate / Gradient
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           Decorative gradients are tokenized by type and direction
         </h1>
         <p style={{ margin: 0, maxWidth: 820, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The WDS Decorate PDF separates Solid, Multiple, and Mask gradients. LDS keeps the same categories with top,
+          The decorate source separates Solid, Multiple, and Mask gradients. LDS keeps the same categories with top,
           right, bottom, and left direction tokens.
         </p>
       </header>
@@ -155,13 +155,13 @@ export const InteractionTokens = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1040 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
-          WDS Decorate / Interaction
+          Decorate / Interaction
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           Interaction decoration uses layer and state tokens
         </h1>
         <p style={{ margin: 0, maxWidth: 780, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The WDS source names interaction variants and states separately. LDS maps those into layer tokens and opacity
+          The source names interaction variants and states separately. LDS maps those into layer tokens and opacity
           state tokens so components do not invent one-off hover or pressed visuals.
         </p>
       </header>

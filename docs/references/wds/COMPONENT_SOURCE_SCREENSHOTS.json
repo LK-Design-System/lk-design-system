@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community component screenshots",
+    "createdAt": "2026-07-07",
+    "purpose": "Record user-provided Figma section screenshots that expose component taxonomy, variants, states, and resource examples before full node-level Figma reads are available."
+  },
+  "screenshots": [
+    {
+      "id": "selection-and-input-overview",
+      "wdsSource": "3 Component / 3 Selection and Input",
+      "figmaNodeId": "16215:30100",
+      "file": "docs/references/wds/source-screenshots/3selectionandinput.png",
+      "sourceType": "user-provided Figma section screenshot",
+      "extractedStructure": [
+        "Section groups visible in the source screenshot: Textinput, Select, Control, Segmented Control, Framed Style.",
+        "Textinput includes Textfield and Textarea examples with development platform tags, status rows, size/height rows, active/focus/disabled states, helper/required/description treatment, icon/button slots, autocomplete behavior, preview compositions, and resource examples.",
+        "Select includes render modes for text and chip, active/open state, focus, normal/negative status, disabled state, heading, required and description rows, overflow examples, leading icon treatment, preview compositions, and resource examples.",
+        "Control includes Checkbox, Radio, Check Mark, and Switch. Checkbox/Radio/Check Mark show size, checked/unchecked states, tight layout, label on/off, disabled, customization by typography and typography color, interaction states, and resource examples.",
+        "Checkbox specifically shows unchecked, checked, and indeterminate states.",
+        "Switch shows platform variants normal and iOS, size small/medium, active on/off, disabled on/off, vertical resource examples, and normal/iOS visual treatments.",
+        "Segmented Control shows solid and outlined variants, small/medium/large sizes, icon on/off variants, inactive/active/focus/active-focus compositions, and a resource example.",
+        "Framed Style shows selected on/off, disabled, normal/negative status, normal/hovered/focused interaction states, radius/padding customization, shadow scale customization, selected/error/disabled frame compositions, and resource examples."
+      ],
+      "localEvidence": [
+        "stories/FormsFull.stories.jsx#TextInputs",
+        "stories/FormsFull.stories.jsx#TextInputInteractionMatrix",
+        "stories/FormSearchAutocomplete.stories.jsx#SearchAndAutocomplete",
+        "stories/FormSelectionControls.stories.jsx#SelectionGroups",
+        "stories/FormSelectionControls.stories.jsx#MarkTreatmentMatrix",
+        "stories/FormSelectionControls.stories.jsx#ControlInteractionMatrix",
+        "stories/FormSelectionControls.stories.jsx#FrameTreatmentMatrix",
+        "stories/FormRangeControls.stories.jsx#RangeControls",
+        "stories/SelectionChips.stories.jsx#ChipSelection",
+        "stories/SelectionSegmentedToggle.stories.jsx#SegmentedAndToggle",
+        "stories/SelectionSegmentedToggle.stories.jsx#SegmentedInteractionMatrix",
+        "stories/SelectionStatus.stories.jsx#ChoiceCards",
+        "stories/SelectionSwitchStepper.stories.jsx#SwitchAndStepper",
+        "stories/SelectionSwitchStepper.stories.jsx#SwitchInteractionMatrix",
+        "components/forms/Checkbox.jsx",
+        "components/selection/ChoiceCard.jsx",
+        "components/forms",
+        "components/selection"
+      ],
+      "coverageImpact": "Adds screenshot-level evidence for WDS Selection and Input child taxonomy and state matrices. The visible PNG states are represented through existing LDS components, including Checkbox variant=\"mark\" and ChoiceCard presentation=\"frame\"; exact Figma child nodes, component properties, and variant names still require direct Figma metadata/design-context reads."
+    }
+  ]
+}

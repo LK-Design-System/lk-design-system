@@ -20,7 +20,7 @@ The current Storybook is running around the WDS/LDS audit and component expansio
 
 ### WDS relationship and audit model
 
-- Added visible WDS/LDS relationship documentation in `readme.md` and audit stories.
+- Added visible WDS/LDS relationship documentation in `readme.md` and docs-backed audit references.
 - Added WDS alignment data under `docs/references/wds/`.
 - Added machine-readable coverage files:
   - `COVERAGE_AUDIT.json`
@@ -83,9 +83,8 @@ Notable design corrections:
 
 ### Storybook reorganization
 
-Many mixed Storybook pages were split into narrower stories. Important new story files include:
+Many mixed Storybook pages were split into narrower component and pattern stories. Audit and operating-model material belongs in docs, not Storybook. Important new story files include:
 
-- `stories/WdsCoverageAudit.stories.jsx`
 - `stories/FoundationBasic.stories.jsx`
 - `stories/FoundationSpacing.stories.jsx`
 - `stories/FoundationDecorate.stories.jsx`
@@ -235,9 +234,8 @@ For generated/public API surface:
 
 For Storybook organization:
 
-- `stories/WdsCoverageAudit.stories.jsx`
-- `stories/Audit.data.jsx`
 - `stories/*shared.jsx`
+- `stories/Audit.data.jsx` as hidden source data for scripts only, not a Storybook page
 
 ## Handoff Summary
 

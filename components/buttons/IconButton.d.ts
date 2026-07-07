@@ -1,17 +1,21 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** 비주얼 스타일. @default "soft" */
-  variant?: 'soft' | 'solid' | 'signal' | 'ghost' | 'on-dark';
-  /** 정사각/원형의 픽셀 크기. @default 44 */
-  size?: number;
-  /** 8px 라운드 사각형 대신 완전 원형. @default false */
+  /** Visual action variant mapped through LK theme tokens. @default "soft" */
+  variant?: "soft" | "solid" | "signal" | "ghost" | "on-dark";
+  /** Square control size in px or size key. @default "medium" */
+  size?: number | "custom" | "small" | "sm" | "medium" | "md";
+  /** alternative inverse treatment. @default false */
+  alternative?: boolean;
+  /** Render as a circular control instead of the default rounded square. @default false */
   round?: boolean;
-  /** 접근성 라벨(필수 — 버튼에 보이는 텍스트가 없음). */
-  label?: string;
-  /** 단일 인라인 SVG 글리프. */
+  /** Disable alias. @default false */
+  disable?: boolean;
+  /** Required accessible label for the icon-only control. */
+  label: string;
+  /** Icon glyph or inline SVG content. */
   children?: React.ReactNode;
 }
 
-/** 아이콘 하나를 감싸는 콤팩트 정사각/원형 컨트롤(내비 화살표, 맨 위로, 닫기). */
+/** Action/Icon Button primitive for icon-only one-shot actions. */
 export function IconButton(props: IconButtonProps): JSX.Element;

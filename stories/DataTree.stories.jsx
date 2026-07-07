@@ -5,7 +5,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LK Product Extension/Data/Tree',
+  title: 'LDS Product/Data/Tree',
   parameters: {
     docs: {
       description: {

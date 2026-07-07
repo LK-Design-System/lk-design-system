@@ -59,7 +59,7 @@
   /* ---- 7-tier type scale (Display/Title/Heading/Headline/Body/Label/
      Caption) provided alongside the LK fs/lh/ls token families so
      consumers can use this vocabulary directly. ---------------------- */
-  --display1-size: 56px;  --display1-line: 72px;  --display1-spacing: -0.031em;
+  --display1-size: 56px;  --display1-line: 72px;  --display1-spacing: -0.0319em;
   --display2-size: 40px;  --display2-line: 52px;  --display2-spacing: -0.0282em;
   --display3-size: 36px;  --display3-line: 48px;  --display3-spacing: -0.027em;
 

@@ -7,7 +7,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LK Product Extension/Content/Writing Editor',
+  title: 'LDS Product/Content/Writing Editor',
   parameters: {
     docs: {
       description: {

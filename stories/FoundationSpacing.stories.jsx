@@ -1,12 +1,12 @@
 import { Button } from '../src/index.js';
 
 const meta = {
-  title: 'WDS Core/0 Foundation/Spacing',
+  title: 'LDS Core/0 Foundation/Spacing',
   parameters: {
     docs: {
       description: {
         component:
-          'WDS Spacing coverage for safe-area spacing: status bar, home indicator, bottom navigation, and bottom actions.',
+          'Spacing coverage for safe-area spacing: status bar, home indicator, bottom navigation, and bottom actions.',
       },
     },
   },
@@ -166,7 +166,7 @@ const tokenRows = [
   ['Status minimum height', '--mobile-status-bar-min-height', '44px'],
   ['Bottom safe area', '--mobile-safe-area-bottom', 'env(safe-area-inset-bottom)'],
   ['Home indicator', '--mobile-home-indicator-height', '34px'],
-  ['Bottom bar minimum', '--mobile-bottom-bar-min-height', '56px'],
+  ['Bottom bar minimum', '--mobile-bottom-bar-min-height', '64px'],
   ['Bottom action padding', '--mobile-bottom-action-padding-bottom', 'space-4 + safe-area-bottom'],
 ];
 
@@ -176,13 +176,13 @@ export const MobileSafeAreaSpacing = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1120 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
-          WDS Spacing / Safe Area
+          Spacing / Safe Area
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           Status and bottom safe areas are spacing tokens
         </h1>
         <p style={{ margin: 0, maxWidth: 780, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The WDS spacing PDF separates the status area and bottom area. LDS keeps those offsets as runtime spacing tokens
+          The spacing source separates the status area and bottom area. LDS keeps those offsets as runtime spacing tokens
           instead of hiding them inside individual mobile components.
         </p>
       </header>

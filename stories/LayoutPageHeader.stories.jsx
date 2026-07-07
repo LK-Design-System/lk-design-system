@@ -6,7 +6,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LK Product Extension/Layout/Page Header',
+  title: 'LDS Product/Layout/Page Header',
   parameters: {
     docs: {
       description: {

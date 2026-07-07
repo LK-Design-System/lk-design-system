@@ -9,7 +9,7 @@ import {
 } from './Layout.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/1 Layout/Grid and Columns',
+  title: 'LDS Core/3 Component/1 Layout/Grid and Columns',
   parameters: {
     docs: {
       description: {

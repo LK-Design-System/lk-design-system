@@ -5,7 +5,7 @@ import {
 import { SpecRowCard as SpecRowCardStory } from './CardsExtended.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/4 Content/Spec Row',
+  title: 'LDS Core/3 Component/4 Content/Spec Row',
   parameters: {
     docs: {
       description: {

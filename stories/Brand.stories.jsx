@@ -4,7 +4,7 @@ import {
 } from './Brand.shared.jsx';
 
 const meta = {
-  title: 'LK Theme Override/Brand/LK ROBOTICS Logo',
+  title: 'LDS Theme/Brand/LK ROBOTICS Logo',
   parameters: {
     docs: {
       description: {

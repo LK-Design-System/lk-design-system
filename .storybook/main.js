@@ -32,6 +32,7 @@ const config = {
       },
       build: {
         ...config.build,
+        assetsDir: '_sb-vite-assets',
         chunkSizeWarningLimit: 1200,
       },
     };

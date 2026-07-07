@@ -25,6 +25,7 @@ import { Icon } from '@lk-robotics/design-system-core';
 - Use semantic names from the registry instead of inventing local aliases.
 - Prefer WDS icons for general UI. Use LK Robotics extension icons only for robotics-specific concepts such as robot, route, waypoint, LiDAR, battery, or joystick.
 - Monochrome icons inherit `currentColor`; set color on the parent or with the `color` prop.
+- WDS Content/Icon evidence shows icons as supplemental content glyphs. Keep sizing explicit (`16`, `20`, `24`, `32`, or `40`) and treat decorative icons as `aria-hidden`.
 - Icon-only controls must provide an accessible label through the wrapping control or `aria-label`.
 - New icons must be added to the source icon inventory and regenerated with `scripts/generate-icons.mjs`; do not edit `Icon.jsx` by hand.
 

@@ -1,47 +1,198 @@
-import React from 'react';
+import React from "react";
+
+const platformStyle = {
+  ios: {
+    maxWidth: 290,
+    radius: 22,
+    padding: "22px 18px 16px",
+    buttonHeight: 40,
+    footer: "center",
+  },
+  android: {
+    maxWidth: 360,
+    radius: 8,
+    padding: "24px 24px 18px",
+    buttonHeight: 36,
+    footer: "flex-end",
+  },
+  web: {
+    maxWidth: 420,
+    radius: 8,
+    padding: "24px 24px 18px",
+    buttonHeight: 36,
+    footer: "flex-end",
+  },
+};
+
+const variantColor = {
+  normal: "var(--lk-accent-ink)",
+  assistive: "var(--label-neutral)",
+  negative: "var(--bw-red)",
+};
+
+function normalizeVariant(value) {
+  if (value === "danger" || value === "error") return "negative";
+  if (value === "default" || value === "info") return "normal";
+  return value || "normal";
+}
 
 /**
- * LK ROBOTICS — Alert (modal dialog)
- * A centered confirmation dialog over a navy scrim. Controlled via `open`. Pass
- * `title` + body children; default footer renders a graphite confirm (and an
- * optional cancel), or supply your own `actions` node. Esc / scrim-click close.
+ * LDS Core - Alert
+ * modal feedback alert with iOS, Android, and Web platform treatments.
  */
 export function Alert({
-  open = false, title, children, tone = 'default',
-  confirmLabel = '확인', cancelLabel, onConfirm, onCancel, onClose,
-  actions, closeOnScrim = true, style, ...rest
+  open = false,
+  title,
+  heading = true,
+  children,
+  description,
+  platform = "web",
+  tone = "default",
+  variant,
+  confirmLabel,
+  cancelLabel,
+  primaryLabel,
+  secondaryLabel,
+  onConfirm,
+  onCancel,
+  onClose,
+  actions,
+  closeOnScrim = true,
+  style,
+  ...rest
 }) {
   const dismiss = onClose || onCancel;
   React.useEffect(() => {
     if (!open) return undefined;
-    const onKey = (e) => { if (e.key === 'Escape' && dismiss) dismiss(); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    const onKey = (e) => {
+      if (e.key === "Escape") dismiss?.();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
   }, [open, dismiss]);
+
   if (!open) return null;
-  const accent = tone === 'danger' ? 'var(--bw-red)' : 'var(--color-primary)';
-  const confirmStyle = { height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--text-on-signal)', background: accent };
-  const cancelStyle = { height: 44, padding: '0 20px', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)', background: 'var(--bw-white)' };
+
+  const p = platformStyle[platform] || platformStyle.web;
+  const primary = primaryLabel ?? confirmLabel ?? "Confirm";
+  const secondary = secondaryLabel ?? cancelLabel;
+  const normalizedVariant = normalizeVariant(variant ?? tone);
+  const accent = variantColor[normalizedVariant] || variantColor.normal;
+  const body = description ?? children;
+  const buttonBase = {
+    height: p.buttonHeight,
+    padding: "0 14px",
+    border: "none",
+    borderRadius:
+      platform === "ios" ? "var(--radius-pill)" : "var(--radius-md)",
+    cursor: "pointer",
+    fontFamily: "var(--font-sans)",
+    fontSize: 14,
+    fontWeight: "var(--fw-bold)",
+    letterSpacing: 0,
+    whiteSpace: "nowrap",
+  };
+
   return (
     <div
       role="presentation"
-      onClick={closeOnScrim ? (e) => { if (e.target === e.currentTarget && dismiss) dismiss(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'var(--scrim-dark)', backdropFilter: 'blur(2px)' }}
+      onClick={
+        closeOnScrim
+          ? (e) => {
+              if (e.target === e.currentTarget) dismiss?.();
+            }
+          : undefined
+      }
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 100,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 24,
+        background: "var(--material-control-dimmer)",
+        backdropFilter: "blur(1px)",
+      }}
     >
       <div
         role="dialog"
         aria-modal="true"
-        aria-label={typeof title === 'string' ? title : undefined}
-        style={{ width: '100%', maxWidth: 420, background: 'var(--bw-white)', borderRadius: 'var(--radius-3xl)', boxShadow: 'var(--shadow-xl)', padding: '28px 28px 24px', fontFamily: 'var(--font-sans)', ...style }}
+        aria-label={typeof title === "string" ? title : undefined}
+        style={{
+          width: "100%",
+          maxWidth: p.maxWidth,
+          background: "var(--bw-white)",
+          borderRadius: p.radius,
+          boxShadow: "var(--shadow-xl)",
+          padding: p.padding,
+          fontFamily: "var(--font-sans)",
+          ...style,
+        }}
         {...rest}
       >
-        {title != null && <div style={{ fontSize: 20, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-normal)', marginBottom: 10 }}>{title}</div>}
-        {children != null && <div style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 24 }}>
-          {actions != null ? actions : (
+        {heading && title != null && (
+          <div
+            style={{
+              fontSize: 17,
+              fontWeight: "var(--fw-extra)",
+              letterSpacing: 0,
+              color: "var(--label-normal)",
+              marginBottom: 8,
+            }}
+          >
+            {title}
+          </div>
+        )}
+        {body != null && (
+          <div
+            style={{
+              fontSize: 14,
+              lineHeight: 1.55,
+              color: "var(--label-neutral)",
+              wordBreak: "keep-all",
+            }}
+          >
+            {body}
+          </div>
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: p.footer,
+            gap: 8,
+            marginTop: 20,
+          }}
+        >
+          {actions != null ? (
+            actions
+          ) : (
             <React.Fragment>
-              {cancelLabel && <button type="button" style={cancelStyle} onClick={onCancel || dismiss}>{cancelLabel}</button>}
-              <button type="button" style={confirmStyle} onClick={onConfirm || dismiss}>{confirmLabel}</button>
+              {secondary && (
+                <button
+                  type="button"
+                  style={{
+                    ...buttonBase,
+                    color: "var(--label-normal)",
+                    background:
+                      platform === "ios" ? "var(--fill-normal)" : "transparent",
+                  }}
+                  onClick={onCancel || dismiss}
+                >
+                  {secondary}
+                </button>
+              )}
+              <button
+                type="button"
+                style={{
+                  ...buttonBase,
+                  color: platform === "ios" ? "var(--text-on-inverse)" : accent,
+                  background: platform === "ios" ? accent : "transparent",
+                }}
+                onClick={onConfirm || dismiss}
+              >
+                {primary}
+              </button>
             </React.Fragment>
           )}
         </div>

@@ -2,7 +2,7 @@ import { ThemeToggle } from '../src/index.js';
 import { ThemeToggleCard as ThemeToggleCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LK Theme Override/Theme/Theme Toggle',
+  title: 'LDS Theme/Theme/Theme Toggle',
   parameters: {
     docs: {
       description: {

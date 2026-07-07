@@ -12,7 +12,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/8 Presentation/Anchored Overlay',
+  title: 'LDS Core/3 Component/8 Presentation/Anchored Overlay',
   parameters: {
     docs: {
       description: {

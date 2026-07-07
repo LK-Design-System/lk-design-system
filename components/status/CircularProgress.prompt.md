@@ -1,8 +1,14 @@
-**CircularProgress** — 값이 정해진 링 게이지(완료율, 품질 점수).
+**CircularProgress** - circular progress indicator.
 
 ```jsx
-<CircularProgress value={72} showValue />
+<CircularProgress value={72} label="Report progress" showValue />
+<CircularProgress indeterminate label="Processing" />
 <CircularProgress value={4} max={5} tone="positive" size={40} />
 ```
 
-- **value / max** — 채움. **size / thickness** — 지오메트리. **tone** `signal · positive · cautionary · negative`. **showValue** — 가운데 퍼센트. 선형 바에는 `ProgressBar`를 쓰세요.
+- **value / max** define determinate progress.
+- **indeterminate** renders an unknown-duration rotating arc and omits `aria-valuenow`.
+- **size / thickness** control the ring geometry.
+- **tone**: `signal`, `positive`, `cautionary`, or `negative`.
+- **label / showValue** provide accessible and visible progress context.
+- Motion respects `prefers-reduced-motion`.

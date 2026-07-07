@@ -3,7 +3,7 @@ import { Icon, Popover, Switch, ViewerToolbar, ViewerToolbarButton } from '../sr
 import { ViewerToolbarCard as ViewerToolbarCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Viewer/Toolbar',
+  title: 'LDS Robotics/Viewer/Toolbar',
   parameters: {
     docs: {
       description: {

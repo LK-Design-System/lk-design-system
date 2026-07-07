@@ -210,7 +210,7 @@ export const ICON_NAMES = ${JSON.stringify(iconNames)};
 const ICON_SVG = ${JSON.stringify(iconSvg)};
 
 /**
- * Icon renders an LDS/WDS glyph. Most icons inherit color through currentColor.
+ * Icon renders an LDS glyph. Most icons inherit color through currentColor.
  */
 export function Icon({ name, size = 24, color, title, style, className, ...rest }) {
   const icon = ICON_SVG[name];
@@ -273,7 +273,7 @@ export default Icon;
 function buildManifest(entries, copiedFiles, rasterFiles) {
   return {
     source: {
-      name: 'Wanted Design System Community / Icon',
+      name: 'Base icon source / Icon',
       importedFrom: toPosix(sourceRoot),
       importedAt: new Date().toISOString().slice(0, 10),
       note: 'SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data.',
@@ -282,7 +282,7 @@ function buildManifest(entries, copiedFiles, rasterFiles) {
       svgImported: copiedFiles.length,
       rasterCopied: rasterFiles.length,
       publicIconNames: entries.length,
-      wdsIconNames: entries.filter((entry) => entry.source !== 'lds-legacy').length,
+      sourceIconNames: entries.filter((entry) => entry.source !== 'lds-legacy').length,
       ldsLegacyFallbacks: entries.filter((entry) => entry.source === 'lds-legacy').length,
     },
     icons: entries.map(({ name, source, sourcePath, assetPath, viewBox }) => ({
@@ -318,7 +318,7 @@ for (const file of svgFiles) {
   copiedSvgFiles.push(assetRel);
   importedEntries.push({
     name,
-    source: folder === 'Color' ? 'wds-color' : folder === 'Navigation' ? 'wds-navigation' : 'wds-normal',
+    source: folder === 'Color' ? 'base-color' : folder === 'Navigation' ? 'base-navigation' : 'base-normal',
     sourcePath: toPosix(rel),
     assetPath: assetRel,
     viewBox: normalized.viewBox,
@@ -345,6 +345,6 @@ await writeFile(path.join(assetsRoot, 'manifest.json'), `${JSON.stringify(manife
 await writeFile(componentFile, buildComponent(entries), 'utf8');
 await writeFile(typesFile, buildTypes(entries), 'utf8');
 
-console.log(`Imported ${copiedSvgFiles.length} WDS SVG icons into assets/icons.`);
+console.log(`Imported ${copiedSvgFiles.length} source SVG icons into assets/icons.`);
 console.log(`Copied ${rasterFiles.length} raster source asset(s).`);
 console.log(`Generated ${entries.length} public Icon names (${legacyEntries.length} LDS legacy fallback(s)).`);

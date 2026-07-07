@@ -4,7 +4,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Overlay/Lightbox',
+  title: 'LDS Product/Overlay/Lightbox',
   parameters: {
     docs: {
       description: {

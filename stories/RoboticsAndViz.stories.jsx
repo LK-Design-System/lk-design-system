@@ -8,7 +8,7 @@ import {
 } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Robotics/Robot State',
+  title: 'LDS Robotics/Robotics/Robot State',
   parameters: {
     docs: {
       description: {

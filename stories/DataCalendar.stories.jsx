@@ -2,7 +2,7 @@ import { Calendar } from '../src/index.js';
 import { CalendarCard as CalendarCardStory } from './DataDisplay.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Data/Calendar',
+  title: 'LDS Product/Data/Calendar',
   parameters: {
     docs: {
       description: {

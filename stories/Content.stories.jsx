@@ -8,7 +8,7 @@ import {
 import { SourceTagCard as SourceTagCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/4 Content/Text',
+  title: 'LDS Core/3 Component/4 Content/Text',
   parameters: {
     docs: {
       description: {

@@ -1,13 +1,27 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface ChipProps extends React.HTMLAttributes<HTMLElement> {
-  /** 렌더 요소 — "span"(기본) 또는 링크 칩은 "a". @default "span" */
+  /** Render element. Use "a" for linked chips. @default "span" */
   as?: React.ElementType;
-  /** 고정/선택 상태(시그널 잉크 보더 + 틴트). @default false */
+  /** chip size mapped from xsmall/small/medium/large. @default "md" */
+  size?: "xs" | "sm" | "md" | "lg" | "xsmall" | "small" | "medium" | "large";
+  /** chip visual variant mapped through LK theme tokens. @default "default" */
+  variant?: "default" | "solid" | "outlined";
+  /** Selected or pinned chip state. @default false */
   selected?: boolean;
+  /** Active alias. @default false */
+  active?: boolean;
+  /** Disable pointer activation and show unavailable styling. @default false */
+  disabled?: boolean;
+  /** Disable alias. @default false */
+  disable?: boolean;
+  /** Optional leading icon content. */
+  leading?: React.ReactNode;
+  /** Optional thumbnail content. Takes precedence over leading. */
+  thumbnail?: React.ReactNode;
   href?: string;
   children?: React.ReactNode;
 }
 
-/** 혼합 케이스 키워드 칩 — 화이트 박스, 헤어라인 보더; 호버/선택 시 시그널 잉크로 올라감. */
+/** Action/Chip primitive for compact labels, links, selected tags, and content chips. */
 export function Chip(props: ChipProps): JSX.Element;

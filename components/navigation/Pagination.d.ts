@@ -1,15 +1,24 @@
-import * as React from 'react';
+import * as React from "react";
 
-export interface PaginationProps {
-  /** 현재 페이지(1부터). @default 1 */
+export interface PaginationProps extends React.HTMLAttributes<HTMLElement> {
+  /** Current page, 1-based. @default 1 */
   page?: number;
-  /** 전체 페이지 수. @default 1 */
+  /** Total pages. @default 1 */
   count?: number;
   onChange?: (page: number) => void;
-  /** 현재 페이지 양옆에 보이는 페이지 수. @default 1 */
+  /** Number of sibling pages around the current page. @default 1 */
   siblingCount?: number;
-  style?: React.CSSProperties;
+  /** navigation variant. @default "extended" */
+  variant?: "extended" | "compact" | "minimize";
+  leadingContent?: React.ReactNode;
+  trailingContent?: React.ReactNode;
+  pageSize?: number;
+  pageSizeOptions?: number[];
+  onPageSizeChange?: (pageSize: number) => void;
+  showPageJump?: boolean;
+  pageJumpLabel?: React.ReactNode;
+  showCounter?: boolean;
 }
 
-/** 이전/다음 셰브론과 말줄임 접기가 있는 번호 페이지네이션. */
+/** numbered pagination with extended, compact, and minimize variants plus leading/trailing slots. */
 export function Pagination(props: PaginationProps): JSX.Element;

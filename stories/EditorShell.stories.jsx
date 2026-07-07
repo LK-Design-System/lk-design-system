@@ -1,7 +1,7 @@
 import { EditorShell as EditorShellStory, CanvasEditorShellEditorToolbarHistoryToolbarCard as CanvasEditorShellEditorToolbarHistoryToolbarCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Editor/Canvas Shell',
+  title: 'LDS Robotics/Editor/Canvas Shell',
   parameters: {
     docs: {
       description: {

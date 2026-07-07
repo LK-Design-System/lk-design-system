@@ -1,15 +1,17 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
-  /** 지름(px). @default 24 */
+  /** Diameter in px. @default 24 */
   size?: number;
-  /** 링 두께(px)(기본값 size/10). */
+  /** Ring thickness in px. Defaults to roughly size / 10. */
   thickness?: number;
-  /** 호 색상. @default signal ink */
+  /** Active arc color. @default signal ink */
   color?: string;
-  /** 선택적 끝 라벨. */
+  /** loading variant. @default "circular" */
+  variant?: "circular" | "wanted";
+  /** Optional visible status label. */
   label?: React.ReactNode;
 }
 
-/** 차분한 원형 로딩 인디케이터. */
+/** circular or Wanted loading indicator with reduced-motion handling and optional label. */
 export function Spinner(props: SpinnerProps): JSX.Element;

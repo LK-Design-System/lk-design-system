@@ -11,31 +11,23 @@ const outDir = path.join(root, 'visual-artifacts', 'smoke');
 
 const targets = [
   {
-    name: 'legacy-card',
-    match: { importPath: './stories/LegacyPreviews.stories.jsx', exportName: 'ComponentCards' },
-    query: { selected: 'components/cards/cards-card.card.html' },
-    viewport: { width: 980, height: 520 },
-  },
-  {
-    name: 'legacy-product-card',
-    match: { importPath: './stories/LegacyPreviews.stories.jsx', exportName: 'ComponentCards' },
-    query: { selected: 'components/cards/cards-productcard.card.html' },
-    viewport: { width: 980, height: 640 },
-  },
-  {
-    name: 'legacy-topbar',
-    match: { importPath: './stories/LegacyPreviews.stories.jsx', exportName: 'ComponentCards' },
-    query: { selected: 'components/navigation/topbar.card.html' },
-    viewport: { width: 1120, height: 520 },
-  },
-  {
     name: 'react-card-interactive-dark',
     match: { importPath: './stories/Card.stories.jsx', exportName: 'InteractiveAndDark' },
     viewport: { width: 980, height: 520 },
   },
   {
+    name: 'wds-content-card-patterns',
+    match: { importPath: './stories/Card.stories.jsx', exportName: 'ContentCardPatterns' },
+    viewport: { width: 1180, height: 860 },
+  },
+  {
+    name: 'action-button-matrix',
+    match: { importPath: './stories/Button.stories.jsx', exportName: 'ActionMatrix' },
+    viewport: { width: 1180, height: 860 },
+  },
+  {
     name: 'react-product-content-cards',
-    match: { importPath: './stories/CardsExtended.stories.jsx', exportName: 'ProductAndContentCards' },
+    match: { importPath: './stories/CardsExtended.stories.jsx', exportName: 'ProductCards' },
     viewport: { width: 1120, height: 760 },
   },
   {
@@ -45,17 +37,52 @@ const targets = [
   },
   {
     name: 'react-forms',
-    match: { importPath: './stories/FormsFull.stories.jsx', exportName: 'InputsAndPickers' },
+    match: { importPath: './stories/FormsFull.stories.jsx', exportName: 'TextInputs' },
     viewport: { width: 1120, height: 760 },
   },
   {
+    name: 'wds-textinput-interactions',
+    match: { importPath: './stories/FormsFull.stories.jsx', exportName: 'TextInputInteractionMatrix' },
+    viewport: { width: 1180, height: 920 },
+  },
+  {
+    name: 'wds-control-states',
+    match: { importPath: './stories/FormSelectionControls.stories.jsx', exportName: 'ControlStateMatrix' },
+    viewport: { width: 1180, height: 920 },
+  },
+  {
+    name: 'wds-segmented-control-matrix',
+    match: { importPath: './stories/SelectionSegmentedToggle.stories.jsx', exportName: 'SegmentedControlMatrix' },
+    viewport: { width: 980, height: 760 },
+  },
+  {
+    name: 'wds-menu-patterns',
+    match: { importPath: './stories/NavigationMenus.stories.jsx', exportName: 'MenuPatterns' },
+    viewport: { width: 1180, height: 860 },
+  },
+  {
+    name: 'wds-tooltip-patterns',
+    match: { importPath: './stories/ContentAnnotations.stories.jsx', exportName: 'TooltipPatterns' },
+    viewport: { width: 1180, height: 960 },
+  },
+  {
+    name: 'wds-loading-states',
+    match: { importPath: './stories/StatusLoading.stories.jsx', exportName: 'LoadingStates' },
+    viewport: { width: 1120, height: 860 },
+  },
+  {
+    name: 'wds-alert-platform-variants',
+    match: { importPath: './stories/OverlayFeedback.stories.jsx', exportName: 'AlertPlatformPreview' },
+    viewport: { width: 1120, height: 700 },
+  },
+  {
     name: 'react-overlay-alert',
-    match: { importPath: './stories/Overlay.stories.jsx', exportName: 'AlertOpen' },
+    match: { importPath: './stories/Overlay.stories.jsx', exportName: 'AnchoredOverlays' },
     viewport: { width: 980, height: 720 },
   },
   {
     name: 'react-robotics-viz',
-    match: { importPath: './stories/RoboticsAndViz.stories.jsx', exportName: 'ViewerAndTelemetry' },
+    match: { importPath: './stories/RoboticsAndViz.stories.jsx', exportName: 'RobotState' },
     viewport: { width: 1180, height: 820 },
   },
 ];

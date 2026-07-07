@@ -1,38 +1,310 @@
-import React from 'react';
+import React from "react";
+
+function CheckMark({ variant, checked, disabled }) {
+  if (!variant || variant === "normal") return null;
+  const activeColor = disabled
+    ? "var(--label-disable)"
+    : "var(--lk-accent-ink)";
+  if (variant === "radio") {
+    return (
+      <span
+        aria-hidden="true"
+        style={{
+          width: 14,
+          height: 14,
+          borderRadius: "50%",
+          border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+        }}
+      >
+        {checked && (
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: activeColor,
+            }}
+          />
+        )}
+      </span>
+    );
+  }
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        width: 14,
+        height: 14,
+        borderRadius: 4,
+        border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
+        background: checked ? activeColor : "transparent",
+        color: disabled ? "var(--fill-normal)" : "var(--text-on-inverse)",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+      }}
+    >
+      {checked && (
+        <svg
+          width="11"
+          height="11"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m5 12 4 4 10-10" />
+        </svg>
+      )}
+    </span>
+  );
+}
+
+function normalizeCellPadding(cellPadding) {
+  if (cellPadding === 8 || cellPadding === "8px" || cellPadding === "small")
+    return "8px";
+  return "12px";
+}
+
+function MenuItemButton({
+  item,
+  variant,
+  cellPadding,
+  verticalPadding,
+  onSelect,
+}) {
+  const [hover, setHover] = React.useState(false);
+  const cell = normalizeCellPadding(cellPadding);
+  const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
+  const denseCell = cell === "8px";
+  const denseVertical = vertical === "8px";
+  const disabled = Boolean(item.disabled || item.disable);
+  const checked = Boolean(item.checked || item.active);
+  const active = checked || Boolean(item.active);
+  const description = item.description ?? item.captionContent;
+  const minHeight = description
+    ? denseVertical
+      ? 62
+      : 70
+    : denseVertical
+      ? 40
+      : 48;
+  return (
+    <button
+      type="button"
+      role={
+        variant === "normal"
+          ? "menuitem"
+          : variant === "radio"
+            ? "menuitemradio"
+            : "menuitemcheckbox"
+      }
+      aria-checked={variant === "normal" ? undefined : checked}
+      aria-current={variant === "normal" && active ? true : undefined}
+      disabled={disabled}
+      onClick={() => {
+        if (disabled) return;
+        item.onClick?.();
+        onSelect?.(item);
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        width: "100%",
+        minHeight,
+        display: "flex",
+        alignItems: description ? "flex-start" : "center",
+        gap: 10,
+        padding: `${vertical} ${denseCell ? 8 : 10}px`,
+        border: "none",
+        background:
+          active || (hover && !disabled) ? "var(--fill-normal)" : "transparent",
+        cursor: disabled ? "not-allowed" : "pointer",
+        borderRadius: "var(--radius-md)",
+        textAlign: "left",
+        fontFamily: "var(--font-sans)",
+        fontSize: 14,
+        fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)",
+        letterSpacing: 0,
+        color: item.danger
+          ? "var(--bw-red)"
+          : disabled
+            ? "var(--label-disable)"
+            : "var(--label-normal)",
+        opacity: disabled ? 0.72 : 1,
+      }}
+    >
+      {item.icon || (
+        <CheckMark variant={variant} checked={checked} disabled={disabled} />
+      )}
+      <span style={{ display: "grid", gap: 2, minWidth: 0, flex: 1 }}>
+        <span
+          style={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {item.label}
+        </span>
+        {description && (
+          <span
+            style={{
+              fontSize: 12,
+              color: "var(--label-alternative)",
+              fontWeight: "var(--fw-medium)",
+            }}
+          >
+            {description}
+          </span>
+        )}
+      </span>
+      {item.shortcut && (
+        <span
+          style={{
+            fontSize: 12,
+            color: "var(--label-assistive)",
+            flexShrink: 0,
+          }}
+        >
+          {item.shortcut}
+        </span>
+      )}
+    </button>
+  );
+}
 
 /**
- * LK ROBOTICS — DropdownMenu
- * A trigger that opens a menu popover. `items` are `{ label, icon, onClick,
- * danger, disabled }` or `{ divider: true }`. Closes on outside-click / select.
+ * LK ROBOTICS - DropdownMenu
+ * menu popover with normal/radio/checkbox item variants and optional
+ * action area.
  */
-export function DropdownMenu({ trigger, items = [], align = 'left', style, ...rest }) {
-  const [open, setOpen] = React.useState(false);
+export function DropdownMenu({
+  trigger,
+  items = [],
+  align = "left",
+  variant = "normal",
+  cellPadding = "12px",
+  verticalPadding,
+  menuActionArea = false,
+  action,
+  width = 320,
+  maxHeight,
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  style,
+  ...rest
+}) {
+  const controlled = open !== undefined;
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const visible = controlled ? open : internalOpen;
   const ref = React.useRef(null);
+  const setVisible = (next) => {
+    if (!controlled) setInternalOpen(next);
+    onOpenChange?.(next);
+  };
+
   React.useEffect(() => {
-    if (!open) return undefined;
-    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
+    if (!visible) return undefined;
+    const onDoc = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setVisible(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [visible]);
+
   return (
-    <div ref={ref} style={{ position: 'relative', display: 'inline-block', ...style }} {...rest}>
-      <span onClick={() => setOpen((o) => !o)} style={{ display: 'inline-flex' }}>{trigger}</span>
-      {open && (
-        <div role="menu" style={{ position: 'absolute', top: 'calc(100% + 8px)', [align]: 0, zIndex: 40, minWidth: 184, background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6 }}>
-          {items.map((it, i) => (it.divider ? (
-            <div key={i} style={{ height: 1, background: 'var(--bw-border)', margin: '6px 4px' }} />
-          ) : (
-            <button
-              key={i} type="button" role="menuitem" disabled={it.disabled}
-              onClick={() => { setOpen(false); it.onClick && it.onClick(); }}
-              onMouseEnter={(e) => { if (!it.disabled) e.currentTarget.style.background = 'var(--fill-normal)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', border: 'none', background: 'transparent', cursor: it.disabled ? 'not-allowed' : 'pointer', borderRadius: 'var(--radius-md)', textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 14.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, color: it.danger ? 'var(--bw-red)' : 'var(--label-normal)', opacity: it.disabled ? 0.5 : 1 }}
+    <div
+      ref={ref}
+      style={{ position: "relative", display: "inline-block", ...style }}
+      {...rest}
+    >
+      <span
+        onClick={() => setVisible(!visible)}
+        style={{ display: "inline-flex" }}
+      >
+        {trigger}
+      </span>
+      {visible && (
+        <div
+          role="menu"
+          style={{
+            position: "absolute",
+            top: "calc(100% + 8px)",
+            [align]: 0,
+            zIndex: 40,
+            width,
+            minWidth: width,
+            maxHeight,
+            overflowY: maxHeight ? "auto" : undefined,
+            background: "var(--bw-white)",
+            border: "1px solid var(--bw-border)",
+            borderRadius: "var(--radius-lg)",
+            boxShadow: "var(--shadow-md)",
+            padding: 20,
+            boxSizing: "border-box",
+          }}
+        >
+          {items.map((item, index) =>
+            item.divider ? (
+              <div
+                key={index}
+                role="separator"
+                style={{
+                  height: 1,
+                  background: "var(--bw-border)",
+                  margin: "6px 4px",
+                }}
+              />
+            ) : (
+              <MenuItemButton
+                key={index}
+                item={item}
+                variant={item.variant || variant}
+                cellPadding={cellPadding}
+                verticalPadding={verticalPadding}
+                onSelect={() => setVisible(false)}
+              />
+            ),
+          )}
+          {(menuActionArea || action) && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                padding: "8px 4px 2px",
+                borderTop: "1px solid var(--bw-border)",
+                marginTop: 4,
+              }}
             >
-              {it.icon}
-              <span>{it.label}</span>
-            </button>
-          )))}
+              {action || (
+                <button
+                  type="button"
+                  style={{
+                    height: 28,
+                    padding: "0 10px",
+                    border: "none",
+                    borderRadius: 7,
+                    background: "var(--lk-accent-ink)",
+                    color: "var(--text-on-inverse)",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 12,
+                    fontWeight: "var(--fw-bold)",
+                  }}
+                >
+                  Apply
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

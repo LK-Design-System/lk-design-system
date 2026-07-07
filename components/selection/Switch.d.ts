@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface SwitchProps {
   /** 제어되는 on/off 상태. */
@@ -10,9 +10,22 @@ export interface SwitchProps {
   /** 선택적 끝 라벨. */
   label?: React.ReactNode;
   /** 트랙 크기. @default "md" */
-  size?: 'sm' | 'md';
+  size?: "sm" | "md" | "small" | "medium";
+  /** fixed visual state for evidence matrices. */
+  state?: "unchecked" | "checked" | "off" | "on";
+  /** platform visual variant. @default "normal" */
+  platform?: "normal" | "ios" | "android";
+  interaction?: "normal" | "inactive" | "hovered" | "focused";
+  /** active visual state alias. */
+  active?: boolean;
+  /** focus visual state alias. */
+  focus?: boolean;
   /** 비활성(흐림, 상호작용 불가). @default false */
   disabled?: boolean;
+  /** disabled alias. */
+  disable?: boolean;
+  labelStyle?: React.CSSProperties;
+  style?: React.CSSProperties;
   id?: string;
 }
 

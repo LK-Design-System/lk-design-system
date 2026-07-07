@@ -2,7 +2,7 @@ import { NewsCard } from '../src/index.js';
 import { NewsCardCard as NewsCardCardStory } from './CardsExtended.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/4 Content/News Card',
+  title: 'LDS Core/3 Component/4 Content/News Card',
   parameters: {
     docs: {
       description: {

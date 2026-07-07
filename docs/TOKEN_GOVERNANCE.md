@@ -1,57 +1,123 @@
 # Token governance
 
-토큰은 Figma, Storybook, React 컴포넌트, 정적 HTML 미리보기, AI 작업 지시가 함께 참조하는 source of truth입니다. `tokens/source.json`은 사람이 읽는 문서가 아니라 변경 가능한 제품 계약으로 취급합니다.
+`tokens/source.json` is the source of truth for LK ROBOTICS design tokens.
+Figma Variables, Storybook examples, React components, static preview cards,
+and AI-generated UI must all resolve back to this token contract.
 
 ## Token layers
 
-| Layer | 역할 | 제품 코드 사용 |
+| Layer | Role | Product usage |
 | --- | --- | --- |
-| Primitive | 브랜드 원값, scale, raw effect 값 | 직접 사용 금지. semantic/component 토큰 정의에만 사용 |
-| Semantic | surface, text, border, action, status 같은 의미 | 일반 제품 UI에서 우선 사용 |
-| Component | Button, Input, Card 같은 구현 계약 | 컴포넌트 내부에서 우선 사용 |
-| Runtime CSS | 실제 앱 import 산출물 | `styles.css` 또는 필요한 CSS entry |
+| Primitive | Brand raw values, scales, type, radius, shadow, motion | Only referenced by semantic or component tokens |
+| Semantic | Product meaning such as surface, text, action, status, border, focus | Preferred token layer for general UI |
+| Component | Component-specific contracts such as Button, Input, Card | Preferred inside that component implementation |
+| Runtime CSS | Importable CSS variables and base styles | Shipped through `styles.css` and `tokens/*.css` |
+
+Rules:
+
+- Do not use primitive values directly in components.
+- Prefer role names over visual names, for example `semantic.action.primary`
+  instead of `blue500`.
+- Use modes for density or theme differences rather than inventing unrelated
+  token names.
+- Component tokens must point back to semantic or primitive tokens unless a
+  documented exception exists.
 
 ## Lifecycle
 
-| 상태 | 의미 | 허용 작업 |
+| State | Meaning | Allowed usage |
 | --- | --- | --- |
-| proposed | 실험 또는 후보 토큰 | Storybook prototype에서만 사용 |
-| active | 제품 사용 가능 | public component와 template에서 사용 |
-| deprecated | 대체 토큰이 있는 이전 이름 | migration guide와 함께 1 minor 이상 유지 |
-| removed | 런타임에서 제거 | major 또는 명시된 breaking release에서만 제거 |
+| proposed | Experimental or draft token | Prototype and Storybook exploration only |
+| active | Approved product token | Public components and templates |
+| deprecated | Replaced token that still exists for compatibility | Keep with migration note for at least one minor cycle |
+| removed | No longer available | Remove only in an explicit breaking change |
 
-## Naming rules
-
-- Primitive token은 값의 정체성을 말한다. 예: `primitive.color.signalSteelAzure`.
-- Semantic token은 UI 의도를 말한다. 예: `semantic.action.primary`.
-- Component token은 컴포넌트와 슬롯을 말한다. 예: `component.button.tokens.primaryBg`.
-- 이름은 시각값보다 역할을 우선한다. `blue500`보다 `action.primary`를 선호한다.
-- density나 theme 차이는 같은 의미 토큰의 mode로 표현한다.
+Deprecation notes must state the replacement token, affected components, and
+the planned removal timing.
 
 ## Figma sync contract
 
-Figma 변수와 code token은 같은 계층을 유지해야 합니다.
+Figma Variables and code tokens must stay aligned.
 
-1. Figma에서 primitive, semantic, component collection을 분리한다.
-2. semantic/component token은 primitive alias를 참조한다.
-3. Figma export는 `tokens/source.json`에 반영한다.
-4. CSS runtime은 `tokens/source.json`에서 생성되거나 수동 변경 시 같은 commit에 근거를 남긴다.
-5. token change PR은 affected component list를 포함한다.
+1. Keep Primitive, Semantic, and Component collections separate in Figma.
+2. Semantic and Component variables should alias Primitive variables where
+   Figma supports aliases.
+3. Exported Figma Variables must be normalized into `tokens/source.json`.
+4. Runtime CSS changes must be generated from, or justified against,
+   `tokens/source.json`.
+5. Token change reviews must include affected component and Storybook evidence.
+
+### Figma Variables workflow
+
+Use these Figma collections and modes:
+
+| Collection | Purpose | Examples |
+| --- | --- | --- |
+| Primitive | Brand raw values and scales | `color/brand/navy`, `space/4`, `radius/md` |
+| Semantic | Product meaning | `surface/card`, `text/body`, `action/primary`, `status/danger` |
+| Component | Component contracts | `button/primary/bg`, `input/border/focus`, `card/shadow/md` |
+
+Supported modes are `light`, `dark`, and `auto`. Use `auto` only as
+documentation when the tool cannot directly resolve OS mode.
+
+Figma names must map predictably:
+
+| Figma | JSON | CSS |
+| --- | --- | --- |
+| `primitive/color/brand/navy` | `primitive.color.brandNavy` | `--bw-ink` |
+| `semantic/action/primary` | `semantic.action.primary` | `--color-primary` |
+| `component/button/primary/bg` | `component.button.tokens.primaryBg` | `--component-button-primary-bg` |
+| `component/input/border/focus` | `component.input.tokens.borderColorFocus` | `--component-input-border-color-focus` |
+| `component/card/shadow/md` | `component.card.tokens.shadowMd` | `--component-card-shadow-md` |
+
+Export flow:
+
+1. Designers update reviewed Figma Variables.
+2. Export through a reviewed plugin or Figma API script.
+3. Normalize the export into the `tokens/source.json` structure.
+4. Regenerate or update runtime CSS under `tokens/`.
+5. Run `npm run check:tokens` and the relevant component checks.
+
+Import flow:
+
+1. Start from `tokens/source.json`, not generated CSS.
+2. Preserve Primitive, Semantic, and Component boundaries.
+3. Preserve light/dark modes.
+4. Preserve aliases wherever Figma supports them.
+5. Validate visual impact in Storybook before replacing shared Variables.
+
+Review checklist:
+
+- Raw values belong first in Primitive tokens.
+- Product roles are expressed as Semantic tokens.
+- Component-only values belong under Component tokens.
+- Component CSS must not introduce untracked hex, rgba, shadow, radius, or
+  control-height decisions.
+- Affected Storybook stories show the token impact.
+- `npm run check:tokens` passes.
+
+Automation backlog:
+
+- Figma Variables export script or documented plugin preset
+- `tokens/source.json` to CSS transformer
+- Generated CSS versus committed CSS drift check
+- Token-change report for reviews
 
 ## Change impact levels
 
-| Level | 예시 | 요구 사항 |
+| Level | Example | Requirement |
 | --- | --- | --- |
-| Patch | description, alias metadata 수정 | token check 통과 |
-| Minor | 새 semantic/component token 추가 | Storybook 사용 예시 추가 |
-| Minor with migration | token deprecation | 대체 토큰과 migration note |
-| Major | active token 제거, 의미 변경 | migration guide와 visual diff |
+| Patch | Description or alias metadata change | Token check passes |
+| Minor | New semantic or component token | Storybook usage evidence |
+| Minor with migration | Token deprecation | Replacement token and migration note |
+| Major | Active token removal or role change | Migration guide and visual diff |
 
 ## Release gate
 
-- `pnpm run check:tokens`가 통과해야 한다.
-- component token 변경은 관련 Storybook story를 확인한다.
-- color/status token 변경은 light/dark 또는 surface contrast를 검토한다.
-- removed token은 deprecation 기간과 migration 문서를 가진다.
-- `docs/FIGMA_TOKEN_WORKFLOW.md`와 이 문서가 충돌하면 이 governance 문서를 우선하고 workflow 문서를 갱신한다.
-
+- `npm run check:tokens` must pass.
+- Component token changes must be verified in the relevant Storybook story.
+- Color and status token changes must include light/dark or surface contrast
+  review.
+- Removed tokens must have a deprecation period and migration note.
+- Figma Variables workflow changes are updated in this document, not in a
+  separate Markdown file.

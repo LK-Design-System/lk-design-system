@@ -1,14 +1,36 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface ContentBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  /** 상태 톤. @default "signal" */
-  tone?: 'signal' | 'navy' | 'neutral' | 'positive' | 'cautionary' | 'negative';
-  /** 웨이트. @default "soft" */
-  variant?: 'solid' | 'soft' | 'outline';
-  /** @default "md" */
-  size?: 'sm' | 'md' | 'lg';
+  /** Legacy LDS tone. Prefer `color="neutral" | "accent"` for parity. */
+  tone?:
+    | "signal"
+    | "accent"
+    | "navy"
+    | "neutral"
+    | "positive"
+    | "cautionary"
+    | "warning"
+    | "negative";
+  /** color axis. @default "neutral" */
+  color?: "neutral" | "accent";
+  /** visual variant. `soft` and `outline` are legacy aliases. @default "default" */
+  variant?: "solid" | "default" | "outlined" | "soft" | "outline";
+  /** size axis. `sm`, `md`, and `lg` are legacy aliases. @default "small" */
+  size?: "xsmall" | "xs" | "small" | "sm" | "medium" | "md" | "lg";
+  /** Icon slot alias for the leading icon by default. */
+  icon?: React.ReactNode;
+  /** Places `icon` before or after text. @default "start" */
+  iconPosition?: "start" | "end";
+  /** Explicit leading slot. */
+  leading?: React.ReactNode;
+  /** Explicit trailing slot. */
+  trailing?: React.ReactNode;
+  /** Custom accent background for `customize = accentBackgroundColor`. */
+  accentBackgroundColor?: string;
+  /** Custom accent text/icon color for `customize = accentContentColor`. */
+  accentContentColor?: string;
   children?: React.ReactNode;
 }
 
-/** 콘텐츠에 붙는 작은 사각 라벨(NEW, 즉시지원). */
+/** Content Badge for short content state or attribute labels. */
 export function ContentBadge(props: ContentBadgeProps): JSX.Element;

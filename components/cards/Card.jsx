@@ -1,4 +1,44 @@
 import React from 'react';
+import { Skeleton } from '../status/Skeleton.jsx';
+
+function SaveButton({ saved = false, onClick }) {
+  return (
+    <button
+      type="button"
+      aria-pressed={saved}
+      aria-label={saved ? 'remove saved item' : 'save item'}
+      onClick={onClick}
+      style={{
+        width: 32,
+        height: 32,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid var(--bw-border)',
+        borderRadius: 'var(--radius-md)',
+        background: saved ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)',
+        color: saved ? 'var(--lk-accent-ink)' : 'var(--label-alternative)',
+        cursor: 'pointer',
+        flexShrink: 0,
+      }}
+    >
+      <svg width="17" height="17" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+      </svg>
+    </button>
+  );
+}
+
+function StructuredSkeleton({ compact }) {
+  return (
+    <div style={{ display: 'grid', gap: compact ? 10 : 12 }}>
+      <Skeleton variant="rect" height={compact ? 132 : 156} radius={12} />
+      <Skeleton variant="text" length="50%" />
+      <Skeleton variant="text" length="82%" />
+      <Skeleton variant="text" length="64%" />
+    </div>
+  );
+}
 
 /**
  * LK ROBOTICS — Card
@@ -12,6 +52,21 @@ export function Card({
   interactive = false,
   dark = false,
   padding,
+  platform = 'desktop',
+  skeleton = false,
+  save = false,
+  saved = false,
+  onSave,
+  thumbnail,
+  topContent,
+  leadingContent,
+  trailingContent,
+  title,
+  description,
+  caption,
+  subCaption,
+  bottomContent,
+  footer,
   style,
   onMouseEnter,
   onMouseLeave,
@@ -24,6 +79,37 @@ export function Card({
     lg: 'var(--component-card-shadow-lg)',
   };
   const [hover, setHover] = React.useState(false);
+  const compact = platform === 'mobile';
+  const structured = skeleton || save || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || bottomContent != null || footer != null;
+  const resolvedPadding = padding != null ? padding : compact ? 12 : 'var(--component-card-padding)';
+  const structuredContent = skeleton ? (
+    <StructuredSkeleton compact={compact} />
+  ) : (
+    <div style={{ display: 'grid', gap: compact ? 10 : 12 }}>
+      {(topContent != null || save) && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+          <div style={{ minWidth: 0 }}>{topContent}</div>
+          {save && <SaveButton saved={saved} onClick={onSave} />}
+        </div>
+      )}
+      {thumbnail != null && <div>{thumbnail}</div>}
+      {(leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null) && (
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+          {leadingContent != null && <div style={{ flexShrink: 0 }}>{leadingContent}</div>}
+          <div style={{ display: 'grid', gap: 4, minWidth: 0, flex: 1 }}>
+            {caption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--label-alternative)', fontWeight: 'var(--fw-semibold)' }}>{caption}</div>}
+            {title != null && <div style={{ fontSize: compact ? 15 : 16, lineHeight: 1.4, color: dark ? 'var(--text-on-inverse)' : 'var(--label-strong)', fontWeight: 'var(--fw-bold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
+            {description != null && <div style={{ fontSize: 13, lineHeight: 1.5, color: dark ? 'var(--inverse-label-neutral)' : 'var(--label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
+            {subCaption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--label-assistive)' }}>{subCaption}</div>}
+          </div>
+          {trailingContent != null && <div style={{ flexShrink: 0 }}>{trailingContent}</div>}
+        </div>
+      )}
+      {children}
+      {bottomContent != null && <div>{bottomContent}</div>}
+      {footer != null && <div>{footer}</div>}
+    </div>
+  );
   return (
     <div
       onMouseEnter={(e) => { if (interactive) setHover(true); onMouseEnter && onMouseEnter(e); }}
@@ -36,12 +122,13 @@ export function Card({
         boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[elevation],
         transform: interactive && hover ? 'var(--component-card-hover-transform)' : 'none',
         transition: 'var(--component-card-transition)',
-        padding: padding != null ? padding : 'var(--component-card-padding)',
+        padding: resolvedPadding,
+        maxWidth: compact ? 320 : undefined,
         ...style,
       }}
       {...rest}
     >
-      {children}
+      {structured ? structuredContent : children}
     </div>
   );
 }

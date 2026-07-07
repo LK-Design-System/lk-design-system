@@ -26,9 +26,9 @@ function relFromReport(filePath) {
   return path.relative(inventoryDir, path.join(root, filePath)).replaceAll('\\', '/');
 }
 
-function storybookRelPath(storybookPath) {
-  if (!storybookPath) return '';
-  return `../../${storybookPath}`;
+function artifactRelPath(artifactPath) {
+  if (!artifactPath) return '';
+  return `../../${artifactPath}`;
 }
 
 async function assertFile(filePath, label) {
@@ -41,7 +41,7 @@ async function assertFile(filePath, label) {
 
 function renderStoryCard(story, screenshot) {
   const isPrimary = story.primary ? '<em>Primary</em>' : '';
-  const storyLink = storybookRelPath(story.storyPath);
+  const storyLink = artifactRelPath(story.storyPath);
   return `
     <figure class="story${story.primary ? ' primary' : ''}">
       <figcaption>
@@ -57,8 +57,8 @@ function renderStoryCard(story, screenshot) {
 
 function renderPair(pair, legacyScreenshot, primaryScreenshot, reactScreenshots) {
   const anchorId = (pair.reviewAnchor || '').replace(/^#/, '');
-  const legacyLink = storybookRelPath(pair.legacyStoryPath);
-  const primaryLink = storybookRelPath(pair.primaryStoryPath);
+  const legacyLink = artifactRelPath(pair.legacyStoryPath);
+  const primaryLink = artifactRelPath(pair.primaryStoryPath);
   return `
     <section class="pair" id="${escapeHtml(anchorId)}">
       <header>
@@ -192,7 +192,7 @@ async function main() {
     const coverage = new Set(pair.storyBlockCoverage || []);
     const coverageGaps = pair.exports.filter((name) => !coverage.has(name));
     if (coverageGaps.length > 0) failures.push(`${pair.card}: missing Storybook export block coverage for ${coverageGaps.join(', ')}`);
-    if (!pair.legacyStoryPath) failures.push(`${pair.card}: missing original preview Storybook path`);
+    if (!pair.legacyStoryPath) failures.push(`${pair.card}: missing original preview source path`);
     if (!pair.primaryStoryPath) failures.push(`${pair.card}: missing primary React story Storybook path`);
     if (!pair.reviewAnchor) failures.push(`${pair.card}: missing review anchor`);
     if (pair.primaryStory?.id && !reactById.has(pair.primaryStory.id)) failures.push(`${pair.card}: primary story has no screenshot (${pair.primaryStory.id})`);

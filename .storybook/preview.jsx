@@ -78,12 +78,11 @@ export const parameters = {
   options: {
     storySort: {
       order: [
-        'WDS Core',
+        'LDS Core',
         ['0 Foundation', '1 Theme', '2 Element', '3 Component'],
-        'LK Theme Override',
-        'LK Product Extension',
-        'LK Robotics Extension',
-        'Documents',
+        'LDS Theme',
+        'LDS Product',
+        'LDS Robotics',
       ],
     },
   },

@@ -1,12 +1,9 @@
-**DropdownMenu** — 메뉴 팝오버를 여는 트리거.
+**DropdownMenu** - WDS anchored menu popover.
 
 ```jsx
-<DropdownMenu align="right" trigger={<IconButton variant="ghost" label="more"><Icon name="more-vertical" /></IconButton>}
-  items={[
-    { label: '내보내기', icon: <Icon name="download" size={18} />, onClick: exp },
-    { divider: true },
-    { label: '삭제', danger: true, onClick: del },
-  ]} />
+<DropdownMenu trigger={<Button>Open</Button>} items={[{ label: 'Copy' }, { divider: true }, { label: 'Delete', danger: true }]} />
+<DropdownMenu variant="checkbox" menuActionArea items={[{ label: 'Option', checked: true }]} />
 ```
 
-- **trigger** — 토글 요소. **items** — `{ label, icon, onClick, danger, disabled }` 또는 `{ divider: true }`. **align** `left · right`.
+- Use for trigger-bound command menus. Use `Menubar` for a horizontal application menu.
+- WDS axes: `variant` (`normal`, `radio`, `checkbox`), `menuActionArea`, and scroll via `maxHeight`.

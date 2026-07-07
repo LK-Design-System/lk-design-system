@@ -5,11 +5,11 @@ import {
 import { StepsCard as StepsCardStory } from './NavigationFull.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/6 Navigation/Steps and Wizard',
+  title: 'LDS Core/3 Component/6 Navigation/Steps and Wizard',
   parameters: {
     docs: {
       description: {
-        component: '선형 절차와 단계 진행을 안내하는 Steps, Wizard 패턴입니다.',
+        component: 'Step and wizard navigation patterns for linear flows.',
       },
     },
   },
@@ -18,11 +18,11 @@ const meta = {
 export default meta;
 
 export const StepsAndWizard = {
-  name: '스텝과 위저드',
+  name: 'Steps and wizard',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
-      <Steps steps={['작성', '검토', '게시']} current={1} />
-      <Wizard steps={['작성', '검토', '게시']} defaultCurrent={1} />
+      <Steps steps={['Draft', 'Review', 'Publish']} current={1} />
+      <Wizard steps={['Draft', 'Review', 'Publish']} defaultCurrent={1} />
     </main>
   ),
 };

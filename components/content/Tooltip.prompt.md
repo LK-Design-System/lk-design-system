@@ -1,7 +1,9 @@
-**Tooltip** — 호버/포커스 시 뜨는 작은 네이비 말풍선. 아무 트리거나 감싸세요.
+**Tooltip** - WDS hover/focus hint with arrow and optional shortcut.
 
 ```jsx
-<Tooltip content="EO/IR 영상처리" placement="top"><IconButton label="info">…</IconButton></Tooltip>
+<Tooltip content="More info" position="top"><IconButton label="Info">...</IconButton></Tooltip>
+<Tooltip content="Save" shortcut="⌘S" size="small" position="right" />
 ```
 
-- **content** — 짧게, 한 줄. **placement** — `top | bottom | left | right`. 차분한 페이드 인/아웃. 지속형 콜아웃에는 `Bubble`을 쓰세요.
+- Keep content short. Use `Bubble` for persistent annotation text.
+- WDS axes: `size`, `position`, arrow `align`, and `shortcut`.

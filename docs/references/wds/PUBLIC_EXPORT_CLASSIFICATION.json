@@ -18,30 +18,61 @@
       "name": "Brand theme override",
       "layer": "lk-theme-override",
       "classification": "theme-override",
-      "storyEvidence": ["stories/Brand.stories.jsx", "stories/BrandPlatform.stories.jsx"],
-      "exports": ["BRAND_LOGO_NAMES", "BrandLogo", "Lockup"]
+      "storyEvidence": [
+        "stories/Brand.stories.jsx",
+        "stories/BrandPlatform.stories.jsx"
+      ],
+      "exports": [
+        "BRAND_LOGO_NAMES",
+        "BrandLogo",
+        "Lockup"
+      ]
     },
     {
       "name": "Theme toggle override",
       "layer": "lk-theme-override",
       "classification": "theme-override",
-      "storyEvidence": ["stories/SelectionThemeToggle.stories.jsx"],
-      "exports": ["ThemeToggle"]
+      "storyEvidence": [
+        "stories/SelectionThemeToggle.stories.jsx"
+      ],
+      "exports": [
+        "ThemeToggle"
+      ]
     },
     {
       "name": "WDS action controls",
       "layer": "wds-core",
       "classification": "direct-wds",
       "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
-      "storyEvidence": ["stories/ActionArea.stories.jsx", "stories/Button.stories.jsx", "stories/ButtonsExtended.stories.jsx"],
-      "exports": ["ActionArea", "Button", "ButtonGroup", "Fab", "IconButton", "SplitButton", "TextButton", "ToggleIcon"]
+      "storyEvidence": [
+        "stories/ActionArea.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ButtonsExtended.stories.jsx"
+      ],
+      "exports": [
+        "ActionArea",
+        "Button",
+        "ButtonGroup",
+        "Fab",
+        "IconButton",
+        "SplitButton",
+        "TextButton",
+        "ToggleIcon"
+      ]
     },
     {
       "name": "Action product extensions",
       "layer": "lk-product-extension",
       "classification": "product-extension",
-      "storyEvidence": ["stories/ButtonsExtended.stories.jsx", "stories/SocialButtons.stories.jsx"],
-      "exports": ["CopyButton", "Link", "SocialButton"]
+      "storyEvidence": [
+        "stories/ButtonsExtended.stories.jsx",
+        "stories/SocialButtons.stories.jsx"
+      ],
+      "exports": [
+        "CopyButton",
+        "Link",
+        "SocialButton"
+      ]
     },
     {
       "name": "WDS cards and content containers",
@@ -55,14 +86,28 @@
         "stories/CardSpecs.stories.jsx",
         "stories/SelectionStatus.stories.jsx"
       ],
-      "exports": ["Card", "ChecklistItem", "FeatureCard", "NewsCard", "SpecRow", "ChoiceCard"]
+      "exports": [
+        "Card",
+        "ChecklistItem",
+        "FeatureCard",
+        "NewsCard",
+        "SpecRow",
+        "ChoiceCard"
+      ]
     },
     {
       "name": "Product cards and dashboard metrics",
       "layer": "lk-product-extension",
       "classification": "product-extension",
-      "storyEvidence": ["stories/CardStats.stories.jsx", "stories/CardsExtended.stories.jsx"],
-      "exports": ["MetricCard", "ProductCard", "Stat"]
+      "storyEvidence": [
+        "stories/CardStats.stories.jsx",
+        "stories/CardsExtended.stories.jsx"
+      ],
+      "exports": [
+        "MetricCard",
+        "ProductCard",
+        "Stat"
+      ]
     },
     {
       "name": "WDS text, list, media, and disclosure content",
@@ -100,8 +145,12 @@
       "name": "Writing editor extension",
       "layer": "lk-product-extension",
       "classification": "product-extension",
-      "storyEvidence": ["stories/ContentEditor.stories.jsx"],
-      "exports": ["ContentEditor"]
+      "storyEvidence": [
+        "stories/ContentEditor.stories.jsx"
+      ],
+      "exports": [
+        "ContentEditor"
+      ]
     },
     {
       "name": "Data visualization and data workflows",
@@ -137,14 +186,26 @@
         "stories/FeedbackBadgesTags.stories.jsx",
         "stories/FeedbackNotifications.stories.jsx"
       ],
-      "exports": ["Avatar", "AvatarGroup", "Badge", "Chip", "Notification", "PushBadge", "Tag"]
+      "exports": [
+        "Avatar",
+        "AvatarGroup",
+        "Badge",
+        "Chip",
+        "Notification",
+        "PushBadge",
+        "Tag"
+      ]
     },
     {
       "name": "Rating extension",
       "layer": "lk-product-extension",
       "classification": "product-extension",
-      "storyEvidence": ["stories/FeedbackRating.stories.jsx"],
-      "exports": ["Rating"]
+      "storyEvidence": [
+        "stories/FeedbackRating.stories.jsx"
+      ],
+      "exports": [
+        "Rating"
+      ]
     },
     {
       "name": "WDS text input and select controls",
@@ -153,6 +214,7 @@
       "wdsFamily": "Textinput/Textfield",
       "storyEvidence": [
         "stories/FormsFull.stories.jsx",
+        "stories/FormSelectionControls.stories.jsx",
         "stories/FormSearchAutocomplete.stories.jsx"
       ],
       "exports": [
@@ -172,8 +234,18 @@
       "name": "Form product extensions",
       "layer": "lk-product-extension",
       "classification": "product-extension",
-      "storyEvidence": ["stories/FormDateTime.stories.jsx", "stories/FormsFull.stories.jsx"],
-      "exports": ["ColorSwatch", "DatePicker", "FileUpload", "NumberField", "PinInput", "TimePicker"]
+      "storyEvidence": [
+        "stories/FormDateTime.stories.jsx",
+        "stories/FormsFull.stories.jsx"
+      ],
+      "exports": [
+        "ColorSwatch",
+        "DatePicker",
+        "FileUpload",
+        "NumberField",
+        "PinInput",
+        "TimePicker"
+      ]
     },
     {
       "name": "WDS selection controls",
@@ -205,8 +277,13 @@
       "name": "WDS icon foundation",
       "layer": "wds-core",
       "classification": "direct-wds",
-      "storyEvidence": ["stories/Iconography.stories.jsx"],
-      "exports": ["Icon", "ICON_NAMES"]
+      "storyEvidence": [
+        "stories/Iconography.stories.jsx"
+      ],
+      "exports": [
+        "Icon",
+        "ICON_NAMES"
+      ]
     },
     {
       "name": "WDS layout primitives",
@@ -242,13 +319,18 @@
       "name": "Page header extension",
       "layer": "lk-product-extension",
       "classification": "product-extension",
-      "storyEvidence": ["stories/LayoutPageHeader.stories.jsx"],
-      "exports": ["PageHeader"]
+      "storyEvidence": [
+        "stories/LayoutPageHeader.stories.jsx"
+      ],
+      "exports": [
+        "PageHeader"
+      ]
     },
     {
       "name": "WDS navigation",
       "layer": "wds-core",
       "classification": "direct-wds",
+      "wdsFamily": "Navigation/Category, Tab, Page Indicator, Pagination",
       "storyEvidence": [
         "stories/Navigation.stories.jsx",
         "stories/NavigationCompact.stories.jsx",
@@ -262,9 +344,11 @@
         "Anchor",
         "BottomNav",
         "Breadcrumb",
+        "Category",
         "Footer",
         "Menubar",
         "NavRail",
+        "PageIndicator",
         "Pagination",
         "SideNav",
         "Steps",
@@ -280,8 +364,12 @@
       "name": "Navigation product extension",
       "layer": "lk-product-extension",
       "classification": "product-extension",
-      "storyEvidence": ["stories/NavigationCompact.stories.jsx"],
-      "exports": ["FloorSelector"]
+      "storyEvidence": [
+        "stories/NavigationCompact.stories.jsx"
+      ],
+      "exports": [
+        "FloorSelector"
+      ]
     },
     {
       "name": "WDS overlays and presentation",
@@ -289,6 +377,8 @@
       "classification": "wds-adjacent",
       "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
       "storyEvidence": [
+        "stories/ContentAnnotations.stories.jsx",
+        "stories/NavigationMenus.stories.jsx",
         "stories/Overlay.stories.jsx",
         "stories/OverlayConfirmDialog.stories.jsx",
         "stories/OverlayDimmer.stories.jsx",
@@ -304,6 +394,7 @@
         "HoverCard",
         "Modal",
         "Popover",
+        "Snackbar",
         "Toast",
         "ToastStack"
       ]
@@ -317,7 +408,12 @@
         "stories/OverlayDrawerSheet.stories.jsx",
         "stories/OverlayLightbox.stories.jsx"
       ],
-      "exports": ["CommandPalette", "Drawer", "Lightbox", "Sheet"]
+      "exports": [
+        "CommandPalette",
+        "Drawer",
+        "Lightbox",
+        "Sheet"
+      ]
     },
     {
       "name": "WDS status and loading",

@@ -1,28 +1,128 @@
-import React from 'react';
+import React from "react";
+import { Avatar } from "./Avatar";
+
+const AVATAR_GROUP_SIZES = {
+  xsmall: 24,
+  default: 32,
+  small: 40,
+};
+
+function resolveGroupSize(size) {
+  return typeof size === "number"
+    ? size
+    : AVATAR_GROUP_SIZES[size] || AVATAR_GROUP_SIZES.default;
+}
 
 /**
  * LK ROBOTICS — AvatarGroup
- * Overlapping avatars with a white ring; collapses past `max` into a navy
- * "+N" chip. Pass `items` as `{ src, name }` — a photo, else the name's first
- * letter on a soft cyan tile.
+ * Overlapping avatars with a white ring. Preserves the legacy "+N" overflow
+ * counter and also supports the Avatar Group trailingContent slot.
  */
-export function AvatarGroup({ items = [], max = 4, size = 36, style, ...rest }) {
+export function AvatarGroup({
+  items = [],
+  max = 4,
+  size = "default",
+  variant = "person",
+  placeholder = "initials",
+  trailingContent = false,
+  trailingLabel,
+  style,
+  ...rest
+}) {
+  const resolvedSize = resolveGroupSize(size);
   const shown = items.slice(0, max);
-  const extra = items.length - shown.length;
-  const overlap = -Math.round(size * 0.3);
+  const extra = Math.max(0, items.length - shown.length);
+  const overlap = -Math.round(resolvedSize * 0.3);
   const base = {
-    width: size, height: size, borderRadius: '50%', border: '2px solid var(--bw-white)', boxSizing: 'border-box',
-    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0,
-    fontFamily: 'var(--font-sans)', fontSize: Math.round(size * 0.36), fontWeight: 'var(--fw-bold)',
+    width: resolvedSize,
+    height: resolvedSize,
+    borderRadius: "50%",
+    border: "2px solid var(--bw-white)",
+    boxSizing: "border-box",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    flexShrink: 0,
+    fontFamily: "var(--font-sans)",
+    fontSize: Math.round(resolvedSize * 0.36),
+    fontWeight: "var(--fw-bold)",
+  };
+  const renderTrailingContent = () => {
+    if (trailingContent === false || trailingContent == null) return null;
+    if (React.isValidElement(trailingContent)) return trailingContent;
+    const label =
+      trailingContent === true
+        ? (trailingLabel ?? `외 ${extra}명`)
+        : trailingContent;
+    return (
+      <span
+        style={{
+          minHeight: Math.max(24, Math.round(resolvedSize * 0.72)),
+          paddingInline: "var(--space-2)",
+          borderRadius: "var(--radius-pill)",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "var(--surface-subtle)",
+          color: "var(--label-alternative)",
+          fontSize: 12,
+          fontWeight: "var(--fw-semibold)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {label}
+      </span>
+    );
   };
   return (
-    <div style={{ display: 'inline-flex', alignItems: 'center', ...style }} {...rest}>
-      {shown.map((it, i) => (
-        <span key={i} title={it.name} style={{ ...base, marginLeft: i ? overlap : 0, background: it.src ? 'var(--bw-mist)' : 'var(--lk-accent-tint-2)', color: 'var(--lk-accent-ink)', zIndex: i }}>
-          {it.src ? <img src={it.src} alt={it.name || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : (it.name ? String(it.name).slice(0, 1) : '')}
-        </span>
-      ))}
-      {extra > 0 && <span style={{ ...base, marginLeft: overlap, background: 'var(--surface-inverse)', color: 'var(--text-on-inverse)', zIndex: shown.length }}>+{extra}</span>}
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: trailingContent ? "var(--space-2)" : 0,
+        ...style,
+      }}
+      {...rest}
+    >
+      <span style={{ display: "inline-flex", alignItems: "center" }}>
+        {shown.map((it, i) => (
+          <Avatar
+            key={i}
+            src={it.src}
+            name={it.name}
+            alt={it.alt}
+            status={it.status}
+            variant={it.variant ?? variant}
+            placeholder={it.placeholder ?? placeholder}
+            deactivated={it.deactivated}
+            interaction={it.interaction}
+            pushBadge={it.pushBadge}
+            size={resolvedSize}
+            borderColor="var(--bw-white)"
+            borderWeight={2}
+            title={it.name}
+            style={{
+              marginLeft: i ? overlap : 0,
+              zIndex: i,
+            }}
+          />
+        ))}
+        {extra > 0 && !trailingContent && (
+          <span
+            style={{
+              ...base,
+              marginLeft: overlap,
+              background: "var(--surface-inverse)",
+              color: "var(--text-on-inverse)",
+              zIndex: shown.length,
+            }}
+          >
+            +{extra}
+          </span>
+        )}
+      </span>
+      {renderTrailingContent()}
     </div>
   );
 }

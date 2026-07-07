@@ -1,11 +1,11 @@
 import { Divider, MobileSystemBars } from '../src/index.js';
 
 const meta = {
-  title: 'WDS Core/3 Component/1 Layout/Essential and Divider',
+  title: 'LDS Core/3 Component/1 Layout/Essential and Divider',
   parameters: {
     docs: {
       description: {
-        component: 'WDS Layout PDF coverage for Essential mobile system bars and Divider variants.',
+        component: 'Layout coverage for Essential mobile system bars and Divider variants.',
       },
     },
   },
@@ -44,13 +44,13 @@ export const EssentialAndDivider = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1100 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
-          WDS Layout / Essential + Divider
+          Layout / Essential + Divider
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           Layout essentials stay separate from product layout components
         </h1>
         <p style={{ margin: 0, maxWidth: 820, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The WDS Layout PDF defines Essential mobile system bars and Divider variants. LDS maps those to small primitives
+          The layout source defines Essential mobile system bars and Divider variants. LDS maps those to small primitives
           instead of folding them into PageHeader, Grid, or product-only shells.
         </p>
       </header>

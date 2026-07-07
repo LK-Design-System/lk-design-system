@@ -5,7 +5,7 @@ import {
 import { ThumbnailCard as ThumbnailCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/4 Content/Media',
+  title: 'LDS Core/3 Component/4 Content/Media',
   parameters: {
     docs: {
       description: {
@@ -20,9 +20,20 @@ export default meta;
 export const MediaThumbnails = {
   name: '미디어 썸네일',
   render: () => (
-    <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)', maxWidth: 760 }}>
-      <Thumbnail ratio={16 / 9} overlay={<ContentBadge tone="navy">LIVE</ContentBadge>} overlayAlign="top-right" />
-      <Thumbnail ratio={4 / 3} overlay={<ContentBadge tone="positive">READY</ContentBadge>} overlayAlign="bottom-right" />
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 820 }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 'var(--space-3)', alignItems: 'end' }}>
+        {['1/1', '5/4', '4/3', '3/2', '16/10', '1.618/1', '16/9', '21/9', '4/5', '3/4', '2/3', '9/16', '1/2'].map((ratio) => (
+          <div key={ratio} style={{ display: 'grid', gap: 'var(--space-2)' }}>
+            <Thumbnail ratio={ratio} />
+            <ContentBadge size="xsmall">{ratio}</ContentBadge>
+          </div>
+        ))}
+      </section>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
+        <Thumbnail ratio="16/9" overlay={<ContentBadge color="accent">LIVE</ContentBadge>} overlayAlign="top-right" />
+        <Thumbnail ratio="4/3" border overlay={<ContentBadge tone="positive">READY</ContentBadge>} overlayAlign="bottom-right" />
+        <Thumbnail ratio="4/5" radius={false} border overlay={<ContentBadge variant="outlined">NO RADIUS</ContentBadge>} overlayAlign="bottom-left" />
+      </section>
     </main>
   ),
 };

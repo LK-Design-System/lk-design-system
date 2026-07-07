@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
   /** Render as a vertical separator. @default false */
@@ -7,8 +7,8 @@ export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
   label?: React.ReactNode;
   /** Horizontal inset in pixels. @default 0 */
   inset?: number;
-  /** WDS divider visual weight. @default "normal" */
-  variant?: 'normal' | 'thick';
+  /** divider visual weight. @default "normal" */
+  variant?: "normal" | "thick";
 }
 
 export function Divider(props: DividerProps): JSX.Element;

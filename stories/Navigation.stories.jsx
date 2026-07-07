@@ -2,12 +2,12 @@ import React from 'react';
 import { IconButton, Lockup, TopBar, TopBarNavItem } from '../src/index.js';
 
 const meta = {
-  title: 'WDS Core/3 Component/6 Navigation/Top Bar',
+  title: 'LDS Core/3 Component/6 Navigation/Top Bar',
   component: TopBar,
   parameters: {
     docs: {
       description: {
-        component: '브랜드, 중앙 메뉴, 액션 영역을 갖는 TopBar 패턴입니다.',
+        component: 'TopBar navigation patterns with brand, centered navigation, dropdown items, and action controls.',
       },
     },
   },
@@ -16,9 +16,9 @@ const meta = {
 export default meta;
 
 const productMenu = [
-  { label: '문서', href: '#' },
-  { label: '컴포넌트', href: '#' },
-  { label: '토큰', href: '#' },
+  { label: 'Overview', href: '#' },
+  { label: 'Components', href: '#' },
+  { label: 'Tokens', href: '#' },
 ];
 
 const SearchIcon = (
@@ -29,20 +29,20 @@ const SearchIcon = (
 );
 
 export const TopBarDefault = {
-  name: '기본 TopBar',
+  name: 'TopBar default',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-7)', width: 'min(880px, 100%)', minWidth: 0 }}>
       <div data-theme="light" className="theme-light" style={{ position: 'relative', zIndex: 2, width: '100%', minWidth: 0, overflow: 'hidden', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>
         <TopBar
           navAlign="center"
           brand={<Lockup variant="inline" tone="ink" height={22} />}
-          actions={<IconButton variant="ghost" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="Search" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
-          <TopBarNavItem active href="#" menuItems={productMenu}>문서</TopBarNavItem>
-          <TopBarNavItem href="#">컴포넌트</TopBarNavItem>
-          <TopBarNavItem href="#">토큰</TopBarNavItem>
-          <TopBarNavItem href="#">문의</TopBarNavItem>
+          <TopBarNavItem active href="#" menuItems={productMenu}>Overview</TopBarNavItem>
+          <TopBarNavItem href="#">Components</TopBarNavItem>
+          <TopBarNavItem href="#">Tokens</TopBarNavItem>
+          <TopBarNavItem href="#">Support</TopBarNavItem>
         </TopBar>
       </div>
 
@@ -51,13 +51,13 @@ export const TopBarDefault = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="on-dark" label="Search" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
-          <TopBarNavItem active href="#" menuItems={productMenu}>문서</TopBarNavItem>
-          <TopBarNavItem href="#">컴포넌트</TopBarNavItem>
-          <TopBarNavItem href="#">토큰</TopBarNavItem>
-          <TopBarNavItem href="#">문의</TopBarNavItem>
+          <TopBarNavItem active href="#" menuItems={productMenu}>Overview</TopBarNavItem>
+          <TopBarNavItem href="#">Components</TopBarNavItem>
+          <TopBarNavItem href="#">Tokens</TopBarNavItem>
+          <TopBarNavItem href="#">Support</TopBarNavItem>
         </TopBar>
       </div>
     </main>
@@ -73,7 +73,7 @@ const topBarNavStyle = {
   padding: '0 14px',
   fontSize: 14.5,
   fontWeight: 700,
-  letterSpacing: -0.1,
+  letterSpacing: 0,
   textDecoration: 'none',
 };
 
@@ -112,16 +112,16 @@ function TopBarStaticNav({ dark = false }) {
   return (
     <React.Fragment>
       <span style={{ position: 'relative', display: 'inline-flex', alignSelf: 'stretch' }}>
-        <a href="#" style={{ ...topBarNavStyle, color: activeColor, boxShadow: `inset 0 -2.5px 0 ${underline}` }}>문서</a>
+        <a href="#" style={{ ...topBarNavStyle, color: activeColor, boxShadow: `inset 0 -2.5px 0 ${underline}` }}>Overview</a>
         <span style={topBarMenuStyle}>
-          <a href="#" style={itemStyle}>문서</a>
-          <a href="#" style={itemStyle}>컴포넌트</a>
-          <a href="#" style={itemStyle}>토큰</a>
+          <a href="#" style={itemStyle}>Overview</a>
+          <a href="#" style={itemStyle}>Components</a>
+          <a href="#" style={itemStyle}>Tokens</a>
         </span>
       </span>
-      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>컴포넌트</a>
-      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>토큰</a>
-      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>문의</a>
+      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>Components</a>
+      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>Tokens</a>
+      <a href="#" style={{ ...topBarNavStyle, color: idleColor }}>Support</a>
     </React.Fragment>
   );
 }
@@ -135,7 +135,7 @@ export const TopBarCard = {
         <TopBar
           navAlign="center"
           brand={<Lockup variant="inline" tone="ink" height={22} />}
-          actions={<IconButton variant="ghost" label="검색" style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
         >
           <TopBarStaticNav />
         </TopBar>
@@ -145,7 +145,7 @@ export const TopBarCard = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="ghost" label="검색" style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
         >
           <TopBarStaticNav dark />
         </TopBar>

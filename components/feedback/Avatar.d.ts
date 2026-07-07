@@ -1,18 +1,34 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
-  /** 이미지 URL. 생략하면 이니셜로 폴백. */
+  /** Image URL. Falls back when omitted. */
   src?: string;
   alt?: string;
-  /** 폴백 이니셜을 만드는 데 쓰는 이름. */
+  /** Name used for initials and accessible image fallback text. */
   name?: string;
-  /** 픽셀 지름. @default 48 */
-  size?: number;
-  /** 상태 점. */
-  status?: 'online' | 'busy' | 'offline';
-  /** 이미지 위에 겹칠 때의 화이트 헤일로 링. @default false */
+  /** avatar variant. `education` is kept as a backwards-compatible alias for `academy`. @default 'person' */
+  variant?: "person" | "company" | "academy" | "education";
+  /** Avatar diameter in px or size key. size keys map to xsmall 24, small 32, medium/default 40, large 48, xlarge 56. @default 40 */
+  size?:
+    number | "xsmall" | "small" | "default" | "medium" | "large" | "xlarge";
+  /** Optional status dot. Hidden when deactivated is true. */
+  status?: "online" | "busy" | "offline";
+  /** White halo for stacked avatars or image surfaces. @default false */
   ring?: boolean;
+  /** Fallback rendering aligned to avatar resource placeholders. @default 'initials' */
+  placeholder?:
+    boolean | "initials" | "person" | "company" | "academy" | "education";
+  /** Shows the deactivated slash treatment and suppresses the status dot. @default false */
+  deactivated?: boolean;
+  /** Static interaction state for examples and visual parity checks. @default false */
+  interaction?: false | true | "normal" | "hovered" | "focused" | "pressed";
+  /** pushBadge state. `true` renders a dot; string/number renders compact text. @default false */
+  pushBadge?: boolean | string | number;
+  /** Optional customization hook matching the borderColor example. */
+  borderColor?: string;
+  /** Optional customization hook matching the borderWeight example. */
+  borderWeight?: number | string;
 }
 
-/** 상태 점(옵션)이 있는 둥근 사진; 이니셜은 쿨 그레이 틴트로 폴백. */
+/** Round identity image with variants, sizes, placeholders, interaction states, pushBadge, and deactivated treatment. */
 export function Avatar(props: AvatarProps): JSX.Element;

@@ -3,7 +3,7 @@ import { VideoStreamTile } from '../src/index.js';
 import { VideoStreamTileCard as VideoStreamTileCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Viewer/Video Stream',
+  title: 'LDS Robotics/Viewer/Video Stream',
   parameters: {
     docs: {
       description: {

@@ -7,12 +7,12 @@
 
 :root {
   /* ---- Button ---------------------------------------------------------- */
-  --component-button-height-sm: var(--control-h-sm);
-  --component-button-height-md: var(--control-h-lg);
-  --component-button-height-lg: var(--control-h-lg);
-  --component-button-padding-sm: 0 var(--space-5);
-  --component-button-padding-md: 0 26px;
-  --component-button-padding-lg: 0 var(--space-8);
+  --component-button-height-sm: 32px;
+  --component-button-height-md: 40px;
+  --component-button-height-lg: 48px;
+  --component-button-padding-sm: 0 12px;
+  --component-button-padding-md: 0 16px;
+  --component-button-padding-lg: 0 20px;
   --component-button-gap: 9px;
   --component-button-font-size-sm: var(--label1-size);
   --component-button-font-size-md: var(--body1-size);
@@ -22,6 +22,10 @@
   --component-button-radius: var(--radius-md);
   --component-button-icon-size: 18px;
   --component-button-disabled-opacity: 0.45;
+  --component-button-disabled-bg: var(--fill-normal);
+  --component-button-disabled-fg: var(--label-disable);
+  --component-button-disabled-border: var(--border-thin) solid transparent;
+  --component-button-disabled-outlined-border: var(--border-thin) solid var(--line-neutral);
   --component-button-text-hover-opacity: 0.9;
   --component-button-shadow-rest: var(--shadow-xs);
   --component-button-transition: none;
@@ -83,6 +87,39 @@
   --component-toggle-icon-fg-active: var(--component-button-primary-fg);
   --component-toggle-icon-border: var(--border-thin) solid var(--border-subtle);
   --component-toggle-icon-disabled-opacity: var(--component-button-disabled-opacity);
+
+  /* ---- Chip ------------------------------------------------------------ */
+  --component-chip-height-xs: 24px;
+  --component-chip-height-sm: 32px;
+  --component-chip-height-md: 36px;
+  --component-chip-height-lg: 40px;
+  --component-chip-padding-x-xs: 6px;
+  --component-chip-padding-x-sm: var(--space-2);
+  --component-chip-padding-x-md: var(--space-2);
+  --component-chip-padding-x-lg: var(--space-3);
+  --component-chip-gap: var(--space-1);
+  --component-chip-media-size-xs: 16px;
+  --component-chip-media-size-sm: 18px;
+  --component-chip-media-size-md: 20px;
+  --component-chip-media-size-lg: 24px;
+  --component-chip-font-size-xs: var(--caption1-size);
+  --component-chip-font-size-sm: var(--label2-size);
+  --component-chip-font-size-md: var(--label1-size);
+  --component-chip-font-size-lg: var(--body2-size);
+  --component-chip-font-weight: var(--fw-medium);
+  --component-chip-letter-spacing: var(--label1-spacing);
+  --component-chip-radius: var(--radius-8);
+  --component-chip-bg: var(--surface-card);
+  --component-chip-bg-hover: var(--surface-card);
+  --component-chip-bg-selected: var(--lk-accent-tint-2);
+  --component-chip-fg: var(--label-normal);
+  --component-chip-fg-active: var(--lk-accent-ink);
+  --component-chip-border: var(--border-thin) solid var(--border-subtle);
+  --component-chip-border-active: var(--border-thin) solid var(--lk-accent-ink);
+  --component-chip-solid-bg: var(--lk-accent-ink);
+  --component-chip-solid-fg: var(--text-on-signal);
+  --component-chip-solid-border: var(--border-thin) solid transparent;
+  --component-chip-disabled-opacity: var(--component-button-disabled-opacity);
 
   /* ---- Divider --------------------------------------------------------- */
   --component-divider-color: var(--line-neutral);

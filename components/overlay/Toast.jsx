@@ -1,38 +1,170 @@
-import React from 'react';
+import React from "react";
 
-const TT = {
-  info: { c: 'var(--lk-accent-ink)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
-  success: { c: 'var(--bw-green)', d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
-  warning: { c: 'var(--bw-amber)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
-  error: { c: 'var(--bw-red)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
+const ICONS = {
+  normal: {
+    color: "var(--text-on-inverse)",
+    node: <circle cx="12" cy="12" r="8" />,
+  },
+  positive: {
+    color: "var(--bw-green)",
+    node: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="m8.5 12.2 2.2 2.2 4.8-5" />
+      </>
+    ),
+  },
+  cautionary: {
+    color: "var(--bw-amber)",
+    node: (
+      <>
+        <path d="M12 3.8 21 19H3L12 3.8Z" />
+        <path d="M12 9v4" />
+        <path d="M12 16h.01" />
+      </>
+    ),
+  },
+  negative: {
+    color: "var(--bw-red)",
+    node: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v5" />
+        <path d="M12 16h.01" />
+      </>
+    ),
+  },
 };
 
+function normalizeTone(value) {
+  if (value === "success") return "positive";
+  if (value === "warning") return "cautionary";
+  if (value === "error") return "negative";
+  if (value === "info") return "normal";
+  return value || "normal";
+}
+
 /**
- * LK ROBOTICS — Toast
- * A floating transient message — a LIGHT elevated card (hairline + soft shadow),
- * a tonal leading icon, an optional action link and close. Matches Notification's
- * light treatment; in dark mode it lifts to an elevated dark card. Presentational:
- * pair with your own timeout + viewport stacking.
+ * LK ROBOTICS - Toast
+ * transient feedback message with dark surface and optional leading icon.
  */
-export function Toast({ tone = 'info', children, action, onClose, style, ...rest }) {
-  const t = TT[tone] || TT.info;
+export function Toast({
+  tone = "normal",
+  variant,
+  children,
+  action,
+  onAction,
+  onClose,
+  leadingIcon = true,
+  icon,
+  style,
+  ...rest
+}) {
+  const normalized = normalizeTone(variant || tone);
+  const t = ICONS[normalized] || ICONS.normal;
   return (
     <div
       role="status"
+      aria-live="polite"
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 12, maxWidth: 440, padding: '13px 16px',
-        background: 'var(--surface-card)', color: 'var(--label-normal)',
-        border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-lg)',
-        fontFamily: 'var(--font-sans)', ...style,
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 10,
+        minHeight: 54,
+        minWidth: 335,
+        maxWidth: 520,
+        padding: "0 18px",
+        background: "var(--component-transient-feedback-bg)",
+        color: "var(--text-on-inverse)",
+        borderRadius: 12,
+        boxShadow: "var(--shadow-lg)",
+        fontFamily: "var(--font-sans)",
+        ...style,
       }}
       {...rest}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }} dangerouslySetInnerHTML={{ __html: t.d }} />
-      <span style={{ flex: 1, fontSize: 14, lineHeight: 1.5, letterSpacing: 0, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</span>
-      {action != null && <span style={{ flexShrink: 0, color: 'var(--accent-text)', fontSize: 14, fontWeight: 'var(--fw-bold)', cursor: 'pointer' }}>{action}</span>}
+      {leadingIcon && (
+        <span
+          aria-hidden="true"
+          style={{ display: "inline-flex", flexShrink: 0, color: t.color }}
+        >
+          {icon || (
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {t.node}
+            </svg>
+          )}
+        </span>
+      )}
+      <span
+        style={{
+          flex: 1,
+          minWidth: 0,
+          fontSize: 15,
+          lineHeight: 1.45,
+          fontWeight: "var(--fw-bold)",
+          letterSpacing: 0,
+          color: "var(--text-on-inverse)",
+          wordBreak: "keep-all",
+        }}
+      >
+        {children}
+      </span>
+      {action != null && (
+        <button
+          type="button"
+          onClick={onAction}
+          style={{
+            flexShrink: 0,
+            border: "none",
+            background: "transparent",
+            color: "var(--text-on-inverse)",
+            fontFamily: "var(--font-sans)",
+            fontSize: 13,
+            fontWeight: "var(--fw-bold)",
+            cursor: "pointer",
+            padding: 0,
+          }}
+        >
+          {action}
+        </button>
+      )}
       {onClose && (
-        <button type="button" aria-label="close" onClick={onClose} style={{ flexShrink: 0, display: 'inline-flex', padding: 2, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--label-assistive)' }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        <button
+          type="button"
+          aria-label="close"
+          onClick={onClose}
+          style={{
+            flexShrink: 0,
+            display: "inline-flex",
+            padding: 2,
+            border: "none",
+            background: "transparent",
+            cursor: "pointer",
+            color: "var(--text-on-inverse)",
+          }}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
         </button>
       )}
     </div>

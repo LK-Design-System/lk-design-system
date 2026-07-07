@@ -62,15 +62,6 @@ assert(staleGuidelines.length === 0, `Audit data references missing guideline fi
 assert(staleComponents.length === 0, `Audit data references missing component card files:\n${staleComponents.join('\n')}`);
 assert(staleTemplates.length === 0, `Audit data references missing template card files:\n${staleTemplates.join('\n')}`);
 
-const legacySource = await read('stories/LegacyPreviews.stories.jsx');
-for (const glob of [
-  "import.meta.glob('../guidelines/**/*.html'",
-  "import.meta.glob('../components/**/*.card.html'",
-  "import.meta.glob('../templates-cards/**/*.html'",
-]) {
-  assert(legacySource.includes(glob), `Legacy previews must include glob: ${glob}`);
-}
-
 const cardMetaMissing = [];
 for (const rel of [...componentCardFiles, ...templateCardFiles]) {
   const source = await read(rel);

@@ -1,18 +1,39 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface CheckboxProps {
-  /** 박스 옆 라벨. */
+  /** Optional label rendered next to the control. */
   label?: React.ReactNode;
-  /** 제어되는 체크 상태. */
+  /** Controlled checked state. */
   checked?: boolean;
-  /** 비제어 초기 상태. */
+  /** Initial checked state for uncontrolled usage. */
   defaultChecked?: boolean;
-  /** 토글 시 다음 불리언과 함께 호출. */
+  /** Mixed checkbox state. Applies to the default box variant. @default false */
+  indeterminate?: boolean;
+  /** Called with the next checked state. */
   onChange?: (checked: boolean) => void;
-  /** 흐림 + 상호작용 차단. @default false */
+  /** Visual style. `mark` renders the source-style check mark treatment. @default "box" */
+  variant?: "box" | "mark";
+  /** Semantic status tone for the mark variant. @default "normal" */
+  status?: "normal" | "negative";
+  /** fixed visual state for evidence matrices. */
+  state?: "unchecked" | "checked" | "indeterminate";
+  /** custom typography emphasis alias. */
+  bold?: boolean;
+  /** Control size. @default "md" */
+  size?: "sm" | "md" | "small" | "medium";
+  /** Reduces spacing between control and label. @default false */
+  tight?: boolean;
+  /** Forces visual interaction state for documentation matrices. */
+  interaction?: "normal" | "inactive" | "hovered" | "focused";
+  /** Blocks pointer and keyboard interaction. @default false */
   disabled?: boolean;
+  /** disabled alias. */
+  disable?: boolean;
+  labelStyle?: React.CSSProperties;
+  style?: React.CSSProperties;
   id?: string;
+  "aria-label"?: string;
 }
 
-/** 라운드 사각 체크박스 — 켜지면 LK 시그널 잉크 + 화이트 체크로 채움. */
+/** Rounded LDS checkbox, or source-style check mark treatment via `variant="mark"`. */
 export function Checkbox(props: CheckboxProps): JSX.Element;

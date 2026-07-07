@@ -4,7 +4,7 @@ import {
 } from './Brand.shared.jsx';
 
 const meta = {
-  title: 'LK Theme Override/Brand/Platform Marks',
+  title: 'LDS Theme/Brand/Platform Marks',
   parameters: {
     docs: {
       description: {

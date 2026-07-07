@@ -2,7 +2,7 @@ import { ProductCard } from '../src/index.js';
 import { ProductCardCard as ProductCardCardStory } from './CardsExtended.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Content/Product Card',
+  title: 'LDS Product/Content/Product Card',
   parameters: {
     docs: {
       description: {

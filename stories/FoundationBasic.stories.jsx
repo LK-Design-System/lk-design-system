@@ -1,11 +1,11 @@
 import { AspectRatio } from '../src/index.js';
 
 const meta = {
-  title: 'WDS Core/0 Foundation/Basic',
+  title: 'LDS Core/0 Foundation/Basic',
   parameters: {
     docs: {
       description: {
-        component: 'WDS Basic coverage for ratio primitives exported from the local Figma PDF source.',
+        component: 'Foundation coverage for ratio primitives exported from the local source.',
       },
     },
   },
@@ -89,13 +89,13 @@ export const RatioTokens = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1180 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
-          WDS Basic / Ratio
+          Basic / Ratio
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           Ratio is a foundation token, not a one-off layout guess
         </h1>
         <p style={{ margin: 0, maxWidth: 820, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The WDS Basic PDF defines horizontal and vertical ratio presets. LDS exposes them as CSS aspect-ratio tokens and
+          The foundation source defines horizontal and vertical ratio presets. LDS exposes them as CSS aspect-ratio tokens and
           routes usage through the AspectRatio primitive.
         </p>
       </header>

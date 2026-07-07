@@ -52,8 +52,8 @@ npm run check:ops-release
 
 AI/Figma가 읽는 토큰 맵은 `tokens/source.json`에 있습니다.
 런타임 component token layer는 `tokens/components.css`에 있습니다.
-AI 도구로 UI를 생성하기 전에는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`를, Figma Variables를 export/import하기 전에는 `docs/FIGMA_TOKEN_WORKFLOW.md`를 읽습니다.
-토큰 lifecycle, deprecation, breaking change 기준은 `docs/TOKEN_GOVERNANCE.md`를 우선합니다.
+AI 도구로 UI를 생성하기 전에는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`를 읽습니다.
+Figma Variables export/import, 토큰 lifecycle, deprecation, breaking change 기준은 `docs/TOKEN_GOVERNANCE.md`를 우선합니다.
 
 ## Storybook 범위
 

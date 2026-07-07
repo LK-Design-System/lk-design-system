@@ -58,7 +58,7 @@ assert(packageJson.exports?.['.']?.types === './dist/index.d.ts', 'package root 
 assert(packageJson.exports?.['./styles.css'] === './styles.css', 'package must expose ./styles.css for consumers.');
 
 const entryNames = exportedNamesFromEntry(srcIndex).sort((a, b) => a.localeCompare(b));
-assert(entryNames.length === 157, `Expected 157 named public exports from 153 component entries, found ${entryNames.length}.`);
+assert(entryNames.length === 160, `Expected 160 named public exports from 156 component entries, found ${entryNames.length}.`);
 assert(srcTypes === distTypes, 'dist/index.d.ts must be an exact copy of src/index.d.ts. Run npm run build.');
 
 const unexportedComponents = [];

@@ -5,7 +5,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'WDS Core/3 Component/4 Content/Disclosure',
+  title: 'LDS Core/3 Component/4 Content/Disclosure',
   parameters: {
     docs: {
       description: {

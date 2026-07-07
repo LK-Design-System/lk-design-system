@@ -7,7 +7,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LK Product Extension/Data/Toolbar and Filters',
+  title: 'LDS Product/Data/Toolbar and Filters',
   parameters: {
     docs: {
       description: {

@@ -32,7 +32,7 @@ const columns = [
 ];
 
 const meta = {
-  title: 'LK Robotics Extension/Viewer/Telemetry',
+  title: 'LDS Robotics/Viewer/Telemetry',
   parameters: {
     docs: {
       description: {

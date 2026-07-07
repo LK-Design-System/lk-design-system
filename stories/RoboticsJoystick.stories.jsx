@@ -2,7 +2,7 @@ import { Joystick } from '../src/index.js';
 import { JoystickCard as JoystickCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Robotics/Joystick',
+  title: 'LDS Robotics/Robotics/Joystick',
   parameters: {
     docs: {
       description: {

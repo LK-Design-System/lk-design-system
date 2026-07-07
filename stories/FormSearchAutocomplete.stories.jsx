@@ -10,7 +10,7 @@ import {
 } from './FormsFull.shared.jsx';
 
 const meta = {
-  title: 'WDS Core/3 Component/3 Selection and Input/Search and Autocomplete',
+  title: 'LDS Core/3 Component/3 Selection and Input/Search and Autocomplete',
   parameters: {
     docs: {
       description: {

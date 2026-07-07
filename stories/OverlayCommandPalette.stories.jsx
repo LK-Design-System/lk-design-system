@@ -4,7 +4,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Overlay/Command Palette',
+  title: 'LDS Product/Overlay/Command Palette',
   parameters: {
     docs: {
       description: {

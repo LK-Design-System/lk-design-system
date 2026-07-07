@@ -5,7 +5,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'WDS Core/3 Component/7 Feedback/Confirm Dialog',
+  title: 'LDS Core/3 Component/7 Feedback/Confirm Dialog',
   parameters: {
     docs: {
       description: {

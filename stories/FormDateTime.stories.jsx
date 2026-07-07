@@ -5,7 +5,7 @@ import {
 import { DatePickerCard as DatePickerCardStory } from './FormsFull.shared.jsx';
 
 const meta = {
-  title: 'LK Product Extension/Selection and Input/Date and Time',
+  title: 'LDS Product/Selection and Input/Date and Time',
   parameters: {
     docs: {
       description: {

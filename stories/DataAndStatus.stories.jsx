@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, MetricCard } from '../src/index.js';
 
 const meta = {
-  title: 'LK Product Extension/Data/Dashboard Metrics',
+  title: 'LDS Product/Data/Dashboard Metrics',
   parameters: {
     docs: {
       description: {

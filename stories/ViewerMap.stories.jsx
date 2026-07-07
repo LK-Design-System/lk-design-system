@@ -3,7 +3,7 @@ import { Map2DCanvas } from '../src/index.js';
 import { Map2DCanvasCard as Map2DCanvasCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Viewer/2D Map',
+  title: 'LDS Robotics/Viewer/2D Map',
   parameters: {
     docs: {
       description: {

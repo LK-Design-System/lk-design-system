@@ -26,8 +26,16 @@
       "wdsSection": "3 Component / 1 Layout",
       "status": "local-evidence",
       "components": [
-        { "name": "MobileSystemBars", "file": "components/layout/MobileSystemBars.jsx", "publicExport": true },
-        { "name": "Divider", "file": "components/content/Divider.jsx", "publicExport": true }
+        {
+          "name": "MobileSystemBars",
+          "file": "components/layout/MobileSystemBars.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Divider",
+          "file": "components/content/Divider.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/LayoutEssentials.stories.jsx"
@@ -42,14 +50,46 @@
       "wdsSection": "3 Component / 2 Action",
       "status": "local-evidence",
       "components": [
-        { "name": "ActionArea", "file": "components/buttons/ActionArea.jsx", "publicExport": true },
-        { "name": "Button", "file": "components/buttons/Button.jsx", "publicExport": true },
-        { "name": "TextButton", "file": "components/buttons/TextButton.jsx", "publicExport": true },
-        { "name": "IconButton", "file": "components/buttons/IconButton.jsx", "publicExport": true },
-        { "name": "ToggleIcon", "file": "components/buttons/ToggleIcon.jsx", "publicExport": true },
-        { "name": "ButtonGroup", "file": "components/buttons/ButtonGroup.jsx", "publicExport": true },
-        { "name": "SplitButton", "file": "components/buttons/SplitButton.jsx", "publicExport": true },
-        { "name": "Fab", "file": "components/buttons/Fab.jsx", "publicExport": true }
+        {
+          "name": "ActionArea",
+          "file": "components/buttons/ActionArea.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Button",
+          "file": "components/buttons/Button.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "TextButton",
+          "file": "components/buttons/TextButton.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "IconButton",
+          "file": "components/buttons/IconButton.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ToggleIcon",
+          "file": "components/buttons/ToggleIcon.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ButtonGroup",
+          "file": "components/buttons/ButtonGroup.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "SplitButton",
+          "file": "components/buttons/SplitButton.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Fab",
+          "file": "components/buttons/Fab.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/ActionArea.stories.jsx",
@@ -57,9 +97,22 @@
         "stories/ButtonsExtended.stories.jsx"
       ],
       "extensionComponents": [
-        { "name": "CopyButton", "file": "components/buttons/CopyButton.jsx", "publicExport": true },
-        { "name": "Link", "file": "components/buttons/Link.jsx", "publicExport": true },
-        { "name": "SocialButton", "file": "components/buttons/SocialButton.jsx", "publicExport": true, "story": "stories/SocialButtons.stories.jsx" }
+        {
+          "name": "CopyButton",
+          "file": "components/buttons/CopyButton.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Link",
+          "file": "components/buttons/Link.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "SocialButton",
+          "file": "components/buttons/SocialButton.jsx",
+          "publicExport": true,
+          "story": "stories/SocialButtons.stories.jsx"
+        }
       ],
       "pendingFigmaAudit": [
         "Local PDF confirms Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon. Confirm exact state/size/icon variants once Figma reads are available.",
@@ -71,24 +124,67 @@
       "wdsSection": "3 Component / 3 Selection and Input",
       "status": "local-evidence",
       "components": [
-        { "name": "Input", "file": "components/forms/Input.jsx", "publicExport": true },
-        { "name": "SearchField", "file": "components/forms/SearchField.jsx", "publicExport": true },
-        { "name": "PasswordInput", "file": "components/forms/PasswordInput.jsx", "publicExport": true },
-        { "name": "Textarea", "file": "components/forms/Textarea.jsx", "publicExport": true },
-        { "name": "FormField", "file": "components/forms/FormField.jsx", "publicExport": true },
-        { "name": "InputGroup", "file": "components/forms/InputGroup.jsx", "publicExport": true }
+        {
+          "name": "Input",
+          "file": "components/forms/Input.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "SearchField",
+          "file": "components/forms/SearchField.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "PasswordInput",
+          "file": "components/forms/PasswordInput.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Textarea",
+          "file": "components/forms/Textarea.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "FormField",
+          "file": "components/forms/FormField.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "InputGroup",
+          "file": "components/forms/InputGroup.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ChoiceCard",
+          "file": "components/selection/ChoiceCard.jsx",
+          "publicExport": true,
+          "usage": "presentation=frame"
+        }
       ],
       "stories": [
         "stories/FormsFull.stories.jsx",
         "stories/FormSearchAutocomplete.stories.jsx"
       ],
       "extensionComponents": [
-        { "name": "NumberField", "file": "components/forms/NumberField.jsx", "publicExport": true },
-        { "name": "PinInput", "file": "components/forms/PinInput.jsx", "publicExport": true },
-        { "name": "FileUpload", "file": "components/forms/FileUpload.jsx", "publicExport": true }
+        {
+          "name": "NumberField",
+          "file": "components/forms/NumberField.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "PinInput",
+          "file": "components/forms/PinInput.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "FileUpload",
+          "file": "components/forms/FileUpload.jsx",
+          "publicExport": true
+        }
       ],
       "pendingFigmaAudit": [
-        "Confirm WDS field labels, helper text, error text, disabled state, and icon slot variants.",
+        "Source screenshot confirms Textfield and Textarea content beyond the section title: status, size/height, active/focus/disabled, helper/required/description, icon/right-button slot, autocomplete, preview composition, and resource examples.",
+        "Confirm exact WDS field labels, helper text, error text, disabled state, and icon slot variants through node-level reads.",
         "Verify SearchField and PasswordInput are WDS-compatible variants, not unrelated extensions."
       ]
     },
@@ -97,18 +193,35 @@
       "wdsSection": "3 Component / 3 Selection and Input",
       "status": "local-evidence",
       "components": [
-        { "name": "Select", "file": "components/forms/Select.jsx", "publicExport": true },
-        { "name": "Combobox", "file": "components/forms/Combobox.jsx", "publicExport": true },
-        { "name": "AutoComplete", "file": "components/forms/AutoComplete.jsx", "publicExport": true },
-        { "name": "TagInput", "file": "components/forms/TagInput.jsx", "publicExport": true }
+        {
+          "name": "Select",
+          "file": "components/forms/Select.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Combobox",
+          "file": "components/forms/Combobox.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "AutoComplete",
+          "file": "components/forms/AutoComplete.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "TagInput",
+          "file": "components/forms/TagInput.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/FormsFull.stories.jsx",
         "stories/FormSearchAutocomplete.stories.jsx"
       ],
       "pendingFigmaAudit": [
+        "Source screenshot confirms Select render modes for text and chip, active/open, focus, normal/negative status, disabled, heading, required, description, overflow, leading icon, preview, and resource examples.",
         "Confirm select, dropdown, autocomplete, and multivalue behavior against WDS component examples.",
-        "Verify option, selected, disabled, and empty-result states."
+        "Verify option, selected, disabled, overflow, leading-icon, and empty-result states."
       ]
     },
     {
@@ -116,13 +229,51 @@
       "wdsSection": "3 Component / 3 Selection and Input",
       "status": "local-evidence",
       "components": [
-        { "name": "Checkbox", "file": "components/forms/Checkbox.jsx", "publicExport": true },
-        { "name": "CheckboxGroup", "file": "components/forms/CheckboxGroup.jsx", "publicExport": true },
-        { "name": "Radio", "file": "components/forms/Radio.jsx", "publicExport": true },
-        { "name": "RadioGroup", "file": "components/forms/RadioGroup.jsx", "publicExport": true },
-        { "name": "Switch", "file": "components/selection/Switch.jsx", "publicExport": true },
-        { "name": "ToggleButton", "file": "components/selection/ToggleButton.jsx", "publicExport": true },
-        { "name": "ThemeToggle", "file": "components/selection/ThemeToggle.jsx", "publicExport": true }
+        {
+          "name": "Checkbox",
+          "file": "components/forms/Checkbox.jsx",
+          "publicExport": true,
+          "variants": [
+            "box",
+            "mark"
+          ]
+        },
+        {
+          "name": "CheckboxGroup",
+          "file": "components/forms/CheckboxGroup.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Radio",
+          "file": "components/forms/Radio.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "RadioGroup",
+          "file": "components/forms/RadioGroup.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Switch",
+          "file": "components/selection/Switch.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ToggleButton",
+          "file": "components/selection/ToggleButton.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ThemeToggle",
+          "file": "components/selection/ThemeToggle.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ChoiceCard",
+          "file": "components/selection/ChoiceCard.jsx",
+          "publicExport": true,
+          "usage": "presentation=frame"
+        }
       ],
       "stories": [
         "stories/FormSelectionControls.stories.jsx",
@@ -131,13 +282,30 @@
         "stories/SelectionThemeToggle.stories.jsx"
       ],
       "extensionComponents": [
-        { "name": "ColorSwatch", "file": "components/forms/ColorSwatch.jsx", "publicExport": true },
-        { "name": "SegmentedControl", "file": "components/selection/SegmentedControl.jsx", "publicExport": true },
-        { "name": "Stepper", "file": "components/selection/Stepper.jsx", "publicExport": true }
+        {
+          "name": "ColorSwatch",
+          "file": "components/forms/ColorSwatch.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "SegmentedControl",
+          "file": "components/selection/SegmentedControl.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Stepper",
+          "file": "components/selection/Stepper.jsx",
+          "publicExport": true
+        }
       ],
       "pendingFigmaAudit": [
-        "Confirm control shape, checked, mixed, focus, disabled, and size variants.",
+        "Source screenshot confirms Checkbox, Radio, Check Mark, and Switch content beyond titles: size, checked/unchecked, checkbox indeterminate, tight layout, label on/off, disabled, customization, interaction states, platform variants for Switch, and resource examples.",
+        "Confirm control shape, checked, mixed, focus, disabled, size, platform, and interaction variants.",
         "Verify ThemeToggle remains LK Theme Override rather than WDS core."
+      ],
+      "representationNotes": [
+        "WDS Check Mark treatment is represented by Checkbox variant=\"mark\" instead of a separate LDS public export.",
+        "WDS Framed Style treatment is represented by ChoiceCard presentation=\"frame\" instead of a separate LDS public export."
       ]
     },
     {
@@ -145,12 +313,48 @@
       "wdsSection": "3 Component / 4 Content",
       "status": "local-evidence",
       "components": [
-        { "name": "Card", "file": "components/cards/Card.jsx", "publicExport": true },
-        { "name": "MetricCard", "file": "components/cards/MetricCard.jsx", "publicExport": true },
-        { "name": "FeatureCard", "file": "components/cards/FeatureCard.jsx", "publicExport": true },
-        { "name": "NewsCard", "file": "components/cards/NewsCard.jsx", "publicExport": true },
-        { "name": "ChecklistItem", "file": "components/cards/ChecklistItem.jsx", "publicExport": true },
-        { "name": "ChoiceCard", "file": "components/selection/ChoiceCard.jsx", "publicExport": true }
+        {
+          "name": "Card",
+          "file": "components/cards/Card.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "MetricCard",
+          "file": "components/cards/MetricCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "FeatureCard",
+          "file": "components/cards/FeatureCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "NewsCard",
+          "file": "components/cards/NewsCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ChecklistItem",
+          "file": "components/cards/ChecklistItem.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ChoiceCard",
+          "file": "components/selection/ChoiceCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ContentBadge",
+          "file": "components/content/ContentBadge.jsx",
+          "publicExport": true,
+          "usage": "card badge/status attribute"
+        },
+        {
+          "name": "Thumbnail",
+          "file": "components/content/Thumbnail.jsx",
+          "publicExport": true,
+          "usage": "card/list-card media slot"
+        }
       ],
       "stories": [
         "stories/Card.stories.jsx",
@@ -158,15 +362,31 @@
         "stories/CardNews.stories.jsx",
         "stories/CardSpecs.stories.jsx",
         "stories/CardStats.stories.jsx",
+        "stories/ContentBadgesAnnotations.stories.jsx",
+        "stories/ContentMedia.stories.jsx",
         "stories/SelectionStatus.stories.jsx"
       ],
       "extensionComponents": [
-        { "name": "ProductCard", "file": "components/cards/ProductCard.jsx", "publicExport": true },
-        { "name": "SpecRow", "file": "components/cards/SpecRow.jsx", "publicExport": true },
-        { "name": "Stat", "file": "components/cards/Stat.jsx", "publicExport": true }
+        {
+          "name": "ProductCard",
+          "file": "components/cards/ProductCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "SpecRow",
+          "file": "components/cards/SpecRow.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Stat",
+          "file": "components/cards/Stat.jsx",
+          "publicExport": true
+        }
       ],
       "pendingFigmaAudit": [
-        "Confirm WDS Card and List Card density, thumbnail, action, and selection variants.",
+        "Local Content Card PDF confirms Card/List Card thumbnailOverlay, caption, toggleIcon, extraCaption, topContent, bottomContent, skeleton, leadingContent, trailingContent, width, and thumbnailAspectRatio axes. Confirm exact child-node values through Figma.",
+        "Local Content Badge PDF confirms variant solid/default/outlined, icon, size xsmall/small/medium, color neutral/accent, and accent customization axes.",
+        "Local Thumbnail PDF confirms ratio presets plus radius and border toggles.",
         "Separate WDS core card patterns from LK product cards and dashboard metrics."
       ]
     },
@@ -175,11 +395,31 @@
       "wdsSection": "3 Component / 4 Content",
       "status": "local-evidence",
       "components": [
-        { "name": "ListCell", "file": "components/content/ListCell.jsx", "publicExport": true },
-        { "name": "DescriptionList", "file": "components/data/DescriptionList.jsx", "publicExport": true },
-        { "name": "Table", "file": "components/data/Table.jsx", "publicExport": true },
-        { "name": "DataGrid", "file": "components/data/DataGrid.jsx", "publicExport": true },
-        { "name": "Tree", "file": "components/data/Tree.jsx", "publicExport": true }
+        {
+          "name": "ListCell",
+          "file": "components/content/ListCell.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "DescriptionList",
+          "file": "components/data/DescriptionList.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Table",
+          "file": "components/data/Table.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "DataGrid",
+          "file": "components/data/DataGrid.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Tree",
+          "file": "components/data/Tree.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/ContentListsMedia.stories.jsx",
@@ -187,12 +427,57 @@
         "stories/DataTree.stories.jsx"
       ],
       "extensionComponents": [
-        { "name": "DataToolbar", "file": "components/data/DataToolbar.jsx", "publicExport": true },
-        { "name": "Calendar", "file": "components/data/Calendar.jsx", "publicExport": true }
+        {
+          "name": "DataToolbar",
+          "file": "components/data/DataToolbar.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Calendar",
+          "file": "components/data/Calendar.jsx",
+          "publicExport": true
+        }
       ],
       "pendingFigmaAudit": [
-        "Confirm list-cell leading/trailing content, density, selected, disabled, and divider variants.",
+        "Local List Cell PDF confirms verticalPadding, verticalAlign, fillWidth, textEllipsis, divider, chevron, selected, disabled, interaction, leadingContent, trailingContent, and customization axes. Confirm exact child-node values through Figma.",
         "Verify Table/DataGrid/Tree are LDS data extensions where WDS has only list cell semantics."
+      ]
+    },
+    {
+      "wdsFamily": "Navigation/Category, Tab, Page Indicator, Pagination",
+      "wdsSection": "3 Component / 6 Navigation",
+      "status": "local-evidence",
+      "components": [
+        {
+          "name": "Category",
+          "file": "components/navigation/Category.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Tabs",
+          "file": "components/navigation/Tabs.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "PageIndicator",
+          "file": "components/navigation/PageIndicator.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Pagination",
+          "file": "components/navigation/Pagination.jsx",
+          "publicExport": true
+        }
+      ],
+      "stories": [
+        "stories/NavigationFlow.stories.jsx",
+        "stories/NavigationCompact.stories.jsx"
+      ],
+      "pendingFigmaAudit": [
+        "Local Navigation Category PDF confirms variant, size, padding, verticalPadding, scroll, and active resource axes.",
+        "Local Navigation Tab PDF confirms resize, size, padding, trailingIconButton, and scroll axes.",
+        "Local Page Indicator and Pagination PDFs confirm counter/dot, size, alternative, extended/compact/minimize, and leading/trailing control slot axes.",
+        "Confirm exact spacing, active indicator dimensions, and scroll behavior through WDS node-level reads."
       ]
     },
     {
@@ -200,13 +485,46 @@
       "wdsSection": "3 Component / 7 Feedback",
       "status": "local-evidence",
       "components": [
-        { "name": "Toast", "file": "components/overlay/Toast.jsx", "publicExport": true },
-        { "name": "ToastStack", "file": "components/overlay/ToastStack.jsx", "publicExport": true },
-        { "name": "Notification", "file": "components/feedback/Notification.jsx", "publicExport": true },
-        { "name": "Banner", "file": "components/status/Banner.jsx", "publicExport": true },
-        { "name": "Callout", "file": "components/status/Callout.jsx", "publicExport": true },
-        { "name": "Alert", "file": "components/overlay/Alert.jsx", "publicExport": true },
-        { "name": "ConfirmDialog", "file": "components/overlay/ConfirmDialog.jsx", "publicExport": true }
+        {
+          "name": "Toast",
+          "file": "components/overlay/Toast.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ToastStack",
+          "file": "components/overlay/ToastStack.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Snackbar",
+          "file": "components/overlay/Snackbar.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Notification",
+          "file": "components/feedback/Notification.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Banner",
+          "file": "components/status/Banner.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Callout",
+          "file": "components/status/Callout.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Alert",
+          "file": "components/overlay/Alert.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ConfirmDialog",
+          "file": "components/overlay/ConfirmDialog.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/FeedbackNotifications.stories.jsx",
@@ -216,7 +534,10 @@
         "stories/OverlayConfirmDialog.stories.jsx"
       ],
       "pendingFigmaAudit": [
-        "Confirm toast/snackbar/alert visual hierarchy and icon sizes against WDS.",
+        "Local Toast PDF confirms normal, positive, cautionary, negative, leadingIcon, custom icon, and dark feedback surface axes.",
+        "Local Snackbar PDF confirms heading, description, icon, close button, action text, and dark feedback surface axes.",
+        "Local Alert PDF confirms iOS, Android, and web platform treatments plus heading true/false.",
+        "Confirm toast/snackbar/alert visual hierarchy and exact icon sizes against WDS.",
         "Verify dismiss, action, persistent, and modal confirm behavior."
       ]
     },
@@ -225,12 +546,36 @@
       "wdsSection": "3 Component / 8 Presentation",
       "status": "local-evidence",
       "components": [
-        { "name": "Tooltip", "file": "components/content/Tooltip.jsx", "publicExport": true },
-        { "name": "DropdownMenu", "file": "components/overlay/DropdownMenu.jsx", "publicExport": true },
-        { "name": "Menubar", "file": "components/navigation/Menubar.jsx", "publicExport": true },
-        { "name": "Popover", "file": "components/overlay/Popover.jsx", "publicExport": true },
-        { "name": "HoverCard", "file": "components/overlay/HoverCard.jsx", "publicExport": true },
-        { "name": "CommandPalette", "file": "components/overlay/CommandPalette.jsx", "publicExport": true }
+        {
+          "name": "Tooltip",
+          "file": "components/content/Tooltip.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "DropdownMenu",
+          "file": "components/overlay/DropdownMenu.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Menubar",
+          "file": "components/navigation/Menubar.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Popover",
+          "file": "components/overlay/Popover.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "HoverCard",
+          "file": "components/overlay/HoverCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "CommandPalette",
+          "file": "components/overlay/CommandPalette.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/Overlay.stories.jsx",
@@ -239,8 +584,10 @@
         "stories/OverlayDimmer.stories.jsx"
       ],
       "pendingFigmaAudit": [
-        "Confirm tooltip arrow, placement, delay, and size variants.",
-        "Verify menu item, submenu, command, separator, checked, disabled, and danger item states."
+        "Local Tooltip PDF confirms size, top/right/bottom/left placement, arrow alignment, and shortcut axes.",
+        "Local Menu PDF confirms normal/radio/checkbox, menuActionArea, scroll, item state, description/caption, action area, and shortcut axes.",
+        "Confirm tooltip delay and exact arrow offset through WDS node-level reads.",
+        "Verify menu submenu, command, separator, checked, disabled, and danger item states against WDS nodes."
       ]
     },
     {
@@ -248,19 +595,40 @@
       "wdsSection": "3 Component / 5 Loading",
       "status": "local-evidence",
       "components": [
-        { "name": "Skeleton", "file": "components/status/Skeleton.jsx", "publicExport": true },
-        { "name": "Spinner", "file": "components/status/Spinner.jsx", "publicExport": true },
-        { "name": "ProgressBar", "file": "components/status/ProgressBar.jsx", "publicExport": true },
-        { "name": "CircularProgress", "file": "components/status/CircularProgress.jsx", "publicExport": true },
-        { "name": "Meter", "file": "components/status/Meter.jsx", "publicExport": true }
+        {
+          "name": "Skeleton",
+          "file": "components/status/Skeleton.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Spinner",
+          "file": "components/status/Spinner.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ProgressBar",
+          "file": "components/status/ProgressBar.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "CircularProgress",
+          "file": "components/status/CircularProgress.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Meter",
+          "file": "components/status/Meter.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/StatusLoading.stories.jsx",
         "stories/StatusProgress.stories.jsx"
       ],
       "pendingFigmaAudit": [
-        "Confirm skeleton line/block/avatar shapes and animation treatment.",
-        "Verify circular/progress sizes, labels, and indeterminate/determinate states."
+        "Local Loading PDF confirms Wanted loading, Circular loading, Skeleton Text length, align, Rectangle customization, and Circle customization axes.",
+        "Local LDS Loading stories now expose skeleton line/block/avatar shapes, spinner labels, Wanted indicator, Circular indicator, custom skeleton colors, determinate and indeterminate linear progress, determinate and indeterminate circular progress, and reduced-motion handling.",
+        "Verify circular/progress sizes, labels, and indeterminate/determinate states against exact WDS nodes."
       ]
     },
     {
@@ -268,17 +636,61 @@
       "wdsSection": "LK Robotics Extension",
       "status": "extension-evidence",
       "components": [
-        { "name": "RobotStatusCard", "file": "components/robotics/RobotStatusCard.jsx", "publicExport": true },
-        { "name": "EquipmentStatusCard", "file": "components/robotics/EquipmentStatusCard.jsx", "publicExport": true },
-        { "name": "TopicTree", "file": "components/robotics/TopicTree.jsx", "publicExport": true },
-        { "name": "Joystick", "file": "components/robotics/Joystick.jsx", "publicExport": true },
-        { "name": "Map2DCanvas", "file": "components/viz/Map2DCanvas.jsx", "publicExport": true },
-        { "name": "Scene3DFrame", "file": "components/viz/Scene3DFrame.jsx", "publicExport": true },
-        { "name": "TelemetryGauge", "file": "components/viz/TelemetryGauge.jsx", "publicExport": true },
-        { "name": "TelemetryValue", "file": "components/viz/TelemetryValue.jsx", "publicExport": true },
-        { "name": "ViewerToolbar", "file": "components/viz/ViewerToolbar.jsx", "publicExport": true },
-        { "name": "VideoStreamTile", "file": "components/viz/VideoStreamTile.jsx", "publicExport": true },
-        { "name": "CanvasEditorShell", "file": "components/editor/CanvasEditorShell.jsx", "publicExport": true }
+        {
+          "name": "RobotStatusCard",
+          "file": "components/robotics/RobotStatusCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "EquipmentStatusCard",
+          "file": "components/robotics/EquipmentStatusCard.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "TopicTree",
+          "file": "components/robotics/TopicTree.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Joystick",
+          "file": "components/robotics/Joystick.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Map2DCanvas",
+          "file": "components/viz/Map2DCanvas.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "Scene3DFrame",
+          "file": "components/viz/Scene3DFrame.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "TelemetryGauge",
+          "file": "components/viz/TelemetryGauge.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "TelemetryValue",
+          "file": "components/viz/TelemetryValue.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "ViewerToolbar",
+          "file": "components/viz/ViewerToolbar.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "VideoStreamTile",
+          "file": "components/viz/VideoStreamTile.jsx",
+          "publicExport": true
+        },
+        {
+          "name": "CanvasEditorShell",
+          "file": "components/editor/CanvasEditorShell.jsx",
+          "publicExport": true
+        }
       ],
       "stories": [
         "stories/RoboticsAndViz.stories.jsx",

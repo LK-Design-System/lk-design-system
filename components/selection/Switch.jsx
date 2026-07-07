@@ -13,45 +13,65 @@ export function Switch({
   onChange,
   label,
   size = 'md',
+  state,
+  platform = 'normal',
+  interaction,
+  active = false,
+  focus: forcedFocus = false,
   disabled = false,
+  disable = false,
+  labelStyle,
+  style,
   id,
   'aria-label': ariaLabel,
   ...rest
 }) {
-  const isControlled = checked !== undefined;
-  const [internal, setInternal] = React.useState(!!defaultChecked);
+  const stateChecked = state === 'checked' || state === 'on' ? true : state === 'unchecked' || state === 'off' ? false : undefined;
+  const isControlled = checked !== undefined || stateChecked !== undefined;
+  const [internal, setInternal] = React.useState(stateChecked ?? !!defaultChecked);
   const [focus, setFocus] = React.useState(false);
-  const on = isControlled ? checked : internal;
+  const [hover, setHover] = React.useState(false);
+  const on = checked !== undefined ? checked : stateChecked !== undefined ? stateChecked : internal;
+  const disabledState = disabled || disable || interaction === 'inactive';
+  const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size;
+  const activeFocus = focus || forcedFocus || interaction === 'focused';
+  const activeHover = hover || active || interaction === 'hovered';
   const toggle = () => {
-    if (disabled) return;
+    if (disabledState) return;
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  const d = size === 'sm' ? { w: 40, h: 24, k: 18, tx: 16 } : { w: 52, h: 32, k: 26, tx: 20 };
+  const d = normalizedSize === 'sm' ? { w: 40, h: 24, k: 18, tx: 16 } : { w: 52, h: 32, k: 26, tx: 20 };
+  const offBg = platform === 'ios' ? 'var(--fill-strong)' : 'var(--bw-gray-300)';
+  const trackBg = disabledState ? (on ? 'var(--fill-strong)' : 'var(--fill-normal)') : on ? 'var(--lk-accent-ink)' : activeHover ? 'var(--fill-strong)' : offBg;
   return (
     <label
       htmlFor={id}
       onClick={toggle}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 12,
-        cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.5 : 1,
+        cursor: disabledState ? 'not-allowed' : 'pointer', opacity: disabledState ? 0.5 : 1,
         fontFamily: 'var(--font-sans)', fontSize: 15, letterSpacing: 0, color: 'var(--label-normal)',
+        ...style,
       }}
     >
       <span
         role="switch"
         aria-checked={on}
-        aria-label={ariaLabel ?? (typeof label === 'string' ? label : '스위치')}
+        aria-disabled={disabledState ? true : undefined}
+        aria-label={ariaLabel ?? (typeof label === 'string' ? label : 'switch')}
         id={id}
-        tabIndex={disabled ? -1 : 0}
+        tabIndex={disabledState ? -1 : 0}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } }}
         style={{
           position: 'relative', flexShrink: 0, width: d.w, height: d.h,
           borderRadius: 'var(--radius-pill)',
-          background: on ? 'var(--lk-accent-ink)' : 'var(--bw-gray-300)',
-          boxShadow: focus ? '0 0 0 4px var(--focus-ring)' : 'none',
+          background: trackBg,
+          boxShadow: activeFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
           transition: 'background var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
         }}
         {...rest}
@@ -59,13 +79,13 @@ export function Switch({
         <span
           style={{
             position: 'absolute', top: 3, left: 3, width: d.k, height: d.k, borderRadius: '50%',
-            background: 'var(--text-on-signal)', boxShadow: 'var(--shadow-control)',
+            background: 'var(--text-on-signal)', boxShadow: platform === 'ios' ? 'var(--shadow-sm)' : 'var(--shadow-control)',
             transform: on ? `translateX(${d.tx}px)` : 'translateX(0)',
             transition: 'transform var(--dur-base) var(--ease-in-out)',
           }}
         />
       </span>
-      {label != null && <span>{label}</span>}
+      {label != null && <span style={labelStyle}>{label}</span>}
     </label>
   );
 }

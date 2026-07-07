@@ -5,7 +5,7 @@ import {
 import { EquipmentStatusCardCard as EquipmentStatusCardCardStory } from './RoboticsAndViz.shared.jsx';
 
 const meta = {
-  title: 'LK Robotics Extension/Robotics/Equipment State',
+  title: 'LDS Robotics/Robotics/Equipment State',
   parameters: {
     docs: {
       description: {

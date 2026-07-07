@@ -1,11 +1,10 @@
 import { createReadStream } from 'node:fs';
-import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
 
 const root = process.cwd();
-const staticDir = path.join(root, 'storybook-static');
 const reportDir = path.join(root, 'visual-artifacts', 'legacy-render');
 const reportPath = path.join(reportDir, 'manifest.json');
 
@@ -40,8 +39,8 @@ function startStaticServer() {
     try {
       const requestUrl = new URL(req.url || '/', 'http://127.0.0.1');
       const safePath = decodeURIComponent(requestUrl.pathname).replace(/^\/+/, '') || 'index.html';
-      const filePath = path.resolve(staticDir, safePath);
-      if (!filePath.startsWith(staticDir)) {
+      const filePath = path.resolve(root, safePath);
+      if (!filePath.startsWith(root)) {
         res.writeHead(403);
         res.end('Forbidden');
         return;
@@ -69,32 +68,14 @@ function startStaticServer() {
   });
 }
 
-function findStoryId(entries, importPath, exportName) {
-  const found = Object.values(entries).find(
-    (entry) => entry.type === 'story' && entry.importPath === importPath && entry.exportName === exportName
-  );
-  assert(found, `Unable to find Storybook entry: ${importPath} / ${exportName}`);
-  return found.id;
-}
-
-function storyUrl(origin, id, selected) {
-  const params = new URLSearchParams({ id, viewMode: 'story', selected });
-  return `${origin}/iframe.html?${params.toString()}`;
-}
-
-async function waitForLegacyFrame(page, selected, kind) {
-  await page.waitForSelector('iframe', { timeout: 15000 });
-  const handle = await page.locator('iframe').first().elementHandle();
-  const frame = await handle.contentFrame();
-  assert(frame, `${selected}: unable to access nested legacy iframe`);
-
-  await frame.waitForLoadState('domcontentloaded', { timeout: 15000 });
-  await frame.evaluate(async () => {
+async function waitForLegacyPage(page, selected, kind) {
+  await page.waitForLoadState('domcontentloaded', { timeout: 15000 });
+  await page.evaluate(async () => {
     if (document.fonts?.ready) await document.fonts.ready;
   });
 
-  if (kind === 'component') {
-    await frame.waitForFunction(
+  if (kind !== 'guideline') {
+    await page.waitForFunction(
       () => {
         const root = document.querySelector('#root');
         return Boolean(root && root.children.length > 0);
@@ -104,8 +85,11 @@ async function waitForLegacyFrame(page, selected, kind) {
     );
   }
 
-  const metrics = await frame.evaluate(() => {
+  return page.evaluate(() => {
     const root = document.querySelector('#root');
+    const themeToggle = document.getElementById('__om-theme-toggle');
+    if (themeToggle) themeToggle.style.display = 'none';
+
     const bodyText = (document.body?.innerText || '').trim();
     const bodyRect = document.body?.getBoundingClientRect();
     const rootRect = root?.getBoundingClientRect();
@@ -124,6 +108,7 @@ async function waitForLegacyFrame(page, selected, kind) {
         };
       })
       .filter((item) => item.visible);
+
     return {
       title: document.title || '',
       bodyTextLength: bodyText.length,
@@ -137,45 +122,23 @@ async function waitForLegacyFrame(page, selected, kind) {
       maxVisibleElementArea: Math.max(0, ...visibleElements.map((item) => item.area)),
     };
   });
-
-  assert(metrics.bodyChildCount > 0, `${selected}: legacy iframe body is empty`);
-  assert(metrics.bodyWidth > 0 && metrics.bodyHeight > 0, `${selected}: legacy iframe has no visible body box`);
-  assert(metrics.visibleElementCount > 0, `${selected}: legacy iframe has no visible descendants`);
-  assert(metrics.maxVisibleElementArea > 0, `${selected}: legacy iframe visible descendants have no area`);
-  if (kind === 'component') {
-    assert(metrics.rootChildCount > 0, `${selected}: #root did not render component content`);
-  }
-
-  return metrics;
 }
 
 async function main() {
-  const index = JSON.parse(await readFile(path.join(staticDir, 'index.json'), 'utf8'));
-  const entries = index.entries;
   const groups = [
     {
       kind: 'guideline',
-      exportName: 'FoundationGuidelines',
       files: await collect('guidelines', (rel) => rel.endsWith('.html')),
     },
     {
       kind: 'component',
-      exportName: 'ComponentCards',
       files: await collect('components', (rel) => rel.endsWith('.card.html')),
     },
     {
       kind: 'template',
-      exportName: 'TemplateCards',
       files: await collect('templates-cards', (rel) => rel.endsWith('.card.html')),
     },
   ];
-
-  const storyIds = Object.fromEntries(
-    groups.map((group) => [
-      group.kind,
-      findStoryId(entries, './stories/LegacyPreviews.stories.jsx', group.exportName),
-    ])
-  );
 
   const expected = { guideline: 20, component: 83, template: 4 };
   for (const group of groups) {
@@ -186,7 +149,7 @@ async function main() {
   const browser = await chromium.launch();
   const report = {
     generatedAt: new Date().toISOString(),
-    storybookStatic: 'storybook-static',
+    source: 'direct-html',
     counts: Object.fromEntries(groups.map((group) => [group.kind, group.files.length])),
     entries: [],
   };
@@ -198,17 +161,26 @@ async function main() {
     page.on('pageerror', (error) => pageErrors.push(String(error?.message || error)));
 
     for (const group of groups) {
-      const id = storyIds[group.kind];
       for (const selected of group.files) {
         const beforeErrorCount = pageErrors.length;
         try {
-          await page.goto(storyUrl(origin, id, selected), { waitUntil: 'networkidle', timeout: 30000 });
-          const metrics = await waitForLegacyFrame(page, selected, group.kind);
+          const url = `${origin}/${selected}`;
+          await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+          const metrics = await waitForLegacyPage(page, selected, group.kind);
           const newErrors = pageErrors.slice(beforeErrorCount);
+
+          assert(metrics.bodyChildCount > 0, `${selected}: body is empty`);
+          assert(metrics.bodyWidth > 0 && metrics.bodyHeight > 0, `${selected}: page has no visible body box`);
+          assert(metrics.visibleElementCount > 0, `${selected}: page has no visible descendants`);
+          assert(metrics.maxVisibleElementArea > 0, `${selected}: visible descendants have no area`);
+          if (group.kind !== 'guideline') {
+            assert(metrics.rootChildCount > 0, `${selected}: #root did not render component content`);
+          }
+
           report.entries.push({
             kind: group.kind,
             selected,
-            id,
+            url,
             metrics,
             pageErrors: newErrors,
           });
@@ -224,13 +196,13 @@ async function main() {
     await new Promise((resolve) => server.close(resolve));
   }
 
-  await import('node:fs/promises').then(({ mkdir }) => mkdir(reportDir, { recursive: true }));
+  await mkdir(reportDir, { recursive: true });
   report.errorCount = errors.length;
   report.errors = errors;
   await writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
 
   if (errors.length > 0) {
-    console.error(`Legacy preview render failures: ${errors.length}`);
+    console.error(`Legacy direct render failures: ${errors.length}`);
     for (const error of errors.slice(0, 20)) {
       console.error(`- ${error.kind} ${error.selected}: ${error.error}`);
     }
@@ -238,7 +210,7 @@ async function main() {
   }
 
   const total = groups.reduce((sum, group) => sum + group.files.length, 0);
-  console.log(`Validated ${total} legacy preview renders: 20 guidelines, 83 component cards, 4 template cards.`);
+  console.log(`Validated ${total} legacy direct HTML renders: 20 guidelines, 83 component cards, 4 template cards.`);
 }
 
 main().catch((error) => {

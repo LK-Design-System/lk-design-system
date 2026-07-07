@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface SelectOption {
   value: string;
@@ -8,6 +8,8 @@ export interface SelectOption {
 export interface SelectProps {
   /** 컨트롤 위의 필드 라벨. */
   label?: React.ReactNode;
+  helper?: React.ReactNode;
+  error?: React.ReactNode;
   /** 옵션은 문자열 또는 `{ value, label }`. 생략하면 `<option>` 자식을 읽음. */
   options?: Array<string | SelectOption>;
   /** 제어되는 선택 값. */
@@ -20,9 +22,36 @@ export interface SelectProps {
   onChange?: (value: string) => void;
   required?: boolean;
   invalid?: boolean;
+  status?: "normal" | "positive" | "negative";
   disabled?: boolean;
+  /** disabled alias. */
+  disable?: boolean;
+  /** negative status alias. */
+  negative?: boolean;
   /** @default "md" */
-  size?: 'sm' | 'md';
+  size?: "sm" | "md" | "lg" | "small" | "medium" | "large";
+  defaultOpen?: boolean;
+  interaction?:
+    | "normal"
+    | "inactive"
+    | "hovered"
+    | "focused"
+    | "active"
+    | "active-focused"
+    | "open";
+  /** active visual state alias. */
+  active?: boolean;
+  /** focus visual state alias. */
+  focus?: boolean;
+  /** overflow evidence axis; accepted for API parity. */
+  overflow?: boolean;
+  /** platform evidence axis; accepted for API parity. */
+  platform?: "ios" | "android" | "web";
+  /** select variant evidence axis; accepted for API parity. */
+  variant?: "normal";
+  /** 선택 값을 텍스트 또는 칩으로 표시. @default "text" */
+  render?: "text" | "chip";
+  iconLeft?: React.ReactNode;
   id?: string;
   /** `<option>` 자식(하위 호환) — `options`가 없을 때 사용. */
   children?: React.ReactNode;

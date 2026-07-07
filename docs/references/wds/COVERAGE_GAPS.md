@@ -45,10 +45,10 @@ confirmation.
 | `2 Element / 3 Decorate` | Partial | `FoundationDecorate`, effects tokens, visual-token exceptions | PDF confirms Gradient/Mask/Interaction coverage; remaining WDS decorative examples need node-level detail audit. |
 | `3 Component / 1 Layout` | Partial | `LayoutEssentials`, layout stories, `MobileSystemBars`, `Divider`, `components/layout` | PDF confirms Essential and Divider; verify remaining WDS layout subsections and examples. |
 | `3 Component / 2 Action` | Partial | `ActionArea`, button/action stories, `components/buttons` | PDF confirms Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon; verify full state/size variants. |
-| `3 Component / 3 Selection and Input` | Partial | form/selection stories and components | Verify framed style, state, and size variants. |
+| `3 Component / 3 Selection and Input` | Partial | form/selection stories and components plus screenshot evidence in `docs/references/wds/source-screenshots/3selectionandinput.png` | Screenshot confirms Textinput, Select, Control, Segmented Control, and Framed Style groups. Local state matrices now cover the visible PNG states through existing LDS components, including `Checkbox variant="mark"` and `ChoiceCard presentation="frame"`; verify exact child-node properties through Figma reads. |
 | `3 Component / 4 Content` | Partial | card/content stories and components | Verify card/list/media/badge/disclosure variants one by one. |
-| `3 Component / 5 Loading` | Partial | loading/progress stories and status components | Verify state and size variants for skeleton, spinner, circular, and progress patterns. |
-| `3 Component / 6 Navigation` | Partial | navigation stories and components | Verify hover-collapse, mobile navigation, footer, menu, route, step, and wizard behavior. |
+| `3 Component / 5 Loading` | Partial | loading/progress stories and status components | Local stories cover skeleton line/block/avatar shapes, spinner labels, determinate/indeterminate linear progress, determinate/indeterminate circular progress, values, and reduced-motion handling; verify exact WDS state and size variants through Figma reads. |
+| `3 Component / 6 Navigation` | Partial | navigation stories and components | Local story wrappers now expose readable TopBar, app navigation, compact navigation, tabs/routes, footer, menu, steps, and wizard evidence; verify hover-collapse, mobile navigation, footer, menu, route, step, and wizard behavior through Figma reads. |
 | `3 Component / 7 Feedback` | Partial | feedback/overlay/status stories and components | Verify exact WDS feedback taxonomy and state variants. |
 | `3 Component / 8 Presentation` | Partial | tooltip/menu/overlay stories and components | Verify tooltip/menu/overlay roles and presentation states. |
 
@@ -69,6 +69,6 @@ confirmation.
 3. `2 Element / 3 Decorate`: Gradient and Interaction are covered from local PDF evidence; verify remaining radius, shadow, line, and decorative examples.
 4. `3 Component / 1 Layout`: Essential and Divider are covered from local PDF evidence; verify remaining layout child sections.
 5. `3 Component / 2 Action`: Action Area and Toggle Icon are covered from local PDF evidence; map any remaining WDS child sections to LDS button/action components.
-6. `3 Component / 3 Selection and Input`: verify framed-style and state variants.
+6. `3 Component / 3 Selection and Input`: local Textinput, Select, Control, Segmented Control, Check Mark, Switch, and Framed Style matrices are implemented from the source screenshot through existing LDS components; verify exact child-node properties through Figma node reads.
 7. `3 Component / 6 Navigation`: verify hover-collapse, mobile navigation, and route/step behavior.
 8. `3 Component / 8 Presentation`: verify Tooltip/Menu/Overlay coverage and states.

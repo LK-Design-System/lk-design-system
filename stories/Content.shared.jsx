@@ -109,9 +109,11 @@ export const ContentBadgeStatusBadgeCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 720, height: 150, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-        <ContentBadge tone="signal" variant="solid">NEW</ContentBadge>
-        <ContentBadge tone="positive" variant="soft">가동중</ContentBadge>
-        <ContentBadge tone="cautionary" variant="outline">점검 예정</ContentBadge>
+        <ContentBadge color="accent" variant="solid" leading={<Icon name="android" />}>Android</ContentBadge>
+        <ContentBadge color="accent" leading={<Icon name="apple" />}>iOS</ContentBadge>
+        <ContentBadge color="accent" variant="outlined" leading={<Icon name="globe" />}>Web</ContentBadge>
+        <ContentBadge color="neutral" size="xsmall">텍스트</ContentBadge>
+        <ContentBadge color="accent" size="medium" trailing={<Icon name="square" />}>텍스트</ContentBadge>
         <StatusBadge tone="positive" pulse>가동중 3대</StatusBadge>
         <StatusBadge tone="warning">점검 중</StatusBadge>
         <StatusBadge tone="offline">오프라인</StatusBadge>
@@ -176,9 +178,9 @@ export const ThumbnailCard = {
     return (
       <div data-visual-crop-root style={{ width: 700, height: 220, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
-          <Thumbnail ratio={1} overlay={overlay('1:1')} />
-          <Thumbnail ratio={16 / 9} overlay={overlay('16:9')} overlayAlign="bottom-right" />
-          <Thumbnail ratio={4 / 3} radius={false} overlay={overlay('square')} />
+          <Thumbnail ratio="1/1" overlay={overlay('1:1')} />
+          <Thumbnail ratio="16/9" border overlay={overlay('16:9')} overlayAlign="bottom-right" />
+          <Thumbnail ratio="4/3" radius={false} border overlay={overlay('square')} />
         </div>
       </div>
     );
@@ -210,8 +212,8 @@ export const ListCellAccordionCard = {
     <div data-visual-crop-root style={{ width: 480, height: 380, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: '8px 16px', width: 340 }}>
-          <ListCell leading={<Icon name="document" />} title="컴포넌트 검토 기록" description="2026.06.30 · PDF" trailing={<Icon name="chevron-right" />} onClick={() => {}} divider />
-          <ListCell leading={<Icon name="bell" />} title="실시간 알림" trailing={<Switch defaultChecked size="sm" />} />
+          <ListCell leading={<Icon name="document" />} title="컴포넌트 검토 기록" description="2026.06.30 · PDF" chevron onClick={() => {}} divider selected />
+          <ListCell leading={<Icon name="bell" />} title="실시간 알림" trailing={<Switch defaultChecked size="sm" />} interaction="hovered" />
         </div>
         <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: '0 16px', width: 340 }}>
           <Accordion
