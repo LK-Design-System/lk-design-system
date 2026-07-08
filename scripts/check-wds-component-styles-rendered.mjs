@@ -39,10 +39,14 @@ const TARGETS = [
   { name: 'Tag', set: 'Content Badge/Content Badge', jsx: '<Tag>TAG</Tag>', dims: [] },
   { name: 'PushBadge', set: 'Badge/Push', jsx: '<PushBadge count={3} />', dims: ['radius', 'height'] },
   { name: 'Category', set: 'Category/Category', jsx: "<Category items={['전체','로봇','배차']} />", dims: [] },
+  { name: 'Toast', set: 'Toast/Toast', jsx: '<Toast>알림 메시지입니다.</Toast>', dims: ['radius', 'padX'] },
+  { name: 'Select', set: 'Select/Select', jsx: "<Select options={['하나','둘']} defaultValue=\"하나\" />", dims: ['radius', 'padX', 'height', 'fontSize'] },
+  { name: 'Textarea', set: 'Textinput/Textarea', jsx: '<Textarea defaultValue="여러 줄 텍스트 값" />', dims: ['radius', 'padX', 'fontSize'] },
+  { name: 'Switch', set: 'Switch/Switch', jsx: '<Switch defaultChecked />', dims: ['height'] },
 ];
 
 const indexHtml = `<!doctype html><html><head><meta charset="UTF-8"/></head><body><div id="root"></div><script type="module" src="/src/App.jsx"></script></body></html>`;
-const imports = 'Button, Chip, FilterChip, ContentBadge, SegmentedControl, Tag, PushBadge, Category';
+const imports = 'Button, Chip, FilterChip, ContentBadge, SegmentedControl, Tag, PushBadge, Category, Toast, Select, Textarea, Switch';
 const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ${imports} } from '@lk-robotics/design-system-core';

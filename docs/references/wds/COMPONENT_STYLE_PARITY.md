@@ -58,20 +58,23 @@ WDS `.fig` reference. Reliable (controlled wrapper + direct child; no ad-hoc
 selectors). Each component is rendered at the **medium** size to match the WDS
 representative variant.
 
-Result (0 drift): Button, Chip, Filter Chip, Content Badge, Segmented Control,
-Push Badge all match WDS dimensions. Two apparent drifts were harness artifacts,
-not real: Content Badge (LDS default size is `small`; its `medium` = r8/padX8/13
-matches WDS) and Segmented Control height (WDS `h` is the track; LDS track =
-40px segment + padding — radius 10 matches; height is a measurement axis, not a
-token).
+Result — **0 drift** across all 12 measured components (action / selection / form /
+feedback / content / overlay): **Button, Chip, Filter Chip, Content Badge,
+Segmented Control, Tag, Push Badge, Category, Toast, Select, Textarea, Switch** all
+match WDS dimensions (radius / padding / height / font as available).
+
+Two apparent drifts were harness artifacts, not real: Content Badge (LDS default
+size is `small`; its `medium` = r8/padX8/13 matches WDS) and Segmented Control
+height (WDS `h` is the track; LDS track = 40px segment + padding — radius 10
+matches; height is a measurement axis, not a token).
 
 ## Scope
 
 - **Token-driven** components — guarded by `check:component-styles` (node-only).
 - **Inline-styled** components — measured by `check:component-styles-rendered`
-  (Playwright). Currently covers Button, Chip, Filter Chip, Content Badge,
-  Segmented Control, Tag, Push Badge, Category; extend `TARGETS` to add more
-  (Checkbox/Radio/Switch/Tab need a targeted inner-element selector for their box/track).
+  (Playwright, 12 components, 0 drift). Extend `TARGETS` to add more; Checkbox /
+  Radio / Tab need a targeted inner-element selector for their box/track (WDS only
+  exposes a height for those, so radius/padding aren't comparable anyway).
 - `COMPONENT_STYLES.json` holds the WDS reference for all 164 sets.
 
 **Net finding across every component measured correctly: LDS matches WDS
