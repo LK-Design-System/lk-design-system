@@ -391,7 +391,7 @@ export const EditorShell = {
       panel={
         <div style={{ display: 'grid', gap: 14, padding: 16, boxSizing: 'border-box' }}>
           <div style={{ display: 'grid', gap: 4, minWidth: 0 }}>
-            <strong style={{ fontSize: 13, color: 'var(--label-strong)' }}>속성</strong>
+            <strong style={{ fontSize: 'var(--label1-size)', color: 'var(--label-strong)' }}>속성</strong>
             <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>미션 경로</span>
           </div>
 

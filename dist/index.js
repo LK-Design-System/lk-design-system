@@ -5316,7 +5316,7 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
             border-top: 1px solid var(--border-subtle) !important;
           }
         }` }),
-    title != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border-subtle)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--label-strong)" }, children: title }),
+    title != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border-subtle)", fontSize: "var(--headline2-size)", fontWeight: "var(--fw-bold)", color: "var(--label-strong)" }, children: title }),
     /* @__PURE__ */ jsxs43("div", { className: bodyClass, style: { display: "grid", gridTemplateColumns: `${tools != null ? "auto " : ""}minmax(0, 1fr)${panel != null ? " var(--lk-editor-panel-width)" : ""}`, flex: 1, minHeight: 0 }, children: [
       tools != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--border-subtle)", background: "var(--surface-subtle)" }, children: tools }),
       /* @__PURE__ */ jsx51("div", { style: { minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
