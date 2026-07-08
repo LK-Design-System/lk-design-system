@@ -105,6 +105,14 @@ export const TextInputStateMatrix = {
           iconLeft={<Icon name="filter" size={16} />}
           helper="칩 렌더와 leading icon"
         />
+        <Select
+          label="Select icon"
+          variant="icon"
+          trailingIcon={<Icon name="search" size={16} />}
+          defaultValue="value"
+          options={[{ value: 'value', label: '값' }, { value: 'review', label: '검토' }]}
+          helper="chevron 대신 트레일링 아이콘"
+        />
       </section>
     </main>
   ),

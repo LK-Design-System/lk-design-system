@@ -7006,9 +7006,11 @@ function Select({
   focus = false,
   overflow,
   platform,
-  variant,
+  variant = "normal",
   render = "text",
   iconLeft,
+  trailingIcon,
+  onTrailingIconClick,
   id,
   children,
   style,
@@ -7097,7 +7099,20 @@ function Select({
               iconLeft && /* @__PURE__ */ jsx78("span", { style: { display: "inline-flex", flex: "0 0 auto", color: "var(--color-semantic-label-assistive)" }, children: iconLeft }),
               curr && render === "chip" ? /* @__PURE__ */ jsx78("span", { style: { display: "inline-flex", alignItems: "center", maxWidth: "100%", height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint-2)", color: "var(--color-semantic-primary-normal)", fontSize: 13, fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr.label }) : /* @__PURE__ */ jsx78("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder })
             ] }),
-            /* @__PURE__ */ jsx78("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: visualOpen ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ jsx78("path", { d: "m6 9 6 6 6-6" }) })
+            (variant === "icon" || variant === "icon-button") && trailingIcon ? variant === "icon-button" ? /* @__PURE__ */ jsx78(
+              "span",
+              {
+                role: "button",
+                tabIndex: -1,
+                "aria-hidden": "true",
+                onClick: (e) => {
+                  e.stopPropagation();
+                  onTrailingIconClick && onTrailingIconClick(e);
+                },
+                style: { flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", width: 24, height: 24, borderRadius: "var(--radius-sm)", color: "var(--color-semantic-label-alternative)", cursor: "pointer" },
+                children: trailingIcon
+              }
+            ) : /* @__PURE__ */ jsx78("span", { style: { flexShrink: 0, display: "inline-flex", color: "var(--color-semantic-label-alternative)" }, children: trailingIcon }) : /* @__PURE__ */ jsx78("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: visualOpen ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ jsx78("path", { d: "m6 9 6 6 6-6" }) })
           ]
         }
       ),
@@ -8926,9 +8941,11 @@ function Tabs({
   padding = false,
   trailingIconButton = false,
   scroll = "auto",
+  variant = "normal",
   style,
   ...rest
 }) {
+  const activeInk = variant === "alternative" ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)";
   const norm = items.map(
     (o) => typeof o === "string" ? { value: o, label: o } : o
   );
@@ -8989,7 +9006,7 @@ function Tabs({
               fontSize: s.fontSize,
               fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
-              color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)",
+              color: active ? activeInk : "var(--color-semantic-label-alternative)",
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)",
               ...item.style
@@ -9044,7 +9061,7 @@ function Tabs({
                     bottom: -1,
                     height: 2,
                     borderRadius: 0,
-                    background: active ? "var(--color-semantic-label-normal)" : "transparent",
+                    background: active ? activeInk : "transparent",
                     transition: "background var(--dur-fast) var(--ease-out)"
                   }
                 }
@@ -10455,6 +10472,11 @@ var ICONS = {
     color: "var(--color-semantic-inverse-label)",
     node: /* @__PURE__ */ jsx127("circle", { cx: "12", cy: "12", r: "8" })
   },
+  assistive: {
+    // neutral informational toast — text only, no status glyph
+    color: "var(--color-semantic-inverse-label)",
+    node: null
+  },
   positive: {
     color: "var(--bw-green)",
     node: /* @__PURE__ */ jsxs95(Fragment3, { children: [
@@ -10523,7 +10545,7 @@ function Toast({
       },
       ...rest,
       children: [
-        leadingIcon && /* @__PURE__ */ jsx127(
+        leadingIcon && (icon || t.node) && /* @__PURE__ */ jsx127(
           "span",
           {
             "aria-hidden": "true",

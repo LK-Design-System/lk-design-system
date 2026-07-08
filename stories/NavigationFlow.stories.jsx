@@ -65,6 +65,7 @@ export const TabAndCategoryPatterns = {
           <Tabs items={tabItems} defaultValue="overview" resize="hug" size="small" />
           <Tabs items={tabItems} defaultValue="activity" resize="fill" size="medium" padding trailingIconButton />
           <Tabs items={tabItems} defaultValue="settings" resize="hug" size="large" scroll />
+          <Tabs items={tabItems} defaultValue="overview" resize="hug" size="medium" variant="alternative" />
         </div>
       </Section>
 

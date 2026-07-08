@@ -30,6 +30,8 @@ export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
   trailingIconButton?: boolean | React.ReactNode;
   /** scroll axis. @default "auto" */
   scroll?: "auto" | boolean;
+  /** 활성 탭 강조. `alternative`는 잉크 대신 브랜드 primary 색을 씁니다. @default "normal" */
+  variant?: "normal" | "alternative";
 }
 
 /** underline tab navigation with hug/fill resize, size, padding, trailing icon, and scroll axes. */

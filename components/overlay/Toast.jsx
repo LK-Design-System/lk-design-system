@@ -5,6 +5,11 @@ const ICONS = {
     color: "var(--color-semantic-inverse-label)",
     node: <circle cx="12" cy="12" r="8" />,
   },
+  assistive: {
+    // neutral informational toast — text only, no status glyph
+    color: "var(--color-semantic-inverse-label)",
+    node: null,
+  },
   positive: {
     color: "var(--bw-green)",
     node: (
@@ -84,7 +89,7 @@ export function Toast({
       }}
       {...rest}
     >
-      {leadingIcon && (
+      {leadingIcon && (icon || t.node) && (
         <span
           aria-hidden="true"
           style={{ display: "inline-flex", flexShrink: 0, color: t.color }}

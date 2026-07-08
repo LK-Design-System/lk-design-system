@@ -20,17 +20,17 @@ Segmented Control, Page Indicator, Menu.
 | Component | Missing | Notes |
 |---|---|---|
 | ~~**Input / Textinput** — Character Counter, Timer~~ | ✅ **resolved** | Added `showCount` (Input + Textarea) and `timer` slot (Input). Badge / Icon-Button trailing content stays composable via slots. |
-| **Toast** | **Assistive** variant | Has normal/positive/cautionary/negative (4); WDS adds `assistive` (5). |
-| **Select** | **Icon / Icon Button** trailing variant | Only `render: text \| chip`. |
-| **Tabs** | **Alternative** variant | No `variant` prop (size only). |
+| ~~**Toast** — Assistive~~ | ✅ **resolved** | Added `assistive` variant (neutral, no status glyph). |
+| ~~**Select** — Icon / Icon Button~~ | ✅ **resolved** | Added `variant: "icon" \| "icon-button"` + `trailingIcon` / `onTrailingIconClick` (replaces the chevron). |
+| ~~**Tabs** — Alternative~~ | ✅ **resolved** | Added `variant: "alternative"` (active state uses brand primary instead of ink). |
 
 ## Modeled differently (decide mapping, not literal gaps)
 
 | Component | Situation |
 |---|---|
-| **ActionArea** | WDS "Action Area" is a 12-variant action element (Button/Cancel/Checkbox/Chip/Summary…); LDS ActionArea is a sticky action-bar container (summary/compact/sticky). Different abstraction. |
+| **ActionArea** | **Decision: keep the container abstraction.** WDS "Action Area" is a 12-variant action element (Button/Cancel/Checkbox/Chip/Summary…); LDS ActionArea is a sticky action-bar container whose content (buttons, checkboxes, chips, summary) is composed from Button/Checkbox/Chip/etc. The WDS "variants" are content configurations, not a single-component enum — composition is the intentional model. |
 | **ChoiceCard** | WDS `Type: radio/checkbox` is modeled by LDS `multiple` boolean — not a gap. |
-| **Dot / PageIndicator** | WDS "Dot" display variants (Extended/Minimize/White) vs LDS `counter/dot/dots`. Ambiguous mapping. |
+| **Dot / PageIndicator** | **Decision: keep LDS `counter/dot/dots`.** WDS "Dot" display modes (Compact/Extended/Minimize/White) are density/on-dark tweaks; `White` (over-media) is the only functional delta and is deferred until an over-media context needs it. |
 
 ## Filtered as fig bleed (not real)
 
@@ -41,4 +41,6 @@ Segmented Control, Page Indicator, Menu.
 ## Resolution log
 
 - ✅ Input / Textarea **Character Counter** (`showCount` + `maxLength` → `n/max`, live) and Input **Timer** (`timer` trailing slot). Demonstrated in the Text Input story; replaced the prior helper-text counter hack.
-- _(open)_ Toast `assistive` variant · Select `icon`/`icon-button` variant · Tabs `alternative` variant · ActionArea abstraction mapping · Dot/PageIndicator variant mapping.
+- ✅ **Toast** `assistive`, **Select** `icon`/`icon-button` (+`trailingIcon`), **Tabs** `alternative`. Each demonstrated in its story.
+- ✅ **ActionArea** and **Dot/PageIndicator** resolved as intentional-divergence decisions (see table).
+- All confirmed component-axis gaps are now closed.
