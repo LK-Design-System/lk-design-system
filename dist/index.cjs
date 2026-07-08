@@ -5567,7 +5567,7 @@ function EditorToolbar({ items = [], value, defaultValue, onChange, orientation 
 // components/editor/HistoryToolbar.jsx
 var import_react56 = __toESM(require("react"), 1);
 var import_jsx_runtime54 = require("react/jsx-runtime");
-function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onReset, count, style, ...rest }) {
+function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onReset, style, ...rest }) {
   const base = {
     width: 34,
     height: 34,
@@ -5583,11 +5583,7 @@ function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onRe
   return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("button", { type: "button", disabled: !canUndo, onClick: onUndo, title: "\uC2E4\uD589 \uCDE8\uC18C", "aria-label": "\uC2E4\uD589 \uCDE8\uC18C", style: { ...base, cursor: canUndo ? "pointer" : "not-allowed", opacity: canUndo ? 1 : 0.4 }, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }),
     /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("button", { type: "button", disabled: !canRedo, onClick: onRedo, title: "\uB2E4\uC2DC \uC2E4\uD589", "aria-label": "\uB2E4\uC2DC \uC2E4\uD589", style: { ...base, cursor: canRedo ? "pointer" : "not-allowed", opacity: canRedo ? 1 : 0.4 }, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }) }),
-    onReset && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("button", { type: "button", onClick: onReset, title: "\uCD08\uAE30\uD654", "aria-label": "\uCD08\uAE30\uD654", style: { ...base, cursor: "pointer" }, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Icon, { name: "reset", size: 16, "aria-hidden": "true" }) }),
-    typeof count === "number" && /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums", marginLeft: 4 }, children: [
-      count,
-      " \uB2E8\uACC4"
-    ] })
+    onReset && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)("button", { type: "button", onClick: onReset, title: "\uCD08\uAE30\uD654", "aria-label": "\uCD08\uAE30\uD654", style: { ...base, cursor: "pointer" }, children: /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Icon, { name: "reset", size: 16, "aria-hidden": "true" }) })
   ] });
 }
 

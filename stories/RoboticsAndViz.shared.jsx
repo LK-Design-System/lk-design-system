@@ -390,12 +390,9 @@ export const EditorShell = {
       }
       panel={
         <div style={{ display: 'grid', gap: 14, padding: 16, boxSizing: 'border-box' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
-            <div style={{ display: 'grid', gap: 4, minWidth: 0 }}>
-              <strong style={{ fontSize: 13, color: 'var(--label-strong)' }}>속성</strong>
-              <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>미션 경로</span>
-            </div>
-            <Badge tone="navy" style={{ flexShrink: 0 }}>초안</Badge>
+          <div style={{ display: 'grid', gap: 4, minWidth: 0 }}>
+            <strong style={{ fontSize: 13, color: 'var(--label-strong)' }}>속성</strong>
+            <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>미션 경로</span>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -424,7 +421,7 @@ export const EditorShell = {
           </div>
         </div>
       }
-      status={<HistoryToolbar canUndo canRedo count={8} onReset={() => {}} style={{ marginLeft: 'auto' }} />}
+      status={<HistoryToolbar canUndo canRedo onReset={() => {}} style={{ marginLeft: 'auto' }} />}
       style={{ height: 480 }}
     >
       <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: 'var(--surface-sunken)' }}>
@@ -487,7 +484,6 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
         <HistoryToolbar
           canUndo={step > 0}
           canRedo={step < 5}
-          count={step}
           onUndo={() => setStep((value) => Math.max(0, value - 1))}
           onRedo={() => setStep((value) => Math.min(5, value + 1))}
           onReset={() => setStep(0)}
