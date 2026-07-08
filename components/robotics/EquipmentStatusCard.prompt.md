@@ -9,4 +9,4 @@
 ```
 
 - **tone**이 상태 점 · 화살표 · 기본 칩 색을 통일. **chips** 항목마다 독립 tone 지정 가능. **direction**("up"/"down")이 있으면 점 대신 dim 방향 화살표가 뜸(이동 중 신호). **connection**("online"/"reconnecting"/"weak"/"offline")이 있으면 점 대신 `ConnectionBadge` 시그널 바(재연결은 블링크) — 연결 끊김·재연결 같은 통신 상태 전용. 라이브 값 바인딩은 앱의 몫.
-- 상태는 **점 + 잉크 라벨**(--label-neutral, 대비 AA)로 조용하게 — 기존 알약 처리를 대체함. `설비 모니터` 예시가 이 컴포넌트로 구성됨.
+- 상태는 **점 + 잉크 라벨**(--color-semantic-label-neutral, 대비 AA)로 조용하게 — 기존 알약 처리를 대체함. `설비 모니터` 예시가 이 컴포넌트로 구성됨.

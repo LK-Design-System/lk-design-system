@@ -4,8 +4,8 @@
 <SideNav
   defaultValue="docs-overview" onChange={setTab}
   overlay collapsed={collapsed} onCollapsedChange={setCollapsed}
-  header={<Lockup variant="inline" color="var(--label-normal)" height={24} />}
-  headerCollapsed={<Lockup variant="mark" color="var(--label-normal)" height={20} />}
+  header={<Lockup variant="inline" color="var(--color-semantic-label-normal)" height={24} />}
+  headerCollapsed={<Lockup variant="mark" color="var(--color-semantic-label-normal)" height={20} />}
   items={[
     { heading: '문서' },
     { value: 'dash', label: '대시보드', icon: <Icon name="home" size={19} /> },

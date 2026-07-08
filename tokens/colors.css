@@ -23,7 +23,6 @@
 :root {
   /* ---- Ink / navy (brand — KEPT) --------------------------------------- */
   --bw-ink:           #0E1329;   /* BRAND NAVY — body text + every dark surface */
-  --bw-ink-deep:      #080B1C;   /* deepest navy fill                          */
   --bw-slate:         #2A3042;   /* raised navy panel                          */
 
   /* dark-surface gradients (heroes, product stages) */
@@ -36,27 +35,20 @@
   /* Demoted: brand colour now carries "primary". Graphite
      stays the calm neutral action + soft flat/tag fill.                     */
   --bw-indigo:        #2C3547;   /* secondary / neutral action                */
-  --bw-indigo-600:    #1F2735;   /* hover / pressed                           */
   --bw-indigo-tint:   #EAECF1;   /* cool-gray soft fill — flat btn, tag bg    */
 
   /* ---- PRIMARY — LK azure ramp (primary = the brand colour) -------- */
   /* Fills the "Primary/Normal · Strong · Heavy" role with the LK azure
      Normal reads AA with white text; strong/heavy darken for
      hover/press. Consumed via --color-primary / --color-primary-hover.       */
-  --lk-primary:        #0067A8;  /* primary button fill (≈5:1 on white)       */
-  --lk-primary-strong: #005A93;  /* hover                                     */
-  --lk-primary-heavy:  #004E7F;  /* pressed / heavy                           */
 
   /* ---- LK signal accent (steel-azure) — THE point colour (KEPT) ---------- */
-  --lk-accent:        #4E7CA8;   /* steel-azure → on DARK (eyebrows·links·state·fills); has life without the neon of #3FC4F0 */
-  --lk-accent-ink:    #4E7CA8;   /* steel-azure → on LIGHT too (eyebrows, links, icons, active, numbers) — unified with the dark value, no more teal-cyan */
   --lk-accent-tint:   rgba(132, 146, 164, 0.10);  /* icon-tile / active-pill wash */
   --lk-accent-tint-2: rgba(132, 146, 164, 0.14);  /* selected option / chip wash  */
 
   /* ---- Steel (muted secondary) ----------------------------------------- */
   --bw-blue:          #5E6E86;   /* steel secondary accents                   */
   --bw-steel:         #5E6E86;   /* steel (explicit alias)                    */
-  --bw-blue-link:     #4E7CA8;   /* inline text links (= signal ink)          */
 
   /* ---- Status (MUTED — LK identity, KEPT) ------------------------------ */
   /* Deliberately quiet: muted-green positive, ochre caution, brick danger.
@@ -64,15 +56,11 @@
      below as --accent-*-green/-orange/-red for categorical use.)            */
   --bw-green:         #4F765D;   /* "positive" slot — muted sage-green (checks, success) */
   --bw-green-600:     #395F47;   /* positive hover                            */
-  --bw-green-light:   #9ABBA2;   /* light sage — checks on dark, chart fill    */
   --bw-amber:         #C29A52;   /* status / rating — muted ochre             */
   --bw-red:           #CF6360;   /* error, destructive — muted brick          */
-  --bw-red-soft:      #E08A88;
-  --bw-coral:         #C2897A;   /* warm illustration accent (rare)           */
 
   /* ---- Neutrals (cool-neutrals) ------------------------------------ */
   --bw-gray:          #70737C;   /* muted body / secondary text (cool-neutral-50) */
-  --bw-gray-700:      #46474C;   /* darker body copy (cool-neutral-30)        */
   --bw-gray-300:      #C2C4C8;   /* disabled, faint icons (cool-neutral-90)   */
   --bw-border:        #E1E2E4;   /* hairline borders, dividers (cool-neutral-96) */
   --bw-mist:          #F7F7F8;   /* light section background (cool-neutral-99) */
@@ -83,39 +71,13 @@
   /* ======================================================================
      Semantic aliases — reference these in components
      ====================================================================== */
-  --color-bg:               var(--bw-paper);
-  --color-bg-subtle:        var(--bw-mist);
   --color-bg-band:          var(--bw-band);
-  --color-bg-inverse:       var(--bw-ink);
-  --surface-card:           var(--bw-white);
   --surface-overlay:        var(--bw-white);
-
-  --text-strong:            var(--bw-ink);
-  --text-body:              var(--bw-ink);
-  --text-muted:             var(--bw-gray);
-  --text-on-dark:           var(--bw-white);
   --text-on-dark-muted:     rgba(255, 255, 255, 0.7);
-  --text-link:              var(--bw-blue-link);
-
-  --color-primary:          var(--lk-primary);         /* brand azure — primary role */
-  --color-primary-hover:    var(--lk-primary-strong);
   --color-secondary:        var(--bw-indigo);          /* graphite neutral action        */
-  --color-secondary-hover:  var(--bw-indigo-600);
-  --color-accent:           var(--lk-accent-ink);      /* the brand signal, on light */
-  --color-accent-on-dark:   var(--lk-accent);          /* the brand signal, on dark  */
-  --color-positive:         var(--bw-green);
-  --color-cautionary:       var(--bw-amber);
-  --color-danger:           var(--bw-red);
-  --color-positive-strong:  var(--bw-green-600);
-  --color-cautionary-strong:#9A7424;
   --status-positive-tint:   rgba(79, 118, 93, 0.14);
   --status-cautionary-tint: rgba(194, 154, 82, 0.18);
   --status-danger-tint:     rgba(207, 99, 96, 0.14);
-  --color-danger-strong:    #FF4242;                   /* safety-critical only (e-stop, collision) — vivid exception to the muted status palette */
-  --color-danger-text:      #AE4E4B;                   /* AA text variant of --bw-red for text on light surfaces (>=4.5:1 on white) */
-
-  --border-subtle:          var(--bw-border);
-  --border-strong:          var(--bw-gray-300);
   --focus-ring:             rgba(0, 103, 168, 0.20);
 
   /* ======================================================================
@@ -127,18 +89,8 @@
      (Per decision: navy ink is treated as brand colour — only the ramp base
      stays LK.)  Prefer these over fixed --bw-gray*.
      ====================================================================== */
-  --label-strong:       #080B1C;                 /* max-contrast headings     */
-  --label-normal:       #0E1329;                 /* body — brand navy         */
-  --label-neutral:      rgba(14, 19, 41, 0.88);  /* secondary body            */
-  --label-alternative:  rgba(14, 19, 41, 0.61);  /* captions, metadata (·)    */
-  --label-assistive:    rgba(14, 19, 41, 0.28);  /* hints, placeholders       */
-  --label-disable:      rgba(14, 19, 41, 0.16);  /* disabled text             */
 
   /* Inverse ramp — same idea, white base, for navy surfaces */
-  --label-on-dark:            rgba(255, 255, 255, 0.96);
-  --label-on-dark-neutral:    rgba(255, 255, 255, 0.72);
-  --label-on-dark-alt:        rgba(255, 255, 255, 0.52);
-  --label-on-dark-assistive:  rgba(255, 255, 255, 0.32);
   --inverse-label-strong:      rgba(255, 255, 255, 0.92);
   --inverse-label-neutral:     rgba(255, 255, 255, 0.62);
   --inverse-label-alternative: rgba(255, 255, 255, 0.50);
@@ -156,24 +108,10 @@
   /* Translucent fills & hairlines on the cool-neutral base
      (#70737C → rgb 112 115 124), light-mode alphas. Chips, cells, dividers,
      tracks & tooltips get a light-touch surface/line. */
-  --fill-normal:        rgba(112, 115, 124, 0.08);
-  --fill-strong:        rgba(112, 115, 124, 0.16);
-  --fill-alt:           rgba(112, 115, 124, 0.05);
-  --line-normal:        rgba(112, 115, 124, 0.22);
-  --line-neutral:       rgba(112, 115, 124, 0.16);
-  --line-strong:        rgba(112, 115, 124, 0.52);
 
   /* ======================================================================
      Surface elevation ladder + inverse chip  (semantic — prefer these)
      ====================================================================== */
-  --surface-page:     var(--bw-paper);
-  --surface-subtle:   var(--bw-mist);
-  --surface-raised:   var(--bw-white);
-  --surface-sunken:   var(--bw-band);
-  --surface-inverse:  var(--bw-ink);
-  --text-on-inverse:  #FFFFFF;
-  --accent-text:      var(--lk-accent-ink);
-  --text-on-signal:   #FFFFFF;               /* text/icon on a signal fill — flips to navy on dark (steel) */
 
   /* ======================================================================
      ACCENT PALETTE — categorical / decorative hues
@@ -185,39 +123,12 @@
      never for LK status; keep categorical use in the cool lane so it never mimics status. Theme-independent (defined once; read anywhere).
      ====================================================================== */
   /* Raw hue anchors */
-  --cyan-40:#188586;   --cyan-50:#39ABAC;   --cyan-60:#7BC7C7;
-  --light-blue-40:#227BA2; --light-blue-50:#45A4D0; --light-blue-60:#82C1E2;
-  --lime-37:#6E8C44;   --lime-50:#8DAF5E;   --lime-60:#B0CC8E;
-  --pink-46:#A75E8A;   --pink-50:#CA7AAA;   --pink-60:#E2A5C8;
-  --purple-40:#7C61A8; --purple-50:#9D81CE; --purple-60:#BCA8E3;
-  --violet-45:#6669B0; --violet-50:#767AC9; --violet-60:#989EE2; --violet-70:#BBC0F1;
-  --orange-39:#B17C48; --orange-50:#DD9F65; --orange-60:#EFBC8D;
-  --red-orange-48:#BA654E; --red-orange-50:#D3745B; --red-orange-60:#EC9D88;
-  --green-40:#488857;  --green-50:#63AB74;  --green-60:#91CB9C;
-  --red-40:#B35757;    --red-50:#CF6968;    --red-60:#E79491;
-  --blue-45:#3A71AC;   --blue-50:#4683C5;   --blue-55:#5B96D6;   --blue-65:#95BEED;
+  --cyan-40:#188586;
 
   /* Accent foreground (readable on light — text / icon / border) */
-  --accent-foreground-blue:       var(--blue-45);
   --accent-foreground-cyan:       var(--cyan-40);
-  --accent-foreground-green:      var(--green-40);
-  --accent-foreground-light-blue: var(--light-blue-40);
-  --accent-foreground-lime:       var(--lime-37);
-  --accent-foreground-orange:     var(--orange-39);
-  --accent-foreground-pink:       var(--pink-46);
-  --accent-foreground-purple:     var(--purple-40);
-  --accent-foreground-red:        var(--red-40);
-  --accent-foreground-red-orange: var(--red-orange-48);
-  --accent-foreground-violet:     var(--violet-45);
 
   /* Accent background (vivid — solid fills / chips) */
-  --accent-background-cyan:       var(--cyan-50);
-  --accent-background-light-blue: var(--light-blue-50);
-  --accent-background-lime:       var(--lime-50);
-  --accent-background-pink:       var(--pink-50);
-  --accent-background-purple:     var(--purple-50);
-  --accent-background-red-orange: var(--red-orange-50);
-  --accent-background-violet:     var(--violet-50);
 }
 
 /* ==========================================================================
@@ -238,65 +149,23 @@
     --bw-band:         #0E121F;
     --bw-slate:        #2A3247;
     --bw-ink:          #E7EAF2;
-    --bw-ink-deep:     #F4F6FB;
     --bw-border:       rgba(255, 255, 255, 0.11);
     --bw-gray-300:     rgba(255, 255, 255, 0.22);
     --bw-gray:         #99A2B4;
-    --bw-gray-700:     #B7BECE;
     --bw-indigo-tint:  rgba(255, 255, 255, 0.10);
-    --lk-primary:        #0A78B2;
-    --lk-primary-strong: #0A6698;
-    --lk-primary-heavy:  #084F78;
     --bw-green:        #8FB79A;
     --bw-green-600:    #7FA98B;
     --bw-amber:        #D2B06D;
     --bw-red:          #E08A88;
-    --bw-red-soft:     #F0A6A3;
-    --lk-accent:       #7FAED4;
-    --lk-accent-ink:   #7FAED4;
     --lk-accent-tint:  rgba(127, 174, 212, 0.14);
     --lk-accent-tint-2:rgba(127, 174, 212, 0.20);
-    --color-bg:            #0A0E1A;
-    --color-bg-subtle:     #151A2B;
     --color-bg-band:       #0E121F;
-    --color-bg-inverse:    #E7EAF2;
-    --surface-card:        #151A2B;
     --surface-overlay:     #1A2036;
-    --surface-page:        #0A0E1A;
-    --surface-subtle:      #1E2438;
-    --surface-raised:      #232A40;
-    --surface-sunken:      #06090F;
-    --surface-inverse:     #262D40;
-    --text-on-inverse:     #FFFFFF;
-    --text-strong:         #F5F7FC;
-    --text-body:           #E7EAF2;
-    --text-muted:          #99A2B4;
-    --text-link:           var(--lk-accent);
-    --accent-text:         var(--lk-accent);
-    --text-on-signal:      #FFFFFF;
-    --color-primary:       var(--lk-primary);
-    --color-primary-hover: var(--lk-primary-strong);
     --color-secondary:     var(--bw-indigo);
-    --color-secondary-hover: var(--bw-indigo-600);
-    --color-accent:        var(--lk-accent);
-    --color-positive:      var(--bw-green);
-    --color-cautionary:    var(--bw-amber);
-    --color-danger:        var(--bw-red);
-    --color-positive-strong:  #B8D8C0;
-    --color-cautionary-strong:#E3C988;
-    --color-danger-text:      #E08A88;                  /* AA red text on dark surfaces */
     --status-positive-tint:   rgba(143, 183, 154, 0.18);
     --status-cautionary-tint: rgba(210, 176, 109, 0.20);
     --status-danger-tint:     rgba(224, 138, 136, 0.20);
-    --border-subtle:       rgba(255, 255, 255, 0.11);
-    --border-strong:       rgba(255, 255, 255, 0.20);
     --focus-ring:          rgba(132, 146, 164, 0.40);
-    --label-strong:        #FFFFFF;
-    --label-normal:        #E7EAF2;
-    --label-neutral:       rgba(255, 255, 255, 0.82);
-    --label-alternative:   rgba(255, 255, 255, 0.60);
-    --label-assistive:     rgba(255, 255, 255, 0.36);
-    --label-disable:       rgba(255, 255, 255, 0.20);
     --inverse-label-strong:      rgba(255, 255, 255, 0.92);
     --inverse-label-neutral:     rgba(255, 255, 255, 0.62);
     --inverse-label-alternative: rgba(255, 255, 255, 0.50);
@@ -310,12 +179,6 @@
     --inverse-line-strong:       rgba(255, 255, 255, 0.22);
     --static-white:              #FFFFFF;
     --static-black:              #000000;
-    --fill-normal:         rgba(112, 115, 124, 0.22);
-    --fill-strong:         rgba(112, 115, 124, 0.28);
-    --fill-alt:            rgba(112, 115, 124, 0.12);
-    --line-normal:         rgba(112, 115, 124, 0.32);
-    --line-neutral:        rgba(112, 115, 124, 0.28);
-    --line-strong:         rgba(194, 196, 200, 0.52);
   }
 }
 
@@ -327,65 +190,23 @@
   --bw-band:         #0E121F;
   --bw-slate:        #2A3247;
   --bw-ink:          #E7EAF2;
-  --bw-ink-deep:     #F4F6FB;
   --bw-border:       rgba(255, 255, 255, 0.11);
   --bw-gray-300:     rgba(255, 255, 255, 0.22);
   --bw-gray:         #99A2B4;
-  --bw-gray-700:     #B7BECE;
   --bw-indigo-tint:  rgba(255, 255, 255, 0.10);
-  --lk-primary:        #0A78B2;
-  --lk-primary-strong: #0A6698;
-  --lk-primary-heavy:  #084F78;
   --bw-green:        #8FB79A;
   --bw-green-600:    #7FA98B;
   --bw-amber:        #D2B06D;
   --bw-red:          #E08A88;
-  --bw-red-soft:     #F0A6A3;
-  --lk-accent:       #7FAED4;
-  --lk-accent-ink:   #7FAED4;
   --lk-accent-tint:  rgba(127, 174, 212, 0.14);
   --lk-accent-tint-2:rgba(127, 174, 212, 0.20);
-  --color-bg:            #0A0E1A;
-  --color-bg-subtle:     #151A2B;
   --color-bg-band:       #0E121F;
-  --color-bg-inverse:    #E7EAF2;
-  --surface-card:        #151A2B;
   --surface-overlay:     #1A2036;
-  --surface-page:        #0A0E1A;
-  --surface-subtle:      #1E2438;
-  --surface-raised:      #232A40;
-  --surface-sunken:      #06090F;
-  --surface-inverse:     #262D40;
-  --text-on-inverse:     #FFFFFF;
-  --text-strong:         #F5F7FC;
-  --text-body:           #E7EAF2;
-  --text-muted:          #99A2B4;
-  --text-link:           var(--lk-accent);
-  --accent-text:         var(--lk-accent);
-  --text-on-signal:      #FFFFFF;
-  --color-primary:       var(--lk-primary);
-  --color-primary-hover: var(--lk-primary-strong);
   --color-secondary:     var(--bw-indigo);
-  --color-secondary-hover: var(--bw-indigo-600);
-  --color-accent:        var(--lk-accent);
-  --color-positive:      var(--bw-green);
-  --color-cautionary:    var(--bw-amber);
-  --color-danger:        var(--bw-red);
-  --color-positive-strong:  #B8D8C0;
-  --color-cautionary-strong:#E3C988;
-  --color-danger-text:      #E08A88;                  /* AA red text on dark surfaces */
   --status-positive-tint:   rgba(143, 183, 154, 0.18);
   --status-cautionary-tint: rgba(210, 176, 109, 0.20);
   --status-danger-tint:     rgba(224, 138, 136, 0.20);
-  --border-subtle:       rgba(255, 255, 255, 0.11);
-  --border-strong:       rgba(255, 255, 255, 0.20);
   --focus-ring:          rgba(132, 146, 164, 0.40);
-  --label-strong:        #FFFFFF;
-  --label-normal:        #E7EAF2;
-  --label-neutral:       rgba(255, 255, 255, 0.82);
-  --label-alternative:   rgba(255, 255, 255, 0.60);
-  --label-assistive:     rgba(255, 255, 255, 0.36);
-  --label-disable:       rgba(255, 255, 255, 0.20);
   --inverse-label-strong:      rgba(255, 255, 255, 0.92);
   --inverse-label-neutral:     rgba(255, 255, 255, 0.62);
   --inverse-label-alternative: rgba(255, 255, 255, 0.50);
@@ -399,12 +220,6 @@
   --inverse-line-strong:       rgba(255, 255, 255, 0.22);
   --static-white:              #FFFFFF;
   --static-black:              #000000;
-  --fill-normal:         rgba(112, 115, 124, 0.22);
-  --fill-strong:         rgba(112, 115, 124, 0.28);
-  --fill-alt:            rgba(112, 115, 124, 0.12);
-  --line-normal:         rgba(112, 115, 124, 0.32);
-  --line-neutral:        rgba(112, 115, 124, 0.28);
-  --line-strong:         rgba(194, 196, 200, 0.52);
 }
 
 /* --------------------------------------------------------------------------
@@ -416,20 +231,9 @@
 [data-theme="light"], .theme-light {
   color-scheme: light;
   --bw-paper:#FFFFFF; --bw-white:#FFFFFF; --bw-mist:#F7F7F8; --bw-band:#F4F4F5; --bw-slate:#2A3042;
-  --bw-ink:#0E1329; --bw-ink-deep:#080B1C;
-  --bw-border:#E1E2E4; --bw-gray-300:#C2C4C8; --bw-gray:#70737C; --bw-gray-700:#46474C; --bw-indigo-tint:#EAECF1;
-  --bw-green:#4F765D; --bw-green-600:#395F47; --bw-green-light:#9ABBA2; --bw-amber:#C29A52; --bw-red:#CF6360; --bw-red-soft:#E08A88; --bw-coral:#C2897A;
-  --lk-primary:#0067A8; --lk-primary-strong:#005A93; --lk-primary-heavy:#004E7F;
-  --lk-accent-ink:#4E7CA8; --lk-accent-tint:rgba(132,146,164,0.10); --lk-accent-tint-2:rgba(132,146,164,0.14);
-  --color-bg:#FFFFFF; --color-bg-subtle:#F7F7F8; --color-bg-band:#F4F4F5; --color-bg-inverse:#0E1329;
-  --surface-card:#FFFFFF; --surface-overlay:#FFFFFF; --surface-page:#FFFFFF; --surface-subtle:#F7F7F8;
-  --surface-raised:#FFFFFF; --surface-sunken:#F4F4F5; --surface-inverse:#0E1329; --text-on-inverse:#FFFFFF;
-  --text-strong:#0E1329; --text-body:#0E1329; --text-muted:#70737C; --text-link:#4E7CA8; --accent-text:#4E7CA8; --text-on-signal:#FFFFFF;
-  --color-primary:var(--lk-primary); --color-primary-hover:var(--lk-primary-strong);
-  --color-secondary:var(--bw-indigo); --color-secondary-hover:var(--bw-indigo-600); --color-accent:#0067A8;
-  --color-positive:var(--bw-green); --color-cautionary:var(--bw-amber); --color-danger:var(--bw-red); --color-positive-strong:var(--bw-green-600); --color-cautionary-strong:#9A7424; --color-danger-text:#AE4E4B; --status-positive-tint:rgba(79,118,93,0.14); --status-cautionary-tint:rgba(194,154,82,0.18); --status-danger-tint:rgba(207,99,96,0.14);
-  --border-subtle:#E1E2E4; --border-strong:#C2C4C8; --focus-ring:rgba(0,103,168,0.20);
-  --label-strong:#080B1C; --label-normal:#0E1329; --label-neutral:rgba(14,19,41,0.88); --label-alternative:rgba(14,19,41,0.61); --label-assistive:rgba(14,19,41,0.28); --label-disable:rgba(14,19,41,0.16);
+  --bw-ink:#0E1329;
+  --bw-border:#E1E2E4; --bw-gray-300:#C2C4C8; --bw-gray:#70737C; --bw-indigo-tint:#EAECF1;
+  --bw-green:#4F765D; --bw-green-600:#395F47; --bw-amber:#C29A52; --bw-red:#CF6360; --lk-accent-tint:rgba(132,146,164,0.10); --lk-accent-tint-2:rgba(132,146,164,0.14); --color-bg-band:#F4F4F5; --surface-overlay:#FFFFFF;
+  --color-secondary:var(--bw-indigo); --status-positive-tint:rgba(79,118,93,0.14); --status-cautionary-tint:rgba(194,154,82,0.18); --status-danger-tint:rgba(207,99,96,0.14); --focus-ring:rgba(0,103,168,0.20);
   --inverse-label-strong:rgba(255,255,255,0.92); --inverse-label-neutral:rgba(255,255,255,0.62); --inverse-label-alternative:rgba(255,255,255,0.50); --inverse-label-assistive:rgba(255,255,255,0.45); --inverse-label-disable:rgba(255,255,255,0.38); --inverse-icon-muted:rgba(255,255,255,0.75); --inverse-fill-normal:rgba(255,255,255,0.12); --inverse-fill-hover:rgba(255,255,255,0.14); --inverse-fill-strong:rgba(255,255,255,0.16); --inverse-line-normal:rgba(255,255,255,0.14); --inverse-line-strong:rgba(255,255,255,0.22); --static-white:#FFFFFF; --static-black:#000000;
-  --fill-normal:rgba(112,115,124,0.08); --fill-strong:rgba(112,115,124,0.16); --fill-alt:rgba(112,115,124,0.05); --line-normal:rgba(112,115,124,0.22); --line-neutral:rgba(112,115,124,0.16); --line-strong:rgba(112,115,124,0.52);
 }

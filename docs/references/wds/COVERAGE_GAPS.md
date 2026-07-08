@@ -78,20 +78,26 @@ None of them block the parity claim; each is either a small evidence gap or an
 intentional LK deviation that should eventually get its own demo or contract
 note.
 
-1. **Focus-visible styling** (`components/buttons`, tokens): no `:focus-visible`
-   rules exist anywhere; components rely on the UA default outline, and no
-   story demonstrates focus states (including on dark surfaces).
-2. **ActionArea story demos**: `sticky`, `compact`, `divider={false}`, and the
-   checkbox/chip/information extra-content variants exist as props but are not
-   demonstrated in stories.
-3. **Card contract deltas**: no `toggleIcon` prop (WDS Card/List Card has one);
-   only two caption tiers (`caption` + `subCaption`) vs WDS three;
-   `thumbnailOverlay` is supported on `Thumbnail` but not demonstrated inside a
-   Card story.
-4. **Brand clear-space rule**: Brand stories say "do not distort" but no
-   explicit clear-space specification is documented.
-5. **Textinput Timer / Character Counter**: covered via `actionRight` /
-   `trailingButton` slot composition; no dedicated story tiles.
+**Resolution status (2026-07-09):** follow-ups 1–5 are closed; item 6 is an
+intentional-override register (no action).
+
+1. **Focus-visible styling** — ✅ RESOLVED. `tokens/focus.css` adds one
+   token-driven, theme-aware `:where(...):focus-visible` ring (with
+   `!important` so it shows even over inline `outline:none`), wired into
+   `styles.css`. No per-component edits.
+2. **ActionArea story demos** — ✅ RESOLVED. `sticky`, `compact`,
+   `divider={false}`, and checkbox/chip/information extra-content are
+   demonstrated in the "Action area states" story (`stories/ActionArea.stories.jsx`).
+3. **Card contract deltas** — ✅ RESOLVED. `Card` gained a `toggleIcon` prop
+   and a third caption tier (`metaCaption`); the "CardAffordances" story
+   demonstrates both plus a `Thumbnail` `overlay` inside a card. `Card.d.ts` +
+   `Card.prompt.md` updated.
+4. **Brand clear-space rule** — ✅ RESOLVED. `stories/Brand.shared.jsx`
+   documents an explicit lockup clear-space rule (≥ ½ × height on all sides,
+   min height 20px) with a visual spec.
+5. **Textinput Timer / Character Counter** — ✅ RESOLVED. Dedicated timer
+   (`actionRight` countdown) and live character-counter tiles in the
+   "타이머 · 문자 수 카운터" story (`stories/FormsFull.stories.jsx`).
 6. **Intentional LK overrides recorded during closure**: thick divider 8px
    (WDS 12px); iOS bar metrics used for both `MobileSystemBars` platforms; no
    chromeless IconButton `normal` style; TextButton icons via composition;

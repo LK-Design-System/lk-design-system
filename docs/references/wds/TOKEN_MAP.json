@@ -24,7 +24,7 @@
     {
       "wds": "Primary/Normal",
       "lkToken": "semantic.action.primary",
-      "css": "--color-primary",
+      "css": "--color-semantic-primary-normal",
       "light": "#0067A8",
       "dark": "#0A78B2",
       "status": "mapped",
@@ -33,7 +33,7 @@
     {
       "wds": "Primary/Strong",
       "lkToken": "semantic.action.primaryHover",
-      "css": "--color-primary-hover",
+      "css": "--color-semantic-primary-strong",
       "light": "#005A93",
       "dark": "#0A6698",
       "status": "mapped",
@@ -42,7 +42,7 @@
     {
       "wds": "Primary/Heavy",
       "lkToken": "primitive.color.brandAzureHeavy",
-      "css": "--lk-primary-heavy",
+      "css": "--color-semantic-primary-heavy",
       "light": "#004E7F",
       "dark": "#084F78",
       "status": "mapped",
@@ -51,7 +51,7 @@
     {
       "wds": "Label/Strong",
       "lkToken": "semantic.text.strong",
-      "css": "--label-strong",
+      "css": "--color-semantic-label-strong",
       "light": "#080B1C",
       "dark": "#FFFFFF",
       "status": "mapped",
@@ -60,7 +60,7 @@
     {
       "wds": "Label/Normal",
       "lkToken": "semantic.text.body",
-      "css": "--label-normal",
+      "css": "--color-semantic-label-normal",
       "light": "#0E1329",
       "dark": "#E7EAF2",
       "status": "mapped",
@@ -69,7 +69,7 @@
     {
       "wds": "Label/Neutral",
       "lkToken": "semantic.text.neutral",
-      "css": "--label-neutral",
+      "css": "--color-semantic-label-neutral",
       "light": "rgba(14, 19, 41, 0.88)",
       "dark": "rgba(255, 255, 255, 0.82)",
       "status": "mapped",
@@ -78,7 +78,7 @@
     {
       "wds": "Label/Alternative",
       "lkToken": "semantic.text.muted",
-      "css": "--label-alternative",
+      "css": "--color-semantic-label-alternative",
       "light": "rgba(14, 19, 41, 0.61)",
       "dark": "rgba(255, 255, 255, 0.60)",
       "status": "mapped",
@@ -87,7 +87,7 @@
     {
       "wds": "Background/Normal/Normal",
       "lkToken": "semantic.surface.page",
-      "css": "--surface-page",
+      "css": "--color-semantic-background-normal-normal",
       "light": "#FFFFFF",
       "dark": "#0A0E1A",
       "status": "mapped",
@@ -96,7 +96,7 @@
     {
       "wds": "Background/Normal/Alternative",
       "lkToken": "semantic.surface.subtle",
-      "css": "--surface-subtle",
+      "css": "--color-semantic-background-normal-alternative",
       "light": "#F7F7F8",
       "dark": "#1E2438",
       "status": "mapped",
@@ -105,7 +105,7 @@
     {
       "wds": "Background/Elevated/Normal",
       "lkToken": "semantic.surface.raised",
-      "css": "--surface-raised",
+      "css": "--color-semantic-background-elevated-normal",
       "light": "#FFFFFF",
       "dark": "#232A40",
       "status": "mapped",
@@ -114,7 +114,7 @@
     {
       "wds": "Line/Solid/Normal",
       "lkToken": "semantic.border.subtle",
-      "css": "--border-subtle",
+      "css": "--color-semantic-line-solid-normal",
       "light": "#E1E2E4",
       "dark": "rgba(255, 255, 255, 0.11)",
       "status": "mapped",
@@ -123,7 +123,7 @@
     {
       "wds": "Line/Normal/Normal",
       "lkToken": "semantic.line.normal",
-      "css": "--line-normal",
+      "css": "--color-semantic-line-normal-normal",
       "light": "rgba(112, 115, 124, 0.22)",
       "dark": "rgba(112, 115, 124, 0.32)",
       "status": "mapped",
@@ -132,7 +132,7 @@
     {
       "wds": "Fill/Normal",
       "lkToken": "semantic.fill.normal",
-      "css": "--fill-normal",
+      "css": "--color-semantic-fill-normal",
       "light": "rgba(112, 115, 124, 0.08)",
       "dark": "rgba(112, 115, 124, 0.22)",
       "status": "mapped",
@@ -141,7 +141,7 @@
     {
       "wds": "Status/Positive",
       "lkToken": "semantic.status.positive",
-      "css": "--color-positive",
+      "css": "--color-semantic-status-positive",
       "light": "#4F765D",
       "dark": "#8FB79A",
       "status": "mapped",
@@ -150,7 +150,7 @@
     {
       "wds": "Status/Cautionary",
       "lkToken": "semantic.status.cautionary",
-      "css": "--color-cautionary",
+      "css": "--color-semantic-status-cautionary",
       "light": "#C29A52",
       "dark": "#D2B06D",
       "status": "mapped",
@@ -159,7 +159,7 @@
     {
       "wds": "Status/Negative",
       "lkToken": "semantic.status.danger",
-      "css": "--color-danger",
+      "css": "--color-semantic-status-negative",
       "light": "#CF6360",
       "dark": "#E08A88",
       "status": "mapped",

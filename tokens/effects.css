@@ -35,46 +35,46 @@
   /* ---- Decorate / Gradient ---------------------------------------- */
   --decorate-gradient-solid-top: linear-gradient(
     180deg,
-    var(--surface-raised) 0%,
+    var(--color-semantic-background-elevated-normal) 0%,
     transparent 100%
   );
   --decorate-gradient-solid-right: linear-gradient(
     270deg,
-    var(--surface-raised) 0%,
+    var(--color-semantic-background-elevated-normal) 0%,
     transparent 100%
   );
   --decorate-gradient-solid-bottom: linear-gradient(
     0deg,
-    var(--surface-raised) 0%,
+    var(--color-semantic-background-elevated-normal) 0%,
     transparent 100%
   );
   --decorate-gradient-solid-left: linear-gradient(
     90deg,
-    var(--surface-raised) 0%,
+    var(--color-semantic-background-elevated-normal) 0%,
     transparent 100%
   );
   --decorate-gradient-multiple-top: linear-gradient(
     180deg,
-    var(--surface-raised) 0%,
-    var(--fill-strong) 48%,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
     transparent 100%
   );
   --decorate-gradient-multiple-right: linear-gradient(
     270deg,
-    var(--surface-raised) 0%,
-    var(--fill-strong) 48%,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
     transparent 100%
   );
   --decorate-gradient-multiple-bottom: linear-gradient(
     0deg,
-    var(--surface-raised) 0%,
-    var(--fill-strong) 48%,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
     transparent 100%
   );
   --decorate-gradient-multiple-left: linear-gradient(
     90deg,
-    var(--surface-raised) 0%,
-    var(--fill-strong) 48%,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
     transparent 100%
   );
   --decorate-mask-fade-top: linear-gradient(180deg, #000 0%, transparent 100%);

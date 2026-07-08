@@ -11,4 +11,4 @@
 - **copyright** — 기본 `Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved.`
 - **backToTop** — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동).
 - **(확장, 실사이트엔 없음)** `brand` · `columns` — 마케팅 푸터가 커질 때만. `compact`는 페이지 서피스 위 한 줄 변형.
-- 서피스는 `--surface-inverse`(라이트에서 `#0E1329`, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다.
+- 서피스는 `--color-semantic-inverse-background`(라이트에서 `#0E1329`, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다.

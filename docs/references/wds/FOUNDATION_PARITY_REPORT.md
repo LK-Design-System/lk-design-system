@@ -47,7 +47,7 @@ Legend: ✅ match · ❌ drift · ⚠️ note
 
 WDS opacity steps: 0, 5, 8, 12, 16, 22, 28, 35, 43, 52, 61, 74, 88, 97, 100
 
-Present in colors.css alpha ladder: 11/15 — missing: 35, 43, 74, 97
+Present in colors.css alpha ladder: 5/15 — missing: 5, 8, 28, 35, 43, 52, 61, 74, 88, 97
 
 ## Extracted but not value-diffed (context / manual review)
 
@@ -58,4 +58,4 @@ Present in colors.css alpha ladder: 11/15 — missing: 35, 43, 74, 97
 
 ---
 
-All value-diffable foundation fields match the local .fig. (typography 16, grid + breakpoints, opacity 11/15)
+All value-diffable foundation fields match the local .fig. (typography 16, grid + breakpoints, opacity 5/15)
