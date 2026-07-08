@@ -26,35 +26,10 @@
         "css": "--bw-ink",
         "$description": "LK ROBOTICS navy ink 원값입니다."
       },
-      "brandNavyDeep": {
-        "$type": "color",
-        "$value": "#080B1C",
-        "css": "--bw-ink-deep"
-      },
-      "brandAzure": {
-        "$type": "color",
-        "$value": "#0067A8",
-        "css": "--lk-primary"
-      },
-      "brandAzureStrong": {
-        "$type": "color",
-        "$value": "#005A93",
-        "css": "--lk-primary-strong"
-      },
-      "signalSteelAzure": {
-        "$type": "color",
-        "$value": "#4E7CA8",
-        "css": "--lk-accent-ink"
-      },
       "graphite": {
         "$type": "color",
         "$value": "#2C3547",
         "css": "--bw-indigo"
-      },
-      "graphiteStrong": {
-        "$type": "color",
-        "$value": "#1F2735",
-        "css": "--bw-indigo-600"
       },
       "paper": {
         "$type": "color",
@@ -342,7 +317,11 @@
           "lineHeight": "24px",
           "letterSpacing": "0.0057em"
         },
-        "css": ["--body1-size", "--body1-line", "--body1-spacing"]
+        "css": [
+          "--body1-size",
+          "--body1-line",
+          "--body1-spacing"
+        ]
       },
       "label1": {
         "$type": "typography",
@@ -351,7 +330,11 @@
           "lineHeight": "20px",
           "letterSpacing": "0.0145em"
         },
-        "css": ["--label1-size", "--label1-line", "--label1-spacing"]
+        "css": [
+          "--label1-size",
+          "--label1-line",
+          "--label1-spacing"
+        ]
       },
       "headline2": {
         "$type": "typography",
@@ -360,7 +343,11 @@
           "lineHeight": "24px",
           "letterSpacing": "0em"
         },
-        "css": ["--headline2-size", "--headline2-line", "--headline2-spacing"]
+        "css": [
+          "--headline2-size",
+          "--headline2-line",
+          "--headline2-spacing"
+        ]
       }
     },
     "grid": {
@@ -591,105 +578,12 @@
   },
   "semantic": {
     "description": "제품 UI에서 쓰는 의미 기반 토큰입니다. 제품 화면에서는 primitive보다 semantic 토큰을 우선 사용합니다.",
-    "surface": {
-      "page": {
-        "$type": "color",
-        "$value": "var(--surface-page)",
-        "css": "--surface-page",
-        "ref": "primitive.color.paper"
-      },
-      "raised": {
-        "$type": "color",
-        "$value": "var(--surface-raised)",
-        "css": "--surface-raised",
-        "ref": "primitive.color.paper"
-      },
-      "card": {
-        "$type": "color",
-        "$value": "var(--surface-card)",
-        "css": "--surface-card"
-      },
-      "inverse": {
-        "$type": "color",
-        "$value": "var(--surface-inverse)",
-        "css": "--surface-inverse",
-        "ref": "primitive.color.brandNavy"
-      }
-    },
-    "text": {
-      "strong": {
-        "$type": "color",
-        "$value": "var(--text-strong)",
-        "css": "--text-strong"
-      },
-      "body": {
-        "$type": "color",
-        "$value": "var(--text-body)",
-        "css": "--text-body"
-      },
-      "muted": {
-        "$type": "color",
-        "$value": "var(--text-muted)",
-        "css": "--text-muted"
-      },
-      "onInverse": {
-        "$type": "color",
-        "$value": "var(--text-on-inverse)",
-        "css": "--text-on-inverse"
-      },
-      "onSignal": {
-        "$type": "color",
-        "$value": "var(--text-on-signal)",
-        "css": "--text-on-signal"
-      }
-    },
     "action": {
-      "primary": {
-        "$type": "color",
-        "$value": "var(--color-primary)",
-        "css": "--color-primary",
-        "ref": "primitive.color.brandAzure"
-      },
-      "primaryHover": {
-        "$type": "color",
-        "$value": "var(--color-primary-hover)",
-        "css": "--color-primary-hover",
-        "ref": "primitive.color.brandAzureStrong"
-      },
       "secondary": {
         "$type": "color",
         "$value": "var(--color-secondary)",
         "css": "--color-secondary",
         "ref": "primitive.color.graphite"
-      },
-      "secondaryHover": {
-        "$type": "color",
-        "$value": "var(--color-secondary-hover)",
-        "css": "--color-secondary-hover",
-        "ref": "primitive.color.graphiteStrong"
-      },
-      "accent": {
-        "$type": "color",
-        "$value": "var(--color-accent)",
-        "css": "--color-accent",
-        "ref": "primitive.color.signalSteelAzure"
-      }
-    },
-    "status": {
-      "positive": {
-        "$type": "color",
-        "$value": "var(--color-positive)",
-        "css": "--color-positive"
-      },
-      "cautionary": {
-        "$type": "color",
-        "$value": "var(--color-cautionary)",
-        "css": "--color-cautionary"
-      },
-      "danger": {
-        "$type": "color",
-        "$value": "var(--color-danger)",
-        "css": "--color-danger"
       }
     },
     "control": {
@@ -715,16 +609,6 @@
       }
     },
     "border": {
-      "subtle": {
-        "$type": "color",
-        "$value": "var(--border-subtle)",
-        "css": "--border-subtle"
-      },
-      "strong": {
-        "$type": "color",
-        "$value": "var(--border-strong)",
-        "css": "--border-strong"
-      },
       "hairline": {
         "$type": "border",
         "$value": "var(--border-hairline)",
@@ -775,12 +659,18 @@
       "fastOut": {
         "$type": "transition",
         "$value": "var(--dur-fast) var(--ease-out)",
-        "css": ["--dur-fast", "--ease-out"]
+        "css": [
+          "--dur-fast",
+          "--ease-out"
+        ]
       },
       "baseOut": {
         "$type": "transition",
         "$value": "var(--dur-base) var(--ease-out)",
-        "css": ["--dur-base", "--ease-out"]
+        "css": [
+          "--dur-base",
+          "--ease-out"
+        ]
       }
     }
   },
