@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, ContentBadge, Icon, ListCell, Thumbnail } from '../src/index.js';
+import { Button, Card, ContentBadge, Icon, ListCell, Thumbnail, ToggleIcon } from '../src/index.js';
 
 const meta = {
   title: 'LDS Core/Components/Content/Card',
@@ -146,6 +146,39 @@ export const ContentCardPatterns = {
         </Card>
         <Card platform="desktop" skeleton />
       </section>
+    </main>
+  ),
+};
+
+export const CardAffordances = {
+  name: '토글 아이콘 · 3단 캡션 · 썸네일 오버레이',
+  render: () => (
+    <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'var(--space-4)', maxWidth: 920, alignItems: 'start' }}>
+      <Card
+        toggleIcon={<ToggleIcon label="즐겨찾기"><Icon name="star" size={18} /></ToggleIcon>}
+        topContent={<ContentBadge color="accent" size="xsmall">라이브</ContentBadge>}
+        caption="카테고리 · caption"
+        title="토글 아이콘 카드"
+        description="상단 우측 toggleIcon 어포던스가 save 액션과 나란히 놓입니다."
+        subCaption="보조 캡션 · subCaption"
+        metaCaption="업데이트 2026-07-09 · metaCaption (3번째 캡션 티어)"
+      />
+      <Card
+        thumbnail={
+          <Thumbnail
+            ratio="16/10"
+            placeholder={false}
+            overlay={<ContentBadge color="accent" size="xsmall">오버레이</ContentBadge>}
+            overlayAlign="top-left"
+            style={{ background: 'linear-gradient(135deg, var(--color-semantic-fill-normal), var(--color-semantic-fill-alternative))' }}
+          />
+        }
+        caption="미디어 · caption"
+        title="썸네일 오버레이 카드"
+        description="Thumbnail의 overlay 슬롯을 카드 내부에서 시연합니다."
+        subCaption="subCaption"
+        metaCaption="00:42 · 라이브 스트림 · metaCaption"
+      />
     </main>
   ),
 };

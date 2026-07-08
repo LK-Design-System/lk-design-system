@@ -1247,6 +1247,7 @@ function Card({
   save = false,
   saved = false,
   onSave,
+  toggleIcon,
   thumbnail,
   topContent,
   leadingContent,
@@ -1255,6 +1256,7 @@ function Card({
   description,
   caption,
   subCaption,
+  metaCaption,
   bottomContent,
   footer,
   style,
@@ -1270,21 +1272,25 @@ function Card({
   };
   const [hover, setHover] = import_react16.default.useState(false);
   const compact = platform === "mobile";
-  const structured = skeleton || save || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || bottomContent != null || footer != null;
+  const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
   const resolvedPadding = padding != null ? padding : compact ? 12 : "var(--component-card-padding)";
   const structuredContent = skeleton ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(StructuredSkeleton, { compact }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "grid", gap: compact ? 6 : 8 }, children: [
-    (topContent != null || save) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }, children: [
+    (topContent != null || save || toggleIcon != null) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { minWidth: 0 }, children: topContent }),
-      save && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(SaveButton, { saved, onClick: onSave })
+      (save || toggleIcon != null) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
+        toggleIcon,
+        save && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(SaveButton, { saved, onClick: onSave })
+      ] })
     ] }),
     thumbnail != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { children: thumbnail }),
-    (leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 12 }, children: [
+    (leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 12 }, children: [
       leadingContent != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { flexShrink: 0 }, children: leadingContent }),
       /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
         caption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)" }, children: caption }),
         title != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-strong)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
         description != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 13, lineHeight: 1.5, color: dark ? "var(--inverse-label-neutral)" : "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
-        subCaption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--color-semantic-label-assistive)" }, children: subCaption })
+        subCaption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--color-semantic-label-assistive)" }, children: subCaption }),
+        metaCaption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 11, lineHeight: 1.3, color: "var(--color-semantic-label-assistive)", fontVariantNumeric: "tabular-nums" }, children: metaCaption })
       ] }),
       trailingContent != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { flexShrink: 0 }, children: trailingContent })
     ] }),

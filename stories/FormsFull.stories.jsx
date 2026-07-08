@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Icon,
   Input,
@@ -6,6 +7,20 @@ import {
   Select,
   Textarea,
 } from '../src/index.js';
+
+function CharCounterField() {
+  const max = 100;
+  const [value, setValue] = React.useState('로봇 관제 시스템 검토 메모입니다.');
+  return (
+    <Textarea
+      label="문자 수 카운터"
+      value={value}
+      onChange={(e) => setValue(e.target.value.slice(0, max))}
+      rows={3}
+      helper={`${value.length}/${max}`}
+    />
+  );
+}
 
 const meta = {
   title: 'LDS Core/Components/Selection and Input/Text Input',
@@ -164,6 +179,30 @@ export const TextInputInteractionMatrix = {
           disable
           options={[{ value: 'alpha', label: '옵션 A' }]}
         />
+      </section>
+    </main>
+  ),
+};
+
+export const TextInputTimerAndCounter = {
+  name: '타이머 · 문자 수 카운터',
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 920 }}>
+      <section style={fieldMatrixStyle}>
+        <Input
+          label="인증 코드"
+          placeholder="6자리 코드"
+          inputMode="numeric"
+          actionRight={<span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-status-negative)', fontWeight: 'var(--fw-bold)', fontSize: 13 }}>02:59</span>}
+          helper="타이머는 actionRight 슬롯으로 합성합니다."
+        />
+        <Input
+          label="인증 코드 (만료됨)"
+          placeholder="6자리 코드"
+          actionRight={<button type="button" style={{ border: 0, background: 'transparent', color: 'var(--color-semantic-primary-normal)', fontWeight: 'var(--fw-bold)', cursor: 'pointer' }}>재전송</button>}
+          helper="만료 후 actionRight를 재전송 버튼으로 전환합니다."
+        />
+        <CharCounterField />
       </section>
     </main>
   ),

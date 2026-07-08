@@ -247,7 +247,7 @@ export const StatCard = {
       <Card elevation="sm" padding={22} style={{ width: 260 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <Stat value="156" label="구현 검증" accent="signal" />
-          <Stat value="105" label="공개 스토리" accent="ink" />
+          <Stat value="108" label="공개 스토리" accent="ink" />
         </div>
       </Card>
     </div>

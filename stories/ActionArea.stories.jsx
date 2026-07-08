@@ -1,4 +1,4 @@
-import { ActionArea, Button, Icon, IconButton, TextButton, ToggleIcon } from '../src/index.js';
+import { ActionArea, Button, Checkbox, Chip, Icon, IconButton, TextButton, ToggleIcon } from '../src/index.js';
 
 const meta = {
   title: 'LDS Core/Components/Action/Action Overview',
@@ -118,4 +118,83 @@ export const BottomActionArea = {
       </section>
     </main>
   ),
+};
+
+export const ActionAreaStates = {
+  name: 'Action area states',
+  render: () => {
+    const frame = {
+      border: '1px solid var(--color-semantic-line-normal-normal)',
+      borderRadius: 'var(--radius-frame-lg)',
+      overflow: 'hidden',
+      background: 'var(--color-semantic-background-normal-alternative)',
+    };
+    const label = (text) => (
+      <span style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-alternative)' }}>{text}</span>
+    );
+    return (
+      <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 880 }}>
+        <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
+          <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>Action / Action Area</p>
+          <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
+            compact · divider · sticky · 부가 콘텐츠(체크박스 · 칩 · 안내)
+          </h1>
+        </header>
+
+        <section style={{ display: 'grid', gap: 'var(--space-5)' }}>
+          <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+            {label('compact + divider={false}')}
+            <div style={frame}>
+              <ActionArea compact divider={false}>
+                <Button variant="solid" color="primary" style={{ flex: 1 }}>저장</Button>
+                <Button variant="outlined" color="assistive" style={{ flex: 1 }}>취소</Button>
+              </ActionArea>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+            {label('부가 콘텐츠 — 약관 동의 체크박스')}
+            <div style={frame}>
+              <ActionArea summary={<Checkbox label="전체 약관에 동의합니다" defaultChecked />}>
+                <Button variant="solid" color="primary" style={{ flex: 1 }}>동의하고 계속</Button>
+              </ActionArea>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+            {label('부가 콘텐츠 — 칩 + 안내 캡션')}
+            <div style={frame}>
+              <ActionArea
+                summary={
+                  <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
+                    <Chip size="sm" leading={<Icon name="clock" size={14} />}>예약 발송</Chip>
+                    <Chip size="sm">우선순위 높음</Chip>
+                  </div>
+                }
+                caption="안내: 예약 발송은 대기열 상태에 따라 최대 2분 지연될 수 있습니다."
+              >
+                <Button variant="solid" color="primary" style={{ flex: 1 }}>예약</Button>
+                <Button variant="outlined" color="assistive" style={{ flex: 1 }}>지금 발송</Button>
+              </ActionArea>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+            {label('sticky — 스크롤 시 하단 고정')}
+            <div style={{ ...frame, height: 260, overflowY: 'auto' }}>
+              <div style={{ padding: 'var(--space-5)', color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+                {Array.from({ length: 8 }, (_, i) => (
+                  <p key={i} style={{ margin: '0 0 var(--space-4)' }}>스크롤 콘텐츠 {i + 1} — 액션 영역이 아래에 고정된 상태로 유지됩니다.</p>
+                ))}
+              </div>
+              <ActionArea sticky>
+                <Button variant="solid" color="primary" style={{ flex: 1 }}>배차 시작</Button>
+                <Button variant="outlined" color="assistive" style={{ flex: 1 }}>나중에</Button>
+              </ActionArea>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  },
 };

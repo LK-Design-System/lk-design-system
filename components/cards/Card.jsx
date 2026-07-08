@@ -58,6 +58,7 @@ export function Card({
   save = false,
   saved = false,
   onSave,
+  toggleIcon,
   thumbnail,
   topContent,
   leadingContent,
@@ -66,6 +67,7 @@ export function Card({
   description,
   caption,
   subCaption,
+  metaCaption,
   bottomContent,
   footer,
   style,
@@ -81,20 +83,25 @@ export function Card({
   };
   const [hover, setHover] = React.useState(false);
   const compact = platform === 'mobile';
-  const structured = skeleton || save || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || bottomContent != null || footer != null;
+  const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
   const resolvedPadding = padding != null ? padding : compact ? 12 : 'var(--component-card-padding)';
   const structuredContent = skeleton ? (
     <StructuredSkeleton compact={compact} />
   ) : (
     <div style={{ display: 'grid', gap: compact ? 6 : 8 }}>
-      {(topContent != null || save) && (
+      {(topContent != null || save || toggleIcon != null) && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
           <div style={{ minWidth: 0 }}>{topContent}</div>
-          {save && <SaveButton saved={saved} onClick={onSave} />}
+          {(save || toggleIcon != null) && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+              {toggleIcon}
+              {save && <SaveButton saved={saved} onClick={onSave} />}
+            </div>
+          )}
         </div>
       )}
       {thumbnail != null && <div>{thumbnail}</div>}
-      {(leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null) && (
+      {(leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null) && (
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
           {leadingContent != null && <div style={{ flexShrink: 0 }}>{leadingContent}</div>}
           <div style={{ display: 'grid', gap: 4, minWidth: 0, flex: 1 }}>
@@ -102,6 +109,7 @@ export function Card({
             {title != null && <div style={{ fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
             {description != null && <div style={{ fontSize: 13, lineHeight: 1.5, color: dark ? 'var(--inverse-label-neutral)' : 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
             {subCaption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--color-semantic-label-assistive)' }}>{subCaption}</div>}
+            {metaCaption != null && <div style={{ fontSize: 11, lineHeight: 1.3, color: 'var(--color-semantic-label-assistive)', fontVariantNumeric: 'tabular-nums' }}>{metaCaption}</div>}
           </div>
           {trailingContent != null && <div style={{ flexShrink: 0 }}>{trailingContent}</div>}
         </div>

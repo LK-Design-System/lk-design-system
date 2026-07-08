@@ -103,6 +103,29 @@ export const LKRoboticsLogo = {
           })}
         </div>
       </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>여백 (Clear space)</h2>
+        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+          로고 주변에는 최소 여백을 확보합니다. 상·하·좌·우 모두 <strong>로크업 높이의 0.5배(½X)</strong> 이상을 비워
+          다른 요소·텍스트·경계와 붙지 않게 합니다. inline 로크업의 <strong>최소 높이는 20px</strong>이며, 그보다 작게
+          쓰지 않습니다.
+        </p>
+        <div style={{ display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'inline-grid', gap: 6, justifyItems: 'center' }}>
+            <div style={{ display: 'inline-flex', padding: 14, border: '1px dashed var(--color-semantic-line-normal-neutral)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+              <Lockup variant="inline" height={28} />
+            </div>
+            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>여백 = ½ × 높이 (28px → 14px)</code>
+          </div>
+          <div style={{ display: 'inline-grid', gap: 6, justifyItems: 'center' }}>
+            <div style={{ display: 'inline-flex', padding: 10, border: '1px dashed var(--color-semantic-line-normal-neutral)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+              <Lockup variant="inline" height={20} />
+            </div>
+            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>최소 크기 (height=20px)</code>
+          </div>
+        </div>
+      </section>
     </main>
   ),
 };

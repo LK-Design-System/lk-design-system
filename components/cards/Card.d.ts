@@ -20,6 +20,8 @@ export interface CardProps extends Omit<
   save?: boolean;
   saved?: boolean;
   onSave?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  /** Toggle-icon affordance rendered in the top-right (WDS Card/List Card parity); shows alongside `save`. */
+  toggleIcon?: React.ReactNode;
   thumbnail?: React.ReactNode;
   topContent?: React.ReactNode;
   leadingContent?: React.ReactNode;
@@ -28,6 +30,8 @@ export interface CardProps extends Omit<
   description?: React.ReactNode;
   caption?: React.ReactNode;
   subCaption?: React.ReactNode;
+  /** Third caption tier — smallest meta line under `subCaption` (WDS three-tier caption parity). */
+  metaCaption?: React.ReactNode;
   bottomContent?: React.ReactNode;
   footer?: React.ReactNode;
   children?: React.ReactNode;
