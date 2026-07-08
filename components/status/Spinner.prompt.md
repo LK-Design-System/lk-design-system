@@ -1,13 +1,14 @@
-**Spinner** - WDS loading indicator for unknown-duration work.
+**Spinner** - loading indicator for unknown-duration work.
 
 ```jsx
 <Spinner />
-<Spinner variant="wanted" size={36} />
-<Spinner size={18} label="Loading" />
+<Spinner variant="brand" size={22} />
+<Spinner size={18} label="불러오는 중" />
 ```
 
-- **variant**: `circular` or `wanted`.
-- **size / thickness / color** control the circular ring geometry and active arc.
+- **variant**: `circular` (ring) or `brand` (LK ROBOTICS wordmark on a traveling wave — the LK theme override of the source-system brand loader).
+- **size**: circular = ring diameter; brand = wordmark cap height.
+- **thickness / color** control the circular ring geometry and active arc.
 - **label** adds visible status text and lets assistive tech announce the loading state.
 - Use `ProgressBar` or `CircularProgress` when a value or completion percentage is known.
 - Motion respects `prefers-reduced-motion`.

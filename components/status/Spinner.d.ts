@@ -1,17 +1,17 @@
 import * as React from "react";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
-  /** Diameter in px. Defaults to 28 for `circular` and 32 for `wanted`. */
+  /** circular: diameter in px (@default 28). brand: wordmark cap height in px (@default 18). */
   size?: number;
-  /** Ring thickness in px. Defaults to roughly size / 10. */
+  /** Ring thickness in px (circular only). Defaults to roughly size / 10. */
   thickness?: number;
-  /** Active arc color. @default signal ink */
+  /** Active arc color (circular only). @default signal ink */
   color?: string;
-  /** loading variant. @default "circular" */
-  variant?: "circular" | "wanted";
+  /** loading variant. `brand` rides the LK ROBOTICS wordmark on a wave. @default "circular" */
+  variant?: "circular" | "brand";
   /** Optional visible status label. */
   label?: React.ReactNode;
 }
 
-/** circular or Wanted loading indicator with reduced-motion handling and optional label. */
+/** circular ring or the LK ROBOTICS wordmark-wave brand loader, with reduced-motion handling and an optional label. */
 export function Spinner(props: SpinnerProps): JSX.Element;

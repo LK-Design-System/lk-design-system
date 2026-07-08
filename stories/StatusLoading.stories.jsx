@@ -38,12 +38,16 @@ export const LoadingStates = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 900 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
-        <DemoCard title="기본 로딩과 서큘러 로딩">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
-            <Spinner variant="wanted" size={44} />
-            <Spinner variant="wanted" size={54} label="불러오는 중" />
-            <Spinner size={30} />
-            <Spinner size={44} label="리포트 생성 중" />
+        <DemoCard title="브랜드 로딩과 서큘러 로딩">
+          <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+              <Spinner variant="brand" size={22} />
+              <Spinner variant="brand" size={18} label="불러오는 중" />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
+              <Spinner size={30} />
+              <Spinner size={44} label="리포트 생성 중" />
+            </div>
           </div>
         </DemoCard>
 
