@@ -98,38 +98,39 @@ export function DataToolbar({
             color: 'var(--label-normal)',
           }}
         >
-          {/* Status on the left; actions grouped on the right so the two
-              controls read as one cluster instead of splitting the bar. */}
+          {/* Count + its clear affordance stay together on the left (clear
+              undoes the selection); the primary bulk action sits on the far
+              right as the CTA. */}
           <span style={{ color: 'var(--label-strong)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
             {selectedCount}개 선택됨
           </span>
-          {(bulkActions != null || onClearSelection) && (
+          {onClearSelection && (
+            <button
+              type="button"
+              onClick={onClearSelection}
+              aria-label="선택 해제"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4,
+                padding: '4px 8px',
+                border: 0,
+                background: 'transparent',
+                color: 'var(--label-neutral)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: 'var(--label2-size)',
+                fontWeight: 'var(--fw-semibold)',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+              선택 해제
+            </button>
+          )}
+          {bulkActions != null && (
             <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
               {bulkActions}
-              {onClearSelection && (
-                <button
-                  type="button"
-                  onClick={onClearSelection}
-                  aria-label="선택 해제"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 4,
-                    padding: '4px 8px',
-                    border: 0,
-                    background: 'transparent',
-                    color: 'var(--label-neutral)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 'var(--label2-size)',
-                    fontWeight: 'var(--fw-semibold)',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
-                  선택 해제
-                </button>
-              )}
             </div>
           )}
         </div>
