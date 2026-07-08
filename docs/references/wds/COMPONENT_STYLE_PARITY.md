@@ -27,8 +27,13 @@ role/alpha, not hex. Only dimensions are diffed here.
 | Menu | radius 16 | radius 16 | ✅ match |
 | **Filter Chip** | height 32 (pill) | ~~38~~ → **32** | 🔧 **fixed** (`--component-filter-chip-height` 38→32) |
 | Toast | r12 / padX16 / padY11 | r12 / padX16 / padY11 | ✅ match (measured) |
+| Content Badge (md) | r8 / padX8 / font13 | r8 / padX8 / font13 | ✅ match (measured; height 30 vs 28 is content-driven) |
 
-`check:component-styles` guards these going forward (0 drift).
+`check:component-styles` guards the token-driven rows going forward (0 drift).
+
+Every component measured correctly matches WDS across action / selection / form /
+feedback / content families — strong evidence the WDS-first size pass is intact.
+The one real drift found (Filter Chip) is fixed.
 
 ### Correction
 
