@@ -6749,6 +6749,8 @@ function Input({
   resize,
   platform,
   variant,
+  showCount = false,
+  timer,
   id,
   style,
   "aria-label": ariaLabel,
@@ -6756,6 +6758,14 @@ function Input({
 }) {
   const autoId = import_react73.default.useId();
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, "-").toLowerCase()}` : `in-${autoId}`);
+  const maxLength = rest.maxLength;
+  const controlledLen = rest.value != null ? String(rest.value).length : null;
+  const [uncontrolledLen, setUncontrolledLen] = import_react73.default.useState(() => String(rest.defaultValue ?? "").length);
+  const len = controlledLen ?? uncontrolledLen;
+  const handleChange = (e) => {
+    if (controlledLen == null) setUncontrolledLen(e.target.value.length);
+    rest.onChange && rest.onChange(e);
+  };
   const message = error ?? helper;
   const messageId = message != null ? `${inputId}-message` : void 0;
   const [focused, setFocused] = import_react73.default.useState(false);
@@ -6814,9 +6824,12 @@ function Input({
                 setFocused(false);
                 rest.onBlur && rest.onBlur(e);
               },
+              onChange: handleChange,
               style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)" }
             }
           ),
+          showCount && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { "aria-hidden": "true", style: { flex: "0 0 auto", fontSize: "var(--caption1-size)", lineHeight: 1, color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: maxLength != null ? `${len}/${maxLength}` : len }),
+          timer != null && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { style: { flex: "0 0 auto", fontSize: "var(--caption1-size)", lineHeight: 1, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-primary-normal)", fontVariantNumeric: "tabular-nums" }, children: timer }),
           endIcon && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: endIcon }),
           endAction && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: endAction })
         ]
@@ -7434,12 +7447,21 @@ function Textarea({
   disable = false,
   resize = "normal",
   rows = 5,
+  showCount = false,
   id,
   style,
   ...rest
 }) {
   const autoId = import_react84.default.useId();
   const taId = id || (label ? `ta-${String(label).replace(/\s+/g, "-").toLowerCase()}` : `ta-${autoId}`);
+  const maxLength = rest.maxLength;
+  const controlledLen = rest.value != null ? String(rest.value).length : null;
+  const [uncontrolledLen, setUncontrolledLen] = import_react84.default.useState(() => String(rest.defaultValue ?? "").length);
+  const len = controlledLen ?? uncontrolledLen;
+  const handleChange = (e) => {
+    if (controlledLen == null) setUncontrolledLen(e.target.value.length);
+    rest.onChange && rest.onChange(e);
+  };
   const message = error ?? helper;
   const messageId = message != null ? `${taId}-message` : void 0;
   const [focused, setFocused] = import_react84.default.useState(false);
@@ -7476,6 +7498,7 @@ function Textarea({
           setFocused(false);
           rest.onBlur && rest.onBlur(e);
         },
+        onChange: handleChange,
         onMouseEnter: (e) => {
           setHover(true);
           rest.onMouseEnter && rest.onMouseEnter(e);
@@ -7505,7 +7528,10 @@ function Textarea({
         }
       }
     ),
-    message != null && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message })
+    (message != null || showCount) && /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)("div", { style: { display: "flex", alignItems: "baseline", justifyContent: message != null ? "space-between" : "flex-end", gap: 12 }, children: [
+      message != null && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message }),
+      showCount && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { "aria-hidden": "true", style: { flex: "0 0 auto", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: maxLength != null ? `${len}/${maxLength}` : len })
+    ] })
   ] });
 }
 

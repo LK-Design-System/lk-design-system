@@ -29,12 +29,18 @@ export function Textarea({
   disable = false,
   resize = 'normal',
   rows = 5,
+  showCount = false,
   id,
   style,
   ...rest
 }) {
   const autoId = React.useId();
   const taId = id || (label ? `ta-${String(label).replace(/\s+/g, '-').toLowerCase()}` : `ta-${autoId}`);
+  const maxLength = rest.maxLength;
+  const controlledLen = rest.value != null ? String(rest.value).length : null;
+  const [uncontrolledLen, setUncontrolledLen] = React.useState(() => String(rest.defaultValue ?? '').length);
+  const len = controlledLen ?? uncontrolledLen;
+  const handleChange = (e) => { if (controlledLen == null) setUncontrolledLen(e.target.value.length); rest.onChange && rest.onChange(e); };
   const message = error ?? helper;
   const messageId = message != null ? `${taId}-message` : undefined;
   const [focused, setFocused] = React.useState(false);
@@ -65,6 +71,7 @@ export function Textarea({
         aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
         onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
         onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
+        onChange={handleChange}
         onMouseEnter={(e) => { setHover(true); rest.onMouseEnter && rest.onMouseEnter(e); }}
         onMouseLeave={(e) => { setHover(false); rest.onMouseLeave && rest.onMouseLeave(e); }}
         style={{
@@ -77,10 +84,19 @@ export function Textarea({
           outline: 'none', boxSizing: 'border-box',
         }}
       />
-      {message != null && (
-        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-label-alternative)' }}>
-          {message}
-        </span>
+      {(message != null || showCount) && (
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: message != null ? 'space-between' : 'flex-end', gap: 12 }}>
+          {message != null && (
+            <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-label-alternative)' }}>
+              {message}
+            </span>
+          )}
+          {showCount && (
+            <span aria-hidden="true" style={{ flex: '0 0 auto', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>
+              {maxLength != null ? `${len}/${maxLength}` : len}
+            </span>
+          )}
+        </div>
       )}
     </div>
   );

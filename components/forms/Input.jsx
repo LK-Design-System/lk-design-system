@@ -37,6 +37,8 @@ export function Input({
   resize,
   platform,
   variant,
+  showCount = false,
+  timer,
   id,
   style,
   'aria-label': ariaLabel,
@@ -44,6 +46,11 @@ export function Input({
 }) {
   const autoId = React.useId();
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, '-').toLowerCase()}` : `in-${autoId}`);
+  const maxLength = rest.maxLength;
+  const controlledLen = rest.value != null ? String(rest.value).length : null;
+  const [uncontrolledLen, setUncontrolledLen] = React.useState(() => String(rest.defaultValue ?? '').length);
+  const len = controlledLen ?? uncontrolledLen;
+  const handleChange = (e) => { if (controlledLen == null) setUncontrolledLen(e.target.value.length); rest.onChange && rest.onChange(e); };
   const message = error ?? helper;
   const messageId = message != null ? `${inputId}-message` : undefined;
   const [focused, setFocused] = React.useState(false);
@@ -99,8 +106,17 @@ export function Input({
           aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
+          onChange={handleChange}
           style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)' }}
         />
+        {showCount && (
+          <span aria-hidden="true" style={{ flex: '0 0 auto', fontSize: 'var(--caption1-size)', lineHeight: 1, color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>
+            {maxLength != null ? `${len}/${maxLength}` : len}
+          </span>
+        )}
+        {timer != null && (
+          <span style={{ flex: '0 0 auto', fontSize: 'var(--caption1-size)', lineHeight: 1, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-primary-normal)', fontVariantNumeric: 'tabular-nums' }}>{timer}</span>
+        )}
         {endIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
         {endAction && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{endAction}</span>}
       </div>
