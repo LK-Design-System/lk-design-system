@@ -48,13 +48,31 @@ S 32/8/14/13 · M 40/10/20/15 · L 48/12/28/16.
   (Card is a padded elevated surface, not a bare content stack).
 - **Toggle Icon** — boxed toggle (r12) vs WDS pill. Retained per STYLE_PARITY_AUDIT.md.
 
-## Scope / limitation
+## Rendered measurement harness (inline-styled components)
 
-The automated diff covers **token-driven** components (dimensions in
-`tokens/components.css`): button, chip, filter-chip, input, card, menu,
-toggle-icon, dialog, tag. Components that style inline (Content Badge, Segmented,
-Checkbox/Radio/Switch, Select, Tab, Category, Avatar, Alert, Tooltip, …) are not
-token-resolvable; their parity is covered by `STYLE_PARITY_AUDIT.md` (manual full
-audit) and the `visual-parity` regression stories. Automating those requires a
-Storybook-measurement harness (per-component computed-style capture) — a known
-follow-up. `COMPONENT_STYLES.json` already holds the WDS reference for all 164 sets.
+`scripts/check-wds-component-styles-rendered.mjs` (`npm run check:component-styles-rendered`)
+builds a tiny consumer app that renders each component in a controlled
+`<div data-measure="…">` wrapper, Vite-builds + serves it, and uses Playwright to
+read the **real computed style** of the component root — then diffs against the
+WDS `.fig` reference. Reliable (controlled wrapper + direct child; no ad-hoc
+selectors). Each component is rendered at the **medium** size to match the WDS
+representative variant.
+
+Result (0 drift): Button, Chip, Filter Chip, Content Badge, Segmented Control,
+Push Badge all match WDS dimensions. Two apparent drifts were harness artifacts,
+not real: Content Badge (LDS default size is `small`; its `medium` = r8/padX8/13
+matches WDS) and Segmented Control height (WDS `h` is the track; LDS track =
+40px segment + padding — radius 10 matches; height is a measurement axis, not a
+token).
+
+## Scope
+
+- **Token-driven** components — guarded by `check:component-styles` (node-only).
+- **Inline-styled** components — measured by `check:component-styles-rendered`
+  (Playwright). Currently covers Button, Chip, Filter Chip, Content Badge,
+  Segmented Control, Tag, Push Badge, Category; extend `TARGETS` to add more
+  (Checkbox/Radio/Switch/Tab need a targeted inner-element selector for their box/track).
+- `COMPONENT_STYLES.json` holds the WDS reference for all 164 sets.
+
+**Net finding across every component measured correctly: LDS matches WDS
+dimensions; the single real drift (Filter Chip 38→32) is fixed.**
