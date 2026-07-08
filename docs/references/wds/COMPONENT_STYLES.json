@@ -722,9 +722,9 @@
     "fill": null,
     "stroke": null,
     "strokeWeight": 1,
-    "fontSize": 12,
+    "fontSize": 15,
     "fontWeight": "Medium",
-    "textColor": "#37383C"
+    "textColor": "#171719"
   },
   "Framed Style/Framed Style": {
     "variant": "Selected=False, Disabled=False, Status=Normal",
@@ -892,9 +892,9 @@
     "fill": null,
     "stroke": null,
     "strokeWeight": 1,
-    "fontSize": 13,
+    "fontSize": 16,
     "fontWeight": "Regular",
-    "textColor": "#37383C"
+    "textColor": "#171719"
   },
   "Lock": {
     "variant": "Fill=False",
@@ -1269,8 +1269,8 @@
     "fill": null,
     "stroke": null,
     "strokeWeight": 1,
-    "fontSize": 16,
-    "fontWeight": "Semibold",
+    "fontSize": 17,
+    "fontWeight": "Medium",
     "textColor": "#000000"
   },
   "Safari/Bar/Navigation Bar": {
@@ -1362,7 +1362,7 @@
     "fill": null,
     "stroke": null,
     "strokeWeight": 1,
-    "fontSize": 12,
+    "fontSize": 16,
     "fontWeight": "Regular",
     "textColor": "#37383C"
   },
@@ -1541,7 +1541,7 @@
     "fill": null,
     "stroke": null,
     "strokeWeight": 1,
-    "fontSize": 12,
+    "fontSize": 16,
     "fontWeight": "Regular",
     "textColor": "#37383C"
   },
@@ -1555,7 +1555,7 @@
     "fill": null,
     "stroke": null,
     "strokeWeight": 1,
-    "fontSize": 12,
+    "fontSize": 16,
     "fontWeight": "Regular",
     "textColor": "#37383C"
   },

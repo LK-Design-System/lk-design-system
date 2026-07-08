@@ -159,7 +159,7 @@
 
   /* ---- Tag pills --------------------------------------------------------- */
   --component-tag-height: 26px;
-  --component-filter-chip-height: 38px;
+  --component-filter-chip-height: 32px;
 
   /* ---- Menu surface ------------------------------------------------------ */
   --component-menu-radius: var(--radius-16);

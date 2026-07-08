@@ -56,7 +56,8 @@ function styleOf(name) {
   // the styled container: prefer the variant symbol node itself if it carries frame style, else the largest filled/rounded frame
   const cand = tree.filter((n) => (n.cornerRadius !== undefined || fills(n).length || n.stackHorizontalPadding !== undefined) && (n.size?.x || 0) > 24);
   const frame = cand.sort((a, b) => (b.size?.x || 0) * (b.size?.y || 0) - (a.size?.x || 0) * (a.size?.y || 0))[0] || variant;
-  const text = tree.find((n) => n.type === 'TEXT');
+  // primary label = the text with the largest font size (not a tiny helper/caption)
+  const text = tree.filter((n) => n.type === 'TEXT' && n.fontSize).sort((a, b) => b.fontSize - a.fontSize)[0];
   return {
     variant: variant.name,
     height: round(frame.size?.y),
