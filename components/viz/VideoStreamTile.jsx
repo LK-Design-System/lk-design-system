@@ -25,7 +25,7 @@ export function VideoStreamTile({ children, label, status = 'live', aspectRatio 
     <div
       style={{
         position: 'relative', width: '100%', aspectRatio, borderRadius: 'var(--radius-lg)', overflow: 'hidden',
-        background: 'var(--surface-inverse)', border: '1px solid var(--border-subtle)', fontFamily: 'var(--font-sans)',
+        background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--color-semantic-line-normal-normal)', fontFamily: 'var(--font-sans)',
         ...style,
       }}
       {...rest}
@@ -36,17 +36,17 @@ export function VideoStreamTile({ children, label, status = 'live', aspectRatio 
           <div style={{ position: 'absolute', left: 0, top: 0, right: 0, height: 52, pointerEvents: 'none',
             background: 'linear-gradient(180deg, var(--material-control-dimmer), transparent)' }} />
           <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 7, pointerEvents: 'none' }}>
-            {status === 'live' && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-danger)', flexShrink: 0,
+            {status === 'live' && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-semantic-status-negative)', flexShrink: 0,
               animation: 'lk-stream-pulse 1.4s var(--ease-in-out) infinite' }} />}
             <span style={{ fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: '1px', textTransform: 'uppercase',
-              color: 'var(--text-on-inverse)', opacity: 0.9 }}>{label}</span>
+              color: 'var(--color-semantic-inverse-label)', opacity: 0.9 }}>{label}</span>
           </div>
         </React.Fragment>
       )}
       {status === 'loading' && (
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
           background: 'var(--scrim-dark)' }}>
-          <span style={{ width: 30, height: 30, borderRadius: '50%', border: '3px solid var(--inverse-line-strong)', borderTopColor: 'var(--lk-accent)', animation: 'lk-stream-spin 0.8s linear infinite' }} />
+          <span style={{ width: 30, height: 30, borderRadius: '50%', border: '3px solid var(--inverse-line-strong)', borderTopColor: 'var(--color-semantic-primary-normal)', animation: 'lk-stream-spin 0.8s linear infinite' }} />
         </div>
       )}
       {status === 'disconnected' && (

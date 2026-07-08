@@ -72,12 +72,12 @@ function MatrixSection({ title, children }) {
         display: 'grid',
         gap: 'var(--space-4)',
         padding: 'var(--space-4)',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-lg)',
-        background: 'var(--surface-card)',
+        background: 'var(--color-semantic-background-elevated-normal)',
       }}
     >
-      <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.3, color: 'var(--label-normal)' }}>{title}</h3>
+      <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.3, color: 'var(--color-semantic-label-normal)' }}>{title}</h3>
       {children}
     </section>
   );
@@ -86,7 +86,7 @@ function MatrixSection({ title, children }) {
 function MatrixRow({ label, children }) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '104px minmax(0, 1fr)', gap: 'var(--space-3)', alignItems: 'center' }}>
-      <span style={{ color: 'var(--label-alternative)', fontSize: 12, fontWeight: 'var(--fw-semibold)' }}>{label}</span>
+      <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12, fontWeight: 'var(--fw-semibold)' }}>{label}</span>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center', minWidth: 0 }}>
         {children}
       </div>
@@ -98,7 +98,7 @@ function ExampleTile({ label, children, width = 86 }) {
   return (
     <span style={{ display: 'inline-grid', gap: 'var(--space-2)', justifyItems: 'center', width }}>
       <span style={{ minHeight: 64, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{children}</span>
-      <span style={{ color: 'var(--label-alternative)', fontSize: 11, lineHeight: 1.25, textAlign: 'center' }}>{label}</span>
+      <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 11, lineHeight: 1.25, textAlign: 'center' }}>{label}</span>
     </span>
   );
 }
@@ -106,7 +106,7 @@ function ExampleTile({ label, children, width = 86 }) {
 function AvatarResourceComparison() {
   return (
     <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
-      <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.3, color: 'var(--label-normal)' }}>리소스 패리티</h3>
+      <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.3, color: 'var(--color-semantic-label-normal)' }}>리소스 패리티</h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(132px, 100%), 1fr))', gap: 'var(--space-3)' }}>
         {avatarResourceRows.map((row) => (
           <div
@@ -115,16 +115,16 @@ function AvatarResourceComparison() {
               display: 'grid',
               gap: 'var(--space-2)',
               padding: 'var(--space-3)',
-              border: '1px solid var(--border-subtle)',
+              border: '1px solid var(--color-semantic-line-normal-normal)',
               borderRadius: 'var(--radius-lg)',
-              background: 'var(--surface-card)',
+              background: 'var(--color-semantic-background-elevated-normal)',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
               <img src={row.src} alt={`${row.label} 리소스`} style={{ width: 42, height: 42, objectFit: 'contain', borderRadius: 'var(--radius-sm)' }} />
               {row.avatar}
             </div>
-            <span style={{ color: 'var(--label-alternative)', fontSize: 12, lineHeight: 1.35 }}>{row.label}</span>
+            <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12, lineHeight: 1.35 }}>{row.label}</span>
           </div>
         ))}
       </div>
@@ -176,10 +176,10 @@ export const AvatarPatterns = {
         </MatrixRow>
         <MatrixRow label="customize">
           <ExampleTile label="borderColor">
-            <Avatar variant="person" placeholder borderColor="var(--lk-accent-ink)" size="default" aria-label="커스텀 테두리 색상 아바타" />
+            <Avatar variant="person" placeholder borderColor="var(--color-semantic-primary-normal)" size="default" aria-label="커스텀 테두리 색상 아바타" />
           </ExampleTile>
           <ExampleTile label="borderWeight">
-            <Avatar variant="person" placeholder borderColor="var(--border-strong)" borderWeight={3} size="default" aria-label="커스텀 테두리 두께 아바타" />
+            <Avatar variant="person" placeholder borderColor="var(--color-semantic-line-solid-normal)" borderWeight={3} size="default" aria-label="커스텀 테두리 두께 아바타" />
           </ExampleTile>
           <ExampleTile label="size">
             <Avatar variant="person" placeholder size="xlarge" aria-label="커스텀 크기 아바타" />

@@ -27,7 +27,7 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], styl
                 width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
                 padding: '18px 4px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left',
                 fontFamily: 'var(--font-sans)', fontSize: 17, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
-                color: isOpen ? 'var(--lk-accent-ink)' : 'var(--label-normal)',
+                color: isOpen ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)',
                 transition: 'color var(--dur-fast) var(--ease-out)',
               }}
             >
@@ -39,7 +39,7 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], styl
             </button>
             <div style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
               <div style={{ overflow: 'hidden' }}>
-                <div style={{ padding: '0 4px 20px', fontFamily: 'var(--font-sans)', fontSize: 15, lineHeight: 1.7, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>
+                <div style={{ padding: '0 4px 20px', fontFamily: 'var(--font-sans)', fontSize: 15, lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
                   {it.content}
                 </div>
               </div>

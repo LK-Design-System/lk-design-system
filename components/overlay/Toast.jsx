@@ -2,7 +2,7 @@ import React from "react";
 
 const ICONS = {
   normal: {
-    color: "var(--text-on-inverse)",
+    color: "var(--color-semantic-inverse-label)",
     node: <circle cx="12" cy="12" r="8" />,
   },
   positive: {
@@ -76,7 +76,7 @@ export function Toast({
         background: "var(--component-transient-feedback-bg)",
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
         WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
-        color: "var(--text-on-inverse)",
+        color: "var(--color-semantic-inverse-label)",
         borderRadius: 12,
         boxShadow: "var(--shadow-lg)",
         fontFamily: "var(--font-sans)",
@@ -113,7 +113,7 @@ export function Toast({
           lineHeight: 1.45,
           fontWeight: "var(--fw-semibold)",
           letterSpacing: 0,
-          color: "var(--text-on-inverse)",
+          color: "var(--color-semantic-inverse-label)",
           wordBreak: "keep-all",
         }}
       >
@@ -127,7 +127,7 @@ export function Toast({
             flexShrink: 0,
             border: "none",
             background: "transparent",
-            color: "var(--text-on-inverse)",
+            color: "var(--color-semantic-inverse-label)",
             fontFamily: "var(--font-sans)",
             fontSize: 13,
             fontWeight: "var(--fw-bold)",
@@ -150,7 +150,7 @@ export function Toast({
             border: "none",
             background: "transparent",
             cursor: "pointer",
-            color: "var(--text-on-inverse)",
+            color: "var(--color-semantic-inverse-label)",
           }}
         >
           <svg

@@ -33,7 +33,7 @@ export function CopyButton({ value, children = '복사', copiedLabel = '복사�
         lineHeight: 'normal',
         fontWeight: 'var(--fw-bold)',
         letterSpacing: 0,
-        color: copied ? 'var(--lk-accent-ink)' : 'var(--label-normal)',
+        color: copied ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)',
         ...(copied ? { background: 'var(--lk-accent-tint-2)' } : null),
         ...style,
       }}

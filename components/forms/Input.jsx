@@ -5,7 +5,7 @@ function usePlaceholderStyle() {
     if (typeof document === 'undefined' || document.getElementById('lk-field-ph')) return;
     const el = document.createElement('style');
     el.id = 'lk-field-ph';
-    el.textContent = '[data-lds-field]::placeholder{color:var(--label-assistive);opacity:1}';
+    el.textContent = '[data-lds-field]::placeholder{color:var(--color-semantic-label-assistive);opacity:1}';
     document.head.appendChild(el);
   }, []);
 }
@@ -55,15 +55,15 @@ export function Input({
   const isInvalid = invalid || status === 'negative' || error != null;
   usePlaceholderStyle();
   const ring = disabled
-    ? 'var(--line-neutral)'
+    ? 'var(--color-semantic-line-normal-neutral)'
     : isInvalid
     ? 'var(--component-input-border-color-invalid)'
     : status === 'positive'
-      ? 'var(--color-positive)'
+      ? 'var(--color-semantic-status-positive)'
     : activeFocus
       ? 'var(--component-input-border-color-focus)'
     : activeHover
-      ? 'var(--border-strong)'
+      ? 'var(--color-semantic-line-solid-normal)'
       : 'var(--component-input-border-color)';
   const h = height || (normalizedSize === 'sm' ? 'var(--control-h-sm)' : normalizedSize === 'lg' ? 'var(--control-h-lg)' : 'var(--component-input-height)');
   const startIcon = leadingIcon ?? iconLeft;
@@ -82,7 +82,7 @@ export function Input({
         style={{
         position: 'relative', display: 'flex', alignItems: 'center', gap: 'var(--component-input-gap)',
         height: h, padding: '0 var(--component-input-padding-x)',
-        background: disabled ? 'var(--fill-normal)' : 'var(--component-input-bg)',
+        background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)',
         border: `var(--component-input-border-width) solid ${ring}`,
         borderRadius: 'var(--component-input-radius)',
         boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
@@ -99,13 +99,13 @@ export function Input({
           aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
-          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--label-disable)' : 'var(--component-input-text-color)' }}
+          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)' }}
         />
         {endIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
         {endAction && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{endAction}</span>}
       </div>
       {message != null && (
-        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
+        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-label-alternative)' }}>
           {message}
         </span>
       )}

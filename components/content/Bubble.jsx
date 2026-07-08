@@ -7,8 +7,8 @@ import React from 'react';
  */
 export function Bubble({ children, tone = 'navy', tail = 'bottom', style, ...rest }) {
   const dark = tone === 'navy';
-  const bg = dark ? 'var(--surface-inverse)' : 'var(--surface-card)';
-  const fg = dark ? 'var(--text-on-signal)' : 'var(--label-normal)';
+  const bg = dark ? 'var(--color-semantic-inverse-background)' : 'var(--color-semantic-background-elevated-normal)';
+  const fg = dark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-normal)';
   const bd = dark ? 'none' : '1px solid var(--bw-border)';
   const tailBase = { position: 'absolute', width: 12, height: 12, background: bg, transform: 'rotate(45deg)' };
   const tails = {

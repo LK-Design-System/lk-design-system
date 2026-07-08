@@ -15,9 +15,9 @@ const meta = {
 export default meta;
 
 const colors = [
-  ['Primary', 'var(--color-primary)'],
-  ['Primary hover', 'var(--color-primary-hover)'],
-  ['Accent ink', 'var(--lk-accent-ink)'],
+  ['Primary', 'var(--color-semantic-primary-normal)'],
+  ['Primary hover', 'var(--color-semantic-primary-strong)'],
+  ['Accent ink', 'var(--color-semantic-primary-normal)'],
   ['Accent tint', 'var(--lk-accent-tint)'],
   ['Ink', 'var(--bw-ink)'],
   ['Slate', 'var(--bw-slate)'],
@@ -48,14 +48,14 @@ export const ColorAndSpacing = {
   render: () => (
     <main style={{ display: 'grid', gap: 32, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <section>
-        <h1 style={{ margin: '0 0 16px', fontSize: 28, color: 'var(--label-strong)' }}>색상 토큰</h1>
+        <h1 style={{ margin: '0 0 16px', fontSize: 28, color: 'var(--color-semantic-label-strong)' }}>색상 토큰</h1>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 14, minWidth: 0 }}>
           {colors.map(([label, value]) => (
-            <div key={label} style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', overflow: 'hidden' }}>
+            <div key={label} style={{ border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)', overflow: 'hidden' }}>
               <div style={{ height: 72, background: value }} />
               <div style={{ padding: 12 }}>
-                <strong style={{ display: 'block', fontSize: 14, color: 'var(--label-normal)' }}>{label}</strong>
-                <code style={{ fontSize: 12, color: 'var(--label-alternative)' }}>{value}</code>
+                <strong style={{ display: 'block', fontSize: 14, color: 'var(--color-semantic-label-normal)' }}>{label}</strong>
+                <code style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>{value}</code>
               </div>
             </div>
           ))}
@@ -63,14 +63,14 @@ export const ColorAndSpacing = {
       </section>
 
       <section>
-        <h2 style={{ margin: '0 0 16px', fontSize: 22, color: 'var(--label-strong)' }}>간격 스케일</h2>
+        <h2 style={{ margin: '0 0 16px', fontSize: 22, color: 'var(--color-semantic-label-strong)' }}>간격 스케일</h2>
         <div style={{ display: 'grid', gap: 12 }}>
           {spacings.map(([token, value, usage]) => (
             <div key={token} style={{ display: 'grid', gridTemplateColumns: 'minmax(88px, 112px) minmax(0, 1fr) auto', alignItems: 'center', gap: '8px 12px', minWidth: 0 }}>
-              <code style={{ color: 'var(--label-alternative)' }}>{token}</code>
-              <div style={{ height: 14, width: `min(var(${token}), 100%)`, background: 'var(--lk-accent-ink)', borderRadius: 'var(--radius-pill)' }} />
-              <code style={{ color: 'var(--label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{value}</code>
-              <span style={{ gridColumn: '1 / -1', color: 'var(--label-alternative)', fontSize: 13 }}>{usage}</span>
+              <code style={{ color: 'var(--color-semantic-label-alternative)' }}>{token}</code>
+              <div style={{ height: 14, width: `min(var(${token}), 100%)`, background: 'var(--color-semantic-primary-normal)', borderRadius: 'var(--radius-pill)' }} />
+              <code style={{ color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{value}</code>
+              <span style={{ gridColumn: '1 / -1', color: 'var(--color-semantic-label-alternative)', fontSize: 13 }}>{usage}</span>
             </div>
           ))}
         </div>
@@ -117,17 +117,17 @@ function TypeSpecRow({ name, cls, sample }) {
     });
   }, []);
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(150px, 190px) minmax(0, 1fr)', gap: 24, alignItems: 'baseline', padding: '14px 0', borderTop: '1px solid var(--border-subtle)', minWidth: 0 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(150px, 190px) minmax(0, 1fr)', gap: 24, alignItems: 'baseline', padding: '14px 0', borderTop: '1px solid var(--color-semantic-line-normal-normal)', minWidth: 0 }}>
       <div style={{ display: 'grid', gap: 3, alignSelf: 'center' }}>
-        <strong style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', color: 'var(--label-strong)' }}>{name}</strong>
-        <code style={{ fontSize: 11, color: 'var(--label-alternative)' }}>.{cls}</code>
+        <strong style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)' }}>{name}</strong>
+        <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>.{cls}</code>
         {metrics && (
-          <span style={{ fontSize: 11, color: 'var(--label-alternative)', fontVariantNumeric: 'tabular-nums' }}>
+          <span style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>
             {metrics.size}px · line {metrics.line}px · {metrics.weight}{metrics.tracking ? ` · ${metrics.tracking}px` : ''}
           </span>
         )}
       </div>
-      <div ref={ref} className={cls} style={{ color: 'var(--label-strong)', minWidth: 0, wordBreak: 'keep-all' }}>{sample}</div>
+      <div ref={ref} className={cls} style={{ color: 'var(--color-semantic-label-strong)', minWidth: 0, wordBreak: 'keep-all' }}>{sample}</div>
     </div>
   );
 }
@@ -136,8 +136,8 @@ function TypographySpecimen() {
   return (
     <main style={{ display: 'grid', gap: 40, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <header style={{ display: 'grid', gap: 12 }}>
-        <p style={{ margin: 0, color: 'var(--label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>타이포그래피</p>
-        <div className="type-display3" style={{ color: 'var(--label-strong)' }}>Pretendard <span style={{ color: 'var(--label-neutral)' }}>프리텐다드 プリテンダード</span></div>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>타이포그래피</p>
+        <div className="type-display3" style={{ color: 'var(--color-semantic-label-strong)' }}>Pretendard <span style={{ color: 'var(--color-semantic-label-neutral)' }}>프리텐다드 プリテンダード</span></div>
         <p style={{ margin: 0, maxWidth: 640 }} className="type-body1">
           하나의 본문 서체(Pretendard JP)가 한글·라틴·가나를 모두 담당합니다. 제목은 음수 자간으로 또렷하게,
           본문은 넉넉한 행간으로 차분하게 읽히도록 설계했습니다. 아래 모든 수치는 타이포그래피 토큰에서 실시간으로 읽어 표시합니다.
@@ -146,12 +146,12 @@ function TypographySpecimen() {
 
       <section style={{ display: 'grid', gap: 14 }}>
         <h2 style={{ margin: 0 }} className="type-heading1">서체 · 굵기</h2>
-        <div style={{ display: 'grid', gap: 0, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-card)' }}>
+        <div style={{ display: 'grid', gap: 0, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--color-semantic-background-elevated-normal)' }}>
           {TYPE_WEIGHTS.map(([label, weightVar, usage], i) => (
-            <div key={label} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 150px) minmax(0, 1fr) auto', gap: 16, alignItems: 'baseline', padding: '14px 18px', borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)' }}>
-              <span style={{ fontSize: 13, color: 'var(--label-alternative)' }}>{label}</span>
-              <span style={{ fontSize: 26, fontWeight: weightVar, color: 'var(--label-strong)', letterSpacing: '-0.01em' }}>가나다라 AaBb 0123</span>
-              <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>{usage}</span>
+            <div key={label} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 150px) minmax(0, 1fr) auto', gap: 16, alignItems: 'baseline', padding: '14px 18px', borderTop: i === 0 ? 'none' : '1px solid var(--color-semantic-line-normal-normal)' }}>
+              <span style={{ fontSize: 13, color: 'var(--color-semantic-label-alternative)' }}>{label}</span>
+              <span style={{ fontSize: 26, fontWeight: weightVar, color: 'var(--color-semantic-label-strong)', letterSpacing: '-0.01em' }}>가나다라 AaBb 0123</span>
+              <span style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>{usage}</span>
             </div>
           ))}
         </div>
@@ -163,8 +163,8 @@ function TypographySpecimen() {
           {TYPE_SCALE.map(({ group, note, sample, rows }) => (
             <div key={group} style={{ display: 'grid', gap: 4 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-                <strong style={{ fontSize: 15, color: 'var(--label-strong)', fontWeight: 'var(--fw-bold)' }}>{group}</strong>
-                <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>{note}</span>
+                <strong style={{ fontSize: 15, color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-bold)' }}>{group}</strong>
+                <span style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>{note}</span>
               </div>
               {rows.map(([name, cls]) => (
                 <TypeSpecRow key={cls} name={name} cls={cls} sample={sample} />
@@ -177,22 +177,22 @@ function TypographySpecimen() {
       <section style={{ display: 'grid', gap: 14 }}>
         <h2 style={{ margin: 0 }} className="type-heading1">적용 예시</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 16, minWidth: 0 }}>
-          <article style={{ display: 'grid', gap: 12, padding: 24, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', minWidth: 0 }}>
-            <h3 className="type-title3" style={{ margin: 0, color: 'var(--label-strong)' }}>미션을 완료하고 포인트를 쌓아 보세요</h3>
-            <p className="type-body2" style={{ margin: 0, color: 'var(--label-neutral)' }}>
+          <article style={{ display: 'grid', gap: 12, padding: 24, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)', minWidth: 0 }}>
+            <h3 className="type-title3" style={{ margin: 0, color: 'var(--color-semantic-label-strong)' }}>미션을 완료하고 포인트를 쌓아 보세요</h3>
+            <p className="type-body2" style={{ margin: 0, color: 'var(--color-semantic-label-neutral)' }}>
               경로를 검증하고 구역을 지정하면 오늘의 작업이 자동으로 요약됩니다. 상태 패널에서 진행률을 확인하세요.
             </p>
-            <span className="type-caption1" style={{ color: 'var(--label-alternative)' }}>최근 업데이트 · 방금 전</span>
+            <span className="type-caption1" style={{ color: 'var(--color-semantic-label-alternative)' }}>최근 업데이트 · 방금 전</span>
           </article>
 
-          <article style={{ display: 'grid', gap: 10, padding: 24, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', minWidth: 0 }}>
-            <div className="type-display3" style={{ color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>84m</div>
-            <div className="type-headline2" style={{ color: 'var(--label-strong)' }}>예상 이동 거리</div>
+          <article style={{ display: 'grid', gap: 10, padding: 24, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)', minWidth: 0 }}>
+            <div className="type-display3" style={{ color: 'var(--color-semantic-label-strong)', fontVariantNumeric: 'tabular-nums' }}>84m</div>
+            <div className="type-headline2" style={{ color: 'var(--color-semantic-label-strong)' }}>예상 이동 거리</div>
             <div style={{ display: 'grid', gap: 6, marginTop: 4 }}>
               {[['웨이포인트', '12개'], ['경유 구역', 'Zone 3'], ['검증 상태', '검증 중']].map(([k, v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-                  <span className="type-label1" style={{ color: 'var(--label-alternative)' }}>{k}</span>
-                  <span className="type-label1" style={{ color: 'var(--label-strong)', fontWeight: 'var(--fw-bold)' }}>{v}</span>
+                  <span className="type-label1" style={{ color: 'var(--color-semantic-label-alternative)' }}>{k}</span>
+                  <span className="type-label1" style={{ color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-bold)' }}>{v}</span>
                 </div>
               ))}
             </div>
@@ -217,10 +217,10 @@ const SEMANTIC_GROUPS = ['primary', 'label', 'background', 'interaction', 'line'
 function Swatch({ varName, caption, sub }) {
   return (
     <div style={{ display: 'grid', gap: 4, minWidth: 0 }}>
-      <div style={{ height: 40, borderRadius: 'var(--radius-sm)', background: `var(${varName})`, border: '1px solid var(--border-subtle)' }} />
+      <div style={{ height: 40, borderRadius: 'var(--radius-sm)', background: `var(${varName})`, border: '1px solid var(--color-semantic-line-normal-normal)' }} />
       <div style={{ display: 'grid', gap: 1, minWidth: 0 }}>
-        <span style={{ fontSize: 11, color: 'var(--label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{caption}</span>
-        {sub && <code style={{ fontSize: 9, color: 'var(--label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub}</code>}
+        <span style={{ fontSize: 11, color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{caption}</span>
+        {sub && <code style={{ fontSize: 9, color: 'var(--color-semantic-label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub}</code>}
       </div>
     </div>
   );
@@ -230,7 +230,7 @@ function ColorSystemSpecimen() {
   return (
     <main style={{ display: 'grid', gap: 40, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <header style={{ display: 'grid', gap: 10 }}>
-        <p style={{ margin: 0, color: 'var(--label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>색상 시스템</p>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>색상 시스템</p>
         <h1 style={{ margin: 0 }} className="type-title2">원자 팔레트 → 시맨틱 역할, 2단 토큰 구조</h1>
         <p style={{ margin: 0, maxWidth: 680 }} className="type-body1">
           {ATOMIC && Object.keys(ATOMIC).length}개 색상 램프({SEMANTIC.length}개 시맨틱 역할)로 이루어진 2단 구조입니다.
@@ -246,7 +246,7 @@ function ColorSystemSpecimen() {
             if (!names.length) return null;
             return (
               <div key={group} style={{ display: 'grid', gap: 8 }}>
-                <strong style={{ fontSize: 13, color: 'var(--label-strong)', textTransform: 'capitalize' }}>{group}</strong>
+                <strong style={{ fontSize: 13, color: 'var(--color-semantic-label-strong)', textTransform: 'capitalize' }}>{group}</strong>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(96px, 1fr))', gap: 10 }}>
                   {names.map((n) => <Swatch key={n} varName={`--color-semantic-${n}`} caption={n.slice(group.length + 1) || 'normal'} sub={`semantic-${n}`} />)}
                 </div>
@@ -261,12 +261,12 @@ function ColorSystemSpecimen() {
         <div style={{ display: 'grid', gap: 16 }}>
           {Object.entries(ATOMIC).map(([slug, { label, steps }]) => (
             <div key={slug} style={{ display: 'grid', gap: 6, minWidth: 0 }}>
-              <strong style={{ fontSize: 12, color: 'var(--label-neutral)' }}>{label}</strong>
+              <strong style={{ fontSize: 12, color: 'var(--color-semantic-label-neutral)' }}>{label}</strong>
               <div style={{ display: 'flex', gap: 2, minWidth: 0, overflowX: 'auto' }}>
                 {steps.map((step) => (
                   <div key={step} style={{ flex: '1 0 34px', minWidth: 34 }}>
-                    <div style={{ height: 44, background: `var(--color-atomic-${slug}-${step})`, borderRadius: 3, border: '1px solid var(--border-subtle)' }} />
-                    <div style={{ fontSize: 9, color: 'var(--label-alternative)', textAlign: 'center', marginTop: 2, fontVariantNumeric: 'tabular-nums' }}>{step}</div>
+                    <div style={{ height: 44, background: `var(--color-atomic-${slug}-${step})`, borderRadius: 3, border: '1px solid var(--color-semantic-line-normal-normal)' }} />
+                    <div style={{ fontSize: 9, color: 'var(--color-semantic-label-alternative)', textAlign: 'center', marginTop: 2, fontVariantNumeric: 'tabular-nums' }}>{step}</div>
                   </div>
                 ))}
               </div>

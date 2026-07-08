@@ -17,10 +17,10 @@ function TimeDropdown({ value, options, onChange, height, ariaLabel }) {
       <button
         type="button" aria-label={ariaLabel} aria-haspopup="listbox" aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, height, padding: '0 12px', boxSizing: 'border-box', background: 'var(--bw-white)', border: `1px solid ${open ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-md)', boxShadow: open ? '0 0 0 4px var(--focus-ring)' : 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-semibold)', color: 'var(--label-normal)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, height, padding: '0 12px', boxSizing: 'border-box', background: 'var(--bw-white)', border: `1px solid ${open ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-md)', boxShadow: open ? '0 0 0 4px var(--focus-ring)' : 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
       >
         {pad(value)}
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}><path d="m6 9 6 6 6-6" /></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}><path d="m6 9 6 6 6-6" /></svg>
       </button>
       {open && (
         <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '100%', zIndex: 40, maxHeight: 220, overflowY: 'auto', background: 'var(--surface-overlay)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -30,9 +30,9 @@ function TimeDropdown({ value, options, onChange, height, ariaLabel }) {
               <div
                 key={x} role="option" aria-selected={on}
                 onClick={() => { onChange(x); setOpen(false); }}
-                onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = 'var(--fill-normal)'; }}
+                onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = 'var(--color-semantic-fill-normal)'; }}
                 onMouseLeave={(e) => { if (!on) e.currentTarget.style.background = 'transparent'; }}
-                style={{ padding: '7px 12px', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, textAlign: 'center', color: on ? 'var(--lk-accent-ink)' : 'var(--label-normal)', background: on ? 'var(--lk-accent-tint-2)' : 'transparent', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
+                style={{ padding: '7px 12px', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, textAlign: 'center', color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)', background: on ? 'var(--lk-accent-tint-2)' : 'transparent', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
               >
                 {pad(x)}
               </div>
@@ -62,7 +62,7 @@ export function TimePicker({ value, defaultValue = '09:00', onChange, minuteStep
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, ...style }} {...rest}>
       <TimeDropdown value={h} options={hours} onChange={(nh) => set(nh, m)} height={height} ariaLabel="hour" />
-      <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', color: 'var(--label-alternative)' }}>:</span>
+      <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-alternative)' }}>:</span>
       <TimeDropdown value={m} options={mins} onChange={(nm) => set(h, nm)} height={height} ariaLabel="minute" />
     </div>
   );

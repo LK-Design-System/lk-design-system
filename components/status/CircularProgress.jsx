@@ -11,7 +11,7 @@ function useKeyframes(id, css) {
 }
 
 const TONES = {
-  signal: 'var(--lk-accent-ink)',
+  signal: 'var(--color-semantic-primary-normal)',
   positive: 'var(--bw-green)',
   cautionary: 'var(--bw-amber)',
   negative: 'var(--bw-red)',
@@ -59,10 +59,10 @@ export function CircularProgress({
         height={size}
         style={{ transform: 'rotate(-90deg)', transformOrigin: 'center', animation: indeterminate ? 'lk-circular-spin 0.9s linear infinite' : undefined }}
       >
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--fill-strong)" strokeWidth={thickness} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--color-semantic-fill-strong)" strokeWidth={thickness} />
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={c} strokeWidth={thickness} strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={dashOffset} style={{ transition: indeterminate ? undefined : 'stroke-dashoffset var(--dur-base) var(--ease-out)' }} />
       </svg>
-      {showValue && !indeterminate && <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: Math.round(size * 0.28), fontWeight: 'var(--fw-bold)', color: 'var(--label-normal)', fontVariantNumeric: 'tabular-nums' }}>{Math.round(pct)}</span>}
+      {showValue && !indeterminate && <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: Math.round(size * 0.28), fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-normal)', fontVariantNumeric: 'tabular-nums' }}>{Math.round(pct)}</span>}
     </span>
   );
 }

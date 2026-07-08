@@ -7,8 +7,8 @@ const DOT = {
   warning: 'var(--bw-amber)',
   negative: 'var(--bw-red)',
   offline: 'var(--bw-gray-300)',
-  signal: 'var(--lk-accent-ink)',
-  critical: 'var(--color-danger-strong)',
+  signal: 'var(--color-semantic-primary-normal)',
+  critical: 'var(--color-semantic-status-negative)',
 };
 
 /**
@@ -31,7 +31,7 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 7,
         fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-        color: 'var(--label-neutral)', ...style,
+        color: 'var(--color-semantic-label-neutral)', ...style,
       }}
       {...rest}
     >

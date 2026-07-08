@@ -43,8 +43,8 @@ export function SocialButton({
     facebook: { bg: 'rgb(24,119,242)',  bgHover: 'rgb(24,119,242)',  fg: '#FFFFFF',          bd: 'none', shadow: 'none',     mono: true },
   };
   const outline = {
-    bg: 'var(--surface-raised, #FFFFFF)', bgHover: 'var(--surface-raised, #FFFFFF)',
-    fg: 'var(--label-normal)', bd: '1px solid var(--bw-border)',
+    bg: 'var(--color-semantic-background-elevated-normal, #FFFFFF)', bgHover: 'var(--color-semantic-background-elevated-normal, #FFFFFF)',
+    fg: 'var(--color-semantic-label-normal)', bd: '1px solid var(--bw-border)',
     bdHover: '1px solid var(--bw-border)', shadow: 'none', mono: false,
   };
   const labels = { google: 'Google로 계속하기', apple: 'Apple로 계속하기', facebook: 'Facebook으로 계속하기' };

@@ -7,7 +7,7 @@ function TableRow({ columns, row, pad, hover }) {
     <tr
       onMouseEnter={() => setH(true)}
       onMouseLeave={() => setH(false)}
-      style={{ background: hover && h ? 'var(--fill-alt)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}
+      style={{ background: hover && h ? 'var(--color-semantic-fill-alternative)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}
     >
       {columns.map((c) => (
         <td key={c.key} style={{ ...tdStyle(pad), textAlign: c.align || 'left' }}>

@@ -39,11 +39,11 @@ export function ToggleButton({
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
         height: h, width: iconOnly ? h : undefined, padding: iconOnly ? 0 : '0 16px',
         background: on ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)',
-        border: `1px solid ${on ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`,
+        border: `1px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`,
         borderRadius: 'var(--radius-md)', cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 15,
         fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-        color: on ? 'var(--lk-accent-ink)' : 'var(--label-neutral)',
+        color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-neutral)',
         transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
         whiteSpace: 'nowrap', ...style,
       }}

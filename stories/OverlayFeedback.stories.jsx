@@ -18,9 +18,9 @@ const meta = {
 export default meta;
 
 const alertVariantColor = {
-  normal: 'var(--lk-accent-ink)',
+  normal: 'var(--color-semantic-primary-normal)',
   negative: 'var(--bw-red)',
-  assistive: 'var(--label-neutral)',
+  assistive: 'var(--color-semantic-label-neutral)',
 };
 
 function AlertPreview({ platform, heading = true, variant = 'negative', title = '리포트를 삭제할까요?', body = '이 작업은 되돌릴 수 없습니다.' }) {
@@ -32,7 +32,7 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
 
   return (
     <section style={{ display: 'grid', gap: 12 }}>
-      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-normal)' }}>{platform}{variant ? ` / ${variant}` : ''}</h3>
+      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-normal)' }}>{platform}{variant ? ` / ${variant}` : ''}</h3>
       <div
         style={{
           height: 210,
@@ -54,18 +54,18 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
           }}
         >
           {heading && (
-            <div style={{ marginBottom: 8, fontSize: ios ? 14 : 15, fontWeight: 'var(--fw-extra)', color: 'var(--label-normal)' }}>
+            <div style={{ marginBottom: 8, fontSize: ios ? 14 : 15, fontWeight: 'var(--fw-extra)', color: 'var(--color-semantic-label-normal)' }}>
               {title}
             </div>
           )}
-          <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5, color: 'var(--label-neutral)' }}>
+          <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5, color: 'var(--color-semantic-label-neutral)' }}>
             {body}
           </p>
           <div style={{ display: 'flex', justifyContent: ios ? 'center' : 'flex-end', gap: 8, marginTop: 18 }}>
-            <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? 'var(--fill-normal)' : 'transparent', color: 'var(--label-normal)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
+            <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? 'var(--color-semantic-fill-normal)' : 'transparent', color: 'var(--color-semantic-label-normal)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
               취소
             </button>
-            <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? accent : 'transparent', color: ios ? 'var(--text-on-inverse)' : accent, fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
+            <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? accent : 'transparent', color: ios ? 'var(--color-semantic-inverse-label)' : accent, fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
               {primaryLabel}
             </button>
           </div>

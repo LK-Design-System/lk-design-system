@@ -11,7 +11,7 @@ function useKeyframes(id, css) {
 }
 
 const TONES = {
-  signal: 'var(--lk-accent-ink)',
+  signal: 'var(--color-semantic-primary-normal)',
   positive: 'var(--bw-green)',
   cautionary: 'var(--bw-amber)',
   negative: 'var(--bw-red)',
@@ -31,9 +31,9 @@ export function ProgressBar({ value = 0, max = 100, indeterminate = false, tone 
   return (
     <div style={{ ...style }} {...rest}>
       {(label != null || showValue) && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--label-neutral)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)' }}>
           <span>{label}</span>
-          {showValue && <span style={{ color: 'var(--label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{Math.round(pct)}%</span>}
+          {showValue && <span style={{ color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{Math.round(pct)}%</span>}
         </div>
       )}
       <div
@@ -44,7 +44,7 @@ export function ProgressBar({ value = 0, max = 100, indeterminate = false, tone 
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuetext={indeterminate ? 'loading' : `${Math.round(pct)}%`}
-        style={{ position: 'relative', height: h, borderRadius: 'var(--radius-pill)', background: 'var(--fill-strong)', overflow: 'hidden' }}
+        style={{ position: 'relative', height: h, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-strong)', overflow: 'hidden' }}
       >
         {indeterminate ? (
           <span data-lds-progress-indeterminate style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '45%', background: c, borderRadius: 'var(--radius-pill)', animation: 'lk-prog-indet 1.3s var(--ease-in-out) infinite' }} />

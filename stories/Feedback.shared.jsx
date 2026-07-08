@@ -39,7 +39,7 @@ export const IdentityAndBadges = {
         <Tag>SYSTEM</Tag>
         <Tag tone="amber" solid>주의</Tag>
         <PushBadge count={7}>
-          <span style={{ display: 'inline-flex', width: 42, height: 42, alignItems: 'center', justifyContent: 'center', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', border: '1px solid var(--border-subtle)' }}>
+          <span style={{ display: 'inline-flex', width: 42, height: 42, alignItems: 'center', justifyContent: 'center', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)' }}>
             <Icon name="bell" />
           </span>
         </PushBadge>
@@ -156,7 +156,7 @@ export const NotificationsAndRating = {
   name: '알림과 평점',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 720 }}>
-      <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+      <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
         <Notification
           unread
           icon={<Icon name="triangle-exclamation" />}

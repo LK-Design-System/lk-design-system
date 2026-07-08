@@ -24,7 +24,7 @@ export function AutoComplete({ options = [], value, defaultValue, onChange, onSe
         onChange={(e) => { set(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 120)}
-        style={{ width: '100%', height: h, padding: '0 16px', boxSizing: 'border-box', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-input)', outline: 'none', fontFamily: 'var(--font-sans)', fontSize: 16, color: 'var(--label-normal)', background: 'var(--bw-white)' }}
+        style={{ width: '100%', height: h, padding: '0 16px', boxSizing: 'border-box', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-input)', outline: 'none', fontFamily: 'var(--font-sans)', fontSize: 16, color: 'var(--color-semantic-label-normal)', background: 'var(--bw-white)' }}
       />
       {open && filtered.length > 0 && (
         <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: 'auto', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-md)', padding: 6 }}>
@@ -32,9 +32,9 @@ export function AutoComplete({ options = [], value, defaultValue, onChange, onSe
             <div
               key={i} role="option"
               onMouseDown={(e) => { e.preventDefault(); pick(o); }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--fill-normal)'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-semantic-fill-normal)'; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-              style={{ padding: '10px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, color: 'var(--label-normal)' }}
+              style={{ padding: '10px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, color: 'var(--color-semantic-label-normal)' }}
             >
               {o.label}
             </div>

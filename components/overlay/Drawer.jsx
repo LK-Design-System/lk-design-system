@@ -34,15 +34,15 @@ export function Drawer({ open = false, side = 'right', width = 380, title, child
       >
         {(title != null || onClose) && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 22px', borderBottom: '1px solid var(--bw-border)' }}>
-            <div style={{ flex: 1, minWidth: 0, fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
+            <div style={{ flex: 1, minWidth: 0, fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
             {onClose && (
-              <button type="button" aria-label="close" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--label-assistive)' }}>
+              <button type="button" aria-label="close" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
               </button>
             )}
           </div>
         )}
-        <div style={{ flex: 1, padding: '20px 22px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
+        <div style={{ flex: 1, padding: '20px 22px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         {footer != null && <div style={{ padding: '16px 22px', borderTop: '1px solid var(--bw-border)', display: 'flex', justifyContent: 'flex-end', gap: 10 }}>{footer}</div>}
       </div>
     </div>

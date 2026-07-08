@@ -13,7 +13,7 @@ export function Dimmer({ open = false, children, onClick, blur = false, style, .
       onClick={onClick}
       style={{
         position: 'absolute', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'var(--scrim-dark)', color: 'var(--text-on-inverse)', backdropFilter: blur ? 'blur(3px)' : 'none', borderRadius: 'inherit', ...style,
+        background: 'var(--scrim-dark)', color: 'var(--color-semantic-inverse-label)', backdropFilter: blur ? 'blur(3px)' : 'none', borderRadius: 'inherit', ...style,
       }}
       {...rest}
     >

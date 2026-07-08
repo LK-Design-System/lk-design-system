@@ -27,7 +27,7 @@ export const ConfirmationStates = {
           <Button onClick={() => setOpen(true)}>다이얼로그 열기</Button>
           <Button variant="ghost">보조 액션</Button>
         </div>
-        <p style={{ margin: 0, color: 'var(--label-neutral)', lineHeight: 1.6 }}>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.6 }}>
           파괴적 작업은 범용 모달이 아니라 명확한 취소/확인 라벨을 가진 ConfirmDialog로 확인합니다.
         </p>
         <ConfirmDialog

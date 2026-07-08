@@ -32,7 +32,7 @@ export const Lists = {
   name: '리스트',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920, minWidth: 0 }}>
-      <section style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
+      <section style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
         <ListCell leading={<Icon name="document" size={18} />} title="디자인 토큰" description="검토 요청됨" trailing={<StatusBadge tone="signal">검토</StatusBadge>} onClick={() => {}} divider />
         <ListCell leading={<Icon name="layers" size={18} />} title="컴포넌트 문서" description="업데이트 완료" trailing={<Kbd>CMD K</Kbd>} onClick={() => {}} divider selected />
         <ListCell leading={<Icon name="bell" size={18} />} title="알림 3건" description="확인 필요한 변경 사항" chevron onClick={() => {}} />
@@ -57,20 +57,20 @@ export const ListCellStates = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920, minWidth: 0 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', minWidth: 0 }}>
-        <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
           <ListCell verticalPadding="none" title="패딩 없음" trailing={<Icon name="chevron-right" />} divider />
           <ListCell verticalPadding="small" title="작은 패딩" trailing={<Icon name="chevron-right" />} divider />
           <ListCell verticalPadding="medium" title="기본 패딩" trailing={<Icon name="chevron-right" />} divider />
           <ListCell verticalPadding="large" title="큰 패딩" trailing={<Icon name="chevron-right" />} />
         </div>
-        <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
           <ListCell title="기본 행" description="보조 텍스트" divider />
           <ListCell title="선택된 행" description="selected 상태" selected divider />
           <ListCell title="비활성 행" description="disabled 상태" disable divider />
           <ListCell title="셰브론 행" description="탐색 이동" chevron />
         </div>
       </section>
-      <section style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
+      <section style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
         <ListCell
           leading={<Icon name="document" />}
           verticalAlign="top"

@@ -7,7 +7,7 @@ import React from 'react';
  */
 export function Link({ children, href, tone = 'signal', underline = 'hover', external = false, style, onMouseEnter, onMouseLeave, ...rest }) {
   const [hover, setHover] = React.useState(false);
-  const color = tone === 'neutral' ? 'var(--label-neutral)' : tone === 'inherit' ? 'inherit' : 'var(--lk-accent-ink)';
+  const color = tone === 'neutral' ? 'var(--color-semantic-label-neutral)' : tone === 'inherit' ? 'inherit' : 'var(--color-semantic-primary-normal)';
   const showUnderline = underline === 'always' || (underline === 'hover' && hover);
   return (
     <a

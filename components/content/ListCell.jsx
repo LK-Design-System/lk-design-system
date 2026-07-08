@@ -81,9 +81,9 @@ export function ListCell({
   const background = disabledState
     ? "transparent"
     : activePressed
-      ? "var(--fill-strong)"
+      ? "var(--color-semantic-fill-strong)"
       : activeHover
-        ? "var(--fill-alt)"
+        ? "var(--color-semantic-fill-alternative)"
         : "transparent";
 
   const handleClick = (event) => {
@@ -150,10 +150,10 @@ export function ListCell({
         /* WDS disabled pattern: dim via content color tokens, not wrapper
            opacity. */
         color: disabledState
-          ? "var(--label-disable)"
+          ? "var(--color-semantic-label-disable)"
           : selected
-            ? "var(--label-normal)"
-            : "var(--label-neutral)",
+            ? "var(--color-semantic-label-normal)"
+            : "var(--color-semantic-label-neutral)",
         borderRadius: "var(--radius-lg)",
         outline:
           activeFocus && !disabledState
@@ -175,7 +175,7 @@ export function ListCell({
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "var(--lk-accent-ink)",
+            color: "var(--color-semantic-primary-normal)",
             background: "var(--lk-accent-tint)",
             borderRadius: "var(--radius-md)",
             ...leadingStyle,
@@ -200,10 +200,10 @@ export function ListCell({
               lineHeight: "var(--body1-line)",
               letterSpacing: 0,
               color: disabledState
-                ? "var(--label-disable)"
+                ? "var(--color-semantic-label-disable)"
                 : selected
-                  ? "var(--lk-accent-ink)"
-                  : "var(--label-normal)",
+                  ? "var(--color-semantic-primary-normal)"
+                  : "var(--color-semantic-label-normal)",
               overflow: textEllipsis ? "hidden" : undefined,
               textOverflow: textEllipsis ? "ellipsis" : undefined,
               whiteSpace: textEllipsis ? "nowrap" : "normal",
@@ -222,8 +222,8 @@ export function ListCell({
               fontSize: "var(--label2-size)",
               lineHeight: "var(--label2-line)",
               color: disabledState
-                ? "var(--label-disable)"
-                : "var(--label-alternative)",
+                ? "var(--color-semantic-label-disable)"
+                : "var(--color-semantic-label-alternative)",
               overflow: textEllipsis ? "hidden" : undefined,
               textOverflow: textEllipsis ? "ellipsis" : undefined,
               whiteSpace: textEllipsis ? "nowrap" : "normal",
@@ -243,10 +243,10 @@ export function ListCell({
             alignItems: "center",
             gap: 8,
             color: disabledState
-              ? "var(--label-disable)"
+              ? "var(--color-semantic-label-disable)"
               : selected
-                ? "var(--lk-accent-ink)"
-                : "var(--label-alternative)",
+                ? "var(--color-semantic-primary-normal)"
+                : "var(--color-semantic-label-alternative)",
             ...trailingStyle,
           }}
         >
@@ -266,7 +266,7 @@ export function ListCell({
             right: dividerRight,
             bottom: 0,
             height: 1,
-            background: "var(--border-subtle)",
+            background: "var(--color-semantic-line-normal-normal)",
             opacity: 0.72,
             pointerEvents: "none",
           }}

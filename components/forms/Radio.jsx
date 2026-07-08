@@ -37,12 +37,12 @@ export function Radio({
   const d = normalizedSize === 'sm' ? 16 : 20;
   const dot = normalizedSize === 'sm' ? 6 : 8;
   const radioBorder = disabledState
-    ? 'var(--line-neutral)'
-    : visualChecked || activeFocus ? 'var(--lk-accent-ink)' : activeHover ? 'var(--border-strong)' : 'var(--bw-border)';
+    ? 'var(--color-semantic-line-normal-neutral)'
+    : visualChecked || activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--bw-border)';
   const radioBg = disabledState
-    ? 'var(--fill-normal)'
-    : visualChecked ? 'var(--lk-accent-ink)' : activeHover ? 'var(--fill-normal)' : 'var(--bw-white)';
-  const radioDot = disabledState ? 'var(--label-disable)' : 'var(--text-on-signal)';
+    ? 'var(--color-semantic-fill-normal)'
+    : visualChecked ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-normal)' : 'var(--bw-white)';
+  const radioDot = disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)';
   return (
     <label
       htmlFor={id}
@@ -51,7 +51,7 @@ export function Radio({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: tight ? 8 : 12,
         cursor: disabledState ? 'not-allowed' : 'pointer',
-        fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, color: disabledState ? 'var(--label-disable)' : 'var(--bw-ink)',
+        fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--bw-ink)',
         fontWeight: bold ? 'var(--fw-bold)' : undefined,
         ...style,
       }}

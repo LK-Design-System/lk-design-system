@@ -25,8 +25,8 @@ function checkboxStyle(checked, indeterminate = false) {
     height: 16,
     margin: 0,
     borderRadius: 4,
-    border: `1px solid ${filled ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`,
-    backgroundColor: filled ? 'var(--lk-accent-ink)' : 'var(--surface-card)',
+    border: `1px solid ${filled ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`,
+    backgroundColor: filled ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)',
     backgroundImage: indeterminate ? DASH_IMG : checked ? CHECK_IMG : 'none',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -82,9 +82,9 @@ export function DataGrid({ columns = [], rows = [], selectable = false, selected
               <th colSpan={columns.length} scope="colgroup" style={{ padding: 0, background: 'var(--lk-accent-tint-2)', borderBottom: '1px solid var(--bw-border)' }}>
                 <div role="status" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minHeight: headerH, padding: size === 'sm' ? '0 12px' : '0 16px' }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', minWidth: 0 }}>
-                    <span style={{ color: 'var(--label-strong)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{sel.size}개 선택됨</span>
+                    <span style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{sel.size}개 선택됨</span>
                     {onClearSelection && (
-                      <button type="button" onClick={onClearSelection} aria-label="선택 해제" title="선택 해제" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 22, height: 22, padding: 0, border: 0, borderRadius: 'var(--radius-sm)', background: 'transparent', color: 'var(--label-neutral)', cursor: 'pointer' }}>
+                      <button type="button" onClick={onClearSelection} aria-label="선택 해제" title="선택 해제" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 22, height: 22, padding: 0, border: 0, borderRadius: 'var(--radius-sm)', background: 'transparent', color: 'var(--color-semantic-label-neutral)', cursor: 'pointer' }}>
                         <Icon name="close" size={15} aria-hidden="true" />
                       </button>
                     )}

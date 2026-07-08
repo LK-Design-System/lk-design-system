@@ -10,13 +10,13 @@ const MONO = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, C
 export function Code({ children, block = false, style, ...rest }) {
   if (block) {
     return (
-      <pre style={{ margin: 0, padding: '14px 16px', background: 'var(--surface-inverse)', color: 'var(--label-on-dark)', borderRadius: 'var(--radius-lg)', overflowX: 'auto', fontFamily: MONO, fontSize: 13, lineHeight: 1.6, ...style }} {...rest}>
+      <pre style={{ margin: 0, padding: '14px 16px', background: 'var(--color-semantic-inverse-background)', color: 'var(--color-semantic-inverse-label)', borderRadius: 'var(--radius-lg)', overflowX: 'auto', fontFamily: MONO, fontSize: 13, lineHeight: 1.6, ...style }} {...rest}>
         <code>{children}</code>
       </pre>
     );
   }
   return (
-    <code style={{ padding: '2px 6px', background: 'var(--fill-strong)', color: 'var(--label-normal)', borderRadius: 'var(--radius-sm)', fontFamily: MONO, fontSize: '0.9em', ...style }} {...rest}>
+    <code style={{ padding: '2px 6px', background: 'var(--color-semantic-fill-strong)', color: 'var(--color-semantic-label-normal)', borderRadius: 'var(--radius-sm)', fontFamily: MONO, fontSize: '0.9em', ...style }} {...rest}>
       {children}
     </code>
   );

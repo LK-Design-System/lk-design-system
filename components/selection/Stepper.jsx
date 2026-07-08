@@ -36,12 +36,12 @@ export function Stepper({
         aria-label={isMinus ? 'decrease' : 'increase'}
         disabled={off}
         onClick={() => set(val + (isMinus ? -step : step))}
-        onMouseEnter={(e) => { if (!off) e.currentTarget.style.background = 'var(--fill-normal)'; }}
+        onMouseEnter={(e) => { if (!off) e.currentTarget.style.background = 'var(--color-semantic-fill-normal)'; }}
         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
         style={{
           width: h, height: h, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           border: 'none', background: 'transparent', cursor: off ? 'not-allowed' : 'pointer',
-          color: off ? 'var(--label-disable)' : 'var(--label-normal)', borderRadius: 'var(--radius-md)',
+          color: off ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', borderRadius: 'var(--radius-md)',
           transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
         }}
       >
@@ -67,7 +67,7 @@ export function Stepper({
         style={{
           minWidth: 40, textAlign: 'center', fontFamily: 'var(--font-sans)',
           fontSize: size === 'sm' ? 15 : 16, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
-          color: 'var(--label-normal)', fontVariantNumeric: 'tabular-nums',
+          color: 'var(--color-semantic-label-normal)', fontVariantNumeric: 'tabular-nums',
         }}
       >
         {val}

@@ -36,7 +36,7 @@ export function PinInput({ length = 6, value, defaultValue = '', onChange, onCom
           type={mask ? 'password' : 'text'}
           onChange={(e) => onInput(i, e)}
           onKeyDown={(e) => onKey(i, e)}
-          style={{ width: boxW, height: boxH, textAlign: 'center', border: `1px solid ${raw[i] ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-md)', outline: 'none', fontFamily: 'var(--font-sans)', fontSize: 18, fontWeight: 'var(--fw-bold)', color: 'var(--label-normal)', background: 'var(--bw-white)' }}
+          style={{ width: boxW, height: boxH, textAlign: 'center', border: `1px solid ${raw[i] ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-md)', outline: 'none', fontFamily: 'var(--font-sans)', fontSize: 18, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-normal)', background: 'var(--bw-white)' }}
         />
       ))}
     </div>

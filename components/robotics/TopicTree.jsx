@@ -41,13 +41,13 @@ function TopicNode({ node, depth, onToggle }) {
           borderRadius: 'var(--radius-md)',
           boxSizing: 'border-box',
           cursor: has ? 'pointer' : 'default',
-          background: hover ? 'var(--surface-subtle)' : 'transparent',
+          background: hover ? 'var(--color-semantic-background-normal-alternative)' : 'transparent',
           textAlign: 'left',
           fontFamily: 'var(--font-sans)',
           fontSize: 14,
           fontWeight: depth === 0 ? 'var(--fw-semibold)' : 'var(--fw-medium)',
           lineHeight: '18px',
-          color: depth === 0 ? 'var(--label-strong)' : 'var(--label-normal)',
+          color: depth === 0 ? 'var(--color-semantic-label-strong)' : 'var(--color-semantic-label-normal)',
           transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)',
         }}
       >
@@ -59,7 +59,7 @@ function TopicNode({ node, depth, onToggle }) {
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--label-alternative)',
+            color: 'var(--color-semantic-label-alternative)',
             transform: has && open ? 'rotate(90deg)' : 'none',
             transition: 'transform var(--dur-fast) var(--ease-out)',
           }}
@@ -78,7 +78,7 @@ function TopicNode({ node, depth, onToggle }) {
               whiteSpace: 'nowrap',
               fontSize: 12,
               lineHeight: '18px',
-              color: 'var(--label-alternative)',
+              color: 'var(--color-semantic-label-alternative)',
               fontFamily: 'var(--font-mono)',
             }}
           >
@@ -87,7 +87,7 @@ function TopicNode({ node, depth, onToggle }) {
         )}
         {(hasHz || node.subscribable) && (
           <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            {hasHz && <span style={{ fontSize: 12, lineHeight: '18px', color: 'var(--label-assistive)', fontVariantNumeric: 'tabular-nums' }}>{node.hz} Hz</span>}
+            {hasHz && <span style={{ fontSize: 12, lineHeight: '18px', color: 'var(--color-semantic-label-assistive)', fontVariantNumeric: 'tabular-nums' }}>{node.hz} Hz</span>}
             {node.subscribable && (
               <span onClick={(e) => e.stopPropagation()} style={{ display: 'inline-flex' }}>
                 <Switch size="sm" checked={!!node.subscribed} onChange={() => onToggle && onToggle(node)} />

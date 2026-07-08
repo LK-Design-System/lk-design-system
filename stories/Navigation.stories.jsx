@@ -36,7 +36,7 @@ export const TopBarDefault = {
         <TopBar
           navAlign="center"
           brand={<Lockup variant="inline" tone="ink" height={22} />}
-          actions={<IconButton variant="ghost" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-label-normal)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
           <TopBarNavItem active href="#" menuItems={productMenu}>개요</TopBarNavItem>
@@ -51,7 +51,7 @@ export const TopBarDefault = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-inverse-label)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
           <TopBarNavItem active href="#" menuItems={productMenu}>개요</TopBarNavItem>
@@ -82,8 +82,8 @@ const topBarMenuStyle = {
   top: '100%',
   left: '50%',
   transform: 'translate(-50%, 4px)',
-  background: 'var(--surface-card)',
-  border: '1px solid var(--line-normal)',
+  background: 'var(--color-semantic-background-elevated-normal)',
+  border: '1px solid var(--color-semantic-line-normal-normal)',
   borderRadius: 14,
   boxShadow: 'var(--shadow-md)',
   padding: 8,
@@ -97,15 +97,15 @@ const topBarMenuStyle = {
 };
 
 function TopBarStaticNav({ dark = false }) {
-  const activeColor = dark ? 'var(--text-on-inverse)' : 'var(--lk-accent-ink)';
-  const idleColor = dark ? 'var(--inverse-label-neutral)' : 'var(--label-alternative)';
-  const underline = dark ? 'var(--lk-accent)' : 'var(--lk-accent-ink)';
+  const activeColor = dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-primary-normal)';
+  const idleColor = dark ? 'var(--inverse-label-neutral)' : 'var(--color-semantic-label-alternative)';
+  const underline = dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)';
   const itemStyle = {
     padding: '10px 12px',
     borderRadius: 10,
     fontSize: 14,
     fontWeight: 600,
-    color: 'var(--label-normal)',
+    color: 'var(--color-semantic-label-normal)',
     textDecoration: 'none',
   };
 
@@ -135,7 +135,7 @@ export const TopBarCard = {
         <TopBar
           navAlign="center"
           brand={<Lockup variant="inline" tone="ink" height={22} />}
-          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-label-normal)' }}>{SearchIcon}</IconButton>}
         >
           <TopBarStaticNav />
         </TopBar>
@@ -145,7 +145,7 @@ export const TopBarCard = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-inverse-label)' }}>{SearchIcon}</IconButton>}
         >
           <TopBarStaticNav dark />
         </TopBar>

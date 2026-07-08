@@ -29,7 +29,7 @@ const meta = {
 export default meta;
 
 const tile = (label) => (
-  <div style={{ minHeight: 72, display: 'grid', placeItems: 'center', background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', color: 'var(--label-neutral)', fontWeight: 'var(--fw-bold)' }}>
+  <div style={{ minHeight: 72, display: 'grid', placeItems: 'center', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-bold)' }}>
     {label}
   </div>
 );
@@ -42,13 +42,13 @@ export const PageStructure = {
         <Stack gap="var(--space-6)">
           <Split template="1.2fr 0.8fr" gap="var(--space-6)">
             <Stack gap="var(--space-3)">
-              <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 32 }}>앱 화면 레이아웃</h1>
-              <p style={{ margin: 0, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
+              <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 32 }}>앱 화면 레이아웃</h1>
+              <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
                 Section, Container, Split, Stack을 조합해 반응형 페이지 리듬을 만듭니다.
               </p>
             </Stack>
             <AspectRatio ratio={16 / 9}>
-              <Center minHeight="100%" style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)' }}>
+              <Center minHeight="100%" style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)' }}>
                 미디어 프리뷰
               </Center>
             </AspectRatio>
@@ -75,7 +75,7 @@ export const PrimitiveInventory = {
       </Grid>
       <Cluster gap="var(--space-3)">
         {['필터', '상태', '문서', '그룹'].map((label) => (
-          <span key={label} style={{ padding: '8px 12px', borderRadius: 'var(--radius-pill)', background: 'var(--surface-card)', border: '1px solid var(--border-subtle)' }}>
+          <span key={label} style={{ padding: '8px 12px', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)' }}>
             {label}
           </span>
         ))}
@@ -85,12 +85,12 @@ export const PrimitiveInventory = {
         <Spacer axis="horizontal" />
         <span>우측</span>
       </div>
-      <ScrollArea maxHeight={120} style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
+      <ScrollArea maxHeight={120} style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
         {Array.from({ length: 8 }, (_, i) => (
-          <p key={i} style={{ margin: '0 0 var(--space-3)', color: 'var(--label-neutral)' }}>스크롤 행 {i + 1}</p>
+          <p key={i} style={{ margin: '0 0 var(--space-3)', color: 'var(--color-semantic-label-neutral)' }}>스크롤 행 {i + 1}</p>
         ))}
       </ScrollArea>
-      <button type="button" style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)', background: 'var(--surface-card)' }}>
+      <button type="button" style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', border: '1px solid var(--color-semantic-line-normal-normal)', background: 'var(--color-semantic-background-elevated-normal)' }}>
         <VisuallyHidden>접근성 전용 라벨</VisuallyHidden>
         ⌘
       </button>
@@ -106,7 +106,7 @@ export const AspectRatioCenterCard = {
       <div style={{ width: 200 }}>
         <AspectRatio ratio={16 / 9}>
           <Center style={{ height: '100%', background: 'var(--bw-mist)', borderRadius: 'var(--radius-lg)' }}>
-            <span style={{ color: 'var(--label-alternative)', fontSize: 13 }}>16 : 9</span>
+            <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 13 }}>16 : 9</span>
           </Center>
         </AspectRatio>
       </div>
@@ -135,7 +135,7 @@ export const ScrollAreaCard = {
                 border: '1px solid var(--bw-border)',
                 borderRadius: 'var(--radius-pill)',
                 fontSize: 13,
-                color: 'var(--label-neutral)',
+                color: 'var(--color-semantic-label-neutral)',
                 boxSizing: 'border-box',
               }}
             >
@@ -149,7 +149,7 @@ export const ScrollAreaCard = {
 };
 
 const parityBox = (children) => (
-  <div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 14, color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 600, textAlign: 'center' }}>
+  <div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 14, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 600, textAlign: 'center' }}>
     {children}
   </div>
 );
@@ -161,7 +161,7 @@ export const ClusterCard = {
     <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <Cluster gap={8}>
         {['문서', '컴포넌트', '토큰', '가이드'].map((label) => (
-          <span key={label} style={{ display: 'inline-flex', height: 30, alignItems: 'center', padding: '0 12px', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-pill)', fontSize: 13, color: 'var(--label-neutral)' }}>
+          <span key={label} style={{ display: 'inline-flex', height: 30, alignItems: 'center', padding: '0 12px', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-pill)', fontSize: 13, color: 'var(--color-semantic-label-neutral)' }}>
             {label}
           </span>
         ))}
@@ -177,18 +177,18 @@ export const ColumnsColCard = {
     <div data-visual-crop-root style={{ width: 700, height: 260, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <div>
         <div style={{ marginBottom: 22 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', marginBottom: 10 }}>main 8 / aside 4 (md)</div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', marginBottom: 10 }}>main 8 / aside 4 (md)</div>
           <Columns gap={12}>
-            <Col md={8}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · md&nbsp;8</div></Col>
-            <Col md={4}><div style={{ background: 'var(--fill-normal)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--label-neutral)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>aside · md&nbsp;4</div></Col>
+            <Col md={8}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · md&nbsp;8</div></Col>
+            <Col md={4}><div style={{ background: 'var(--color-semantic-fill-normal)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-label-neutral)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>aside · md&nbsp;4</div></Col>
           </Columns>
         </div>
         <div style={{ marginBottom: 22 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', marginBottom: 10 }}>thirds — full → half (sm) → third (md)</div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', marginBottom: 10 }}>thirds — full → half (sm) → third (md)</div>
           <Columns gap={12}>
-            <Col sm={6} md={4}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>1</div></Col>
-            <Col sm={6} md={4}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>2</div></Col>
-            <Col sm={12} md={4}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>3</div></Col>
+            <Col sm={6} md={4}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>1</div></Col>
+            <Col sm={6} md={4}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>2</div></Col>
+            <Col sm={12} md={4}><div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>3</div></Col>
           </Columns>
         </div>
       </div>
@@ -216,7 +216,7 @@ export const SectionCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 700, height: 150, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <Section surface="subtle" py={28} style={{ borderRadius: 'var(--radius-xl)', border: '1px solid var(--bw-border)' }}>
-        <div style={{ color: 'var(--label-alternative)', fontSize: 13 }}>
+        <div style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 13 }}>
           centered <b>.lk-container-fluid</b> · <b>--gap-section</b> vertical rhythm · surface=&quot;subtle&quot;
         </div>
       </Section>
@@ -230,8 +230,8 @@ export const SplitCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 700, height: 140, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <Split template="260px 1fr" gap={16}>
-        <div style={{ background: 'var(--fill-normal)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--label-neutral)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>sidebar · 260</div>
-        <div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--lk-accent-ink)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · 1fr</div>
+        <div style={{ background: 'var(--color-semantic-fill-normal)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-label-neutral)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>sidebar · 260</div>
+        <div style={{ background: 'var(--lk-accent-tint)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · 1fr</div>
       </Split>
     </div>
   ),

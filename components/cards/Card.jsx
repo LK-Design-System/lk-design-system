@@ -17,7 +17,7 @@ function SaveButton({ saved = false, onClick }) {
         border: '1px solid var(--bw-border)',
         borderRadius: 'var(--radius-md)',
         background: saved ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)',
-        color: saved ? 'var(--lk-accent-ink)' : 'var(--label-alternative)',
+        color: saved ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
         cursor: 'pointer',
         flexShrink: 0,
       }}
@@ -98,10 +98,10 @@ export function Card({
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
           {leadingContent != null && <div style={{ flexShrink: 0 }}>{leadingContent}</div>}
           <div style={{ display: 'grid', gap: 4, minWidth: 0, flex: 1 }}>
-            {caption != null && <div style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', color: 'var(--label-alternative)', fontWeight: 'var(--fw-medium)' }}>{caption}</div>}
-            {title != null && <div style={{ fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? 'var(--text-on-inverse)' : 'var(--label-strong)', fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
-            {description != null && <div style={{ fontSize: 13, lineHeight: 1.5, color: dark ? 'var(--inverse-label-neutral)' : 'var(--label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
-            {subCaption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--label-assistive)' }}>{subCaption}</div>}
+            {caption != null && <div style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-medium)' }}>{caption}</div>}
+            {title != null && <div style={{ fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
+            {description != null && <div style={{ fontSize: 13, lineHeight: 1.5, color: dark ? 'var(--inverse-label-neutral)' : 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
+            {subCaption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--color-semantic-label-assistive)' }}>{subCaption}</div>}
           </div>
           {trailingContent != null && <div style={{ flexShrink: 0 }}>{trailingContent}</div>}
         </div>

@@ -14,13 +14,13 @@ export function SpecRow({ label, value, labelWidth = '34%', style, ...rest }) {
     <div
       style={{
         display: 'grid', gridTemplateColumns: `${labelWidth} 1fr`, gap: 16,
-        padding: '14px 0', borderBottom: '1px solid var(--border-subtle)', alignItems: 'baseline',
+        padding: '14px 0', borderBottom: '1px solid var(--color-semantic-line-normal-normal)', alignItems: 'baseline',
         ...style,
       }}
       {...rest}
     >
-      <div style={{ fontSize: 14, fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--ls-small)', color: 'var(--label-alternative)', wordBreak: 'keep-all' }}>{label}</div>
-      <div style={{ fontSize: 'var(--fs-small)', fontWeight: 'var(--fw-semibold)', lineHeight: 'var(--lh-small)', letterSpacing: 'var(--ls-small)', color: 'var(--label-normal)', fontVariantNumeric: 'tabular-nums', wordBreak: 'keep-all' }}>{value}</div>
+      <div style={{ fontSize: 14, fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--ls-small)', color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{label}</div>
+      <div style={{ fontSize: 'var(--fs-small)', fontWeight: 'var(--fw-semibold)', lineHeight: 'var(--lh-small)', letterSpacing: 'var(--ls-small)', color: 'var(--color-semantic-label-normal)', fontVariantNumeric: 'tabular-nums', wordBreak: 'keep-all' }}>{value}</div>
     </div>
   );
 }

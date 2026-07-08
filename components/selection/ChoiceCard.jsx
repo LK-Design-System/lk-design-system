@@ -79,19 +79,19 @@ export function ChoiceCard({
     : (tabIndex ?? (resolvedRole || interactive ? 0 : undefined));
 
   const choiceBorder = selected
-    ? "var(--color-primary)"
+    ? "var(--color-semantic-primary-normal)"
     : activeHover && !disabled
-      ? "var(--border-strong)"
-      : "var(--border-subtle)";
+      ? "var(--color-semantic-line-solid-normal)"
+      : "var(--color-semantic-line-normal-normal)";
   const frameBorder = disabled
-    ? "var(--border-subtle)"
+    ? "var(--color-semantic-line-normal-normal)"
     : status === "negative"
-      ? "var(--color-danger)"
+      ? "var(--color-semantic-status-negative)"
       : selected || activeFocus
-        ? "var(--color-primary)"
+        ? "var(--color-semantic-primary-normal)"
         : activeHover
-          ? "var(--border-strong)"
-          : "var(--border-subtle)";
+          ? "var(--color-semantic-line-solid-normal)"
+          : "var(--color-semantic-line-normal-normal)";
   const frameInset = selected || activeFocus || status === "negative" ? 2 : 1;
   const frameShadow = [
     shadowMap[resolvedShadow] && shadowMap[resolvedShadow] !== "none"
@@ -147,12 +147,12 @@ export function ChoiceCard({
     padding: paddingMap[padding] ?? paddingMap.md,
     borderRadius: radiusMap[radius] ?? radiusMap.md,
     background: disabled
-      ? "var(--fill-normal)"
+      ? "var(--color-semantic-fill-normal)"
       : selected
         ? "var(--lk-accent-tint-2)"
-        : "var(--surface-raised)",
+        : "var(--color-semantic-background-elevated-normal)",
     boxShadow: frameShadow,
-    color: disabled ? "var(--label-disable)" : "var(--label-normal)",
+    color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
     cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
     outline: "none",
     transition:
@@ -168,11 +168,11 @@ export function ChoiceCard({
     padding: 16,
     borderRadius: "var(--radius-xl)",
     background: disabled
-      ? "var(--fill-normal)"
+      ? "var(--color-semantic-fill-normal)"
       : selected
         ? "var(--lk-accent-tint)"
-        : "var(--surface-raised)",
-    color: disabled ? "var(--label-disable)" : undefined,
+        : "var(--color-semantic-background-elevated-normal)",
+    color: disabled ? "var(--color-semantic-label-disable)" : undefined,
     boxShadow: choiceShadow,
     cursor: disabled ? "not-allowed" : "pointer",
     transition:
@@ -211,7 +211,7 @@ export function ChoiceCard({
         <span
           style={{
             flexShrink: 0,
-            color: selected ? "var(--color-accent)" : "var(--label-neutral)",
+            color: selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
             display: "inline-flex",
           }}
         >
@@ -225,7 +225,7 @@ export function ChoiceCard({
               fontSize: 15,
               fontWeight: "var(--fw-bold)",
               letterSpacing: 0,
-              color: "var(--label-strong)",
+              color: "var(--color-semantic-label-strong)",
               wordBreak: "keep-all",
             }}
           >
@@ -238,7 +238,7 @@ export function ChoiceCard({
               marginTop: 3,
               fontSize: 13,
               lineHeight: 1.55,
-              color: "var(--label-alternative)",
+              color: "var(--color-semantic-label-alternative)",
               wordBreak: "keep-all",
             }}
           >
@@ -255,14 +255,14 @@ export function ChoiceCard({
             width: 20,
             height: 20,
             borderRadius: multiple ? "var(--radius-sm)" : "50%",
-            background: selected ? "var(--color-primary)" : "transparent",
+            background: selected ? "var(--color-semantic-primary-normal)" : "transparent",
             boxShadow: selected
               ? "none"
-              : "inset 0 0 0 1.5px var(--line-strong)",
+              : "inset 0 0 0 1.5px var(--color-semantic-line-solid-normal)",
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "var(--text-on-signal)",
+            color: "var(--color-semantic-static-white)",
             transition: "background var(--dur-fast) var(--ease-out)",
           }}
         >

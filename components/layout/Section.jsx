@@ -3,10 +3,10 @@ import React from 'react';
 const toLen = (v) => (typeof v === 'number' ? v + 'px' : v);
 
 const SURFACES = {
-  subtle:  'var(--surface-subtle)',
-  band:    'var(--surface-sunken)',
-  raised:  'var(--surface-raised)',
-  inverse: 'var(--surface-inverse)',
+  subtle:  'var(--color-semantic-background-normal-alternative)',
+  band:    'var(--color-semantic-background-normal-alternative)',
+  raised:  'var(--color-semantic-background-elevated-normal)',
+  inverse: 'var(--color-semantic-inverse-background)',
 };
 
 /**
@@ -20,7 +20,7 @@ const SURFACES = {
 export function Section({ children, surface, py, container = true, innerStyle, style, ...rest }) {
   const outer = {
     background: surface ? SURFACES[surface] : undefined,
-    color: surface === 'inverse' ? 'var(--text-on-inverse)' : undefined,
+    color: surface === 'inverse' ? 'var(--color-semantic-inverse-label)' : undefined,
     ...(py != null ? { '--section-py': toLen(py) } : {}),
     ...style,
   };

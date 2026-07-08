@@ -12,9 +12,9 @@ const meta = {
 export default meta;
 
 const panelStyle = {
-  border: '1px solid var(--border-subtle)',
+  border: '1px solid var(--color-semantic-line-normal-normal)',
   borderRadius: 'var(--radius-frame-lg)',
-  background: 'var(--surface-card)',
+  background: 'var(--color-semantic-background-elevated-normal)',
   padding: 'var(--space-5)',
   boxShadow: 'var(--shadow-xs)',
 };
@@ -56,8 +56,8 @@ function TokenCard({ label, token, children }) {
     <article style={{ ...panelStyle, display: 'grid', gap: 'var(--space-3)' }}>
       {children}
       <div style={{ display: 'grid', gap: 'var(--space-1)' }}>
-        <strong style={{ color: 'var(--label-strong)' }}>{label}</strong>
-        <code style={{ color: 'var(--label-alternative)', fontSize: 12, wordBreak: 'break-word' }}>{token}</code>
+        <strong style={{ color: 'var(--color-semantic-label-strong)' }}>{label}</strong>
+        <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12, wordBreak: 'break-word' }}>{token}</code>
       </div>
     </article>
   );
@@ -70,7 +70,7 @@ function GradientSwatch({ label, token }) {
         style={{
           height: 104,
           borderRadius: 'var(--radius-frame-md)',
-          border: '1px solid var(--border-subtle)',
+          border: '1px solid var(--color-semantic-line-normal-normal)',
           background: `var(${token})`,
         }}
       />
@@ -85,8 +85,8 @@ function MaskSwatch({ label, token }) {
         style={{
           height: 104,
           borderRadius: 'var(--radius-frame-md)',
-          border: '1px solid var(--border-subtle)',
-          background: 'var(--surface-subtle)',
+          border: '1px solid var(--color-semantic-line-normal-normal)',
+          background: 'var(--color-semantic-background-normal-alternative)',
           overflow: 'hidden',
           display: 'grid',
           placeItems: 'center',
@@ -97,7 +97,7 @@ function MaskSwatch({ label, token }) {
             width: '78%',
             height: 56,
             borderRadius: 'var(--radius-frame-md)',
-            background: 'var(--label-normal)',
+            background: 'var(--color-semantic-label-normal)',
             WebkitMaskImage: `var(${token})`,
             maskImage: `var(${token})`,
           }}
@@ -115,17 +115,17 @@ export const GradientTokens = {
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
           Decorate / Gradient
         </p>
-        <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
+        <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           장식용 그라디언트는 유형과 방향으로 토큰화되어 있습니다
         </h1>
-        <p style={{ margin: 0, maxWidth: 820, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
+        <p style={{ margin: 0, maxWidth: 820, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
           Decorate 소스는 Solid, Multiple, Mask 그라디언트를 구분합니다. LDS는 같은 분류를 유지하면서 top,
           right, bottom, left 방향 토큰을 제공합니다.
         </p>
       </header>
 
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
-        <h2 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
           Solid와 Multiple
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 'var(--space-3)' }}>
@@ -136,7 +136,7 @@ export const GradientTokens = {
       </section>
 
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
-        <h2 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
           마스크
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 'var(--space-3)' }}>
@@ -157,10 +157,10 @@ export const InteractionTokens = {
         <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
           Decorate / Interaction
         </p>
-        <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
+        <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           인터랙션 장식은 레이어와 상태 토큰을 사용합니다
         </h1>
-        <p style={{ margin: 0, maxWidth: 780, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
+        <p style={{ margin: 0, maxWidth: 780, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
           소스는 인터랙션 변형과 상태를 따로 명명합니다. LDS는 이를 레이어 토큰과 불투명도 상태 토큰으로 매핑해
           컴포넌트가 임의의 hover, pressed 표현을 만들지 않게 합니다.
         </p>
@@ -173,8 +173,8 @@ export const InteractionTokens = {
               style={{
                 height: 96,
                 borderRadius: 'var(--radius-frame-md)',
-                border: '1px solid var(--border-subtle)',
-                background: 'var(--surface-subtle)',
+                border: '1px solid var(--color-semantic-line-normal-normal)',
+                background: 'var(--color-semantic-background-normal-alternative)',
                 display: 'grid',
                 placeItems: 'center',
               }}
@@ -185,7 +185,7 @@ export const InteractionTokens = {
                   height: 48,
                   borderRadius: 'var(--radius-frame-md)',
                   background: `var(${token})`,
-                  border: '1px solid var(--border-subtle)',
+                  border: '1px solid var(--color-semantic-line-normal-normal)',
                 }}
               />
             </div>
@@ -194,7 +194,7 @@ export const InteractionTokens = {
       </section>
 
       <section style={panelStyle}>
-        <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>상태 불투명도</h2>
+        <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--color-semantic-label-strong)', fontSize: 18 }}>상태 불투명도</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 'var(--space-3)' }}>
           {interactionStates.map(([label, token]) => (
             <div key={token} style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -202,12 +202,12 @@ export const InteractionTokens = {
                 style={{
                   height: 56,
                   borderRadius: 'var(--radius-frame-md)',
-                  background: 'var(--color-primary)',
+                  background: 'var(--color-semantic-primary-normal)',
                   opacity: `var(${token})`,
                 }}
               />
-              <strong style={{ color: 'var(--label-strong)' }}>{label}</strong>
-              <code style={{ color: 'var(--label-alternative)', fontSize: 12, wordBreak: 'break-word' }}>{token}</code>
+              <strong style={{ color: 'var(--color-semantic-label-strong)' }}>{label}</strong>
+              <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12, wordBreak: 'break-word' }}>{token}</code>
             </div>
           ))}
         </div>

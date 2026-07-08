@@ -32,8 +32,8 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
               <button key={i} type="button" role="menuitem" disabled={it.disabled}
                 onClick={() => { setOpen(false); it.onClick && it.onClick(); }}
                 onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(-1)}
-                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 8, cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--status-danger, var(--color-danger))' : 'var(--label-normal, var(--label-normal))', transition: 'background var(--dur-fast) var(--ease-out)' }}>
-                {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--label-alternative)' }}>{it.icon}</span>}
+                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 8, cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--status-danger, var(--color-semantic-status-negative))' : 'var(--color-semantic-label-normal, var(--color-semantic-label-normal))', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+                {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--color-semantic-label-alternative)' }}>{it.icon}</span>}
                 <span style={{ flex: 1, minWidth: 0 }}>{it.label}</span>
               </button>
             ))}
@@ -45,12 +45,12 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
         <Avatar name={typeof name === 'string' ? name : undefined} src={src} status={status} size={30} style={{ flexShrink: 0 }} />
         {!collapsed && (
           <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <span style={{ fontSize: 13, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal, var(--label-normal))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
-            {detail != null && <span style={{ fontSize: 11.5, color: 'var(--label-assistive)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail}</span>}
+            <span style={{ fontSize: 13, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal, var(--color-semantic-label-normal))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
+            {detail != null && <span style={{ fontSize: 11.5, color: 'var(--color-semantic-label-assistive)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail}</span>}
           </span>
         )}
         {!collapsed && (
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}>
             <path d="M6 15l6-6 6 6" />
           </svg>
         )}

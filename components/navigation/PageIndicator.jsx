@@ -60,10 +60,10 @@ export function PageIndicator({
                 background: active
                   ? alternative
                     ? "var(--static-white)"
-                    : "var(--label-normal)"
+                    : "var(--color-semantic-label-normal)"
                   : alternative
                     ? "var(--inverse-label-disable)"
-                    : "var(--fill-strong)",
+                    : "var(--color-semantic-fill-strong)",
                 cursor: onChange ? "pointer" : "default",
               }}
             />
@@ -85,8 +85,8 @@ export function PageIndicator({
         height: s.height,
         padding: s.padding,
         borderRadius: "var(--radius-pill)",
-        background: alternative ? "var(--label-normal)" : "var(--fill-strong)",
-        color: alternative ? "var(--text-on-inverse)" : "var(--label-neutral)",
+        background: alternative ? "var(--color-semantic-label-normal)" : "var(--color-semantic-fill-strong)",
+        color: alternative ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-neutral)",
         fontFamily: "var(--font-sans)",
         fontSize: s.fontSize,
         fontWeight: "var(--fw-semibold)",

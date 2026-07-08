@@ -132,13 +132,13 @@ const templateItems = [
 
 const tokenGroups = [
   ['브랜드 네이비', 'var(--bw-ink)', '텍스트와 다크 서피스의 기준'],
-  ['프라이머리 애저', 'var(--color-primary)', '주요 CTA'],
-  ['시그널 강조색', 'var(--lk-accent-ink)', '링크, 활성 상태, 감지 신호'],
+  ['프라이머리 애저', 'var(--color-semantic-primary-normal)', '주요 CTA'],
+  ['시그널 강조색', 'var(--color-semantic-primary-normal)', '링크, 활성 상태, 감지 신호'],
   ['쿨 뉴트럴', 'var(--bw-gray)', '보조 텍스트와 미세 구분'],
-  ['상태 긍정', 'var(--color-positive)', '성공과 정상 상태'],
-  ['상태 주의', 'var(--color-cautionary)', '주의와 점검 상태'],
-  ['상태 위험', 'var(--color-danger)', '오류와 위험 상태'],
-  ['보더', 'var(--border-subtle)', 'hairline divider'],
+  ['상태 긍정', 'var(--color-semantic-status-positive)', '성공과 정상 상태'],
+  ['상태 주의', 'var(--color-semantic-status-cautionary)', '주의와 점검 상태'],
+  ['상태 위험', 'var(--color-semantic-status-negative)', '오류와 위험 상태'],
+  ['보더', 'var(--color-semantic-line-normal-normal)', 'hairline divider'],
 ];
 
 const spacingGroups = [
@@ -162,8 +162,8 @@ const pageStyle = {
 };
 
 const panelStyle = {
-  background: 'var(--surface-card)',
-  border: '1px solid var(--border-subtle)',
+  background: 'var(--color-semantic-background-elevated-normal)',
+  border: '1px solid var(--color-semantic-line-normal-normal)',
   borderRadius: 'var(--radius-xl)',
   boxShadow: 'var(--shadow-xs)',
   padding: 'var(--space-6)',
@@ -171,14 +171,14 @@ const panelStyle = {
 
 const titleStyle = {
   margin: 0,
-  color: 'var(--label-strong)',
+  color: 'var(--color-semantic-label-strong)',
   fontSize: 'var(--fs-h3)',
   lineHeight: 'var(--lh-h3)',
 };
 
 const textStyle = {
   margin: 0,
-  color: 'var(--label-neutral)',
+  color: 'var(--color-semantic-label-neutral)',
   lineHeight: 1.65,
 };
 
@@ -192,7 +192,7 @@ function StatusPill({ children }) {
         padding: '2px 9px',
         borderRadius: 'var(--radius-pill)',
         background: 'var(--lk-accent-tint)',
-        color: 'var(--accent-text)',
+        color: 'var(--color-semantic-primary-normal)',
         fontSize: 12,
         fontWeight: 800,
         whiteSpace: 'nowrap',
@@ -206,7 +206,7 @@ function StatusPill({ children }) {
 function Header({ eyebrow, title, description }) {
   return (
     <header style={{ display: 'grid', gap: 'var(--space-3)' }}>
-      <strong style={{ color: 'var(--accent-text)', fontSize: 13 }}>{eyebrow}</strong>
+      <strong style={{ color: 'var(--color-semantic-primary-normal)', fontSize: 13 }}>{eyebrow}</strong>
       <h1 style={{ ...titleStyle, fontSize: 'var(--fs-h1)', lineHeight: 'var(--lh-h1)' }}>{title}</h1>
       <p style={{ ...textStyle, maxWidth: 820 }}>{description}</p>
     </header>
@@ -216,11 +216,11 @@ function Header({ eyebrow, title, description }) {
 function Metric({ label, value, caption }) {
   return (
     <article style={panelStyle}>
-      <strong style={{ display: 'block', color: 'var(--label-alternative)', fontSize: 13 }}>{label}</strong>
-      <p style={{ margin: '8px 0 2px', color: 'var(--label-strong)', fontSize: 34, lineHeight: 1, fontWeight: 800 }}>
+      <strong style={{ display: 'block', color: 'var(--color-semantic-label-alternative)', fontSize: 13 }}>{label}</strong>
+      <p style={{ margin: '8px 0 2px', color: 'var(--color-semantic-label-strong)', fontSize: 34, lineHeight: 1, fontWeight: 800 }}>
         {value}
       </p>
-      <span style={{ color: 'var(--label-alternative)', fontSize: 13 }}>{caption}</span>
+      <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 13 }}>{caption}</span>
     </article>
   );
 }
@@ -250,9 +250,9 @@ function InventoryTable({ columns, rows }) {
                 style={{
                   padding: '14px 16px',
                   textAlign: 'left',
-                  color: 'var(--label-alternative)',
-                  borderBottom: '1px solid var(--border-subtle)',
-                  background: 'var(--fill-alt)',
+                  color: 'var(--color-semantic-label-alternative)',
+                  borderBottom: '1px solid var(--color-semantic-line-normal-normal)',
+                  background: 'var(--color-semantic-fill-alternative)',
                   fontSize: 13,
                 }}
               >
@@ -269,8 +269,8 @@ function InventoryTable({ columns, rows }) {
                   key={`${row[2]}-${index}`}
                   style={{
                     padding: '14px 16px',
-                    borderBottom: '1px solid var(--border-subtle)',
-                    color: index === 1 ? 'var(--label-normal)' : 'var(--label-neutral)',
+                    borderBottom: '1px solid var(--color-semantic-line-normal-normal)',
+                    color: index === 1 ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-neutral)',
                     fontWeight: index === 1 ? 700 : 500,
                     verticalAlign: 'top',
                   }}
@@ -280,7 +280,7 @@ function InventoryTable({ columns, rows }) {
                   ) : index === 2 ? (
                     <code
                       style={{
-                        color: 'var(--label-alternative)',
+                        color: 'var(--color-semantic-label-alternative)',
                         fontFamily: 'var(--font-sans)',
                         fontSize: 13,
                         letterSpacing: 0,
@@ -354,11 +354,11 @@ export const FoundationMatrix = {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
           {tokenGroups.map(([label, token, usage]) => (
             <article key={token} style={{ ...panelStyle, display: 'grid', gap: 'var(--space-3)' }}>
-              <div style={{ height: 72, borderRadius: 'var(--radius-lg)', background: token, border: '1px solid var(--border-subtle)' }} />
+              <div style={{ height: 72, borderRadius: 'var(--radius-lg)', background: token, border: '1px solid var(--color-semantic-line-normal-normal)' }} />
               <div style={{ display: 'grid', gap: 4 }}>
-                <strong style={{ color: 'var(--label-normal)' }}>{label}</strong>
-                <code style={{ color: 'var(--label-alternative)', fontSize: 12 }}>{token}</code>
-                <span style={{ color: 'var(--label-neutral)', fontSize: 13 }}>{usage}</span>
+                <strong style={{ color: 'var(--color-semantic-label-normal)' }}>{label}</strong>
+                <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12 }}>{token}</code>
+                <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 13 }}>{usage}</span>
               </div>
             </article>
           ))}
@@ -377,10 +377,10 @@ export const FoundationMatrix = {
                 gap: 'var(--space-3)',
               }}
             >
-              <code style={{ color: 'var(--label-alternative)' }}>{token}</code>
-              <div style={{ width: `var(${token})`, maxWidth: '100%', height: 12, borderRadius: 'var(--radius-pill)', background: 'var(--accent-text)' }} />
-              <code style={{ color: 'var(--label-alternative)' }}>{value}</code>
-              <span style={{ color: 'var(--label-neutral)' }}>{usage}</span>
+              <code style={{ color: 'var(--color-semantic-label-alternative)' }}>{token}</code>
+              <div style={{ width: `var(${token})`, maxWidth: '100%', height: 12, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-primary-normal)' }} />
+              <code style={{ color: 'var(--color-semantic-label-alternative)' }}>{value}</code>
+              <span style={{ color: 'var(--color-semantic-label-neutral)' }}>{usage}</span>
             </div>
           ))}
         </div>
@@ -395,7 +395,7 @@ export const FoundationMatrix = {
             ['그리드', '12 columns, sm 768, md 992, lg 1200, xl 1600'],
           ].map(([label, value]) => (
             <article key={label} style={panelStyle}>
-              <strong style={{ display: 'block', marginBottom: 8, color: 'var(--label-normal)' }}>{label}</strong>
+              <strong style={{ display: 'block', marginBottom: 8, color: 'var(--color-semantic-label-normal)' }}>{label}</strong>
               <p style={textStyle}>{value}</p>
             </article>
           ))}

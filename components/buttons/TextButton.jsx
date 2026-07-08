@@ -35,10 +35,10 @@ export function TextButton({
   }[size] || size;
   const normalizedColor = color === 'assistive' ? 'assistive' : color === 'primary' ? 'primary' : undefined;
   const textColor = normalizedColor === 'assistive'
-    ? 'var(--label-alternative)'
+    ? 'var(--color-semantic-label-alternative)'
     : normalizedColor === 'primary'
-      ? 'var(--color-primary)'
-      : tone === 'neutral' ? 'var(--label-neutral)' : tone === 'danger' ? 'var(--bw-red)' : 'var(--lk-accent-ink)';
+      ? 'var(--color-semantic-primary-normal)'
+      : tone === 'neutral' ? 'var(--color-semantic-label-neutral)' : tone === 'danger' ? 'var(--bw-red)' : 'var(--color-semantic-primary-normal)';
   const fs = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 17 : 'var(--body1-size)';
   const ls = normalizedSize === 'sm' ? 'var(--label1-spacing)' : 'var(--body1-spacing)';
   const h = normalizedSize === 'sm' ? 28 : normalizedSize === 'lg' ? 36 : 32;
@@ -63,7 +63,7 @@ export function TextButton({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 4, minHeight: h, padding: 0, border: 'none', background: 'transparent',
         fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-semibold)', letterSpacing: ls,
-        color: disabledState ? 'var(--label-disable)' : textColor,
+        color: disabledState ? 'var(--color-semantic-label-disable)' : textColor,
         opacity: !disabledState && hover ? 'var(--component-button-text-hover-opacity)' : 1,
         cursor: disabledState ? 'not-allowed' : 'pointer',
         textDecoration: underline ? 'underline' : 'none', textUnderlineOffset: '3px',

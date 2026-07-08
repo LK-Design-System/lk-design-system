@@ -45,17 +45,17 @@ export function ToggleIcon({
         width: side,
         height: side,
         color: disabled
-          ? "var(--label-disable)"
+          ? "var(--color-semantic-label-disable)"
           : active
             ? "var(--component-toggle-icon-fg-active)"
             : "var(--component-toggle-icon-fg)",
         background: disabled
-          ? "var(--fill-normal)"
+          ? "var(--color-semantic-fill-normal)"
           : active
             ? "var(--component-toggle-icon-bg-active)"
             : "var(--component-toggle-icon-bg)",
         border: disabled
-          ? "var(--border-thin) solid var(--line-neutral)"
+          ? "var(--border-thin) solid var(--color-semantic-line-normal-neutral)"
           : active
             ? "var(--border-thin) solid transparent"
             : "var(--component-toggle-icon-border)",

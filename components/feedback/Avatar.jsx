@@ -77,14 +77,14 @@ function resolvePlaceholderKind(placeholder, variant) {
 function resolveInteractionStyle(interaction) {
   const state = interaction === true ? "normal" : interaction;
   const states = {
-    hovered: { boxShadow: "0 0 0 1px var(--border-strong)" },
+    hovered: { boxShadow: "0 0 0 1px var(--color-semantic-line-solid-normal)" },
     focused: {
       boxShadow:
-        "0 0 0 3px color-mix(in srgb, var(--lk-accent-ink) 22%, transparent)",
+        "0 0 0 3px color-mix(in srgb, var(--color-semantic-primary-normal) 22%, transparent)",
     },
     pressed: {
       transform: "scale(0.96)",
-      boxShadow: "0 0 0 1px var(--border-strong)",
+      boxShadow: "0 0 0 1px var(--color-semantic-line-solid-normal)",
     },
   };
   return states[state] || {};
@@ -100,7 +100,7 @@ function PlaceholderGlyph({ kind, deactivated }) {
       fill="none"
       style={{
         display: "block",
-        color: deactivated ? "var(--bw-white)" : "var(--label-assistive)",
+        color: deactivated ? "var(--bw-white)" : "var(--color-semantic-label-assistive)",
       }}
     >
       <path
@@ -141,7 +141,7 @@ export function Avatar({
   const initials = initialsFromName(name);
   const statusColor =
     status === "online"
-      ? "var(--lk-accent-ink)"
+      ? "var(--color-semantic-primary-normal)"
       : status === "busy"
         ? "var(--bw-red)"
         : "var(--bw-gray-300)";
@@ -157,7 +157,7 @@ export function Avatar({
   const interactionStyle = resolveInteractionStyle(interaction);
   const resolvedBorderWeight = borderColor && !borderWeight ? 1 : borderWeight;
   const border = resolvedBorderWeight
-    ? `${typeof resolvedBorderWeight === "number" ? `${resolvedBorderWeight}px` : resolvedBorderWeight} solid ${borderColor || "var(--border-subtle)"}`
+    ? `${typeof resolvedBorderWeight === "number" ? `${resolvedBorderWeight}px` : resolvedBorderWeight} solid ${borderColor || "var(--color-semantic-line-normal-normal)"}`
     : "none";
   const ringShadow = ring
     ? "0 0 0 4px var(--bw-white), 0 0 0 5px var(--bw-border)"
@@ -256,7 +256,7 @@ export function Avatar({
               height: Math.max(4, Math.round(resolvedSize * 0.12)),
               borderRadius: "var(--radius-pill)",
               background:
-                "color-mix(in srgb, var(--bw-gray-300) 76%, var(--surface-card))",
+                "color-mix(in srgb, var(--bw-gray-300) 76%, var(--color-semantic-background-elevated-normal))",
               transform: "translateY(-50%) rotate(-45deg)",
               transformOrigin: "center",
             }}
@@ -293,8 +293,8 @@ export function Avatar({
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "var(--lk-accent-ink)",
-            color: "var(--text-on-signal)",
+            background: "var(--color-semantic-primary-normal)",
+            color: "var(--color-semantic-static-white)",
             fontSize: Math.max(9, Math.round(resolvedSize * 0.2)),
             fontWeight: "var(--fw-bold)",
             lineHeight: 1,

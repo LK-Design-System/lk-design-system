@@ -25,7 +25,7 @@ export function BottomNav({ items = [], value, defaultValue, onChange, style, ..
             style={{
               flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4,
               padding: '9px 4px', minHeight: 58, border: 'none', background: 'transparent', cursor: 'pointer',
-              color: active ? 'var(--lk-accent-ink)' : 'var(--label-assistive)',
+              color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-assistive)',
               transition: 'color var(--dur-fast) var(--ease-out)',
             }}
           >

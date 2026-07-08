@@ -20,7 +20,7 @@ export const NotificationPatterns = {
   name: '알림',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 720 }}>
-      <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+      <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
         <Notification
           unread
           icon={<Icon name="triangle-exclamation" />}

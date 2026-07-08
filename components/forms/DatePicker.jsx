@@ -26,9 +26,9 @@ export function DatePicker({ value, defaultValue, onChange, placeholder = 'ë‚ ì§
     <div ref={ref} style={{ position: 'relative', display: 'inline-block', ...style }} {...rest}>
       <button
         type="button" onClick={() => setOpen((o) => !o)}
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: h, padding: '0 14px', minWidth: 200, background: 'var(--bw-white)', border: `1px solid ${open ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-input)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, color: sel ? 'var(--label-normal)' : 'var(--label-assistive)' }}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: h, padding: '0 14px', minWidth: 200, background: 'var(--bw-white)', border: `1px solid ${open ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-input)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, color: sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-assistive)' }}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5" /><path d="M3 9.5h18M8 2.5v4M16 2.5v4" /></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5" /><path d="M3 9.5h18M8 2.5v4M16 2.5v4" /></svg>
         <span style={{ flex: 1, textAlign: 'left' }}>{sel ? fmt(sel) : placeholder}</span>
       </button>
       {open && (

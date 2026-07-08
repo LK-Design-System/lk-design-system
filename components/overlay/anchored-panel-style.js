@@ -9,6 +9,6 @@ export function anchoredPanelStyle(width) {
     background: 'var(--bw-white)', border: '1px solid var(--bw-border)',
     borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 16,
     fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.6,
-    color: 'var(--label-neutral)',
+    color: 'var(--color-semantic-label-neutral)',
   };
 }

@@ -31,10 +31,10 @@ export const StackAndAlignment = {
             key={label}
             style={{
               padding: 'var(--space-4)',
-              border: '1px solid var(--border-subtle)',
+              border: '1px solid var(--color-semantic-line-normal-normal)',
               borderRadius: 'var(--radius-lg)',
-              background: 'var(--surface-card)',
-              color: 'var(--label-neutral)',
+              background: 'var(--color-semantic-background-elevated-normal)',
+              color: 'var(--color-semantic-label-neutral)',
               fontWeight: 'var(--fw-bold)',
             }}
           >
@@ -45,7 +45,7 @@ export const StackAndAlignment = {
 
       <Cluster gap="var(--space-2)">
         {['활성', '검토', '비활성', '보류'].map((label) => (
-          <span key={label} style={{ padding: '8px 12px', borderRadius: 'var(--radius-pill)', background: 'var(--surface-card)', border: '1px solid var(--border-subtle)' }}>
+          <span key={label} style={{ padding: '8px 12px', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)' }}>
             {label}
           </span>
         ))}
@@ -54,7 +54,7 @@ export const StackAndAlignment = {
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', maxWidth: 520 }}>
         <strong>좌측 그룹</strong>
         <Spacer axis="horizontal" />
-        <span style={{ color: 'var(--label-neutral)' }}>우측 액션</span>
+        <span style={{ color: 'var(--color-semantic-label-neutral)' }}>우측 액션</span>
       </div>
     </main>
   ),

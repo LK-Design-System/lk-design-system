@@ -113,7 +113,7 @@ export function Chip({
         border: p.border,
         borderRadius: s.radius,
         fontFamily: 'var(--font-sans)', fontSize: s.fontSize, fontWeight: 'var(--component-chip-font-weight)', letterSpacing: s.letterSpacing,
-        color: disabledState ? 'var(--label-disable)' : p.fg,
+        color: disabledState ? 'var(--color-semantic-label-disable)' : p.fg,
         opacity: 1,
         whiteSpace: 'nowrap', textDecoration: 'none',
         cursor: disabledState ? 'not-allowed' : (as === 'a' || onClick || rest.onClick ? 'pointer' : 'default'),

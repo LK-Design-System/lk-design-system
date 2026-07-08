@@ -132,7 +132,7 @@ export const FeatureSpecAndStats = {
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
-        <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
           <SpecRow label="상태" value="active / review / disabled" />
           <SpecRow label="밀도" value="compact / regular" />
           <SpecRow label="테마" value="light / dark" />
@@ -178,10 +178,10 @@ function SpecsBlock() {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, paddingBottom: 6 }}>
-        <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--label-alternative)' }}>
+        <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)' }}>
           제원 · Specifications
         </span>
-        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, fontVariantNumeric: 'tabular-nums', color: 'var(--label-assistive)' }}>
+        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-label-assistive)' }}>
           CORE
         </span>
       </div>
@@ -194,7 +194,7 @@ function DarkSpecsBlock() {
   return (
     <div data-theme="dark">
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, paddingBottom: 6 }}>
-        <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--lk-accent)' }}>
+        <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-primary-normal)' }}>
           제원 · Specifications
         </span>
         <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, fontVariantNumeric: 'tabular-nums', color: 'var(--inverse-label-assistive)' }}>
@@ -212,7 +212,7 @@ export const SpecRowCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 820, height: 400, background: 'var(--bw-mist)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <div style={{ display: 'flex', gap: 16, alignItems: 'stretch' }}>
-        <div style={{ flex: 1, background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-xs)', padding: '22px 24px' }}>
+        <div style={{ flex: 1, background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-xs)', padding: '22px 24px' }}>
           <SpecsBlock />
         </div>
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden', border: '1px solid var(--inverse-line-normal)', borderRadius: 'var(--radius-2xl)', boxShadow: 'var(--shadow-xl)', padding: '22px 24px', background: 'radial-gradient(120% 82% at 100% 0%, var(--focus-ring), transparent 56%), linear-gradient(158deg, var(--lk-stage-from) 0%, var(--lk-stage-to) 100%)' }}>
@@ -258,7 +258,7 @@ export const CardCard = {
   name: 'Card card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 320, height: 160, background: 'var(--bw-mist)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-neutral)', fontSize: 14 }}>
+    <div data-visual-crop-root style={{ width: 320, height: 160, background: 'var(--bw-mist)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-neutral)', fontSize: 14 }}>
       <Card elevation="sm" padding={22} style={{ width: 260 }}>
         기본 서피스 카드 — elevation·padding·radius를 토큰으로 구성합니다.
       </Card>

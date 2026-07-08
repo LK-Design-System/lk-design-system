@@ -20,10 +20,10 @@ export default meta;
 export const DimmerOverlay = {
   name: '디머',
   render: () => (
-    <main style={{ position: 'relative', minHeight: 180, width: 320, display: 'grid', placeItems: 'center', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
-      <span style={{ color: 'var(--label-neutral)' }}>데이터를 동기화 중입니다.</span>
+    <main style={{ position: 'relative', minHeight: 180, width: 320, display: 'grid', placeItems: 'center', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+      <span style={{ color: 'var(--color-semantic-label-neutral)' }}>데이터를 동기화 중입니다.</span>
       <Dimmer open blur>
-        <Spinner color="var(--text-on-inverse)" label="처리 중" />
+        <Spinner color="var(--color-semantic-inverse-label)" label="처리 중" />
       </Dimmer>
     </main>
   ),

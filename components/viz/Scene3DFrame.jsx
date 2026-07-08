@@ -9,17 +9,17 @@ import React from 'react';
 export function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty, style, ...rest }) {
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: 220, borderRadius: 'var(--radius-lg)', overflow: 'hidden',
-      background: 'var(--surface-inverse)', border: '1px solid var(--border-subtle)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+      background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--color-semantic-line-normal-normal)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {children}
       {(title != null || badges != null) && (
         <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 8, pointerEvents: 'none' }}>
-          {title != null && <span style={{ fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--text-on-inverse)', opacity: 0.9 }}>{title}</span>}
+          {title != null && <span style={{ fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-inverse-label)', opacity: 0.9 }}>{title}</span>}
           {badges}
         </div>
       )}
       {toolbar != null && <div style={{ position: 'absolute', right: 12, top: 12 }}>{toolbar}</div>}
       {loading && (
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: 'var(--scrim-dark)', color: 'var(--text-on-inverse)', fontSize: 13, fontWeight: 'var(--fw-semibold)' }}>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: 'var(--scrim-dark)', color: 'var(--color-semantic-inverse-label)', fontSize: 13, fontWeight: 'var(--fw-semibold)' }}>
           불러오는 중…
         </div>
       )}

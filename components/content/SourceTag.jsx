@@ -24,17 +24,17 @@ export function SourceTag({ children, label = 'SOURCE', href, tone = 'default', 
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 8, height: 'var(--component-tag-height)', paddingInline: 11,
         borderRadius: 'var(--radius-pill)',
-        background: onDark ? 'var(--inverse-fill-normal)' : 'var(--fill-normal)',
-        border: `1px solid ${onDark ? 'var(--inverse-fill-strong)' : 'var(--line-normal)'}`,
+        background: onDark ? 'var(--inverse-fill-normal)' : 'var(--color-semantic-fill-normal)',
+        border: `1px solid ${onDark ? 'var(--inverse-fill-strong)' : 'var(--color-semantic-line-normal-normal)'}`,
         fontFamily: 'var(--font-sans)', fontSize: 12.5, whiteSpace: 'nowrap', textDecoration: 'none',
         cursor: isLink ? 'pointer' : 'default',
-        color: onDark ? 'var(--inverse-label-strong)' : 'var(--label-neutral)',
+        color: onDark ? 'var(--inverse-label-strong)' : 'var(--color-semantic-label-neutral)',
         transition: 'border-color var(--dur-fast) var(--ease-out)',
         ...style,
       }}
       {...rest}
     >
-      <span style={{ fontFamily: MONO, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: onDark ? 'var(--lk-accent)' : 'var(--accent-text)' }}>{label}</span>
+      <span style={{ fontFamily: MONO, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: onDark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)' }}>{label}</span>
       <span aria-hidden="true" style={{ width: 1, height: 12, background: 'currentColor', opacity: 0.28 }} />
       <span style={{ fontWeight: 600 }}>{children}</span>
       {isLink && <span aria-hidden="true" style={{ opacity: hover ? 1 : 0.55, transition: 'opacity var(--dur-fast) var(--ease-out)' }}>↗</span>}

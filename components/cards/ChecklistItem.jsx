@@ -14,7 +14,7 @@ export function ChecklistItem({
   ...rest
 }) {
   const ok = !cross;
-  const color = ok ? (dark ? 'var(--lk-accent)' : 'var(--lk-accent-ink)') : 'var(--bw-red)';
+  const color = ok ? (dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)') : 'var(--bw-red)';
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '11px', ...style }} {...rest}>
       <span style={{ display: 'inline-flex', flexShrink: 0, marginTop: 2, color }}>
@@ -26,7 +26,7 @@ export function ChecklistItem({
       </span>
       <span style={{
         fontSize: '16.5px', fontWeight: 'var(--fw-semibold)', lineHeight: 1.5, letterSpacing: 0,
-        color: dark ? 'var(--text-on-dark)' : muted ? 'var(--label-alternative)' : 'var(--label-neutral)',
+        color: dark ? 'var(--color-semantic-static-white)' : muted ? 'var(--color-semantic-label-alternative)' : 'var(--color-semantic-label-neutral)',
         opacity: dark && muted ? 0.7 : 1,
         textDecoration: cross ? 'line-through' : 'none',
         wordBreak: 'keep-all',

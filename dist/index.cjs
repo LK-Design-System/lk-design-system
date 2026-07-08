@@ -253,7 +253,7 @@ function joinLetters(parts, groups) {
 // components/brand/Lockup.jsx
 var import_jsx_runtime = require("react/jsx-runtime");
 function Lockup({ variant = "inline", tone = "ink", color, height, title = "LK ROBOTICS", decorative = false, style, ...rest }) {
-  const fill = color || (tone === "white" ? "var(--static-white)" : tone === "brand" ? "var(--lk-accent-ink)" : tone === "current" ? "currentColor" : "var(--label-normal)");
+  const fill = color || (tone === "white" ? "var(--static-white)" : tone === "brand" ? "var(--color-semantic-primary-normal)" : tone === "current" ? "currentColor" : "var(--color-semantic-label-normal)");
   const vb = LK_LOGO_VIEWBOX[variant] || LK_LOGO_VIEWBOX.inline;
   const h = height != null ? height : variant === "mark" ? 32 : variant === "stacked" ? 64 : 28;
   const a11y = decorative ? { "aria-hidden": true } : { role: "img", "aria-label": title };
@@ -303,7 +303,7 @@ function ActionArea({
             style: {
               display: "grid",
               gap: "var(--space-1)",
-              color: "var(--label-normal)"
+              color: "var(--color-semantic-label-normal)"
             },
             children: summary
           }
@@ -325,7 +325,7 @@ function ActionArea({
           {
             style: {
               margin: 0,
-              color: "var(--label-alternative)",
+              color: "var(--color-semantic-label-alternative)",
               fontSize: "var(--label2-size)",
               lineHeight: "var(--label2-line)",
               letterSpacing: "var(--label2-spacing)"
@@ -357,12 +357,12 @@ function useKeyframes(id, css) {
     document.head.appendChild(el);
   }, [id, css]);
 }
-function Spinner({ size, thickness, color = "var(--lk-accent-ink)", label, variant = "circular", style, ...rest }) {
+function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal)", label, variant = "circular", style, ...rest }) {
   useKeyframes("lk-spin-kf", "@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none}}");
   useKeyframes("lk-brand-wave-kf", "@keyframes lk-brand-wave-lk{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(300px)}}@keyframes lk-brand-wave-robo{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(77px)}}@media (prefers-reduced-motion: reduce){[data-wave]{animation:none!important}}");
   const resolvedSize = size ?? (variant === "brand" ? 22 : 28);
   if (variant === "brand") {
-    const mark = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("svg", { viewBox: LK_LOGO_VIEWBOX.inline, height: resolvedSize, "aria-hidden": "true", style: { display: "block", overflow: "visible" }, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("g", { transform: "translate(0,504) scale(0.1,-0.1)", fill: "var(--label-normal)", children: [
+    const mark = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("svg", { viewBox: LK_LOGO_VIEWBOX.inline, height: resolvedSize, "aria-hidden": "true", style: { display: "block", overflow: "visible" }, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("g", { transform: "translate(0,504) scale(0.1,-0.1)", fill: "var(--color-semantic-label-normal)", children: [
       LK_LETTERS.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` } }, `lk${i}`)),
       /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("g", { transform: ROBO_INLINE, children: ROBO_LETTERS.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_LETTERS.length + i)}s infinite` } }, `ro${i}`)) })
     ] }) });
@@ -385,7 +385,7 @@ function Spinner({ size, thickness, color = "var(--lk-accent-ink)", label, varia
         height: resolvedSize,
         borderRadius: "50%",
         boxSizing: "border-box",
-        border: `${t}px solid var(--fill-strong)`,
+        border: `${t}px solid var(--color-semantic-fill-strong)`,
         borderTopColor: color,
         animation: "lk-spin 0.7s linear infinite",
         flexShrink: 0
@@ -499,8 +499,8 @@ function Button({
     "on-dark": { bg: "var(--component-button-on-dark-bg)", bgHover: "var(--component-button-on-dark-bg-hover)", fg: "var(--component-button-on-dark-fg)", bd: "var(--component-button-on-dark-border)", elevated: false },
     "solid-primary": { bg: "var(--component-button-primary-bg)", bgHover: "var(--component-button-primary-bg-hover)", fg: "var(--component-button-primary-fg)", bd: "none", elevated: true },
     "solid-assistive": { bg: "var(--component-button-flat-bg)", bgHover: "var(--component-button-flat-bg-hover)", fg: "var(--component-button-flat-fg)", bd: "none", elevated: false },
-    "outlined-primary": { bg: "transparent", bgHover: "var(--lk-accent-tint)", fg: "var(--color-primary)", bd: "var(--border-thin) solid var(--border-subtle)", bdHover: "var(--border-thin) solid var(--border-subtle)", elevated: false },
-    "outlined-assistive": { bg: "transparent", bgHover: "var(--fill-normal)", fg: "var(--label-normal)", bd: "var(--border-thin) solid var(--border-subtle)", bdHover: "var(--border-thin) solid var(--border-strong)", elevated: false }
+    "outlined-primary": { bg: "transparent", bgHover: "var(--lk-accent-tint)", fg: "var(--color-semantic-primary-normal)", bd: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", bdHover: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", elevated: false },
+    "outlined-assistive": { bg: "transparent", bgHover: "var(--color-semantic-fill-normal)", fg: "var(--color-semantic-label-normal)", bd: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", bdHover: "var(--border-thin) solid var(--color-semantic-line-solid-normal)", elevated: false }
   };
   const p = palettes[wdsVariant] || palettes.primary;
   const disabledState = disabled || disable || loading;
@@ -618,9 +618,9 @@ function ButtonGroup({ options = [], value, defaultValue, onChange, size = "md",
           fontSize: fs,
           fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)",
           letterSpacing: 0,
-          color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
+          color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
           background: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-          border: `1px solid ${active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+          border: `1px solid ${active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
           marginLeft: first ? 0 : -1,
           zIndex: active ? 1 : 0,
           borderTopLeftRadius: first ? "var(--radius-md)" : 0,
@@ -667,7 +667,7 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
         lineHeight: "normal",
         fontWeight: "var(--fw-bold)",
         letterSpacing: 0,
-        color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)",
+        color: copied ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)",
         ...copied ? { background: "var(--lk-accent-tint-2)" } : null,
         ...style
       },
@@ -689,11 +689,11 @@ var import_jsx_runtime7 = require("react/jsx-runtime");
 function Fab({ children, variant = "signal", size = "md", label, style, ...rest }) {
   const d = size === "sm" ? 48 : size === "lg" ? 64 : 56;
   const palettes = {
-    signal: { bg: "var(--lk-accent-ink)", fg: "var(--text-on-signal)", sh: "var(--shadow-accent)" },
-    dark: { bg: "var(--surface-inverse)", fg: "var(--text-on-inverse)", sh: "var(--shadow-md)" },
-    primary: { bg: "var(--color-primary)", fg: "var(--text-on-signal)", sh: "var(--shadow-accent)" },
-    secondary: { bg: "var(--bw-indigo)", fg: "var(--text-on-signal)", sh: "var(--shadow-indigo)" },
-    white: { bg: "var(--bw-white)", fg: "var(--label-normal)", sh: "var(--shadow-md)" }
+    signal: { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)", sh: "var(--shadow-accent)" },
+    dark: { bg: "var(--color-semantic-inverse-background)", fg: "var(--color-semantic-inverse-label)", sh: "var(--shadow-md)" },
+    primary: { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)", sh: "var(--shadow-accent)" },
+    secondary: { bg: "var(--bw-indigo)", fg: "var(--color-semantic-static-white)", sh: "var(--shadow-indigo)" },
+    white: { bg: "var(--bw-white)", fg: "var(--color-semantic-label-normal)", sh: "var(--shadow-md)" }
   };
   const p = palettes[variant] || palettes.signal;
   return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
@@ -751,10 +751,10 @@ function IconButton({
   }[size] || 40;
   const palettes = {
     soft: { bg: "var(--bw-indigo-tint)", bgHover: "var(--bw-indigo-tint)", fg: "var(--bw-ink)", bd: "none" },
-    solid: { bg: "var(--bw-indigo)", bgHover: "var(--bw-indigo)", fg: "var(--text-on-inverse)", bd: "none" },
-    signal: { bg: "var(--lk-accent-ink)", bgHover: "var(--lk-accent-ink)", fg: "var(--text-on-signal)", bd: "none" },
+    solid: { bg: "var(--bw-indigo)", bgHover: "var(--bw-indigo)", fg: "var(--color-semantic-inverse-label)", bd: "none" },
+    signal: { bg: "var(--color-semantic-primary-normal)", bgHover: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)", bd: "none" },
     ghost: { bg: "var(--bw-white)", bgHover: "var(--bw-white)", fg: "var(--bw-ink)", bd: "1px solid var(--bw-border)" },
-    "on-dark": { bg: "var(--inverse-fill-normal)", bgHover: "var(--inverse-fill-hover)", fg: "var(--text-on-inverse)", bd: "1px solid var(--inverse-line-strong)" }
+    "on-dark": { bg: "var(--inverse-fill-normal)", bgHover: "var(--inverse-fill-hover)", fg: "var(--color-semantic-inverse-label)", bd: "1px solid var(--inverse-line-strong)" }
   };
   const p = palettes[alternative ? "on-dark" : variant] || palettes.soft;
   const disabledState = disabled || disable;
@@ -779,8 +779,8 @@ function IconButton({
         justifyContent: "center",
         width: resolvedSize,
         height: resolvedSize,
-        color: disabledState ? "var(--label-disable)" : p.fg,
-        background: disabledState ? "var(--fill-normal)" : hover ? p.bgHover : p.bg,
+        color: disabledState ? "var(--color-semantic-label-disable)" : p.fg,
+        background: disabledState ? "var(--color-semantic-fill-normal)" : hover ? p.bgHover : p.bg,
         border: p.bd,
         borderRadius: round ? "var(--radius-pill)" : "var(--radius-md)",
         cursor: disabledState ? "not-allowed" : "pointer",
@@ -801,7 +801,7 @@ var import_react10 = __toESM(require("react"), 1);
 var import_jsx_runtime9 = require("react/jsx-runtime");
 function Link({ children, href, tone = "signal", underline = "hover", external = false, style, onMouseEnter, onMouseLeave, ...rest }) {
   const [hover, setHover] = import_react10.default.useState(false);
-  const color = tone === "neutral" ? "var(--label-neutral)" : tone === "inherit" ? "inherit" : "var(--lk-accent-ink)";
+  const color = tone === "neutral" ? "var(--color-semantic-label-neutral)" : tone === "inherit" ? "inherit" : "var(--color-semantic-primary-normal)";
   const showUnderline = underline === "always" || underline === "hover" && hover;
   return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
     "a",
@@ -871,9 +871,9 @@ function SocialButton({
     facebook: { bg: "rgb(24,119,242)", bgHover: "rgb(24,119,242)", fg: "#FFFFFF", bd: "none", shadow: "none", mono: true }
   };
   const outline = {
-    bg: "var(--surface-raised, #FFFFFF)",
-    bgHover: "var(--surface-raised, #FFFFFF)",
-    fg: "var(--label-normal)",
+    bg: "var(--color-semantic-background-elevated-normal, #FFFFFF)",
+    bgHover: "var(--color-semantic-background-elevated-normal, #FFFFFF)",
+    fg: "var(--color-semantic-label-normal)",
     bd: "1px solid var(--bw-border)",
     bdHover: "1px solid var(--bw-border)",
     shadow: "none",
@@ -959,7 +959,7 @@ function SplitButton({ children, onClick, items = [], variant = "primary", size 
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  const pal = variant === "signal" ? { bg: "var(--lk-accent-ink)", fg: "var(--text-on-signal)" } : variant === "dark" ? { bg: "var(--surface-inverse)", fg: "var(--text-on-inverse)" } : variant === "secondary" ? { bg: "var(--bw-indigo)", fg: "var(--text-on-signal)" } : { bg: "var(--color-primary)", fg: "var(--text-on-signal)" };
+  const pal = variant === "signal" ? { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)" } : variant === "dark" ? { bg: "var(--color-semantic-inverse-background)", fg: "var(--color-semantic-inverse-label)" } : variant === "secondary" ? { bg: "var(--bw-indigo)", fg: "var(--color-semantic-static-white)" } : { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)" };
   const h = size === "sm" ? 44 : 52;
   return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { ref, style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { type: "button", onClick, style: { height: h, padding: "0 20px", border: "none", borderTopLeftRadius: "var(--radius-md)", borderBottomLeftRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--component-button-font-size-lg)", fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children }),
@@ -971,7 +971,7 @@ function SplitButton({ children, onClick, items = [], variant = "primary", size 
       e.currentTarget.style.background = "var(--component-menu-item-hover-bg)";
     }, onMouseLeave: (e) => {
       e.currentTarget.style.background = "transparent";
-    }, style: { width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: "var(--body1-size)", fontWeight: "var(--fw-medium)", color: "var(--label-normal)" }, children: [
+    }, style: { width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: "var(--body1-size)", fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-normal)" }, children: [
       it.icon,
       /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: it.label })
     ] }, i)) })
@@ -1007,7 +1007,7 @@ function TextButton({
     large: "lg"
   }[size] || size;
   const normalizedColor = color === "assistive" ? "assistive" : color === "primary" ? "primary" : void 0;
-  const textColor = normalizedColor === "assistive" ? "var(--label-alternative)" : normalizedColor === "primary" ? "var(--color-primary)" : tone === "neutral" ? "var(--label-neutral)" : tone === "danger" ? "var(--bw-red)" : "var(--lk-accent-ink)";
+  const textColor = normalizedColor === "assistive" ? "var(--color-semantic-label-alternative)" : normalizedColor === "primary" ? "var(--color-semantic-primary-normal)" : tone === "neutral" ? "var(--color-semantic-label-neutral)" : tone === "danger" ? "var(--bw-red)" : "var(--color-semantic-primary-normal)";
   const fs = normalizedSize === "sm" ? "var(--label1-size)" : normalizedSize === "lg" ? 17 : "var(--body1-size)";
   const ls = normalizedSize === "sm" ? "var(--label1-spacing)" : "var(--body1-spacing)";
   const h = normalizedSize === "sm" ? 28 : normalizedSize === "lg" ? 36 : 32;
@@ -1048,7 +1048,7 @@ function TextButton({
         fontSize: fs,
         fontWeight: "var(--fw-semibold)",
         letterSpacing: ls,
-        color: disabledState ? "var(--label-disable)" : textColor,
+        color: disabledState ? "var(--color-semantic-label-disable)" : textColor,
         opacity: !disabledState && hover ? "var(--component-button-text-hover-opacity)" : 1,
         cursor: disabledState ? "not-allowed" : "pointer",
         textDecoration: underline ? "underline" : "none",
@@ -1107,9 +1107,9 @@ function ToggleIcon({
         justifyContent: "center",
         width: side,
         height: side,
-        color: disabled ? "var(--label-disable)" : active ? "var(--component-toggle-icon-fg-active)" : "var(--component-toggle-icon-fg)",
-        background: disabled ? "var(--fill-normal)" : active ? "var(--component-toggle-icon-bg-active)" : "var(--component-toggle-icon-bg)",
-        border: disabled ? "var(--border-thin) solid var(--line-neutral)" : active ? "var(--border-thin) solid transparent" : "var(--component-toggle-icon-border)",
+        color: disabled ? "var(--color-semantic-label-disable)" : active ? "var(--component-toggle-icon-fg-active)" : "var(--component-toggle-icon-fg)",
+        background: disabled ? "var(--color-semantic-fill-normal)" : active ? "var(--component-toggle-icon-bg-active)" : "var(--component-toggle-icon-bg)",
+        border: disabled ? "var(--border-thin) solid var(--color-semantic-line-normal-neutral)" : active ? "var(--border-thin) solid transparent" : "var(--component-toggle-icon-border)",
         borderRadius: "var(--component-toggle-icon-radius)",
         cursor: disabled ? "not-allowed" : "pointer",
         transition: "var(--component-button-transition)",
@@ -1160,7 +1160,7 @@ function Skeleton({
   const normalizedTone = color === "white" || tone === "white" ? "light" : tone;
   const customColor = color && color !== "normal" && color !== "white" ? color : void 0;
   const resolvedWidth = length ?? width;
-  const shimmer = customColor ? `linear-gradient(90deg, ${customColor} 25%, color-mix(in srgb, ${customColor} 84%, white) 37%, ${customColor} 63%)` : normalizedTone === "light" ? "linear-gradient(90deg, var(--inverse-fill-normal) 25%, var(--inverse-line-strong) 37%, var(--inverse-fill-normal) 63%)" : "linear-gradient(90deg, var(--fill-normal) 25%, var(--fill-strong) 37%, var(--fill-normal) 63%)";
+  const shimmer = customColor ? `linear-gradient(90deg, ${customColor} 25%, color-mix(in srgb, ${customColor} 84%, white) 37%, ${customColor} 63%)` : normalizedTone === "light" ? "linear-gradient(90deg, var(--inverse-fill-normal) 25%, var(--inverse-line-strong) 37%, var(--inverse-fill-normal) 63%)" : "linear-gradient(90deg, var(--color-semantic-fill-normal) 25%, var(--color-semantic-fill-strong) 37%, var(--color-semantic-fill-normal) 63%)";
   const base = {
     background: shimmer,
     backgroundSize: "200% 100%",
@@ -1220,7 +1220,7 @@ function SaveButton({ saved = false, onClick }) {
         border: "1px solid var(--bw-border)",
         borderRadius: "var(--radius-md)",
         background: saved ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-        color: saved ? "var(--lk-accent-ink)" : "var(--label-alternative)",
+        color: saved ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
         cursor: "pointer",
         flexShrink: 0
       },
@@ -1281,10 +1281,10 @@ function Card({
     (leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 12 }, children: [
       leadingContent != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { flexShrink: 0 }, children: leadingContent }),
       /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
-        caption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", color: "var(--label-alternative)", fontWeight: "var(--fw-medium)" }, children: caption }),
-        title != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? "var(--text-on-inverse)" : "var(--label-strong)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
-        description != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 13, lineHeight: 1.5, color: dark ? "var(--inverse-label-neutral)" : "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
-        subCaption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--label-assistive)" }, children: subCaption })
+        caption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)" }, children: caption }),
+        title != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-strong)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
+        description != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 13, lineHeight: 1.5, color: dark ? "var(--inverse-label-neutral)" : "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
+        subCaption != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--color-semantic-label-assistive)" }, children: subCaption })
       ] }),
       trailingContent != null && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { flexShrink: 0 }, children: trailingContent })
     ] }),
@@ -1333,7 +1333,7 @@ function ChecklistItem({
   ...rest
 }) {
   const ok = !cross;
-  const color = ok ? dark ? "var(--lk-accent)" : "var(--lk-accent-ink)" : "var(--bw-red)";
+  const color = ok ? dark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-normal)" : "var(--bw-red)";
   return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: "11px", ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { style: { display: "inline-flex", flexShrink: 0, marginTop: 2, color }, children: ok ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: [
       /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("path", { d: "M18 6 6 18" }),
@@ -1344,7 +1344,7 @@ function ChecklistItem({
       fontWeight: "var(--fw-semibold)",
       lineHeight: 1.5,
       letterSpacing: 0,
-      color: dark ? "var(--text-on-dark)" : muted ? "var(--label-alternative)" : "var(--label-neutral)",
+      color: dark ? "var(--color-semantic-static-white)" : muted ? "var(--color-semantic-label-alternative)" : "var(--color-semantic-label-neutral)",
       opacity: dark && muted ? 0.7 : 1,
       textDecoration: cross ? "line-through" : "none",
       wordBreak: "keep-all"
@@ -1356,11 +1356,11 @@ function ChecklistItem({
 var import_react18 = __toESM(require("react"), 1);
 var import_jsx_runtime17 = require("react/jsx-runtime");
 var ICON_TONES = {
-  signal: { fg: "var(--lk-accent-ink)", bg: "var(--lk-accent-tint)" },
+  signal: { fg: "var(--color-semantic-primary-normal)", bg: "var(--lk-accent-tint)" },
   // teal tile (default)
-  steel: { fg: "var(--color-positive-strong)", bg: "var(--status-positive-tint)" },
-  amber: { fg: "var(--color-cautionary-strong)", bg: "var(--status-cautionary-tint)" },
-  navy: { fg: "var(--bw-ink)", bg: "var(--fill-strong)" }
+  steel: { fg: "var(--color-semantic-status-positive)", bg: "var(--status-positive-tint)" },
+  amber: { fg: "var(--color-semantic-status-cautionary)", bg: "var(--status-cautionary-tint)" },
+  navy: { fg: "var(--bw-ink)", bg: "var(--color-semantic-fill-strong)" }
 };
 function FeatureCard({
   icon,
@@ -1392,8 +1392,8 @@ function FeatureCard({
       children: [
         icon && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: 14, color: t.fg, background: t.bg }, children: icon }),
         /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "8px" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { style: { fontSize: "15.5px", lineHeight: 1.7, color: "var(--label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { style: { fontSize: "15.5px", lineHeight: 1.7, color: "var(--color-semantic-label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -1406,21 +1406,21 @@ var import_jsx_runtime18 = require("react/jsx-runtime");
 function MetricCard({ label, value, delta, deltaTone = "auto", caption, icon, style, ...rest }) {
   const tone = deltaTone === "auto" ? typeof delta === "number" ? delta >= 0 ? "up" : "down" : "flat" : deltaTone;
   const up = tone === "up";
-  const dc = up ? "var(--bw-green)" : tone === "down" ? "var(--bw-red)" : "var(--label-alternative)";
+  const dc = up ? "var(--bw-green)" : tone === "down" ? "var(--bw-red)" : "var(--color-semantic-label-alternative)";
   const deltaText = typeof delta === "number" ? `${delta > 0 ? "+" : ""}${delta}%` : delta;
   return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { style: { background: "var(--component-card-bg)", border: "var(--component-card-border)", borderRadius: "var(--component-card-radius)", padding: "22px 24px", boxShadow: "var(--shadow-xs)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "1.4px", textTransform: "uppercase", color: "var(--label-alternative)" }, children: label }),
-      icon && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { color: "var(--lk-accent-ink)", display: "inline-flex" }, children: icon })
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "1.4px", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)" }, children: label }),
+      icon && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { color: "var(--color-semantic-primary-normal)", display: "inline-flex" }, children: icon })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { style: { display: "flex", alignItems: "flex-end", gap: 10, flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: 34, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { style: { fontSize: 34, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
       delta != null && /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: 13, fontWeight: "var(--fw-bold)", color: dc }, children: [
         (tone === "up" || tone === "down") && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: up ? "M7 17 17 7M9 7h8v8" : "M7 7l10 10M17 9v8H9" }) }),
         deltaText
       ] })
     ] }),
-    caption != null && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { style: { marginTop: 8, fontSize: 13, color: "var(--label-alternative)" }, children: caption })
+    caption != null && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { style: { marginTop: 8, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: caption })
   ] });
 }
 
@@ -1454,16 +1454,16 @@ function NewsCard({ image, category, title, excerpt, source, date, cta, href = "
       },
       ...rest,
       children: [
-        image && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--surface-subtle)" }, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
+        image && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--color-semantic-background-normal-alternative)" }, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
         /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { style: { padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9, flex: 1 }, children: [
-          category && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--label-alternative)" }, children: category }),
-          title && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h3", { style: { margin: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1.36, color: "var(--text-strong)", wordBreak: "keep-all" }, children: title }),
-          excerpt && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--label-neutral)", wordBreak: "keep-all" }, children: excerpt }),
-          (source || date || cta) && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { style: { marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--label-alternative)" }, children: [
+          category && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)" }, children: category }),
+          title && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h3", { style: { margin: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1.36, color: "var(--color-semantic-label-strong)", wordBreak: "keep-all" }, children: title }),
+          excerpt && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: excerpt }),
+          (source || date || cta) && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { style: { marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--color-semantic-label-alternative)" }, children: [
             source && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { style: { fontWeight: 600 }, children: source }),
             source && date && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { "aria-hidden": "true", children: "\xB7" }),
             date && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { style: { fontVariantNumeric: "tabular-nums" }, children: date }),
-            cta && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("span", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 700, color: "var(--accent-text)", whiteSpace: "nowrap" }, children: [
+            cta && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("span", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 700, color: "var(--color-semantic-primary-normal)", whiteSpace: "nowrap" }, children: [
               cta,
               /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { style: { display: "inline-flex", transform: hover ? "translateX(2px)" : "none", transition: "transform var(--dur-base) var(--ease-out)" }, children: ArrowR })
             ] })
@@ -1550,10 +1550,10 @@ function ProductCard({
         ),
         /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { style: { position: "relative", padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
-            category && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--lk-accent)" }, children: category }),
-            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("h3", { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: 800, letterSpacing: "var(--ls-h5)", color: "var(--text-on-inverse)", whiteSpace: "nowrap" }, children: id })
+            category && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-primary-normal)" }, children: category }),
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("h3", { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: 800, letterSpacing: "var(--ls-h5)", color: "var(--color-semantic-inverse-label)", whiteSpace: "nowrap" }, children: id })
           ] }),
-          description && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--label-on-dark-neutral)", wordBreak: "keep-all" }, children: description }),
+          description && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--color-semantic-inverse-label)", wordBreak: "keep-all" }, children: description }),
           cta && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { style: {
             alignSelf: "flex-end",
             marginTop: 4,
@@ -1561,7 +1561,7 @@ function ProductCard({
             fontSize: 12.5,
             fontWeight: "var(--fw-bold)",
             letterSpacing: 0,
-            color: hover ? "var(--text-on-inverse)" : "var(--inverse-label-neutral)",
+            color: hover ? "var(--color-semantic-inverse-label)" : "var(--inverse-label-neutral)",
             textDecoration: hover ? "underline" : "none",
             textUnderlineOffset: 3,
             transition: "color var(--dur-fast) var(--ease-out)"
@@ -1584,14 +1584,14 @@ function SpecRow({ label, value, labelWidth = "34%", style, ...rest }) {
         gridTemplateColumns: `${labelWidth} 1fr`,
         gap: 16,
         padding: "14px 0",
-        borderBottom: "1px solid var(--border-subtle)",
+        borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
         alignItems: "baseline",
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-small)", color: "var(--label-alternative)", wordBreak: "keep-all" }, children: label }),
-        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { fontSize: "var(--fs-small)", fontWeight: "var(--fw-semibold)", lineHeight: "var(--lh-small)", letterSpacing: "var(--ls-small)", color: "var(--label-normal)", fontVariantNumeric: "tabular-nums", wordBreak: "keep-all" }, children: value })
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-small)", color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: label }),
+        /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { style: { fontSize: "var(--fs-small)", fontWeight: "var(--fw-semibold)", lineHeight: "var(--lh-small)", letterSpacing: "var(--ls-small)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums", wordBreak: "keep-all" }, children: value })
       ]
     }
   );
@@ -1609,9 +1609,9 @@ function Stat({
   style,
   ...rest
 }) {
-  const colors = { ink: "var(--label-strong)", signal: "var(--lk-accent-ink)", steel: "var(--bw-green-600)" };
-  const valColor = dark ? "var(--text-on-dark)" : colors[accent] || colors.ink;
-  const labColor = dark ? "var(--text-on-dark-muted)" : "var(--label-alternative)";
+  const colors = { ink: "var(--color-semantic-label-strong)", signal: "var(--color-semantic-primary-normal)", steel: "var(--bw-green-600)" };
+  const valColor = dark ? "var(--color-semantic-static-white)" : colors[accent] || colors.ink;
+  const labColor = dark ? "var(--text-on-dark-muted)" : "var(--color-semantic-label-alternative)";
   return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     "div",
     {
@@ -1666,7 +1666,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
             fontSize: 17,
             fontWeight: "var(--fw-bold)",
             letterSpacing: 0,
-            color: isOpen ? "var(--lk-accent-ink)" : "var(--label-normal)",
+            color: isOpen ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)",
             transition: "color var(--dur-fast) var(--ease-out)"
           },
           children: [
@@ -1690,7 +1690,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
           ]
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { display: "grid", gridTemplateRows: isOpen ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { padding: "0 4px 20px", fontFamily: "var(--font-sans)", fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children: it.content }) }) })
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { display: "grid", gridTemplateRows: isOpen ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { padding: "0 4px 20px", fontFamily: "var(--font-sans)", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: it.content }) }) })
     ] }, i);
   }) });
 }
@@ -1699,9 +1699,9 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
 var import_react25 = __toESM(require("react"), 1);
 var import_jsx_runtime24 = require("react/jsx-runtime");
 function Blockquote({ children, cite, style, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("blockquote", { style: { margin: 0, padding: "6px 0 6px 20px", borderLeft: "3px solid var(--lk-accent-ink)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { fontSize: 17, lineHeight: 1.7, letterSpacing: 0, color: "var(--label-normal)", wordBreak: "keep-all" }, children }),
-    cite != null && /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { style: { marginTop: 8, fontSize: 13.5, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("blockquote", { style: { margin: 0, padding: "6px 0 6px 20px", borderLeft: "3px solid var(--color-semantic-primary-normal)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { style: { fontSize: 17, lineHeight: 1.7, letterSpacing: 0, color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children }),
+    cite != null && /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { style: { marginTop: 8, fontSize: 13.5, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: [
       "\u2014 ",
       cite
     ] })
@@ -1746,7 +1746,7 @@ function Bookmark({ active, defaultActive, onChange, size = 24, disabled = false
         background: "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.5 : 1,
-        color: on ? "var(--lk-accent-ink)" : "var(--label-assistive)",
+        color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)",
         transition: "color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)",
         ...style
       },
@@ -1761,8 +1761,8 @@ var import_react27 = __toESM(require("react"), 1);
 var import_jsx_runtime26 = require("react/jsx-runtime");
 function Bubble({ children, tone = "navy", tail = "bottom", style, ...rest }) {
   const dark = tone === "navy";
-  const bg = dark ? "var(--surface-inverse)" : "var(--surface-card)";
-  const fg = dark ? "var(--text-on-signal)" : "var(--label-normal)";
+  const bg = dark ? "var(--color-semantic-inverse-background)" : "var(--color-semantic-background-elevated-normal)";
+  const fg = dark ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-normal)";
   const bd = dark ? "none" : "1px solid var(--bw-border)";
   const tailBase = { position: "absolute", width: 12, height: 12, background: bg, transform: "rotate(45deg)" };
   const tails = {
@@ -1806,9 +1806,9 @@ var import_jsx_runtime27 = require("react/jsx-runtime");
 var MONO2 = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace)';
 function Code({ children, block = false, style, ...rest }) {
   if (block) {
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("pre", { style: { margin: 0, padding: "14px 16px", background: "var(--surface-inverse)", color: "var(--label-on-dark)", borderRadius: "var(--radius-lg)", overflowX: "auto", fontFamily: MONO2, fontSize: 13, lineHeight: 1.6, ...style }, ...rest, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("code", { children }) });
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("pre", { style: { margin: 0, padding: "14px 16px", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", borderRadius: "var(--radius-lg)", overflowX: "auto", fontFamily: MONO2, fontSize: 13, lineHeight: 1.6, ...style }, ...rest, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("code", { children }) });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("code", { style: { padding: "2px 6px", background: "var(--fill-strong)", color: "var(--label-normal)", borderRadius: "var(--radius-sm)", fontFamily: MONO2, fontSize: "0.9em", ...style }, ...rest, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("code", { style: { padding: "2px 6px", background: "var(--color-semantic-fill-strong)", color: "var(--color-semantic-label-normal)", borderRadius: "var(--radius-sm)", fontFamily: MONO2, fontSize: "0.9em", ...style }, ...rest, children });
 }
 
 // components/content/Collapsible.jsx
@@ -1823,14 +1823,14 @@ function Collapsible({ title, children, defaultOpen = false, style, ...rest }) {
         type: "button",
         "aria-expanded": open,
         onClick: () => setOpen((o) => !o),
-        style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 4px", border: "none", background: "transparent", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" },
+        style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 4px", border: "none", background: "transparent", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" },
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-base) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: "m6 9 6 6 6-6" }) })
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-base) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("path", { d: "m6 9 6 6 6-6" }) })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { display: "grid", gridTemplateRows: open ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { padding: "0 4px 14px", fontFamily: "var(--font-sans)", fontSize: 14.5, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }) }) })
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { display: "grid", gridTemplateRows: open ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { padding: "0 4px 14px", fontFamily: "var(--font-sans)", fontSize: 14.5, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }) }) })
   ] });
 }
 
@@ -1838,10 +1838,10 @@ function Collapsible({ title, children, defaultOpen = false, style, ...rest }) {
 var import_react30 = __toESM(require("react"), 1);
 var import_jsx_runtime29 = require("react/jsx-runtime");
 var TONES = {
-  signal: "var(--lk-accent-ink)",
-  accent: "var(--color-accent)",
-  navy: "var(--surface-inverse)",
-  neutral: "var(--label-alternative)",
+  signal: "var(--color-semantic-primary-normal)",
+  accent: "var(--color-semantic-primary-normal)",
+  navy: "var(--color-semantic-inverse-background)",
+  neutral: "var(--color-semantic-label-alternative)",
   positive: "var(--bw-green)",
   cautionary: "var(--bw-amber)",
   warning: "var(--bw-amber)",
@@ -1914,10 +1914,10 @@ function ContentBadge({
   const resolvedTone = tone || color || "neutral";
   const baseColor = accentContentColor || TONES[resolvedTone] || TONES.neutral;
   const neutralColor = resolvedTone === "neutral";
-  const softBg = accentBackgroundColor || (resolvedTone === "accent" ? "color-mix(in srgb, var(--color-accent) 14%, var(--surface-card))" : neutralColor ? "var(--fill-normal)" : `color-mix(in srgb, ${baseColor} 14%, var(--surface-card))`);
-  const solidBg = accentBackgroundColor || (neutralColor ? "var(--fill-strong)" : baseColor);
-  const solidFg = accentContentColor || (neutralColor ? "var(--label-neutral)" : "var(--text-on-signal)");
-  const borderColor = accentContentColor || (neutralColor ? "var(--line-normal)" : `color-mix(in srgb, ${baseColor} 48%, var(--surface-card))`);
+  const softBg = accentBackgroundColor || (resolvedTone === "accent" ? "color-mix(in srgb, var(--color-semantic-primary-normal) 14%, var(--color-semantic-background-elevated-normal))" : neutralColor ? "var(--color-semantic-fill-normal)" : `color-mix(in srgb, ${baseColor} 14%, var(--color-semantic-background-elevated-normal))`);
+  const solidBg = accentBackgroundColor || (neutralColor ? "var(--color-semantic-fill-strong)" : baseColor);
+  const solidFg = accentContentColor || (neutralColor ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-static-white)");
+  const borderColor = accentContentColor || (neutralColor ? "var(--color-semantic-line-normal-normal)" : `color-mix(in srgb, ${baseColor} 48%, var(--color-semantic-background-elevated-normal))`);
   const looks = {
     solid: {
       background: solidBg,
@@ -3826,10 +3826,10 @@ function ToolbarButton({ item, active, disabled, onAction }) {
         justifyContent: "center",
         width: 34,
         height: 34,
-        border: "1px solid var(--border-subtle)",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
         borderRadius: "var(--radius-sm)",
-        background: active ? "var(--lk-accent-tint-2)" : hover && !isDisabled ? "var(--fill-normal)" : "var(--surface-card)",
-        color: active ? "var(--lk-accent-ink)" : "var(--label-alternative)",
+        background: active ? "var(--lk-accent-tint-2)" : hover && !isDisabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
+        color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
         cursor: isDisabled ? "not-allowed" : "pointer",
         opacity: isDisabled ? 0.45 : 1,
         transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
@@ -3889,7 +3889,7 @@ function ContentEditor({
   const activeSet = import_react32.default.useMemo(() => new Set(activeToolbarItems), [activeToolbarItems]);
   const hasFooter = meta != null || status != null || helper != null || actions != null || footer != null || maxLength != null;
   const bodyLength = String(currentValue ?? "").length;
-  const ring = invalid ? "var(--bw-red)" : titleFocus || bodyFocus ? "var(--lk-accent-ink)" : "var(--border-subtle)";
+  const ring = invalid ? "var(--bw-red)" : titleFocus || bodyFocus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-normal-normal)";
   const handleTitleChange = (event) => {
     const next = event.target.value;
     if (!isTitleControlled) setInternalTitle(next);
@@ -3916,17 +3916,17 @@ function ContentEditor({
         overflow: "hidden",
         border: `1px solid ${ring}`,
         borderRadius: "var(--radius-md)",
-        background: "var(--surface-card)",
+        background: "var(--color-semantic-background-elevated-normal)",
         boxShadow: titleFocus || bodyFocus ? "0 0 0 4px var(--focus-ring)" : "none",
         fontFamily: "var(--font-sans)",
-        color: "var(--label-normal)",
+        color: "var(--color-semantic-label-normal)",
         transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
         ...style
       },
       ...rest,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4) var(--space-4) var(--space-3)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { htmlFor: resolvedTitleId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--bw-red)" : "var(--label-alternative)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { htmlFor: resolvedTitleId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--bw-red)" : "var(--color-semantic-label-alternative)" }, children: [
             titleLabel,
             required && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { style: { color: "var(--bw-red)" }, children: " *" })
           ] }),
@@ -3954,7 +3954,7 @@ function ContentEditor({
                 border: "none",
                 outline: "none",
                 background: "transparent",
-                color: "var(--label-strong)",
+                color: "var(--color-semantic-label-strong)",
                 fontFamily: "var(--font-sans)",
                 fontSize: 22,
                 lineHeight: 1.35,
@@ -3977,9 +3977,9 @@ function ContentEditor({
               justifyContent: "space-between",
               gap: "var(--space-3)",
               padding: "8px var(--space-4)",
-              borderTop: "1px solid var(--border-subtle)",
-              borderBottom: "1px solid var(--border-subtle)",
-              background: "var(--surface-subtle)"
+              borderTop: "1px solid var(--color-semantic-line-normal-normal)",
+              borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
+              background: "var(--color-semantic-background-normal-alternative)"
             },
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", minWidth: 0 }, children: toolbar != null ? toolbar : toolbarItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
@@ -3992,12 +3992,12 @@ function ContentEditor({
                 },
                 item.value
               )) }),
-              status != null && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { role: "status", "aria-live": "polite", style: { flexShrink: 0, color: "var(--label-alternative)", fontSize: 13, lineHeight: 1.35 }, children: status })
+              status != null && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", { role: "status", "aria-live": "polite", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: 13, lineHeight: 1.35 }, children: status })
             ]
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { htmlFor: resolvedBodyId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--bw-red)" : "var(--label-alternative)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("label", { htmlFor: resolvedBodyId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--bw-red)" : "var(--color-semantic-label-alternative)" }, children: [
             bodyLabel,
             required && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { style: { color: "var(--bw-red)" }, children: " *" })
           ] }),
@@ -4029,7 +4029,7 @@ function ContentEditor({
                 border: "none",
                 outline: "none",
                 background: "transparent",
-                color: "var(--label-normal)",
+                color: "var(--color-semantic-label-normal)",
                 fontFamily: "var(--font-sans)",
                 fontSize: 15,
                 lineHeight: 1.68,
@@ -4051,11 +4051,11 @@ function ContentEditor({
               gap: "var(--space-3)",
               flexWrap: "wrap",
               padding: "10px var(--space-4)",
-              borderTop: "1px solid var(--border-subtle)",
-              background: "var(--surface-subtle)"
+              borderTop: "1px solid var(--color-semantic-line-normal-normal)",
+              background: "var(--color-semantic-background-normal-alternative)"
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, color: "var(--label-alternative)", fontSize: 12.5, lineHeight: 1.45 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, color: "var(--color-semantic-label-alternative)", fontSize: 12.5, lineHeight: 1.45 }, children: [
                 meta != null && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: meta }),
                 helper != null && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("span", { children: helper }),
                 maxLength != null && /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("span", { children: [
@@ -4123,7 +4123,7 @@ function Divider({
                 fontSize: 13,
                 fontWeight: "var(--fw-semibold)",
                 letterSpacing: 0,
-                color: "var(--label-alternative)",
+                color: "var(--color-semantic-label-alternative)",
                 whiteSpace: "nowrap"
               },
               children: label
@@ -4167,9 +4167,9 @@ function Kbd({ children, style, ...rest }) {
         fontFamily: "var(--font-sans)",
         fontSize: 12,
         fontWeight: "var(--fw-bold)",
-        color: "var(--label-neutral)",
-        background: "var(--surface-raised)",
-        borderColor: "var(--border-subtle)",
+        color: "var(--color-semantic-label-neutral)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        borderColor: "var(--color-semantic-line-normal-normal)",
         borderStyle: "solid",
         borderWidth: 1,
         borderBottomWidth: 2,
@@ -4249,7 +4249,7 @@ function ListCell({
   const dividerRight = resolvedTrailing != null || chevron ? paddingX + 24 : paddingX;
   const resolvedRole = role ?? (clickable ? "button" : void 0);
   const resolvedTabIndex = disabledState ? -1 : tabIndex ?? (clickable ? 0 : void 0);
-  const background = disabledState ? "transparent" : activePressed ? "var(--fill-strong)" : activeHover ? "var(--fill-alt)" : "transparent";
+  const background = disabledState ? "transparent" : activePressed ? "var(--color-semantic-fill-strong)" : activeHover ? "var(--color-semantic-fill-alternative)" : "transparent";
   const handleClick = (event) => {
     if (!disabledState && onClick) onClick(event);
   };
@@ -4301,7 +4301,7 @@ function ListCell({
         background,
         /* WDS disabled pattern: dim via content color tokens, not wrapper
            opacity. */
-        color: disabledState ? "var(--label-disable)" : selected ? "var(--label-normal)" : "var(--label-neutral)",
+        color: disabledState ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)",
         borderRadius: "var(--radius-lg)",
         outline: activeFocus && !disabledState ? "2px solid var(--focus-ring)" : "none",
         outlineOffset: -2,
@@ -4320,7 +4320,7 @@ function ListCell({
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "var(--lk-accent-ink)",
+              color: "var(--color-semantic-primary-normal)",
               background: "var(--lk-accent-tint)",
               borderRadius: "var(--radius-md)",
               ...leadingStyle
@@ -4346,7 +4346,7 @@ function ListCell({
                     fontWeight: selected ? "var(--fw-medium)" : "var(--fw-regular)",
                     lineHeight: "var(--body1-line)",
                     letterSpacing: 0,
-                    color: disabledState ? "var(--label-disable)" : selected ? "var(--lk-accent-ink)" : "var(--label-normal)",
+                    color: disabledState ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)",
                     overflow: textEllipsis ? "hidden" : void 0,
                     textOverflow: textEllipsis ? "ellipsis" : void 0,
                     whiteSpace: textEllipsis ? "nowrap" : "normal",
@@ -4364,7 +4364,7 @@ function ListCell({
                     fontFamily: "var(--font-sans)",
                     fontSize: "var(--label2-size)",
                     lineHeight: "var(--label2-line)",
-                    color: disabledState ? "var(--label-disable)" : "var(--label-alternative)",
+                    color: disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-alternative)",
                     overflow: textEllipsis ? "hidden" : void 0,
                     textOverflow: textEllipsis ? "ellipsis" : void 0,
                     whiteSpace: textEllipsis ? "nowrap" : "normal",
@@ -4385,7 +4385,7 @@ function ListCell({
               display: "flex",
               alignItems: "center",
               gap: 8,
-              color: disabledState ? "var(--label-disable)" : selected ? "var(--lk-accent-ink)" : "var(--label-alternative)",
+              color: disabledState ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
               ...trailingStyle
             },
             children: [
@@ -4405,7 +4405,7 @@ function ListCell({
               right: dividerRight,
               bottom: 0,
               height: 1,
-              background: "var(--border-subtle)",
+              background: "var(--color-semantic-line-normal-normal)",
               opacity: 0.72,
               pointerEvents: "none"
             }
@@ -4421,7 +4421,7 @@ var import_react36 = __toESM(require("react"), 1);
 var import_jsx_runtime34 = require("react/jsx-runtime");
 function Overline({ children, as = "div", tone = "muted", onDark = false, style, ...rest }) {
   const Comp = as;
-  const color = onDark ? tone === "signal" ? "var(--lk-accent)" : tone === "ink" ? "var(--text-on-signal)" : "var(--inverse-label-neutral)" : tone === "signal" ? "var(--accent-text)" : tone === "ink" ? "var(--label-strong)" : "var(--label-alternative)";
+  const color = onDark ? tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "ink" ? "var(--color-semantic-static-white)" : "var(--inverse-label-neutral)" : tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "ink" ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-alternative)";
   return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
     Comp,
     {
@@ -4465,20 +4465,20 @@ function SourceTag({ children, label = "SOURCE", href, tone = "default", style, 
         height: "var(--component-tag-height)",
         paddingInline: 11,
         borderRadius: "var(--radius-pill)",
-        background: onDark ? "var(--inverse-fill-normal)" : "var(--fill-normal)",
-        border: `1px solid ${onDark ? "var(--inverse-fill-strong)" : "var(--line-normal)"}`,
+        background: onDark ? "var(--inverse-fill-normal)" : "var(--color-semantic-fill-normal)",
+        border: `1px solid ${onDark ? "var(--inverse-fill-strong)" : "var(--color-semantic-line-normal-normal)"}`,
         fontFamily: "var(--font-sans)",
         fontSize: 12.5,
         whiteSpace: "nowrap",
         textDecoration: "none",
         cursor: isLink ? "pointer" : "default",
-        color: onDark ? "var(--inverse-label-strong)" : "var(--label-neutral)",
+        color: onDark ? "var(--inverse-label-strong)" : "var(--color-semantic-label-neutral)",
         transition: "border-color var(--dur-fast) var(--ease-out)",
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { style: { fontFamily: MONO3, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: onDark ? "var(--lk-accent)" : "var(--accent-text)" }, children: label }),
+        /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { style: { fontFamily: MONO3, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: onDark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-normal)" }, children: label }),
         /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { "aria-hidden": "true", style: { width: 1, height: 12, background: "currentColor", opacity: 0.28 } }),
         /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { style: { fontWeight: 600 }, children }),
         isLink && /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("span", { "aria-hidden": "true", style: { opacity: hover ? 1 : 0.55, transition: "opacity var(--dur-fast) var(--ease-out)" }, children: "\u2197" })
@@ -4497,8 +4497,8 @@ var DOT = {
   warning: "var(--bw-amber)",
   negative: "var(--bw-red)",
   offline: "var(--bw-gray-300)",
-  signal: "var(--lk-accent-ink)",
-  critical: "var(--color-danger-strong)"
+  signal: "var(--color-semantic-primary-normal)",
+  critical: "var(--color-semantic-status-negative)"
 };
 function StatusBadge({ children, tone = "positive", pulse = false, style, ...rest }) {
   import_react38.default.useEffect(() => {
@@ -4520,7 +4520,7 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
         fontSize: 13,
         fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
-        color: "var(--label-neutral)",
+        color: "var(--color-semantic-label-neutral)",
         ...style
       },
       ...rest,
@@ -4550,10 +4550,10 @@ function Mini({ children, onClick, disabled, label }) {
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        border: "1px solid var(--border-subtle)",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
         borderRadius: "var(--radius-sm)",
-        background: "var(--surface-raised)",
-        color: "var(--label-neutral)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        color: "var(--color-semantic-label-neutral)",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.4 : 1,
         fontSize: 13
@@ -4576,11 +4576,11 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
     onChange && onChange(steps.filter((_, k) => k !== i));
   };
   return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    steps.map((st, i) => /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-md)", background: "var(--surface-raised)", marginBottom: 8 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", fontSize: 12, fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
+    steps.map((st, i) => /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", marginBottom: 8 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("span", { style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--lk-accent-tint)", color: "var(--color-semantic-primary-normal)", fontSize: 12, fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
       /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { style: { fontSize: 14, fontWeight: 700, color: "var(--label-strong)" }, children: st.label }),
-        st.detail != null && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { style: { fontSize: 12.5, color: "var(--label-alternative)", marginTop: 1 }, children: st.detail })
+        /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { style: { fontSize: 14, fontWeight: 700, color: "var(--color-semantic-label-strong)" }, children: st.label }),
+        st.detail != null && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { style: { fontSize: 12.5, color: "var(--color-semantic-label-alternative)", marginTop: 1 }, children: st.detail })
       ] }),
       editable && /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", { style: { display: "inline-flex", gap: 2, flexShrink: 0 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Mini, { onClick: () => move(i, -1), disabled: i === 0, label: "\uC704\uB85C", children: "\u2191" }),
@@ -4593,7 +4593,7 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
       {
         type: "button",
         onClick: onAdd,
-        style: { width: "100%", padding: 10, border: "1px dashed var(--border-strong)", borderRadius: "var(--radius-md)", background: "transparent", color: "var(--label-alternative)", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "var(--font-sans)" },
+        style: { width: "100%", padding: 10, border: "1px dashed var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "transparent", color: "var(--color-semantic-label-alternative)", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "var(--font-sans)" },
         children: [
           "+ ",
           addLabel
@@ -4655,7 +4655,7 @@ function Thumbnail({
   ...rest
 }) {
   const r = radius === true ? "var(--radius-md)" : radius === false ? "0" : toLen(radius);
-  const borderStyle = border === true ? "1px solid var(--border-subtle)" : border || "0";
+  const borderStyle = border === true ? "1px solid var(--color-semantic-line-normal-normal)" : border || "0";
   const pos = ALIGN[overlayAlign] || ALIGN["top-left"];
   const hasOverlay = overlay || children;
   return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
@@ -4669,8 +4669,8 @@ function Thumbnail({
         borderRadius: r,
         border: borderStyle,
         boxSizing: "border-box",
-        background: "var(--fill-normal)",
-        color: "var(--label-assistive)",
+        background: "var(--color-semantic-fill-normal)",
+        color: "var(--color-semantic-label-assistive)",
         ...style
       },
       ...rest,
@@ -4727,7 +4727,7 @@ function Thumbnail({
 var import_react41 = __toESM(require("react"), 1);
 var import_jsx_runtime39 = require("react/jsx-runtime");
 var DOT2 = {
-  signal: "var(--lk-accent-ink)",
+  signal: "var(--color-semantic-primary-normal)",
   positive: "var(--bw-green)",
   cautionary: "var(--bw-amber)",
   negative: "var(--bw-red)",
@@ -4743,9 +4743,9 @@ function Timeline({ items = [], style, ...rest }) {
         !last && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("span", { style: { flex: 1, width: 2, background: "var(--bw-border)", marginTop: 4 } })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)("div", { style: { paddingBottom: last ? 0 : 22 }, children: [
-        it.time != null && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--label-assistive)", marginBottom: 3 }, children: it.time }),
-        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: it.title }),
-        it.description != null && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { style: { marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: it.description })
+        it.time != null && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--color-semantic-label-assistive)", marginBottom: 3 }, children: it.time }),
+        /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: it.title }),
+        it.description != null && /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { style: { marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: it.description })
       ] })
     ] }, i);
   }) });
@@ -4793,7 +4793,7 @@ function bubbleOffset(placement, align) {
   return { transform: `translateY(-50%) translateX(${x})` };
 }
 function arrowStyle(placement, arrowHalf, arrowHeight) {
-  const bg = "var(--surface-inverse)";
+  const bg = "var(--color-semantic-inverse-background)";
   if (placement === "bottom") {
     return {
       bottom: "calc(100% - 1px)",
@@ -4883,8 +4883,8 @@ function Tooltip({
               alignItems: "center",
               gap: compact ? 6 : 8,
               padding: compact ? "5px 8px" : "8px 12px",
-              background: "var(--surface-inverse)",
-              color: "var(--text-on-inverse)",
+              background: "var(--color-semantic-inverse-background)",
+              color: "var(--color-semantic-inverse-label)",
               fontFamily: "var(--font-sans)",
               fontSize: compact ? 11.5 : "var(--label1-size)",
               fontWeight: "var(--fw-semibold)",
@@ -4931,12 +4931,12 @@ function Tooltip({
 // components/data/BarChart.jsx
 var import_react43 = __toESM(require("react"), 1);
 var import_jsx_runtime41 = require("react/jsx-runtime");
-function BarChart({ data = [], height = 160, gap = 12, showValue = true, color = "var(--lk-accent-ink)", style, ...rest }) {
+function BarChart({ data = [], height = 160, gap = 12, showValue = true, color = "var(--color-semantic-primary-normal)", style, ...rest }) {
   const max = Math.max(...data.map((d) => d.value), 1);
   return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { style: { display: "flex", alignItems: "flex-end", gap, height, fontFamily: "var(--font-sans)", ...style }, ...rest, children: data.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%", justifyContent: "flex-end" }, children: [
-    showValue && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: d.value }),
+    showValue && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: d.value }),
     /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { style: { width: "100%", maxWidth: 48, height: `${d.value / max * 100}%`, minHeight: 2, background: d.color || color, borderRadius: "var(--radius-md) var(--radius-md) 0 0", transition: "height var(--dur-slow) var(--ease-out)" } }),
-    /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { style: { fontSize: 12, color: "var(--label-alternative)", whiteSpace: "nowrap" }, children: d.label })
+    /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: d.label })
   ] }, i)) });
 }
 
@@ -4950,8 +4950,8 @@ function ymd(d) {
 function DayCell({ d, selected, today, onPick }) {
   const [h, setH] = import_react44.default.useState(false);
   const dow = d.getDay();
-  const bg = selected ? "var(--lk-accent-ink)" : h ? "var(--fill-normal)" : "transparent";
-  const color = selected ? "var(--text-on-signal)" : dow === 0 ? "var(--bw-red)" : dow === 6 ? "var(--lk-accent-ink)" : "var(--label-normal)";
+  const bg = selected ? "var(--color-semantic-primary-normal)" : h ? "var(--color-semantic-fill-normal)" : "transparent";
+  const color = selected ? "var(--color-semantic-static-white)" : dow === 0 ? "var(--bw-red)" : dow === 6 ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)";
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(
     "button",
     {
@@ -4963,7 +4963,7 @@ function DayCell({ d, selected, today, onPick }) {
         height: 38,
         borderRadius: "var(--radius-md)",
         cursor: "pointer",
-        border: today && !selected ? "1px solid var(--lk-accent-ink)" : "1px solid transparent",
+        border: today && !selected ? "1px solid var(--color-semantic-primary-normal)" : "1px solid transparent",
         background: bg,
         color,
         fontFamily: "var(--font-sans)",
@@ -4994,10 +4994,10 @@ function Calendar({ value, defaultValue, onChange, style, ...rest }) {
     onChange && onChange(d);
   };
   const navMonth = (delta) => setView(new Date(view.getFullYear(), view.getMonth() + delta, 1));
-  const navBtn = { width: 32, height: 32, display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", cursor: "pointer", color: "var(--label-neutral)" };
+  const navBtn = { width: 32, height: 32, display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", cursor: "pointer", color: "var(--color-semantic-label-neutral)" };
   return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { style: { width: 300, fontFamily: "var(--font-sans)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 16, ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { style: { fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { style: { fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: [
         view.getFullYear(),
         "\uB144 ",
         view.getMonth() + 1,
@@ -5008,7 +5008,7 @@ function Calendar({ value, defaultValue, onChange, style, ...rest }) {
         /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("button", { type: "button", "aria-label": "next month", onClick: () => navMonth(1), style: navBtn, children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("path", { d: "m9 18 6-6-6-6" }) }) })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 2, marginBottom: 6 }, children: WD.map((w, i) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { style: { textAlign: "center", fontSize: 12, fontWeight: "var(--fw-semibold)", color: i === 0 ? "var(--bw-red)" : i === 6 ? "var(--lk-accent-ink)" : "var(--label-assistive)" }, children: w }, w)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 2, marginBottom: 6 }, children: WD.map((w, i) => /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { style: { textAlign: "center", fontSize: 12, fontWeight: "var(--fw-semibold)", color: i === 0 ? "var(--bw-red)" : i === 6 ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)" }, children: w }, w)) }),
     /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 2 }, children: cells.map((d, i) => d ? /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(DayCell, { d, selected: sel && ymd(sel) === ymd(d), today: todayStr === ymd(d), onPick: pick }, i) : /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("span", {}, i)) })
   ] });
 }
@@ -5017,7 +5017,7 @@ function Calendar({ value, defaultValue, onChange, style, ...rest }) {
 var import_react45 = __toESM(require("react"), 1);
 var import_jsx_runtime43 = require("react/jsx-runtime");
 function navBtnStyle(side) {
-  return { position: "absolute", top: "50%", [side]: 12, transform: "translateY(-50%)", width: 40, height: 40, borderRadius: "50%", border: "none", background: "var(--scrim-dark)", color: "var(--text-on-signal)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 2 };
+  return { position: "absolute", top: "50%", [side]: 12, transform: "translateY(-50%)", width: 40, height: 40, borderRadius: "50%", border: "none", background: "var(--scrim-dark)", color: "var(--color-semantic-static-white)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 2 };
 }
 function Carousel({ slides = [], showDots = true, showArrows = true, style, ...rest }) {
   const [i, setI] = import_react45.default.useState(0);
@@ -5038,10 +5038,10 @@ var import_react46 = __toESM(require("react"), 1);
 
 // components/data/table-cell-styles.js
 function thStyle(pad2) {
-  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", whiteSpace: "nowrap" };
+  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" };
 }
 function tdStyle(pad2) {
-  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14, color: "var(--label-neutral)", whiteSpace: "nowrap" };
+  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14, color: "var(--color-semantic-label-neutral)", whiteSpace: "nowrap" };
 }
 
 // components/data/DataGrid.jsx
@@ -5069,8 +5069,8 @@ function checkboxStyle(checked, indeterminate = false) {
     height: 16,
     margin: 0,
     borderRadius: 4,
-    border: `1px solid ${filled ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
-    backgroundColor: filled ? "var(--lk-accent-ink)" : "var(--surface-card)",
+    border: `1px solid ${filled ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+    backgroundColor: filled ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)",
     backgroundImage: indeterminate ? DASH_IMG : checked ? CHECK_IMG : "none",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -5118,11 +5118,11 @@ function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, d
         selectable && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("th", { style: { padding: pad2, width: 44, textAlign: "left", background: "var(--lk-accent-tint-2)", borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn, !allOn) }) }),
         /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("th", { colSpan: columns.length, scope: "colgroup", style: { padding: 0, background: "var(--lk-accent-tint-2)", borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { role: "status", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 12px" : "0 16px" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("span", { style: { color: "var(--label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("span", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
               sel.size,
               "\uAC1C \uC120\uD0DD\uB428"
             ] }),
-            onClearSelection && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { type: "button", onClick: onClearSelection, "aria-label": "\uC120\uD0DD \uD574\uC81C", title: "\uC120\uD0DD \uD574\uC81C", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22, padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: "var(--label-neutral)", cursor: "pointer" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
+            onClearSelection && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { type: "button", onClick: onClearSelection, "aria-label": "\uC120\uD0DD \uD574\uC81C", title: "\uC120\uD0DD \uD574\uC81C", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22, padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: "var(--color-semantic-label-neutral)", cursor: "pointer" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
           ] }),
           bulkActions != null && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: bulkActions })
         ] }) })
@@ -5182,14 +5182,14 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
     padding: "0 14px",
     boxSizing: "border-box",
     background: "var(--bw-white)",
-    border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+    border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
     borderRadius: "var(--radius-input)",
     boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none",
     opacity: disabled ? 0.5 : 1,
     transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
     ...style
   }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("circle", { cx: "11", cy: "11", r: "7" }),
       /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("path", { d: "m21 21-4.3-4.3" })
     ] }),
@@ -5206,11 +5206,11 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
         onKeyDown: (e) => {
           if (e.key === "Enter" && onSearch) onSearch(val);
         },
-        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--label-normal)" },
+        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--color-semantic-label-normal)" },
         ...rest
       }
     ),
-    val && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("button", { type: "button", "aria-label": "\uC9C0\uC6B0\uAE30", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
+    val && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("button", { type: "button", "aria-label": "\uC9C0\uC6B0\uAE30", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
       /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("circle", { cx: "12", cy: "12", r: "10" }),
       /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("path", { d: "M15 9l-6 6M9 9l6 6", stroke: "var(--bw-white)", strokeWidth: "2", strokeLinecap: "round" })
     ] }) })
@@ -5261,13 +5261,13 @@ function DataToolbar({
         /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
             (title != null || count != null) && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-2)", minWidth: 0 }, children: [
-              title != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("strong", { style: { color: "var(--label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
-              count != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+              title != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
+              count != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
                 count,
                 "\uAC1C"
               ] })
             ] }),
-            description != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)" }, children: description })
+            description != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)" }, children: description })
           ] }),
           actions != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
         ] }),
@@ -5295,15 +5295,15 @@ var import_react49 = __toESM(require("react"), 1);
 var import_jsx_runtime47 = require("react/jsx-runtime");
 function DescriptionList({ items = [], columns = 1, style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid var(--bw-border)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: it.term }),
-    /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--label-normal)", wordBreak: "keep-all" }, children: it.description })
+    /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: it.term }),
+    /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children: it.description })
   ] }, i)) });
 }
 
 // components/data/DonutChart.jsx
 var import_react50 = __toESM(require("react"), 1);
 var import_jsx_runtime48 = require("react/jsx-runtime");
-var PALETTE = ["var(--lk-accent-ink)", "var(--bw-blue)", "var(--bw-amber)", "var(--bw-green)", "var(--bw-red)", "var(--bw-gray-300)"];
+var PALETTE = ["var(--color-semantic-primary-normal)", "var(--bw-blue)", "var(--bw-amber)", "var(--bw-green)", "var(--bw-red)", "var(--bw-gray-300)"];
 function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = true, centerLabel, legend = true, style, ...rest }) {
   const total = segments.reduce((s, x) => s + (x.value || 0), 0) || 1;
   const r = (size - thickness) / 2;
@@ -5312,7 +5312,7 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
   return /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: 20, ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("span", { style: { position: "relative", width: size, height: size }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness }),
+        /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
         segments.map((s, i) => {
           const dash = (s.value || 0) / total * circ;
           const el = /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: s.color || PALETTE[i % PALETTE.length], strokeWidth: thickness, strokeDasharray: `${dash} ${circ - dash}`, strokeDashoffset: -offset }, i);
@@ -5320,12 +5320,12 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
           return el;
         })
       ] }),
-      (showTotal || centerLabel != null) && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
+      (showTotal || centerLabel != null) && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
     ] }),
-    legend && segments.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-neutral)" }, children: [
+    legend && segments.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--color-semantic-label-neutral)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime48.jsx)("span", { style: { width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] } }),
       s.label,
-      /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("b", { style: { marginLeft: 2, color: "var(--label-normal)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime48.jsxs)("b", { style: { marginLeft: 2, color: "var(--color-semantic-label-normal)" }, children: [
         Math.round(s.value / total * 100),
         "%"
       ] })
@@ -5336,7 +5336,7 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
 // components/data/Sparkline.jsx
 var import_react51 = __toESM(require("react"), 1);
 var import_jsx_runtime49 = require("react/jsx-runtime");
-function Sparkline({ data = [], width = 120, height = 32, color = "var(--lk-accent-ink)", fill = true, strokeWidth = 2, style, ...rest }) {
+function Sparkline({ data = [], width = 120, height = 32, color = "var(--color-semantic-primary-normal)", fill = true, strokeWidth = 2, style, ...rest }) {
   if (!data.length) return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("svg", { width, height, style, ...rest });
   const min = Math.min(...data);
   const max = Math.max(...data);
@@ -5360,7 +5360,7 @@ function TableRow({ columns, row, pad: pad2, hover }) {
     {
       onMouseEnter: () => setH(true),
       onMouseLeave: () => setH(false),
-      style: { background: hover && h ? "var(--fill-alt)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
+      style: { background: hover && h ? "var(--color-semantic-fill-alternative)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
       children: columns.map((c) => /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(row) : row[c.key] }, c.key))
     }
   );
@@ -5410,18 +5410,18 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
           padding: "8px 10px",
           paddingLeft: 10 + level * 20,
           border: "1px solid transparent",
-          background: hovered ? "var(--surface-subtle)" : "transparent",
+          background: hovered ? "var(--color-semantic-background-normal-alternative)" : "transparent",
           cursor: "pointer",
           borderRadius: "var(--radius-md)",
           textAlign: "left",
           fontFamily: "var(--font-sans)",
           fontSize: 14,
           fontWeight: level === 0 ? "var(--fw-semibold)" : "var(--fw-medium)",
-          color: level === 0 ? "var(--label-strong)" : "var(--label-normal)",
+          color: level === 0 ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-normal)",
           transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
         },
         children: [
-          has ? /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("path", { d: "m9 18 6-6-6-6" }) }) : /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("span", { style: { width: 14, flexShrink: 0 } }),
+          has ? /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("path", { d: "m9 18 6-6-6-6" }) }) : /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("span", { style: { width: 14, flexShrink: 0 } }),
           node.icon,
           /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("span", { children: node.label })
         ]
@@ -5486,10 +5486,10 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
     flexDirection: "column",
     height: "100%",
     minHeight: 320,
-    border: "1px solid var(--border-subtle)",
+    border: "1px solid var(--color-semantic-line-normal-normal)",
     borderRadius: "var(--radius-lg)",
     overflow: "hidden",
-    background: "var(--surface-raised)",
+    background: "var(--color-semantic-background-elevated-normal)",
     fontFamily: "var(--font-sans)",
     ...style
   }, ...rest, children: [
@@ -5507,16 +5507,16 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
             width: auto !important;
             max-height: 180px !important;
             border-left: 0 !important;
-            border-top: 1px solid var(--border-subtle) !important;
+            border-top: 1px solid var(--color-semantic-line-normal-normal) !important;
           }
         }` }),
-    title != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border-subtle)", fontSize: "var(--headline2-size)", fontWeight: "var(--fw-bold)", color: "var(--label-strong)" }, children: title }),
+    title != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--color-semantic-line-normal-normal)", fontSize: "var(--headline2-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)" }, children: title }),
     /* @__PURE__ */ (0, import_jsx_runtime52.jsxs)("div", { className: bodyClass, style: { display: "grid", gridTemplateColumns: `${tools != null ? "auto " : ""}minmax(0, 1fr)${panel != null ? " var(--lk-editor-panel-width)" : ""}`, gridTemplateRows: "minmax(0, 1fr)", flex: 1, minHeight: 0 }, children: [
-      tools != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--border-subtle)", background: "var(--surface-subtle)" }, children: tools }),
-      /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
-      panel != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "lk-canvas-editor-shell__panel", style: { width: panelWidth, borderLeft: "1px solid var(--border-subtle)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
+      tools != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--color-semantic-line-normal-normal)", background: "var(--color-semantic-background-normal-alternative)" }, children: tools }),
+      /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { minWidth: 0, position: "relative", background: "var(--color-semantic-background-normal-alternative)" }, children }),
+      panel != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { className: "lk-canvas-editor-shell__panel", style: { width: panelWidth, borderLeft: "1px solid var(--color-semantic-line-normal-normal)", overflow: "auto", background: "var(--color-semantic-background-elevated-normal)" }, children: panel })
     ] }),
-    status != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "6px 14px", borderTop: "1px solid var(--border-subtle)", fontSize: 12, color: "var(--label-alternative)", background: "var(--surface-subtle)" }, children: status })
+    status != null && /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "6px 14px", borderTop: "1px solid var(--color-semantic-line-normal-normal)", fontSize: 12, color: "var(--color-semantic-label-alternative)", background: "var(--color-semantic-background-normal-alternative)" }, children: status })
   ] });
 }
 
@@ -5552,9 +5552,9 @@ function EditorToolbar({ items = [], value, defaultValue, onChange, orientation 
           border: 0,
           borderRadius: "var(--radius-sm)",
           cursor: "pointer",
-          background: on ? "var(--lk-accent-ink)" : "var(--surface-raised)",
-          color: on ? "var(--text-on-signal)" : "var(--label-neutral)",
-          boxShadow: on ? "none" : "inset 0 0 0 1px var(--border-subtle)",
+          background: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)",
+          color: on ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-neutral)",
+          boxShadow: on ? "none" : "inset 0 0 0 1px var(--color-semantic-line-normal-normal)",
           transition: "background var(--dur-fast) var(--ease-out)"
         },
         children: it.icon || v
@@ -5574,10 +5574,10 @@ function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onRe
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    border: "1px solid var(--border-subtle)",
+    border: "1px solid var(--color-semantic-line-normal-normal)",
     borderRadius: "var(--radius-sm)",
-    background: "var(--surface-raised)",
-    color: "var(--label-neutral)",
+    background: "var(--color-semantic-background-elevated-normal)",
+    color: "var(--color-semantic-label-neutral)",
     lineHeight: 0
   };
   return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
@@ -5638,13 +5638,13 @@ function resolvePlaceholderKind(placeholder, variant) {
 function resolveInteractionStyle(interaction) {
   const state = interaction === true ? "normal" : interaction;
   const states = {
-    hovered: { boxShadow: "0 0 0 1px var(--border-strong)" },
+    hovered: { boxShadow: "0 0 0 1px var(--color-semantic-line-solid-normal)" },
     focused: {
-      boxShadow: "0 0 0 3px color-mix(in srgb, var(--lk-accent-ink) 22%, transparent)"
+      boxShadow: "0 0 0 3px color-mix(in srgb, var(--color-semantic-primary-normal) 22%, transparent)"
     },
     pressed: {
       transform: "scale(0.96)",
-      boxShadow: "0 0 0 1px var(--border-strong)"
+      boxShadow: "0 0 0 1px var(--color-semantic-line-solid-normal)"
     }
   };
   return states[state] || {};
@@ -5660,7 +5660,7 @@ function PlaceholderGlyph({ kind, deactivated }) {
       fill: "none",
       style: {
         display: "block",
-        color: deactivated ? "var(--bw-white)" : "var(--label-assistive)"
+        color: deactivated ? "var(--bw-white)" : "var(--color-semantic-label-assistive)"
       },
       children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(
         "path",
@@ -5695,7 +5695,7 @@ function Avatar({
   const resolvedSize = resolveAvatarSize(size);
   const normalizedVariant = normalizeVariant2(variant);
   const initials = initialsFromName(name);
-  const statusColor = status === "online" ? "var(--lk-accent-ink)" : status === "busy" ? "var(--bw-red)" : "var(--bw-gray-300)";
+  const statusColor = status === "online" ? "var(--color-semantic-primary-normal)" : status === "busy" ? "var(--bw-red)" : "var(--bw-gray-300)";
   const placeholderKind = resolvePlaceholderKind(
     placeholder,
     normalizedVariant
@@ -5705,7 +5705,7 @@ function Avatar({
   const fallbackFg = deactivated ? "var(--bw-white)" : "var(--bw-ink)";
   const interactionStyle = resolveInteractionStyle(interaction);
   const resolvedBorderWeight = borderColor && !borderWeight ? 1 : borderWeight;
-  const border = resolvedBorderWeight ? `${typeof resolvedBorderWeight === "number" ? `${resolvedBorderWeight}px` : resolvedBorderWeight} solid ${borderColor || "var(--border-subtle)"}` : "none";
+  const border = resolvedBorderWeight ? `${typeof resolvedBorderWeight === "number" ? `${resolvedBorderWeight}px` : resolvedBorderWeight} solid ${borderColor || "var(--color-semantic-line-normal-normal)"}` : "none";
   const ringShadow = ring ? "0 0 0 4px var(--bw-white), 0 0 0 5px var(--bw-border)" : "";
   const stateShadow = interactionStyle.boxShadow || "";
   const boxShadow = [ringShadow, stateShadow].filter(Boolean).join(", ") || "none";
@@ -5793,7 +5793,7 @@ function Avatar({
                   width: "148%",
                   height: Math.max(4, Math.round(resolvedSize * 0.12)),
                   borderRadius: "var(--radius-pill)",
-                  background: "color-mix(in srgb, var(--bw-gray-300) 76%, var(--surface-card))",
+                  background: "color-mix(in srgb, var(--bw-gray-300) 76%, var(--color-semantic-background-elevated-normal))",
                   transform: "translateY(-50%) rotate(-45deg)",
                   transformOrigin: "center"
                 }
@@ -5833,8 +5833,8 @@ function Avatar({
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              background: "var(--lk-accent-ink)",
-              color: "var(--text-on-signal)",
+              background: "var(--color-semantic-primary-normal)",
+              color: "var(--color-semantic-static-white)",
               fontSize: Math.max(9, Math.round(resolvedSize * 0.2)),
               fontWeight: "var(--fw-bold)",
               lineHeight: 1
@@ -5902,8 +5902,8 @@ function AvatarGroup({
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "var(--surface-subtle)",
-          color: "var(--label-alternative)",
+          background: "var(--color-semantic-background-normal-alternative)",
+          color: "var(--color-semantic-label-alternative)",
           fontSize: 12,
           fontWeight: "var(--fw-semibold)",
           whiteSpace: "nowrap"
@@ -5953,8 +5953,8 @@ function AvatarGroup({
               style: {
                 ...base,
                 marginLeft: overlap,
-                background: "var(--surface-inverse)",
-                color: "var(--text-on-inverse)",
+                background: "var(--color-semantic-inverse-background)",
+                color: "var(--color-semantic-inverse-label)",
                 zIndex: shown.length
               },
               children: [
@@ -5974,15 +5974,15 @@ function AvatarGroup({
 var import_react59 = __toESM(require("react"), 1);
 var import_jsx_runtime57 = require("react/jsx-runtime");
 var COLORS = {
-  signal: "var(--lk-accent-ink)",
-  navy: "var(--surface-inverse)",
+  signal: "var(--color-semantic-primary-normal)",
+  navy: "var(--color-semantic-inverse-background)",
   steel: "var(--bw-blue)",
   amber: "var(--bw-amber)",
   red: "var(--bw-red)",
   // aliases
-  indigo: "var(--surface-inverse)",
+  indigo: "var(--color-semantic-inverse-background)",
   green: "var(--bw-green)",
-  ink: "var(--surface-inverse)"
+  ink: "var(--color-semantic-inverse-background)"
 };
 function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
   const c = COLORS[tone] || COLORS.signal;
@@ -6002,7 +6002,7 @@ function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
         fontFamily: "var(--font-sans)",
         fontWeight: "var(--fw-bold)",
         fontSize: 12,
-        color: "var(--text-on-signal)",
+        color: "var(--color-semantic-static-white)",
         background: c,
         borderRadius: "var(--radius-pill)",
         ...style
@@ -6136,7 +6136,7 @@ function Chip({
         fontSize: s.fontSize,
         fontWeight: "var(--component-chip-font-weight)",
         letterSpacing: s.letterSpacing,
-        color: disabledState ? "var(--label-disable)" : p.fg,
+        color: disabledState ? "var(--color-semantic-label-disable)" : p.fg,
         opacity: 1,
         whiteSpace: "nowrap",
         textDecoration: "none",
@@ -6184,14 +6184,14 @@ function Notification({ icon, title, description, time, unread = false, onClick,
       style: { display: "flex", gap: 12, padding: "14px 16px", borderRadius: "var(--radius-lg)", cursor: onClick ? "pointer" : "default", background: unread ? "var(--lk-accent-tint)" : "transparent", fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        icon != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--lk-accent-ink)" }, children: icon }),
+        icon != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--color-semantic-primary-normal)" }, children: icon }),
         /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
+            /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
             unread && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "var(--bw-red)", flexShrink: 0 } })
           ] }),
-          description != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("div", { style: { marginTop: 2, fontSize: 13, lineHeight: 1.55, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
-          time != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("div", { style: { marginTop: 4, fontSize: 12, color: "var(--label-assistive)" }, children: time })
+          description != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("div", { style: { marginTop: 2, fontSize: 13, lineHeight: 1.55, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
+          time != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("div", { style: { marginTop: 4, fontSize: 12, color: "var(--color-semantic-label-assistive)" }, children: time })
         ] })
       ]
     }
@@ -6202,12 +6202,12 @@ function Notification({ icon, title, description, time, unread = false, onClick,
 var import_react62 = __toESM(require("react"), 1);
 var import_jsx_runtime60 = require("react/jsx-runtime");
 function PushBadge({ children, count, dot = false, max = 99, tone = "negative", style, ...rest }) {
-  const c = tone === "signal" ? "var(--lk-accent-ink)" : tone === "navy" ? "var(--surface-inverse)" : "var(--bw-red)";
+  const c = tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "navy" ? "var(--color-semantic-inverse-background)" : "var(--bw-red)";
   const show = dot || count != null && count > 0;
   const label = count > max ? `${max}+` : count;
   return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     children,
-    show && (dot ? /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxSizing: "content-box" } }) : /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--text-on-signal)", borderRadius: "var(--radius-pill)", border: "2px solid var(--bw-white)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
+    show && (dot ? /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxSizing: "content-box" } }) : /* @__PURE__ */ (0, import_jsx_runtime60.jsx)("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--color-semantic-static-white)", borderRadius: "var(--radius-pill)", border: "2px solid var(--bw-white)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
   ] });
 }
 
@@ -6249,17 +6249,17 @@ function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnl
 var import_react64 = __toESM(require("react"), 1);
 var import_jsx_runtime62 = require("react/jsx-runtime");
 var TONES2 = {
-  signal: { fg: "var(--lk-accent-ink)", bg: "var(--lk-accent-tint-2)" },
+  signal: { fg: "var(--color-semantic-primary-normal)", bg: "var(--lk-accent-tint-2)" },
   // brand teal chip (default)
-  neutral: { fg: "var(--label-strong)", bg: "var(--fill-strong)", solidBg: "var(--surface-inverse)" },
+  neutral: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" },
   // ink neutral
   steel: { fg: "var(--bw-steel)", bg: "var(--bw-indigo-tint)" },
-  amber: { fg: "var(--color-cautionary-strong)", bg: "var(--status-cautionary-tint)" },
-  red: { fg: "var(--color-danger)", bg: "var(--status-danger-tint)" },
+  amber: { fg: "var(--color-semantic-status-cautionary)", bg: "var(--status-cautionary-tint)" },
+  red: { fg: "var(--color-semantic-status-negative)", bg: "var(--status-danger-tint)" },
   // back-compat aliases (live site uses tone="indigo")
-  indigo: { fg: "var(--label-strong)", bg: "var(--fill-strong)", solidBg: "var(--surface-inverse)" },
-  green: { fg: "var(--color-positive-strong)", bg: "var(--status-positive-tint)" },
-  ink: { fg: "var(--label-strong)", bg: "var(--fill-strong)", solidBg: "var(--surface-inverse)" }
+  indigo: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" },
+  green: { fg: "var(--color-semantic-status-positive)", bg: "var(--status-positive-tint)" },
+  ink: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" }
 };
 function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
   const t = TONES2[tone] || TONES2.signal;
@@ -6279,7 +6279,7 @@ function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
         letterSpacing: "var(--ls-caption)",
         textTransform: "uppercase",
         whiteSpace: "nowrap",
-        color: solid ? "var(--text-on-signal)" : t.fg,
+        color: solid ? "var(--color-semantic-static-white)" : t.fg,
         background: solid ? t.solidBg || t.fg : t.bg,
         borderRadius: "var(--radius-pill)",
         ...style
@@ -6323,7 +6323,7 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
         },
         onFocus: () => setOpen(true),
         onBlur: () => setTimeout(() => setOpen(false), 120),
-        style: { width: "100%", height: h, padding: "0 16px", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 16, color: "var(--label-normal)", background: "var(--bw-white)" }
+        style: { width: "100%", height: h, padding: "0 16px", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 16, color: "var(--color-semantic-label-normal)", background: "var(--bw-white)" }
       }
     ),
     open && filtered.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime63.jsx)("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: 6 }, children: filtered.map((o, i) => /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(
@@ -6335,12 +6335,12 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
           pick(o);
         },
         onMouseEnter: (e) => {
-          e.currentTarget.style.background = "var(--fill-normal)";
+          e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
         },
         onMouseLeave: (e) => {
           e.currentTarget.style.background = "transparent";
         },
-        style: { padding: "10px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--label-normal)" },
+        style: { padding: "10px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--color-semantic-label-normal)" },
         children: o.label
       },
       i
@@ -6391,11 +6391,11 @@ function Checkbox({
   };
   const d = isMark ? normalizedSize === "sm" ? 20 : 24 : normalizedSize === "sm" ? 16 : 18;
   const iconSize = isMark ? d : normalizedSize === "sm" ? 14 : 16;
-  const markTone = status === "negative" ? "var(--color-danger)" : "var(--lk-accent-ink)";
-  const markIdleColor = activeHover || activeFocus ? "var(--label-neutral)" : "var(--bw-gray-300)";
-  const boxBackground = disabledState ? on || mixed ? "var(--fill-strong)" : "var(--fill-normal)" : on || mixed ? "var(--lk-accent-ink)" : activeHover ? "var(--fill-normal)" : "var(--bw-white)";
-  const boxBorder = disabledState ? "var(--line-neutral)" : on || mixed ? "var(--lk-accent-ink)" : activeHover || activeFocus ? "var(--border-strong)" : "var(--bw-border)";
-  const checkStroke = disabledState ? "var(--label-disable)" : "var(--text-on-signal)";
+  const markTone = status === "negative" ? "var(--color-semantic-status-negative)" : "var(--color-semantic-primary-normal)";
+  const markIdleColor = activeHover || activeFocus ? "var(--color-semantic-label-neutral)" : "var(--bw-gray-300)";
+  const boxBackground = disabledState ? on || mixed ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-fill-normal)" : on || mixed ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-normal)" : "var(--bw-white)";
+  const boxBorder = disabledState ? "var(--color-semantic-line-normal-neutral)" : on || mixed ? "var(--color-semantic-primary-normal)" : activeHover || activeFocus ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
+  const checkStroke = disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-static-white)";
   const controlStyle = isMark ? {
     display: "inline-flex",
     alignItems: "center",
@@ -6404,7 +6404,7 @@ function Checkbox({
     height: d,
     flexShrink: 0,
     boxSizing: "border-box",
-    color: disabledState ? "var(--label-disable)" : on ? markTone : markIdleColor,
+    color: disabledState ? "var(--color-semantic-label-disable)" : on ? markTone : markIdleColor,
     background: "transparent",
     border: "0",
     borderRadius: "var(--radius-pill)",
@@ -6440,7 +6440,7 @@ function Checkbox({
         fontFamily: "var(--font-sans)",
         fontSize: normalizedSize === "sm" ? "var(--label1-size)" : "15px",
         letterSpacing: 0,
-        color: disabledState ? "var(--label-disable)" : "var(--bw-ink)",
+        color: disabledState ? "var(--color-semantic-label-disable)" : "var(--bw-ink)",
         fontWeight: bold ? "var(--fw-bold)" : void 0,
         ...style
       },
@@ -6494,10 +6494,10 @@ function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direc
     const on = Array.isArray(val) && val.includes(o.value);
     return /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
-      /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "var(--bw-white)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "var(--text-on-signal)", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, background: on ? "var(--color-semantic-primary-normal)" : "var(--bw-white)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) }),
       /* @__PURE__ */ (0, import_jsx_runtime65.jsxs)("span", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
+        /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ (0, import_jsx_runtime65.jsx)("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
@@ -6523,7 +6523,7 @@ function ColorSwatch({ colors = [], value, defaultValue, onChange, size = 28, sh
         type: "button",
         "aria-label": c,
         onClick: () => pick(c),
-        style: { width: size, height: size, borderRadius: radius, background: c, cursor: "pointer", padding: 0, border: "2px solid var(--bw-white)", boxShadow: on ? "0 0 0 2px var(--lk-accent-ink)" : "inset 0 0 0 1px var(--line-normal)", transition: "box-shadow var(--dur-fast) var(--ease-out)" }
+        style: { width: size, height: size, borderRadius: radius, background: c, cursor: "pointer", padding: 0, border: "2px solid var(--bw-white)", boxShadow: on ? "0 0 0 2px var(--color-semantic-primary-normal)" : "inset 0 0 0 1px var(--color-semantic-line-normal-normal)", transition: "box-shadow var(--dur-fast) var(--ease-out)" }
       },
       c
     );
@@ -6559,9 +6559,9 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
   };
   const h = size === "sm" ? 40 : 50;
   return /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--label-normal)" : "var(--label-assistive)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
-      /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("path", { d: "m6 9 6 6 6-6" }) })
+    /* @__PURE__ */ (0, import_jsx_runtime67.jsxs)("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--lk-accent-tint-2)", color: "var(--color-semantic-primary-normal)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
+      /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("path", { d: "m6 9 6 6 6-6" }) })
     ] }),
     open && /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
       const on = sel.includes(o.value);
@@ -6572,14 +6572,14 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
           "aria-selected": on,
           onClick: () => toggle(o.value),
           onMouseEnter: (e) => {
-            e.currentTarget.style.background = "var(--fill-normal)";
+            e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
           },
           onMouseLeave: (e) => {
             e.currentTarget.style.background = "transparent";
           },
-          style: { display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--label-normal)" },
+          style: { display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--color-semantic-label-normal)" },
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", { style: { width: 18, height: 18, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: on && /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("svg", { width: "11", height: "11", viewBox: "0 0 24 24", fill: "none", stroke: "var(--text-on-signal)", strokeWidth: "3.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("span", { style: { width: 18, height: 18, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, background: on ? "var(--color-semantic-primary-normal)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: on && /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("svg", { width: "11", height: "11", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime67.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) }),
             o.label
           ]
         },
@@ -6623,9 +6623,9 @@ function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC
       {
         type: "button",
         onClick: () => setOpen((o) => !o),
-        style: { display: "inline-flex", alignItems: "center", gap: 10, height: h, padding: "0 14px", minWidth: 200, background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel ? "var(--label-normal)" : "var(--label-assistive)" },
+        style: { display: "inline-flex", alignItems: "center", gap: 10, height: h, padding: "0 14px", minWidth: 200, background: "var(--bw-white)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)" },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime68.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
             /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("rect", { x: "3", y: "4.5", width: "18", height: "17", rx: "2.5" }),
             /* @__PURE__ */ (0, import_jsx_runtime68.jsx)("path", { d: "M3 9.5h18M8 2.5v4M16 2.5v4" })
           ] }),
@@ -6673,7 +6673,7 @@ function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD
         gap: 10,
         padding: "32px 20px",
         textAlign: "center",
-        border: `1.5px dashed ${drag ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+        border: `1.5px dashed ${drag ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
         borderRadius: "var(--radius-xl)",
         background: drag ? "var(--lk-accent-tint)" : "var(--bw-white)",
         cursor: disabled ? "not-allowed" : "pointer",
@@ -6684,11 +6684,11 @@ function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("span", { style: { display: "inline-flex", width: 44, height: 44, borderRadius: "var(--radius-lg)", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("span", { style: { display: "inline-flex", width: 44, height: 44, borderRadius: "var(--radius-lg)", background: "var(--lk-accent-tint)", color: "var(--color-semantic-primary-normal)", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime69.jsxs)("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
           /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("path", { d: "M12 16V4M7 9l5-5 5 5" }),
           /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("path", { d: "M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", color: names.length ? "var(--label-normal)" : "var(--label-neutral)", wordBreak: "break-all" }, children: names.length ? names.join(", ") : hint }),
+        /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", color: names.length ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)", wordBreak: "break-all" }, children: names.length ? names.join(", ") : hint }),
         /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("input", { ref: inputRef, type: "file", accept, multiple, disabled, onChange: (e) => handle(e.target.files), style: { display: "none" } })
       ]
     }
@@ -6700,12 +6700,12 @@ var import_react72 = __toESM(require("react"), 1);
 var import_jsx_runtime70 = require("react/jsx-runtime");
 function FormField({ label, required = false, helper, error, htmlFor, children, style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    label != null && /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: [
+    label != null && /* @__PURE__ */ (0, import_jsx_runtime70.jsxs)("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: [
       label,
       required && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { color: "var(--bw-red)", marginLeft: 3 }, children: "*" })
     ] }),
     children,
-    (error != null || helper != null) && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { fontSize: 13, lineHeight: 1.5, color: error != null ? "var(--bw-red)" : "var(--label-alternative)" }, children: error != null ? error : helper })
+    (error != null || helper != null) && /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("span", { style: { fontSize: 13, lineHeight: 1.5, color: error != null ? "var(--bw-red)" : "var(--color-semantic-label-alternative)" }, children: error != null ? error : helper })
   ] });
 }
 
@@ -6717,7 +6717,7 @@ function usePlaceholderStyle() {
     if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
     const el = document.createElement("style");
     el.id = "lk-field-ph";
-    el.textContent = "[data-lds-field]::placeholder{color:var(--label-assistive);opacity:1}";
+    el.textContent = "[data-lds-field]::placeholder{color:var(--color-semantic-label-assistive);opacity:1}";
     document.head.appendChild(el);
   }, []);
 }
@@ -6760,7 +6760,7 @@ function Input({
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
   const isInvalid = invalid || status === "negative" || error != null;
   usePlaceholderStyle();
-  const ring = disabled ? "var(--line-neutral)" : isInvalid ? "var(--component-input-border-color-invalid)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--component-input-border-color-focus)" : activeHover ? "var(--border-strong)" : "var(--component-input-border-color)";
+  const ring = disabled ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--component-input-border-color-invalid)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--component-input-border-color-focus)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--component-input-border-color)";
   const h = height || (normalizedSize === "sm" ? "var(--control-h-sm)" : normalizedSize === "lg" ? "var(--control-h-lg)" : "var(--component-input-height)");
   const startIcon = leadingIcon ?? iconLeft;
   const endIcon = trailingIcon ?? iconRight;
@@ -6782,7 +6782,7 @@ function Input({
           gap: "var(--component-input-gap)",
           height: h,
           padding: "0 var(--component-input-padding-x)",
-          background: disabled ? "var(--fill-normal)" : "var(--component-input-bg)",
+          background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)",
           border: `var(--component-input-border-width) solid ${ring}`,
           borderRadius: "var(--component-input-radius)",
           boxShadow: activeFocus && !isInvalid ? "var(--component-input-focus-shadow)" : "none",
@@ -6808,7 +6808,7 @@ function Input({
                 setFocused(false);
                 rest.onBlur && rest.onBlur(e);
               },
-              style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: disabled ? "var(--label-disable)" : "var(--component-input-text-color)" }
+              style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)" }
             }
           ),
           endIcon && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: endIcon }),
@@ -6816,7 +6816,7 @@ function Input({
         ]
       }
     ),
-    message != null && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ (0, import_jsx_runtime71.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message })
   ] });
 }
 
@@ -6832,7 +6832,7 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  const Addon = ({ node, side }) => /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--fill-normal)", color: "var(--label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--bw-border)" }, children: node });
+  const Addon = ({ node, side }) => /* @__PURE__ */ (0, import_jsx_runtime72.jsx)("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--bw-border)" }, children: node });
   return /* @__PURE__ */ (0, import_jsx_runtime72.jsxs)("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
     prefix != null && /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Addon, { node: prefix, side: "left" }),
     /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(
@@ -6843,7 +6843,7 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
         placeholder,
         "aria-label": ariaLabel ?? inputProps?.["aria-label"] ?? (typeof placeholder === "string" ? placeholder : "\uC785\uB825"),
         onChange: (e) => set(e.target.value),
-        style: { flex: 1, minWidth: 0, padding: "0 14px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--label-normal)" },
+        style: { flex: 1, minWidth: 0, padding: "0 14px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--color-semantic-label-normal)" },
         ...inputProps
       }
     ),
@@ -6874,7 +6874,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
         "aria-label": dir < 0 ? "decrease" : "increase",
         disabled: off,
         onClick: () => commit(Number(val) + dir * step),
-        style: { flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, border: "none", borderLeft: "1px solid var(--bw-border)", background: "transparent", cursor: off ? "not-allowed" : "pointer", color: off ? "var(--label-disable)" : "var(--label-neutral)" },
+        style: { flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, border: "none", borderLeft: "1px solid var(--bw-border)", background: "transparent", cursor: off ? "not-allowed" : "pointer", color: off ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)" },
         children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime73.jsx)("path", { d: dir < 0 ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
       }
     );
@@ -6892,7 +6892,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
         placeholder,
         "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uC22B\uC790 \uC785\uB825"),
         onChange: (e) => commit(e.target.value === "" ? 0 : Number(e.target.value)),
-        style: { width: 92, padding: "0 12px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: "var(--label-normal)" },
+        style: { width: 92, padding: "0 12px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)" },
         ...rest
       }
     ),
@@ -6917,7 +6917,7 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
     /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(
       "input",
       {
@@ -6929,11 +6929,11 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
         onChange: (e) => set(e.target.value),
         onFocus: () => setFocus(true),
         onBlur: () => setFocus(false),
-        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--label-normal)" },
+        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--color-semantic-label-normal)" },
         ...rest
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: show ? /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: show ? /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
       /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("path", { d: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" }),
       /* @__PURE__ */ (0, import_jsx_runtime74.jsx)("circle", { cx: "12", cy: "12", r: "3" })
     ] }) : /* @__PURE__ */ (0, import_jsx_runtime74.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
@@ -6984,7 +6984,7 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
       type: mask ? "password" : "text",
       onChange: (e) => onInput(i, e),
       onKeyDown: (e) => onKey(i, e),
-      style: { width: boxW, height: boxH, textAlign: "center", border: `1px solid ${raw[i] ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-md)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: "var(--fw-bold)", color: "var(--label-normal)", background: "var(--bw-white)" }
+      style: { width: boxW, height: boxH, textAlign: "center", border: `1px solid ${raw[i] ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-md)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)", background: "var(--bw-white)" }
     },
     i
   )) });
@@ -7023,9 +7023,9 @@ function Radio({
   const activeFocus = focus || interaction === "focused";
   const d = normalizedSize === "sm" ? 16 : 20;
   const dot = normalizedSize === "sm" ? 6 : 8;
-  const radioBorder = disabledState ? "var(--line-neutral)" : visualChecked || activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
-  const radioBg = disabledState ? "var(--fill-normal)" : visualChecked ? "var(--lk-accent-ink)" : activeHover ? "var(--fill-normal)" : "var(--bw-white)";
-  const radioDot = disabledState ? "var(--label-disable)" : "var(--text-on-signal)";
+  const radioBorder = disabledState ? "var(--color-semantic-line-normal-neutral)" : visualChecked || activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
+  const radioBg = disabledState ? "var(--color-semantic-fill-normal)" : visualChecked ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-normal)" : "var(--bw-white)";
+  const radioDot = disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-static-white)";
   return /* @__PURE__ */ (0, import_jsx_runtime76.jsxs)(
     "label",
     {
@@ -7040,7 +7040,7 @@ function Radio({
         fontFamily: "var(--font-sans)",
         fontSize: "15px",
         letterSpacing: 0,
-        color: disabledState ? "var(--label-disable)" : "var(--bw-ink)",
+        color: disabledState ? "var(--color-semantic-label-disable)" : "var(--bw-ink)",
         fontWeight: bold ? "var(--fw-bold)" : void 0,
         ...style
       },
@@ -7102,10 +7102,10 @@ function RadioGroup({ options = [], value, defaultValue, onChange, name, directi
     const on = o.value === val;
     return /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
-      /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-gray-300)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--lk-accent-ink)" } }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-gray-300)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } }) }),
       /* @__PURE__ */ (0, import_jsx_runtime77.jsxs)("span", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
+        /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ (0, import_jsx_runtime77.jsx)("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
@@ -7122,9 +7122,9 @@ function useRangeStyles() {
     el.textContent = `
 input.lk-rangeslider{position:absolute;top:0;left:0;width:100%;height:24px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;pointer-events:none;}
 input.lk-rangeslider::-webkit-slider-runnable-track{background:transparent;height:24px;}
-input.lk-rangeslider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;pointer-events:auto;width:20px;height:20px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;margin-top:2px;}
+input.lk-rangeslider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;pointer-events:auto;width:20px;height:20px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;margin-top:2px;}
 input.lk-rangeslider::-moz-range-track{background:transparent;height:24px;}
-input.lk-rangeslider::-moz-range-thumb{pointer-events:auto;width:18px;height:18px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;}`;
+input.lk-rangeslider::-moz-range-thumb{pointer-events:auto;width:18px;height:18px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;}`;
     document.head.appendChild(el);
   }, []);
 }
@@ -7144,12 +7144,12 @@ function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step 
   const pctHi = (hi - min) / (max - min) * 100;
   return /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { style: { ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { style: { position: "relative", height: 24 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--fill-strong)" } }),
-      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: "var(--lk-accent-ink)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)" } }),
+      /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-normal)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
       /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("input", { className: "lk-rangeslider", type: "range", min, max, step, value: lo, onChange: (e) => set(Number(e.target.value), hi), "aria-label": "minimum" }),
       /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("input", { className: "lk-rangeslider", type: "range", min, max, step, value: hi, onChange: (e) => set(lo, Number(e.target.value)), "aria-label": "maximum" })
     ] }),
-    showValue && /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
+    showValue && /* @__PURE__ */ (0, import_jsx_runtime78.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("span", { children: lo }),
       /* @__PURE__ */ (0, import_jsx_runtime78.jsx)("span", { children: hi })
     ] })
@@ -7224,7 +7224,7 @@ function Select({
   const visualOpen = open || interaction === "open";
   const activeFocus = visualOpen || focus || interaction === "focused" || interaction === "active-focused";
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
-  const ring = disabledState ? "var(--line-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
+  const ring = disabledState ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
   return /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
     label && /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)("label", { htmlFor: selId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
@@ -7254,8 +7254,8 @@ function Select({
             height: h,
             padding: "0 var(--component-input-padding-x)",
             boxSizing: "border-box",
-            background: disabledState ? "var(--fill-normal)" : "var(--bw-white)",
-            color: disabledState ? "var(--label-disable)" : curr ? "var(--label-normal)" : "var(--label-assistive)",
+            background: disabledState ? "var(--color-semantic-fill-normal)" : "var(--bw-white)",
+            color: disabledState ? "var(--color-semantic-label-disable)" : curr ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)",
             border: `1px solid ${ring}`,
             borderRadius: "var(--radius-input)",
             boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--focus-ring)" : "none",
@@ -7269,10 +7269,10 @@ function Select({
           },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime79.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, minWidth: 0, overflow: "hidden" }, children: [
-              iconLeft && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { style: { display: "inline-flex", flex: "0 0 auto", color: "var(--label-assistive)" }, children: iconLeft }),
-              curr && render === "chip" ? /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { style: { display: "inline-flex", alignItems: "center", maxWidth: "100%", height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", fontSize: 13, fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr.label }) : /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder })
+              iconLeft && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { style: { display: "inline-flex", flex: "0 0 auto", color: "var(--color-semantic-label-assistive)" }, children: iconLeft }),
+              curr && render === "chip" ? /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { style: { display: "inline-flex", alignItems: "center", maxWidth: "100%", height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint-2)", color: "var(--color-semantic-primary-normal)", fontSize: 13, fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr.label }) : /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: visualOpen ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("path", { d: "m6 9 6 6 6-6" }) })
+            /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: visualOpen ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("path", { d: "m6 9 6 6 6-6" }) })
           ]
         }
       ),
@@ -7285,12 +7285,12 @@ function Select({
             "aria-selected": on,
             onClick: () => pick(o.value),
             onMouseEnter: (e) => {
-              if (!on) e.currentTarget.style.background = "var(--fill-normal)";
+              if (!on) e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
             },
             onMouseLeave: (e) => {
               if (!on) e.currentTarget.style.background = "transparent";
             },
-            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "9px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: on ? "var(--lk-accent-ink)" : "var(--label-normal)", background: on ? "var(--lk-accent-tint-2)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "9px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)", background: on ? "var(--lk-accent-tint-2)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
             children: [
               /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: o.label }),
               on && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("path", { d: "M20 6 9 17l-5-5" }) })
@@ -7300,7 +7300,7 @@ function Select({
         );
       }) })
     ] }),
-    message != null && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ (0, import_jsx_runtime79.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message })
   ] });
 }
 
@@ -7313,8 +7313,8 @@ function useSliderStyles() {
     const el = document.createElement("style");
     el.id = "lk-slider-css";
     el.textContent = `
-input.lk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;margin-top:0;}
-input.lk-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;}
+input.lk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;margin-top:0;}
+input.lk-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;}
 input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--bw-gray-300);cursor:not-allowed;}`;
     document.head.appendChild(el);
   }, []);
@@ -7350,12 +7350,12 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
           borderRadius: "var(--radius-pill)",
           outline: "none",
           cursor: disabled ? "not-allowed" : "pointer",
-          background: `linear-gradient(to right, var(--lk-accent-ink) 0%, var(--lk-accent-ink) ${pct}%, var(--fill-strong) ${pct}%, var(--fill-strong) 100%)`
+          background: `linear-gradient(to right, var(--color-semantic-primary-normal) 0%, var(--color-semantic-primary-normal) ${pct}%, var(--color-semantic-fill-strong) ${pct}%, var(--color-semantic-fill-strong) 100%)`
         },
         ...rest
       }
     ),
-    showValue && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
+    showValue && /* @__PURE__ */ (0, import_jsx_runtime80.jsx)("span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
   ] });
 }
 
@@ -7378,9 +7378,9 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
   };
   const remove = (t) => set(tags.filter((x) => x !== t));
   return /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
-    tags.map((t) => /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-semibold)" }, children: [
+    tags.map((t) => /* @__PURE__ */ (0, import_jsx_runtime81.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--lk-accent-tint-2)", color: "var(--color-semantic-primary-normal)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-semibold)" }, children: [
       t,
-      /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("button", { type: "button", "aria-label": "remove", onClick: () => remove(t), style: { display: "inline-flex", border: "none", background: "transparent", cursor: "pointer", color: "var(--lk-accent-ink)", padding: 2 }, children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+      /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("button", { type: "button", "aria-label": "remove", onClick: () => remove(t), style: { display: "inline-flex", border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-primary-normal)", padding: 2 }, children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", children: /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
     ] }, t)),
     /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(
       "input",
@@ -7396,7 +7396,7 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
             add(draft);
           } else if (e.key === "Backspace" && !draft && tags.length) remove(tags[tags.length - 1]);
         },
-        style: { flex: 1, minWidth: 90, height: 28, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--label-normal)" }
+        style: { flex: 1, minWidth: 90, height: 28, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--color-semantic-label-normal)" }
       }
     )
   ] });
@@ -7410,7 +7410,7 @@ function usePlaceholderStyle2() {
     if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
     const el = document.createElement("style");
     el.id = "lk-field-ph";
-    el.textContent = "[data-lds-field]::placeholder{color:var(--label-assistive);opacity:1}";
+    el.textContent = "[data-lds-field]::placeholder{color:var(--color-semantic-label-assistive);opacity:1}";
     document.head.appendChild(el);
   }, []);
 }
@@ -7444,7 +7444,7 @@ function Textarea({
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
   const isInvalid = invalid || status === "negative" || error != null;
   usePlaceholderStyle2();
-  const ring = disabled ? "var(--line-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
+  const ring = disabled ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
   const minHeight = normalizedSize === "sm" ? 96 : normalizedSize === "lg" ? 160 : 120;
   const resizeMode = resize === "fixed" ? "none" : resize === "limit" ? "vertical" : "vertical";
   return /* @__PURE__ */ (0, import_jsx_runtime82.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
@@ -7484,8 +7484,8 @@ function Textarea({
           minHeight,
           maxHeight: resize === "limit" ? minHeight * 2 : void 0,
           padding: "var(--space-3)",
-          background: disabled ? "var(--fill-normal)" : "var(--bw-white)",
-          color: disabled ? "var(--label-disable)" : "var(--bw-ink)",
+          background: disabled ? "var(--color-semantic-fill-normal)" : "var(--bw-white)",
+          color: disabled ? "var(--color-semantic-label-disable)" : "var(--bw-ink)",
           border: `1px solid ${ring}`,
           borderRadius: "var(--radius-input)",
           boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--focus-ring)" : "none",
@@ -7499,7 +7499,7 @@ function Textarea({
         }
       }
     ),
-    message != null && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ (0, import_jsx_runtime82.jsx)("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message })
   ] });
 }
 
@@ -7529,10 +7529,10 @@ function TimeDropdown({ value, options, onChange, height, ariaLabel }) {
         "aria-haspopup": "listbox",
         "aria-expanded": open,
         onClick: () => setOpen((o) => !o),
-        style: { display: "inline-flex", alignItems: "center", gap: 8, height, padding: "0 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-md)", boxShadow: open ? "0 0 0 4px var(--focus-ring)" : "none", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: "var(--label-normal)", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)" },
+        style: { display: "inline-flex", alignItems: "center", gap: 8, height, padding: "0 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-md)", boxShadow: open ? "0 0 0 4px var(--focus-ring)" : "none", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)" },
         children: [
           pad(value),
-          /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("path", { d: "m6 9 6 6 6-6" }) })
+          /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("path", { d: "m6 9 6 6 6-6" }) })
         ]
       }
     ),
@@ -7548,12 +7548,12 @@ function TimeDropdown({ value, options, onChange, height, ariaLabel }) {
             setOpen(false);
           },
           onMouseEnter: (e) => {
-            if (!on) e.currentTarget.style.background = "var(--fill-normal)";
+            if (!on) e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
           },
           onMouseLeave: (e) => {
             if (!on) e.currentTarget.style.background = "transparent";
           },
-          style: { padding: "7px 12px", borderRadius: "var(--radius-sm)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, textAlign: "center", color: on ? "var(--lk-accent-ink)" : "var(--label-normal)", background: on ? "var(--lk-accent-tint-2)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
+          style: { padding: "7px 12px", borderRadius: "var(--radius-sm)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, textAlign: "center", color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)", background: on ? "var(--lk-accent-tint-2)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
           children: pad(x)
         },
         x
@@ -7576,7 +7576,7 @@ function TimePicker({ value, defaultValue = "09:00", onChange, minuteStep = 5, s
   const mins = Array.from({ length: Math.ceil(60 / minuteStep) }, (_, i) => i * minuteStep);
   return /* @__PURE__ */ (0, import_jsx_runtime83.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(TimeDropdown, { value: h, options: hours, onChange: (nh) => set(nh, m), height, ariaLabel: "hour" }),
-    /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontWeight: "var(--fw-bold)", color: "var(--label-alternative)" }, children: ":" }),
+    /* @__PURE__ */ (0, import_jsx_runtime83.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-alternative)" }, children: ":" }),
     /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(TimeDropdown, { value: m, options: mins, onChange: (nm) => set(h, nm), height, ariaLabel: "minute" })
   ] });
 }
@@ -7767,7 +7767,7 @@ function PageHeader({
         alignItems: align === "center" ? "center" : "start",
         width: "100%",
         minWidth: 0,
-        color: "var(--label-normal)",
+        color: "var(--color-semantic-label-normal)",
         fontFamily: "var(--font-sans)",
         ...style
       },
@@ -7775,13 +7775,13 @@ function PageHeader({
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)("div", { style: { display: "grid", gap: compact ? 4 : 6, minWidth: 0 }, children: [
           breadcrumb != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { minWidth: 0 }, children: breadcrumb }),
-          eyebrow != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { fontSize: 13, lineHeight: 1.45, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-alternative)" }, children: eyebrow }),
+          eyebrow != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { fontSize: 13, lineHeight: 1.45, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-alternative)" }, children: eyebrow }),
           /* @__PURE__ */ (0, import_jsx_runtime92.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("h1", { style: { margin: 0, minWidth: 0, color: "var(--label-strong)", fontSize: titleSize, lineHeight: titleLine, fontWeight: "var(--fw-extra)", letterSpacing: 0, wordBreak: "keep-all" }, children: title }),
+            /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("h1", { style: { margin: 0, minWidth: 0, color: "var(--color-semantic-label-strong)", fontSize: titleSize, lineHeight: titleLine, fontWeight: "var(--fw-extra)", letterSpacing: 0, wordBreak: "keep-all" }, children: title }),
             status != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { flexShrink: 0 }, children: status })
           ] }),
-          description != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("p", { style: { margin: 0, maxWidth: 680, color: "var(--label-neutral)", fontSize: 14, lineHeight: 1.55, wordBreak: "keep-all" }, children: description }),
-          meta != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", color: "var(--label-alternative)", fontSize: 13, lineHeight: 1.45 }, children: meta })
+          description != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("p", { style: { margin: 0, maxWidth: 680, color: "var(--color-semantic-label-neutral)", fontSize: 14, lineHeight: 1.55, wordBreak: "keep-all" }, children: description }),
+          meta != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", color: "var(--color-semantic-label-alternative)", fontSize: 13, lineHeight: 1.45 }, children: meta })
         ] }),
         actions != null && /* @__PURE__ */ (0, import_jsx_runtime92.jsx)("div", { style: { display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: actions })
       ]
@@ -7811,15 +7811,15 @@ var import_react96 = __toESM(require("react"), 1);
 var import_jsx_runtime94 = require("react/jsx-runtime");
 var toLen3 = (v) => typeof v === "number" ? v + "px" : v;
 var SURFACES = {
-  subtle: "var(--surface-subtle)",
-  band: "var(--surface-sunken)",
-  raised: "var(--surface-raised)",
-  inverse: "var(--surface-inverse)"
+  subtle: "var(--color-semantic-background-normal-alternative)",
+  band: "var(--color-semantic-background-normal-alternative)",
+  raised: "var(--color-semantic-background-elevated-normal)",
+  inverse: "var(--color-semantic-inverse-background)"
 };
 function Section({ children, surface, py, container = true, innerStyle, style, ...rest }) {
   const outer = {
     background: surface ? SURFACES[surface] : void 0,
-    color: surface === "inverse" ? "var(--text-on-inverse)" : void 0,
+    color: surface === "inverse" ? "var(--color-semantic-inverse-label)" : void 0,
     ...py != null ? { "--section-py": toLen3(py) } : {},
     ...style
   };
@@ -7878,7 +7878,7 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
           if (!isControlled) setInternal(it.href);
           onChange && onChange(it.href);
         },
-        style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, color: on ? "var(--lk-accent-ink)" : "var(--label-alternative)", fontSize: 14, fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" },
+        style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", fontSize: 14, fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" },
         children: it.label
       },
       it.href
@@ -7917,7 +7917,7 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
           border: "none",
           background: "transparent",
           cursor: "pointer",
-          color: active ? "var(--lk-accent-ink)" : "var(--label-assistive)",
+          color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)",
           transition: "color var(--dur-fast) var(--ease-out)"
         },
         children: [
@@ -7937,8 +7937,8 @@ function Breadcrumb({ items = [], style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("nav", { "aria-label": "breadcrumb", style: { display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13.5, ...style }, ...rest, children: items.map((it, i) => {
     const last = i === items.length - 1;
     return /* @__PURE__ */ (0, import_jsx_runtime101.jsxs)(import_react103.default.Fragment, { children: [
-      last || !it.href ? /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--label-normal)" : "var(--label-alternative)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: it.label }) : /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("a", { href: it.href, style: { color: "var(--label-alternative)", fontWeight: "var(--fw-medium)", letterSpacing: 0, textDecoration: "none" }, children: it.label }),
-      !last && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("path", { d: "m9 18 6-6-6-6" }) })
+      last || !it.href ? /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: it.label }) : /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("a", { href: it.href, style: { color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)", letterSpacing: 0, textDecoration: "none" }, children: it.label }),
+      !last && /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime101.jsx)("path", { d: "m9 18 6-6-6-6" }) })
     ] }, i);
   }) });
 }
@@ -8017,12 +8017,12 @@ function Category({
         const active = item.value === selected || item.active;
         const colors = alternative ? {
           bg: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-          fg: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
-          border: active ? "var(--lk-accent-ink)" : "var(--bw-border)"
+          fg: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
+          border: active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"
         } : {
-          bg: active ? "var(--label-normal)" : "var(--bw-white)",
-          fg: active ? "var(--text-on-inverse)" : "var(--label-neutral)",
-          border: active ? "var(--label-normal)" : "var(--bw-border)"
+          bg: active ? "var(--color-semantic-label-normal)" : "var(--bw-white)",
+          fg: active ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-neutral)",
+          border: active ? "var(--color-semantic-label-normal)" : "var(--bw-border)"
         };
         return /* @__PURE__ */ (0, import_jsx_runtime102.jsx)(
           "button",
@@ -8079,8 +8079,8 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...r
     flexDirection: "column",
     gap: 3,
     padding: 4,
-    background: "var(--surface-raised)",
-    border: "1px solid var(--border-subtle)",
+    background: "var(--color-semantic-background-elevated-normal)",
+    border: "1px solid var(--color-semantic-line-normal-normal)",
     borderRadius: "var(--radius-md)",
     boxShadow: "var(--shadow-1)",
     fontFamily: "var(--font-sans)",
@@ -8105,8 +8105,8 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...r
           cursor: "pointer",
           fontSize: 14,
           fontWeight: on ? 800 : 600,
-          background: on ? "var(--lk-accent-ink)" : "transparent",
-          color: on ? "var(--text-on-signal)" : "var(--label-neutral)",
+          background: on ? "var(--color-semantic-primary-normal)" : "transparent",
+          color: on ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-neutral)",
           transition: "background var(--dur-fast) var(--ease-out)"
         },
         children: f.label
@@ -8198,9 +8198,9 @@ function Footer({
     key
   );
   if (compact) {
-    return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--border-subtle)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { fontSize: 12.5, letterSpacing: 0, color: "var(--label-assistive)" }, children: copyright }),
-      links.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--label-alternative)", "var(--label-normal)", 12.5)) })
+    return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--color-semantic-line-normal-normal)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { fontSize: 12.5, letterSpacing: 0, color: "var(--color-semantic-label-assistive)" }, children: copyright }),
+      links.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--color-semantic-label-alternative)", "var(--color-semantic-label-normal)", 12.5)) })
     ] });
   }
   const entryRow = (items) => /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { style: { display: "flex", flexWrap: "wrap", gap: "4px 14px" }, children: items.map((it, i) => /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("span", { style: { whiteSpace: "nowrap" }, children: [
@@ -8208,14 +8208,14 @@ function Footer({
     " ",
     it.value
   ] }, i)) });
-  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("footer", { style: { background: "var(--surface-inverse)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("footer", { style: { background: "var(--color-semantic-inverse-background)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     backToTop && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)(BackToTopButton, {}),
     /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
       (brand != null || columns.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)(import_react106.default.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
           brand != null && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("div", { style: { flex: "1 1 240px", minWidth: 220 }, children: brand }),
           columns.map((col, ci) => /* @__PURE__ */ (0, import_jsx_runtime104.jsxs)("nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: 11, minWidth: 108 }, children: [
-            col.heading != null && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "var(--text-on-inverse)", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
+            col.heading != null && /* @__PURE__ */ (0, import_jsx_runtime104.jsx)("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "var(--color-semantic-inverse-label)", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
             (col.links || []).map((l, li) => linkEl(ci + "-" + li, l, "var(--inverse-label-alternative)", "var(--inverse-label-strong)", 13.5))
           ] }, ci))
         ] }),
@@ -8262,13 +8262,13 @@ function MenuItem({ item, variant, close }) {
         minHeight: item.description ? 44 : 34,
         padding: "7px 10px",
         border: "none",
-        background: hover && !item.disabled ? "var(--fill-normal)" : "transparent",
+        background: hover && !item.disabled ? "var(--color-semantic-fill-normal)" : "transparent",
         cursor: item.disabled ? "not-allowed" : "pointer",
         borderRadius: "var(--radius-md)",
         textAlign: "left",
         fontFamily: "var(--font-sans)",
         fontSize: 14,
-        color: item.danger ? "var(--bw-red)" : item.disabled ? "var(--label-disable)" : "var(--label-normal)",
+        color: item.danger ? "var(--bw-red)" : item.disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
         opacity: item.disabled ? 0.55 : 1
       },
       children: [
@@ -8290,8 +8290,8 @@ function MenuItem({ item, variant, close }) {
                     width: 14,
                     height: 14,
                     borderRadius: variant === "radio" ? "50%" : 4,
-                    border: `1.5px solid ${checked ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
-                    background: checked && variant === "checkbox" ? "var(--lk-accent-ink)" : "transparent",
+                    border: `1.5px solid ${checked ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+                    background: checked && variant === "checkbox" ? "var(--color-semantic-primary-normal)" : "transparent",
                     flexShrink: 0,
                     marginTop: item.description ? 2 : 0
                   }
@@ -8311,7 +8311,7 @@ function MenuItem({ item, variant, close }) {
                     children: item.label
                   }
                 ),
-                item.description && /* @__PURE__ */ (0, import_jsx_runtime105.jsx)("span", { style: { fontSize: 12, color: "var(--label-alternative)" }, children: item.description })
+                item.description && /* @__PURE__ */ (0, import_jsx_runtime105.jsx)("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)" }, children: item.description })
               ] })
             ]
           }
@@ -8321,7 +8321,7 @@ function MenuItem({ item, variant, close }) {
           {
             style: {
               fontSize: 12,
-              color: "var(--label-assistive)",
+              color: "var(--color-semantic-label-assistive)",
               flexShrink: 0
             },
             children: item.shortcut
@@ -8379,12 +8379,12 @@ function Menubar({
               padding: "0 12px",
               border: "none",
               borderRadius: "var(--radius-sm)",
-              background: open === index ? "var(--fill-normal)" : "transparent",
+              background: open === index ? "var(--color-semantic-fill-normal)" : "transparent",
               cursor: "pointer",
               fontFamily: "var(--font-sans)",
               fontSize: 14,
               fontWeight: "var(--fw-semibold)",
-              color: "var(--label-normal)"
+              color: "var(--color-semantic-label-normal)"
             },
             children: menu.label
           }
@@ -8449,8 +8449,8 @@ function Menubar({
                         padding: "0 10px",
                         border: "none",
                         borderRadius: 7,
-                        background: "var(--lk-accent-ink)",
-                        color: "var(--text-on-inverse)",
+                        background: "var(--color-semantic-primary-normal)",
+                        color: "var(--color-semantic-inverse-label)",
                         fontFamily: "var(--font-sans)",
                         fontSize: 12,
                         fontWeight: "var(--fw-bold)"
@@ -8488,7 +8488,7 @@ function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) 
         "aria-current": active ? "page" : void 0,
         onClick: () => pick(o.value),
         title: typeof o.label === "string" ? o.label : void 0,
-        style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5, width: 68, height: 60, border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", background: active ? "var(--lk-accent-tint-2)" : "transparent", color: active ? "var(--lk-accent-ink)" : "var(--label-alternative)", transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5, width: 68, height: 60, border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", background: active ? "var(--lk-accent-tint-2)" : "transparent", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" },
         children: [
           o.icon,
           /* @__PURE__ */ (0, import_jsx_runtime106.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)" }, children: o.label })
@@ -8553,7 +8553,7 @@ function PageIndicator({
                 padding: 0,
                 border: "none",
                 borderRadius: "50%",
-                background: active ? alternative ? "var(--static-white)" : "var(--label-normal)" : alternative ? "var(--inverse-label-disable)" : "var(--fill-strong)",
+                background: active ? alternative ? "var(--static-white)" : "var(--color-semantic-label-normal)" : alternative ? "var(--inverse-label-disable)" : "var(--color-semantic-fill-strong)",
                 cursor: onChange ? "pointer" : "default"
               }
             },
@@ -8576,8 +8576,8 @@ function PageIndicator({
         height: s.height,
         padding: s.padding,
         borderRadius: "var(--radius-pill)",
-        background: alternative ? "var(--label-normal)" : "var(--fill-strong)",
-        color: alternative ? "var(--text-on-inverse)" : "var(--label-neutral)",
+        background: alternative ? "var(--color-semantic-label-normal)" : "var(--color-semantic-fill-strong)",
+        color: alternative ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-neutral)",
         fontFamily: "var(--font-sans)",
         fontSize: s.fontSize,
         fontWeight: "var(--fw-semibold)",
@@ -8628,7 +8628,7 @@ var selectStyle = {
   background: "var(--bw-white)",
   fontFamily: "var(--font-sans)",
   fontSize: 13,
-  color: "var(--label-normal)"
+  color: "var(--color-semantic-label-normal)"
 };
 function Pagination({
   page = 1,
@@ -8670,7 +8670,7 @@ function Pagination({
         borderRadius: "var(--radius-md)",
         background: "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
-        color: disabled ? "var(--label-disable)" : "var(--label-neutral)"
+        color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)"
       },
       children: /* @__PURE__ */ (0, import_jsx_runtime108.jsx)(
         "svg",
@@ -8733,7 +8733,7 @@ function Pagination({
                     style: {
                       minWidth: 24,
                       textAlign: "center",
-                      color: "var(--label-assistive)",
+                      color: "var(--color-semantic-label-assistive)",
                       fontSize: "var(--body2-size)"
                     },
                     children: "..."
@@ -8758,7 +8758,7 @@ function Pagination({
                       fontWeight: p === current ? "var(--fw-semibold)" : "var(--fw-regular)",
                       letterSpacing: 0,
                       fontVariantNumeric: "tabular-nums",
-                      color: p === current ? "var(--label-normal)" : "var(--label-alternative)"
+                      color: p === current ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)"
                     },
                     children: p
                   },
@@ -8775,7 +8775,7 @@ function Pagination({
             {
               style: {
                 fontSize: 13,
-                color: "var(--label-alternative)",
+                color: "var(--color-semantic-label-alternative)",
                 fontVariantNumeric: "tabular-nums"
               },
               children: [
@@ -8793,7 +8793,7 @@ function Pagination({
                 alignItems: "center",
                 gap: 6,
                 fontSize: 13,
-                color: "var(--label-neutral)"
+                color: "var(--color-semantic-label-neutral)"
               },
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime108.jsx)("span", { children: pageJumpLabel }),
@@ -8922,13 +8922,13 @@ function SideNav({
     textAlign: "left",
     fontFamily: "var(--font-sans)",
     background: active ? "var(--lk-accent-tint-2)" : hovered && !disabled ? "var(--lk-accent-tint)" : "transparent",
-    color: active ? "var(--lk-accent-ink)" : "var(--label-alternative)",
+    color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
     transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
     ...extra
   });
   const labelSpan = (active, children) => /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children });
-  const pill = (active, badge) => /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("span", { style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: 9, fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? "var(--lk-accent-ink)" : "var(--lk-accent-tint-2)", color: active ? "var(--bw-white)" : "var(--lk-accent-ink)" }, children: badge });
-  const dot = /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("span", { style: { position: "absolute", top: 7, right: 7, width: 7, height: 7, borderRadius: "50%", background: "var(--lk-accent-ink)" } });
+  const pill = (active, badge) => /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("span", { style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: 9, fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? "var(--color-semantic-primary-normal)" : "var(--lk-accent-tint-2)", color: active ? "var(--bw-white)" : "var(--color-semantic-primary-normal)" }, children: badge });
+  const dot = /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("span", { style: { position: "absolute", top: 7, right: 7, width: 7, height: 7, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } });
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
   const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
   const inner = /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)(import_react111.default.Fragment, { children: [
@@ -8942,7 +8942,7 @@ function SideNav({
           onClick: () => setCol(!col),
           title: col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
           "aria-label": col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
-          style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: 8, background: "transparent", color: "var(--label-assistive)", cursor: "pointer" },
+          style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: 8, background: "transparent", color: "var(--color-semantic-label-assistive)", cursor: "pointer" },
           children: /* @__PURE__ */ (0, import_jsx_runtime109.jsxs)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
             /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("rect", { x: "3", y: "4", width: "18", height: "16", rx: "3" }),
             /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("path", { d: "M9.5 4v16" }),
@@ -8952,7 +8952,7 @@ function SideNav({
       )
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { className: "lk-sidenav__scroll", style: { display: "flex", flexDirection: "column", gap: 2, flex: "1 1 auto", minHeight: 0, overflowX: "hidden", overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none" }, children: items.map((o, i) => {
-      if (o.heading) return col ? /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { style: { height: 1, flexShrink: 0, background: "var(--bw-border)", margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px" } }, "h" + i) : /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { style: { fontFamily: "var(--font-sans)", fontSize: 10.5, fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--label-assistive)", padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px" }, children: o.heading }, "h" + i);
+      if (o.heading) return col ? /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { style: { height: 1, flexShrink: 0, background: "var(--bw-border)", margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px" } }, "h" + i) : /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("div", { style: { fontFamily: "var(--font-sans)", fontSize: 10.5, fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-label-assistive)", padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px" }, children: o.heading }, "h" + i);
       const kids = o.children || [];
       const title = typeof o.label === "string" ? o.label : void 0;
       if (kids.length > 0) {
@@ -8976,7 +8976,7 @@ function SideNav({
               onClick: onParent,
               title,
               ...hoverProps(o.value),
-              style: row(false, o.disabled, { color: childActive ? "var(--lk-accent-ink)" : "var(--label-alternative)" }, hovKey === o.value),
+              style: row(false, o.disabled, { color: childActive ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)" }, hovKey === o.value),
               children: [
                 o.icon != null && /* @__PURE__ */ (0, import_jsx_runtime109.jsx)("span", { style: { flexShrink: 0, display: "inline-flex" }, children: o.icon }),
                 !col && labelSpan(childActive, o.label),
@@ -9053,15 +9053,15 @@ function Steps({ steps = [], current = 0, style, ...rest }) {
     const label = typeof s === "string" ? s : s.label;
     const done = i < current;
     const active = i === current;
-    const bg = done ? "var(--lk-accent-ink)" : "var(--bw-white)";
-    const bd = done || active ? "var(--lk-accent-ink)" : "var(--bw-border)";
-    const fg = done ? "var(--text-on-signal)" : active ? "var(--lk-accent-ink)" : "var(--label-assistive)";
+    const bg = done ? "var(--color-semantic-primary-normal)" : "var(--bw-white)";
+    const bd = done || active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)";
+    const fg = done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)";
     return /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)(import_react112.default.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime110.jsxs)("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
-        /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, color: active ? "var(--label-normal)" : "var(--label-alternative)", whiteSpace: "nowrap" }, children: label })
+        /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
       ] }),
-      i < steps.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < current ? "var(--lk-accent-ink)" : "var(--bw-border)", minWidth: 24 } })
+      i < steps.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime110.jsx)("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < current ? "var(--color-semantic-primary-normal)" : "var(--bw-border)", minWidth: 24 } })
     ] }, i);
   }) });
 }
@@ -9151,7 +9151,7 @@ function Tabs({
               fontSize: s.fontSize,
               fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
-              color: active ? "var(--label-normal)" : "var(--label-alternative)",
+              color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)",
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)",
               ...item.style
@@ -9164,7 +9164,7 @@ function Tabs({
                   style: {
                     fontSize: s.countSize,
                     fontWeight: "var(--fw-semibold)",
-                    color: active ? "var(--lk-accent-ink)" : "var(--label-assistive)"
+                    color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)"
                   },
                   children: item.count
                 }
@@ -9177,7 +9177,7 @@ function Tabs({
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    color: active ? "var(--label-normal)" : "var(--label-alternative)"
+                    color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)"
                   },
                   children: trailing === true ? /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(
                     "svg",
@@ -9206,7 +9206,7 @@ function Tabs({
                     bottom: -1,
                     height: 2,
                     borderRadius: 0,
-                    background: active ? "var(--label-normal)" : "transparent",
+                    background: active ? "var(--color-semantic-label-normal)" : "transparent",
                     transition: "background var(--dur-fast) var(--ease-out)"
                   }
                 }
@@ -9250,9 +9250,9 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
         height,
         paddingInline: "clamp(16px, 4vw, 32px)",
         boxSizing: "border-box",
-        background: dark ? "linear-gradient(135deg, var(--lk-navy-from), var(--lk-navy-to))" : sticky ? "color-mix(in srgb, var(--surface-card) 88%, transparent)" : "var(--surface-card)",
-        color: dark ? "var(--text-on-inverse)" : "var(--text-body)",
-        borderBottom: bordered ? `1px solid ${dark ? "var(--inverse-fill-normal)" : "var(--border-subtle)"}` : "none",
+        background: dark ? "linear-gradient(135deg, var(--lk-navy-from), var(--lk-navy-to))" : sticky ? "color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)" : "var(--color-semantic-background-elevated-normal)",
+        color: dark ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-normal)",
+        borderBottom: bordered ? `1px solid ${dark ? "var(--inverse-fill-normal)" : "var(--color-semantic-line-normal-normal)"}` : "none",
         backdropFilter: sticky ? "saturate(150%) blur(8px)" : "none",
         WebkitBackdropFilter: sticky ? "saturate(150%) blur(8px)" : "none",
         fontFamily: "var(--font-sans)",
@@ -9277,7 +9277,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
   const open = hasMenu && (hover || focusWithin || clickOpen);
   const activeOrHover = active || hover || focusWithin || clickOpen;
   const Comp = href ? "a" : "button";
-  const fg = active ? onDark ? "var(--text-on-signal)" : "var(--lk-accent-ink)" : activeOrHover ? onDark ? "var(--text-on-signal)" : "var(--label-strong)" : onDark ? "var(--inverse-label-neutral)" : "var(--label-alternative)";
+  const fg = active ? onDark ? "var(--color-semantic-static-white)" : "var(--color-semantic-primary-normal)" : activeOrHover ? onDark ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-strong)" : onDark ? "var(--inverse-label-neutral)" : "var(--color-semantic-label-alternative)";
   return /* @__PURE__ */ (0, import_jsx_runtime113.jsxs)(
     "span",
     {
@@ -9346,7 +9346,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
                     bottom: 0,
                     height: 2.5,
                     borderRadius: "2px 2px 0 0",
-                    background: onDark ? "var(--lk-accent)" : "var(--lk-accent-ink)",
+                    background: onDark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-normal)",
                     transform: activeOrHover ? "scaleX(1)" : "scaleX(0)",
                     transformOrigin: "center",
                     transition: "transform var(--dur-fast) var(--ease-out)"
@@ -9372,8 +9372,8 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
               flexDirection: "column",
               gap: 2,
               padding: 8,
-              background: "var(--surface-card)",
-              border: "1px solid var(--line-normal)",
+              background: "var(--color-semantic-background-elevated-normal)",
+              border: "1px solid var(--color-semantic-line-normal-normal)",
               borderRadius: 14,
               boxShadow: "var(--shadow-md)",
               opacity: open ? 1 : 0,
@@ -9397,7 +9397,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
                     border: "none",
                     borderRadius: 10,
                     background: "transparent",
-                    color: "var(--label-normal)",
+                    color: "var(--color-semantic-label-normal)",
                     cursor: "pointer",
                     fontFamily: "var(--font-sans)",
                     fontSize: 14,
@@ -9458,9 +9458,9 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         },
         onMouseEnter: () => setHov(i),
         onMouseLeave: () => setHov(-1),
-        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--component-menu-item-hover-bg)" : "transparent", color: it.danger ? "var(--status-danger, var(--color-danger))" : "var(--label-normal, var(--label-normal))", transition: "background var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--component-menu-item-hover-bg)" : "transparent", color: it.danger ? "var(--status-danger, var(--color-semantic-status-negative))" : "var(--color-semantic-label-normal, var(--color-semantic-label-normal))", transition: "background var(--dur-fast) var(--ease-out)" },
         children: [
-          it.icon != null && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("span", { style: { flexShrink: 0, display: "inline-flex", color: it.danger ? "inherit" : "var(--label-alternative)" }, children: it.icon }),
+          it.icon != null && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("span", { style: { flexShrink: 0, display: "inline-flex", color: it.danger ? "inherit" : "var(--color-semantic-label-alternative)" }, children: it.icon }),
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("span", { style: { flex: 1, minWidth: 0 }, children: it.label })
         ]
       },
@@ -9478,10 +9478,10 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime114.jsx)(Avatar, { name: typeof name === "string" ? name : void 0, src, status, size: 30, style: { flexShrink: 0 } }),
           !collapsed && /* @__PURE__ */ (0, import_jsx_runtime114.jsxs)("span", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal, var(--label-normal))", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
-            detail != null && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
+            /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal, var(--color-semantic-label-normal))", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
+            detail != null && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("span", { style: { fontSize: 11.5, color: "var(--color-semantic-label-assistive)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
           ] }),
-          !collapsed && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("path", { d: "M6 15l6-6 6 6" }) })
+          !collapsed && /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ (0, import_jsx_runtime114.jsx)("path", { d: "M6 15l6-6 6 6" }) })
         ]
       }
     )
@@ -9507,16 +9507,16 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, childre
       const active = i === cur;
       return /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)(import_react117.default.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: done ? "var(--lk-accent-ink)" : "var(--bw-white)", border: `2px solid ${done || active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, color: done ? "var(--text-on-signal)" : active ? "var(--lk-accent-ink)" : "var(--label-assistive)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
-          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { style: { fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", color: active ? "var(--label-normal)" : "var(--label-alternative)", whiteSpace: "nowrap" }, children: label })
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: done ? "var(--color-semantic-primary-normal)" : "var(--bw-white)", border: `2px solid ${done || active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, color: done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
+          /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { style: { fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
         ] }),
-        i < steps.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < cur ? "var(--lk-accent-ink)" : "var(--bw-border)", minWidth: 24 } })
+        i < steps.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < cur ? "var(--color-semantic-primary-normal)" : "var(--bw-border)", minWidth: 24 } })
       ] }, i);
     }) }),
     /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("div", { children: typeof children === "function" ? children(cur) : children }),
     footer !== null && /* @__PURE__ */ (0, import_jsx_runtime115.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("button", { type: "button", onClick: () => go(cur - 1), disabled: cur === 0, style: { height: 44, padding: "0 18px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", color: "var(--label-normal)", cursor: cur === 0 ? "not-allowed" : "pointer", opacity: cur === 0 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
-      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("button", { type: "button", onClick: () => go(cur + 1), disabled: cur === steps.length - 1, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--lk-accent-ink)", color: "var(--text-on-signal)", cursor: cur === steps.length - 1 ? "not-allowed" : "pointer", opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uB2E4\uC74C" })
+      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("button", { type: "button", onClick: () => go(cur - 1), disabled: cur === 0, style: { height: 44, padding: "0 18px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", color: "var(--color-semantic-label-normal)", cursor: cur === 0 ? "not-allowed" : "pointer", opacity: cur === 0 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
+      /* @__PURE__ */ (0, import_jsx_runtime115.jsx)("button", { type: "button", onClick: () => go(cur + 1), disabled: cur === steps.length - 1, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--color-semantic-primary-normal)", color: "var(--color-semantic-static-white)", cursor: cur === steps.length - 1 ? "not-allowed" : "pointer", opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uB2E4\uC74C" })
     ] })
   ] });
 }
@@ -9562,8 +9562,8 @@ var platformStyle = {
   }
 };
 var variantColor = {
-  normal: "var(--lk-accent-ink)",
-  assistive: "var(--label-neutral)",
+  normal: "var(--color-semantic-primary-normal)",
+  assistive: "var(--color-semantic-label-neutral)",
   negative: "var(--bw-red)"
 };
 function normalizeVariant3(value) {
@@ -9663,7 +9663,7 @@ function Alert({
                   fontSize: p.titleSize,
                   fontWeight: p.titleWeight,
                   letterSpacing: 0,
-                  color: "var(--label-normal)",
+                  color: "var(--color-semantic-label-normal)",
                   marginBottom: 8
                 },
                 children: title
@@ -9675,7 +9675,7 @@ function Alert({
                 style: {
                   fontSize: "var(--body2-size)",
                   lineHeight: 1.55,
-                  color: "var(--label-neutral)",
+                  color: "var(--color-semantic-label-neutral)",
                   wordBreak: "keep-all"
                 },
                 children: body
@@ -9697,8 +9697,8 @@ function Alert({
                       type: "button",
                       style: {
                         ...buttonBase,
-                        color: "var(--label-normal)",
-                        background: platform === "ios" ? "var(--fill-normal)" : "transparent"
+                        color: "var(--color-semantic-label-normal)",
+                        background: platform === "ios" ? "var(--color-semantic-fill-normal)" : "transparent"
                       },
                       onClick: onCancel || dismiss,
                       children: secondary
@@ -9710,7 +9710,7 @@ function Alert({
                       type: "button",
                       style: {
                         ...buttonBase,
-                        color: platform === "ios" ? "var(--text-on-inverse)" : accent,
+                        color: platform === "ios" ? "var(--color-semantic-inverse-label)" : accent,
                         background: platform === "ios" ? accent : "transparent"
                       },
                       onClick: onConfirm || dismiss,
@@ -9747,13 +9747,13 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
     if (e.target === e.currentTarget && onClose) onClose();
   }, style: { position: "fixed", inset: 0, zIndex: 110, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "12vh", background: "var(--scrim-dark)", backdropFilter: "blur(2px)" }, children: /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { role: "dialog", "aria-modal": "true", style: { width: "100%", maxWidth: 560, background: "var(--bw-white)", borderRadius: "var(--radius-2xl)", boxShadow: "var(--shadow-xl)", overflow: "hidden", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: "1px solid var(--bw-border)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
         /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("circle", { cx: "11", cy: "11", r: "7" }),
         /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("path", { d: "m21 21-4.3-4.3" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--label-normal)" } })
+      /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--color-semantic-label-normal)" } })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { style: { padding: 28, textAlign: "center", color: "var(--label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("div", { style: { padding: 28, textAlign: "center", color: "var(--color-semantic-label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ (0, import_jsx_runtime117.jsxs)(
       "button",
       {
         type: "button",
@@ -9762,16 +9762,16 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
           c.onSelect && c.onSelect();
         },
         onMouseEnter: (e) => {
-          e.currentTarget.style.background = "var(--fill-normal)";
+          e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
         },
         onMouseLeave: (e) => {
           e.currentTarget.style.background = "transparent";
         },
-        style: { width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "11px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-medium)", color: "var(--label-normal)" },
+        style: { width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "11px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-normal)" },
         children: [
-          c.icon && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { style: { color: "var(--lk-accent-ink)", display: "inline-flex" }, children: c.icon }),
+          c.icon && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { style: { color: "var(--color-semantic-primary-normal)", display: "inline-flex" }, children: c.icon }),
           /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { style: { flex: 1 }, children: c.label }),
-          c.shortcut && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { style: { fontSize: 12, color: "var(--label-assistive)", fontWeight: "var(--fw-semibold)" }, children: c.shortcut })
+          c.shortcut && /* @__PURE__ */ (0, import_jsx_runtime117.jsx)("span", { style: { fontSize: 12, color: "var(--color-semantic-label-assistive)", fontWeight: "var(--fw-semibold)" }, children: c.shortcut })
         ]
       },
       i
@@ -9783,7 +9783,7 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
 var import_react120 = __toESM(require("react"), 1);
 var import_jsx_runtime118 = require("react/jsx-runtime");
 var TONES3 = {
-  default: "var(--color-primary)",
+  default: "var(--color-semantic-primary-normal)",
   danger: "var(--bw-red)",
   warning: "var(--bw-amber)"
 };
@@ -9832,8 +9832,8 @@ function ConfirmDialog({
           ...rest,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)("div", { style: { display: "grid", gap: "var(--space-2)" }, children: [
-              title != null && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("h2", { id: titleId, style: { margin: 0, color: "var(--label-normal)", fontSize: 20, lineHeight: 1.35, fontWeight: "var(--fw-extra)", letterSpacing: 0 }, children: title }),
-              children != null && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("div", { style: { color: "var(--label-neutral)", fontSize: 15, lineHeight: 1.7, wordBreak: "keep-all" }, children })
+              title != null && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("h2", { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-normal)", fontSize: 20, lineHeight: 1.35, fontWeight: "var(--fw-extra)", letterSpacing: 0 }, children: title }),
+              children != null && /* @__PURE__ */ (0, import_jsx_runtime118.jsx)("div", { style: { color: "var(--color-semantic-label-neutral)", fontSize: 15, lineHeight: 1.7, wordBreak: "keep-all" }, children })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime118.jsxs)("div", { style: { display: "flex", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime118.jsx)(Button, { variant: "ghost", onClick: () => dismiss && dismiss(), style: { height: 44, borderRadius: "var(--radius-md)", fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children: cancelLabel }),
@@ -9878,7 +9878,7 @@ function Dimmer({ open = false, children, onClick, blur = false, style, ...rest 
         alignItems: "center",
         justifyContent: "center",
         background: "var(--scrim-dark)",
-        color: "var(--text-on-inverse)",
+        color: "var(--color-semantic-inverse-label)",
         backdropFilter: blur ? "blur(3px)" : "none",
         borderRadius: "inherit",
         ...style
@@ -9931,10 +9931,10 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
           ...rest,
           children: [
             (title != null || onClose) && /* @__PURE__ */ (0, import_jsx_runtime120.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 22px", borderBottom: "1px solid var(--bw-border)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-              onClose && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+              /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+              onClose && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { style: { flex: 1, padding: "20px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
+            /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { style: { flex: 1, padding: "20px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
             footer != null && /* @__PURE__ */ (0, import_jsx_runtime120.jsx)("div", { style: { padding: "16px 22px", borderTop: "1px solid var(--bw-border)", display: "flex", justifyContent: "flex-end", gap: 10 }, children: footer })
           ]
         }
@@ -9948,7 +9948,7 @@ var import_react123 = __toESM(require("react"), 1);
 var import_jsx_runtime121 = require("react/jsx-runtime");
 function CheckMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
-  const activeColor = disabled ? "var(--label-disable)" : "var(--lk-accent-ink)";
+  const activeColor = disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-primary-normal)";
   if (variant === "radio") {
     return /* @__PURE__ */ (0, import_jsx_runtime121.jsx)(
       "span",
@@ -9988,7 +9988,7 @@ function CheckMark({ variant, checked, disabled }) {
         borderRadius: 4,
         border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
         background: checked ? activeColor : "transparent",
-        color: disabled ? "var(--fill-normal)" : "var(--text-on-inverse)",
+        color: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-inverse-label)",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
@@ -10064,7 +10064,7 @@ function MenuItemButton({
         fontSize: "var(--body1-size)",
         fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
         letterSpacing: 0,
-        color: item.danger ? "var(--bw-red)" : disabled ? "var(--label-disable)" : "var(--label-normal)",
+        color: item.danger ? "var(--bw-red)" : disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
         opacity: disabled ? 0.72 : 1
       },
       children: [
@@ -10086,7 +10086,7 @@ function MenuItemButton({
             {
               style: {
                 fontSize: "var(--label2-size)",
-                color: "var(--label-alternative)",
+                color: "var(--color-semantic-label-alternative)",
                 fontWeight: "var(--fw-medium)"
               },
               children: description
@@ -10098,7 +10098,7 @@ function MenuItemButton({
           {
             style: {
               fontSize: 12,
-              color: "var(--label-assistive)",
+              color: "var(--color-semantic-label-assistive)",
               flexShrink: 0
             },
             children: item.shortcut
@@ -10222,8 +10222,8 @@ function DropdownMenu({
                         padding: "0 10px",
                         border: "none",
                         borderRadius: 7,
-                        background: "var(--lk-accent-ink)",
-                        color: "var(--text-on-inverse)",
+                        background: "var(--color-semantic-primary-normal)",
+                        color: "var(--color-semantic-inverse-label)",
                         fontFamily: "var(--font-sans)",
                         fontSize: 12,
                         fontWeight: "var(--fw-bold)"
@@ -10259,7 +10259,7 @@ function anchoredPanelStyle(width) {
     fontFamily: "var(--font-sans)",
     fontSize: 14,
     lineHeight: 1.6,
-    color: "var(--label-neutral)"
+    color: "var(--color-semantic-label-neutral)"
   };
 }
 
@@ -10286,7 +10286,7 @@ function HoverCard({ trigger, children, align = "left", width = 280, style, ...r
 var import_react125 = __toESM(require("react"), 1);
 var import_jsx_runtime123 = require("react/jsx-runtime");
 function lbArrow(side) {
-  return { position: "absolute", [side]: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--material-control-dimmer)", color: "var(--text-on-inverse)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" };
+  return { position: "absolute", [side]: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--material-control-dimmer)", color: "var(--color-semantic-inverse-label)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" };
 }
 function Lightbox({ open = false, images = [], index = 0, onClose, onIndexChange, style, ...rest }) {
   const [i, setI] = import_react125.default.useState(index);
@@ -10326,7 +10326,7 @@ function LightboxStage({ url, alt, count, go, onClose, style, rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)("div", { role: "dialog", "aria-modal": "true", onClick: (e) => {
     if (e.target === e.currentTarget && onClose) onClose();
   }, style: { position: "fixed", inset: 0, zIndex: 130, display: "flex", alignItems: "center", justifyContent: "center", background: "var(--material-dimmer)", ...style }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--inverse-fill-normal)", color: "var(--text-on-inverse)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--inverse-fill-normal)", color: "var(--color-semantic-inverse-label)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) }),
     /* @__PURE__ */ (0, import_jsx_runtime123.jsxs)("div", { style: { position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: loaded ? 0 : 280, minHeight: loaded ? 0 : 200 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("img", { ref: imgRef, src: url, alt, onLoad: () => setLoaded(true), style: { display: "block", maxWidth: "86vw", maxHeight: "86vh", borderRadius: "var(--radius-lg)", boxShadow: loaded ? "var(--shadow-xl)" : "none", opacity: loaded ? 1 : 0, transition: "opacity .18s ease" } }),
       !loaded && /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("span", { "aria-hidden": "true", style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", display: "inline-flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("svg", { width: "34", height: "34", viewBox: "0 0 24 24", fill: "none", stroke: "var(--inverse-icon-muted)", strokeWidth: "2.4", strokeLinecap: "round", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("path", { d: "M12 2a10 10 0 1 0 10 10", children: /* @__PURE__ */ (0, import_jsx_runtime123.jsx)("animateTransform", { attributeName: "transform", type: "rotate", from: "0 12 12", to: "360 12 12", dur: "0.8s", repeatCount: "indefinite" }) }) }) }),
@@ -10367,10 +10367,10 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
           ...rest,
           children: [
             (title != null || onClose) && /* @__PURE__ */ (0, import_jsx_runtime124.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--bw-border)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
-              onClose && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+              /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+              onClose && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { padding: "20px 24px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
+            /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { padding: "20px 24px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
             footer != null && /* @__PURE__ */ (0, import_jsx_runtime124.jsx)("div", { style: { display: "flex", justifyContent: "flex-end", gap: 10, padding: "16px 24px", borderTop: "1px solid var(--bw-border)" }, children: footer })
           ]
         }
@@ -10439,8 +10439,8 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
           ...rest,
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { style: { display: "flex", justifyContent: "center", paddingTop: 10 }, children: /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("span", { style: { width: 40, height: 4, borderRadius: "var(--radius-pill)", background: "var(--bw-gray-300)" } }) }),
-            title != null && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { style: { padding: "14px 22px 4px", fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
-            /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { style: { flex: 1, padding: "14px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--label-neutral)", wordBreak: "keep-all" }, children }),
+            title != null && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { style: { padding: "14px 22px 4px", fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+            /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { style: { flex: 1, padding: "14px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
             footer != null && /* @__PURE__ */ (0, import_jsx_runtime126.jsx)("div", { style: { padding: "14px 22px 22px", display: "flex", gap: 10 }, children: footer })
           ]
         }
@@ -10504,7 +10504,7 @@ function Snackbar({
         background: "var(--component-transient-feedback-bg)",
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
         WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
-        color: "var(--text-on-inverse)",
+        color: "var(--color-semantic-inverse-label)",
         boxShadow: "var(--shadow-lg)",
         fontFamily: "var(--font-sans)",
         ...style
@@ -10562,7 +10562,7 @@ function Snackbar({
               marginLeft: 20,
               border: "none",
               background: "transparent",
-              color: "var(--text-on-inverse)",
+              color: "var(--color-semantic-inverse-label)",
               fontFamily: "var(--font-sans)",
               fontSize: 13,
               fontWeight: "var(--fw-bold)",
@@ -10583,7 +10583,7 @@ function Snackbar({
               alignSelf: "center",
               border: "none",
               background: "transparent",
-              color: "var(--text-on-inverse)",
+              color: "var(--color-semantic-inverse-label)",
               cursor: "pointer",
               padding: 0
             },
@@ -10614,7 +10614,7 @@ var import_react130 = __toESM(require("react"), 1);
 var import_jsx_runtime128 = require("react/jsx-runtime");
 var ICONS = {
   normal: {
-    color: "var(--text-on-inverse)",
+    color: "var(--color-semantic-inverse-label)",
     node: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)("circle", { cx: "12", cy: "12", r: "8" })
   },
   positive: {
@@ -10677,7 +10677,7 @@ function Toast({
         background: "var(--component-transient-feedback-bg)",
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
         WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
-        color: "var(--text-on-inverse)",
+        color: "var(--color-semantic-inverse-label)",
         borderRadius: 12,
         boxShadow: "var(--shadow-lg)",
         fontFamily: "var(--font-sans)",
@@ -10716,7 +10716,7 @@ function Toast({
               lineHeight: 1.45,
               fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
-              color: "var(--text-on-inverse)",
+              color: "var(--color-semantic-inverse-label)",
               wordBreak: "keep-all"
             },
             children
@@ -10731,7 +10731,7 @@ function Toast({
               flexShrink: 0,
               border: "none",
               background: "transparent",
-              color: "var(--text-on-inverse)",
+              color: "var(--color-semantic-inverse-label)",
               fontFamily: "var(--font-sans)",
               fontSize: 13,
               fontWeight: "var(--fw-bold)",
@@ -10754,7 +10754,7 @@ function Toast({
               border: "none",
               background: "transparent",
               cursor: "pointer",
-              color: "var(--text-on-inverse)"
+              color: "var(--color-semantic-inverse-label)"
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime128.jsx)(
               "svg",
@@ -10796,10 +10796,10 @@ function ToastStack({ children, position = "bottom-right", gap = 10, style, ...r
 var import_react132 = __toESM(require("react"), 1);
 var import_jsx_runtime130 = require("react/jsx-runtime");
 var CFG = {
-  online: { c: "var(--color-positive)", bars: 3, label: "\uC628\uB77C\uC778" },
-  reconnecting: { c: "var(--color-cautionary)", bars: 2, label: "\uC7AC\uC5F0\uACB0" },
-  weak: { c: "var(--color-cautionary)", bars: 1, label: "\uC57D\uD568" },
-  offline: { c: "var(--label-disable)", bars: 0, label: "\uC624\uD504\uB77C\uC778" }
+  online: { c: "var(--color-semantic-status-positive)", bars: 3, label: "\uC628\uB77C\uC778" },
+  reconnecting: { c: "var(--color-semantic-status-cautionary)", bars: 2, label: "\uC7AC\uC5F0\uACB0" },
+  weak: { c: "var(--color-semantic-status-cautionary)", bars: 1, label: "\uC57D\uD568" },
+  offline: { c: "var(--color-semantic-label-disable)", bars: 0, label: "\uC624\uD504\uB77C\uC778" }
 };
 function ConnectionBadge({ status = "online", label, showLabel = true, size = "md", style, ...rest }) {
   import_react132.default.useEffect(() => {
@@ -10819,7 +10819,7 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
     fontFamily: "var(--font-sans)",
     fontSize: size === "sm" ? 12 : 13,
     fontWeight: "var(--fw-semibold)",
-    color: "var(--label-neutral)",
+    color: "var(--color-semantic-label-neutral)",
     ...style
   }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { style: {
@@ -10832,7 +10832,7 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
       width: bw,
       height: Math.round(h * ((i + 1) / 3)),
       borderRadius: 1,
-      background: i < cfg.bars ? cfg.c : "var(--fill-strong)"
+      background: i < cfg.bars ? cfg.c : "var(--color-semantic-fill-strong)"
     } }, i)) }),
     showLabel && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { children: label || cfg.label })
   ] });
@@ -10842,11 +10842,11 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
 var import_react133 = __toESM(require("react"), 1);
 var import_jsx_runtime131 = require("react/jsx-runtime");
 var TONE = {
-  positive: "var(--color-positive)",
-  cautionary: "var(--color-cautionary)",
-  negative: "var(--color-danger)",
-  signal: "var(--lk-accent-ink)",
-  neutral: "var(--label-alternative)"
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)",
+  signal: "var(--color-semantic-primary-normal)",
+  neutral: "var(--color-semantic-label-alternative)"
 };
 function useDimKeyframes() {
   import_react133.default.useEffect(() => {
@@ -10872,7 +10872,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
         width: "100%",
         boxSizing: "border-box",
         padding: "14px 16px",
-        background: "var(--surface-raised)",
+        background: "var(--color-semantic-background-elevated-normal)",
         border: "var(--component-card-border)",
         borderRadius: "var(--component-card-radius)",
         boxShadow: "var(--component-card-shadow-sm)",
@@ -10886,15 +10886,15 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           height: 38,
           borderRadius: "var(--radius-md)",
           flexShrink: 0,
-          background: "var(--fill-strong)",
+          background: "var(--color-semantic-fill-strong)",
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "var(--label-alternative)"
+          color: "var(--color-semantic-label-alternative)"
         }, children: icon }),
         /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-          (hasChips || ringCaption != null) && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+          (hasChips || ringCaption != null) && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
         ] }),
         ringLabel != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("span", { style: {
           display: "inline-flex",
@@ -10905,7 +10905,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           fontSize: 13,
           fontWeight: "var(--fw-semibold)",
           letterSpacing: 0,
-          color: "var(--label-neutral)",
+          color: "var(--color-semantic-label-neutral)",
           fontVariantNumeric: "tabular-nums"
         }, children: [
           moving ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { "aria-label": direction === "up" ? "\uC0C1\uC2B9 \uC911" : "\uD558\uAC15 \uC911", style: { display: "inline-flex", color: c, animation: "lk-equip-dim 1.5s var(--ease-in-out) infinite" }, children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: direction === "up" ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("path", { d: "M12 19V5M5 12l7-7 7 7" }) : /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("path", { d: "M12 5v14M19 12l-7 7-7-7" }) }) }) : connection != null ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(ConnectionBadge, { status: connection, showLabel: false, size: "sm", style: { flexShrink: 0 } }) : /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: c, flexShrink: 0 } }),
@@ -10998,16 +10998,16 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
           height: size,
           borderRadius: "50%",
           outline: "none",
-          background: "var(--fill-normal)",
-          border: "1px solid var(--border-subtle)",
+          background: "var(--color-semantic-fill-normal)",
+          border: "1px solid var(--color-semantic-line-normal-normal)",
           boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "inset var(--shadow-sm)",
           touchAction: "none",
           cursor: disabled ? "not-allowed" : active ? "grabbing" : "grab",
           opacity: disabled ? 0.5 : 1
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { position: "absolute", left: "50%", top: 10, bottom: 10, width: 1, background: "var(--line-neutral)", transform: "translateX(-0.5px)" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { position: "absolute", top: "50%", left: 10, right: 10, height: 1, background: "var(--line-neutral)", transform: "translateY(-0.5px)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { position: "absolute", left: "50%", top: 10, bottom: 10, width: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateX(-0.5px)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { position: "absolute", top: "50%", left: 10, right: 10, height: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateY(-0.5px)" } }),
           /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: {
             position: "absolute",
             left: "50%",
@@ -11017,7 +11017,7 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
             marginLeft: -knob / 2,
             marginTop: -knob / 2,
             borderRadius: "50%",
-            background: "var(--lk-accent-ink)",
+            background: "var(--color-semantic-primary-normal)",
             boxShadow: "var(--shadow-control)",
             transform: `translate(${pos.x}px, ${pos.y}px)`,
             transition: active ? "none" : "transform var(--dur-base) var(--ease-out)"
@@ -11025,7 +11025,7 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
         ]
       }
     ),
-    label != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: label })
+    label != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: label })
   ] });
 }
 
@@ -11033,16 +11033,16 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
 var import_react135 = __toESM(require("react"), 1);
 var import_jsx_runtime133 = require("react/jsx-runtime");
 var CONN = {
-  online: { c: "var(--color-positive)", bars: 3 },
-  reconnecting: { c: "var(--color-cautionary)", bars: 2 },
-  offline: { c: "var(--label-disable)", bars: 0 }
+  online: { c: "var(--color-semantic-status-positive)", bars: 3 },
+  reconnecting: { c: "var(--color-semantic-status-cautionary)", bars: 2 },
+  offline: { c: "var(--color-semantic-label-disable)", bars: 0 }
 };
 var BAR_H = [5, 8, 12];
 function RobotStatusCard({ name, image, status = "online", battery, mode, selected = false, onClick, style, ...rest }) {
   const hasBat = typeof battery === "number";
   const b = Math.max(0, Math.min(100, battery));
-  const batFill = b <= 20 ? "var(--color-danger)" : b <= 50 ? "var(--color-cautionary)" : "var(--color-positive)";
-  const batText = b <= 20 ? "var(--color-danger-text)" : b <= 50 ? "var(--color-cautionary-strong)" : "var(--color-positive)";
+  const batFill = b <= 20 ? "var(--color-semantic-status-negative)" : b <= 50 ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
+  const batText = b <= 20 ? "var(--color-semantic-status-negative)" : b <= 50 ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
   const conn = CONN[status] || CONN.offline;
   return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { onClick, style: {
     display: "flex",
@@ -11051,8 +11051,8 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
     padding: 16,
     width: "100%",
     boxSizing: "border-box",
-    background: "var(--surface-raised)",
-    border: selected ? "var(--border-thin) solid var(--lk-accent-ink)" : "var(--component-card-border)",
+    background: "var(--color-semantic-background-elevated-normal)",
+    border: selected ? "var(--border-thin) solid var(--color-semantic-primary-normal)" : "var(--component-card-border)",
     borderRadius: "var(--component-card-radius)",
     boxShadow: selected ? "0 0 0 3px var(--focus-ring)" : "var(--component-card-shadow-sm)",
     cursor: onClick ? "pointer" : "default",
@@ -11065,20 +11065,20 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
       borderRadius: "var(--radius-md)",
       flexShrink: 0,
       overflow: "hidden",
-      background: "var(--fill-strong)",
+      background: "var(--color-semantic-fill-strong)",
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }, children: image ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
+    }, children: image ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
     /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
-      mode != null && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--label-normal)", whiteSpace: "nowrap" }, children: mode }),
+      mode != null && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap" }, children: mode }),
       /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { role: "img", title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--fill-strong)" } }, i)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { role: "img", title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--color-semantic-fill-strong)" } }, i)) }),
         hasBat && /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 6 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("span", { style: { position: "relative", width: 24, height: 12, border: "1.5px solid var(--label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("span", { style: { position: "relative", width: 24, height: 12, border: "1.5px solid var(--color-semantic-label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { display: "block", height: "100%", width: `${b}%`, background: batFill, borderRadius: 1 } }),
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--label-alternative)", borderRadius: "0 1px 1px 0" } })
+            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--color-semantic-label-alternative)", borderRadius: "0 1px 1px 0" } })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: batText, fontVariantNumeric: "tabular-nums" }, children: [
             b,
@@ -11131,8 +11131,8 @@ function Switch({
     onChange && onChange(!on);
   };
   const d = normalizedSize === "sm" ? { w: 40, h: 24, k: 18, p: 3, tx: 16 } : { w: 52, h: 32, k: 24, p: 4, tx: 20 };
-  const offBg = platform === "ios" ? "var(--fill-strong)" : "var(--bw-gray-300)";
-  const trackBg = disabledState ? on ? "var(--fill-strong)" : "var(--fill-normal)" : on ? "var(--lk-accent-ink)" : activeHover ? "var(--fill-strong)" : offBg;
+  const offBg = platform === "ios" ? "var(--color-semantic-fill-strong)" : "var(--bw-gray-300)";
+  const trackBg = disabledState ? on ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-fill-normal)" : on ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-strong)" : offBg;
   return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
     "label",
     {
@@ -11148,7 +11148,7 @@ function Switch({
         fontFamily: "var(--font-sans)",
         fontSize: 15,
         letterSpacing: 0,
-        color: disabledState ? "var(--label-disable)" : "var(--label-normal)",
+        color: disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
         ...style
       },
       children: [
@@ -11190,7 +11190,7 @@ function Switch({
                   width: d.k,
                   height: d.k,
                   borderRadius: "50%",
-                  background: disabledState ? "var(--label-disable)" : "var(--text-on-signal)",
+                  background: disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-static-white)",
                   boxShadow: platform === "ios" ? "var(--shadow-sm)" : "var(--shadow-control)",
                   transform: on ? `translateX(${d.tx}px)` : "translateX(0)",
                   transition: "transform var(--dur-base) var(--ease-in-out)"
@@ -11246,13 +11246,13 @@ function TopicNode({ node, depth, onToggle }) {
           borderRadius: "var(--radius-md)",
           boxSizing: "border-box",
           cursor: has ? "pointer" : "default",
-          background: hover ? "var(--surface-subtle)" : "transparent",
+          background: hover ? "var(--color-semantic-background-normal-alternative)" : "transparent",
           textAlign: "left",
           fontFamily: "var(--font-sans)",
           fontSize: 14,
           fontWeight: depth === 0 ? "var(--fw-semibold)" : "var(--fw-medium)",
           lineHeight: "18px",
-          color: depth === 0 ? "var(--label-strong)" : "var(--label-normal)",
+          color: depth === 0 ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-normal)",
           transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
         },
         children: [
@@ -11266,7 +11266,7 @@ function TopicNode({ node, depth, onToggle }) {
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "var(--label-alternative)",
+                color: "var(--color-semantic-label-alternative)",
                 transform: has && open ? "rotate(90deg)" : "none",
                 transition: "transform var(--dur-fast) var(--ease-out)"
               },
@@ -11284,14 +11284,14 @@ function TopicNode({ node, depth, onToggle }) {
                 whiteSpace: "nowrap",
                 fontSize: 12,
                 lineHeight: "18px",
-                color: "var(--label-alternative)",
+                color: "var(--color-semantic-label-alternative)",
                 fontFamily: "var(--font-mono)"
               },
               children: node.type
             }
           ),
           (hasHz || node.subscribable) && /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: [
-            hasHz && /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)("span", { style: { fontSize: 12, lineHeight: "18px", color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
+            hasHz && /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)("span", { style: { fontSize: 12, lineHeight: "18px", color: "var(--color-semantic-label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
               node.hz,
               " Hz"
             ] }),
@@ -11365,8 +11365,8 @@ function ChoiceCard({
   const interactive = !disabled && (onSelect || onClick);
   const resolvedRole = role ?? (isFrame ? onSelect ? multiple ? "checkbox" : "radio" : void 0 : multiple ? "checkbox" : "radio");
   const resolvedTabIndex = disabled ? -1 : tabIndex ?? (resolvedRole || interactive ? 0 : void 0);
-  const choiceBorder = selected ? "var(--color-primary)" : activeHover && !disabled ? "var(--border-strong)" : "var(--border-subtle)";
-  const frameBorder = disabled ? "var(--border-subtle)" : status === "negative" ? "var(--color-danger)" : selected || activeFocus ? "var(--color-primary)" : activeHover ? "var(--border-strong)" : "var(--border-subtle)";
+  const choiceBorder = selected ? "var(--color-semantic-primary-normal)" : activeHover && !disabled ? "var(--color-semantic-line-solid-normal)" : "var(--color-semantic-line-normal-normal)";
+  const frameBorder = disabled ? "var(--color-semantic-line-normal-normal)" : status === "negative" ? "var(--color-semantic-status-negative)" : selected || activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--color-semantic-line-normal-normal)";
   const frameInset = selected || activeFocus || status === "negative" ? 2 : 1;
   const frameShadow = [
     shadowMap[resolvedShadow] && shadowMap[resolvedShadow] !== "none" ? shadowMap[resolvedShadow] : null,
@@ -11413,9 +11413,9 @@ function ChoiceCard({
     display: "block",
     padding: paddingMap[padding] ?? paddingMap.md,
     borderRadius: radiusMap[radius] ?? radiusMap.md,
-    background: disabled ? "var(--fill-normal)" : selected ? "var(--lk-accent-tint-2)" : "var(--surface-raised)",
+    background: disabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--lk-accent-tint-2)" : "var(--color-semantic-background-elevated-normal)",
     boxShadow: frameShadow,
-    color: disabled ? "var(--label-disable)" : "var(--label-normal)",
+    color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
     cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
     outline: "none",
     transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
@@ -11428,8 +11428,8 @@ function ChoiceCard({
     gap: 12,
     padding: 16,
     borderRadius: "var(--radius-xl)",
-    background: disabled ? "var(--fill-normal)" : selected ? "var(--lk-accent-tint)" : "var(--surface-raised)",
-    color: disabled ? "var(--label-disable)" : void 0,
+    background: disabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--lk-accent-tint)" : "var(--color-semantic-background-elevated-normal)",
+    color: disabled ? "var(--color-semantic-label-disable)" : void 0,
     boxShadow: choiceShadow,
     cursor: disabled ? "not-allowed" : "pointer",
     transition: "box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out)",
@@ -11462,7 +11462,7 @@ function ChoiceCard({
           {
             style: {
               flexShrink: 0,
-              color: selected ? "var(--color-accent)" : "var(--label-neutral)",
+              color: selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
               display: "inline-flex"
             },
             children: icon
@@ -11476,7 +11476,7 @@ function ChoiceCard({
                 fontSize: 15,
                 fontWeight: "var(--fw-bold)",
                 letterSpacing: 0,
-                color: "var(--label-strong)",
+                color: "var(--color-semantic-label-strong)",
                 wordBreak: "keep-all"
               },
               children: title
@@ -11489,7 +11489,7 @@ function ChoiceCard({
                 marginTop: 3,
                 fontSize: 13,
                 lineHeight: 1.55,
-                color: "var(--label-alternative)",
+                color: "var(--color-semantic-label-alternative)",
                 wordBreak: "keep-all"
               },
               children: description
@@ -11506,12 +11506,12 @@ function ChoiceCard({
               width: 20,
               height: 20,
               borderRadius: multiple ? "var(--radius-sm)" : "50%",
-              background: selected ? "var(--color-primary)" : "transparent",
-              boxShadow: selected ? "none" : "inset 0 0 0 1.5px var(--line-strong)",
+              background: selected ? "var(--color-semantic-primary-normal)" : "transparent",
+              boxShadow: selected ? "none" : "inset 0 0 0 1.5px var(--color-semantic-line-solid-normal)",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "var(--text-on-signal)",
+              color: "var(--color-semantic-static-white)",
               transition: "background var(--dur-fast) var(--ease-out)"
             },
             children: selected && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
@@ -11549,7 +11549,7 @@ function pillChipStyle(active, disabled, size = "md") {
     height: sm ? "var(--component-button-height-sm)" : "var(--component-filter-chip-height)",
     padding: sm ? "0 12px" : "0 15px",
     background: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-    border: `1px solid ${active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+    border: `1px solid ${active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
     borderRadius: "var(--radius-pill)",
     cursor: disabled ? "not-allowed" : "pointer",
     opacity: disabled ? 0.5 : 1,
@@ -11557,7 +11557,7 @@ function pillChipStyle(active, disabled, size = "md") {
     fontSize: sm ? "var(--label2-size)" : "var(--label1-size)",
     fontWeight: "var(--fw-semibold)",
     letterSpacing: 0,
-    color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
+    color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
     transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
     whiteSpace: "nowrap"
   };
@@ -11589,13 +11589,13 @@ function FilterChip({
       style: {
         ...pillChipStyle(active, disabled, size),
         gap: size === "sm" ? 6 : 7,
-        ...!active && hover && !disabled ? { background: "var(--fill-normal)" } : null,
+        ...!active && hover && !disabled ? { background: "var(--color-semantic-fill-normal)" } : null,
         ...style
       },
       ...rest,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("span", { children }),
-        count != null && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("span", { style: { fontWeight: "var(--fw-bold)", color: active ? "var(--lk-accent-ink)" : "var(--label-alternative)" }, children: count }),
+        count != null && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("span", { style: { fontWeight: "var(--fw-bold)", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)" }, children: count }),
         caret && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("path", { d: "m6 9 6 6 6-6" }) })
       ]
     }
@@ -11693,7 +11693,7 @@ function SegmentedControl({
         justifySelf: fill ? void 0 : "start",
         padding: outlined ? 0 : trackPad,
         gap: outlined ? 0 : 2,
-        background: outlined ? "var(--bw-white)" : "var(--fill-normal)",
+        background: outlined ? "var(--bw-white)" : "var(--color-semantic-fill-normal)",
         border: outlined ? "1px solid var(--bw-border)" : "none",
         borderRadius: trackRadius,
         overflow: "hidden",
@@ -11728,8 +11728,8 @@ function SegmentedControl({
               fontSize: fs,
               fontWeight: active ? "var(--fw-semibold)" : "var(--fw-medium)",
               letterSpacing: 0,
-              color: disabledState || o.disabled ? "var(--label-disable)" : active ? "var(--lk-accent-ink)" : activeFocus ? "var(--label-normal)" : "var(--label-alternative)",
-              background: active ? outlined ? "var(--lk-accent-tint-2)" : "var(--bw-white)" : activeHover || activeFocus ? "var(--fill-normal)" : "transparent",
+              color: disabledState || o.disabled ? "var(--color-semantic-label-disable)" : active ? "var(--color-semantic-primary-normal)" : activeFocus ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)",
+              background: active ? outlined ? "var(--lk-accent-tint-2)" : "var(--bw-white)" : activeHover || activeFocus ? "var(--color-semantic-fill-normal)" : "transparent",
               borderRadius: outlined ? 0 : segmentRadius,
               borderLeft: outlined && index > 0 ? "1px solid var(--bw-border)" : "none",
               boxShadow: [
@@ -11786,7 +11786,7 @@ function Stepper({
         disabled: off,
         onClick: () => set(val + (isMinus ? -step : step)),
         onMouseEnter: (e) => {
-          if (!off) e.currentTarget.style.background = "var(--fill-normal)";
+          if (!off) e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
         },
         onMouseLeave: (e) => {
           e.currentTarget.style.background = "transparent";
@@ -11800,7 +11800,7 @@ function Stepper({
           border: "none",
           background: "transparent",
           cursor: off ? "not-allowed" : "pointer",
-          color: off ? "var(--label-disable)" : "var(--label-normal)",
+          color: off ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
           borderRadius: "var(--radius-md)",
           transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
         },
@@ -11838,7 +11838,7 @@ function Stepper({
               fontSize: size === "sm" ? 15 : 16,
               fontWeight: "var(--fw-bold)",
               letterSpacing: 0,
-              color: "var(--label-normal)",
+              color: "var(--color-semantic-label-normal)",
               fontVariantNumeric: "tabular-nums"
             },
             children: val
@@ -11924,8 +11924,8 @@ function ThemeToggle({
         height: h,
         padding: 3,
         boxSizing: "border-box",
-        background: "var(--fill-normal)",
-        border: "1px solid var(--border-subtle)",
+        background: "var(--color-semantic-fill-normal)",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
         borderRadius: "var(--radius-pill)",
         ...style
       },
@@ -11951,9 +11951,9 @@ function ThemeToggle({
               border: "none",
               borderRadius: "var(--radius-pill)",
               cursor: "pointer",
-              background: on ? "var(--surface-card)" : "transparent",
+              background: on ? "var(--color-semantic-background-elevated-normal)" : "transparent",
               boxShadow: on ? "var(--shadow-xs)" : "none",
-              color: on ? "var(--accent-text)" : "var(--label-alternative)",
+              color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
               fontFamily: "var(--font-sans)",
               fontSize: fs,
               fontWeight: "var(--fw-bold)",
@@ -12014,7 +12014,7 @@ function ToggleButton({
         width: iconOnly ? h : void 0,
         padding: iconOnly ? 0 : "0 16px",
         background: on ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-        border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+        border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
         borderRadius: "var(--radius-md)",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.5 : 1,
@@ -12022,7 +12022,7 @@ function ToggleButton({
         fontSize: 15,
         fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
-        color: on ? "var(--lk-accent-ink)" : "var(--label-neutral)",
+        color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
         transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
         whiteSpace: "nowrap",
         ...style
@@ -12040,7 +12040,7 @@ function ToggleButton({
 var import_react145 = __toESM(require("react"), 1);
 var import_jsx_runtime143 = require("react/jsx-runtime");
 var TONES4 = {
-  info: { c: "var(--lk-accent-ink)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
+  info: { c: "var(--color-semantic-primary-normal)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
   success: { c: "var(--bw-green)", d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
   warning: { c: "var(--bw-amber)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
   error: { c: "var(--bw-red)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' }
@@ -12056,8 +12056,8 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
         alignItems: "flex-start",
         gap: 12,
         padding: "14px 16px",
-        background: `color-mix(in srgb, ${t.c} 9%, var(--surface-card))`,
-        border: `1px solid color-mix(in srgb, ${t.c} 26%, var(--surface-card))`,
+        background: `color-mix(in srgb, ${t.c} 9%, var(--color-semantic-background-elevated-normal))`,
+        border: `1px solid color-mix(in srgb, ${t.c} 26%, var(--color-semantic-background-elevated-normal))`,
         borderRadius: "var(--radius-lg)",
         fontFamily: "var(--font-sans)",
         ...style
@@ -12066,11 +12066,11 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, marginTop: 1 }, dangerouslySetInnerHTML: { __html: t.d } }),
         /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] }),
         action != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { flexShrink: 0 }, children: action }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
       ]
     }
   );
@@ -12079,7 +12079,7 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
 // components/status/Callout.jsx
 var import_react146 = __toESM(require("react"), 1);
 var import_jsx_runtime144 = require("react/jsx-runtime");
-var CT = { signal: "var(--lk-accent-ink)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)", navy: "var(--bw-ink)" };
+var CT = { signal: "var(--color-semantic-primary-normal)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)", navy: "var(--bw-ink)" };
 var ICON_SIZE = 20;
 function normalizeIcon(icon) {
   if (!import_react146.default.isValidElement(icon)) return icon;
@@ -12100,8 +12100,8 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
         display: "flex",
         gap: 14,
         padding: "16px 18px",
-        background: `color-mix(in srgb, ${c} 7%, var(--surface-card))`,
-        border: `1px solid color-mix(in srgb, ${c} 32%, var(--border-subtle))`,
+        background: `color-mix(in srgb, ${c} 7%, var(--color-semantic-background-elevated-normal))`,
+        border: `1px solid color-mix(in srgb, ${c} 32%, var(--color-semantic-line-normal-normal))`,
         borderRadius: "var(--radius-lg)",
         boxShadow: `inset 0 1px 0 color-mix(in srgb, ${c} 12%, transparent)`,
         fontFamily: "var(--font-sans)",
@@ -12127,8 +12127,8 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--label-neutral)", wordBreak: "keep-all" }, children })
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -12148,7 +12148,7 @@ function useKeyframes3(id, css) {
   }, [id, css]);
 }
 var TONES5 = {
-  signal: "var(--lk-accent-ink)",
+  signal: "var(--color-semantic-primary-normal)",
   positive: "var(--bw-green)",
   cautionary: "var(--bw-amber)",
   negative: "var(--bw-red)"
@@ -12193,12 +12193,12 @@ function CircularProgress({
             height: size,
             style: { transform: "rotate(-90deg)", transformOrigin: "center", animation: indeterminate ? "lk-circular-spin 0.9s linear infinite" : void 0 },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness }),
+              /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
               /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: circ, strokeDashoffset: dashOffset, style: { transition: indeterminate ? void 0 : "stroke-dashoffset var(--dur-base) var(--ease-out)" } })
             ]
           }
         ),
-        showValue && !indeterminate && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: Math.round(size * 0.28), fontWeight: "var(--fw-bold)", color: "var(--label-normal)", fontVariantNumeric: "tabular-nums" }, children: Math.round(pct) })
+        showValue && !indeterminate && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: Math.round(size * 0.28), fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: Math.round(pct) })
       ]
     }
   );
@@ -12233,11 +12233,11 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
           height: 56,
           borderRadius: "var(--radius-xl)",
           background: "var(--lk-accent-tint)",
-          color: "var(--lk-accent-ink)",
+          color: "var(--color-semantic-primary-normal)",
           marginBottom: 12
         }, children: icon }),
-        title != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
-        description != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
+        title != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+        description != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
         action != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { marginTop: 14 }, children: action })
       ]
     }
@@ -12260,7 +12260,7 @@ function useKeyframes4(id, css) {
   }, [id, css]);
 }
 var TONES6 = {
-  signal: "var(--lk-accent-ink)",
+  signal: "var(--color-semantic-primary-normal)",
   positive: "var(--bw-green)",
   cautionary: "var(--bw-amber)",
   negative: "var(--bw-red)"
@@ -12272,9 +12272,9 @@ function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "sign
   const pct = Math.max(0, Math.min(100, value / max * 100));
   const ariaLabel = typeof label === "string" ? label : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
+    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { children: label }),
-      showValue && /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("span", { style: { color: "var(--label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
+      showValue && /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("span", { style: { color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
         Math.round(pct),
         "%"
       ] })
@@ -12289,7 +12289,7 @@ function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "sign
         "aria-valuemin": 0,
         "aria-valuemax": 100,
         "aria-valuetext": indeterminate ? "loading" : `${Math.round(pct)}%`,
-        style: { position: "relative", height: h, borderRadius: "var(--radius-pill)", background: "var(--fill-strong)", overflow: "hidden" },
+        style: { position: "relative", height: h, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)", overflow: "hidden" },
         children: indeterminate ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { "data-lds-progress-indeterminate": true, style: { position: "absolute", top: 0, bottom: 0, left: 0, width: "45%", background: c, borderRadius: "var(--radius-pill)", animation: "lk-prog-indet 1.3s var(--ease-in-out) infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { style: { position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out)" } })
       }
     )
@@ -12300,16 +12300,16 @@ function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "sign
 var import_jsx_runtime148 = require("react/jsx-runtime");
 function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue = true, style, ...rest }) {
   const pct = Math.max(0, Math.min(100, value / max * 100));
-  let c = "var(--lk-accent-ink)";
+  let c = "var(--color-semantic-primary-normal)";
   if (thresholds) {
     if (pct <= thresholds.low) c = "var(--bw-red)";
     else if (pct <= thresholds.high) c = "var(--bw-amber)";
     else c = "var(--bw-green)";
   }
   return /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
+    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("span", { children: label }),
-      showValue && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--label-alternative)" }, children: [
+      showValue && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--color-semantic-label-alternative)" }, children: [
         value,
         "/",
         max
@@ -12331,8 +12331,8 @@ function ViewerToolbar({ children, orientation = "vertical", style, ...rest }) {
     flexDirection: orientation === "vertical" ? "column" : "row",
     gap: 2,
     padding: 4,
-    background: "var(--surface-raised)",
-    border: "1px solid var(--border-subtle)",
+    background: "var(--color-semantic-background-elevated-normal)",
+    border: "1px solid var(--color-semantic-line-normal-normal)",
     borderRadius: "var(--radius-md)",
     boxShadow: "var(--shadow-md)",
     ...style
@@ -12355,7 +12355,7 @@ function ViewerToolbarButton({ children, active = false, label, style, ...rest }
         borderRadius: "var(--radius-sm)",
         cursor: "pointer",
         background: active ? "var(--lk-accent-tint)" : "transparent",
-        color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
+        color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
         transition: "background var(--dur-fast) var(--ease-out)",
         ...style
       },
@@ -12403,12 +12403,12 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
         height: "100%",
         minHeight: 200,
         borderRadius: "var(--radius-lg)",
-        border: "1px solid var(--border-subtle)",
-        background: "var(--surface-sunken)",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
+        background: "var(--color-semantic-background-normal-alternative)",
         cursor: "grab",
         touchAction: "none",
         fontFamily: "var(--font-sans)",
-        backgroundImage: grid ? "linear-gradient(var(--line-neutral) 1px,transparent 1px),linear-gradient(90deg,var(--line-neutral) 1px,transparent 1px)" : "none",
+        backgroundImage: grid ? "linear-gradient(var(--color-semantic-line-normal-neutral) 1px,transparent 1px),linear-gradient(90deg,var(--color-semantic-line-normal-neutral) 1px,transparent 1px)" : "none",
         backgroundSize: grid ? `${24 * t.z}px ${24 * t.z}px` : void 0,
         backgroundPosition: grid ? `${t.x}px ${t.y}px` : void 0,
         ...style
@@ -12421,7 +12421,7 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
           /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoom(0.8), children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Icon, { name: "minus", size: 18 }) }),
           /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ViewerToolbarButton, { label: "\uCD08\uAE30\uD654", onClick: () => setT({ x: 0, y: 0, z: 1 }), children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Icon, { name: "reset", size: 18 }) })
         ] }),
-        controls && /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: "var(--fw-bold)", color: "var(--label-alternative)", background: "var(--surface-raised)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
+        controls && /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-alternative)", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
           Math.round(t.z * 100),
           "%"
         ] })
@@ -12441,18 +12441,18 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
     minHeight: 220,
     borderRadius: "var(--radius-lg)",
     overflow: "hidden",
-    background: "var(--surface-inverse)",
-    border: "1px solid var(--border-subtle)",
+    background: "var(--color-semantic-inverse-background)",
+    border: "1px solid var(--color-semantic-line-normal-normal)",
     fontFamily: "var(--font-sans)",
     ...style
   }, ...rest, children: [
     children,
     (title != null || badges != null) && /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 8, pointerEvents: "none" }, children: [
-      title != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-extra)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--text-on-inverse)", opacity: 0.9 }, children: title }),
+      title != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-extra)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-inverse-label)", opacity: 0.9 }, children: title }),
       badges
     ] }),
     toolbar != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", right: 12, top: 12 }, children: toolbar }),
-    loading && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "var(--scrim-dark)", color: "var(--text-on-inverse)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: "\uBD88\uB7EC\uC624\uB294 \uC911\u2026" }),
+    loading && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "var(--scrim-dark)", color: "var(--color-semantic-inverse-label)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: "\uBD88\uB7EC\uC624\uB294 \uC911\u2026" }),
     !loading && empty != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--inverse-label-alternative)", fontSize: 13 }, children: empty })
   ] });
 }
@@ -12460,28 +12460,28 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
 // components/viz/TelemetryGauge.jsx
 var import_react154 = __toESM(require("react"), 1);
 var import_jsx_runtime152 = require("react/jsx-runtime");
-var TONE2 = { signal: "var(--lk-accent-ink)", positive: "var(--color-positive)", cautionary: "var(--color-cautionary)", negative: "var(--color-danger)" };
+var TONE2 = { signal: "var(--color-semantic-primary-normal)", positive: "var(--color-semantic-status-positive)", cautionary: "var(--color-semantic-status-cautionary)", negative: "var(--color-semantic-status-negative)" };
 function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size = 120, thickness = 10, thresholds, tone, style, ...rest }) {
   const pct = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
-  let c = "var(--lk-accent-ink)";
+  let c = "var(--color-semantic-primary-normal)";
   if (tone) c = TONE2[tone] || c;
   else if (thresholds) {
     const p = pct * 100;
-    c = p <= thresholds.low ? "var(--color-danger)" : p <= thresholds.high ? "var(--color-cautionary)" : "var(--color-positive)";
+    c = p <= thresholds.low ? "var(--color-semantic-status-negative)" : p <= thresholds.high ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
   }
   const r = (size - thickness) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r, arc = 0.75, dash = C * arc;
   return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: { position: "relative", width: size, height: size }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, style: { transform: "rotate(135deg)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("circle", { cx, cy, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
+        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("circle", { cx, cy, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
         /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("circle", { cx, cy, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash * pct} ${C}`, style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" } })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: size * 0.24, fontWeight: "var(--fw-extra)", color: "var(--label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
-        unit && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: size * 0.11, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)", marginTop: 2 }, children: unit })
+        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: size * 0.24, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
+        unit && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: size * 0.11, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", marginTop: 2 }, children: unit })
       ] })
     ] }),
-    label != null && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)", wordBreak: "keep-all", textAlign: "center" }, children: label })
+    label != null && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all", textAlign: "center" }, children: label })
   ] });
 }
 
@@ -12489,11 +12489,11 @@ function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size 
 var import_react155 = __toESM(require("react"), 1);
 var import_jsx_runtime153 = require("react/jsx-runtime");
 var TONE3 = {
-  neutral: "var(--label-neutral)",
-  signal: "var(--lk-accent-ink)",
-  positive: "var(--color-positive)",
-  cautionary: "var(--color-cautionary-strong)",
-  negative: "var(--color-danger-text)"
+  neutral: "var(--color-semantic-label-neutral)",
+  signal: "var(--color-semantic-primary-normal)",
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)"
 };
 function TelemetryValue({
   label,
@@ -12510,7 +12510,7 @@ function TelemetryValue({
   style,
   ...rest
 }) {
-  const color = stale ? "var(--label-assistive)" : TONE3[tone] || TONE3.neutral;
+  const color = stale ? "var(--color-semantic-label-assistive)" : TONE3[tone] || TONE3.neutral;
   const valueSize = size === "sm" ? 18 : 21;
   return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
     "div",
@@ -12521,18 +12521,18 @@ function TelemetryValue({
         justifyItems: align === "end" ? "end" : "start",
         minWidth: 0,
         fontFamily: "var(--font-sans)",
-        color: "var(--label-normal)",
+        color: "var(--color-semantic-label-normal)",
         ...style
       },
       ...rest,
       children: [
-        label != null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: "var(--label-alternative)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)" }, children: label }),
+        label != null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)" }, children: label }),
         /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { style: { display: "inline-flex", alignItems: "baseline", gap: 5, minWidth: 0 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("strong", { style: { color, fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums" }, children: value }),
-          unit != null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: stale ? "var(--label-assistive)" : "var(--label-alternative)", fontSize: size === "sm" ? 12 : 13, fontWeight: "var(--fw-bold)" }, children: unit }),
-          stale && showStaleBadge && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { alignSelf: "center", padding: "2px 6px", borderRadius: "var(--radius-pill)", background: "var(--fill-normal)", color: "var(--label-alternative)", fontSize: 10.5, lineHeight: 1.2, fontWeight: "var(--fw-bold)" }, children: staleLabel })
+          unit != null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: stale ? "var(--color-semantic-label-assistive)" : "var(--color-semantic-label-alternative)", fontSize: size === "sm" ? 12 : 13, fontWeight: "var(--fw-bold)" }, children: unit }),
+          stale && showStaleBadge && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { alignSelf: "center", padding: "2px 6px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontSize: 10.5, lineHeight: 1.2, fontWeight: "var(--fw-bold)" }, children: staleLabel })
         ] }),
-        (timestamp != null || helper != null) && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: "var(--label-assistive)", fontSize: 11.5, lineHeight: 1.35, fontVariantNumeric: "tabular-nums" }, children: helper != null ? helper : timestamp })
+        (timestamp != null || helper != null) && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: "var(--color-semantic-label-assistive)", fontSize: 11.5, lineHeight: 1.35, fontVariantNumeric: "tabular-nums" }, children: helper != null ? helper : timestamp })
       ]
     }
   );
@@ -12562,8 +12562,8 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
         aspectRatio,
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
-        background: "var(--surface-inverse)",
-        border: "1px solid var(--border-subtle)",
+        background: "var(--color-semantic-inverse-background)",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
         fontFamily: "var(--font-sans)",
         ...style
       },
@@ -12585,7 +12585,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
               width: 6,
               height: 6,
               borderRadius: "50%",
-              background: "var(--color-danger)",
+              background: "var(--color-semantic-status-negative)",
               flexShrink: 0,
               animation: "lk-stream-pulse 1.4s var(--ease-in-out) infinite"
             } }),
@@ -12594,7 +12594,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
               fontWeight: "var(--fw-extra)",
               letterSpacing: "1px",
               textTransform: "uppercase",
-              color: "var(--text-on-inverse)",
+              color: "var(--color-semantic-inverse-label)",
               opacity: 0.9
             }, children: label })
           ] })
@@ -12606,7 +12606,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
           alignItems: "center",
           justifyContent: "center",
           background: "var(--scrim-dark)"
-        }, children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid var(--inverse-line-strong)", borderTopColor: "var(--lk-accent)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
+        }, children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid var(--inverse-line-strong)", borderTopColor: "var(--color-semantic-primary-normal)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
         status === "disconnected" && /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)("div", { style: {
           position: "absolute",
           inset: 0,

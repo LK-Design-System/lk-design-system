@@ -38,12 +38,12 @@ export const AnchoredOverlays = {
       <Popover trigger={<Button variant="ghost">팝오버</Button>}>
         <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
           <strong>운영 설정</strong>
-          <span style={{ color: 'var(--label-neutral)', fontSize: 13 }}>앵커 기준으로 열리는 보조 패널입니다.</span>
+          <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 13 }}>앵커 기준으로 열리는 보조 패널입니다.</span>
         </div>
       </Popover>
       <HoverCard trigger={<Button variant="ghost">호버 카드</Button>}>
         <strong>문서 A</strong>
-        <p style={{ margin: '6px 0 0', color: 'var(--label-neutral)' }}>검토 86%, 초안 상태</p>
+        <p style={{ margin: '6px 0 0', color: 'var(--color-semantic-label-neutral)' }}>검토 86%, 초안 상태</p>
       </HoverCard>
     </main>
   ),

@@ -84,13 +84,13 @@ export function Category({
         const colors = alternative
           ? {
               bg: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-              fg: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
-              border: active ? "var(--lk-accent-ink)" : "var(--bw-border)",
+              fg: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
+              border: active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)",
             }
           : {
-              bg: active ? "var(--label-normal)" : "var(--bw-white)",
-              fg: active ? "var(--text-on-inverse)" : "var(--label-neutral)",
-              border: active ? "var(--label-normal)" : "var(--bw-border)",
+              bg: active ? "var(--color-semantic-label-normal)" : "var(--bw-white)",
+              fg: active ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-neutral)",
+              border: active ? "var(--color-semantic-label-normal)" : "var(--bw-border)",
             };
 
         return (

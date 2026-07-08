@@ -5,7 +5,7 @@ function usePlaceholderStyle() {
     if (typeof document === 'undefined' || document.getElementById('lk-field-ph')) return;
     const el = document.createElement('style');
     el.id = 'lk-field-ph';
-    el.textContent = '[data-lds-field]::placeholder{color:var(--label-assistive);opacity:1}';
+    el.textContent = '[data-lds-field]::placeholder{color:var(--color-semantic-label-assistive);opacity:1}';
     document.head.appendChild(el);
   }, []);
 }
@@ -45,7 +45,7 @@ export function Textarea({
   const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
   const isInvalid = invalid || status === 'negative' || error != null;
   usePlaceholderStyle();
-  const ring = disabled ? 'var(--line-neutral)' : isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-positive)' : activeFocus ? 'var(--lk-accent-ink)' : activeHover ? 'var(--border-strong)' : 'var(--bw-border)';
+  const ring = disabled ? 'var(--color-semantic-line-normal-neutral)' : isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--bw-border)';
   const minHeight = normalizedSize === 'sm' ? 96 : normalizedSize === 'lg' ? 160 : 120;
   const resizeMode = resize === 'fixed' ? 'none' : resize === 'limit' ? 'vertical' : 'vertical';
   return (
@@ -69,7 +69,7 @@ export function Textarea({
         onMouseLeave={(e) => { setHover(false); rest.onMouseLeave && rest.onMouseLeave(e); }}
         style={{
           width: '100%', resize: resizeMode, minHeight, maxHeight: resize === 'limit' ? minHeight * 2 : undefined, padding: 'var(--space-3)',
-          background: disabled ? 'var(--fill-normal)' : 'var(--bw-white)', color: disabled ? 'var(--label-disable)' : 'var(--bw-ink)',
+          background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--bw-white)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--bw-ink)',
           border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
           boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--focus-ring)' : 'none',
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
@@ -78,7 +78,7 @@ export function Textarea({
         }}
       />
       {message != null && (
-        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
+        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-label-alternative)' }}>
           {message}
         </span>
       )}

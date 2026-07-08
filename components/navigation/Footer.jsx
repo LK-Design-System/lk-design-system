@@ -6,7 +6,7 @@ import React from 'react';
  * location rows (HQ · R&D · factory), and a copyright line. Defaults carry the
  * real LK company data, so a bare `<Footer />` produces the standard footer.
  * White-alpha text is fixed (not themed) so the band reads the same in
- * both themes; the surface uses `--surface-inverse` so dark mode lifts it off
+ * both themes; the surface uses `--color-semantic-inverse-background` so dark mode lifts it off
  * the page like the rest of the system.
  * Extensions beyond the live site (all opt-in): `columns` link columns +
  * `brand` (marketing growth), `links` policy row, `compact` one-line app
@@ -61,11 +61,11 @@ export function Footer({
 
   if (compact) {
     return (
-      <footer style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px 24px', flexWrap: 'wrap', padding: '14px 2px', borderTop: '1px solid var(--border-subtle)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-        <span style={{ fontSize: 12.5, letterSpacing: 0, color: 'var(--label-assistive)' }}>{copyright}</span>
+      <footer style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px 24px', flexWrap: 'wrap', padding: '14px 2px', borderTop: '1px solid var(--color-semantic-line-normal-normal)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+        <span style={{ fontSize: 12.5, letterSpacing: 0, color: 'var(--color-semantic-label-assistive)' }}>{copyright}</span>
         {links.length > 0 && (
           <span style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-            {links.map((l, i) => linkEl('c' + i, l, 'var(--label-alternative)', 'var(--label-normal)', 12.5))}
+            {links.map((l, i) => linkEl('c' + i, l, 'var(--color-semantic-label-alternative)', 'var(--color-semantic-label-normal)', 12.5))}
           </span>
         )}
       </footer>
@@ -83,7 +83,7 @@ export function Footer({
   );
 
   return (
-    <footer style={{ background: 'var(--surface-inverse)', padding: '32px 0 40px', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+    <footer style={{ background: 'var(--color-semantic-inverse-background)', padding: '32px 0 40px', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {backToTop && <BackToTopButton />}
       <div style={{ maxWidth, margin: '0 auto', padding: '0 32px', boxSizing: 'border-box' }}>
         {(brand != null || columns.length > 0) && (
@@ -92,7 +92,7 @@ export function Footer({
               {brand != null && <div style={{ flex: '1 1 240px', minWidth: 220 }}>{brand}</div>}
               {columns.map((col, ci) => (
                 <nav key={ci} aria-label={typeof col.heading === 'string' ? col.heading : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 11, minWidth: 108 }}>
-                  {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: 'var(--text-on-inverse)', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
+                  {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: 'var(--color-semantic-inverse-label)', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
                   {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'var(--inverse-label-alternative)', 'var(--inverse-label-strong)', 13.5))}
                 </nav>
               ))}

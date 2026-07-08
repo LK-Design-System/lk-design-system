@@ -14,8 +14,8 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   letter-spacing: var(--ls-body);
-  color: var(--text-body);
-  background: var(--color-bg);
+  color: var(--color-semantic-label-normal);
+  background: var(--color-semantic-background-normal-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -24,7 +24,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-weight: var(--fw-bold);
-  color: var(--text-strong);
+  color: var(--color-semantic-label-strong);
   /* Korean: break between words, balance ragged edges */
   word-break: keep-all;
   text-wrap: balance;
@@ -38,7 +38,7 @@ h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); letter-spacing: var(--l
 
 p { margin: 0; text-wrap: pretty; }
 
-a { color: var(--text-link); text-decoration: none; transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
+a { color: var(--color-semantic-primary-normal); text-decoration: none; transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
 a:hover { opacity: 0.8; }
 
 img { display: block; max-width: 100%; }
@@ -55,13 +55,13 @@ img { display: block; max-width: 100%; }
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-overline);
   text-transform: uppercase;
-  color: var(--label-alternative);       /* muted — default tone */
+  color: var(--color-semantic-label-alternative);       /* muted — default tone */
 }
-.lk-overline--signal { color: var(--accent-text); }   /* brand signal */
-.lk-overline--ink    { color: var(--label-strong); }  /* max contrast  */
+.lk-overline--signal { color: var(--color-semantic-primary-normal); }   /* brand signal */
+.lk-overline--ink    { color: var(--color-semantic-label-strong); }  /* max contrast  */
 /* On a dark surface inside a light theme (tokens don't flip): */
 .lk-overline--on-dark                      { color: rgba(255,255,255,0.60); }
-.lk-overline--on-dark.lk-overline--signal  { color: var(--lk-accent); }
+.lk-overline--on-dark.lk-overline--signal  { color: var(--color-semantic-primary-normal); }
 .lk-overline--on-dark.lk-overline--ink     { color: #fff; }
 
 /* Centred page container + narrow reading band. */

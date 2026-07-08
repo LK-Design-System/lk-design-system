@@ -43,7 +43,7 @@ function bubbleOffset(placement, align) {
 }
 
 function arrowStyle(placement, arrowHalf, arrowHeight) {
-  const bg = "var(--surface-inverse)";
+  const bg = "var(--color-semantic-inverse-background)";
   if (placement === "bottom") {
     return {
       bottom: "calc(100% - 1px)",
@@ -136,8 +136,8 @@ export function Tooltip({
           alignItems: "center",
           gap: compact ? 6 : 8,
           padding: compact ? "5px 8px" : "8px 12px",
-          background: "var(--surface-inverse)",
-          color: "var(--text-on-inverse)",
+          background: "var(--color-semantic-inverse-background)",
+          color: "var(--color-semantic-inverse-label)",
           fontFamily: "var(--font-sans)",
           fontSize: compact ? 11.5 : "var(--label1-size)",
           fontWeight: "var(--fw-semibold)",

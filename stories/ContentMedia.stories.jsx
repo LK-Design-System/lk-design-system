@@ -36,7 +36,7 @@ export const MediaThumbnails = {
         <Thumbnail ratio="4/5" radius={false} border overlay={<ContentBadge variant="outlined">NO RADIUS</ContentBadge>} overlayAlign="bottom-left" />
       </section>
       <section style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 560 }}>
-        <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-strong)' }}>미디어 캐러셀</h3>
+        <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>미디어 캐러셀</h3>
         <Carousel
           slides={[
             <Thumbnail key="live" ratio="16/9" radius={false} overlay={<ContentBadge color="accent">LIVE</ContentBadge>} overlayAlign="top-right" />,

@@ -18,7 +18,7 @@ export function ColorSwatch({ colors = [], value, defaultValue, onChange, size =
         return (
           <button
             key={c} type="button" aria-label={c} onClick={() => pick(c)}
-            style={{ width: size, height: size, borderRadius: radius, background: c, cursor: 'pointer', padding: 0, border: '2px solid var(--bw-white)', boxShadow: on ? '0 0 0 2px var(--lk-accent-ink)' : 'inset 0 0 0 1px var(--line-normal)', transition: 'box-shadow var(--dur-fast) var(--ease-out)' }}
+            style={{ width: size, height: size, borderRadius: radius, background: c, cursor: 'pointer', padding: 0, border: '2px solid var(--bw-white)', boxShadow: on ? '0 0 0 2px var(--color-semantic-primary-normal)' : 'inset 0 0 0 1px var(--color-semantic-line-normal-normal)', transition: 'box-shadow var(--dur-fast) var(--ease-out)' }}
           />
         );
       })}

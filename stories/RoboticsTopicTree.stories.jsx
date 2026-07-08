@@ -29,7 +29,7 @@ const topicNodes = [
 export const TopicTreePattern = {
   name: '토픽 트리',
   render: () => (
-    <main style={{ maxWidth: 520, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', padding: 'var(--space-2)' }}>
+    <main style={{ maxWidth: 520, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)', padding: 'var(--space-2)' }}>
       <TopicTree nodes={topicNodes} />
     </main>
   ),

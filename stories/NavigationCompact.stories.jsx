@@ -20,7 +20,7 @@ export default meta;
 function Section({ title, children }) {
   return (
     <section style={{ display: 'grid', gap: 12 }}>
-      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-normal)' }}>{title}</h3>
+      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-normal)' }}>{title}</h3>
       {children}
     </section>
   );

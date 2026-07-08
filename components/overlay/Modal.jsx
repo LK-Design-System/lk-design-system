@@ -29,15 +29,15 @@ export function Modal({ open = false, title, children, footer, onClose, width = 
       >
         {(title != null || onClose) && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 24px', borderBottom: '1px solid var(--bw-border)' }}>
-            <div style={{ fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-normal)' }}>{title}</div>
+            <div style={{ fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</div>
             {onClose && (
-              <button type="button" aria-label="close" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--label-assistive)' }}>
+              <button type="button" aria-label="close" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
               </button>
             )}
           </div>
         )}
-        <div style={{ padding: '20px 24px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
+        <div style={{ padding: '20px 24px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         {footer != null && (
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, padding: '16px 24px', borderTop: '1px solid var(--bw-border)' }}>{footer}</div>
         )}

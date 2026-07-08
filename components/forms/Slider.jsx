@@ -6,8 +6,8 @@ function useSliderStyles() {
     const el = document.createElement('style');
     el.id = 'lk-slider-css';
     el.textContent = `
-input.lk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;margin-top:0;}
-input.lk-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--surface-raised);border:2px solid var(--lk-accent-ink);box-shadow:var(--shadow-control);cursor:pointer;}
+input.lk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;margin-top:0;}
+input.lk-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;}
 input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--bw-gray-300);cursor:not-allowed;}`;
     document.head.appendChild(el);
   }, []);
@@ -35,11 +35,11 @@ export function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, 
         style={{
           flex: 1, WebkitAppearance: 'none', appearance: 'none', height: 6, borderRadius: 'var(--radius-pill)', outline: 'none',
           cursor: disabled ? 'not-allowed' : 'pointer',
-          background: `linear-gradient(to right, var(--lk-accent-ink) 0%, var(--lk-accent-ink) ${pct}%, var(--fill-strong) ${pct}%, var(--fill-strong) 100%)`,
+          background: `linear-gradient(to right, var(--color-semantic-primary-normal) 0%, var(--color-semantic-primary-normal) ${pct}%, var(--color-semantic-fill-strong) ${pct}%, var(--color-semantic-fill-strong) 100%)`,
         }}
         {...rest}
       />
-      {showValue && <span style={{ minWidth: 36, textAlign: 'right', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 'var(--fw-bold)', color: 'var(--label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{val}</span>}
+      {showValue && <span style={{ minWidth: 36, textAlign: 'right', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{val}</span>}
     </div>
   );
 }

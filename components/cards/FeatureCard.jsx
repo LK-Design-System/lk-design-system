@@ -1,10 +1,10 @@
 import React from 'react';
 
 const ICON_TONES = {
-  signal: { fg: 'var(--lk-accent-ink)', bg: 'var(--lk-accent-tint)' },     // teal tile (default)
-  steel:  { fg: 'var(--color-positive-strong)', bg: 'var(--status-positive-tint)' },
-  amber:  { fg: 'var(--color-cautionary-strong)', bg: 'var(--status-cautionary-tint)' },
-  navy:   { fg: 'var(--bw-ink)', bg: 'var(--fill-strong)' },
+  signal: { fg: 'var(--color-semantic-primary-normal)', bg: 'var(--lk-accent-tint)' },     // teal tile (default)
+  steel:  { fg: 'var(--color-semantic-status-positive)', bg: 'var(--status-positive-tint)' },
+  amber:  { fg: 'var(--color-semantic-status-cautionary)', bg: 'var(--status-cautionary-tint)' },
+  navy:   { fg: 'var(--bw-ink)', bg: 'var(--color-semantic-fill-strong)' },
 };
 
 /**
@@ -43,8 +43,8 @@ export function FeatureCard({
         </span>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <h4 style={{ fontSize: '19px', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-strong)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
-        <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: 'var(--label-alternative)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
+        <h4 style={{ fontSize: '19px', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-strong)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
+        <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: 'var(--color-semantic-label-alternative)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
       </div>
     </div>
   );

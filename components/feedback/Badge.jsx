@@ -1,15 +1,15 @@
 import React from 'react';
 
 const COLORS = {
-  signal: 'var(--lk-accent-ink)',
-  navy:   'var(--surface-inverse)',
+  signal: 'var(--color-semantic-primary-normal)',
+  navy:   'var(--color-semantic-inverse-background)',
   steel:  'var(--bw-blue)',
   amber:  'var(--bw-amber)',
   red:    'var(--bw-red)',
   // aliases
-  indigo: 'var(--surface-inverse)',
+  indigo: 'var(--color-semantic-inverse-background)',
   green:  'var(--bw-green)',
-  ink:    'var(--surface-inverse)',
+  ink:    'var(--color-semantic-inverse-background)',
 };
 
 /**
@@ -28,7 +28,7 @@ export function Badge({ children, tone = 'signal', dot = false, style, ...rest }
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         minWidth: 20, height: 20, padding: '0 7px',
         fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', fontSize: 12,
-        color: 'var(--text-on-signal)', background: c, borderRadius: 'var(--radius-pill)',
+        color: 'var(--color-semantic-static-white)', background: c, borderRadius: 'var(--radius-pill)',
         ...style,
       }}
       {...rest}

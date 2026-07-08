@@ -20,7 +20,7 @@ function useKeyframes(id, css) {
  * LDS Core - Spinner
  * Circular loading indicator with an optional visible label.
  */
-export function Spinner({ size, thickness, color = 'var(--lk-accent-ink)', label, variant = 'circular', style, ...rest }) {
+export function Spinner({ size, thickness, color = 'var(--color-semantic-primary-normal)', label, variant = 'circular', style, ...rest }) {
   useKeyframes('lk-spin-kf', '@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none}}');
   // Two amplitudes: ROBOTICS carries an extra 3.9x group scale, so its local
   // translate is 1/3.9 of LK's to bob by the same on-screen amount.
@@ -34,7 +34,7 @@ export function Spinner({ size, thickness, color = 'var(--lk-accent-ink)', label
        counters stay hollow) and every letter rides a staggered vertical wave. */
     const mark = (
       <svg viewBox={LK_LOGO_VIEWBOX.inline} height={resolvedSize} aria-hidden="true" style={{ display: 'block', overflow: 'visible' }}>
-        <g transform="translate(0,504) scale(0.1,-0.1)" fill="var(--label-normal)">
+        <g transform="translate(0,504) scale(0.1,-0.1)" fill="var(--color-semantic-label-normal)">
           {LK_LETTERS.map((d, i) => (
             <path key={`lk${i}`} data-wave d={d} fillRule="evenodd" style={{ animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` }} />
           ))}
@@ -71,7 +71,7 @@ export function Spinner({ size, thickness, color = 'var(--lk-accent-ink)', label
         height: resolvedSize,
         borderRadius: '50%',
         boxSizing: 'border-box',
-        border: `${t}px solid var(--fill-strong)`,
+        border: `${t}px solid var(--color-semantic-fill-strong)`,
         borderTopColor: color,
         animation: 'lk-spin 0.7s linear infinite',
         flexShrink: 0,

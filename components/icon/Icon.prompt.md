@@ -15,7 +15,7 @@ Use `Icon` for every product glyph before introducing a new drawing.
 import { Icon } from '@lk-robotics/design-system-core';
 
 <Icon name="search" />
-<Icon name="route" color="var(--color-primary)" />
+<Icon name="route" color="var(--color-semantic-primary-normal)" />
 <Icon name="color-logo-kakao" size={32} />
 ```
 

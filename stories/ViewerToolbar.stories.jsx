@@ -20,9 +20,9 @@ function MiniMapPreview({ layers }) {
     <svg width="360" height="220" viewBox="0 0 360 220" style={{ display: 'block' }} aria-label="툴바가 놓인 지도 예시">
       {layers.map && <rect x="28" y="24" width="304" height="172" fill="none" stroke="var(--inverse-label-alternative)" strokeWidth="2.5" />}
       {layers.map && <path d="M28 118 H132 M132 24 V118 M214 118 V196 M214 150 H332" fill="none" stroke="var(--inverse-label-disable)" strokeWidth="2.5" />}
-      {layers.path && <polyline points="64,162 64,86 164,86 164,58 286,58" fill="none" stroke="var(--lk-accent)" strokeWidth="2.5" strokeDasharray="6 6" />}
-      {layers.robots && <circle cx="64" cy="162" r="6" fill="var(--lk-accent)" />}
-      {layers.robots && <circle cx="286" cy="58" r="6" fill="var(--lk-accent)" />}
+      {layers.path && <polyline points="64,162 64,86 164,86 164,58 286,58" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" />}
+      {layers.robots && <circle cx="64" cy="162" r="6" fill="var(--color-semantic-primary-normal)" />}
+      {layers.robots && <circle cx="286" cy="58" r="6" fill="var(--color-semantic-primary-normal)" />}
     </svg>
   );
 }
@@ -35,7 +35,7 @@ export const ViewerToolbarOverview = {
 
     return (
       <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
-        <section style={{ position: 'relative', height: 300, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-inverse)', border: '1px solid var(--border-subtle)' }}>
+        <section style={{ position: 'relative', height: 300, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--color-semantic-line-normal-normal)' }}>
           <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
             <MiniMapPreview layers={layers} />
           </div>
@@ -44,7 +44,7 @@ export const ViewerToolbarOverview = {
             <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
             <ViewerToolbarButton label="초기화"><Icon name="home" size={18} /></ViewerToolbarButton>
             <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어" active={anyOff}><Icon name="filter" size={18} /></ViewerToolbarButton>}>
-              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.2, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 8px 2px' }}>
+              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.2, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 8px 2px' }}>
                 레이어
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

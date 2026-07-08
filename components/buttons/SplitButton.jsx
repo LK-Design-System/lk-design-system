@@ -14,7 +14,7 @@ export function SplitButton({ children, onClick, items = [], variant = 'primary'
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, [open]);
-  const pal = variant === 'signal' ? { bg: 'var(--lk-accent-ink)', fg: 'var(--text-on-signal)' } : variant === 'dark' ? { bg: 'var(--surface-inverse)', fg: 'var(--text-on-inverse)' } : variant === 'secondary' ? { bg: 'var(--bw-indigo)', fg: 'var(--text-on-signal)' } : { bg: 'var(--color-primary)', fg: 'var(--text-on-signal)' };
+  const pal = variant === 'signal' ? { bg: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)' } : variant === 'dark' ? { bg: 'var(--color-semantic-inverse-background)', fg: 'var(--color-semantic-inverse-label)' } : variant === 'secondary' ? { bg: 'var(--bw-indigo)', fg: 'var(--color-semantic-static-white)' } : { bg: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)' };
   // Intentionally larger than the Button height scale (32/40/48) — hero CTA geometry.
   const h = size === 'sm' ? 44 : 52;
   return (
@@ -26,7 +26,7 @@ export function SplitButton({ children, onClick, items = [], variant = 'primary'
       {open && (
         <div role="menu" style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, zIndex: 40, minWidth: 184, background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--component-menu-radius)', boxShadow: 'var(--shadow-md)', padding: 'var(--component-menu-padding-y) var(--component-menu-padding-x)' }}>
           {items.map((it, i) => (
-            <button key={i} type="button" role="menuitem" onClick={() => { setOpen(false); it.onClick && it.onClick(); }} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--component-menu-item-hover-bg)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', border: 'none', background: 'transparent', cursor: 'pointer', borderRadius: 'var(--radius-md)', textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--body1-size)', fontWeight: 'var(--fw-medium)', color: 'var(--label-normal)' }}>
+            <button key={i} type="button" role="menuitem" onClick={() => { setOpen(false); it.onClick && it.onClick(); }} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--component-menu-item-hover-bg)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', border: 'none', background: 'transparent', cursor: 'pointer', borderRadius: 'var(--radius-md)', textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--body1-size)', fontWeight: 'var(--fw-medium)', color: 'var(--color-semantic-label-normal)' }}>
               {it.icon}
               <span>{it.label}</span>
             </button>

@@ -24,7 +24,7 @@ export default meta;
 function Section({ title, children }) {
   return (
     <section style={{ display: 'grid', gap: 14 }}>
-      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-normal)' }}>{title}</h3>
+      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-normal)' }}>{title}</h3>
       {children}
     </section>
   );
@@ -40,10 +40,10 @@ function AnchorBox({ label = 'target' }) {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-md)',
         background: 'var(--bw-white)',
-        color: 'var(--label-assistive)',
+        color: 'var(--color-semantic-label-assistive)',
         fontSize: 11,
       }}
     >

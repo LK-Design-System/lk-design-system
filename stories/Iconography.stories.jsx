@@ -72,18 +72,18 @@ function IconTile({ name, compact = false }) {
         gap: compact ? 7 : 9,
         minHeight: compact ? 88 : 104,
         padding: compact ? '12px 8px' : 14,
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-md)',
-        background: 'var(--surface-card)',
-        color: 'var(--label-normal)',
+        background: 'var(--color-semantic-background-elevated-normal)',
+        color: 'var(--color-semantic-label-normal)',
       }}
     >
       <Icon name={name} size={24} />
-      <code style={{ fontSize: compact ? 10 : 11, color: 'var(--label-neutral)', textAlign: 'center', lineHeight: 1.35 }}>
+      <code style={{ fontSize: compact ? 10 : 11, color: 'var(--color-semantic-label-neutral)', textAlign: 'center', lineHeight: 1.35 }}>
         {name}
       </code>
       {!compact && (
-        <span style={{ fontSize: 10, color: 'var(--label-alternative)', textAlign: 'center' }}>
+        <span style={{ fontSize: 10, color: 'var(--color-semantic-label-alternative)', textAlign: 'center' }}>
           {sourceLabel[source] || source}
         </span>
       )}
@@ -95,19 +95,19 @@ export const IconSizingAndColor = {
   name: 'Icon sizing and color',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: 'min(760px, 100%)' }}>
-      <section style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap', color: 'var(--label-normal)' }}>
+      <section style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap', color: 'var(--color-semantic-label-normal)' }}>
         {[16, 20, 24, 32, 40].map((size) => (
-          <span key={size} style={{ display: 'inline-grid', gap: 6, justifyItems: 'center', color: 'var(--label-neutral)' }}>
+          <span key={size} style={{ display: 'inline-grid', gap: 6, justifyItems: 'center', color: 'var(--color-semantic-label-neutral)' }}>
             <Icon name="square" size={size} aria-hidden="true" />
             <code style={{ fontSize: 11 }}>{size}</code>
           </span>
         ))}
       </section>
       <section style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center', flexWrap: 'wrap' }}>
-        <span style={{ color: 'var(--label-normal)' }}><Icon name="document" size={24} aria-hidden="true" /></span>
-        <span style={{ color: 'var(--color-accent)' }}><Icon name="bookmark" size={24} aria-hidden="true" /></span>
-        <span style={{ color: 'var(--color-positive)' }}><Icon name="circle-check" size={24} aria-hidden="true" /></span>
-        <span style={{ color: 'var(--color-danger)' }}><Icon name="triangle-exclamation" size={24} aria-hidden="true" /></span>
+        <span style={{ color: 'var(--color-semantic-label-normal)' }}><Icon name="document" size={24} aria-hidden="true" /></span>
+        <span style={{ color: 'var(--color-semantic-primary-normal)' }}><Icon name="bookmark" size={24} aria-hidden="true" /></span>
+        <span style={{ color: 'var(--color-semantic-status-positive)' }}><Icon name="circle-check" size={24} aria-hidden="true" /></span>
+        <span style={{ color: 'var(--color-semantic-status-negative)' }}><Icon name="triangle-exclamation" size={24} aria-hidden="true" /></span>
       </section>
     </main>
   ),
@@ -125,16 +125,16 @@ export const IconRegistry = {
             gap: 8,
           }}
         >
-          <div style={{ padding: 14, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>기본 아이콘 이름</div>
+          <div style={{ padding: 14, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>기본 아이콘 이름</div>
             <strong style={{ display: 'block', marginTop: 4, fontSize: 24 }}>{counts.baseIconNames}</strong>
           </div>
-          <div style={{ padding: 14, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>컬러 아이콘 페이지 소속</div>
+          <div style={{ padding: 14, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>컬러 아이콘 페이지 소속</div>
             <strong style={{ display: 'block', marginTop: 4, fontSize: 24 }}>{counts.colorIconNames}</strong>
           </div>
-          <div style={{ padding: 14, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>로보틱스 아이콘 페이지 소속</div>
+          <div style={{ padding: 14, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>로보틱스 아이콘 페이지 소속</div>
             <strong style={{ display: 'block', marginTop: 4, fontSize: 24 }}>{counts.roboticsExtensionIconNames}</strong>
           </div>
         </section>
@@ -207,12 +207,12 @@ export const IconCard = {
             fontWeight: 700,
             letterSpacing: 1.4,
             textTransform: 'uppercase',
-            color: 'var(--lk-accent-ink)',
+            color: 'var(--color-semantic-primary-normal)',
           }}
         >
           Iconography
         </span>
-        <p style={{ margin: 0, fontSize: 13, color: 'var(--label-alternative)' }}>
+        <p style={{ margin: 0, fontSize: 13, color: 'var(--color-semantic-label-alternative)' }}>
           {ICON_NAMES.length} base glyphs plus LDS extensions
         </p>
       </div>

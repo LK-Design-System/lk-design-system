@@ -32,7 +32,7 @@ function MenuItem({ item, variant, close }) {
         padding: "7px 10px",
         border: "none",
         background:
-          hover && !item.disabled ? "var(--fill-normal)" : "transparent",
+          hover && !item.disabled ? "var(--color-semantic-fill-normal)" : "transparent",
         cursor: item.disabled ? "not-allowed" : "pointer",
         borderRadius: "var(--radius-md)",
         textAlign: "left",
@@ -41,8 +41,8 @@ function MenuItem({ item, variant, close }) {
         color: item.danger
           ? "var(--bw-red)"
           : item.disabled
-            ? "var(--label-disable)"
-            : "var(--label-normal)",
+            ? "var(--color-semantic-label-disable)"
+            : "var(--color-semantic-label-normal)",
         opacity: item.disabled ? 0.55 : 1,
       }}
     >
@@ -61,10 +61,10 @@ function MenuItem({ item, variant, close }) {
               width: 14,
               height: 14,
               borderRadius: variant === "radio" ? "50%" : 4,
-              border: `1.5px solid ${checked ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+              border: `1.5px solid ${checked ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
               background:
                 checked && variant === "checkbox"
-                  ? "var(--lk-accent-ink)"
+                  ? "var(--color-semantic-primary-normal)"
                   : "transparent",
               flexShrink: 0,
               marginTop: item.description ? 2 : 0,
@@ -84,7 +84,7 @@ function MenuItem({ item, variant, close }) {
             {item.label}
           </span>
           {item.description && (
-            <span style={{ fontSize: 12, color: "var(--label-alternative)" }}>
+            <span style={{ fontSize: 12, color: "var(--color-semantic-label-alternative)" }}>
               {item.description}
             </span>
           )}
@@ -94,7 +94,7 @@ function MenuItem({ item, variant, close }) {
         <span
           style={{
             fontSize: 12,
-            color: "var(--label-assistive)",
+            color: "var(--color-semantic-label-assistive)",
             flexShrink: 0,
           }}
         >
@@ -159,12 +159,12 @@ export function Menubar({
               padding: "0 12px",
               border: "none",
               borderRadius: "var(--radius-sm)",
-              background: open === index ? "var(--fill-normal)" : "transparent",
+              background: open === index ? "var(--color-semantic-fill-normal)" : "transparent",
               cursor: "pointer",
               fontFamily: "var(--font-sans)",
               fontSize: 14,
               fontWeight: "var(--fw-semibold)",
-              color: "var(--label-normal)",
+              color: "var(--color-semantic-label-normal)",
             }}
           >
             {menu.label}
@@ -225,8 +225,8 @@ export function Menubar({
                         padding: "0 10px",
                         border: "none",
                         borderRadius: 7,
-                        background: "var(--lk-accent-ink)",
-                        color: "var(--text-on-inverse)",
+                        background: "var(--color-semantic-primary-normal)",
+                        color: "var(--color-semantic-inverse-label)",
                         fontFamily: "var(--font-sans)",
                         fontSize: 12,
                         fontWeight: "var(--fw-bold)",

@@ -26,7 +26,7 @@ function PointCloudPreview() {
     <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 90% at 50% 20%, var(--lk-accent-tint-2), transparent 60%)' }}>
       <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" aria-label="포인트 클라우드 예시">
         {points.map((point, index) => (
-          <circle key={index} cx={point.x} cy={point.y} r={point.r} fill={point.accent ? 'var(--lk-accent)' : 'var(--text-on-inverse)'} opacity={point.accent ? 0.72 : 0.34} />
+          <circle key={index} cx={point.x} cy={point.y} r={point.r} fill={point.accent ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-inverse-label)'} opacity={point.accent ? 0.72 : 0.34} />
         ))}
       </svg>
     </div>

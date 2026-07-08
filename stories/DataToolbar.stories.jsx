@@ -34,7 +34,7 @@ const columns = [
   { key: 'id', label: '계정', sortable: true },
   { key: 'group', label: '그룹' },
   { key: 'status', label: '상태', render: (row) => <StatusBadge tone={row.status === '활성' ? 'positive' : row.status === '검토 중' ? 'cautionary' : 'offline'}>{row.status}</StatusBadge> },
-  { key: 'progress', label: '진행률', align: 'right', render: (row) => <strong style={{ color: row.progress <= 20 ? 'var(--color-danger-text)' : 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{row.progress}%</strong> },
+  { key: 'progress', label: '진행률', align: 'right', render: (row) => <strong style={{ color: row.progress <= 20 ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-strong)', fontVariantNumeric: 'tabular-nums' }}>{row.progress}%</strong> },
 ];
 
 const surfaceStyle = {
@@ -42,7 +42,7 @@ const surfaceStyle = {
   maxWidth: 1040,
   border: '1px solid var(--bw-border)',
   borderRadius: 'var(--radius-lg)',
-  background: 'var(--surface-card)',
+  background: 'var(--color-semantic-background-elevated-normal)',
   boxShadow: 'var(--shadow-xs)',
   overflow: 'hidden',
 };
@@ -51,7 +51,7 @@ const toolbarStyle = {
   border: 0,
   borderBottom: '1px solid var(--bw-border)',
   borderRadius: 0,
-  background: 'var(--surface-raised)',
+  background: 'var(--color-semantic-background-elevated-normal)',
 };
 
 function ToolbarWithGridDemo() {
@@ -86,7 +86,7 @@ function ToolbarWithGridDemo() {
         style={{
           border: 0,
           borderRadius: 0,
-          background: 'var(--surface-card)',
+          background: 'var(--color-semantic-background-elevated-normal)',
         }}
       />
     </main>

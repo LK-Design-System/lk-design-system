@@ -45,7 +45,7 @@ export function ActionArea({
           style={{
             display: "grid",
             gap: "var(--space-1)",
-            color: "var(--label-normal)",
+            color: "var(--color-semantic-label-normal)",
           }}
         >
           {summary}
@@ -65,7 +65,7 @@ export function ActionArea({
         <p
           style={{
             margin: 0,
-            color: "var(--label-alternative)",
+            color: "var(--color-semantic-label-alternative)",
             fontSize: "var(--label2-size)",
             lineHeight: "var(--label2-line)",
             letterSpacing: "var(--label2-spacing)",

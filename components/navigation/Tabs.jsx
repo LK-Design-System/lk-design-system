@@ -94,8 +94,8 @@ export function Tabs({
               fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
               color: active
-                ? "var(--label-normal)"
-                : "var(--label-alternative)",
+                ? "var(--color-semantic-label-normal)"
+                : "var(--color-semantic-label-alternative)",
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)",
               ...item.style,
@@ -110,8 +110,8 @@ export function Tabs({
                   fontSize: s.countSize,
                   fontWeight: "var(--fw-semibold)",
                   color: active
-                    ? "var(--lk-accent-ink)"
-                    : "var(--label-assistive)",
+                    ? "var(--color-semantic-primary-normal)"
+                    : "var(--color-semantic-label-assistive)",
                 }}
               >
                 {item.count}
@@ -125,8 +125,8 @@ export function Tabs({
                   alignItems: "center",
                   justifyContent: "center",
                   color: active
-                    ? "var(--label-normal)"
-                    : "var(--label-alternative)",
+                    ? "var(--color-semantic-label-normal)"
+                    : "var(--color-semantic-label-alternative)",
                 }}
               >
                 {trailing === true ? (
@@ -156,7 +156,7 @@ export function Tabs({
                 bottom: -1,
                 height: 2,
                 borderRadius: 0,
-                background: active ? "var(--label-normal)" : "transparent",
+                background: active ? "var(--color-semantic-label-normal)" : "transparent",
                 transition: "background var(--dur-fast) var(--ease-out)",
               }}
             />

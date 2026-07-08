@@ -11,7 +11,7 @@ import { ProgressBar } from './ProgressBar.jsx';
  */
 export function Meter({ value = 0, max = 100, label, thresholds, size = 'md', showValue = true, style, ...rest }) {
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
-  let c = 'var(--lk-accent-ink)';
+  let c = 'var(--color-semantic-primary-normal)';
   if (thresholds) {
     if (pct <= thresholds.low) c = 'var(--bw-red)';
     else if (pct <= thresholds.high) c = 'var(--bw-amber)';
@@ -20,9 +20,9 @@ export function Meter({ value = 0, max = 100, label, thresholds, size = 'md', sh
   return (
     <div style={{ ...style }} {...rest}>
       {(label != null || showValue) && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 6, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--label-neutral)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 6, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)' }}>
           <span>{label}</span>
-          {showValue && <span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--label-alternative)' }}>{value}/{max}</span>}
+          {showValue && <span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-label-alternative)' }}>{value}/{max}</span>}
         </div>
       )}
       <ProgressBar value={value} max={max} size={size === 'sm' ? 'md' : 'lg'} color={c} />

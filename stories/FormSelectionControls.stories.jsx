@@ -12,11 +12,11 @@ import {
 } from '../src/index.js';
 
 const semanticSwatchColors = [
-  'var(--lk-accent-ink)',
-  'var(--color-positive)',
-  'var(--color-cautionary)',
-  'var(--color-danger)',
-  'var(--surface-inverse)',
+  'var(--color-semantic-primary-normal)',
+  'var(--color-semantic-status-positive)',
+  'var(--color-semantic-status-cautionary)',
+  'var(--color-semantic-status-negative)',
+  'var(--color-semantic-inverse-background)',
 ];
 
 const meta = {
@@ -77,14 +77,14 @@ export const SelectionGroups = {
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-4)' }}>
         <ChoiceCard presentation="frame" selected padding="lg">
           <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
-            <strong style={{ fontSize: 14, color: 'var(--label-normal)' }}>프레임 선택 카드</strong>
+            <strong style={{ fontSize: 14, color: 'var(--color-semantic-label-normal)' }}>프레임 선택 카드</strong>
             <Checkbox label="체크박스 형태" defaultChecked />
             <Checkbox variant="mark" label="체크 마크 형태" defaultChecked />
           </div>
         </ChoiceCard>
         <ChoiceCard presentation="frame" interaction="focused" padding="lg">
           <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
-            <strong style={{ fontSize: 14, color: 'var(--label-normal)' }}>포커스된 컨트롤 그룹</strong>
+            <strong style={{ fontSize: 14, color: 'var(--color-semantic-label-normal)' }}>포커스된 컨트롤 그룹</strong>
             <Input aria-label="그룹 라벨" defaultValue="선택된 옵션" />
             <Switch label="사용함" defaultChecked />
           </div>
@@ -153,7 +153,7 @@ const matrixCellStyle = {
 const matrixCaptionStyle = {
   fontSize: 13,
   fontWeight: 'var(--fw-bold)',
-  color: 'var(--label-alternative)',
+  color: 'var(--color-semantic-label-alternative)',
 };
 
 export const MarkTreatmentMatrix = {
@@ -185,7 +185,7 @@ export const MarkTreatmentMatrix = {
             variant="mark"
             label="custom label"
             defaultChecked
-            labelStyle={{ fontWeight: 'var(--fw-bold)', color: 'var(--lk-accent-ink)' }}
+            labelStyle={{ fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-primary-normal)' }}
           />
         </div>
       </section>
@@ -204,14 +204,14 @@ export const ControlInteractionMatrix = {
           <Checkbox label="normal" />
           <Checkbox label="hovered" interaction="hovered" />
           <Checkbox label="focused" interaction="focused" />
-          <Checkbox label="custom typography" defaultChecked labelStyle={{ fontWeight: 'var(--fw-bold)', color: 'var(--lk-accent-ink)' }} />
+          <Checkbox label="custom typography" defaultChecked labelStyle={{ fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-primary-normal)' }} />
         </div>
         <div style={matrixCellStyle}>
           <span style={matrixCaptionStyle}>Radio</span>
           <Radio label="normal" name="radio-interaction" value="normal" />
           <Radio label="hovered" name="radio-interaction" value="hovered" interaction="hovered" />
           <Radio label="focused" name="radio-interaction" value="focused" interaction="focused" />
-          <Radio label="custom typography" name="radio-interaction" value="custom" checked onChange={() => {}} labelStyle={{ fontWeight: 'var(--fw-bold)', color: 'var(--lk-accent-ink)' }} />
+          <Radio label="custom typography" name="radio-interaction" value="custom" checked onChange={() => {}} labelStyle={{ fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-primary-normal)' }} />
         </div>
         <div style={matrixCellStyle}>
           <span style={matrixCaptionStyle}>Switch</span>
@@ -228,8 +228,8 @@ export const ControlInteractionMatrix = {
 const FrameSample = ({ title, caption, children, ...props }) => (
   <ChoiceCard presentation="frame" tabIndex={0} {...props}>
     <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-      <strong style={{ fontSize: 14, color: 'var(--label-normal)' }}>{title}</strong>
-      {caption && <span style={{ fontSize: 13, color: 'var(--label-alternative)', lineHeight: 1.45 }}>{caption}</span>}
+      <strong style={{ fontSize: 14, color: 'var(--color-semantic-label-normal)' }}>{title}</strong>
+      {caption && <span style={{ fontSize: 13, color: 'var(--color-semantic-label-alternative)', lineHeight: 1.45 }}>{caption}</span>}
       {children}
     </div>
   </ChoiceCard>

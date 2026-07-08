@@ -37,10 +37,10 @@ export function IconButton({
       }[size] || 40);
   const palettes = {
     soft:    { bg: 'var(--bw-indigo-tint)', bgHover: 'var(--bw-indigo-tint)', fg: 'var(--bw-ink)', bd: 'none' },
-    solid:   { bg: 'var(--bw-indigo)', bgHover: 'var(--bw-indigo)', fg: 'var(--text-on-inverse)', bd: 'none' },
-    signal:  { bg: 'var(--lk-accent-ink)', bgHover: 'var(--lk-accent-ink)', fg: 'var(--text-on-signal)', bd: 'none' },
+    solid:   { bg: 'var(--bw-indigo)', bgHover: 'var(--bw-indigo)', fg: 'var(--color-semantic-inverse-label)', bd: 'none' },
+    signal:  { bg: 'var(--color-semantic-primary-normal)', bgHover: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)', bd: 'none' },
     ghost:   { bg: 'var(--bw-white)', bgHover: 'var(--bw-white)', fg: 'var(--bw-ink)', bd: '1px solid var(--bw-border)' },
-    'on-dark': { bg: 'var(--inverse-fill-normal)', bgHover: 'var(--inverse-fill-hover)', fg: 'var(--text-on-inverse)', bd: '1px solid var(--inverse-line-strong)' },
+    'on-dark': { bg: 'var(--inverse-fill-normal)', bgHover: 'var(--inverse-fill-hover)', fg: 'var(--color-semantic-inverse-label)', bd: '1px solid var(--inverse-line-strong)' },
   };
   const p = palettes[alternative ? 'on-dark' : variant] || palettes.soft;
   const disabledState = disabled || disable;
@@ -58,9 +58,9 @@ export function IconButton({
         justifyContent: 'center',
         width: resolvedSize,
         height: resolvedSize,
-        color: disabledState ? 'var(--label-disable)' : p.fg,
+        color: disabledState ? 'var(--color-semantic-label-disable)' : p.fg,
         background: disabledState
-          ? 'var(--fill-normal)'
+          ? 'var(--color-semantic-fill-normal)'
           : hover ? p.bgHover : p.bg,
         border: p.bd,
         borderRadius: round ? 'var(--radius-pill)' : 'var(--radius-md)',

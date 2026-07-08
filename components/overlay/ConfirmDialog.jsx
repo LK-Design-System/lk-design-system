@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '../buttons/Button.jsx';
 
 const TONES = {
-  default: 'var(--color-primary)',
+  default: 'var(--color-semantic-primary-normal)',
   danger: 'var(--bw-red)',
   warning: 'var(--bw-amber)',
 };
@@ -54,8 +54,8 @@ export function ConfirmDialog({
         {...rest}
       >
         <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-          {title != null && <h2 id={titleId} style={{ margin: 0, color: 'var(--label-normal)', fontSize: 20, lineHeight: 1.35, fontWeight: 'var(--fw-extra)', letterSpacing: 0 }}>{title}</h2>}
-          {children != null && <div style={{ color: 'var(--label-neutral)', fontSize: 15, lineHeight: 1.7, wordBreak: 'keep-all' }}>{children}</div>}
+          {title != null && <h2 id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-normal)', fontSize: 20, lineHeight: 1.35, fontWeight: 'var(--fw-extra)', letterSpacing: 0 }}>{title}</h2>}
+          {children != null && <div style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 15, lineHeight: 1.7, wordBreak: 'keep-all' }}>{children}</div>}
         </div>
         {/* Footer actions ride the shared Button (size md = 15px type, 0 20px
             padding — the legacy metrics). The style override pins the legacy

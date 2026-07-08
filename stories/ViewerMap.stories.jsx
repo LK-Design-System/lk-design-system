@@ -18,15 +18,15 @@ export default meta;
 function MapRoutePreview() {
   return (
     <svg width="440" height="280" viewBox="0 0 440 280" style={{ display: 'block' }} aria-label="지도 경로 예시">
-      <rect x="30" y="26" width="380" height="228" fill="none" stroke="var(--label-normal)" strokeWidth="3" opacity="0.85" />
-      <path d="M30 150 H150 M150 26 V150 M250 150 V254 M250 200 H410" fill="none" stroke="var(--label-normal)" strokeWidth="3" opacity="0.6" />
-      <polyline points="80,210 80,110 200,110 200,70 340,70" fill="none" stroke="var(--accent-text)" strokeWidth="2.5" strokeDasharray="6 6" opacity="0.9" />
+      <rect x="30" y="26" width="380" height="228" fill="none" stroke="var(--color-semantic-label-normal)" strokeWidth="3" opacity="0.85" />
+      <path d="M30 150 H150 M150 26 V150 M250 150 V254 M250 200 H410" fill="none" stroke="var(--color-semantic-label-normal)" strokeWidth="3" opacity="0.6" />
+      <polyline points="80,210 80,110 200,110 200,70 340,70" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" opacity="0.9" />
       {[80, 200, 340].map((x, index) => (
-        <circle key={x} cx={x} cy={[210, 110, 70][index]} r="4" fill="var(--accent-text)" />
+        <circle key={x} cx={x} cy={[210, 110, 70][index]} r="4" fill="var(--color-semantic-primary-normal)" />
       ))}
       <g transform="translate(80,210)">
-        <circle r="9" fill="var(--lk-accent-ink)" />
-        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="var(--text-on-inverse)" transform="rotate(30)" />
+        <circle r="9" fill="var(--color-semantic-primary-normal)" />
+        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="var(--color-semantic-inverse-label)" transform="rotate(30)" />
       </g>
     </svg>
   );

@@ -127,7 +127,7 @@ export const ListsAndMedia = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980, minWidth: 0 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-5)', minWidth: 0 }}>
-        <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
           <ListCell leading={<Icon name="document" size={18} />} title="디자인 토큰" description="검토 요청됨" trailing={<StatusBadge tone="signal">검토</StatusBadge>} onClick={() => {}} divider />
           <ListCell leading={<Icon name="layers" size={18} />} title="컴포넌트 문서" description="업데이트 완료" trailing={<Kbd>⌘ K</Kbd>} onClick={() => {}} divider />
           <ListCell leading={<Icon name="bell" size={18} />} title="알림 3건" description="확인 필요한 변경 사항" trailing={<Icon name="chevron-right" size={18} />} onClick={() => {}} />
@@ -156,7 +156,7 @@ export const ListsAndMedia = {
       <section style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center', flexWrap: 'wrap' }}>
         <Bubble>검토 코멘트</Bubble>
         <Tooltip content="툴팁은 hover/focus에서 표시됩니다.">
-          <button type="button" style={{ height: 40, padding: '0 var(--space-4)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', background: 'var(--surface-card)' }}>
+          <button type="button" style={{ height: 40, padding: '0 var(--space-4)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
             툴팁 트리거
           </button>
         </Tooltip>
@@ -171,7 +171,7 @@ export const ThumbnailCard = {
   tags: ['!dev', 'visual-parity'],
   render: () => {
     const overlay = (label) => (
-      <span style={{ background: 'var(--material-dimmer)', color: 'var(--text-on-inverse)', fontSize: 11, fontWeight: 700, padding: '3px 8px', borderRadius: 'var(--radius-sm)' }}>
+      <span style={{ background: 'var(--material-dimmer)', color: 'var(--color-semantic-inverse-label)', fontSize: 11, fontWeight: 700, padding: '3px 8px', borderRadius: 'var(--radius-sm)' }}>
         {label}
       </span>
     );
@@ -197,9 +197,9 @@ export const TooltipBubbleBookmarkDividerCard = {
         <Bubble tone="navy" tail="left">선택 항목 설명</Bubble>
         <Bookmark defaultActive />
         <Bookmark />
-        <span style={{ color: 'var(--label-alternative)', fontFamily: 'var(--font-sans)', fontSize: 13 }}>문서</span>
+        <span style={{ color: 'var(--color-semantic-label-alternative)', fontFamily: 'var(--font-sans)', fontSize: 13 }}>문서</span>
         <Divider vertical />
-        <span style={{ color: 'var(--label-alternative)', fontFamily: 'var(--font-sans)', fontSize: 13 }}>국방·보안</span>
+        <span style={{ color: 'var(--color-semantic-label-alternative)', fontFamily: 'var(--font-sans)', fontSize: 13 }}>국방·보안</span>
       </div>
     </div>
   ),

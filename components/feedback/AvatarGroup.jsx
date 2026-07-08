@@ -67,8 +67,8 @@ export function AvatarGroup({
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "var(--surface-subtle)",
-          color: "var(--label-alternative)",
+          background: "var(--color-semantic-background-normal-alternative)",
+          color: "var(--color-semantic-label-alternative)",
           fontSize: 12,
           fontWeight: "var(--fw-semibold)",
           whiteSpace: "nowrap",
@@ -116,8 +116,8 @@ export function AvatarGroup({
             style={{
               ...base,
               marginLeft: overlap,
-              background: "var(--surface-inverse)",
-              color: "var(--text-on-inverse)",
+              background: "var(--color-semantic-inverse-background)",
+              color: "var(--color-semantic-inverse-label)",
               zIndex: shown.length,
             }}
           >

@@ -19,7 +19,7 @@ export const EmptyStates = {
   name: '빈 상태',
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-5)', maxWidth: 860 }}>
-      <div style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
+      <div style={{ border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
         <EmptyState
           icon={<Icon name="search" size={26} />}
           title="검색 결과가 없습니다"
@@ -27,7 +27,7 @@ export const EmptyStates = {
           action={<Button variant="flat">필터 초기화</Button>}
         />
       </div>
-      <div style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
+      <div style={{ border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
         <EmptyState
           icon={<Icon name="document" size={26} />}
           title="아직 로그가 없습니다"

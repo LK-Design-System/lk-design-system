@@ -36,7 +36,7 @@ export const SwitchPlatformMatrix = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 560 }}>
       <section style={{ display: 'grid', gap: 'var(--space-2)' }}>
-        <strong style={{ fontSize: 13, color: 'var(--label-alternative)' }}>Normal</strong>
+        <strong style={{ fontSize: 13, color: 'var(--color-semantic-label-alternative)' }}>Normal</strong>
         <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', alignItems: 'center' }}>
           <Switch size="sm" label="sm off" aria-label="normal small off" />
           <Switch size="sm" label="sm on" defaultChecked aria-label="normal small on" />
@@ -45,7 +45,7 @@ export const SwitchPlatformMatrix = {
         </div>
       </section>
       <section style={{ display: 'grid', gap: 'var(--space-2)' }}>
-        <strong style={{ fontSize: 13, color: 'var(--label-alternative)' }}>iOS</strong>
+        <strong style={{ fontSize: 13, color: 'var(--color-semantic-label-alternative)' }}>iOS</strong>
         <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', alignItems: 'center' }}>
           <Switch platform="ios" size="sm" label="sm off" aria-label="ios small off" />
           <Switch platform="ios" size="sm" label="sm on" defaultChecked aria-label="ios small on" />
@@ -54,7 +54,7 @@ export const SwitchPlatformMatrix = {
         </div>
       </section>
       <section style={{ display: 'grid', gap: 'var(--space-2)' }}>
-        <strong style={{ fontSize: 13, color: 'var(--label-alternative)' }}>Disabled and numeric</strong>
+        <strong style={{ fontSize: 13, color: 'var(--color-semantic-label-alternative)' }}>Disabled and numeric</strong>
         <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', alignItems: 'center' }}>
           <Switch disabled label="off" aria-label="disabled off" />
           <Switch disabled label="on" defaultChecked aria-label="disabled on" />
@@ -71,7 +71,7 @@ export const SwitchInteractionMatrix = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 640 }}>
       <section style={{ display: 'grid', gap: 'var(--space-2)' }}>
-        <strong style={{ fontSize: 13, color: 'var(--label-alternative)' }}>State</strong>
+        <strong style={{ fontSize: 13, color: 'var(--color-semantic-label-alternative)' }}>State</strong>
         <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', alignItems: 'center' }}>
           <Switch label="off" />
           <Switch label="on" defaultChecked />
@@ -81,7 +81,7 @@ export const SwitchInteractionMatrix = {
         </div>
       </section>
       <section style={{ display: 'grid', gap: 'var(--space-2)' }}>
-        <strong style={{ fontSize: 13, color: 'var(--label-alternative)' }}>iOS resource</strong>
+        <strong style={{ fontSize: 13, color: 'var(--color-semantic-label-alternative)' }}>iOS resource</strong>
         <div style={{ display: 'grid', gap: 'var(--space-3)', width: 'fit-content' }}>
           <Switch platform="ios" size="sm" label="small off" />
           <Switch platform="ios" size="sm" label="small on" defaultChecked />

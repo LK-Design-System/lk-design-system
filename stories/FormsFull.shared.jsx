@@ -27,11 +27,11 @@ import {
 
 const options = ['물류 로봇', '용접 로봇', '순찰 로봇', '방역 로봇'];
 const semanticSwatchColors = [
-  'var(--lk-accent-ink)',
-  'var(--color-positive)',
-  'var(--color-cautionary)',
-  'var(--color-danger)',
-  'var(--surface-inverse)',
+  'var(--color-semantic-primary-normal)',
+  'var(--color-semantic-status-positive)',
+  'var(--color-semantic-status-cautionary)',
+  'var(--color-semantic-status-negative)',
+  'var(--color-semantic-inverse-background)',
 ];
 
 export const InputsAndPickers = {

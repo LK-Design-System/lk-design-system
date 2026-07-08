@@ -118,8 +118,8 @@ export function Button({
     'on-dark': { bg: 'var(--component-button-on-dark-bg)', bgHover: 'var(--component-button-on-dark-bg-hover)', fg: 'var(--component-button-on-dark-fg)', bd: 'var(--component-button-on-dark-border)', elevated: false },
     'solid-primary': { bg: 'var(--component-button-primary-bg)', bgHover: 'var(--component-button-primary-bg-hover)', fg: 'var(--component-button-primary-fg)', bd: 'none', elevated: true },
     'solid-assistive': { bg: 'var(--component-button-flat-bg)', bgHover: 'var(--component-button-flat-bg-hover)', fg: 'var(--component-button-flat-fg)', bd: 'none', elevated: false },
-    'outlined-primary': { bg: 'transparent', bgHover: 'var(--lk-accent-tint)', fg: 'var(--color-primary)', bd: 'var(--border-thin) solid var(--border-subtle)', bdHover: 'var(--border-thin) solid var(--border-subtle)', elevated: false },
-    'outlined-assistive': { bg: 'transparent', bgHover: 'var(--fill-normal)', fg: 'var(--label-normal)', bd: 'var(--border-thin) solid var(--border-subtle)', bdHover: 'var(--border-thin) solid var(--border-strong)', elevated: false },
+    'outlined-primary': { bg: 'transparent', bgHover: 'var(--lk-accent-tint)', fg: 'var(--color-semantic-primary-normal)', bd: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', bdHover: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', elevated: false },
+    'outlined-assistive': { bg: 'transparent', bgHover: 'var(--color-semantic-fill-normal)', fg: 'var(--color-semantic-label-normal)', bd: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', bdHover: 'var(--border-thin) solid var(--color-semantic-line-solid-normal)', elevated: false },
   };
   const p = palettes[wdsVariant] || palettes.primary;
   const disabledState = disabled || disable || loading;

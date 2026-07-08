@@ -12,8 +12,8 @@ export function CanvasEditorShell({ title, tools, children, panel, status, panel
   const bodyClass = `lk-canvas-editor-shell__body${tools != null ? ' lk-canvas-editor-shell__body--tools' : ''}`;
 
   return (
-    <div className={shellClass} style={{ '--lk-editor-panel-width': `${panelWidth}px`, display: 'flex', flexDirection: 'column', height: '100%', minHeight: 320, border: '1px solid var(--border-subtle)',
-      borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-raised)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+    <div className={shellClass} style={{ '--lk-editor-panel-width': `${panelWidth}px`, display: 'flex', flexDirection: 'column', height: '100%', minHeight: 320, border: '1px solid var(--color-semantic-line-normal-normal)',
+      borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--color-semantic-background-elevated-normal)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       <style>
         {`@media (max-width: 640px) {
           .${shellClass} .lk-canvas-editor-shell__body--tools {
@@ -29,17 +29,17 @@ export function CanvasEditorShell({ title, tools, children, panel, status, panel
             width: auto !important;
             max-height: 180px !important;
             border-left: 0 !important;
-            border-top: 1px solid var(--border-subtle) !important;
+            border-top: 1px solid var(--color-semantic-line-normal-normal) !important;
           }
         }`}
       </style>
-      {title != null && <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid var(--border-subtle)', fontSize: 'var(--headline2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--label-strong)' }}>{title}</div>}
+      {title != null && <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid var(--color-semantic-line-normal-normal)', fontSize: 'var(--headline2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)' }}>{title}</div>}
       <div className={bodyClass} style={{ display: 'grid', gridTemplateColumns: `${tools != null ? 'auto ' : ''}minmax(0, 1fr)${panel != null ? ' var(--lk-editor-panel-width)' : ''}`, gridTemplateRows: 'minmax(0, 1fr)', flex: 1, minHeight: 0 }}>
-        {tools != null && <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: 8, borderRight: '1px solid var(--border-subtle)', background: 'var(--surface-subtle)' }}>{tools}</div>}
-        <div style={{ minWidth: 0, position: 'relative', background: 'var(--surface-sunken)' }}>{children}</div>
-        {panel != null && <div className="lk-canvas-editor-shell__panel" style={{ width: panelWidth, borderLeft: '1px solid var(--border-subtle)', overflow: 'auto', background: 'var(--surface-raised)' }}>{panel}</div>}
+        {tools != null && <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: 8, borderRight: '1px solid var(--color-semantic-line-normal-normal)', background: 'var(--color-semantic-background-normal-alternative)' }}>{tools}</div>}
+        <div style={{ minWidth: 0, position: 'relative', background: 'var(--color-semantic-background-normal-alternative)' }}>{children}</div>
+        {panel != null && <div className="lk-canvas-editor-shell__panel" style={{ width: panelWidth, borderLeft: '1px solid var(--color-semantic-line-normal-normal)', overflow: 'auto', background: 'var(--color-semantic-background-elevated-normal)' }}>{panel}</div>}
       </div>
-      {status != null && <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '6px 14px', borderTop: '1px solid var(--border-subtle)', fontSize: 12, color: 'var(--label-alternative)', background: 'var(--surface-subtle)' }}>{status}</div>}
+      {status != null && <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '6px 14px', borderTop: '1px solid var(--color-semantic-line-normal-normal)', fontSize: 12, color: 'var(--color-semantic-label-alternative)', background: 'var(--color-semantic-background-normal-alternative)' }}>{status}</div>}
     </div>
   );
 }

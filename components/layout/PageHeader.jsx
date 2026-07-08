@@ -31,7 +31,7 @@ export function PageHeader({
         alignItems: align === 'center' ? 'center' : 'start',
         width: '100%',
         minWidth: 0,
-        color: 'var(--label-normal)',
+        color: 'var(--color-semantic-label-normal)',
         fontFamily: 'var(--font-sans)',
         ...style,
       }}
@@ -40,23 +40,23 @@ export function PageHeader({
       <div style={{ display: 'grid', gap: compact ? 4 : 6, minWidth: 0 }}>
         {breadcrumb != null && <div style={{ minWidth: 0 }}>{breadcrumb}</div>}
         {eyebrow != null && (
-          <div style={{ fontSize: 13, lineHeight: 1.45, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-alternative)' }}>
+          <div style={{ fontSize: 13, lineHeight: 1.45, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-alternative)' }}>
             {eyebrow}
           </div>
         )}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
-          <h1 style={{ margin: 0, minWidth: 0, color: 'var(--label-strong)', fontSize: titleSize, lineHeight: titleLine, fontWeight: 'var(--fw-extra)', letterSpacing: 0, wordBreak: 'keep-all' }}>
+          <h1 style={{ margin: 0, minWidth: 0, color: 'var(--color-semantic-label-strong)', fontSize: titleSize, lineHeight: titleLine, fontWeight: 'var(--fw-extra)', letterSpacing: 0, wordBreak: 'keep-all' }}>
             {title}
           </h1>
           {status != null && <div style={{ flexShrink: 0 }}>{status}</div>}
         </div>
         {description != null && (
-          <p style={{ margin: 0, maxWidth: 680, color: 'var(--label-neutral)', fontSize: 14, lineHeight: 1.55, wordBreak: 'keep-all' }}>
+          <p style={{ margin: 0, maxWidth: 680, color: 'var(--color-semantic-label-neutral)', fontSize: 14, lineHeight: 1.55, wordBreak: 'keep-all' }}>
             {description}
           </p>
         )}
         {meta != null && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', color: 'var(--label-alternative)', fontSize: 13, lineHeight: 1.45 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', color: 'var(--color-semantic-label-alternative)', fontSize: 13, lineHeight: 1.45 }}>
             {meta}
           </div>
         )}

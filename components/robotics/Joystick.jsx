@@ -42,16 +42,16 @@ export function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled
         onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end}
         onKeyDown={key} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
         style={{ position: 'relative', width: size, height: size, borderRadius: '50%', outline: 'none',
-          background: 'var(--fill-normal)', border: '1px solid var(--border-subtle)',
+          background: 'var(--color-semantic-fill-normal)', border: '1px solid var(--color-semantic-line-normal-normal)',
           boxShadow: focus ? '0 0 0 4px var(--focus-ring)' : 'inset var(--shadow-sm)', touchAction: 'none',
           cursor: disabled ? 'not-allowed' : (active ? 'grabbing' : 'grab'), opacity: disabled ? 0.5 : 1 }}>
-        <span style={{ position: 'absolute', left: '50%', top: 10, bottom: 10, width: 1, background: 'var(--line-neutral)', transform: 'translateX(-0.5px)' }} />
-        <span style={{ position: 'absolute', top: '50%', left: 10, right: 10, height: 1, background: 'var(--line-neutral)', transform: 'translateY(-0.5px)' }} />
+        <span style={{ position: 'absolute', left: '50%', top: 10, bottom: 10, width: 1, background: 'var(--color-semantic-line-normal-neutral)', transform: 'translateX(-0.5px)' }} />
+        <span style={{ position: 'absolute', top: '50%', left: 10, right: 10, height: 1, background: 'var(--color-semantic-line-normal-neutral)', transform: 'translateY(-0.5px)' }} />
         <span style={{ position: 'absolute', left: '50%', top: '50%', width: knob, height: knob, marginLeft: -knob / 2, marginTop: -knob / 2, borderRadius: '50%',
-          background: 'var(--lk-accent-ink)', boxShadow: 'var(--shadow-control)',
+          background: 'var(--color-semantic-primary-normal)', boxShadow: 'var(--shadow-control)',
           transform: `translate(${pos.x}px, ${pos.y}px)`, transition: active ? 'none' : 'transform var(--dur-base) var(--ease-out)' }} />
       </div>
-      {label != null && <span style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-semibold)', color: 'var(--label-alternative)' }}>{label}</span>}
+      {label != null && <span style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-alternative)' }}>{label}</span>}
     </div>
   );
 }

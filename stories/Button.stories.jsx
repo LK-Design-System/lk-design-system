@@ -122,7 +122,7 @@ export const OnDark = {
     backgrounds: { default: 'Navy' },
   },
   render: () => (
-    <div style={{ background: 'var(--surface-inverse)', padding: 28, borderRadius: 'var(--radius-lg)' }}>
+    <div style={{ background: 'var(--color-semantic-inverse-background)', padding: 28, borderRadius: 'var(--radius-lg)' }}>
       <Button variant="on-dark">자세히 보기</Button>
     </div>
   ),

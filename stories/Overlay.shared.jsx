@@ -39,19 +39,19 @@ export const AnchoredAndToast = {
         <Popover trigger={<Button variant="ghost">팝오버</Button>}>
           <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
             <strong>운영 설정</strong>
-            <span style={{ color: 'var(--label-neutral)', fontSize: 13 }}>앵커 기준으로 열리는 보조 패널입니다.</span>
+            <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 13 }}>앵커 기준으로 열리는 보조 패널입니다.</span>
           </div>
         </Popover>
         <HoverCard trigger={<Button variant="ghost">호버 카드</Button>}>
           <strong>문서 A</strong>
-          <p style={{ margin: '6px 0 0', color: 'var(--label-neutral)' }}>검토 86%, 초안 상태</p>
+          <p style={{ margin: '6px 0 0', color: 'var(--color-semantic-label-neutral)' }}>검토 86%, 초안 상태</p>
         </HoverCard>
       </section>
 
-      <section style={{ position: 'relative', minHeight: 180, display: 'grid', placeItems: 'center', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
-        <span style={{ color: 'var(--label-neutral)' }}>Dimmer는 부모 영역을 차단합니다.</span>
+      <section style={{ position: 'relative', minHeight: 180, display: 'grid', placeItems: 'center', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+        <span style={{ color: 'var(--color-semantic-label-neutral)' }}>Dimmer는 부모 영역을 차단합니다.</span>
         <Dimmer open blur>
-          <span style={{ color: 'var(--text-on-inverse)', fontWeight: 'var(--fw-bold)' }}>처리 중</span>
+          <span style={{ color: 'var(--color-semantic-inverse-label)', fontWeight: 'var(--fw-bold)' }}>처리 중</span>
         </Dimmer>
       </section>
 
@@ -136,7 +136,7 @@ export const DrawerCard = {
   tags: ['!dev', 'visual-parity'],
   render: () => (
     <div data-visual-crop-root style={{ width: 520, height: 460, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
-      <div style={{ position: 'relative', height: 400, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--border-subtle)', transform: 'translateZ(0)', background: 'var(--bw-paper)' }}>
+      <div style={{ position: 'relative', height: 400, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--color-semantic-line-normal-normal)', transform: 'translateZ(0)', background: 'var(--bw-paper)' }}>
         <div style={{ padding: 20 }}>
           <Button variant="secondary">필터 열기</Button>
         </div>
@@ -238,7 +238,7 @@ export const SheetCard = {
                   background: 'transparent',
                   fontFamily: 'var(--font-sans)',
                   fontSize: 15,
-                  color: 'var(--label-normal)',
+                  color: 'var(--color-semantic-label-normal)',
                   cursor: 'pointer',
                 }}
               >
@@ -269,12 +269,12 @@ export const DimmerCard = {
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: 'var(--font-sans)',
-          color: 'var(--label-alternative)',
+          color: 'var(--color-semantic-label-alternative)',
           fontSize: 14,
         }}
       >
         콘텐츠
-        <Dimmer open blur><Spinner color="var(--text-on-inverse)" label="처리 중…" /></Dimmer>
+        <Dimmer open blur><Spinner color="var(--color-semantic-inverse-label)" label="처리 중…" /></Dimmer>
       </div>
     </div>
   ),

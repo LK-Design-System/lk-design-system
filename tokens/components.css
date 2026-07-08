@@ -43,35 +43,35 @@
   --component-button-icon-only-icon-size-md: 20px;
   --component-button-icon-only-icon-size-lg: 24px;
   --component-button-disabled-opacity: 0.45;
-  --component-button-disabled-bg: var(--fill-normal);
-  --component-button-disabled-fg: var(--label-assistive);
-  --component-button-disabled-fg-outlined: var(--label-disable);
+  --component-button-disabled-bg: var(--color-semantic-fill-normal);
+  --component-button-disabled-fg: var(--color-semantic-label-assistive);
+  --component-button-disabled-fg-outlined: var(--color-semantic-label-disable);
   --component-button-disabled-border: var(--border-thin) solid transparent;
-  --component-button-disabled-outlined-border: var(--border-thin) solid var(--line-neutral);
+  --component-button-disabled-outlined-border: var(--border-thin) solid var(--color-semantic-line-normal-neutral);
   --component-button-text-hover-opacity: 0.9;
   --component-button-shadow-rest: var(--shadow-xs);
   --component-button-transition: none;
   --component-button-transform-hover: none;
   --component-button-transform-pressed: none;
 
-  --component-button-primary-bg: var(--color-primary);
+  --component-button-primary-bg: var(--color-semantic-primary-normal);
   --component-button-primary-bg-hover: var(--component-button-primary-bg);
-  --component-button-primary-fg: var(--text-on-signal);
+  --component-button-primary-fg: var(--color-semantic-static-white);
   --component-button-primary-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-secondary-bg: var(--color-secondary);
   --component-button-secondary-bg-hover: var(--component-button-secondary-bg);
-  --component-button-secondary-fg: var(--text-on-inverse);
+  --component-button-secondary-fg: var(--color-semantic-inverse-label);
   --component-button-secondary-shadow-hover: var(--component-button-shadow-rest);
 
-  --component-button-signal-bg: var(--lk-accent-ink);
+  --component-button-signal-bg: var(--color-semantic-primary-normal);
   --component-button-signal-bg-hover: var(--component-button-signal-bg);
-  --component-button-signal-fg: var(--text-on-signal);
+  --component-button-signal-fg: var(--color-semantic-static-white);
   --component-button-signal-shadow-hover: var(--component-button-shadow-rest);
 
-  --component-button-dark-bg: var(--surface-inverse);
+  --component-button-dark-bg: var(--color-semantic-inverse-background);
   --component-button-dark-bg-hover: var(--component-button-dark-bg);
-  --component-button-dark-fg: var(--text-on-inverse);
+  --component-button-dark-fg: var(--color-semantic-inverse-label);
   --component-button-dark-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-flat-bg: var(--bw-indigo-tint);
@@ -90,11 +90,11 @@
   --component-button-on-dark-border: var(--border-thin) solid rgba(255, 255, 255, 0.28);
 
   /* ---- Action Area ----------------------------------------------------- */
-  --component-action-area-bg: var(--surface-card);
+  --component-action-area-bg: var(--color-semantic-background-elevated-normal);
   --component-action-area-padding-x: var(--space-5);
   --component-action-area-padding-y: var(--space-5);
   --component-action-area-gap: var(--space-4);
-  --component-action-area-border: var(--border-thin) solid var(--border-subtle);
+  --component-action-area-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
   --component-action-area-shadow-sticky: var(--shadow-control);
   --component-action-area-z-index: 20;
 
@@ -102,12 +102,12 @@
   --component-toggle-icon-size-sm: 32px;
   --component-toggle-icon-size-md: 40px;
   --component-toggle-icon-radius: var(--radius-md);
-  --component-toggle-icon-bg: var(--surface-card);
-  --component-toggle-icon-bg-hover: var(--fill-alt);
+  --component-toggle-icon-bg: var(--color-semantic-background-elevated-normal);
+  --component-toggle-icon-bg-hover: var(--color-semantic-fill-alternative);
   --component-toggle-icon-bg-active: var(--component-button-primary-bg);
-  --component-toggle-icon-fg: var(--label-normal);
+  --component-toggle-icon-fg: var(--color-semantic-label-normal);
   --component-toggle-icon-fg-active: var(--component-button-primary-fg);
-  --component-toggle-icon-border: var(--border-thin) solid var(--border-subtle);
+  --component-toggle-icon-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
   --component-toggle-icon-disabled-opacity: var(--component-button-disabled-opacity);
 
   /* ---- Chip ------------------------------------------------------------ */
@@ -145,15 +145,15 @@
   --component-chip-radius-md: var(--radius-10);
   --component-chip-radius-lg: var(--radius-10);
   --component-chip-radius: var(--component-chip-radius-md);
-  --component-chip-bg: var(--surface-card);
-  --component-chip-bg-hover: var(--surface-card);
+  --component-chip-bg: var(--color-semantic-background-elevated-normal);
+  --component-chip-bg-hover: var(--color-semantic-background-elevated-normal);
   --component-chip-bg-selected: var(--lk-accent-tint-2);
-  --component-chip-fg: var(--label-normal);
-  --component-chip-fg-active: var(--lk-accent-ink);
-  --component-chip-border: var(--border-thin) solid var(--border-subtle);
-  --component-chip-border-active: var(--border-thin) solid var(--lk-accent-ink);
-  --component-chip-solid-bg: var(--lk-accent-ink);
-  --component-chip-solid-fg: var(--text-on-signal);
+  --component-chip-fg: var(--color-semantic-label-normal);
+  --component-chip-fg-active: var(--color-semantic-primary-normal);
+  --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
+  --component-chip-solid-bg: var(--color-semantic-primary-normal);
+  --component-chip-solid-fg: var(--color-semantic-static-white);
   --component-chip-solid-border: var(--border-thin) solid transparent;
   --component-chip-disabled-opacity: var(--component-button-disabled-opacity);
 
@@ -165,7 +165,7 @@
   --component-menu-radius: var(--radius-16);
   --component-menu-padding-y: 8px;
   --component-menu-padding-x: 20px;
-  --component-menu-item-hover-bg: var(--fill-normal);
+  --component-menu-item-hover-bg: var(--color-semantic-fill-normal);
 
   /* ---- Dialog ------------------------------------------------------------ */
   --component-dialog-radius: var(--radius-3xl);
@@ -174,15 +174,15 @@
 
   /* ---- Divider --------------------------------------------------------- */
   /* Source-model roles: normal = line 0.22 step, thick = fill 0.08 step. */
-  --component-divider-color: var(--line-normal);
-  --component-divider-color-normal: var(--line-normal);
-  --component-divider-color-thick: var(--fill-normal);
+  --component-divider-color: var(--color-semantic-line-normal-normal);
+  --component-divider-color-normal: var(--color-semantic-line-normal-normal);
+  --component-divider-color-thick: var(--color-semantic-fill-normal);
   --component-divider-thickness-normal: 1px;
   --component-divider-thickness-thick: 8px;
 
   /* ---- Mobile System Bars --------------------------------------------- */
-  --component-system-bars-fg: var(--label-strong);
-  --component-system-bars-muted-fg: var(--label-alternative);
+  --component-system-bars-fg: var(--color-semantic-label-strong);
+  --component-system-bars-muted-fg: var(--color-semantic-label-alternative);
   --component-system-bars-home-width: 78px;
   --component-system-bars-home-height: 4px;
 
@@ -191,36 +191,36 @@
   --component-input-gap: var(--space-2);
   --component-input-height: var(--control-h-md);
   --component-input-padding-x: var(--space-3);
-  --component-input-bg: var(--surface-raised);
+  --component-input-bg: var(--color-semantic-background-elevated-normal);
   --component-input-radius: var(--radius-input);
   --component-input-border-width: var(--border-thin);
-  --component-input-border-color: var(--border-subtle);
-  --component-input-border-color-focus: var(--color-accent);
-  --component-input-border-color-invalid: var(--color-danger);
+  --component-input-border-color: var(--color-semantic-line-normal-normal);
+  --component-input-border-color-focus: var(--color-semantic-primary-normal);
+  --component-input-border-color-invalid: var(--color-semantic-status-negative);
   --component-input-focus-shadow: 0 0 0 4px var(--focus-ring);
-  --component-input-icon-color: var(--text-muted);
-  --component-input-text-color: var(--text-body);
+  --component-input-icon-color: var(--color-semantic-label-alternative);
+  --component-input-text-color: var(--color-semantic-label-normal);
   --component-input-font-size: var(--body1-size);
   --component-input-line-height: var(--body1-line);
   --component-input-letter-spacing: var(--body1-spacing);
-  --component-input-label-color: var(--label-normal);
+  --component-input-label-color: var(--color-semantic-label-normal);
   --component-input-label-font-size: var(--label1-size);
   --component-input-label-line-height: var(--label1-line);
   --component-input-label-letter-spacing: var(--label1-spacing);
   --component-input-label-font-weight: var(--fw-semibold);
-  --component-input-required-color: var(--color-danger);
+  --component-input-required-color: var(--color-semantic-status-negative);
 
   /* ---- Transient feedback (Toast, Snackbar) ----------------------------- */
   /* Source-model material: translucent inverse surface behind a backdrop blur. */
-  --component-transient-feedback-bg: color-mix(in srgb, var(--surface-inverse) 72%, transparent);
+  --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
   --component-transient-feedback-blur: 20px;
 
   /* ---- Card ------------------------------------------------------------ */
-  --component-card-bg: var(--surface-card);
-  --component-card-bg-dark: var(--surface-inverse);
-  --component-card-fg: var(--text-body);
-  --component-card-fg-dark: var(--text-on-dark);
-  --component-card-border: var(--border-thin) solid var(--border-subtle);
+  --component-card-bg: var(--color-semantic-background-elevated-normal);
+  --component-card-bg-dark: var(--color-semantic-inverse-background);
+  --component-card-fg: var(--color-semantic-label-normal);
+  --component-card-fg-dark: var(--color-semantic-static-white);
+  --component-card-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
   --component-card-border-dark: var(--border-hairline-dark);
   --component-card-radius: var(--radius-xl);
   --component-card-padding: var(--space-8);

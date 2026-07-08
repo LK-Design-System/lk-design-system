@@ -37,7 +37,7 @@ export const Playground = {
             <h3 style={{ margin: 0, fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
               항목 상태 패널
             </h3>
-            <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: 'var(--body2-size)' }}>
+            <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--body2-size)' }}>
               검토 중, compact mode
             </p>
           </div>
@@ -57,7 +57,7 @@ export const Elevation = {
       {['none', 'sm', 'md', 'lg'].map((elevation) => (
         <Card key={elevation} elevation={elevation}>
           <strong style={{ display: 'block', marginBottom: 'var(--space-2)' }}>{elevation}</strong>
-          <span style={{ color: 'var(--text-muted)', fontSize: 'var(--body2-size)' }}>
+          <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--body2-size)' }}>
             component card shadow 토큰을 사용합니다.
           </span>
         </Card>
@@ -78,14 +78,14 @@ export const InteractiveAndDark = {
           <h3 style={{ margin: 0, fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
             인터랙티브 light card
           </h3>
-          <p style={{ margin: 0, color: 'var(--text-muted)' }}>
+          <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)' }}>
             hover 상태는 `--component-card-shadow-lg`와 `--component-card-hover-transform`을 사용합니다.
           </p>
         </div>
       </Card>
       <Card dark interactive>
         <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
-          <h3 style={{ margin: 0, color: 'var(--text-on-dark)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
+          <h3 style={{ margin: 0, color: 'var(--color-semantic-static-white)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
             인터랙티브 dark card
           </h3>
           <p style={{ margin: 0, color: 'var(--text-on-dark-muted)' }}>
@@ -106,7 +106,7 @@ export const ContentCardPatterns = {
           platform="desktop"
           save
           topContent={<ContentBadge color="accent" size="xsmall">콘텐츠</ContentBadge>}
-          thumbnail={<Thumbnail ratio="16/10" placeholder={false} style={{ background: 'linear-gradient(135deg, var(--fill-normal), var(--fill-alt))' }} />}
+          thumbnail={<Thumbnail ratio="16/10" placeholder={false} style={{ background: 'linear-gradient(135deg, var(--color-semantic-fill-normal), var(--color-semantic-fill-alternative))' }} />}
           caption="카테고리"
           title="콘텐츠 카드"
           description="썸네일, 저장 액션, 제목, 설명, 보조 정보를 하나의 중립 카드 표면에 배치합니다."
@@ -114,7 +114,7 @@ export const ContentCardPatterns = {
         />
         <Card
           platform="mobile"
-          thumbnail={<Thumbnail ratio="4/3" placeholder={false} border style={{ background: 'linear-gradient(135deg, var(--fill-normal), var(--surface-card))' }} />}
+          thumbnail={<Thumbnail ratio="4/3" placeholder={false} border style={{ background: 'linear-gradient(135deg, var(--color-semantic-fill-normal), var(--color-semantic-background-elevated-normal))' }} />}
           caption="Mobile"
           title="모바일 콘텐츠 카드"
           description="모바일 축은 같은 정보 구조를 유지하고 padding과 width만 더 조밀하게 조정합니다."
@@ -124,21 +124,21 @@ export const ContentCardPatterns = {
       <section style={{ display: 'grid', gridTemplateColumns: 'minmax(min(420px, 100%), 1fr) minmax(min(260px, 100%), 0.7fr)', gap: 'var(--space-4)', alignItems: 'start' }}>
         <Card padding={8} elevation="sm">
           <ListCell
-            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--fill-normal)' }} />}
+            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--color-semantic-fill-normal)' }} />}
             title="리스트 카드 항목"
             description="leading, trailing, divider를 조합한 List Card 밀도"
             trailing={<ContentBadge color="accent">상태</ContentBadge>}
             divider
           />
           <ListCell
-            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--fill-normal)' }} />}
+            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--color-semantic-fill-normal)' }} />}
             title="선택된 리스트 항목"
             description="선택 상태와 divider"
             selected
             divider
           />
           <ListCell
-            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--fill-normal)' }} />}
+            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--color-semantic-fill-normal)' }} />}
             title="탐색 가능한 항목"
             description="chevron trailing affordance"
             chevron

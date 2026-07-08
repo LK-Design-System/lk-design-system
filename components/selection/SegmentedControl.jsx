@@ -40,7 +40,7 @@ export function SegmentedControl({
       role="tablist"
       style={{
         display: 'inline-flex', width: fill ? '100%' : undefined, justifySelf: fill ? undefined : 'start', padding: outlined ? 0 : trackPad, gap: outlined ? 0 : 2,
-        background: outlined ? 'var(--bw-white)' : 'var(--fill-normal)',
+        background: outlined ? 'var(--bw-white)' : 'var(--color-semantic-fill-normal)',
         border: outlined ? '1px solid var(--bw-border)' : 'none',
         borderRadius: trackRadius,
         overflow: 'hidden',
@@ -67,8 +67,8 @@ export function SegmentedControl({
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 4,
               cursor: disabledState || o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
               fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)', letterSpacing: 0,
-              color: disabledState || o.disabled ? 'var(--label-disable)' : active ? 'var(--lk-accent-ink)' : activeFocus ? 'var(--label-normal)' : 'var(--label-alternative)',
-              background: active ? (outlined ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)') : activeHover || activeFocus ? 'var(--fill-normal)' : 'transparent',
+              color: disabledState || o.disabled ? 'var(--color-semantic-label-disable)' : active ? 'var(--color-semantic-primary-normal)' : activeFocus ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
+              background: active ? (outlined ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)') : activeHover || activeFocus ? 'var(--color-semantic-fill-normal)' : 'transparent',
               borderRadius: outlined ? 0 : segmentRadius,
               borderLeft: outlined && index > 0 ? '1px solid var(--bw-border)' : 'none',
               boxShadow: [

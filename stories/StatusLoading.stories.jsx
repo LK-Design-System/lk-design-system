@@ -22,12 +22,12 @@ function DemoCard({ title, children }) {
         display: 'grid',
         gap: 'var(--space-3)',
         padding: 16,
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-lg)',
-        background: 'var(--surface-card)',
+        background: 'var(--color-semantic-background-elevated-normal)',
       }}
     >
-      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-normal)' }}>{title}</h3>
+      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-normal)' }}>{title}</h3>
       {children}
     </section>
   );
@@ -69,7 +69,7 @@ export const LoadingStates = {
 
         <DemoCard title="원형 스켈레톤 커스터마이징">
           <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-            <Skeleton variant="circle" width={44} color="var(--fill-strong)" />
+            <Skeleton variant="circle" width={44} color="var(--color-semantic-fill-strong)" />
             <div style={{ flex: 1 }}>
               <Skeleton variant="text" lines={2} />
             </div>
@@ -78,7 +78,7 @@ export const LoadingStates = {
       </section>
 
       <DemoCard title="인버스 서피스">
-        <div style={{ padding: 16, borderRadius: 'var(--radius-lg)', background: 'var(--surface-inverse)' }}>
+        <div style={{ padding: 16, borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-inverse-background)' }}>
           <Skeleton variant="text" lines={2} color="white" />
         </div>
       </DemoCard>

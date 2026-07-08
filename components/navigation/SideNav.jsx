@@ -60,16 +60,16 @@ export function SideNav({
     position: 'relative', display: 'flex', alignItems: 'center', justifyContent: col ? 'center' : 'flex-start', gap: 11,
     width: '100%', padding: col ? '11px 0' : '10px 12px', border: 'none', borderRadius: 'var(--radius-lg)',
     cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)',
-    background: active ? 'var(--lk-accent-tint-2)' : hovered && !disabled ? 'var(--lk-accent-tint)' : 'transparent', color: active ? 'var(--lk-accent-ink)' : 'var(--label-alternative)',
+    background: active ? 'var(--lk-accent-tint-2)' : hovered && !disabled ? 'var(--lk-accent-tint)' : 'transparent', color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
     transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra,
   });
   const labelSpan = (active, children) => (
     <span style={{ flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{children}</span>
   );
   const pill = (active, badge) => (
-    <span style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 9, fontSize: 11, fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--lk-accent-ink)' : 'var(--lk-accent-tint-2)', color: active ? 'var(--bw-white)' : 'var(--lk-accent-ink)' }}>{badge}</span>
+    <span style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 9, fontSize: 11, fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--color-semantic-primary-normal)' : 'var(--lk-accent-tint-2)', color: active ? 'var(--bw-white)' : 'var(--color-semantic-primary-normal)' }}>{badge}</span>
   );
-  const dot = <span style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--lk-accent-ink)' }} />;
+  const dot = <span style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)' }} />;
 
   const brand = col ? (headerCollapsed != null ? headerCollapsed : header) : header;
 
@@ -82,7 +82,7 @@ export function SideNav({
           {brand}
           {collapsible && (
             <button type="button" onClick={() => setCol(!col)} title={col ? '펼치기' : '접기'} aria-label={col ? '펼치기' : '접기'}
-              style={{ position: col ? 'static' : 'absolute', right: col ? 'auto' : 2, top: col ? 'auto' : 12, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, padding: 0, border: 'none', borderRadius: 8, background: 'transparent', color: 'var(--label-assistive)', cursor: 'pointer' }}>
+              style={{ position: col ? 'static' : 'absolute', right: col ? 'auto' : 2, top: col ? 'auto' : 12, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, padding: 0, border: 'none', borderRadius: 8, background: 'transparent', color: 'var(--color-semantic-label-assistive)', cursor: 'pointer' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="3" y="4" width="18" height="16" rx="3" />
                 <path d="M9.5 4v16" />
@@ -96,7 +96,7 @@ export function SideNav({
         {items.map((o, i) => {
           if (o.heading) return col
             ? <div key={'h' + i} style={{ height: 1, flexShrink: 0, background: 'var(--bw-border)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} />
-            : <div key={'h' + i} style={{ fontFamily: 'var(--font-sans)', fontSize: 10.5, fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--label-assistive)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div>;
+            : <div key={'h' + i} style={{ fontFamily: 'var(--font-sans)', fontSize: 10.5, fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div>;
 
           const kids = o.children || [];
           const title = typeof o.label === 'string' ? o.label : undefined;
@@ -108,7 +108,7 @@ export function SideNav({
             return (
               <React.Fragment key={o.value}>
                 <button type="button" aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={title} {...hoverProps(o.value)}
-                  style={row(false, o.disabled, { color: childActive ? 'var(--lk-accent-ink)' : 'var(--label-alternative)' }, hovKey === o.value)}>
+                  style={row(false, o.disabled, { color: childActive ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
                   {o.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
                   {!col && labelSpan(childActive, o.label)}
                   {!col && <Chevron open={isOpen} />}

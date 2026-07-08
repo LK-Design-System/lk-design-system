@@ -33,19 +33,19 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
           padding: '8px 10px',
           paddingLeft: 10 + level * 20,
           border: '1px solid transparent',
-          background: hovered ? 'var(--surface-subtle)' : 'transparent',
+          background: hovered ? 'var(--color-semantic-background-normal-alternative)' : 'transparent',
           cursor: 'pointer',
           borderRadius: 'var(--radius-md)',
           textAlign: 'left',
           fontFamily: 'var(--font-sans)',
           fontSize: 14,
           fontWeight: level === 0 ? 'var(--fw-semibold)' : 'var(--fw-medium)',
-          color: level === 0 ? 'var(--label-strong)' : 'var(--label-normal)',
+          color: level === 0 ? 'var(--color-semantic-label-strong)' : 'var(--color-semantic-label-normal)',
           transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)',
         }}
       >
         {has
-          ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--label-alternative)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? 'rotate(90deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)', flexShrink: 0 }}><path d="m9 18 6-6-6-6" /></svg>
+          ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? 'rotate(90deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)', flexShrink: 0 }}><path d="m9 18 6-6-6-6" /></svg>
           : <span style={{ width: 14, flexShrink: 0 }} />}
         {node.icon}
         <span>{node.label}</span>

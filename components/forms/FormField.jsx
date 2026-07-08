@@ -9,14 +9,14 @@ export function FormField({ label, required = false, helper, error, htmlFor, chi
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {label != null && (
-        <label htmlFor={htmlFor} style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)' }}>
+        <label htmlFor={htmlFor} style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>
           {label}
           {required && <span style={{ color: 'var(--bw-red)', marginLeft: 3 }}>*</span>}
         </label>
       )}
       {children}
       {(error != null || helper != null) && (
-        <span style={{ fontSize: 13, lineHeight: 1.5, color: error != null ? 'var(--bw-red)' : 'var(--label-alternative)' }}>{error != null ? error : helper}</span>
+        <span style={{ fontSize: 13, lineHeight: 1.5, color: error != null ? 'var(--bw-red)' : 'var(--color-semantic-label-alternative)' }}>{error != null ? error : helper}</span>
       )}
     </div>
   );

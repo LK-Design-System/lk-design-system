@@ -20,8 +20,8 @@ export function EditorToolbar({ items = [], value, defaultValue, onChange, orien
         return (
           <button key={i} type="button" title={it.label || v} aria-label={it.label || v} aria-pressed={on} onClick={() => pick(v)}
             style={{ width: 38, height: 38, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 0, borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-              background: on ? 'var(--lk-accent-ink)' : 'var(--surface-raised)', color: on ? 'var(--text-on-signal)' : 'var(--label-neutral)',
-              boxShadow: on ? 'none' : 'inset 0 0 0 1px var(--border-subtle)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+              background: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)', color: on ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-neutral)',
+              boxShadow: on ? 'none' : 'inset 0 0 0 1px var(--color-semantic-line-normal-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
             {it.icon || v}
           </button>
         );

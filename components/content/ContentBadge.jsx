@@ -1,10 +1,10 @@
 import React from "react";
 
 const TONES = {
-  signal: "var(--lk-accent-ink)",
-  accent: "var(--color-accent)",
-  navy: "var(--surface-inverse)",
-  neutral: "var(--label-alternative)",
+  signal: "var(--color-semantic-primary-normal)",
+  accent: "var(--color-semantic-primary-normal)",
+  navy: "var(--color-semantic-inverse-background)",
+  neutral: "var(--color-semantic-label-alternative)",
   positive: "var(--bw-green)",
   cautionary: "var(--bw-amber)",
   warning: "var(--bw-amber)",
@@ -92,20 +92,20 @@ export function ContentBadge({
   const softBg =
     accentBackgroundColor ||
     (resolvedTone === "accent"
-      ? "color-mix(in srgb, var(--color-accent) 14%, var(--surface-card))"
+      ? "color-mix(in srgb, var(--color-semantic-primary-normal) 14%, var(--color-semantic-background-elevated-normal))"
       : neutralColor
-        ? "var(--fill-normal)"
-        : `color-mix(in srgb, ${baseColor} 14%, var(--surface-card))`);
+        ? "var(--color-semantic-fill-normal)"
+        : `color-mix(in srgb, ${baseColor} 14%, var(--color-semantic-background-elevated-normal))`);
   const solidBg =
-    accentBackgroundColor || (neutralColor ? "var(--fill-strong)" : baseColor);
+    accentBackgroundColor || (neutralColor ? "var(--color-semantic-fill-strong)" : baseColor);
   const solidFg =
     accentContentColor ||
-    (neutralColor ? "var(--label-neutral)" : "var(--text-on-signal)");
+    (neutralColor ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-static-white)");
   const borderColor =
     accentContentColor ||
     (neutralColor
-      ? "var(--line-normal)"
-      : `color-mix(in srgb, ${baseColor} 48%, var(--surface-card))`);
+      ? "var(--color-semantic-line-normal-normal)"
+      : `color-mix(in srgb, ${baseColor} 48%, var(--color-semantic-background-elevated-normal))`);
   const looks =
     {
       solid: {

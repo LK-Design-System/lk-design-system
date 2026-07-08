@@ -22,7 +22,7 @@ export const ChartPatterns = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 920 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-4)' }}>
-        <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
           <BarChart
             height={180}
             showValue
@@ -34,7 +34,7 @@ export const ChartPatterns = {
             ]}
           />
         </div>
-        <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
           <DonutChart
             centerLabel="95%"
             segments={[
@@ -48,7 +48,7 @@ export const ChartPatterns = {
 
       <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
         <Sparkline data={[8, 12, 9, 16, 15, 22, 18, 28]} width={220} height={64} />
-        <span style={{ color: 'var(--label-neutral)' }}>일일 처리량 추세</span>
+        <span style={{ color: 'var(--color-semantic-label-neutral)' }}>일일 처리량 추세</span>
       </section>
     </main>
   ),

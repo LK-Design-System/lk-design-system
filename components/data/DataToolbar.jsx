@@ -57,11 +57,11 @@ export function DataToolbar({
               the export CTA where it reads ambiguously. */}
           {(title != null || count != null) && (
             <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-2)', minWidth: 0 }}>
-              {title != null && <strong style={{ color: 'var(--label-strong)', fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: compact ? 'var(--body2-line)' : 'var(--body1-line)' }}>{title}</strong>}
-              {count != null && <span style={{ color: 'var(--label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{count}개</span>}
+              {title != null && <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: compact ? 'var(--body2-line)' : 'var(--body1-line)' }}>{title}</strong>}
+              {count != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{count}개</span>}
             </div>
           )}
-          {description != null && <span style={{ color: 'var(--label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)' }}>{description}</span>}
+          {description != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)' }}>{description}</span>}
         </div>
         {/* Header right slot holds page-level actions only. */}
         {actions != null && (

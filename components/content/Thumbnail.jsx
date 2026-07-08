@@ -65,7 +65,7 @@ export function Thumbnail({
         ? "0"
         : toLen(radius);
   const borderStyle =
-    border === true ? "1px solid var(--border-subtle)" : border || "0";
+    border === true ? "1px solid var(--color-semantic-line-normal-normal)" : border || "0";
   const pos = ALIGN[overlayAlign] || ALIGN["top-left"];
   const hasOverlay = overlay || children;
 
@@ -79,8 +79,8 @@ export function Thumbnail({
         borderRadius: r,
         border: borderStyle,
         boxSizing: "border-box",
-        background: "var(--fill-normal)",
-        color: "var(--label-assistive)",
+        background: "var(--color-semantic-fill-normal)",
+        color: "var(--color-semantic-label-assistive)",
         ...style,
       }}
       {...rest}

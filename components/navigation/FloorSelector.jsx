@@ -13,13 +13,13 @@ export function FloorSelector({ floors = [], value, defaultValue, onChange, styl
   const pick = (v) => { if (!controlled) setInternal(v); onChange && onChange(v); };
   return (
     <div role="listbox" aria-label="층 선택" style={{ display: 'inline-flex', flexDirection: 'column', gap: 3, padding: 4,
-      background: 'var(--surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-1)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+      background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-1)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {norm.map((f) => {
         const on = f.value === cur;
         return (
           <button key={f.value} type="button" role="option" aria-selected={on} onClick={() => pick(f.value)}
             style={{ minWidth: 44, height: 40, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 0, borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-              fontSize: 14, fontWeight: on ? 800 : 600, background: on ? 'var(--lk-accent-ink)' : 'transparent', color: on ? 'var(--text-on-signal)' : 'var(--label-neutral)',
+              fontSize: 14, fontWeight: on ? 800 : 600, background: on ? 'var(--color-semantic-primary-normal)' : 'transparent', color: on ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-neutral)',
               transition: 'background var(--dur-fast) var(--ease-out)' }}>
             {f.label}
           </button>

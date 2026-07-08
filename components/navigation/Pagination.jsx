@@ -31,7 +31,7 @@ const selectStyle = {
   background: "var(--bw-white)",
   fontFamily: "var(--font-sans)",
   fontSize: 13,
-  color: "var(--label-normal)",
+  color: "var(--color-semantic-label-normal)",
 };
 
 /**
@@ -79,7 +79,7 @@ export function Pagination({
         borderRadius: "var(--radius-md)",
         background: "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
-        color: disabled ? "var(--label-disable)" : "var(--label-neutral)",
+        color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)",
       }}
     >
       <svg
@@ -145,7 +145,7 @@ export function Pagination({
               style={{
                 minWidth: 24,
                 textAlign: "center",
-                color: "var(--label-assistive)",
+                color: "var(--color-semantic-label-assistive)",
                 fontSize: "var(--body2-size)",
               }}
             >
@@ -175,8 +175,8 @@ export function Pagination({
                 fontVariantNumeric: "tabular-nums",
                 color:
                   p === current
-                    ? "var(--label-normal)"
-                    : "var(--label-alternative)",
+                    ? "var(--color-semantic-label-normal)"
+                    : "var(--color-semantic-label-alternative)",
               }}
             >
               {p}
@@ -192,7 +192,7 @@ export function Pagination({
             <span
               style={{
                 fontSize: 13,
-                color: "var(--label-alternative)",
+                color: "var(--color-semantic-label-alternative)",
                 fontVariantNumeric: "tabular-nums",
               }}
             >
@@ -206,7 +206,7 @@ export function Pagination({
                 alignItems: "center",
                 gap: 6,
                 fontSize: 13,
-                color: "var(--label-neutral)",
+                color: "var(--color-semantic-label-neutral)",
               }}
             >
               <span>{pageJumpLabel}</span>

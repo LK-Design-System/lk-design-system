@@ -28,10 +28,10 @@ function ToolbarButton({ item, active, disabled, onAction }) {
         justifyContent: 'center',
         width: 34,
         height: 34,
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-sm)',
-        background: active ? 'var(--lk-accent-tint-2)' : hover && !isDisabled ? 'var(--fill-normal)' : 'var(--surface-card)',
-        color: active ? 'var(--lk-accent-ink)' : 'var(--label-alternative)',
+        background: active ? 'var(--lk-accent-tint-2)' : hover && !isDisabled ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)',
+        color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
         cursor: isDisabled ? 'not-allowed' : 'pointer',
         opacity: isDisabled ? 0.45 : 1,
         transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)',
@@ -101,7 +101,7 @@ export function ContentEditor({
   const bodyLength = String(currentValue ?? '').length;
   const ring = invalid
     ? 'var(--bw-red)'
-    : (titleFocus || bodyFocus) ? 'var(--lk-accent-ink)' : 'var(--border-subtle)';
+    : (titleFocus || bodyFocus) ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-normal-normal)';
 
   const handleTitleChange = (event) => {
     const next = event.target.value;
@@ -130,17 +130,17 @@ export function ContentEditor({
         overflow: 'hidden',
         border: `1px solid ${ring}`,
         borderRadius: 'var(--radius-md)',
-        background: 'var(--surface-card)',
+        background: 'var(--color-semantic-background-elevated-normal)',
         boxShadow: titleFocus || bodyFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
         fontFamily: 'var(--font-sans)',
-        color: 'var(--label-normal)',
+        color: 'var(--color-semantic-label-normal)',
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
         ...style,
       }}
       {...rest}
     >
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4) var(--space-4) var(--space-3)' }}>
-        <label htmlFor={resolvedTitleId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--bw-red)' : 'var(--label-alternative)' }}>
+        <label htmlFor={resolvedTitleId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--bw-red)' : 'var(--color-semantic-label-alternative)' }}>
           {titleLabel}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
         </label>
         <input
@@ -159,7 +159,7 @@ export function ContentEditor({
             border: 'none',
             outline: 'none',
             background: 'transparent',
-            color: 'var(--label-strong)',
+            color: 'var(--color-semantic-label-strong)',
             fontFamily: 'var(--font-sans)',
             fontSize: 22,
             lineHeight: 1.35,
@@ -179,9 +179,9 @@ export function ContentEditor({
           justifyContent: 'space-between',
           gap: 'var(--space-3)',
           padding: '8px var(--space-4)',
-          borderTop: '1px solid var(--border-subtle)',
-          borderBottom: '1px solid var(--border-subtle)',
-          background: 'var(--surface-subtle)',
+          borderTop: '1px solid var(--color-semantic-line-normal-normal)',
+          borderBottom: '1px solid var(--color-semantic-line-normal-normal)',
+          background: 'var(--color-semantic-background-normal-alternative)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', minWidth: 0 }}>
@@ -198,13 +198,13 @@ export function ContentEditor({
             ))}
         </div>
         {status != null && (
-          <div role="status" aria-live="polite" style={{ flexShrink: 0, color: 'var(--label-alternative)', fontSize: 13, lineHeight: 1.35 }}>
+          <div role="status" aria-live="polite" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 13, lineHeight: 1.35 }}>
             {status}
           </div>
         )}
       </div>
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4)' }}>
-        <label htmlFor={resolvedBodyId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--bw-red)' : 'var(--label-alternative)' }}>
+        <label htmlFor={resolvedBodyId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--bw-red)' : 'var(--color-semantic-label-alternative)' }}>
           {bodyLabel}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
         </label>
         <textarea
@@ -227,7 +227,7 @@ export function ContentEditor({
             border: 'none',
             outline: 'none',
             background: 'transparent',
-            color: 'var(--label-normal)',
+            color: 'var(--color-semantic-label-normal)',
             fontFamily: 'var(--font-sans)',
             fontSize: 15,
             lineHeight: 1.68,
@@ -247,11 +247,11 @@ export function ContentEditor({
             gap: 'var(--space-3)',
             flexWrap: 'wrap',
             padding: '10px var(--space-4)',
-            borderTop: '1px solid var(--border-subtle)',
-            background: 'var(--surface-subtle)',
+            borderTop: '1px solid var(--color-semantic-line-normal-normal)',
+            background: 'var(--color-semantic-background-normal-alternative)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0, color: 'var(--label-alternative)', fontSize: 12.5, lineHeight: 1.45 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 12.5, lineHeight: 1.45 }}>
             {meta != null && <span>{meta}</span>}
             {helper != null && <span>{helper}</span>}
             {maxLength != null && <span>{bodyLength}/{maxLength}</span>}

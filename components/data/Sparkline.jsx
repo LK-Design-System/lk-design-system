@@ -5,7 +5,7 @@ import React from 'react';
  * A tiny inline trend chart from a number array — signal-ink stroke with a soft
  * area fill. No axes; for compact stat rows.
  */
-export function Sparkline({ data = [], width = 120, height = 32, color = 'var(--lk-accent-ink)', fill = true, strokeWidth = 2, style, ...rest }) {
+export function Sparkline({ data = [], width = 120, height = 32, color = 'var(--color-semantic-primary-normal)', fill = true, strokeWidth = 2, style, ...rest }) {
   if (!data.length) return <svg width={width} height={height} style={style} {...rest} />;
   const min = Math.min(...data);
   const max = Math.max(...data);

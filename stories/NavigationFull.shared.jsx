@@ -55,7 +55,7 @@ function AccentTintAction({ children }) {
       onMouseLeave={() => setHover(false)}
       style={{
         background: hover ? 'var(--lk-accent-tint-2)' : 'var(--lk-accent-tint)',
-        color: 'var(--accent-text)',
+        color: 'var(--color-semantic-primary-normal)',
         border: 'none',
         boxShadow: 'none',
       }}
@@ -72,7 +72,7 @@ export const AppNavigation = {
 
     return (
       <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1100, minWidth: 0 }}>
-        <div style={{ position: 'relative', zIndex: 2, width: '100%', minWidth: 0, overflow: 'hidden', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', minWidth: 0, overflow: 'hidden', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
           <TopBar
             navAlign="center"
             brand={<Lockup variant="inline" height={22} />}
@@ -129,8 +129,8 @@ export const SideNavUserMenuCard = {
           collapsed={collapsed}
           onCollapsedChange={setCollapsed}
           style={{ height: 560 }}
-          header={<Lockup variant="inline" color="var(--label-normal)" height={24} />}
-          headerCollapsed={<Lockup variant="mark" color="var(--label-normal)" height={20} />}
+          header={<Lockup variant="inline" color="var(--color-semantic-label-normal)" height={24} />}
+          headerCollapsed={<Lockup variant="mark" color="var(--color-semantic-label-normal)" height={20} />}
           items={[
             { heading: '문서' },
             { value: 'dash', label: '대시보드', icon: <Icon name="home" size={19} /> },
@@ -195,7 +195,7 @@ export const CompactNavigation = {
         </div>
       </section>
 
-      <div style={{ width: 360, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+      <div style={{ width: 360, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
         <BottomNav
           defaultValue="docs"
           items={[

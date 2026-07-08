@@ -45,20 +45,20 @@ export function Checkbox({
   };
   const d = isMark ? (normalizedSize === 'sm' ? 20 : 24) : (normalizedSize === 'sm' ? 16 : 18);
   const iconSize = isMark ? d : (normalizedSize === 'sm' ? 14 : 16);
-  const markTone = status === 'negative' ? 'var(--color-danger)' : 'var(--lk-accent-ink)';
-  const markIdleColor = activeHover || activeFocus ? 'var(--label-neutral)' : 'var(--bw-gray-300)';
+  const markTone = status === 'negative' ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-primary-normal)';
+  const markIdleColor = activeHover || activeFocus ? 'var(--color-semantic-label-neutral)' : 'var(--bw-gray-300)';
   const boxBackground = disabledState
-    ? (on || mixed ? 'var(--fill-strong)' : 'var(--fill-normal)')
-    : on || mixed ? 'var(--lk-accent-ink)' : activeHover ? 'var(--fill-normal)' : 'var(--bw-white)';
+    ? (on || mixed ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)')
+    : on || mixed ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-normal)' : 'var(--bw-white)';
   const boxBorder = disabledState
-    ? 'var(--line-neutral)'
-    : on || mixed ? 'var(--lk-accent-ink)' : activeHover || activeFocus ? 'var(--border-strong)' : 'var(--bw-border)';
-  const checkStroke = disabledState ? 'var(--label-disable)' : 'var(--text-on-signal)';
+    ? 'var(--color-semantic-line-normal-neutral)'
+    : on || mixed ? 'var(--color-semantic-primary-normal)' : activeHover || activeFocus ? 'var(--color-semantic-line-solid-normal)' : 'var(--bw-border)';
+  const checkStroke = disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)';
   const controlStyle = isMark
     ? {
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         width: d, height: d, flexShrink: 0, boxSizing: 'border-box',
-        color: disabledState ? 'var(--label-disable)' : on ? markTone : markIdleColor,
+        color: disabledState ? 'var(--color-semantic-label-disable)' : on ? markTone : markIdleColor,
         background: 'transparent',
         border: '0',
         borderRadius: 'var(--radius-pill)',
@@ -85,7 +85,7 @@ export function Checkbox({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: tight ? 4 : 8,
         cursor: disabledState ? 'not-allowed' : 'pointer',
-        fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--label-disable)' : 'var(--bw-ink)',
+        fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--bw-ink)',
         fontWeight: bold ? 'var(--fw-bold)' : undefined,
         ...style,
       }}

@@ -121,7 +121,7 @@ export const ButtonIconButtonSocialButtonCard = {
           <SocialButton provider="apple" iconOnly tone="brand" />
           <SocialButton provider="facebook" iconOnly tone="brand" />
         </div>
-        <div style={{ background: 'var(--surface-inverse)', borderRadius: 'var(--radius-xl)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ background: 'var(--color-semantic-inverse-background)', borderRadius: 'var(--radius-xl)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <Button variant="on-dark">Learn more</Button>
           <Button variant="signal">제품 문의</Button>
           <IconButton variant="on-dark" label="prev">{ArrowLeftIcon}</IconButton>

@@ -68,7 +68,7 @@ export function ThemeToggle({
       aria-label="테마"
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 3, height: h, padding: 3, boxSizing: 'border-box',
-        background: 'var(--fill-normal)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-pill)',
+        background: 'var(--color-semantic-fill-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-pill)',
         ...style,
       }}
       {...rest}
@@ -87,9 +87,9 @@ export function ThemeToggle({
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: showLabels ? 7 : 0,
               height: h - 6, paddingInline: showLabels ? 13 : 9, minWidth: showLabels ? 0 : h - 6,
               border: 'none', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
-              background: on ? 'var(--surface-card)' : 'transparent',
+              background: on ? 'var(--color-semantic-background-elevated-normal)' : 'transparent',
               boxShadow: on ? 'var(--shadow-xs)' : 'none',
-              color: on ? 'var(--accent-text)' : 'var(--label-alternative)',
+              color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
               fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
               transition: 'var(--component-button-transition)',
             }}

@@ -22,12 +22,12 @@ function DemoCard({ title, children }) {
         display: 'grid',
         gap: 'var(--space-3)',
         padding: 16,
-        border: '1px solid var(--border-subtle)',
+        border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-lg)',
-        background: 'var(--surface-card)',
+        background: 'var(--color-semantic-background-elevated-normal)',
       }}
     >
-      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-normal)' }}>{title}</h3>
+      <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-normal)' }}>{title}</h3>
       {children}
     </section>
   );

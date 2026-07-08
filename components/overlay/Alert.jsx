@@ -39,8 +39,8 @@ const platformStyle = {
 };
 
 const variantColor = {
-  normal: "var(--lk-accent-ink)",
-  assistive: "var(--label-neutral)",
+  normal: "var(--color-semantic-primary-normal)",
+  assistive: "var(--color-semantic-label-neutral)",
   negative: "var(--bw-red)",
 };
 
@@ -151,7 +151,7 @@ export function Alert({
               fontSize: p.titleSize,
               fontWeight: p.titleWeight,
               letterSpacing: 0,
-              color: "var(--label-normal)",
+              color: "var(--color-semantic-label-normal)",
               marginBottom: 8,
             }}
           >
@@ -163,7 +163,7 @@ export function Alert({
             style={{
               fontSize: "var(--body2-size)",
               lineHeight: 1.55,
-              color: "var(--label-neutral)",
+              color: "var(--color-semantic-label-neutral)",
               wordBreak: "keep-all",
             }}
           >
@@ -187,9 +187,9 @@ export function Alert({
                   type="button"
                   style={{
                     ...buttonBase,
-                    color: "var(--label-normal)",
+                    color: "var(--color-semantic-label-normal)",
                     background:
-                      platform === "ios" ? "var(--fill-normal)" : "transparent",
+                      platform === "ios" ? "var(--color-semantic-fill-normal)" : "transparent",
                   }}
                   onClick={onCancel || dismiss}
                 >
@@ -200,7 +200,7 @@ export function Alert({
                 type="button"
                 style={{
                   ...buttonBase,
-                  color: platform === "ios" ? "var(--text-on-inverse)" : accent,
+                  color: platform === "ios" ? "var(--color-semantic-inverse-label)" : accent,
                   background: platform === "ios" ? accent : "transparent",
                 }}
                 onClick={onConfirm || dismiss}

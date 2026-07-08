@@ -54,7 +54,7 @@ export function Divider({
             fontSize: 13,
             fontWeight: "var(--fw-semibold)",
             letterSpacing: 0,
-            color: "var(--label-alternative)",
+            color: "var(--color-semantic-label-alternative)",
             whiteSpace: "nowrap",
           }}
         >

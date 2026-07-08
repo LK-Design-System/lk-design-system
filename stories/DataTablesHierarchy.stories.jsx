@@ -28,13 +28,13 @@ const rows = [
 const statusTone = { '진행 중': 'positive', '검토 중': 'cautionary', 중지: 'offline' };
 
 function ProgressCell({ value }) {
-  const tone = value <= 20 ? 'var(--bw-red)' : value <= 50 ? 'var(--bw-amber)' : 'var(--lk-accent-ink)';
+  const tone = value <= 20 ? 'var(--bw-red)' : value <= 50 ? 'var(--bw-amber)' : 'var(--color-semantic-primary-normal)';
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10, width: '100%', minWidth: 112 }}>
-      <span style={{ position: 'relative', width: 64, height: 5, borderRadius: 'var(--radius-pill)', background: 'var(--fill-strong)', overflow: 'hidden' }}>
+      <span style={{ position: 'relative', width: 64, height: 5, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-strong)', overflow: 'hidden' }}>
         <span style={{ position: 'absolute', insetBlock: 0, left: 0, width: `${value}%`, borderRadius: 'inherit', background: tone }} />
       </span>
-      <strong style={{ minWidth: 36, color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}%</strong>
+      <strong style={{ minWidth: 36, color: 'var(--color-semantic-label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}%</strong>
     </span>
   );
 }
@@ -53,26 +53,26 @@ export const TablePatterns = {
       <section style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: 16 }}>
           <div>
-            <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.35, color: 'var(--label-strong)' }}>항목 목록</h3>
-            <p style={{ margin: '4px 0 0', fontSize: 13, lineHeight: 1.45, color: 'var(--label-alternative)' }}>상태, 그룹, 진행률 정보를 한 화면에서 비교합니다.</p>
+            <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>항목 목록</h3>
+            <p style={{ margin: '4px 0 0', fontSize: 13, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>상태, 그룹, 진행률 정보를 한 화면에서 비교합니다.</p>
           </div>
           <StatusBadge tone="online">3개 등록</StatusBadge>
         </div>
-        <DataGrid columns={columns} rows={rows} selectable style={{ minWidth: 0, background: 'var(--surface-card)' }} />
+        <DataGrid columns={columns} rows={rows} selectable style={{ minWidth: 0, background: 'var(--color-semantic-background-elevated-normal)' }} />
       </section>
 
       <section style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>
         <div>
-          <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-strong)' }}>정적 표</h3>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--label-alternative)' }}>정렬과 선택이 필요 없는 읽기 전용 데이터에는 기본 Table을 사용합니다.</p>
+          <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>정적 표</h3>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>정렬과 선택이 필요 없는 읽기 전용 데이터에는 기본 Table을 사용합니다.</p>
         </div>
         <Table columns={columns} rows={rows} style={{ minWidth: 0 }} />
       </section>
 
       <section style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 420 }}>
         <div>
-          <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-strong)' }}>항목 메타데이터</h3>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--label-alternative)' }}>표로 만들기에는 작은 용어-값 쌍은 DescriptionList로 정리합니다.</p>
+          <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>항목 메타데이터</h3>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표로 만들기에는 작은 용어-값 쌍은 DescriptionList로 정리합니다.</p>
         </div>
         <DescriptionList
           columns={1}

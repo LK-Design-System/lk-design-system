@@ -15,14 +15,14 @@ export function Notification({ icon, title, description, time, unread = false, o
       style={{ display: 'flex', gap: 12, padding: '14px 16px', borderRadius: 'var(--radius-lg)', cursor: onClick ? 'pointer' : 'default', background: unread ? 'var(--lk-accent-tint)' : 'transparent', fontFamily: 'var(--font-sans)', ...style }}
       {...rest}
     >
-      {icon != null && <span style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 'var(--radius-md)', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--lk-accent-ink)' }}>{icon}</span>}
+      {icon != null && <span style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 'var(--radius-md)', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-semantic-primary-normal)' }}>{icon}</span>}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--label-normal)' }}>{title}</span>
+          <span style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</span>
           {unread && <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--bw-red)', flexShrink: 0 }} />}
         </div>
-        {description != null && <div style={{ marginTop: 2, fontSize: 13, lineHeight: 1.55, color: 'var(--label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
-        {time != null && <div style={{ marginTop: 4, fontSize: 12, color: 'var(--label-assistive)' }}>{time}</div>}
+        {description != null && <div style={{ marginTop: 2, fontSize: 13, lineHeight: 1.55, color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
+        {time != null && <div style={{ marginTop: 4, fontSize: 12, color: 'var(--color-semantic-label-assistive)' }}>{time}</div>}
       </div>
     </div>
   );

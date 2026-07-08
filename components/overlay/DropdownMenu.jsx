@@ -3,8 +3,8 @@ import React from "react";
 function CheckMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
   const activeColor = disabled
-    ? "var(--label-disable)"
-    : "var(--lk-accent-ink)";
+    ? "var(--color-semantic-label-disable)"
+    : "var(--color-semantic-primary-normal)";
   if (variant === "radio") {
     return (
       <span
@@ -42,7 +42,7 @@ function CheckMark({ variant, checked, disabled }) {
         borderRadius: 4,
         border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
         background: checked ? activeColor : "transparent",
-        color: disabled ? "var(--fill-normal)" : "var(--text-on-inverse)",
+        color: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-inverse-label)",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
@@ -138,8 +138,8 @@ function MenuItemButton({
         color: item.danger
           ? "var(--bw-red)"
           : disabled
-            ? "var(--label-disable)"
-            : "var(--label-normal)",
+            ? "var(--color-semantic-label-disable)"
+            : "var(--color-semantic-label-normal)",
         opacity: disabled ? 0.72 : 1,
       }}
     >
@@ -160,7 +160,7 @@ function MenuItemButton({
           <span
             style={{
               fontSize: "var(--label2-size)",
-              color: "var(--label-alternative)",
+              color: "var(--color-semantic-label-alternative)",
               fontWeight: "var(--fw-medium)",
             }}
           >
@@ -172,7 +172,7 @@ function MenuItemButton({
         <span
           style={{
             fontSize: 12,
-            color: "var(--label-assistive)",
+            color: "var(--color-semantic-label-assistive)",
             flexShrink: 0,
           }}
         >
@@ -297,8 +297,8 @@ export function DropdownMenu({
                     padding: "0 10px",
                     border: "none",
                     borderRadius: 7,
-                    background: "var(--lk-accent-ink)",
-                    color: "var(--text-on-inverse)",
+                    background: "var(--color-semantic-primary-normal)",
+                    color: "var(--color-semantic-inverse-label)",
                     fontFamily: "var(--font-sans)",
                     fontSize: 12,
                     fontWeight: "var(--fw-bold)",

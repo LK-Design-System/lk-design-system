@@ -13,12 +13,12 @@ export function Breadcrumb({ items = [], style, ...rest }) {
         return (
           <React.Fragment key={i}>
             {last || !it.href ? (
-              <span aria-current={last ? 'page' : undefined} style={{ color: last ? 'var(--label-normal)' : 'var(--label-alternative)', fontWeight: last ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0 }}>{it.label}</span>
+              <span aria-current={last ? 'page' : undefined} style={{ color: last ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', fontWeight: last ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0 }}>{it.label}</span>
             ) : (
-              <a href={it.href} style={{ color: 'var(--label-alternative)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, textDecoration: 'none' }}>{it.label}</a>
+              <a href={it.href} style={{ color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, textDecoration: 'none' }}>{it.label}</a>
             )}
             {!last && (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
             )}
           </React.Fragment>
         );
