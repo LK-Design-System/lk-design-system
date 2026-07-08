@@ -22,11 +22,11 @@ export function TelemetryGauge({ value = 0, min = 0, max = 100, unit = '', label
           <circle cx={cx} cy={cy} r={r} fill="none" stroke={c} strokeWidth={thickness} strokeLinecap="round" strokeDasharray={`${dash * pct} ${C}`} style={{ transition: 'stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)' }} />
         </svg>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ fontSize: size * 0.24, fontWeight: 800, color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums', lineHeight: 1 }}>{Math.round(value)}</span>
-          {unit && <span style={{ fontSize: size * 0.11, fontWeight: 600, color: 'var(--label-alternative)', marginTop: 2 }}>{unit}</span>}
+          <span style={{ fontSize: size * 0.24, fontWeight: 'var(--fw-extra)', color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums', lineHeight: 1 }}>{Math.round(value)}</span>
+          {unit && <span style={{ fontSize: size * 0.11, fontWeight: 'var(--fw-semibold)', color: 'var(--label-alternative)', marginTop: 2 }}>{unit}</span>}
         </div>
       </div>
-      {label != null && <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--label-alternative)', wordBreak: 'keep-all', textAlign: 'center' }}>{label}</span>}
+      {label != null && <span style={{ fontSize: 12, fontWeight: 'var(--fw-semibold)', color: 'var(--label-alternative)', wordBreak: 'keep-all', textAlign: 'center' }}>{label}</span>}
     </div>
   );
 }

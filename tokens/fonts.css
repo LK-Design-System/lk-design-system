@@ -61,4 +61,7 @@
   --font-brand: var(--font-sans);
   /* --font-alt kept as a token hook for product codes / numerals. */
   --font-alt: var(--font-sans);
+  /* Monospace hook for code / identifiers (ROS topic types, IDs, tabular codes).
+     System stack, offline-safe — LK ships no vendored mono face. */
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }

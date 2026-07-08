@@ -330,6 +330,11 @@
         "$value": "Pretendard JP, Pretendard, system-ui, sans-serif",
         "css": "--font-sans"
       },
+      "fontMono": {
+        "$type": "fontFamily",
+        "$value": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+        "css": "--font-mono"
+      },
       "body1": {
         "$type": "typography",
         "$value": {

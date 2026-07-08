@@ -79,7 +79,7 @@ function TopicNode({ node, depth, onToggle }) {
               fontSize: 12,
               lineHeight: '18px',
               color: 'var(--label-alternative)',
-              fontFamily: 'ui-monospace,SFMono-Regular,monospace',
+              fontFamily: 'var(--font-mono)',
             }}
           >
             {node.type}

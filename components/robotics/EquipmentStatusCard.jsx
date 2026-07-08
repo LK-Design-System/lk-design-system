@@ -48,7 +48,7 @@ export function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone 
       {...rest}
     >
       {icon != null && (
-        <span style={{ width: 38, height: 38, borderRadius: 'var(--radius-md)', flexShrink: 0, background: 'var(--fill-normal)',
+        <span style={{ width: 38, height: 38, borderRadius: 'var(--radius-md)', flexShrink: 0, background: 'var(--fill-strong)',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--label-alternative)' }}>
           {icon}
         </span>
@@ -56,12 +56,12 @@ export function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone 
 
       <div style={{ flex: 1, minWidth: 0 }}>
         {title != null && (
-          <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--label-strong)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ fontSize: 15, fontWeight: 'var(--fw-bold)', color: 'var(--label-strong)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {title}
           </div>
         )}
         {(hasChips || ringCaption != null) && (
-          <div style={{ marginTop: 3, fontSize: 12, fontWeight: 600, color: 'var(--label-alternative)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <div style={{ marginTop: 3, fontSize: 12, fontWeight: 'var(--fw-semibold)', color: 'var(--label-alternative)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {hasChips ? chips.map((ch) => ch.label).join(' · ') : ringCaption}
           </div>
         )}
@@ -69,7 +69,7 @@ export function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone 
 
       {ringLabel != null && (
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0, whiteSpace: 'nowrap',
-          fontSize: 13, fontWeight: 600, letterSpacing: 0, color: 'var(--label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
+          fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
           {moving ? (
             <span aria-label={direction === 'up' ? '상승 중' : '하강 중'} style={{ display: 'inline-flex', color: c, animation: 'lk-equip-dim 1.5s var(--ease-in-out) infinite' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">

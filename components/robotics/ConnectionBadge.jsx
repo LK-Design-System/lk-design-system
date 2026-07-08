@@ -25,7 +25,7 @@ export function ConnectionBadge({ status = 'online', label, showLabel = true, si
   const bw = size === 'sm' ? 3 : 4;
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-sans)',
-      fontSize: size === 'sm' ? 12 : 13, fontWeight: 600, color: 'var(--label-neutral)', ...style }} {...rest}>
+      fontSize: size === 'sm' ? 12 : 13, fontWeight: 'var(--fw-semibold)', color: 'var(--label-neutral)', ...style }} {...rest}>
       <span style={{ display: 'inline-flex', alignItems: 'flex-end', gap: 2, height: h,
         animation: status === 'reconnecting' ? 'lk-conn-blink 1s var(--ease-in-out) infinite' : 'none' }}>
         {[0, 1, 2].map((i) => (

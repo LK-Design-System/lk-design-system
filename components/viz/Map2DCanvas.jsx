@@ -1,15 +1,6 @@
 import React from 'react';
-
-function ZBtn({ children, onClick, label }) {
-  return (
-    <button type="button" onClick={onClick} aria-label={label} title={label}
-      style={{ width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', background: 'var(--surface-raised)',
-        color: 'var(--label-neutral)', cursor: 'pointer', fontSize: 16, fontWeight: 700, lineHeight: 1, boxShadow: 'var(--shadow-sm)' }}>
-      {children}
-    </button>
-  );
-}
+import { Icon } from '../icon/Icon.jsx';
+import { ViewerToolbar, ViewerToolbarButton } from './ViewerToolbar.jsx';
 
 /**
  * LK ROBOTICS — Map2DCanvas
@@ -44,13 +35,13 @@ export function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true
         {children}
       </div>
       {controls && (
-        <div style={{ position: 'absolute', right: 10, bottom: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <ZBtn label="확대" onClick={() => zoom(1.2)}>+</ZBtn>
-          <ZBtn label="축소" onClick={() => zoom(0.8)}>−</ZBtn>
-          <ZBtn label="초기화" onClick={() => setT({ x: 0, y: 0, z: 1 })}>⤾</ZBtn>
-        </div>
+        <ViewerToolbar orientation="vertical" style={{ position: 'absolute', right: 10, bottom: 10 }}>
+          <ViewerToolbarButton label="확대" onClick={() => zoom(1.2)}><Icon name="plus" size={18} /></ViewerToolbarButton>
+          <ViewerToolbarButton label="축소" onClick={() => zoom(0.8)}><Icon name="minus" size={18} /></ViewerToolbarButton>
+          <ViewerToolbarButton label="초기화" onClick={() => setT({ x: 0, y: 0, z: 1 })}><Icon name="reset" size={18} /></ViewerToolbarButton>
+        </ViewerToolbar>
       )}
-      {controls && <span style={{ position: 'absolute', left: 10, bottom: 10, fontSize: 11, fontWeight: 700, color: 'var(--label-alternative)', background: 'var(--surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: '2px 7px', fontVariantNumeric: 'tabular-nums' }}>{Math.round(t.z * 100)}%</span>}
+      {controls && <span style={{ position: 'absolute', left: 10, bottom: 10, fontSize: 11, fontWeight: 'var(--fw-bold)', color: 'var(--label-alternative)', background: 'var(--surface-raised)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: '2px 7px', fontVariantNumeric: 'tabular-nums' }}>{Math.round(t.z * 100)}%</span>}
     </div>
   );
 }

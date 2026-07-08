@@ -1609,7 +1609,7 @@ function Bubble({ children, tone = "navy", tail = "bottom", style, ...rest }) {
 // components/content/Code.jsx
 import React28 from "react";
 import { jsx as jsx27 } from "react/jsx-runtime";
-var MONO2 = 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace';
+var MONO2 = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace)';
 function Code({ children, block = false, style, ...rest }) {
   if (block) {
     return /* @__PURE__ */ jsx27("pre", { style: { margin: 0, padding: "14px 16px", background: "var(--surface-inverse)", color: "var(--label-on-dark)", borderRadius: "var(--radius-lg)", overflowX: "auto", fontFamily: MONO2, fontSize: 13, lineHeight: 1.6, ...style }, ...rest, children: /* @__PURE__ */ jsx27("code", { children }) });
@@ -5316,7 +5316,7 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
             border-top: 1px solid var(--border-subtle) !important;
           }
         }` }),
-    title != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border-subtle)", fontSize: 13, fontWeight: 700, color: "var(--label-strong)" }, children: title }),
+    title != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border-subtle)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--label-strong)" }, children: title }),
     /* @__PURE__ */ jsxs43("div", { className: bodyClass, style: { display: "grid", gridTemplateColumns: `${tools != null ? "auto " : ""}minmax(0, 1fr)${panel != null ? " var(--lk-editor-panel-width)" : ""}`, flex: 1, minHeight: 0 }, children: [
       tools != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--border-subtle)", background: "var(--surface-subtle)" }, children: tools }),
       /* @__PURE__ */ jsx51("div", { style: { minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
@@ -10628,7 +10628,7 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
     gap: 7,
     fontFamily: "var(--font-sans)",
     fontSize: size === "sm" ? 12 : 13,
-    fontWeight: 600,
+    fontWeight: "var(--fw-semibold)",
     color: "var(--label-neutral)",
     ...style
   }, ...rest, children: [
@@ -10696,15 +10696,15 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           height: 38,
           borderRadius: "var(--radius-md)",
           flexShrink: 0,
-          background: "var(--fill-normal)",
+          background: "var(--fill-strong)",
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
           color: "var(--label-alternative)"
         }, children: icon }),
         /* @__PURE__ */ jsxs97("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ jsx130("div", { style: { fontSize: 15, fontWeight: 700, color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-          (hasChips || ringCaption != null) && /* @__PURE__ */ jsx130("div", { style: { marginTop: 3, fontSize: 12, fontWeight: 600, color: "var(--label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
+          title != null && /* @__PURE__ */ jsx130("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+          (hasChips || ringCaption != null) && /* @__PURE__ */ jsx130("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
         ] }),
         ringLabel != null && /* @__PURE__ */ jsxs97("span", { style: {
           display: "inline-flex",
@@ -10713,7 +10713,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           flexShrink: 0,
           whiteSpace: "nowrap",
           fontSize: 13,
-          fontWeight: 600,
+          fontWeight: "var(--fw-semibold)",
           letterSpacing: 0,
           color: "var(--label-neutral)",
           fontVariantNumeric: "tabular-nums"
@@ -10835,7 +10835,7 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
         ]
       }
     ),
-    label != null && /* @__PURE__ */ jsx131("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "var(--label-alternative)" }, children: label })
+    label != null && /* @__PURE__ */ jsx131("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: label })
   ] });
 }
 
@@ -10879,10 +10879,10 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }, children: image ? /* @__PURE__ */ jsx132("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx132("span", { style: { fontSize: 17, fontWeight: 800, color: "var(--label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
-    /* @__PURE__ */ jsx132("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: 700, color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
+    }, children: image ? /* @__PURE__ */ jsx132("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx132("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
+    /* @__PURE__ */ jsx132("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
     /* @__PURE__ */ jsxs99("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
-      mode != null && /* @__PURE__ */ jsx132("span", { style: { fontSize: 11, fontWeight: 700, letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--label-normal)", whiteSpace: "nowrap" }, children: mode }),
+      mode != null && /* @__PURE__ */ jsx132("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--label-normal)", whiteSpace: "nowrap" }, children: mode }),
       /* @__PURE__ */ jsxs99("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
         /* @__PURE__ */ jsx132("span", { role: "img", title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx132("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--fill-strong)" } }, i)) }),
         hasBat && /* @__PURE__ */ jsxs99("span", { style: { display: "inline-flex", alignItems: "center", gap: 6 }, children: [
@@ -10890,7 +10890,7 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
             /* @__PURE__ */ jsx132("span", { style: { display: "block", height: "100%", width: `${b}%`, background: batFill, borderRadius: 1 } }),
             /* @__PURE__ */ jsx132("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--label-alternative)", borderRadius: "0 1px 1px 0" } })
           ] }),
-          /* @__PURE__ */ jsxs99("span", { style: { fontSize: 12, fontWeight: 700, color: batText, fontVariantNumeric: "tabular-nums" }, children: [
+          /* @__PURE__ */ jsxs99("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: batText, fontVariantNumeric: "tabular-nums" }, children: [
             b,
             "%"
           ] })
@@ -11095,7 +11095,7 @@ function TopicNode({ node, depth, onToggle }) {
                 fontSize: 12,
                 lineHeight: "18px",
                 color: "var(--label-alternative)",
-                fontFamily: "ui-monospace,SFMono-Regular,monospace"
+                fontFamily: "var(--font-mono)"
               },
               children: node.type
             }
@@ -12130,39 +12130,56 @@ function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue
 }
 
 // components/viz/Map2DCanvas.jsx
+import React152 from "react";
+
+// components/viz/ViewerToolbar.jsx
 import React151 from "react";
-import { jsx as jsx148, jsxs as jsxs115 } from "react/jsx-runtime";
-function ZBtn({ children, onClick, label }) {
+import { jsx as jsx148 } from "react/jsx-runtime";
+function ViewerToolbar({ children, orientation = "vertical", style, ...rest }) {
+  return /* @__PURE__ */ jsx148("div", { style: {
+    display: "inline-flex",
+    flexDirection: orientation === "vertical" ? "column" : "row",
+    gap: 2,
+    padding: 4,
+    background: "var(--surface-raised)",
+    border: "1px solid var(--border-subtle)",
+    borderRadius: "var(--radius-md)",
+    boxShadow: "var(--shadow-md)",
+    ...style
+  }, ...rest, children });
+}
+function ViewerToolbarButton({ children, active = false, label, style, ...rest }) {
   return /* @__PURE__ */ jsx148(
     "button",
     {
       type: "button",
-      onClick,
       "aria-label": label,
       title: label,
       style: {
-        width: 30,
-        height: 30,
+        width: 34,
+        height: 34,
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        border: "1px solid var(--border-subtle)",
+        border: 0,
         borderRadius: "var(--radius-sm)",
-        background: "var(--surface-raised)",
-        color: "var(--label-neutral)",
         cursor: "pointer",
-        fontSize: 16,
-        fontWeight: 700,
-        lineHeight: 1,
-        boxShadow: "var(--shadow-sm)"
+        background: active ? "var(--lk-accent-tint)" : "transparent",
+        color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
+        transition: "background var(--dur-fast) var(--ease-out)",
+        ...style
       },
+      ...rest,
       children
     }
   );
 }
+
+// components/viz/Map2DCanvas.jsx
+import { jsx as jsx149, jsxs as jsxs115 } from "react/jsx-runtime";
 function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, controls = true, style, ...rest }) {
-  const [t, setT] = React151.useState({ x: 0, y: 0, z: 1 });
-  const drag = React151.useRef(null);
+  const [t, setT] = React152.useState({ x: 0, y: 0, z: 1 });
+  const drag = React152.useRef(null);
   const clamp = (z) => Math.max(minZoom, Math.min(maxZoom, z));
   const down = (e) => {
     drag.current = { x: e.clientX, y: e.clientY, tx: t.x, ty: t.y };
@@ -12208,13 +12225,13 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx148("div", { style: { position: "absolute", left: "50%", top: "50%", transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, transformOrigin: "0 0" }, children }),
-        controls && /* @__PURE__ */ jsxs115("div", { style: { position: "absolute", right: 10, bottom: 10, display: "flex", flexDirection: "column", gap: 4 }, children: [
-          /* @__PURE__ */ jsx148(ZBtn, { label: "\uD655\uB300", onClick: () => zoom(1.2), children: "+" }),
-          /* @__PURE__ */ jsx148(ZBtn, { label: "\uCD95\uC18C", onClick: () => zoom(0.8), children: "\u2212" }),
-          /* @__PURE__ */ jsx148(ZBtn, { label: "\uCD08\uAE30\uD654", onClick: () => setT({ x: 0, y: 0, z: 1 }), children: "\u293E" })
+        /* @__PURE__ */ jsx149("div", { style: { position: "absolute", left: "50%", top: "50%", transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, transformOrigin: "0 0" }, children }),
+        controls && /* @__PURE__ */ jsxs115(ViewerToolbar, { orientation: "vertical", style: { position: "absolute", right: 10, bottom: 10 }, children: [
+          /* @__PURE__ */ jsx149(ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoom(1.2), children: /* @__PURE__ */ jsx149(Icon, { name: "plus", size: 18 }) }),
+          /* @__PURE__ */ jsx149(ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoom(0.8), children: /* @__PURE__ */ jsx149(Icon, { name: "minus", size: 18 }) }),
+          /* @__PURE__ */ jsx149(ViewerToolbarButton, { label: "\uCD08\uAE30\uD654", onClick: () => setT({ x: 0, y: 0, z: 1 }), children: /* @__PURE__ */ jsx149(Icon, { name: "reset", size: 18 }) })
         ] }),
-        controls && /* @__PURE__ */ jsxs115("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: 700, color: "var(--label-alternative)", background: "var(--surface-raised)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
+        controls && /* @__PURE__ */ jsxs115("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: "var(--fw-bold)", color: "var(--label-alternative)", background: "var(--surface-raised)", border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
           Math.round(t.z * 100),
           "%"
         ] })
@@ -12224,8 +12241,8 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
 }
 
 // components/viz/Scene3DFrame.jsx
-import React152 from "react";
-import { jsx as jsx149, jsxs as jsxs116 } from "react/jsx-runtime";
+import React153 from "react";
+import { jsx as jsx150, jsxs as jsxs116 } from "react/jsx-runtime";
 function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty, style, ...rest }) {
   return /* @__PURE__ */ jsxs116("div", { style: {
     position: "relative",
@@ -12241,18 +12258,18 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
   }, ...rest, children: [
     children,
     (title != null || badges != null) && /* @__PURE__ */ jsxs116("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 8, pointerEvents: "none" }, children: [
-      title != null && /* @__PURE__ */ jsx149("span", { style: { fontSize: 12, fontWeight: 800, letterSpacing: "1px", textTransform: "uppercase", color: "var(--text-on-inverse)", opacity: 0.9 }, children: title }),
+      title != null && /* @__PURE__ */ jsx150("span", { style: { fontSize: 12, fontWeight: "var(--fw-extra)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--text-on-inverse)", opacity: 0.9 }, children: title }),
       badges
     ] }),
-    toolbar != null && /* @__PURE__ */ jsx149("div", { style: { position: "absolute", right: 12, top: 12 }, children: toolbar }),
-    loading && /* @__PURE__ */ jsx149("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "var(--scrim-dark)", color: "var(--text-on-inverse)", fontSize: 13, fontWeight: 600 }, children: "\uBD88\uB7EC\uC624\uB294 \uC911\u2026" }),
-    !loading && empty != null && /* @__PURE__ */ jsx149("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--inverse-label-alternative)", fontSize: 13 }, children: empty })
+    toolbar != null && /* @__PURE__ */ jsx150("div", { style: { position: "absolute", right: 12, top: 12 }, children: toolbar }),
+    loading && /* @__PURE__ */ jsx150("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "var(--scrim-dark)", color: "var(--text-on-inverse)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: "\uBD88\uB7EC\uC624\uB294 \uC911\u2026" }),
+    !loading && empty != null && /* @__PURE__ */ jsx150("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--inverse-label-alternative)", fontSize: 13 }, children: empty })
   ] });
 }
 
 // components/viz/TelemetryGauge.jsx
-import React153 from "react";
-import { jsx as jsx150, jsxs as jsxs117 } from "react/jsx-runtime";
+import React154 from "react";
+import { jsx as jsx151, jsxs as jsxs117 } from "react/jsx-runtime";
 var TONE2 = { signal: "var(--lk-accent-ink)", positive: "var(--color-positive)", cautionary: "var(--color-cautionary)", negative: "var(--color-danger)" };
 function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size = 120, thickness = 10, thresholds, tone, style, ...rest }) {
   const pct = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
@@ -12266,21 +12283,21 @@ function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size 
   return /* @__PURE__ */ jsxs117("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsxs117("div", { style: { position: "relative", width: size, height: size }, children: [
       /* @__PURE__ */ jsxs117("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, style: { transform: "rotate(135deg)" }, children: [
-        /* @__PURE__ */ jsx150("circle", { cx, cy, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
-        /* @__PURE__ */ jsx150("circle", { cx, cy, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash * pct} ${C}`, style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" } })
+        /* @__PURE__ */ jsx151("circle", { cx, cy, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
+        /* @__PURE__ */ jsx151("circle", { cx, cy, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash * pct} ${C}`, style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" } })
       ] }),
       /* @__PURE__ */ jsxs117("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }, children: [
-        /* @__PURE__ */ jsx150("span", { style: { fontSize: size * 0.24, fontWeight: 800, color: "var(--label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
-        unit && /* @__PURE__ */ jsx150("span", { style: { fontSize: size * 0.11, fontWeight: 600, color: "var(--label-alternative)", marginTop: 2 }, children: unit })
+        /* @__PURE__ */ jsx151("span", { style: { fontSize: size * 0.24, fontWeight: "var(--fw-extra)", color: "var(--label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
+        unit && /* @__PURE__ */ jsx151("span", { style: { fontSize: size * 0.11, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)", marginTop: 2 }, children: unit })
       ] })
     ] }),
-    label != null && /* @__PURE__ */ jsx150("span", { style: { fontSize: 12, fontWeight: 600, color: "var(--label-alternative)", wordBreak: "keep-all", textAlign: "center" }, children: label })
+    label != null && /* @__PURE__ */ jsx151("span", { style: { fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)", wordBreak: "keep-all", textAlign: "center" }, children: label })
   ] });
 }
 
 // components/viz/TelemetryValue.jsx
-import React154 from "react";
-import { jsx as jsx151, jsxs as jsxs118 } from "react/jsx-runtime";
+import React155 from "react";
+import { jsx as jsx152, jsxs as jsxs118 } from "react/jsx-runtime";
 var TONE3 = {
   neutral: "var(--label-neutral)",
   signal: "var(--lk-accent-ink)",
@@ -12319,23 +12336,23 @@ function TelemetryValue({
       },
       ...rest,
       children: [
-        label != null && /* @__PURE__ */ jsx151("span", { style: { color: "var(--label-alternative)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)" }, children: label }),
+        label != null && /* @__PURE__ */ jsx152("span", { style: { color: "var(--label-alternative)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)" }, children: label }),
         /* @__PURE__ */ jsxs118("div", { style: { display: "inline-flex", alignItems: "baseline", gap: 5, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx151("strong", { style: { color, fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums" }, children: value }),
-          unit != null && /* @__PURE__ */ jsx151("span", { style: { color: stale ? "var(--label-assistive)" : "var(--label-alternative)", fontSize: size === "sm" ? 12 : 13, fontWeight: "var(--fw-bold)" }, children: unit }),
-          stale && showStaleBadge && /* @__PURE__ */ jsx151("span", { style: { alignSelf: "center", padding: "2px 6px", borderRadius: "var(--radius-pill)", background: "var(--fill-normal)", color: "var(--label-alternative)", fontSize: 10.5, lineHeight: 1.2, fontWeight: "var(--fw-bold)" }, children: staleLabel })
+          /* @__PURE__ */ jsx152("strong", { style: { color, fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums" }, children: value }),
+          unit != null && /* @__PURE__ */ jsx152("span", { style: { color: stale ? "var(--label-assistive)" : "var(--label-alternative)", fontSize: size === "sm" ? 12 : 13, fontWeight: "var(--fw-bold)" }, children: unit }),
+          stale && showStaleBadge && /* @__PURE__ */ jsx152("span", { style: { alignSelf: "center", padding: "2px 6px", borderRadius: "var(--radius-pill)", background: "var(--fill-normal)", color: "var(--label-alternative)", fontSize: 10.5, lineHeight: 1.2, fontWeight: "var(--fw-bold)" }, children: staleLabel })
         ] }),
-        (timestamp != null || helper != null) && /* @__PURE__ */ jsx151("span", { style: { color: "var(--label-assistive)", fontSize: 11.5, lineHeight: 1.35, fontVariantNumeric: "tabular-nums" }, children: helper != null ? helper : timestamp })
+        (timestamp != null || helper != null) && /* @__PURE__ */ jsx152("span", { style: { color: "var(--label-assistive)", fontSize: 11.5, lineHeight: 1.35, fontVariantNumeric: "tabular-nums" }, children: helper != null ? helper : timestamp })
       ]
     }
   );
 }
 
 // components/viz/VideoStreamTile.jsx
-import React155 from "react";
-import { jsx as jsx152, jsxs as jsxs119 } from "react/jsx-runtime";
+import React156 from "react";
+import { jsx as jsx153, jsxs as jsxs119 } from "react/jsx-runtime";
 function usePulseKeyframes() {
-  React155.useEffect(() => {
+  React156.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-stream-kf")) return;
     const el = document.createElement("style");
     el.id = "lk-stream-kf";
@@ -12363,8 +12380,8 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
       ...rest,
       children: [
         children,
-        showHud && /* @__PURE__ */ jsxs119(React155.Fragment, { children: [
-          /* @__PURE__ */ jsx152("div", { style: {
+        showHud && /* @__PURE__ */ jsxs119(React156.Fragment, { children: [
+          /* @__PURE__ */ jsx153("div", { style: {
             position: "absolute",
             left: 0,
             top: 0,
@@ -12374,7 +12391,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
             background: "linear-gradient(180deg, var(--material-control-dimmer), transparent)"
           } }),
           /* @__PURE__ */ jsxs119("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 7, pointerEvents: "none" }, children: [
-            status === "live" && /* @__PURE__ */ jsx152("span", { style: {
+            status === "live" && /* @__PURE__ */ jsx153("span", { style: {
               width: 6,
               height: 6,
               borderRadius: "50%",
@@ -12382,9 +12399,9 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
               flexShrink: 0,
               animation: "lk-stream-pulse 1.4s var(--ease-in-out) infinite"
             } }),
-            /* @__PURE__ */ jsx152("span", { style: {
+            /* @__PURE__ */ jsx153("span", { style: {
               fontSize: 12,
-              fontWeight: 800,
+              fontWeight: "var(--fw-extra)",
               letterSpacing: "1px",
               textTransform: "uppercase",
               color: "var(--text-on-inverse)",
@@ -12392,14 +12409,14 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
             }, children: label })
           ] })
         ] }),
-        status === "loading" && /* @__PURE__ */ jsx152("div", { style: {
+        status === "loading" && /* @__PURE__ */ jsx153("div", { style: {
           position: "absolute",
           inset: 0,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           background: "var(--scrim-dark)"
-        }, children: /* @__PURE__ */ jsx152("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid var(--inverse-line-strong)", borderTopColor: "var(--lk-accent)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
+        }, children: /* @__PURE__ */ jsx153("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid var(--inverse-line-strong)", borderTopColor: "var(--lk-accent)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
         status === "disconnected" && /* @__PURE__ */ jsxs119("div", { style: {
           position: "absolute",
           inset: 0,
@@ -12411,60 +12428,17 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
           background: "var(--material-dimmer)",
           color: "var(--inverse-label-neutral)",
           fontSize: 13,
-          fontWeight: 600,
+          fontWeight: "var(--fw-semibold)",
           whiteSpace: "nowrap"
         }, children: [
           /* @__PURE__ */ jsxs119("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
-            /* @__PURE__ */ jsx152("path", { d: "M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
-            /* @__PURE__ */ jsx152("path", { d: "M12 9v4" }),
-            /* @__PURE__ */ jsx152("path", { d: "M12 17h.01" })
+            /* @__PURE__ */ jsx153("path", { d: "M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
+            /* @__PURE__ */ jsx153("path", { d: "M12 9v4" }),
+            /* @__PURE__ */ jsx153("path", { d: "M12 17h.01" })
           ] }),
           "\uC5F0\uACB0 \uB04A\uAE40"
         ] })
       ]
-    }
-  );
-}
-
-// components/viz/ViewerToolbar.jsx
-import React156 from "react";
-import { jsx as jsx153 } from "react/jsx-runtime";
-function ViewerToolbar({ children, orientation = "vertical", style, ...rest }) {
-  return /* @__PURE__ */ jsx153("div", { style: {
-    display: "inline-flex",
-    flexDirection: orientation === "vertical" ? "column" : "row",
-    gap: 2,
-    padding: 4,
-    background: "var(--surface-raised)",
-    border: "1px solid var(--border-subtle)",
-    borderRadius: "var(--radius-md)",
-    boxShadow: "var(--shadow-md)",
-    ...style
-  }, ...rest, children });
-}
-function ViewerToolbarButton({ children, active = false, label, style, ...rest }) {
-  return /* @__PURE__ */ jsx153(
-    "button",
-    {
-      type: "button",
-      "aria-label": label,
-      title: label,
-      style: {
-        width: 34,
-        height: 34,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: 0,
-        borderRadius: "var(--radius-sm)",
-        cursor: "pointer",
-        background: active ? "var(--lk-accent-tint)" : "transparent",
-        color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
-        transition: "background var(--dur-fast) var(--ease-out)",
-        ...style
-      },
-      ...rest,
-      children
     }
   );
 }

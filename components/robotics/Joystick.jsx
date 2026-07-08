@@ -51,7 +51,7 @@ export function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled
           background: 'var(--lk-accent-ink)', boxShadow: 'var(--shadow-control)',
           transform: `translate(${pos.x}px, ${pos.y}px)`, transition: active ? 'none' : 'transform var(--dur-base) var(--ease-out)' }} />
       </div>
-      {label != null && <span style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 600, color: 'var(--label-alternative)' }}>{label}</span>}
+      {label != null && <span style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-semibold)', color: 'var(--label-alternative)' }}>{label}</span>}
     </div>
   );
 }

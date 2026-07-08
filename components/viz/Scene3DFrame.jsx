@@ -13,13 +13,13 @@ export function Scene3DFrame({ children, title, badges, toolbar, loading = false
       {children}
       {(title != null || badges != null) && (
         <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 8, pointerEvents: 'none' }}>
-          {title != null && <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--text-on-inverse)', opacity: 0.9 }}>{title}</span>}
+          {title != null && <span style={{ fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--text-on-inverse)', opacity: 0.9 }}>{title}</span>}
           {badges}
         </div>
       )}
       {toolbar != null && <div style={{ position: 'absolute', right: 12, top: 12 }}>{toolbar}</div>}
       {loading && (
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: 'var(--scrim-dark)', color: 'var(--text-on-inverse)', fontSize: 13, fontWeight: 600 }}>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: 'var(--scrim-dark)', color: 'var(--text-on-inverse)', fontSize: 13, fontWeight: 'var(--fw-semibold)' }}>
           불러오는 중…
         </div>
       )}
