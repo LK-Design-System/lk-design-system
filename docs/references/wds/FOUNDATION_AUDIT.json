@@ -23,8 +23,7 @@
         "assets/icons",
         "assets/icons/manifest.json",
         "components/icon/Icon.jsx",
-        "components/icon/Icon.d.ts",
-        "components/icon/icon.card.html"
+        "components/icon/Icon.d.ts"
       ],
       "cssTokens": [],
       "notes": "Verified against the accepted local .fig snapshot: 339/339 source SVGs imported with 1:1 variant-name mapping (kebab-case renames; navigationX -> nav-*); logoGoogle intentionally relocated to BrandLogo; lds-legacy glyphs are LK product extensions."

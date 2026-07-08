@@ -42,8 +42,7 @@
         "stories/Iconography.stories.jsx",
         "assets/icons",
         "assets/icons/manifest.json",
-        "components/icon/Icon.jsx",
-        "components/icon/icon.card.html"
+        "components/icon/Icon.jsx"
       ],
       "closureCriteria": [
         "Compare the imported WDS icon folder and assets/icons/manifest.json against the Figma source node inventory.",

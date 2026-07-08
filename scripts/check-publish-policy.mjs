@@ -19,7 +19,7 @@ const workflow = await read('docs/COMPONENT_WORKFLOW.md');
 assert(pkg.private === true, 'Operational policy is internal Git/package consumption for now: package.json private must remain true until an explicit publish decision.');
 assert(pkg.publishConfig?.registry === 'https://npm.pkg.github.com', 'publishConfig.registry must document the intended future registry.');
 
-for (const expected of ['dist', 'components', 'tokens', 'assets', 'styles.css', 'guidelines', 'templates', 'templates-cards', '_ds_bundle.js', 'readme.md']) {
+for (const expected of ['dist', 'components', 'tokens', 'assets', 'styles.css', 'readme.md']) {
   assert(pkg.files?.includes(expected), `package.json files must include ${expected}.`);
 }
 

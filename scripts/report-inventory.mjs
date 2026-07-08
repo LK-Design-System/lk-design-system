@@ -60,9 +60,6 @@ async function getStorybookCounts() {
 async function getCounts() {
   const componentJsx = await collect('components', (rel) => rel.endsWith('.jsx'));
   const componentDts = await collect('components', (rel) => rel.endsWith('.d.ts'));
-  const componentCards = await collect('components', (rel) => rel.endsWith('.card.html'));
-  const guidelines = await collect('guidelines', (rel) => rel.endsWith('.html'));
-  const templateCards = await collect('templates-cards', (rel) => rel.endsWith('.card.html'));
   const groups = await readdir(path.join(root, 'components'), { withFileTypes: true });
   const srcIndex = await read('src/index.js');
   const entryExports = srcIndex.split('\n').filter((line) => line.startsWith('export {'));
@@ -74,9 +71,6 @@ async function getCounts() {
     componentTypeContracts: componentDts.length,
     componentEntryExports: entryExports.length,
     namedPublicExports: namedPublicExports.size,
-    componentCards: componentCards.length,
-    foundationGuidelines: guidelines.length,
-    templateCards: templateCards.length,
     componentGroups: groups.filter((entry) => entry.isDirectory()).length,
     storybook,
   };
@@ -121,9 +115,6 @@ function printTable(counts) {
     ['Component type contracts', counts.componentTypeContracts],
     ['Component entry exports', counts.componentEntryExports],
     ['Named public exports', counts.namedPublicExports],
-    ['Component cards', counts.componentCards],
-    ['Foundation guidelines', counts.foundationGuidelines],
-    ['Template cards', counts.templateCards],
     ['Component groups', counts.componentGroups],
   ];
 

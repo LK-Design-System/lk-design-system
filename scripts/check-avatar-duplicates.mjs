@@ -31,7 +31,6 @@ function uniqueSorted(items) {
 
 const componentFiles = await collect('components', (rel) => rel.endsWith('.jsx'));
 const storyFiles = await collect('stories', (rel) => rel.endsWith('.stories.jsx'));
-const cardFiles = await collect('components', (rel) => rel.endsWith('.card.html'));
 
 const definitionChecks = [
   {
@@ -89,32 +88,6 @@ for (const name of ['Avatar', 'AvatarGroup']) {
   if (count !== 1) failures.push(`PUBLIC_EXPORT_CLASSIFICATION.json must classify ${name} once; found ${count}.`);
 }
 
-const cardMeta = [];
-for (const file of cardFiles) {
-  const source = await read(file);
-  const meta = source.match(/@dsCard\s+[^>]*name="(AvatarGroup|Avatar)"/);
-  if (meta) cardMeta.push(`${file}: ${meta[1]}`);
-}
-
-const expectedCards = [
-  'components/data/data-avatargroup.card.html: AvatarGroup',
-  'components/feedback/feedback-avatar.card.html: Avatar',
-];
-if (cardMeta.join('\n') !== expectedCards.join('\n')) {
-  failures.push(`Legacy Avatar card references must be limited to known migration cards; found:\n${cardMeta.join('\n') || 'none'}`);
-}
-
-const auditSource = await read('stories/Audit.data.jsx');
-const auditRows = [...auditSource.matchAll(/\[\s*'[^']*',\s*'(AvatarGroup|Avatar)',\s*'([^']+)',\s*'(AvatarGroup|Avatar)'/g)]
-  .map((match) => `${match[1]} -> ${match[2]} -> ${match[3]}`);
-const expectedAuditRows = [
-  'AvatarGroup -> components/data/data-avatargroup.card.html -> AvatarGroup',
-  'Avatar -> components/feedback/feedback-avatar.card.html -> Avatar',
-];
-if (auditRows.join('\n') !== expectedAuditRows.join('\n')) {
-  failures.push(`Audit.data.jsx Avatar migration rows changed unexpectedly; found:\n${auditRows.join('\n') || 'none'}`);
-}
-
 assert(failures.length === 0, `Avatar duplication guard failed:\n${failures.join('\n')}`);
 
 const definitionSummary = definitionChecks.map((check) => `${check.name}=${check.expected}`).join(', ');
@@ -123,6 +96,5 @@ console.log(
     `Validated Avatar duplication guard: ${definitionSummary}.`,
     `Unique Storybook page: ${expectedStoryTitle}.`,
     `Public exports classified once: ${uniqueSorted(['Avatar', 'AvatarGroup']).join(', ')}.`,
-    `Legacy migration references allowed: ${expectedCards.join('; ')}.`,
   ].join(' ')
 );

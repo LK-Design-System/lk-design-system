@@ -1,7 +1,7 @@
 # Token governance
 
 `tokens/source.json` is the source of truth for LK ROBOTICS design tokens.
-Figma Variables, Storybook examples, React components, static preview cards,
+Figma Variables, Storybook examples, React components,
 and AI-generated UI must all resolve back to this token contract.
 
 ## Token layers

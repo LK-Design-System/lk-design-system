@@ -30,8 +30,7 @@
             "stories/Iconography.stories.jsx",
             "assets/icons",
             "assets/icons/manifest.json",
-            "components/icon/Icon.jsx",
-            "components/icon/icon.card.html"
+            "components/icon/Icon.jsx"
           ],
           "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): all 339 WDS icon SVGs are imported with 1:1 variant-name mapping (kebab-case renames; navigationX -> nav-*). logoGoogle is intentionally served through BrandLogo; 18 lds-legacy robotics glyphs are LK product extensions."
         },

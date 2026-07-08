@@ -49,11 +49,10 @@ const card = await read('components/cards/Card.jsx');
 const newsCard = await read('components/cards/NewsCard.jsx');
 const productCard = await read('components/cards/ProductCard.jsx');
 const componentTokens = await read('tokens/components.css');
-const originalBundle = await read('_ds_bundle.js');
 
-// The static original previews execute _ds_bundle.js. Keep the public React
-// components aligned with those original card motion values until a new visual
-// decision is recorded in the parity ledger.
+// Motion contracts on the React source — the intended hover/lift behaviour of
+// the interactive cards. (The legacy static-card + _ds_bundle.js comparison was
+// retired; Storybook is the source of truth.)
 const motionContracts = [
   [componentTokens, '--component-card-hover-transform: translateY(-4px);', 'tokens/components.css card hover token'],
   [card, "boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[elevation]", 'Card interactive shadow'],
@@ -64,13 +63,10 @@ const motionContracts = [
   [newsCard, "transform: hover ? 'translateX(2px)' : 'none'", 'NewsCard CTA arrow nudge'],
   [productCard, "boxShadow: hover ? 'var(--shadow-xl)' : 'var(--shadow-sm)'", 'ProductCard hover shadow'],
   [productCard, "transform: hover ? 'scale(1.05)' : 'scale(1)'", 'ProductCard image zoom'],
-  [originalBundle, "transform: hover ? 'translateY(-2px)' : 'none'", 'Original bundle NewsCard lift'],
-  [originalBundle, "transform: hover ? 'scale(1.03)' : 'scale(1)'", 'Original bundle NewsCard zoom'],
-  [originalBundle, "transform: hover ? 'scale(1.05)' : 'scale(1)'", 'Original bundle ProductCard zoom'],
 ];
 
 for (const [source, needle, label] of motionContracts) {
   assertIncludes(source, needle, label);
 }
 
-console.log(`Validated visual parity invariants: ${jsxFiles.length} React components, card motion contracts, and typography spacing.`);
+console.log(`Validated visual invariants: ${jsxFiles.length} React components, card motion contracts, and typography spacing.`);

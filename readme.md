@@ -54,17 +54,13 @@ import '@lk-robotics/design-system-core/styles.css';
 
 | 경로 | 용도 |
 | --- | --- |
-| `components/` | React 컴포넌트 소스, `.d.ts` 계약, 프롬프트 노트, 정적 컴포넌트 카드 |
+| `components/` | React 컴포넌트 소스, `.d.ts` 계약, 프롬프트 노트 |
 | `tokens/` | CSS 디자인 토큰과 기계가 읽을 수 있는 토큰 맵 `source.json` |
 | `styles.css` | 토큰 파일을 불러오는 CSS 진입점 |
 | `assets/` | 브랜드 SVG, Pretendard 폰트, 제품/산업/기술 이미지 |
 | `src/` | 생성된 패키지 진입 파일 |
 | `dist/` | 빌드된 ESM/CJS/타입 결과물. Git 직접 사용을 위해 커밋함 |
 | `scripts/` | 진입 파일 생성과 타입 복사 스크립트 |
-| `guidelines/` | 정적 파운데이션 미리보기 카드 |
-| `templates/` | 로그인, 목록-테이블, 마스터-디테일, 폼-설정 화면 스타터 템플릿 |
-| `templates-cards/` | 스타터 템플릿 정적 미리보기 카드 |
-| `_ds_bundle.js` | 정적 카드와 템플릿에서 사용하는 레거시 브라우저 번들 |
 
 ## 개발
 
@@ -119,8 +115,7 @@ npm run build:storybook
 WDS 원천 번호 체계(`1 Theme`, `3 Component / 2 Action` 등)는 public sidebar title이 아니라 `docs/references/wds/`의 근거 데이터에만 남깁니다.
 `LDS Product`와 `LDS Robotics`는 재사용 가능한 확장 컴포넌트/패턴만 다루며, 완성된 앱 화면, 템플릿, 워크플로우, 데모 페이지를 Storybook source of truth로 올리지 않습니다.
 보고/감사/보정표 UI와 운영 문서는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
-원본 카드와 1:1 비교하기 위한 82개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
-원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개는 public Storybook 문서 페이지가 아니라 `check:legacy-render`, `check:visual-inventory`, `check:visual-diff` 스크립트가 직접 렌더링해 검증합니다.
+WDS 원본과 1:1 비교하기 위한 82개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
 접근성, 토큰 lifecycle, 컴포넌트 상태 매트릭스, 도메인 컴포넌트 계약, 릴리즈와 ownership 같은 기준은 `docs/` 아래 Markdown 문서에서 관리합니다.
 레포 수치가 바뀌면 `npm run report:inventory`로 현재 값을 확인하고, `npm run check:inventory`로 README/docs/story 표시 수치가 stale하지 않은지 검증합니다.
 
@@ -162,10 +157,6 @@ CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/contract/publish policy/
 - `selection`
 - `status`
 - `viz`
-
-## 정적 미리보기
-
-`guidelines/`, `components/**`, `templates-cards/` 아래 `.html` 파일은 브라우저에서 직접 열 수 있습니다. 이 미리보기들은 상대 경로로 `_ds_bundle.js`, `styles.css`, `tokens/`, `assets/`를 불러오므로 현재 위치를 유지해야 합니다.
 
 ## 정리 정책
 

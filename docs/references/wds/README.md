@@ -148,8 +148,6 @@ through a Storybook audit page.
 | Public export | Avatar, AvatarGroup | `src/index.js`, `src/index.d.ts` | One export each |
 | Storybook page | AvatarPatterns | `stories/Feedback.stories.jsx` | One design-system page |
 | Hidden parity | AvatarCard, AvatarGroupCard | `stories/Feedback.shared.jsx` | Visual regression only, hidden from sidebar |
-| Legacy source card | Avatar | `components/feedback/feedback-avatar.card.html` | Migration reference |
-| Legacy source card | AvatarGroup | `components/data/data-avatargroup.card.html` | Migration reference |
 | Usage | UserMenu | `components/navigation/UserMenu.jsx` | Consumer only |
 
 Run:

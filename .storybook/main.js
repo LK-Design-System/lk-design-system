@@ -4,8 +4,6 @@ const config = {
     { from: '../assets', to: '/assets' },
     { from: '../tokens', to: '/tokens' },
     { from: '../styles.css', to: '/styles.css' },
-    { from: '../_ds_bundle.js', to: '/_ds_bundle.js' },
-    { from: '../templates', to: '/templates' },
   ],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
   framework: {
