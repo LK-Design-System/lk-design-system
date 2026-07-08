@@ -38,15 +38,20 @@ function checkboxStyle(checked) {
  * mark `sortable`; `render` a cell for custom content. Emits selected row
  * indices via `onSelectionChange`.
  */
-export function DataGrid({ columns = [], rows = [], selectable = false, defaultSelectedRows = [], onSelectionChange, size = 'md', style, ...rest }) {
+export function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, defaultSelectedRows = [], onSelectionChange, size = 'md', style, ...rest }) {
   const [sort, setSort] = React.useState({ key: null, dir: 'asc' });
-  const [sel, setSel] = React.useState(() => new Set(defaultSelectedRows));
+  // Selection is controlled when `selectedRows` is passed, otherwise internal.
+  const isControlled = selectedRows !== undefined;
+  const [internalSel, setInternalSel] = React.useState(() => new Set(defaultSelectedRows));
+  const sel = isControlled ? new Set(selectedRows) : internalSel;
   const pad = size === 'sm' ? '10px 12px' : '13px 16px';
   const sorted = sortRows(rows, sort.key, sort.dir);
   const toggleSort = (c) => { if (!c.sortable) return; setSort((s) => (s.key === c.key ? { key: c.key, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { key: c.key, dir: 'asc' })); };
-  const emit = (n) => { onSelectionChange && onSelectionChange([...n]); };
-  const toggleRow = (i) => setSel((prev) => { const n = new Set(prev); if (n.has(i)) n.delete(i); else n.add(i); emit(n); return n; });
-  const toggleAll = () => setSel((prev) => { const n = prev.size === sorted.length ? new Set() : new Set(sorted.map((_, i) => i)); emit(n); return n; });
+  // Compute next selection in the event handler (not inside the setState
+  // updater) so the parent callback never fires mid-render.
+  const applySel = (n) => { if (!isControlled) setInternalSel(n); onSelectionChange && onSelectionChange([...n]); };
+  const toggleRow = (i) => { const n = new Set(sel); if (n.has(i)) n.delete(i); else n.add(i); applySel(n); };
+  const toggleAll = () => { const n = sel.size === sorted.length ? new Set() : new Set(sorted.map((_, i) => i)); applySel(n); };
   const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
   return (
     <div style={{ overflowX: 'auto', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', ...style }} {...rest}>

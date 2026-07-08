@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Button,
   DataGrid,
@@ -58,9 +59,9 @@ const filterChipStyle = {
   fontSize: 13,
 };
 
-export const ToolbarWithGrid = {
-  name: '검색과 선택 액션',
-  render: () => (
+function ToolbarWithGridDemo() {
+  const [selected, setSelected] = React.useState(selectedRows);
+  return (
     <main style={surfaceStyle}>
       <DataToolbar
         size="sm"
@@ -76,15 +77,17 @@ export const ToolbarWithGrid = {
           </>
         )}
         actions={<Button size="sm" variant="ghost">내보내기</Button>}
-        selectedCount={selectedRows.length}
-        bulkActions={<Button size="sm" variant="secondary">권한 변경</Button>}
+        selectedCount={selected.length}
+        bulkActions={<Button size="sm" variant="primary">권한 변경</Button>}
+        onClearSelection={() => setSelected([])}
         style={toolbarStyle}
       />
       <DataGrid
         columns={columns}
         rows={rows}
         selectable
-        defaultSelectedRows={selectedRows}
+        selectedRows={selected}
+        onSelectionChange={setSelected}
         size="sm"
         style={{
           border: 0,
@@ -93,5 +96,10 @@ export const ToolbarWithGrid = {
         }}
       />
     </main>
-  ),
+  );
+}
+
+export const ToolbarWithGrid = {
+  name: '검색과 선택 액션',
+  render: () => <ToolbarWithGridDemo />,
 };

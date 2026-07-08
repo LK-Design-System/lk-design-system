@@ -31,7 +31,7 @@ export function SearchField({ value, defaultValue, onChange, onSearch, placehold
         {...rest}
       />
       {val && (
-        <button type="button" aria-label="clear" onClick={() => set('')} style={{ display: 'inline-flex', padding: 2, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--label-assistive)' }}>
+        <button type="button" aria-label="지우기" onClick={() => set('')} style={{ display: 'inline-flex', padding: 2, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--label-assistive)' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10" /><path d="M15 9l-6 6M9 9l6 6" stroke="var(--bw-white)" strokeWidth="2" strokeLinecap="round" /></svg>
         </button>
       )}

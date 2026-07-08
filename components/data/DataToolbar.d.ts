@@ -21,8 +21,10 @@ export interface DataToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   actions?: React.ReactNode;
   /** 선택된 행 수. @default 0 */
   selectedCount?: number;
-  /** 선택 상태에서 노출할 bulk action 슬롯. */
+  /** 선택 상태에서 컨텍스트 바에 노출할 bulk action 슬롯. */
   bulkActions?: React.ReactNode;
+  /** 선택 해제 콜백. 지정 시 컨텍스트 바에 "선택 해제" 버튼을 노출합니다. */
+  onClearSelection?: () => void;
   /** 밀도. @default "md" */
   size?: 'sm' | 'md';
 }

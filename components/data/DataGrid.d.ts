@@ -13,6 +13,8 @@ export interface DataGridProps<Row extends Record<string, unknown> = Record<stri
   rows: Row[];
   /** 행 체크박스. @default false */
   selectable?: boolean;
+  /** Controlled selected row indices. When set, the grid mirrors this value and clearing is driven by the parent. */
+  selectedRows?: number[];
   /** Initially selected row indices for Storybook/demo and uncontrolled table states. @default [] */
   defaultSelectedRows?: number[];
   onSelectionChange?: (indices: number[]) => void;

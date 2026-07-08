@@ -4862,30 +4862,31 @@ function checkboxStyle(checked) {
     verticalAlign: "middle"
   };
 }
-function DataGrid({ columns = [], rows = [], selectable = false, defaultSelectedRows = [], onSelectionChange, size = "md", style, ...rest }) {
+function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, defaultSelectedRows = [], onSelectionChange, size = "md", style, ...rest }) {
   const [sort, setSort] = React46.useState({ key: null, dir: "asc" });
-  const [sel, setSel] = React46.useState(() => new Set(defaultSelectedRows));
+  const isControlled = selectedRows !== void 0;
+  const [internalSel, setInternalSel] = React46.useState(() => new Set(defaultSelectedRows));
+  const sel = isControlled ? new Set(selectedRows) : internalSel;
   const pad2 = size === "sm" ? "10px 12px" : "13px 16px";
   const sorted = sortRows(rows, sort.key, sort.dir);
   const toggleSort = (c) => {
     if (!c.sortable) return;
     setSort((s) => s.key === c.key ? { key: c.key, dir: s.dir === "asc" ? "desc" : "asc" } : { key: c.key, dir: "asc" });
   };
-  const emit = (n) => {
+  const applySel = (n) => {
+    if (!isControlled) setInternalSel(n);
     onSelectionChange && onSelectionChange([...n]);
   };
-  const toggleRow = (i) => setSel((prev) => {
-    const n = new Set(prev);
+  const toggleRow = (i) => {
+    const n = new Set(sel);
     if (n.has(i)) n.delete(i);
     else n.add(i);
-    emit(n);
-    return n;
-  });
-  const toggleAll = () => setSel((prev) => {
-    const n = prev.size === sorted.length ? /* @__PURE__ */ new Set() : new Set(sorted.map((_, i) => i));
-    emit(n);
-    return n;
-  });
+    applySel(n);
+  };
+  const toggleAll = () => {
+    const n = sel.size === sorted.length ? /* @__PURE__ */ new Set() : new Set(sorted.map((_, i) => i));
+    applySel(n);
+  };
   const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
   return /* @__PURE__ */ jsx43("div", { style: { overflowX: "auto", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ jsxs35("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
     /* @__PURE__ */ jsx43("thead", { children: /* @__PURE__ */ jsxs35("tr", { children: [
@@ -4919,8 +4920,67 @@ function DataGrid({ columns = [], rows = [], selectable = false, defaultSelected
 }
 
 // components/data/DataToolbar.jsx
+import React48 from "react";
+
+// components/forms/SearchField.jsx
 import React47 from "react";
 import { jsx as jsx44, jsxs as jsxs36 } from "react/jsx-runtime";
+function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\uAC80\uC0C9", size = "md", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
+  const isControlled = value !== void 0;
+  const [internal, setInternal] = React47.useState(defaultValue || "");
+  const [focus, setFocus] = React47.useState(false);
+  const val = isControlled ? value : internal;
+  const set = (v) => {
+    if (!isControlled) setInternal(v);
+    onChange && onChange(v);
+  };
+  const h = size === "sm" ? 40 : 50;
+  return /* @__PURE__ */ jsxs36("div", { style: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 10,
+    height: h,
+    width: "100%",
+    padding: "0 14px",
+    boxSizing: "border-box",
+    background: "var(--bw-white)",
+    border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+    borderRadius: "var(--radius-input)",
+    boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none",
+    opacity: disabled ? 0.5 : 1,
+    transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
+    ...style
+  }, children: [
+    /* @__PURE__ */ jsxs36("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
+      /* @__PURE__ */ jsx44("circle", { cx: "11", cy: "11", r: "7" }),
+      /* @__PURE__ */ jsx44("path", { d: "m21 21-4.3-4.3" })
+    ] }),
+    /* @__PURE__ */ jsx44(
+      "input",
+      {
+        value: val,
+        disabled,
+        placeholder,
+        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uAC80\uC0C9"),
+        onChange: (e) => set(e.target.value),
+        onFocus: () => setFocus(true),
+        onBlur: () => setFocus(false),
+        onKeyDown: (e) => {
+          if (e.key === "Enter" && onSearch) onSearch(val);
+        },
+        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--label-normal)" },
+        ...rest
+      }
+    ),
+    val && /* @__PURE__ */ jsx44("button", { type: "button", "aria-label": "\uC9C0\uC6B0\uAE30", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ jsxs36("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
+      /* @__PURE__ */ jsx44("circle", { cx: "12", cy: "12", r: "10" }),
+      /* @__PURE__ */ jsx44("path", { d: "M15 9l-6 6M9 9l6 6", stroke: "var(--bw-white)", strokeWidth: "2", strokeLinecap: "round" })
+    ] }) })
+  ] });
+}
+
+// components/data/DataToolbar.jsx
+import { jsx as jsx45, jsxs as jsxs37 } from "react/jsx-runtime";
 function DataToolbar({
   title,
   description,
@@ -4933,12 +4993,13 @@ function DataToolbar({
   actions,
   selectedCount = 0,
   bulkActions,
+  onClearSelection,
   size = "md",
   style,
   ...rest
 }) {
   const isSearchControlled = searchValue !== void 0;
-  const [internalSearch, setInternalSearch] = React47.useState(defaultSearchValue);
+  const [internalSearch, setInternalSearch] = React48.useState(defaultSearchValue);
   const currentSearch = isSearchControlled ? searchValue : internalSearch;
   const setSearch = (value) => {
     if (!isSearchControlled) setInternalSearch(value);
@@ -4946,7 +5007,7 @@ function DataToolbar({
   };
   const compact = size === "sm";
   const controlHeight = compact ? "var(--control-h-sm)" : 40;
-  return /* @__PURE__ */ jsxs36(
+  return /* @__PURE__ */ jsxs37(
     "div",
     {
       style: {
@@ -4962,114 +5023,126 @@ function DataToolbar({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs36("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs36("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
-            title != null && /* @__PURE__ */ jsx44("strong", { style: { color: "var(--label-strong)", fontSize: compact ? "var(--label1-size)" : "var(--body2-size)", fontWeight: "var(--fw-semibold)", lineHeight: 1.35 }, children: title }),
-            description != null && /* @__PURE__ */ jsx44("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", lineHeight: 1.45 }, children: description })
+        /* @__PURE__ */ jsxs37("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs37("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
+            title != null && /* @__PURE__ */ jsx45("strong", { style: { color: "var(--label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
+            description != null && /* @__PURE__ */ jsx45("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)" }, children: description })
           ] }),
-          (count != null || actions != null) && /* @__PURE__ */ jsxs36("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
-            count != null && /* @__PURE__ */ jsxs36("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", fontVariantNumeric: "tabular-nums" }, children: [
+          (count != null || actions != null) && /* @__PURE__ */ jsxs37("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
+            count != null && /* @__PURE__ */ jsxs37("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", fontVariantNumeric: "tabular-nums" }, children: [
               count,
               "\uAC1C"
             ] }),
             actions
           ] })
         ] }),
-        /* @__PURE__ */ jsxs36("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs36("label", { style: { position: "relative", flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: [
-            /* @__PURE__ */ jsx44("span", { style: { position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--label-assistive)", pointerEvents: "none" }, "aria-hidden": "true", children: /* @__PURE__ */ jsx44(Icon, { name: "search", size: 17, role: "presentation", "aria-label": void 0, "aria-hidden": "true" }) }),
-            /* @__PURE__ */ jsx44(
-              "input",
-              {
-                value: currentSearch,
-                onChange: (event) => setSearch(event.target.value),
-                placeholder: searchPlaceholder,
-                "aria-label": searchPlaceholder,
-                style: {
-                  width: "100%",
-                  height: controlHeight,
-                  boxSizing: "border-box",
-                  padding: "0 12px 0 36px",
-                  border: "1px solid var(--border-subtle)",
-                  borderRadius: "var(--radius-md)",
-                  background: "var(--surface-raised)",
-                  color: "var(--label-normal)",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "var(--label1-size)",
-                  outline: "none"
-                }
-              }
-            )
-          ] }),
-          filters != null && /* @__PURE__ */ jsx44("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: filters }),
-          selectedCount > 0 && /* @__PURE__ */ jsxs36(
-            "div",
+        /* @__PURE__ */ jsxs37("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsx45("div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ jsx45(
+            SearchField,
             {
-              role: "status",
-              style: {
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                minHeight: controlHeight,
-                marginLeft: "auto",
-                paddingLeft: "var(--space-3)",
-                borderLeft: "1px solid var(--line-neutral)",
-                color: "var(--label-normal)",
-                fontSize: 13,
-                fontWeight: "var(--fw-bold)",
-                whiteSpace: "nowrap"
-              },
-              children: [
-                /* @__PURE__ */ jsxs36("span", { style: { display: "inline-flex", alignItems: "center", minHeight: controlHeight, padding: "0 10px", borderRadius: "var(--radius-sm)", background: "var(--fill-normal)" }, children: [
-                  selectedCount,
-                  "\uAC1C \uC120\uD0DD"
-                ] }),
-                bulkActions
-              ]
+              value: currentSearch,
+              onChange: setSearch,
+              placeholder: searchPlaceholder,
+              "aria-label": searchPlaceholder,
+              size: "sm",
+              style: { height: controlHeight }
             }
-          )
-        ] })
+          ) }),
+          filters != null && /* @__PURE__ */ jsx45("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: filters })
+        ] }),
+        selectedCount > 0 && /* @__PURE__ */ jsxs37(
+          "div",
+          {
+            role: "status",
+            style: {
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--space-2)",
+              flexWrap: "wrap",
+              minHeight: controlHeight,
+              padding: compact ? "6px 10px" : "8px 12px",
+              borderRadius: "var(--radius-sm)",
+              background: "var(--lk-accent-tint-2)",
+              color: "var(--label-normal)"
+            },
+            children: [
+              /* @__PURE__ */ jsxs37("span", { style: { color: "var(--label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+                selectedCount,
+                "\uAC1C \uC120\uD0DD\uB428"
+              ] }),
+              (bulkActions != null || onClearSelection) && /* @__PURE__ */ jsxs37("div", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
+                bulkActions,
+                onClearSelection && /* @__PURE__ */ jsxs37(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: onClearSelection,
+                    "aria-label": "\uC120\uD0DD \uD574\uC81C",
+                    style: {
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 4,
+                      padding: "4px 8px",
+                      border: 0,
+                      background: "transparent",
+                      color: "var(--label-neutral)",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "var(--label2-size)",
+                      fontWeight: "var(--fw-semibold)",
+                      cursor: "pointer",
+                      whiteSpace: "nowrap"
+                    },
+                    children: [
+                      /* @__PURE__ */ jsx45("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx45("path", { d: "M18 6 6 18M6 6l12 12" }) }),
+                      "\uC120\uD0DD \uD574\uC81C"
+                    ]
+                  }
+                )
+              ] })
+            ]
+          }
+        )
       ]
     }
   );
 }
 
 // components/data/DescriptionList.jsx
-import React48 from "react";
-import { jsx as jsx45, jsxs as jsxs37 } from "react/jsx-runtime";
+import React49 from "react";
+import { jsx as jsx46, jsxs as jsxs38 } from "react/jsx-runtime";
 function DescriptionList({ items = [], columns = 1, style, ...rest }) {
-  return /* @__PURE__ */ jsx45("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ jsxs37("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid var(--bw-border)" }, children: [
-    /* @__PURE__ */ jsx45("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: it.term }),
-    /* @__PURE__ */ jsx45("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--label-normal)", wordBreak: "keep-all" }, children: it.description })
+  return /* @__PURE__ */ jsx46("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ jsxs38("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid var(--bw-border)" }, children: [
+    /* @__PURE__ */ jsx46("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--label-alternative)" }, children: it.term }),
+    /* @__PURE__ */ jsx46("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--label-normal)", wordBreak: "keep-all" }, children: it.description })
   ] }, i)) });
 }
 
 // components/data/DonutChart.jsx
-import React49 from "react";
-import { jsx as jsx46, jsxs as jsxs38 } from "react/jsx-runtime";
+import React50 from "react";
+import { jsx as jsx47, jsxs as jsxs39 } from "react/jsx-runtime";
 var PALETTE = ["var(--lk-accent-ink)", "var(--bw-blue)", "var(--bw-amber)", "var(--bw-green)", "var(--bw-red)", "var(--bw-gray-300)"];
 function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = true, centerLabel, legend = true, style, ...rest }) {
   const total = segments.reduce((s, x) => s + (x.value || 0), 0) || 1;
   const r = (size - thickness) / 2;
   const circ = 2 * Math.PI * r;
   let offset = 0;
-  return /* @__PURE__ */ jsxs38("div", { style: { display: "inline-flex", alignItems: "center", gap: 20, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs38("span", { style: { position: "relative", width: size, height: size }, children: [
-      /* @__PURE__ */ jsxs38("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
-        /* @__PURE__ */ jsx46("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness }),
+  return /* @__PURE__ */ jsxs39("div", { style: { display: "inline-flex", alignItems: "center", gap: 20, ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs39("span", { style: { position: "relative", width: size, height: size }, children: [
+      /* @__PURE__ */ jsxs39("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
+        /* @__PURE__ */ jsx47("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--fill-strong)", strokeWidth: thickness }),
         segments.map((s, i) => {
           const dash = (s.value || 0) / total * circ;
-          const el = /* @__PURE__ */ jsx46("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: s.color || PALETTE[i % PALETTE.length], strokeWidth: thickness, strokeDasharray: `${dash} ${circ - dash}`, strokeDashoffset: -offset }, i);
+          const el = /* @__PURE__ */ jsx47("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: s.color || PALETTE[i % PALETTE.length], strokeWidth: thickness, strokeDasharray: `${dash} ${circ - dash}`, strokeDashoffset: -offset }, i);
           offset += dash;
           return el;
         })
       ] }),
-      (showTotal || centerLabel != null) && /* @__PURE__ */ jsx46("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
+      (showTotal || centerLabel != null) && /* @__PURE__ */ jsx47("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
     ] }),
-    legend && segments.length > 0 && /* @__PURE__ */ jsx46("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs38("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-neutral)" }, children: [
-      /* @__PURE__ */ jsx46("span", { style: { width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] } }),
+    legend && segments.length > 0 && /* @__PURE__ */ jsx47("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs39("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--label-neutral)" }, children: [
+      /* @__PURE__ */ jsx47("span", { style: { width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] } }),
       s.label,
-      /* @__PURE__ */ jsxs38("b", { style: { marginLeft: 2, color: "var(--label-normal)" }, children: [
+      /* @__PURE__ */ jsxs39("b", { style: { marginLeft: 2, color: "var(--label-normal)" }, children: [
         Math.round(s.value / total * 100),
         "%"
       ] })
@@ -5078,53 +5151,53 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
 }
 
 // components/data/Sparkline.jsx
-import React50 from "react";
-import { jsx as jsx47, jsxs as jsxs39 } from "react/jsx-runtime";
+import React51 from "react";
+import { jsx as jsx48, jsxs as jsxs40 } from "react/jsx-runtime";
 function Sparkline({ data = [], width = 120, height = 32, color = "var(--lk-accent-ink)", fill = true, strokeWidth = 2, style, ...rest }) {
-  if (!data.length) return /* @__PURE__ */ jsx47("svg", { width, height, style, ...rest });
+  if (!data.length) return /* @__PURE__ */ jsx48("svg", { width, height, style, ...rest });
   const min = Math.min(...data);
   const max = Math.max(...data);
   const range2 = max - min || 1;
   const pts = data.map((d, i) => [i / (data.length - 1 || 1) * width, height - (d - min) / range2 * (height - 4) - 2]);
   const line = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
   const area = `${line} L${width} ${height} L0 ${height} Z`;
-  return /* @__PURE__ */ jsxs39("svg", { width, height, viewBox: `0 0 ${width} ${height}`, style: { display: "block", ...style }, ...rest, children: [
-    fill && /* @__PURE__ */ jsx47("path", { d: area, fill: color, opacity: "0.12" }),
-    /* @__PURE__ */ jsx47("path", { d: line, fill: "none", stroke: color, strokeWidth, strokeLinecap: "round", strokeLinejoin: "round" })
+  return /* @__PURE__ */ jsxs40("svg", { width, height, viewBox: `0 0 ${width} ${height}`, style: { display: "block", ...style }, ...rest, children: [
+    fill && /* @__PURE__ */ jsx48("path", { d: area, fill: color, opacity: "0.12" }),
+    /* @__PURE__ */ jsx48("path", { d: line, fill: "none", stroke: color, strokeWidth, strokeLinecap: "round", strokeLinejoin: "round" })
   ] });
 }
 
 // components/data/Table.jsx
-import React51 from "react";
-import { jsx as jsx48, jsxs as jsxs40 } from "react/jsx-runtime";
+import React52 from "react";
+import { jsx as jsx49, jsxs as jsxs41 } from "react/jsx-runtime";
 function TableRow({ columns, row, pad: pad2, hover }) {
-  const [h, setH] = React51.useState(false);
-  return /* @__PURE__ */ jsx48(
+  const [h, setH] = React52.useState(false);
+  return /* @__PURE__ */ jsx49(
     "tr",
     {
       onMouseEnter: () => setH(true),
       onMouseLeave: () => setH(false),
       style: { background: hover && h ? "var(--fill-alt)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
-      children: columns.map((c) => /* @__PURE__ */ jsx48("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(row) : row[c.key] }, c.key))
+      children: columns.map((c) => /* @__PURE__ */ jsx49("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(row) : row[c.key] }, c.key))
     }
   );
 }
 function Table({ columns = [], rows = [], size = "md", hover = true, style, ...rest }) {
   const pad2 = size === "sm" ? "10px 12px" : "14px 16px";
-  return /* @__PURE__ */ jsx48("div", { style: { overflowX: "auto", ...style }, ...rest, children: /* @__PURE__ */ jsxs40("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
-    /* @__PURE__ */ jsx48("thead", { children: /* @__PURE__ */ jsx48("tr", { children: columns.map((c) => /* @__PURE__ */ jsx48("th", { style: { ...thStyle(pad2), textAlign: c.align || "left", width: c.width }, children: c.label }, c.key)) }) }),
-    /* @__PURE__ */ jsx48("tbody", { children: rows.map((r, ri) => /* @__PURE__ */ jsx48(TableRow, { columns, row: r, pad: pad2, hover }, ri)) })
+  return /* @__PURE__ */ jsx49("div", { style: { overflowX: "auto", ...style }, ...rest, children: /* @__PURE__ */ jsxs41("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
+    /* @__PURE__ */ jsx49("thead", { children: /* @__PURE__ */ jsx49("tr", { children: columns.map((c) => /* @__PURE__ */ jsx49("th", { style: { ...thStyle(pad2), textAlign: c.align || "left", width: c.width }, children: c.label }, c.key)) }) }),
+    /* @__PURE__ */ jsx49("tbody", { children: rows.map((r, ri) => /* @__PURE__ */ jsx49(TableRow, { columns, row: r, pad: pad2, hover }, ri)) })
   ] }) });
 }
 
 // components/data/Tree.jsx
-import React52 from "react";
-import { jsx as jsx49, jsxs as jsxs41 } from "react/jsx-runtime";
+import React53 from "react";
+import { jsx as jsx50, jsxs as jsxs42 } from "react/jsx-runtime";
 function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle, onSelect, openOnHover }) {
   const key = node.id != null ? node.id : node.label;
   const has = node.children && node.children.length > 0;
   const open = expandedSet.has(key) || previewSet.has(key);
-  const [hovered, setHovered] = React52.useState(false);
+  const [hovered, setHovered] = React53.useState(false);
   const previewHandlers = openOnHover && has ? {
     onMouseEnter: () => setPreviewKey(key, true),
     onMouseLeave: () => setPreviewKey(key, false),
@@ -5133,8 +5206,8 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
       if (!event.currentTarget.contains(event.relatedTarget)) setPreviewKey(key, false);
     }
   } : {};
-  return /* @__PURE__ */ jsxs41("div", { ...previewHandlers, children: [
-    /* @__PURE__ */ jsxs41(
+  return /* @__PURE__ */ jsxs42("div", { ...previewHandlers, children: [
+    /* @__PURE__ */ jsxs42(
       "button",
       {
         type: "button",
@@ -5165,13 +5238,13 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
           transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
         },
         children: [
-          has ? /* @__PURE__ */ jsx49("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ jsx49("path", { d: "m9 18 6-6-6-6" }) }) : /* @__PURE__ */ jsx49("span", { style: { width: 14, flexShrink: 0 } }),
+          has ? /* @__PURE__ */ jsx50("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ jsx50("path", { d: "m9 18 6-6-6-6" }) }) : /* @__PURE__ */ jsx50("span", { style: { width: 14, flexShrink: 0 } }),
           node.icon,
-          /* @__PURE__ */ jsx49("span", { children: node.label })
+          /* @__PURE__ */ jsx50("span", { children: node.label })
         ]
       }
     ),
-    has && open && node.children.map((c, i) => /* @__PURE__ */ jsx49(
+    has && open && node.children.map((c, i) => /* @__PURE__ */ jsx50(
       TreeNode,
       {
         node: c,
@@ -5188,8 +5261,8 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
   ] });
 }
 function Tree({ nodes = [], defaultExpanded = [], onSelect, openOnHover = false, style, ...rest }) {
-  const [expanded, setExpanded] = React52.useState(() => new Set(defaultExpanded));
-  const [preview, setPreview] = React52.useState(() => /* @__PURE__ */ new Set());
+  const [expanded, setExpanded] = React53.useState(() => new Set(defaultExpanded));
+  const [preview, setPreview] = React53.useState(() => /* @__PURE__ */ new Set());
   const toggle = (k) => setExpanded((prev) => {
     const n = new Set(prev);
     if (n.has(k)) n.delete(k);
@@ -5202,7 +5275,7 @@ function Tree({ nodes = [], defaultExpanded = [], onSelect, openOnHover = false,
     else next.delete(key);
     return next;
   });
-  return /* @__PURE__ */ jsx49("div", { style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx49(
+  return /* @__PURE__ */ jsx50("div", { style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx50(
     TreeNode,
     {
       node: n,
@@ -5219,12 +5292,12 @@ function Tree({ nodes = [], defaultExpanded = [], onSelect, openOnHover = false,
 }
 
 // components/editor/CanvasEditorShell.jsx
-import React53 from "react";
-import { jsx as jsx50, jsxs as jsxs42 } from "react/jsx-runtime";
+import React54 from "react";
+import { jsx as jsx51, jsxs as jsxs43 } from "react/jsx-runtime";
 function CanvasEditorShell({ title, tools, children, panel, status, panelWidth = 280, style, ...rest }) {
   const shellClass = "lk-canvas-editor-shell";
   const bodyClass = `lk-canvas-editor-shell__body${tools != null ? " lk-canvas-editor-shell__body--tools" : ""}`;
-  return /* @__PURE__ */ jsxs42("div", { className: shellClass, style: {
+  return /* @__PURE__ */ jsxs43("div", { className: shellClass, style: {
     "--lk-editor-panel-width": `${panelWidth}px`,
     display: "flex",
     flexDirection: "column",
@@ -5237,7 +5310,7 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
     fontFamily: "var(--font-sans)",
     ...style
   }, ...rest, children: [
-    /* @__PURE__ */ jsx50("style", { children: `@media (max-width: 640px) {
+    /* @__PURE__ */ jsx51("style", { children: `@media (max-width: 640px) {
           .${shellClass} .lk-canvas-editor-shell__body--tools {
             grid-template-columns: auto minmax(0, 1fr) !important;
             grid-template-rows: minmax(260px, 1fr) auto !important;
@@ -5254,32 +5327,32 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
             border-top: 1px solid var(--bw-band) !important;
           }
         }` }),
-    title != null && /* @__PURE__ */ jsx50("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--bw-band)", fontSize: 13, fontWeight: 700, color: "var(--label-strong)" }, children: title }),
-    /* @__PURE__ */ jsxs42("div", { className: bodyClass, style: { display: "grid", gridTemplateColumns: `${tools != null ? "auto " : ""}minmax(0, 1fr)${panel != null ? " var(--lk-editor-panel-width)" : ""}`, flex: 1, minHeight: 0 }, children: [
-      tools != null && /* @__PURE__ */ jsx50("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--bw-band)", background: "var(--surface-subtle)" }, children: tools }),
-      /* @__PURE__ */ jsx50("div", { style: { minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
-      panel != null && /* @__PURE__ */ jsx50("div", { className: "lk-canvas-editor-shell__panel", style: { width: panelWidth, borderLeft: "1px solid var(--bw-band)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
+    title != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--bw-band)", fontSize: 13, fontWeight: 700, color: "var(--label-strong)" }, children: title }),
+    /* @__PURE__ */ jsxs43("div", { className: bodyClass, style: { display: "grid", gridTemplateColumns: `${tools != null ? "auto " : ""}minmax(0, 1fr)${panel != null ? " var(--lk-editor-panel-width)" : ""}`, flex: 1, minHeight: 0 }, children: [
+      tools != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--bw-band)", background: "var(--surface-subtle)" }, children: tools }),
+      /* @__PURE__ */ jsx51("div", { style: { minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
+      panel != null && /* @__PURE__ */ jsx51("div", { className: "lk-canvas-editor-shell__panel", style: { width: panelWidth, borderLeft: "1px solid var(--bw-band)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
     ] }),
-    status != null && /* @__PURE__ */ jsx50("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "6px 14px", borderTop: "1px solid var(--bw-band)", fontSize: 12, color: "var(--label-alternative)", background: "var(--surface-subtle)" }, children: status })
+    status != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "6px 14px", borderTop: "1px solid var(--bw-band)", fontSize: 12, color: "var(--label-alternative)", background: "var(--surface-subtle)" }, children: status })
   ] });
 }
 
 // components/editor/EditorToolbar.jsx
-import React54 from "react";
-import { jsx as jsx51 } from "react/jsx-runtime";
+import React55 from "react";
+import { jsx as jsx52 } from "react/jsx-runtime";
 function EditorToolbar({ items = [], value, defaultValue, onChange, orientation = "vertical", style, ...rest }) {
   const controlled = value !== void 0;
   const first = items[0] && (items[0].value != null ? items[0].value : items[0]);
-  const [internal, setInternal] = React54.useState(defaultValue != null ? defaultValue : first);
+  const [internal, setInternal] = React55.useState(defaultValue != null ? defaultValue : first);
   const cur = controlled ? value : internal;
   const pick = (v) => {
     if (!controlled) setInternal(v);
     onChange && onChange(v);
   };
-  return /* @__PURE__ */ jsx51("div", { style: { display: "inline-flex", flexDirection: orientation === "vertical" ? "column" : "row", gap: 3, ...style }, ...rest, children: items.map((it, i) => {
+  return /* @__PURE__ */ jsx52("div", { style: { display: "inline-flex", flexDirection: orientation === "vertical" ? "column" : "row", gap: 3, ...style }, ...rest, children: items.map((it, i) => {
     const v = it.value != null ? it.value : it;
     const on = v === cur;
-    return /* @__PURE__ */ jsx51(
+    return /* @__PURE__ */ jsx52(
       "button",
       {
         type: "button",
@@ -5309,8 +5382,8 @@ function EditorToolbar({ items = [], value, defaultValue, onChange, orientation 
 }
 
 // components/editor/HistoryToolbar.jsx
-import React55 from "react";
-import { jsx as jsx52, jsxs as jsxs43 } from "react/jsx-runtime";
+import React56 from "react";
+import { jsx as jsx53, jsxs as jsxs44 } from "react/jsx-runtime";
 function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onReset, count, style, ...rest }) {
   const base = {
     width: 34,
@@ -5324,11 +5397,11 @@ function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onRe
     color: "var(--label-neutral)",
     lineHeight: 0
   };
-  return /* @__PURE__ */ jsxs43("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx52("button", { type: "button", disabled: !canUndo, onClick: onUndo, title: "\uC2E4\uD589 \uCDE8\uC18C", "aria-label": "\uC2E4\uD589 \uCDE8\uC18C", style: { ...base, cursor: canUndo ? "pointer" : "not-allowed", opacity: canUndo ? 1 : 0.4 }, children: /* @__PURE__ */ jsx52(Icon, { name: "arrow-left", size: 16, "aria-hidden": "true" }) }),
-    /* @__PURE__ */ jsx52("button", { type: "button", disabled: !canRedo, onClick: onRedo, title: "\uB2E4\uC2DC \uC2E4\uD589", "aria-label": "\uB2E4\uC2DC \uC2E4\uD589", style: { ...base, cursor: canRedo ? "pointer" : "not-allowed", opacity: canRedo ? 1 : 0.4 }, children: /* @__PURE__ */ jsx52(Icon, { name: "arrow-right", size: 16, "aria-hidden": "true" }) }),
-    onReset && /* @__PURE__ */ jsx52("button", { type: "button", onClick: onReset, title: "\uCD08\uAE30\uD654", "aria-label": "\uCD08\uAE30\uD654", style: { ...base, cursor: "pointer" }, children: /* @__PURE__ */ jsx52(Icon, { name: "close", size: 16, "aria-hidden": "true" }) }),
-    typeof count === "number" && /* @__PURE__ */ jsxs43("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums", marginLeft: 4 }, children: [
+  return /* @__PURE__ */ jsxs44("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx53("button", { type: "button", disabled: !canUndo, onClick: onUndo, title: "\uC2E4\uD589 \uCDE8\uC18C", "aria-label": "\uC2E4\uD589 \uCDE8\uC18C", style: { ...base, cursor: canUndo ? "pointer" : "not-allowed", opacity: canUndo ? 1 : 0.4 }, children: /* @__PURE__ */ jsx53(Icon, { name: "arrow-left", size: 16, "aria-hidden": "true" }) }),
+    /* @__PURE__ */ jsx53("button", { type: "button", disabled: !canRedo, onClick: onRedo, title: "\uB2E4\uC2DC \uC2E4\uD589", "aria-label": "\uB2E4\uC2DC \uC2E4\uD589", style: { ...base, cursor: canRedo ? "pointer" : "not-allowed", opacity: canRedo ? 1 : 0.4 }, children: /* @__PURE__ */ jsx53(Icon, { name: "arrow-right", size: 16, "aria-hidden": "true" }) }),
+    onReset && /* @__PURE__ */ jsx53("button", { type: "button", onClick: onReset, title: "\uCD08\uAE30\uD654", "aria-label": "\uCD08\uAE30\uD654", style: { ...base, cursor: "pointer" }, children: /* @__PURE__ */ jsx53(Icon, { name: "close", size: 16, "aria-hidden": "true" }) }),
+    typeof count === "number" && /* @__PURE__ */ jsxs44("span", { style: { fontSize: 11.5, color: "var(--label-assistive)", fontVariantNumeric: "tabular-nums", marginLeft: 4 }, children: [
       count,
       " \uB2E8\uACC4"
     ] })
@@ -5336,8 +5409,8 @@ function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onRe
 }
 
 // components/feedback/Avatar.jsx
-import React56 from "react";
-import { jsx as jsx53, jsxs as jsxs44 } from "react/jsx-runtime";
+import React57 from "react";
+import { jsx as jsx54, jsxs as jsxs45 } from "react/jsx-runtime";
 var PLACEHOLDER_PATHS = {
   person: "M24 0H0V24H24V0ZM12.0007 5.90324C10.3806 5.90324 9.06734 7.21654 9.06734 8.83657C9.06734 10.4566 10.3806 11.7699 12.0007 11.7699C13.6207 11.7699 14.934 10.4566 14.934 8.83657C14.934 7.21654 13.6207 5.90324 12.0007 5.90324ZM7.94485 13.9487C9.02103 13.369 10.4593 13.0673 12.0006 13.0673C13.5419 13.0673 14.9802 13.369 16.0564 13.9487C17.1318 14.528 17.9339 15.4448 17.9339 16.6673L17.9339 16.8852C17.9339 17.0096 17.934 17.1363 17.9251 17.2446C17.9153 17.3651 17.8916 17.5146 17.814 17.6667C17.7086 17.8737 17.5403 18.042 17.3334 18.1474C17.1812 18.225 17.0317 18.2487 16.9112 18.2585C16.803 18.2674 16.6763 18.2674 16.5519 18.2674H16.5519L7.44952 18.2679C7.32508 18.2679 7.1984 18.268 7.0901 18.2591C6.96962 18.2493 6.82012 18.2256 6.66795 18.1481C6.46096 18.0426 6.29267 17.8743 6.1872 17.6673C6.10967 17.5152 6.08595 17.3657 6.07611 17.2452C6.06726 17.1369 6.06728 17.0102 6.0673 16.8858L6.0673 16.6673C6.0673 15.4448 6.86943 14.528 7.94485 13.9487Z",
   company: "M24 0H0V24H24V0ZM7.91302 5.40129H7.91304H12.0909H12.0909C12.3518 5.40128 12.5828 5.40127 12.7742 5.4169C12.9781 5.43356 13.1893 5.4709 13.395 5.57568C13.696 5.72908 13.9408 5.97384 14.0942 6.2749C14.199 6.48054 14.2363 6.69177 14.253 6.89563C14.2686 7.08704 14.2686 7.31806 14.2686 7.57901V7.57903V7.57905V7.57906L14.2686 10.7346H16.0908H16.0908H16.0909H16.0909C16.3519 10.7346 16.5828 10.7346 16.7742 10.7502C16.9781 10.7669 17.1893 10.8042 17.3949 10.909C17.696 11.0624 17.9408 11.3072 18.0942 11.6082C18.1989 11.8139 18.2363 12.0251 18.2529 12.229C18.2686 12.4204 18.2686 12.6514 18.2686 12.9124V18.6013H13.6827L13.6686 18.6014L13.6545 18.6013H10.0109L10.0019 18.6014L9.99291 18.6013H5.73527L5.73527 7.57903V7.57901C5.73526 7.31803 5.73525 7.08706 5.75089 6.89563C5.76754 6.69177 5.80488 6.48054 5.90966 6.2749C6.06306 5.97384 6.30782 5.72908 6.60888 5.57568C6.81452 5.4709 7.02575 5.43356 7.22961 5.4169C7.42102 5.40127 7.65205 5.40128 7.91302 5.40129ZM13.0686 17.4013H10.6019V15.3347C10.6019 15.0033 10.3333 14.7347 10.0019 14.7347C9.67054 14.7347 9.40191 15.0033 9.40191 15.3347V17.4013H6.93529V7.40125C6.93529 6.9823 6.94269 6.91512 6.95486 6.87765C6.99443 6.75587 7.08991 6.6604 7.21168 6.62083C7.24915 6.60865 7.31633 6.60125 7.73528 6.60125H12.2686C12.6876 6.60125 12.7547 6.60865 12.7922 6.62083C12.914 6.6604 13.0095 6.75587 13.049 6.87765C13.0612 6.91512 13.0686 6.9823 13.0686 7.40125V17.4013ZM14.2686 17.4013H17.0686V12.7346C17.0686 12.3156 17.0612 12.2485 17.049 12.211C17.0094 12.0892 16.914 11.9937 16.7922 11.9542C16.7547 11.942 16.6875 11.9346 16.2686 11.9346H14.2686V17.4013ZM8.06858 8.66802C8.06858 8.33665 8.33721 8.06802 8.66858 8.06802H11.3352C11.6666 8.06802 11.9352 8.33665 11.9352 8.66802C11.9352 8.99939 11.6666 9.26802 11.3352 9.26802H8.66858C8.33721 9.26802 8.06858 8.99939 8.06858 8.66802ZM8.06858 11.3347C8.06858 11.0033 8.33721 10.7347 8.66858 10.7347H11.3352C11.6666 10.7347 11.9352 11.0033 11.9352 11.3347C11.9352 11.6661 11.6666 11.9347 11.3352 11.9347H8.66858C8.33721 11.9347 8.06858 11.6661 8.06858 11.3347Z",
@@ -5398,7 +5471,7 @@ function resolveInteractionStyle(interaction) {
   return states[state] || {};
 }
 function PlaceholderGlyph({ kind, deactivated }) {
-  return /* @__PURE__ */ jsx53(
+  return /* @__PURE__ */ jsx54(
     "svg",
     {
       "aria-hidden": "true",
@@ -5410,7 +5483,7 @@ function PlaceholderGlyph({ kind, deactivated }) {
         display: "block",
         color: deactivated ? "var(--bw-white)" : "var(--label-assistive)"
       },
-      children: /* @__PURE__ */ jsx53(
+      children: /* @__PURE__ */ jsx54(
         "path",
         {
           fillRule: "evenodd",
@@ -5471,7 +5544,7 @@ function Avatar({
   const showPushBadge = pushBadge !== false && pushBadge != null && !deactivated;
   const pushBadgeSize = Math.max(10, Math.round(resolvedSize * 0.28));
   const pushBadgeLabel = pushBadge === true ? "" : pushBadge;
-  return /* @__PURE__ */ jsxs44(
+  return /* @__PURE__ */ jsxs45(
     "span",
     {
       "aria-disabled": deactivated || void 0,
@@ -5488,7 +5561,7 @@ function Avatar({
       },
       ...rest,
       children: [
-        src ? /* @__PURE__ */ jsx53(
+        src ? /* @__PURE__ */ jsx54(
           "img",
           {
             src,
@@ -5497,7 +5570,7 @@ function Avatar({
             height: resolvedSize,
             style: { ...avatarBoxStyle, display: "block", objectFit: "cover" }
           }
-        ) : /* @__PURE__ */ jsx53(
+        ) : /* @__PURE__ */ jsx54(
           "span",
           {
             style: {
@@ -5511,7 +5584,7 @@ function Avatar({
               fontWeight: "var(--fw-bold)",
               fontSize: Math.round(resolvedSize * 0.38)
             },
-            children: showInitials ? initials : /* @__PURE__ */ jsx53(
+            children: showInitials ? initials : /* @__PURE__ */ jsx54(
               PlaceholderGlyph,
               {
                 kind: placeholderKind === "initials" ? normalizedVariant : placeholderKind,
@@ -5520,7 +5593,7 @@ function Avatar({
             )
           }
         ),
-        deactivated && /* @__PURE__ */ jsx53(
+        deactivated && /* @__PURE__ */ jsx54(
           "span",
           {
             "aria-hidden": "true",
@@ -5531,7 +5604,7 @@ function Avatar({
               overflow: "hidden",
               pointerEvents: "none"
             },
-            children: /* @__PURE__ */ jsx53(
+            children: /* @__PURE__ */ jsx54(
               "span",
               {
                 style: {
@@ -5549,7 +5622,7 @@ function Avatar({
             )
           }
         ),
-        status && !deactivated && /* @__PURE__ */ jsx53(
+        status && !deactivated && /* @__PURE__ */ jsx54(
           "span",
           {
             style: {
@@ -5564,7 +5637,7 @@ function Avatar({
             }
           }
         ),
-        showPushBadge && /* @__PURE__ */ jsx53(
+        showPushBadge && /* @__PURE__ */ jsx54(
           "span",
           {
             "aria-hidden": "true",
@@ -5596,8 +5669,8 @@ function Avatar({
 }
 
 // components/feedback/AvatarGroup.jsx
-import React57 from "react";
-import { jsx as jsx54, jsxs as jsxs45 } from "react/jsx-runtime";
+import React58 from "react";
+import { jsx as jsx55, jsxs as jsxs46 } from "react/jsx-runtime";
 var AVATAR_GROUP_SIZES = {
   xsmall: 24,
   default: 32,
@@ -5638,9 +5711,9 @@ function AvatarGroup({
   };
   const renderTrailingContent = () => {
     if (trailingContent === false || trailingContent == null) return null;
-    if (React57.isValidElement(trailingContent)) return trailingContent;
+    if (React58.isValidElement(trailingContent)) return trailingContent;
     const label = trailingContent === true ? trailingLabel ?? `\uC678 ${extra}\uBA85` : trailingContent;
-    return /* @__PURE__ */ jsx54(
+    return /* @__PURE__ */ jsx55(
       "span",
       {
         style: {
@@ -5660,7 +5733,7 @@ function AvatarGroup({
       }
     );
   };
-  return /* @__PURE__ */ jsxs45(
+  return /* @__PURE__ */ jsxs46(
     "div",
     {
       style: {
@@ -5671,8 +5744,8 @@ function AvatarGroup({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs45("span", { style: { display: "inline-flex", alignItems: "center" }, children: [
-          shown.map((it, i) => /* @__PURE__ */ jsx54(
+        /* @__PURE__ */ jsxs46("span", { style: { display: "inline-flex", alignItems: "center" }, children: [
+          shown.map((it, i) => /* @__PURE__ */ jsx55(
             Avatar,
             {
               src: it.src,
@@ -5695,7 +5768,7 @@ function AvatarGroup({
             },
             i
           )),
-          extra > 0 && !trailingContent && /* @__PURE__ */ jsxs45(
+          extra > 0 && !trailingContent && /* @__PURE__ */ jsxs46(
             "span",
             {
               style: {
@@ -5719,8 +5792,8 @@ function AvatarGroup({
 }
 
 // components/feedback/Badge.jsx
-import React58 from "react";
-import { jsx as jsx55 } from "react/jsx-runtime";
+import React59 from "react";
+import { jsx as jsx56 } from "react/jsx-runtime";
 var COLORS = {
   signal: "var(--lk-accent-ink)",
   navy: "var(--surface-inverse)",
@@ -5735,9 +5808,9 @@ var COLORS = {
 function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
   const c = COLORS[tone] || COLORS.signal;
   if (dot) {
-    return /* @__PURE__ */ jsx55("span", { style: { display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: c, ...style }, ...rest });
+    return /* @__PURE__ */ jsx56("span", { style: { display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: c, ...style }, ...rest });
   }
-  return /* @__PURE__ */ jsx55(
+  return /* @__PURE__ */ jsx56(
     "span",
     {
       style: {
@@ -5762,8 +5835,8 @@ function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
 }
 
 // components/feedback/Chip.jsx
-import React59 from "react";
-import { jsx as jsx56, jsxs as jsxs46 } from "react/jsx-runtime";
+import React60 from "react";
+import { jsx as jsx57, jsxs as jsxs47 } from "react/jsx-runtime";
 function Chip({
   children,
   as = "span",
@@ -5781,7 +5854,7 @@ function Chip({
   onClick,
   ...rest
 }) {
-  const [hover, setHover] = React59.useState(false);
+  const [hover, setHover] = React60.useState(false);
   const disabledState = disabled || disable;
   const activeState = active || selected || hover && !disabledState;
   const normalizedSize = {
@@ -5851,7 +5924,7 @@ function Chip({
   };
   const p = palettes[variant] || palettes.default;
   const Comp = as;
-  return /* @__PURE__ */ jsxs46(
+  return /* @__PURE__ */ jsxs47(
     Comp,
     {
       disabled: as === "button" ? disabledState : void 0,
@@ -5894,7 +5967,7 @@ function Chip({
       },
       ...rest,
       children: [
-        thumbnail && /* @__PURE__ */ jsx56(
+        thumbnail && /* @__PURE__ */ jsx57(
           "span",
           {
             "aria-hidden": "true",
@@ -5912,7 +5985,7 @@ function Chip({
             children: thumbnail
           }
         ),
-        !thumbnail && leading && /* @__PURE__ */ jsx56("span", { "aria-hidden": "true", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: leading }),
+        !thumbnail && leading && /* @__PURE__ */ jsx57("span", { "aria-hidden": "true", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: leading }),
         children
       ]
     }
@@ -5920,10 +5993,10 @@ function Chip({
 }
 
 // components/feedback/Notification.jsx
-import React60 from "react";
-import { jsx as jsx57, jsxs as jsxs47 } from "react/jsx-runtime";
+import React61 from "react";
+import { jsx as jsx58, jsxs as jsxs48 } from "react/jsx-runtime";
 function Notification({ icon, title, description, time, unread = false, onClick, style, ...rest }) {
-  return /* @__PURE__ */ jsxs47(
+  return /* @__PURE__ */ jsxs48(
     "div",
     {
       role: onClick ? "button" : void 0,
@@ -5932,14 +6005,14 @@ function Notification({ icon, title, description, time, unread = false, onClick,
       style: { display: "flex", gap: 12, padding: "14px 16px", borderRadius: "var(--radius-lg)", cursor: onClick ? "pointer" : "default", background: unread ? "var(--lk-accent-tint)" : "transparent", fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        icon != null && /* @__PURE__ */ jsx57("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--lk-accent-ink)" }, children: icon }),
-        /* @__PURE__ */ jsxs47("div", { style: { flex: 1, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs47("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            /* @__PURE__ */ jsx57("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
-            unread && /* @__PURE__ */ jsx57("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "var(--bw-red)", flexShrink: 0 } })
+        icon != null && /* @__PURE__ */ jsx58("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--lk-accent-ink)" }, children: icon }),
+        /* @__PURE__ */ jsxs48("div", { style: { flex: 1, minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs48("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+            /* @__PURE__ */ jsx58("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: title }),
+            unread && /* @__PURE__ */ jsx58("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "var(--bw-red)", flexShrink: 0 } })
           ] }),
-          description != null && /* @__PURE__ */ jsx57("div", { style: { marginTop: 2, fontSize: 13, lineHeight: 1.55, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
-          time != null && /* @__PURE__ */ jsx57("div", { style: { marginTop: 4, fontSize: 12, color: "var(--label-assistive)" }, children: time })
+          description != null && /* @__PURE__ */ jsx58("div", { style: { marginTop: 2, fontSize: 13, lineHeight: 1.55, color: "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
+          time != null && /* @__PURE__ */ jsx58("div", { style: { marginTop: 4, fontSize: 12, color: "var(--label-assistive)" }, children: time })
         ] })
       ]
     }
@@ -5947,25 +6020,25 @@ function Notification({ icon, title, description, time, unread = false, onClick,
 }
 
 // components/feedback/PushBadge.jsx
-import React61 from "react";
-import { jsx as jsx58, jsxs as jsxs48 } from "react/jsx-runtime";
+import React62 from "react";
+import { jsx as jsx59, jsxs as jsxs49 } from "react/jsx-runtime";
 function PushBadge({ children, count, dot = false, max = 99, tone = "negative", style, ...rest }) {
   const c = tone === "signal" ? "var(--lk-accent-ink)" : tone === "navy" ? "var(--surface-inverse)" : "var(--bw-red)";
   const show = dot || count != null && count > 0;
   const label = count > max ? `${max}+` : count;
-  return /* @__PURE__ */ jsxs48("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs49("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     children,
-    show && (dot ? /* @__PURE__ */ jsx58("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxSizing: "content-box" } }) : /* @__PURE__ */ jsx58("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--text-on-signal)", borderRadius: "var(--radius-pill)", border: "2px solid var(--bw-white)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
+    show && (dot ? /* @__PURE__ */ jsx59("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxSizing: "content-box" } }) : /* @__PURE__ */ jsx59("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--text-on-signal)", borderRadius: "var(--radius-pill)", border: "2px solid var(--bw-white)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
   ] });
 }
 
 // components/feedback/Rating.jsx
-import React62 from "react";
-import { jsx as jsx59 } from "react/jsx-runtime";
+import React63 from "react";
+import { jsx as jsx60 } from "react/jsx-runtime";
 function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnly = false, style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React62.useState(defaultValue);
-  const [hover, setHover] = React62.useState(null);
+  const [internal, setInternal] = React63.useState(defaultValue);
+  const [hover, setHover] = React63.useState(null);
   const val = isControlled ? value : internal;
   const shown = hover != null ? hover : val;
   const set = (v) => {
@@ -5973,9 +6046,9 @@ function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnl
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
-  return /* @__PURE__ */ jsx59("span", { style: { display: "inline-flex", gap: 2, ...style }, ...rest, children: Array.from({ length: max }).map((_, i) => {
+  return /* @__PURE__ */ jsx60("span", { style: { display: "inline-flex", gap: 2, ...style }, ...rest, children: Array.from({ length: max }).map((_, i) => {
     const filled = i < shown;
-    return /* @__PURE__ */ jsx59(
+    return /* @__PURE__ */ jsx60(
       "span",
       {
         onMouseEnter: () => {
@@ -5986,7 +6059,7 @@ function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnl
         },
         onClick: () => set(i + 1),
         style: { display: "inline-flex", cursor: readOnly ? "default" : "pointer", color: filled ? "var(--bw-amber)" : "var(--bw-gray-300)" },
-        children: /* @__PURE__ */ jsx59("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: filled ? "currentColor" : "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx59("path", { d: "M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 18.6 6.2 21l1.1-6.5-4.7-4.6 6.5-.95z" }) })
+        children: /* @__PURE__ */ jsx60("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: filled ? "currentColor" : "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx60("path", { d: "M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 18.6 6.2 21l1.1-6.5-4.7-4.6 6.5-.95z" }) })
       },
       i
     );
@@ -5994,8 +6067,8 @@ function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnl
 }
 
 // components/feedback/Tag.jsx
-import React63 from "react";
-import { jsx as jsx60 } from "react/jsx-runtime";
+import React64 from "react";
+import { jsx as jsx61 } from "react/jsx-runtime";
 var TONES2 = {
   signal: { fg: "var(--lk-accent-ink)", bg: "var(--lk-accent-tint-2)" },
   // brand teal chip (default)
@@ -6011,7 +6084,7 @@ var TONES2 = {
 };
 function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
   const t = TONES2[tone] || TONES2.signal;
-  return /* @__PURE__ */ jsx60(
+  return /* @__PURE__ */ jsx61(
     "span",
     {
       className: `lk-tag lk-tag--${tone}`,
@@ -6039,12 +6112,12 @@ function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
 }
 
 // components/forms/AutoComplete.jsx
-import React64 from "react";
-import { jsx as jsx61, jsxs as jsxs49 } from "react/jsx-runtime";
+import React65 from "react";
+import { jsx as jsx62, jsxs as jsxs50 } from "react/jsx-runtime";
 function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, placeholder = "\uC785\uB825\uD558\uC138\uC694", size = "md", style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React64.useState(defaultValue || "");
-  const [open, setOpen] = React64.useState(false);
+  const [internal, setInternal] = React65.useState(defaultValue || "");
+  const [open, setOpen] = React65.useState(false);
   const val = isControlled ? value : internal;
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const filtered = val ? norm.filter((o) => String(o.label).toLowerCase().includes(String(val).toLowerCase())) : norm;
@@ -6058,8 +6131,8 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
     setOpen(false);
   };
   const h = size === "sm" ? 40 : 48;
-  return /* @__PURE__ */ jsxs49("div", { style: { position: "relative", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx61(
+  return /* @__PURE__ */ jsxs50("div", { style: { position: "relative", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx62(
       "input",
       {
         value: val,
@@ -6074,7 +6147,7 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
         style: { width: "100%", height: h, padding: "0 16px", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 16, color: "var(--label-normal)", background: "var(--bw-white)" }
       }
     ),
-    open && filtered.length > 0 && /* @__PURE__ */ jsx61("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: 6 }, children: filtered.map((o, i) => /* @__PURE__ */ jsx61(
+    open && filtered.length > 0 && /* @__PURE__ */ jsx62("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: 6 }, children: filtered.map((o, i) => /* @__PURE__ */ jsx62(
       "div",
       {
         role: "option",
@@ -6097,8 +6170,8 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
 }
 
 // components/forms/Checkbox.jsx
-import React65 from "react";
-import { jsx as jsx62, jsxs as jsxs50 } from "react/jsx-runtime";
+import React66 from "react";
+import { jsx as jsx63, jsxs as jsxs51 } from "react/jsx-runtime";
 function Checkbox({
   label,
   checked,
@@ -6122,9 +6195,9 @@ function Checkbox({
 }) {
   const stateChecked = state === "checked" ? true : state === "unchecked" ? false : void 0;
   const isControlled = checked !== void 0 || stateChecked !== void 0;
-  const [internal, setInternal] = React65.useState(stateChecked ?? !!defaultChecked);
-  const [hover, setHover] = React65.useState(false);
-  const [focus, setFocus] = React65.useState(false);
+  const [internal, setInternal] = React66.useState(stateChecked ?? !!defaultChecked);
+  const [hover, setHover] = React66.useState(false);
+  const [focus, setFocus] = React66.useState(false);
   const on = checked !== void 0 ? checked : stateChecked !== void 0 ? stateChecked : internal;
   const isMark = variant === "mark";
   const mixed = !isMark && (indeterminate || state === "indeterminate") && !on;
@@ -6173,7 +6246,7 @@ function Checkbox({
     boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
     transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
   };
-  return /* @__PURE__ */ jsxs50(
+  return /* @__PURE__ */ jsxs51(
     "label",
     {
       htmlFor: id,
@@ -6193,7 +6266,7 @@ function Checkbox({
         ...style
       },
       children: [
-        /* @__PURE__ */ jsxs50(
+        /* @__PURE__ */ jsxs51(
           "span",
           {
             role: "checkbox",
@@ -6213,24 +6286,24 @@ function Checkbox({
             style: controlStyle,
             ...rest,
             children: [
-              (on || isMark) && /* @__PURE__ */ jsx62("svg", { width: iconSize, height: iconSize, viewBox: "0 0 24 24", fill: "none", stroke: isMark ? "currentColor" : checkStroke, strokeWidth: "3.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx62("path", { d: "M20 6 9 17l-5-5" }) }),
-              mixed && /* @__PURE__ */ jsx62("span", { style: { width: d - 8, height: 2, borderRadius: 999, background: checkStroke } })
+              (on || isMark) && /* @__PURE__ */ jsx63("svg", { width: iconSize, height: iconSize, viewBox: "0 0 24 24", fill: "none", stroke: isMark ? "currentColor" : checkStroke, strokeWidth: "3.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx63("path", { d: "M20 6 9 17l-5-5" }) }),
+              mixed && /* @__PURE__ */ jsx63("span", { style: { width: d - 8, height: 2, borderRadius: 999, background: checkStroke } })
             ]
           }
         ),
-        label && /* @__PURE__ */ jsx62("span", { style: labelStyle, children: label })
+        label && /* @__PURE__ */ jsx63("span", { style: labelStyle, children: label })
       ]
     }
   );
 }
 
 // components/forms/CheckboxGroup.jsx
-import React66 from "react";
-import { jsx as jsx63, jsxs as jsxs51 } from "react/jsx-runtime";
+import React67 from "react";
+import { jsx as jsx64, jsxs as jsxs52 } from "react/jsx-runtime";
 function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direction = "column", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React66.useState(defaultValue);
+  const [internal, setInternal] = React67.useState(defaultValue);
   const val = isControlled ? value : internal;
   const toggle = (v) => {
     const arr = Array.isArray(val) ? val : [];
@@ -6238,34 +6311,34 @@ function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direc
     if (!isControlled) setInternal(next);
     onChange && onChange(next);
   };
-  return /* @__PURE__ */ jsx63("div", { role: "group", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
+  return /* @__PURE__ */ jsx64("div", { role: "group", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = Array.isArray(val) && val.includes(o.value);
-    return /* @__PURE__ */ jsxs51("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
-      /* @__PURE__ */ jsx63("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
-      /* @__PURE__ */ jsx63("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "var(--bw-white)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx63("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "var(--text-on-signal)", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx63("path", { d: "M20 6 9 17l-5-5" }) }) }),
-      /* @__PURE__ */ jsxs51("span", { children: [
-        /* @__PURE__ */ jsx63("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ jsx63("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
+    return /* @__PURE__ */ jsxs52("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+      /* @__PURE__ */ jsx64("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
+      /* @__PURE__ */ jsx64("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "var(--bw-white)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx64("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "var(--text-on-signal)", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx64("path", { d: "M20 6 9 17l-5-5" }) }) }),
+      /* @__PURE__ */ jsxs52("span", { children: [
+        /* @__PURE__ */ jsx64("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ jsx64("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
 }
 
 // components/forms/ColorSwatch.jsx
-import React67 from "react";
-import { jsx as jsx64 } from "react/jsx-runtime";
+import React68 from "react";
+import { jsx as jsx65 } from "react/jsx-runtime";
 function ColorSwatch({ colors = [], value, defaultValue, onChange, size = 28, shape = "rounded", style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React67.useState(defaultValue);
+  const [internal, setInternal] = React68.useState(defaultValue);
   const val = isControlled ? value : internal;
   const pick = (c) => {
     if (!isControlled) setInternal(c);
     onChange && onChange(c);
   };
   const radius = shape === "circle" ? "50%" : "var(--radius-md)";
-  return /* @__PURE__ */ jsx64("div", { style: { display: "inline-flex", gap: 10, flexWrap: "wrap", ...style }, ...rest, children: colors.map((c) => {
+  return /* @__PURE__ */ jsx65("div", { style: { display: "inline-flex", gap: 10, flexWrap: "wrap", ...style }, ...rest, children: colors.map((c) => {
     const on = c === val;
-    return /* @__PURE__ */ jsx64(
+    return /* @__PURE__ */ jsx65(
       "button",
       {
         type: "button",
@@ -6279,16 +6352,16 @@ function ColorSwatch({ colors = [], value, defaultValue, onChange, size = 28, sh
 }
 
 // components/forms/Combobox.jsx
-import React68 from "react";
-import { jsx as jsx65, jsxs as jsxs52 } from "react/jsx-runtime";
+import React69 from "react";
+import { jsx as jsx66, jsxs as jsxs53 } from "react/jsx-runtime";
 function Combobox({ options = [], value, defaultValue = [], onChange, placeholder = "\uC120\uD0DD", size = "md", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React68.useState(defaultValue);
+  const [internal, setInternal] = React69.useState(defaultValue);
   const sel = isControlled ? value : internal;
-  const [open, setOpen] = React68.useState(false);
-  const ref = React68.useRef(null);
-  React68.useEffect(() => {
+  const [open, setOpen] = React69.useState(false);
+  const ref = React69.useRef(null);
+  React69.useEffect(() => {
     if (!open) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -6306,14 +6379,14 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
     return o ? o.label : v;
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs52("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs52("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--label-normal)" : "var(--label-assistive)" }, children: [
-      /* @__PURE__ */ jsx65("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ jsx65("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
-      /* @__PURE__ */ jsx65("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx65("path", { d: "m6 9 6 6 6-6" }) })
+  return /* @__PURE__ */ jsxs53("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs53("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--label-normal)" : "var(--label-assistive)" }, children: [
+      /* @__PURE__ */ jsx66("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ jsx66("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--lk-accent-tint-2)", color: "var(--lk-accent-ink)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
+      /* @__PURE__ */ jsx66("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx66("path", { d: "m6 9 6 6 6-6" }) })
     ] }),
-    open && /* @__PURE__ */ jsx65("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
+    open && /* @__PURE__ */ jsx66("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
       const on = sel.includes(o.value);
-      return /* @__PURE__ */ jsxs52(
+      return /* @__PURE__ */ jsxs53(
         "div",
         {
           role: "option",
@@ -6327,7 +6400,7 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
           },
           style: { display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--label-normal)" },
           children: [
-            /* @__PURE__ */ jsx65("span", { style: { width: 18, height: 18, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: on && /* @__PURE__ */ jsx65("svg", { width: "11", height: "11", viewBox: "0 0 24 24", fill: "none", stroke: "var(--text-on-signal)", strokeWidth: "3.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx65("path", { d: "M20 6 9 17l-5-5" }) }) }),
+            /* @__PURE__ */ jsx66("span", { style: { width: 18, height: 18, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, background: on ? "var(--lk-accent-ink)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: on && /* @__PURE__ */ jsx66("svg", { width: "11", height: "11", viewBox: "0 0 24 24", fill: "none", stroke: "var(--text-on-signal)", strokeWidth: "3.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx66("path", { d: "M20 6 9 17l-5-5" }) }) }),
             o.label
           ]
         },
@@ -6338,15 +6411,15 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
 }
 
 // components/forms/DatePicker.jsx
-import React69 from "react";
-import { jsx as jsx66, jsxs as jsxs53 } from "react/jsx-runtime";
+import React70 from "react";
+import { jsx as jsx67, jsxs as jsxs54 } from "react/jsx-runtime";
 function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC \uC120\uD0DD", size = "md", style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React69.useState(defaultValue || null);
+  const [internal, setInternal] = React70.useState(defaultValue || null);
   const sel = isControlled ? value : internal;
-  const [open, setOpen] = React69.useState(false);
-  const ref = React69.useRef(null);
-  React69.useEffect(() => {
+  const [open, setOpen] = React70.useState(false);
+  const ref = React70.useRef(null);
+  React70.useEffect(() => {
     if (!open) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -6365,39 +6438,39 @@ function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC
     onChange && onChange(d);
     setOpen(false);
   };
-  return /* @__PURE__ */ jsxs53("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs53(
+  return /* @__PURE__ */ jsxs54("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs54(
       "button",
       {
         type: "button",
         onClick: () => setOpen((o) => !o),
         style: { display: "inline-flex", alignItems: "center", gap: 10, height: h, padding: "0 14px", minWidth: 200, background: "var(--bw-white)", border: `1px solid ${open ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel ? "var(--label-normal)" : "var(--label-assistive)" },
         children: [
-          /* @__PURE__ */ jsxs53("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-            /* @__PURE__ */ jsx66("rect", { x: "3", y: "4.5", width: "18", height: "17", rx: "2.5" }),
-            /* @__PURE__ */ jsx66("path", { d: "M3 9.5h18M8 2.5v4M16 2.5v4" })
+          /* @__PURE__ */ jsxs54("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+            /* @__PURE__ */ jsx67("rect", { x: "3", y: "4.5", width: "18", height: "17", rx: "2.5" }),
+            /* @__PURE__ */ jsx67("path", { d: "M3 9.5h18M8 2.5v4M16 2.5v4" })
           ] }),
-          /* @__PURE__ */ jsx66("span", { style: { flex: 1, textAlign: "left" }, children: sel ? fmt(sel) : placeholder })
+          /* @__PURE__ */ jsx67("span", { style: { flex: 1, textAlign: "left" }, children: sel ? fmt(sel) : placeholder })
         ]
       }
     ),
-    open && /* @__PURE__ */ jsx66("div", { style: { position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 40 }, children: /* @__PURE__ */ jsx66(Calendar, { value: sel || void 0, onChange: pick }) })
+    open && /* @__PURE__ */ jsx67("div", { style: { position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 40 }, children: /* @__PURE__ */ jsx67(Calendar, { value: sel || void 0, onChange: pick }) })
   ] });
 }
 
 // components/forms/FileUpload.jsx
-import React70 from "react";
-import { jsx as jsx67, jsxs as jsxs54 } from "react/jsx-runtime";
+import React71 from "react";
+import { jsx as jsx68, jsxs as jsxs55 } from "react/jsx-runtime";
 function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD558\uAC70\uB098 \uD30C\uC77C\uC744 \uB04C\uC5B4\uB2E4 \uB193\uC73C\uC138\uC694", disabled = false, style, ...rest }) {
-  const inputRef = React70.useRef(null);
-  const [drag, setDrag] = React70.useState(false);
-  const [names, setNames] = React70.useState([]);
+  const inputRef = React71.useRef(null);
+  const [drag, setDrag] = React71.useState(false);
+  const [names, setNames] = React71.useState([]);
   const handle = (files) => {
     const arr = Array.from(files || []);
     setNames(arr.map((f) => f.name));
     onFiles && onFiles(arr);
   };
-  return /* @__PURE__ */ jsxs54(
+  return /* @__PURE__ */ jsxs55(
     "div",
     {
       onClick: () => {
@@ -6432,36 +6505,36 @@ function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx67("span", { style: { display: "inline-flex", width: 44, height: 44, borderRadius: "var(--radius-lg)", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxs54("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-          /* @__PURE__ */ jsx67("path", { d: "M12 16V4M7 9l5-5 5 5" }),
-          /* @__PURE__ */ jsx67("path", { d: "M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" })
+        /* @__PURE__ */ jsx68("span", { style: { display: "inline-flex", width: 44, height: 44, borderRadius: "var(--radius-lg)", background: "var(--lk-accent-tint)", color: "var(--lk-accent-ink)", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxs55("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+          /* @__PURE__ */ jsx68("path", { d: "M12 16V4M7 9l5-5 5 5" }),
+          /* @__PURE__ */ jsx68("path", { d: "M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" })
         ] }) }),
-        /* @__PURE__ */ jsx67("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", color: names.length ? "var(--label-normal)" : "var(--label-neutral)", wordBreak: "break-all" }, children: names.length ? names.join(", ") : hint }),
-        /* @__PURE__ */ jsx67("input", { ref: inputRef, type: "file", accept, multiple, disabled, onChange: (e) => handle(e.target.files), style: { display: "none" } })
+        /* @__PURE__ */ jsx68("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", color: names.length ? "var(--label-normal)" : "var(--label-neutral)", wordBreak: "break-all" }, children: names.length ? names.join(", ") : hint }),
+        /* @__PURE__ */ jsx68("input", { ref: inputRef, type: "file", accept, multiple, disabled, onChange: (e) => handle(e.target.files), style: { display: "none" } })
       ]
     }
   );
 }
 
 // components/forms/FormField.jsx
-import React71 from "react";
-import { jsx as jsx68, jsxs as jsxs55 } from "react/jsx-runtime";
+import React72 from "react";
+import { jsx as jsx69, jsxs as jsxs56 } from "react/jsx-runtime";
 function FormField({ label, required = false, helper, error, htmlFor, children, style, ...rest }) {
-  return /* @__PURE__ */ jsxs55("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    label != null && /* @__PURE__ */ jsxs55("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: [
+  return /* @__PURE__ */ jsxs56("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    label != null && /* @__PURE__ */ jsxs56("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--label-normal)" }, children: [
       label,
-      required && /* @__PURE__ */ jsx68("span", { style: { color: "var(--bw-red)", marginLeft: 3 }, children: "*" })
+      required && /* @__PURE__ */ jsx69("span", { style: { color: "var(--bw-red)", marginLeft: 3 }, children: "*" })
     ] }),
     children,
-    (error != null || helper != null) && /* @__PURE__ */ jsx68("span", { style: { fontSize: 13, lineHeight: 1.5, color: error != null ? "var(--bw-red)" : "var(--label-alternative)" }, children: error != null ? error : helper })
+    (error != null || helper != null) && /* @__PURE__ */ jsx69("span", { style: { fontSize: 13, lineHeight: 1.5, color: error != null ? "var(--bw-red)" : "var(--label-alternative)" }, children: error != null ? error : helper })
   ] });
 }
 
 // components/forms/Input.jsx
-import React72 from "react";
-import { jsx as jsx69, jsxs as jsxs56 } from "react/jsx-runtime";
+import React73 from "react";
+import { jsx as jsx70, jsxs as jsxs57 } from "react/jsx-runtime";
 function usePlaceholderStyle() {
-  React72.useEffect(() => {
+  React73.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
     const el = document.createElement("style");
     el.id = "lk-field-ph";
@@ -6496,12 +6569,12 @@ function Input({
   "aria-label": ariaLabel,
   ...rest
 }) {
-  const autoId = React72.useId();
+  const autoId = React73.useId();
   const inputId = id || (label ? `in-${String(label).replace(/\s+/g, "-").toLowerCase()}` : `in-${autoId}`);
   const message = error ?? helper;
   const messageId = message != null ? `${inputId}-message` : void 0;
-  const [focused, setFocused] = React72.useState(false);
-  const [hover, setHover] = React72.useState(false);
+  const [focused, setFocused] = React73.useState(false);
+  const [hover, setHover] = React73.useState(false);
   const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size === "large" ? "lg" : size;
   const disabled = !!rest.disabled || disable || interaction === "inactive";
   const activeFocus = focused || focus || interaction === "focused" || interaction === "active-focused";
@@ -6513,12 +6586,12 @@ function Input({
   const startIcon = leadingIcon ?? iconLeft;
   const endIcon = trailingIcon ?? iconRight;
   const endAction = trailingButton ?? actionRight;
-  return /* @__PURE__ */ jsxs56("div", { style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
-    label && /* @__PURE__ */ jsxs56("label", { htmlFor: inputId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
+  return /* @__PURE__ */ jsxs57("div", { style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
+    label && /* @__PURE__ */ jsxs57("label", { htmlFor: inputId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
-      required && /* @__PURE__ */ jsx69("span", { style: { color: "var(--component-input-required-color)" }, children: " *" })
+      required && /* @__PURE__ */ jsx70("span", { style: { color: "var(--component-input-required-color)" }, children: " *" })
     ] }),
-    /* @__PURE__ */ jsxs56(
+    /* @__PURE__ */ jsxs57(
       "div",
       {
         onMouseEnter: () => setHover(true),
@@ -6537,8 +6610,8 @@ function Input({
           transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
         },
         children: [
-          startIcon && /* @__PURE__ */ jsx69("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: startIcon }),
-          /* @__PURE__ */ jsx69(
+          startIcon && /* @__PURE__ */ jsx70("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: startIcon }),
+          /* @__PURE__ */ jsx70(
             "input",
             {
               id: inputId,
@@ -6559,31 +6632,31 @@ function Input({
               style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: disabled ? "var(--label-disable)" : "var(--component-input-text-color)" }
             }
           ),
-          endIcon && /* @__PURE__ */ jsx69("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: endIcon }),
-          endAction && /* @__PURE__ */ jsx69("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: endAction })
+          endIcon && /* @__PURE__ */ jsx70("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: endIcon }),
+          endAction && /* @__PURE__ */ jsx70("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: endAction })
         ]
       }
     ),
-    message != null && /* @__PURE__ */ jsx69("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ jsx70("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
   ] });
 }
 
 // components/forms/InputGroup.jsx
-import React73 from "react";
-import { jsx as jsx70, jsxs as jsxs57 } from "react/jsx-runtime";
+import React74 from "react";
+import { jsx as jsx71, jsxs as jsxs58 } from "react/jsx-runtime";
 function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder, size = "md", disabled = false, inputProps, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React73.useState(defaultValue || "");
+  const [internal, setInternal] = React74.useState(defaultValue || "");
   const val = isControlled ? value : internal;
   const set = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  const Addon = ({ node, side }) => /* @__PURE__ */ jsx70("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--fill-normal)", color: "var(--label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--bw-border)" }, children: node });
-  return /* @__PURE__ */ jsxs57("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
-    prefix != null && /* @__PURE__ */ jsx70(Addon, { node: prefix, side: "left" }),
-    /* @__PURE__ */ jsx70(
+  const Addon = ({ node, side }) => /* @__PURE__ */ jsx71("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--fill-normal)", color: "var(--label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--bw-border)" }, children: node });
+  return /* @__PURE__ */ jsxs58("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
+    prefix != null && /* @__PURE__ */ jsx71(Addon, { node: prefix, side: "left" }),
+    /* @__PURE__ */ jsx71(
       "input",
       {
         value: val,
@@ -6595,16 +6668,16 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
         ...inputProps
       }
     ),
-    suffix != null && /* @__PURE__ */ jsx70(Addon, { node: suffix, side: "right" })
+    suffix != null && /* @__PURE__ */ jsx71(Addon, { node: suffix, side: "right" })
   ] });
 }
 
 // components/forms/NumberField.jsx
-import React74 from "react";
-import { jsx as jsx71, jsxs as jsxs58 } from "react/jsx-runtime";
+import React75 from "react";
+import { jsx as jsx72, jsxs as jsxs59 } from "react/jsx-runtime";
 function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = "md", disabled = false, placeholder, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React74.useState(defaultValue);
+  const [internal, setInternal] = React75.useState(defaultValue);
   const val = isControlled ? value : internal;
   const commit = (v) => {
     const c = Math.min(max, Math.max(min, v));
@@ -6614,7 +6687,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
   const h = size === "sm" ? 40 : 50;
   const Arrow = ({ dir }) => {
     const off = disabled || (dir < 0 ? val <= min : val >= max);
-    return /* @__PURE__ */ jsx71(
+    return /* @__PURE__ */ jsx72(
       "button",
       {
         type: "button",
@@ -6623,12 +6696,12 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
         disabled: off,
         onClick: () => commit(Number(val) + dir * step),
         style: { flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, border: "none", borderLeft: "1px solid var(--bw-border)", background: "transparent", cursor: off ? "not-allowed" : "pointer", color: off ? "var(--label-disable)" : "var(--label-neutral)" },
-        children: /* @__PURE__ */ jsx71("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx71("path", { d: dir < 0 ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
+        children: /* @__PURE__ */ jsx72("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx72("path", { d: dir < 0 ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
       }
     );
   };
-  return /* @__PURE__ */ jsxs58("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, overflow: "hidden", ...style }, children: [
-    /* @__PURE__ */ jsx71(
+  return /* @__PURE__ */ jsxs59("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, overflow: "hidden", ...style }, children: [
+    /* @__PURE__ */ jsx72(
       "input",
       {
         type: "number",
@@ -6644,29 +6717,29 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
         ...rest
       }
     ),
-    /* @__PURE__ */ jsxs58("div", { style: { display: "flex", flexDirection: "column", width: 28 }, children: [
-      /* @__PURE__ */ jsx71(Arrow, { dir: 1 }),
-      /* @__PURE__ */ jsx71(Arrow, { dir: -1 })
+    /* @__PURE__ */ jsxs59("div", { style: { display: "flex", flexDirection: "column", width: 28 }, children: [
+      /* @__PURE__ */ jsx72(Arrow, { dir: 1 }),
+      /* @__PURE__ */ jsx72(Arrow, { dir: -1 })
     ] })
   ] });
 }
 
 // components/forms/PasswordInput.jsx
-import React75 from "react";
-import { jsx as jsx72, jsxs as jsxs59 } from "react/jsx-runtime";
+import React76 from "react";
+import { jsx as jsx73, jsxs as jsxs60 } from "react/jsx-runtime";
 function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uBC00\uBC88\uD638", size = "md", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React75.useState(defaultValue || "");
-  const [show, setShow] = React75.useState(false);
-  const [focus, setFocus] = React75.useState(false);
+  const [internal, setInternal] = React76.useState(defaultValue || "");
+  const [show, setShow] = React76.useState(false);
+  const [focus, setFocus] = React76.useState(false);
   const val = isControlled ? value : internal;
   const set = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs59("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
-    /* @__PURE__ */ jsx72(
+  return /* @__PURE__ */ jsxs60("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
+    /* @__PURE__ */ jsx73(
       "input",
       {
         value: val,
@@ -6681,25 +6754,25 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
         ...rest
       }
     ),
-    /* @__PURE__ */ jsx72("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: show ? /* @__PURE__ */ jsxs59("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-      /* @__PURE__ */ jsx72("path", { d: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" }),
-      /* @__PURE__ */ jsx72("circle", { cx: "12", cy: "12", r: "3" })
-    ] }) : /* @__PURE__ */ jsxs59("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-      /* @__PURE__ */ jsx72("path", { d: "M3 3l18 18" }),
-      /* @__PURE__ */ jsx72("path", { d: "M10.6 10.6a3 3 0 0 0 4.2 4.2" }),
-      /* @__PURE__ */ jsx72("path", { d: "M9.4 5.2A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a15.9 15.9 0 0 1-3.4 4.3M6.6 6.6A15.8 15.8 0 0 0 2 12s3.5 7 10 7a9.5 9.5 0 0 0 2.6-.35" })
+    /* @__PURE__ */ jsx73("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: show ? /* @__PURE__ */ jsxs60("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+      /* @__PURE__ */ jsx73("path", { d: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" }),
+      /* @__PURE__ */ jsx73("circle", { cx: "12", cy: "12", r: "3" })
+    ] }) : /* @__PURE__ */ jsxs60("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+      /* @__PURE__ */ jsx73("path", { d: "M3 3l18 18" }),
+      /* @__PURE__ */ jsx73("path", { d: "M10.6 10.6a3 3 0 0 0 4.2 4.2" }),
+      /* @__PURE__ */ jsx73("path", { d: "M9.4 5.2A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a15.9 15.9 0 0 1-3.4 4.3M6.6 6.6A15.8 15.8 0 0 0 2 12s3.5 7 10 7a9.5 9.5 0 0 0 2.6-.35" })
     ] }) })
   ] });
 }
 
 // components/forms/PinInput.jsx
-import React76 from "react";
-import { jsx as jsx73 } from "react/jsx-runtime";
+import React77 from "react";
+import { jsx as jsx74 } from "react/jsx-runtime";
 function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, mask = false, disabled = false, size = "md", style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React76.useState(defaultValue);
+  const [internal, setInternal] = React77.useState(defaultValue);
   const raw = (isControlled ? value : internal) || "";
-  const refs = React76.useRef([]);
+  const refs = React77.useRef([]);
   const commit = (next) => {
     const v = next.slice(0, length);
     if (!isControlled) setInternal(v);
@@ -6718,7 +6791,7 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
   };
   const boxH = size === "sm" ? 40 : 48;
   const boxW = size === "sm" ? 36 : 44;
-  return /* @__PURE__ */ jsx73("div", { style: { display: "inline-flex", gap: 8, ...style }, ...rest, children: Array.from({ length }).map((_, i) => /* @__PURE__ */ jsx73(
+  return /* @__PURE__ */ jsx74("div", { style: { display: "inline-flex", gap: 8, ...style }, ...rest, children: Array.from({ length }).map((_, i) => /* @__PURE__ */ jsx74(
     "input",
     {
       ref: (el) => {
@@ -6739,8 +6812,8 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
 }
 
 // components/forms/Radio.jsx
-import React77 from "react";
-import { jsx as jsx74, jsxs as jsxs60 } from "react/jsx-runtime";
+import React78 from "react";
+import { jsx as jsx75, jsxs as jsxs61 } from "react/jsx-runtime";
 function Radio({
   label,
   checked,
@@ -6761,8 +6834,8 @@ function Radio({
   "aria-label": ariaLabel,
   ...rest
 }) {
-  const [hover, setHover] = React77.useState(false);
-  const [focus, setFocus] = React77.useState(false);
+  const [hover, setHover] = React78.useState(false);
+  const [focus, setFocus] = React78.useState(false);
   const stateChecked = state === "checked" ? true : state === "unchecked" ? false : void 0;
   const visualChecked = checked ?? stateChecked ?? defaultChecked;
   const disabledState = disabled || disable || interaction === "inactive";
@@ -6774,7 +6847,7 @@ function Radio({
   const radioBorder = disabledState ? "var(--line-neutral)" : visualChecked || activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
   const radioBg = disabledState ? "var(--fill-normal)" : visualChecked ? "var(--lk-accent-ink)" : activeHover ? "var(--fill-normal)" : "var(--bw-white)";
   const radioDot = disabledState ? "var(--label-disable)" : "var(--text-on-signal)";
-  return /* @__PURE__ */ jsxs60(
+  return /* @__PURE__ */ jsxs61(
     "label",
     {
       htmlFor: id,
@@ -6793,7 +6866,7 @@ function Radio({
         ...style
       },
       children: [
-        /* @__PURE__ */ jsx74(
+        /* @__PURE__ */ jsx75(
           "input",
           {
             type: "radio",
@@ -6812,7 +6885,7 @@ function Radio({
             style: { position: "absolute", opacity: 0, width: 0, height: 0 }
           }
         ),
-        /* @__PURE__ */ jsx74("span", { "aria-hidden": "true", style: {
+        /* @__PURE__ */ jsx75("span", { "aria-hidden": "true", style: {
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
@@ -6825,45 +6898,45 @@ function Radio({
           borderRadius: "var(--radius-pill)",
           boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
           transition: "border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
-        }, children: visualChecked && /* @__PURE__ */ jsx74("span", { style: { width: dot, height: dot, borderRadius: "50%", background: radioDot } }) }),
-        label && /* @__PURE__ */ jsx74("span", { style: labelStyle, children: label })
+        }, children: visualChecked && /* @__PURE__ */ jsx75("span", { style: { width: dot, height: dot, borderRadius: "50%", background: radioDot } }) }),
+        label && /* @__PURE__ */ jsx75("span", { style: labelStyle, children: label })
       ]
     }
   );
 }
 
 // components/forms/RadioGroup.jsx
-import React78 from "react";
-import { jsx as jsx75, jsxs as jsxs61 } from "react/jsx-runtime";
+import React79 from "react";
+import { jsx as jsx76, jsxs as jsxs62 } from "react/jsx-runtime";
 function RadioGroup({ options = [], value, defaultValue, onChange, name, direction = "column", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React78.useState(defaultValue);
+  const [internal, setInternal] = React79.useState(defaultValue);
   const val = isControlled ? value : internal;
   const pick = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
-  const autoId = React78.useId();
+  const autoId = React79.useId();
   const gname = name || autoId;
-  return /* @__PURE__ */ jsx75("div", { role: "radiogroup", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
+  return /* @__PURE__ */ jsx76("div", { role: "radiogroup", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = o.value === val;
-    return /* @__PURE__ */ jsxs61("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
-      /* @__PURE__ */ jsx75("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
-      /* @__PURE__ */ jsx75("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-gray-300)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx75("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--lk-accent-ink)" } }) }),
-      /* @__PURE__ */ jsxs61("span", { children: [
-        /* @__PURE__ */ jsx75("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ jsx75("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
+    return /* @__PURE__ */ jsxs62("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+      /* @__PURE__ */ jsx76("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
+      /* @__PURE__ */ jsx76("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-gray-300)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx76("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--lk-accent-ink)" } }) }),
+      /* @__PURE__ */ jsxs62("span", { children: [
+        /* @__PURE__ */ jsx76("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ jsx76("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
 }
 
 // components/forms/RangeSlider.jsx
-import React79 from "react";
-import { jsx as jsx76, jsxs as jsxs62 } from "react/jsx-runtime";
+import React80 from "react";
+import { jsx as jsx77, jsxs as jsxs63 } from "react/jsx-runtime";
 function useRangeStyles() {
-  React79.useEffect(() => {
+  React80.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-rangeslider-css")) return;
     const el = document.createElement("style");
     el.id = "lk-rangeslider-css";
@@ -6879,7 +6952,7 @@ input.lk-rangeslider::-moz-range-thumb{pointer-events:auto;width:18px;height:18p
 function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step = 1, onChange, showValue = false, style, ...rest }) {
   useRangeStyles();
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React79.useState(defaultValue);
+  const [internal, setInternal] = React80.useState(defaultValue);
   const [lo, hi] = isControlled ? value : internal;
   const set = (nlo, nhi) => {
     const a = Math.min(nlo, nhi);
@@ -6890,74 +6963,17 @@ function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step 
   };
   const pctLo = (lo - min) / (max - min) * 100;
   const pctHi = (hi - min) / (max - min) * 100;
-  return /* @__PURE__ */ jsxs62("div", { style: { ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs62("div", { style: { position: "relative", height: 24 }, children: [
-      /* @__PURE__ */ jsx76("div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--fill-strong)" } }),
-      /* @__PURE__ */ jsx76("div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: "var(--lk-accent-ink)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
-      /* @__PURE__ */ jsx76("input", { className: "lk-rangeslider", type: "range", min, max, step, value: lo, onChange: (e) => set(Number(e.target.value), hi), "aria-label": "minimum" }),
-      /* @__PURE__ */ jsx76("input", { className: "lk-rangeslider", type: "range", min, max, step, value: hi, onChange: (e) => set(lo, Number(e.target.value)), "aria-label": "maximum" })
+  return /* @__PURE__ */ jsxs63("div", { style: { ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs63("div", { style: { position: "relative", height: 24 }, children: [
+      /* @__PURE__ */ jsx77("div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--fill-strong)" } }),
+      /* @__PURE__ */ jsx77("div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: "var(--lk-accent-ink)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
+      /* @__PURE__ */ jsx77("input", { className: "lk-rangeslider", type: "range", min, max, step, value: lo, onChange: (e) => set(Number(e.target.value), hi), "aria-label": "minimum" }),
+      /* @__PURE__ */ jsx77("input", { className: "lk-rangeslider", type: "range", min, max, step, value: hi, onChange: (e) => set(lo, Number(e.target.value)), "aria-label": "maximum" })
     ] }),
-    showValue && /* @__PURE__ */ jsxs62("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
-      /* @__PURE__ */ jsx76("span", { children: lo }),
-      /* @__PURE__ */ jsx76("span", { children: hi })
+    showValue && /* @__PURE__ */ jsxs63("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
+      /* @__PURE__ */ jsx77("span", { children: lo }),
+      /* @__PURE__ */ jsx77("span", { children: hi })
     ] })
-  ] });
-}
-
-// components/forms/SearchField.jsx
-import React80 from "react";
-import { jsx as jsx77, jsxs as jsxs63 } from "react/jsx-runtime";
-function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\uAC80\uC0C9", size = "md", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
-  const isControlled = value !== void 0;
-  const [internal, setInternal] = React80.useState(defaultValue || "");
-  const [focus, setFocus] = React80.useState(false);
-  const val = isControlled ? value : internal;
-  const set = (v) => {
-    if (!isControlled) setInternal(v);
-    onChange && onChange(v);
-  };
-  const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs63("div", { style: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 10,
-    height: h,
-    width: "100%",
-    padding: "0 14px",
-    boxSizing: "border-box",
-    background: "var(--bw-white)",
-    border: `1px solid ${focus ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
-    borderRadius: "var(--radius-input)",
-    boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none",
-    opacity: disabled ? 0.5 : 1,
-    transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
-    ...style
-  }, children: [
-    /* @__PURE__ */ jsxs63("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
-      /* @__PURE__ */ jsx77("circle", { cx: "11", cy: "11", r: "7" }),
-      /* @__PURE__ */ jsx77("path", { d: "m21 21-4.3-4.3" })
-    ] }),
-    /* @__PURE__ */ jsx77(
-      "input",
-      {
-        value: val,
-        disabled,
-        placeholder,
-        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uAC80\uC0C9"),
-        onChange: (e) => set(e.target.value),
-        onFocus: () => setFocus(true),
-        onBlur: () => setFocus(false),
-        onKeyDown: (e) => {
-          if (e.key === "Enter" && onSearch) onSearch(val);
-        },
-        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--label-normal)" },
-        ...rest
-      }
-    ),
-    val && /* @__PURE__ */ jsx77("button", { type: "button", "aria-label": "clear", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--label-assistive)" }, children: /* @__PURE__ */ jsxs63("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
-      /* @__PURE__ */ jsx77("circle", { cx: "12", cy: "12", r: "10" }),
-      /* @__PURE__ */ jsx77("path", { d: "M15 9l-6 6M9 9l6 6", stroke: "var(--bw-white)", strokeWidth: "2", strokeLinecap: "round" })
-    ] }) })
   ] });
 }
 
