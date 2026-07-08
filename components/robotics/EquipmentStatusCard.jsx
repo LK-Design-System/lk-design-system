@@ -1,12 +1,14 @@
 import React from 'react';
 import { ConnectionBadge } from './ConnectionBadge';
 
+// Tone drives non-text marks only (direction arrow + status dot); the ringLabel
+// text stays on --label-neutral, so these carry the semantic hue, not AA-text duty.
 const TONE = {
-  positive: 'var(--bw-green)',
-  cautionary: 'var(--bw-amber)',
-  negative: 'var(--bw-red)',
+  positive: 'var(--color-positive)',
+  cautionary: 'var(--color-cautionary)',
+  negative: 'var(--color-danger)',
   signal: 'var(--lk-accent-ink)',
-  neutral: 'var(--bw-gray)',
+  neutral: 'var(--label-alternative)',
 };
 
 function useDimKeyframes() {

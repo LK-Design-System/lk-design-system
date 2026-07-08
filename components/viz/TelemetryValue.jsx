@@ -1,11 +1,14 @@
 import React from 'react';
 
+// Tone colours the value text, so amber/red map to the AA-contrast variants
+// (--color-cautionary-strong / --color-danger-text) rather than the raw hues,
+// which fall below WCAG-AA as text on the panel surface.
 const TONE = {
   neutral: 'var(--label-neutral)',
   signal: 'var(--lk-accent-ink)',
-  positive: 'var(--bw-green)',
-  cautionary: 'var(--bw-amber)',
-  negative: 'var(--bw-red)',
+  positive: 'var(--color-positive)',
+  cautionary: 'var(--color-cautionary-strong)',
+  negative: 'var(--color-danger-text)',
 };
 
 /**

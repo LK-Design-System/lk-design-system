@@ -2,9 +2,9 @@ import React from 'react';
 
 // Connection strength by state — mirrors ConnectionBadge's mapping.
 const CONN = {
-  online: { c: 'var(--bw-green)', bars: 3 },
-  reconnecting: { c: 'var(--bw-amber)', bars: 2 },
-  offline: { c: 'var(--bw-gray-300)', bars: 0 },
+  online: { c: 'var(--color-positive)', bars: 3 },
+  reconnecting: { c: 'var(--color-cautionary)', bars: 2 },
+  offline: { c: 'var(--label-disable)', bars: 0 },
 };
 const BAR_H = [5, 8, 12];
 
@@ -18,7 +18,10 @@ const BAR_H = [5, 8, 12];
 export function RobotStatusCard({ name, image, status = 'online', battery, mode, selected = false, onClick, style, ...rest }) {
   const hasBat = typeof battery === 'number';
   const b = Math.max(0, Math.min(100, battery));
-  const batC = b <= 20 ? 'var(--bw-red)' : (b <= 50 ? 'var(--bw-amber)' : 'var(--bw-green)');
+  // Battery colour by level: the gauge fill carries the hue as a mark; the % readout
+  // uses the AA-contrast text variants so the number stays legible (WCAG-AA on the card surface).
+  const batFill = b <= 20 ? 'var(--color-danger)' : (b <= 50 ? 'var(--color-cautionary)' : 'var(--color-positive)');
+  const batText = b <= 20 ? 'var(--color-danger-text)' : (b <= 50 ? 'var(--color-cautionary-strong)' : 'var(--color-positive)');
   const conn = CONN[status] || CONN.offline;
   return (
     <div onClick={onClick} style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 16, width: '100%', boxSizing: 'border-box',
@@ -42,10 +45,10 @@ export function RobotStatusCard({ name, image, status = 'online', battery, mode,
           {hasBat && (
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               <span style={{ position: 'relative', width: 24, height: 12, border: '1.5px solid var(--label-alternative)', borderRadius: 3, padding: 1.5, boxSizing: 'border-box' }}>
-                <span style={{ display: 'block', height: '100%', width: `${b}%`, background: batC, borderRadius: 1 }} />
+                <span style={{ display: 'block', height: '100%', width: `${b}%`, background: batFill, borderRadius: 1 }} />
                 <span style={{ position: 'absolute', right: -3, top: '50%', transform: 'translateY(-50%)', width: 2, height: 5, background: 'var(--label-alternative)', borderRadius: '0 1px 1px 0' }} />
               </span>
-              <span style={{ fontSize: 12, fontWeight: 700, color: batC, fontVariantNumeric: 'tabular-nums' }}>{b}%</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: batText, fontVariantNumeric: 'tabular-nums' }}>{b}%</span>
             </span>
           )}
         </div>

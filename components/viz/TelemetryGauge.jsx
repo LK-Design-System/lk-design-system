@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TONE = { signal: 'var(--lk-accent-ink)', positive: 'var(--bw-green)', cautionary: 'var(--bw-amber)', negative: 'var(--bw-red)' };
+const TONE = { signal: 'var(--lk-accent-ink)', positive: 'var(--color-positive)', cautionary: 'var(--color-cautionary)', negative: 'var(--color-danger)' };
 
 /**
  * LK ROBOTICS — TelemetryGauge
@@ -12,7 +12,7 @@ export function TelemetryGauge({ value = 0, min = 0, max = 100, unit = '', label
   const pct = Math.max(0, Math.min(1, (value - min) / ((max - min) || 1)));
   let c = 'var(--lk-accent-ink)';
   if (tone) c = TONE[tone] || c;
-  else if (thresholds) { const p = pct * 100; c = p <= thresholds.low ? 'var(--bw-red)' : (p <= thresholds.high ? 'var(--bw-amber)' : 'var(--bw-green)'); }
+  else if (thresholds) { const p = pct * 100; c = p <= thresholds.low ? 'var(--color-danger)' : (p <= thresholds.high ? 'var(--color-cautionary)' : 'var(--color-positive)'); }
   const r = (size - thickness) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r, arc = 0.75, dash = C * arc;
   return (
     <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 6, fontFamily: 'var(--font-sans)', ...style }} {...rest}>

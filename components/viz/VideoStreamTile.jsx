@@ -36,7 +36,7 @@ export function VideoStreamTile({ children, label, status = 'live', aspectRatio 
           <div style={{ position: 'absolute', left: 0, top: 0, right: 0, height: 52, pointerEvents: 'none',
             background: 'linear-gradient(180deg, var(--material-control-dimmer), transparent)' }} />
           <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 7, pointerEvents: 'none' }}>
-            {status === 'live' && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--bw-red)', flexShrink: 0,
+            {status === 'live' && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-danger)', flexShrink: 0,
               animation: 'lk-stream-pulse 1.4s var(--ease-in-out) infinite' }} />}
             <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase',
               color: 'var(--text-on-inverse)', opacity: 0.9 }}>{label}</span>

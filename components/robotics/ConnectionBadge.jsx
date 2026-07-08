@@ -1,10 +1,10 @@
 import React from 'react';
 
 const CFG = {
-  online: { c: 'var(--bw-green)', bars: 3, label: '온라인' },
-  reconnecting: { c: 'var(--bw-amber)', bars: 2, label: '재연결' },
-  weak: { c: 'var(--bw-amber)', bars: 1, label: '약함' },
-  offline: { c: 'var(--bw-gray-300)', bars: 0, label: '오프라인' },
+  online: { c: 'var(--color-positive)', bars: 3, label: '온라인' },
+  reconnecting: { c: 'var(--color-cautionary)', bars: 2, label: '재연결' },
+  weak: { c: 'var(--color-cautionary)', bars: 1, label: '약함' },
+  offline: { c: 'var(--label-disable)', bars: 0, label: '오프라인' },
 };
 
 /**

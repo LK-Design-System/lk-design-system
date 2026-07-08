@@ -284,6 +284,7 @@
     --color-danger:        var(--bw-red);
     --color-positive-strong:  #B8D8C0;
     --color-cautionary-strong:#E3C988;
+    --color-danger-text:      #E08A88;                  /* AA red text on dark surfaces */
     --status-positive-tint:   rgba(143, 183, 154, 0.18);
     --status-cautionary-tint: rgba(210, 176, 109, 0.20);
     --status-danger-tint:     rgba(224, 138, 136, 0.20);
@@ -372,6 +373,7 @@
   --color-danger:        var(--bw-red);
   --color-positive-strong:  #B8D8C0;
   --color-cautionary-strong:#E3C988;
+  --color-danger-text:      #E08A88;                  /* AA red text on dark surfaces */
   --status-positive-tint:   rgba(143, 183, 154, 0.18);
   --status-cautionary-tint: rgba(210, 176, 109, 0.20);
   --status-danger-tint:     rgba(224, 138, 136, 0.20);
@@ -425,7 +427,7 @@
   --text-strong:#0E1329; --text-body:#0E1329; --text-muted:#70737C; --text-link:#4E7CA8; --accent-text:#4E7CA8; --text-on-signal:#FFFFFF;
   --color-primary:var(--lk-primary); --color-primary-hover:var(--lk-primary-strong);
   --color-secondary:var(--bw-indigo); --color-secondary-hover:var(--bw-indigo-600); --color-accent:#0067A8;
-  --color-positive:var(--bw-green); --color-cautionary:var(--bw-amber); --color-danger:var(--bw-red); --color-positive-strong:var(--bw-green-600); --color-cautionary-strong:#9A7424; --status-positive-tint:rgba(79,118,93,0.14); --status-cautionary-tint:rgba(194,154,82,0.18); --status-danger-tint:rgba(207,99,96,0.14);
+  --color-positive:var(--bw-green); --color-cautionary:var(--bw-amber); --color-danger:var(--bw-red); --color-positive-strong:var(--bw-green-600); --color-cautionary-strong:#9A7424; --color-danger-text:#AE4E4B; --status-positive-tint:rgba(79,118,93,0.14); --status-cautionary-tint:rgba(194,154,82,0.18); --status-danger-tint:rgba(207,99,96,0.14);
   --border-subtle:#E1E2E4; --border-strong:#C2C4C8; --focus-ring:rgba(0,103,168,0.20);
   --label-strong:#080B1C; --label-normal:#0E1329; --label-neutral:rgba(14,19,41,0.88); --label-alternative:rgba(14,19,41,0.61); --label-assistive:rgba(14,19,41,0.28); --label-disable:rgba(14,19,41,0.16);
   --inverse-label-strong:rgba(255,255,255,0.92); --inverse-label-neutral:rgba(255,255,255,0.62); --inverse-label-alternative:rgba(255,255,255,0.50); --inverse-label-assistive:rgba(255,255,255,0.45); --inverse-label-disable:rgba(255,255,255,0.38); --inverse-icon-muted:rgba(255,255,255,0.75); --inverse-fill-normal:rgba(255,255,255,0.12); --inverse-fill-hover:rgba(255,255,255,0.14); --inverse-fill-strong:rgba(255,255,255,0.16); --inverse-line-normal:rgba(255,255,255,0.14); --inverse-line-strong:rgba(255,255,255,0.22); --static-white:#FFFFFF; --static-black:#000000;

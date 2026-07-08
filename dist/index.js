@@ -5313,16 +5313,16 @@ function CanvasEditorShell({ title, tools, children, panel, status, panelWidth =
             width: auto !important;
             max-height: 180px !important;
             border-left: 0 !important;
-            border-top: 1px solid var(--bw-band) !important;
+            border-top: 1px solid var(--border-subtle) !important;
           }
         }` }),
-    title != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--bw-band)", fontSize: 13, fontWeight: 700, color: "var(--label-strong)" }, children: title }),
+    title != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border-subtle)", fontSize: 13, fontWeight: 700, color: "var(--label-strong)" }, children: title }),
     /* @__PURE__ */ jsxs43("div", { className: bodyClass, style: { display: "grid", gridTemplateColumns: `${tools != null ? "auto " : ""}minmax(0, 1fr)${panel != null ? " var(--lk-editor-panel-width)" : ""}`, flex: 1, minHeight: 0 }, children: [
-      tools != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--bw-band)", background: "var(--surface-subtle)" }, children: tools }),
+      tools != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", flexDirection: "column", gap: 4, padding: 8, borderRight: "1px solid var(--border-subtle)", background: "var(--surface-subtle)" }, children: tools }),
       /* @__PURE__ */ jsx51("div", { style: { minWidth: 0, position: "relative", background: "var(--surface-sunken)" }, children }),
-      panel != null && /* @__PURE__ */ jsx51("div", { className: "lk-canvas-editor-shell__panel", style: { width: panelWidth, borderLeft: "1px solid var(--bw-band)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
+      panel != null && /* @__PURE__ */ jsx51("div", { className: "lk-canvas-editor-shell__panel", style: { width: panelWidth, borderLeft: "1px solid var(--border-subtle)", overflow: "auto", background: "var(--surface-raised)" }, children: panel })
     ] }),
-    status != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "6px 14px", borderTop: "1px solid var(--bw-band)", fontSize: 12, color: "var(--label-alternative)", background: "var(--surface-subtle)" }, children: status })
+    status != null && /* @__PURE__ */ jsx51("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "6px 14px", borderTop: "1px solid var(--border-subtle)", fontSize: 12, color: "var(--label-alternative)", background: "var(--surface-subtle)" }, children: status })
   ] });
 }
 
@@ -10606,10 +10606,10 @@ function ToastStack({ children, position = "bottom-right", gap = 10, style, ...r
 import React132 from "react";
 import { jsx as jsx129, jsxs as jsxs96 } from "react/jsx-runtime";
 var CFG = {
-  online: { c: "var(--bw-green)", bars: 3, label: "\uC628\uB77C\uC778" },
-  reconnecting: { c: "var(--bw-amber)", bars: 2, label: "\uC7AC\uC5F0\uACB0" },
-  weak: { c: "var(--bw-amber)", bars: 1, label: "\uC57D\uD568" },
-  offline: { c: "var(--bw-gray-300)", bars: 0, label: "\uC624\uD504\uB77C\uC778" }
+  online: { c: "var(--color-positive)", bars: 3, label: "\uC628\uB77C\uC778" },
+  reconnecting: { c: "var(--color-cautionary)", bars: 2, label: "\uC7AC\uC5F0\uACB0" },
+  weak: { c: "var(--color-cautionary)", bars: 1, label: "\uC57D\uD568" },
+  offline: { c: "var(--label-disable)", bars: 0, label: "\uC624\uD504\uB77C\uC778" }
 };
 function ConnectionBadge({ status = "online", label, showLabel = true, size = "md", style, ...rest }) {
   React132.useEffect(() => {
@@ -10652,11 +10652,11 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
 import React133 from "react";
 import { jsx as jsx130, jsxs as jsxs97 } from "react/jsx-runtime";
 var TONE = {
-  positive: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  negative: "var(--bw-red)",
+  positive: "var(--color-positive)",
+  cautionary: "var(--color-cautionary)",
+  negative: "var(--color-danger)",
   signal: "var(--lk-accent-ink)",
-  neutral: "var(--bw-gray)"
+  neutral: "var(--label-alternative)"
 };
 function useDimKeyframes() {
   React133.useEffect(() => {
@@ -10843,15 +10843,16 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
 import React135 from "react";
 import { jsx as jsx132, jsxs as jsxs99 } from "react/jsx-runtime";
 var CONN = {
-  online: { c: "var(--bw-green)", bars: 3 },
-  reconnecting: { c: "var(--bw-amber)", bars: 2 },
-  offline: { c: "var(--bw-gray-300)", bars: 0 }
+  online: { c: "var(--color-positive)", bars: 3 },
+  reconnecting: { c: "var(--color-cautionary)", bars: 2 },
+  offline: { c: "var(--label-disable)", bars: 0 }
 };
 var BAR_H = [5, 8, 12];
 function RobotStatusCard({ name, image, status = "online", battery, mode, selected = false, onClick, style, ...rest }) {
   const hasBat = typeof battery === "number";
   const b = Math.max(0, Math.min(100, battery));
-  const batC = b <= 20 ? "var(--bw-red)" : b <= 50 ? "var(--bw-amber)" : "var(--bw-green)";
+  const batFill = b <= 20 ? "var(--color-danger)" : b <= 50 ? "var(--color-cautionary)" : "var(--color-positive)";
+  const batText = b <= 20 ? "var(--color-danger-text)" : b <= 50 ? "var(--color-cautionary-strong)" : "var(--color-positive)";
   const conn = CONN[status] || CONN.offline;
   return /* @__PURE__ */ jsxs99("div", { onClick, style: {
     display: "flex",
@@ -10886,10 +10887,10 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
         /* @__PURE__ */ jsx132("span", { role: "img", title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx132("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--fill-strong)" } }, i)) }),
         hasBat && /* @__PURE__ */ jsxs99("span", { style: { display: "inline-flex", alignItems: "center", gap: 6 }, children: [
           /* @__PURE__ */ jsxs99("span", { style: { position: "relative", width: 24, height: 12, border: "1.5px solid var(--label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
-            /* @__PURE__ */ jsx132("span", { style: { display: "block", height: "100%", width: `${b}%`, background: batC, borderRadius: 1 } }),
+            /* @__PURE__ */ jsx132("span", { style: { display: "block", height: "100%", width: `${b}%`, background: batFill, borderRadius: 1 } }),
             /* @__PURE__ */ jsx132("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--label-alternative)", borderRadius: "0 1px 1px 0" } })
           ] }),
-          /* @__PURE__ */ jsxs99("span", { style: { fontSize: 12, fontWeight: 700, color: batC, fontVariantNumeric: "tabular-nums" }, children: [
+          /* @__PURE__ */ jsxs99("span", { style: { fontSize: 12, fontWeight: 700, color: batText, fontVariantNumeric: "tabular-nums" }, children: [
             b,
             "%"
           ] })
@@ -12252,14 +12253,14 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
 // components/viz/TelemetryGauge.jsx
 import React153 from "react";
 import { jsx as jsx150, jsxs as jsxs117 } from "react/jsx-runtime";
-var TONE2 = { signal: "var(--lk-accent-ink)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)" };
+var TONE2 = { signal: "var(--lk-accent-ink)", positive: "var(--color-positive)", cautionary: "var(--color-cautionary)", negative: "var(--color-danger)" };
 function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size = 120, thickness = 10, thresholds, tone, style, ...rest }) {
   const pct = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
   let c = "var(--lk-accent-ink)";
   if (tone) c = TONE2[tone] || c;
   else if (thresholds) {
     const p = pct * 100;
-    c = p <= thresholds.low ? "var(--bw-red)" : p <= thresholds.high ? "var(--bw-amber)" : "var(--bw-green)";
+    c = p <= thresholds.low ? "var(--color-danger)" : p <= thresholds.high ? "var(--color-cautionary)" : "var(--color-positive)";
   }
   const r = (size - thickness) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r, arc = 0.75, dash = C * arc;
   return /* @__PURE__ */ jsxs117("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
@@ -12283,9 +12284,9 @@ import { jsx as jsx151, jsxs as jsxs118 } from "react/jsx-runtime";
 var TONE3 = {
   neutral: "var(--label-neutral)",
   signal: "var(--lk-accent-ink)",
-  positive: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  negative: "var(--bw-red)"
+  positive: "var(--color-positive)",
+  cautionary: "var(--color-cautionary-strong)",
+  negative: "var(--color-danger-text)"
 };
 function TelemetryValue({
   label,
@@ -12377,7 +12378,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
               width: 6,
               height: 6,
               borderRadius: "50%",
-              background: "var(--bw-red)",
+              background: "var(--color-danger)",
               flexShrink: 0,
               animation: "lk-stream-pulse 1.4s var(--ease-in-out) infinite"
             } }),
