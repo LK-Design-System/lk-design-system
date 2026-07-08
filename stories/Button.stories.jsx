@@ -103,7 +103,7 @@ export const SizesAndStates = {
           저장 중
         </Button>
         <Button variant="outlined" color="assistive">
-          <Icon name="download" size={18} />
+          <Icon name="upload" size={18} />
           내보내기
         </Button>
       </div>

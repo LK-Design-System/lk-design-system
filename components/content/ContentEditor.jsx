@@ -4,7 +4,7 @@ import { Icon } from '../icon/Icon.jsx';
 const DEFAULT_TOOLBAR_ITEMS = [
   { value: 'body', label: '본문', icon: 'document' },
   { value: 'tag', label: '태그', icon: 'tag' },
-  { value: 'attachment', label: '첨부', icon: 'upload' },
+  { value: 'attachment', label: '첨부', icon: 'attachment' },
   { value: 'preview', label: '미리보기', icon: 'eye' },
 ];
 

@@ -4,8 +4,9 @@ import { SearchField } from '../forms/SearchField.jsx';
 /**
  * LK ROBOTICS - DataToolbar
  * Header/controls bar for DataGrid and Table surfaces: title, result count,
- * search field, filter chips/menus, selected-count bulk actions, and trailing
- * commands. It keeps dense operational tables from inventing custom toolbars.
+ * search field, filter chips/menus, and trailing commands. Row selection and
+ * its bulk actions live on the DataGrid (they replace the grid's header row),
+ * so the toolbar stays a stable page-level surface.
  */
 export function DataToolbar({
   title,
@@ -17,9 +18,6 @@ export function DataToolbar({
   searchPlaceholder = '검색',
   filters,
   actions,
-  selectedCount = 0,
-  bulkActions,
-  onClearSelection,
   size = 'md',
   style,
   ...rest
@@ -32,9 +30,9 @@ export function DataToolbar({
     onSearchChange && onSearchChange(value);
   };
   const compact = size === 'sm';
-  // Control scale: sm 32 (compact) / 40 (button md step) — keeps toolbar rows
-  // flush with the sm/md button heights beside them.
-  const controlHeight = compact ? 'var(--control-h-sm)' : 40;
+  // Snap every control to the DS button-height scale so search, chips, and
+  // buttons share one baseline (sm 32 / md 40) instead of an invented rhythm.
+  const controlHeight = compact ? 'var(--component-button-height-sm)' : 'var(--component-button-height-md)';
 
   return (
     <div
@@ -54,16 +52,20 @@ export function DataToolbar({
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minWidth: 0 }}>
         <div style={{ display: 'grid', gap: 3, minWidth: 0 }}>
           {/* WDS Card/List Cell title:description ratio — 16:13 (default),
-              15:13 (compact) — SemiBold title over a 13px muted description. */}
-          {title != null && <strong style={{ color: 'var(--label-strong)', fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: compact ? 'var(--body2-line)' : 'var(--body1-line)' }}>{title}</strong>}
+              15:13 (compact) — SemiBold title over a 13px muted description.
+              The result count sits beside the title as context, not next to
+              the export CTA where it reads ambiguously. */}
+          {(title != null || count != null) && (
+            <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-2)', minWidth: 0 }}>
+              {title != null && <strong style={{ color: 'var(--label-strong)', fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: compact ? 'var(--body2-line)' : 'var(--body1-line)' }}>{title}</strong>}
+              {count != null && <span style={{ color: 'var(--label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{count}개</span>}
+            </div>
+          )}
           {description != null && <span style={{ color: 'var(--label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)' }}>{description}</span>}
         </div>
-        {/* Header right slot holds page-level context only: result count and
-            persistent actions. Selection controls live in the contextual bar
-            below so the two scopes never blur together. */}
-        {(count != null || actions != null) && (
+        {/* Header right slot holds page-level actions only. */}
+        {actions != null && (
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', marginLeft: 'auto' }}>
-            {count != null && <span style={{ color: 'var(--label-alternative)', fontSize: 'var(--label2-size)', fontVariantNumeric: 'tabular-nums' }}>{count}개</span>}
             {actions}
           </div>
         )}
@@ -81,60 +83,6 @@ export function DataToolbar({
         </div>
         {filters != null && <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>{filters}</div>}
       </div>
-      {/* Contextual selection bar: a tinted strip appears only while rows are
-          selected, carrying the count, bulk actions, and a clear affordance. */}
-      {selectedCount > 0 && (
-        <div
-          role="status"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'var(--space-2)',
-            flexWrap: 'wrap',
-            minHeight: controlHeight,
-            padding: compact ? '6px 10px' : '8px 12px',
-            borderRadius: 'var(--radius-sm)',
-            background: 'var(--lk-accent-tint-2)',
-            color: 'var(--label-normal)',
-          }}
-        >
-          {/* Count + its clear affordance stay together on the left (clear
-              undoes the selection); the primary bulk action sits on the far
-              right as the CTA. */}
-          <span style={{ color: 'var(--label-strong)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
-            {selectedCount}개 선택됨
-          </span>
-          {onClearSelection && (
-            <button
-              type="button"
-              onClick={onClearSelection}
-              aria-label="선택 해제"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 4,
-                padding: '4px 8px',
-                border: 0,
-                background: 'transparent',
-                color: 'var(--label-neutral)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: 'var(--label2-size)',
-                fontWeight: 'var(--fw-semibold)',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
-              선택 해제
-            </button>
-          )}
-          {bulkActions != null && (
-            <div style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-              {bulkActions}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

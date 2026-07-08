@@ -7,6 +7,8 @@ export interface MultiSelectChipProps {
   defaultSelected?: boolean;
   onChange?: (next: boolean) => void;
   disabled?: boolean;
+  /** 밀도. sm은 소형 컨트롤 높이(32)에 맞춥니다. @default "md" */
+  size?: 'sm' | 'md';
   style?: React.CSSProperties;
   children?: React.ReactNode;
 }

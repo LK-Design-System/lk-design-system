@@ -3781,7 +3781,7 @@ var import_jsx_runtime30 = require("react/jsx-runtime");
 var DEFAULT_TOOLBAR_ITEMS = [
   { value: "body", label: "\uBCF8\uBB38", icon: "document" },
   { value: "tag", label: "\uD0DC\uADF8", icon: "tag" },
-  { value: "attachment", label: "\uCCA8\uBD80", icon: "upload" },
+  { value: "attachment", label: "\uCCA8\uBD80", icon: "attachment" },
   { value: "preview", label: "\uBBF8\uB9AC\uBCF4\uAE30", icon: "eye" }
 ];
 function ToolbarButton({ item, active, disabled, onAction }) {
@@ -5039,7 +5039,10 @@ function sortRows(rows, key, dir) {
   });
   return dir === "desc" ? s.reverse() : s;
 }
-function checkboxStyle(checked) {
+var CHECK_IMG = `url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8.2L6.7 10.8L12 5.2' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`;
+var DASH_IMG = `url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8h8' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")`;
+function checkboxStyle(checked, indeterminate = false) {
+  const filled = checked || indeterminate;
   return {
     appearance: "none",
     WebkitAppearance: "none",
@@ -5047,21 +5050,22 @@ function checkboxStyle(checked) {
     height: 16,
     margin: 0,
     borderRadius: 4,
-    border: `1px solid ${checked ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
-    backgroundColor: checked ? "var(--lk-accent-ink)" : "var(--surface-card)",
-    backgroundImage: checked ? `url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8.2L6.7 10.8L12 5.2' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")` : "none",
+    border: `1px solid ${filled ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+    backgroundColor: filled ? "var(--lk-accent-ink)" : "var(--surface-card)",
+    backgroundImage: indeterminate ? DASH_IMG : checked ? CHECK_IMG : "none",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     cursor: "pointer",
     verticalAlign: "middle"
   };
 }
-function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, defaultSelectedRows = [], onSelectionChange, size = "md", style, ...rest }) {
+function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, defaultSelectedRows = [], onSelectionChange, bulkActions, onClearSelection, size = "md", style, ...rest }) {
   const [sort, setSort] = import_react46.default.useState({ key: null, dir: "asc" });
   const isControlled = selectedRows !== void 0;
   const [internalSel, setInternalSel] = import_react46.default.useState(() => new Set(defaultSelectedRows));
   const sel = isControlled ? new Set(selectedRows) : internalSel;
   const pad2 = size === "sm" ? "10px 12px" : "13px 16px";
+  const headerH = size === "sm" ? 50 : 58;
   const sorted = sortRows(rows, sort.key, sort.dir);
   const toggleSort = (c) => {
     if (!c.sortable) return;
@@ -5082,9 +5086,30 @@ function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, d
     applySel(n);
   };
   const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
+  const selecting = selectable && sel.size > 0;
+  const colSpan = columns.length + (selectable ? 1 : 0);
   return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { style: { overflowX: "auto", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { children: [
-      selectable && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44 }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("thead", { children: selecting ? (
+      /* Material-style selection band: replaces the column header at the
+         same fixed height (no row shift), carrying the count, a clear
+         affordance, and the bulk-action slot. The select-all checkbox
+         stays in its own column so it remains reachable while selecting;
+         it shows an indeterminate dash on a partial selection. */
+      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { style: { height: headerH }, children: [
+        selectable && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("th", { style: { padding: pad2, width: 44, textAlign: "left", background: "var(--lk-accent-tint-2)", borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn, !allOn) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("th", { colSpan: columns.length, scope: "colgroup", style: { padding: 0, background: "var(--lk-accent-tint-2)", borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { role: "status", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 12px" : "0 16px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("span", { style: { color: "var(--label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+              sel.size,
+              "\uAC1C \uC120\uD0DD\uB428"
+            ] }),
+            onClearSelection && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("button", { type: "button", onClick: onClearSelection, "aria-label": "\uC120\uD0DD \uD574\uC81C", title: "\uC120\uD0DD \uD574\uC81C", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22, padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: "var(--label-neutral)", cursor: "pointer" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
+          ] }),
+          bulkActions != null && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: bulkActions })
+        ] }) })
+      ] })
+    ) : /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("tr", { style: { height: headerH }, children: [
+      selectable && /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44, textAlign: "left" }, children: /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn) }) }),
       columns.map((c) => /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
         "th",
         {
@@ -5185,9 +5210,6 @@ function DataToolbar({
   searchPlaceholder = "\uAC80\uC0C9",
   filters,
   actions,
-  selectedCount = 0,
-  bulkActions,
-  onClearSelection,
   size = "md",
   style,
   ...rest
@@ -5200,7 +5222,7 @@ function DataToolbar({
     onSearchChange && onSearchChange(value);
   };
   const compact = size === "sm";
-  const controlHeight = compact ? "var(--control-h-sm)" : 40;
+  const controlHeight = compact ? "var(--component-button-height-sm)" : "var(--component-button-height-md)";
   return /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
     "div",
     {
@@ -5219,16 +5241,16 @@ function DataToolbar({
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
-            title != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("strong", { style: { color: "var(--label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
+            (title != null || count != null) && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-2)", minWidth: 0 }, children: [
+              title != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("strong", { style: { color: "var(--label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
+              count != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+                count,
+                "\uAC1C"
+              ] })
+            ] }),
             description != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)" }, children: description })
           ] }),
-          (count != null || actions != null) && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
-            count != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", fontVariantNumeric: "tabular-nums" }, children: [
-              count,
-              "\uAC1C"
-            ] }),
-            actions
-          ] })
+          actions != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
@@ -5243,57 +5265,7 @@ function DataToolbar({
             }
           ) }),
           filters != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: filters })
-        ] }),
-        selectedCount > 0 && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
-          "div",
-          {
-            role: "status",
-            style: {
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-              flexWrap: "wrap",
-              minHeight: controlHeight,
-              padding: compact ? "6px 10px" : "8px 12px",
-              borderRadius: "var(--radius-sm)",
-              background: "var(--lk-accent-tint-2)",
-              color: "var(--label-normal)"
-            },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)("span", { style: { color: "var(--label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
-                selectedCount,
-                "\uAC1C \uC120\uD0DD\uB428"
-              ] }),
-              onClearSelection && /* @__PURE__ */ (0, import_jsx_runtime46.jsxs)(
-                "button",
-                {
-                  type: "button",
-                  onClick: onClearSelection,
-                  "aria-label": "\uC120\uD0DD \uD574\uC81C",
-                  style: {
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 4,
-                    padding: "4px 8px",
-                    border: 0,
-                    background: "transparent",
-                    color: "var(--label-neutral)",
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "var(--label2-size)",
-                    fontWeight: "var(--fw-semibold)",
-                    cursor: "pointer",
-                    whiteSpace: "nowrap"
-                  },
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }),
-                    "\uC120\uD0DD \uD574\uC81C"
-                  ]
-                }
-              ),
-              bulkActions != null && /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: bulkActions })
-            ]
-          }
-        )
+        ] })
       ]
     }
   );
@@ -11551,19 +11523,22 @@ function ChoiceCard({
 var import_react139 = __toESM(require("react"), 1);
 
 // components/selection/pill-chip-style.js
-function pillChipStyle(active, disabled) {
+function pillChipStyle(active, disabled, size = "md") {
+  const sm = size === "sm";
   return {
     display: "inline-flex",
     alignItems: "center",
-    height: "var(--component-filter-chip-height)",
-    padding: "0 15px",
+    // sm snaps to the small-control height (32) so chips sit flush with
+    // small buttons/inputs in dense toolbars; md keeps the default pill.
+    height: sm ? "var(--component-button-height-sm)" : "var(--component-filter-chip-height)",
+    padding: sm ? "0 12px" : "0 15px",
     background: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
     border: `1px solid ${active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
     borderRadius: "var(--radius-pill)",
     cursor: disabled ? "not-allowed" : "pointer",
     opacity: disabled ? 0.5 : 1,
     fontFamily: "var(--font-sans)",
-    fontSize: 14,
+    fontSize: sm ? "var(--label2-size)" : "var(--label1-size)",
     fontWeight: "var(--fw-semibold)",
     letterSpacing: 0,
     color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
@@ -11580,6 +11555,7 @@ function FilterChip({
   count,
   caret = false,
   disabled = false,
+  size = "md",
   onClick,
   style,
   ...rest
@@ -11595,8 +11571,8 @@ function FilterChip({
       onMouseEnter: () => setHover(true),
       onMouseLeave: () => setHover(false),
       style: {
-        ...pillChipStyle(active, disabled),
-        gap: 7,
+        ...pillChipStyle(active, disabled, size),
+        gap: size === "sm" ? 6 : 7,
         ...!active && hover && !disabled ? { background: "var(--fill-normal)" } : null,
         ...style
       },
@@ -11619,12 +11595,14 @@ function MultiSelectChip({
   defaultSelected,
   onChange,
   disabled = false,
+  size = "md",
   style,
   ...rest
 }) {
   const isControlled = selected !== void 0;
   const [internal, setInternal] = import_react140.default.useState(!!defaultSelected);
   const on = isControlled ? selected : internal;
+  const sm = size === "sm";
   const toggle = () => {
     if (disabled) return;
     if (!isControlled) setInternal(!on);
@@ -11638,9 +11616,9 @@ function MultiSelectChip({
       disabled,
       onClick: toggle,
       style: {
-        ...pillChipStyle(on, disabled),
+        ...pillChipStyle(on, disabled, size),
         gap: 6,
-        padding: on ? "0 15px 0 11px" : "0 15px",
+        padding: on ? sm ? "0 12px 0 9px" : "0 15px 0 11px" : sm ? "0 12px" : "0 15px",
         transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), padding var(--dur-fast) var(--ease-out)",
         ...style
       },

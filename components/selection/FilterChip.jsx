@@ -13,6 +13,7 @@ export function FilterChip({
   count,
   caret = false,
   disabled = false,
+  size = 'md',
   onClick,
   style,
   ...rest
@@ -27,7 +28,7 @@ export function FilterChip({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        ...pillChipStyle(active, disabled), gap: 7,
+        ...pillChipStyle(active, disabled, size), gap: size === 'sm' ? 6 : 7,
         ...(!active && hover && !disabled ? { background: 'var(--fill-normal)' } : null),
         ...style,
       }}

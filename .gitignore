@@ -34,3 +34,6 @@ desktop.ini
 *.temp
 *.bak
 ~$*
+
+# local scratch (ad-hoc reference clones, experiments)
+tmp/

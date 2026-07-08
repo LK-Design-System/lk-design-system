@@ -4,7 +4,9 @@ import {
   DataGrid,
   DataToolbar,
   FilterChip,
+  Icon,
   StatusBadge,
+  TextButton,
 } from '../src/index.js';
 
 const meta = {
@@ -52,13 +54,6 @@ const toolbarStyle = {
   background: 'var(--surface-raised)',
 };
 
-const filterChipStyle = {
-  height: 34,
-  padding: '0 12px',
-  borderRadius: 'var(--radius-md)',
-  fontSize: 13,
-};
-
 function ToolbarWithGridDemo() {
   const [selected, setSelected] = React.useState(selectedRows);
   return (
@@ -71,15 +66,12 @@ function ToolbarWithGridDemo() {
         searchPlaceholder="사용자 검색"
         filters={(
           <>
-            <FilterChip active style={filterChipStyle}>활성</FilterChip>
-            <FilterChip style={filterChipStyle}>검토 필요</FilterChip>
-            <FilterChip style={filterChipStyle}>비활성</FilterChip>
+            <FilterChip size="sm" active>활성</FilterChip>
+            <FilterChip size="sm">검토 필요</FilterChip>
+            <FilterChip size="sm">비활성</FilterChip>
           </>
         )}
-        actions={<Button size="sm" variant="ghost">내보내기</Button>}
-        selectedCount={selected.length}
-        bulkActions={<Button size="sm" variant="primary">권한 변경</Button>}
-        onClearSelection={() => setSelected([])}
+        actions={<Button size="sm" variant="ghost"><Icon name="upload" size={16} aria-hidden="true" />내보내기</Button>}
         style={toolbarStyle}
       />
       <DataGrid
@@ -88,6 +80,8 @@ function ToolbarWithGridDemo() {
         selectable
         selectedRows={selected}
         onSelectionChange={setSelected}
+        bulkActions={<TextButton size="sm" color="primary">권한 변경</TextButton>}
+        onClearSelection={() => setSelected([])}
         size="sm"
         style={{
           border: 0,
