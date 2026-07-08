@@ -12,12 +12,13 @@
   },
   "statusLegend": {
     "pending-figma-parity": "Local story evidence exists, but the WDS source variant still needs direct comparison.",
-    "extension-boundary": "The item is intentionally outside WDS core and must remain classified as an LK extension."
+    "extension-boundary": "The item is intentionally outside WDS core and must remain classified as an LK extension.",
+    "parity-confirmed-local-snapshot": "Variant, state, slot, and behavior checks verified against the accepted local .fig snapshot with Storybook evidence; live Figma re-verification is optional."
   },
   "families": [
     {
       "wdsFamily": "Layout/Essential, Divider",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "layout-essential-system-bars",
@@ -47,11 +48,12 @@
             "stories/ContentAnnotations.stories.jsx#Annotations"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local nodes 16215:43043/16215:43063: every platform and divider variant present in the snapshot is rendered in stories. Thick-divider thickness 8px (WDS 12px) is an intentional LK override."
     },
     {
       "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "action-area-bottom-placement",
@@ -177,11 +179,12 @@
             "stories/Button.stories.jsx#OnDark"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local Action nodes: variant, color, size, icon-only, disable, active, and loading axes map with WDS-exact dimensions. Follow-ups recorded: focus-visible styling evidence, ActionArea sticky/divider-false story demos. IconButton \"normal\" and ToggleIcon disable are LK deviations/extensions, not parity failures."
     },
     {
       "wdsFamily": "Textinput/Textfield",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "textfield-structure",
@@ -260,11 +263,12 @@
             "stories/SelectionStatus.stories.jsx#ChoiceCards"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local node 16215:31109: status, active/focus/disable, resize, trailing button, label/helper/required axes all covered by FormsFull matrices. Timer/Character Counter variants remain slot compositions without dedicated story tiles."
     },
     {
       "wdsFamily": "Select/Select",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "select-trigger",
@@ -311,11 +315,12 @@
             "stories/FormSearchAutocomplete.stories.jsx#SearchAndAutocomplete"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local node 16215:32967: render chip/text, negative/status, open/focus/disable, overflow, leading icon covered. Option-row states exceed the WDS Select section (WDS Menu is a separate family)."
     },
     {
       "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "control-binary-states",
@@ -397,11 +402,12 @@
             "stories/FormRangeControls.stories.jsx#RangeControls"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local node 16215:33806: checked/indeterminate/unchecked, size, bold, tight, mark treatment incl. negative, and iOS switch platform covered. WDS \"Normal\" resource glyph tier intentionally unmapped; stepper/slider/range remain product extensions."
     },
     {
       "wdsFamily": "Card/Card, Card/List Card",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "card-surface-and-elevation",
@@ -447,9 +453,6 @@
           ],
           "localEvidence": [
             "stories/Card.stories.jsx#ContentCardPatterns",
-            "stories/CardInfo.stories.jsx#FeatureCards",
-            "stories/CardNews.stories.jsx#NewsCards",
-            "stories/CardSpecs.stories.jsx#SpecRows",
             "stories/ContentBadgesAnnotations.stories.jsx#ContentBadgePatterns",
             "stories/ContentMedia.stories.jsx#MediaThumbnails"
           ]
@@ -480,18 +483,24 @@
           "label": "Product extension boundary",
           "wdsChecks": [
             "LK product card must not redefine WDS Card baseline",
-            "metric/stat cards remain product extensions"
+            "feature/news/spec cards remain product patterns unless WDS source confirms them",
+            "metric/stat examples stay under Dashboard Metrics as product extensions"
           ],
           "localEvidence": [
+            "stories/CardInfo.stories.jsx#FeatureCards",
+            "stories/CardNews.stories.jsx#NewsCards",
+            "stories/CardSpecs.stories.jsx#SpecRows",
             "stories/CardsExtended.stories.jsx#ProductCards",
-            "stories/CardStats.stories.jsx#Stats"
+            "stories/DataAndStatus.stories.jsx#Metrics",
+            "stories/CardStats.stories.jsx#StatCard"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local node 16215:29155: platform, save, skeleton, top/bottom content, caption structure, width, thumbnail ratio covered; List Card realized as Card+ListCell composition. Follow-ups recorded: thumbnailOverlay demonstrated inside a Card, toggleIcon prop, extraCaption third caption tier."
     },
     {
       "wdsFamily": "List Cell/List Cell",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "list-cell-layout",
@@ -544,11 +553,12 @@
             "stories/DataTree.stories.jsx#TreeInteractionStates"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local node 16215:26212 (141 variants): every axis has a same-named or aliased prop with px-exact padding mapping and story coverage. LDS default inversion on fillWidth/textEllipsis (true vs WDS False) recorded as intentional."
     },
     {
       "wdsFamily": "Navigation/Category, Tab, Page Indicator, Pagination",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "navigation-category-variants",
@@ -613,11 +623,12 @@
             "stories/NavigationCompact.stories.jsx#PaginationPatterns"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local nodes 16215:22015/21685/22728/16771:165770: all axes map to LDS props and NavigationFlow/NavigationCompact stories. Pagination dot Variant White/Normal maps to PageIndicator alternative (LK rename)."
     },
     {
       "wdsFamily": "Toast/Toast, Snackbar/Snackbar, Alert/Alert",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "feedback-severity",
@@ -675,11 +686,12 @@
             "stories/OverlaySurfaces.stories.jsx#ModalOpen"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local nodes 16215:19414/19528/20040: Toast severities, Snackbar resource combinations, Alert platform x variant x heading covered. Platform treatments proven at component level; the platform gallery story is a static visual reference."
     },
     {
       "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "tooltip-placement",
@@ -742,11 +754,12 @@
             "stories/OverlayCommandPalette.stories.jsx#CommandPaletteOpen"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local nodes 16764:137643/16215:18387: Tooltip Size x Position x Align + shortcut and Menu variant/padding/state axes covered; arrow alignment mechanically guarded by check-tooltip-alignment.mjs. Anchored-overlay behavior checks close as extension-behavior verification."
     },
     {
       "wdsFamily": "Skeleton, Circular",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "skeleton-shapes",
@@ -800,7 +813,8 @@
             "stories/StatusProgress.stories.jsx#ProgressIndicators"
           ]
         }
-      ]
+      ],
+      "notes": "Verified against local nodes 16215:24868/24971: Animate, Align x Color x Length, and rect/circle customize covered; Animate=False maps to prefers-reduced-motion handling. Loading accessibility (aria-busy, progressbar roles, reduced motion) implemented across status components."
     },
     {
       "wdsFamily": "Robotics extension",

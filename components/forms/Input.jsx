@@ -1,5 +1,15 @@
 import React from 'react';
 
+function usePlaceholderStyle() {
+  React.useEffect(() => {
+    if (typeof document === 'undefined' || document.getElementById('lk-field-ph')) return;
+    const el = document.createElement('style');
+    el.id = 'lk-field-ph';
+    el.textContent = '[data-lds-field]::placeholder{color:var(--label-assistive);opacity:1}';
+    document.head.appendChild(el);
+  }, []);
+}
+
 /**
  * LK ROBOTICS — Input
  * Text field with optional label and leading/trailing icon. White box,
@@ -43,7 +53,10 @@ export function Input({
   const activeFocus = focused || focus || interaction === 'focused' || interaction === 'active-focused';
   const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
   const isInvalid = invalid || status === 'negative' || error != null;
-  const ring = isInvalid
+  usePlaceholderStyle();
+  const ring = disabled
+    ? 'var(--line-neutral)'
+    : isInvalid
     ? 'var(--component-input-border-color-invalid)'
     : status === 'positive'
       ? 'var(--color-positive)'
@@ -73,12 +86,12 @@ export function Input({
         border: `var(--component-input-border-width) solid ${ring}`,
         borderRadius: 'var(--component-input-radius)',
         boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
-        opacity: disabled ? 0.65 : 1,
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
       }}>
         {startIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{startIcon}</span>}
         <input
           id={inputId}
+          data-lds-field=""
           {...rest}
           disabled={disabled}
           aria-label={ariaLabel ?? (!label && typeof rest.placeholder === 'string' ? rest.placeholder : undefined)}
@@ -86,13 +99,13 @@ export function Input({
           aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
-          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: 'var(--component-input-text-color)' }}
+          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--label-disable)' : 'var(--component-input-text-color)' }}
         />
         {endIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
         {endAction && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{endAction}</span>}
       </div>
       {message != null && (
-        <span id={messageId} style={{ fontSize: 13, lineHeight: 1.45, color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
+        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
           {message}
         </span>
       )}

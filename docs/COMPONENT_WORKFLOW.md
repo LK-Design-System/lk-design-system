@@ -5,8 +5,9 @@
 1. 패키지 빌드: `npm run build`
 2. 토큰/타입 surface/contract/publish policy 검증: `npm run check:tokens`, `npm run check:type-surface`, `npm run check:contracts`, `npm run check:publish-policy`
 3. 소비 앱 smoke: `npm run check:consumer`
-4. 정적 문서 빌드와 접근성 guard: `npm run build:storybook`, `npm run check:a11y`
-5. CI 게이트: `.github/workflows/ci.yml`
+4. 인벤토리/문서 수치 drift guard: `npm run report:inventory`, `npm run check:inventory`
+5. 정적 문서 빌드와 접근성 guard: `npm run build:storybook`, `npm run check:a11y`
+6. CI 게이트: `.github/workflows/ci.yml`
 
 ## 로컬 개발
 
@@ -16,10 +17,24 @@
 npm install
 ```
 
+CI는 npm과 `package-lock.json`을 기준으로 합니다. 다만 로컬에 npm이 없고 pnpm만 있는 환경에서는 같은 이름의 `pnpm run <script>`를 사용할 수 있습니다. 패키지 스크립트는 내부에서 특정 package manager를 재호출하지 않도록 구성합니다.
+
 Storybook 실행:
 
 ```powershell
 npm run storybook
+```
+
+일상 개발 중 빠른 검사를 실행:
+
+```powershell
+npm run check:fast
+```
+
+Storybook 빌드와 public/accessibility/inventory guard를 실행:
+
+```powershell
+npm run check:storybook
 ```
 
 CI가 확인하는 전체 검사를 로컬에서 실행:
@@ -46,7 +61,8 @@ npm run check:ops-release
 7. `docs/COMPONENT_API_STATE_MATRIX.md` 기준으로 API, state, token, accessibility 계약을 갱신합니다.
 8. `docs/ACCESSIBILITY_CONTRACTS.md` 기준으로 keyboard/focus/screen reader 근거를 확인합니다.
 9. 원본 카드와 대응되면 `stories/Audit.data.jsx`에 숨김 매핑 데이터를 갱신합니다.
-10. push 전에 `npm run check`를 실행합니다.
+10. public export, Storybook story, 문서 수치가 바뀌면 `npm run report:inventory`로 값을 확인하고 관련 문서를 갱신합니다.
+11. push 전에 변경 범위에 맞춰 `npm run check:fast`, `npm run check:storybook`, 또는 `npm run check`를 실행합니다.
 
 ## 토큰 소스 범위
 
@@ -58,7 +74,9 @@ Figma Variables export/import, 토큰 lifecycle, deprecation, breaking change �
 ## Storybook 범위
 
 Storybook은 모든 구현 세부사항이 아니라 실제로 필요한 컴포넌트 상태를 문서화합니다. 원본 카드와 1:1 비교하기 위한 `visual-parity` story는 `!dev` 태그로 sidebar에서 숨기고, public story에는 대표 상태만 남깁니다.
-디자인 시스템 계약은 `문서/디자인 시스템 계약` 아래에 둡니다. 도메인별 기준은 별도 결과 화면을 만들지 않고 관련 컴포넌트 story와 `docs/ROBOTICS_PATTERNS.md` 같은 문서 계약에 반영합니다.
+Public Storybook title은 사용자 탐색 기준입니다. `LDS Core/Foundation`, `LDS Core/Components/<family>`, `LDS Theme/...`, `LDS Product/...`, `LDS Robotics/...`를 사용하고, `1 Theme`, `2 Element`, `3 Component / 2 Action` 같은 WDS 원천 번호 체계는 `docs/references/wds/`의 근거 데이터에만 남깁니다.
+`LDS Product`와 `LDS Robotics` story는 재사용 가능한 확장 컴포넌트나 패턴이어야 합니다. 완성 앱 화면, 템플릿, 워크플로우, 데모 페이지는 Storybook public surface로 추가하지 않습니다.
+디자인 시스템 계약은 Storybook 문서 페이지가 아니라 `docs/` 아래 Markdown 문서와 검증 스크립트에 둡니다. 도메인별 기준은 별도 결과 화면을 만들지 않고 관련 컴포넌트 story와 `docs/ROBOTICS_PATTERNS.md` 같은 문서 계약에 반영합니다.
 우선순위:
 
 - 기본 상태
@@ -76,12 +94,13 @@ GitHub Actions workflow는 `main` push, pull request, manual dispatch에서 실�
 - 패키지 빌드
 - 기계가 읽을 수 있는 토큰 소스 검증
 - public `.d.ts` surface와 `any` 누출 검증
-- 디자인 시스템 계약 문서와 Storybook public 계약 페이지 검증
+- 디자인 시스템 계약 문서와 자동 contract 검증
 - `private: true` 내부 Git 소비 / GitHub Packages 전환 정책 검증
 - 실제 소비 앱 Vite production smoke
 - TypeScript typecheck
 - 생성된 source와 `dist/` drift 검사
 - Storybook 정적 빌드
+- 인벤토리/문서 수치 drift 검사
 - Storybook public surface 중복/숨김 guard
 - Storybook 구현 story 접근성 guard
 - package dry run
@@ -90,4 +109,4 @@ GitHub Actions workflow는 `main` push, pull request, manual dispatch에서 실�
 
 ## Publish policy
 
-현재 패키지는 `private: true` 상태로 유지합니다. 기본 운영 모델은 내부 Git 소비이며, npm publish가 필요해지는 시점에만 GitHub Packages registry 설정과 함께 `package.json`, 문서, CI 정책을 명시적으로 변경합니다. `npm pack --dry-run --ignore-scripts`는 계속 실행해 패키지 파일 구성이 깨지지 않는지 확인합니다.
+현재 패키지는 `private: true` 상태로 유지합니다. 기본 운영 모델은 내부 Git 소비이며, npm publish가 필요해지는 시점에만 GitHub Packages registry 설정과 함께 `package.json`, 문서, CI 정책을 명시적으로 변경합니다. `npm run check:pack`은 사용 가능한 package manager로 pack dry run을 실행해 패키지 파일 구성이 깨지지 않는지 확인합니다.

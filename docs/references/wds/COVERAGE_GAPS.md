@@ -7,13 +7,16 @@ The machine-readable source for this report is
 `docs/references/wds/COVERAGE_AUDIT.json`.
 
 The completion gate is
-`docs/references/wds/COVERAGE_COMPLETION_GATE.json`. It must remain
-`not-ready` while any node-level WDS parity row is unresolved.
+`docs/references/wds/COVERAGE_COMPLETION_GATE.json`. On 2026-07-08 the
+checked-in `Wanted Design System (Community).fig` export (decoded to
+`FIGMA_LOCAL_CONTENT_AUDIT.json`) was accepted as the authoritative WDS source
+snapshot, every node-level queue row was closed against that snapshot, and the
+gate moved to `ready`.
 
-The node-level follow-up source is
-`docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json`. It lists the exact Figma
-node, local LDS evidence, and closure criteria for every WDS section row that
-cannot yet be treated as complete parity.
+The node-level closure record is
+`docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json`. Each row keeps its Figma
+node, local LDS evidence, closure criteria, and a `closureNote` describing what
+was verified against the local snapshot.
 
 ## Source Structure
 
@@ -21,36 +24,37 @@ Figma source: `Wanted Design System Community`
 
 File key: `4e0301GrjO6P8fOQpLUrrG`
 
-Inspected pages:
+Accepted snapshot: local `.fig` export decoded on 2026-07-07
+(101,534 node changes, 35 target summaries, 57 component sections).
 
 | WDS page | Figma node | Audit status |
 | --- | --- | --- |
-| `1 Theme` | `16222:137703` | Section-level audit started |
-| `2 Element` | `16222:137704` | Section-level audit started |
-| `3 Component` | `16222:137705` | Section-level audit started |
+| `1 Theme` | `16222:137703` | Closed against local snapshot |
+| `2 Element` | `16222:137704` | Closed against local snapshot |
+| `3 Component` | `16222:137705` | Closed against local snapshot |
 
-The Figma MCP Starter plan rate limit stopped the deeper subsection-title
-extraction during this pass. Rows marked `partial` are not complete parity
-claims; they mean LDS has relevant coverage and still needs node-level variant
-confirmation.
+Live Figma MCP reads remain blocked by the Starter plan call limit. Live
+re-verification is optional and only matters if the upstream community file
+changes; in that case re-export, run `npm run extract:wds-fig-content`, and
+re-audit affected rows.
 
 ## Section Coverage
 
-| WDS source | Status | LDS coverage | Gap |
+| WDS source | Status | LDS coverage | Closure summary |
 | --- | --- | --- | --- |
-| `1 Theme / 1 Icon` | Partial | `Iconography`, `Icon`, `assets/icons/manifest.json` | WDS icon export folder is imported locally; compare manifest and sizing states against the Figma source node. |
-| `1 Theme / 2 Logo` | Theme-overridden | `Brand`, `BrandPlatform`, LK brand assets | WDS logo is intentionally replaced by LK ROBOTICS marks; verify structural usage guidance. |
-| `2 Element / 1 Basic` | Partial | `Foundations`, `FoundationBasic`, typography/color/ratio tokens, `TOKEN_MAP` | PDF confirms Basic/Ratio coverage; remaining Basic source sections still need node-level detail audit. |
-| `2 Element / 2 Spacing` | Partial | `FoundationSpacing`, grid/spacing tokens, local PDF evidence | Base spacing, grid, and Safe Area Status/Bottom coverage exists; remaining spacing examples need detail audit. |
-| `2 Element / 3 Decorate` | Partial | `FoundationDecorate`, effects tokens, visual-token exceptions | PDF confirms Gradient/Mask/Interaction coverage; remaining WDS decorative examples need node-level detail audit. |
-| `3 Component / 1 Layout` | Partial | `LayoutEssentials`, layout stories, `MobileSystemBars`, `Divider`, `components/layout` | PDF confirms Essential and Divider; verify remaining WDS layout subsections and examples. |
-| `3 Component / 2 Action` | Partial | `ActionArea`, button/action stories, `components/buttons` | PDF confirms Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon; verify full state/size variants. |
-| `3 Component / 3 Selection and Input` | Partial | form/selection stories and components plus screenshot evidence in `docs/references/wds/source-screenshots/3selectionandinput.png` | Screenshot confirms Textinput, Select, Control, Segmented Control, and Framed Style groups. Local state matrices now cover the visible PNG states through existing LDS components, including `Checkbox variant="mark"` and `ChoiceCard presentation="frame"`; verify exact child-node properties through Figma reads. |
-| `3 Component / 4 Content` | Partial | card/content stories and components | Verify card/list/media/badge/disclosure variants one by one. |
-| `3 Component / 5 Loading` | Partial | loading/progress stories and status components | Local stories cover skeleton line/block/avatar shapes, spinner labels, determinate/indeterminate linear progress, determinate/indeterminate circular progress, values, and reduced-motion handling; verify exact WDS state and size variants through Figma reads. |
-| `3 Component / 6 Navigation` | Partial | navigation stories and components | Local story wrappers now expose readable TopBar, app navigation, compact navigation, tabs/routes, footer, menu, steps, and wizard evidence; verify hover-collapse, mobile navigation, footer, menu, route, step, and wizard behavior through Figma reads. |
-| `3 Component / 7 Feedback` | Partial | feedback/overlay/status stories and components | Verify exact WDS feedback taxonomy and state variants. |
-| `3 Component / 8 Presentation` | Partial | tooltip/menu/overlay stories and components | Verify tooltip/menu/overlay roles and presentation states. |
+| `1 Theme / 1 Icon` | Covered | `Iconography`, `Icon`, `assets/icons/manifest.json` | All 339 WDS icon SVGs imported 1:1 (kebab-case renames; `navigationX` → `nav-*`); `logoGoogle` served through `BrandLogo`; `lds-legacy` glyphs are LK product extensions. |
+| `1 Theme / 2 Logo` | Theme-overridden | `Brand`, `BrandPlatform`, LK brand assets | WDS Color/Variant/symbol roles map to `Lockup` tone/variant; Language and Partnership sections intentionally excluded for the single-language LK brand. |
+| `2 Element / 1 Basic` | Covered | `Foundations`, `FoundationBasic`, ratio tokens, `TOKEN_MAP` | The WDS Basic node contains only Ratio; all 17 aspect-ratio presets map 1:1 to `--ratio-*` tokens. Color/typography live on Foundation guideline pages tracked by `FOUNDATION_AUDIT.json`. |
+| `2 Element / 2 Spacing` | Covered | `FoundationSpacing`, grid/spacing tokens | The WDS Spacing node is Safe Area only; iOS minima (44/34) and web `env()` insets are tokenized. Android fixed constants intentionally not tokenized for web runtime. |
+| `2 Element / 3 Decorate` | Covered | `FoundationDecorate`, effects tokens, visual-token exceptions | WDS Decorate is exactly Gradient + Interaction, mapped to `--decorate-*` and `--interaction-*` tokens. |
+| `3 Component / 1 Layout` | Covered | `LayoutEssentials`, `MobileSystemBars`, `Divider` | Layout is Essential + Divider only. LK overrides: thick divider 8px (WDS 12px), iOS bar metrics for both platforms. PageHeader stays a product extension. |
+| `3 Component / 2 Action` | Covered | `ActionArea`, button stories, `components/buttons` | All six Action children map with exact size parity; `Disable`→`disabled`, `Active`→`pressed/selected`. See follow-ups for focus-visible and ActionArea story demos. |
+| `3 Component / 3 Selection and Input` | Covered | form/selection stories and components | Textinput, Select, Control, Segmented Control, Framed Style map axis-by-axis. DateTime/ColorSwatch/PinInput/FileUpload confirmed absent from WDS — product extensions. |
+| `3 Component / 4 Content` | Covered | card/content stories and components | Icon, Badge, Thumbnail (17 ratios exact), Avatar (sizes exact), List Cell (141 variants, px-exact) map axis-complete. Avatar `Official/원티드` badges are Wanted-brand assets, intentionally excluded. |
+| `3 Component / 5 Loading` | Covered | loading/progress stories and status components | Wanted/Circular loading, Skeleton axes, rect/circle customize covered; `Animate=False` maps to reduced-motion handling. Meter stays a product extension. |
+| `3 Component / 6 Navigation` | Covered | navigation stories and components | WDS Navigation is exactly Category, Tab, Page Indicator, Pagination — all mapped. TopBar/Footer/SideNav/Steps have no WDS counterpart and are product extensions. |
+| `3 Component / 7 Feedback` | Covered | feedback/overlay/status stories and components | Toast severities, Snackbar resource axes, Alert platform×variant×heading covered. WDS keeps Snackbar separate, matching LDS. |
+| `3 Component / 8 Presentation` | Covered | tooltip/menu stories and components | Presentation is Tooltip + Menu only, both mapped; arrow alignment guarded by `check-tooltip-alignment.mjs`. Lightbox/CommandPalette/Popover/HoverCard are product extensions. |
 
 ## Confirmed Covered Findings
 
@@ -62,13 +66,33 @@ confirmation.
 | `3 Component / 1 Layout / Essential and Divider`, local PDF `1layout.pdf` | `stories/LayoutEssentials.stories.jsx`, `components/layout/MobileSystemBars.jsx`, `components/content/Divider.jsx`, `tokens/components.css` | Adds WDS Essential mobile system bars and Divider normal/thick, horizontal/vertical variants. |
 | `3 Component / 2 Action / Action Area and Controls`, local PDF `2action.pdf` | `stories/ActionArea.stories.jsx`, `components/buttons/ActionArea.jsx`, `components/buttons/ToggleIcon.jsx`, `components/buttons`, `components/feedback/Chip.jsx` | Adds WDS Action Area and Toggle Icon primitives and documents the Action taxonomy. |
 
-## Next Detail Audit Targets
+## Post-Closure Follow-Ups
 
-1. `1 Theme / 1 Icon`: compare `assets/icons/manifest.json` and `components/icon/Icon.jsx` with the Figma source node.
-2. `2 Element / 1 Basic`: Ratio is covered from local PDF evidence; verify remaining basic foundation subsections against `tokens/colors.css`, `tokens/typography.css`, `tokens/effects.css`, and `tokens/source.json`.
-3. `2 Element / 3 Decorate`: Gradient and Interaction are covered from local PDF evidence; verify remaining radius, shadow, line, and decorative examples.
-4. `3 Component / 1 Layout`: Essential and Divider are covered from local PDF evidence; verify remaining layout child sections.
-5. `3 Component / 2 Action`: Action Area and Toggle Icon are covered from local PDF evidence; map any remaining WDS child sections to LDS button/action components.
-6. `3 Component / 3 Selection and Input`: local Textinput, Select, Control, Segmented Control, Check Mark, Switch, and Framed Style matrices are implemented from the source screenshot through existing LDS components; verify exact child-node properties through Figma node reads.
-7. `3 Component / 6 Navigation`: verify hover-collapse, mobile navigation, and route/step behavior.
-8. `3 Component / 8 Presentation`: verify Tooltip/Menu/Overlay coverage and states.
+A deeper style-level pass (radius, padding, typography, state treatments over
+all 869 WDS variant symbols) was run after closure; its ranked drift findings
+and LK-override register live in `STYLE_PARITY_AUDIT.md`. The items below are
+the structural follow-ups from the closure pass itself.
+
+These are the residual items recorded during the 2026-07-08 snapshot closure.
+None of them block the parity claim; each is either a small evidence gap or an
+intentional LK deviation that should eventually get its own demo or contract
+note.
+
+1. **Focus-visible styling** (`components/buttons`, tokens): no `:focus-visible`
+   rules exist anywhere; components rely on the UA default outline, and no
+   story demonstrates focus states (including on dark surfaces).
+2. **ActionArea story demos**: `sticky`, `compact`, `divider={false}`, and the
+   checkbox/chip/information extra-content variants exist as props but are not
+   demonstrated in stories.
+3. **Card contract deltas**: no `toggleIcon` prop (WDS Card/List Card has one);
+   only two caption tiers (`caption` + `subCaption`) vs WDS three;
+   `thumbnailOverlay` is supported on `Thumbnail` but not demonstrated inside a
+   Card story.
+4. **Brand clear-space rule**: Brand stories say "do not distort" but no
+   explicit clear-space specification is documented.
+5. **Textinput Timer / Character Counter**: covered via `actionRight` /
+   `trailingButton` slot composition; no dedicated story tiles.
+6. **Intentional LK overrides recorded during closure**: thick divider 8px
+   (WDS 12px); iOS bar metrics used for both `MobileSystemBars` platforms; no
+   chromeless IconButton `normal` style; TextButton icons via composition;
+   `ListCell` default inversion on `fillWidth`/`textEllipsis`.

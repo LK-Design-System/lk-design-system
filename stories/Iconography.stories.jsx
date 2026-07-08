@@ -42,7 +42,7 @@ const sourceLabel = {
 };
 
 const meta = {
-  title: 'LDS Core/1 Theme/Icon',
+  title: 'LDS Core/Foundation/Icon',
   parameters: {
     docs: {
       description: {

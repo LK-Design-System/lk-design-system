@@ -85,7 +85,7 @@ export function Card({
   const structuredContent = skeleton ? (
     <StructuredSkeleton compact={compact} />
   ) : (
-    <div style={{ display: 'grid', gap: compact ? 10 : 12 }}>
+    <div style={{ display: 'grid', gap: compact ? 6 : 8 }}>
       {(topContent != null || save) && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
           <div style={{ minWidth: 0 }}>{topContent}</div>
@@ -97,8 +97,8 @@ export function Card({
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
           {leadingContent != null && <div style={{ flexShrink: 0 }}>{leadingContent}</div>}
           <div style={{ display: 'grid', gap: 4, minWidth: 0, flex: 1 }}>
-            {caption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--label-alternative)', fontWeight: 'var(--fw-semibold)' }}>{caption}</div>}
-            {title != null && <div style={{ fontSize: compact ? 15 : 16, lineHeight: 1.4, color: dark ? 'var(--text-on-inverse)' : 'var(--label-strong)', fontWeight: 'var(--fw-bold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
+            {caption != null && <div style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', color: 'var(--label-alternative)', fontWeight: 'var(--fw-medium)' }}>{caption}</div>}
+            {title != null && <div style={{ fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? 'var(--text-on-inverse)' : 'var(--label-strong)', fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
             {description != null && <div style={{ fontSize: 13, lineHeight: 1.5, color: dark ? 'var(--inverse-label-neutral)' : 'var(--label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
             {subCaption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--label-assistive)' }}>{subCaption}</div>}
           </div>

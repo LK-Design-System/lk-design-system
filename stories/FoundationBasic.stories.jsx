@@ -1,7 +1,7 @@
 import { AspectRatio } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/0 Foundation/Basic',
+  title: 'LDS Core/Foundation/Basic',
   parameters: {
     docs: {
       description: {

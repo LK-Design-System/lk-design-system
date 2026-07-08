@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — Chip
- * Mixed-case keyword chip — white box, hairline border, 8px radius. The
+ * Mixed-case keyword chip — white box, hairline border, per-size WDS radius. The
  * recurring "applied product / capability" token (적용 제품, 핵심 기술). Pass
  * `as="a"` + `href` for a link chip; hover lifts the border + text to the
  * signal ink.
@@ -38,24 +38,36 @@ export function Chip({
       height: 'var(--component-chip-height-xs)',
       paddingX: 'var(--component-chip-padding-x-xs)',
       fontSize: 'var(--component-chip-font-size-xs)',
+      letterSpacing: 'var(--component-chip-letter-spacing-xs)',
+      gap: 'var(--component-chip-gap-xs)',
+      radius: 'var(--component-chip-radius-xs)',
       media: 'var(--component-chip-media-size-xs)',
     },
     sm: {
       height: 'var(--component-chip-height-sm)',
       paddingX: 'var(--component-chip-padding-x-sm)',
       fontSize: 'var(--component-chip-font-size-sm)',
+      letterSpacing: 'var(--component-chip-letter-spacing-sm)',
+      gap: 'var(--component-chip-gap-sm)',
+      radius: 'var(--component-chip-radius-sm)',
       media: 'var(--component-chip-media-size-sm)',
     },
     md: {
       height: 'var(--component-chip-height-md)',
       paddingX: 'var(--component-chip-padding-x-md)',
       fontSize: 'var(--component-chip-font-size-md)',
+      letterSpacing: 'var(--component-chip-letter-spacing-md)',
+      gap: 'var(--component-chip-gap-md)',
+      radius: 'var(--component-chip-radius-md)',
       media: 'var(--component-chip-media-size-md)',
     },
     lg: {
       height: 'var(--component-chip-height-lg)',
       paddingX: 'var(--component-chip-padding-x-lg)',
       fontSize: 'var(--component-chip-font-size-lg)',
+      letterSpacing: 'var(--component-chip-letter-spacing-lg)',
+      gap: 'var(--component-chip-gap-lg)',
+      radius: 'var(--component-chip-radius-lg)',
       media: 'var(--component-chip-media-size-lg)',
     },
   };
@@ -96,13 +108,13 @@ export function Chip({
         onClick && onClick(e);
       }}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 'var(--component-chip-gap)', height: s.height, paddingInline: s.paddingX,
+        display: 'inline-flex', alignItems: 'center', gap: s.gap, height: s.height, paddingInline: s.paddingX,
         background: hover && !disabledState ? p.bgHover : p.bg,
         border: p.border,
-        borderRadius: 'var(--component-chip-radius)',
-        fontFamily: 'var(--font-sans)', fontSize: s.fontSize, fontWeight: 'var(--component-chip-font-weight)', letterSpacing: 'var(--component-chip-letter-spacing)',
-        color: p.fg,
-        opacity: disabledState ? 'var(--component-chip-disabled-opacity)' : 1,
+        borderRadius: s.radius,
+        fontFamily: 'var(--font-sans)', fontSize: s.fontSize, fontWeight: 'var(--component-chip-font-weight)', letterSpacing: s.letterSpacing,
+        color: disabledState ? 'var(--label-disable)' : p.fg,
+        opacity: 1,
         whiteSpace: 'nowrap', textDecoration: 'none',
         cursor: disabledState ? 'not-allowed' : (as === 'a' || onClick || rest.onClick ? 'pointer' : 'default'),
         transition: 'color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out)',
@@ -122,7 +134,7 @@ export function Chip({
             borderRadius: 'var(--radius-sm)',
             overflow: 'hidden',
             flexShrink: 0,
-            marginLeft: 'calc(var(--component-chip-gap) * -1)',
+            marginLeft: `calc(${s.gap} * -1)`,
           }}
         >
           {thumbnail}

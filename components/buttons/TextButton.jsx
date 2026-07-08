@@ -35,11 +35,12 @@ export function TextButton({
   }[size] || size;
   const normalizedColor = color === 'assistive' ? 'assistive' : color === 'primary' ? 'primary' : undefined;
   const textColor = normalizedColor === 'assistive'
-    ? 'var(--label-neutral)'
+    ? 'var(--label-alternative)'
     : normalizedColor === 'primary'
       ? 'var(--color-primary)'
       : tone === 'neutral' ? 'var(--label-neutral)' : tone === 'danger' ? 'var(--bw-red)' : 'var(--lk-accent-ink)';
-  const fs = normalizedSize === 'sm' ? 14 : normalizedSize === 'lg' ? 17 : 16;
+  const fs = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 17 : 'var(--body1-size)';
+  const ls = normalizedSize === 'sm' ? 'var(--label1-spacing)' : 'var(--body1-spacing)';
   const h = normalizedSize === 'sm' ? 28 : normalizedSize === 'lg' ? 36 : 32;
   const disabledState = disabled || disable || loading;
   const Comp = as;
@@ -61,8 +62,10 @@ export function TextButton({
       }}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 4, minHeight: h, padding: 0, border: 'none', background: 'transparent',
-        fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-        color: textColor, opacity: disabledState ? 0.45 : (hover ? 'var(--component-button-text-hover-opacity)' : 1), cursor: disabledState ? 'not-allowed' : 'pointer',
+        fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-semibold)', letterSpacing: ls,
+        color: disabledState ? 'var(--label-disable)' : textColor,
+        opacity: !disabledState && hover ? 'var(--component-button-text-hover-opacity)' : 1,
+        cursor: disabledState ? 'not-allowed' : 'pointer',
         textDecoration: underline ? 'underline' : 'none', textUnderlineOffset: '3px',
         transition: 'var(--component-button-transition)', ...style,
       }}

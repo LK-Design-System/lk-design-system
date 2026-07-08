@@ -5,7 +5,7 @@ import {
 } from './Layout.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/1 Layout/Page Structure',
+  title: 'LDS Core/Components/Layout/Page Structure',
   parameters: {
     docs: {
       description: {

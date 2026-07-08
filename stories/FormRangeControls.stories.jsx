@@ -5,7 +5,7 @@ import {
 import { SliderCard as SliderCardStory } from './FormsFull.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/3 Selection and Input/Slider and Range',
+  title: 'LDS Core/Components/Selection and Input/Slider and Range',
   parameters: {
     docs: {
       description: {

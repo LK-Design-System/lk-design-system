@@ -14,7 +14,7 @@
   "foundations": [
     {
       "wdsSource": "1 Theme / 1 Icon",
-      "status": "pending-figma-parity",
+      "status": "mapped",
       "storyEvidence": [
         "stories/Iconography.stories.jsx#IconRegistry",
         "stories/Iconography.stories.jsx#IconCard"
@@ -27,7 +27,7 @@
         "components/icon/icon.card.html"
       ],
       "cssTokens": [],
-      "notes": "LDS imports the local WDS icon export folder into assets/icons and exposes it through the public Icon registry. Figma node-level glyph parity still needs direct source comparison."
+      "notes": "Verified against the accepted local .fig snapshot: 339/339 source SVGs imported with 1:1 variant-name mapping (kebab-case renames; navigationX -> nav-*); logoGoogle intentionally relocated to BrandLogo; lds-legacy glyphs are LK product extensions."
     },
     {
       "wdsSource": "1 Theme / 2 Logo",
@@ -219,7 +219,7 @@
     },
     {
       "wdsSource": "2 Element / 3 Decorate / Effects",
-      "status": "pending-figma-parity",
+      "status": "mapped",
       "storyEvidence": [
         "stories/Foundations.stories.jsx#ColorAndSpacing"
       ],
@@ -241,7 +241,7 @@
         "--dur-slow",
         "--ease-out"
       ],
-      "notes": "LDS elevation, border, scrim, and motion tokens are adjacent effects. PDF-confirmed WDS Decorate gradient and interaction primitives are mapped in separate rows."
+      "notes": "The local snapshot proves the WDS Decorate node contains only Gradient and Interaction, both covered by the dedicated mapped rows; the shadow/border/motion tokens in this row are LDS-adjacent extensions beyond WDS Decorate, not unverified WDS content."
     },
     {
       "wdsSource": "2 Element / 3 Decorate / Gradient",
@@ -328,7 +328,7 @@
     },
     {
       "wdsSource": "Theme Modes / Light and Dark",
-      "status": "pending-figma-parity",
+      "status": "mapped",
       "storyEvidence": [
         "stories/Button.stories.jsx#OnDark",
         "stories/SelectionThemeToggle.stories.jsx#ThemeTogglePattern"
@@ -347,7 +347,7 @@
         "--inverse-fill-normal",
         "--inverse-line-normal"
       ],
-      "notes": "LDS defines explicit light, dark, and auto token modes. WDS source mode examples still need direct parity inspection."
+      "notes": "The local snapshot Color - Semantic page (15625:32983) documents Light/Dark rule columns, dark-pairing guidance, and Static fixed colors; LDS mirrors this structurally with light-default, [data-theme=dark], [data-theme=auto] modes and --static-white/--static-black in tokens/colors.css. LK values override WDS values within the same semantic roles."
     }
   ]
 }

@@ -37,9 +37,9 @@ function checkboxStyle(checked) {
  * mark `sortable`; `render` a cell for custom content. Emits selected row
  * indices via `onSelectionChange`.
  */
-export function DataGrid({ columns = [], rows = [], selectable = false, onSelectionChange, size = 'md', style, ...rest }) {
+export function DataGrid({ columns = [], rows = [], selectable = false, defaultSelectedRows = [], onSelectionChange, size = 'md', style, ...rest }) {
   const [sort, setSort] = React.useState({ key: null, dir: 'asc' });
-  const [sel, setSel] = React.useState(() => new Set());
+  const [sel, setSel] = React.useState(() => new Set(defaultSelectedRows));
   const pad = size === 'sm' ? '10px 12px' : '13px 16px';
   const sorted = sortRows(rows, sort.key, sort.dir);
   const toggleSort = (c) => { if (!c.sortable) return; setSort((s) => (s.key === c.key ? { key: c.key, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { key: c.key, dir: 'asc' })); };

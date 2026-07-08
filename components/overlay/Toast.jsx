@@ -70,11 +70,12 @@ export function Toast({
         display: "inline-flex",
         alignItems: "center",
         gap: 10,
-        minHeight: 54,
         minWidth: 335,
         maxWidth: 520,
-        padding: "0 18px",
+        padding: "11px 16px",
         background: "var(--component-transient-feedback-bg)",
+        backdropFilter: "blur(var(--component-transient-feedback-blur))",
+        WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
         color: "var(--text-on-inverse)",
         borderRadius: 12,
         boxShadow: "var(--shadow-lg)",
@@ -90,8 +91,8 @@ export function Toast({
         >
           {icon || (
             <svg
-              width="18"
-              height="18"
+              width="22"
+              height="22"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -110,7 +111,7 @@ export function Toast({
           minWidth: 0,
           fontSize: 15,
           lineHeight: 1.45,
-          fontWeight: "var(--fw-bold)",
+          fontWeight: "var(--fw-semibold)",
           letterSpacing: 0,
           color: "var(--text-on-inverse)",
           wordBreak: "keep-all",

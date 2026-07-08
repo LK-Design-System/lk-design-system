@@ -9,4 +9,4 @@
   rows={[{ code: 'LKR-T1', hours: 1240 }, { code: 'LKR-CP', hours: 980 }]} />
 ```
 
-- **columns** — `{ key, label, align, sortable, render }`. **selectable / onSelectionChange**. 정적 표에는 `Table`을 쓰세요.
+- **columns** — `{ key, label, align, sortable, render }`. **selectable / defaultSelectedRows / onSelectionChange**. 정적 표에는 `Table`을 쓰세요.

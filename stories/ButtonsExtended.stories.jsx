@@ -1,7 +1,7 @@
 import { ActionControls as ActionControlsStory, ButtonIconButtonSocialButtonCard as ButtonIconButtonSocialButtonCardStory } from './ButtonsExtended.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/2 Action/Action Controls',
+  title: 'LDS Core/Components/Action/Action Controls',
   parameters: {
     docs: {
       description: {

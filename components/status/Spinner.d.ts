@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
-  /** Diameter in px. @default 24 */
+  /** Diameter in px. Defaults to 28 for `circular` and 32 for `wanted`. */
   size?: number;
   /** Ring thickness in px. Defaults to roughly size / 10. */
   thickness?: number;

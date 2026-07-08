@@ -73,6 +73,8 @@ npm install
 npm run build
 ```
 
+CI는 npm을 기준으로 실행하지만, 패키지 스크립트 내부에서는 다시 `npm run`을 호출하지 않습니다. 로컬에 npm이 없고 pnpm만 있는 환경에서는 같은 이름의 `pnpm run <script>`를 사용해도 됩니다.
+
 주요 검사:
 
 ```powershell
@@ -81,6 +83,10 @@ npm run check:type-surface
 npm run check:contracts
 npm run check:publish-policy
 npm run check:consumer
+npm run report:inventory
+npm run check:inventory
+npm run check:fast
+npm run check:storybook
 npm run check:a11y
 npm run check
 npm run check:audit
@@ -109,11 +115,14 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 public Storybook sidebar는 파운데이션, 토큰 전략, 버튼, 카드, 폼 컨트롤, 대시보드 지표, 선택/상태, 도메인/뷰어, 아이콘, 내비게이션, 디자인 시스템 계약을 public story로 다룹니다.
-보고/감사/보정표 UI는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
+현재 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product`, `LDS Robotics` 아래의 컴포넌트와 패턴 표면 101개 story를 다룹니다.
+WDS 원천 번호 체계(`1 Theme`, `3 Component / 2 Action` 등)는 public sidebar title이 아니라 `docs/references/wds/`의 근거 데이터에만 남깁니다.
+`LDS Product`와 `LDS Robotics`는 재사용 가능한 확장 컴포넌트/패턴만 다루며, 완성된 앱 화면, 템플릿, 워크플로우, 데모 페이지를 Storybook source of truth로 올리지 않습니다.
+보고/감사/보정표 UI와 운영 문서는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
 원본 카드와 1:1 비교하기 위한 82개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
-`문서/원본 미리보기` 스토리는 원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개를 Storybook iframe 안에서 직접 렌더링해 예전 기준과 현재 구현을 시각적으로 대조할 수 있게 합니다.
-`문서/디자인 시스템 계약`은 접근성, 토큰 lifecycle, 컴포넌트 상태 매트릭스, 도메인 컴포넌트 계약을 public 문서로 제공합니다. 릴리즈와 ownership 같은 레포 운영 기준은 Storybook이 아니라 `docs/OPERATING_MODEL.md`에서 관리합니다.
+원본 `guidelines/*.html` 20개, `components/**/*.card.html` 83개, `templates-cards/*.html` 4개는 public Storybook 문서 페이지가 아니라 `check:legacy-render`, `check:visual-inventory`, `check:visual-diff` 스크립트가 직접 렌더링해 검증합니다.
+접근성, 토큰 lifecycle, 컴포넌트 상태 매트릭스, 도메인 컴포넌트 계약, 릴리즈와 ownership 같은 기준은 `docs/` 아래 Markdown 문서에서 관리합니다.
+레포 수치가 바뀌면 `npm run report:inventory`로 현재 값을 확인하고, `npm run check:inventory`로 README/docs/story 표시 수치가 stale하지 않은지 검증합니다.
 
 ## AI 및 Figma 토큰 워크플로
 
@@ -135,7 +144,7 @@ CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/contract/publish policy/
 
 ## 컴포넌트 범위
 
-이 패키지는 다음 그룹에 걸쳐 149개의 React 컴포넌트 소스 파일을 export합니다.
+이 패키지는 다음 그룹에 걸쳐 156개의 React 컴포넌트 소스 파일을 export합니다.
 
 - `brand`
 - `buttons`

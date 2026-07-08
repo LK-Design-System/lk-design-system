@@ -11,14 +11,39 @@ const TONES = {
   negative: "var(--bw-red)",
 };
 
+/* WDS scale: heights derive from padding + line-height (no fixed height). */
+const SIZE_XS = {
+  padding: "3px 6px",
+  fontSize: 11,
+  lineHeight: "var(--caption2-line)",
+  gap: 2,
+  icon: 12,
+  radius: "var(--radius-sm)",
+};
+const SIZE_SM = {
+  padding: "4px 6px",
+  fontSize: 12,
+  lineHeight: "var(--caption1-line)",
+  gap: 3,
+  icon: 14,
+  radius: "var(--radius-sm)",
+};
+const SIZE_MD = {
+  padding: "5px 8px",
+  fontSize: 13,
+  lineHeight: "var(--label2-line)",
+  gap: 4,
+  icon: 16,
+  radius: "var(--radius-8)",
+};
 const SIZE = {
-  xsmall: { height: 18, padding: "0 6px", fontSize: 11, gap: 3, icon: 11 },
-  xs: { height: 18, padding: "0 6px", fontSize: 11, gap: 3, icon: 11 },
-  small: { height: 22, padding: "0 8px", fontSize: 12, gap: 4, icon: 12 },
-  sm: { height: 22, padding: "0 8px", fontSize: 12, gap: 4, icon: 12 },
-  medium: { height: 26, padding: "0 10px", fontSize: 13, gap: 5, icon: 14 },
-  md: { height: 26, padding: "0 10px", fontSize: 13, gap: 5, icon: 14 },
-  lg: { height: 26, padding: "0 10px", fontSize: 13, gap: 5, icon: 14 },
+  xsmall: SIZE_XS,
+  xs: SIZE_XS,
+  small: SIZE_SM,
+  sm: SIZE_SM,
+  medium: SIZE_MD,
+  md: SIZE_MD,
+  lg: SIZE_MD,
 };
 
 function normalizeVariant(variant) {
@@ -109,16 +134,14 @@ export function ContentBadge({
         alignItems: "center",
         justifyContent: "center",
         gap: resolvedSize.gap,
-        minWidth: resolvedSize.height,
-        height: resolvedSize.height,
         padding: resolvedSize.padding,
         boxSizing: "border-box",
         fontFamily: "var(--font-sans)",
         fontSize: resolvedSize.fontSize,
-        lineHeight: 1,
-        fontWeight: "var(--fw-bold)",
+        lineHeight: resolvedSize.lineHeight,
+        fontWeight: "var(--fw-medium)",
         letterSpacing: 0,
-        borderRadius: "var(--radius-sm)",
+        borderRadius: resolvedSize.radius,
         whiteSpace: "nowrap",
         ...looks,
         ...style,

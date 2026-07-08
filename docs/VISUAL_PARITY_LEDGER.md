@@ -1,6 +1,6 @@
 # LK ROBOTICS Design System Visual Parity Ledger
 
-Updated: 2026-07-07
+Updated: 2026-07-08
 
 This ledger tracks parity between the original static design-system cards and
 the current React/Storybook implementation. It is the Markdown owner for visual
@@ -14,11 +14,12 @@ coverage, visual regression commands, and release-blocking pixel-diff gates.
 | Component cards | 83 | Mapped to React exports and parity captures |
 | Template cards | 4 | Mapped to starter template previews |
 | Runtime export gaps | 0 | No public export gap required by source cards |
-| React exports | 150 | Public package surface covered by checks |
-| Storybook public stories | 95 | Component and pattern surfaces only |
+| React component entry exports | 156 | Public package component entries covered by checks |
+| Named public exports | 160 | Public package surface covered by type checks |
+| Storybook public stories | 101 | Component and pattern surfaces only |
 | Storybook hidden visual parity stories | 82 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 170 | Captured excluding audit and document-only stories |
-| Accessibility checked implementation stories | 169 | Document/source preview stories excluded |
+| Visual inventory React stories | 193 | Current implementation stories captured by visual inventory |
+| Accessibility checked implementation stories | 193 | Current implementation stories checked by accessibility guard |
 
 `components/navigation/navigation-footer.card.html` uses a namespace fallback
 to reference `Footer`, but it is still part of the original preview target and
@@ -111,6 +112,8 @@ styling so the comparison is source card content versus React story content.
   bundle, and Storybook story links.
 - `npm run check:storybook-public` keeps visual parity stories out of the public
   sidebar.
+- `npm run check:inventory` keeps README, repository inventory, visual ledger,
+  and Storybook-facing numeric summaries aligned with current source counts.
 
 ## Next verification order
 

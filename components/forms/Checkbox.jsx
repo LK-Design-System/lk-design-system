@@ -43,8 +43,8 @@ export function Checkbox({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  const d = isMark ? (normalizedSize === 'sm' ? 18 : 22) : (normalizedSize === 'sm' ? 16 : 18);
-  const iconSize = isMark ? (normalizedSize === 'sm' ? 14 : 17) : (normalizedSize === 'sm' ? 11 : 13);
+  const d = isMark ? (normalizedSize === 'sm' ? 20 : 24) : (normalizedSize === 'sm' ? 16 : 18);
+  const iconSize = isMark ? d : (normalizedSize === 'sm' ? 14 : 16);
   const markTone = status === 'negative' ? 'var(--color-danger)' : 'var(--lk-accent-ink)';
   const markIdleColor = activeHover || activeFocus ? 'var(--label-neutral)' : 'var(--bw-gray-300)';
   const boxBackground = disabledState
@@ -59,7 +59,7 @@ export function Checkbox({
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         width: d, height: d, flexShrink: 0, boxSizing: 'border-box',
         color: disabledState ? 'var(--label-disable)' : on ? markTone : markIdleColor,
-        background: disabledState ? 'var(--fill-normal)' : on ? 'var(--lk-accent-tint-2)' : activeHover ? 'var(--fill-normal)' : 'transparent',
+        background: 'transparent',
         border: '0',
         borderRadius: 'var(--radius-pill)',
         boxShadow: activeFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
@@ -83,9 +83,9 @@ export function Checkbox({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: tight ? 8 : 12,
-        cursor: disabledState ? 'not-allowed' : 'pointer', opacity: disabledState ? 0.5 : 1,
-        fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, color: 'var(--bw-ink)',
+        display: 'inline-flex', alignItems: 'center', gap: tight ? 4 : 8,
+        cursor: disabledState ? 'not-allowed' : 'pointer',
+        fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--label-disable)' : 'var(--bw-ink)',
         fontWeight: bold ? 'var(--fw-bold)' : undefined,
         ...style,
       }}

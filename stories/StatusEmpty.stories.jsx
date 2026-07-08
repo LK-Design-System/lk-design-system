@@ -3,7 +3,7 @@ import { Button, EmptyState, Icon } from '../src/index.js';
 import { EmptyStateCard as EmptyStateCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/7 Feedback/Empty State',
+  title: 'LDS Core/Components/Feedback/Empty State',
   parameters: {
     docs: {
       description: {

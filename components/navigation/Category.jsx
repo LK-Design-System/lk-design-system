@@ -1,14 +1,27 @@
 import React from "react";
 
+/* WDS chip geometry: pad-x 7/8/11/12, inter-chip gap 4/6/8/10 (S/M/L/XL). */
 const SIZE = {
-  small: { height: 24, padding: "0 8px", fontSize: 12.5, radius: 6 },
-  sm: { height: 24, padding: "0 8px", fontSize: 12.5, radius: 6 },
-  medium: { height: 32, padding: "0 12px", fontSize: 14, radius: 8 },
-  md: { height: 32, padding: "0 12px", fontSize: 14, radius: 8 },
-  large: { height: 36, padding: "0 14px", fontSize: 15, radius: 9 },
-  lg: { height: 36, padding: "0 14px", fontSize: 15, radius: 9 },
-  xlarge: { height: 40, padding: "0 16px", fontSize: 16, radius: 10 },
-  xl: { height: 40, padding: "0 16px", fontSize: 16, radius: 10 },
+  small: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
+  sm: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
+  medium: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
+  md: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
+  large: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
+  lg: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
+  xlarge: {
+    height: 40,
+    padding: "0 12px",
+    fontSize: "var(--body2-size)",
+    radius: 10,
+    gap: 10,
+  },
+  xl: {
+    height: 40,
+    padding: "0 12px",
+    fontSize: "var(--body2-size)",
+    radius: 10,
+    gap: 10,
+  },
 };
 
 function normalizeItem(item) {
@@ -56,10 +69,10 @@ export function Category({
       style={{
         display: "flex",
         alignItems: "center",
-        gap: 8,
+        gap: s.gap,
         maxWidth: "100%",
         overflowX: scroll === "auto" || scroll === true ? "auto" : "visible",
-        paddingInline: padding ? 8 : 0,
+        paddingInline: padding ? 20 : 0,
         paddingBlock: verticalPadding ? 8 : 0,
         scrollbarWidth: "none",
         ...style,
@@ -100,7 +113,7 @@ export function Category({
               color: colors.fg,
               fontFamily: "var(--font-sans)",
               fontSize: s.fontSize,
-              fontWeight: "var(--fw-bold)",
+              fontWeight: "var(--fw-medium)",
               letterSpacing: 0,
               whiteSpace: "nowrap",
               cursor: item.disabled ? "not-allowed" : "pointer",

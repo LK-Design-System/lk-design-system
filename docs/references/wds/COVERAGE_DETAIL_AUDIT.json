@@ -319,26 +319,6 @@
           "publicExport": true
         },
         {
-          "name": "MetricCard",
-          "file": "components/cards/MetricCard.jsx",
-          "publicExport": true
-        },
-        {
-          "name": "FeatureCard",
-          "file": "components/cards/FeatureCard.jsx",
-          "publicExport": true
-        },
-        {
-          "name": "NewsCard",
-          "file": "components/cards/NewsCard.jsx",
-          "publicExport": true
-        },
-        {
-          "name": "ChecklistItem",
-          "file": "components/cards/ChecklistItem.jsx",
-          "publicExport": true
-        },
-        {
           "name": "ChoiceCard",
           "file": "components/selection/ChoiceCard.jsx",
           "publicExport": true
@@ -358,36 +338,60 @@
       ],
       "stories": [
         "stories/Card.stories.jsx",
-        "stories/CardInfo.stories.jsx",
-        "stories/CardNews.stories.jsx",
-        "stories/CardSpecs.stories.jsx",
-        "stories/CardStats.stories.jsx",
         "stories/ContentBadgesAnnotations.stories.jsx",
+        "stories/ContentListsMedia.stories.jsx",
         "stories/ContentMedia.stories.jsx",
         "stories/SelectionStatus.stories.jsx"
       ],
       "extensionComponents": [
         {
+          "name": "ChecklistItem",
+          "file": "components/cards/ChecklistItem.jsx",
+          "publicExport": true,
+          "story": "stories/CardInfo.stories.jsx"
+        },
+        {
+          "name": "FeatureCard",
+          "file": "components/cards/FeatureCard.jsx",
+          "publicExport": true,
+          "story": "stories/CardInfo.stories.jsx"
+        },
+        {
+          "name": "MetricCard",
+          "file": "components/cards/MetricCard.jsx",
+          "publicExport": true,
+          "story": "stories/DataAndStatus.stories.jsx"
+        },
+        {
+          "name": "NewsCard",
+          "file": "components/cards/NewsCard.jsx",
+          "publicExport": true,
+          "story": "stories/CardNews.stories.jsx"
+        },
+        {
           "name": "ProductCard",
           "file": "components/cards/ProductCard.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/CardsExtended.stories.jsx"
         },
         {
           "name": "SpecRow",
           "file": "components/cards/SpecRow.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/CardSpecs.stories.jsx"
         },
         {
           "name": "Stat",
           "file": "components/cards/Stat.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/CardStats.stories.jsx"
         }
       ],
       "pendingFigmaAudit": [
         "Local Content Card PDF confirms Card/List Card thumbnailOverlay, caption, toggleIcon, extraCaption, topContent, bottomContent, skeleton, leadingContent, trailingContent, width, and thumbnailAspectRatio axes. Confirm exact child-node values through Figma.",
         "Local Content Badge PDF confirms variant solid/default/outlined, icon, size xsmall/small/medium, color neutral/accent, and accent customization axes.",
         "Local Thumbnail PDF confirms ratio presets plus radius and border toggles.",
-        "Separate WDS core card patterns from LK product cards and dashboard metrics."
+        "Separate WDS core Card/List Card patterns from LK product cards, feature/news/spec patterns, and dashboard metrics."
       ]
     },
     {

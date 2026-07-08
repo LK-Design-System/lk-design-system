@@ -2,7 +2,7 @@ import React from 'react';
 import { IconButton, Lockup, TopBar, TopBarNavItem } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/6 Navigation/Top Bar',
+  title: 'LDS Core/Components/Navigation/Top Bar',
   component: TopBar,
   parameters: {
     docs: {

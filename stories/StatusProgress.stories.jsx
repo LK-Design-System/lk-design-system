@@ -3,7 +3,7 @@ import { CircularProgress, Meter, ProgressBar } from '../src/index.js';
 import { CircularProgressCard as CircularProgressCardStory, ProgressBarCard as ProgressBarCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/5 Loading/Progress',
+  title: 'LDS Core/Components/Loading/Progress',
   parameters: {
     docs: {
       description: {

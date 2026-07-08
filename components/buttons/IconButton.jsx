@@ -2,8 +2,10 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — IconButton
- * Square (or circular) control wrapping a single icon glyph. Pass an inline
- * SVG as children. Matches Button's calm hover (minimal tone shift, no lift).
+ * Circular control wrapping a single icon glyph (WDS icon buttons are always
+ * circular; pass `round={false}` to opt into the rounded-square look). Pass an
+ * inline SVG as children. Matches Button's calm hover (minimal tone shift, no
+ * lift).
  *
  * variant: soft (cool-gray) · solid (graphite) · signal (cyan-ink) ·
  *          ghost (hairline) · on-dark (translucent white, for navy)
@@ -13,7 +15,7 @@ export function IconButton({
   variant = 'soft',
   size = 'medium',
   alternative = false,
-  round = false,
+  round = true,
   label,
   style,
   disabled = false,
@@ -56,12 +58,14 @@ export function IconButton({
         justifyContent: 'center',
         width: resolvedSize,
         height: resolvedSize,
-        color: p.fg,
-        background: hover && !disabledState ? p.bgHover : p.bg,
+        color: disabledState ? 'var(--label-disable)' : p.fg,
+        background: disabledState
+          ? 'var(--fill-normal)'
+          : hover ? p.bgHover : p.bg,
         border: p.bd,
         borderRadius: round ? 'var(--radius-pill)' : 'var(--radius-md)',
         cursor: disabledState ? 'not-allowed' : 'pointer',
-        opacity: disabledState ? 0.45 : 1,
+        opacity: 1,
         boxShadow: 'none',
         transition: 'var(--component-button-transition)',
         WebkitTapHighlightColor: 'transparent',

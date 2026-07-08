@@ -78,7 +78,7 @@ for (const expected of [
   '| Component cards | 83 |',
   '| Template cards | 4 |',
   '| Runtime export gaps | 0 |',
-  '| React exports | 150 |',
+  '| React component entry exports | 156 |',
 ]) {
   assert(ledgerSource.includes(expected), `Visual parity ledger coverage row is missing: ${expected}`);
 }

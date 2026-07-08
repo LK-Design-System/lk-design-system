@@ -44,18 +44,23 @@ export function ToggleIcon({
         justifyContent: "center",
         width: side,
         height: side,
-        color: active
-          ? "var(--component-toggle-icon-fg-active)"
-          : "var(--component-toggle-icon-fg)",
-        background: active
-          ? "var(--component-toggle-icon-bg-active)"
-          : "var(--component-toggle-icon-bg)",
-        border: active
-          ? "var(--border-thin) solid transparent"
-          : "var(--component-toggle-icon-border)",
+        color: disabled
+          ? "var(--label-disable)"
+          : active
+            ? "var(--component-toggle-icon-fg-active)"
+            : "var(--component-toggle-icon-fg)",
+        background: disabled
+          ? "var(--fill-normal)"
+          : active
+            ? "var(--component-toggle-icon-bg-active)"
+            : "var(--component-toggle-icon-bg)",
+        border: disabled
+          ? "var(--border-thin) solid var(--line-neutral)"
+          : active
+            ? "var(--border-thin) solid transparent"
+            : "var(--component-toggle-icon-border)",
         borderRadius: "var(--component-toggle-icon-radius)",
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? "var(--component-toggle-icon-disabled-opacity)" : 1,
         transition: "var(--component-button-transition)",
         WebkitTapHighlightColor: "transparent",
         ...style,

@@ -37,7 +37,7 @@ export interface ListCellProps extends Omit<
     "none" | "small" | "sm" | "medium" | "md" | "large" | "lg" | "custom";
   /** `verticalPadding="custom"`일 때 직접 패딩 지정. */
   paddingY?: number;
-  /** 좌우 패딩. @default 14 */
+  /** 좌우 패딩. @default 20 */
   paddingX?: number | string;
   /** 세로 정렬. @default "center" */
   verticalAlign?: "top" | "center";

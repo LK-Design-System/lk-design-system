@@ -39,6 +39,25 @@ function resolveAvatarSize(size) {
     : AVATAR_SIZES[size] || AVATAR_SIZES.default;
 }
 
+/* WDS: Company/Academy avatars are rounded squares with size-graded radius;
+   Person stays a full circle. */
+const SQUARE_RADIUS_STEPS = [
+  [24, "var(--radius-sm)"],
+  [32, "var(--radius-8)"],
+  [40, "var(--radius-10)"],
+  [48, "var(--radius-12)"],
+  [56, "var(--radius-14)"],
+];
+
+function resolveAvatarRadius(variant, size) {
+  if (variant === "person") return "var(--radius-pill)";
+  let radius = SQUARE_RADIUS_STEPS[0][1];
+  for (const [threshold, value] of SQUARE_RADIUS_STEPS) {
+    if (size >= threshold) radius = value;
+  }
+  return radius;
+}
+
 function normalizeVariant(variant = "person") {
   const normalized = variant === "education" ? "academy" : variant;
   return PLACEHOLDER_PATHS[normalized] ? normalized : "person";
@@ -146,10 +165,11 @@ export function Avatar({
   const stateShadow = interactionStyle.boxShadow || "";
   const boxShadow =
     [ringShadow, stateShadow].filter(Boolean).join(", ") || "none";
+  const avatarRadius = resolveAvatarRadius(normalizedVariant, resolvedSize);
   const avatarBoxStyle = {
     width: "100%",
     height: "100%",
-    borderRadius: "var(--radius-pill)",
+    borderRadius: avatarRadius,
     border,
     boxSizing: "border-box",
     boxShadow,
@@ -222,7 +242,7 @@ export function Avatar({
           style={{
             position: "absolute",
             inset: 0,
-            borderRadius: "var(--radius-pill)",
+            borderRadius: avatarRadius,
             overflow: "hidden",
             pointerEvents: "none",
           }}

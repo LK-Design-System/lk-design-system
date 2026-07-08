@@ -8,7 +8,7 @@ import {
 } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/3 Selection and Input/Switch and Stepper',
+  title: 'LDS Core/Components/Selection and Input/Switch and Stepper',
   parameters: {
     docs: {
       description: {

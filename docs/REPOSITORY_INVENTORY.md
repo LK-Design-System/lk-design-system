@@ -5,7 +5,8 @@
 ## 패키지 범위
 
 - 패키지명: `@lk-robotics/design-system-core`
-- React 컴포넌트 소스 파일: 150개
+- React 컴포넌트 소스 파일: 156개
+- 공개 named export: 160개
 - 컴포넌트 그룹: `brand`, `buttons`, `cards`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
@@ -30,25 +31,25 @@
 
 ## 원본 이관 검증 기준
 
-`stories/Audit.data.jsx` is a hidden data source for source-card mapping scripts (`check:coverage`, `check:map`, and visual inventory); it is not a Storybook page.
-`check:legacy-render` renders original guideline/card/template HTML files directly through a local static server. Storybook stays limited to LDS component and pattern surfaces; visual-parity stories remain hidden with `!dev` and `visual-parity` tags.
+`stories/Audit.data.jsx`는 source-card mapping 스크립트(`check:coverage`, `check:map`, visual inventory)가 읽는 숨김 데이터 소스입니다. 현재 Storybook page로 노출하지 않습니다.
+`check:legacy-render`는 원본 guideline/card/template HTML 파일을 로컬 정적 서버로 직접 렌더링합니다. Storybook은 LDS 컴포넌트와 패턴 표면으로 제한하고, visual parity story는 `!dev`와 `visual-parity` 태그로 숨깁니다.
 
 - 원본 지침: `guidelines/*.html` 20개
 - 원본 요소 카드: `components/**/*.card.html` 83개
 - 템플릿 카드: `templates-cards/*.html` 4개
-- 현재 React export: 150개
-- Storybook 전체 story: 177개
-- Storybook public story: 95개
+- 현재 React component entry export: 156개
+- 공개 named export: 160개
+- Storybook 전체 story: 193개
+- Storybook public story: 101개
 - 숨김 visual parity story: 82개
-- visual inventory React story: 170개
-- 접근성 guard 검사 대상 implementation story: 169개
-
-`stories/Audit.data.jsx` is a hidden data source for source-card mapping scripts (`check:coverage`, `check:map`, and visual inventory); it is not a Storybook page.
+- visual inventory React story: 193개
+- 접근성 guard 검사 대상 implementation story: 193개
 
 ## 생성 영역
 
 - `dist/`: 패키지 빌드 결과물. 내부 Git 소비자가 별도 publish 없이 import할 수 있도록 커밋합니다.
 - `_ds_bundle.js`: 정적 HTML 미리보기 카드와 starter template에서 사용하는 레거시 브라우저 번들
+- `scripts/report-inventory.mjs`: 컴포넌트, export, Storybook, 원본 카드 수치를 현재 파일 시스템과 `storybook-static/index.json`에서 산출하고 문서 drift를 검증합니다.
 
 ## 현재 head에서 제거된 항목
 
@@ -66,10 +67,10 @@
 ## 유지보수 메모
 
 - `src/index.js`와 `src/index.d.ts`는 직접 수정하지 않습니다. `npm run generate:entry`를 실행하세요.
+- 현재 수치는 `npm run report:inventory`로 확인하고, 문서/Storybook 표시값은 `npm run check:inventory`로 stale 여부를 검증합니다.
 - 정적 preview card와 template이 직접 불러오므로 `_ds_bundle.js`는 유지합니다.
 - 배포 정책은 현재 `private: true`이며 내부 Git 소비를 기본으로 합니다. 정식 npm publish로 전환할 때만 `private` 값을 바꾸고 GitHub Packages 설정과 운영 문서를 함께 갱신합니다. 그 전까지 `dist/`는 Git에 유지합니다.
 - `tokens/source.json`은 `tokens/*.css`와 맞춰야 합니다. `npm run check:tokens`가 component-token 참조를 검증합니다.
 - `components/` 아래에 컴포넌트를 추가하면 대응 `.d.ts`를 추가하고 `npm run build`를 실행합니다.
-`stories/Audit.data.jsx` is a hidden data source for source-card mapping scripts (`check:coverage`, `check:map`, and visual inventory); it is not a Storybook page.
 - 현재 최신 `npm run check:visual-diff`는 83쌍 산출물을 생성하고 strict gate를 통과합니다. 최신 수치는 mean mismatch `0.01066455849450229`, max mismatch `0.046059027777777775`입니다.
-- push 전 `npm run check`, `npm run check:audit`, 필요 시 `npm run check:ops-release`를 실행합니다.
+- push 전 변경 범위에 맞춰 `npm run check:fast`, `npm run check:storybook`, `npm run check`, `npm run check:audit`, 필요 시 `npm run check:ops-release`를 실행합니다.

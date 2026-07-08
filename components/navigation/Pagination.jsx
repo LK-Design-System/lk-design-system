@@ -27,7 +27,7 @@ const selectStyle = {
   height: 32,
   padding: "0 8px",
   border: "1px solid var(--bw-border)",
-  borderRadius: "var(--radius-md)",
+  borderRadius: "var(--radius-8)",
   background: "var(--bw-white)",
   fontFamily: "var(--font-sans)",
   fontSize: 13,
@@ -133,7 +133,7 @@ export function Pagination({
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: variant === "compact" ? 2 : 4,
+          gap: variant === "compact" ? 8 : 16,
           minWidth: 0,
         }}
       >
@@ -146,7 +146,7 @@ export function Pagination({
                 minWidth: 24,
                 textAlign: "center",
                 color: "var(--label-assistive)",
-                fontSize: 14,
+                fontSize: "var(--body2-size)",
               }}
             >
               ...
@@ -164,17 +164,19 @@ export function Pagination({
                 borderRadius: "var(--radius-md)",
                 cursor: "pointer",
                 border: "none",
-                background:
-                  p === current ? "var(--fill-strong)" : "transparent",
+                background: "transparent",
                 fontFamily: "var(--font-sans)",
-                fontSize: 14,
-                fontWeight: "var(--fw-semibold)",
+                fontSize: "var(--body2-size)",
+                fontWeight:
+                  p === current
+                    ? "var(--fw-semibold)"
+                    : "var(--fw-regular)",
                 letterSpacing: 0,
                 fontVariantNumeric: "tabular-nums",
                 color:
                   p === current
                     ? "var(--label-normal)"
-                    : "var(--label-neutral)",
+                    : "var(--label-alternative)",
               }}
             >
               {p}

@@ -9,7 +9,7 @@ import {
 } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/3 Selection and Input/Segmented and Toggle',
+  title: 'LDS Core/Components/Selection and Input/Segmented and Toggle',
   parameters: {
     docs: {
       description: {

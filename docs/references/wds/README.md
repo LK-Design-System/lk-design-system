@@ -51,6 +51,9 @@ LK override or extension rather than silently changing the WDS baseline.
   with Storybook evidence refs for the next Figma parity pass
 - `COVERAGE_GAPS.md`: WDS concepts found in Figma that need LDS coverage or
   have recently been brought into LDS
+- `STYLE_PARITY_AUDIT.md`: style-level (radius, padding, typography, state
+  treatment) comparison of all 869 WDS variant symbols against LDS component
+  implementations, with ranked drift findings and the LK override register
 - `source-screenshots/`: user-provided Figma section screenshots used as
   interim visual evidence for component taxonomy and state matrices
 
@@ -65,11 +68,16 @@ npm run extract:wds-fig-content
 ```
 
 The generated `FIGMA_LOCAL_CONTENT_AUDIT.json` records source text, section
-labels, variant-like symbol names, dimensions, and visual samples. It is still
-a snapshot from the checked-in export, so it does not prove that a newer live
-Figma URL is unchanged. `COVERAGE_COMPLETION_GATE.json` stays `not-ready`
-until the Figma node-level queue is closed or a pending item is explicitly
-accepted as an LK override.
+labels, variant-like symbol names, dimensions, and visual samples.
+
+On 2026-07-08 the checked-in `.fig` export was accepted as the authoritative
+WDS source snapshot. Every Figma node queue row was closed by verifying its
+closure criteria against the decoded local content and LDS sources, and
+`COVERAGE_COMPLETION_GATE.json` moved to `ready`. The snapshot cannot attest
+that the live Figma community file is unchanged upstream; if the upstream file
+is updated, re-export it, re-run `npm run extract:wds-fig-content`, and
+re-audit affected rows. Residual follow-up items from the closure pass are
+listed in `COVERAGE_GAPS.md`.
 
 Operating rules:
 

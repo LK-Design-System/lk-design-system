@@ -66,8 +66,9 @@ export function ActionArea({
           style={{
             margin: 0,
             color: "var(--label-alternative)",
-            fontSize: "var(--caption1-size)",
-            lineHeight: "var(--caption1-line)",
+            fontSize: "var(--label2-size)",
+            lineHeight: "var(--label2-line)",
+            letterSpacing: "var(--label2-spacing)",
           }}
         >
           {caption}

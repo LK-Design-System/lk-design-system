@@ -1,12 +1,14 @@
 import React from "react";
 
+/* WDS tab model: zero horizontal item padding, 24px inter-tab gap,
+ * constant 2px label-width indicator. S=15 (body2), M/L=17 (headline2). */
 const SIZE = {
-  small: { height: 40, fontSize: 14, paddingX: 12, indicator: 2 },
-  sm: { height: 40, fontSize: 14, paddingX: 12, indicator: 2 },
-  medium: { height: 48, fontSize: 15, paddingX: 16, indicator: 2.5 },
-  md: { height: 48, fontSize: 15, paddingX: 16, indicator: 2.5 },
-  large: { height: 56, fontSize: 16, paddingX: 20, indicator: 3 },
-  lg: { height: 56, fontSize: 16, paddingX: 20, indicator: 3 },
+  small: { height: 40, fontSize: "var(--body2-size)", countSize: 13 },
+  sm: { height: 40, fontSize: "var(--body2-size)", countSize: 13 },
+  medium: { height: 48, fontSize: "var(--headline2-size)", countSize: 15 },
+  md: { height: 48, fontSize: "var(--headline2-size)", countSize: 15 },
+  large: { height: 56, fontSize: "var(--headline2-size)", countSize: 15 },
+  lg: { height: 56, fontSize: "var(--headline2-size)", countSize: 15 },
 };
 
 /**
@@ -51,7 +53,7 @@ export function Tabs({
       style={{
         display: "flex",
         alignItems: "stretch",
-        gap: fill ? 0 : 8,
+        gap: fill ? 0 : 24,
         maxWidth: "100%",
         overflowX: scroll === "auto" || scroll === true ? "auto" : "visible",
         paddingInline: padding ? 8 : 0,
@@ -78,7 +80,7 @@ export function Tabs({
               minWidth: 0,
               position: "relative",
               height: s.height,
-              padding: `0 ${s.paddingX}px`,
+              padding: 0,
               border: "none",
               background: "transparent",
               cursor: item.disabled ? "not-allowed" : "pointer",
@@ -89,7 +91,7 @@ export function Tabs({
               gap: 7,
               fontFamily: "var(--font-sans)",
               fontSize: s.fontSize,
-              fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)",
+              fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
               color: active
                 ? "var(--label-normal)"
@@ -105,8 +107,8 @@ export function Tabs({
             {item.count != null && (
               <span
                 style={{
-                  fontSize: Math.max(11, s.fontSize - 2),
-                  fontWeight: "var(--fw-bold)",
+                  fontSize: s.countSize,
+                  fontWeight: "var(--fw-semibold)",
                   color: active
                     ? "var(--lk-accent-ink)"
                     : "var(--label-assistive)",
@@ -149,11 +151,11 @@ export function Tabs({
               aria-hidden="true"
               style={{
                 position: "absolute",
-                left: s.paddingX,
-                right: s.paddingX,
+                left: 0,
+                right: 0,
                 bottom: -1,
-                height: s.indicator,
-                borderRadius: "2px 2px 0 0",
+                height: 2,
+                borderRadius: 0,
                 background: active ? "var(--label-normal)" : "transparent",
                 transition: "background var(--dur-fast) var(--ease-out)",
               }}

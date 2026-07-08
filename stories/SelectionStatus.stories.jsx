@@ -5,7 +5,7 @@ import {
 import { ChoiceCardCard as ChoiceCardCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/3 Selection and Input/Card Selection',
+  title: 'LDS Core/Components/Selection and Input/Card Selection',
   parameters: {
     docs: {
       description: {

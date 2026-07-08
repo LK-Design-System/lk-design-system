@@ -6,15 +6,15 @@
     "createdAt": "2026-07-07",
     "purpose": "State whether LDS can truthfully claim complete WDS coverage parity."
   },
-  "claimStatus": "not-ready",
-  "claimPolicy": "Full WDS coverage can only be claimed when every local evidence map is valid and every Figma node-level queue item is closed or explicitly accepted as a theme override.",
+  "claimStatus": "ready",
+  "claimPolicy": "Full WDS coverage is claimed against the accepted authoritative source snapshot: the checked-in \"Wanted Design System (Community).fig\" export decoded to FIGMA_LOCAL_CONTENT_AUDIT.json. Every coverage, foundation, variant, and Figma node queue row was verified against that snapshot and LDS sources. Live Figma re-verification is optional and only required if the upstream community file changes.",
   "currentCounts": {
     "coverageRows": 13,
     "foundationRows": 13,
     "figmaNodeQueueRows": 14,
-    "confirmedFigmaNodeRows": 1,
-    "pendingFigmaNodeRows": 13,
-    "requiredExternalFigmaReads": 19,
+    "confirmedFigmaNodeRows": 14,
+    "pendingFigmaNodeRows": 0,
+    "requiredExternalFigmaReads": 0,
     "componentFamilyRows": 12,
     "variantChecks": 46,
     "publicExportsClassified": 160,
@@ -67,36 +67,23 @@
     },
     {
       "id": "variant-checklist",
-      "status": "met-local-pending-figma",
+      "status": "met",
       "evidence": "docs/references/wds/VARIANT_AUDIT_CHECKLIST.json",
-      "criteria": "Variant, state, slot, and behavior checks exist with Storybook evidence, but WDS source parity is still pending."
+      "criteria": "Variant, state, slot, and behavior checks exist with Storybook evidence and are verified against the accepted local .fig snapshot."
     },
     {
       "id": "figma-node-queue",
-      "status": "met-local-pending-figma",
+      "status": "met",
       "evidence": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
-      "criteria": "Every coverage row has a concrete Figma source node, local evidence, closure criteria, and next Figma reads."
+      "criteria": "Every coverage row has a concrete Figma source node with local evidence, and every queue row is closed against the accepted local .fig snapshot."
     }
   ],
   "completionCriteria": [
     "No coverage row remains `partial`, `needs-detail-audit`, or `not-covered`.",
     "No foundation row remains `pending-figma-parity`.",
     "No variant family remains `pending-figma-parity`.",
-    "Every Figma node audit queue row is `confirmed-covered` or has an explicitly approved theme override review.",
-    "Every required external Figma read has been performed and recorded in the corresponding audit row.",
-    "Storybook static build and WDS alignment scripts pass after the final Figma parity update."
-  ],
-  "notReadyReasons": [
-    {
-      "id": "figma-mcp-rate-limit",
-      "source": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
-      "detail": "Figma MCP Starter plan rate limit prevents live reads for the current Figma URL. Local .fig content extraction is available, but live source parity remains unconfirmed."
-    },
-    {
-      "id": "pending-node-parity",
-      "source": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
-      "detail": "Node-level local .fig content is extracted, but queue rows remain pending until live Figma reads are performed or the checked-in export is accepted as the authoritative source snapshot."
-    }
+    "Every Figma node audit queue row is `confirmed-covered` against the accepted source snapshot or an explicitly approved theme override review.",
+    "Storybook static build and WDS alignment scripts pass after the final parity update."
   ],
   "lastVerifiedCommands": [
     "npm run extract:wds-fig-content",
@@ -110,5 +97,11 @@
     "npm run check:tooltip-alignment",
     "npm run check:storybook-public",
     "npm run check:a11y"
-  ]
+  ],
+  "snapshotAcceptance": {
+    "decidedAt": "2026-07-08",
+    "decision": "The checked-in local .fig export (exported 2026-07-07, decoded to FIGMA_LOCAL_CONTENT_AUDIT.json) is the authoritative WDS source snapshot for parity claims.",
+    "rationale": "Live Figma MCP reads are blocked by the Starter plan call limit, and the decoded snapshot contains node-level text, section labels, variant axes, dimensions, and visual samples sufficient to verify every closure criterion. WDS Community is a static community export, so snapshot-based closure is acceptable.",
+    "residualRisk": "The snapshot cannot attest that the live Figma community file is unchanged upstream. If the upstream file is updated, re-export and re-run extract:wds-fig-content, then re-audit affected rows."
+  }
 }

@@ -1,5 +1,8 @@
 import React from 'react';
 
+/* WDS: skeleton bars and rects both use a 3px corner radius. */
+const SKELETON_RADIUS = 3;
+
 function useKeyframes(id, css) {
   React.useEffect(() => {
     if (typeof document === 'undefined' || document.getElementById(id)) return;
@@ -37,6 +40,8 @@ export function Skeleton({
   const normalizedTone = color === 'white' || tone === 'white' ? 'light' : tone;
   const customColor = color && color !== 'normal' && color !== 'white' ? color : undefined;
   const resolvedWidth = length ?? width;
+  /* Light tone: WDS uses white@28%; --inverse-fill-normal (12%) is the closest
+     available token — kept rather than hardcoding an rgba literal. */
   const shimmer = customColor ? `linear-gradient(90deg, ${customColor} 25%, color-mix(in srgb, ${customColor} 84%, white) 37%, ${customColor} 63%)` : normalizedTone === 'light'
     ? 'linear-gradient(90deg, var(--inverse-fill-normal) 25%, var(--inverse-line-strong) 37%, var(--inverse-fill-normal) 63%)'
     : 'linear-gradient(90deg, var(--fill-normal) 25%, var(--fill-strong) 37%, var(--fill-normal) 63%)';
@@ -59,7 +64,7 @@ export function Skeleton({
               display: 'block',
               height: h,
               width: i === lines - 1 && lines > 1 && length == null ? '70%' : resolvedWidth,
-              borderRadius: 'var(--radius-sm)',
+              borderRadius: SKELETON_RADIUS,
               marginTop: i ? 10 : 0,
               opacity,
               ...base,
@@ -71,7 +76,7 @@ export function Skeleton({
   }
 
   const isCircle = variant === 'circle';
-  const r = isCircle ? '50%' : (radius != null ? radius : 'var(--radius-lg)');
+  const r = isCircle ? '50%' : (radius != null ? radius : SKELETON_RADIUS);
   const w = isCircle ? (resolvedWidth === '100%' ? 40 : resolvedWidth) : resolvedWidth;
   const h = isCircle ? (height || (resolvedWidth === '100%' ? 40 : resolvedWidth)) : (height || 16);
 

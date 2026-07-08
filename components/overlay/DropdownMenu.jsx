@@ -130,8 +130,8 @@ function MenuItemButton({
         borderRadius: "var(--radius-md)",
         textAlign: "left",
         fontFamily: "var(--font-sans)",
-        fontSize: 14,
-        fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)",
+        fontSize: "var(--body1-size)",
+        fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
         letterSpacing: 0,
         color: item.danger
           ? "var(--bw-red)"
@@ -144,7 +144,7 @@ function MenuItemButton({
       {item.icon || (
         <CheckMark variant={variant} checked={checked} disabled={disabled} />
       )}
-      <span style={{ display: "grid", gap: 2, minWidth: 0, flex: 1 }}>
+      <span style={{ display: "grid", gap: 4, minWidth: 0, flex: 1 }}>
         <span
           style={{
             overflow: "hidden",
@@ -157,7 +157,7 @@ function MenuItemButton({
         {description && (
           <span
             style={{
-              fontSize: 12,
+              fontSize: "var(--label2-size)",
               color: "var(--label-alternative)",
               fontWeight: "var(--fw-medium)",
             }}
@@ -247,10 +247,13 @@ export function DropdownMenu({
             overflowY: maxHeight ? "auto" : undefined,
             background: "var(--bw-white)",
             border: "1px solid var(--bw-border)",
-            borderRadius: "var(--radius-lg)",
+            borderRadius: "var(--radius-16)",
             boxShadow: "var(--shadow-md)",
-            padding: 20,
+            padding: "8px 20px",
             boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
           }}
         >
           {items.map((item, index) =>
@@ -282,7 +285,6 @@ export function DropdownMenu({
                 justifyContent: "flex-end",
                 padding: "8px 4px 2px",
                 borderTop: "1px solid var(--bw-border)",
-                marginTop: 4,
               }}
             >
               {action || (

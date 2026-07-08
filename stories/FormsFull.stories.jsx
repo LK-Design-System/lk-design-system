@@ -11,7 +11,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/3 Selection and Input/Text Input',
+  title: 'LDS Core/Components/Selection and Input/Text Input',
   parameters: {
     docs: {
       description: {

@@ -10,7 +10,7 @@ import {
 import { ListCellAccordionCard as ListCellAccordionCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/4 Content/Lists',
+  title: 'LDS Core/Components/Content/Lists',
   parameters: {
     docs: {
       description: {

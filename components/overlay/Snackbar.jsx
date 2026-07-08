@@ -2,8 +2,8 @@ import React from "react";
 
 const ICON = (
   <svg
-    width="18"
-    height="18"
+    width="22"
+    height="22"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -51,9 +51,11 @@ export function Snackbar({
         width,
         maxWidth: "100%",
         minHeight,
-        padding: "14px 20px",
+        padding: "11px 16px",
         borderRadius: 12,
         background: "var(--component-transient-feedback-bg)",
+        backdropFilter: "blur(var(--component-transient-feedback-blur))",
+        WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
         color: "var(--text-on-inverse)",
         boxShadow: "var(--shadow-lg)",
         fontFamily: "var(--font-sans)",
@@ -76,9 +78,9 @@ export function Snackbar({
         {heading != null && (
           <strong
             style={{
-              fontSize: 14,
+              fontSize: "var(--body2-size)",
               lineHeight: 1.35,
-              fontWeight: "var(--fw-bold)",
+              fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
             }}
           >
@@ -109,6 +111,8 @@ export function Snackbar({
           style={{
             flexShrink: 0,
             alignSelf: "center",
+            /* WDS content-to-action gap is 32px (container gap 12 + 20). */
+            marginLeft: 20,
             border: "none",
             background: "transparent",
             color: "var(--text-on-inverse)",

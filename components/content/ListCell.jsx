@@ -38,7 +38,7 @@ export function ListCell({
   textEllipsis = true,
   verticalPadding = "medium",
   paddingY,
-  paddingX = 14,
+  paddingX = 20,
   verticalAlign = "center",
   interaction,
   leadingStyle,
@@ -69,22 +69,22 @@ export function ListCell({
   const activePressed = isPressed(interaction);
   const y = paddingY ?? PADDING_Y[verticalPadding] ?? PADDING_Y.medium;
   const alignItems = verticalAlign === "top" ? "flex-start" : "center";
-  const dividerLeft = resolvedLeading != null ? paddingX + 48 : paddingX;
+  const dividerLeft = resolvedLeading != null ? paddingX + 44 : paddingX;
   const dividerRight =
-    resolvedTrailing != null || chevron ? paddingX + 28 : paddingX;
+    resolvedTrailing != null || chevron ? paddingX + 24 : paddingX;
   const resolvedRole = role ?? (clickable ? "button" : undefined);
   const resolvedTabIndex = disabledState
     ? -1
     : (tabIndex ?? (clickable ? 0 : undefined));
+  /* WDS selected pattern: no background tint — the title turns accent and a
+     trailing check appears instead. */
   const background = disabledState
     ? "transparent"
-    : selected
-      ? "var(--lk-accent-tint-2)"
-      : activePressed
-        ? "var(--fill-strong)"
-        : activeHover
-          ? "var(--fill-alt)"
-          : "transparent";
+    : activePressed
+      ? "var(--fill-strong)"
+      : activeHover
+        ? "var(--fill-alt)"
+        : "transparent";
 
   const handleClick = (event) => {
     if (!disabledState && onClick) onClick(event);
@@ -136,7 +136,7 @@ export function ListCell({
         position: "relative",
         display: "flex",
         alignItems,
-        gap: 12,
+        gap: 8,
         width: fillWidth ? "100%" : "fit-content",
         minHeight: y === 0 ? 40 : undefined,
         padding: `${y}px ${typeof paddingX === "number" ? paddingX + "px" : paddingX}`,
@@ -147,12 +147,13 @@ export function ListCell({
             ? "pointer"
             : "default",
         background,
+        /* WDS disabled pattern: dim via content color tokens, not wrapper
+           opacity. */
         color: disabledState
           ? "var(--label-disable)"
           : selected
             ? "var(--label-normal)"
             : "var(--label-neutral)",
-        opacity: disabledState ? 0.55 : 1,
         borderRadius: "var(--radius-lg)",
         outline:
           activeFocus && !disabledState
@@ -174,10 +175,8 @@ export function ListCell({
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            color: selected ? "var(--color-primary)" : "var(--lk-accent-ink)",
-            background: selected
-              ? "var(--surface-card)"
-              : "var(--lk-accent-tint)",
+            color: "var(--lk-accent-ink)",
+            background: "var(--lk-accent-tint)",
             borderRadius: "var(--radius-md)",
             ...leadingStyle,
           }}
@@ -196,13 +195,15 @@ export function ListCell({
           <div
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: 15,
-              fontWeight: "var(--fw-bold)",
-              lineHeight: 1.35,
+              fontSize: "var(--body1-size)",
+              fontWeight: selected ? "var(--fw-medium)" : "var(--fw-regular)",
+              lineHeight: "var(--body1-line)",
               letterSpacing: 0,
               color: disabledState
                 ? "var(--label-disable)"
-                : "var(--label-normal)",
+                : selected
+                  ? "var(--lk-accent-ink)"
+                  : "var(--label-normal)",
               overflow: textEllipsis ? "hidden" : undefined,
               textOverflow: textEllipsis ? "ellipsis" : undefined,
               whiteSpace: textEllipsis ? "nowrap" : "normal",
@@ -218,8 +219,8 @@ export function ListCell({
             style={{
               marginTop: 3,
               fontFamily: "var(--font-sans)",
-              fontSize: 12.5,
-              lineHeight: 1.45,
+              fontSize: "var(--label2-size)",
+              lineHeight: "var(--label2-line)",
               color: disabledState
                 ? "var(--label-disable)"
                 : "var(--label-alternative)",
@@ -234,7 +235,7 @@ export function ListCell({
           </div>
         )}
       </div>
-      {(resolvedTrailing != null || chevron) && (
+      {(resolvedTrailing != null || chevron || selected) && (
         <div
           style={{
             flexShrink: 0,
@@ -244,12 +245,13 @@ export function ListCell({
             color: disabledState
               ? "var(--label-disable)"
               : selected
-                ? "var(--color-primary)"
+                ? "var(--lk-accent-ink)"
                 : "var(--label-alternative)",
             ...trailingStyle,
           }}
         >
           {resolvedTrailing}
+          {selected && <Icon name="check" size={16} aria-hidden="true" />}
           {chevron && (
             <Icon name="chevron-right" size={16} aria-hidden="true" />
           )}

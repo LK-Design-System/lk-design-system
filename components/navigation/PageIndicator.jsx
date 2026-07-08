@@ -1,10 +1,10 @@
 import React from "react";
 
 const COUNTER_SIZE = {
-  small: { height: 26, padding: "0 10px", fontSize: 12 },
-  sm: { height: 26, padding: "0 10px", fontSize: 12 },
-  medium: { height: 34, padding: "0 12px", fontSize: 14 },
-  md: { height: 34, padding: "0 12px", fontSize: 14 },
+  small: { height: 26, padding: "0 10px", fontSize: "var(--label2-size)" },
+  sm: { height: 26, padding: "0 10px", fontSize: "var(--label2-size)" },
+  medium: { height: 34, padding: "0 12px", fontSize: "var(--body2-size)" },
+  md: { height: 34, padding: "0 12px", fontSize: "var(--body2-size)" },
 };
 
 /**
@@ -27,7 +27,7 @@ export function PageIndicator({
   if (variant === "dot" || variant === "dots") {
     const small = size === "small" || size === "sm";
     const dotSize = small ? 6 : 10;
-    const dotGap = small ? 4.5 : 8.5;
+    const dotGap = small ? 6 : 10;
     return (
       <div
         role="group"
@@ -89,7 +89,7 @@ export function PageIndicator({
         color: alternative ? "var(--text-on-inverse)" : "var(--label-neutral)",
         fontFamily: "var(--font-sans)",
         fontSize: s.fontSize,
-        fontWeight: "var(--fw-bold)",
+        fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
         fontVariantNumeric: "tabular-nums",
         whiteSpace: "nowrap",

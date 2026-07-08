@@ -3,7 +3,7 @@ import { Footer } from '../src/index.js';
 import { FooterCard as FooterCardStory } from './NavigationFull.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/6 Navigation/Footer',
+  title: 'LDS Core/Components/Navigation/Footer',
   parameters: {
     docs: {
       description: {

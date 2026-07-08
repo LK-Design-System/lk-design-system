@@ -67,7 +67,7 @@ for (const file of storyFiles) {
   for (const title of titleMatches) storyTitleMatches.push(`${file}: ${title}`);
 }
 
-const expectedStoryTitle = 'stories/Feedback.stories.jsx: LDS Core/3 Component/4 Content/Avatar';
+const expectedStoryTitle = 'stories/Feedback.stories.jsx: LDS Core/Components/Content/Avatar';
 if (storyTitleMatches.length !== 1 || storyTitleMatches[0] !== expectedStoryTitle) {
   failures.push(`Avatar Storybook page must be unique; found:\n${storyTitleMatches.join('\n') || 'none'}`);
 }

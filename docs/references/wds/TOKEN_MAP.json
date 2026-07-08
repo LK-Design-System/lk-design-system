@@ -220,7 +220,7 @@
     },
     {
       "wds": "Card/Card, Card/List Card",
-      "lk": "Card, MetricCard, FeatureCard, NewsCard, ChecklistItem, ChoiceCard",
+      "lk": "Card, ChoiceCard; LK product extensions: MetricCard, FeatureCard, NewsCard, ChecklistItem, ProductCard, SpecRow, Stat",
       "layer": "wds-core"
     },
     {

@@ -81,17 +81,11 @@
       "wdsFamily": "Card/Card, Card/List Card",
       "storyEvidence": [
         "stories/Card.stories.jsx",
-        "stories/CardInfo.stories.jsx",
-        "stories/CardNews.stories.jsx",
-        "stories/CardSpecs.stories.jsx",
+        "stories/ContentListsMedia.stories.jsx",
         "stories/SelectionStatus.stories.jsx"
       ],
       "exports": [
         "Card",
-        "ChecklistItem",
-        "FeatureCard",
-        "NewsCard",
-        "SpecRow",
         "ChoiceCard"
       ]
     },
@@ -100,12 +94,20 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/CardInfo.stories.jsx",
+        "stories/CardNews.stories.jsx",
+        "stories/CardSpecs.stories.jsx",
         "stories/CardStats.stories.jsx",
-        "stories/CardsExtended.stories.jsx"
+        "stories/CardsExtended.stories.jsx",
+        "stories/DataAndStatus.stories.jsx"
       ],
       "exports": [
+        "ChecklistItem",
+        "FeatureCard",
         "MetricCard",
+        "NewsCard",
         "ProductCard",
+        "SpecRow",
         "Stat"
       ]
     },

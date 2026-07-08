@@ -34,11 +34,6 @@ export function Button({
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
-  const content = React.Children.toArray(children).map((child, index) => (
-    typeof child === 'string' || typeof child === 'number'
-      ? <span key={`text-${index}`}>{child}</span>
-      : child
-  ));
 
   const heights = {
     sm: 'var(--component-button-height-sm)',
@@ -55,12 +50,57 @@ export function Button({
     md: 'var(--component-button-font-size-md)',
     lg: 'var(--component-button-font-size-lg)',
   };
+  const lineHeights = {
+    sm: 'var(--component-button-line-height-sm)',
+    md: 'var(--component-button-line-height-md)',
+    lg: 'var(--component-button-line-height-lg)',
+  };
+  const letterSpacings = {
+    sm: 'var(--component-button-letter-spacing-sm)',
+    md: 'var(--component-button-letter-spacing-md)',
+    lg: 'var(--component-button-letter-spacing-lg)',
+  };
+  const gaps = {
+    sm: 'var(--component-button-gap-sm)',
+    md: 'var(--component-button-gap-md)',
+    lg: 'var(--component-button-gap-lg)',
+  };
+  const radii = {
+    sm: 'var(--component-button-radius-sm)',
+    md: 'var(--component-button-radius-md)',
+    lg: 'var(--component-button-radius-lg)',
+  };
+  const iconSizes = {
+    sm: 'var(--component-button-icon-size-sm)',
+    md: 'var(--component-button-icon-size-md)',
+    lg: 'var(--component-button-icon-size-lg)',
+  };
+  const iconOnlyIconSizes = {
+    sm: 'var(--component-button-icon-only-icon-size-sm)',
+    md: 'var(--component-button-icon-only-icon-size-md)',
+    lg: 'var(--component-button-icon-only-icon-size-lg)',
+  };
 
   const normalizedSize = {
     small: 'sm',
     medium: 'md',
     large: 'lg',
   }[size] || size;
+  const iconSize = iconOnly
+    ? (iconOnlyIconSizes[normalizedSize] || iconOnlyIconSizes.md)
+    : (iconSizes[normalizedSize] || iconSizes.md);
+  const content = React.Children.toArray(children).map((child, index) => (
+    typeof child === 'string' || typeof child === 'number'
+      ? <span key={`text-${index}`}>{child}</span>
+      : (
+        <span
+          key={`icon-${index}`}
+          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: iconSize, flexShrink: 0 }}
+        >
+          {child}
+        </span>
+      )
+  ));
   const normalizedVariant = String(variant || 'primary').toLowerCase();
   const normalizedColor = String(color || 'primary').toLowerCase();
   const wdsVariant =
@@ -78,33 +118,41 @@ export function Button({
     'on-dark': { bg: 'var(--component-button-on-dark-bg)', bgHover: 'var(--component-button-on-dark-bg-hover)', fg: 'var(--component-button-on-dark-fg)', bd: 'var(--component-button-on-dark-border)', elevated: false },
     'solid-primary': { bg: 'var(--component-button-primary-bg)', bgHover: 'var(--component-button-primary-bg-hover)', fg: 'var(--component-button-primary-fg)', bd: 'none', elevated: true },
     'solid-assistive': { bg: 'var(--component-button-flat-bg)', bgHover: 'var(--component-button-flat-bg-hover)', fg: 'var(--component-button-flat-fg)', bd: 'none', elevated: false },
-    'outlined-primary': { bg: 'transparent', bgHover: 'var(--lk-accent-tint)', fg: 'var(--color-primary)', bd: 'var(--border-thin) solid var(--color-primary)', bdHover: 'var(--border-thin) solid var(--color-primary)', elevated: false },
+    'outlined-primary': { bg: 'transparent', bgHover: 'var(--lk-accent-tint)', fg: 'var(--color-primary)', bd: 'var(--border-thin) solid var(--border-subtle)', bdHover: 'var(--border-thin) solid var(--border-subtle)', elevated: false },
     'outlined-assistive': { bg: 'transparent', bgHover: 'var(--fill-normal)', fg: 'var(--label-normal)', bd: 'var(--border-thin) solid var(--border-subtle)', bdHover: 'var(--border-thin) solid var(--border-strong)', elevated: false },
   };
   const p = palettes[wdsVariant] || palettes.primary;
   const disabledState = disabled || disable || loading;
   const active = !disabledState;
-  const disabledBorder = wdsVariant.startsWith('outlined')
+  const outlinedLike = wdsVariant.startsWith('outlined') || wdsVariant === 'ghost';
+  const disabledBorder = outlinedLike
     ? 'var(--component-button-disabled-outlined-border)'
     : 'var(--component-button-disabled-border)';
+  const disabledFg = outlinedLike
+    ? 'var(--component-button-disabled-fg-outlined)'
+    : 'var(--component-button-disabled-fg)';
+  const disabledBg = outlinedLike ? 'transparent' : 'var(--component-button-disabled-bg)';
 
   const composed = {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 'var(--component-button-gap)',
+    gap: gaps[normalizedSize] || gaps.md,
     height: heights[normalizedSize] || heights.md,
     minWidth: iconOnly ? (heights[normalizedSize] || heights.md) : undefined,
     padding: iconOnly ? 0 : (pads[normalizedSize] || pads.md),
     width: full ? '100%' : undefined,
     fontFamily: 'var(--font-sans)',
     fontSize: fonts[normalizedSize] || fonts.md,
-    fontWeight: 'var(--component-button-font-weight)',
-    letterSpacing: 'var(--component-button-letter-spacing)',
-    color: disabledState ? 'var(--component-button-disabled-fg)' : p.fg,
-    background: disabledState ? 'var(--component-button-disabled-bg)' : active && hover ? p.bgHover : p.bg,
+    lineHeight: lineHeights[normalizedSize] || lineHeights.md,
+    fontWeight: wdsVariant.endsWith('-assistive')
+      ? 'var(--component-button-font-weight-assistive)'
+      : 'var(--component-button-font-weight)',
+    letterSpacing: letterSpacings[normalizedSize] || letterSpacings.md,
+    color: disabledState ? disabledFg : p.fg,
+    background: disabledState ? disabledBg : active && hover ? p.bgHover : p.bg,
     border: disabledState ? disabledBorder : (active && hover && p.bdHover) ? p.bdHover : p.bd,
-    borderRadius: 'var(--component-button-radius)',
+    borderRadius: radii[normalizedSize] || radii.md,
     boxShadow: active && p.elevated ? 'var(--component-button-shadow-rest)' : 'none',
     transform: 'none',
     cursor: disabledState ? 'not-allowed' : 'pointer',

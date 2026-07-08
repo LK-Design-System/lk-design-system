@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Icon } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/2 Action/Button',
+  title: 'LDS Core/Components/Action/Button',
   component: Button,
   args: {
     children: 'Action',

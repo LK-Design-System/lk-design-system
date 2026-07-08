@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, ContentBadge, Icon, ListCell, Thumbnail } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/4 Content/Card',
+  title: 'LDS Core/Components/Content/Card',
   component: Card,
   args: {
     elevation: 'md',
@@ -98,71 +98,54 @@ export const InteractiveAndDark = {
 };
 
 export const ContentCardPatterns = {
-  name: '콘텐츠 카드 패턴',
+  name: '콘텐츠 카드와 리스트 카드',
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 980 }}>
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)' }}>
+    <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920 }}>
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 'var(--space-4)', alignItems: 'start' }}>
         <Card
           platform="desktop"
           save
-          saved
-          topContent={<ContentBadge color="accent" size="xsmall">Featured</ContentBadge>}
-          thumbnail={<Thumbnail ratio="16/10" overlay={<ContentBadge color="neutral" variant="solid">Desktop</ContentBadge>} overlayAlign="top-left" />}
-          title="Desktop content card"
-          description="Thumbnail, badge, save action, title, description, and bottom content."
+          topContent={<ContentBadge color="accent" size="xsmall">콘텐츠</ContentBadge>}
+          thumbnail={<Thumbnail ratio="16/10" placeholder={false} style={{ background: 'linear-gradient(135deg, var(--fill-normal), var(--fill-alt))' }} />}
+          caption="카테고리"
+          title="콘텐츠 카드"
+          description="썸네일, 저장 액션, 제목, 설명, 보조 정보를 하나의 중립 카드 표면에 배치합니다."
           bottomContent={<div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}><ContentBadge size="xsmall">Badge</ContentBadge><ContentBadge size="xsmall">Meta</ContentBadge></div>}
         />
         <Card
           platform="mobile"
-          save
-          thumbnail={<Thumbnail ratio="4/3" overlay={<Icon name="bookmark" size={16} />} overlayAlign="top-right" />}
+          thumbnail={<Thumbnail ratio="4/3" placeholder={false} border style={{ background: 'linear-gradient(135deg, var(--fill-normal), var(--surface-card))' }} />}
           caption="Mobile"
-          title="Mobile content card"
-          description="Compact padding and card width for the mobile platform axis."
-          subCaption="Sub caption"
+          title="모바일 콘텐츠 카드"
+          description="모바일 축은 같은 정보 구조를 유지하고 padding과 width만 더 조밀하게 조정합니다."
+          subCaption="Extra caption"
         />
+      </section>
+      <section style={{ display: 'grid', gridTemplateColumns: 'minmax(min(420px, 100%), 1fr) minmax(min(260px, 100%), 0.7fr)', gap: 'var(--space-4)', alignItems: 'start' }}>
+        <Card padding={8} elevation="sm">
+          <ListCell
+            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--fill-normal)' }} />}
+            title="리스트 카드 항목"
+            description="leading, trailing, divider를 조합한 List Card 밀도"
+            trailing={<ContentBadge color="accent">상태</ContentBadge>}
+            divider
+          />
+          <ListCell
+            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--fill-normal)' }} />}
+            title="선택된 리스트 항목"
+            description="선택 상태와 divider"
+            selected
+            divider
+          />
+          <ListCell
+            leading={<Thumbnail ratio="1/1" radius="8px" placeholder={false} style={{ width: 48, background: 'var(--fill-normal)' }} />}
+            title="탐색 가능한 항목"
+            description="chevron trailing affordance"
+            chevron
+          />
+        </Card>
         <Card platform="desktop" skeleton />
       </section>
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)' }}>
-        <Card padding={16} style={{ display: 'grid', gap: 'var(--space-3)' }}>
-          <Thumbnail
-            ratio="16/10"
-            overlay={<ContentBadge color="neutral" variant="solid">오피스랩 단위</ContentBadge>}
-            overlayAlign="top-left"
-          >
-            <Icon name="bookmark" size={16} />
-          </Thumbnail>
-          <div style={{ display: 'grid', gap: 4 }}>
-            <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.4, color: 'var(--label-strong)' }}>제목</h3>
-            <p style={{ margin: 0, fontSize: 13, color: 'var(--label-alternative)' }}>설명</p>
-          </div>
-        </Card>
-        <Card padding={16} style={{ display: 'grid', gap: 'var(--space-3)' }}>
-          <Thumbnail ratio="4/3" border overlay={<Icon name="bookmark" size={16} />} overlayAlign="top-right" />
-          <div style={{ display: 'grid', gap: 6 }}>
-            <ContentBadge color="accent" size="xsmall">텍스트</ContentBadge>
-            <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.4, color: 'var(--label-strong)' }}>제목</h3>
-            <p style={{ margin: 0, fontSize: 13, color: 'var(--label-alternative)' }}>설명</p>
-            <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-              <ContentBadge size="xsmall">텍스트</ContentBadge>
-              <ContentBadge size="xsmall">텍스트</ContentBadge>
-            </div>
-          </div>
-        </Card>
-        <Card padding={8}>
-          <ListCell leading={<Thumbnail ratio="1/1" radius="8px" style={{ width: 48 }} />} title="제목" description="설명" trailing={<ContentBadge color="accent">상태</ContentBadge>} divider />
-          <ListCell leading={<Thumbnail ratio="1/1" radius="8px" style={{ width: 48 }} />} title="제목" description="설명" selected divider />
-          <ListCell leading={<Thumbnail ratio="1/1" radius="8px" style={{ width: 48 }} />} title="제목" description="설명" chevron />
-        </Card>
-      </section>
-      <Card padding={16}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 'var(--space-3)' }}>
-          <Thumbnail ratio="4/3" />
-          <Thumbnail ratio="4/3" border />
-          <Thumbnail ratio="4/3" radius={false} />
-          <Thumbnail ratio="4/3" overlay={<ContentBadge color="accent">LIVE</ContentBadge>} overlayAlign="bottom-right" />
-        </div>
-      </Card>
     </main>
   ),
 };

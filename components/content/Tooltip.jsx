@@ -135,14 +135,14 @@ export function Tooltip({
           display: "inline-flex",
           alignItems: "center",
           gap: compact ? 6 : 8,
-          padding: compact ? "5px 8px" : "7px 10px",
+          padding: compact ? "5px 8px" : "8px 12px",
           background: "var(--surface-inverse)",
           color: "var(--text-on-inverse)",
           fontFamily: "var(--font-sans)",
-          fontSize: compact ? 11.5 : 12.5,
+          fontSize: compact ? 11.5 : "var(--label1-size)",
           fontWeight: "var(--fw-semibold)",
           letterSpacing: 0,
-          lineHeight: 1.35,
+          lineHeight: compact ? 1.35 : "var(--label1-line)",
           borderRadius: compact ? 6 : 8,
           whiteSpace: "nowrap",
           boxShadow: "var(--shadow-md)",
@@ -154,8 +154,7 @@ export function Tooltip({
         {shortcut != null && (
           <span
             style={{
-              opacity: 0.78,
-              fontSize: compact ? 10.5 : 11.5,
+              color: "var(--inverse-label-alternative)",
               fontWeight: "var(--fw-bold)",
             }}
           >

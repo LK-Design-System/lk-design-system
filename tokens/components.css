@@ -10,20 +10,42 @@
   --component-button-height-sm: 32px;
   --component-button-height-md: 40px;
   --component-button-height-lg: 48px;
-  --component-button-padding-sm: 0 12px;
-  --component-button-padding-md: 0 16px;
-  --component-button-padding-lg: 0 20px;
-  --component-button-gap: 9px;
-  --component-button-font-size-sm: var(--label1-size);
-  --component-button-font-size-md: var(--body1-size);
-  --component-button-font-size-lg: var(--headline2-size);
-  --component-button-font-weight: var(--fw-bold);
-  --component-button-letter-spacing: 0;
-  --component-button-radius: var(--radius-md);
-  --component-button-icon-size: 18px;
+  /* WDS Action/Button size grading: padding 28/20/14, radius 12/10/8,
+     gap 6/5/4, type body1/body2/label2, per-size tracking. */
+  --component-button-padding-sm: 0 14px;
+  --component-button-padding-md: 0 20px;
+  --component-button-padding-lg: 0 28px;
+  --component-button-gap-sm: 4px;
+  --component-button-gap-md: 5px;
+  --component-button-gap-lg: 6px;
+  --component-button-gap: var(--component-button-gap-md);
+  --component-button-font-size-sm: var(--label2-size);
+  --component-button-font-size-md: var(--body2-size);
+  --component-button-font-size-lg: var(--body1-size);
+  --component-button-line-height-sm: var(--label2-line);
+  --component-button-line-height-md: var(--body2-line);
+  --component-button-line-height-lg: var(--body1-line);
+  --component-button-letter-spacing-sm: var(--label2-spacing);
+  --component-button-letter-spacing-md: var(--body2-spacing);
+  --component-button-letter-spacing-lg: var(--body1-spacing);
+  --component-button-font-weight: var(--fw-semibold);
+  --component-button-font-weight-assistive: var(--fw-medium);
+  --component-button-letter-spacing: var(--component-button-letter-spacing-md);
+  --component-button-radius-sm: var(--radius-8);
+  --component-button-radius-md: var(--radius-10);
+  --component-button-radius-lg: var(--radius-md);
+  --component-button-radius: var(--component-button-radius-lg);
+  --component-button-icon-size-sm: 16px;
+  --component-button-icon-size-md: 18px;
+  --component-button-icon-size-lg: 20px;
+  --component-button-icon-size: var(--component-button-icon-size-md);
+  --component-button-icon-only-icon-size-sm: 18px;
+  --component-button-icon-only-icon-size-md: 20px;
+  --component-button-icon-only-icon-size-lg: 24px;
   --component-button-disabled-opacity: 0.45;
   --component-button-disabled-bg: var(--fill-normal);
-  --component-button-disabled-fg: var(--label-disable);
+  --component-button-disabled-fg: var(--label-assistive);
+  --component-button-disabled-fg-outlined: var(--label-disable);
   --component-button-disabled-border: var(--border-thin) solid transparent;
   --component-button-disabled-outlined-border: var(--border-thin) solid var(--line-neutral);
   --component-button-text-hover-opacity: 0.9;
@@ -69,9 +91,9 @@
 
   /* ---- Action Area ----------------------------------------------------- */
   --component-action-area-bg: var(--surface-card);
-  --component-action-area-padding-x: var(--space-4);
-  --component-action-area-padding-y: var(--space-4);
-  --component-action-area-gap: var(--space-3);
+  --component-action-area-padding-x: var(--space-5);
+  --component-action-area-padding-y: var(--space-5);
+  --component-action-area-gap: var(--space-4);
   --component-action-area-border: var(--border-thin) solid var(--border-subtle);
   --component-action-area-shadow-sticky: var(--shadow-control);
   --component-action-area-z-index: 20;
@@ -93,22 +115,36 @@
   --component-chip-height-sm: 32px;
   --component-chip-height-md: 36px;
   --component-chip-height-lg: 40px;
-  --component-chip-padding-x-xs: 6px;
+  /* WDS Action/Chip size grading: padding 12/11/8/7, radius 10/10/8/6,
+     gap 3/3/2/2, type body2/body2/label1/caption1. */
+  --component-chip-padding-x-xs: 7px;
   --component-chip-padding-x-sm: var(--space-2);
-  --component-chip-padding-x-md: var(--space-2);
+  --component-chip-padding-x-md: 11px;
   --component-chip-padding-x-lg: var(--space-3);
-  --component-chip-gap: var(--space-1);
+  --component-chip-gap-xs: 2px;
+  --component-chip-gap-sm: 2px;
+  --component-chip-gap-md: 3px;
+  --component-chip-gap-lg: 3px;
+  --component-chip-gap: var(--component-chip-gap-md);
   --component-chip-media-size-xs: 16px;
   --component-chip-media-size-sm: 18px;
   --component-chip-media-size-md: 20px;
   --component-chip-media-size-lg: 24px;
   --component-chip-font-size-xs: var(--caption1-size);
-  --component-chip-font-size-sm: var(--label2-size);
-  --component-chip-font-size-md: var(--label1-size);
+  --component-chip-font-size-sm: var(--label1-size);
+  --component-chip-font-size-md: var(--body2-size);
   --component-chip-font-size-lg: var(--body2-size);
+  --component-chip-letter-spacing-xs: var(--caption1-spacing);
+  --component-chip-letter-spacing-sm: var(--label1-spacing);
+  --component-chip-letter-spacing-md: var(--body2-spacing);
+  --component-chip-letter-spacing-lg: var(--body2-spacing);
   --component-chip-font-weight: var(--fw-medium);
-  --component-chip-letter-spacing: var(--label1-spacing);
-  --component-chip-radius: var(--radius-8);
+  --component-chip-letter-spacing: var(--component-chip-letter-spacing-md);
+  --component-chip-radius-xs: var(--radius-sm);
+  --component-chip-radius-sm: var(--radius-8);
+  --component-chip-radius-md: var(--radius-10);
+  --component-chip-radius-lg: var(--radius-10);
+  --component-chip-radius: var(--component-chip-radius-md);
   --component-chip-bg: var(--surface-card);
   --component-chip-bg-hover: var(--surface-card);
   --component-chip-bg-selected: var(--lk-accent-tint-2);
@@ -122,7 +158,10 @@
   --component-chip-disabled-opacity: var(--component-button-disabled-opacity);
 
   /* ---- Divider --------------------------------------------------------- */
-  --component-divider-color: var(--line-neutral);
+  /* WDS roles: normal = line 0.22 step, thick = fill 0.08 step. */
+  --component-divider-color: var(--line-normal);
+  --component-divider-color-normal: var(--line-normal);
+  --component-divider-color-thick: var(--fill-normal);
   --component-divider-thickness-normal: 1px;
   --component-divider-thickness-thick: 8px;
 
@@ -155,6 +194,11 @@
   --component-input-label-letter-spacing: var(--label1-spacing);
   --component-input-label-font-weight: var(--fw-semibold);
   --component-input-required-color: var(--color-danger);
+
+  /* ---- Transient feedback (Toast, Snackbar) ----------------------------- */
+  /* WDS material: translucent inverse surface behind a backdrop blur. */
+  --component-transient-feedback-bg: color-mix(in srgb, var(--surface-inverse) 72%, transparent);
+  --component-transient-feedback-blur: 20px;
 
   /* ---- Card ------------------------------------------------------------ */
   --component-card-bg: var(--surface-card);

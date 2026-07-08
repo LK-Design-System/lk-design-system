@@ -41,7 +41,7 @@ export function ChoiceCard({
   interaction,
   radius = "md",
   padding = "md",
-  shadow = "none",
+  shadow,
   showIndicator = true,
   style,
   tabIndex,
@@ -57,6 +57,9 @@ export function ChoiceCard({
   const [hover, setHover] = React.useState(false);
   const [focus, setFocus] = React.useState(false);
   const isFrame = presentation === "frame";
+  // WDS FramedStyle always carries a hairline rest shadow; frame defaults to
+  // the smallest shadow token unless explicitly overridden.
+  const resolvedShadow = shadow ?? (isFrame ? "xs" : "none");
   const activeHover = hover || interaction === "hovered";
   const activeFocus = focus || interaction === "focused";
   const interactive = !disabled && (onSelect || onClick);
@@ -91,8 +94,8 @@ export function ChoiceCard({
           : "var(--border-subtle)";
   const frameInset = selected || activeFocus || status === "negative" ? 2 : 1;
   const frameShadow = [
-    shadowMap[shadow] && shadowMap[shadow] !== "none"
-      ? shadowMap[shadow]
+    shadowMap[resolvedShadow] && shadowMap[resolvedShadow] !== "none"
+      ? shadowMap[resolvedShadow]
       : null,
     `inset 0 0 0 ${frameInset}px ${frameBorder}`,
     activeFocus && !disabled ? "0 0 0 4px var(--focus-ring)" : null,
@@ -149,8 +152,7 @@ export function ChoiceCard({
         ? "var(--lk-accent-tint-2)"
         : "var(--surface-raised)",
     boxShadow: frameShadow,
-    color: disabled ? "var(--label-assistive)" : "var(--label-normal)",
-    opacity: disabled ? 0.62 : 1,
+    color: disabled ? "var(--label-disable)" : "var(--label-normal)",
     cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
     outline: "none",
     transition:
@@ -165,10 +167,14 @@ export function ChoiceCard({
     gap: 12,
     padding: 16,
     borderRadius: "var(--radius-xl)",
-    background: selected ? "var(--lk-accent-tint)" : "var(--surface-raised)",
+    background: disabled
+      ? "var(--fill-normal)"
+      : selected
+        ? "var(--lk-accent-tint)"
+        : "var(--surface-raised)",
+    color: disabled ? "var(--label-disable)" : undefined,
     boxShadow: choiceShadow,
     cursor: disabled ? "not-allowed" : "pointer",
-    opacity: disabled ? 0.5 : 1,
     transition:
       "box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out)",
     outline: "none",

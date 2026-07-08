@@ -6,7 +6,7 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
   alt?: string;
   /** Name used for initials and accessible image fallback text. */
   name?: string;
-  /** avatar variant. `education` is kept as a backwards-compatible alias for `academy`. @default 'person' */
+  /** avatar variant. `person` renders a circle; `company`/`academy` render rounded squares with size-graded radius. `education` is kept as a backwards-compatible alias for `academy`. @default 'person' */
   variant?: "person" | "company" | "academy" | "education";
   /** Avatar diameter in px or size key. size keys map to xsmall 24, small 32, medium/default 40, large 48, xlarge 56. @default 40 */
   size?:

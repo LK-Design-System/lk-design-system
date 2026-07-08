@@ -8,7 +8,7 @@ import {
 } from './Feedback.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/4 Content/Avatar',
+  title: 'LDS Core/Components/Content/Avatar',
   parameters: {
     docs: {
       description: {

@@ -5,7 +5,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/8 Presentation/Menu',
+  title: 'LDS Core/Components/Presentation/Menu',
   parameters: {
     docs: {
       description: {

@@ -4,7 +4,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/7 Feedback/Notifications',
+  title: 'LDS Core/Components/Feedback/Notifications',
   parameters: {
     docs: {
       description: {

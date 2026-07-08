@@ -5,7 +5,7 @@ import {
 import { DimmerCard as DimmerCardStory } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/8 Presentation/Dimmer',
+  title: 'LDS Core/Components/Presentation/Dimmer',
   parameters: {
     docs: {
       description: {

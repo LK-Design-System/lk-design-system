@@ -8,7 +8,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/7 Feedback/Toast',
+  title: 'LDS Core/Components/Feedback/Toast',
   parameters: {
     docs: {
       description: {

@@ -28,7 +28,7 @@ export interface ChoiceCardProps extends Omit<
   radius?: "sm" | "md" | "lg" | "xl";
   /** Frame presentation padding. @default "md" */
   padding?: "sm" | "md" | "lg" | "xl";
-  /** Frame presentation shadow. @default "none" */
+  /** Frame presentation shadow. Defaults to "xs" for frame presentation, "none" otherwise. */
   shadow?: "none" | "xs" | "sm" | "md" | "lg";
   /** Shows the trailing selected indicator in choice presentation. @default true */
   showIndicator?: boolean;

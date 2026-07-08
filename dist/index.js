@@ -116,8 +116,9 @@ function ActionArea({
             style: {
               margin: 0,
               color: "var(--label-alternative)",
-              fontSize: "var(--caption1-size)",
-              lineHeight: "var(--caption1-line)"
+              fontSize: "var(--label2-size)",
+              lineHeight: "var(--label2-line)",
+              letterSpacing: "var(--label2-spacing)"
             },
             children: caption
           }
@@ -142,12 +143,13 @@ function useKeyframes(id, css) {
     document.head.appendChild(el);
   }, [id, css]);
 }
-function Spinner({ size = 24, thickness, color = "var(--lk-accent-ink)", label, variant = "circular", style, ...rest }) {
+function Spinner({ size, thickness, color = "var(--lk-accent-ink)", label, variant = "circular", style, ...rest }) {
   useKeyframes("lk-spin-kf", "@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none}}");
   useKeyframes("lk-wanted-loading-kf", "@keyframes lk-wanted-loading{0%,100%{transform:translateY(0) scale(1);opacity:.92}50%{transform:translateY(-4px) scale(1.05);opacity:1}}@media (prefers-reduced-motion: reduce){[data-lds-wanted-loading]>*{animation:none}}");
+  const resolvedSize = size ?? (variant === "wanted" ? 32 : 28);
   if (variant === "wanted") {
-    const unit = Math.max(8, Math.round(size / 3));
-    const mark = /* @__PURE__ */ jsxs3("span", { "data-lds-wanted-loading": true, style: { display: "inline-flex", alignItems: "center", gap: Math.max(5, Math.round(unit * 0.45)), height: size }, children: [
+    const unit = Math.max(8, Math.round(resolvedSize / 3));
+    const mark = /* @__PURE__ */ jsxs3("span", { "data-lds-wanted-loading": true, style: { display: "inline-flex", alignItems: "center", gap: Math.max(5, Math.round(unit * 0.45)), height: resolvedSize }, children: [
       /* @__PURE__ */ jsx3("span", { style: { width: unit, height: unit, borderRadius: "50%", background: "var(--lk-accent-ink)", animation: "lk-wanted-loading .9s ease-in-out infinite" } }),
       /* @__PURE__ */ jsx3("span", { style: { width: unit, height: unit, background: "var(--accent-background-pink)", transform: "rotate(45deg)", animation: "lk-wanted-loading .9s ease-in-out .12s infinite" } }),
       /* @__PURE__ */ jsx3("span", { style: { width: 0, height: 0, borderTop: `${unit * 0.62}px solid transparent`, borderBottom: `${unit * 0.62}px solid transparent`, borderLeft: `${unit * 1.08}px solid var(--accent-background-orange)`, animation: "lk-wanted-loading .9s ease-in-out .24s infinite" } })
@@ -160,14 +162,14 @@ function Spinner({ size = 24, thickness, color = "var(--lk-accent-ink)", label, 
       /* @__PURE__ */ jsx3("span", { children: label })
     ] });
   }
-  const t = thickness || Math.max(2, Math.round(size / 10));
+  const t = thickness || Math.max(2, Math.round(resolvedSize / 10));
   const ring = /* @__PURE__ */ jsx3(
     "span",
     {
       "data-lds-spinner-ring": true,
       style: {
-        width: size,
-        height: size,
+        width: resolvedSize,
+        height: resolvedSize,
         borderRadius: "50%",
         boxSizing: "border-box",
         border: `${t}px solid var(--fill-strong)`,
@@ -212,7 +214,6 @@ function Button({
   ...rest
 }) {
   const [hover, setHover] = React5.useState(false);
-  const content = React5.Children.toArray(children).map((child, index) => typeof child === "string" || typeof child === "number" ? /* @__PURE__ */ jsx4("span", { children: child }, `text-${index}`) : child);
   const heights = {
     sm: "var(--component-button-height-sm)",
     md: "var(--component-button-height-md)",
@@ -228,11 +229,50 @@ function Button({
     md: "var(--component-button-font-size-md)",
     lg: "var(--component-button-font-size-lg)"
   };
+  const lineHeights = {
+    sm: "var(--component-button-line-height-sm)",
+    md: "var(--component-button-line-height-md)",
+    lg: "var(--component-button-line-height-lg)"
+  };
+  const letterSpacings = {
+    sm: "var(--component-button-letter-spacing-sm)",
+    md: "var(--component-button-letter-spacing-md)",
+    lg: "var(--component-button-letter-spacing-lg)"
+  };
+  const gaps = {
+    sm: "var(--component-button-gap-sm)",
+    md: "var(--component-button-gap-md)",
+    lg: "var(--component-button-gap-lg)"
+  };
+  const radii = {
+    sm: "var(--component-button-radius-sm)",
+    md: "var(--component-button-radius-md)",
+    lg: "var(--component-button-radius-lg)"
+  };
+  const iconSizes = {
+    sm: "var(--component-button-icon-size-sm)",
+    md: "var(--component-button-icon-size-md)",
+    lg: "var(--component-button-icon-size-lg)"
+  };
+  const iconOnlyIconSizes = {
+    sm: "var(--component-button-icon-only-icon-size-sm)",
+    md: "var(--component-button-icon-only-icon-size-md)",
+    lg: "var(--component-button-icon-only-icon-size-lg)"
+  };
   const normalizedSize = {
     small: "sm",
     medium: "md",
     large: "lg"
   }[size] || size;
+  const iconSize = iconOnly ? iconOnlyIconSizes[normalizedSize] || iconOnlyIconSizes.md : iconSizes[normalizedSize] || iconSizes.md;
+  const content = React5.Children.toArray(children).map((child, index) => typeof child === "string" || typeof child === "number" ? /* @__PURE__ */ jsx4("span", { children: child }, `text-${index}`) : /* @__PURE__ */ jsx4(
+    "span",
+    {
+      style: { display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: iconSize, flexShrink: 0 },
+      children: child
+    },
+    `icon-${index}`
+  ));
   const normalizedVariant = String(variant || "primary").toLowerCase();
   const normalizedColor = String(color || "primary").toLowerCase();
   const wdsVariant = normalizedVariant === "solid" || normalizedVariant === "outlined" ? `${normalizedVariant}-${normalizedColor === "assistive" ? "assistive" : "primary"}` : normalizedVariant;
@@ -246,30 +286,34 @@ function Button({
     "on-dark": { bg: "var(--component-button-on-dark-bg)", bgHover: "var(--component-button-on-dark-bg-hover)", fg: "var(--component-button-on-dark-fg)", bd: "var(--component-button-on-dark-border)", elevated: false },
     "solid-primary": { bg: "var(--component-button-primary-bg)", bgHover: "var(--component-button-primary-bg-hover)", fg: "var(--component-button-primary-fg)", bd: "none", elevated: true },
     "solid-assistive": { bg: "var(--component-button-flat-bg)", bgHover: "var(--component-button-flat-bg-hover)", fg: "var(--component-button-flat-fg)", bd: "none", elevated: false },
-    "outlined-primary": { bg: "transparent", bgHover: "var(--lk-accent-tint)", fg: "var(--color-primary)", bd: "var(--border-thin) solid var(--color-primary)", bdHover: "var(--border-thin) solid var(--color-primary)", elevated: false },
+    "outlined-primary": { bg: "transparent", bgHover: "var(--lk-accent-tint)", fg: "var(--color-primary)", bd: "var(--border-thin) solid var(--border-subtle)", bdHover: "var(--border-thin) solid var(--border-subtle)", elevated: false },
     "outlined-assistive": { bg: "transparent", bgHover: "var(--fill-normal)", fg: "var(--label-normal)", bd: "var(--border-thin) solid var(--border-subtle)", bdHover: "var(--border-thin) solid var(--border-strong)", elevated: false }
   };
   const p = palettes[wdsVariant] || palettes.primary;
   const disabledState = disabled || disable || loading;
   const active = !disabledState;
-  const disabledBorder = wdsVariant.startsWith("outlined") ? "var(--component-button-disabled-outlined-border)" : "var(--component-button-disabled-border)";
+  const outlinedLike = wdsVariant.startsWith("outlined") || wdsVariant === "ghost";
+  const disabledBorder = outlinedLike ? "var(--component-button-disabled-outlined-border)" : "var(--component-button-disabled-border)";
+  const disabledFg = outlinedLike ? "var(--component-button-disabled-fg-outlined)" : "var(--component-button-disabled-fg)";
+  const disabledBg = outlinedLike ? "transparent" : "var(--component-button-disabled-bg)";
   const composed = {
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: "var(--component-button-gap)",
+    gap: gaps[normalizedSize] || gaps.md,
     height: heights[normalizedSize] || heights.md,
     minWidth: iconOnly ? heights[normalizedSize] || heights.md : void 0,
     padding: iconOnly ? 0 : pads[normalizedSize] || pads.md,
     width: full ? "100%" : void 0,
     fontFamily: "var(--font-sans)",
     fontSize: fonts[normalizedSize] || fonts.md,
-    fontWeight: "var(--component-button-font-weight)",
-    letterSpacing: "var(--component-button-letter-spacing)",
-    color: disabledState ? "var(--component-button-disabled-fg)" : p.fg,
-    background: disabledState ? "var(--component-button-disabled-bg)" : active && hover ? p.bgHover : p.bg,
+    lineHeight: lineHeights[normalizedSize] || lineHeights.md,
+    fontWeight: wdsVariant.endsWith("-assistive") ? "var(--component-button-font-weight-assistive)" : "var(--component-button-font-weight)",
+    letterSpacing: letterSpacings[normalizedSize] || letterSpacings.md,
+    color: disabledState ? disabledFg : p.fg,
+    background: disabledState ? disabledBg : active && hover ? p.bgHover : p.bg,
     border: disabledState ? disabledBorder : active && hover && p.bdHover ? p.bdHover : p.bd,
-    borderRadius: "var(--component-button-radius)",
+    borderRadius: radii[normalizedSize] || radii.md,
     boxShadow: active && p.elevated ? "var(--component-button-shadow-rest)" : "none",
     transform: "none",
     cursor: disabledState ? "not-allowed" : "pointer",
@@ -460,7 +504,7 @@ function IconButton({
   variant = "soft",
   size = "medium",
   alternative = false,
-  round = false,
+  round = true,
   label,
   style,
   disabled = false,
@@ -508,12 +552,12 @@ function IconButton({
         justifyContent: "center",
         width: resolvedSize,
         height: resolvedSize,
-        color: p.fg,
-        background: hover && !disabledState ? p.bgHover : p.bg,
+        color: disabledState ? "var(--label-disable)" : p.fg,
+        background: disabledState ? "var(--fill-normal)" : hover ? p.bgHover : p.bg,
         border: p.bd,
         borderRadius: round ? "var(--radius-pill)" : "var(--radius-md)",
         cursor: disabledState ? "not-allowed" : "pointer",
-        opacity: disabledState ? 0.45 : 1,
+        opacity: 1,
         boxShadow: "none",
         transition: "var(--component-button-transition)",
         WebkitTapHighlightColor: "transparent",
@@ -736,8 +780,9 @@ function TextButton({
     large: "lg"
   }[size] || size;
   const normalizedColor = color === "assistive" ? "assistive" : color === "primary" ? "primary" : void 0;
-  const textColor = normalizedColor === "assistive" ? "var(--label-neutral)" : normalizedColor === "primary" ? "var(--color-primary)" : tone === "neutral" ? "var(--label-neutral)" : tone === "danger" ? "var(--bw-red)" : "var(--lk-accent-ink)";
-  const fs = normalizedSize === "sm" ? 14 : normalizedSize === "lg" ? 17 : 16;
+  const textColor = normalizedColor === "assistive" ? "var(--label-alternative)" : normalizedColor === "primary" ? "var(--color-primary)" : tone === "neutral" ? "var(--label-neutral)" : tone === "danger" ? "var(--bw-red)" : "var(--lk-accent-ink)";
+  const fs = normalizedSize === "sm" ? "var(--label1-size)" : normalizedSize === "lg" ? 17 : "var(--body1-size)";
+  const ls = normalizedSize === "sm" ? "var(--label1-spacing)" : "var(--body1-spacing)";
   const h = normalizedSize === "sm" ? 28 : normalizedSize === "lg" ? 36 : 32;
   const disabledState = disabled || disable || loading;
   const Comp = as;
@@ -775,9 +820,9 @@ function TextButton({
         fontFamily: "var(--font-sans)",
         fontSize: fs,
         fontWeight: "var(--fw-semibold)",
-        letterSpacing: 0,
-        color: textColor,
-        opacity: disabledState ? 0.45 : hover ? "var(--component-button-text-hover-opacity)" : 1,
+        letterSpacing: ls,
+        color: disabledState ? "var(--label-disable)" : textColor,
+        opacity: !disabledState && hover ? "var(--component-button-text-hover-opacity)" : 1,
         cursor: disabledState ? "not-allowed" : "pointer",
         textDecoration: underline ? "underline" : "none",
         textUnderlineOffset: "3px",
@@ -835,12 +880,11 @@ function ToggleIcon({
         justifyContent: "center",
         width: side,
         height: side,
-        color: active ? "var(--component-toggle-icon-fg-active)" : "var(--component-toggle-icon-fg)",
-        background: active ? "var(--component-toggle-icon-bg-active)" : "var(--component-toggle-icon-bg)",
-        border: active ? "var(--border-thin) solid transparent" : "var(--component-toggle-icon-border)",
+        color: disabled ? "var(--label-disable)" : active ? "var(--component-toggle-icon-fg-active)" : "var(--component-toggle-icon-fg)",
+        background: disabled ? "var(--fill-normal)" : active ? "var(--component-toggle-icon-bg-active)" : "var(--component-toggle-icon-bg)",
+        border: disabled ? "var(--border-thin) solid var(--line-neutral)" : active ? "var(--border-thin) solid transparent" : "var(--component-toggle-icon-border)",
         borderRadius: "var(--component-toggle-icon-radius)",
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? "var(--component-toggle-icon-disabled-opacity)" : 1,
         transition: "var(--component-button-transition)",
         WebkitTapHighlightColor: "transparent",
         ...style
@@ -857,6 +901,7 @@ import React16 from "react";
 // components/status/Skeleton.jsx
 import React15 from "react";
 import { jsx as jsx14 } from "react/jsx-runtime";
+var SKELETON_RADIUS = 3;
 function useKeyframes2(id, css) {
   React15.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
@@ -905,7 +950,7 @@ function Skeleton({
           display: "block",
           height: h2,
           width: i === lines - 1 && lines > 1 && length == null ? "70%" : resolvedWidth,
-          borderRadius: "var(--radius-sm)",
+          borderRadius: SKELETON_RADIUS,
           marginTop: i ? 10 : 0,
           opacity,
           ...base
@@ -915,7 +960,7 @@ function Skeleton({
     )) });
   }
   const isCircle = variant === "circle";
-  const r = isCircle ? "50%" : radius != null ? radius : "var(--radius-lg)";
+  const r = isCircle ? "50%" : radius != null ? radius : SKELETON_RADIUS;
   const w = isCircle ? resolvedWidth === "100%" ? 40 : resolvedWidth : resolvedWidth;
   const h = isCircle ? height || (resolvedWidth === "100%" ? 40 : resolvedWidth) : height || 16;
   return /* @__PURE__ */ jsx14(
@@ -1000,7 +1045,7 @@ function Card({
   const compact = platform === "mobile";
   const structured = skeleton || save || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || bottomContent != null || footer != null;
   const resolvedPadding = padding != null ? padding : compact ? 12 : "var(--component-card-padding)";
-  const structuredContent = skeleton ? /* @__PURE__ */ jsx15(StructuredSkeleton, { compact }) : /* @__PURE__ */ jsxs10("div", { style: { display: "grid", gap: compact ? 10 : 12 }, children: [
+  const structuredContent = skeleton ? /* @__PURE__ */ jsx15(StructuredSkeleton, { compact }) : /* @__PURE__ */ jsxs10("div", { style: { display: "grid", gap: compact ? 6 : 8 }, children: [
     (topContent != null || save) && /* @__PURE__ */ jsxs10("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }, children: [
       /* @__PURE__ */ jsx15("div", { style: { minWidth: 0 }, children: topContent }),
       save && /* @__PURE__ */ jsx15(SaveButton, { saved, onClick: onSave })
@@ -1009,8 +1054,8 @@ function Card({
     (leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null) && /* @__PURE__ */ jsxs10("div", { style: { display: "flex", alignItems: "flex-start", gap: 12 }, children: [
       leadingContent != null && /* @__PURE__ */ jsx15("div", { style: { flexShrink: 0 }, children: leadingContent }),
       /* @__PURE__ */ jsxs10("div", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
-        caption != null && /* @__PURE__ */ jsx15("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--label-alternative)", fontWeight: "var(--fw-semibold)" }, children: caption }),
-        title != null && /* @__PURE__ */ jsx15("div", { style: { fontSize: compact ? 15 : 16, lineHeight: 1.4, color: dark ? "var(--text-on-inverse)" : "var(--label-strong)", fontWeight: "var(--fw-bold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
+        caption != null && /* @__PURE__ */ jsx15("div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", color: "var(--label-alternative)", fontWeight: "var(--fw-medium)" }, children: caption }),
+        title != null && /* @__PURE__ */ jsx15("div", { style: { fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? "var(--text-on-inverse)" : "var(--label-strong)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
         description != null && /* @__PURE__ */ jsx15("div", { style: { fontSize: 13, lineHeight: 1.5, color: dark ? "var(--inverse-label-neutral)" : "var(--label-alternative)", wordBreak: "keep-all" }, children: description }),
         subCaption != null && /* @__PURE__ */ jsx15("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--label-assistive)" }, children: subCaption })
       ] }),
@@ -1573,14 +1618,38 @@ var TONES = {
   warning: "var(--bw-amber)",
   negative: "var(--bw-red)"
 };
+var SIZE_XS = {
+  padding: "3px 6px",
+  fontSize: 11,
+  lineHeight: "var(--caption2-line)",
+  gap: 2,
+  icon: 12,
+  radius: "var(--radius-sm)"
+};
+var SIZE_SM = {
+  padding: "4px 6px",
+  fontSize: 12,
+  lineHeight: "var(--caption1-line)",
+  gap: 3,
+  icon: 14,
+  radius: "var(--radius-sm)"
+};
+var SIZE_MD = {
+  padding: "5px 8px",
+  fontSize: 13,
+  lineHeight: "var(--label2-line)",
+  gap: 4,
+  icon: 16,
+  radius: "var(--radius-8)"
+};
 var SIZE = {
-  xsmall: { height: 18, padding: "0 6px", fontSize: 11, gap: 3, icon: 11 },
-  xs: { height: 18, padding: "0 6px", fontSize: 11, gap: 3, icon: 11 },
-  small: { height: 22, padding: "0 8px", fontSize: 12, gap: 4, icon: 12 },
-  sm: { height: 22, padding: "0 8px", fontSize: 12, gap: 4, icon: 12 },
-  medium: { height: 26, padding: "0 10px", fontSize: 13, gap: 5, icon: 14 },
-  md: { height: 26, padding: "0 10px", fontSize: 13, gap: 5, icon: 14 },
-  lg: { height: 26, padding: "0 10px", fontSize: 13, gap: 5, icon: 14 }
+  xsmall: SIZE_XS,
+  xs: SIZE_XS,
+  small: SIZE_SM,
+  sm: SIZE_SM,
+  medium: SIZE_MD,
+  md: SIZE_MD,
+  lg: SIZE_MD
 };
 function normalizeVariant(variant) {
   if (variant === "outline") return "outlined";
@@ -1647,16 +1716,14 @@ function ContentBadge({
         alignItems: "center",
         justifyContent: "center",
         gap: resolvedSize.gap,
-        minWidth: resolvedSize.height,
-        height: resolvedSize.height,
         padding: resolvedSize.padding,
         boxSizing: "border-box",
         fontFamily: "var(--font-sans)",
         fontSize: resolvedSize.fontSize,
-        lineHeight: 1,
-        fontWeight: "var(--fw-bold)",
+        lineHeight: resolvedSize.lineHeight,
+        fontWeight: "var(--fw-medium)",
         letterSpacing: 0,
-        borderRadius: "var(--radius-sm)",
+        borderRadius: resolvedSize.radius,
         whiteSpace: "nowrap",
         ...looks,
         ...style
@@ -3790,7 +3857,7 @@ function Divider({
   ...rest
 }) {
   const thickness = variant === "thick" ? "var(--component-divider-thickness-thick)" : "var(--component-divider-thickness-normal)";
-  const color = "var(--component-divider-color)";
+  const color = variant === "thick" ? "var(--component-divider-color-thick)" : "var(--component-divider-color-normal)";
   if (vertical) {
     return /* @__PURE__ */ jsx30(
       "span",
@@ -3801,7 +3868,7 @@ function Divider({
           display: "inline-block",
           width: thickness,
           alignSelf: "stretch",
-          minHeight: 16,
+          minHeight: 32,
           background: color,
           ...style
         },
@@ -3919,7 +3986,7 @@ function ListCell({
   textEllipsis = true,
   verticalPadding = "medium",
   paddingY,
-  paddingX = 14,
+  paddingX = 20,
   verticalAlign = "center",
   interaction,
   leadingStyle,
@@ -3949,11 +4016,11 @@ function ListCell({
   const activePressed = isPressed(interaction);
   const y = paddingY ?? PADDING_Y[verticalPadding] ?? PADDING_Y.medium;
   const alignItems = verticalAlign === "top" ? "flex-start" : "center";
-  const dividerLeft = resolvedLeading != null ? paddingX + 48 : paddingX;
-  const dividerRight = resolvedTrailing != null || chevron ? paddingX + 28 : paddingX;
+  const dividerLeft = resolvedLeading != null ? paddingX + 44 : paddingX;
+  const dividerRight = resolvedTrailing != null || chevron ? paddingX + 24 : paddingX;
   const resolvedRole = role ?? (clickable ? "button" : void 0);
   const resolvedTabIndex = disabledState ? -1 : tabIndex ?? (clickable ? 0 : void 0);
-  const background = disabledState ? "transparent" : selected ? "var(--lk-accent-tint-2)" : activePressed ? "var(--fill-strong)" : activeHover ? "var(--fill-alt)" : "transparent";
+  const background = disabledState ? "transparent" : activePressed ? "var(--fill-strong)" : activeHover ? "var(--fill-alt)" : "transparent";
   const handleClick = (event) => {
     if (!disabledState && onClick) onClick(event);
   };
@@ -3996,15 +4063,16 @@ function ListCell({
         position: "relative",
         display: "flex",
         alignItems,
-        gap: 12,
+        gap: 8,
         width: fillWidth ? "100%" : "fit-content",
         minHeight: y === 0 ? 40 : void 0,
         padding: `${y}px ${typeof paddingX === "number" ? paddingX + "px" : paddingX}`,
         boxSizing: "border-box",
         cursor: disabledState ? "not-allowed" : clickable ? "pointer" : "default",
         background,
+        /* WDS disabled pattern: dim via content color tokens, not wrapper
+           opacity. */
         color: disabledState ? "var(--label-disable)" : selected ? "var(--label-normal)" : "var(--label-neutral)",
-        opacity: disabledState ? 0.55 : 1,
         borderRadius: "var(--radius-lg)",
         outline: activeFocus && !disabledState ? "2px solid var(--focus-ring)" : "none",
         outlineOffset: -2,
@@ -4023,8 +4091,8 @@ function ListCell({
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              color: selected ? "var(--color-primary)" : "var(--lk-accent-ink)",
-              background: selected ? "var(--surface-card)" : "var(--lk-accent-tint)",
+              color: "var(--lk-accent-ink)",
+              background: "var(--lk-accent-tint)",
               borderRadius: "var(--radius-md)",
               ...leadingStyle
             },
@@ -4045,11 +4113,11 @@ function ListCell({
                 {
                   style: {
                     fontFamily: "var(--font-sans)",
-                    fontSize: 15,
-                    fontWeight: "var(--fw-bold)",
-                    lineHeight: 1.35,
+                    fontSize: "var(--body1-size)",
+                    fontWeight: selected ? "var(--fw-medium)" : "var(--fw-regular)",
+                    lineHeight: "var(--body1-line)",
                     letterSpacing: 0,
-                    color: disabledState ? "var(--label-disable)" : "var(--label-normal)",
+                    color: disabledState ? "var(--label-disable)" : selected ? "var(--lk-accent-ink)" : "var(--label-normal)",
                     overflow: textEllipsis ? "hidden" : void 0,
                     textOverflow: textEllipsis ? "ellipsis" : void 0,
                     whiteSpace: textEllipsis ? "nowrap" : "normal",
@@ -4065,8 +4133,8 @@ function ListCell({
                   style: {
                     marginTop: 3,
                     fontFamily: "var(--font-sans)",
-                    fontSize: 12.5,
-                    lineHeight: 1.45,
+                    fontSize: "var(--label2-size)",
+                    lineHeight: "var(--label2-line)",
                     color: disabledState ? "var(--label-disable)" : "var(--label-alternative)",
                     overflow: textEllipsis ? "hidden" : void 0,
                     textOverflow: textEllipsis ? "ellipsis" : void 0,
@@ -4080,7 +4148,7 @@ function ListCell({
             ]
           }
         ),
-        (resolvedTrailing != null || chevron) && /* @__PURE__ */ jsxs25(
+        (resolvedTrailing != null || chevron || selected) && /* @__PURE__ */ jsxs25(
           "div",
           {
             style: {
@@ -4088,11 +4156,12 @@ function ListCell({
               display: "flex",
               alignItems: "center",
               gap: 8,
-              color: disabledState ? "var(--label-disable)" : selected ? "var(--color-primary)" : "var(--label-alternative)",
+              color: disabledState ? "var(--label-disable)" : selected ? "var(--lk-accent-ink)" : "var(--label-alternative)",
               ...trailingStyle
             },
             children: [
               resolvedTrailing,
+              selected && /* @__PURE__ */ jsx32(Icon, { name: "check", size: 16, "aria-hidden": "true" }),
               chevron && /* @__PURE__ */ jsx32(Icon, { name: "chevron-right", size: 16, "aria-hidden": "true" })
             ]
           }
@@ -4346,7 +4415,7 @@ function Thumbnail({
   alt = "",
   ratio = "1/1",
   radius = true,
-  border = false,
+  border = true,
   fit = "cover",
   overlay,
   overlayAlign = "top-left",
@@ -4584,14 +4653,14 @@ function Tooltip({
               display: "inline-flex",
               alignItems: "center",
               gap: compact ? 6 : 8,
-              padding: compact ? "5px 8px" : "7px 10px",
+              padding: compact ? "5px 8px" : "8px 12px",
               background: "var(--surface-inverse)",
               color: "var(--text-on-inverse)",
               fontFamily: "var(--font-sans)",
-              fontSize: compact ? 11.5 : 12.5,
+              fontSize: compact ? 11.5 : "var(--label1-size)",
               fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
-              lineHeight: 1.35,
+              lineHeight: compact ? 1.35 : "var(--label1-line)",
               borderRadius: compact ? 6 : 8,
               whiteSpace: "nowrap",
               boxShadow: "var(--shadow-md)",
@@ -4604,8 +4673,7 @@ function Tooltip({
                 "span",
                 {
                   style: {
-                    opacity: 0.78,
-                    fontSize: compact ? 10.5 : 11.5,
+                    color: "var(--inverse-label-alternative)",
                     fontWeight: "var(--fw-bold)"
                   },
                   children: shortcut
@@ -4768,9 +4836,9 @@ function checkboxStyle(checked) {
     verticalAlign: "middle"
   };
 }
-function DataGrid({ columns = [], rows = [], selectable = false, onSelectionChange, size = "md", style, ...rest }) {
+function DataGrid({ columns = [], rows = [], selectable = false, defaultSelectedRows = [], onSelectionChange, size = "md", style, ...rest }) {
   const [sort, setSort] = React46.useState({ key: null, dir: "asc" });
-  const [sel, setSel] = React46.useState(() => /* @__PURE__ */ new Set());
+  const [sel, setSel] = React46.useState(() => new Set(defaultSelectedRows));
   const pad2 = size === "sm" ? "10px 12px" : "13px 16px";
   const sorted = sortRows(rows, sort.key, sort.dir);
   const toggleSort = (c) => {
@@ -4835,13 +4903,14 @@ function DataToolbar({
     onSearchChange && onSearchChange(value);
   };
   const compact = size === "sm";
+  const controlHeight = compact ? 34 : 38;
   return /* @__PURE__ */ jsxs36(
     "div",
     {
       style: {
         display: "grid",
-        gap: "var(--space-3)",
-        padding: compact ? "10px 12px" : "12px 14px",
+        gap: compact ? "var(--space-2)" : "var(--space-3)",
+        padding: compact ? "10px 12px" : "14px 16px",
         border: "1px solid var(--bw-border)",
         borderRadius: "var(--radius-md)",
         background: "var(--bw-white)",
@@ -4851,13 +4920,13 @@ function DataToolbar({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs36("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs36("div", { style: { display: "grid", gap: 4, minWidth: 0 }, children: [
+        /* @__PURE__ */ jsxs36("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs36("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
             title != null && /* @__PURE__ */ jsx44("strong", { style: { color: "var(--label-strong)", fontSize: compact ? 14 : 15.5, lineHeight: 1.35 }, children: title }),
-            description != null && /* @__PURE__ */ jsx44("span", { style: { color: "var(--label-alternative)", fontSize: 13, lineHeight: 1.45 }, children: description })
+            description != null && /* @__PURE__ */ jsx44("span", { style: { color: "var(--label-alternative)", fontSize: compact ? 12.5 : 13, lineHeight: 1.45 }, children: description })
           ] }),
-          (count != null || actions != null) && /* @__PURE__ */ jsxs36("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
-            count != null && /* @__PURE__ */ jsxs36("span", { style: { color: "var(--label-alternative)", fontSize: 13, fontVariantNumeric: "tabular-nums" }, children: [
+          (count != null || actions != null) && /* @__PURE__ */ jsxs36("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
+            count != null && /* @__PURE__ */ jsxs36("span", { style: { color: "var(--label-alternative)", fontSize: 12.5, fontVariantNumeric: "tabular-nums" }, children: [
               count,
               "\uAC1C"
             ] }),
@@ -4865,7 +4934,7 @@ function DataToolbar({
           ] })
         ] }),
         /* @__PURE__ */ jsxs36("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs36("label", { style: { position: "relative", flex: "1 1 220px", minWidth: 180, maxWidth: 320 }, children: [
+          /* @__PURE__ */ jsxs36("label", { style: { position: "relative", flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: [
             /* @__PURE__ */ jsx44("span", { style: { position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "var(--label-assistive)", pointerEvents: "none" }, "aria-hidden": "true", children: /* @__PURE__ */ jsx44(Icon, { name: "search", size: 17, role: "presentation", "aria-label": void 0, "aria-hidden": "true" }) }),
             /* @__PURE__ */ jsx44(
               "input",
@@ -4876,28 +4945,47 @@ function DataToolbar({
                 "aria-label": searchPlaceholder,
                 style: {
                   width: "100%",
-                  height: compact ? 36 : 40,
+                  height: controlHeight,
                   boxSizing: "border-box",
                   padding: "0 12px 0 36px",
-                  border: "1px solid var(--bw-border)",
+                  border: "1px solid var(--border-subtle)",
                   borderRadius: "var(--radius-md)",
-                  background: "var(--surface-card)",
+                  background: "var(--surface-raised)",
                   color: "var(--label-normal)",
                   fontFamily: "var(--font-sans)",
-                  fontSize: 14,
+                  fontSize: 13.5,
                   outline: "none"
                 }
               }
             )
           ] }),
-          filters != null && /* @__PURE__ */ jsx44("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: filters }),
-          selectedCount > 0 && /* @__PURE__ */ jsxs36("div", { role: "status", style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", minHeight: compact ? 36 : 40, padding: "0 10px", borderRadius: "var(--radius-md)", background: "var(--lk-accent-tint)", color: "var(--label-normal)", fontSize: 13, fontWeight: "var(--fw-bold)" }, children: [
-            /* @__PURE__ */ jsxs36("span", { children: [
-              selectedCount,
-              "\uAC1C \uC120\uD0DD"
-            ] }),
-            bulkActions
-          ] })
+          filters != null && /* @__PURE__ */ jsx44("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: filters }),
+          selectedCount > 0 && /* @__PURE__ */ jsxs36(
+            "div",
+            {
+              role: "status",
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--space-2)",
+                minHeight: controlHeight,
+                marginLeft: "auto",
+                paddingLeft: "var(--space-3)",
+                borderLeft: "1px solid var(--line-neutral)",
+                color: "var(--label-normal)",
+                fontSize: 13,
+                fontWeight: "var(--fw-bold)",
+                whiteSpace: "nowrap"
+              },
+              children: [
+                /* @__PURE__ */ jsxs36("span", { style: { display: "inline-flex", alignItems: "center", minHeight: controlHeight, padding: "0 10px", borderRadius: "var(--radius-sm)", background: "var(--fill-normal)" }, children: [
+                  selectedCount,
+                  "\uAC1C \uC120\uD0DD"
+                ] }),
+                bulkActions
+              ]
+            }
+          )
         ] })
       ]
     }
@@ -5228,6 +5316,21 @@ function initialsFromName(name) {
 function resolveAvatarSize(size) {
   return typeof size === "number" ? size : AVATAR_SIZES[size] || AVATAR_SIZES.default;
 }
+var SQUARE_RADIUS_STEPS = [
+  [24, "var(--radius-sm)"],
+  [32, "var(--radius-8)"],
+  [40, "var(--radius-10)"],
+  [48, "var(--radius-12)"],
+  [56, "var(--radius-14)"]
+];
+function resolveAvatarRadius(variant, size) {
+  if (variant === "person") return "var(--radius-pill)";
+  let radius = SQUARE_RADIUS_STEPS[0][1];
+  for (const [threshold, value] of SQUARE_RADIUS_STEPS) {
+    if (size >= threshold) radius = value;
+  }
+  return radius;
+}
 function normalizeVariant2(variant = "person") {
   const normalized = variant === "education" ? "academy" : variant;
   return PLACEHOLDER_PATHS[normalized] ? normalized : "person";
@@ -5312,10 +5415,11 @@ function Avatar({
   const ringShadow = ring ? "0 0 0 4px var(--bw-white), 0 0 0 5px var(--bw-border)" : "";
   const stateShadow = interactionStyle.boxShadow || "";
   const boxShadow = [ringShadow, stateShadow].filter(Boolean).join(", ") || "none";
+  const avatarRadius = resolveAvatarRadius(normalizedVariant, resolvedSize);
   const avatarBoxStyle = {
     width: "100%",
     height: "100%",
-    borderRadius: "var(--radius-pill)",
+    borderRadius: avatarRadius,
     border,
     boxSizing: "border-box",
     boxShadow,
@@ -5381,7 +5485,7 @@ function Avatar({
             style: {
               position: "absolute",
               inset: 0,
-              borderRadius: "var(--radius-pill)",
+              borderRadius: avatarRadius,
               overflow: "hidden",
               pointerEvents: "none"
             },
@@ -5474,12 +5578,12 @@ function AvatarGroup({
   const resolvedSize = resolveGroupSize(size);
   const shown = items.slice(0, max);
   const extra = Math.max(0, items.length - shown.length);
-  const overlap = -Math.round(resolvedSize * 0.3);
+  const overlap = -8;
   const base = {
     width: resolvedSize,
     height: resolvedSize,
     borderRadius: "50%",
-    border: "2px solid var(--bw-white)",
+    border: "1.5px solid var(--bw-white)",
     boxSizing: "border-box",
     display: "inline-flex",
     alignItems: "center",
@@ -5540,7 +5644,7 @@ function AvatarGroup({
               pushBadge: it.pushBadge,
               size: resolvedSize,
               borderColor: "var(--bw-white)",
-              borderWeight: 2,
+              borderWeight: 1.5,
               title: it.name,
               style: {
                 marginLeft: i ? overlap : 0,
@@ -5649,24 +5753,36 @@ function Chip({
       height: "var(--component-chip-height-xs)",
       paddingX: "var(--component-chip-padding-x-xs)",
       fontSize: "var(--component-chip-font-size-xs)",
+      letterSpacing: "var(--component-chip-letter-spacing-xs)",
+      gap: "var(--component-chip-gap-xs)",
+      radius: "var(--component-chip-radius-xs)",
       media: "var(--component-chip-media-size-xs)"
     },
     sm: {
       height: "var(--component-chip-height-sm)",
       paddingX: "var(--component-chip-padding-x-sm)",
       fontSize: "var(--component-chip-font-size-sm)",
+      letterSpacing: "var(--component-chip-letter-spacing-sm)",
+      gap: "var(--component-chip-gap-sm)",
+      radius: "var(--component-chip-radius-sm)",
       media: "var(--component-chip-media-size-sm)"
     },
     md: {
       height: "var(--component-chip-height-md)",
       paddingX: "var(--component-chip-padding-x-md)",
       fontSize: "var(--component-chip-font-size-md)",
+      letterSpacing: "var(--component-chip-letter-spacing-md)",
+      gap: "var(--component-chip-gap-md)",
+      radius: "var(--component-chip-radius-md)",
       media: "var(--component-chip-media-size-md)"
     },
     lg: {
       height: "var(--component-chip-height-lg)",
       paddingX: "var(--component-chip-padding-x-lg)",
       fontSize: "var(--component-chip-font-size-lg)",
+      letterSpacing: "var(--component-chip-letter-spacing-lg)",
+      gap: "var(--component-chip-gap-lg)",
+      radius: "var(--component-chip-radius-lg)",
       media: "var(--component-chip-media-size-lg)"
     }
   };
@@ -5716,18 +5832,18 @@ function Chip({
       style: {
         display: "inline-flex",
         alignItems: "center",
-        gap: "var(--component-chip-gap)",
+        gap: s.gap,
         height: s.height,
         paddingInline: s.paddingX,
         background: hover && !disabledState ? p.bgHover : p.bg,
         border: p.border,
-        borderRadius: "var(--component-chip-radius)",
+        borderRadius: s.radius,
         fontFamily: "var(--font-sans)",
         fontSize: s.fontSize,
         fontWeight: "var(--component-chip-font-weight)",
-        letterSpacing: "var(--component-chip-letter-spacing)",
-        color: p.fg,
-        opacity: disabledState ? "var(--component-chip-disabled-opacity)" : 1,
+        letterSpacing: s.letterSpacing,
+        color: disabledState ? "var(--label-disable)" : p.fg,
+        opacity: 1,
         whiteSpace: "nowrap",
         textDecoration: "none",
         cursor: disabledState ? "not-allowed" : as === "a" || onClick || rest.onClick ? "pointer" : "default",
@@ -5749,7 +5865,7 @@ function Chip({
               borderRadius: "var(--radius-sm)",
               overflow: "hidden",
               flexShrink: 0,
-              marginLeft: "calc(var(--component-chip-gap) * -1)"
+              marginLeft: `calc(${s.gap} * -1)`
             },
             children: thumbnail
           }
@@ -5979,8 +6095,8 @@ function Checkbox({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  const d = isMark ? normalizedSize === "sm" ? 18 : 22 : normalizedSize === "sm" ? 16 : 18;
-  const iconSize = isMark ? normalizedSize === "sm" ? 14 : 17 : normalizedSize === "sm" ? 11 : 13;
+  const d = isMark ? normalizedSize === "sm" ? 20 : 24 : normalizedSize === "sm" ? 16 : 18;
+  const iconSize = isMark ? d : normalizedSize === "sm" ? 14 : 16;
   const markTone = status === "negative" ? "var(--color-danger)" : "var(--lk-accent-ink)";
   const markIdleColor = activeHover || activeFocus ? "var(--label-neutral)" : "var(--bw-gray-300)";
   const boxBackground = disabledState ? on || mixed ? "var(--fill-strong)" : "var(--fill-normal)" : on || mixed ? "var(--lk-accent-ink)" : activeHover ? "var(--fill-normal)" : "var(--bw-white)";
@@ -5995,7 +6111,7 @@ function Checkbox({
     flexShrink: 0,
     boxSizing: "border-box",
     color: disabledState ? "var(--label-disable)" : on ? markTone : markIdleColor,
-    background: disabledState ? "var(--fill-normal)" : on ? "var(--lk-accent-tint-2)" : activeHover ? "var(--fill-normal)" : "transparent",
+    background: "transparent",
     border: "0",
     borderRadius: "var(--radius-pill)",
     boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
@@ -6025,13 +6141,12 @@ function Checkbox({
       style: {
         display: "inline-flex",
         alignItems: "center",
-        gap: tight ? 8 : 12,
+        gap: tight ? 4 : 8,
         cursor: disabledState ? "not-allowed" : "pointer",
-        opacity: disabledState ? 0.5 : 1,
         fontFamily: "var(--font-sans)",
-        fontSize: "15px",
+        fontSize: normalizedSize === "sm" ? "var(--label1-size)" : "15px",
         letterSpacing: 0,
-        color: "var(--bw-ink)",
+        color: disabledState ? "var(--label-disable)" : "var(--bw-ink)",
         fontWeight: bold ? "var(--fw-bold)" : void 0,
         ...style
       },
@@ -6303,6 +6418,15 @@ function FormField({ label, required = false, helper, error, htmlFor, children, 
 // components/forms/Input.jsx
 import React72 from "react";
 import { jsx as jsx69, jsxs as jsxs56 } from "react/jsx-runtime";
+function usePlaceholderStyle() {
+  React72.useEffect(() => {
+    if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
+    const el = document.createElement("style");
+    el.id = "lk-field-ph";
+    el.textContent = "[data-lds-field]::placeholder{color:var(--label-assistive);opacity:1}";
+    document.head.appendChild(el);
+  }, []);
+}
 function Input({
   label,
   helper,
@@ -6341,7 +6465,8 @@ function Input({
   const activeFocus = focused || focus || interaction === "focused" || interaction === "active-focused";
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
   const isInvalid = invalid || status === "negative" || error != null;
-  const ring = isInvalid ? "var(--component-input-border-color-invalid)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--component-input-border-color-focus)" : activeHover ? "var(--border-strong)" : "var(--component-input-border-color)";
+  usePlaceholderStyle();
+  const ring = disabled ? "var(--line-neutral)" : isInvalid ? "var(--component-input-border-color-invalid)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--component-input-border-color-focus)" : activeHover ? "var(--border-strong)" : "var(--component-input-border-color)";
   const h = height || (normalizedSize === "sm" ? "var(--control-h-sm)" : normalizedSize === "lg" ? "var(--control-h-lg)" : "var(--component-input-height)");
   const startIcon = leadingIcon ?? iconLeft;
   const endIcon = trailingIcon ?? iconRight;
@@ -6367,7 +6492,6 @@ function Input({
           border: `var(--component-input-border-width) solid ${ring}`,
           borderRadius: "var(--component-input-radius)",
           boxShadow: activeFocus && !isInvalid ? "var(--component-input-focus-shadow)" : "none",
-          opacity: disabled ? 0.65 : 1,
           transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
         },
         children: [
@@ -6376,6 +6500,7 @@ function Input({
             "input",
             {
               id: inputId,
+              "data-lds-field": "",
               ...rest,
               disabled,
               "aria-label": ariaLabel ?? (!label && typeof rest.placeholder === "string" ? rest.placeholder : void 0),
@@ -6389,7 +6514,7 @@ function Input({
                 setFocused(false);
                 rest.onBlur && rest.onBlur(e);
               },
-              style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: "var(--component-input-text-color)" }
+              style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: disabled ? "var(--label-disable)" : "var(--component-input-text-color)" }
             }
           ),
           endIcon && /* @__PURE__ */ jsx69("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: endIcon }),
@@ -6397,7 +6522,7 @@ function Input({
         ]
       }
     ),
-    message != null && /* @__PURE__ */ jsx69("span", { id: messageId, style: { fontSize: 13, lineHeight: 1.45, color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ jsx69("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
   ] });
 }
 
@@ -6602,10 +6727,11 @@ function Radio({
   const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size;
   const activeHover = hover || interaction === "hovered";
   const activeFocus = focus || interaction === "focused";
-  const d = normalizedSize === "sm" ? 18 : 22;
-  const dot = normalizedSize === "sm" ? 8 : 10;
+  const d = normalizedSize === "sm" ? 16 : 20;
+  const dot = normalizedSize === "sm" ? 6 : 8;
   const radioBorder = disabledState ? "var(--line-neutral)" : visualChecked || activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
-  const radioDot = disabledState ? "var(--label-disable)" : "var(--lk-accent-ink)";
+  const radioBg = disabledState ? "var(--fill-normal)" : visualChecked ? "var(--lk-accent-ink)" : activeHover ? "var(--fill-normal)" : "var(--bw-white)";
+  const radioDot = disabledState ? "var(--label-disable)" : "var(--text-on-signal)";
   return /* @__PURE__ */ jsxs60(
     "label",
     {
@@ -6617,11 +6743,10 @@ function Radio({
         alignItems: "center",
         gap: tight ? 8 : 12,
         cursor: disabledState ? "not-allowed" : "pointer",
-        opacity: disabledState ? 0.5 : 1,
         fontFamily: "var(--font-sans)",
         fontSize: "15px",
         letterSpacing: 0,
-        color: "var(--bw-ink)",
+        color: disabledState ? "var(--label-disable)" : "var(--bw-ink)",
         fontWeight: bold ? "var(--fw-bold)" : void 0,
         ...style
       },
@@ -6652,8 +6777,9 @@ function Radio({
           width: d,
           height: d,
           flexShrink: 0,
-          background: activeHover ? "var(--fill-normal)" : "var(--bw-white)",
-          border: `1px solid ${radioBorder}`,
+          boxSizing: "border-box",
+          background: radioBg,
+          border: `1.5px solid ${radioBorder}`,
           borderRadius: "var(--radius-pill)",
           boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
           transition: "border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
@@ -6861,9 +6987,9 @@ function Select({
   const visualOpen = open || interaction === "open";
   const activeFocus = visualOpen || focus || interaction === "focused" || interaction === "active-focused";
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
-  const ring = isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
+  const ring = disabledState ? "var(--line-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
   return /* @__PURE__ */ jsxs64("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ jsxs64("label", { htmlFor: selId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: 0, color: "var(--label-normal)" }, children: [
+    label && /* @__PURE__ */ jsxs64("label", { htmlFor: selId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
       required && /* @__PURE__ */ jsx78("span", { style: { color: "var(--bw-red)" }, children: " *" })
     ] }),
@@ -6889,18 +7015,18 @@ function Select({
             gap: 10,
             width: "100%",
             height: h,
-            padding: "0 16px 0 18px",
+            padding: "0 var(--component-input-padding-x)",
             boxSizing: "border-box",
             background: disabledState ? "var(--fill-normal)" : "var(--bw-white)",
-            color: curr ? "var(--label-normal)" : "var(--label-assistive)",
+            color: disabledState ? "var(--label-disable)" : curr ? "var(--label-normal)" : "var(--label-assistive)",
             border: `1px solid ${ring}`,
             borderRadius: "var(--radius-input)",
             boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--focus-ring)" : "none",
             cursor: disabledState ? "not-allowed" : "pointer",
-            opacity: disabledState ? 0.65 : 1,
             fontFamily: "var(--font-sans)",
-            fontSize: "15px",
-            letterSpacing: 0,
+            fontSize: "var(--component-input-font-size)",
+            lineHeight: "var(--component-input-line-height)",
+            letterSpacing: "var(--component-input-letter-spacing)",
             textAlign: "left",
             transition: "var(--component-button-transition)"
           },
@@ -6937,7 +7063,7 @@ function Select({
         );
       }) })
     ] }),
-    message != null && /* @__PURE__ */ jsx78("span", { id: messageId, style: { fontSize: 13, lineHeight: 1.45, color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ jsx78("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
   ] });
 }
 
@@ -7042,6 +7168,15 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
 // components/forms/Textarea.jsx
 import React84 from "react";
 import { jsx as jsx81, jsxs as jsxs67 } from "react/jsx-runtime";
+function usePlaceholderStyle2() {
+  React84.useEffect(() => {
+    if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
+    const el = document.createElement("style");
+    el.id = "lk-field-ph";
+    el.textContent = "[data-lds-field]::placeholder{color:var(--label-assistive);opacity:1}";
+    document.head.appendChild(el);
+  }, []);
+}
 function Textarea({
   label,
   helper,
@@ -7071,11 +7206,12 @@ function Textarea({
   const activeFocus = focused || focus || interaction === "focused" || interaction === "active-focused";
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
   const isInvalid = invalid || status === "negative" || error != null;
-  const ring = isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
+  usePlaceholderStyle2();
+  const ring = disabled ? "var(--line-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-positive)" : activeFocus ? "var(--lk-accent-ink)" : activeHover ? "var(--border-strong)" : "var(--bw-border)";
   const minHeight = normalizedSize === "sm" ? 96 : normalizedSize === "lg" ? 160 : 120;
   const resizeMode = resize === "fixed" ? "none" : resize === "limit" ? "vertical" : "vertical";
   return /* @__PURE__ */ jsxs67("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ jsxs67("label", { htmlFor: taId, style: { fontWeight: "var(--fw-bold)", fontSize: "15px", letterSpacing: 0, color: "var(--bw-ink)" }, children: [
+    label && /* @__PURE__ */ jsxs67("label", { htmlFor: taId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
       required && /* @__PURE__ */ jsx81("span", { style: { color: "var(--bw-red)" }, children: " *" })
     ] }),
@@ -7084,6 +7220,7 @@ function Textarea({
       {
         id: taId,
         rows,
+        "data-lds-field": "",
         ...rest,
         disabled,
         "aria-describedby": messageId ?? rest["aria-describedby"],
@@ -7109,24 +7246,23 @@ function Textarea({
           resize: resizeMode,
           minHeight,
           maxHeight: resize === "limit" ? minHeight * 2 : void 0,
-          padding: "14px 18px",
+          padding: "var(--space-3)",
           background: disabled ? "var(--fill-normal)" : "var(--bw-white)",
-          color: "var(--bw-ink)",
+          color: disabled ? "var(--label-disable)" : "var(--bw-ink)",
           border: `1px solid ${ring}`,
           borderRadius: "var(--radius-input)",
           boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--focus-ring)" : "none",
-          opacity: disabled ? 0.65 : 1,
           transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
           fontFamily: "var(--font-sans)",
-          fontSize: "15px",
-          letterSpacing: 0,
-          lineHeight: 1.6,
+          fontSize: "var(--component-input-font-size)",
+          letterSpacing: "var(--component-input-letter-spacing)",
+          lineHeight: "var(--component-input-line-height)",
           outline: "none",
           boxSizing: "border-box"
         }
       }
     ),
-    message != null && /* @__PURE__ */ jsx81("span", { id: messageId, style: { fontSize: 13, lineHeight: 1.45, color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ jsx81("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-danger)" : status === "positive" ? "var(--color-positive)" : "var(--label-alternative)" }, children: message })
   ] });
 }
 
@@ -7574,14 +7710,26 @@ function Breadcrumb({ items = [], style, ...rest }) {
 import React104 from "react";
 import { jsx as jsx101 } from "react/jsx-runtime";
 var SIZE2 = {
-  small: { height: 24, padding: "0 8px", fontSize: 12.5, radius: 6 },
-  sm: { height: 24, padding: "0 8px", fontSize: 12.5, radius: 6 },
-  medium: { height: 32, padding: "0 12px", fontSize: 14, radius: 8 },
-  md: { height: 32, padding: "0 12px", fontSize: 14, radius: 8 },
-  large: { height: 36, padding: "0 14px", fontSize: 15, radius: 9 },
-  lg: { height: 36, padding: "0 14px", fontSize: 15, radius: 9 },
-  xlarge: { height: 40, padding: "0 16px", fontSize: 16, radius: 10 },
-  xl: { height: 40, padding: "0 16px", fontSize: 16, radius: 10 }
+  small: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
+  sm: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
+  medium: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
+  md: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
+  large: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
+  lg: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
+  xlarge: {
+    height: 40,
+    padding: "0 12px",
+    fontSize: "var(--body2-size)",
+    radius: 10,
+    gap: 10
+  },
+  xl: {
+    height: 40,
+    padding: "0 12px",
+    fontSize: "var(--body2-size)",
+    radius: 10,
+    gap: 10
+  }
 };
 function normalizeItem(item) {
   return typeof item === "string" ? { value: item, label: item } : item;
@@ -7619,10 +7767,10 @@ function Category({
       style: {
         display: "flex",
         alignItems: "center",
-        gap: 8,
+        gap: s.gap,
         maxWidth: "100%",
         overflowX: scroll === "auto" || scroll === true ? "auto" : "visible",
-        paddingInline: padding ? 8 : 0,
+        paddingInline: padding ? 20 : 0,
         paddingBlock: verticalPadding ? 8 : 0,
         scrollbarWidth: "none",
         ...style
@@ -7659,7 +7807,7 @@ function Category({
               color: colors.fg,
               fontFamily: "var(--font-sans)",
               fontSize: s.fontSize,
-              fontWeight: "var(--fw-bold)",
+              fontWeight: "var(--fw-medium)",
               letterSpacing: 0,
               whiteSpace: "nowrap",
               cursor: item.disabled ? "not-allowed" : "pointer",
@@ -8118,10 +8266,10 @@ function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) 
 import React109 from "react";
 import { jsx as jsx106, jsxs as jsxs76 } from "react/jsx-runtime";
 var COUNTER_SIZE = {
-  small: { height: 26, padding: "0 10px", fontSize: 12 },
-  sm: { height: 26, padding: "0 10px", fontSize: 12 },
-  medium: { height: 34, padding: "0 12px", fontSize: 14 },
-  md: { height: 34, padding: "0 12px", fontSize: 14 }
+  small: { height: 26, padding: "0 10px", fontSize: "var(--label2-size)" },
+  sm: { height: 26, padding: "0 10px", fontSize: "var(--label2-size)" },
+  medium: { height: 34, padding: "0 12px", fontSize: "var(--body2-size)" },
+  md: { height: 34, padding: "0 12px", fontSize: "var(--body2-size)" }
 };
 function PageIndicator({
   page = 1,
@@ -8138,7 +8286,7 @@ function PageIndicator({
   if (variant === "dot" || variant === "dots") {
     const small = size === "small" || size === "sm";
     const dotSize = small ? 6 : 10;
-    const dotGap = small ? 4.5 : 8.5;
+    const dotGap = small ? 6 : 10;
     return /* @__PURE__ */ jsx106(
       "div",
       {
@@ -8195,7 +8343,7 @@ function PageIndicator({
         color: alternative ? "var(--text-on-inverse)" : "var(--label-neutral)",
         fontFamily: "var(--font-sans)",
         fontSize: s.fontSize,
-        fontWeight: "var(--fw-bold)",
+        fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
         fontVariantNumeric: "tabular-nums",
         whiteSpace: "nowrap",
@@ -8239,7 +8387,7 @@ var selectStyle = {
   height: 32,
   padding: "0 8px",
   border: "1px solid var(--bw-border)",
-  borderRadius: "var(--radius-md)",
+  borderRadius: "var(--radius-8)",
   background: "var(--bw-white)",
   fontFamily: "var(--font-sans)",
   fontSize: 13,
@@ -8336,7 +8484,7 @@ function Pagination({
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: variant === "compact" ? 2 : 4,
+              gap: variant === "compact" ? 8 : 16,
               minWidth: 0
             },
             children: [
@@ -8349,7 +8497,7 @@ function Pagination({
                       minWidth: 24,
                       textAlign: "center",
                       color: "var(--label-assistive)",
-                      fontSize: 14
+                      fontSize: "var(--body2-size)"
                     },
                     children: "..."
                   },
@@ -8367,13 +8515,13 @@ function Pagination({
                       borderRadius: "var(--radius-md)",
                       cursor: "pointer",
                       border: "none",
-                      background: p === current ? "var(--fill-strong)" : "transparent",
+                      background: "transparent",
                       fontFamily: "var(--font-sans)",
-                      fontSize: 14,
-                      fontWeight: "var(--fw-semibold)",
+                      fontSize: "var(--body2-size)",
+                      fontWeight: p === current ? "var(--fw-semibold)" : "var(--fw-regular)",
                       letterSpacing: 0,
                       fontVariantNumeric: "tabular-nums",
-                      color: p === current ? "var(--label-normal)" : "var(--label-neutral)"
+                      color: p === current ? "var(--label-normal)" : "var(--label-alternative)"
                     },
                     children: p
                   },
@@ -8685,12 +8833,12 @@ function Steps({ steps = [], current = 0, style, ...rest }) {
 import React113 from "react";
 import { jsx as jsx110, jsxs as jsxs80 } from "react/jsx-runtime";
 var SIZE3 = {
-  small: { height: 40, fontSize: 14, paddingX: 12, indicator: 2 },
-  sm: { height: 40, fontSize: 14, paddingX: 12, indicator: 2 },
-  medium: { height: 48, fontSize: 15, paddingX: 16, indicator: 2.5 },
-  md: { height: 48, fontSize: 15, paddingX: 16, indicator: 2.5 },
-  large: { height: 56, fontSize: 16, paddingX: 20, indicator: 3 },
-  lg: { height: 56, fontSize: 16, paddingX: 20, indicator: 3 }
+  small: { height: 40, fontSize: "var(--body2-size)", countSize: 13 },
+  sm: { height: 40, fontSize: "var(--body2-size)", countSize: 13 },
+  medium: { height: 48, fontSize: "var(--headline2-size)", countSize: 15 },
+  md: { height: 48, fontSize: "var(--headline2-size)", countSize: 15 },
+  large: { height: 56, fontSize: "var(--headline2-size)", countSize: 15 },
+  lg: { height: 56, fontSize: "var(--headline2-size)", countSize: 15 }
 };
 function Tabs({
   items = [],
@@ -8728,7 +8876,7 @@ function Tabs({
       style: {
         display: "flex",
         alignItems: "stretch",
-        gap: fill ? 0 : 8,
+        gap: fill ? 0 : 24,
         maxWidth: "100%",
         overflowX: scroll === "auto" || scroll === true ? "auto" : "visible",
         paddingInline: padding ? 8 : 0,
@@ -8753,7 +8901,7 @@ function Tabs({
               minWidth: 0,
               position: "relative",
               height: s.height,
-              padding: `0 ${s.paddingX}px`,
+              padding: 0,
               border: "none",
               background: "transparent",
               cursor: item.disabled ? "not-allowed" : "pointer",
@@ -8764,7 +8912,7 @@ function Tabs({
               gap: 7,
               fontFamily: "var(--font-sans)",
               fontSize: s.fontSize,
-              fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)",
+              fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
               color: active ? "var(--label-normal)" : "var(--label-alternative)",
               whiteSpace: "nowrap",
@@ -8777,8 +8925,8 @@ function Tabs({
                 "span",
                 {
                   style: {
-                    fontSize: Math.max(11, s.fontSize - 2),
-                    fontWeight: "var(--fw-bold)",
+                    fontSize: s.countSize,
+                    fontWeight: "var(--fw-semibold)",
                     color: active ? "var(--lk-accent-ink)" : "var(--label-assistive)"
                   },
                   children: item.count
@@ -8816,11 +8964,11 @@ function Tabs({
                   "aria-hidden": "true",
                   style: {
                     position: "absolute",
-                    left: s.paddingX,
-                    right: s.paddingX,
+                    left: 0,
+                    right: 0,
                     bottom: -1,
-                    height: s.indicator,
-                    borderRadius: "2px 2px 0 0",
+                    height: 2,
+                    borderRadius: 0,
                     background: active ? "var(--label-normal)" : "transparent",
                     transition: "background var(--dur-fast) var(--ease-out)"
                   }
@@ -9140,26 +9288,40 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, childre
 import React118 from "react";
 import { jsx as jsx115, jsxs as jsxs84 } from "react/jsx-runtime";
 var platformStyle = {
+  /* iOS internals retained as an LDS simplification (WDS iOS table layout
+   * is not decodable from the source). */
   ios: {
     maxWidth: 290,
     radius: 22,
     padding: "22px 18px 16px",
     buttonHeight: 40,
-    footer: "center"
+    buttonPadding: "0 14px",
+    footer: "center",
+    footerGap: 8,
+    titleSize: 17,
+    titleWeight: "var(--fw-extra)"
   },
   android: {
-    maxWidth: 360,
-    radius: 8,
-    padding: "24px 24px 18px",
-    buttonHeight: 36,
-    footer: "flex-end"
+    maxWidth: 320,
+    radius: 16,
+    padding: "28px",
+    buttonHeight: 32,
+    buttonPadding: 0,
+    footer: "flex-end",
+    footerGap: 24,
+    titleSize: "var(--heading2-size)",
+    titleWeight: "var(--fw-semibold)"
   },
   web: {
-    maxWidth: 420,
-    radius: 8,
-    padding: "24px 24px 18px",
-    buttonHeight: 36,
-    footer: "flex-end"
+    maxWidth: 335,
+    radius: 12,
+    padding: "20px",
+    buttonHeight: 32,
+    buttonPadding: 0,
+    footer: "flex-end",
+    footerGap: 24,
+    titleSize: "var(--headline1-size)",
+    titleWeight: "var(--fw-semibold)"
   }
 };
 var variantColor = {
@@ -9211,7 +9373,7 @@ function Alert({
   const body = description ?? children;
   const buttonBase = {
     height: p.buttonHeight,
-    padding: "0 14px",
+    padding: p.buttonPadding,
     border: "none",
     borderRadius: platform === "ios" ? "var(--radius-pill)" : "var(--radius-md)",
     cursor: "pointer",
@@ -9261,8 +9423,8 @@ function Alert({
               "div",
               {
                 style: {
-                  fontSize: 17,
-                  fontWeight: "var(--fw-extra)",
+                  fontSize: p.titleSize,
+                  fontWeight: p.titleWeight,
                   letterSpacing: 0,
                   color: "var(--label-normal)",
                   marginBottom: 8
@@ -9274,7 +9436,7 @@ function Alert({
               "div",
               {
                 style: {
-                  fontSize: 14,
+                  fontSize: "var(--body2-size)",
                   lineHeight: 1.55,
                   color: "var(--label-neutral)",
                   wordBreak: "keep-all"
@@ -9288,7 +9450,7 @@ function Alert({
                 style: {
                   display: "flex",
                   justifyContent: p.footer,
-                  gap: 8,
+                  gap: p.footerGap,
                   marginTop: 20
                 },
                 children: actions != null ? actions : /* @__PURE__ */ jsxs84(React118.Fragment, { children: [
@@ -9647,15 +9809,15 @@ function MenuItemButton({
         borderRadius: "var(--radius-md)",
         textAlign: "left",
         fontFamily: "var(--font-sans)",
-        fontSize: 14,
-        fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)",
+        fontSize: "var(--body1-size)",
+        fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
         letterSpacing: 0,
         color: item.danger ? "var(--bw-red)" : disabled ? "var(--label-disable)" : "var(--label-normal)",
         opacity: disabled ? 0.72 : 1
       },
       children: [
         item.icon || /* @__PURE__ */ jsx120(CheckMark, { variant, checked, disabled }),
-        /* @__PURE__ */ jsxs88("span", { style: { display: "grid", gap: 2, minWidth: 0, flex: 1 }, children: [
+        /* @__PURE__ */ jsxs88("span", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
           /* @__PURE__ */ jsx120(
             "span",
             {
@@ -9671,7 +9833,7 @@ function MenuItemButton({
             "span",
             {
               style: {
-                fontSize: 12,
+                fontSize: "var(--label2-size)",
                 color: "var(--label-alternative)",
                 fontWeight: "var(--fw-medium)"
               },
@@ -9757,10 +9919,13 @@ function DropdownMenu({
               overflowY: maxHeight ? "auto" : void 0,
               background: "var(--bw-white)",
               border: "1px solid var(--bw-border)",
-              borderRadius: "var(--radius-lg)",
+              borderRadius: "var(--radius-16)",
               boxShadow: "var(--shadow-md)",
-              padding: 20,
-              boxSizing: "border-box"
+              padding: "8px 20px",
+              boxSizing: "border-box",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4
             },
             children: [
               items.map(
@@ -9794,8 +9959,7 @@ function DropdownMenu({
                     display: "flex",
                     justifyContent: "flex-end",
                     padding: "8px 4px 2px",
-                    borderTop: "1px solid var(--bw-border)",
-                    marginTop: 4
+                    borderTop: "1px solid var(--bw-border)"
                   },
                   children: action || /* @__PURE__ */ jsx120(
                     "button",
@@ -10018,8 +10182,8 @@ import { jsx as jsx126, jsxs as jsxs94 } from "react/jsx-runtime";
 var ICON = /* @__PURE__ */ jsxs94(
   "svg",
   {
-    width: "18",
-    height: "18",
+    width: "22",
+    height: "22",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
@@ -10062,9 +10226,11 @@ function Snackbar({
         width,
         maxWidth: "100%",
         minHeight,
-        padding: "14px 20px",
+        padding: "11px 16px",
         borderRadius: 12,
         background: "var(--component-transient-feedback-bg)",
+        backdropFilter: "blur(var(--component-transient-feedback-blur))",
+        WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
         color: "var(--text-on-inverse)",
         boxShadow: "var(--shadow-lg)",
         fontFamily: "var(--font-sans)",
@@ -10088,9 +10254,9 @@ function Snackbar({
             "strong",
             {
               style: {
-                fontSize: 14,
+                fontSize: "var(--body2-size)",
                 lineHeight: 1.35,
-                fontWeight: "var(--fw-bold)",
+                fontWeight: "var(--fw-semibold)",
                 letterSpacing: 0
               },
               children: heading
@@ -10119,6 +10285,8 @@ function Snackbar({
             style: {
               flexShrink: 0,
               alignSelf: "center",
+              /* WDS content-to-action gap is 32px (container gap 12 + 20). */
+              marginLeft: 20,
               border: "none",
               background: "transparent",
               color: "var(--text-on-inverse)",
@@ -10230,11 +10398,12 @@ function Toast({
         display: "inline-flex",
         alignItems: "center",
         gap: 10,
-        minHeight: 54,
         minWidth: 335,
         maxWidth: 520,
-        padding: "0 18px",
+        padding: "11px 16px",
         background: "var(--component-transient-feedback-bg)",
+        backdropFilter: "blur(var(--component-transient-feedback-blur))",
+        WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
         color: "var(--text-on-inverse)",
         borderRadius: 12,
         boxShadow: "var(--shadow-lg)",
@@ -10251,8 +10420,8 @@ function Toast({
             children: icon || /* @__PURE__ */ jsx127(
               "svg",
               {
-                width: "18",
-                height: "18",
+                width: "22",
+                height: "22",
                 viewBox: "0 0 24 24",
                 fill: "none",
                 stroke: "currentColor",
@@ -10272,7 +10441,7 @@ function Toast({
               minWidth: 0,
               fontSize: 15,
               lineHeight: 1.45,
-              fontWeight: "var(--fw-bold)",
+              fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
               color: "var(--text-on-inverse)",
               wordBreak: "keep-all"
@@ -10687,7 +10856,7 @@ function Switch({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  const d = normalizedSize === "sm" ? { w: 40, h: 24, k: 18, tx: 16 } : { w: 52, h: 32, k: 26, tx: 20 };
+  const d = normalizedSize === "sm" ? { w: 40, h: 24, k: 18, p: 3, tx: 16 } : { w: 52, h: 32, k: 24, p: 4, tx: 20 };
   const offBg = platform === "ios" ? "var(--fill-strong)" : "var(--bw-gray-300)";
   const trackBg = disabledState ? on ? "var(--fill-strong)" : "var(--fill-normal)" : on ? "var(--lk-accent-ink)" : activeHover ? "var(--fill-strong)" : offBg;
   return /* @__PURE__ */ jsxs100(
@@ -10702,11 +10871,10 @@ function Switch({
         alignItems: "center",
         gap: 12,
         cursor: disabledState ? "not-allowed" : "pointer",
-        opacity: disabledState ? 0.5 : 1,
         fontFamily: "var(--font-sans)",
         fontSize: 15,
         letterSpacing: 0,
-        color: "var(--label-normal)",
+        color: disabledState ? "var(--label-disable)" : "var(--label-normal)",
         ...style
       },
       children: [
@@ -10743,12 +10911,12 @@ function Switch({
               {
                 style: {
                   position: "absolute",
-                  top: 3,
-                  left: 3,
+                  top: d.p,
+                  left: d.p,
                   width: d.k,
                   height: d.k,
                   borderRadius: "50%",
-                  background: "var(--text-on-signal)",
+                  background: disabledState ? "var(--label-disable)" : "var(--text-on-signal)",
                   boxShadow: platform === "ios" ? "var(--shadow-sm)" : "var(--shadow-control)",
                   transform: on ? `translateX(${d.tx}px)` : "translateX(0)",
                   transition: "transform var(--dur-base) var(--ease-in-out)"
@@ -10901,7 +11069,7 @@ function ChoiceCard({
   interaction,
   radius = "md",
   padding = "md",
-  shadow = "none",
+  shadow,
   showIndicator = true,
   style,
   tabIndex,
@@ -10917,6 +11085,7 @@ function ChoiceCard({
   const [hover, setHover] = React138.useState(false);
   const [focus, setFocus] = React138.useState(false);
   const isFrame = presentation === "frame";
+  const resolvedShadow = shadow ?? (isFrame ? "xs" : "none");
   const activeHover = hover || interaction === "hovered";
   const activeFocus = focus || interaction === "focused";
   const interactive = !disabled && (onSelect || onClick);
@@ -10926,7 +11095,7 @@ function ChoiceCard({
   const frameBorder = disabled ? "var(--border-subtle)" : status === "negative" ? "var(--color-danger)" : selected || activeFocus ? "var(--color-primary)" : activeHover ? "var(--border-strong)" : "var(--border-subtle)";
   const frameInset = selected || activeFocus || status === "negative" ? 2 : 1;
   const frameShadow = [
-    shadowMap[shadow] && shadowMap[shadow] !== "none" ? shadowMap[shadow] : null,
+    shadowMap[resolvedShadow] && shadowMap[resolvedShadow] !== "none" ? shadowMap[resolvedShadow] : null,
     `inset 0 0 0 ${frameInset}px ${frameBorder}`,
     activeFocus && !disabled ? "0 0 0 4px var(--focus-ring)" : null
   ].filter(Boolean).join(", ");
@@ -10972,8 +11141,7 @@ function ChoiceCard({
     borderRadius: radiusMap[radius] ?? radiusMap.md,
     background: disabled ? "var(--fill-normal)" : selected ? "var(--lk-accent-tint-2)" : "var(--surface-raised)",
     boxShadow: frameShadow,
-    color: disabled ? "var(--label-assistive)" : "var(--label-normal)",
-    opacity: disabled ? 0.62 : 1,
+    color: disabled ? "var(--label-disable)" : "var(--label-normal)",
     cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
     outline: "none",
     transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
@@ -10986,10 +11154,10 @@ function ChoiceCard({
     gap: 12,
     padding: 16,
     borderRadius: "var(--radius-xl)",
-    background: selected ? "var(--lk-accent-tint)" : "var(--surface-raised)",
+    background: disabled ? "var(--fill-normal)" : selected ? "var(--lk-accent-tint)" : "var(--surface-raised)",
+    color: disabled ? "var(--label-disable)" : void 0,
     boxShadow: choiceShadow,
     cursor: disabled ? "not-allowed" : "pointer",
-    opacity: disabled ? 0.5 : 1,
     transition: "box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out)",
     outline: "none",
     ...style
@@ -11232,7 +11400,10 @@ function SegmentedControl({
   };
   const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size === "large" ? "lg" : size;
   const h = normalizedSize === "sm" ? 32 : normalizedSize === "lg" ? 48 : 40;
-  const fs = normalizedSize === "sm" ? 13 : normalizedSize === "lg" ? 16 : 14.5;
+  const fs = normalizedSize === "sm" ? "var(--label1-size)" : normalizedSize === "lg" ? "var(--headline2-size)" : "var(--body1-size)";
+  const trackRadius = normalizedSize === "sm" ? "var(--radius-8)" : normalizedSize === "lg" ? "var(--radius-md)" : "var(--radius-10)";
+  const segmentRadius = normalizedSize === "sm" ? "var(--radius-sm)" : normalizedSize === "lg" ? "var(--radius-10)" : "var(--radius-8)";
+  const trackPad = normalizedSize === "lg" ? 3 : 2;
   const outlined = variant === "outlined";
   const fill = full || resize === "fill";
   return /* @__PURE__ */ jsx138(
@@ -11243,11 +11414,11 @@ function SegmentedControl({
         display: "inline-flex",
         width: fill ? "100%" : void 0,
         justifySelf: fill ? void 0 : "start",
-        padding: outlined ? 0 : 4,
+        padding: outlined ? 0 : trackPad,
         gap: outlined ? 0 : 2,
         background: outlined ? "var(--bw-white)" : "var(--fill-normal)",
         border: outlined ? "1px solid var(--bw-border)" : "none",
-        borderRadius: "var(--radius-md)",
+        borderRadius: trackRadius,
         overflow: "hidden",
         ...style
       },
@@ -11269,26 +11440,25 @@ function SegmentedControl({
             style: {
               flex: fill ? 1 : void 0,
               height: h,
-              padding: "0 18px",
+              padding: "0 9px",
               border: "none",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 7,
+              gap: 4,
               cursor: disabledState || o.disabled ? "not-allowed" : "pointer",
               fontFamily: "var(--font-sans)",
               fontSize: fs,
-              fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)",
+              fontWeight: active ? "var(--fw-semibold)" : "var(--fw-medium)",
               letterSpacing: 0,
-              color: active ? "var(--lk-accent-ink)" : activeFocus ? "var(--label-normal)" : "var(--label-alternative)",
+              color: disabledState || o.disabled ? "var(--label-disable)" : active ? "var(--lk-accent-ink)" : activeFocus ? "var(--label-normal)" : "var(--label-alternative)",
               background: active ? outlined ? "var(--lk-accent-tint-2)" : "var(--bw-white)" : activeHover || activeFocus ? "var(--fill-normal)" : "transparent",
-              borderRadius: outlined ? 0 : "var(--radius-sm)",
+              borderRadius: outlined ? 0 : segmentRadius,
               borderLeft: outlined && index > 0 ? "1px solid var(--bw-border)" : "none",
               boxShadow: [
                 active && !outlined ? "var(--shadow-xs)" : null,
                 activeFocus ? "0 0 0 3px var(--focus-ring)" : null
               ].filter(Boolean).join(", ") || "none",
-              opacity: disabledState || o.disabled ? 0.45 : 1,
               transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
               whiteSpace: "nowrap"
             },

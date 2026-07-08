@@ -1,7 +1,7 @@
 import { Button } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/0 Foundation/Spacing',
+  title: 'LDS Core/Foundation/Spacing',
   parameters: {
     docs: {
       description: {

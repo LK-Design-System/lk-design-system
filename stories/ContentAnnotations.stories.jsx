@@ -9,7 +9,7 @@ import {
 import { TooltipBubbleBookmarkDividerCard as TooltipBubbleBookmarkDividerCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/8 Presentation/Annotations',
+  title: 'LDS Core/Components/Presentation/Annotations',
   parameters: {
     docs: {
       description: {

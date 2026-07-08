@@ -41,7 +41,7 @@ export function Switch({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  const d = normalizedSize === 'sm' ? { w: 40, h: 24, k: 18, tx: 16 } : { w: 52, h: 32, k: 26, tx: 20 };
+  const d = normalizedSize === 'sm' ? { w: 40, h: 24, k: 18, p: 3, tx: 16 } : { w: 52, h: 32, k: 24, p: 4, tx: 20 };
   const offBg = platform === 'ios' ? 'var(--fill-strong)' : 'var(--bw-gray-300)';
   const trackBg = disabledState ? (on ? 'var(--fill-strong)' : 'var(--fill-normal)') : on ? 'var(--lk-accent-ink)' : activeHover ? 'var(--fill-strong)' : offBg;
   return (
@@ -52,8 +52,8 @@ export function Switch({
       onMouseLeave={() => setHover(false)}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 12,
-        cursor: disabledState ? 'not-allowed' : 'pointer', opacity: disabledState ? 0.5 : 1,
-        fontFamily: 'var(--font-sans)', fontSize: 15, letterSpacing: 0, color: 'var(--label-normal)',
+        cursor: disabledState ? 'not-allowed' : 'pointer',
+        fontFamily: 'var(--font-sans)', fontSize: 15, letterSpacing: 0, color: disabledState ? 'var(--label-disable)' : 'var(--label-normal)',
         ...style,
       }}
     >
@@ -78,8 +78,8 @@ export function Switch({
       >
         <span
           style={{
-            position: 'absolute', top: 3, left: 3, width: d.k, height: d.k, borderRadius: '50%',
-            background: 'var(--text-on-signal)', boxShadow: platform === 'ios' ? 'var(--shadow-sm)' : 'var(--shadow-control)',
+            position: 'absolute', top: d.p, left: d.p, width: d.k, height: d.k, borderRadius: '50%',
+            background: disabledState ? 'var(--label-disable)' : 'var(--text-on-signal)', boxShadow: platform === 'ios' ? 'var(--shadow-sm)' : 'var(--shadow-control)',
             transform: on ? `translateX(${d.tx}px)` : 'translateX(0)',
             transition: 'transform var(--dur-base) var(--ease-in-out)',
           }}

@@ -79,10 +79,26 @@ export const parameters = {
     storySort: {
       order: [
         'LDS Core',
-        ['0 Foundation', '1 Theme', '2 Element', '3 Component'],
+        [
+          'Foundation',
+          'Components',
+          [
+            'Layout',
+            'Action',
+            'Selection and Input',
+            'Content',
+            'Loading',
+            'Navigation',
+            'Feedback',
+            'Presentation',
+          ],
+        ],
         'LDS Theme',
+        ['Brand', 'Theme'],
         'LDS Product',
+        ['Auth', 'Content', 'Data', 'Feedback', 'Layout', 'Overlay', 'Selection and Input'],
         'LDS Robotics',
+        ['Editor', 'Robotics', 'Viewer'],
       ],
     },
   },

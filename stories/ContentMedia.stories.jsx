@@ -5,7 +5,7 @@ import {
 import { ThumbnailCard as ThumbnailCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/4 Content/Media',
+  title: 'LDS Core/Components/Content/Media',
   parameters: {
     docs: {
       description: {

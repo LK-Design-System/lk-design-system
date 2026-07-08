@@ -5,7 +5,7 @@
   title="사용자 목록"
   count={24}
   searchPlaceholder="사용자 검색"
-  filters={<FilterChip selected>온라인</FilterChip>}
+  filters={<FilterChip active>온라인</FilterChip>}
   selectedCount={2}
   bulkActions={<Button size="sm">권한 변경</Button>}
 />

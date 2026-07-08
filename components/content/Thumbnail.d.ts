@@ -28,7 +28,7 @@ export interface ThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
   ratio?: ThumbnailRatio | number | string;
   /** 둥근 모서리: true = --radius-md, false = 사각, 또는 숫자/CSS 길이. @default true */
   radius?: boolean | number | string;
-  /** border toggle. @default false */
+  /** border toggle (WDS bakes a 1px hairline into every thumbnail). @default true */
   border?: boolean | string;
   /** 이미지의 object-fit. @default "cover" */
   fit?: "cover" | "contain";

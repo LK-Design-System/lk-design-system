@@ -1,7 +1,7 @@
 import { Divider, MobileSystemBars } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/1 Layout/Essential and Divider',
+  title: 'LDS Core/Components/Layout/Essential and Divider',
   parameters: {
     docs: {
       description: {

@@ -1,26 +1,40 @@
 import React from "react";
 
 const platformStyle = {
+  /* iOS internals retained as an LDS simplification (WDS iOS table layout
+   * is not decodable from the source). */
   ios: {
     maxWidth: 290,
     radius: 22,
     padding: "22px 18px 16px",
     buttonHeight: 40,
+    buttonPadding: "0 14px",
     footer: "center",
+    footerGap: 8,
+    titleSize: 17,
+    titleWeight: "var(--fw-extra)",
   },
   android: {
-    maxWidth: 360,
-    radius: 8,
-    padding: "24px 24px 18px",
-    buttonHeight: 36,
+    maxWidth: 320,
+    radius: 16,
+    padding: "28px",
+    buttonHeight: 32,
+    buttonPadding: 0,
     footer: "flex-end",
+    footerGap: 24,
+    titleSize: "var(--heading2-size)",
+    titleWeight: "var(--fw-semibold)",
   },
   web: {
-    maxWidth: 420,
-    radius: 8,
-    padding: "24px 24px 18px",
-    buttonHeight: 36,
+    maxWidth: 335,
+    radius: 12,
+    padding: "20px",
+    buttonHeight: 32,
+    buttonPadding: 0,
     footer: "flex-end",
+    footerGap: 24,
+    titleSize: "var(--headline1-size)",
+    titleWeight: "var(--fw-semibold)",
   },
 };
 
@@ -81,7 +95,7 @@ export function Alert({
   const body = description ?? children;
   const buttonBase = {
     height: p.buttonHeight,
-    padding: "0 14px",
+    padding: p.buttonPadding,
     border: "none",
     borderRadius:
       platform === "ios" ? "var(--radius-pill)" : "var(--radius-md)",
@@ -134,8 +148,8 @@ export function Alert({
         {heading && title != null && (
           <div
             style={{
-              fontSize: 17,
-              fontWeight: "var(--fw-extra)",
+              fontSize: p.titleSize,
+              fontWeight: p.titleWeight,
               letterSpacing: 0,
               color: "var(--label-normal)",
               marginBottom: 8,
@@ -147,7 +161,7 @@ export function Alert({
         {body != null && (
           <div
             style={{
-              fontSize: 14,
+              fontSize: "var(--body2-size)",
               lineHeight: 1.55,
               color: "var(--label-neutral)",
               wordBreak: "keep-all",
@@ -160,7 +174,7 @@ export function Alert({
           style={{
             display: "flex",
             justifyContent: p.footer,
-            gap: 8,
+            gap: p.footerGap,
             marginTop: 20,
           }}
         >

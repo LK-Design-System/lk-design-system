@@ -3,7 +3,7 @@ import { Skeleton, Spinner } from '../src/index.js';
 import { SkeletonCard as SkeletonCardStory, SpinnerCard as SpinnerCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/5 Loading/Loading State',
+  title: 'LDS Core/Components/Loading/Loading State',
   parameters: {
     docs: {
       description: {

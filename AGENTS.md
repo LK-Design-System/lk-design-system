@@ -6,6 +6,8 @@
 - Do not add audit dashboards, duplicate-check pages, implementation status pages, coverage reports, planning pages, or operational notes to Storybook.
 - If information can live as Markdown, JSON, or a script output, keep it out of Storybook.
 - When a user asks for duplicate checks, coverage checks, source mapping, WDS/LDS audit evidence, or process notes, add or update files under `docs/` and/or `scripts/`; do not create a Storybook story for that purpose.
+- Public Storybook titles use audience-facing navigation groups such as `LDS Core/Foundation` and `LDS Core/Components/Action`; keep numbered WDS source labels such as `1 Theme` or `3 Component / 2 Action` in `docs/references/wds/` only.
+- `LDS Product` and `LDS Robotics` are for reusable extension components and patterns. Do not add application screens, templates, workflows, demos, or example pages there.
 - Hidden visual parity stories are allowed only when they exist to support visual regression of a real component surface and are tagged with `!dev` and `visual-parity`.
 
 ## WDS Evidence Handling

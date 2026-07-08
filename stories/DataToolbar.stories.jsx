@@ -25,6 +25,8 @@ const rows = [
   { id: 'USR-318', group: '지원', status: 'disabled', progress: 12 },
 ];
 
+const selectedRows = [0, 1];
+
 const columns = [
   { key: 'id', label: '계정', sortable: true },
   { key: 'group', label: '그룹' },
@@ -32,21 +34,64 @@ const columns = [
   { key: 'progress', label: '진행률', align: 'right', render: (row) => <strong style={{ color: row.progress <= 20 ? 'var(--bw-red)' : 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{row.progress}%</strong> },
 ];
 
+const surfaceStyle = {
+  width: '100%',
+  maxWidth: 1040,
+  border: '1px solid var(--bw-border)',
+  borderRadius: 'var(--radius-lg)',
+  background: 'var(--surface-card)',
+  boxShadow: 'var(--shadow-xs)',
+  overflow: 'hidden',
+};
+
+const toolbarStyle = {
+  border: 0,
+  borderBottom: '1px solid var(--bw-border)',
+  borderRadius: 0,
+  background: 'var(--surface-raised)',
+};
+
+const filterChipStyle = {
+  height: 34,
+  padding: '0 12px',
+  borderRadius: 'var(--radius-md)',
+  fontSize: 13,
+};
+
 export const ToolbarWithGrid = {
   name: '검색과 선택 액션',
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 1040 }}>
+    <main style={surfaceStyle}>
       <DataToolbar
+        size="sm"
         title="사용자 목록"
-        description="검색, 필터, 선택 후 작업을 DataGrid와 같은 밀도로 정렬합니다."
+        description="검색, 필터, 선택 후 작업을 표와 같은 표면에서 정렬합니다."
         count={rows.length}
         searchPlaceholder="사용자 검색"
-        filters={<><FilterChip selected>활성</FilterChip><FilterChip>검토 필요</FilterChip><FilterChip>비활성</FilterChip></>}
+        filters={(
+          <>
+            <FilterChip active style={filterChipStyle}>활성</FilterChip>
+            <FilterChip style={filterChipStyle}>검토 필요</FilterChip>
+            <FilterChip style={filterChipStyle}>비활성</FilterChip>
+          </>
+        )}
         actions={<Button size="sm" variant="ghost">내보내기</Button>}
-        selectedCount={2}
+        selectedCount={selectedRows.length}
         bulkActions={<Button size="sm" variant="secondary">권한 변경</Button>}
+        style={toolbarStyle}
       />
-      <DataGrid columns={columns} rows={rows} selectable style={{ background: 'var(--surface-card)' }} />
+      <DataGrid
+        columns={columns}
+        rows={rows}
+        selectable
+        defaultSelectedRows={selectedRows}
+        size="sm"
+        style={{
+          border: 0,
+          borderRadius: 0,
+          background: 'var(--surface-card)',
+        }}
+      />
     </main>
   ),
 };

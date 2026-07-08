@@ -5,7 +5,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/7 Feedback/Confirm Alert',
+  title: 'LDS Core/Components/Feedback/Confirm Alert',
   parameters: {
     docs: {
       description: {

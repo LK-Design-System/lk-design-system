@@ -1,7 +1,7 @@
 import { AppNavigation as AppNavigationStory, SideNavUserMenuCard as SideNavUserMenuCardStory } from './NavigationFull.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/6 Navigation/App Navigation',
+  title: 'LDS Core/Components/Navigation/App Navigation',
   parameters: {
     docs: {
       description: {

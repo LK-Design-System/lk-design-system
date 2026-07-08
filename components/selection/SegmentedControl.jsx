@@ -29,17 +29,20 @@ export function SegmentedControl({
   const pick = (v) => { if (disabledState) return; if (!isControlled) setInternal(v); onChange && onChange(v); };
   const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
   const h = normalizedSize === 'sm' ? 32 : normalizedSize === 'lg' ? 48 : 40;
-  const fs = normalizedSize === 'sm' ? 13 : normalizedSize === 'lg' ? 16 : 14.5;
+  const fs = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 'var(--headline2-size)' : 'var(--body1-size)';
+  const trackRadius = normalizedSize === 'sm' ? 'var(--radius-8)' : normalizedSize === 'lg' ? 'var(--radius-md)' : 'var(--radius-10)';
+  const segmentRadius = normalizedSize === 'sm' ? 'var(--radius-sm)' : normalizedSize === 'lg' ? 'var(--radius-10)' : 'var(--radius-8)';
+  const trackPad = normalizedSize === 'lg' ? 3 : 2;
   const outlined = variant === 'outlined';
   const fill = full || resize === 'fill';
   return (
     <div
       role="tablist"
       style={{
-        display: 'inline-flex', width: fill ? '100%' : undefined, justifySelf: fill ? undefined : 'start', padding: outlined ? 0 : 4, gap: outlined ? 0 : 2,
+        display: 'inline-flex', width: fill ? '100%' : undefined, justifySelf: fill ? undefined : 'start', padding: outlined ? 0 : trackPad, gap: outlined ? 0 : 2,
         background: outlined ? 'var(--bw-white)' : 'var(--fill-normal)',
         border: outlined ? '1px solid var(--bw-border)' : 'none',
-        borderRadius: 'var(--radius-md)',
+        borderRadius: trackRadius,
         overflow: 'hidden',
         ...style,
       }}
@@ -60,19 +63,18 @@ export function SegmentedControl({
             onClick={() => pick(o.value)}
             disabled={disabledState || o.disabled}
             style={{
-              flex: fill ? 1 : undefined, height: h, padding: '0 18px', border: 'none',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+              flex: fill ? 1 : undefined, height: h, padding: '0 9px', border: 'none',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 4,
               cursor: disabledState || o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
-              fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0,
-              color: active ? 'var(--lk-accent-ink)' : activeFocus ? 'var(--label-normal)' : 'var(--label-alternative)',
+              fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)', letterSpacing: 0,
+              color: disabledState || o.disabled ? 'var(--label-disable)' : active ? 'var(--lk-accent-ink)' : activeFocus ? 'var(--label-normal)' : 'var(--label-alternative)',
               background: active ? (outlined ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)') : activeHover || activeFocus ? 'var(--fill-normal)' : 'transparent',
-              borderRadius: outlined ? 0 : 'var(--radius-sm)',
+              borderRadius: outlined ? 0 : segmentRadius,
               borderLeft: outlined && index > 0 ? '1px solid var(--bw-border)' : 'none',
               boxShadow: [
                 active && !outlined ? 'var(--shadow-xs)' : null,
                 activeFocus ? '0 0 0 3px var(--focus-ring)' : null,
               ].filter(Boolean).join(', ') || 'none',
-              opacity: disabledState || o.disabled ? 0.45 : 1,
               transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
               whiteSpace: 'nowrap',
             }}

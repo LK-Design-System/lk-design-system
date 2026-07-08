@@ -6,13 +6,41 @@ const staticRoot = path.join(root, 'storybook-static');
 const indexPath = path.join(staticRoot, 'index.json');
 const forbiddenStorybookName = /\bwds\b/i;
 const allowedDuplicateNames = new Set(['플레이그라운드']);
+const forbiddenNumberedStorybookSegments = new Set([
+  '0 Foundation',
+  '1 Theme',
+  '2 Element',
+  '3 Component',
+  '1 Layout',
+  '2 Action',
+  '3 Selection and Input',
+  '4 Content',
+  '5 Loading',
+  '6 Navigation',
+  '7 Feedback',
+  '8 Presentation',
+]);
+const extensionLayerTitle = /^LDS (?:Product|Robotics)\//;
+const forbiddenExtensionSurfaceSegment =
+  /\b(?:app|application|screen|screens|template|templates|workflow|workflows|flow|flows|demo|demos|example|examples)\b/i;
 const requiredPublicStoryNames = new Map([
   ['IconRegistry', 'Base icon registry'],
   ['TabsAndBreadcrumb', 'Breadcrumb routes'],
   ['ContentBadgePatterns', 'Content badge patterns'],
 ]);
 const forbiddenPublicTitles = new Map([
-  ['LDS Core/3 Component/4 Content/Badges', 'Use Content Badge for ContentBadge and Badges and Tags for Badge/Tag grouping.'],
+  ['LDS Core/Components/Content/Badges', 'Use Content Badge for ContentBadge and Badges and Tags for Badge/Tag grouping.'],
+]);
+const productCardPatternTitles = new Map([
+  ['LDS Core/Components/Content/Feature Card', 'FeatureCard is an LK Product content pattern unless WDS source confirms a direct component contract.'],
+  ['LDS Core/Components/Content/News Card', 'NewsCard is an LK Product content pattern unless WDS source confirms a direct component contract.'],
+  ['LDS Core/Components/Content/Spec Row', 'SpecRow is an LK Product content pattern unless WDS source confirms a direct component contract.'],
+]);
+const absorbedProductDataTitles = new Map([
+  ['LDS Product/Data/Stats', 'Use Dashboard Metrics for stat/metric tiles so KPI patterns stay in one sidebar group.'],
+]);
+const absorbedProductDataStories = new Map([
+  ['LDS Product/Data/Dashboard Metrics / 요약 지표', 'Use the single Dashboard Metrics / 지표 story instead of splitting summary metrics from metrics.'],
 ]);
 
 function assert(condition, message) {
@@ -25,6 +53,20 @@ function isPublicStory(entry) {
 
 function storyLabel(entry) {
   return `${entry.title} / ${entry.name} (${entry.importPath}::${entry.exportName || '-'})`;
+}
+
+function findNumberedStorybookSegment(title) {
+  return String(title || '')
+    .split('/')
+    .find((segment) => forbiddenNumberedStorybookSegments.has(segment.trim()));
+}
+
+function findForbiddenExtensionSegment(title) {
+  const normalizedTitle = String(title || '');
+  if (!extensionLayerTitle.test(normalizedTitle)) return undefined;
+
+  const [, ...segments] = normalizedTitle.split('/');
+  return segments.find((segment) => forbiddenExtensionSurfaceSegment.test(segment.trim()));
 }
 
 async function collectStaticTextFiles(dir, files = []) {
@@ -93,6 +135,26 @@ for (const story of publicStories) {
 
 for (const story of stories) {
   const labelSurface = [story.id, story.title, story.name, story.exportName].filter(Boolean).join(' ');
+  const numberedSegment = findNumberedStorybookSegment(story.title);
+  const forbiddenExtensionSegment = findForbiddenExtensionSegment(story.title);
+
+  if (numberedSegment) {
+    failures.push(`Storybook title uses source-numbered taxonomy segment "${numberedSegment}": ${storyLabel(story)}`);
+  }
+  if (productCardPatternTitles.has(story.title)) {
+    failures.push(`LK product card pattern is exposed as WDS Core: ${storyLabel(story)}. ${productCardPatternTitles.get(story.title)}`);
+  }
+  if (absorbedProductDataTitles.has(story.title)) {
+    failures.push(`absorbed product data title returned: ${storyLabel(story)}. ${absorbedProductDataTitles.get(story.title)}`);
+  }
+  if (absorbedProductDataStories.has(`${story.title} / ${story.name}`)) {
+    failures.push(`absorbed product data story returned: ${storyLabel(story)}. ${absorbedProductDataStories.get(`${story.title} / ${story.name}`)}`);
+  }
+  if (forbiddenExtensionSegment) {
+    failures.push(
+      `Product/Robotics title looks like an app screen, workflow, or demo surface: "${forbiddenExtensionSegment}" in ${storyLabel(story)}`
+    );
+  }
   if (forbiddenStorybookName.test(labelSurface)) {
     failures.push(`Storybook label includes forbidden source-system name: ${storyLabel(story)}`);
   }

@@ -48,7 +48,7 @@ export function Thumbnail({
   alt = "",
   ratio = "1/1",
   radius = true,
-  border = false,
+  border = true,
   fit = "cover",
   overlay,
   overlayAlign = "top-left",

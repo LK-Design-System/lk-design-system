@@ -14,7 +14,7 @@ import {
 } from './Feedback.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/4 Content/Badges and Tags',
+  title: 'LDS Core/Components/Content/Badges and Tags',
   parameters: {
     docs: {
       description: {

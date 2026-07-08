@@ -5,7 +5,7 @@ import {
 import { StepsCard as StepsCardStory } from './NavigationFull.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/6 Navigation/Steps and Wizard',
+  title: 'LDS Core/Components/Navigation/Steps and Wizard',
   parameters: {
     docs: {
       description: {

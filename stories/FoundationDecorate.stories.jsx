@@ -1,5 +1,5 @@
 const meta = {
-  title: 'LDS Core/0 Foundation/Decorate',
+  title: 'LDS Core/Foundation/Decorate',
   parameters: {
     docs: {
       description: {

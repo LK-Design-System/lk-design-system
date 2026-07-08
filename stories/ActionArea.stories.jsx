@@ -1,7 +1,7 @@
 import { ActionArea, Button, Chip, Icon, IconButton, TextButton, ToggleIcon } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/3 Component/2 Action/Action Area',
+  title: 'LDS Core/Components/Action/Action Area',
   parameters: {
     docs: {
       description: {

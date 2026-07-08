@@ -16,7 +16,10 @@ export function Divider({
     variant === "thick"
       ? "var(--component-divider-thickness-thick)"
       : "var(--component-divider-thickness-normal)";
-  const color = "var(--component-divider-color)";
+  const color =
+    variant === "thick"
+      ? "var(--component-divider-color-thick)"
+      : "var(--component-divider-color-normal)";
 
   if (vertical) {
     return (
@@ -27,7 +30,7 @@ export function Divider({
           display: "inline-block",
           width: thickness,
           alignSelf: "stretch",
-          minHeight: 16,
+          minHeight: 32,
           background: color,
           ...style,
         }}

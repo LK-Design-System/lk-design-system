@@ -10,7 +10,7 @@ import {
 } from './CardsExtended.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/4 Content/Feature Card',
+  title: 'LDS Product/Content/Feature Card',
   parameters: {
     docs: {
       description: {

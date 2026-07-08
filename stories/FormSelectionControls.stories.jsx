@@ -20,7 +20,7 @@ const semanticSwatchColors = [
 ];
 
 const meta = {
-  title: 'LDS Core/3 Component/3 Selection and Input/Selection Groups',
+  title: 'LDS Core/Components/Selection and Input/Selection Groups',
   parameters: {
     docs: {
       description: {

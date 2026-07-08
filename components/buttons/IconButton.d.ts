@@ -7,7 +7,7 @@ export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
   size?: number | "custom" | "small" | "sm" | "medium" | "md";
   /** alternative inverse treatment. @default false */
   alternative?: boolean;
-  /** Render as a circular control instead of the default rounded square. @default false */
+  /** Circular control (WDS default). Pass false to opt into the rounded-square look. @default true */
   round?: boolean;
   /** Disable alias. @default false */
   disable?: boolean;

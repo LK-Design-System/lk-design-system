@@ -1,6 +1,6 @@
 # LK Design System Handoff
 
-Date: 2026-07-07
+Date: 2026-07-08
 Branch: `main`
 Remote: `origin` (`https://github.com/LK-ROBOTICS/lk-design-system-core.git`)
 Working area: `lk-design-system-core`
@@ -12,7 +12,7 @@ This repository is the LK ROBOTICS Design System Core. The intended relationship
 - LDS should follow WDS structure, component taxonomy, interaction model, and primitive behavior.
 - LDS may replace WDS colors with LK ROBOTICS brand tokens.
 - Domain-specific robotics/product examples should demonstrate components, but should not become the design system's source of truth.
-- Full WDS parity must not be claimed until Figma node-level checks are complete or explicit LK theme overrides are documented.
+- Full WDS parity is now claimed against the accepted local `.fig` snapshot (decision 2026-07-08): the checked-in `Wanted Design System (Community).fig` export, decoded to `FIGMA_LOCAL_CONTENT_AUDIT.json`, is the authoritative WDS source. All Figma node queue rows are closed and `COVERAGE_COMPLETION_GATE.json` is `ready`. Live Figma re-verification is optional and only needed if the upstream community file changes. Residual follow-ups are listed in `docs/references/wds/COVERAGE_GAPS.md`.
 
 The current Storybook is running around the WDS/LDS audit and component expansion work. The in-app browser may already be open at `http://127.0.0.1:6006`.
 
@@ -84,6 +84,7 @@ Notable design corrections:
 ### Storybook reorganization
 
 Many mixed Storybook pages were split into narrower component and pattern stories. Audit and operating-model material belongs in docs, not Storybook. Important new story files include:
+Public Storybook titles now use audience-facing navigation groups such as `LDS Core/Foundation` and `LDS Core/Components/Action`; numbered WDS source labels stay in `docs/references/wds/` evidence. `LDS Product` and `LDS Robotics` must stay reusable component/pattern layers rather than application screens, templates, workflows, or demos.
 
 - `stories/FoundationBasic.stories.jsx`
 - `stories/FoundationSpacing.stories.jsx`
@@ -103,28 +104,30 @@ Shared story modules were added to keep public stories focused while preserving 
 
 ## Current Verification Status
 
-The following commands passed most recently:
+The following commands were reconfirmed during the 2026-07-08 documentation refresh:
 
 ```bash
 node scripts/check-wds-alignment.mjs
-node scripts/check-token-source.mjs
-node scripts/check-visual-token-drift.mjs
-node scripts/check-type-surface.mjs
-pnpm exec tsc --noEmit
-pnpm exec storybook build
+pnpm run build:storybook
+pnpm run check:inventory
 ```
 
 Observed `check-wds-alignment` summary:
 
 ```text
-Validated WDS alignment: 87 story titles, 20 token map refs, 11 component-family mappings, 13 coverage rows, 13 foundation rows, 3 foundation PDF rows, 2 component PDF rows, 14 Figma node queue rows, 11 detail families, 157 public exports, 357 icons, 39 variant checks, completion gate not-ready.
+Validated WDS alignment: 82 story titles, 20 token map refs, 12 component-family mappings, 13 coverage rows, 13 foundation rows, 3 foundation PDF rows, 18 component PDF rows, 14 Figma node queue rows, 12 detail families, 160 public exports, 357 icons, 46 variant checks, completion gate not-ready.
 ```
 
 Storybook static build passed. It still prints a Vite chunk-size warning around the large bundle/icon surface; this is currently a warning, not a failing gate.
 
 ## Build Notes
 
-In this desktop environment, `npm` may not be available even though `pnpm` is. If `pnpm run build` fails because the script shells out to `npm run generate:entry`, use the equivalent direct build sequence:
+CI uses npm and `package-lock.json`, but package scripts avoid nested `npm run`
+calls so the same script names can be run with pnpm in this desktop
+environment. If package-manager commands such as pack or audit are needed,
+`scripts/run-package-command.mjs` chooses npm or pnpm based on what is available.
+
+If the generated entrypoints drift, the build sequence is:
 
 ```bash
 node scripts/generate-entry.mjs
@@ -190,8 +193,10 @@ node scripts/check-wds-alignment.mjs
 node scripts/check-token-source.mjs
 node scripts/check-visual-token-drift.mjs
 node scripts/check-type-surface.mjs
+node scripts/report-inventory.mjs
 pnpm exec tsc --noEmit
 pnpm exec storybook build
+pnpm run check:inventory
 ```
 
 Run Storybook locally:

@@ -69,11 +69,11 @@ export function Select({
   const visualOpen = open || interaction === 'open';
   const activeFocus = visualOpen || focus || interaction === 'focused' || interaction === 'active-focused';
   const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
-  const ring = isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-positive)' : activeFocus ? 'var(--lk-accent-ink)' : activeHover ? 'var(--border-strong)' : 'var(--bw-border)';
+  const ring = disabledState ? 'var(--line-neutral)' : isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-positive)' : activeFocus ? 'var(--lk-accent-ink)' : activeHover ? 'var(--border-strong)' : 'var(--bw-border)';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
       {label && (
-        <label htmlFor={selId} style={{ fontWeight: 'var(--fw-bold)', fontSize: '15px', letterSpacing: 0, color: 'var(--label-normal)' }}>
+        <label htmlFor={selId} style={{ fontWeight: 'var(--component-input-label-font-weight)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', letterSpacing: 'var(--component-input-label-letter-spacing)', color: 'var(--component-input-label-color)' }}>
           {label}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
         </label>
       )}
@@ -90,12 +90,12 @@ export function Select({
           {...rest}
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, width: '100%',
-            height: h, padding: '0 16px 0 18px', boxSizing: 'border-box',
-            background: disabledState ? 'var(--fill-normal)' : 'var(--bw-white)', color: curr ? 'var(--label-normal)' : 'var(--label-assistive)',
+            height: h, padding: '0 var(--component-input-padding-x)', boxSizing: 'border-box',
+            background: disabledState ? 'var(--fill-normal)' : 'var(--bw-white)', color: disabledState ? 'var(--label-disable)' : curr ? 'var(--label-normal)' : 'var(--label-assistive)',
             border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
             boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--focus-ring)' : 'none',
-            cursor: disabledState ? 'not-allowed' : 'pointer', opacity: disabledState ? 0.65 : 1,
-            fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, textAlign: 'left',
+            cursor: disabledState ? 'not-allowed' : 'pointer',
+            fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', textAlign: 'left',
             transition: 'var(--component-button-transition)',
           }}
         >
@@ -132,7 +132,7 @@ export function Select({
           )}
       </div>
       {message != null && (
-        <span id={messageId} style={{ fontSize: 13, lineHeight: 1.45, color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
+        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-danger)' : status === 'positive' ? 'var(--color-positive)' : 'var(--label-alternative)' }}>
           {message}
         </span>
       )}

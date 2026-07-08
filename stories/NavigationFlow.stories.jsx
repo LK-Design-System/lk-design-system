@@ -9,7 +9,7 @@ import {
 } from './NavigationFull.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/6 Navigation/Tabs and Routes',
+  title: 'LDS Core/Components/Navigation/Tabs and Routes',
   parameters: {
     docs: {
       description: {

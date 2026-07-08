@@ -5,7 +5,7 @@ import {
 import { CompactNavigation as CompactNavigationStory, BottomNavCard as BottomNavCardStory } from './NavigationFull.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/3 Component/6 Navigation/Compact Navigation',
+  title: 'LDS Core/Components/Navigation/Compact Navigation',
   parameters: {
     docs: {
       description: {

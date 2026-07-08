@@ -9,7 +9,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLSpanElement> {
   length?: "25%" | "50%" | "75%" | "100%" | number | string;
   /** Height in px or CSS length. Text defaults to 14px, rect to 16px, circle to width. */
   height?: number | string;
-  /** Rect corner radius. Defaults to `--radius-lg`; circle always uses 50%. */
+  /** Rect corner radius. Defaults to 3px (WDS); circle always uses 50%. */
   radius?: number | string;
   /** Text-line count. The last line is shortened when more than one line is rendered. @default 1 */
   lines?: number;

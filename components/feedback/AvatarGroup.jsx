@@ -1,6 +1,8 @@
 import React from "react";
 import { Avatar } from "./Avatar";
 
+/* NOTE: key naming is inverted vs WDS (WDS Small=32 maps to LDS "default";
+   LDS "small"=40). Kept as-is — renaming keys would break the public API. */
 const AVATAR_GROUP_SIZES = {
   xsmall: 24,
   default: 32,
@@ -32,12 +34,13 @@ export function AvatarGroup({
   const resolvedSize = resolveGroupSize(size);
   const shown = items.slice(0, max);
   const extra = Math.max(0, items.length - shown.length);
-  const overlap = -Math.round(resolvedSize * 0.3);
+  /* WDS: fixed -8px overlap for all sizes, 1.5px white ring. */
+  const overlap = -8;
   const base = {
     width: resolvedSize,
     height: resolvedSize,
     borderRadius: "50%",
-    border: "2px solid var(--bw-white)",
+    border: "1.5px solid var(--bw-white)",
     boxSizing: "border-box",
     display: "inline-flex",
     alignItems: "center",
@@ -100,7 +103,7 @@ export function AvatarGroup({
             pushBadge={it.pushBadge}
             size={resolvedSize}
             borderColor="var(--bw-white)"
-            borderWeight={2}
+            borderWeight={1.5}
             title={it.name}
             style={{
               marginLeft: i ? overlap : 0,
