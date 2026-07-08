@@ -56,3 +56,114 @@ export const GridAndColumns = {
 
 export const ColumnsColCard = { ...ColumnsColCardStory, name: 'Columns · Col card parity', tags: ['!dev', 'visual-parity'] };
 export const GridCard = { ...GridCardStory, name: 'Grid card parity', tags: ['!dev', 'visual-parity'] };
+
+// --- Grid guideline specimen -------------------------------------------------
+// Mirrors the source Foundation / Grid page: breakpoints, the 2/3/12 column grids,
+// container tiers, the 4px spacing rule, and the side-margin note. Every value
+// is the canonical grid token.
+const GRID_TINT = 'var(--grid-overlay-fill)';
+const GRID_EDGE = 'var(--grid-overlay-line)';
+
+const BREAKPOINTS = [
+  ['xs', '모바일', '< 768px', 2],
+  ['sm', '태블릿', '768 – 991px', 3],
+  ['md', '태블릿', '992 – 1199px', 3],
+  ['lg', '데스크톱', '1200 – 1599px', 12],
+  ['xl', '데스크톱', '1600px +', 12],
+];
+
+function ColumnGridPreview({ cols, caption }) {
+  return (
+    <figure style={{ margin: 0, display: 'grid', gap: 8, minWidth: 0 }}>
+      <div style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', background: 'var(--surface-card)', padding: 20, minWidth: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gap: 20, height: 96 }}>
+          {Array.from({ length: cols }, (_, i) => (
+            <div key={i} style={{ background: GRID_TINT, borderInline: `1px solid ${GRID_EDGE}`, borderRadius: 2 }} />
+          ))}
+        </div>
+      </div>
+      <figcaption style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 12, color: 'var(--label-alternative)' }}>
+        <span>{caption}</span>
+        <span style={{ fontVariantNumeric: 'tabular-nums' }}>{cols}단 · 마진 20 · 거터 20</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+export const GridGuidelines = {
+  name: '그리드 가이드',
+  render: () => (
+    <main style={{ display: 'grid', gap: 40, width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <header style={{ display: 'grid', gap: 10 }}>
+        <p style={{ margin: 0, color: 'var(--label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>그리드</p>
+        <h1 style={{ margin: 0 }} className="type-title2">화면 너비에 유연히 대응하는 컬럼 그리드</h1>
+        <p style={{ margin: 0, maxWidth: 640 }} className="type-body1">
+          거터는 20px로 두고, 화면 너비에 맞춰 컬럼을 늘리는 STRETCH 그리드를 씁니다. 모바일 2단, 태블릿 3단,
+          데스크톱 12단이며 컬럼을 묶어 사용합니다. 아래 모든 값은 그리드 토큰과 동일합니다.
+        </p>
+      </header>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">브레이크포인트</h2>
+        <div style={{ display: 'grid', gap: 0, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-card)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '80px minmax(0, 1fr) minmax(0, 1.2fr) auto', gap: 12, padding: '10px 18px', background: 'var(--surface-subtle)', fontSize: 12, fontWeight: 'var(--fw-bold)', color: 'var(--label-alternative)' }}>
+            <span>명칭</span><span>구분</span><span>너비 범위</span><span>컬럼</span>
+          </div>
+          {BREAKPOINTS.map(([key, kind, range, cols]) => (
+            <div key={key} style={{ display: 'grid', gridTemplateColumns: '80px minmax(0, 1fr) minmax(0, 1.2fr) auto', gap: 12, alignItems: 'center', padding: '12px 18px', borderTop: '1px solid var(--border-subtle)', fontSize: 13 }}>
+              <code style={{ color: 'var(--label-strong)', fontWeight: 'var(--fw-bold)' }}>{key}</code>
+              <span style={{ color: 'var(--label-neutral)' }}>{kind}</span>
+              <span style={{ color: 'var(--label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{range}</span>
+              <span style={{ color: 'var(--label-strong)', fontWeight: 'var(--fw-bold)', fontVariantNumeric: 'tabular-nums' }}>{cols}단</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">컬럼 그리드</h2>
+        <div style={{ display: 'grid', gap: 20 }}>
+          <ColumnGridPreview cols={2} caption="모바일 · < 768px" />
+          <ColumnGridPreview cols={3} caption="태블릿 · 768 – 1199px" />
+          <ColumnGridPreview cols={12} caption="데스크톱 · 1200px +" />
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">컨테이너 · 여백</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 16, minWidth: 0 }}>
+          {[['--container-lg', '1100px', '여백 포함 그리드 최대 너비 (기본 데스크톱)'], ['--container-xl', '1440px', '여백 포함 그리드 최대 너비 (와이드 데스크톱, xl)']].map(([token, value, desc]) => (
+            <div key={token} style={{ display: 'grid', gap: 6, padding: 18, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
+              <div className="type-title3" style={{ color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+              <code style={{ fontSize: 12, color: 'var(--label-alternative)' }}>{token}</code>
+              <span style={{ fontSize: 13, color: 'var(--label-neutral)' }}>{desc}</span>
+            </div>
+          ))}
+          <div style={{ display: 'grid', gap: 6, padding: 18, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
+            <div className="type-title3" style={{ color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>20px</div>
+            <code style={{ fontSize: 12, color: 'var(--label-alternative)' }}>--grid-margin · --grid-gutter</code>
+            <span style={{ fontSize: 13, color: 'var(--label-neutral)' }}>사이드 여백과 컬럼 사이 간격은 모든 구간에서 20px 고정</span>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">간격 기준</h2>
+        <div style={{ display: 'grid', gap: 12, padding: 20, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)' }}>
+          <p style={{ margin: 0 }} className="type-body2">
+            예측 가능한 규칙과 개발자와의 소통을 위해 <strong style={{ color: 'var(--label-strong)' }}>4px 배수</strong>를 기준으로 간격을 잡습니다.
+            시각 보정이 필요하면 2px씩, 불가피하면 1px씩 조정합니다.
+          </p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {[4, 8, 12, 16, 20, 24, 32, 40, 48, 64].map((n) => (
+              <span key={n} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 10px', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-pill)', fontSize: 12, color: 'var(--label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
+                <span style={{ width: n, height: 8, background: 'var(--lk-accent-ink)', borderRadius: 2 }} />
+                {n}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  ),
+};

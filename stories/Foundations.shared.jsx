@@ -1,4 +1,5 @@
 import React from 'react';
+import { ATOMIC, SEMANTIC } from './color-system.data.js';
 
 const meta = {
   title: '파운데이션/토큰/shared',
@@ -78,21 +79,206 @@ export const ColorAndSpacing = {
   ),
 };
 
+// Full type-scale specimen — mirrors the source Foundation / Typography page:
+// Pretendard weight ladder, the complete 7-tier scale (Display→Caption, 16 styles),
+// and applied usage examples. Every metric is read live from the rendered element
+// via getComputedStyle, so the spec labels can never drift from tokens/typography.css.
+const TYPE_WEIGHTS = [
+  ['Regular', 'var(--fw-regular)', '본문 기본'],
+  ['Medium', 'var(--fw-medium)', '본문 강조 · 라벨'],
+  ['SemiBold', 'var(--fw-semibold)', 'Heading · Headline'],
+  ['Bold', 'var(--fw-bold)', 'Title · Display'],
+  ['ExtraBold', 'var(--fw-extra)', '수치 · 강한 강조'],
+];
+
+const TYPE_SCALE = [
+  { group: 'Display', note: '히어로 · 랜딩 표제. 밀도 높은 앱 화면에서는 제한적으로.', sample: '차분한 위계 Calm', rows: [['Display 1', 'type-display1'], ['Display 2', 'type-display2'], ['Display 3', 'type-display3']] },
+  { group: 'Title', note: '페이지 · 섹션 제목.', sample: '미션 경로 편집 Aa', rows: [['Title 1', 'type-title1'], ['Title 2', 'type-title2'], ['Title 3', 'type-title3']] },
+  { group: 'Heading', note: '카드 · 그룹 제목.', sample: '오늘의 작업 요약', rows: [['Heading 1', 'type-heading1'], ['Heading 2', 'type-heading2']] },
+  { group: 'Headline', note: '강조 본문 · 소제목.', sample: '읽기 쉬운 인터페이스 텍스트', rows: [['Headline 1', 'type-headline1'], ['Headline 2', 'type-headline2']] },
+  { group: 'Body', note: '본문. Normal 외에 행간이 넉넉한 Reading 변형(--*-reading-line)이 있습니다.', sample: '밀도 높은 앱 화면에서는 읽기 쉬운 본문과 안정적인 위계가 필요합니다. Aa 123', rows: [['Body 1', 'type-body1'], ['Body 2', 'type-body2']] },
+  { group: 'Label', note: '버튼 · 태그 · 폼 라벨.', sample: '상태 라벨 Label 123', rows: [['Label 1', 'type-label1'], ['Label 2', 'type-label2']] },
+  { group: 'Caption', note: '보조 설명 · 메타 텍스트.', sample: '보조 설명 캡션 Caption 123', rows: [['Caption 1', 'type-caption1'], ['Caption 2', 'type-caption2']] },
+];
+
+function TypeSpecRow({ name, cls, sample }) {
+  const ref = React.useRef(null);
+  const [metrics, setMetrics] = React.useState(null);
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const cs = getComputedStyle(el);
+    const px = (value) => Math.round(parseFloat(value) * 100) / 100;
+    setMetrics({
+      size: px(cs.fontSize),
+      line: px(cs.lineHeight),
+      weight: cs.fontWeight,
+      tracking: cs.letterSpacing === 'normal' ? 0 : px(cs.letterSpacing),
+    });
+  }, []);
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(150px, 190px) minmax(0, 1fr)', gap: 24, alignItems: 'baseline', padding: '14px 0', borderTop: '1px solid var(--border-subtle)', minWidth: 0 }}>
+      <div style={{ display: 'grid', gap: 3, alignSelf: 'center' }}>
+        <strong style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', color: 'var(--label-strong)' }}>{name}</strong>
+        <code style={{ fontSize: 11, color: 'var(--label-alternative)' }}>.{cls}</code>
+        {metrics && (
+          <span style={{ fontSize: 11, color: 'var(--label-alternative)', fontVariantNumeric: 'tabular-nums' }}>
+            {metrics.size}px · line {metrics.line}px · {metrics.weight}{metrics.tracking ? ` · ${metrics.tracking}px` : ''}
+          </span>
+        )}
+      </div>
+      <div ref={ref} className={cls} style={{ color: 'var(--label-strong)', minWidth: 0, wordBreak: 'keep-all' }}>{sample}</div>
+    </div>
+  );
+}
+
+function TypographySpecimen() {
+  return (
+    <main style={{ display: 'grid', gap: 40, width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <header style={{ display: 'grid', gap: 12 }}>
+        <p style={{ margin: 0, color: 'var(--label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>타이포그래피</p>
+        <div className="type-display3" style={{ color: 'var(--label-strong)' }}>Pretendard <span style={{ color: 'var(--label-neutral)' }}>프리텐다드 プリテンダード</span></div>
+        <p style={{ margin: 0, maxWidth: 640 }} className="type-body1">
+          하나의 본문 서체(Pretendard JP)가 한글·라틴·가나를 모두 담당합니다. 제목은 음수 자간으로 또렷하게,
+          본문은 넉넉한 행간으로 차분하게 읽히도록 설계했습니다. 아래 모든 수치는 타이포그래피 토큰에서 실시간으로 읽어 표시합니다.
+        </p>
+      </header>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">서체 · 굵기</h2>
+        <div style={{ display: 'grid', gap: 0, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--surface-card)' }}>
+          {TYPE_WEIGHTS.map(([label, weightVar, usage], i) => (
+            <div key={label} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 150px) minmax(0, 1fr) auto', gap: 16, alignItems: 'baseline', padding: '14px 18px', borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)' }}>
+              <span style={{ fontSize: 13, color: 'var(--label-alternative)' }}>{label}</span>
+              <span style={{ fontSize: 26, fontWeight: weightVar, color: 'var(--label-strong)', letterSpacing: '-0.01em' }}>가나다라 AaBb 0123</span>
+              <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>{usage}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">타입 스케일 · 16종</h2>
+        <div style={{ display: 'grid', gap: 24 }}>
+          {TYPE_SCALE.map(({ group, note, sample, rows }) => (
+            <div key={group} style={{ display: 'grid', gap: 4 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+                <strong style={{ fontSize: 15, color: 'var(--label-strong)', fontWeight: 'var(--fw-bold)' }}>{group}</strong>
+                <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>{note}</span>
+              </div>
+              {rows.map(([name, cls]) => (
+                <TypeSpecRow key={cls} name={name} cls={cls} sample={sample} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">적용 예시</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 16, minWidth: 0 }}>
+          <article style={{ display: 'grid', gap: 12, padding: 24, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', minWidth: 0 }}>
+            <h3 className="type-title3" style={{ margin: 0, color: 'var(--label-strong)' }}>미션을 완료하고 포인트를 쌓아 보세요</h3>
+            <p className="type-body2" style={{ margin: 0, color: 'var(--label-neutral)' }}>
+              경로를 검증하고 구역을 지정하면 오늘의 작업이 자동으로 요약됩니다. 상태 패널에서 진행률을 확인하세요.
+            </p>
+            <span className="type-caption1" style={{ color: 'var(--label-alternative)' }}>최근 업데이트 · 방금 전</span>
+          </article>
+
+          <article style={{ display: 'grid', gap: 10, padding: 24, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', background: 'var(--surface-card)', minWidth: 0 }}>
+            <div className="type-display3" style={{ color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>84m</div>
+            <div className="type-headline2" style={{ color: 'var(--label-strong)' }}>예상 이동 거리</div>
+            <div style={{ display: 'grid', gap: 6, marginTop: 4 }}>
+              {[['웨이포인트', '12개'], ['경유 구역', 'Zone 3'], ['검증 상태', '검증 중']].map(([k, v]) => (
+                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+                  <span className="type-label1" style={{ color: 'var(--label-alternative)' }}>{k}</span>
+                  <span className="type-label1" style={{ color: 'var(--label-strong)', fontWeight: 'var(--fw-bold)' }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 export const Typography = {
   name: '타이포그래피',
-  render: () => (
-    <main style={{ display: 'grid', gap: 18, maxWidth: 840 }}>
-      <p style={{ margin: 0, color: 'var(--label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>
-        타이포그래피
-      </p>
-      <h1 style={{ margin: 0, fontSize: 48, lineHeight: 1.05, color: 'var(--label-strong)' }}>앱 인터페이스에는 차분한 위계가 필요합니다.</h1>
-      <p style={{ margin: 0, fontSize: 18, lineHeight: 1.7, color: 'var(--label-neutral)' }}>
-        이 토큰 세트는 대시보드, 관리 화면, 상태 패널, 문서 페이지에 맞춰져 있습니다.
-      </p>
-      <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'var(--label-alternative)' }}>
-        큰 display text는 제한적으로 사용합니다. 밀도 높은 앱 화면에서는 읽기 쉬운 label,
-        tabular value, 명확한 상태 색상, 안정적인 control dimension을 우선합니다.
-      </p>
+  render: () => <TypographySpecimen />,
+};
+
+// Two-tier color system showcase — mirrors the source Color page: the atomic
+// hue ramps and the semantic role tokens. Structure is adopted from the source
+// design system; every value is re-toned to the LK palette (see
+// scripts/generate-lk-color-system.mjs). Reads live var(--color-*) tokens.
+const SEMANTIC_GROUPS = ['primary', 'label', 'background', 'interaction', 'line', 'status', 'accent', 'inverse', 'fill', 'material', 'static'];
+
+function Swatch({ varName, caption, sub }) {
+  return (
+    <div style={{ display: 'grid', gap: 4, minWidth: 0 }}>
+      <div style={{ height: 40, borderRadius: 'var(--radius-sm)', background: `var(${varName})`, border: '1px solid var(--border-subtle)' }} />
+      <div style={{ display: 'grid', gap: 1, minWidth: 0 }}>
+        <span style={{ fontSize: 11, color: 'var(--label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{caption}</span>
+        {sub && <code style={{ fontSize: 9, color: 'var(--label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub}</code>}
+      </div>
+    </div>
+  );
+}
+
+function ColorSystemSpecimen() {
+  return (
+    <main style={{ display: 'grid', gap: 40, width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <header style={{ display: 'grid', gap: 10 }}>
+        <p style={{ margin: 0, color: 'var(--label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>색상 시스템</p>
+        <h1 style={{ margin: 0 }} className="type-title2">원자 팔레트 → 시맨틱 역할, 2단 토큰 구조</h1>
+        <p style={{ margin: 0, maxWidth: 680 }} className="type-body1">
+          {ATOMIC && Object.keys(ATOMIC).length}개 색상 램프({SEMANTIC.length}개 시맨틱 역할)로 이루어진 2단 구조입니다.
+          구조는 원본 디자인 시스템을 따르되, 모든 값은 LK 팔레트로 재보정했습니다(명도 보존, 색상·채도 재조정). 라이트/다크에 반응합니다.
+        </p>
+      </header>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">시맨틱 역할</h2>
+        <div style={{ display: 'grid', gap: 18 }}>
+          {SEMANTIC_GROUPS.map((group) => {
+            const names = SEMANTIC.filter((n) => n.split('-')[0] === group);
+            if (!names.length) return null;
+            return (
+              <div key={group} style={{ display: 'grid', gap: 8 }}>
+                <strong style={{ fontSize: 13, color: 'var(--label-strong)', textTransform: 'capitalize' }}>{group}</strong>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(96px, 1fr))', gap: 10 }}>
+                  {names.map((n) => <Swatch key={n} varName={`--color-semantic-${n}`} caption={n.slice(group.length + 1) || 'normal'} sub={`semantic-${n}`} />)}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">원자 램프</h2>
+        <div style={{ display: 'grid', gap: 16 }}>
+          {Object.entries(ATOMIC).map(([slug, { label, steps }]) => (
+            <div key={slug} style={{ display: 'grid', gap: 6, minWidth: 0 }}>
+              <strong style={{ fontSize: 12, color: 'var(--label-neutral)' }}>{label}</strong>
+              <div style={{ display: 'flex', gap: 2, minWidth: 0, overflowX: 'auto' }}>
+                {steps.map((step) => (
+                  <div key={step} style={{ flex: '1 0 34px', minWidth: 34 }}>
+                    <div style={{ height: 44, background: `var(--color-atomic-${slug}-${step})`, borderRadius: 3, border: '1px solid var(--border-subtle)' }} />
+                    <div style={{ fontSize: 9, color: 'var(--label-alternative)', textAlign: 'center', marginTop: 2, fontVariantNumeric: 'tabular-nums' }}>{step}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
-  ),
+  );
+}
+
+export const ColorSystem = {
+  name: '색상 시스템',
+  render: () => <ColorSystemSpecimen />,
 };

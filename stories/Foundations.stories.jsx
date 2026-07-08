@@ -1,4 +1,4 @@
-import { ColorAndSpacing as ColorAndSpacingStory } from './Foundations.shared.jsx';
+import { ColorAndSpacing as ColorAndSpacingStory, ColorSystem as ColorSystemStory } from './Foundations.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Foundation/Color and Spacing',
@@ -14,3 +14,4 @@ const meta = {
 export default meta;
 
 export const ColorAndSpacing = { ...ColorAndSpacingStory, name: '색상과 간격' };
+export const ColorSystem = { ...ColorSystemStory, name: '색상 시스템 (2단 토큰)' };

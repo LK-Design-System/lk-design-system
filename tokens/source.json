@@ -412,6 +412,12 @@
         "css": "--grid-gutter",
         "source": "Grid/Gutter"
       },
+      "margin": {
+        "$type": "dimension",
+        "$value": "20px",
+        "css": "--grid-margin",
+        "source": "Grid/Margin"
+      },
       "containerLg": {
         "$type": "dimension",
         "$value": "1100px",

@@ -52,6 +52,8 @@
     "prepack": "node scripts/run-package-scripts.mjs build",
     "extract:wds-fig-content": "node scripts/extract-wds-fig-content.mjs",
     "check:wds-local-fig": "node scripts/check-wds-local-fig-content.mjs",
+    "report:foundation-parity": "node scripts/report-wds-foundation-parity.mjs",
+    "check:foundation-parity": "node scripts/report-wds-foundation-parity.mjs --check",
     "check:type-surface": "node scripts/check-type-surface.mjs",
     "check:contracts": "node scripts/check-design-system-contracts.mjs",
     "check:wds-alignment": "node scripts/check-wds-alignment.mjs",

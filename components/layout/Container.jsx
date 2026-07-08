@@ -6,7 +6,7 @@ import React from 'react';
  *   default — responsive: caps at 1100 (through lg), widens to 1440 at xl
  *   read    — narrow reading band (1100, text pages)
  *   wide    — full-bleed rails (1500)
- * Page side margin follows `--grid-margin` (16 → 32px across breakpoints).
+ * Page side margin follows `--grid-margin` (flat 20px — the column-grid offset).
  */
 export function Container({ children, size = 'default', style, ...rest }) {
   if (size === 'default') {

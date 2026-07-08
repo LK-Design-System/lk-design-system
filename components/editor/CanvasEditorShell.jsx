@@ -34,7 +34,7 @@ export function CanvasEditorShell({ title, tools, children, panel, status, panel
         }`}
       </style>
       {title != null && <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid var(--border-subtle)', fontSize: 'var(--headline2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--label-strong)' }}>{title}</div>}
-      <div className={bodyClass} style={{ display: 'grid', gridTemplateColumns: `${tools != null ? 'auto ' : ''}minmax(0, 1fr)${panel != null ? ' var(--lk-editor-panel-width)' : ''}`, flex: 1, minHeight: 0 }}>
+      <div className={bodyClass} style={{ display: 'grid', gridTemplateColumns: `${tools != null ? 'auto ' : ''}minmax(0, 1fr)${panel != null ? ' var(--lk-editor-panel-width)' : ''}`, gridTemplateRows: 'minmax(0, 1fr)', flex: 1, minHeight: 0 }}>
         {tools != null && <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: 8, borderRight: '1px solid var(--border-subtle)', background: 'var(--surface-subtle)' }}>{tools}</div>}
         <div style={{ minWidth: 0, position: 'relative', background: 'var(--surface-sunken)' }}>{children}</div>
         {panel != null && <div className="lk-canvas-editor-shell__panel" style={{ width: panelWidth, borderLeft: '1px solid var(--border-subtle)', overflow: 'auto', background: 'var(--surface-raised)' }}>{panel}</div>}

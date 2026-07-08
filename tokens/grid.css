@@ -25,11 +25,16 @@
   --grid-columns-desktop: 12; /* desktop column grid */
   --grid-columns: var(--grid-columns-mobile); /* @kind other */
   --grid-gutter: 20px; /* space between columns */
-  --grid-margin: 16px; /* page side margin — steps up per breakpoint */
+  --grid-margin: 20px; /* page side margin — column-grid offset, flat 20 across breakpoints */
 
   /* ---- Container tiers (content max-widths) ------------------------ */
   --container-lg: 1100px; /* content column ≤ lg */
   --container-xl: 1440px; /* content column @ xl */
+
+  /* ---- Column-grid overlay (design-guide illustration) ----------------
+     Grid marker red — used to visualise column tracks in grid docs. */
+  --grid-overlay-fill: rgba(255, 66, 66, 0.08); /* column-grid fill */
+  --grid-overlay-line: rgba(255, 66, 66, 0.32); /* column edge */
 
   /* ---- Gap scale (4px base) -------------------------------------------- */
   --gap-3xs: 4px;
@@ -52,7 +57,6 @@
 @media (min-width: 768px) {
   :root {
     --grid-columns: var(--grid-columns-tablet);
-    --grid-margin: 20px;
     --gap-section: 80px;
   }
 }
@@ -64,13 +68,11 @@
 @media (min-width: 1200px) {
   :root {
     --grid-columns: var(--grid-columns-desktop);
-    --grid-margin: 24px;
     --gap-section: 100px;
   }
 }
 @media (min-width: 1600px) {
   :root {
-    --grid-margin: 32px;
     --gap-section: 120px;
   }
 }
