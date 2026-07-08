@@ -70,7 +70,7 @@ export const RobotStatusCardCard = {
   render: () => {
     const [sel, setSel] = React.useState('t1');
     return (
-      <div data-visual-crop-root style={{ width: 700, height: 160, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+      <div data-visual-crop-root style={{ width: 700, height: 160, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
         <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, minWidth: 200 }}>
             <RobotStatusCard name="LKR-T1" status="online" battery={82} mode="순찰" selected={sel === 't1'} onClick={() => setSel('t1')} />
@@ -105,7 +105,7 @@ export const ConnectionBadgeCard = {
   name: 'ConnectionBadge card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 700, height: 140, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+    <div data-visual-crop-root style={{ width: 700, height: 140, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
       <div style={{ display: 'flex', gap: 22, alignItems: 'center', flexWrap: 'wrap' }}>
         <ConnectionBadge status="online" />
         <ConnectionBadge status="reconnecting" />
@@ -120,7 +120,7 @@ export const EquipmentStatusCardCard = {
   name: 'EquipmentStatusCard card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 330, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 330, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <EquipmentStatusCard
           icon={<Icon name="lock" size={16} />}
@@ -163,7 +163,7 @@ export const JoystickCard = {
   render: () => {
     const [vec, setVec] = React.useState({ x: 0, y: 0 });
     return (
-      <div data-visual-crop-root style={{ width: 420, height: 330, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 282 }}>
+      <div data-visual-crop-root style={{ width: 420, height: 330, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 282 }}>
         <Joystick size={180} label={`x ${vec.x.toFixed(2)} · y ${vec.y.toFixed(2)}`} onChange={setVec} />
       </div>
     );
@@ -181,8 +181,8 @@ export const TopicTreeCard = {
       { name: 'tf', children: [{ name: 'map' }, { name: 'odom' }, { name: 'base_link' }] },
     ];
     return (
-      <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
-        <div style={{ border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', padding: '6px 4px', background: 'var(--surface-raised)' }}>
+      <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+        <div style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: '6px 4px', background: 'var(--surface-raised)' }}>
           <TopicTree nodes={topics} onToggleSubscribe={(node) => setSubs((prev) => ({ ...prev, [node.name]: !prev[node.name] }))} />
         </div>
       </div>
@@ -223,8 +223,8 @@ export const ViewerAndTelemetry = {
           <div style={{ transform: 'translate(-180px, -120px)' }}>
             <svg width="360" height="240" viewBox="-180 -120 360 240" aria-label="지도 오버레이">
               <rect x="-150" y="-90" width="300" height="180" rx="12" fill="var(--lk-accent-tint-2)" stroke="var(--lk-accent-ink)" />
-              <path d="M-110 40 C-20 -40 60 70 120 -30" fill="none" stroke="var(--bw-green)" strokeWidth="6" strokeLinecap="round" />
-              <circle cx="120" cy="-30" r="10" fill="var(--bw-red)" />
+              <path d="M-110 40 C-20 -40 60 70 120 -30" fill="none" stroke="var(--color-positive)" strokeWidth="6" strokeLinecap="round" />
+              <circle cx="120" cy="-30" r="10" fill="var(--color-danger)" />
             </svg>
           </div>
         </Map2DCanvas>
@@ -266,7 +266,7 @@ function FeedPlaceholder({ children }) {
       }}
     >
       {children != null && (
-        <span style={{ fontFamily: monoFont, fontSize: 11, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--inverse-label-assistive)' }}>
+        <span style={{ fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--inverse-label-assistive)' }}>
           {children}
         </span>
       )}
@@ -323,7 +323,7 @@ function PlayerBar({ progress = 0.62, current = '12:04', total = '42:30' }) {
             {current} <span style={{ color: 'var(--inverse-label-alternative)' }}>/ {total}</span>
           </span>
           <div style={{ flex: 1 }} />
-          <span style={{ fontFamily: monoFont, fontSize: 10.5, fontWeight: 700, letterSpacing: '0.5px', color: 'var(--inverse-label-neutral)', border: '1px solid var(--inverse-line-strong)', borderRadius: 4, padding: '2px 6px' }}>
+          <span style={{ fontFamily: monoFont, fontSize: 10.5, fontWeight: 'var(--fw-bold)', letterSpacing: '0.5px', color: 'var(--inverse-label-neutral)', border: '1px solid var(--inverse-line-strong)', borderRadius: 4, padding: '2px 6px' }}>
             1080p
           </span>
           <PlayerButton label="설정"><Icon name="setting" size={18} /></PlayerButton>
@@ -338,8 +338,8 @@ export const VideoStreamTileCard = {
   name: 'VideoStreamTile card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 920, height: 800, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
-      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+    <div data-visual-crop-root style={{ width: 920, height: 800, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
         VideoStreamTile — 플레이어 컨트롤 바
       </div>
       <div style={{ maxWidth: 620, marginBottom: 28 }}>
@@ -349,7 +349,7 @@ export const VideoStreamTileCard = {
         </VideoStreamTile>
       </div>
 
-      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
         카메라 그리드 — live · loading · disconnected
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
@@ -358,7 +358,7 @@ export const VideoStreamTileCard = {
         <VideoStreamTile label="EO-1" status="disconnected"><FeedPlaceholder /></VideoStreamTile>
       </div>
 
-      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
         aspectRatio — 나란히 배치할 때 비율 조정
       </div>
       <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
@@ -403,22 +403,22 @@ export const EditorShell = {
               ['웨이포인트', '12'],
               ['예상 거리', '84m'],
             ].map(([label, value]) => (
-              <div key={label} style={{ padding: '10px 11px', border: '1px solid var(--bw-band)', borderRadius: 'var(--radius-md)', background: 'var(--surface-subtle)' }}>
-                <div style={{ fontSize: 11, color: 'var(--label-assistive)', marginBottom: 4 }}>{label}</div>
-                <div style={{ fontSize: 18, lineHeight: 1.1, fontWeight: 800, color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}</div>
+              <div key={label} style={{ padding: '10px 11px', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', background: 'var(--surface-subtle)' }}>
+                <div style={{ fontSize: 11, color: 'var(--label-alternative)', marginBottom: 4 }}>{label}</div>
+                <div style={{ fontSize: 18, lineHeight: 1.1, fontWeight: 'var(--fw-extra)', color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}</div>
               </div>
             ))}
           </div>
 
-          <div style={{ display: 'grid', gap: 0, borderTop: '1px solid var(--bw-band)' }}>
+          <div style={{ display: 'grid', gap: 0, borderTop: '1px solid var(--border-subtle)' }}>
             {[
               ['시작 지점', 'Dock A'],
               ['경유 구역', 'Zone 3'],
               ['검증 상태', '경로 검증 중'],
             ].map(([label, value]) => (
-              <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '9px 0', borderBottom: '1px solid var(--bw-band)', fontSize: 12 }}>
+              <div key={label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '9px 0', borderBottom: '1px solid var(--border-subtle)', fontSize: 12 }}>
                 <span style={{ color: 'var(--label-alternative)' }}>{label}</span>
-                <strong style={{ color: 'var(--label-strong)', fontWeight: 700, textAlign: 'right' }}>{value}</strong>
+                <strong style={{ color: 'var(--label-strong)', fontWeight: 'var(--fw-bold)', textAlign: 'right' }}>{value}</strong>
               </div>
             ))}
           </div>
@@ -439,11 +439,11 @@ export const EditorShell = {
           <rect x="362" y="72" width="156" height="64" rx="10" fill="var(--surface-raised)" stroke="var(--border-subtle)" />
           <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--focus-ring)" strokeWidth="24" strokeLinecap="round" />
           <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--lk-accent)" strokeWidth="6" strokeLinecap="round" strokeDasharray="12 12" />
-          <circle cx="132" cy="220" r="11" fill="var(--bw-green)" stroke="var(--bw-white)" strokeWidth="4" />
-          <circle cx="344" cy="166" r="11" fill="var(--bw-amber)" stroke="var(--bw-white)" strokeWidth="4" />
-          <circle cx="502" cy="88" r="11" fill="var(--lk-accent)" stroke="var(--bw-white)" strokeWidth="4" />
+          <circle cx="132" cy="220" r="11" fill="var(--color-positive)" stroke="var(--surface-card)" strokeWidth="4" />
+          <circle cx="344" cy="166" r="11" fill="var(--color-cautionary)" stroke="var(--surface-card)" strokeWidth="4" />
+          <circle cx="502" cy="88" r="11" fill="var(--lk-accent)" stroke="var(--surface-card)" strokeWidth="4" />
         </svg>
-        <div style={{ position: 'absolute', left: 16, bottom: 16, display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--radius-pill)', background: 'var(--surface-raised)', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-sm)', fontSize: 12, fontWeight: 700 }}>
+        <div style={{ position: 'absolute', left: 16, bottom: 16, display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--radius-pill)', background: 'var(--surface-raised)', border: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-sm)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
           <Badge dot tone="green" />
           경로 검증 중
         </div>
@@ -467,14 +467,14 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
     ];
     const panel = (
       <div style={{ padding: 14 }}>
-        <h4 style={{ margin: '0 0 10px', fontSize: 12, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--label-assistive)' }}>속성</h4>
+        <h4 style={{ margin: '0 0 10px', fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: 1, textTransform: 'uppercase', color: 'var(--label-assistive)' }}>속성</h4>
         {[
           ['도구', tool],
           ['해상도', '0.05 m/px'],
           ['존', '3'],
           ['웨이포인트', '12'],
         ].map(([label, value]) => (
-          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, padding: '7px 0', borderTop: '1px solid var(--bw-band)', color: 'var(--label-neutral)' }}>
+          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, padding: '7px 0', borderTop: '1px solid var(--border-subtle)', color: 'var(--label-neutral)' }}>
             <span>{label}</span>
             <b style={{ color: 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{value}</b>
           </div>
@@ -496,7 +496,7 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
       </>
     );
     return (
-      <div data-visual-crop-root style={{ width: 900, height: 520, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+      <div data-visual-crop-root style={{ width: 900, height: 520, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
         <CanvasEditorShell title="지도 편집 — floor_1.pgm" style={{ height: 440 }} tools={<EditorToolbar value={tool} onChange={setTool} items={tools} />} panel={panel} status={status}>
           <Map2DCanvas style={{ height: '100%', borderRadius: 0, border: 'none' }}>
             <div style={{ width: 280, height: 200, background: 'repeating-linear-gradient(45deg, var(--color-bg-band), var(--color-bg-band) 8px, var(--fill-normal) 8px, var(--fill-normal) 16px)', border: '2px solid var(--line-strong)', borderRadius: 4, position: 'relative' }}>
@@ -553,7 +553,7 @@ export const Scene3DFrameCard = {
   name: 'Scene3DFrame card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box' }}>
       <Scene3DFrame
         title="POINT CLOUD"
         badges={<ConnectionBadge status="online" size="sm" />}
@@ -575,8 +575,8 @@ export const TelemetryGaugeCard = {
   name: 'TelemetryGauge card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 920, height: 230, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
-      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+    <div data-visual-crop-root style={{ width: 920, height: 230, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
         TelemetryGauge
       </div>
       <div style={{ display: 'flex', gap: 26, alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -631,8 +631,8 @@ export const ViewerToolbarCard = {
     const layers = { map: true, path: true, robots: true };
     const anyOff = !layers.map || !layers.path || !layers.robots;
     return (
-      <div data-visual-crop-root style={{ width: 700, height: 460, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
-        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+      <div data-visual-crop-root style={{ width: 700, height: 460, background: 'var(--color-bg)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--label-normal)' }}>
+        <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
           레이어 버튼 → Popover 패널 (눌러보세요)
         </div>
         <div style={{ position: 'relative', height: 240, marginBottom: 26 }}>
@@ -642,7 +642,7 @@ export const ViewerToolbarCard = {
                 <ViewerToolbarMapPlaceholder layers={layers} />
               </div>
             </div>
-            <div style={{ position: 'absolute', left: 12, bottom: 12, fontFamily: monoFont, fontSize: 11, fontWeight: 600, letterSpacing: '0.4px', color: 'var(--inverse-label-neutral)', background: 'var(--material-control-dimmer)', borderRadius: 6, padding: '4px 9px' }}>
+            <div style={{ position: 'absolute', left: 12, bottom: 12, fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '0.4px', color: 'var(--inverse-label-neutral)', background: 'var(--material-control-dimmer)', borderRadius: 6, padding: '4px 9px' }}>
               {zoom}%
             </div>
           </div>
@@ -651,7 +651,7 @@ export const ViewerToolbarCard = {
             <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
             <ViewerToolbarButton label="핏"><Icon name="home" size={18} /></ViewerToolbarButton>
             <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어" active={anyOff}><Icon name="filter" size={18} /></ViewerToolbarButton>}>
-              <div style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 8px 2px' }}>
+              <div style={{ fontSize: 10.5, fontWeight: 'var(--fw-extra)', letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 8px 2px' }}>
                 레이어
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -663,7 +663,7 @@ export const ViewerToolbarCard = {
           </ViewerToolbar>
         </div>
 
-        <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
+        <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--label-assistive)', margin: '0 0 12px' }}>
           orientation — horizontal · vertical
         </div>
         <div style={{ display: 'flex', gap: 26, alignItems: 'flex-start' }}>
