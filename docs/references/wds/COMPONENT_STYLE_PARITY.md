@@ -58,15 +58,18 @@ WDS `.fig` reference. Reliable (controlled wrapper + direct child; no ad-hoc
 selectors). Each component is rendered at the **medium** size to match the WDS
 representative variant.
 
-Result — **0 drift** across all 12 measured components (action / selection / form /
-feedback / content / overlay): **Button, Chip, Filter Chip, Content Badge,
-Segmented Control, Tag, Push Badge, Category, Toast, Select, Textarea, Switch** all
-match WDS dimensions (radius / padding / height / font as available).
+Result — **0 drift** across 20 measured components (action / selection / form /
+feedback / content): Button (solid + outlined), Text Button, Fab, Chip, Filter
+Chip, Multi-Select Chip, Content Badge, Segmented Control, Tag, Push Badge,
+Category, Choice Card, Page Indicator, Skeleton, Avatar, Toast, Select, Textarea,
+Switch — all match WDS dimensions (radius / padding / height / font as available).
 
-Two apparent drifts were harness artifacts, not real: Content Badge (LDS default
-size is `small`; its `medium` = r8/padX8/13 matches WDS) and Segmented Control
-height (WDS `h` is the track; LDS track = 40px segment + padding — radius 10
-matches; height is a measurement axis, not a token).
+Notes:
+- Radius is compared as "is it a pill/circle" when the value ≥ half the height
+  (Fab/Avatar/pill chips render round regardless of the raw radius value).
+- Each component is rendered at the **medium** size to match the WDS representative
+  variant; comparing LDS defaults directly gave false size-mismatch drifts
+  (e.g. Content Badge default is `small`).
 
 ## Scope
 
@@ -77,5 +80,12 @@ matches; height is a measurement axis, not a token).
   exposes a height for those, so radius/padding aren't comparable anyway).
 - `COMPONENT_STYLES.json` holds the WDS reference for all 164 sets.
 
-**Net finding across every component measured correctly: LDS matches WDS
-dimensions; the single real drift (Filter Chip 38→32) is fixed.**
+Excluded (unreliable to auto-diff): deeply nested / overlay components — List Cell,
+Alert, Card, Menu, Auto Complete, Pagination. The WDS style extractor reads the
+top-level frame, which is not the meaningful styled element for those layouts, so
+the automated diff picks the wrong sub-frame. Their parity is covered by
+`STYLE_PARITY_AUDIT.md` (manual) + the `visual-parity` regression stories.
+
+**Net finding: across the 20 components with a reliable single styled root, LDS
+matches WDS dimensions. Two real drifts were found and fixed — Filter Chip height
+(38→32) and Multi-Select Chip padding (15→12).**

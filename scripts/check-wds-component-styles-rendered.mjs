@@ -43,10 +43,22 @@ const TARGETS = [
   { name: 'Select', set: 'Select/Select', jsx: "<Select options={['하나','둘']} defaultValue=\"하나\" />", dims: ['radius', 'padX', 'height', 'fontSize'] },
   { name: 'Textarea', set: 'Textinput/Textarea', jsx: '<Textarea defaultValue="여러 줄 텍스트 값" />', dims: ['radius', 'padX', 'fontSize'] },
   { name: 'Switch', set: 'Switch/Switch', jsx: '<Switch defaultChecked />', dims: ['height'] },
+  { name: 'ButtonOutlined', set: 'Button/Outlined', jsx: '<Button variant="outlined">텍스트</Button>', dims: ['radius', 'padX', 'height', 'fontSize'] },
+  { name: 'TextButton', set: 'Button/Text', jsx: '<TextButton>텍스트</TextButton>', dims: ['height', 'fontSize'] },
+  { name: 'Fab', set: 'Button/Floating Action Button', jsx: '<Fab>+</Fab>', dims: ['radius', 'height'] },
+  { name: 'MultiSelectChip', set: 'Chip/Multi-Select', jsx: '<MultiSelectChip>텍스트</MultiSelectChip>', dims: ['radius', 'padX', 'height', 'fontSize'] },
+  { name: 'Avatar', set: 'Avatar/Avatar', jsx: '<Avatar name="김철수" />', dims: ['radius'] },
+  { name: 'ChoiceCard', set: 'Framed Style/Framed Style', jsx: '<ChoiceCard title="텍스트" />', dims: ['padX'] },
+  { name: 'PageIndicator', set: 'Page Indicator/Counter', jsx: '<PageIndicator variant="counter" page={1} count={5} />', dims: ['padX', 'fontSize'] },
+  { name: 'Skeleton', set: 'Skeleton/Rectangle', jsx: '<Skeleton />', dims: ['radius'] },
+  // NOTE: nested/overlay components (List Cell, Alert, Card, Menu, Auto Complete,
+  // Pagination) are excluded — the WDS style extractor reads the top-level frame,
+  // which is not the meaningful styled element for deeply-nested layouts, so the
+  // automated diff is unreliable there. Their parity is covered by STYLE_PARITY_AUDIT.md.
 ];
 
 const indexHtml = `<!doctype html><html><head><meta charset="UTF-8"/></head><body><div id="root"></div><script type="module" src="/src/App.jsx"></script></body></html>`;
-const imports = 'Button, Chip, FilterChip, ContentBadge, SegmentedControl, Tag, PushBadge, Category, Toast, Select, Textarea, Switch';
+const imports = 'Button, Chip, FilterChip, ContentBadge, SegmentedControl, Tag, PushBadge, Category, Toast, Select, Textarea, Switch, TextButton, Fab, MultiSelectChip, Avatar, ListCell, ChoiceCard, PageIndicator, Skeleton, Alert';
 const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ${imports} } from '@lk-robotics/design-system-core';
@@ -96,7 +108,9 @@ for (const t of TARGETS) {
     const tol = key === 'height' ? 3 : 0.6; // height is content-driven; allow small
     const wv = w[key], lv = l[key];
     if (wv == null || lv == null) continue;
-    const ok = near(wv, lv, tol);
+    // a radius >= half the height renders as a full pill/circle; compare "is round"
+    const roundW = wv >= (w.height || 9999) / 2 - 1, roundL = lv >= (l.height || 9999) / 2 - 1;
+    const ok = key === 'radius' && roundW && roundL ? true : near(wv, lv, tol);
     if (!ok) drift++;
     console.log(t.name.padEnd(18), key.padEnd(9), String(wv).padEnd(6), String(lv).padEnd(6), ok ? '✅' : '❌');
   }

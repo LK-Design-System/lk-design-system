@@ -11446,7 +11446,7 @@ function MultiSelectChip({
       style: {
         ...pillChipStyle(on, disabled, size),
         gap: 6,
-        padding: on ? sm ? "0 12px 0 9px" : "0 15px 0 11px" : sm ? "0 12px" : "0 15px",
+        padding: on ? sm ? "0 12px 0 9px" : "0 12px 0 8px" : sm ? "0 12px" : "0 12px",
         transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), padding var(--dur-fast) var(--ease-out)",
         ...style
       },
