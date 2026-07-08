@@ -36,7 +36,6 @@ export const ToastNotifications = {
       <Section title="Toast 심각도와 아이콘 축">
         <div style={{ display: 'grid', gap: 10, justifyItems: 'start' }}>
           <Toast variant="normal">임시 저장되었습니다.</Toast>
-          <Toast variant="assistive">경로 계산을 시작했습니다.</Toast>
           <Toast variant="positive" action="실행 취소">변경 사항이 게시되었습니다.</Toast>
           <Toast variant="cautionary">일부 필드는 검토가 필요합니다.</Toast>
           <Toast variant="negative" onClose={() => {}}>업로드에 실패했습니다.</Toast>

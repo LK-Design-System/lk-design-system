@@ -16,6 +16,13 @@
 - Do not present inferred behavior as WDS behavior. If the source PDF, screenshot, resource folder, or Figma node does not show it, label it as LDS compatibility or leave it out of the WDS-facing story.
 - Keep source evidence traceable in `docs/references/wds/` and guard important claims with scripts where practical.
 
+## Component Variant/Axis Parity — authoritative source (MANDATORY)
+
+- A component's variant axes MUST be read from the `.fig` **internal component-set definition**: decode `docs/references/wds/Wanted Design System (Community).fig`, locate that one component's COMPONENT_SET (variant container), and read ONLY its own direct variant children / component-property definitions. Scope strictly to that component set.
+- Do NOT derive variant axes from `docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json` `variantAxes`. That extraction aggregates at the SECTION level and **bleeds adjacent components' axis values**, producing phantom axes. It is unreliable for per-component variant analysis (it is fine for foundations: typography, grid, color).
+- Do NOT treat rendered screenshots or PDF exports (`source-pdfs/`, `source-screenshots/`) as authoritative for axis completeness. They are rendered pictures of example pages, not the component's own variant definition — use them only as a secondary visual cross-check.
+- Before implementing a "missing variant/axis", confirm the value exists in that component set's own variant definition. If it cannot be confirmed there, it is NOT WDS parity: treat it as absent, or ship it only as an explicit, labeled LDS extension.
+
 ## Duplicate And Coverage Checks
 
 - Prefer automated guards under `scripts/` and package scripts over visual audit pages.

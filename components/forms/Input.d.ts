@@ -46,10 +46,6 @@ export interface InputProps extends Omit<
   platform?: "ios" | "android" | "web";
   /** field variant evidence axis; accepted for API parity. */
   variant?: "textfield" | "textarea";
-  /** 트레일링에 글자 수 카운터 표시(`maxLength`와 함께 쓰면 `n/max`). @default false */
-  showCount?: boolean;
-  /** 트레일링 타이머 슬롯(예: 인증 카운트다운 "3:00"). 카운트다운 로직은 소비자 소유. */
-  timer?: React.ReactNode;
   /** 래퍼 스타일(예: 그리드 셀용 minWidth). */
   style?: React.CSSProperties;
 }

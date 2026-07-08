@@ -30,8 +30,6 @@ export interface TextareaProps extends Omit<
   resize?: "normal" | "fixed" | "limit";
   /** 처음 보이는 줄 수. @default 5 */
   rows?: number;
-  /** 하단 우측에 글자 수 카운터 표시(`maxLength`와 함께 쓰면 `n/max`). @default false */
-  showCount?: boolean;
   /** 래퍼 스타일. */
   style?: React.CSSProperties;
 }

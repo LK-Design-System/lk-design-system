@@ -47,15 +47,11 @@ export interface SelectProps {
   overflow?: boolean;
   /** platform evidence axis; accepted for API parity. */
   platform?: "ios" | "android" | "web";
-  /** 트레일링 어피던스. `icon`/`icon-button`은 chevron 대신 `trailingIcon`을 렌더. @default "normal" */
-  variant?: "normal" | "icon" | "icon-button";
+  /** select variant evidence axis; accepted for API parity. */
+  variant?: "normal";
   /** 선택 값을 텍스트 또는 칩으로 표시. @default "text" */
   render?: "text" | "chip";
   iconLeft?: React.ReactNode;
-  /** `variant="icon"|"icon-button"`일 때 chevron을 대체하는 트레일링 아이콘. */
-  trailingIcon?: React.ReactNode;
-  /** `variant="icon-button"`의 트레일링 버튼 클릭 핸들러. */
-  onTrailingIconClick?: (e: React.MouseEvent) => void;
   id?: string;
   /** `<option>` 자식(하위 호환) — `options`가 없을 때 사용. */
   children?: React.ReactNode;

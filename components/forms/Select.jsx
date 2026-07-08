@@ -30,11 +30,9 @@ export function Select({
   focus = false,
   overflow,
   platform,
-  variant = 'normal',
+  variant,
   render = 'text',
   iconLeft,
-  trailingIcon,
-  onTrailingIconClick,
   id,
   children,
   style,
@@ -109,21 +107,7 @@ export function Select({
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{curr ? curr.label : placeholder}</span>
             )}
           </span>
-          {(variant === 'icon' || variant === 'icon-button') && trailingIcon ? (
-            variant === 'icon-button' ? (
-              <span
-                role="button"
-                tabIndex={-1}
-                aria-hidden="true"
-                onClick={(e) => { e.stopPropagation(); onTrailingIconClick && onTrailingIconClick(e); }}
-                style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 24, height: 24, borderRadius: 'var(--radius-sm)', color: 'var(--color-semantic-label-alternative)', cursor: 'pointer' }}
-              >{trailingIcon}</span>
-            ) : (
-              <span style={{ flexShrink: 0, display: 'inline-flex', color: 'var(--color-semantic-label-alternative)' }}>{trailingIcon}</span>
-            )
-          ) : (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transform: visualOpen ? 'rotate(180deg)' : 'none', transition: 'var(--component-button-transition)' }}><path d="m6 9 6 6 6-6" /></svg>
-          )}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transform: visualOpen ? 'rotate(180deg)' : 'none', transition: 'var(--component-button-transition)' }}><path d="m6 9 6 6 6-6" /></svg>
         </button>
         {visualOpen && (
           <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: 'auto', background: 'var(--surface-overlay)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>

@@ -4,7 +4,6 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   /** tone. Legacy info/success/warning/error aliases are supported. @default "normal" */
   tone?:
     | "normal"
-    | "assistive"
     | "positive"
     | "cautionary"
     | "negative"
@@ -13,7 +12,7 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
     | "warning"
     | "error";
   /** Alias for the tone axis. */
-  variant?: "normal" | "assistive" | "positive" | "cautionary" | "negative";
+  variant?: "normal" | "positive" | "cautionary" | "negative";
   children?: React.ReactNode;
   action?: React.ReactNode;
   onAction?: () => void;

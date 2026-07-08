@@ -9,15 +9,15 @@ import {
 } from '../src/index.js';
 
 function CharCounterField() {
+  const max = 100;
   const [value, setValue] = React.useState('로봇 관제 시스템 검토 메모입니다.');
   return (
     <Textarea
       label="문자 수 카운터"
       value={value}
-      onChange={(e) => setValue(e.target.value)}
-      maxLength={100}
+      onChange={(e) => setValue(e.target.value.slice(0, max))}
       rows={3}
-      showCount
+      helper={`${value.length}/${max}`}
     />
   );
 }
@@ -45,14 +45,8 @@ export const TextInputs = {
         <InputGroup prefix="ID" suffix="개" defaultValue="12" />
       </section>
 
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
-        <Input label="글자 수 카운터" defaultValue="닉네임" maxLength={20} showCount />
-        <Input label="인증 코드" placeholder="6자리 코드" timer="2:59" iconLeft={<Icon name="lock" size={17} />} />
-      </section>
-
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
         <Textarea label="검토 메모" defaultValue="모바일 화면에서 줄바꿈과 도움말 위치를 확인합니다." rows={4} />
-        <Textarea label="문자 수 제한" defaultValue="글자 수 카운터가 하단 우측에 표시됩니다." maxLength={120} rows={4} showCount />
       </section>
     </main>
   ),
@@ -104,14 +98,6 @@ export const TextInputStateMatrix = {
           options={[{ value: 'value', label: '값' }, { value: 'review', label: '텍스트' }]}
           iconLeft={<Icon name="filter" size={16} />}
           helper="칩 렌더와 leading icon"
-        />
-        <Select
-          label="Select icon"
-          variant="icon"
-          trailingIcon={<Icon name="search" size={16} />}
-          defaultValue="value"
-          options={[{ value: 'value', label: '값' }, { value: 'review', label: '검토' }]}
-          helper="chevron 대신 트레일링 아이콘"
         />
       </section>
     </main>

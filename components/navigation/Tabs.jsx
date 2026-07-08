@@ -27,14 +27,9 @@ export function Tabs({
   padding = false,
   trailingIconButton = false,
   scroll = "auto",
-  variant = "normal",
   style,
   ...rest
 }) {
-  const activeInk =
-    variant === "alternative"
-      ? "var(--color-semantic-primary-normal)"
-      : "var(--color-semantic-label-normal)";
   const norm = items.map((o) =>
     typeof o === "string" ? { value: o, label: o } : o,
   );
@@ -99,7 +94,7 @@ export function Tabs({
               fontWeight: "var(--fw-semibold)",
               letterSpacing: 0,
               color: active
-                ? activeInk
+                ? "var(--color-semantic-label-normal)"
                 : "var(--color-semantic-label-alternative)",
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)",
@@ -161,7 +156,7 @@ export function Tabs({
                 bottom: -1,
                 height: 2,
                 borderRadius: 0,
-                background: active ? activeInk : "transparent",
+                background: active ? "var(--color-semantic-label-normal)" : "transparent",
                 transition: "background var(--dur-fast) var(--ease-out)",
               }}
             />
