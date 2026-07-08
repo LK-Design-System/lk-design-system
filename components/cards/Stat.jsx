@@ -14,9 +14,9 @@ export function Stat({
   style,
   ...rest
 }) {
-  const colors = { ink: 'var(--bw-ink)', signal: 'var(--lk-accent-ink)', steel: 'var(--bw-green-600)' };
+  const colors = { ink: 'var(--label-strong)', signal: 'var(--lk-accent-ink)', steel: 'var(--bw-green-600)' };
   const valColor = dark ? 'var(--text-on-dark)' : (colors[accent] || colors.ink);
-  const labColor = dark ? 'var(--text-on-dark-muted)' : 'var(--bw-gray)';
+  const labColor = dark ? 'var(--text-on-dark-muted)' : 'var(--label-alternative)';
   return (
     <div
       style={{

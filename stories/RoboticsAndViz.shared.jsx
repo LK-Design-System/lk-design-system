@@ -221,7 +221,7 @@ export const ViewerAndTelemetry = {
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--space-4)', minWidth: 0 }}>
         <Map2DCanvas style={{ height: 260 }}>
           <div style={{ transform: 'translate(-180px, -120px)' }}>
-            <svg width="360" height="240" viewBox="-180 -120 360 240" aria-label="map overlay">
+            <svg width="360" height="240" viewBox="-180 -120 360 240" aria-label="지도 오버레이">
               <rect x="-150" y="-90" width="300" height="180" rx="12" fill="var(--lk-accent-tint-2)" stroke="var(--lk-accent-ink)" />
               <path d="M-110 40 C-20 -40 60 70 120 -30" fill="none" stroke="var(--bw-green)" strokeWidth="6" strokeLinecap="round" />
               <circle cx="120" cy="-30" r="10" fill="var(--bw-red)" />
@@ -230,8 +230,8 @@ export const ViewerAndTelemetry = {
         </Map2DCanvas>
 
         <Scene3DFrame
-          title="3D VIEW"
-          badges={<StatusBadge tone="online">live</StatusBadge>}
+          title="3D 뷰"
+          badges={<StatusBadge tone="online">라이브</StatusBadge>}
           toolbar={
             <ViewerToolbar orientation="horizontal">
               <ViewerToolbarButton label="확대"><Icon name="plus" size={16} /></ViewerToolbarButton>
@@ -243,7 +243,7 @@ export const ViewerAndTelemetry = {
           style={{ height: 260 }}
         >
           <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: 'var(--inverse-label-alternative)', background: 'linear-gradient(180deg, var(--lk-stage-from), var(--lk-stage-to))' }}>
-            3D canvas slot
+            3D 캔버스 슬롯
           </div>
         </Scene3DFrame>
       </section>
@@ -395,7 +395,7 @@ export const EditorShell = {
               <strong style={{ fontSize: 13, color: 'var(--label-strong)' }}>속성</strong>
               <span style={{ fontSize: 12, color: 'var(--label-alternative)' }}>미션 경로</span>
             </div>
-            <Badge tone="navy" style={{ flexShrink: 0 }}>draft</Badge>
+            <Badge tone="navy" style={{ flexShrink: 0 }}>초안</Badge>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -428,7 +428,7 @@ export const EditorShell = {
       style={{ height: 480 }}
     >
       <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: 'var(--surface-sunken)' }}>
-        <svg width="100%" height="100%" viewBox="0 0 640 300" aria-label="mission route canvas" preserveAspectRatio="xMidYMid slice">
+        <svg width="100%" height="100%" viewBox="0 0 640 300" aria-label="미션 경로 캔버스" preserveAspectRatio="xMidYMid slice">
           <defs>
             <pattern id="editor-grid" width="24" height="24" patternUnits="userSpaceOnUse">
               <path d="M 24 0 L 0 0 0 24" fill="none" stroke="var(--line-neutral)" strokeWidth="1" />

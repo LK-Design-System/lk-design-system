@@ -1,11 +1,8 @@
 import {
-  FileUpload,
   Icon,
   Input,
   InputGroup,
-  NumberField,
   PasswordInput,
-  PinInput,
   Select,
   Textarea,
 } from '../src/index.js';
@@ -15,7 +12,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '텍스트, 숫자, 비밀번호, 코드, 파일, 긴 문장을 입력하는 기본 폼 요소입니다.',
+        component: '텍스트, 비밀번호, 그룹 입력, 긴 문장을 입력하는 기본 폼 요소입니다.',
       },
     },
   },
@@ -28,16 +25,13 @@ export const TextInputs = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 920 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
-        <Input label="프로젝트 이름" defaultValue="Design System" iconLeft={<Icon name="document" size={18} />} />
+        <Input label="프로젝트 이름" defaultValue="로봇 관제 시스템" iconLeft={<Icon name="document" size={18} />} />
         <PasswordInput defaultValue="design-system" />
         <InputGroup prefix="ID" suffix="개" defaultValue="12" />
-        <NumberField defaultValue={5} min={0} max={20} />
-        <PinInput defaultValue="1205" length={6} />
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
         <Textarea label="검토 메모" defaultValue="모바일 화면에서 줄바꿈과 도움말 위치를 확인합니다." rows={4} />
-        <FileUpload accept="image/*,.pdf" multiple hint="이미지 또는 문서 업로드" />
       </section>
     </main>
   ),
@@ -101,55 +95,55 @@ export const TextInputInteractionMatrix = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1020 }}>
       <section style={fieldMatrixStyle}>
-        <Input label="normal" placeholder="Type text" />
-        <Input label="hovered" placeholder="Type text" interaction="hovered" />
-        <Input label="focused" defaultValue="Focused value" interaction="focused" />
-        <Input label="disabled" placeholder="Disabled" disabled />
+        <Input label="normal" placeholder="텍스트를 입력해 주세요." />
+        <Input label="hovered" placeholder="텍스트를 입력해 주세요." interaction="hovered" />
+        <Input label="focused" defaultValue="포커스 값" interaction="focused" />
+        <Input label="disabled" placeholder="비활성" disabled />
       </section>
 
       <section style={fieldMatrixStyle}>
-        <Input label="active" defaultValue="Active value" active />
-        <Input label="focus alias" defaultValue="Focus value" focus />
+        <Input label="active" defaultValue="활성 값" active />
+        <Input label="focus alias" defaultValue="포커스 값" focus />
         <Input
           label="trailing button"
-          defaultValue="Selected keyword"
+          defaultValue="선택된 키워드"
           leadingIcon={<Icon name="search" size={16} />}
-          trailingButton={<button type="button" style={{ border: 0, background: 'transparent', color: 'var(--lk-accent-ink)', fontWeight: 'var(--fw-bold)' }}>Clear</button>}
+          trailingButton={<button type="button" style={{ border: 0, background: 'transparent', color: 'var(--lk-accent-ink)', fontWeight: 'var(--fw-bold)' }}>지우기</button>}
         />
-        <Input label="disable alias" placeholder="Disabled" disable />
+        <Input label="disable alias" placeholder="비활성" disable />
       </section>
 
       <section style={fieldMatrixStyle}>
-        <Input label="required" placeholder="Required" required />
-        <Input label="positive" defaultValue="Validated" status="positive" helper="Available value." />
-        <Input label="negative" placeholder="Error value" status="negative" error="Check this message." />
-        <Input label="readonly" defaultValue="Read only value" readOnly helper="Read-only treatment." />
+        <Input label="required" placeholder="필수 입력" required />
+        <Input label="positive" defaultValue="검증 완료" status="positive" helper="사용 가능한 값입니다." />
+        <Input label="negative" placeholder="오류 값" status="negative" error="메시지를 확인해 주세요." />
+        <Input label="readonly" defaultValue="읽기 전용 값" readOnly helper="읽기 전용 상태입니다." />
       </section>
 
       <section style={fieldMatrixStyle}>
-        <Textarea label="textarea hover" defaultValue="Long text value" interaction="hovered" rows={3} />
-        <Textarea label="textarea focus" defaultValue="Long text value" interaction="focused" rows={3} />
-        <Textarea label="textarea disabled" defaultValue="Long text value" disabled rows={3} />
-        <Textarea label="textarea fixed" defaultValue="Fixed resize" resize="fixed" rows={3} />
-        <Textarea label="textarea limit" defaultValue="Limited resize" resize="limit" rows={3} />
+        <Textarea label="textarea hover" defaultValue="긴 텍스트 값" interaction="hovered" rows={3} />
+        <Textarea label="textarea focus" defaultValue="긴 텍스트 값" interaction="focused" rows={3} />
+        <Textarea label="textarea disabled" defaultValue="긴 텍스트 값" disabled rows={3} />
+        <Textarea label="textarea fixed" defaultValue="고정 크기" resize="fixed" rows={3} />
+        <Textarea label="textarea limit" defaultValue="제한 크기" resize="limit" rows={3} />
       </section>
 
       <section style={fieldMatrixStyle}>
         <Select
           label="select normal"
           defaultValue="alpha"
-          options={[{ value: 'alpha', label: 'Alpha' }, { value: 'beta', label: 'Beta' }]}
+          options={[{ value: 'alpha', label: '옵션 A' }, { value: 'beta', label: '옵션 B' }]}
         />
         <Select
           label="select hovered"
           interaction="hovered"
-          options={[{ value: 'alpha', label: 'Alpha' }, { value: 'beta', label: 'Beta' }]}
+          options={[{ value: 'alpha', label: '옵션 A' }, { value: 'beta', label: '옵션 B' }]}
         />
         <Select
           label="select open"
           defaultValue="alpha"
           interaction="open"
-          options={[{ value: 'alpha', label: 'Alpha' }, { value: 'beta', label: 'Beta' }, { value: 'gamma', label: 'Gamma' }]}
+          options={[{ value: 'alpha', label: '옵션 A' }, { value: 'beta', label: '옵션 B' }, { value: 'gamma', label: '옵션 C' }]}
         />
         <Select
           label="select overflow chip"
@@ -157,18 +151,18 @@ export const TextInputInteractionMatrix = {
           active
           defaultValue="long"
           iconLeft={<Icon name="filter" size={16} />}
-          options={[{ value: 'long', label: 'Very long selected value for overflow' }, { value: 'short', label: 'Short' }]}
+          options={[{ value: 'long', label: '오버플로 확인용으로 아주 길게 선택된 값' }, { value: 'short', label: '짧은 값' }]}
         />
         <Select
           label="select negative alias"
           negative
-          error="Check this message."
-          options={[{ value: 'alpha', label: 'Alpha' }]}
+          error="메시지를 확인해 주세요."
+          options={[{ value: 'alpha', label: '옵션 A' }]}
         />
         <Select
           label="select disable alias"
           disable
-          options={[{ value: 'alpha', label: 'Alpha' }]}
+          options={[{ value: 'alpha', label: '옵션 A' }]}
         />
       </section>
     </main>

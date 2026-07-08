@@ -5,7 +5,7 @@ const meta = {
   title: 'LDS Core/Components/Action/Button',
   component: Button,
   args: {
-    children: 'Action',
+    children: '버튼',
     variant: 'solid',
     color: 'primary',
     size: 'medium',
@@ -38,7 +38,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Action Button evidence for LDS variants, sizes, disabled state, loading state, icon content, full width, and dark-surface usage.',
+          'LDS Button의 variant, size, disabled, loading, 아이콘, full, 다크 서피스 사용을 확인합니다.',
       },
     },
   },
@@ -99,12 +99,12 @@ export const SizesAndStates = {
       </div>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
         <Button disabled>Disabled</Button>
-        <Button loading loadingLabel="Saving">
-          Saving
+        <Button loading loadingLabel="저장 중">
+          저장 중
         </Button>
         <Button variant="outlined" color="assistive">
           <Icon name="download" size={18} />
-          Export
+          내보내기
         </Button>
       </div>
       <div style={{ width: 'min(360px, 100%)' }}>
@@ -123,7 +123,7 @@ export const OnDark = {
   },
   render: () => (
     <div style={{ background: 'var(--surface-inverse)', padding: 28, borderRadius: 'var(--radius-lg)' }}>
-      <Button variant="on-dark">Details</Button>
+      <Button variant="on-dark">자세히 보기</Button>
     </div>
   ),
 };

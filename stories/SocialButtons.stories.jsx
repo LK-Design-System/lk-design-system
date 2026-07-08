@@ -1,7 +1,7 @@
 import { SocialLoginControls as SocialLoginControlsStory } from './ButtonsExtended.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Auth/Social Login',
+  title: 'LDS Product/Action/Social Login',
   parameters: {
     docs: {
       description: {

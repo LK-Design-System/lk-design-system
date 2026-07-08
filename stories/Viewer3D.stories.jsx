@@ -38,7 +38,7 @@ export const Scene3DOverview = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 840 }}>
       <Scene3DFrame
-        title="POINT CLOUD"
+        title="포인트 클라우드"
         badges={<ConnectionBadge status="online" size="sm" />}
         toolbar={(
           <ViewerToolbar orientation="horizontal">

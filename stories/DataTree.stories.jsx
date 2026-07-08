@@ -25,19 +25,19 @@ function TreeStatusDot({ tone = 'online' }) {
 const hierarchyNodes = [
   {
     id: 'workspace',
-    label: 'workspace',
+    label: '워크스페이스',
     icon: <Icon name="layers" size={16} />,
     children: [
       {
         id: 'components',
-        label: 'components',
+        label: '컴포넌트',
         icon: <TreeStatusDot tone="online" />,
         children: [
-          { id: 'buttons', label: '/buttons' },
-          { id: 'forms', label: '/forms' },
+          { id: 'buttons', label: '버튼' },
+          { id: 'forms', label: '폼' },
         ],
       },
-      { id: 'tokens', label: 'tokens', icon: <TreeStatusDot tone="disabled" /> },
+      { id: 'tokens', label: '토큰', icon: <TreeStatusDot tone="disabled" /> },
     ],
   },
 ];
@@ -52,13 +52,13 @@ export const TreeInteractionStates = {
           <Tree nodes={hierarchyNodes} style={{ alignSelf: 'start' }} />
         </div>
         <div style={{ display: 'grid', gridTemplateRows: 'auto 1fr', minHeight: 190, background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
-          <h3 style={{ margin: '0 0 var(--space-3)', fontSize: 14, lineHeight: 1.35, color: 'var(--label-neutral)' }}>Hover / focus</h3>
+          <h3 style={{ margin: '0 0 var(--space-3)', fontSize: 14, lineHeight: 1.35, color: 'var(--label-neutral)' }}>호버 / 포커스</h3>
           <Tree defaultExpanded={['workspace']} nodes={hierarchyNodes} openOnHover style={{ alignSelf: 'start' }} />
         </div>
         <div style={{ display: 'grid', gridTemplateRows: 'auto 1fr', minHeight: 190, background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-3)' }}>
             <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-neutral)' }}>열림</h3>
-            <StatusBadge tone="signal">2 nodes</StatusBadge>
+            <StatusBadge tone="signal">노드 2개</StatusBadge>
           </div>
           <Tree defaultExpanded={['workspace', 'components']} nodes={hierarchyNodes} openOnHover style={{ alignSelf: 'start' }} />
         </div>

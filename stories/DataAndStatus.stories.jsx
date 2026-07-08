@@ -1,4 +1,5 @@
 import { Icon, MetricCard } from '../src/index.js';
+import { StatCard as StatCardStory } from './CardsExtended.shared.jsx';
 
 const metricGridStyle = {
   display: 'grid',
@@ -12,7 +13,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '대시보드와 현황판에서 핵심 KPI를 같은 카드 구조로 보여주는 지표 패턴입니다.',
+        component: '대시보드와 현황판에서 핵심 KPI를 같은 카드 구조로 보여주는 지표 패턴입니다. Stat primitive의 시각 회귀 검증은 이 페이지의 숨김 parity story로 유지합니다.',
       },
     },
   },
@@ -33,10 +34,10 @@ export const Metrics = {
       />
       <MetricCard
         label="공개 스토리"
-        value="102"
+        value="103"
         delta="stable"
         deltaTone="flat"
-        caption="Storybook sidebar"
+        caption="Storybook 사이드바 기준"
         icon={<Icon name="document" size={22} />}
       />
       <MetricCard
@@ -50,9 +51,11 @@ export const Metrics = {
         label="대기 항목"
         value="14"
         delta={-2}
-        caption="parity audit queue"
+        caption="패리티 점검 대기열"
         icon={<Icon name="triangle-exclamation" size={22} />}
       />
     </main>
   ),
 };
+
+export const StatCard = { ...StatCardStory, name: 'Stat card parity', tags: ['!dev', 'visual-parity'] };

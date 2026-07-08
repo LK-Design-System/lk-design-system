@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Loading primitives aligned with Loading, Circular loading, and Skeleton resources.',
+        component: 'Loading, Circular loading, Skeleton 리소스에 맞춘 로딩 프리미티브입니다.',
       },
     },
   },
@@ -38,16 +38,16 @@ export const LoadingStates = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 900 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
-        <DemoCard title="Wanted loading and circular loading">
+        <DemoCard title="기본 로딩과 서큘러 로딩">
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)', flexWrap: 'wrap' }}>
             <Spinner variant="wanted" size={44} />
-            <Spinner variant="wanted" size={54} label="Loading" />
+            <Spinner variant="wanted" size={54} label="불러오는 중" />
             <Spinner size={30} />
-            <Spinner size={44} label="Generating report" />
+            <Spinner size={44} label="리포트 생성 중" />
           </div>
         </DemoCard>
 
-        <DemoCard title="Text skeleton length and alignment">
+        <DemoCard title="텍스트 스켈레톤 길이와 정렬">
           <div style={{ display: 'grid', gap: 14 }}>
             <Skeleton variant="text" length="100%" lines={1} />
             <Skeleton variant="text" length="75%" lines={1} align="center" />
@@ -58,12 +58,12 @@ export const LoadingStates = {
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
-        <DemoCard title="Rectangle customization">
+        <DemoCard title="사각형 스켈레톤 커스터마이징">
           <Skeleton variant="rect" width="100%" height={116} radius={12} color="var(--lk-accent-tint-2)" opacity={0.95} />
           <Skeleton variant="text" lines={2} width="82%" style={{ marginTop: 2 }} />
         </DemoCard>
 
-        <DemoCard title="Circle customization">
+        <DemoCard title="원형 스켈레톤 커스터마이징">
           <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
             <Skeleton variant="circle" width={44} color="var(--fill-strong)" />
             <div style={{ flex: 1 }}>
@@ -73,7 +73,7 @@ export const LoadingStates = {
         </DemoCard>
       </section>
 
-      <DemoCard title="Inverse surface">
+      <DemoCard title="인버스 서피스">
         <div style={{ padding: 16, borderRadius: 'var(--radius-lg)', background: 'var(--surface-inverse)' }}>
           <Skeleton variant="text" lines={2} color="white" />
         </div>

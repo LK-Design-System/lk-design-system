@@ -112,6 +112,7 @@
   --status-cautionary-tint: rgba(194, 154, 82, 0.18);
   --status-danger-tint:     rgba(207, 99, 96, 0.14);
   --color-danger-strong:    #FF4242;                   /* safety-critical only (e-stop, collision) — vivid exception to the muted status palette */
+  --color-danger-text:      #AE4E4B;                   /* AA text variant of --bw-red for text on light surfaces (>=4.5:1 on white) */
 
   --border-subtle:          var(--bw-border);
   --border-strong:          var(--bw-gray-300);

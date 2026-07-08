@@ -31,7 +31,9 @@ export function DataToolbar({
     onSearchChange && onSearchChange(value);
   };
   const compact = size === 'sm';
-  const controlHeight = compact ? 34 : 38;
+  // Control scale: sm 32 (compact) / 40 (button md step) — keeps toolbar rows
+  // flush with the sm/md button heights beside them.
+  const controlHeight = compact ? 'var(--control-h-sm)' : 40;
 
   return (
     <div
@@ -50,12 +52,12 @@ export function DataToolbar({
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minWidth: 0 }}>
         <div style={{ display: 'grid', gap: 3, minWidth: 0 }}>
-          {title != null && <strong style={{ color: 'var(--label-strong)', fontSize: compact ? 14 : 15.5, lineHeight: 1.35 }}>{title}</strong>}
-          {description != null && <span style={{ color: 'var(--label-alternative)', fontSize: compact ? 12.5 : 13, lineHeight: 1.45 }}>{description}</span>}
+          {title != null && <strong style={{ color: 'var(--label-strong)', fontSize: compact ? 'var(--label1-size)' : 'var(--body2-size)', fontWeight: 'var(--fw-semibold)', lineHeight: 1.35 }}>{title}</strong>}
+          {description != null && <span style={{ color: 'var(--label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 1.45 }}>{description}</span>}
         </div>
         {(count != null || actions != null) && (
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', marginLeft: 'auto' }}>
-            {count != null && <span style={{ color: 'var(--label-alternative)', fontSize: 12.5, fontVariantNumeric: 'tabular-nums' }}>{count}개</span>}
+            {count != null && <span style={{ color: 'var(--label-alternative)', fontSize: 'var(--label2-size)', fontVariantNumeric: 'tabular-nums' }}>{count}개</span>}
             {actions}
           </div>
         )}
@@ -80,7 +82,7 @@ export function DataToolbar({
               background: 'var(--surface-raised)',
               color: 'var(--label-normal)',
               fontFamily: 'var(--font-sans)',
-              fontSize: 13.5,
+              fontSize: 'var(--label1-size)',
               outline: 'none',
             }}
           />

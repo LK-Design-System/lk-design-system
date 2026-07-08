@@ -5,4 +5,5 @@
 <Link href="https://example.com" external>외부 문서</Link>
 ```
 
-- **tone** `signal · neutral · inherit`. **underline** `none · hover · always`. **external** — 새 탭 + 외부 링크 화살표 + 안전한 rel. 독립형 텍스트 CTA에는 `TextButton`을 쓰세요.
+- **tone** `signal · neutral · inherit`. **underline** `none · hover · always`. **external** — 새 탭 + 외부 링크 화살표 + 안전한 rel.
+- Link는 밑줄 제어가 있는 앵커/내비게이션 전용입니다. 사이즈·로딩 상태가 필요한 버튼형 액션(독립형 텍스트 CTA)에는 `TextButton`을 쓰세요.

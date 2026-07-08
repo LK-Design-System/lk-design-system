@@ -77,16 +77,16 @@ export const SelectionGroups = {
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-4)' }}>
         <ChoiceCard presentation="frame" selected padding="lg">
           <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
-            <strong style={{ fontSize: 14, color: 'var(--label-normal)' }}>Framed selection</strong>
-            <Checkbox label="Checkbox treatment" defaultChecked />
-            <Checkbox variant="mark" label="Check mark treatment" defaultChecked />
+            <strong style={{ fontSize: 14, color: 'var(--label-normal)' }}>프레임 선택 카드</strong>
+            <Checkbox label="체크박스 형태" defaultChecked />
+            <Checkbox variant="mark" label="체크 마크 형태" defaultChecked />
           </div>
         </ChoiceCard>
         <ChoiceCard presentation="frame" interaction="focused" padding="lg">
           <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
-            <strong style={{ fontSize: 14, color: 'var(--label-normal)' }}>Focused control group</strong>
-            <Input aria-label="group label" defaultValue="Selected option" />
-            <Switch label="Enabled" defaultChecked />
+            <strong style={{ fontSize: 14, color: 'var(--label-normal)' }}>포커스된 컨트롤 그룹</strong>
+            <Input aria-label="그룹 라벨" defaultValue="선택된 옵션" />
+            <Switch label="사용함" defaultChecked />
           </div>
         </ChoiceCard>
       </section>

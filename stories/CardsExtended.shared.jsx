@@ -21,7 +21,7 @@ export const ProductAndContentCards = {
           description="토큰, 컴포넌트, 문서 예제를 하나의 패키지로 제공합니다."
         />
         <NewsCard
-          category="PRESS"
+          category="보도자료"
           title="디자인 시스템 문서 개편"
           excerpt="카드 안에서 제목, 요약, 출처, 액션의 위계를 확인하는 예제입니다."
           source="Design System"
@@ -247,7 +247,7 @@ export const StatCard = {
       <Card elevation="sm" padding={22} style={{ width: 260 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <Stat value="156" label="구현 검증" accent="signal" />
-          <Stat value="101" label="공개 스토리" accent="ink" />
+          <Stat value="103" label="공개 스토리" accent="ink" />
         </div>
       </Card>
     </div>

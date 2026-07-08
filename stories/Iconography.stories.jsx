@@ -35,10 +35,10 @@ const counts = {
 };
 
 const sourceLabel = {
-  'base-normal': 'Base normal',
-  'base-navigation': 'Base navigation',
-  'base-color': 'Base color',
-  'lds-legacy': 'LDS extension',
+  'base-normal': '기본 일반',
+  'base-navigation': '기본 내비게이션',
+  'base-color': '기본 컬러',
+  'lds-legacy': 'LDS 확장',
 };
 
 const meta = {
@@ -47,7 +47,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'LDS imports the base icon set, then keeps a small LK Robotics extension set for domain-specific controls.',
+          'LDS는 기본 아이콘 세트를 가져오고, 도메인 전용 컨트롤을 위한 소규모 LK ROBOTICS 확장 세트를 유지합니다.',
       },
     },
   },
@@ -126,15 +126,15 @@ export const IconRegistry = {
           }}
         >
           <div style={{ padding: 14, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>Base icon names</div>
+            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>기본 아이콘 이름</div>
             <strong style={{ display: 'block', marginTop: 4, fontSize: 24 }}>{counts.baseIconNames}</strong>
           </div>
           <div style={{ padding: 14, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>Color icon page owns</div>
+            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>컬러 아이콘 페이지 소속</div>
             <strong style={{ display: 'block', marginTop: 4, fontSize: 24 }}>{counts.colorIconNames}</strong>
           </div>
           <div style={{ padding: 14, border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
-            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>Robotics icon page owns</div>
+            <div style={{ fontSize: 12, color: 'var(--label-alternative)' }}>로보틱스 아이콘 페이지 소속</div>
             <strong style={{ display: 'block', marginTop: 4, fontSize: 24 }}>{counts.roboticsExtensionIconNames}</strong>
           </div>
         </section>

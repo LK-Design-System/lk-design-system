@@ -149,6 +149,7 @@
           "status": "covered",
           "ldsCoverage": [
             "stories/FormsFull.stories.jsx",
+            "stories/FormAdvancedInputs.stories.jsx",
             "stories/FormSelectionControls.stories.jsx",
             "stories/FormSearchAutocomplete.stories.jsx",
             "stories/FormRangeControls.stories.jsx",

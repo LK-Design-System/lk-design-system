@@ -12,7 +12,7 @@ export function MetricCard({ label, value, delta, deltaTone = 'auto', caption, i
   const dc = up ? 'var(--bw-green)' : tone === 'down' ? 'var(--bw-red)' : 'var(--label-alternative)';
   const deltaText = typeof delta === 'number' ? `${delta > 0 ? '+' : ''}${delta}%` : delta;
   return (
-    <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: '22px 24px', boxShadow: 'var(--shadow-xs)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+    <div style={{ background: 'var(--component-card-bg)', border: 'var(--component-card-border)', borderRadius: 'var(--component-card-radius)', padding: '22px 24px', boxShadow: 'var(--shadow-xs)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 14 }}>
         <span style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', letterSpacing: '1.4px', textTransform: 'uppercase', color: 'var(--label-alternative)' }}>{label}</span>
         {icon && <span style={{ color: 'var(--lk-accent-ink)', display: 'inline-flex' }}>{icon}</span>}

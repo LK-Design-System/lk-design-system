@@ -3,7 +3,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Decorate coverage for gradient, mask, and interaction overlay primitives.',
+        component: '그라디언트, 마스크, 인터랙션 오버레이 프리미티브를 다루는 Decorate 커버리지입니다.',
       },
     },
   },
@@ -116,17 +116,17 @@ export const GradientTokens = {
           Decorate / Gradient
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          Decorative gradients are tokenized by type and direction
+          장식용 그라디언트는 유형과 방향으로 토큰화되어 있습니다
         </h1>
         <p style={{ margin: 0, maxWidth: 820, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The decorate source separates Solid, Multiple, and Mask gradients. LDS keeps the same categories with top,
-          right, bottom, and left direction tokens.
+          Decorate 소스는 Solid, Multiple, Mask 그라디언트를 구분합니다. LDS는 같은 분류를 유지하면서 top,
+          right, bottom, left 방향 토큰을 제공합니다.
         </p>
       </header>
 
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <h2 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
-          Solid and multiple
+          Solid와 Multiple
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 'var(--space-3)' }}>
           {gradientTokens.map(([label, token]) => (
@@ -137,7 +137,7 @@ export const GradientTokens = {
 
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <h2 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
-          Mask
+          마스크
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 'var(--space-3)' }}>
           {maskTokens.map(([label, token]) => (
@@ -158,11 +158,11 @@ export const InteractionTokens = {
           Decorate / Interaction
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          Interaction decoration uses layer and state tokens
+          인터랙션 장식은 레이어와 상태 토큰을 사용합니다
         </h1>
         <p style={{ margin: 0, maxWidth: 780, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The source names interaction variants and states separately. LDS maps those into layer tokens and opacity
-          state tokens so components do not invent one-off hover or pressed visuals.
+          소스는 인터랙션 변형과 상태를 따로 명명합니다. LDS는 이를 레이어 토큰과 불투명도 상태 토큰으로 매핑해
+          컴포넌트가 임의의 hover, pressed 표현을 만들지 않게 합니다.
         </p>
       </header>
 
@@ -194,7 +194,7 @@ export const InteractionTokens = {
       </section>
 
       <section style={panelStyle}>
-        <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>State opacity</h2>
+        <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>상태 불투명도</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 'var(--space-3)' }}>
           {interactionStates.map(([label, token]) => (
             <div key={token} style={{ display: 'grid', gap: 'var(--space-2)' }}>

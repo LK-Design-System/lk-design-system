@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Compact navigation patterns for constrained surfaces, including Page Indicator and Pagination.',
+        component: 'Page Indicator와 Pagination을 포함해 좁은 화면을 위한 컴팩트 내비게이션 패턴입니다.',
       },
     },
   },
@@ -32,7 +32,7 @@ export const PaginationPatterns = {
   name: 'Page indicator and pagination',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 880 }}>
-      <Section title="Page indicator counter and dots">
+      <Section title="페이지 인디케이터 카운터와 도트">
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
           <PageIndicator page={1} count={10} size="small" />
           <PageIndicator page={1} count={10} size="medium" />
@@ -44,7 +44,7 @@ export const PaginationPatterns = {
         </div>
       </Section>
 
-      <Section title="Pagination variants and control slots">
+      <Section title="페이지네이션 변형과 컨트롤 슬롯">
         <div style={{ display: 'grid', gap: 18 }}>
           <Pagination page={6} count={24} variant="extended" pageSize={20} showCounter showPageJump />
           <Pagination page={6} count={24} variant="compact" showCounter />

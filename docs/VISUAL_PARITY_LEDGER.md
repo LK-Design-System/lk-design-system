@@ -16,10 +16,10 @@ coverage, visual regression commands, and release-blocking pixel-diff gates.
 | Runtime export gaps | 0 | No public export gap required by source cards |
 | React component entry exports | 156 | Public package component entries covered by checks |
 | Named public exports | 160 | Public package surface covered by type checks |
-| Storybook public stories | 101 | Component and pattern surfaces only |
+| Storybook public stories | 103 | Component and pattern surfaces only |
 | Storybook hidden visual parity stories | 82 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 193 | Current implementation stories captured by visual inventory |
-| Accessibility checked implementation stories | 193 | Current implementation stories checked by accessibility guard |
+| Visual inventory React stories | 195 | Current implementation stories captured by visual inventory |
+| Accessibility checked implementation stories | 195 | Current implementation stories checked by accessibility guard |
 
 `components/navigation/navigation-footer.card.html` uses a namespace fallback
 to reference `Footer`, but it is still part of the original preview target and

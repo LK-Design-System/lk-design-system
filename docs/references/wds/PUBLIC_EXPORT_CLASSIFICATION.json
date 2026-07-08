@@ -65,7 +65,7 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
-        "stories/ButtonsExtended.stories.jsx",
+        "stories/ActionUtility.stories.jsx",
         "stories/SocialButtons.stories.jsx"
       ],
       "exports": [
@@ -97,7 +97,6 @@
         "stories/CardInfo.stories.jsx",
         "stories/CardNews.stories.jsx",
         "stories/CardSpecs.stories.jsx",
-        "stories/CardStats.stories.jsx",
         "stories/CardsExtended.stories.jsx",
         "stories/DataAndStatus.stories.jsx"
       ],
@@ -159,7 +158,7 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
-        "stories/DataAndStatus.stories.jsx",
+        "stories/ContentMedia.stories.jsx",
         "stories/DataCalendar.stories.jsx",
         "stories/DataDisplay.stories.jsx",
         "stories/DataTablesHierarchy.stories.jsx",
@@ -237,8 +236,9 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateTime.stories.jsx",
-        "stories/FormsFull.stories.jsx"
+        "stories/FormSelectionControls.stories.jsx"
       ],
       "exports": [
         "ColorSwatch",
@@ -367,7 +367,7 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
-        "stories/NavigationCompact.stories.jsx"
+        "stories/LayoutPageHeader.stories.jsx"
       ],
       "exports": [
         "FloorSelector"

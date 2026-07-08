@@ -1,11 +1,11 @@
-import { ActionArea, Button, Chip, Icon, IconButton, TextButton, ToggleIcon } from '../src/index.js';
+import { ActionArea, Button, Icon, IconButton, TextButton, ToggleIcon } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/Components/Action/Action Area',
+  title: 'LDS Core/Components/Action/Action Overview',
   parameters: {
     docs: {
       description: {
-        component: 'Action coverage for Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon.',
+        component: 'Action Area, Button, Text Button, Icon Button, Chip, Toggle Icon을 아우르는 액션 컴포넌트 모음입니다.',
       },
     },
   },
@@ -30,11 +30,11 @@ export const ActionTaxonomy = {
           Action
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          Action controls share one taxonomy
+          액션 컨트롤은 하나의 체계를 공유합니다
         </h1>
         <p style={{ margin: 0, maxWidth: 820, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The action system groups Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon together.
-          LDS keeps those roles explicit so action styling does not drift across separate stories.
+          액션 시스템은 Action Area, Button, Text Button, Icon Button, Chip, Toggle Icon을 하나로 묶어 관리합니다.
+          LDS는 각 역할을 명시적으로 유지해 스토리마다 액션 스타일이 어긋나지 않도록 합니다.
         </p>
       </header>
 
@@ -42,49 +42,38 @@ export const ActionTaxonomy = {
         <article style={panelStyle}>
           <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>Button</h2>
           <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-            <Button>Main action</Button>
+            <Button>로봇 등록</Button>
             <Button variant="outlined" color="primary">Outlined</Button>
           </div>
         </article>
         <article style={panelStyle}>
           <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>Text Button</h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
-            <TextButton color="primary">More</TextButton>
-            <TextButton color="assistive">Cancel</TextButton>
-            <TextButton loading loadingLabel="Loading more">Loading</TextButton>
+            <TextButton color="primary">더보기</TextButton>
+            <TextButton color="assistive">취소</TextButton>
+            <TextButton loading loadingLabel="불러오는 중">Loading</TextButton>
           </div>
         </article>
         <article style={panelStyle}>
           <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>Icon Button</h2>
           <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-            <IconButton label="Search" size="small"><Icon name="search" size={18} /></IconButton>
-            <IconButton label="Add" size="medium" variant="solid"><Icon name="plus" size={18} /></IconButton>
-            <IconButton label="Custom" size="custom" variant="ghost"><Icon name="settings" size={16} /></IconButton>
-          </div>
-        </article>
-        <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>Chip</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-            <Chip size="xsmall">XS</Chip>
-            <Chip size="small">Small</Chip>
-            <Chip size="medium">Medium</Chip>
-            <Chip size="large">Large</Chip>
-            <Chip active>Active</Chip>
-            <Chip variant="solid">Solid</Chip>
-            <Chip variant="outlined">Outlined</Chip>
-            <Chip leading={<Icon name="filter" size={14} />}>Icon</Chip>
-            <Chip thumbnail={<span style={{ width: '100%', height: '100%', background: 'var(--lk-accent-tint-2)' }} />}>Thumb</Chip>
-            <Chip disable>Disabled</Chip>
+            <IconButton label="검색" size="small"><Icon name="search" size={18} /></IconButton>
+            <IconButton label="추가" size="medium" variant="solid"><Icon name="plus" size={18} /></IconButton>
+            <IconButton label="설정" size="custom" variant="ghost"><Icon name="settings" size={16} /></IconButton>
           </div>
         </article>
         <article style={panelStyle}>
           <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>Toggle Icon</h2>
           <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-            <ToggleIcon label="Show preview" defaultPressed><Icon name="eye" size={18} /></ToggleIcon>
-            <ToggleIcon label="Favorite"><Icon name="star" size={18} /></ToggleIcon>
+            <ToggleIcon label="미리보기 표시" defaultPressed><Icon name="eye" size={18} /></ToggleIcon>
+            <ToggleIcon label="즐겨찾기"><Icon name="star" size={18} /></ToggleIcon>
           </div>
         </article>
       </section>
+
+      <p style={{ margin: 0, color: 'var(--label-alternative)', fontSize: 13, lineHeight: 1.6 }}>
+        Chip 변형은 Selection and Input/Chip 페이지와 Content/Badges and Tags 페이지에서 확인합니다.
+      </p>
     </main>
   ),
 };
@@ -98,7 +87,7 @@ export const BottomActionArea = {
           Action / Action Area
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          Action Area owns bottom placement, divider, caption, sticky, and safe-area padding
+          Action Area가 하단 배치, 구분선, 캡션, 스티키, 세이프 에어리어 패딩을 담당합니다
         </h1>
       </header>
 
@@ -115,15 +104,15 @@ export const BottomActionArea = {
           }}
         >
           <div style={{ padding: 'var(--space-5)', color: 'var(--label-neutral)', lineHeight: 1.6 }}>
-            Content area
+            콘텐츠 영역
           </div>
           <ActionArea
             safeArea
-            summary={<><strong>Summary</strong><span style={{ color: 'var(--label-neutral)' }}>Value and status can sit above actions.</span></>}
-            caption="Optional caption explains the consequence of the primary action."
+            summary={<><strong>요약</strong><span style={{ color: 'var(--label-neutral)' }}>값과 상태를 액션 위에 표시할 수 있습니다.</span></>}
+            caption="캡션은 주요 동작의 결과를 설명하는 선택 요소입니다."
           >
-            <Button variant="solid" color="primary" style={{ flex: 1 }}>Main action</Button>
-            <Button variant="outlined" color="assistive" style={{ flex: 1 }}>Alternative</Button>
+            <Button variant="solid" color="primary" style={{ flex: 1 }}>배차 시작</Button>
+            <Button variant="outlined" color="assistive" style={{ flex: 1 }}>나중에</Button>
           </ActionArea>
         </div>
       </section>

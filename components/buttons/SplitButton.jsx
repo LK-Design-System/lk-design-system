@@ -15,17 +15,18 @@ export function SplitButton({ children, onClick, items = [], variant = 'primary'
     return () => document.removeEventListener('mousedown', onDoc);
   }, [open]);
   const pal = variant === 'signal' ? { bg: 'var(--lk-accent-ink)', fg: 'var(--text-on-signal)' } : variant === 'dark' ? { bg: 'var(--surface-inverse)', fg: 'var(--text-on-inverse)' } : variant === 'secondary' ? { bg: 'var(--bw-indigo)', fg: 'var(--text-on-signal)' } : { bg: 'var(--color-primary)', fg: 'var(--text-on-signal)' };
+  // Intentionally larger than the Button height scale (32/40/48) — hero CTA geometry.
   const h = size === 'sm' ? 44 : 52;
   return (
     <div ref={ref} style={{ position: 'relative', display: 'inline-flex', ...style }} {...rest}>
-      <button type="button" onClick={onClick} style={{ height: h, padding: '0 20px', border: 'none', borderTopLeftRadius: 'var(--radius-md)', borderBottomLeftRadius: 'var(--radius-md)', background: pal.bg, color: pal.fg, cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 16, fontWeight: 'var(--fw-bold)', letterSpacing: 0 }}>{children}</button>
+      <button type="button" onClick={onClick} style={{ height: h, padding: '0 20px', border: 'none', borderTopLeftRadius: 'var(--radius-md)', borderBottomLeftRadius: 'var(--radius-md)', background: pal.bg, color: pal.fg, cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-button-font-size-lg)', fontWeight: 'var(--fw-bold)', letterSpacing: 0 }}>{children}</button>
       <button type="button" aria-label="more actions" onClick={() => setOpen((o) => !o)} style={{ height: h, width: 42, border: 'none', borderLeft: '1px solid var(--inverse-line-strong)', borderTopRightRadius: 'var(--radius-md)', borderBottomRightRadius: 'var(--radius-md)', background: pal.bg, color: pal.fg, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
       </button>
       {open && (
-        <div role="menu" style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, zIndex: 40, minWidth: 184, background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6 }}>
+        <div role="menu" style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, zIndex: 40, minWidth: 184, background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--component-menu-radius)', boxShadow: 'var(--shadow-md)', padding: 'var(--component-menu-padding-y) var(--component-menu-padding-x)' }}>
           {items.map((it, i) => (
-            <button key={i} type="button" role="menuitem" onClick={() => { setOpen(false); it.onClick && it.onClick(); }} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--fill-normal)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', border: 'none', background: 'transparent', cursor: 'pointer', borderRadius: 'var(--radius-md)', textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 14.5, fontWeight: 'var(--fw-medium)', color: 'var(--label-normal)' }}>
+            <button key={i} type="button" role="menuitem" onClick={() => { setOpen(false); it.onClick && it.onClick(); }} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--component-menu-item-hover-bg)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', border: 'none', background: 'transparent', cursor: 'pointer', borderRadius: 'var(--radius-md)', textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--body1-size)', fontWeight: 'var(--fw-medium)', color: 'var(--label-normal)' }}>
               {it.icon}
               <span>{it.label}</span>
             </button>

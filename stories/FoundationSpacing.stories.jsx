@@ -6,7 +6,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Spacing coverage for safe-area spacing: status bar, home indicator, bottom navigation, and bottom actions.',
+          '상태 바, 홈 인디케이터, 하단 내비게이션, 하단 액션 등 세이프 에어리어 간격을 다루는 Spacing 커버리지입니다.',
       },
     },
   },
@@ -78,7 +78,7 @@ const homeIndicatorStyle = {
   background: 'var(--fill-alt)',
 };
 
-const navItems = ['Home', 'Career', 'Social', 'My', 'Menu'];
+const navItems = ['홈', '모니터링', '배차', '알림', '메뉴'];
 
 function HomeIndicator() {
   return (
@@ -130,9 +130,9 @@ function PhoneFrame({ variant = 'status', actionInset = false }) {
         <span>LTE 100%</span>
       </div>
       <div style={appBarStyle}>
-        <span>Back</span>
-        <span>Title</span>
-        <span>More</span>
+        <span>뒤로</span>
+        <span>제목</span>
+        <span>더보기</span>
       </div>
       <div style={{ background: 'var(--surface-page)' }} />
       {variant === 'bottom' ? (
@@ -151,7 +151,7 @@ function PhoneFrame({ variant = 'status', actionInset = false }) {
             background: 'var(--surface-card)',
           }}
         >
-          <Button full>Main action</Button>
+          <Button full>주요 액션</Button>
         </div>
       )}
       <div style={homeIndicatorStyle}>
@@ -162,12 +162,12 @@ function PhoneFrame({ variant = 'status', actionInset = false }) {
 }
 
 const tokenRows = [
-  ['Status safe area', '--mobile-safe-area-top', 'env(safe-area-inset-top)'],
-  ['Status minimum height', '--mobile-status-bar-min-height', '44px'],
-  ['Bottom safe area', '--mobile-safe-area-bottom', 'env(safe-area-inset-bottom)'],
-  ['Home indicator', '--mobile-home-indicator-height', '34px'],
-  ['Bottom bar minimum', '--mobile-bottom-bar-min-height', '64px'],
-  ['Bottom action padding', '--mobile-bottom-action-padding-bottom', 'space-4 + safe-area-bottom'],
+  ['상태 영역 세이프 에어리어', '--mobile-safe-area-top', 'env(safe-area-inset-top)'],
+  ['상태 바 최소 높이', '--mobile-status-bar-min-height', '44px'],
+  ['하단 세이프 에어리어', '--mobile-safe-area-bottom', 'env(safe-area-inset-bottom)'],
+  ['홈 인디케이터', '--mobile-home-indicator-height', '34px'],
+  ['하단 바 최소 높이', '--mobile-bottom-bar-min-height', '64px'],
+  ['하단 액션 패딩', '--mobile-bottom-action-padding-bottom', 'space-4 + safe-area-bottom'],
 ];
 
 export const MobileSafeAreaSpacing = {
@@ -179,42 +179,42 @@ export const MobileSafeAreaSpacing = {
           Spacing / Safe Area
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          Status and bottom safe areas are spacing tokens
+          상태 영역과 하단 세이프 에어리어는 간격 토큰입니다
         </h1>
         <p style={{ margin: 0, maxWidth: 780, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The spacing source separates the status area and bottom area. LDS keeps those offsets as runtime spacing tokens
-          instead of hiding them inside individual mobile components.
+          Spacing 소스는 상태 영역과 하단 영역을 구분합니다. LDS는 이 오프셋을 개별 모바일 컴포넌트 안에 숨기지 않고
+          런타임 간격 토큰으로 유지합니다.
         </p>
       </header>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-5)' }}>
         <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>Status</h2>
+          <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>상태 영역</h2>
           <PhoneFrame />
           <p style={{ margin: 'var(--space-4) 0 0', color: 'var(--label-neutral)', lineHeight: 1.6 }}>
-            The top status region combines the status-bar minimum height and safe-area top inset.
+            상단 상태 영역은 상태 바 최소 높이와 세이프 에어리어 상단 인셋을 합쳐 구성합니다.
           </p>
         </article>
 
         <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>Bottom</h2>
+          <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>하단 내비게이션</h2>
           <PhoneFrame variant="bottom" />
           <p style={{ margin: 'var(--space-4) 0 0', color: 'var(--label-neutral)', lineHeight: 1.6 }}>
-            Bottom navigation keeps the home indicator and safe-area bottom as part of its layout rhythm.
+            하단 내비게이션은 홈 인디케이터와 하단 세이프 에어리어를 레이아웃 리듬의 일부로 유지합니다.
           </p>
         </article>
 
         <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>Bottom action</h2>
+          <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>하단 액션</h2>
           <PhoneFrame actionInset />
           <p style={{ margin: 'var(--space-4) 0 0', color: 'var(--label-neutral)', lineHeight: 1.6 }}>
-            Fixed bottom actions include the bottom safe area so the tappable area remains visible and reachable.
+            고정된 하단 액션은 하단 세이프 에어리어를 포함해 터치 영역이 항상 보이고 닿을 수 있게 합니다.
           </p>
         </article>
       </section>
 
       <section style={panelStyle}>
-        <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>Runtime tokens</h2>
+        <h2 style={{ margin: '0 0 var(--space-3)', fontSize: 18, color: 'var(--label-strong)' }}>런타임 토큰</h2>
         <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
           {tokenRows.map(([label, token, note]) => (
             <div

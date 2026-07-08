@@ -4,7 +4,6 @@ import {
   BottomNav,
   Breadcrumb,
   Button,
-  FloorSelector,
   Footer,
   Icon,
   IconButton,
@@ -96,7 +95,7 @@ export const AppNavigation = {
             style={{ height: 312 }}
             header={<Lockup variant="inline" height={22} />}
             headerCollapsed={<Lockup variant="mark" height={22} />}
-            footer={<UserMenu name="운영자" detail="Admin" status="online" collapsed={sideCollapsed} items={[{ label: '프로필' }, { label: '로그아웃', danger: true }]} />}
+            footer={<UserMenu name="운영자" detail="관리자" status="online" collapsed={sideCollapsed} items={[{ label: '프로필' }, { label: '로그아웃', danger: true }]} />}
           />
           <div style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0 }}>
             <Breadcrumb items={[{ label: '홈', href: '#' }, { label: '문서', href: '#' }, { label: '개요' }]} />
@@ -192,7 +191,6 @@ export const CompactNavigation = {
               { href: '#history', label: '변경 이력', level: 1 },
             ]}
           />
-          <FloorSelector floors={['B1', '1F', '2F', '3F']} defaultValue="2F" />
           <Pagination page={4} count={12} />
         </div>
       </section>

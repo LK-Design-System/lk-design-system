@@ -1,4 +1,5 @@
 import React from 'react';
+import { pillChipStyle } from './pill-chip-style.js';
 
 /**
  * LK ROBOTICS — MultiSelectChip
@@ -30,16 +31,10 @@ export function MultiSelectChip({
       disabled={disabled}
       onClick={toggle}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 6, height: 38,
+        ...pillChipStyle(on, disabled), gap: 6,
         padding: on ? '0 15px 0 11px' : '0 15px',
-        background: on ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)',
-        border: `1px solid ${on ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`,
-        borderRadius: 'var(--radius-pill)', cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 14,
-        fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-        color: on ? 'var(--lk-accent-ink)' : 'var(--label-neutral)',
         transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), padding var(--dur-fast) var(--ease-out)',
-        whiteSpace: 'nowrap', ...style,
+        ...style,
       }}
       {...rest}
     >

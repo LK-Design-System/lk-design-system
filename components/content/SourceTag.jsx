@@ -22,7 +22,7 @@ export function SourceTag({ children, label = 'SOURCE', href, tone = 'default', 
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 8, height: 26, paddingInline: 11,
+        display: 'inline-flex', alignItems: 'center', gap: 8, height: 'var(--component-tag-height)', paddingInline: 11,
         borderRadius: 'var(--radius-pill)',
         background: onDark ? 'var(--inverse-fill-normal)' : 'var(--fill-normal)',
         border: `1px solid ${onDark ? 'var(--inverse-fill-strong)' : 'var(--line-normal)'}`,

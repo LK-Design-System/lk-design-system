@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Modal feedback alert patterns aligned with Alert platform treatments.',
+        component: 'Alert 플랫폼별 처리에 맞춘 모달 피드백 알럿 패턴입니다.',
       },
     },
   },
@@ -23,12 +23,12 @@ const alertVariantColor = {
   assistive: 'var(--label-neutral)',
 };
 
-function AlertPreview({ platform, heading = true, variant = 'negative', title = 'Delete report?', body = 'This action cannot be undone.' }) {
+function AlertPreview({ platform, heading = true, variant = 'negative', title = '리포트를 삭제할까요?', body = '이 작업은 되돌릴 수 없습니다.' }) {
   const ios = platform === 'ios';
   const android = platform === 'android';
   const width = ios ? 210 : android ? 230 : 250;
   const accent = alertVariantColor[variant] || alertVariantColor.normal;
-  const primaryLabel = variant === 'negative' ? 'Delete' : variant === 'assistive' ? 'Got it' : 'Confirm';
+  const primaryLabel = variant === 'negative' ? '삭제' : variant === 'assistive' ? '알겠어요' : '확인';
 
   return (
     <section style={{ display: 'grid', gap: 12 }}>
@@ -63,7 +63,7 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
           </p>
           <div style={{ display: 'flex', justifyContent: ios ? 'center' : 'flex-end', gap: 8, marginTop: 18 }}>
             <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? 'var(--fill-normal)' : 'transparent', color: 'var(--label-normal)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
-              Cancel
+              취소
             </button>
             <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? accent : 'transparent', color: ios ? 'var(--text-on-inverse)' : accent, fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
               {primaryLabel}
@@ -84,8 +84,8 @@ export const AlertPlatformPreview = {
       <div style={{ padding: 24, borderRadius: 'var(--radius-lg)', background: 'var(--bw-mist)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18, alignItems: 'start' }}>
           <AlertPreview platform="ios" variant="negative" />
-          <AlertPreview platform="android" variant="normal" title="Publish changes?" body="The selected updates will be visible to members." />
-          <AlertPreview platform="web" variant="assistive" heading={false} body="The shortcut can be changed later from settings." />
+          <AlertPreview platform="android" variant="normal" title="변경 사항을 게시할까요?" body="선택한 업데이트가 구성원에게 공개됩니다." />
+          <AlertPreview platform="web" variant="assistive" heading={false} body="단축키는 설정에서 나중에 변경할 수 있습니다." />
         </div>
       </div>
     </main>

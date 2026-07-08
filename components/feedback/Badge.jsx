@@ -8,7 +8,7 @@ const COLORS = {
   red:    'var(--bw-red)',
   // aliases
   indigo: 'var(--surface-inverse)',
-  green:  'var(--bw-blue)',
+  green:  'var(--bw-green)',
   ink:    'var(--surface-inverse)',
 };
 

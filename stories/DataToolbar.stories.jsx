@@ -20,9 +20,9 @@ const meta = {
 export default meta;
 
 const rows = [
-  { id: 'USR-104', group: '운영', status: 'active', progress: 86 },
-  { id: 'USR-212', group: '검토', status: 'review', progress: 47 },
-  { id: 'USR-318', group: '지원', status: 'disabled', progress: 12 },
+  { id: 'USR-104', group: '운영', status: '활성', progress: 86 },
+  { id: 'USR-212', group: '검토', status: '검토 중', progress: 47 },
+  { id: 'USR-318', group: '지원', status: '비활성', progress: 12 },
 ];
 
 const selectedRows = [0, 1];
@@ -30,8 +30,8 @@ const selectedRows = [0, 1];
 const columns = [
   { key: 'id', label: '계정', sortable: true },
   { key: 'group', label: '그룹' },
-  { key: 'status', label: '상태', render: (row) => <StatusBadge tone={row.status === 'active' ? 'positive' : row.status === 'review' ? 'cautionary' : 'offline'}>{row.status}</StatusBadge> },
-  { key: 'progress', label: '진행률', align: 'right', render: (row) => <strong style={{ color: row.progress <= 20 ? 'var(--bw-red)' : 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{row.progress}%</strong> },
+  { key: 'status', label: '상태', render: (row) => <StatusBadge tone={row.status === '활성' ? 'positive' : row.status === '검토 중' ? 'cautionary' : 'offline'}>{row.status}</StatusBadge> },
+  { key: 'progress', label: '진행률', align: 'right', render: (row) => <strong style={{ color: row.progress <= 20 ? 'var(--color-danger-text)' : 'var(--label-strong)', fontVariantNumeric: 'tabular-nums' }}>{row.progress}%</strong> },
 ];
 
 const surfaceStyle = {

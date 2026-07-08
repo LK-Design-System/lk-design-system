@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — IconButton
- * Circular control wrapping a single icon glyph (WDS icon buttons are always
+ * Circular control wrapping a single icon glyph (source-model icon buttons are always
  * circular; pass `round={false}` to opt into the rounded-square look). Pass an
  * inline SVG as children. Matches Button's calm hover (minimal tone shift, no
  * lift).

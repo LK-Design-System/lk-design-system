@@ -87,9 +87,9 @@ export const SegmentedInteractionMatrix = {
       <SegmentedControl
         variant="outlined"
         options={[
-          { value: 'list', label: 'List', icon: <Icon name="list" size={15} /> },
-          { value: 'grid', label: 'Grid', icon: <Icon name="apps" size={15} />, interaction: 'active-focused' },
-          { value: 'map', label: 'Map', icon: <Icon name="globe" size={15} /> },
+          { value: 'list', label: '목록', icon: <Icon name="list" size={15} /> },
+          { value: 'grid', label: '그리드', icon: <Icon name="apps" size={15} />, interaction: 'active-focused' },
+          { value: 'map', label: '지도', icon: <Icon name="globe" size={15} /> },
         ]}
         defaultValue="list"
         full

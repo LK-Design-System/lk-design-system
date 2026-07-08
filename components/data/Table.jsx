@@ -1,4 +1,5 @@
 import React from 'react';
+import { thStyle, tdStyle } from './table-cell-styles.js';
 
 function TableRow({ columns, row, pad, hover }) {
   const [h, setH] = React.useState(false);
@@ -9,7 +10,7 @@ function TableRow({ columns, row, pad, hover }) {
       style={{ background: hover && h ? 'var(--fill-alt)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}
     >
       {columns.map((c) => (
-        <td key={c.key} style={{ textAlign: c.align || 'left', padding: pad, borderBottom: '1px solid var(--bw-border)', fontSize: 14.5, color: 'var(--label-neutral)', whiteSpace: 'nowrap' }}>
+        <td key={c.key} style={{ ...tdStyle(pad), textAlign: c.align || 'left' }}>
           {typeof c.render === 'function' ? c.render(row) : row[c.key]}
         </td>
       ))}
@@ -31,7 +32,7 @@ export function Table({ columns = [], rows = [], size = 'md', hover = true, styl
         <thead>
           <tr>
             {columns.map((c) => (
-              <th key={c.key} style={{ textAlign: c.align || 'left', padding: pad, borderBottom: '1px solid var(--bw-border)', fontSize: 12, fontWeight: 'var(--fw-bold)', letterSpacing: '0.4px', textTransform: 'uppercase', color: 'var(--label-alternative)', width: c.width, whiteSpace: 'nowrap' }}>{c.label}</th>
+              <th key={c.key} style={{ ...thStyle(pad), textAlign: c.align || 'left', width: c.width }}>{c.label}</th>
             ))}
           </tr>
         </thead>

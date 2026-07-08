@@ -1,4 +1,5 @@
 import React from 'react';
+import { thStyle, tdStyle } from './table-cell-styles.js';
 
 function sortRows(rows, key, dir) {
   if (!key) return rows;
@@ -52,13 +53,25 @@ export function DataGrid({ columns = [], rows = [], selectable = false, defaultS
       <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-sans)' }}>
         <thead>
           <tr>
-            {selectable && <th style={{ padding: pad, borderBottom: '1px solid var(--bw-border)', width: 44 }}><input type="checkbox" checked={allOn} onChange={toggleAll} aria-label="select all" style={checkboxStyle(allOn)} /></th>}
+            {selectable && <th style={{ padding: pad, borderBottom: '1px solid var(--bw-border)', width: 44 }}><input type="checkbox" checked={allOn} onChange={toggleAll} aria-label="전체 선택" style={checkboxStyle(allOn)} /></th>}
             {columns.map((c) => (
-              <th key={c.key} onClick={() => toggleSort(c)} style={{ textAlign: c.align || 'left', padding: pad, borderBottom: '1px solid var(--bw-border)', fontSize: 12, fontWeight: 'var(--fw-bold)', letterSpacing: '0.4px', textTransform: 'uppercase', color: 'var(--label-alternative)', cursor: c.sortable ? 'pointer' : 'default', whiteSpace: 'nowrap', userSelect: 'none' }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-                  {c.label}
-                  {c.sortable && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: sort.key === c.key ? 1 : 0.3 }}><path d={sort.key === c.key && sort.dir === 'desc' ? 'm6 9 6 6 6-6' : 'm6 15 6-6 6 6'} /></svg>}
-                </span>
+              <th
+                key={c.key}
+                aria-sort={c.sortable && sort.key === c.key ? (sort.dir === 'desc' ? 'descending' : 'ascending') : undefined}
+                style={{ ...thStyle(pad), textAlign: c.align || 'left', userSelect: 'none' }}
+              >
+                {c.sortable ? (
+                  <button
+                    type="button"
+                    onClick={() => toggleSort(c)}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: 0, border: 0, background: 'transparent', cursor: 'pointer', font: 'inherit', letterSpacing: 'inherit', textTransform: 'inherit', color: 'inherit' }}
+                  >
+                    {c.label}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ opacity: sort.key === c.key ? 1 : 0.3 }}><path d={sort.key === c.key && sort.dir === 'desc' ? 'm6 9 6 6 6-6' : 'm6 15 6-6 6 6'} /></svg>
+                  </button>
+                ) : (
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>{c.label}</span>
+                )}
               </th>
             ))}
           </tr>
@@ -66,8 +79,8 @@ export function DataGrid({ columns = [], rows = [], selectable = false, defaultS
         <tbody>
           {sorted.map((r, ri) => (
             <tr key={ri} style={{ background: sel.has(ri) ? 'var(--lk-accent-tint)' : 'transparent' }}>
-              {selectable && <td style={{ padding: pad, borderBottom: '1px solid var(--bw-border)' }}><input type="checkbox" checked={sel.has(ri)} onChange={() => toggleRow(ri)} aria-label={`select row ${ri + 1}`} style={checkboxStyle(sel.has(ri))} /></td>}
-              {columns.map((c) => <td key={c.key} style={{ textAlign: c.align || 'left', padding: pad, borderBottom: '1px solid var(--bw-border)', fontSize: 14.5, color: 'var(--label-neutral)', whiteSpace: 'nowrap' }}>{typeof c.render === 'function' ? c.render(r) : r[c.key]}</td>)}
+              {selectable && <td style={{ padding: pad, borderBottom: '1px solid var(--bw-border)' }}><input type="checkbox" checked={sel.has(ri)} onChange={() => toggleRow(ri)} aria-label={`${ri + 1}행 선택`} style={checkboxStyle(sel.has(ri))} /></td>}
+              {columns.map((c) => <td key={c.key} style={{ ...tdStyle(pad), textAlign: c.align || 'left' }}>{typeof c.render === 'function' ? c.render(r) : r[c.key]}</td>)}
             </tr>
           ))}
         </tbody>

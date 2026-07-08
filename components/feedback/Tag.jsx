@@ -3,7 +3,7 @@ import React from 'react';
 const TONES = {
   signal:  { fg: 'var(--lk-accent-ink)', bg: 'var(--lk-accent-tint-2)' },  // brand teal chip (default)
   neutral: { fg: 'var(--label-strong)', bg: 'var(--fill-strong)', solidBg: 'var(--surface-inverse)' }, // ink neutral
-  steel:   { fg: 'var(--color-positive-strong)', bg: 'var(--status-positive-tint)' },
+  steel:   { fg: 'var(--bw-steel)', bg: 'var(--bw-indigo-tint)' },
   amber:   { fg: 'var(--color-cautionary-strong)', bg: 'var(--status-cautionary-tint)' },
   red:     { fg: 'var(--color-danger)', bg: 'var(--status-danger-tint)' },
   // back-compat aliases (live site uses tone="indigo")
@@ -23,7 +23,7 @@ export function Tag({ children, tone = 'signal', solid = false, style, ...rest }
     <span
       className={`lk-tag lk-tag--${tone}`}
       style={{
-        display: 'inline-flex', alignItems: 'center', height: 26, padding: '0 12px',
+        display: 'inline-flex', alignItems: 'center', height: 'var(--component-tag-height)', padding: '0 12px',
         fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--fs-caption)', lineHeight: 1,
         letterSpacing: 'var(--ls-caption)', textTransform: 'uppercase', whiteSpace: 'nowrap',
         color: solid ? 'var(--text-on-signal)' : t.fg,

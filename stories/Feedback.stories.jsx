@@ -12,7 +12,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Avatar and AvatarGroup patterns with placeholder resource parity.',
+        component: '플레이스홀더 리소스 패리티를 포함한 Avatar와 AvatarGroup 패턴입니다.',
       },
     },
   },
@@ -41,27 +41,27 @@ const avatarResourceRows = [
   {
     label: 'Placeholder / content',
     src: '/assets/source/avatar/resource/avatar-placeholder-content.png',
-    avatar: <Avatar variant="person" placeholder size={44} aria-label="Content placeholder" />,
+    avatar: <Avatar variant="person" placeholder size={44} aria-label="콘텐츠 플레이스홀더" />,
   },
   {
     label: 'Placeholder / person',
     src: '/assets/source/avatar/resource/avatar-null.svg',
-    avatar: <Avatar variant="person" placeholder size={44} aria-label="Person placeholder" />,
+    avatar: <Avatar variant="person" placeholder size={44} aria-label="인물 플레이스홀더" />,
   },
   {
     label: 'Placeholder / company',
     src: '/assets/source/avatar/resource/avatar-null-company.svg',
-    avatar: <Avatar variant="company" placeholder size={44} aria-label="Company placeholder" />,
+    avatar: <Avatar variant="company" placeholder size={44} aria-label="기업 플레이스홀더" />,
   },
   {
     label: 'Placeholder / academy',
     src: '/assets/source/avatar/resource/avatar-null-academy.svg',
-    avatar: <Avatar variant="academy" placeholder size={44} aria-label="Academy placeholder" />,
+    avatar: <Avatar variant="academy" placeholder size={44} aria-label="아카데미 플레이스홀더" />,
   },
   {
     label: 'Deactivate',
     src: '/assets/source/avatar/resource/avatar-deactivate.png',
-    avatar: <Avatar variant="person" placeholder size={44} deactivated aria-label="Deactivated placeholder" />,
+    avatar: <Avatar variant="person" placeholder size={44} deactivated aria-label="비활성화 플레이스홀더" />,
   },
 ];
 
@@ -106,7 +106,7 @@ function ExampleTile({ label, children, width = 86 }) {
 function AvatarResourceComparison() {
   return (
     <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
-      <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.3, color: 'var(--label-normal)' }}>Resource parity</h3>
+      <h3 style={{ margin: 0, fontSize: 16, lineHeight: 1.3, color: 'var(--label-normal)' }}>리소스 패리티</h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(132px, 100%), 1fr))', gap: 'var(--space-3)' }}>
         {avatarResourceRows.map((row) => (
           <div
@@ -121,7 +121,7 @@ function AvatarResourceComparison() {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
-              <img src={row.src} alt={`${row.label} resource`} style={{ width: 42, height: 42, objectFit: 'contain', borderRadius: 'var(--radius-sm)' }} />
+              <img src={row.src} alt={`${row.label} 리소스`} style={{ width: 42, height: 42, objectFit: 'contain', borderRadius: 'var(--radius-sm)' }} />
               {row.avatar}
             </div>
             <span style={{ color: 'var(--label-alternative)', fontSize: 12, lineHeight: 1.35 }}>{row.label}</span>
@@ -140,49 +140,49 @@ export const AvatarPatterns = {
         <MatrixRow label="variant">
           {avatarVariants.map((item) => (
             <ExampleTile key={item.variant} label={item.label}>
-              <Avatar variant={item.variant} placeholder size="default" aria-label={`${item.label} avatar`} />
+              <Avatar variant={item.variant} placeholder size="default" aria-label={`${item.label} 아바타`} />
             </ExampleTile>
           ))}
         </MatrixRow>
         <MatrixRow label="size">
           {personSizes.map((size) => (
             <ExampleTile key={size} label={size} width={76}>
-              <Avatar name="L" size={size} aria-label={`${size} avatar`} />
+              <Avatar name="L" size={size} aria-label={`${size} 아바타`} />
             </ExampleTile>
           ))}
         </MatrixRow>
         <MatrixRow label="placeholder">
           <ExampleTile label="false">
-            <Avatar variant="person" placeholder={false} name="LK" size="default" aria-label="Initial avatar" />
+            <Avatar variant="person" placeholder={false} name="LK" size="default" aria-label="이니셜 아바타" />
           </ExampleTile>
           <ExampleTile label="true">
-            <Avatar variant="person" placeholder size="default" aria-label="Placeholder avatar" />
+            <Avatar variant="person" placeholder size="default" aria-label="플레이스홀더 아바타" />
           </ExampleTile>
         </MatrixRow>
         <MatrixRow label="interaction">
           {interactionStates.map((state) => (
             <ExampleTile key={state} label={state}>
-              <Avatar variant="person" placeholder interaction={state} size="default" aria-label={`${state} avatar`} />
+              <Avatar variant="person" placeholder interaction={state} size="default" aria-label={`${state} 아바타`} />
             </ExampleTile>
           ))}
         </MatrixRow>
         <MatrixRow label="pushBadge">
           <ExampleTile label="false">
-            <Avatar variant="person" placeholder size="default" aria-label="Avatar without push badge" />
+            <Avatar variant="person" placeholder size="default" aria-label="푸시 배지가 없는 아바타" />
           </ExampleTile>
           <ExampleTile label="true">
-            <Avatar variant="person" placeholder pushBadge size="default" aria-label="Avatar with push badge" />
+            <Avatar variant="person" placeholder pushBadge size="default" aria-label="푸시 배지가 있는 아바타" />
           </ExampleTile>
         </MatrixRow>
         <MatrixRow label="customize">
           <ExampleTile label="borderColor">
-            <Avatar variant="person" placeholder borderColor="var(--lk-accent-ink)" size="default" aria-label="Avatar with custom border color" />
+            <Avatar variant="person" placeholder borderColor="var(--lk-accent-ink)" size="default" aria-label="커스텀 테두리 색상 아바타" />
           </ExampleTile>
           <ExampleTile label="borderWeight">
-            <Avatar variant="person" placeholder borderColor="var(--border-strong)" borderWeight={3} size="default" aria-label="Avatar with custom border weight" />
+            <Avatar variant="person" placeholder borderColor="var(--border-strong)" borderWeight={3} size="default" aria-label="커스텀 테두리 두께 아바타" />
           </ExampleTile>
           <ExampleTile label="size">
-            <Avatar variant="person" placeholder size="xlarge" aria-label="Customized size avatar" />
+            <Avatar variant="person" placeholder size="xlarge" aria-label="커스텀 크기 아바타" />
           </ExampleTile>
         </MatrixRow>
       </MatrixSection>
@@ -191,23 +191,23 @@ export const AvatarPatterns = {
         <MatrixRow label="variant">
           {avatarVariants.map((item) => (
             <ExampleTile key={item.variant} label={item.label} width={132}>
-              <AvatarGroup variant={item.variant} placeholder max={4} size="default" items={groupItems} aria-label={`${item.label} avatar group`} />
+              <AvatarGroup variant={item.variant} placeholder max={4} size="default" items={groupItems} aria-label={`${item.label} 아바타 그룹`} />
             </ExampleTile>
           ))}
         </MatrixRow>
         <MatrixRow label="size">
           {groupSizes.map((size) => (
             <ExampleTile key={size} label={size} width={118}>
-              <AvatarGroup size={size} max={4} items={groupItems} aria-label={`${size} avatar group`} />
+              <AvatarGroup size={size} max={4} items={groupItems} aria-label={`${size} 아바타 그룹`} />
             </ExampleTile>
           ))}
         </MatrixRow>
         <MatrixRow label="trailingContent">
           <ExampleTile label="false" width={128}>
-            <AvatarGroup max={4} items={groupItems} aria-label="Avatar group without trailing content" />
+            <AvatarGroup max={4} items={groupItems} aria-label="트레일링 콘텐츠가 없는 아바타 그룹" />
           </ExampleTile>
           <ExampleTile label="true" width={150}>
-            <AvatarGroup max={4} items={groupItems} trailingContent trailingLabel="외 0명" aria-label="Avatar group with trailing content" />
+            <AvatarGroup max={4} items={groupItems} trailingContent trailingLabel="외 0명" aria-label="트레일링 콘텐츠가 있는 아바타 그룹" />
           </ExampleTile>
         </MatrixRow>
       </MatrixSection>

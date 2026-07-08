@@ -2,11 +2,9 @@ import React from 'react';
 import {
   Button,
   ButtonGroup,
-  CopyButton,
   Fab,
   Icon,
   IconButton,
-  Link,
   SocialButton,
   SplitButton,
   TextButton,
@@ -18,7 +16,6 @@ export const ActionControls = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
       <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
         <ButtonGroup options={['자동', '수동', '검토']} defaultValue="자동" />
-        <CopyButton value="item-2026-0705">항목 ID 복사</CopyButton>
         <SplitButton
           items={[
             { label: '초안으로 저장', icon: <Icon name="document" size={16} /> },
@@ -41,9 +38,6 @@ export const ActionControls = {
         </IconButton>
         <TextButton>텍스트 액션</TextButton>
         <TextButton tone="danger">삭제</TextButton>
-        <Link href="#" external>
-          문서 링크
-        </Link>
       </section>
 
       <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>

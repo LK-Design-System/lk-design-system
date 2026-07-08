@@ -61,7 +61,7 @@ export const TextAndDisclosure = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
-        <Overline tone="signal">CONTENT GUIDE</Overline>
+        <Overline tone="signal">콘텐츠 가이드</Overline>
         <Blockquote cite="문서 가이드">
           문서 화면에서는 상태, 조치, 결과가 같은 위계 안에서 읽혀야 합니다.
         </Blockquote>

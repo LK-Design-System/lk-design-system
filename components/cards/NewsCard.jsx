@@ -17,8 +17,8 @@ export function NewsCard({ image, category, title, excerpt, source, date, cta, h
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        display: 'flex', flexDirection: 'column', background: 'var(--surface-card)',
-        border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', overflow: 'hidden',
+        display: 'flex', flexDirection: 'column', background: 'var(--component-card-bg)',
+        border: 'var(--component-card-border)', borderRadius: 'var(--component-card-radius)', overflow: 'hidden',
         textDecoration: 'none', boxShadow: hover ? 'var(--shadow-md)' : 'var(--shadow-xs)',
         transform: hover ? 'translateY(-2px)' : 'none',
         transition: 'transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',

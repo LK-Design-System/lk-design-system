@@ -1,4 +1,5 @@
 import React from 'react';
+import { pillChipStyle } from './pill-chip-style.js';
 
 /**
  * LK ROBOTICS — FilterChip
@@ -26,15 +27,9 @@ export function FilterChip({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 7, height: 38, padding: '0 15px',
-        background: active ? 'var(--lk-accent-tint-2)' : (hover && !disabled ? 'var(--fill-normal)' : 'var(--bw-white)'),
-        border: `1px solid ${active ? 'var(--lk-accent-ink)' : 'var(--bw-border)'}`,
-        borderRadius: 'var(--radius-pill)', cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 14,
-        fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-        color: active ? 'var(--lk-accent-ink)' : 'var(--label-neutral)',
-        transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
-        whiteSpace: 'nowrap', ...style,
+        ...pillChipStyle(active, disabled), gap: 7,
+        ...(!active && hover && !disabled ? { background: 'var(--fill-normal)' } : null),
+        ...style,
       }}
       {...rest}
     >

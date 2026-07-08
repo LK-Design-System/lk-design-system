@@ -9,3 +9,4 @@
 - WDS axes: **variant** `solid · default · outlined`, **size** `xsmall · small · medium`, **color** `neutral · accent`, **icon** via `icon`, `leading`, or `trailing`.
 - Legacy LDS aliases still work: `variant="soft"` maps to WDS `default`, `variant="outline"` maps to `outlined`, and `tone` can still be used for status-flavoured labels.
 - Count/dot badges belong to `Badge`; live status with dot/text belongs to `StatusBadge`.
+- ContentBadge는 비상호작용 정보 라벨 전용입니다. 클릭·선택되는 키워드에는 `Chip`, 대문자 이브로우 필에는 `Tag`를 쓰세요.

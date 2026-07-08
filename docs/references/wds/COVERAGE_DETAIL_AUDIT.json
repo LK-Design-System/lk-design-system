@@ -100,12 +100,14 @@
         {
           "name": "CopyButton",
           "file": "components/buttons/CopyButton.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/ActionUtility.stories.jsx"
         },
         {
           "name": "Link",
           "file": "components/buttons/Link.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/ActionUtility.stories.jsx"
         },
         {
           "name": "SocialButton",
@@ -169,17 +171,20 @@
         {
           "name": "NumberField",
           "file": "components/forms/NumberField.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/FormAdvancedInputs.stories.jsx"
         },
         {
           "name": "PinInput",
           "file": "components/forms/PinInput.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/FormAdvancedInputs.stories.jsx"
         },
         {
           "name": "FileUpload",
           "file": "components/forms/FileUpload.jsx",
-          "publicExport": true
+          "publicExport": true,
+          "story": "stories/FormAdvancedInputs.stories.jsx"
         }
       ],
       "pendingFigmaAudit": [
@@ -384,7 +389,7 @@
           "name": "Stat",
           "file": "components/cards/Stat.jsx",
           "publicExport": true,
-          "story": "stories/CardStats.stories.jsx"
+          "story": "stories/DataAndStatus.stories.jsx"
         }
       ],
       "pendingFigmaAudit": [

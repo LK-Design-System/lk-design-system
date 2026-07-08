@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Step and wizard navigation patterns for linear flows.',
+        component: '선형 흐름을 위한 Steps, Wizard 내비게이션 패턴입니다.',
       },
     },
   },
@@ -21,8 +21,8 @@ export const StepsAndWizard = {
   name: 'Steps and wizard',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
-      <Steps steps={['Draft', 'Review', 'Publish']} current={1} />
-      <Wizard steps={['Draft', 'Review', 'Publish']} defaultCurrent={1} />
+      <Steps steps={['작성', '검토', '게시']} current={1} />
+      <Wizard steps={['작성', '검토', '게시']} defaultCurrent={1} />
     </main>
   ),
 };

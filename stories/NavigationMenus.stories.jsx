@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Menu presentation patterns aligned with Menu variant, action area, scroll, and item state axes.',
+        component: 'Menu의 variant, action area, scroll, 항목 상태 축에 맞춘 메뉴 프레젠테이션 패턴입니다.',
       },
     },
   },
@@ -18,11 +18,11 @@ const meta = {
 export default meta;
 
 const menuItems = [
-  { label: 'Open profile', shortcut: 'Enter', active: true },
-  { label: 'Share', description: 'Copy a link for collaborators', shortcut: 'S' },
+  { label: '프로필 열기', shortcut: 'Enter', active: true },
+  { label: '공유', description: '협업자에게 링크를 복사합니다', shortcut: 'S' },
   { divider: true },
-  { label: 'Disabled item', disable: true },
-  { label: 'Delete', danger: true, shortcut: 'Del' },
+  { label: '비활성 항목', disable: true },
+  { label: '삭제', danger: true, shortcut: 'Del' },
 ];
 
 function Section({ title, children }) {
@@ -38,13 +38,13 @@ export const MenuPatterns = {
   name: 'Menu patterns',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980 }}>
-      <Section title="Dropdown variants, scroll, and action area">
+      <Section title="드롭다운 변형, 스크롤, 액션 영역">
         <div style={{ minHeight: 360, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 28, alignItems: 'start' }}>
           <div style={{ minHeight: 300 }}>
             <DropdownMenu trigger={<Button variant="ghost">Normal</Button>} items={menuItems} open />
           </div>
           <div style={{ minHeight: 300 }}>
-            <DropdownMenu trigger={<Button variant="ghost">Radio</Button>} variant="radio" cellPadding="8px" verticalPadding="8px" items={[{ label: 'Newest', checked: true }, { label: 'Oldest' }, { label: 'Most viewed' }]} open />
+            <DropdownMenu trigger={<Button variant="ghost">Radio</Button>} variant="radio" cellPadding="8px" verticalPadding="8px" items={[{ label: '최신순', checked: true }, { label: '오래된순' }, { label: '조회순' }]} open />
           </div>
           <div style={{ minHeight: 300 }}>
             <DropdownMenu
@@ -52,12 +52,12 @@ export const MenuPatterns = {
               variant="checkbox"
               verticalPadding="12px"
               items={[
-                { label: 'Jobs', checked: true },
-                { label: 'Companies', checked: true },
-                { label: 'Education', captionContent: 'Caption text' },
-                { label: 'Events' },
-                { label: 'Saved searches' },
-                { label: 'Disabled', disable: true },
+                { label: '로봇', checked: true },
+                { label: '설비', checked: true },
+                { label: '배차', captionContent: '캡션 텍스트' },
+                { label: '이벤트' },
+                { label: '저장된 검색' },
+                { label: '비활성', disable: true },
               ]}
               menuActionArea
               maxHeight={160}
@@ -67,13 +67,13 @@ export const MenuPatterns = {
         </div>
       </Section>
 
-      <Section title="Menubar wrapper">
+      <Section title="Menubar 래퍼">
         <div style={{ justifySelf: 'start' }}>
           <Menubar
             menus={[
-              { label: 'File', items: menuItems, menuActionArea: true },
-              { label: 'View', variant: 'radio', items: [{ label: 'List', checked: true }, { label: 'Grid' }, { label: 'Preview', disabled: true }] },
-              { label: 'Filter', variant: 'checkbox', items: [{ label: 'Open', checked: true }, { label: 'Assigned to me', checked: true }, { label: 'Archived' }] },
+              { label: '파일', items: menuItems, menuActionArea: true },
+              { label: '보기', variant: 'radio', items: [{ label: '목록', checked: true }, { label: '그리드' }, { label: '미리보기', disabled: true }] },
+              { label: '필터', variant: 'checkbox', items: [{ label: '진행 중', checked: true }, { label: '내 담당', checked: true }, { label: '보관됨' }] },
             ]}
             maxHeight={180}
           />

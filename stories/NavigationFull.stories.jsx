@@ -5,7 +5,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Composed application navigation patterns using TopBar, SideNav, and UserMenu.',
+        component: 'TopBar, SideNav, UserMenu를 조합한 애플리케이션 내비게이션 패턴입니다.',
       },
     },
   },

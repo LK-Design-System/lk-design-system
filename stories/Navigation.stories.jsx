@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'TopBar navigation patterns with brand, centered navigation, dropdown items, and action controls.',
+        component: '브랜드, 중앙 정렬 내비게이션, 드롭다운 항목, 액션 컨트롤을 갖춘 TopBar 내비게이션 패턴입니다.',
       },
     },
   },
@@ -16,9 +16,9 @@ const meta = {
 export default meta;
 
 const productMenu = [
-  { label: 'Overview', href: '#' },
-  { label: 'Components', href: '#' },
-  { label: 'Tokens', href: '#' },
+  { label: '개요', href: '#' },
+  { label: '컴포넌트', href: '#' },
+  { label: '토큰', href: '#' },
 ];
 
 const SearchIcon = (
@@ -36,13 +36,13 @@ export const TopBarDefault = {
         <TopBar
           navAlign="center"
           brand={<Lockup variant="inline" tone="ink" height={22} />}
-          actions={<IconButton variant="ghost" label="Search" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--label-normal)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
-          <TopBarNavItem active href="#" menuItems={productMenu}>Overview</TopBarNavItem>
-          <TopBarNavItem href="#">Components</TopBarNavItem>
-          <TopBarNavItem href="#">Tokens</TopBarNavItem>
-          <TopBarNavItem href="#">Support</TopBarNavItem>
+          <TopBarNavItem active href="#" menuItems={productMenu}>개요</TopBarNavItem>
+          <TopBarNavItem href="#">컴포넌트</TopBarNavItem>
+          <TopBarNavItem href="#">토큰</TopBarNavItem>
+          <TopBarNavItem href="#">지원</TopBarNavItem>
         </TopBar>
       </div>
 
@@ -51,13 +51,13 @@ export const TopBarDefault = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="on-dark" label="Search" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--text-on-inverse)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
-          <TopBarNavItem active href="#" menuItems={productMenu}>Overview</TopBarNavItem>
-          <TopBarNavItem href="#">Components</TopBarNavItem>
-          <TopBarNavItem href="#">Tokens</TopBarNavItem>
-          <TopBarNavItem href="#">Support</TopBarNavItem>
+          <TopBarNavItem active href="#" menuItems={productMenu}>개요</TopBarNavItem>
+          <TopBarNavItem href="#">컴포넌트</TopBarNavItem>
+          <TopBarNavItem href="#">토큰</TopBarNavItem>
+          <TopBarNavItem href="#">지원</TopBarNavItem>
         </TopBar>
       </div>
     </main>

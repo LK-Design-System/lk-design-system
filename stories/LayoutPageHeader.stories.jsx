@@ -1,6 +1,7 @@
 import {
   Breadcrumb,
   Button,
+  FloorSelector,
   PageHeader,
   StatusBadge,
 } from '../src/index.js';
@@ -36,6 +37,13 @@ export const PageHeaderPattern = {
         title="목록 조건"
         description="작은 화면이나 도구 패널에서는 compact 크기로 제목과 설명만 유지합니다."
         actions={<Button variant="secondary" size="sm">저장</Button>}
+      />
+      <PageHeader
+        size="sm"
+        eyebrow="시설 모니터링"
+        title="층별 현황"
+        description="층 전환처럼 화면 범위를 바꾸는 셀렉터는 헤더 액세서리로 배치합니다."
+        actions={<FloorSelector floors={['B1', '1F', '2F', '3F']} defaultValue="2F" />}
       />
     </main>
   ),

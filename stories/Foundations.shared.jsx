@@ -27,19 +27,19 @@ const colors = [
 ];
 
 const spacings = [
-  ['--space-1', '4px', 'micro gap'],
-  ['--space-2', '8px', 'tight pair'],
-  ['--space-3', '12px', 'control gap'],
-  ['--space-4', '16px', 'card inner gap'],
-  ['--space-5', '20px', 'compact padding'],
-  ['--space-6', '24px', 'section group gap'],
-  ['--space-8', '32px', 'page rhythm'],
-  ['--space-10', '40px', 'large group gap'],
-  ['--space-12', '48px', 'band rhythm'],
-  ['--space-16', '64px', 'wide section gap'],
-  ['--space-20', '80px', 'large section padding'],
-  ['--space-28', '112px', 'light section padding'],
-  ['--space-32', '128px', 'hero / dark-band padding'],
+  ['--space-1', '4px', '미세 간격'],
+  ['--space-2', '8px', '밀착 요소 쌍'],
+  ['--space-3', '12px', '컨트롤 간격'],
+  ['--space-4', '16px', '카드 내부 간격'],
+  ['--space-5', '20px', '컴팩트 패딩'],
+  ['--space-6', '24px', '섹션 그룹 간격'],
+  ['--space-8', '32px', '페이지 리듬'],
+  ['--space-10', '40px', '큰 그룹 간격'],
+  ['--space-12', '48px', '밴드 리듬'],
+  ['--space-16', '64px', '넓은 섹션 간격'],
+  ['--space-20', '80px', '큰 섹션 패딩'],
+  ['--space-28', '112px', '라이트 섹션 패딩'],
+  ['--space-32', '128px', '히어로 · 다크 밴드 패딩'],
 ];
 
 export const ColorAndSpacing = {

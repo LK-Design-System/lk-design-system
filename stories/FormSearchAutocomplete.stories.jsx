@@ -22,15 +22,15 @@ const meta = {
 
 export default meta;
 
-const options = ['Alpha', 'Beta', 'Gamma', 'Delta'];
+const options = ['물류 로봇', '용접 로봇', '순찰 로봇', '방역 로봇'];
 
 export const SearchAndAutocomplete = {
   name: '검색과 자동완성',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 760 }}>
       <SearchField defaultValue="토큰" placeholder="항목 검색" />
-      <AutoComplete options={options} defaultValue="Alpha" placeholder="항목 검색" />
-      <Combobox options={options} defaultValue={['Alpha', 'Gamma']} />
+      <AutoComplete options={options} defaultValue="물류 로봇" placeholder="항목 검색" />
+      <Combobox options={options} defaultValue={['물류 로봇', '순찰 로봇']} />
       <TagInput defaultValue={['중요', '검토']} />
     </main>
   ),

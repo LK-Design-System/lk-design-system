@@ -109,7 +109,7 @@ async function main() {
       }
 
       const section = Array.from(document.querySelectorAll('section')).find((node) =>
-        node.innerText.includes('Arrow vertical and horizontal align')
+        node.innerText.includes('화살표 세로·가로 정렬')
       );
       if (!section) throw new Error('Tooltip alignment section is missing.');
 

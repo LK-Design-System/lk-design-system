@@ -21,3 +21,6 @@ visuals through LK theme tokens.
 - Use **as="a"** with **href** for linked chips.
 - Keep filtering and multi-select state in selection components when the chip
   is acting as an input control rather than a simple action/tag.
+- Chip is for interactive/selectable keywords. Use `Tag` for uppercase display
+  eyebrow pills and `ContentBadge` for non-interactive informational content
+  labels.

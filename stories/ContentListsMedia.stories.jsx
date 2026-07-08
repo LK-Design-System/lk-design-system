@@ -64,10 +64,10 @@ export const ListCellStates = {
           <ListCell verticalPadding="large" title="큰 패딩" trailing={<Icon name="chevron-right" />} />
         </div>
         <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
-          <ListCell title="기본 행" description="secondary text" divider />
-          <ListCell title="선택된 행" description="selected state" selected divider />
-          <ListCell title="비활성 행" description="disabled state" disable divider />
-          <ListCell title="셰브론 행" description="navigation" chevron />
+          <ListCell title="기본 행" description="보조 텍스트" divider />
+          <ListCell title="선택된 행" description="selected 상태" selected divider />
+          <ListCell title="비활성 행" description="disabled 상태" disable divider />
+          <ListCell title="셰브론 행" description="탐색 이동" chevron />
         </div>
       </section>
       <section style={{ background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
@@ -80,9 +80,9 @@ export const ListCellStates = {
           trailing={<ContentBadge color="accent">검토</ContentBadge>}
           divider
         />
-        <ListCell leading={<Icon name="bell" />} title="Hover preview" description="interaction prop for Storybook" interaction="hovered" divider />
-        <ListCell leading={<Icon name="check" />} title="Focus preview" description="keyboard focus ring" interaction="focused" divider />
-        <ListCell leading={<Icon name="circle-check" />} title="Pressed preview" description="pressed visual state" interaction="pressed" />
+        <ListCell leading={<Icon name="bell" />} title="호버 미리보기" description="Storybook용 interaction prop" interaction="hovered" divider />
+        <ListCell leading={<Icon name="check" />} title="포커스 미리보기" description="키보드 포커스 링" interaction="focused" divider />
+        <ListCell leading={<Icon name="circle-check" />} title="프레스 미리보기" description="눌림 시각 상태" interaction="pressed" />
       </section>
     </main>
   ),

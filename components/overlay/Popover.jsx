@@ -1,4 +1,5 @@
 import React from 'react';
+import { anchoredPanelStyle } from './anchored-panel-style.js';
 
 /**
  * LK ROBOTICS — Popover
@@ -18,7 +19,7 @@ export function Popover({ trigger, children, align = 'left', width = 260, style,
     <div ref={ref} style={{ position: 'relative', display: 'inline-block', ...style }} {...rest}>
       <span onClick={() => setOpen((o) => !o)} style={{ display: 'inline-flex' }}>{trigger}</span>
       {open && (
-        <div role="dialog" style={{ position: 'absolute', top: 'calc(100% + 8px)', [align]: 0, zIndex: 40, width, background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 16, fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.6, color: 'var(--label-neutral)' }}>
+        <div role="dialog" style={{ ...anchoredPanelStyle(width), [align]: 0 }}>
           {children}
         </div>
       )}

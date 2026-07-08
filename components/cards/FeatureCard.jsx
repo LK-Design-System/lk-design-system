@@ -26,11 +26,13 @@ export function FeatureCard({
     <div
       style={{
         display: 'flex', flexDirection: 'column', gap: '16px',
-        background: boxed ? 'var(--surface-card)' : 'transparent',
-        border: boxed ? '1px solid var(--bw-border)' : 'none',
-        borderRadius: boxed ? 'var(--radius-xl)' : 0,
-        boxShadow: boxed ? 'var(--shadow-md)' : 'none',
-        padding: boxed ? 'var(--space-8)' : 0,
+        background: boxed ? 'var(--component-card-bg)' : 'transparent',
+        border: boxed ? 'var(--component-card-border)' : 'none',
+        borderRadius: boxed ? 'var(--component-card-radius)' : 0,
+        /* Card's default rest elevation (elevation="md") — same value as the
+           previous var(--shadow-md), now tracked via the card token. */
+        boxShadow: boxed ? 'var(--component-card-shadow-md)' : 'none',
+        padding: boxed ? 'var(--component-card-padding)' : 0,
         ...style,
       }}
       {...rest}
@@ -41,8 +43,8 @@ export function FeatureCard({
         </span>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <h4 style={{ fontSize: '19px', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--bw-ink)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
-        <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: 'var(--bw-gray)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
+        <h4 style={{ fontSize: '19px', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--label-strong)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
+        <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: 'var(--label-alternative)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
       </div>
     </div>
   );

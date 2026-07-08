@@ -25,7 +25,7 @@ import {
   TimePicker,
 } from '../src/index.js';
 
-const options = ['Alpha', 'Beta', 'Gamma', 'Delta'];
+const options = ['물류 로봇', '용접 로봇', '순찰 로봇', '방역 로봇'];
 const semanticSwatchColors = [
   'var(--lk-accent-ink)',
   'var(--color-positive)',
@@ -39,7 +39,7 @@ export const InputsAndPickers = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 960 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
-        <Input label="프로젝트 이름" defaultValue="Design System" iconLeft={<Icon name="document" size={18} />} />
+        <Input label="프로젝트 이름" defaultValue="로봇 관제 시스템" iconLeft={<Icon name="document" size={18} />} />
         <SearchField defaultValue="토큰" placeholder="항목 검색" />
         <PasswordInput defaultValue="design-system" />
         <InputGroup prefix="ID" suffix="개" defaultValue="12" />
@@ -63,8 +63,8 @@ export const SelectorsAndGroups = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
         <Select label="작업 유형" defaultValue="review" options={[{ value: 'draft', label: '초안' }, { value: 'review', label: '검토' }, { value: 'publish', label: '게시' }]} />
-        <AutoComplete options={options} defaultValue="Alpha" placeholder="항목 검색" />
-        <Combobox options={options} defaultValue={['Alpha', 'Gamma']} />
+        <AutoComplete options={options} defaultValue="물류 로봇" placeholder="항목 검색" />
+        <Combobox options={options} defaultValue={['물류 로봇', '순찰 로봇']} />
         <TagInput defaultValue={['중요', '검토']} />
       </section>
 

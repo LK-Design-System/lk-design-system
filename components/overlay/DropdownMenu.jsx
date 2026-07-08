@@ -125,7 +125,9 @@ function MenuItemButton({
         padding: `${vertical} ${denseCell ? 8 : 10}px`,
         border: "none",
         background:
-          active || (hover && !disabled) ? "var(--fill-normal)" : "transparent",
+          active || (hover && !disabled)
+            ? "var(--component-menu-item-hover-bg)"
+            : "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
         borderRadius: "var(--radius-md)",
         textAlign: "left",
@@ -247,9 +249,9 @@ export function DropdownMenu({
             overflowY: maxHeight ? "auto" : undefined,
             background: "var(--bw-white)",
             border: "1px solid var(--bw-border)",
-            borderRadius: "var(--radius-16)",
+            borderRadius: "var(--component-menu-radius)",
             boxShadow: "var(--shadow-md)",
-            padding: "8px 20px",
+            padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)",
             boxSizing: "border-box",
             display: "flex",
             flexDirection: "column",

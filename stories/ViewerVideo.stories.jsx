@@ -37,13 +37,13 @@ export const VideoStreamOverview = {
   name: '영상 스트림 상태',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 920 }}>
-      <VideoStreamTile label="AMR-07 FRONT" status="live">
+      <VideoStreamTile label="AMR-07 전면 카메라" status="live">
         <FeedPlaceholder>RTSP · 1280x720</FeedPlaceholder>
       </VideoStreamTile>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
-        <VideoStreamTile label="RGB" status="live"><FeedPlaceholder>LIVE</FeedPlaceholder></VideoStreamTile>
-        <VideoStreamTile label="IR" status="loading"><FeedPlaceholder>LOADING</FeedPlaceholder></VideoStreamTile>
-        <VideoStreamTile label="EO-1" status="disconnected"><FeedPlaceholder>OFFLINE</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="RGB" status="live"><FeedPlaceholder>라이브</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="IR" status="loading"><FeedPlaceholder>로딩 중</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="EO-1" status="disconnected"><FeedPlaceholder>오프라인</FeedPlaceholder></VideoStreamTile>
       </section>
     </main>
   ),

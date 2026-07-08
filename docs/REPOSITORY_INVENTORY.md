@@ -39,11 +39,11 @@
 - 템플릿 카드: `templates-cards/*.html` 4개
 - 현재 React component entry export: 156개
 - 공개 named export: 160개
-- Storybook 전체 story: 193개
-- Storybook public story: 101개
+- Storybook 전체 story: 195개
+- Storybook public story: 103개
 - 숨김 visual parity story: 82개
-- visual inventory React story: 193개
-- 접근성 guard 검사 대상 implementation story: 193개
+- visual inventory React story: 195개
+- 접근성 guard 검사 대상 implementation story: 195개
 
 ## 생성 영역
 

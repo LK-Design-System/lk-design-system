@@ -1,4 +1,5 @@
 import {
+  Carousel,
   ContentBadge,
   Thumbnail,
 } from '../src/index.js';
@@ -9,7 +10,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '이미지와 영상 썸네일을 일정한 비율로 보여주는 Thumbnail 패턴입니다.',
+        component: '이미지와 영상 썸네일을 일정한 비율로 보여주는 Thumbnail과 가로 슬라이드로 넘겨보는 Carousel 패턴입니다.',
       },
     },
   },
@@ -31,8 +32,18 @@ export const MediaThumbnails = {
       </section>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
         <Thumbnail ratio="16/9" overlay={<ContentBadge color="accent">LIVE</ContentBadge>} overlayAlign="top-right" />
-        <Thumbnail ratio="4/3" border overlay={<ContentBadge tone="positive">READY</ContentBadge>} overlayAlign="bottom-right" />
+        <Thumbnail ratio="4/3" border overlay={<ContentBadge tone="positive">준비됨</ContentBadge>} overlayAlign="bottom-right" />
         <Thumbnail ratio="4/5" radius={false} border overlay={<ContentBadge variant="outlined">NO RADIUS</ContentBadge>} overlayAlign="bottom-left" />
+      </section>
+      <section style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 560 }}>
+        <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-strong)' }}>미디어 캐러셀</h3>
+        <Carousel
+          slides={[
+            <Thumbnail key="live" ratio="16/9" radius={false} overlay={<ContentBadge color="accent">LIVE</ContentBadge>} overlayAlign="top-right" />,
+            <Thumbnail key="ready" ratio="16/9" radius={false} overlay={<ContentBadge tone="positive">준비됨</ContentBadge>} overlayAlign="top-right" />,
+            <Thumbnail key="review" ratio="16/9" radius={false} overlay={<ContentBadge variant="outlined">검토 중</ContentBadge>} overlayAlign="top-right" />,
+          ]}
+        />
       </section>
     </main>
   ),

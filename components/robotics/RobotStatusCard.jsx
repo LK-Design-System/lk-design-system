@@ -22,8 +22,8 @@ export function RobotStatusCard({ name, image, status = 'online', battery, mode,
   const conn = CONN[status] || CONN.offline;
   return (
     <div onClick={onClick} style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 16, width: '100%', boxSizing: 'border-box',
-      background: 'var(--surface-raised)', border: `1px solid ${selected ? 'var(--lk-accent-ink)' : 'var(--border-subtle)'}`,
-      borderRadius: 'var(--radius-xl)', boxShadow: selected ? '0 0 0 3px var(--focus-ring)' : 'var(--shadow-sm)',
+      background: 'var(--surface-raised)', border: selected ? 'var(--border-thin) solid var(--lk-accent-ink)' : 'var(--component-card-border)',
+      borderRadius: 'var(--component-card-radius)', boxShadow: selected ? '0 0 0 3px var(--focus-ring)' : 'var(--component-card-shadow-sm)',
       cursor: onClick ? 'pointer' : 'default', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       <div style={{ width: 48, height: 48, borderRadius: 'var(--radius-md)', flexShrink: 0, overflow: 'hidden',
         background: 'var(--fill-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

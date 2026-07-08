@@ -1,5 +1,6 @@
 import {
   DataGrid,
+  DescriptionList,
   StatusBadge,
   Table,
 } from '../src/index.js';
@@ -10,7 +11,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '정렬, 선택, 읽기 전용 표처럼 행 기반 데이터를 비교하는 DataGrid와 Table 패턴입니다.',
+        component: '정렬, 선택, 읽기 전용 표처럼 행 기반 데이터를 비교하는 DataGrid, Table과 항목 메타데이터를 나열하는 DescriptionList 패턴입니다.',
       },
     },
   },
@@ -19,12 +20,12 @@ const meta = {
 export default meta;
 
 const rows = [
-  { id: 'ITEM-104', group: '문서', status: 'active', progress: 86 },
-  { id: 'ITEM-212', group: '컴포넌트', status: 'review', progress: 47 },
-  { id: 'ITEM-318', group: '토큰', status: 'disabled', progress: 12 },
+  { id: 'ITEM-104', group: '문서', status: '진행 중', progress: 86 },
+  { id: 'ITEM-212', group: '컴포넌트', status: '검토 중', progress: 47 },
+  { id: 'ITEM-318', group: '토큰', status: '중지', progress: 12 },
 ];
 
-const statusTone = { active: 'positive', review: 'cautionary', disabled: 'offline' };
+const statusTone = { '진행 중': 'positive', '검토 중': 'cautionary', 중지: 'offline' };
 
 function ProgressCell({ value }) {
   const tone = value <= 20 ? 'var(--bw-red)' : value <= 50 ? 'var(--bw-amber)' : 'var(--lk-accent-ink)';
@@ -66,6 +67,21 @@ export const TablePatterns = {
           <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--label-alternative)' }}>정렬과 선택이 필요 없는 읽기 전용 데이터에는 기본 Table을 사용합니다.</p>
         </div>
         <Table columns={columns} rows={rows} style={{ minWidth: 0 }} />
+      </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 420 }}>
+        <div>
+          <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--label-strong)' }}>항목 메타데이터</h3>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--label-alternative)' }}>표로 만들기에는 작은 용어-값 쌍은 DescriptionList로 정리합니다.</p>
+        </div>
+        <DescriptionList
+          columns={1}
+          items={[
+            { term: '문서 유형', description: '컴포넌트 가이드' },
+            { term: '검토 주기', description: '주간' },
+            { term: '검증 상태', description: '완료' },
+          ]}
+        />
       </section>
     </main>
   ),

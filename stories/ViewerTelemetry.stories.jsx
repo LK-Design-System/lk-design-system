@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '뷰어 주변에서 함께 읽는 수치 정보를 게이지와 compact readout으로 정리하는 텔레메트리 패턴입니다.',
+        component: '뷰어 주변에서 함께 읽는 수치 정보를 게이지와 컴팩트 수치 표시로 정리하는 텔레메트리 패턴입니다.',
       },
     },
   },

@@ -6,7 +6,8 @@ import { BrandLogo } from '../brand/BrandLogo.jsx';
  * "…로 계속하기" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with
  * Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로
  * 통합하되, 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법을 따른다 —
- * 높이 52(=Button md) · var(--radius-md) · 16px/var(--fw-bold) ·
+ * 높이 52(소셜 로그인 전용 지오메트리 — Button 높이 스케일 32/40/48보다 큼) ·
+ * var(--radius-md) · 16px/var(--fw-bold) ·
  * 토큰 상태 변화(호버 색 변화 최소화, 위치/크기 모션 없음).
  *
  * tone:

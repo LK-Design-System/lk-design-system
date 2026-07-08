@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '삭제, reset, 게시처럼 명시적 확인이 필요한 액션을 위한 ConfirmDialog입니다.',
+        component: '삭제, 초기화, 게시처럼 명시적 확인이 필요한 액션을 위한 ConfirmDialog입니다.',
       },
     },
   },
@@ -28,7 +28,7 @@ export const ConfirmationStates = {
           <Button variant="ghost">보조 액션</Button>
         </div>
         <p style={{ margin: 0, color: 'var(--label-neutral)', lineHeight: 1.6 }}>
-          파괴적 작업은 generic modal이 아니라 명확한 취소/확인 라벨을 가진 ConfirmDialog로 확인합니다.
+          파괴적 작업은 범용 모달이 아니라 명확한 취소/확인 라벨을 가진 ConfirmDialog로 확인합니다.
         </p>
         <ConfirmDialog
           open={open}

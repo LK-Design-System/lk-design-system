@@ -36,7 +36,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '작은 패널과 표 셀에서 값, 단위, freshness, timestamp를 함께 읽는 compact readout입니다.',
+        component: '작은 패널과 표 셀에서 값, 단위, 최신 여부, 수집 시각을 함께 읽는 컴팩트 수치 표시입니다.',
       },
     },
   },

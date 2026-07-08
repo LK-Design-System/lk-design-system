@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Footer patterns for site-level information, support links, and compact app footers.',
+        component: '사이트 정보, 지원 링크, 컴팩트 앱 푸터를 위한 Footer 패턴입니다.',
       },
     },
   },
@@ -22,9 +22,9 @@ export const FooterPatterns = {
       <section style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '1px solid var(--border-subtle)' }}>
         <Footer
           links={[
-            { label: 'Support', href: '#' },
-            { label: 'Release notes', href: '#' },
-            { label: 'Privacy', href: '#' },
+            { label: '고객지원', href: '#' },
+            { label: '릴리스 노트', href: '#' },
+            { label: '개인정보처리방침', href: '#' },
           ]}
         />
       </section>
@@ -32,8 +32,8 @@ export const FooterPatterns = {
         compact
         copyright="Copyright 2026 LK ROBOTICS Inc."
         links={[
-          { label: 'Support', href: '#' },
-          { label: 'Docs', href: '#' },
+          { label: '고객지원', href: '#' },
+          { label: '문서', href: '#' },
         ]}
       />
     </main>

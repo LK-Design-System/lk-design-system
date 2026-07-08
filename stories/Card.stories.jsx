@@ -110,7 +110,7 @@ export const ContentCardPatterns = {
           caption="카테고리"
           title="콘텐츠 카드"
           description="썸네일, 저장 액션, 제목, 설명, 보조 정보를 하나의 중립 카드 표면에 배치합니다."
-          bottomContent={<div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}><ContentBadge size="xsmall">Badge</ContentBadge><ContentBadge size="xsmall">Meta</ContentBadge></div>}
+          bottomContent={<div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}><ContentBadge size="xsmall">신규</ContentBadge><ContentBadge size="xsmall">추천</ContentBadge></div>}
         />
         <Card
           platform="mobile"
@@ -118,7 +118,7 @@ export const ContentCardPatterns = {
           caption="Mobile"
           title="모바일 콘텐츠 카드"
           description="모바일 축은 같은 정보 구조를 유지하고 padding과 width만 더 조밀하게 조정합니다."
-          subCaption="Extra caption"
+          subCaption="보조 캡션"
         />
       </section>
       <section style={{ display: 'grid', gridTemplateColumns: 'minmax(min(420px, 100%), 1fr) minmax(min(260px, 100%), 0.7fr)', gap: 'var(--space-4)', alignItems: 'start' }}>

@@ -21,9 +21,9 @@ const TONES = {
  * LDS Core - ProgressBar
  * Linear determinate or indeterminate progress indicator.
  */
-export function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = 'signal', size = 'md', label, showValue = false, style, ...rest }) {
+export function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = 'signal', color, size = 'md', label, showValue = false, style, ...rest }) {
   useKeyframes('lk-prog-kf', '@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none}}');
-  const c = TONES[tone] || TONES.signal;
+  const c = color || TONES[tone] || TONES.signal;
   const h = size === 'sm' ? 4 : size === 'lg' ? 10 : 6;
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
   const ariaLabel = typeof label === 'string' ? label : undefined;

@@ -5,7 +5,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Foundation coverage for ratio primitives exported from the local source.',
+        component: '로컬 소스에서 내보내는 비율(ratio) 프리미티브를 다루는 파운데이션 커버리지입니다.',
       },
     },
   },
@@ -92,17 +92,17 @@ export const RatioTokens = {
           Basic / Ratio
         </p>
         <h1 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          Ratio is a foundation token, not a one-off layout guess
+          비율은 임의의 레이아웃 값이 아니라 파운데이션 토큰입니다
         </h1>
         <p style={{ margin: 0, maxWidth: 820, color: 'var(--label-neutral)', lineHeight: 1.7 }}>
-          The foundation source defines horizontal and vertical ratio presets. LDS exposes them as CSS aspect-ratio tokens and
-          routes usage through the AspectRatio primitive.
+          파운데이션 소스는 가로·세로 비율 프리셋을 정의합니다. LDS는 이를 CSS aspect-ratio 토큰으로 노출하고
+          AspectRatio 프리미티브를 통해 사용하도록 안내합니다.
         </p>
       </header>
 
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <h2 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
-          Horizontal ratios
+          가로 비율
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
           {horizontalRatios.map(([label, token]) => (
@@ -113,7 +113,7 @@ export const RatioTokens = {
 
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <h2 style={{ margin: 0, color: 'var(--label-strong)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
-          Vertical ratios
+          세로 비율
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 'var(--space-3)' }}>
           {verticalRatios.map(([label, token]) => (
@@ -123,13 +123,13 @@ export const RatioTokens = {
       </section>
 
       <section style={panelStyle}>
-        <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>Customize rule</h2>
+        <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--label-strong)', fontSize: 18 }}>커스터마이즈 규칙</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-4)' }}>
           <p style={{ margin: 0, color: 'var(--label-neutral)', lineHeight: 1.65 }}>
-            Horizontal examples customize width and let height follow the selected ratio token.
+            가로 예시는 너비를 지정하고 높이는 선택한 비율 토큰을 따르게 합니다.
           </p>
           <p style={{ margin: 0, color: 'var(--label-neutral)', lineHeight: 1.65 }}>
-            Vertical examples customize height or the containing column and keep width derived from the token.
+            세로 예시는 높이나 감싸는 컬럼을 지정하고 너비는 토큰에서 계산되도록 유지합니다.
           </p>
         </div>
       </section>

@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — Chip
- * Mixed-case keyword chip — white box, hairline border, per-size WDS radius. The
+ * Mixed-case keyword chip — white box, hairline border, per-size source-model radius. The
  * recurring "applied product / capability" token (적용 제품, 핵심 기술). Pass
  * `as="a"` + `href` for a link chip; hover lifts the border + text to the
  * signal ink.

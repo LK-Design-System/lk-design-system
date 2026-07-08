@@ -7,6 +7,7 @@ import React from 'react';
  * `label` for the accessible name.
  */
 export function Fab({ children, variant = 'signal', size = 'md', label, style, ...rest }) {
+  // FAB diameters are intentionally larger than the Button height scale (32/40/48).
   const d = size === 'sm' ? 48 : size === 'lg' ? 64 : 56;
   const palettes = {
     signal: { bg: 'var(--lk-accent-ink)', fg: 'var(--text-on-signal)', sh: 'var(--shadow-accent)' },

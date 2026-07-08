@@ -135,7 +135,8 @@
             "stories/Button.stories.jsx#ActionMatrix",
             "stories/ActionArea.stories.jsx#ActionTaxonomy",
             "stories/ButtonsExtended.stories.jsx#ActionControls",
-            "stories/ButtonsExtended.stories.jsx#ButtonIconButtonSocialButtonCard"
+            "stories/ButtonsExtended.stories.jsx#ButtonIconButtonSocialButtonCard",
+            "stories/FeedbackBadgesTags.stories.jsx#ChipCard"
           ]
         },
         {
@@ -149,7 +150,9 @@
             "disable true/false"
           ],
           "localEvidence": [
-            "stories/ActionArea.stories.jsx#ActionTaxonomy"
+            "stories/FeedbackBadgesTags.stories.jsx#BadgeTagPatterns",
+            "stories/FeedbackBadgesTags.stories.jsx#ChipCard",
+            "stories/SelectionChips.stories.jsx#ChipSelection"
           ]
         },
         {
@@ -492,7 +495,7 @@
             "stories/CardSpecs.stories.jsx#SpecRows",
             "stories/CardsExtended.stories.jsx#ProductCards",
             "stories/DataAndStatus.stories.jsx#Metrics",
-            "stories/CardStats.stories.jsx#StatCard"
+            "stories/DataAndStatus.stories.jsx#StatCard"
           ]
         }
       ],

@@ -16,3 +16,5 @@ compact "more" actions.
   `aria-busy`; use **loadingLabel** for screen-reader context.
 - **arrow** is deprecated and remains as a no-op compatibility prop.
 - Use `Button` for filled CTAs and `IconButton` for icon-only actions.
+- TextButton is a button-style action with sizes and loading state. Use `Link`
+  for pure anchor/navigation text with underline control.

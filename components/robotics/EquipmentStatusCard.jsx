@@ -39,8 +39,8 @@ export function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone 
     <div
       style={{
         display: 'flex', alignItems: 'center', gap: 14, width: '100%', boxSizing: 'border-box',
-        padding: '14px 16px', background: 'var(--surface-raised)', border: '1px solid var(--border-subtle)',
-        borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)', fontFamily: 'var(--font-sans)',
+        padding: '14px 16px', background: 'var(--surface-raised)', border: 'var(--component-card-border)',
+        borderRadius: 'var(--component-card-radius)', boxShadow: 'var(--component-card-shadow-sm)', fontFamily: 'var(--font-sans)',
         ...style,
       }}
       {...rest}

@@ -13,7 +13,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Route, tab, and category navigation patterns aligned with Navigation Tab and Category sources.',
+        component: 'Navigation Tab, Category 원본에 맞춘 경로, 탭, 카테고리 내비게이션 패턴입니다.',
       },
     },
   },
@@ -22,20 +22,20 @@ const meta = {
 export default meta;
 
 const tabItems = [
-  { value: 'overview', label: 'Overview', count: 2 },
-  { value: 'activity', label: 'Activity' },
-  { value: 'settings', label: 'Settings', trailingIconButton: true },
-  { value: 'disabled', label: 'Disabled', disabled: true },
+  { value: 'overview', label: '개요', count: 2 },
+  { value: 'activity', label: '활동' },
+  { value: 'settings', label: '설정', trailingIconButton: true },
+  { value: 'disabled', label: '비활성', disabled: true },
 ];
 
 const categoryItems = [
-  'All',
-  'Recommended',
-  'Following',
-  'Jobs',
-  'Companies',
-  'Education',
-  'Events',
+  '전체',
+  '로봇',
+  '설비',
+  '배차',
+  '원격 제어',
+  '텔레메트리',
+  '이벤트',
 ];
 
 function Section({ title, children }) {
@@ -51,7 +51,7 @@ export const TabsAndBreadcrumb = {
   name: 'Breadcrumb routes',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
-      <Breadcrumb items={[{ label: 'Home', href: '#' }, { label: 'Docs', href: '#' }, { label: 'Overview' }]} />
+      <Breadcrumb items={[{ label: '홈', href: '#' }, { label: '문서', href: '#' }, { label: '개요' }]} />
     </main>
   ),
 };
@@ -60,7 +60,7 @@ export const TabAndCategoryPatterns = {
   name: 'Tab and category patterns',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 920 }}>
-      <Section title="Tab resize, size, padding, trailing icon button">
+      <Section title="Tab의 resize, size, padding, trailing icon button 축">
         <div style={{ display: 'grid', gap: 18 }}>
           <Tabs items={tabItems} defaultValue="overview" resize="hug" size="small" />
           <Tabs items={tabItems} defaultValue="activity" resize="fill" size="medium" padding trailingIconButton />
@@ -68,11 +68,11 @@ export const TabAndCategoryPatterns = {
         </div>
       </Section>
 
-      <Section title="Category variant, size, padding, vertical padding, scroll">
+      <Section title="Category의 variant, size, padding, vertical padding, scroll 축">
         <div style={{ display: 'grid', gap: 14 }}>
-          <Category items={categoryItems} defaultValue="All" size="small" />
-          <Category items={categoryItems} defaultValue="Recommended" variant="alternative" size="medium" padding />
-          <Category items={categoryItems} defaultValue="Companies" size="xlarge" padding verticalPadding scroll />
+          <Category items={categoryItems} defaultValue="전체" size="small" />
+          <Category items={categoryItems} defaultValue="로봇" variant="alternative" size="medium" padding />
+          <Category items={categoryItems} defaultValue="배차" size="xlarge" padding verticalPadding scroll />
         </div>
       </Section>
     </main>

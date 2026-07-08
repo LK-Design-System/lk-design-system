@@ -1,4 +1,5 @@
 import React from 'react';
+import { anchoredPanelStyle } from './anchored-panel-style.js';
 
 /**
  * LK ROBOTICS — HoverCard
@@ -14,7 +15,7 @@ export function HoverCard({ trigger, children, align = 'left', width = 280, styl
     <span style={{ position: 'relative', display: 'inline-flex' }} onMouseEnter={show} onMouseLeave={hide} {...rest}>
       {trigger}
       {open && (
-        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', [align]: 0, zIndex: 40, width, background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 16, fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.6, color: 'var(--label-neutral)', ...style }}>
+        <div style={{ ...anchoredPanelStyle(width), [align]: 0, ...style }}>
           {children}
         </div>
       )}

@@ -10,7 +10,7 @@
   --component-button-height-sm: 32px;
   --component-button-height-md: 40px;
   --component-button-height-lg: 48px;
-  /* WDS Action/Button size grading: padding 28/20/14, radius 12/10/8,
+  /* Source-model Action/Button size grading: padding 28/20/14, radius 12/10/8,
      gap 6/5/4, type body1/body2/label2, per-size tracking. */
   --component-button-padding-sm: 0 14px;
   --component-button-padding-md: 0 20px;
@@ -115,7 +115,7 @@
   --component-chip-height-sm: 32px;
   --component-chip-height-md: 36px;
   --component-chip-height-lg: 40px;
-  /* WDS Action/Chip size grading: padding 12/11/8/7, radius 10/10/8/6,
+  /* Source-model Action/Chip size grading: padding 12/11/8/7, radius 10/10/8/6,
      gap 3/3/2/2, type body2/body2/label1/caption1. */
   --component-chip-padding-x-xs: 7px;
   --component-chip-padding-x-sm: var(--space-2);
@@ -157,8 +157,23 @@
   --component-chip-solid-border: var(--border-thin) solid transparent;
   --component-chip-disabled-opacity: var(--component-button-disabled-opacity);
 
+  /* ---- Tag pills --------------------------------------------------------- */
+  --component-tag-height: 26px;
+  --component-filter-chip-height: 38px;
+
+  /* ---- Menu surface ------------------------------------------------------ */
+  --component-menu-radius: var(--radius-16);
+  --component-menu-padding-y: 8px;
+  --component-menu-padding-x: 20px;
+  --component-menu-item-hover-bg: var(--fill-normal);
+
+  /* ---- Dialog ------------------------------------------------------------ */
+  --component-dialog-radius: var(--radius-3xl);
+  --component-dialog-scrim: var(--scrim-dark);
+  --component-dialog-scrim-blur: 2px;
+
   /* ---- Divider --------------------------------------------------------- */
-  /* WDS roles: normal = line 0.22 step, thick = fill 0.08 step. */
+  /* Source-model roles: normal = line 0.22 step, thick = fill 0.08 step. */
   --component-divider-color: var(--line-normal);
   --component-divider-color-normal: var(--line-normal);
   --component-divider-color-thick: var(--fill-normal);
@@ -196,7 +211,7 @@
   --component-input-required-color: var(--color-danger);
 
   /* ---- Transient feedback (Toast, Snackbar) ----------------------------- */
-  /* WDS material: translucent inverse surface behind a backdrop blur. */
+  /* Source-model material: translucent inverse surface behind a backdrop blur. */
   --component-transient-feedback-bg: color-mix(in srgb, var(--surface-inverse) 72%, transparent);
   --component-transient-feedback-blur: 20px;
 

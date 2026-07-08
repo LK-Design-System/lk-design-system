@@ -13,7 +13,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Annotation primitives with Tooltip placement, arrow alignment, size, and shortcut patterns.',
+        component: 'Tooltip 위치, 화살표 정렬, 크기, 단축키 패턴을 포함한 어노테이션 프리미티브입니다.',
       },
     },
   },
@@ -65,14 +65,14 @@ export const Annotations = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
       <section style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center', flexWrap: 'wrap' }}>
-        <Tooltip content="More information">
-          <IconButton variant="ghost" label="info"><Icon name="circle-info" size={20} /></IconButton>
+        <Tooltip content="자세한 정보">
+          <IconButton variant="ghost" label="정보"><Icon name="circle-info" size={20} /></IconButton>
         </Tooltip>
-        <Bubble tone="navy" tail="left">Selected item helper</Bubble>
+        <Bubble tone="navy" tail="left">선택 항목 설명</Bubble>
         <Bookmark defaultActive />
         <Bookmark />
       </section>
-      <Divider label="or" />
+      <Divider label="또는" />
     </main>
   ),
 };
@@ -81,21 +81,21 @@ export const TooltipPatterns = {
   name: 'Tooltip patterns',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 900 }}>
-      <Section title="Size and shortcut">
+      <Section title="크기와 단축키">
         <div style={{ display: 'flex', alignItems: 'center', gap: 78, minHeight: 142, paddingTop: 42, flexWrap: 'wrap' }}>
-          <Tooltip open content="Message helper" position="top" size="medium">
+          <Tooltip open content="도움말 메시지" position="top" size="medium">
             <AnchorBox />
           </Tooltip>
           <Tooltip open content="Small" position="top" size="small">
             <AnchorBox />
           </Tooltip>
-          <Tooltip open content="Message helper" shortcut="Cmd C" position="top">
+          <Tooltip open content="도움말 메시지" shortcut="Cmd C" position="top">
             <AnchorBox />
           </Tooltip>
         </div>
       </Section>
 
-      <Section title="Position">
+      <Section title="위치">
         <div
           style={{
             width: 520,
@@ -122,7 +122,7 @@ export const TooltipPatterns = {
         </div>
       </Section>
 
-      <Section title="Arrow vertical and horizontal align">
+      <Section title="화살표 세로·가로 정렬">
         <div style={{ display: 'grid', gap: 28 }}>
           <div style={{ display: 'flex', gap: 88, minHeight: 142, paddingTop: 42, alignItems: 'center', flexWrap: 'wrap' }}>
             <Tooltip open content={<AlignmentLabel>Left</AlignmentLabel>} position="top" align="left"><AnchorBox /></Tooltip>

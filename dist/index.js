@@ -437,20 +437,34 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
     setCopied(true);
     setTimeout(() => setCopied(false), 1400);
   };
-  const h = size === "sm" ? 36 : 44;
   return /* @__PURE__ */ jsxs5(
-    "button",
+    Button,
     {
-      type: "button",
+      variant: "flat",
+      size,
       onClick: copy,
-      style: { display: "inline-flex", alignItems: "center", gap: 7, height: h, padding: "0 14px", border: "none", borderRadius: "var(--radius-md)", cursor: "pointer", background: copied ? "var(--lk-accent-tint-2)" : "var(--bw-indigo-tint)", color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, transition: "var(--component-button-transition)", ...style },
+      style: {
+        // Overrides that intentionally diverge from the Button md/sm recipe —
+        // kept to avoid any visual change; normalize in a future pass.
+        gap: 7,
+        height: size === "sm" ? 36 : 44,
+        padding: "0 14px",
+        borderRadius: "var(--radius-md)",
+        fontSize: 14,
+        lineHeight: "normal",
+        fontWeight: "var(--fw-bold)",
+        letterSpacing: 0,
+        color: copied ? "var(--lk-accent-ink)" : "var(--label-normal)",
+        ...copied ? { background: "var(--lk-accent-tint-2)" } : null,
+        ...style
+      },
       ...rest,
       children: [
         copied ? /* @__PURE__ */ jsx6("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx6("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ jsxs5("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
           /* @__PURE__ */ jsx6("rect", { x: "9", y: "9", width: "11", height: "11", rx: "2.5" }),
           /* @__PURE__ */ jsx6("path", { d: "M5 15V5a2 2 0 0 1 2-2h10" })
         ] }),
-        /* @__PURE__ */ jsx6("span", { children: copied ? copiedLabel : children })
+        copied ? copiedLabel : children
       ]
     }
   );
@@ -735,16 +749,16 @@ function SplitButton({ children, onClick, items = [], variant = "primary", size 
   const pal = variant === "signal" ? { bg: "var(--lk-accent-ink)", fg: "var(--text-on-signal)" } : variant === "dark" ? { bg: "var(--surface-inverse)", fg: "var(--text-on-inverse)" } : variant === "secondary" ? { bg: "var(--bw-indigo)", fg: "var(--text-on-signal)" } : { bg: "var(--color-primary)", fg: "var(--text-on-signal)" };
   const h = size === "sm" ? 44 : 52;
   return /* @__PURE__ */ jsxs8("div", { ref, style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx11("button", { type: "button", onClick, style: { height: h, padding: "0 20px", border: "none", borderTopLeftRadius: "var(--radius-md)", borderBottomLeftRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children }),
+    /* @__PURE__ */ jsx11("button", { type: "button", onClick, style: { height: h, padding: "0 20px", border: "none", borderTopLeftRadius: "var(--radius-md)", borderBottomLeftRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--component-button-font-size-lg)", fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children }),
     /* @__PURE__ */ jsx11("button", { type: "button", "aria-label": "more actions", onClick: () => setOpen((o) => !o), style: { height: h, width: 42, border: "none", borderLeft: "1px solid var(--inverse-line-strong)", borderTopRightRadius: "var(--radius-md)", borderBottomRightRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx11("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx11("path", { d: "m6 9 6 6 6-6" }) }) }),
-    open && /* @__PURE__ */ jsx11("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6 }, children: items.map((it, i) => /* @__PURE__ */ jsxs8("button", { type: "button", role: "menuitem", onClick: () => {
+    open && /* @__PURE__ */ jsx11("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--component-menu-radius)", boxShadow: "var(--shadow-md)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)" }, children: items.map((it, i) => /* @__PURE__ */ jsxs8("button", { type: "button", role: "menuitem", onClick: () => {
       setOpen(false);
       it.onClick && it.onClick();
     }, onMouseEnter: (e) => {
-      e.currentTarget.style.background = "var(--fill-normal)";
+      e.currentTarget.style.background = "var(--component-menu-item-hover-bg)";
     }, onMouseLeave: (e) => {
       e.currentTarget.style.background = "transparent";
-    }, style: { width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 14.5, fontWeight: "var(--fw-medium)", color: "var(--label-normal)" }, children: [
+    }, style: { width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: "var(--body1-size)", fontWeight: "var(--fw-medium)", color: "var(--label-normal)" }, children: [
       it.icon,
       /* @__PURE__ */ jsx11("span", { children: it.label })
     ] }, i)) })
@@ -997,7 +1011,7 @@ function SaveButton({ saved = false, onClick }) {
         cursor: "pointer",
         flexShrink: 0
       },
-      children: /* @__PURE__ */ jsx15("svg", { width: "17", height: "17", viewBox: "0 0 24 24", fill: saved ? "currentColor" : "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx15("path", { d: "M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" }) })
+      children: /* @__PURE__ */ jsx15("svg", { width: "17", height: "17", viewBox: "0 0 24 24", fill: saved ? "currentColor" : "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx15("path", { d: "M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" }) })
     }
   );
 }
@@ -1117,7 +1131,7 @@ function ChecklistItem({
       fontWeight: "var(--fw-semibold)",
       lineHeight: 1.5,
       letterSpacing: 0,
-      color: dark ? "var(--text-on-dark)" : muted ? "var(--bw-gray)" : "var(--bw-gray-700)",
+      color: dark ? "var(--text-on-dark)" : muted ? "var(--label-alternative)" : "var(--label-neutral)",
       opacity: dark && muted ? 0.7 : 1,
       textDecoration: cross ? "line-through" : "none",
       wordBreak: "keep-all"
@@ -1152,19 +1166,21 @@ function FeatureCard({
         display: "flex",
         flexDirection: "column",
         gap: "16px",
-        background: boxed ? "var(--surface-card)" : "transparent",
-        border: boxed ? "1px solid var(--bw-border)" : "none",
-        borderRadius: boxed ? "var(--radius-xl)" : 0,
-        boxShadow: boxed ? "var(--shadow-md)" : "none",
-        padding: boxed ? "var(--space-8)" : 0,
+        background: boxed ? "var(--component-card-bg)" : "transparent",
+        border: boxed ? "var(--component-card-border)" : "none",
+        borderRadius: boxed ? "var(--component-card-radius)" : 0,
+        /* Card's default rest elevation (elevation="md") — same value as the
+           previous var(--shadow-md), now tracked via the card token. */
+        boxShadow: boxed ? "var(--component-card-shadow-md)" : "none",
+        padding: boxed ? "var(--component-card-padding)" : 0,
         ...style
       },
       ...rest,
       children: [
         icon && /* @__PURE__ */ jsx17("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: 14, color: t.fg, background: t.bg }, children: icon }),
         /* @__PURE__ */ jsxs12("div", { style: { display: "flex", flexDirection: "column", gap: "8px" }, children: [
-          /* @__PURE__ */ jsx17("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--bw-ink)", margin: 0, wordBreak: "keep-all" }, children: title }),
-          /* @__PURE__ */ jsx17("p", { style: { fontSize: "15.5px", lineHeight: 1.7, color: "var(--bw-gray)", margin: 0, wordBreak: "keep-all" }, children })
+          /* @__PURE__ */ jsx17("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
+          /* @__PURE__ */ jsx17("p", { style: { fontSize: "15.5px", lineHeight: 1.7, color: "var(--label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -1179,7 +1195,7 @@ function MetricCard({ label, value, delta, deltaTone = "auto", caption, icon, st
   const up = tone === "up";
   const dc = up ? "var(--bw-green)" : tone === "down" ? "var(--bw-red)" : "var(--label-alternative)";
   const deltaText = typeof delta === "number" ? `${delta > 0 ? "+" : ""}${delta}%` : delta;
-  return /* @__PURE__ */ jsxs13("div", { style: { background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: "22px 24px", boxShadow: "var(--shadow-xs)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs13("div", { style: { background: "var(--component-card-bg)", border: "var(--component-card-border)", borderRadius: "var(--component-card-radius)", padding: "22px 24px", boxShadow: "var(--shadow-xs)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsxs13("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14 }, children: [
       /* @__PURE__ */ jsx18("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "1.4px", textTransform: "uppercase", color: "var(--label-alternative)" }, children: label }),
       icon && /* @__PURE__ */ jsx18("span", { style: { color: "var(--lk-accent-ink)", display: "inline-flex" }, children: icon })
@@ -1213,9 +1229,9 @@ function NewsCard({ image, category, title, excerpt, source, date, cta, href = "
       style: {
         display: "flex",
         flexDirection: "column",
-        background: "var(--surface-card)",
-        border: "1px solid var(--border-subtle)",
-        borderRadius: "var(--radius-xl)",
+        background: "var(--component-card-bg)",
+        border: "var(--component-card-border)",
+        borderRadius: "var(--component-card-radius)",
         overflow: "hidden",
         textDecoration: "none",
         boxShadow: hover ? "var(--shadow-md)" : "var(--shadow-xs)",
@@ -1380,9 +1396,9 @@ function Stat({
   style,
   ...rest
 }) {
-  const colors = { ink: "var(--bw-ink)", signal: "var(--lk-accent-ink)", steel: "var(--bw-green-600)" };
+  const colors = { ink: "var(--label-strong)", signal: "var(--lk-accent-ink)", steel: "var(--bw-green-600)" };
   const valColor = dark ? "var(--text-on-dark)" : colors[accent] || colors.ink;
-  const labColor = dark ? "var(--text-on-dark-muted)" : "var(--bw-gray)";
+  const labColor = dark ? "var(--text-on-dark-muted)" : "var(--label-alternative)";
   return /* @__PURE__ */ jsxs17(
     "div",
     {
@@ -4233,7 +4249,7 @@ function SourceTag({ children, label = "SOURCE", href, tone = "default", style, 
         display: "inline-flex",
         alignItems: "center",
         gap: 8,
-        height: 26,
+        height: "var(--component-tag-height)",
         paddingInline: 11,
         borderRadius: "var(--radius-pill)",
         background: onDark ? "var(--inverse-fill-normal)" : "var(--fill-normal)",
@@ -4806,6 +4822,16 @@ function Carousel({ slides = [], showDots = true, showArrows = true, style, ...r
 
 // components/data/DataGrid.jsx
 import React46 from "react";
+
+// components/data/table-cell-styles.js
+function thStyle(pad2) {
+  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", whiteSpace: "nowrap" };
+}
+function tdStyle(pad2) {
+  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14, color: "var(--label-neutral)", whiteSpace: "nowrap" };
+}
+
+// components/data/DataGrid.jsx
 import { jsx as jsx43, jsxs as jsxs35 } from "react/jsx-runtime";
 function sortRows(rows, key, dir) {
   if (!key) return rows;
@@ -4863,15 +4889,31 @@ function DataGrid({ columns = [], rows = [], selectable = false, defaultSelected
   const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
   return /* @__PURE__ */ jsx43("div", { style: { overflowX: "auto", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ jsxs35("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
     /* @__PURE__ */ jsx43("thead", { children: /* @__PURE__ */ jsxs35("tr", { children: [
-      selectable && /* @__PURE__ */ jsx43("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44 }, children: /* @__PURE__ */ jsx43("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "select all", style: checkboxStyle(allOn) }) }),
-      columns.map((c) => /* @__PURE__ */ jsx43("th", { onClick: () => toggleSort(c), style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", cursor: c.sortable ? "pointer" : "default", whiteSpace: "nowrap", userSelect: "none" }, children: /* @__PURE__ */ jsxs35("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: [
-        c.label,
-        c.sortable && /* @__PURE__ */ jsx43("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { opacity: sort.key === c.key ? 1 : 0.3 }, children: /* @__PURE__ */ jsx43("path", { d: sort.key === c.key && sort.dir === "desc" ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
-      ] }) }, c.key))
+      selectable && /* @__PURE__ */ jsx43("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44 }, children: /* @__PURE__ */ jsx43("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn) }) }),
+      columns.map((c) => /* @__PURE__ */ jsx43(
+        "th",
+        {
+          "aria-sort": c.sortable && sort.key === c.key ? sort.dir === "desc" ? "descending" : "ascending" : void 0,
+          style: { ...thStyle(pad2), textAlign: c.align || "left", userSelect: "none" },
+          children: c.sortable ? /* @__PURE__ */ jsxs35(
+            "button",
+            {
+              type: "button",
+              onClick: () => toggleSort(c),
+              style: { display: "inline-flex", alignItems: "center", gap: 5, padding: 0, border: 0, background: "transparent", cursor: "pointer", font: "inherit", letterSpacing: "inherit", textTransform: "inherit", color: "inherit" },
+              children: [
+                c.label,
+                /* @__PURE__ */ jsx43("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { opacity: sort.key === c.key ? 1 : 0.3 }, children: /* @__PURE__ */ jsx43("path", { d: sort.key === c.key && sort.dir === "desc" ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
+              ]
+            }
+          ) : /* @__PURE__ */ jsx43("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: c.label })
+        },
+        c.key
+      ))
     ] }) }),
     /* @__PURE__ */ jsx43("tbody", { children: sorted.map((r, ri) => /* @__PURE__ */ jsxs35("tr", { style: { background: sel.has(ri) ? "var(--lk-accent-tint)" : "transparent" }, children: [
-      selectable && /* @__PURE__ */ jsx43("td", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsx43("input", { type: "checkbox", checked: sel.has(ri), onChange: () => toggleRow(ri), "aria-label": `select row ${ri + 1}`, style: checkboxStyle(sel.has(ri)) }) }),
-      columns.map((c) => /* @__PURE__ */ jsx43("td", { style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14.5, color: "var(--label-neutral)", whiteSpace: "nowrap" }, children: typeof c.render === "function" ? c.render(r) : r[c.key] }, c.key))
+      selectable && /* @__PURE__ */ jsx43("td", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsx43("input", { type: "checkbox", checked: sel.has(ri), onChange: () => toggleRow(ri), "aria-label": `${ri + 1}\uD589 \uC120\uD0DD`, style: checkboxStyle(sel.has(ri)) }) }),
+      columns.map((c) => /* @__PURE__ */ jsx43("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(r) : r[c.key] }, c.key))
     ] }, ri)) })
   ] }) });
 }
@@ -4903,7 +4945,7 @@ function DataToolbar({
     onSearchChange && onSearchChange(value);
   };
   const compact = size === "sm";
-  const controlHeight = compact ? 34 : 38;
+  const controlHeight = compact ? "var(--control-h-sm)" : 40;
   return /* @__PURE__ */ jsxs36(
     "div",
     {
@@ -4922,11 +4964,11 @@ function DataToolbar({
       children: [
         /* @__PURE__ */ jsxs36("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
           /* @__PURE__ */ jsxs36("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
-            title != null && /* @__PURE__ */ jsx44("strong", { style: { color: "var(--label-strong)", fontSize: compact ? 14 : 15.5, lineHeight: 1.35 }, children: title }),
-            description != null && /* @__PURE__ */ jsx44("span", { style: { color: "var(--label-alternative)", fontSize: compact ? 12.5 : 13, lineHeight: 1.45 }, children: description })
+            title != null && /* @__PURE__ */ jsx44("strong", { style: { color: "var(--label-strong)", fontSize: compact ? "var(--label1-size)" : "var(--body2-size)", fontWeight: "var(--fw-semibold)", lineHeight: 1.35 }, children: title }),
+            description != null && /* @__PURE__ */ jsx44("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", lineHeight: 1.45 }, children: description })
           ] }),
           (count != null || actions != null) && /* @__PURE__ */ jsxs36("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
-            count != null && /* @__PURE__ */ jsxs36("span", { style: { color: "var(--label-alternative)", fontSize: 12.5, fontVariantNumeric: "tabular-nums" }, children: [
+            count != null && /* @__PURE__ */ jsxs36("span", { style: { color: "var(--label-alternative)", fontSize: "var(--label2-size)", fontVariantNumeric: "tabular-nums" }, children: [
               count,
               "\uAC1C"
             ] }),
@@ -4953,7 +4995,7 @@ function DataToolbar({
                   background: "var(--surface-raised)",
                   color: "var(--label-normal)",
                   fontFamily: "var(--font-sans)",
-                  fontSize: 13.5,
+                  fontSize: "var(--label1-size)",
                   outline: "none"
                 }
               }
@@ -5063,14 +5105,14 @@ function TableRow({ columns, row, pad: pad2, hover }) {
       onMouseEnter: () => setH(true),
       onMouseLeave: () => setH(false),
       style: { background: hover && h ? "var(--fill-alt)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
-      children: columns.map((c) => /* @__PURE__ */ jsx48("td", { style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14.5, color: "var(--label-neutral)", whiteSpace: "nowrap" }, children: typeof c.render === "function" ? c.render(row) : row[c.key] }, c.key))
+      children: columns.map((c) => /* @__PURE__ */ jsx48("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(row) : row[c.key] }, c.key))
     }
   );
 }
 function Table({ columns = [], rows = [], size = "md", hover = true, style, ...rest }) {
   const pad2 = size === "sm" ? "10px 12px" : "14px 16px";
   return /* @__PURE__ */ jsx48("div", { style: { overflowX: "auto", ...style }, ...rest, children: /* @__PURE__ */ jsxs40("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
-    /* @__PURE__ */ jsx48("thead", { children: /* @__PURE__ */ jsx48("tr", { children: columns.map((c) => /* @__PURE__ */ jsx48("th", { style: { textAlign: c.align || "left", padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--label-alternative)", width: c.width, whiteSpace: "nowrap" }, children: c.label }, c.key)) }) }),
+    /* @__PURE__ */ jsx48("thead", { children: /* @__PURE__ */ jsx48("tr", { children: columns.map((c) => /* @__PURE__ */ jsx48("th", { style: { ...thStyle(pad2), textAlign: c.align || "left", width: c.width }, children: c.label }, c.key)) }) }),
     /* @__PURE__ */ jsx48("tbody", { children: rows.map((r, ri) => /* @__PURE__ */ jsx48(TableRow, { columns, row: r, pad: pad2, hover }, ri)) })
   ] }) });
 }
@@ -5687,7 +5729,7 @@ var COLORS = {
   red: "var(--bw-red)",
   // aliases
   indigo: "var(--surface-inverse)",
-  green: "var(--bw-blue)",
+  green: "var(--bw-green)",
   ink: "var(--surface-inverse)"
 };
 function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
@@ -5959,7 +6001,7 @@ var TONES2 = {
   // brand teal chip (default)
   neutral: { fg: "var(--label-strong)", bg: "var(--fill-strong)", solidBg: "var(--surface-inverse)" },
   // ink neutral
-  steel: { fg: "var(--color-positive-strong)", bg: "var(--status-positive-tint)" },
+  steel: { fg: "var(--bw-steel)", bg: "var(--bw-indigo-tint)" },
   amber: { fg: "var(--color-cautionary-strong)", bg: "var(--status-cautionary-tint)" },
   red: { fg: "var(--color-danger)", bg: "var(--status-danger-tint)" },
   // back-compat aliases (live site uses tone="indigo")
@@ -5976,7 +6018,7 @@ function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
       style: {
         display: "inline-flex",
         alignItems: "center",
-        height: 26,
+        height: "var(--component-tag-height)",
         padding: "0 12px",
         fontFamily: "var(--font-sans)",
         fontWeight: "var(--fw-bold)",
@@ -9209,7 +9251,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
     };
   }, [open]);
   return /* @__PURE__ */ jsxs82("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    open && /* @__PURE__ */ jsx113("div", { role: "menu", style: { position: "absolute", bottom: "calc(100% + 8px)", left: 0, minWidth: collapsed ? 200 : "100%", boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", padding: 5, boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx113("div", { style: { height: 1, background: "var(--bw-border)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ jsxs82(
+    open && /* @__PURE__ */ jsx113("div", { role: "menu", style: { position: "absolute", bottom: "calc(100% + 8px)", left: 0, minWidth: collapsed ? 200 : "100%", boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--component-menu-radius)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)", boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx113("div", { style: { height: 1, background: "var(--bw-border)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ jsxs82(
       "button",
       {
         type: "button",
@@ -9221,7 +9263,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         },
         onMouseEnter: () => setHov(i),
         onMouseLeave: () => setHov(-1),
-        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--lk-accent-tint)" : "transparent", color: it.danger ? "var(--status-danger, var(--color-danger))" : "var(--label-normal, var(--label-normal))", transition: "background var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--component-menu-item-hover-bg)" : "transparent", color: it.danger ? "var(--status-danger, var(--color-danger))" : "var(--label-normal, var(--label-normal))", transition: "background var(--dur-fast) var(--ease-out)" },
         children: [
           it.icon != null && /* @__PURE__ */ jsx113("span", { style: { flexShrink: 0, display: "inline-flex", color: it.danger ? "inherit" : "var(--label-alternative)" }, children: it.icon }),
           /* @__PURE__ */ jsx113("span", { style: { flex: 1, minWidth: 0 }, children: it.label })
@@ -9583,7 +9625,7 @@ function ConfirmDialog({
       onClick: closeOnScrim ? (event) => {
         if (event.target === event.currentTarget && dismiss) dismiss();
       } : void 0,
-      style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--scrim-dark)", backdropFilter: "blur(2px)" },
+      style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--component-dialog-scrim)", backdropFilter: "blur(var(--component-dialog-scrim-blur))" },
       children: /* @__PURE__ */ jsxs86(
         "div",
         {
@@ -9591,7 +9633,7 @@ function ConfirmDialog({
           "aria-modal": "true",
           "aria-labelledby": title != null ? titleId : void 0,
           "aria-label": title == null ? "\uD655\uC778 \uB2E4\uC774\uC5BC\uB85C\uADF8" : void 0,
-          style: { width: "100%", maxWidth: 420, display: "grid", gap: "var(--space-4)", background: "var(--bw-white)", borderRadius: "var(--radius-3xl)", boxShadow: "var(--shadow-xl)", padding: "28px 28px 24px", fontFamily: "var(--font-sans)", ...style },
+          style: { width: "100%", maxWidth: 420, display: "grid", gap: "var(--space-4)", background: "var(--bw-white)", borderRadius: "var(--component-dialog-radius)", boxShadow: "var(--shadow-xl)", padding: "28px 28px 24px", fontFamily: "var(--font-sans)", ...style },
           ...rest,
           children: [
             /* @__PURE__ */ jsxs86("div", { style: { display: "grid", gap: "var(--space-2)" }, children: [
@@ -9599,8 +9641,23 @@ function ConfirmDialog({
               children != null && /* @__PURE__ */ jsx117("div", { style: { color: "var(--label-neutral)", fontSize: 15, lineHeight: 1.7, wordBreak: "keep-all" }, children })
             ] }),
             /* @__PURE__ */ jsxs86("div", { style: { display: "flex", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
-              /* @__PURE__ */ jsx117("button", { type: "button", onClick: () => dismiss && dismiss(), style: { height: 44, padding: "0 20px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", color: "var(--label-normal)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children: cancelLabel }),
-              /* @__PURE__ */ jsx117("button", { type: "button", onClick: onConfirm, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: accent, color: "var(--text-on-signal)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children: confirmLabel })
+              /* @__PURE__ */ jsx117(Button, { variant: "ghost", onClick: () => dismiss && dismiss(), style: { height: 44, borderRadius: "var(--radius-md)", fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children: cancelLabel }),
+              /* @__PURE__ */ jsx117(
+                Button,
+                {
+                  variant: "primary",
+                  onClick: onConfirm,
+                  style: {
+                    height: 44,
+                    borderRadius: "var(--radius-md)",
+                    fontWeight: "var(--fw-bold)",
+                    letterSpacing: 0,
+                    boxShadow: "none",
+                    ...tone !== "default" ? { background: accent } : null
+                  },
+                  children: confirmLabel
+                }
+              )
             ] })
           ]
         }
@@ -9804,7 +9861,7 @@ function MenuItemButton({
         gap: 10,
         padding: `${vertical} ${denseCell ? 8 : 10}px`,
         border: "none",
-        background: active || hover && !disabled ? "var(--fill-normal)" : "transparent",
+        background: active || hover && !disabled ? "var(--component-menu-item-hover-bg)" : "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
         borderRadius: "var(--radius-md)",
         textAlign: "left",
@@ -9919,9 +9976,9 @@ function DropdownMenu({
               overflowY: maxHeight ? "auto" : void 0,
               background: "var(--bw-white)",
               border: "1px solid var(--bw-border)",
-              borderRadius: "var(--radius-16)",
+              borderRadius: "var(--component-menu-radius)",
               boxShadow: "var(--shadow-md)",
-              padding: "8px 20px",
+              padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)",
               boxSizing: "border-box",
               display: "flex",
               flexDirection: "column",
@@ -9991,6 +10048,27 @@ function DropdownMenu({
 
 // components/overlay/HoverCard.jsx
 import React124 from "react";
+
+// components/overlay/anchored-panel-style.js
+function anchoredPanelStyle(width) {
+  return {
+    position: "absolute",
+    top: "calc(100% + 8px)",
+    zIndex: 40,
+    width,
+    background: "var(--bw-white)",
+    border: "1px solid var(--bw-border)",
+    borderRadius: "var(--radius-lg)",
+    boxShadow: "var(--shadow-md)",
+    padding: 16,
+    fontFamily: "var(--font-sans)",
+    fontSize: 14,
+    lineHeight: 1.6,
+    color: "var(--label-neutral)"
+  };
+}
+
+// components/overlay/HoverCard.jsx
 import { jsx as jsx121, jsxs as jsxs89 } from "react/jsx-runtime";
 function HoverCard({ trigger, children, align = "left", width = 280, style, ...rest }) {
   const [open, setOpen] = React124.useState(false);
@@ -10005,7 +10083,7 @@ function HoverCard({ trigger, children, align = "left", width = 280, style, ...r
   };
   return /* @__PURE__ */ jsxs89("span", { style: { position: "relative", display: "inline-flex" }, onMouseEnter: show, onMouseLeave: hide, ...rest, children: [
     trigger,
-    open && /* @__PURE__ */ jsx121("div", { style: { position: "absolute", top: "calc(100% + 8px)", [align]: 0, zIndex: 40, width, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 16, fontFamily: "var(--font-sans)", fontSize: 14, lineHeight: 1.6, color: "var(--label-neutral)", ...style }, children })
+    open && /* @__PURE__ */ jsx121("div", { style: { ...anchoredPanelStyle(width), [align]: 0, ...style }, children })
   ] });
 }
 
@@ -10083,14 +10161,14 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
       onClick: closeOnScrim ? (e) => {
         if (e.target === e.currentTarget && onClose) onClose();
       } : void 0,
-      style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--scrim-dark)", backdropFilter: "blur(2px)" },
+      style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--component-dialog-scrim)", backdropFilter: "blur(var(--component-dialog-scrim-blur))" },
       children: /* @__PURE__ */ jsxs91(
         "div",
         {
           role: "dialog",
           "aria-modal": "true",
           "aria-label": typeof title === "string" ? title : void 0,
-          style: { width: "100%", maxWidth: width, maxHeight: "86vh", display: "flex", flexDirection: "column", background: "var(--bw-white)", borderRadius: "var(--radius-4xl)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", overflow: "hidden", ...style },
+          style: { width: "100%", maxWidth: width, maxHeight: "86vh", display: "flex", flexDirection: "column", background: "var(--bw-white)", borderRadius: "var(--component-dialog-radius)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", overflow: "hidden", ...style },
           ...rest,
           children: [
             (title != null || onClose) && /* @__PURE__ */ jsxs91("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--bw-border)" }, children: [
@@ -10122,7 +10200,7 @@ function Popover({ trigger, children, align = "left", width = 260, style, ...res
   }, [open]);
   return /* @__PURE__ */ jsxs92("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx124("span", { onClick: () => setOpen((o) => !o), style: { display: "inline-flex" }, children: trigger }),
-    open && /* @__PURE__ */ jsx124("div", { role: "dialog", style: { position: "absolute", top: "calc(100% + 8px)", [align]: 0, zIndex: 40, width, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 16, fontFamily: "var(--font-sans)", fontSize: 14, lineHeight: 1.6, color: "var(--label-neutral)" }, children })
+    open && /* @__PURE__ */ jsx124("div", { role: "dialog", style: { ...anchoredPanelStyle(width), [align]: 0 }, children })
   ] });
 }
 
@@ -10600,9 +10678,9 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
         boxSizing: "border-box",
         padding: "14px 16px",
         background: "var(--surface-raised)",
-        border: "1px solid var(--border-subtle)",
-        borderRadius: "var(--radius-xl)",
-        boxShadow: "var(--shadow-sm)",
+        border: "var(--component-card-border)",
+        borderRadius: "var(--component-card-radius)",
+        boxShadow: "var(--component-card-shadow-sm)",
         fontFamily: "var(--font-sans)",
         ...style
       },
@@ -10778,9 +10856,9 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
     width: "100%",
     boxSizing: "border-box",
     background: "var(--surface-raised)",
-    border: `1px solid ${selected ? "var(--lk-accent-ink)" : "var(--border-subtle)"}`,
-    borderRadius: "var(--radius-xl)",
-    boxShadow: selected ? "0 0 0 3px var(--focus-ring)" : "var(--shadow-sm)",
+    border: selected ? "var(--border-thin) solid var(--lk-accent-ink)" : "var(--component-card-border)",
+    borderRadius: "var(--component-card-radius)",
+    boxShadow: selected ? "0 0 0 3px var(--focus-ring)" : "var(--component-card-shadow-sm)",
     cursor: onClick ? "pointer" : "default",
     fontFamily: "var(--font-sans)",
     ...style
@@ -11263,6 +11341,30 @@ function ChoiceCard({
 
 // components/selection/FilterChip.jsx
 import React139 from "react";
+
+// components/selection/pill-chip-style.js
+function pillChipStyle(active, disabled) {
+  return {
+    display: "inline-flex",
+    alignItems: "center",
+    height: "var(--component-filter-chip-height)",
+    padding: "0 15px",
+    background: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
+    border: `1px solid ${active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
+    borderRadius: "var(--radius-pill)",
+    cursor: disabled ? "not-allowed" : "pointer",
+    opacity: disabled ? 0.5 : 1,
+    fontFamily: "var(--font-sans)",
+    fontSize: 14,
+    fontWeight: "var(--fw-semibold)",
+    letterSpacing: 0,
+    color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
+    transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
+    whiteSpace: "nowrap"
+  };
+}
+
+// components/selection/FilterChip.jsx
 import { jsx as jsx136, jsxs as jsxs103 } from "react/jsx-runtime";
 function FilterChip({
   children,
@@ -11285,23 +11387,9 @@ function FilterChip({
       onMouseEnter: () => setHover(true),
       onMouseLeave: () => setHover(false),
       style: {
-        display: "inline-flex",
-        alignItems: "center",
+        ...pillChipStyle(active, disabled),
         gap: 7,
-        height: 38,
-        padding: "0 15px",
-        background: active ? "var(--lk-accent-tint-2)" : hover && !disabled ? "var(--fill-normal)" : "var(--bw-white)",
-        border: `1px solid ${active ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
-        borderRadius: "var(--radius-pill)",
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
-        fontFamily: "var(--font-sans)",
-        fontSize: 14,
-        fontWeight: "var(--fw-semibold)",
-        letterSpacing: 0,
-        color: active ? "var(--lk-accent-ink)" : "var(--label-neutral)",
-        transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
-        whiteSpace: "nowrap",
+        ...!active && hover && !disabled ? { background: "var(--fill-normal)" } : null,
         ...style
       },
       ...rest,
@@ -11342,23 +11430,10 @@ function MultiSelectChip({
       disabled,
       onClick: toggle,
       style: {
-        display: "inline-flex",
-        alignItems: "center",
+        ...pillChipStyle(on, disabled),
         gap: 6,
-        height: 38,
         padding: on ? "0 15px 0 11px" : "0 15px",
-        background: on ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-        border: `1px solid ${on ? "var(--lk-accent-ink)" : "var(--bw-border)"}`,
-        borderRadius: "var(--radius-pill)",
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
-        fontFamily: "var(--font-sans)",
-        fontSize: 14,
-        fontWeight: "var(--fw-semibold)",
-        letterSpacing: 0,
-        color: on ? "var(--lk-accent-ink)" : "var(--label-neutral)",
         transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), padding var(--dur-fast) var(--ease-out)",
-        whiteSpace: "nowrap",
         ...style
       },
       ...rest,
@@ -11968,35 +12043,13 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
 }
 
 // components/status/Meter.jsx
-import React149 from "react";
-import { jsx as jsx146, jsxs as jsxs113 } from "react/jsx-runtime";
-function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue = true, style, ...rest }) {
-  const pct = Math.max(0, Math.min(100, value / max * 100));
-  let c = "var(--lk-accent-ink)";
-  if (thresholds) {
-    if (pct <= thresholds.low) c = "var(--bw-red)";
-    else if (pct <= thresholds.high) c = "var(--bw-amber)";
-    else c = "var(--bw-green)";
-  }
-  const h = size === "sm" ? 6 : 10;
-  return /* @__PURE__ */ jsxs113("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs113("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
-      /* @__PURE__ */ jsx146("span", { children: label }),
-      showValue && /* @__PURE__ */ jsxs113("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--label-alternative)" }, children: [
-        value,
-        "/",
-        max
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx146("div", { style: { height: h, borderRadius: "var(--radius-pill)", background: "var(--fill-strong)", overflow: "hidden" }, children: /* @__PURE__ */ jsx146("span", { style: { display: "block", height: "100%", width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)" } }) })
-  ] });
-}
+import React150 from "react";
 
 // components/status/ProgressBar.jsx
-import React150 from "react";
-import { jsx as jsx147, jsxs as jsxs114 } from "react/jsx-runtime";
+import React149 from "react";
+import { jsx as jsx146, jsxs as jsxs113 } from "react/jsx-runtime";
 function useKeyframes4(id, css) {
-  React150.useEffect(() => {
+  React149.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
     const el = document.createElement("style");
     el.id = id;
@@ -12010,21 +12063,21 @@ var TONES6 = {
   cautionary: "var(--bw-amber)",
   negative: "var(--bw-red)"
 };
-function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "signal", size = "md", label, showValue = false, style, ...rest }) {
+function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "signal", color, size = "md", label, showValue = false, style, ...rest }) {
   useKeyframes4("lk-prog-kf", "@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none}}");
-  const c = TONES6[tone] || TONES6.signal;
+  const c = color || TONES6[tone] || TONES6.signal;
   const h = size === "sm" ? 4 : size === "lg" ? 10 : 6;
   const pct = Math.max(0, Math.min(100, value / max * 100));
   const ariaLabel = typeof label === "string" ? label : void 0;
-  return /* @__PURE__ */ jsxs114("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs114("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
-      /* @__PURE__ */ jsx147("span", { children: label }),
-      showValue && /* @__PURE__ */ jsxs114("span", { style: { color: "var(--label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
+  return /* @__PURE__ */ jsxs113("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs113("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
+      /* @__PURE__ */ jsx146("span", { children: label }),
+      showValue && /* @__PURE__ */ jsxs113("span", { style: { color: "var(--label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
         Math.round(pct),
         "%"
       ] })
     ] }),
-    /* @__PURE__ */ jsx147(
+    /* @__PURE__ */ jsx146(
       "div",
       {
         role: "progressbar",
@@ -12035,9 +12088,32 @@ function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "sign
         "aria-valuemax": 100,
         "aria-valuetext": indeterminate ? "loading" : `${Math.round(pct)}%`,
         style: { position: "relative", height: h, borderRadius: "var(--radius-pill)", background: "var(--fill-strong)", overflow: "hidden" },
-        children: indeterminate ? /* @__PURE__ */ jsx147("span", { "data-lds-progress-indeterminate": true, style: { position: "absolute", top: 0, bottom: 0, left: 0, width: "45%", background: c, borderRadius: "var(--radius-pill)", animation: "lk-prog-indet 1.3s var(--ease-in-out) infinite" } }) : /* @__PURE__ */ jsx147("span", { style: { position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out)" } })
+        children: indeterminate ? /* @__PURE__ */ jsx146("span", { "data-lds-progress-indeterminate": true, style: { position: "absolute", top: 0, bottom: 0, left: 0, width: "45%", background: c, borderRadius: "var(--radius-pill)", animation: "lk-prog-indet 1.3s var(--ease-in-out) infinite" } }) : /* @__PURE__ */ jsx146("span", { style: { position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out)" } })
       }
     )
+  ] });
+}
+
+// components/status/Meter.jsx
+import { jsx as jsx147, jsxs as jsxs114 } from "react/jsx-runtime";
+function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue = true, style, ...rest }) {
+  const pct = Math.max(0, Math.min(100, value / max * 100));
+  let c = "var(--lk-accent-ink)";
+  if (thresholds) {
+    if (pct <= thresholds.low) c = "var(--bw-red)";
+    else if (pct <= thresholds.high) c = "var(--bw-amber)";
+    else c = "var(--bw-green)";
+  }
+  return /* @__PURE__ */ jsxs114("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs114("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--label-neutral)" }, children: [
+      /* @__PURE__ */ jsx147("span", { children: label }),
+      showValue && /* @__PURE__ */ jsxs114("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--label-alternative)" }, children: [
+        value,
+        "/",
+        max
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx147(ProgressBar, { value, max, size: size === "sm" ? "md" : "lg", color: c })
   ] });
 }
 
