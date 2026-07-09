@@ -1,10 +1,8 @@
 import {
-  ChecklistItem,
   FeatureCard,
   Icon,
 } from '../src/index.js';
 import {
-  ChecklistItemCard as ChecklistItemCardStory,
   FeatureCardCard as FeatureCardCardStory,
 } from './CardsExtended.shared.jsx';
 
@@ -13,7 +11,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '제품 기능과 체크리스트를 카드 안에서 설명하는 FeatureCard, ChecklistItem 패턴입니다.',
+        component: '제품 기능을 아이콘·제목·설명으로 카드 안에서 설명하는 FeatureCard 패턴입니다.',
       },
     },
   },
@@ -33,15 +31,8 @@ export const FeatureCards = {
           경고와 조치가 필요한 이벤트를 차분한 상태 색상으로 분리합니다.
         </FeatureCard>
       </section>
-
-      <section style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 560 }}>
-        <ChecklistItem>상태 라벨 표시</ChecklistItem>
-        <ChecklistItem>권한별 액션 분리</ChecklistItem>
-        <ChecklistItem cross muted>임의 색상 사용</ChecklistItem>
-      </section>
     </main>
   ),
 };
 
 export const FeatureCardCard = { ...FeatureCardCardStory, name: 'FeatureCard card parity', tags: ['!dev', 'visual-parity'] };
-export const ChecklistItemCard = { ...ChecklistItemCardStory, name: 'ChecklistItem card parity', tags: ['!dev', 'visual-parity'] };

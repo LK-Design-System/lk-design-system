@@ -4,7 +4,6 @@ import {
   Kbd,
   ListCell,
   StatusBadge,
-  StepList,
 } from '../src/index.js';
 import { ListCellAccordionCard as ListCellAccordionCardStory } from './Content.shared.jsx';
 
@@ -13,19 +12,13 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '항목 목록과 단계처럼 순서와 상태를 읽는 ListCell, StepList 패턴입니다.',
+        component: '항목 목록처럼 순서와 상태를 읽는 ListCell 패턴입니다.',
       },
     },
   },
 };
 
 export default meta;
-
-const steps = [
-  { title: '초안 작성', description: '필수 항목 확인' },
-  { title: '검토 요청', description: '담당자 지정' },
-  { title: '게시 완료', description: '변경 이력 기록' },
-];
 
 export const Lists = {
   name: '리스트',
@@ -35,10 +28,6 @@ export const Lists = {
         <ListCell leading={<Icon name="document" size={18} />} title="디자인 토큰" description="검토 요청됨" trailing={<StatusBadge tone="signal">검토</StatusBadge>} onClick={() => {}} divider />
         <ListCell leading={<Icon name="layers" size={18} />} title="컴포넌트 문서" description="업데이트 완료" trailing={<Kbd>CMD K</Kbd>} onClick={() => {}} divider selected />
         <ListCell leading={<Icon name="bell" size={18} />} title="알림 3건" description="확인 필요한 변경 사항" chevron onClick={() => {}} />
-      </section>
-
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 'var(--space-5)', alignItems: 'start', minWidth: 0 }}>
-        <StepList steps={steps} editable={false} />
       </section>
     </main>
   ),

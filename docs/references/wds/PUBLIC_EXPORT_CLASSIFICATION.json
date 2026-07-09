@@ -94,6 +94,7 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/CardChecklistItem.stories.jsx",
         "stories/CardInfo.stories.jsx",
         "stories/CardNews.stories.jsx",
         "stories/CardSpecs.stories.jsx",
@@ -122,6 +123,7 @@
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentListsMedia.stories.jsx",
         "stories/ContentMedia.stories.jsx",
+        "stories/ContentStepList.stories.jsx",
         "stories/ContentTimeline.stories.jsx"
       ],
       "exports": [
@@ -159,6 +161,7 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/ContentCarousel.stories.jsx",
         "stories/ContentMedia.stories.jsx",
         "stories/DataCalendar.stories.jsx",
         "stories/DataDescriptionList.stories.jsx",
@@ -345,6 +348,7 @@
         "stories/NavigationFull.stories.jsx",
         "stories/NavigationSteps.stories.jsx",
         "stories/NavigationTabs.stories.jsx",
+        "stories/NavigationUserMenu.stories.jsx",
         "stories/OverlayMenu.stories.jsx"
       ],
       "exports": [

@@ -353,7 +353,7 @@
           "name": "ChecklistItem",
           "file": "components/cards/ChecklistItem.jsx",
           "publicExport": true,
-          "story": "stories/CardInfo.stories.jsx"
+          "story": "stories/CardChecklistItem.stories.jsx"
         },
         {
           "name": "FeatureCard",
