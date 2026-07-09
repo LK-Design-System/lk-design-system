@@ -4804,50 +4804,43 @@ function bubbleOffset(placement, align) {
   }
   return { transform: `translateY(-50%) translateX(${x})` };
 }
-function arrowStyle(placement, arrowHalf, arrowHeight) {
+var START_ALIGNS = /* @__PURE__ */ new Set(["leading", "top"]);
+var END_ALIGNS = /* @__PURE__ */ new Set(["trailing", "bottom"]);
+function arrowMainAxis(normalizedAlign, target, axis) {
+  const size = target ? axis === "x" ? target.w : target.h : null;
+  const half = axis === "x" ? "translateX" : "translateY";
+  const startEdge = axis === "x" ? "left" : "top";
+  const endEdge = axis === "x" ? "right" : "bottom";
+  const isStart = START_ALIGNS.has(normalizedAlign);
+  const isEnd = END_ALIGNS.has(normalizedAlign);
+  if (size == null || !isStart && !isEnd) {
+    return { edge: startEdge, value: "50%", shift: `${half}(-50%)` };
+  }
+  if (isStart) return { edge: startEdge, value: size / 2, shift: `${half}(-50%)` };
+  return { edge: endEdge, value: size / 2, shift: `${half}(50%)` };
+}
+function arrowStyle(placement, arrowHalf, arrowHeight, normalizedAlign, target) {
   const bg = "var(--color-semantic-inverse-background)";
-  if (placement === "bottom") {
-    return {
-      bottom: "calc(100% - 1px)",
-      left: "50%",
+  if (placement === "top" || placement === "bottom") {
+    const a2 = arrowMainAxis(normalizedAlign, target, "x");
+    const base2 = {
       width: arrowHalf * 2,
       height: arrowHeight,
-      transform: "translateX(-50%)",
       background: bg,
-      clipPath: "polygon(0 100%, 50% 0, 100% 100%)"
+      transform: a2.shift,
+      [a2.edge]: a2.value
     };
+    return placement === "bottom" ? { ...base2, bottom: "calc(100% - 1px)", clipPath: "polygon(0 100%, 50% 0, 100% 100%)" } : { ...base2, top: "calc(100% - 1px)", clipPath: "polygon(0 0, 50% 100%, 100% 0)" };
   }
-  if (placement === "left") {
-    return {
-      left: "calc(100% - 1px)",
-      top: "50%",
-      width: arrowHeight,
-      height: arrowHalf * 2,
-      transform: "translateY(-50%)",
-      background: bg,
-      clipPath: "polygon(0 0, 100% 50%, 0 100%)"
-    };
-  }
-  if (placement === "right") {
-    return {
-      right: "calc(100% - 1px)",
-      top: "50%",
-      width: arrowHeight,
-      height: arrowHalf * 2,
-      transform: "translateY(-50%)",
-      background: bg,
-      clipPath: "polygon(100% 0, 0 50%, 100% 100%)"
-    };
-  }
-  return {
-    top: "calc(100% - 1px)",
-    left: "50%",
-    width: arrowHalf * 2,
-    height: arrowHeight,
-    transform: "translateX(-50%)",
+  const a = arrowMainAxis(normalizedAlign, target, "y");
+  const base = {
+    width: arrowHeight,
+    height: arrowHalf * 2,
     background: bg,
-    clipPath: "polygon(0 0, 50% 100%, 100% 0)"
+    transform: a.shift,
+    [a.edge]: a.value
   };
+  return placement === "left" ? { ...base, left: "calc(100% - 1px)", clipPath: "polygon(0 0, 100% 50%, 0 100%)" } : { ...base, right: "calc(100% - 1px)", clipPath: "polygon(100% 0, 0 50%, 100% 100%)" };
 }
 function Tooltip({
   content,
@@ -4870,9 +4863,29 @@ function Tooltip({
   const compact = size === "small" || size === "sm";
   const arrowHalf = compact ? 7 : 10;
   const arrowHeight = compact ? 6 : 8;
+  const normalizedAlign = normalizeAlign(align);
+  const wrapperRef = import_react42.default.useRef(null);
+  const [target, setTarget] = import_react42.default.useState(null);
+  const edgeAligned = START_ALIGNS.has(normalizedAlign) || END_ALIGNS.has(normalizedAlign);
+  import_react42.default.useLayoutEffect(() => {
+    if (!arrow || !edgeAligned || !wrapperRef.current) return;
+    const node = wrapperRef.current;
+    const measure = () => {
+      const r = node.getBoundingClientRect();
+      setTarget(
+        (prev) => prev && prev.w === r.width && prev.h === r.height ? prev : { w: r.width, h: r.height }
+      );
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, [arrow, edgeAligned, place, size]);
   return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
     "span",
     {
+      ref: wrapperRef,
       style: { position: "relative", display: "inline-flex", ...style },
       onMouseEnter: () => setShow(true),
       onMouseLeave: () => setShow(false),
@@ -4928,7 +4941,7 @@ function Tooltip({
                     position: "absolute",
                     display: "block",
                     pointerEvents: "none",
-                    ...arrowStyle(place, arrowHalf, arrowHeight)
+                    ...arrowStyle(place, arrowHalf, arrowHeight, normalizedAlign, target)
                   }
                 }
               )
@@ -6196,7 +6209,7 @@ function Notification({ icon, title, description, time, unread = false, onClick,
       style: { display: "flex", gap: 12, padding: "14px 16px", borderRadius: "var(--radius-lg)", cursor: onClick ? "pointer" : "default", background: unread ? "var(--lk-accent-tint)" : "transparent", fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        icon != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--color-semantic-primary-normal)" }, children: icon }),
+        icon != null && /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: unread ? "var(--bw-white)" : "var(--lk-accent-tint)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--color-semantic-primary-normal)" }, children: icon }),
         /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime59.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime59.jsx)("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
@@ -11836,6 +11849,7 @@ function Stepper({
         display: "inline-flex",
         alignItems: "center",
         height: h,
+        width: "fit-content",
         border: "1px solid var(--bw-border)",
         borderRadius: "var(--radius-md)",
         background: "var(--bw-white)",
@@ -12466,7 +12480,7 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
   }, ...rest, children: [
     children,
     (title != null || badges != null) && /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 8, pointerEvents: "none" }, children: [
-      title != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-extra)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-inverse-label)", opacity: 0.9 }, children: title }),
+      title != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", textTransform: "uppercase", color: "var(--color-semantic-inverse-label)", opacity: 0.9 }, children: title }),
       badges
     ] }),
     toolbar != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", right: 12, top: 12 }, children: toolbar }),
@@ -12609,8 +12623,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
             } }),
             /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: {
               fontSize: 12,
-              fontWeight: "var(--fw-extra)",
-              letterSpacing: "1px",
+              fontWeight: "var(--fw-bold)",
               textTransform: "uppercase",
               color: "var(--color-semantic-inverse-label)",
               opacity: 0.9
