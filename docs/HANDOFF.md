@@ -96,7 +96,6 @@ Public Storybook titles now use audience-facing navigation groups such as `LDS C
 - `stories/LayoutPageHeader.stories.jsx`
 - `stories/OverlayConfirmDialog.stories.jsx`
 - `stories/ViewerTelemetry.stories.jsx`
-- `stories/ViewerTelemetryValue.stories.jsx`
 
 Shared story modules were added to keep public stories focused while preserving examples:
 

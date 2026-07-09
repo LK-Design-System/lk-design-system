@@ -26,10 +26,10 @@ function Section({ title, children }) {
   );
 }
 
-export const CompactNavigation = { ...CompactNavigationStory, name: 'Compact navigation' };
+export const CompactNavigation = { ...CompactNavigationStory, name: '컴팩트 내비게이션' };
 
 export const PaginationPatterns = {
-  name: 'Page indicator and pagination',
+  name: '페이지 인디케이터와 페이지네이션',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 880 }}>
       <Section title="페이지 인디케이터 카운터와 도트">

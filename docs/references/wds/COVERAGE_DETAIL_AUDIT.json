@@ -283,7 +283,7 @@
       "stories": [
         "stories/FormSelectionControls.stories.jsx",
         "stories/SelectionSegmentedToggle.stories.jsx",
-        "stories/SelectionSwitchStepper.stories.jsx",
+        "stories/SelectionSwitch.stories.jsx",
         "stories/SelectionThemeToggle.stories.jsx"
       ],
       "extensionComponents": [
@@ -479,7 +479,7 @@
         }
       ],
       "stories": [
-        "stories/NavigationFlow.stories.jsx",
+        "stories/NavigationTabs.stories.jsx",
         "stories/NavigationCompact.stories.jsx"
       ],
       "pendingFigmaAudit": [
@@ -539,7 +539,7 @@
         "stories/FeedbackNotifications.stories.jsx",
         "stories/StatusFeedback.stories.jsx",
         "stories/OverlayToast.stories.jsx",
-        "stories/OverlayFeedback.stories.jsx",
+        "stories/OverlayConfirmAlert.stories.jsx",
         "stories/OverlayConfirmDialog.stories.jsx"
       ],
       "pendingFigmaAudit": [
@@ -587,9 +587,9 @@
         }
       ],
       "stories": [
-        "stories/Overlay.stories.jsx",
+        "stories/OverlayAnchored.stories.jsx",
         "stories/OverlayCommandPalette.stories.jsx",
-        "stories/NavigationMenus.stories.jsx",
+        "stories/OverlayMenu.stories.jsx",
         "stories/OverlayDimmer.stories.jsx"
       ],
       "pendingFigmaAudit": [
@@ -709,7 +709,6 @@
         "stories/ViewerMap.stories.jsx",
         "stories/Viewer3D.stories.jsx",
         "stories/ViewerTelemetry.stories.jsx",
-        "stories/ViewerTelemetryValue.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
         "stories/ViewerVideo.stories.jsx",
         "stories/EditorShell.stories.jsx"

@@ -156,7 +156,7 @@
             "stories/SelectionChips.stories.jsx",
             "stories/SelectionSegmentedToggle.stories.jsx",
             "stories/SelectionStatus.stories.jsx",
-            "stories/SelectionSwitchStepper.stories.jsx",
+            "stories/SelectionSwitch.stories.jsx",
             "docs/references/wds/source-screenshots/3selectionandinput.png",
             "docs/references/wds/COMPONENT_SOURCE_SCREENSHOTS.json",
             "components/forms/",
@@ -217,9 +217,9 @@
             "stories/Navigation.stories.jsx",
             "stories/NavigationFull.stories.jsx",
             "stories/NavigationCompact.stories.jsx",
-            "stories/NavigationFlow.stories.jsx",
+            "stories/NavigationTabs.stories.jsx",
             "stories/NavigationFooter.stories.jsx",
-            "stories/NavigationMenus.stories.jsx",
+            "stories/OverlayMenu.stories.jsx",
             "stories/NavigationSteps.stories.jsx",
             "docs/references/wds/source-pdfs/navigation-category.pdf",
             "docs/references/wds/source-pdfs/navigation-tab.pdf",
@@ -232,7 +232,7 @@
             "components/navigation/Pagination.jsx",
             "components/navigation/"
           ],
-          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): the WDS Navigation node contains exactly Category, Tab, Page Indicator, and Pagination, all mapped to LDS props with NavigationFlow/NavigationCompact evidence. TopBar, Footer, SideNav, Steps and related LDS components have no WDS counterpart and are recorded as product extensions; SideNav keeps hover-peek behavior without an invented explicit close pattern."
+          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): the WDS Navigation node contains exactly Category, Tab, Page Indicator, and Pagination, all mapped to LDS props with NavigationTabs/NavigationCompact evidence. TopBar, Footer, SideNav, Steps and related LDS components have no WDS counterpart and are recorded as product extensions; SideNav keeps hover-peek behavior without an invented explicit close pattern."
         },
         {
           "wdsSection": "7 Feedback",
@@ -241,8 +241,8 @@
           "ldsCoverage": [
             "stories/FeedbackNotifications.stories.jsx",
             "stories/OverlayConfirmDialog.stories.jsx",
-            "stories/OverlayFeedback.stories.jsx",
-            "stories/OverlaySurfaces.stories.jsx",
+            "stories/OverlayConfirmAlert.stories.jsx",
+            "stories/OverlayModal.stories.jsx",
             "stories/OverlayToast.stories.jsx",
             "stories/StatusEmpty.stories.jsx",
             "stories/StatusFeedback.stories.jsx",
@@ -253,18 +253,19 @@
             "components/feedback/",
             "components/overlay/Snackbar.jsx",
             "components/overlay/",
-            "components/status/"
+            "components/status/",
+            "stories/OverlaySnackbar.stories.jsx"
           ],
-          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Toast severity/leadingIcon/customize, Snackbar heading/description/icon/closeButton/action, and Alert platform x variant x heading map to LDS props with OverlayToast/OverlayFeedback evidence. WDS keeps Snackbar as its own node, matching the separate LDS Snackbar. Alert platform treatments are proven at component level; the platform gallery story is a static visual reference."
+          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Toast severity/leadingIcon/customize, Snackbar heading/description/icon/closeButton/action, and Alert platform x variant x heading map to LDS props with OverlayToast/OverlayConfirmAlert evidence. WDS keeps Snackbar as its own node, matching the separate LDS Snackbar. Alert platform treatments are proven at component level; the platform gallery story is a static visual reference."
         },
         {
           "wdsSection": "8 Presentation",
           "figmaNodeId": "16215:17599",
           "status": "covered",
           "ldsCoverage": [
-            "stories/Overlay.stories.jsx",
+            "stories/OverlayAnchored.stories.jsx",
             "stories/OverlayDimmer.stories.jsx",
-            "stories/NavigationMenus.stories.jsx",
+            "stories/OverlayMenu.stories.jsx",
             "stories/ContentAnnotations.stories.jsx",
             "docs/references/wds/source-pdfs/presentation-tooltip.pdf",
             "docs/references/wds/source-pdfs/presentation-menu.pdf",

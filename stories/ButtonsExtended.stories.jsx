@@ -5,7 +5,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Button, IconButton처럼 즉시 실행되는 액션 버튼 계열을 확인합니다.',
+        component: 'IconButton, SocialButton처럼 즉시 실행되는 아이콘·소셜 버튼 계열을 확인합니다.',
       },
     },
   },

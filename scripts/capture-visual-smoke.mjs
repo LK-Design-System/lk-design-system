@@ -57,7 +57,7 @@ const targets = [
   },
   {
     name: 'wds-menu-patterns',
-    match: { importPath: './stories/NavigationMenus.stories.jsx', exportName: 'MenuPatterns' },
+    match: { importPath: './stories/OverlayMenu.stories.jsx', exportName: 'MenuPatterns' },
     viewport: { width: 1180, height: 860 },
   },
   {
@@ -72,12 +72,12 @@ const targets = [
   },
   {
     name: 'wds-alert-platform-variants',
-    match: { importPath: './stories/OverlayFeedback.stories.jsx', exportName: 'AlertPlatformPreview' },
+    match: { importPath: './stories/OverlayConfirmAlert.stories.jsx', exportName: 'AlertPlatformPreview' },
     viewport: { width: 1120, height: 700 },
   },
   {
     name: 'react-overlay-alert',
-    match: { importPath: './stories/Overlay.stories.jsx', exportName: 'AnchoredOverlays' },
+    match: { importPath: './stories/OverlayAnchored.stories.jsx', exportName: 'AnchoredOverlays' },
     viewport: { width: 980, height: 720 },
   },
   {

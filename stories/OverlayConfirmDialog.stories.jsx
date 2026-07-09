@@ -5,7 +5,7 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/Components/Feedback/Confirm Dialog',
+  title: 'LDS Core/Components/Overlay/Confirm Dialog',
   parameters: {
     docs: {
       description: {

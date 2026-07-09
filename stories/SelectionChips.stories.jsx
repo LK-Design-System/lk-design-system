@@ -1,7 +1,9 @@
 import {
+  Chip,
   FilterChip,
   MultiSelectChip,
 } from '../src/index.js';
+import { ChipCard as ChipCardStory } from './Feedback.shared.jsx';
 import {
   FilterChipCard as FilterChipCardStory,
   MultiSelectChipCard as MultiSelectChipCardStory,
@@ -12,7 +14,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '필터 적용과 다중 선택 상태를 작은 토큰으로 조절하는 FilterChip, MultiSelectChip 패턴입니다.',
+        component: '기본 칩과 필터 적용, 다중 선택 상태를 작은 토큰으로 조절하는 Chip, FilterChip, MultiSelectChip 패턴입니다.',
       },
     },
   },
@@ -24,6 +26,8 @@ export const ChipSelection = {
   name: '칩 선택',
   render: () => (
     <main style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center', maxWidth: 720 }}>
+      <Chip selected>선택된 필터</Chip>
+      <Chip as="a" href="#">링크 칩</Chip>
       <FilterChip active count={3}>활성</FilterChip>
       <FilterChip caret>그룹</FilterChip>
       <FilterChip>검토</FilterChip>
@@ -33,5 +37,6 @@ export const ChipSelection = {
   ),
 };
 
+export const ChipCard = { ...ChipCardStory, name: 'Chip card parity', tags: ['!dev', 'visual-parity'] };
 export const FilterChipCard = { ...FilterChipCardStory, name: 'FilterChip card parity', tags: ['!dev', 'visual-parity'] };
 export const MultiSelectChipCard = { ...MultiSelectChipCardStory, name: 'MultiSelectChip card parity', tags: ['!dev', 'visual-parity'] };

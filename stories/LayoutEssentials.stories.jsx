@@ -39,7 +39,7 @@ function PhoneMock({ platform }) {
 }
 
 export const EssentialAndDivider = {
-  name: 'Essential and Divider',
+  name: '필수 요소와 구분선',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1100 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>

@@ -2,7 +2,6 @@ import React from 'react';
 import { BRAND_LOGO_NAMES, BrandLogo, Lockup, Overline } from '../src/index.js';
 
 const meta = {
-  title: '파운데이션/브랜드/shared',
   component: Lockup,
   parameters: {
     docs: {

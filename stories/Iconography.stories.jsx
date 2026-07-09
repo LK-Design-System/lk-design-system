@@ -92,7 +92,7 @@ function IconTile({ name, compact = false }) {
 }
 
 export const IconSizingAndColor = {
-  name: 'Icon sizing and color',
+  name: '아이콘 크기와 색상',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: 'min(760px, 100%)' }}>
       <section style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap', color: 'var(--color-semantic-label-normal)' }}>
@@ -114,7 +114,7 @@ export const IconSizingAndColor = {
 };
 
 export const IconRegistry = {
-  name: 'Base icon registry',
+  name: '기본 아이콘 레지스트리',
   render: () => {
     return (
       <main style={{ width: 'min(1040px, 100%)', display: 'grid', gap: 18 }}>
@@ -155,7 +155,7 @@ export const IconRegistry = {
 };
 
 export const ColorBrandIcons = {
-  name: 'Color brand icons',
+  name: '컬러 브랜드 아이콘',
   render: () => {
     return (
       <main style={{ width: 'min(920px, 100%)', display: 'grid', gap: 16 }}>
@@ -170,7 +170,7 @@ export const ColorBrandIcons = {
 };
 
 export const RoboticsExtensionIcons = {
-  name: 'Robotics extension icons',
+  name: '로보틱스 확장 아이콘',
   render: () => {
     return (
       <main style={{ width: 'min(920px, 100%)', display: 'grid', gap: 16 }}>

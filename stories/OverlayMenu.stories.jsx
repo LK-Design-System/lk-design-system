@@ -3,13 +3,14 @@ import {
   DropdownMenu,
   Menubar,
 } from '../src/index.js';
+import { DropdownMenuCard as DropdownMenuCardStory } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Presentation/Menu',
+  title: 'LDS Core/Components/Overlay/Menu',
   parameters: {
     docs: {
       description: {
-        component: 'Menu의 variant, action area, scroll, 항목 상태 축에 맞춘 메뉴 프레젠테이션 패턴입니다.',
+        component: 'DropdownMenu, Menubar의 variant, action area, scroll, 항목 상태 축에 맞춘 메뉴 프레젠테이션 패턴입니다.',
       },
     },
   },
@@ -35,7 +36,7 @@ function Section({ title, children }) {
 }
 
 export const MenuPatterns = {
-  name: 'Menu patterns',
+  name: '메뉴 패턴',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980 }}>
       <Section title="드롭다운 변형, 스크롤, 액션 영역">
@@ -82,3 +83,5 @@ export const MenuPatterns = {
     </main>
   ),
 };
+
+export const DropdownMenuCard = { ...DropdownMenuCardStory, name: 'DropdownMenu card parity', tags: ['!dev', 'visual-parity'] };

@@ -1,4 +1,5 @@
 import { Button } from '../src/index.js';
+import { SpacingScale as SpacingScaleStory } from './Foundations.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Foundation/Spacing',
@@ -6,13 +7,15 @@ const meta = {
     docs: {
       description: {
         component:
-          '상태 바, 홈 인디케이터, 하단 내비게이션, 하단 액션 등 세이프 에어리어 간격을 다루는 Spacing 커버리지입니다.',
+          '간격 스케일 토큰과 상태 바, 홈 인디케이터, 하단 내비게이션, 하단 액션 등 세이프 에어리어 간격을 다루는 Spacing 커버리지입니다.',
       },
     },
   },
 };
 
 export default meta;
+
+export const SpacingScale = { ...SpacingScaleStory, name: '간격 스케일' };
 
 const panelStyle = {
   border: '1px solid var(--color-semantic-line-normal-normal)',
@@ -171,7 +174,7 @@ const tokenRows = [
 ];
 
 export const MobileSafeAreaSpacing = {
-  name: 'Mobile safe-area spacing',
+  name: '모바일 세이프 에어리어 간격',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1120 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>

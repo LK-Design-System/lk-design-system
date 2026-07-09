@@ -3,7 +3,7 @@ import { CircularProgress, Meter, ProgressBar } from '../src/index.js';
 import { CircularProgressCard as CircularProgressCardStory, ProgressBarCard as ProgressBarCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Loading/Progress',
+  title: 'LDS Core/Components/Status/Progress',
   parameters: {
     docs: {
       description: {
@@ -34,7 +34,7 @@ function DemoCard({ title, children }) {
 }
 
 export const ProgressIndicators = {
-  name: 'Progress indicators',
+  name: '진행 표시',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 820 }}>
       <DemoCard title="원형 진행 표시">

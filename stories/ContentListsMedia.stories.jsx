@@ -5,7 +5,6 @@ import {
   ListCell,
   StatusBadge,
   StepList,
-  Timeline,
 } from '../src/index.js';
 import { ListCellAccordionCard as ListCellAccordionCardStory } from './Content.shared.jsx';
 
@@ -14,7 +13,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '항목 목록, 단계, 타임라인처럼 순서와 상태를 읽는 ListCell, StepList, Timeline 패턴입니다.',
+        component: '항목 목록과 단계처럼 순서와 상태를 읽는 ListCell, StepList 패턴입니다.',
       },
     },
   },
@@ -40,13 +39,6 @@ export const Lists = {
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 'var(--space-5)', alignItems: 'start', minWidth: 0 }}>
         <StepList steps={steps} editable={false} />
-        <Timeline
-          items={[
-            { time: '09:12', title: '검토 시작', description: '초안이 담당자에게 전달됨', tone: 'signal' },
-            { time: '09:18', title: '수정 요청', description: '설명 문구 보완 필요', tone: 'cautionary' },
-            { time: '09:26', title: '게시 완료', description: '변경 이력 기록', tone: 'positive' },
-          ]}
-        />
       </section>
     </main>
   ),

@@ -29,7 +29,7 @@ const SearchIcon = (
 );
 
 export const TopBarDefault = {
-  name: 'TopBar default',
+  name: 'TopBar 기본',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-7)', width: 'min(880px, 100%)', minWidth: 0 }}>
       <div data-theme="light" className="theme-light" style={{ position: 'relative', zIndex: 2, width: '100%', minWidth: 0, overflow: 'hidden', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>

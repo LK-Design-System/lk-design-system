@@ -121,7 +121,8 @@
         "stories/ContentBadgesAnnotations.stories.jsx",
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentListsMedia.stories.jsx",
-        "stories/ContentMedia.stories.jsx"
+        "stories/ContentMedia.stories.jsx",
+        "stories/ContentTimeline.stories.jsx"
       ],
       "exports": [
         "Accordion",
@@ -160,6 +161,7 @@
       "storyEvidence": [
         "stories/ContentMedia.stories.jsx",
         "stories/DataCalendar.stories.jsx",
+        "stories/DataDescriptionList.stories.jsx",
         "stories/DataDisplay.stories.jsx",
         "stories/DataTablesHierarchy.stories.jsx",
         "stories/DataToolbar.stories.jsx",
@@ -185,7 +187,8 @@
       "storyEvidence": [
         "stories/Feedback.stories.jsx",
         "stories/FeedbackBadgesTags.stories.jsx",
-        "stories/FeedbackNotifications.stories.jsx"
+        "stories/FeedbackNotifications.stories.jsx",
+        "stories/SelectionChips.stories.jsx"
       ],
       "exports": [
         "Avatar",
@@ -258,7 +261,8 @@
         "stories/FormSelectionControls.stories.jsx",
         "stories/SelectionChips.stories.jsx",
         "stories/SelectionSegmentedToggle.stories.jsx",
-        "stories/SelectionSwitchStepper.stories.jsx"
+        "stories/SelectionStepper.stories.jsx",
+        "stories/SelectionSwitch.stories.jsx"
       ],
       "exports": [
         "Checkbox",
@@ -335,12 +339,13 @@
       "wdsFamily": "Navigation/Category, Tab, Page Indicator, Pagination",
       "storyEvidence": [
         "stories/Navigation.stories.jsx",
+        "stories/NavigationBreadcrumb.stories.jsx",
         "stories/NavigationCompact.stories.jsx",
-        "stories/NavigationFlow.stories.jsx",
         "stories/NavigationFooter.stories.jsx",
         "stories/NavigationFull.stories.jsx",
-        "stories/NavigationMenus.stories.jsx",
-        "stories/NavigationSteps.stories.jsx"
+        "stories/NavigationSteps.stories.jsx",
+        "stories/NavigationTabs.stories.jsx",
+        "stories/OverlayMenu.stories.jsx"
       ],
       "exports": [
         "Anchor",
@@ -380,12 +385,13 @@
       "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
       "storyEvidence": [
         "stories/ContentAnnotations.stories.jsx",
-        "stories/NavigationMenus.stories.jsx",
-        "stories/Overlay.stories.jsx",
+        "stories/OverlayAnchored.stories.jsx",
+        "stories/OverlayConfirmAlert.stories.jsx",
         "stories/OverlayConfirmDialog.stories.jsx",
         "stories/OverlayDimmer.stories.jsx",
-        "stories/OverlayFeedback.stories.jsx",
-        "stories/OverlaySurfaces.stories.jsx",
+        "stories/OverlayMenu.stories.jsx",
+        "stories/OverlayModal.stories.jsx",
+        "stories/OverlaySnackbar.stories.jsx",
         "stories/OverlayToast.stories.jsx"
       ],
       "exports": [
@@ -453,7 +459,6 @@
         "stories/Viewer3D.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerTelemetry.stories.jsx",
-        "stories/ViewerTelemetryValue.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],

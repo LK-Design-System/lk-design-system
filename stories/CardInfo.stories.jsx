@@ -4,7 +4,6 @@ import {
   Icon,
 } from '../src/index.js';
 import {
-  CardCard as CardCardStory,
   ChecklistItemCard as ChecklistItemCardStory,
   FeatureCardCard as FeatureCardCardStory,
 } from './CardsExtended.shared.jsx';
@@ -46,4 +45,3 @@ export const FeatureCards = {
 
 export const FeatureCardCard = { ...FeatureCardCardStory, name: 'FeatureCard card parity', tags: ['!dev', 'visual-parity'] };
 export const ChecklistItemCard = { ...ChecklistItemCardStory, name: 'ChecklistItem card parity', tags: ['!dev', 'visual-parity'] };
-export const CardCard = { ...CardCardStory, name: 'Card card parity', tags: ['!dev', 'visual-parity'] };

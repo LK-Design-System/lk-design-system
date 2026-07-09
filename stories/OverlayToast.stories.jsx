@@ -1,18 +1,15 @@
-import {
-  Snackbar,
-  Toast,
-} from '../src/index.js';
+import { Toast } from '../src/index.js';
 import {
   ToastCard as ToastCardStory,
   ToastStackCard as ToastStackCardStory,
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Feedback/Toast',
+  title: 'LDS Core/Components/Overlay/Toast',
   parameters: {
     docs: {
       description: {
-        component: 'Toast, Snackbar 원본에 맞춘 일시적 피드백 패턴입니다.',
+        component: 'Toast 원본에 맞춘 심각도, 아이콘, 액션 축의 일시적 피드백 패턴입니다.',
       },
     },
   },
@@ -30,7 +27,7 @@ function Section({ title, children }) {
 }
 
 export const ToastNotifications = {
-  name: 'Toast variants',
+  name: 'Toast 변형',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
       <Section title="Toast 심각도와 아이콘 축">
@@ -40,22 +37,6 @@ export const ToastNotifications = {
           <Toast variant="cautionary">일부 필드는 검토가 필요합니다.</Toast>
           <Toast variant="negative" onClose={() => {}}>업로드에 실패했습니다.</Toast>
           <Toast variant="positive" leadingIcon={false}>리딩 아이콘을 끈 상태입니다.</Toast>
-        </div>
-      </Section>
-    </main>
-  ),
-};
-
-export const SnackbarPatterns = {
-  name: 'Snackbar patterns',
-  render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
-      <Section title="Snackbar의 heading, description, icon, close button, action 축">
-        <div style={{ display: 'grid', gap: 12, justifyItems: 'start' }}>
-          <Snackbar heading="초안이 저장되었습니다" action="보기" onAction={() => {}} />
-          <Snackbar description="리포트는 활동 이력에서 복원할 수 있습니다." leadingIcon />
-          <Snackbar heading="초대를 보냈습니다" description="구성원에게 곧 이메일이 발송됩니다." leadingIcon closeButton />
-          <Snackbar description="네트워크 연결이 불안정합니다." action="다시 시도" closeButton />
         </div>
       </Section>
     </main>

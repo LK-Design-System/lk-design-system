@@ -47,12 +47,12 @@ const meta = {
 export default meta;
 
 export const Playground = {
-  name: 'Playground',
+  name: '플레이그라운드',
   render: (args) => <Button {...args} />,
 };
 
 export const Variants = {
-  name: 'Variants',
+  name: '변형',
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       {['solid', 'outlined'].map((variant) => (
@@ -69,7 +69,7 @@ export const Variants = {
 };
 
 export const ActionMatrix = {
-  name: 'Action matrix',
+  name: '액션 매트릭스',
   render: () => (
     <main style={{ display: 'grid', gap: 18, maxWidth: 760 }}>
       {['large', 'medium', 'small'].map((size) => (
@@ -89,7 +89,7 @@ export const ActionMatrix = {
 };
 
 export const SizesAndStates = {
-  name: 'Sizes and states',
+  name: '크기와 상태',
   render: () => (
     <div style={{ display: 'grid', gap: 18, maxWidth: 720 }}>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -117,7 +117,7 @@ export const SizesAndStates = {
 };
 
 export const OnDark = {
-  name: 'On dark',
+  name: '다크 배경',
   parameters: {
     backgrounds: { default: 'Navy' },
   },

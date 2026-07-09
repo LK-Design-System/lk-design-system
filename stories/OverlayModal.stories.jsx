@@ -4,7 +4,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Feedback/Modal',
+  title: 'LDS Core/Components/Overlay/Modal',
   parameters: {
     docs: {
       description: {

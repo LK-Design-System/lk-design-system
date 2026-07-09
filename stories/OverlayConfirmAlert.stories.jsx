@@ -5,7 +5,7 @@ import {
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Feedback/Confirm Alert',
+  title: 'LDS Core/Components/Overlay/Confirm Alert',
   parameters: {
     docs: {
       description: {
@@ -75,10 +75,10 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
   );
 }
 
-export const AlertOpen = { ...AlertOpenStory, name: 'Alert open' };
+export const AlertOpen = { ...AlertOpenStory, name: 'Alert 열림' };
 
 export const AlertPlatformPreview = {
-  name: 'Alert platform and variant preview',
+  name: 'Alert 플랫폼·변형 미리보기',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980 }}>
       <div style={{ padding: 24, borderRadius: 'var(--radius-lg)', background: 'var(--bw-mist)' }}>

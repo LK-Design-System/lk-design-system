@@ -48,7 +48,7 @@
       "wdsSource": "2 Element / 1 Basic / Color",
       "status": "mapped",
       "storyEvidence": [
-        "stories/Foundations.stories.jsx#ColorAndSpacing"
+        "stories/Foundations.stories.jsx#Color"
       ],
       "fileEvidence": [
         "tokens/colors.css",
@@ -145,7 +145,7 @@
       "wdsSource": "2 Element / 2 Spacing / Base Scale",
       "status": "mapped",
       "storyEvidence": [
-        "stories/Foundations.stories.jsx#ColorAndSpacing",
+        "stories/FoundationSpacing.stories.jsx#SpacingScale",
         "stories/FoundationSpacing.stories.jsx#MobileSafeAreaSpacing"
       ],
       "fileEvidence": [
@@ -196,7 +196,7 @@
       "wdsSource": "2 Element / 1 Basic / Frame Radius",
       "status": "mapped",
       "storyEvidence": [
-        "stories/Foundations.stories.jsx#ColorAndSpacing"
+        "stories/Foundations.stories.jsx#Color"
       ],
       "fileEvidence": [
         "tokens/spacing.css",
@@ -220,7 +220,7 @@
       "wdsSource": "2 Element / 3 Decorate / Effects",
       "status": "mapped",
       "storyEvidence": [
-        "stories/Foundations.stories.jsx#ColorAndSpacing"
+        "stories/Foundations.stories.jsx#Color"
       ],
       "fileEvidence": [
         "tokens/effects.css",

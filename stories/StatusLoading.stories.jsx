@@ -3,7 +3,7 @@ import { Skeleton, Spinner } from '../src/index.js';
 import { SkeletonCard as SkeletonCardStory, SpinnerCard as SpinnerCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Loading/Loading State',
+  title: 'LDS Core/Components/Status/Loading State',
   parameters: {
     docs: {
       description: {
@@ -34,7 +34,7 @@ function DemoCard({ title, children }) {
 }
 
 export const LoadingStates = {
-  name: 'Loading states',
+  name: '로딩 상태',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 900 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>

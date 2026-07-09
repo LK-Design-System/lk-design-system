@@ -14,7 +14,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'DataGrid/Table 상단에서 검색, 필터, 결과 수, 선택 bulk action을 정렬하는 DataToolbar입니다.',
+        component: '데이터 표 상단에서 검색, 필터, 결과 수, 선택 bulk action을 정렬하는 DataToolbar입니다.',
       },
     },
   },

@@ -16,7 +16,7 @@ const meta = {
 export default meta;
 
 export const FooterPatterns = {
-  name: 'Footer patterns',
+  name: '푸터 패턴',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 980 }}>
       <section style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '1px solid var(--color-semantic-line-normal-normal)' }}>

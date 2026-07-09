@@ -5,7 +5,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'TopBar, SideNav, UserMenu를 조합한 애플리케이션 내비게이션 패턴입니다.',
+        component: '상단 바와 SideNav, UserMenu를 조합한 애플리케이션 내비게이션 패턴입니다.',
       },
     },
   },
@@ -13,5 +13,5 @@ const meta = {
 
 export default meta;
 
-export const AppNavigation = { ...AppNavigationStory, name: 'App navigation' };
+export const AppNavigation = { ...AppNavigationStory, name: '앱 내비게이션' };
 export const SideNavUserMenuCard = { ...SideNavUserMenuCardStory, name: 'SideNav and UserMenu card parity', tags: ['!dev', 'visual-parity'] };

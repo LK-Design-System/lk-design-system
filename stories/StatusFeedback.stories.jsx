@@ -3,7 +3,7 @@ import { Banner, Button, Callout, Icon } from '../src/index.js';
 import { BannerCard as BannerCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Feedback/Notices and Callouts',
+  title: 'LDS Core/Components/Status/Notices and Callouts',
   parameters: {
     docs: {
       description: {

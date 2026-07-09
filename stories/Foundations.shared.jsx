@@ -2,7 +2,6 @@ import React from 'react';
 import { ATOMIC, SEMANTIC } from './color-system.data.js';
 
 const meta = {
-  title: '파운데이션/토큰/shared',
   parameters: {
     docs: {
       description: {
@@ -43,8 +42,8 @@ const spacings = [
   ['--space-32', '128px', '히어로 · 다크 밴드 패딩'],
 ];
 
-export const ColorAndSpacing = {
-  name: '색상과 간격',
+export const Color = {
+  name: '색상 토큰',
   render: () => (
     <main style={{ display: 'grid', gap: 32, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <section>
@@ -61,9 +60,16 @@ export const ColorAndSpacing = {
           ))}
         </div>
       </section>
+    </main>
+  ),
+};
 
+export const SpacingScale = {
+  name: '간격 스케일',
+  render: () => (
+    <main style={{ display: 'grid', gap: 32, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <section>
-        <h2 style={{ margin: '0 0 16px', fontSize: 22, color: 'var(--color-semantic-label-strong)' }}>간격 스케일</h2>
+        <h1 style={{ margin: '0 0 16px', fontSize: 28, color: 'var(--color-semantic-label-strong)' }}>간격 스케일</h1>
         <div style={{ display: 'grid', gap: 12 }}>
           {spacings.map(([token, value, usage]) => (
             <div key={token} style={{ display: 'grid', gridTemplateColumns: 'minmax(88px, 112px) minmax(0, 1fr) auto', alignItems: 'center', gap: '8px 12px', minWidth: 0 }}>

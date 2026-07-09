@@ -9,7 +9,7 @@ import {
 import { TooltipBubbleBookmarkDividerCard as TooltipBubbleBookmarkDividerCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Presentation/Annotations',
+  title: 'LDS Core/Components/Content/Annotations',
   parameters: {
     docs: {
       description: {
@@ -61,7 +61,7 @@ function AlignmentLabel({ children }) {
 }
 
 export const Annotations = {
-  name: 'Annotations',
+  name: '주석 요소',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
       <section style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -78,7 +78,7 @@ export const Annotations = {
 };
 
 export const TooltipPatterns = {
-  name: 'Tooltip patterns',
+  name: '툴팁 패턴',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 900 }}>
       <Section title="크기와 단축키">

@@ -108,7 +108,7 @@ function MaskSwatch({ label, token }) {
 }
 
 export const GradientTokens = {
-  name: 'Gradient and mask tokens',
+  name: '그라디언트와 마스크 토큰',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1120 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -150,7 +150,7 @@ export const GradientTokens = {
 };
 
 export const InteractionTokens = {
-  name: 'Interaction tokens',
+  name: '인터랙션 토큰',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1040 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>

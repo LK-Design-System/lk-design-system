@@ -6,7 +6,7 @@ import {
 import { ContentBadgeStatusBadgeCard as ContentBadgeStatusBadgeCardStory } from './Content.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Content/Badges and Tags',
+  title: 'LDS Core/Components/Content/Content Badges',
   parameters: {
     docs: {
       description: {
@@ -19,7 +19,7 @@ const meta = {
 export default meta;
 
 export const ContentBadgePatterns = {
-  name: 'Content badge patterns',
+  name: '콘텐츠 배지 패턴',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
       <section style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center', flexWrap: 'wrap' }}>

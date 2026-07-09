@@ -6,17 +6,16 @@ import {
   Popover,
 } from '../src/index.js';
 import {
-  DropdownMenuCard as DropdownMenuCardStory,
   HoverCardCard as HoverCardCardStory,
   PopoverCard as PopoverCardStory,
 } from './Overlay.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Presentation/Anchored Overlay',
+  title: 'LDS Core/Components/Overlay/Anchored Overlay',
   parameters: {
     docs: {
       description: {
-        component: 'DropdownMenu, Popover, HoverCard처럼 트리거 주변에 붙는 오버레이입니다.',
+        component: 'Popover, HoverCard처럼 트리거 주변에 붙는 오버레이입니다.',
       },
     },
   },
@@ -49,6 +48,5 @@ export const AnchoredOverlays = {
   ),
 };
 
-export const DropdownMenuCard = { ...DropdownMenuCardStory, name: 'DropdownMenu card parity', tags: ['!dev', 'visual-parity'] };
 export const PopoverCard = { ...PopoverCardStory, name: 'Popover card parity', tags: ['!dev', 'visual-parity'] };
 export const HoverCardCard = { ...HoverCardCardStory, name: 'HoverCard card parity', tags: ['!dev', 'visual-parity'] };

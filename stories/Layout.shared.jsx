@@ -16,7 +16,6 @@ import {
 } from '../src/index.js';
 
 const meta = {
-  title: '컴포넌트/레이아웃/shared',
   parameters: {
     docs: {
       description: {

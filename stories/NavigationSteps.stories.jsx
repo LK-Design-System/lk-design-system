@@ -18,7 +18,7 @@ const meta = {
 export default meta;
 
 export const StepsAndWizard = {
-  name: 'Steps and wizard',
+  name: '스텝과 위저드',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
       <Steps steps={['작성', '검토', '게시']} current={1} />

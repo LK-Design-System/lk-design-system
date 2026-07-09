@@ -5,7 +5,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Action Area, Button, Text Button, Icon Button, Chip, Toggle Icon을 아우르는 액션 컴포넌트 모음입니다.',
+        component: '버튼, 텍스트 버튼, 아이콘 버튼, 칩, 토글 아이콘을 아우르는 액션 분류 개요와 ActionArea 하단 액션 영역 패턴입니다.',
       },
     },
   },
@@ -22,7 +22,7 @@ const panelStyle = {
 };
 
 export const ActionTaxonomy = {
-  name: 'Action taxonomy',
+  name: '액션 분류',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1120 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -79,7 +79,7 @@ export const ActionTaxonomy = {
 };
 
 export const BottomActionArea = {
-  name: 'Bottom action area',
+  name: '하단 액션 영역',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 880 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -121,7 +121,7 @@ export const BottomActionArea = {
 };
 
 export const ActionAreaStates = {
-  name: 'Action area states',
+  name: '액션 영역 상태',
   render: () => {
     const frame = {
       border: '1px solid var(--color-semantic-line-normal-normal)',

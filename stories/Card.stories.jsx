@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card, ContentBadge, Icon, ListCell, Thumbnail, ToggleIcon } from '../src/index.js';
+import { CardCard as CardCardStory } from './CardsExtended.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Components/Content/Card',
@@ -182,3 +183,5 @@ export const CardAffordances = {
     </main>
   ),
 };
+
+export const CardCard = { ...CardCardStory, name: 'Card card parity', tags: ['!dev', 'visual-parity'] };

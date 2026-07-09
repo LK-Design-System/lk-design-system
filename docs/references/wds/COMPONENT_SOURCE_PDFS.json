@@ -224,7 +224,7 @@
         "Resource: active false/default and true category chips"
       ],
       "localEvidence": [
-        "stories/NavigationFlow.stories.jsx#TabAndCategoryPatterns",
+        "stories/NavigationTabs.stories.jsx#TabAndCategoryPatterns",
         "components/navigation/Category.jsx",
         "components/navigation/Category.d.ts",
         "components/navigation/Category.prompt.md",
@@ -246,7 +246,7 @@
         "scroll = auto"
       ],
       "localEvidence": [
-        "stories/NavigationFlow.stories.jsx#TabAndCategoryPatterns",
+        "stories/NavigationTabs.stories.jsx#TabAndCategoryPatterns",
         "components/navigation/Tabs.jsx",
         "components/navigation/Tabs.d.ts",
         "components/navigation/Tabs.prompt.md",
@@ -332,7 +332,7 @@
         "dark grey feedback surface"
       ],
       "localEvidence": [
-        "stories/OverlayToast.stories.jsx#SnackbarPatterns",
+        "stories/OverlaySnackbar.stories.jsx#SnackbarPatterns",
         "components/overlay/Snackbar.jsx",
         "components/overlay/Snackbar.d.ts",
         "components/overlay/Snackbar.prompt.md",
@@ -354,8 +354,8 @@
         "grey scrim modal surface"
       ],
       "localEvidence": [
-        "stories/OverlayFeedback.stories.jsx#AlertOpen",
-        "stories/OverlayFeedback.stories.jsx#AlertPlatformPreview",
+        "stories/OverlayConfirmAlert.stories.jsx#AlertOpen",
+        "stories/OverlayConfirmAlert.stories.jsx#AlertPlatformPreview",
         "components/overlay/Alert.jsx",
         "components/overlay/Alert.d.ts",
         "components/overlay/Alert.prompt.md",
@@ -399,7 +399,7 @@
         "menu item resource includes active, disabled, checked, description/caption, action area, and shortcut"
       ],
       "localEvidence": [
-        "stories/NavigationMenus.stories.jsx#MenuPatterns",
+        "stories/OverlayMenu.stories.jsx#MenuPatterns",
         "components/overlay/DropdownMenu.jsx",
         "components/navigation/Menubar.jsx",
         "components/overlay/DropdownMenu.d.ts",

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const meta = {
-  title: '내부/원본 이관 데이터',
   parameters: {
     docs: {
       description: {

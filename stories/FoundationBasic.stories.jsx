@@ -84,7 +84,7 @@ function RatioTile({ label, token, vertical = false }) {
 }
 
 export const RatioTokens = {
-  name: 'Ratio tokens',
+  name: '비율 토큰',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1180 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
