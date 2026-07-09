@@ -51,6 +51,16 @@ const TARGETS = [
   { name: 'ChoiceCard', set: 'Framed Style/Framed Style', jsx: '<ChoiceCard title="텍스트" />', dims: ['padX'] },
   { name: 'PageIndicator', set: 'Page Indicator/Counter', jsx: '<PageIndicator variant="counter" page={1} count={5} />', dims: ['padX', 'fontSize'] },
   { name: 'Skeleton', set: 'Skeleton/Rectangle', jsx: '<Skeleton />', dims: ['radius'] },
+  // Batch 2 — previously census-covered but not style-diffed (single-root, measurable).
+  // Input value font (16=body1) is token-checked, not measured here: the largest
+  // styled element is the field row, whose font is inherited noise, not the input's.
+  { name: 'Input', set: 'Textinput/Textfield', jsx: '<Input placeholder="값" />', dims: ['radius', 'height', 'padX'] },
+  { name: 'Divider', set: 'Basic/Divider', jsx: '<div style={{ width: 220 }}><Divider /></div>', dims: ['height'] },
+  // Excluded from auto-measure (verified manually / documented override instead):
+  //  - Tabs: the "largest styled element" is the 2px indicator, not the 48px tab; and
+  //    Tab spacing is a signed-off LK override (STYLE_PARITY_AUDIT.md).
+  //  - StatusBadge: LDS StatusBadge is a pill status indicator, NOT WDS Content Badge
+  //    (that maps to ContentBadge, already verified above) — different component.
   // NOTE: nested/overlay components (List Cell, Alert, Card, Menu, Auto Complete,
   // Pagination) are excluded — the WDS style extractor reads the top-level frame,
   // which is not the meaningful styled element for deeply-nested layouts, so the
@@ -58,7 +68,7 @@ const TARGETS = [
 ];
 
 const indexHtml = `<!doctype html><html><head><meta charset="UTF-8"/></head><body><div id="root"></div><script type="module" src="/src/App.jsx"></script></body></html>`;
-const imports = 'Button, Chip, FilterChip, ContentBadge, SegmentedControl, Tag, PushBadge, Category, Toast, Select, Textarea, Switch, TextButton, Fab, MultiSelectChip, Avatar, ListCell, ChoiceCard, PageIndicator, Skeleton, Alert';
+const imports = 'Button, Chip, FilterChip, ContentBadge, SegmentedControl, Tag, PushBadge, Category, Toast, Select, Textarea, Switch, TextButton, Fab, MultiSelectChip, Avatar, ListCell, ChoiceCard, PageIndicator, Skeleton, Alert, Input, Divider';
 const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ${imports} } from '@lk-robotics/design-system-core';

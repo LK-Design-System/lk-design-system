@@ -118,17 +118,31 @@ The earlier "r3 checkbox drift" was a **false positive** — r3 belongs to a min
   16 (web / Android) and 17 (iOS), all SemiBold. Fixed with a per-platform
   `buttonFontSize` (web 16 / android 16 / ios 17). `components/overlay/Alert.jsx`.
 
-## Scope
+## Coverage — what is style-verified vs coverage-only
 
-- **Token-driven** components — guarded by `check:component-styles` (node-only).
-- **Inline-styled, single-root** components — `check:component-styles-rendered`
-  (Playwright, 20 components, 0 drift).
-- **Nested / overlay inner elements** — `check:nested-styles` (Playwright, 7
-  reconstructed inner elements, 0 drift) diffing against `COMPONENT_STYLES_DEEP.json`.
-- `COMPONENT_STYLES.json` holds the shallow WDS reference for all 164 sets;
-  `COMPONENT_STYLES_DEEP.json` holds the INSTANCE-resolved inner elements.
+Honest split (see `COMPONENT_CENSUS.json` for the full 103-component name census):
 
-**Net finding: with the INSTANCE-resolving extractor, every reconstructed WDS inner
-element matches LDS (0 drift). Real drifts found and fixed across the whole sweep —
+- **Style-verified (real WDS↔LDS diff, 0 drift): ~26 components.**
+  - `check:component-styles` — token-driven (node), incl. Button/Input/Chip/Textfield/Menu.
+  - `check:component-styles-rendered` — Playwright, **22 components** (adds Input, Divider).
+  - `check:nested-styles` — Playwright, 7 INSTANCE-resolved inner elements (Checkbox/Radio
+    box, Tooltip, Alert, List Cell) vs `COMPONENT_STYLES_DEEP.json`.
+- **Coverage-only (exists in LDS, WDS reference captured, NOT pixel-diffed): the rest.**
+  These are (a) **documented LK overrides** (Card r16, ToggleIcon r12, Tabs spacing,
+  Segmented inner geometry), (b) **overlays needing interaction** (Modal, Popover,
+  DropdownMenu), (c) **layout/platform** (Grid, Footer, BottomNav, TopBar,
+  MobileSystemBars), (d) **LK extensions** with no WDS counterpart. Their WDS reference
+  lives in `COMPONENT_STYLES.json` (164 sets) but auto-diffing them is unreliable.
+
+A batch-2 auto-diff attempt (Tabs, StatusBadge, Input font) surfaced **only false
+positives, 0 real drift**: the harness measured the 2px Tab indicator instead of the
+48px tab; StatusBadge is a pill status chip, not WDS Content Badge (that maps to the
+already-verified `ContentBadge`); the Input "font 17" was the field row's inherited
+font, not the input's token-set 16 (`--component-input-font-size` = body1). This is why
+the coverage-only set is not force-diffed — noise would masquerade as findings.
+
+**Net finding: across every component measured with a reliable single styled root
+(~26), LDS matches WDS (0 drift). Real drifts found and fixed across the whole sweep —
 Filter Chip height (38→32), Multi-Select Chip padding (15→12), Alert action button
-font (14→16/17). Remaining divergences are documented, deliberate LK overrides.**
+font (14→16/17). Remaining divergences are documented, deliberate LK overrides; the
+un-diffed remainder is coverage-verified (exists) but not claimed as pixel-matched.**
