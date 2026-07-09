@@ -72,6 +72,23 @@ export const LKRoboticsLogo = {
       </section>
 
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>앱 아이콘 · 파비콘</h2>
+        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+          심볼을 라운드 네이비 타일에 얹은 앱 아이콘 형태입니다. 브라우저 탭 파비콘과 홈 화면 아이콘에 쓰며, 이 자리에서는
+          로크업 대신 고정된 이 형태를 사용합니다. 원본:{' '}
+          <code style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>assets/brand/lk-favicon.svg</code>
+        </p>
+        <div style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+          {[96, 64, 48, 32, 16].map((size) => (
+            <div key={size} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
+              <img src="/assets/brand/lk-favicon.svg" alt="LK ROBOTICS 앱 아이콘" width={size} height={size} style={{ display: 'block' }} />
+              <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>{size}px</code>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>톤</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
           {toneLabels.map(([tone, label]) => {
