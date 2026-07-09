@@ -118,6 +118,29 @@ The earlier "r3 checkbox drift" was a **false positive** — r3 belongs to a min
   16 (web / Android) and 17 (iOS), all SemiBold. Fixed with a per-platform
   `buttonFontSize` (web 16 / android 16 / ios 17). `components/overlay/Alert.jsx`.
 
+### Code-verified (radius token literally equals the WDS value — no render needed)
+
+Overlays that need interaction to measure were verified by reading the resolved
+style against the deep-reconstructed WDS reference:
+
+- **DropdownMenu** — `--component-menu-radius` = `--radius-16` = **16** = WDS `Menu/Menu`
+  container r16 ✅.
+- **Popover** — `anchored-panel-style.js` `--radius-lg` = **12** = WDS `Popover/Popover`
+  container r12 ✅.
+- **Pagination** chip — r8 / h32 = WDS `Pagination/Navigation` chip (the shallow h30 /
+  padX16 reference was the nav *wrapper*, not the chip) ✅.
+
+### Shape divergences found (LK form vs WDS filled badge — design call, not yet changed)
+
+- **Badge** (`feedback/Badge.jsx`) — h20 ✅, fs12 ✅, padX7≈6, but **radius = pill** vs
+  WDS `_Badge/Value` **r4** (rounded rect). LDS renders a full pill; WDS a subtle-corner
+  rect.
+- **StatusBadge** (`content/StatusBadge.jsx`) — **8px dot + neutral label** vs WDS
+  `_Badge/Status` **filled r4 badge** with inner dot. Structurally different (minimal
+  indicator vs filled label). LK simplification; flagged for a keep-or-align decision.
+- **Link** — inline text that inherits font size; no component box to diff (WDS Link
+  "fs15" is the surrounding body size), so nothing to match.
+
 ## Coverage — what is style-verified vs coverage-only
 
 Honest split (see `COMPONENT_CENSUS.json` for the full 103-component name census):
