@@ -1,0 +1,1036 @@
+{
+  "summary": {
+    "publishedWdsSets": 106,
+    "ldsExports": 160,
+    "matched": 103,
+    "wdsOnly": 3,
+    "ldsOnly": 106
+  },
+  "matched": [
+    {
+      "set": "\bTime",
+      "lds": "TimePicker",
+      "variant": "Property 1=\bRequire",
+      "w": 277,
+      "h": 18,
+      "fontSize": 13
+    },
+    {
+      "set": "\bbadge",
+      "lds": "Badge",
+      "variant": "상태=Active",
+      "w": 25,
+      "h": 19,
+      "radius": 5,
+      "padY": 2,
+      "fontSize": 9
+    },
+    {
+      "set": ".Color/Overlay",
+      "lds": "ColorSwatch",
+      "variant": "Percent=8%",
+      "w": 64,
+      "h": 64
+    },
+    {
+      "set": "Action Area/Action Area",
+      "lds": "ActionArea",
+      "variant": "Extra=False",
+      "w": 64,
+      "h": 64,
+      "fontSize": 16
+    },
+    {
+      "set": "Alert/Alert",
+      "lds": "Alert",
+      "variant": "Platform=iOS",
+      "w": 375,
+      "h": 812,
+      "fontSize": 17
+    },
+    {
+      "set": "Auto Complete/Auto Complete",
+      "lds": "AutoComplete",
+      "variant": "Variant=Normal, Direct Input Position=Top",
+      "w": 320,
+      "h": 400,
+      "radius": 16,
+      "fontSize": 16
+    },
+    {
+      "set": "Avatar/Academic",
+      "lds": "Avatar",
+      "variant": "Size=Medium, Variant=Icon",
+      "w": 40,
+      "h": 40,
+      "radius": 8
+    },
+    {
+      "set": "Avatar/Avatar",
+      "lds": "Avatar",
+      "variant": "Variant=Person, Size=Medium, Placeholder=False",
+      "w": 40,
+      "h": 40,
+      "radius": 10000
+    },
+    {
+      "set": "Avatar/Avatar Group",
+      "lds": "Avatar",
+      "variant": "Variant=Person, Size=XSmall",
+      "w": 40,
+      "h": 40,
+      "radius": 10000,
+      "fontSize": 14
+    },
+    {
+      "set": "Avatar/Company",
+      "lds": "Avatar",
+      "variant": "Size=Medium, Variant=Icon",
+      "w": 40,
+      "h": 40,
+      "radius": 8
+    },
+    {
+      "set": "Avatar/Person",
+      "lds": "Avatar",
+      "variant": "Size=Medium, Variant=Image",
+      "w": 40,
+      "h": 40,
+      "radius": 10000
+    },
+    {
+      "set": "Badge/Push",
+      "lds": "PushBadge",
+      "variant": "Type=Number",
+      "w": 20,
+      "h": 20,
+      "radius": 999,
+      "fontSize": 11
+    },
+    {
+      "set": "Basic/Divider",
+      "lds": "Divider",
+      "variant": "Variant=Normal, Vertical=False",
+      "w": 375,
+      "h": 1
+    },
+    {
+      "set": "Bottom Navigation/Bottom Navigation",
+      "lds": "BottomNav",
+      "variant": "Platform=iOS",
+      "w": 375,
+      "h": 85,
+      "fontSize": 11
+    },
+    {
+      "set": "Button/Button",
+      "lds": "Button",
+      "variant": "Variant=Solid, Color=Primary, Size=Medium, Icon Only=False, Disable=False",
+      "w": 80,
+      "h": 40,
+      "radius": 10,
+      "padX": 20,
+      "padY": 9,
+      "fontSize": 15
+    },
+    {
+      "set": "Button/Floating Action Button",
+      "lds": "Button",
+      "variant": "Disable=False",
+      "w": 56,
+      "h": 56,
+      "radius": 1000,
+      "padX": 16,
+      "padY": 16
+    },
+    {
+      "set": "Button/Icon Button/Background",
+      "lds": "Button",
+      "variant": "Disable=False",
+      "w": 24,
+      "h": 24,
+      "padX": 2,
+      "padY": 2
+    },
+    {
+      "set": "Button/Icon Button/Normal",
+      "lds": "Button",
+      "variant": "Disable=False",
+      "w": 40,
+      "h": 40,
+      "radius": 1000
+    },
+    {
+      "set": "Button/Icon Button/Outlined",
+      "lds": "Button",
+      "variant": "Size=Normal, Disable=False",
+      "w": 40,
+      "h": 40,
+      "radius": 1000,
+      "padX": 10,
+      "padY": 10
+    },
+    {
+      "set": "Button/Outlined",
+      "lds": "Button",
+      "variant": "Variant=Primary, Size=Medium, Icon Only=False, Disable=False",
+      "w": 80,
+      "h": 40,
+      "radius": 10,
+      "padX": 20,
+      "padY": 9,
+      "fontSize": 15
+    },
+    {
+      "set": "Button/Round Button/Alternative",
+      "lds": "Button",
+      "variant": "Size=Medium, Disable=False",
+      "w": 80,
+      "h": 40,
+      "radius": 1000,
+      "padX": 20,
+      "padY": 9,
+      "fontSize": 15
+    },
+    {
+      "set": "Button/Round Button/Assistive",
+      "lds": "Button",
+      "variant": "Size=Medium, Disable=False",
+      "w": 80,
+      "h": 40,
+      "radius": 1000,
+      "padX": 20,
+      "padY": 9,
+      "fontSize": 15
+    },
+    {
+      "set": "Button/Round Button/Primary",
+      "lds": "Button",
+      "variant": "Size=Medium, Disable=False",
+      "w": 80,
+      "h": 40,
+      "radius": 1000,
+      "padX": 20,
+      "padY": 9,
+      "fontSize": 15
+    },
+    {
+      "set": "Button/Round Button/Secondary",
+      "lds": "Button",
+      "variant": "Size=Medium, Disable=False",
+      "w": 80,
+      "h": 40,
+      "radius": 1000,
+      "padX": 20,
+      "padY": 9,
+      "fontSize": 15
+    },
+    {
+      "set": "Button/Text",
+      "lds": "TextButton",
+      "variant": "Variant=Primary, Size=Medium, Disable=False",
+      "w": 56,
+      "h": 32,
+      "radius": 6,
+      "fontSize": 16
+    },
+    {
+      "set": "Button/Text Button/Assistive",
+      "lds": "Button",
+      "variant": "Size=Medium, Disable=False",
+      "w": 56,
+      "h": 32,
+      "radius": 5,
+      "fontSize": 16
+    },
+    {
+      "set": "Button/Text Button/Primary",
+      "lds": "Button",
+      "variant": "Size=Medium, Disable=False",
+      "w": 56,
+      "h": 32,
+      "radius": 5,
+      "fontSize": 16
+    },
+    {
+      "set": "Card/Card",
+      "lds": "Card",
+      "variant": "Platform=Desktop, Skeleton=False",
+      "w": 240,
+      "h": 160,
+      "radius": 12,
+      "fontSize": 16
+    },
+    {
+      "set": "Card/List Card",
+      "lds": "Card",
+      "variant": "Platform=Desktop, Skeleton=False",
+      "w": 120,
+      "h": 80,
+      "radius": 12,
+      "fontSize": 16
+    },
+    {
+      "set": "Category/Category",
+      "lds": "Category",
+      "variant": "Variant=Normal, Size=Medium, Horizontal Padding=False",
+      "w": 335,
+      "h": 32,
+      "fontSize": 14
+    },
+    {
+      "set": "Chip/Action",
+      "lds": "Chip",
+      "variant": "Size=Normal, Variant=Outlined, Disable=False, Active=True",
+      "w": 83,
+      "h": 36,
+      "radius": 10,
+      "padX": 11,
+      "fontSize": 15
+    },
+    {
+      "set": "Chip/Chip",
+      "lds": "Chip",
+      "variant": "Size=Medium, Variant=Solid, Disable=False, Active=True",
+      "w": 66,
+      "h": 36,
+      "radius": 10,
+      "padX": 11,
+      "padY": 7,
+      "fontSize": 15
+    },
+    {
+      "set": "Chip/Filter",
+      "lds": "FilterChip",
+      "variant": "Size=Medium, State=Selected, Expand=False",
+      "w": 92,
+      "h": 32,
+      "radius": 999,
+      "padX": 12,
+      "padY": 6,
+      "fontSize": 14
+    },
+    {
+      "set": "Chip/Multi-Select",
+      "lds": "MultiSelectChip",
+      "variant": "Size=Medium, State=Selected",
+      "w": 77,
+      "h": 32,
+      "radius": 999,
+      "padX": 12,
+      "padY": 6,
+      "fontSize": 14
+    },
+    {
+      "set": "Circular/Circular",
+      "lds": "CircularProgress",
+      "variant": " Animate=False",
+      "w": 28,
+      "h": 28
+    },
+    {
+      "set": "Circular/Wanted",
+      "lds": "CircularProgress",
+      "variant": " Animate=False",
+      "w": 32,
+      "h": 32
+    },
+    {
+      "set": "Content",
+      "lds": "ContentEditor",
+      "variant": "상태=활성화 (미입력)",
+      "w": 277,
+      "h": 1,
+      "fontSize": 15
+    },
+    {
+      "set": "Content Badge/Content Badge",
+      "lds": "ContentBadge",
+      "variant": "Variant=Solid, Size=Medium, Color=Neutral",
+      "w": 51,
+      "h": 28,
+      "radius": 8,
+      "padX": 8,
+      "padY": 5,
+      "fontSize": 13
+    },
+    {
+      "set": "Control/.Switch",
+      "lds": "Switch",
+      "variant": "Active=True, Disable=False, Size=Medium",
+      "w": 52,
+      "h": 32,
+      "radius": 100,
+      "padX": 4,
+      "padY": 4
+    },
+    {
+      "set": "Control/Check",
+      "lds": "SegmentedControl",
+      "variant": "Type=Checked",
+      "w": 24,
+      "h": 24,
+      "padX": 2,
+      "padY": 2
+    },
+    {
+      "set": "Control/Check Mark",
+      "lds": "SegmentedControl",
+      "variant": "Size=Medium, State=Checked, Tight=False, Disable=False",
+      "w": 68,
+      "h": 24,
+      "fontSize": 15
+    },
+    {
+      "set": "Control/Checkbox",
+      "lds": "Checkbox",
+      "variant": "Size=Medium, State=Checked, Tight=False, Bold=False, Disable=False",
+      "w": 335,
+      "h": 24,
+      "fontSize": 15
+    },
+    {
+      "set": "Control/Radio",
+      "lds": "Radio",
+      "variant": "Size=Medium, State=Checked, Tight=False, Disable=False",
+      "w": 335,
+      "h": 24,
+      "fontSize": 15
+    },
+    {
+      "set": "Control/Switch",
+      "lds": "Switch",
+      "variant": "Active=True, Disable=False",
+      "w": 52,
+      "h": 32,
+      "radius": 100
+    },
+    {
+      "set": "Control/Toggle Icon",
+      "lds": "ToggleIcon",
+      "variant": "State=Inactive",
+      "w": 24,
+      "h": 24
+    },
+    {
+      "set": "Dimmer",
+      "lds": "Dimmer",
+      "variant": "_Width=375",
+      "w": 375,
+      "h": 812
+    },
+    {
+      "set": "Divider",
+      "lds": "Divider",
+      "variant": "Type=Normal",
+      "w": 345,
+      "h": 1
+    },
+    {
+      "set": "Divider/Divider",
+      "lds": "Divider",
+      "variant": "Variant=Normal, Vertical=False",
+      "w": 375,
+      "h": 1
+    },
+    {
+      "set": "Filter Button/Filter Button",
+      "lds": "Button",
+      "variant": "Size=Medium, Variant=Solid, State=Normal, Active=True, Disable=False",
+      "w": 93,
+      "h": 36,
+      "radius": 10,
+      "padX": 11,
+      "padY": 7,
+      "fontSize": 15
+    },
+    {
+      "set": "Footer/Footer",
+      "lds": "Footer",
+      "variant": "Breakpoint=Mobile(xs)",
+      "w": 40,
+      "h": 40,
+      "radius": 1000,
+      "fontSize": 15
+    },
+    {
+      "set": "Framed Style/Framed Style",
+      "lds": "ChoiceCard",
+      "variant": "Selected=True, Disabled=False, Status=Normal",
+      "w": 367,
+      "h": 72,
+      "padX": 16,
+      "padY": 4
+    },
+    {
+      "set": "Icons/Icons Responsive",
+      "lds": "Icon",
+      "variant": "Size=Medium",
+      "w": 28,
+      "h": 28
+    },
+    {
+      "set": "Link",
+      "lds": "Link",
+      "variant": "Property 1=Active",
+      "w": 327,
+      "h": 44,
+      "fontSize": 15
+    },
+    {
+      "set": "List Cell/List Cell",
+      "lds": "ListCell",
+      "variant": "Vertical Padding=Medium, Vertical Align=Top, Fill Width=False, Text Ellipsis=False, Selected=True, Disable=False",
+      "w": 359,
+      "h": 48,
+      "radius": 12,
+      "fontSize": 16
+    },
+    {
+      "set": "Logo/Wanted Gigs/Logo Horizontal",
+      "lds": "BrandLogo",
+      "variant": "Variant=Normal, Color=Normal",
+      "w": 160,
+      "h": 32
+    },
+    {
+      "set": "Logo/Wanted Gigs/Logo Vertical",
+      "lds": "BrandLogo",
+      "variant": "Color=Normal",
+      "w": 84,
+      "h": 84
+    },
+    {
+      "set": "Logo/Wanted Space/Logo Horizontal",
+      "lds": "BrandLogo",
+      "variant": "Variant=Normal, Color=Normal",
+      "w": 180,
+      "h": 32
+    },
+    {
+      "set": "Logo/Wanted Space/Logo Vertical",
+      "lds": "BrandLogo",
+      "variant": "Color=Normal",
+      "w": 84,
+      "h": 84
+    },
+    {
+      "set": "Logo/Wanted Space/Symbol",
+      "lds": "BrandLogo",
+      "variant": "Tight=False",
+      "w": 24,
+      "h": 24
+    },
+    {
+      "set": "Logo/Wanted Sub Services/Wanted Agent",
+      "lds": "BrandLogo",
+      "variant": "Variant=Normal",
+      "w": 164,
+      "h": 32
+    },
+    {
+      "set": "Logo/Wanted Sub Services/Wanted OneID",
+      "lds": "BrandLogo",
+      "variant": "Language=Korean",
+      "w": 156,
+      "h": 32,
+      "padY": 3
+    },
+    {
+      "set": "Logo/Wanted/Combination",
+      "lds": "BrandLogo",
+      "variant": "order=Vertical",
+      "w": 90,
+      "h": 66
+    },
+    {
+      "set": "Logo/Wanted/Logo Horizontal",
+      "lds": "BrandLogo",
+      "variant": "Color=Normal",
+      "w": 112,
+      "h": 32
+    },
+    {
+      "set": "Logo/Wanted/Logo Vertical",
+      "lds": "BrandLogo",
+      "variant": "Color=Normal",
+      "w": 84,
+      "h": 84
+    },
+    {
+      "set": "Logo/Wanted/Logo/Horizontal",
+      "lds": "BrandLogo",
+      "variant": "Color=Normal",
+      "w": 112,
+      "h": 32
+    },
+    {
+      "set": "Logo/Wanted/Logo/Vertical",
+      "lds": "BrandLogo",
+      "variant": "Color=Normal",
+      "w": 84,
+      "h": 84
+    },
+    {
+      "set": "Logo/Wanted/Symbol",
+      "lds": "BrandLogo",
+      "variant": "Tight=False",
+      "w": 24,
+      "h": 24
+    },
+    {
+      "set": "Master Grid",
+      "lds": "Grid",
+      "variant": "View Grid=off",
+      "w": 320,
+      "h": 320
+    },
+    {
+      "set": "Menu/Menu",
+      "lds": "DropdownMenu",
+      "variant": "Variant=Normal, Cell Padding=12px",
+      "w": 320,
+      "h": 400,
+      "radius": 16,
+      "fontSize": 16
+    },
+    {
+      "set": "Modal/Bottom Sheet",
+      "lds": "Modal",
+      "variant": "Variant=Bottom, Size=Medium, Resize=Hug, Custom=True",
+      "w": 375,
+      "h": 812,
+      "fontSize": 16
+    },
+    {
+      "set": "Navigation Bar/Navigation Bar",
+      "lds": "MobileSystemBars",
+      "variant": "Type=Gesture",
+      "w": 66,
+      "h": 2,
+      "radius": 1
+    },
+    {
+      "set": "Navigation/Navigation",
+      "lds": "NavRail",
+      "variant": "Breakpoint=Desktop(xl)",
+      "w": 1800,
+      "h": 62,
+      "fontSize": 15
+    },
+    {
+      "set": "Page Indicator/Counter",
+      "lds": "PageIndicator",
+      "variant": "Size=Medium, Alternative=False",
+      "w": 62,
+      "h": 34,
+      "radius": 1000,
+      "fontSize": 15
+    },
+    {
+      "set": "Pagination/Dots",
+      "lds": "Pagination",
+      "variant": "Variant=Normal, Size=Medium",
+      "w": 84,
+      "h": 10
+    },
+    {
+      "set": "Pagination/Navigation",
+      "lds": "Pagination",
+      "variant": "Variant=Extended",
+      "w": 51,
+      "h": 32,
+      "radius": 8,
+      "padX": 8,
+      "padY": 6,
+      "fontSize": 16
+    },
+    {
+      "set": "Play Badge/Play Badge",
+      "lds": "Badge",
+      "variant": "Size=Medium, Alternative=False",
+      "w": 60,
+      "h": 60
+    },
+    {
+      "set": "Popover/Popover",
+      "lds": "Popover",
+      "variant": "Variant=Normal, Position=Top and Bottom, Heading=False",
+      "w": 240,
+      "h": 82,
+      "radius": 12,
+      "fontSize": 14
+    },
+    {
+      "set": "Presentation/Alert/Alert",
+      "lds": "Alert",
+      "variant": "Type=Side-by-Side",
+      "w": 375,
+      "h": 812,
+      "fontSize": 17
+    },
+    {
+      "set": "Presentation/Picker/Wheels",
+      "lds": "DatePicker",
+      "variant": "Type=Time",
+      "w": 232,
+      "h": 204,
+      "radius": 13,
+      "padX": 37,
+      "padY": 13
+    },
+    {
+      "set": "Push Badge/Push Badge",
+      "lds": "PushBadge",
+      "variant": "Variant=Dot, Size=Medium",
+      "w": 64,
+      "h": 64
+    },
+    {
+      "set": "Safe Area/Bottom",
+      "lds": "BottomNav",
+      "variant": "Platform=iOS",
+      "w": 375,
+      "h": 34
+    },
+    {
+      "set": "Safe Area/Status",
+      "lds": "EquipmentStatusCard",
+      "variant": "Platform=iOS",
+      "w": 375,
+      "h": 44
+    },
+    {
+      "set": "Section Header/Section Header",
+      "lds": "Section",
+      "variant": "Platform=Mobile, Size=Medium, Heading Content=False",
+      "w": 49,
+      "h": 28,
+      "radius": 6,
+      "fontSize": 20
+    },
+    {
+      "set": "Section/Job/Shortcut",
+      "lds": "Section",
+      "variant": "Platform=Desktop, Palceholder=False",
+      "w": 1060,
+      "h": 122,
+      "padY": 24,
+      "fontSize": 14
+    },
+    {
+      "set": "Segmented Control/Segmented Control",
+      "lds": "SegmentedControl",
+      "variant": "Variant=Solid, Size=Medium, Icon=False",
+      "w": 335,
+      "h": 40,
+      "radius": 10,
+      "padX": 2,
+      "padY": 2,
+      "fontSize": 17
+    },
+    {
+      "set": "Select/Select",
+      "lds": "Select",
+      "variant": "Render=Text, Negative=False, Active=True, Focus=False, Disable=False, Overflow=False",
+      "w": 335,
+      "h": 48,
+      "radius": 12,
+      "padX": 12,
+      "padY": 12,
+      "fontSize": 16
+    },
+    {
+      "set": "Selection & Input/Toggle/Switch",
+      "lds": "Switch",
+      "variant": "Active=True",
+      "w": 52,
+      "h": 32
+    },
+    {
+      "set": "Skeleton/Circle",
+      "lds": "Skeleton",
+      "variant": "Color=Normal",
+      "w": 64,
+      "h": 64
+    },
+    {
+      "set": "Skeleton/Rectangle",
+      "lds": "Skeleton",
+      "variant": "Color=Normal",
+      "w": 64,
+      "h": 64,
+      "radius": 3
+    },
+    {
+      "set": "Skeleton/Text",
+      "lds": "Skeleton",
+      "variant": "Color=Normal, Length=100%, Align=Leading",
+      "w": 120,
+      "h": 18,
+      "radius": 3
+    },
+    {
+      "set": "Switch",
+      "lds": "Switch",
+      "variant": "Platform=Web, Active=True",
+      "w": 52,
+      "h": 32,
+      "radius": 100,
+      "padX": 4,
+      "padY": 4
+    },
+    {
+      "set": "Switch/Switch",
+      "lds": "Switch",
+      "variant": "Platform=Normal, Size=Medium, Active=True, Disable=False",
+      "w": 52,
+      "h": 32,
+      "radius": 100,
+      "padX": 4,
+      "padY": 4
+    },
+    {
+      "set": "Tab/Tab",
+      "lds": "Tabs",
+      "variant": "Resize=Hug, Size=Medium, Horizontal Padding=False",
+      "w": 335,
+      "h": 48,
+      "fontSize": 17
+    },
+    {
+      "set": "Text Button/Primary-rev2",
+      "lds": "TextButton",
+      "variant": "Size=Medium, Disable=False",
+      "w": 67,
+      "h": 40,
+      "radius": 1000,
+      "padX": 20,
+      "padY": 9,
+      "fontSize": 15
+    },
+    {
+      "set": "Textinput/Textarea",
+      "lds": "Textarea",
+      "variant": "Status=Normal, Resize=Normal, Active=True, Focus=False, Disable=False",
+      "w": 335,
+      "h": 86,
+      "radius": 12,
+      "padX": 12,
+      "padY": 12,
+      "fontSize": 16
+    },
+    {
+      "set": "Textinput/Textfield",
+      "lds": "Input",
+      "variant": "Status=Normal, Active=True, Focus=False, Disable=False, Trailing Button=False",
+      "w": 335,
+      "h": 48,
+      "radius": 12,
+      "padX": 12,
+      "padY": 12,
+      "fontSize": 16
+    },
+    {
+      "set": "Thumbnail/Thumbnail",
+      "lds": "Thumbnail",
+      "variant": "Radius=False",
+      "w": 240,
+      "h": 240
+    },
+    {
+      "set": "Toast/Toast",
+      "lds": "Toast",
+      "variant": "Variant=Normal",
+      "w": 335,
+      "h": 54,
+      "radius": 12,
+      "padX": 16,
+      "padY": 11,
+      "fontSize": 15
+    },
+    {
+      "set": "Tooltip/Tooltip",
+      "lds": "Tooltip",
+      "variant": "Size=Medium, Position=Bottom",
+      "w": 171,
+      "h": 36,
+      "radius": 8,
+      "padX": 12,
+      "padY": 8,
+      "fontSize": 14
+    },
+    {
+      "set": "Top Navigation/Top Navigation",
+      "lds": "TopBar",
+      "variant": "Platform=iOS",
+      "w": 375,
+      "h": 88,
+      "fontSize": 17
+    },
+    {
+      "set": "_Badge/Status",
+      "lds": "StatusBadge",
+      "variant": "Available=False",
+      "w": 89,
+      "h": 20,
+      "radius": 4,
+      "padX": 6,
+      "padY": 2,
+      "fontSize": 12
+    },
+    {
+      "set": "_Badge/Value",
+      "lds": "Badge",
+      "variant": "Variant=Normal",
+      "w": 50,
+      "h": 20,
+      "radius": 4,
+      "padX": 6,
+      "padY": 2,
+      "fontSize": 12
+    },
+    {
+      "set": "_Theme/Primary Button",
+      "lds": "ThemeToggle",
+      "variant": "Type=Secondary, Active=True",
+      "w": 140,
+      "h": 50,
+      "radius": 1000,
+      "padX": 32,
+      "padY": 13,
+      "fontSize": 16
+    }
+  ],
+  "wdsOnly": [
+    {
+      "set": "\bImage",
+      "variant": "Property 1=경력",
+      "w": 40,
+      "h": 40,
+      "radius": 10000
+    },
+    {
+      "set": "\bProject_after_name",
+      "variant": "Property 1=\bRequire",
+      "w": 277,
+      "h": 18,
+      "fontSize": 13
+    },
+    {
+      "set": "\bProject_before",
+      "variant": "Property 1=\bRequire",
+      "w": 277,
+      "h": 18,
+      "fontSize": 13
+    }
+  ],
+  "ldsOnly": [
+    "Accordion",
+    "Anchor",
+    "AspectRatio",
+    "Auto",
+    "AvatarGroup",
+    "Banner",
+    "BarChart",
+    "Blockquote",
+    "Bookmark",
+    "Breadcrumb",
+    "Bubble",
+    "ButtonGroup",
+    "Calendar",
+    "Callout",
+    "CanvasEditorShell",
+    "Carousel",
+    "Center",
+    "CheckboxGroup",
+    "ChecklistItem",
+    "Cluster",
+    "Code",
+    "Col",
+    "Collapsible",
+    "Columns",
+    "Combobox",
+    "CommandPalette",
+    "ConfirmDialog",
+    "ConnectionBadge",
+    "Container",
+    "CopyButton",
+    "DataGrid",
+    "DataToolbar",
+    "DescriptionList",
+    "Do",
+    "DonutChart",
+    "Drawer",
+    "EditorToolbar",
+    "EmptyState",
+    "Fab",
+    "FeatureCard",
+    "FileUpload",
+    "FloorSelector",
+    "FormField",
+    "HistoryToolbar",
+    "HoverCard",
+    "IconButton",
+    "InputGroup",
+    "Joystick",
+    "Kbd",
+    "Lightbox",
+    "Lockup",
+    "Map2DCanvas",
+    "Menubar",
+    "Meter",
+    "MetricCard",
+    "NewsCard",
+    "Notification",
+    "NumberField",
+    "Overline",
+    "PageHeader",
+    "PasswordInput",
+    "PinInput",
+    "ProductCard",
+    "ProgressBar",
+    "RadioGroup",
+    "RangeSlider",
+    "Rating",
+    "RobotStatusCard",
+    "Scene3DFrame",
+    "ScrollArea",
+    "SearchField",
+    "Sheet",
+    "SideNav",
+    "Slider",
+    "Snackbar",
+    "SocialButton",
+    "SourceTag",
+    "Spacer",
+    "Sparkline",
+    "SpecRow",
+    "Spinner",
+    "Split",
+    "SplitButton",
+    "Stack",
+    "Stat",
+    "StepList",
+    "Stepper",
+    "Steps",
+    "Table",
+    "Tag",
+    "TagInput",
+    "TelemetryGauge",
+    "TelemetryValue",
+    "Timeline",
+    "ToastStack",
+    "ToggleButton",
+    "Toolbar",
+    "TopBarNavItem",
+    "TopicTree",
+    "Tree",
+    "UserMenu",
+    "VideoStreamTile",
+    "ViewerToolbar",
+    "ViewerToolbarButton",
+    "VisuallyHidden",
+    "Wizard"
+  ]
+}
