@@ -46,6 +46,7 @@
       "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
       "storyEvidence": [
         "stories/ActionArea.stories.jsx",
+        "stories/ActionSpeedDial.stories.jsx",
         "stories/Button.stories.jsx",
         "stories/ButtonsExtended.stories.jsx"
       ],
@@ -55,6 +56,7 @@
         "ButtonGroup",
         "Fab",
         "IconButton",
+        "SpeedDial",
         "SplitButton",
         "TextButton",
         "ToggleIcon"
@@ -122,7 +124,9 @@
         "stories/ContentBadgesAnnotations.stories.jsx",
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentListsMedia.stories.jsx",
+        "stories/ContentLogViewer.stories.jsx",
         "stories/ContentMedia.stories.jsx",
+        "stories/ContentReorderList.stories.jsx",
         "stories/ContentStepList.stories.jsx",
         "stories/ContentTimeline.stories.jsx"
       ],
@@ -136,7 +140,9 @@
         "ContentBadge",
         "Kbd",
         "ListCell",
+        "LogViewer",
         "Overline",
+        "ReorderList",
         "SourceTag",
         "StatusBadge",
         "StepList",
@@ -166,9 +172,13 @@
         "stories/DataCalendar.stories.jsx",
         "stories/DataDescriptionList.stories.jsx",
         "stories/DataDisplay.stories.jsx",
+        "stories/DataFileBrowser.stories.jsx",
+        "stories/DataLegend.stories.jsx",
+        "stories/DataLineChart.stories.jsx",
         "stories/DataTablesHierarchy.stories.jsx",
         "stories/DataToolbar.stories.jsx",
-        "stories/DataTree.stories.jsx"
+        "stories/DataTree.stories.jsx",
+        "stories/DataTreeSelect.stories.jsx"
       ],
       "exports": [
         "BarChart",
@@ -178,9 +188,13 @@
         "DataToolbar",
         "DescriptionList",
         "DonutChart",
+        "FileBrowser",
+        "Legend",
+        "LineChart",
         "Sparkline",
         "Table",
-        "Tree"
+        "Tree",
+        "TreeSelect"
       ]
     },
     {
@@ -220,9 +234,10 @@
       "classification": "direct-wds",
       "wdsFamily": "Textinput/Textfield",
       "storyEvidence": [
-        "stories/FormsFull.stories.jsx",
+        "stories/FormPropertyField.stories.jsx",
+        "stories/FormSearchAutocomplete.stories.jsx",
         "stories/FormSelectionControls.stories.jsx",
-        "stories/FormSearchAutocomplete.stories.jsx"
+        "stories/FormsFull.stories.jsx"
       ],
       "exports": [
         "AutoComplete",
@@ -231,6 +246,7 @@
         "Input",
         "InputGroup",
         "PasswordInput",
+        "PropertyField",
         "SearchField",
         "Select",
         "TagInput",
@@ -263,14 +279,17 @@
       "storyEvidence": [
         "stories/FormSelectionControls.stories.jsx",
         "stories/SelectionChips.stories.jsx",
+        "stories/SelectionIconPicker.stories.jsx",
         "stories/SelectionSegmentedToggle.stories.jsx",
         "stories/SelectionStepper.stories.jsx",
-        "stories/SelectionSwitch.stories.jsx"
+        "stories/SelectionSwitch.stories.jsx",
+        "stories/SelectionWheelPicker.stories.jsx"
       ],
       "exports": [
         "Checkbox",
         "CheckboxGroup",
         "FilterChip",
+        "IconPicker",
         "MultiSelectChip",
         "Radio",
         "RadioGroup",
@@ -279,7 +298,8 @@
         "Slider",
         "Stepper",
         "Switch",
-        "ToggleButton"
+        "ToggleButton",
+        "WheelPicker"
       ]
     },
     {
@@ -300,8 +320,9 @@
       "classification": "direct-wds",
       "wdsFamily": "Layout/Essential, Divider",
       "storyEvidence": [
-        "stories/LayoutEssentials.stories.jsx",
         "stories/Layout.stories.jsx",
+        "stories/LayoutDockPanel.stories.jsx",
+        "stories/LayoutEssentials.stories.jsx",
         "stories/LayoutGrid.stories.jsx",
         "stories/LayoutScrollAccess.stories.jsx",
         "stories/LayoutStack.stories.jsx"
@@ -314,6 +335,7 @@
         "Columns",
         "Container",
         "Divider",
+        "DockPanel",
         "Grid",
         "MobileSystemBars",
         "ScrollArea",
@@ -459,6 +481,7 @@
         "stories/RoboticsAndViz.stories.jsx",
         "stories/RoboticsBatteryGauge.stories.jsx",
         "stories/RoboticsConnectionBadge.stories.jsx",
+        "stories/RoboticsDirectionalPad.stories.jsx",
         "stories/RoboticsEquipment.stories.jsx",
         "stories/RoboticsJoystick.stories.jsx",
         "stories/RoboticsTopicTree.stories.jsx",
@@ -472,6 +495,7 @@
         "BatteryGauge",
         "CanvasEditorShell",
         "ConnectionBadge",
+        "DirectionalPad",
         "EditorToolbar",
         "EquipmentStatusCard",
         "HistoryToolbar",

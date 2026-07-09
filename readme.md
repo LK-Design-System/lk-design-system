@@ -111,7 +111,7 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product`, `LDS Robotics` 아래의 컴포넌트와 패턴 표면 118개 story를 다룹니다.
+현재 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product`, `LDS Robotics` 아래의 컴포넌트와 패턴 표면 130개 story를 다룹니다.
 WDS 원천 번호 체계(`1 Theme`, `3 Component / 2 Action` 등)는 public sidebar title이 아니라 `docs/references/wds/`의 근거 데이터에만 남깁니다.
 `LDS Product`와 `LDS Robotics`는 재사용 가능한 확장 컴포넌트/패턴만 다루며, 완성된 앱 화면, 템플릿, 워크플로우, 데모 페이지를 Storybook source of truth로 올리지 않습니다.
 보고/감사/보정표 UI와 운영 문서는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
@@ -139,7 +139,7 @@ CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/contract/publish policy/
 
 ## 컴포넌트 범위
 
-이 패키지는 다음 그룹에 걸쳐 157개의 React 컴포넌트 소스 파일을 export합니다.
+이 패키지는 다음 그룹에 걸쳐 169개의 React 컴포넌트 소스 파일을 export합니다.
 
 - `brand`
 - `buttons`

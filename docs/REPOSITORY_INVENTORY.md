@@ -5,8 +5,8 @@
 ## 패키지 범위
 
 - 패키지명: `@lk-robotics/design-system-core`
-- React 컴포넌트 소스 파일: 157개
-- 공개 named export: 161개
+- React 컴포넌트 소스 파일: 169개
+- 공개 named export: 173개
 - 컴포넌트 그룹: `brand`, `buttons`, `cards`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
@@ -30,13 +30,13 @@
 
 WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`)과 Storybook의 LDS 컴포넌트/패턴 표면입니다. Storybook은 LDS 컴포넌트와 패턴 표면으로 제한하고, visual parity story는 `!dev`와 `visual-parity` 태그로 숨깁니다.
 
-- 현재 React component entry export: 157개
-- 공개 named export: 161개
-- Storybook 전체 story: 210개
-- Storybook public story: 118개
+- 현재 React component entry export: 169개
+- 공개 named export: 173개
+- Storybook 전체 story: 222개
+- Storybook public story: 130개
 - 숨김 visual parity story: 82개
-- visual inventory React story: 210개
-- 접근성 guard 검사 대상 implementation story: 210개
+- visual inventory React story: 222개
+- 접근성 guard 검사 대상 implementation story: 222개
 
 ## 생성 영역
 
