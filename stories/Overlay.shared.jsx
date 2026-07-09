@@ -113,7 +113,7 @@ export const ModalOpen = {
       title="항목 상세"
       footer={<Button size="sm">확인</Button>}
     >
-      상세 다이얼로그는 헤더, 본문, 푸터를 분리해 비교적 긴 정보를 담습니다.
+      모달은 헤더, 본문, 푸터를 분리해 비교적 긴 정보를 담습니다.
     </Modal>
   ),
 };
