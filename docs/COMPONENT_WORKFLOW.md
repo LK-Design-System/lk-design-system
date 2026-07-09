@@ -50,6 +50,17 @@ npm run check:audit
 npm run check:ops-release
 ```
 
+## 설계 원칙
+
+WDS Makers' Principle 중 코드로 이식 가능한 항목 (근거:
+`docs/references/wds/WDS_NONCOMPONENT_RECONCILIATION.md`):
+
+- **최소 기능 우선**: 처음에는 최소 기능/최소 prop 표면으로 만들고 필요에 따라
+  넓힙니다. Variant·prop이 너무 많으면 어떤 옵션이 무슨 의미인지 파악이 어렵습니다.
+- **이름 규칙 일관성**: React export는 PascalCase, 파일은 `components/<group>/`에
+  그룹으로 둡니다. 유사 컴포넌트의 prop/state 이름을 계승해
+  `COMPONENT_API_STATE_MATRIX.md`와 일치시킵니다 (예: `disabled`/`size`/`variant`).
+
 ## 컴포넌트 추가
 
 1. React 컴포넌트를 알맞은 `components/<group>/` 디렉터리에 추가합니다.

@@ -43,15 +43,15 @@ Voice/tone convention (from the Guideline page): **principles use the "-합니�
 usage examples use "-해요"**. LDS `*.prompt.md` files play the WDS "Dummy" documentation
 role but do not codify this register split.
 
-### Genuine, code-relevant gaps (small)
+### Genuine, code-relevant gaps (small) — now folded in
 
-1. No explicit **naming convention** note for LDS components/props.
-2. No explicit **minimal-first / small-prop-surface** principle.
-3. Release/PR docs lack the **readable-release-note tone** guidance.
+1. Explicit **naming convention** note → added to `COMPONENT_WORKFLOW.md` §설계 원칙.
+2. Explicit **minimal-first / small-prop-surface** principle → same section.
+3. **Readable-release-note tone** guidance → added to `OPERATING_MODEL.md`
+   §"Release note / commit 톤" with WDS's before/after examples.
 
-These are documentation gaps, not implementation drift. They are candidates to fold
-into `OPERATING_MODEL.md` / `COMPONENT_WORKFLOW.md` if the team wants WDS's authoring
-principles restated for the code library.
+These were documentation gaps, not implementation drift. Restated in the working docs
+(where contributors actually read them) rather than left only in this audit artifact.
 
 ## Icons
 
@@ -77,7 +77,7 @@ fork.
 - **Icons**: complete superset coverage (99/101; 2 optional glyphs).
 - **Logos**: LK identity substituted appropriately.
 - **Principles/guidelines**: WDS's are mostly Figma-authoring; LDS has its own code
-  governance docs. Three small documentation gaps identified (naming convention,
-  minimal-first, release-note tone) — optional to adopt.
+  governance docs. Three small transferable gaps (naming convention, minimal-first,
+  release-note tone) were folded into `COMPONENT_WORKFLOW.md` / `OPERATING_MODEL.md`.
 - Everything else on the non-component pages is Figma-authoring scaffolding with no
   code-DS counterpart.

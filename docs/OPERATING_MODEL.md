@@ -48,6 +48,17 @@
 - token 변경이 있으면 `docs/TOKEN_GOVERNANCE.md` 기준을 만족한다.
 - migration guide가 필요한 변경은 release note에 링크한다.
 
+## Release note / commit 톤
+
+WDS Makers' Principle을 코드 맥락으로 옮긴 규칙 (근거:
+`docs/references/wds/WDS_NONCOMPONENT_RECONCILIATION.md`). 사소한 변경이라도
+빠르고 읽기 쉽게 기록한다. 내부/도구 용어 대신 **무엇이 어떻게 바뀌는지**를
+사용자 언어로 쓴다.
+
+- 이렇게 쓰지 않는다: "Constraint 속성을 Left Top으로 변경", "min-width 반영".
+- 대신 이렇게: "정렬 기본값으로 변경", "최소 너비 추가", "구조 최적화".
+- 작업 파일에 영향 없는 수정: "잘못된 속성을 바로잡습니다 / 라이브러리를 업데이트합니다".
+
 ## Migration guide format
 
 ```md
