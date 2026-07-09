@@ -38,7 +38,7 @@ export function VideoStreamTile({ children, label, status = 'live', aspectRatio 
           <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 7, pointerEvents: 'none' }}>
             {status === 'live' && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-semantic-status-negative)', flexShrink: 0,
               animation: 'lk-stream-pulse 1.4s var(--ease-in-out) infinite' }} />}
-            <span style={{ fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: '1px', textTransform: 'uppercase',
+            <span style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', textTransform: 'uppercase',
               color: 'var(--color-semantic-inverse-label)', opacity: 0.9 }}>{label}</span>
           </div>
         </React.Fragment>

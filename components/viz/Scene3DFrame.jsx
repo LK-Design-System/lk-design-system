@@ -13,7 +13,7 @@ export function Scene3DFrame({ children, title, badges, toolbar, loading = false
       {children}
       {(title != null || badges != null) && (
         <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 8, pointerEvents: 'none' }}>
-          {title != null && <span style={{ fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-inverse-label)', opacity: 0.9 }}>{title}</span>}
+          {title != null && <span style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', color: 'var(--color-semantic-inverse-label)', opacity: 0.9 }}>{title}</span>}
           {badges}
         </div>
       )}
