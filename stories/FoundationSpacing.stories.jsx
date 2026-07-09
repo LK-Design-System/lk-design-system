@@ -154,7 +154,7 @@ function PhoneFrame({ variant = 'status', actionInset = false }) {
             background: 'var(--color-semantic-background-elevated-normal)',
           }}
         >
-          <Button full>주요 액션</Button>
+          <Button full size="sm">주요 액션</Button>
         </div>
       )}
       <div style={homeIndicatorStyle}>
