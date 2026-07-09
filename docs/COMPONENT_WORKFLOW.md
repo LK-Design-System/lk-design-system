@@ -61,6 +61,17 @@ WDS Makers' Principle 중 코드로 이식 가능한 항목 (근거:
   그룹으로 둡니다. 유사 컴포넌트의 prop/state 이름을 계승해
   `COMPONENT_API_STATE_MATRIX.md`와 일치시킵니다 (예: `disabled`/`size`/`variant`).
 
+Storybook 표면의 LDS 자체 규칙:
+
+- **이름 언어 규칙**: 사이드바 위계(title 경로)는 영어, story 표시 이름(`name`)은
+  한국어로 씁니다. 컴포넌트 이름은 한국어 문장 안에서도 Latin 그대로 유지합니다
+  (예: `TopBar 기본`, `Toast 변형`). 숨김 visual parity story는 영어
+  `<X> card parity` 관례를 유지합니다.
+- **페이지 주제 선언**: docs description에 Latin 컴포넌트명을 쓰면 그 페이지가 해당
+  컴포넌트의 홈 페이지입니다. 다른 페이지에서 같은 컴포넌트를 지칭할 때는 한국어
+  일반명사(예: "상단 바", "데이터 표")를 씁니다. 홈 중복은
+  `npm run check:story-subjects`가 차단합니다.
+
 ## 컴포넌트 추가
 
 1. React 컴포넌트를 알맞은 `components/<group>/` 디렉터리에 추가합니다.

@@ -24,9 +24,9 @@ const extensionLayerTitle = /^LDS (?:Product|Robotics)\//;
 const forbiddenExtensionSurfaceSegment =
   /\b(?:app|application|screen|screens|template|templates|workflow|workflows|flow|flows|demo|demos|example|examples)\b/i;
 const requiredPublicStoryNames = new Map([
-  ['IconRegistry', 'Base icon registry'],
-  ['TabsAndBreadcrumb', 'Breadcrumb routes'],
-  ['ContentBadgePatterns', 'Content badge patterns'],
+  ['IconRegistry', '기본 아이콘 레지스트리'],
+  ['BreadcrumbRoutes', '브레드크럼 라우트'],
+  ['ContentBadgePatterns', '콘텐츠 배지 패턴'],
 ]);
 const forbiddenPublicTitles = new Map([
   ['LDS Core/Components/Content/Badges', 'Use Content Badge for ContentBadge and Badges and Tags for Badge/Tag grouping.'],
