@@ -6,10 +6,13 @@ import React from 'react';
  * right, hairline rows. `columns` lays pairs out in a responsive grid.
  */
 export function DescriptionList({ items = [], columns = 1, style, ...rest }) {
+  // Rows on the last grid row omit the hairline so the list closes on its
+  // container edge rather than trailing a stray line under the final row.
+  const lastRowStart = items.length - (((items.length - 1) % columns) + 1);
   return (
     <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {items.map((it, i) => (
-        <div key={i} style={{ display: 'flex', gap: 16, padding: '12px 0', borderBottom: '1px solid var(--bw-border)' }}>
+        <div key={i} style={{ display: 'flex', gap: 16, padding: '12px 0', borderBottom: i >= lastRowStart ? 'none' : '1px solid var(--bw-border)' }}>
           <dt style={{ flex: '0 0 34%', fontSize: 14, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-alternative)' }}>{it.term}</dt>
           <dd style={{ margin: 0, flex: 1, fontSize: 14.5, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)', wordBreak: 'keep-all' }}>{it.description}</dd>
         </div>

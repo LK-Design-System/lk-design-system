@@ -23,7 +23,7 @@ export const SpecRows = {
     <Card elevation="sm" padding={22} style={{ width: 360 }}>
       <SpecRow label="상태" value="active / review / disabled" />
       <SpecRow label="밀도" value="compact / regular" />
-      <SpecRow label="테마" value="light / dark" />
+      <SpecRow label="테마" value="light / dark" divider={false} />
     </Card>
   ),
 };
