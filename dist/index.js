@@ -6712,7 +6712,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
       }
     );
   };
-  return /* @__PURE__ */ jsxs59("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, overflow: "hidden", ...style }, children: [
+  return /* @__PURE__ */ jsxs59("div", { style: { display: "inline-flex", alignItems: "stretch", width: "fit-content", height: h, border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, overflow: "hidden", ...style }, children: [
     /* @__PURE__ */ jsx72(
       "input",
       {
