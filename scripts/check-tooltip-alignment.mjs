@@ -126,6 +126,8 @@ async function main() {
           targetWidth: targetRect.width,
           arrowCenterVsBubbleCenterX: arrowRect.cx - bubbleRect.cx,
           arrowCenterVsBubbleCenterY: arrowRect.cy - bubbleRect.cy,
+          arrowCenterVsTargetCenterX: arrowRect.cx - targetRect.cx,
+          arrowCenterVsTargetCenterY: arrowRect.cy - targetRect.cy,
           bubbleLeftVsTargetLeft: bubbleRect.left - targetRect.left,
           bubbleCenterVsTargetCenterX: bubbleRect.cx - targetRect.cx,
           bubbleRightVsTargetRight: bubbleRect.right - targetRect.right,
@@ -141,9 +143,12 @@ async function main() {
     }
 
     const [left, center, right, top, middle, bottom] = measurements;
-    assertClose('vertical leading arrow centered in bubble', left.arrowCenterVsBubbleCenterX);
+    // Arrow must point AT the target centre in every alignment (edge-aligned
+    // bubbles offset the arrow back over the target, not to the bubble centre).
+    assertClose('vertical leading arrow points at target', left.arrowCenterVsTargetCenterX);
+    assertClose('vertical center arrow points at target', center.arrowCenterVsTargetCenterX);
+    assertClose('vertical trailing arrow points at target', right.arrowCenterVsTargetCenterX);
     assertClose('vertical center arrow centered in bubble', center.arrowCenterVsBubbleCenterX);
-    assertClose('vertical trailing arrow centered in bubble', right.arrowCenterVsBubbleCenterX);
     assertClose('vertical leading bubble left aligned to target', left.bubbleLeftVsTargetLeft);
     assertClose('vertical center bubble centered to target', center.bubbleCenterVsTargetCenterX);
     assertClose('vertical trailing bubble right aligned to target', right.bubbleRightVsTargetRight);
@@ -151,9 +156,10 @@ async function main() {
     assertAtLeast('vertical center bubble width makes alignment visible', center.bubbleWidth - center.targetWidth, 20);
     assertAtLeast('vertical trailing bubble width makes alignment visible', right.bubbleWidth - right.targetWidth, 20);
 
-    assertClose('horizontal top arrow centered in bubble', top.arrowCenterVsBubbleCenterY);
+    assertClose('horizontal top arrow points at target', top.arrowCenterVsTargetCenterY);
+    assertClose('horizontal center arrow points at target', middle.arrowCenterVsTargetCenterY);
+    assertClose('horizontal bottom arrow points at target', bottom.arrowCenterVsTargetCenterY);
     assertClose('horizontal center arrow centered in bubble', middle.arrowCenterVsBubbleCenterY);
-    assertClose('horizontal bottom arrow centered in bubble', bottom.arrowCenterVsBubbleCenterY);
     assertClose('horizontal top bubble top aligned to target', top.bubbleTopVsTargetTop);
     assertClose('horizontal center bubble centered to target', middle.bubbleCenterVsTargetCenterY);
     assertClose('horizontal bottom bubble bottom aligned to target', bottom.bubbleBottomVsTargetBottom);

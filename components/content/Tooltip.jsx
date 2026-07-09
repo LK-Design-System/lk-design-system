@@ -42,55 +42,64 @@ function bubbleOffset(placement, align) {
   return { transform: `translateY(-50%) translateX(${x})` };
 }
 
-function arrowStyle(placement, arrowHalf, arrowHeight) {
+// Position the arrow so it points AT the target. For center alignment the bubble
+// is centred on the target, so the arrow sits at the bubble's own centre. For
+// edge (leading/trailing) alignment the bubble is anchored to a target edge and
+// extends past it, so the arrow is offset back toward the anchored edge by half
+// the target's measured size — keeping it over the target centre instead of
+// drifting to the bubble centre. `target` is the measured {w, h} of the trigger
+// (null until measured → falls back to bubble-centred).
+const START_ALIGNS = new Set(["leading", "top"]);
+const END_ALIGNS = new Set(["trailing", "bottom"]);
+
+function arrowMainAxis(normalizedAlign, target, axis) {
+  const size = target ? (axis === "x" ? target.w : target.h) : null;
+  const half = axis === "x" ? "translateX" : "translateY";
+  const startEdge = axis === "x" ? "left" : "top";
+  const endEdge = axis === "x" ? "right" : "bottom";
+  const isStart = START_ALIGNS.has(normalizedAlign);
+  const isEnd = END_ALIGNS.has(normalizedAlign);
+  if (size == null || (!isStart && !isEnd)) {
+    return { edge: startEdge, value: "50%", shift: `${half}(-50%)` };
+  }
+  if (isStart) return { edge: startEdge, value: size / 2, shift: `${half}(-50%)` };
+  return { edge: endEdge, value: size / 2, shift: `${half}(50%)` };
+}
+
+function arrowStyle(placement, arrowHalf, arrowHeight, normalizedAlign, target) {
   const bg = "var(--color-semantic-inverse-background)";
-  if (placement === "bottom") {
-    return {
-      bottom: "calc(100% - 1px)",
-      left: "50%",
+  if (placement === "top" || placement === "bottom") {
+    const a = arrowMainAxis(normalizedAlign, target, "x");
+    const base = {
       width: arrowHalf * 2,
       height: arrowHeight,
-      transform: "translateX(-50%)",
       background: bg,
-      clipPath: "polygon(0 100%, 50% 0, 100% 100%)",
+      transform: a.shift,
+      [a.edge]: a.value,
     };
+    return placement === "bottom"
+      ? { ...base, bottom: "calc(100% - 1px)", clipPath: "polygon(0 100%, 50% 0, 100% 100%)" }
+      : { ...base, top: "calc(100% - 1px)", clipPath: "polygon(0 0, 50% 100%, 100% 0)" };
   }
-  if (placement === "left") {
-    return {
-      left: "calc(100% - 1px)",
-      top: "50%",
-      width: arrowHeight,
-      height: arrowHalf * 2,
-      transform: "translateY(-50%)",
-      background: bg,
-      clipPath: "polygon(0 0, 100% 50%, 0 100%)",
-    };
-  }
-  if (placement === "right") {
-    return {
-      right: "calc(100% - 1px)",
-      top: "50%",
-      width: arrowHeight,
-      height: arrowHalf * 2,
-      transform: "translateY(-50%)",
-      background: bg,
-      clipPath: "polygon(100% 0, 0 50%, 100% 100%)",
-    };
-  }
-  return {
-    top: "calc(100% - 1px)",
-    left: "50%",
-    width: arrowHalf * 2,
-    height: arrowHeight,
-    transform: "translateX(-50%)",
+
+  const a = arrowMainAxis(normalizedAlign, target, "y");
+  const base = {
+    width: arrowHeight,
+    height: arrowHalf * 2,
     background: bg,
-    clipPath: "polygon(0 0, 50% 100%, 100% 0)",
+    transform: a.shift,
+    [a.edge]: a.value,
   };
+  return placement === "left"
+    ? { ...base, left: "calc(100% - 1px)", clipPath: "polygon(0 0, 100% 50%, 0 100%)" }
+    : { ...base, right: "calc(100% - 1px)", clipPath: "polygon(100% 0, 0 50%, 100% 100%)" };
 }
 
 /**
  * LDS Core - Tooltip
- * tooltip with placement, size, arrow alignment, and optional shortcut.
+ * tooltip with placement, size, arrow alignment, and optional shortcut. The
+ * arrow always points at the trigger: for edge-aligned bubbles it is offset
+ * back over the target centre rather than drifting to the bubble centre.
  */
 export function Tooltip({
   content,
@@ -113,9 +122,30 @@ export function Tooltip({
   const compact = size === "small" || size === "sm";
   const arrowHalf = compact ? 7 : 10;
   const arrowHeight = compact ? 6 : 8;
+  const normalizedAlign = normalizeAlign(align);
+
+  const wrapperRef = React.useRef(null);
+  const [target, setTarget] = React.useState(null);
+  const edgeAligned = START_ALIGNS.has(normalizedAlign) || END_ALIGNS.has(normalizedAlign);
+  React.useLayoutEffect(() => {
+    if (!arrow || !edgeAligned || !wrapperRef.current) return;
+    const node = wrapperRef.current;
+    const measure = () => {
+      const r = node.getBoundingClientRect();
+      setTarget((prev) =>
+        prev && prev.w === r.width && prev.h === r.height ? prev : { w: r.width, h: r.height }
+      );
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, [arrow, edgeAligned, place, size]);
 
   return (
     <span
+      ref={wrapperRef}
       style={{ position: "relative", display: "inline-flex", ...style }}
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
@@ -168,7 +198,7 @@ export function Tooltip({
               position: "absolute",
               display: "block",
               pointerEvents: "none",
-              ...arrowStyle(place, arrowHalf, arrowHeight),
+              ...arrowStyle(place, arrowHalf, arrowHeight, normalizedAlign, target),
             }}
           />
         )}
