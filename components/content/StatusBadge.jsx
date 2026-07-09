@@ -14,7 +14,7 @@ const DOT = {
 /**
  * LK ROBOTICS — StatusBadge
  * Filled status badge — a coloured availability dot + label (가동중 / 점검중 /
- * 오프라인) inside a neutral r4 fill, matching WDS `_Badge/Status`
+ * 오프라인) inside a neutral r4 fill, matching the source `_Badge/Status` spec
  * (r4 / h20 / padX6 / fs12, dot + text). Optional `pulse` radiates a soft ring —
  * a live "detection" cue. `tone="critical"` is the vivid safety exception
  * (e-stop / collision) and auto-pulses.

@@ -15,7 +15,7 @@ const COLORS = {
 /**
  * LK ROBOTICS — Badge
  * Small status/count token. `dot` renders a bare status dot; otherwise a
- * solid r4 rounded-rect with white text (WDS `_Badge/Value`: r4 / h20 / padX6).
+ * solid r4 rounded-rect with white text (source `_Badge/Value` spec: r4 / h20 / padX6).
  */
 export function Badge({ children, tone = 'signal', dot = false, style, ...rest }) {
   const c = COLORS[tone] || COLORS.signal;
