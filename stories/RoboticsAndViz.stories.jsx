@@ -1,9 +1,7 @@
 import {
-  ConnectionBadge,
   RobotStatusCard,
 } from '../src/index.js';
 import {
-  ConnectionBadgeCard as ConnectionBadgeCardStory,
   RobotStatusCardCard as RobotStatusCardCardStory,
 } from './RoboticsAndViz.shared.jsx';
 
@@ -12,7 +10,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '로봇의 연결, 배터리, 모드, 선택 상태를 보여주는 ConnectionBadge와 RobotStatusCard 패턴입니다.',
+        component: '로봇의 연결, 배터리, 모드, 선택 상태를 한 행으로 보여주는 RobotStatusCard 패턴입니다.',
       },
     },
   },
@@ -24,13 +22,6 @@ export const RobotState = {
   name: '로봇 상태',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920, minWidth: 0 }}>
-      <section style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' }}>
-        <ConnectionBadge status="online" />
-        <ConnectionBadge status="weak" />
-        <ConnectionBadge status="reconnecting" />
-        <ConnectionBadge status="offline" />
-      </section>
-
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
         <RobotStatusCard name="AMR-07" status="online" battery={86} mode="순찰" selected />
         <RobotStatusCard name="Forklift-B2" status="reconnecting" battery={47} mode="수동" />
@@ -41,4 +32,3 @@ export const RobotState = {
 };
 
 export const RobotStatusCardCard = { ...RobotStatusCardCardStory, name: 'RobotStatusCard card parity', tags: ['!dev', 'visual-parity'] };
-export const ConnectionBadgeCard = { ...ConnectionBadgeCardStory, name: 'ConnectionBadge card parity', tags: ['!dev', 'visual-parity'] };

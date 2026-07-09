@@ -108,6 +108,8 @@
     "stories/OverlaySnackbar.stories.jsx": "LDS Core/Components/Overlay/Snackbar",
     "stories/OverlayToast.stories.jsx": "LDS Core/Components/Overlay/Toast",
     "stories/RoboticsAndViz.stories.jsx": "LDS Robotics/Robotics/Robot State",
+    "stories/RoboticsBatteryGauge.stories.jsx": "LDS Robotics/Robotics/Battery Gauge",
+    "stories/RoboticsConnectionBadge.stories.jsx": "LDS Robotics/Robotics/Connection Badge",
     "stories/RoboticsEquipment.stories.jsx": "LDS Robotics/Robotics/Equipment State",
     "stories/RoboticsJoystick.stories.jsx": "LDS Robotics/Robotics/Joystick",
     "stories/RoboticsTopicTree.stories.jsx": "LDS Robotics/Robotics/Topic Tree",

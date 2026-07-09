@@ -453,6 +453,8 @@
       "storyEvidence": [
         "stories/EditorShell.stories.jsx",
         "stories/RoboticsAndViz.stories.jsx",
+        "stories/RoboticsBatteryGauge.stories.jsx",
+        "stories/RoboticsConnectionBadge.stories.jsx",
         "stories/RoboticsEquipment.stories.jsx",
         "stories/RoboticsJoystick.stories.jsx",
         "stories/RoboticsTopicTree.stories.jsx",
@@ -463,18 +465,19 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "exports": [
+        "BatteryGauge",
         "CanvasEditorShell",
-        "EditorToolbar",
-        "HistoryToolbar",
         "ConnectionBadge",
+        "EditorToolbar",
         "EquipmentStatusCard",
+        "HistoryToolbar",
         "Joystick",
-        "RobotStatusCard",
-        "TopicTree",
         "Map2DCanvas",
+        "RobotStatusCard",
         "Scene3DFrame",
         "TelemetryGauge",
         "TelemetryValue",
+        "TopicTree",
         "VideoStreamTile",
         "ViewerToolbar",
         "ViewerToolbarButton"

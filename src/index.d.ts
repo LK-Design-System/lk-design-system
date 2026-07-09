@@ -130,6 +130,7 @@ export { Sheet } from '../components/overlay/Sheet';
 export { Snackbar } from '../components/overlay/Snackbar';
 export { Toast } from '../components/overlay/Toast';
 export { ToastStack } from '../components/overlay/ToastStack';
+export { BatteryGauge } from '../components/robotics/BatteryGauge';
 export { ConnectionBadge } from '../components/robotics/ConnectionBadge';
 export { EquipmentStatusCard } from '../components/robotics/EquipmentStatusCard';
 export { Joystick } from '../components/robotics/Joystick';

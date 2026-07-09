@@ -1,28 +1,15 @@
 import React from 'react';
-
-// Connection strength by state — mirrors ConnectionBadge's mapping.
-const CONN = {
-  online: { c: 'var(--color-semantic-status-positive)', bars: 3 },
-  reconnecting: { c: 'var(--color-semantic-status-cautionary)', bars: 2 },
-  offline: { c: 'var(--color-semantic-label-disable)', bars: 0 },
-};
-const BAR_H = [5, 8, 12];
+import { ConnectionBadge } from './ConnectionBadge.jsx';
+import { BatteryGauge } from './BatteryGauge.jsx';
 
 /**
  * LK ROBOTICS — RobotStatusCard
  * Live robot status card — thumbnail (or initials) + name on the left, and a
  * top-right status cluster: the operating-mode chip over a telemetry row
- * (connection-strength bars + a battery gauge that colours by level —
- * ≤20% red, ≤50% amber, else green). `selected` for the picked robot.
+ * (ConnectionBadge signal bars + BatteryGauge). `selected` for the picked robot.
  */
 export function RobotStatusCard({ name, image, status = 'online', battery, mode, selected = false, onClick, style, ...rest }) {
   const hasBat = typeof battery === 'number';
-  const b = Math.max(0, Math.min(100, battery));
-  // Battery colour by level: the gauge fill carries the hue as a mark; the % readout
-  // uses the AA-contrast text variants so the number stays legible (WCAG-AA on the card surface).
-  const batFill = b <= 20 ? 'var(--color-semantic-status-negative)' : (b <= 50 ? 'var(--color-semantic-status-cautionary)' : 'var(--color-semantic-status-positive)');
-  const batText = b <= 20 ? 'var(--color-semantic-status-negative)' : (b <= 50 ? 'var(--color-semantic-status-cautionary)' : 'var(--color-semantic-status-positive)');
-  const conn = CONN[status] || CONN.offline;
   return (
     <div onClick={onClick} style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 16, width: '100%', boxSizing: 'border-box',
       background: 'var(--color-semantic-background-elevated-normal)', border: selected ? 'var(--border-thin) solid var(--color-semantic-primary-normal)' : 'var(--component-card-border)',
@@ -37,20 +24,8 @@ export function RobotStatusCard({ name, image, status = 'online', battery, mode,
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 7, flexShrink: 0 }}>
         {mode != null && <span style={{ fontSize: 11, fontWeight: 'var(--fw-bold)', letterSpacing: 0, padding: '2px 8px', borderRadius: 'var(--radius-pill)', background: 'var(--lk-accent-tint)', color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap' }}>{mode}</span>}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span role="img" title={status} aria-label={status} style={{ display: 'inline-flex', alignItems: 'flex-end', gap: 2, height: 12 }}>
-            {[0, 1, 2].map((i) => (
-              <span key={i} style={{ width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : 'var(--color-semantic-fill-strong)' }} />
-            ))}
-          </span>
-          {hasBat && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ position: 'relative', width: 24, height: 12, border: '1.5px solid var(--color-semantic-label-alternative)', borderRadius: 3, padding: 1.5, boxSizing: 'border-box' }}>
-                <span style={{ display: 'block', height: '100%', width: `${b}%`, background: batFill, borderRadius: 1 }} />
-                <span style={{ position: 'absolute', right: -3, top: '50%', transform: 'translateY(-50%)', width: 2, height: 5, background: 'var(--color-semantic-label-alternative)', borderRadius: '0 1px 1px 0' }} />
-              </span>
-              <span style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', color: batText, fontVariantNumeric: 'tabular-nums' }}>{b}%</span>
-            </span>
-          )}
+          <ConnectionBadge status={status} showLabel={false} size="sm" />
+          {hasBat && <BatteryGauge value={battery} />}
         </div>
       </div>
     </div>

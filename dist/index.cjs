@@ -41,6 +41,7 @@ __export(index_exports, {
   Badge: () => Badge,
   Banner: () => Banner,
   BarChart: () => BarChart,
+  BatteryGauge: () => BatteryGauge,
   Blockquote: () => Blockquote,
   Bookmark: () => Bookmark,
   BottomNav: () => BottomNav,
@@ -1581,7 +1582,7 @@ function ProductCard({
 // components/cards/SpecRow.jsx
 var import_react22 = __toESM(require("react"), 1);
 var import_jsx_runtime21 = require("react/jsx-runtime");
-function SpecRow({ label, value, labelWidth = "34%", style, ...rest }) {
+function SpecRow({ label, value, labelWidth = "34%", divider = true, style, ...rest }) {
   return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
     "div",
     {
@@ -1590,7 +1591,7 @@ function SpecRow({ label, value, labelWidth = "34%", style, ...rest }) {
         gridTemplateColumns: `${labelWidth} 1fr`,
         gap: 16,
         padding: "14px 0",
-        borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
+        borderBottom: divider ? "1px solid var(--color-semantic-line-normal-normal)" : "none",
         alignItems: "baseline",
         ...style
       },
@@ -4568,6 +4569,7 @@ function Mini({ children, onClick, disabled, label }) {
         color: "var(--color-semantic-label-neutral)",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.4 : 1,
+        fontFamily: "inherit",
         fontSize: 13
       },
       children
@@ -5319,7 +5321,8 @@ function DataToolbar({
 var import_react49 = __toESM(require("react"), 1);
 var import_jsx_runtime47 = require("react/jsx-runtime");
 function DescriptionList({ items = [], columns = 1, style, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: "1px solid var(--bw-border)" }, children: [
+  const lastRowStart = items.length - ((items.length - 1) % columns + 1);
+  return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: i >= lastRowStart ? "none" : "1px solid var(--bw-border)" }, children: [
     /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: it.term }),
     /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children: it.description })
   ] }, i)) });
@@ -8128,6 +8131,7 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...r
           border: 0,
           borderRadius: "var(--radius-sm)",
           cursor: "pointer",
+          fontFamily: "inherit",
           fontSize: 14,
           fontWeight: on ? 800 : 600,
           background: on ? "var(--color-semantic-primary-normal)" : "transparent",
@@ -10823,9 +10827,42 @@ function ToastStack({ children, position = "bottom-right", gap = 10, style, ...r
   return /* @__PURE__ */ (0, import_jsx_runtime129.jsx)("div", { style: { position: "fixed", zIndex: 120, display: "flex", flexDirection: "column", gap, ...pos, ...style }, ...rest, children });
 }
 
-// components/robotics/ConnectionBadge.jsx
+// components/robotics/BatteryGauge.jsx
 var import_react132 = __toESM(require("react"), 1);
 var import_jsx_runtime130 = require("react/jsx-runtime");
+function fillForLevel(b) {
+  return b <= 20 ? "var(--color-semantic-status-negative)" : b <= 50 ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
+}
+function BatteryGauge({ value = 0, showLabel = true, size = "md", style, ...rest }) {
+  const b = Math.max(0, Math.min(100, value));
+  const fill = fillForLevel(b);
+  const sm = size === "sm";
+  const w = sm ? 20 : 24;
+  const h = sm ? 10 : 12;
+  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)(
+    "span",
+    {
+      role: "img",
+      "aria-label": `\uBC30\uD130\uB9AC ${b}%`,
+      style: { display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style },
+      ...rest,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)("span", { "aria-hidden": "true", style: { position: "relative", width: w, height: h, border: "1.5px solid var(--color-semantic-label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { style: { display: "block", height: "100%", width: `${b}%`, background: fill, borderRadius: 1 } }),
+          /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--color-semantic-label-alternative)", borderRadius: "0 1px 1px 0" } })
+        ] }),
+        showLabel && /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)("span", { "aria-hidden": "true", style: { fontSize: sm ? 11 : 12, fontWeight: "var(--fw-bold)", color: fill, fontVariantNumeric: "tabular-nums" }, children: [
+          b,
+          "%"
+        ] })
+      ]
+    }
+  );
+}
+
+// components/robotics/ConnectionBadge.jsx
+var import_react133 = __toESM(require("react"), 1);
+var import_jsx_runtime131 = require("react/jsx-runtime");
 var CFG = {
   online: { c: "var(--color-semantic-status-positive)", bars: 3, label: "\uC628\uB77C\uC778" },
   reconnecting: { c: "var(--color-semantic-status-cautionary)", bars: 2, label: "\uC7AC\uC5F0\uACB0" },
@@ -10833,7 +10870,7 @@ var CFG = {
   offline: { c: "var(--color-semantic-label-disable)", bars: 0, label: "\uC624\uD504\uB77C\uC778" }
 };
 function ConnectionBadge({ status = "online", label, showLabel = true, size = "md", style, ...rest }) {
-  import_react132.default.useEffect(() => {
+  import_react133.default.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-conn-kf")) return;
     const el = document.createElement("style");
     el.id = "lk-conn-kf";
@@ -10843,7 +10880,7 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
   const cfg = CFG[status] || CFG.online;
   const h = size === "sm" ? 11 : 14;
   const bw = size === "sm" ? 3 : 4;
-  return /* @__PURE__ */ (0, import_jsx_runtime130.jsxs)("span", { style: {
+  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("span", { style: {
     display: "inline-flex",
     alignItems: "center",
     gap: 7,
@@ -10853,25 +10890,25 @@ function ConnectionBadge({ status = "online", label, showLabel = true, size = "m
     color: "var(--color-semantic-label-neutral)",
     ...style
   }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { style: {
+    /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { style: {
       display: "inline-flex",
       alignItems: "flex-end",
       gap: 2,
       height: h,
       animation: status === "reconnecting" ? "lk-conn-blink 1s var(--ease-in-out) infinite" : "none"
-    }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { style: {
+    }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { style: {
       width: bw,
       height: Math.round(h * ((i + 1) / 3)),
       borderRadius: 1,
       background: i < cfg.bars ? cfg.c : "var(--color-semantic-fill-strong)"
     } }, i)) }),
-    showLabel && /* @__PURE__ */ (0, import_jsx_runtime130.jsx)("span", { children: label || cfg.label })
+    showLabel && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { children: label || cfg.label })
   ] });
 }
 
 // components/robotics/EquipmentStatusCard.jsx
-var import_react133 = __toESM(require("react"), 1);
-var import_jsx_runtime131 = require("react/jsx-runtime");
+var import_react134 = __toESM(require("react"), 1);
+var import_jsx_runtime132 = require("react/jsx-runtime");
 var TONE = {
   positive: "var(--color-semantic-status-positive)",
   cautionary: "var(--color-semantic-status-cautionary)",
@@ -10880,7 +10917,7 @@ var TONE = {
   neutral: "var(--color-semantic-label-alternative)"
 };
 function useDimKeyframes() {
-  import_react133.default.useEffect(() => {
+  import_react134.default.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-equip-dim-kf")) return;
     const el = document.createElement("style");
     el.id = "lk-equip-dim-kf";
@@ -10893,7 +10930,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
   const c = TONE[tone] || TONE.neutral;
   const moving = direction != null;
   const hasChips = chips && chips.length > 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
     "div",
     {
       style: {
@@ -10912,7 +10949,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
       },
       ...rest,
       children: [
-        icon != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { style: {
+        icon != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: {
           width: 38,
           height: 38,
           borderRadius: "var(--radius-md)",
@@ -10923,11 +10960,11 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           justifyContent: "center",
           color: "var(--color-semantic-label-alternative)"
         }, children: icon }),
-        /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-          (hasChips || ringCaption != null) && /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
+        /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+          (hasChips || ringCaption != null) && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
         ] }),
-        ringLabel != null && /* @__PURE__ */ (0, import_jsx_runtime131.jsxs)("span", { style: {
+        ringLabel != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)("span", { style: {
           display: "inline-flex",
           alignItems: "center",
           gap: 6,
@@ -10939,7 +10976,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           color: "var(--color-semantic-label-neutral)",
           fontVariantNumeric: "tabular-nums"
         }, children: [
-          moving ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { "aria-label": direction === "up" ? "\uC0C1\uC2B9 \uC911" : "\uD558\uAC15 \uC911", style: { display: "inline-flex", color: c, animation: "lk-equip-dim 1.5s var(--ease-in-out) infinite" }, children: /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: direction === "up" ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("path", { d: "M12 19V5M5 12l7-7 7 7" }) : /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("path", { d: "M12 5v14M19 12l-7 7-7-7" }) }) }) : connection != null ? /* @__PURE__ */ (0, import_jsx_runtime131.jsx)(ConnectionBadge, { status: connection, showLabel: false, size: "sm", style: { flexShrink: 0 } }) : /* @__PURE__ */ (0, import_jsx_runtime131.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: c, flexShrink: 0 } }),
+          moving ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { "aria-label": direction === "up" ? "\uC0C1\uC2B9 \uC911" : "\uD558\uAC15 \uC911", style: { display: "inline-flex", color: c, animation: "lk-equip-dim 1.5s var(--ease-in-out) infinite" }, children: /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: direction === "up" ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("path", { d: "M12 19V5M5 12l7-7 7 7" }) : /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("path", { d: "M12 5v14M19 12l-7 7-7-7" }) }) }) : connection != null ? /* @__PURE__ */ (0, import_jsx_runtime132.jsx)(ConnectionBadge, { status: connection, showLabel: false, size: "sm", style: { flexShrink: 0 } }) : /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: c, flexShrink: 0 } }),
           ringLabel
         ] })
       ]
@@ -10948,13 +10985,13 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
 }
 
 // components/robotics/Joystick.jsx
-var import_react134 = __toESM(require("react"), 1);
-var import_jsx_runtime132 = require("react/jsx-runtime");
+var import_react135 = __toESM(require("react"), 1);
+var import_jsx_runtime133 = require("react/jsx-runtime");
 function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = false, label, style, ...rest }) {
-  const ref = import_react134.default.useRef(null);
-  const [pos, setPos] = import_react134.default.useState({ x: 0, y: 0 });
-  const [active, setActive] = import_react134.default.useState(false);
-  const [focus, setFocus] = import_react134.default.useState(false);
+  const ref = import_react135.default.useRef(null);
+  const [pos, setPos] = import_react135.default.useState({ x: 0, y: 0 });
+  const [active, setActive] = import_react135.default.useState(false);
+  const [focus, setFocus] = import_react135.default.useState(false);
   const R = size / 2;
   const knob = Math.round(size * 0.32);
   const max = R - knob / 2 - 4;
@@ -11008,8 +11045,8 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
     }
     emit(x, y);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 10, ...style }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime132.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 10, ...style }, ...rest, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)(
       "div",
       {
         ref,
@@ -11037,9 +11074,9 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
           opacity: disabled ? 0.5 : 1
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { position: "absolute", left: "50%", top: 10, bottom: 10, width: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateX(-0.5px)" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { position: "absolute", top: "50%", left: 10, right: 10, height: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateY(-0.5px)" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: {
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { position: "absolute", left: "50%", top: 10, bottom: 10, width: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateX(-0.5px)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { position: "absolute", top: "50%", left: 10, right: 10, height: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateY(-0.5px)" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: {
             position: "absolute",
             left: "50%",
             top: "50%",
@@ -11056,26 +11093,16 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
         ]
       }
     ),
-    label != null && /* @__PURE__ */ (0, import_jsx_runtime132.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: label })
+    label != null && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: label })
   ] });
 }
 
 // components/robotics/RobotStatusCard.jsx
-var import_react135 = __toESM(require("react"), 1);
-var import_jsx_runtime133 = require("react/jsx-runtime");
-var CONN = {
-  online: { c: "var(--color-semantic-status-positive)", bars: 3 },
-  reconnecting: { c: "var(--color-semantic-status-cautionary)", bars: 2 },
-  offline: { c: "var(--color-semantic-label-disable)", bars: 0 }
-};
-var BAR_H = [5, 8, 12];
+var import_react136 = __toESM(require("react"), 1);
+var import_jsx_runtime134 = require("react/jsx-runtime");
 function RobotStatusCard({ name, image, status = "online", battery, mode, selected = false, onClick, style, ...rest }) {
   const hasBat = typeof battery === "number";
-  const b = Math.max(0, Math.min(100, battery));
-  const batFill = b <= 20 ? "var(--color-semantic-status-negative)" : b <= 50 ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
-  const batText = b <= 20 ? "var(--color-semantic-status-negative)" : b <= 50 ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
-  const conn = CONN[status] || CONN.offline;
-  return /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { onClick, style: {
+  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)("div", { onClick, style: {
     display: "flex",
     gap: 16,
     alignItems: "center",
@@ -11090,7 +11117,7 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
     fontFamily: "var(--font-sans)",
     ...style
   }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("div", { style: {
+    /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("div", { style: {
       width: 48,
       height: 48,
       borderRadius: "var(--radius-md)",
@@ -11100,33 +11127,24 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }, children: image ? /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
-    /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
-      mode != null && /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap" }, children: mode }),
-      /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { role: "img", title: status, "aria-label": status, style: { display: "inline-flex", alignItems: "flex-end", gap: 2, height: 12 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { width: 3, height: BAR_H[i], borderRadius: 1, background: i < conn.bars ? conn.c : "var(--color-semantic-fill-strong)" } }, i)) }),
-        hasBat && /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 6 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("span", { style: { position: "relative", width: 24, height: 12, border: "1.5px solid var(--color-semantic-label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { display: "block", height: "100%", width: `${b}%`, background: batFill, borderRadius: 1 } }),
-            /* @__PURE__ */ (0, import_jsx_runtime133.jsx)("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--color-semantic-label-alternative)", borderRadius: "0 1px 1px 0" } })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime133.jsxs)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: batText, fontVariantNumeric: "tabular-nums" }, children: [
-            b,
-            "%"
-          ] })
-        ] })
+    }, children: image ? /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
+    /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
+      mode != null && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap" }, children: mode }),
+      /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(ConnectionBadge, { status, showLabel: false, size: "sm" }),
+        hasBat && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(BatteryGauge, { value: battery })
       ] })
     ] })
   ] });
 }
 
 // components/robotics/TopicTree.jsx
-var import_react137 = __toESM(require("react"), 1);
+var import_react138 = __toESM(require("react"), 1);
 
 // components/selection/Switch.jsx
-var import_react136 = __toESM(require("react"), 1);
-var import_jsx_runtime134 = require("react/jsx-runtime");
+var import_react137 = __toESM(require("react"), 1);
+var import_jsx_runtime135 = require("react/jsx-runtime");
 function Switch({
   checked,
   defaultChecked,
@@ -11148,9 +11166,9 @@ function Switch({
 }) {
   const stateChecked = state === "checked" || state === "on" ? true : state === "unchecked" || state === "off" ? false : void 0;
   const isControlled = checked !== void 0 || stateChecked !== void 0;
-  const [internal, setInternal] = import_react136.default.useState(stateChecked ?? !!defaultChecked);
-  const [focus, setFocus] = import_react136.default.useState(false);
-  const [hover, setHover] = import_react136.default.useState(false);
+  const [internal, setInternal] = import_react137.default.useState(stateChecked ?? !!defaultChecked);
+  const [focus, setFocus] = import_react137.default.useState(false);
+  const [hover, setHover] = import_react137.default.useState(false);
   const on = checked !== void 0 ? checked : stateChecked !== void 0 ? stateChecked : internal;
   const disabledState = disabled || disable || interaction === "inactive";
   const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size;
@@ -11164,7 +11182,7 @@ function Switch({
   const d = normalizedSize === "sm" ? { w: 40, h: 24, k: 18, p: 3, tx: 16 } : { w: 52, h: 32, k: 24, p: 4, tx: 20 };
   const offBg = platform === "ios" ? "var(--color-semantic-fill-strong)" : "var(--bw-gray-300)";
   const trackBg = disabledState ? on ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-fill-normal)" : on ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-strong)" : offBg;
-  return /* @__PURE__ */ (0, import_jsx_runtime134.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(
     "label",
     {
       htmlFor: id,
@@ -11183,7 +11201,7 @@ function Switch({
         ...style
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
           "span",
           {
             role: "switch",
@@ -11211,7 +11229,7 @@ function Switch({
               transition: "background var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
             },
             ...rest,
-            children: /* @__PURE__ */ (0, import_jsx_runtime134.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
               "span",
               {
                 style: {
@@ -11230,19 +11248,19 @@ function Switch({
             )
           }
         ),
-        label != null && /* @__PURE__ */ (0, import_jsx_runtime134.jsx)("span", { style: labelStyle, children: label })
+        label != null && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("span", { style: labelStyle, children: label })
       ]
     }
   );
 }
 
 // components/robotics/TopicTree.jsx
-var import_jsx_runtime135 = require("react/jsx-runtime");
+var import_jsx_runtime136 = require("react/jsx-runtime");
 function TopicNode({ node, depth, onToggle }) {
   const kids = node.children || [];
   const has = kids.length > 0;
-  const [open, setOpen] = import_react137.default.useState(depth < 1);
-  const [hover, setHover] = import_react137.default.useState(false);
+  const [open, setOpen] = import_react138.default.useState(depth < 1);
+  const [hover, setHover] = import_react138.default.useState(false);
   const hasHz = typeof node.hz === "number";
   const toggleOpen = () => {
     if (has) setOpen((value) => !value);
@@ -11254,8 +11272,8 @@ function TopicNode({ node, depth, onToggle }) {
       toggleOpen();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)("div", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
       "div",
       {
         role: "treeitem",
@@ -11287,7 +11305,7 @@ function TopicNode({ node, depth, onToggle }) {
           transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
             "span",
             {
               "aria-hidden": "true",
@@ -11301,11 +11319,11 @@ function TopicNode({ node, depth, onToggle }) {
                 transform: has && open ? "rotate(90deg)" : "none",
                 transition: "transform var(--dur-fast) var(--ease-out)"
               },
-              children: has && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(Icon, { name: "chevron-right", size: 14 })
+              children: has && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Icon, { name: "chevron-right", size: 14 })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: node.name }),
-          node.type && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: node.name }),
+          node.type && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
             "code",
             {
               style: {
@@ -11321,26 +11339,26 @@ function TopicNode({ node, depth, onToggle }) {
               children: node.type
             }
           ),
-          (hasHz || node.subscribable) && /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: [
-            hasHz && /* @__PURE__ */ (0, import_jsx_runtime135.jsxs)("span", { style: { fontSize: 12, lineHeight: "18px", color: "var(--color-semantic-label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
+          (hasHz || node.subscribable) && /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: [
+            hasHz && /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)("span", { style: { fontSize: 12, lineHeight: "18px", color: "var(--color-semantic-label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
               node.hz,
               " Hz"
             ] }),
-            node.subscribable && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("span", { onClick: (e) => e.stopPropagation(), style: { display: "inline-flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(Switch, { size: "sm", checked: !!node.subscribed, onChange: () => onToggle && onToggle(node) }) })
+            node.subscribable && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("span", { onClick: (e) => e.stopPropagation(), style: { display: "inline-flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(Switch, { size: "sm", checked: !!node.subscribed, onChange: () => onToggle && onToggle(node) }) })
           ] })
         ]
       }
     ),
-    open && has && /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { children: kids.map((k, i) => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(TopicNode, { node: k, depth: depth + 1, onToggle }, i)) })
+    open && has && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("div", { children: kids.map((k, i) => /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(TopicNode, { node: k, depth: depth + 1, onToggle }, i)) })
   ] });
 }
 function TopicTree({ nodes = [], onToggleSubscribe, style, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime135.jsx)("div", { role: "tree", style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ (0, import_jsx_runtime135.jsx)(TopicNode, { node: n, depth: 0, onToggle: onToggleSubscribe }, i)) });
+  return /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("div", { role: "tree", style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(TopicNode, { node: n, depth: 0, onToggle: onToggleSubscribe }, i)) });
 }
 
 // components/selection/ChoiceCard.jsx
-var import_react138 = __toESM(require("react"), 1);
-var import_jsx_runtime136 = require("react/jsx-runtime");
+var import_react139 = __toESM(require("react"), 1);
+var import_jsx_runtime137 = require("react/jsx-runtime");
 var radiusMap = {
   sm: "var(--radius-frame-sm)",
   md: "var(--radius-frame-md)",
@@ -11387,8 +11405,8 @@ function ChoiceCard({
   onKeyDown,
   ...rest
 }) {
-  const [hover, setHover] = import_react138.default.useState(false);
-  const [focus, setFocus] = import_react138.default.useState(false);
+  const [hover, setHover] = import_react139.default.useState(false);
+  const [focus, setFocus] = import_react139.default.useState(false);
   const isFrame = presentation === "frame";
   const resolvedShadow = shadow ?? (isFrame ? "xs" : "none");
   const activeHover = hover || interaction === "hovered";
@@ -11467,7 +11485,7 @@ function ChoiceCard({
     outline: "none",
     ...style
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
     "div",
     {
       role: resolvedRole,
@@ -11488,7 +11506,7 @@ function ChoiceCard({
       style: isFrame ? frameStyle : choiceStyle,
       ...rest,
       children: [
-        !isFrame && icon != null && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+        !isFrame && icon != null && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
           "span",
           {
             style: {
@@ -11499,8 +11517,8 @@ function ChoiceCard({
             children: icon
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime136.jsxs)("div", { style: isFrame ? void 0 : { flex: 1, minWidth: 0 }, children: [
-          !isFrame && title != null && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)("div", { style: isFrame ? void 0 : { flex: 1, minWidth: 0 }, children: [
+          !isFrame && title != null && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
             "div",
             {
               style: {
@@ -11513,7 +11531,7 @@ function ChoiceCard({
               children: title
             }
           ),
-          !isFrame && description != null && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+          !isFrame && description != null && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
             "div",
             {
               style: {
@@ -11528,7 +11546,7 @@ function ChoiceCard({
           ),
           children
         ] }),
-        !isFrame && showIndicator && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+        !isFrame && showIndicator && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
           "span",
           {
             "aria-hidden": "true",
@@ -11545,7 +11563,7 @@ function ChoiceCard({
               color: "var(--color-semantic-static-white)",
               transition: "background var(--dur-fast) var(--ease-out)"
             },
-            children: selected && /* @__PURE__ */ (0, import_jsx_runtime136.jsx)(
+            children: selected && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)(
               "svg",
               {
                 width: "12",
@@ -11556,7 +11574,7 @@ function ChoiceCard({
                 strokeWidth: "3.4",
                 strokeLinecap: "round",
                 strokeLinejoin: "round",
-                children: /* @__PURE__ */ (0, import_jsx_runtime136.jsx)("path", { d: "M20 6 9 17l-5-5" })
+                children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("path", { d: "M20 6 9 17l-5-5" })
               }
             )
           }
@@ -11567,7 +11585,7 @@ function ChoiceCard({
 }
 
 // components/selection/FilterChip.jsx
-var import_react139 = __toESM(require("react"), 1);
+var import_react140 = __toESM(require("react"), 1);
 
 // components/selection/pill-chip-style.js
 function pillChipStyle(active, disabled, size = "md") {
@@ -11595,7 +11613,7 @@ function pillChipStyle(active, disabled, size = "md") {
 }
 
 // components/selection/FilterChip.jsx
-var import_jsx_runtime137 = require("react/jsx-runtime");
+var import_jsx_runtime138 = require("react/jsx-runtime");
 function FilterChip({
   children,
   active = false,
@@ -11607,8 +11625,8 @@ function FilterChip({
   style,
   ...rest
 }) {
-  const [hover, setHover] = import_react139.default.useState(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime137.jsxs)(
+  const [hover, setHover] = import_react140.default.useState(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
     "button",
     {
       type: "button",
@@ -11625,17 +11643,17 @@ function FilterChip({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("span", { children }),
-        count != null && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("span", { style: { fontWeight: "var(--fw-bold)", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)" }, children: count }),
-        caret && /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime137.jsx)("path", { d: "m6 9 6 6 6-6" }) })
+        /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("span", { children }),
+        count != null && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("span", { style: { fontWeight: "var(--fw-bold)", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)" }, children: count }),
+        caret && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("path", { d: "m6 9 6 6 6-6" }) })
       ]
     }
   );
 }
 
 // components/selection/MultiSelectChip.jsx
-var import_react140 = __toESM(require("react"), 1);
-var import_jsx_runtime138 = require("react/jsx-runtime");
+var import_react141 = __toESM(require("react"), 1);
+var import_jsx_runtime139 = require("react/jsx-runtime");
 function MultiSelectChip({
   children,
   selected,
@@ -11647,7 +11665,7 @@ function MultiSelectChip({
   ...rest
 }) {
   const isControlled = selected !== void 0;
-  const [internal, setInternal] = import_react140.default.useState(!!defaultSelected);
+  const [internal, setInternal] = import_react141.default.useState(!!defaultSelected);
   const on = isControlled ? selected : internal;
   const sm = size === "sm";
   const toggle = () => {
@@ -11655,7 +11673,7 @@ function MultiSelectChip({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime138.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
     "button",
     {
       type: "button",
@@ -11671,16 +11689,16 @@ function MultiSelectChip({
       },
       ...rest,
       children: [
-        on && /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("path", { d: "M20 6 9 17l-5-5" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime138.jsx)("span", { children })
+        on && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("path", { d: "M20 6 9 17l-5-5" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("span", { children })
       ]
     }
   );
 }
 
 // components/selection/SegmentedControl.jsx
-var import_react141 = __toESM(require("react"), 1);
-var import_jsx_runtime139 = require("react/jsx-runtime");
+var import_react142 = __toESM(require("react"), 1);
+var import_jsx_runtime140 = require("react/jsx-runtime");
 function SegmentedControl({
   options = [],
   value,
@@ -11698,7 +11716,7 @@ function SegmentedControl({
 }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = import_react141.default.useState(defaultValue != null ? defaultValue : norm[0] && norm[0].value);
+  const [internal, setInternal] = import_react142.default.useState(defaultValue != null ? defaultValue : norm[0] && norm[0].value);
   const val = isControlled ? value : internal;
   const disabledState = disabled || disable || interaction === "inactive";
   const pick = (v) => {
@@ -11714,7 +11732,7 @@ function SegmentedControl({
   const trackPad = normalizedSize === "lg" ? 3 : 2;
   const outlined = variant === "outlined";
   const fill = full || resize === "fill";
-  return /* @__PURE__ */ (0, import_jsx_runtime139.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
     "div",
     {
       role: "tablist",
@@ -11737,7 +11755,7 @@ function SegmentedControl({
         const active = selected || optionInteraction === "active" || optionInteraction === "active-focused";
         const activeHover = optionInteraction === "hovered";
         const activeFocus = optionInteraction === "focused" || optionInteraction === "active-focused";
-        return /* @__PURE__ */ (0, import_jsx_runtime139.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
           "button",
           {
             type: "button",
@@ -11771,7 +11789,7 @@ function SegmentedControl({
               whiteSpace: "nowrap"
             },
             children: [
-              o.icon && /* @__PURE__ */ (0, import_jsx_runtime139.jsx)("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: o.icon }),
+              o.icon && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: o.icon }),
               o.label
             ]
           },
@@ -11783,8 +11801,8 @@ function SegmentedControl({
 }
 
 // components/selection/Stepper.jsx
-var import_react142 = __toESM(require("react"), 1);
-var import_jsx_runtime140 = require("react/jsx-runtime");
+var import_react143 = __toESM(require("react"), 1);
+var import_jsx_runtime141 = require("react/jsx-runtime");
 function Stepper({
   value,
   defaultValue = 0,
@@ -11798,7 +11816,7 @@ function Stepper({
   ...rest
 }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = import_react142.default.useState(defaultValue);
+  const [internal, setInternal] = import_react143.default.useState(defaultValue);
   const val = isControlled ? value : internal;
   const set = (next) => {
     const clamped = Math.min(max, Math.max(min, next));
@@ -11809,7 +11827,7 @@ function Stepper({
   const StepBtn = ({ kind }) => {
     const isMinus = kind === "minus";
     const off = disabled || (isMinus ? val <= min : val >= max);
-    return /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
       "button",
       {
         type: "button",
@@ -11835,14 +11853,14 @@ function Stepper({
           borderRadius: "var(--radius-md)",
           transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("path", { d: "M5 12h14" }),
-          !isMinus && /* @__PURE__ */ (0, import_jsx_runtime140.jsx)("path", { d: "M12 5v14" })
+        children: /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("path", { d: "M5 12h14" }),
+          !isMinus && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("path", { d: "M12 5v14" })
         ] })
       }
     );
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime140.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
     "div",
     {
       style: {
@@ -11858,8 +11876,8 @@ function Stepper({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(StepBtn, { kind: "minus" }),
-        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(StepBtn, { kind: "minus" }),
+        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
           "span",
           {
             "aria-live": "polite",
@@ -11876,15 +11894,15 @@ function Stepper({
             children: val
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime140.jsx)(StepBtn, { kind: "plus" })
+        /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(StepBtn, { kind: "plus" })
       ]
     }
   );
 }
 
 // components/selection/ThemeToggle.jsx
-var import_react143 = __toESM(require("react"), 1);
-var import_jsx_runtime141 = require("react/jsx-runtime");
+var import_react144 = __toESM(require("react"), 1);
+var import_jsx_runtime142 = require("react/jsx-runtime");
 var ICONS2 = {
   light: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>',
   dark: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
@@ -11904,13 +11922,13 @@ function ThemeToggle({
   style,
   ...rest
 }) {
-  const resolveTarget = import_react143.default.useCallback(() => {
+  const resolveTarget = import_react144.default.useCallback(() => {
     if (target === null) return null;
     if (target && target.nodeType) return target;
     if (typeof target === "string") return document.querySelector(target);
     return typeof document !== "undefined" ? document.documentElement : null;
   }, [target]);
-  const [internal, setInternal] = import_react143.default.useState(() => {
+  const [internal, setInternal] = import_react144.default.useState(() => {
     if (value) return value;
     if (persist) {
       try {
@@ -11922,7 +11940,7 @@ function ThemeToggle({
     return defaultValue;
   });
   const cur = value != null ? value : internal;
-  const apply = import_react143.default.useCallback((v) => {
+  const apply = import_react144.default.useCallback((v) => {
     const el = resolveTarget();
     if (el) el.setAttribute("data-theme", v);
     if (persist) {
@@ -11932,7 +11950,7 @@ function ThemeToggle({
       }
     }
   }, [resolveTarget, storageKey, persist]);
-  import_react143.default.useEffect(() => {
+  import_react144.default.useEffect(() => {
     apply(cur);
   }, [cur, apply]);
   const pick = (v) => {
@@ -11944,7 +11962,7 @@ function ThemeToggle({
   const h = size === "sm" ? 32 : 38;
   const fs = size === "sm" ? 12.5 : 13.5;
   const isz = size === "sm" ? 15 : 16;
-  return /* @__PURE__ */ (0, import_jsx_runtime141.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime142.jsx)(
     "div",
     {
       role: "radiogroup",
@@ -11964,7 +11982,7 @@ function ThemeToggle({
       ...rest,
       children: options.map((v) => {
         const on = cur === v;
-        return /* @__PURE__ */ (0, import_jsx_runtime141.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
           "button",
           {
             type: "button",
@@ -11993,8 +12011,8 @@ function ThemeToggle({
               transition: "var(--component-button-transition)"
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("svg", { width: isz, height: isz, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", dangerouslySetInnerHTML: { __html: ICONS2[v] || "" } }),
-              showLabels && /* @__PURE__ */ (0, import_jsx_runtime141.jsx)("span", { children: LABELS[v] || v })
+              /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("svg", { width: isz, height: isz, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", dangerouslySetInnerHTML: { __html: ICONS2[v] || "" } }),
+              showLabels && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("span", { children: LABELS[v] || v })
             ]
           },
           v
@@ -12005,8 +12023,8 @@ function ThemeToggle({
 }
 
 // components/selection/ToggleButton.jsx
-var import_react144 = __toESM(require("react"), 1);
-var import_jsx_runtime142 = require("react/jsx-runtime");
+var import_react145 = __toESM(require("react"), 1);
+var import_jsx_runtime143 = require("react/jsx-runtime");
 function ToggleButton({
   children,
   pressed,
@@ -12020,7 +12038,7 @@ function ToggleButton({
   ...rest
 }) {
   const isControlled = pressed !== void 0;
-  const [internal, setInternal] = import_react144.default.useState(!!defaultPressed);
+  const [internal, setInternal] = import_react145.default.useState(!!defaultPressed);
   const on = isControlled ? pressed : internal;
   const toggle = () => {
     if (disabled) return;
@@ -12029,7 +12047,7 @@ function ToggleButton({
   };
   const h = size === "sm" ? 36 : 44;
   const iconOnly = children == null;
-  return /* @__PURE__ */ (0, import_jsx_runtime142.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(
     "button",
     {
       type: "button",
@@ -12062,15 +12080,15 @@ function ToggleButton({
       ...rest,
       children: [
         icon,
-        children != null && /* @__PURE__ */ (0, import_jsx_runtime142.jsx)("span", { children })
+        children != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("span", { children })
       ]
     }
   );
 }
 
 // components/status/Banner.jsx
-var import_react145 = __toESM(require("react"), 1);
-var import_jsx_runtime143 = require("react/jsx-runtime");
+var import_react146 = __toESM(require("react"), 1);
+var import_jsx_runtime144 = require("react/jsx-runtime");
 var TONES4 = {
   info: { c: "var(--color-semantic-primary-normal)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
   success: { c: "var(--bw-green)", d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
@@ -12079,7 +12097,7 @@ var TONES4 = {
 };
 function Banner({ tone = "info", title, children, action, onClose, style, ...rest }) {
   const t = TONES4[tone] || TONES4.info;
-  return /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
     "div",
     {
       role: "status",
@@ -12096,26 +12114,26 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, marginTop: 1 }, dangerouslySetInnerHTML: { __html: t.d } }),
-        /* @__PURE__ */ (0, import_jsx_runtime143.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+        /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, marginTop: 1 }, dangerouslySetInnerHTML: { __html: t.d } }),
+        /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] }),
-        action != null && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("div", { style: { flexShrink: 0 }, children: action }),
-        onClose && /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime143.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+        action != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { flexShrink: 0 }, children: action }),
+        onClose && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
       ]
     }
   );
 }
 
 // components/status/Callout.jsx
-var import_react146 = __toESM(require("react"), 1);
-var import_jsx_runtime144 = require("react/jsx-runtime");
+var import_react147 = __toESM(require("react"), 1);
+var import_jsx_runtime145 = require("react/jsx-runtime");
 var CT = { signal: "var(--color-semantic-primary-normal)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)", navy: "var(--bw-ink)" };
 var ICON_SIZE = 20;
 function normalizeIcon(icon) {
-  if (!import_react146.default.isValidElement(icon)) return icon;
-  return import_react146.default.cloneElement(icon, {
+  if (!import_react147.default.isValidElement(icon)) return icon;
+  return import_react147.default.cloneElement(icon, {
     size: icon.props.size ?? ICON_SIZE,
     width: icon.props.width ?? ICON_SIZE,
     height: icon.props.height ?? ICON_SIZE,
@@ -12125,7 +12143,7 @@ function normalizeIcon(icon) {
 function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
   const c = CT[tone] || CT.signal;
   const normalizedIcon = normalizeIcon(icon);
-  return /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
     "div",
     {
       style: {
@@ -12141,7 +12159,7 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
       },
       ...rest,
       children: [
-        icon && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)(
+        icon && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)(
           "span",
           {
             style: {
@@ -12158,9 +12176,9 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
             children: normalizedIcon
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime144.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ (0, import_jsx_runtime144.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+        /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -12168,10 +12186,10 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
 }
 
 // components/status/CircularProgress.jsx
-var import_react147 = __toESM(require("react"), 1);
-var import_jsx_runtime145 = require("react/jsx-runtime");
+var import_react148 = __toESM(require("react"), 1);
+var import_jsx_runtime146 = require("react/jsx-runtime");
 function useKeyframes3(id, css) {
-  import_react147.default.useEffect(() => {
+  import_react148.default.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
     const el = document.createElement("style");
     el.id = id;
@@ -12204,7 +12222,7 @@ function CircularProgress({
   const circ = 2 * Math.PI * r;
   const dashOffset = indeterminate ? circ * 0.72 : circ * (1 - pct / 100);
   const ariaLabel = typeof label === "string" ? label : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
     "span",
     {
       role: "progressbar",
@@ -12217,7 +12235,7 @@ function CircularProgress({
       style: { position: "relative", display: "inline-flex", width: size, height: size, ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime145.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
           "svg",
           {
             "data-lds-circular-progress": true,
@@ -12225,22 +12243,22 @@ function CircularProgress({
             height: size,
             style: { transform: "rotate(-90deg)", transformOrigin: "center", animation: indeterminate ? "lk-circular-spin 0.9s linear infinite" : void 0 },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
-              /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: circ, strokeDashoffset: dashOffset, style: { transition: indeterminate ? void 0 : "stroke-dashoffset var(--dur-base) var(--ease-out)" } })
+              /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
+              /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: circ, strokeDashoffset: dashOffset, style: { transition: indeterminate ? void 0 : "stroke-dashoffset var(--dur-base) var(--ease-out)" } })
             ]
           }
         ),
-        showValue && !indeterminate && /* @__PURE__ */ (0, import_jsx_runtime145.jsx)("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: Math.round(size * 0.28), fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: Math.round(pct) })
+        showValue && !indeterminate && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: Math.round(size * 0.28), fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: Math.round(pct) })
       ]
     }
   );
 }
 
 // components/status/EmptyState.jsx
-var import_react148 = __toESM(require("react"), 1);
-var import_jsx_runtime146 = require("react/jsx-runtime");
+var import_react149 = __toESM(require("react"), 1);
+var import_jsx_runtime147 = require("react/jsx-runtime");
 function EmptyState({ icon, title, description, action, style, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime146.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)(
     "div",
     {
       style: {
@@ -12257,7 +12275,7 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
       },
       ...rest,
       children: [
-        icon != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: {
+        icon != null && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { style: {
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
@@ -12268,22 +12286,22 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
           color: "var(--color-semantic-primary-normal)",
           marginBottom: 12
         }, children: icon }),
-        title != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-        description != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
-        action != null && /* @__PURE__ */ (0, import_jsx_runtime146.jsx)("div", { style: { marginTop: 14 }, children: action })
+        title != null && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+        description != null && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
+        action != null && /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("div", { style: { marginTop: 14 }, children: action })
       ]
     }
   );
 }
 
 // components/status/Meter.jsx
-var import_react150 = __toESM(require("react"), 1);
+var import_react151 = __toESM(require("react"), 1);
 
 // components/status/ProgressBar.jsx
-var import_react149 = __toESM(require("react"), 1);
-var import_jsx_runtime147 = require("react/jsx-runtime");
+var import_react150 = __toESM(require("react"), 1);
+var import_jsx_runtime148 = require("react/jsx-runtime");
 function useKeyframes4(id, css) {
-  import_react149.default.useEffect(() => {
+  import_react150.default.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
     const el = document.createElement("style");
     el.id = id;
@@ -12303,15 +12321,15 @@ function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "sign
   const h = size === "sm" ? 4 : size === "lg" ? 10 : 6;
   const pct = Math.max(0, Math.min(100, value / max * 100));
   const ariaLabel = typeof label === "string" ? label : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { children: label }),
-      showValue && /* @__PURE__ */ (0, import_jsx_runtime147.jsxs)("span", { style: { color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("span", { children: label }),
+      showValue && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("span", { style: { color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
         Math.round(pct),
         "%"
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime147.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(
       "div",
       {
         role: "progressbar",
@@ -12322,14 +12340,14 @@ function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "sign
         "aria-valuemax": 100,
         "aria-valuetext": indeterminate ? "loading" : `${Math.round(pct)}%`,
         style: { position: "relative", height: h, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)", overflow: "hidden" },
-        children: indeterminate ? /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { "data-lds-progress-indeterminate": true, style: { position: "absolute", top: 0, bottom: 0, left: 0, width: "45%", background: c, borderRadius: "var(--radius-pill)", animation: "lk-prog-indet 1.3s var(--ease-in-out) infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime147.jsx)("span", { style: { position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out)" } })
+        children: indeterminate ? /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("span", { "data-lds-progress-indeterminate": true, style: { position: "absolute", top: 0, bottom: 0, left: 0, width: "45%", background: c, borderRadius: "var(--radius-pill)", animation: "lk-prog-indet 1.3s var(--ease-in-out) infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("span", { style: { position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out)" } })
       }
     )
   ] });
 }
 
 // components/status/Meter.jsx
-var import_jsx_runtime148 = require("react/jsx-runtime");
+var import_jsx_runtime149 = require("react/jsx-runtime");
 function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue = true, style, ...rest }) {
   const pct = Math.max(0, Math.min(100, value / max * 100));
   let c = "var(--color-semantic-primary-normal)";
@@ -12338,27 +12356,27 @@ function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue
     else if (pct <= thresholds.high) c = "var(--bw-amber)";
     else c = "var(--bw-green)";
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime148.jsx)("span", { children: label }),
-      showValue && /* @__PURE__ */ (0, import_jsx_runtime148.jsxs)("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--color-semantic-label-alternative)" }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("span", { children: label }),
+      showValue && /* @__PURE__ */ (0, import_jsx_runtime149.jsxs)("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--color-semantic-label-alternative)" }, children: [
         value,
         "/",
         max
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime148.jsx)(ProgressBar, { value, max, size: size === "sm" ? "md" : "lg", color: c })
+    /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(ProgressBar, { value, max, size: size === "sm" ? "md" : "lg", color: c })
   ] });
 }
 
 // components/viz/Map2DCanvas.jsx
-var import_react152 = __toESM(require("react"), 1);
+var import_react153 = __toESM(require("react"), 1);
 
 // components/viz/ViewerToolbar.jsx
-var import_react151 = __toESM(require("react"), 1);
-var import_jsx_runtime149 = require("react/jsx-runtime");
+var import_react152 = __toESM(require("react"), 1);
+var import_jsx_runtime150 = require("react/jsx-runtime");
 function ViewerToolbar({ children, orientation = "vertical", style, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)("div", { style: {
+  return /* @__PURE__ */ (0, import_jsx_runtime150.jsx)("div", { style: {
     display: "inline-flex",
     flexDirection: orientation === "vertical" ? "column" : "row",
     gap: 2,
@@ -12371,7 +12389,7 @@ function ViewerToolbar({ children, orientation = "vertical", style, ...rest }) {
   }, ...rest, children });
 }
 function ViewerToolbarButton({ children, active = false, label, style, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime149.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(
     "button",
     {
       type: "button",
@@ -12398,10 +12416,10 @@ function ViewerToolbarButton({ children, active = false, label, style, ...rest }
 }
 
 // components/viz/Map2DCanvas.jsx
-var import_jsx_runtime150 = require("react/jsx-runtime");
+var import_jsx_runtime151 = require("react/jsx-runtime");
 function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, controls = true, style, ...rest }) {
-  const [t, setT] = import_react152.default.useState({ x: 0, y: 0, z: 1 });
-  const drag = import_react152.default.useRef(null);
+  const [t, setT] = import_react153.default.useState({ x: 0, y: 0, z: 1 });
+  const drag = import_react153.default.useRef(null);
   const clamp = (z) => Math.max(minZoom, Math.min(maxZoom, z));
   const down = (e) => {
     drag.current = { x: e.clientX, y: e.clientY, tx: t.x, ty: t.y };
@@ -12420,7 +12438,7 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
     setT((p) => ({ ...p, z: clamp(p.z * (e.deltaY < 0 ? 1.1 : 0.9)) }));
   };
   const zoom = (f) => setT((p) => ({ ...p, z: clamp(p.z * f) }));
-  return /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(
     "div",
     {
       onPointerDown: down,
@@ -12447,13 +12465,13 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime150.jsx)("div", { style: { position: "absolute", left: "50%", top: "50%", transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, transformOrigin: "0 0" }, children }),
-        controls && /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)(ViewerToolbar, { orientation: "vertical", style: { position: "absolute", right: 10, bottom: 10 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoom(1.2), children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Icon, { name: "plus", size: 18 }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoom(0.8), children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Icon, { name: "minus", size: 18 }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(ViewerToolbarButton, { label: "\uCD08\uAE30\uD654", onClick: () => setT({ x: 0, y: 0, z: 1 }), children: /* @__PURE__ */ (0, import_jsx_runtime150.jsx)(Icon, { name: "reset", size: 18 }) })
+        /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", left: "50%", top: "50%", transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, transformOrigin: "0 0" }, children }),
+        controls && /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)(ViewerToolbar, { orientation: "vertical", style: { position: "absolute", right: 10, bottom: 10 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoom(1.2), children: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(Icon, { name: "plus", size: 18 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoom(0.8), children: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(Icon, { name: "minus", size: 18 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(ViewerToolbarButton, { label: "\uCD08\uAE30\uD654", onClick: () => setT({ x: 0, y: 0, z: 1 }), children: /* @__PURE__ */ (0, import_jsx_runtime151.jsx)(Icon, { name: "reset", size: 18 }) })
         ] }),
-        controls && /* @__PURE__ */ (0, import_jsx_runtime150.jsxs)("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-alternative)", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
+        controls && /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-alternative)", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums" }, children: [
           Math.round(t.z * 100),
           "%"
         ] })
@@ -12463,10 +12481,10 @@ function Map2DCanvas({ children, minZoom = 0.25, maxZoom = 8, grid = true, contr
 }
 
 // components/viz/Scene3DFrame.jsx
-var import_react153 = __toESM(require("react"), 1);
-var import_jsx_runtime151 = require("react/jsx-runtime");
+var import_react154 = __toESM(require("react"), 1);
+var import_jsx_runtime152 = require("react/jsx-runtime");
 function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty, style, ...rest }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)("div", { style: {
+  return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: {
     position: "relative",
     width: "100%",
     height: "100%",
@@ -12479,19 +12497,19 @@ function Scene3DFrame({ children, title, badges, toolbar, loading = false, empty
     ...style
   }, ...rest, children: [
     children,
-    (title != null || badges != null) && /* @__PURE__ */ (0, import_jsx_runtime151.jsxs)("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 8, pointerEvents: "none" }, children: [
-      title != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", textTransform: "uppercase", color: "var(--color-semantic-inverse-label)", opacity: 0.9 }, children: title }),
+    (title != null || badges != null) && /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 8, pointerEvents: "none" }, children: [
+      title != null && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", textTransform: "uppercase", color: "var(--color-semantic-inverse-label)", opacity: 0.9 }, children: title }),
       badges
     ] }),
-    toolbar != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", right: 12, top: 12 }, children: toolbar }),
-    loading && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "var(--scrim-dark)", color: "var(--color-semantic-inverse-label)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: "\uBD88\uB7EC\uC624\uB294 \uC911\u2026" }),
-    !loading && empty != null && /* @__PURE__ */ (0, import_jsx_runtime151.jsx)("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--inverse-label-alternative)", fontSize: 13 }, children: empty })
+    toolbar != null && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { style: { position: "absolute", right: 12, top: 12 }, children: toolbar }),
+    loading && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "var(--scrim-dark)", color: "var(--color-semantic-inverse-label)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: "\uBD88\uB7EC\uC624\uB294 \uC911\u2026" }),
+    !loading && empty != null && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--inverse-label-alternative)", fontSize: 13 }, children: empty })
   ] });
 }
 
 // components/viz/TelemetryGauge.jsx
-var import_react154 = __toESM(require("react"), 1);
-var import_jsx_runtime152 = require("react/jsx-runtime");
+var import_react155 = __toESM(require("react"), 1);
+var import_jsx_runtime153 = require("react/jsx-runtime");
 var TONE2 = { signal: "var(--color-semantic-primary-normal)", positive: "var(--color-semantic-status-positive)", cautionary: "var(--color-semantic-status-cautionary)", negative: "var(--color-semantic-status-negative)" };
 function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size = 120, thickness = 10, thresholds, tone, style, ...rest }) {
   const pct = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
@@ -12502,24 +12520,24 @@ function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size 
     c = p <= thresholds.low ? "var(--color-semantic-status-negative)" : p <= thresholds.high ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
   }
   const r = (size - thickness) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r, arc = 0.75, dash = C * arc;
-  return /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: { position: "relative", width: size, height: size }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, style: { transform: "rotate(135deg)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("circle", { cx, cy, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("circle", { cx, cy, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash * pct} ${C}`, style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" } })
+  return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { style: { position: "relative", width: size, height: size }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, style: { transform: "rotate(135deg)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("circle", { cx, cy, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
+        /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("circle", { cx, cy, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash * pct} ${C}`, style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" } })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime152.jsxs)("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: size * 0.24, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
-        unit && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: size * 0.11, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", marginTop: 2 }, children: unit })
+      /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { fontSize: size * 0.24, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
+        unit && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { fontSize: size * 0.11, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", marginTop: 2 }, children: unit })
       ] })
     ] }),
-    label != null && /* @__PURE__ */ (0, import_jsx_runtime152.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all", textAlign: "center" }, children: label })
+    label != null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all", textAlign: "center" }, children: label })
   ] });
 }
 
 // components/viz/TelemetryValue.jsx
-var import_react155 = __toESM(require("react"), 1);
-var import_jsx_runtime153 = require("react/jsx-runtime");
+var import_react156 = __toESM(require("react"), 1);
+var import_jsx_runtime154 = require("react/jsx-runtime");
 var TONE3 = {
   neutral: "var(--color-semantic-label-neutral)",
   signal: "var(--color-semantic-primary-normal)",
@@ -12544,7 +12562,7 @@ function TelemetryValue({
 }) {
   const color = stale ? "var(--color-semantic-label-assistive)" : TONE3[tone] || TONE3.neutral;
   const valueSize = size === "sm" ? 18 : 21;
-  return /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(
     "div",
     {
       style: {
@@ -12558,23 +12576,23 @@ function TelemetryValue({
       },
       ...rest,
       children: [
-        label != null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)" }, children: label }),
-        /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { style: { display: "inline-flex", alignItems: "baseline", gap: 5, minWidth: 0 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("strong", { style: { color, fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums" }, children: value }),
-          unit != null && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: stale ? "var(--color-semantic-label-assistive)" : "var(--color-semantic-label-alternative)", fontSize: size === "sm" ? 12 : 13, fontWeight: "var(--fw-bold)" }, children: unit }),
-          stale && showStaleBadge && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { alignSelf: "center", padding: "2px 6px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontSize: 10.5, lineHeight: 1.2, fontWeight: "var(--fw-bold)" }, children: staleLabel })
+        label != null && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)" }, children: label }),
+        /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)("div", { style: { display: "inline-flex", alignItems: "baseline", gap: 5, minWidth: 0 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("strong", { style: { color, fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums" }, children: value }),
+          unit != null && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: { color: stale ? "var(--color-semantic-label-assistive)" : "var(--color-semantic-label-alternative)", fontSize: size === "sm" ? 12 : 13, fontWeight: "var(--fw-bold)" }, children: unit }),
+          stale && showStaleBadge && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: { alignSelf: "center", padding: "2px 6px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontSize: 10.5, lineHeight: 1.2, fontWeight: "var(--fw-bold)" }, children: staleLabel })
         ] }),
-        (timestamp != null || helper != null) && /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("span", { style: { color: "var(--color-semantic-label-assistive)", fontSize: 11.5, lineHeight: 1.35, fontVariantNumeric: "tabular-nums" }, children: helper != null ? helper : timestamp })
+        (timestamp != null || helper != null) && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: { color: "var(--color-semantic-label-assistive)", fontSize: 11.5, lineHeight: 1.35, fontVariantNumeric: "tabular-nums" }, children: helper != null ? helper : timestamp })
       ]
     }
   );
 }
 
 // components/viz/VideoStreamTile.jsx
-var import_react156 = __toESM(require("react"), 1);
-var import_jsx_runtime154 = require("react/jsx-runtime");
+var import_react157 = __toESM(require("react"), 1);
+var import_jsx_runtime155 = require("react/jsx-runtime");
 function usePulseKeyframes() {
-  import_react156.default.useEffect(() => {
+  import_react157.default.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-stream-kf")) return;
     const el = document.createElement("style");
     el.id = "lk-stream-kf";
@@ -12585,7 +12603,7 @@ function usePulseKeyframes() {
 function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 / 9", style, ...rest }) {
   usePulseKeyframes();
   const showHud = label != null;
-  return /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(
     "div",
     {
       style: {
@@ -12602,8 +12620,8 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
       ...rest,
       children: [
         children,
-        showHud && /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)(import_react156.default.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("div", { style: {
+        showHud && /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)(import_react157.default.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("div", { style: {
             position: "absolute",
             left: 0,
             top: 0,
@@ -12612,8 +12630,8 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
             pointerEvents: "none",
             background: "linear-gradient(180deg, var(--material-control-dimmer), transparent)"
           } }),
-          /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 7, pointerEvents: "none" }, children: [
-            status === "live" && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: {
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 7, pointerEvents: "none" }, children: [
+            status === "live" && /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("span", { style: {
               width: 6,
               height: 6,
               borderRadius: "50%",
@@ -12621,7 +12639,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
               flexShrink: 0,
               animation: "lk-stream-pulse 1.4s var(--ease-in-out) infinite"
             } }),
-            /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: {
+            /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("span", { style: {
               fontSize: 12,
               fontWeight: "var(--fw-bold)",
               textTransform: "uppercase",
@@ -12630,15 +12648,15 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
             }, children: label })
           ] })
         ] }),
-        status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("div", { style: {
+        status === "loading" && /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("div", { style: {
           position: "absolute",
           inset: 0,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           background: "var(--scrim-dark)"
-        }, children: /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid var(--inverse-line-strong)", borderTopColor: "var(--color-semantic-primary-normal)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
-        status === "disconnected" && /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)("div", { style: {
+        }, children: /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid var(--inverse-line-strong)", borderTopColor: "var(--color-semantic-primary-normal)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
+        status === "disconnected" && /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)("div", { style: {
           position: "absolute",
           inset: 0,
           display: "flex",
@@ -12652,10 +12670,10 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
           fontWeight: "var(--fw-semibold)",
           whiteSpace: "nowrap"
         }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime154.jsxs)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("path", { d: "M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
-            /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("path", { d: "M12 9v4" }),
-            /* @__PURE__ */ (0, import_jsx_runtime154.jsx)("path", { d: "M12 17h.01" })
+          /* @__PURE__ */ (0, import_jsx_runtime155.jsxs)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("path", { d: "M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
+            /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("path", { d: "M12 9v4" }),
+            /* @__PURE__ */ (0, import_jsx_runtime155.jsx)("path", { d: "M12 17h.01" })
           ] }),
           "\uC5F0\uACB0 \uB04A\uAE40"
         ] })
@@ -12677,6 +12695,7 @@ function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 /
   Badge,
   Banner,
   BarChart,
+  BatteryGauge,
   Blockquote,
   Bookmark,
   BottomNav,
