@@ -15,7 +15,7 @@ const COLORS = {
 /**
  * LK ROBOTICS — Badge
  * Small status/count token. `dot` renders a bare status dot; otherwise a
- * solid rounded pill with white text.
+ * solid r4 rounded-rect with white text (WDS `_Badge/Value`: r4 / h20 / padX6).
  */
 export function Badge({ children, tone = 'signal', dot = false, style, ...rest }) {
   const c = COLORS[tone] || COLORS.signal;
@@ -26,9 +26,9 @@ export function Badge({ children, tone = 'signal', dot = false, style, ...rest }
     <span
       style={{
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        minWidth: 20, height: 20, padding: '0 7px',
+        minWidth: 20, height: 20, padding: '0 6px',
         fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', fontSize: 12,
-        color: 'var(--color-semantic-static-white)', background: c, borderRadius: 'var(--radius-pill)',
+        color: 'var(--color-semantic-static-white)', background: c, borderRadius: 4,
         ...style,
       }}
       {...rest}

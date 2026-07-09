@@ -13,9 +13,11 @@ const DOT = {
 
 /**
  * LK ROBOTICS — StatusBadge
- * A coloured status dot + label (가동중 / 점검중 / 오프라인). Optional `pulse`
- * radiates a soft ring — a live "detection" cue. `tone="critical"` is the vivid
- * safety exception (e-stop / collision) and auto-pulses.
+ * Filled status badge — a coloured availability dot + label (가동중 / 점검중 /
+ * 오프라인) inside a neutral r4 fill, matching WDS `_Badge/Status`
+ * (r4 / h20 / padX6 / fs12, dot + text). Optional `pulse` radiates a soft ring —
+ * a live "detection" cue. `tone="critical"` is the vivid safety exception
+ * (e-stop / collision) and auto-pulses.
  */
 export function StatusBadge({ children, tone = 'positive', pulse = false, style, ...rest }) {
   React.useEffect(() => {
@@ -29,13 +31,15 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
   return (
     <span
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 7,
-        fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-        color: 'var(--color-semantic-label-neutral)', ...style,
+        display: 'inline-flex', alignItems: 'center', gap: 4, boxSizing: 'border-box',
+        height: 20, padding: '0 6px', borderRadius: 4, /* WDS _Badge/Status r4 */
+        background: 'var(--color-semantic-fill-strong)',
+        fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
+        color: 'var(--color-semantic-label-normal)', ...style,
       }}
       {...rest}
     >
-      <span style={{ position: 'relative', width: 8, height: 8, borderRadius: '50%', background: c, flexShrink: 0 }}>
+      <span style={{ position: 'relative', width: 6, height: 6, borderRadius: '50%', background: c, flexShrink: 0 }}>
         {(pulse || tone === 'critical') && (
           <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: c, animation: 'lk-status-pulse 1.7s var(--ease-out) infinite' }} />
         )}

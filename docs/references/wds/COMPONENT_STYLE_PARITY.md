@@ -130,16 +130,19 @@ style against the deep-reconstructed WDS reference:
 - **Pagination** chip — r8 / h32 = WDS `Pagination/Navigation` chip (the shallow h30 /
   padX16 reference was the nav *wrapper*, not the chip) ✅.
 
-### Shape divergences found (LK form vs WDS filled badge — design call, not yet changed)
+### Shape divergences found → aligned to WDS r4
 
-- **Badge** (`feedback/Badge.jsx`) — h20 ✅, fs12 ✅, padX7≈6, but **radius = pill** vs
-  WDS `_Badge/Value` **r4** (rounded rect). LDS renders a full pill; WDS a subtle-corner
-  rect.
-- **StatusBadge** (`content/StatusBadge.jsx`) — **8px dot + neutral label** vs WDS
-  `_Badge/Status` **filled r4 badge** with inner dot. Structurally different (minimal
-  indicator vs filled label). LK simplification; flagged for a keep-or-align decision.
+Two badges rendered in an LK form that diverged from WDS's filled r4 badge. Aligned:
+
+- **Badge** (`feedback/Badge.jsx`) — pill → **r4**, padX 7 → **6**; now r4 / h20 / padX6 /
+  fs12 = WDS `_Badge/Value` ✅.
+- **StatusBadge** (`content/StatusBadge.jsx`) — bare dot+label → **filled r4 badge**
+  (neutral fill + coloured availability dot + label), r4 / h20 / padX6 / fs12 = WDS
+  `_Badge/Status` ✅. Tone/pulse API preserved. Verified live in Storybook + the harness.
 - **Link** — inline text that inherits font size; no component box to diff (WDS Link
   "fs15" is the surrounding body size), so nothing to match.
+
+Both badges are now guarded by `check:component-styles-rendered` (24 components, 0 drift).
 
 ## Coverage — what is style-verified vs coverage-only
 
@@ -147,7 +150,8 @@ Honest split (see `COMPONENT_CENSUS.json` for the full 103-component name census
 
 - **Style-verified (real WDS↔LDS diff, 0 drift): ~26 components.**
   - `check:component-styles` — token-driven (node), incl. Button/Input/Chip/Textfield/Menu.
-  - `check:component-styles-rendered` — Playwright, **22 components** (adds Input, Divider).
+  - `check:component-styles-rendered` — Playwright, **24 components** (adds Input, Divider,
+    Badge, StatusBadge).
   - `check:nested-styles` — Playwright, 7 INSTANCE-resolved inner elements (Checkbox/Radio
     box, Tooltip, Alert, List Cell) vs `COMPONENT_STYLES_DEEP.json`.
 - **Coverage-only (exists in LDS, WDS reference captured, NOT pixel-diffed): the rest.**

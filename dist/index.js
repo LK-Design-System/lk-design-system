@@ -4327,17 +4327,23 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
       style: {
         display: "inline-flex",
         alignItems: "center",
-        gap: 7,
+        gap: 4,
+        boxSizing: "border-box",
+        height: 20,
+        padding: "0 6px",
+        borderRadius: 4,
+        /* WDS _Badge/Status r4 */
+        background: "var(--color-semantic-fill-strong)",
         fontFamily: "var(--font-sans)",
-        fontSize: 13,
+        fontSize: 12,
         fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
-        color: "var(--color-semantic-label-neutral)",
+        color: "var(--color-semantic-label-normal)",
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx35("span", { style: { position: "relative", width: 8, height: 8, borderRadius: "50%", background: c, flexShrink: 0 }, children: (pulse || tone === "critical") && /* @__PURE__ */ jsx35("span", { style: { position: "absolute", inset: 0, borderRadius: "50%", background: c, animation: "lk-status-pulse 1.7s var(--ease-out) infinite" } }) }),
+        /* @__PURE__ */ jsx35("span", { style: { position: "relative", width: 6, height: 6, borderRadius: "50%", background: c, flexShrink: 0 }, children: (pulse || tone === "critical") && /* @__PURE__ */ jsx35("span", { style: { position: "absolute", inset: 0, borderRadius: "50%", background: c, animation: "lk-status-pulse 1.7s var(--ease-out) infinite" } }) }),
         children
       ]
     }
@@ -5810,13 +5816,13 @@ function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
         justifyContent: "center",
         minWidth: 20,
         height: 20,
-        padding: "0 7px",
+        padding: "0 6px",
         fontFamily: "var(--font-sans)",
         fontWeight: "var(--fw-bold)",
         fontSize: 12,
         color: "var(--color-semantic-static-white)",
         background: c,
-        borderRadius: "var(--radius-pill)",
+        borderRadius: 4,
         ...style
       },
       ...rest,
@@ -9345,6 +9351,8 @@ var platformStyle = {
     padding: "22px 18px 16px",
     buttonHeight: 40,
     buttonPadding: "0 14px",
+    buttonFontSize: 17,
+    // WDS Control/Alert iOS action = 17 SemiBold
     footer: "center",
     footerGap: 8,
     titleSize: 17,
@@ -9356,6 +9364,8 @@ var platformStyle = {
     padding: "28px",
     buttonHeight: 32,
     buttonPadding: 0,
+    buttonFontSize: 16,
+    // WDS Android action = 16 SemiBold
     footer: "flex-end",
     footerGap: 24,
     titleSize: "var(--heading2-size)",
@@ -9367,6 +9377,8 @@ var platformStyle = {
     padding: "20px",
     buttonHeight: 32,
     buttonPadding: 0,
+    buttonFontSize: 16,
+    // WDS Web action = 16 SemiBold
     footer: "flex-end",
     footerGap: 24,
     titleSize: "var(--headline1-size)",
@@ -9427,7 +9439,7 @@ function Alert({
     borderRadius: platform === "ios" ? "var(--radius-pill)" : "var(--radius-md)",
     cursor: "pointer",
     fontFamily: "var(--font-sans)",
-    fontSize: 14,
+    fontSize: p.buttonFontSize ?? 16,
     fontWeight: "var(--fw-bold)",
     letterSpacing: 0,
     whiteSpace: "nowrap"
