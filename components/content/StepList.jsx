@@ -4,7 +4,7 @@ function Mini({ children, onClick, disabled, label }) {
   return (
     <button type="button" onClick={onClick} disabled={disabled} title={label} aria-label={label}
       style={{ width: 28, height: 28, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--color-semantic-line-normal-normal)',
-        borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-neutral)', cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1, fontSize: 13 }}>
+        borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-neutral)', cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1, fontFamily: 'inherit', fontSize: 13 }}>
       {children}
     </button>
   );
