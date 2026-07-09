@@ -1,0 +1,119 @@
+{
+  "Checkbox/box@md": {
+    "set": "Control/Checkbox",
+    "variant": "Size=Medium, State=Checked, Tight=False, Bold=False, Disable=False",
+    "element": "Box",
+    "w": 18,
+    "h": 18,
+    "radius": 5,
+    "fill": "#0066FF",
+    "stroke": "#0066FF",
+    "strokeWeight": 1.5
+  },
+  "Checkbox/box@sm": {
+    "set": "Control/Checkbox",
+    "variant": "Size=Small, State=Checked, Tight=False, Bold=False, Disable=False",
+    "element": "Box",
+    "w": 16,
+    "h": 16,
+    "radius": 5,
+    "fill": "#0066FF",
+    "stroke": "#0066FF",
+    "strokeWeight": 1.5
+  },
+  "Radio/box@md": {
+    "set": "Control/Radio",
+    "variant": "Size=Medium, State=Checked, Tight=False, Disable=False",
+    "element": "Box",
+    "w": 20,
+    "h": 20,
+    "radius": 9999,
+    "padX": 2,
+    "padY": 2,
+    "fill": "#0066FF",
+    "stroke": "#0066FF",
+    "strokeWeight": 1.5
+  },
+  "Radio/box@sm": {
+    "set": "Control/Radio",
+    "variant": "Size=Small, State=Checked, Tight=False, Disable=False",
+    "element": "Box",
+    "w": 16,
+    "h": 16,
+    "radius": 9999,
+    "padX": 1,
+    "padY": 1,
+    "fill": "#0066FF",
+    "stroke": "#0066FF",
+    "strokeWeight": 1.5
+  },
+  "Menu/container": {
+    "set": "Menu/Menu",
+    "variant": "Variant=Normal, Cell Padding=12px",
+    "element": "Container",
+    "w": 320,
+    "h": 400,
+    "radius": 16,
+    "fill": "#FFFFFF",
+    "stroke": "#EAEBEC",
+    "strokeWeight": 1
+  },
+  "AutoComplete/container": {
+    "set": "Auto Complete/Auto Complete",
+    "variant": "Variant=Normal, Direct Input Position=Top",
+    "element": "Container",
+    "w": 320,
+    "h": 400,
+    "radius": 16,
+    "fill": "#FFFFFF",
+    "stroke": "#EAEBEC",
+    "strokeWeight": 1
+  },
+  "Tooltip/bubble": {
+    "set": "Tooltip/Tooltip",
+    "variant": "Size=Medium, Position=Bottom",
+    "element": "Container",
+    "w": 171,
+    "h": 36,
+    "radius": 8,
+    "padX": 12,
+    "padY": 8,
+    "gap": 10,
+    "fill": null,
+    "stroke": null,
+    "strokeWeight": 1
+  },
+  "Alert/modal@web": {
+    "set": "Alert/Alert",
+    "variant": "Platform=Web",
+    "element": "Modal",
+    "w": 335,
+    "h": 138,
+    "radius": 12,
+    "fill": "#FFFFFF",
+    "stroke": null,
+    "strokeWeight": 1
+  },
+  "ListCell/interaction": {
+    "set": "List Cell/List Cell",
+    "variant": "Vertical Padding=Medium, Vertical Align=Top, Fill Width=False, Text Ellipsis=False, Selected=False, Disable=False",
+    "element": "Interaction",
+    "w": 359,
+    "h": 48,
+    "radius": 12,
+    "fill": "#171719",
+    "stroke": null,
+    "strokeWeight": 1
+  },
+  "Pagination/chip": {
+    "set": "Pagination/Navigation",
+    "variant": "Variant=Extended",
+    "element": "Background",
+    "w": 51,
+    "h": 32,
+    "radius": 8,
+    "fill": null,
+    "stroke": "#70737C",
+    "strokeWeight": 1
+  }
+}

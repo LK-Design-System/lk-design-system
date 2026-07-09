@@ -71,21 +71,64 @@ Notes:
   variant; comparing LDS defaults directly gave false size-mismatch drifts
   (e.g. Content Badge default is `small`).
 
+## Nested / overlay components — deep reconstruction (INSTANCE-resolving)
+
+The shallow extractor reads only a variant's own top-level frame, so it cannot see
+the real styled element of components whose geometry lives inside a *referenced*
+symbol. WDS's published controls (Checkbox / Radio / Check Mark) delegate their box
+to a `Resource/Control` symbol via an INSTANCE, and overlay layouts (List Cell,
+Alert, Menu, Tooltip…) nest several instances deep.
+
+`scripts/extract-wds-styles-deep.mjs` resolves every INSTANCE → its master symbol
+and recurses, reconstructing the full styled skeleton exactly as it renders.
+`scripts/build-wds-deep-styles.mjs` (`npm run build:wds-deep-styles`) writes the
+authoritative inner-element values to `COMPONENT_STYLES_DEEP.json`, and
+`scripts/check-wds-nested-styles.mjs` (`npm run check:nested-styles`) renders each
+LDS component and diffs its real computed inner-element style against them.
+
+Result — **0 drift** across the reconstructed inner elements:
+
+| Element (WDS reconstructed) | WDS | LDS | Verdict |
+|---|---|---|---|
+| Checkbox Box (md / sm) | 18 · 16, r5, 1.5px, primary fill | 18 · 16, r5, 1.5px | ✅ match |
+| Radio Box (md / sm) | 20 · 16, circle, 1.5px | 20 · 16, circle, 1.5px | ✅ match |
+| Check Mark row | control 24 + label fs15/14, gap | fs15/14 | ✅ match |
+| Tooltip bubble | r8, padX12 padY8, dark, fs14 | r8, padX12 | ✅ match |
+| Alert modal (web) | r12, pad20, title fs18/body fs15 | r12, headline1/body2 | ✅ match |
+| List Cell | h48, padY12, gap8, title fs16/desc fs13 | h48, r12, body1/label2 | ✅ match |
+| Menu / Auto Complete | container r16, 1px stroke | r16 | ✅ match |
+| Pagination chip | r8, padX8, h32 | r8, padX8, h32 | ✅ match |
+
+The earlier "r3 checkbox drift" was a **false positive** — r3 belongs to a minor
+3-variant atomic control; the canonical published Checkbox (48-variant
+`Control/Checkbox` → `Checkbox/Resource/Control`) box is **r5**, which LDS matches.
+
+### Signed-off LK overrides (intentional, verified against the deep reconstruction)
+
+- **Card radius 16** vs WDS 12 (padded elevated surface — see above).
+- **List Cell leading = 36px accent-tinted icon tile** (`--lk-accent-tint`) vs WDS
+  bare 24px icon. This is the LK icon-tile wash used consistently across FeatureCard,
+  StepList, DataGrid, ButtonGroup — a deliberate brand pattern, not a drift.
+- **+1 weight step / positive letter-spacing** — the documented LK typography feel
+  (`STYLE_PARITY_AUDIT.md`); only sizes/metrics are aligned to WDS.
+
+### Real drift found + fixed
+
+- **Alert action button font** — LDS used 14px on every platform; WDS actions are
+  16 (web / Android) and 17 (iOS), all SemiBold. Fixed with a per-platform
+  `buttonFontSize` (web 16 / android 16 / ios 17). `components/overlay/Alert.jsx`.
+
 ## Scope
 
 - **Token-driven** components — guarded by `check:component-styles` (node-only).
-- **Inline-styled** components — measured by `check:component-styles-rendered`
-  (Playwright, 12 components, 0 drift). Extend `TARGETS` to add more; Checkbox /
-  Radio / Tab need a targeted inner-element selector for their box/track (WDS only
-  exposes a height for those, so radius/padding aren't comparable anyway).
-- `COMPONENT_STYLES.json` holds the WDS reference for all 164 sets.
+- **Inline-styled, single-root** components — `check:component-styles-rendered`
+  (Playwright, 20 components, 0 drift).
+- **Nested / overlay inner elements** — `check:nested-styles` (Playwright, 7
+  reconstructed inner elements, 0 drift) diffing against `COMPONENT_STYLES_DEEP.json`.
+- `COMPONENT_STYLES.json` holds the shallow WDS reference for all 164 sets;
+  `COMPONENT_STYLES_DEEP.json` holds the INSTANCE-resolved inner elements.
 
-Excluded (unreliable to auto-diff): deeply nested / overlay components — List Cell,
-Alert, Card, Menu, Auto Complete, Pagination. The WDS style extractor reads the
-top-level frame, which is not the meaningful styled element for those layouts, so
-the automated diff picks the wrong sub-frame. Their parity is covered by
-`STYLE_PARITY_AUDIT.md` (manual) + the `visual-parity` regression stories.
-
-**Net finding: across the 20 components with a reliable single styled root, LDS
-matches WDS dimensions. Two real drifts were found and fixed — Filter Chip height
-(38→32) and Multi-Select Chip padding (15→12).**
+**Net finding: with the INSTANCE-resolving extractor, every reconstructed WDS inner
+element matches LDS (0 drift). Real drifts found and fixed across the whole sweep —
+Filter Chip height (38→32), Multi-Select Chip padding (15→12), Alert action button
+font (14→16/17). Remaining divergences are documented, deliberate LK overrides.**

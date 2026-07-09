@@ -9,6 +9,7 @@ const platformStyle = {
     padding: "22px 18px 16px",
     buttonHeight: 40,
     buttonPadding: "0 14px",
+    buttonFontSize: 17, // WDS Control/Alert iOS action = 17 SemiBold
     footer: "center",
     footerGap: 8,
     titleSize: 17,
@@ -20,6 +21,7 @@ const platformStyle = {
     padding: "28px",
     buttonHeight: 32,
     buttonPadding: 0,
+    buttonFontSize: 16, // WDS Android action = 16 SemiBold
     footer: "flex-end",
     footerGap: 24,
     titleSize: "var(--heading2-size)",
@@ -31,6 +33,7 @@ const platformStyle = {
     padding: "20px",
     buttonHeight: 32,
     buttonPadding: 0,
+    buttonFontSize: 16, // WDS Web action = 16 SemiBold
     footer: "flex-end",
     footerGap: 24,
     titleSize: "var(--headline1-size)",
@@ -101,7 +104,7 @@ export function Alert({
       platform === "ios" ? "var(--radius-pill)" : "var(--radius-md)",
     cursor: "pointer",
     fontFamily: "var(--font-sans)",
-    fontSize: 14,
+    fontSize: p.buttonFontSize ?? 16,
     fontWeight: "var(--fw-bold)",
     letterSpacing: 0,
     whiteSpace: "nowrap",
