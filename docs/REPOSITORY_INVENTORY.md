@@ -5,8 +5,8 @@
 ## 패키지 범위
 
 - 패키지명: `@lk-robotics/design-system-core`
-- React 컴포넌트 소스 파일: 169개
-- 공개 named export: 173개
+- React 컴포넌트 소스 파일: 173개
+- 공개 named export: 177개
 - 컴포넌트 그룹: `brand`, `buttons`, `cards`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
@@ -25,18 +25,20 @@
 - `.github/workflows/ci.yml`: GitHub Actions CI 게이트
 - `docs/AI_DESIGN_SYSTEM_GUIDE.md`: AI 사용 규칙과 토큰 계층 가이드
 - `docs/TOKEN_GOVERNANCE.md`: 토큰 lifecycle, Figma Variables export/import, release gate
+- `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`: 에디터/맵/포인트클라우드 레이아웃 판단 기준표
+- `docs/EDITOR_LAYOUT_AUDIT.md`: CanvasEditorShell 코드 수정 전 IA 감사와 작업 순서
 
 ## WDS parity 검증 기준
 
 WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`)과 Storybook의 LDS 컴포넌트/패턴 표면입니다. Storybook은 LDS 컴포넌트와 패턴 표면으로 제한하고, visual parity story는 `!dev`와 `visual-parity` 태그로 숨깁니다.
 
-- 현재 React component entry export: 169개
-- 공개 named export: 173개
-- Storybook 전체 story: 222개
-- Storybook public story: 130개
+- 현재 React component entry export: 173개
+- 공개 named export: 177개
+- Storybook 전체 story: 263개
+- Storybook public story: 171개
 - 숨김 visual parity story: 82개
-- visual inventory React story: 222개
-- 접근성 guard 검사 대상 implementation story: 222개
+- visual inventory React story: 263개
+- 접근성 guard 검사 대상 implementation story: 263개
 
 ## 생성 영역
 

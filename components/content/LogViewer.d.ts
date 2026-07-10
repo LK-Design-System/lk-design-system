@@ -9,12 +9,28 @@ export interface LogLine {
 
 export interface LogViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   lines?: LogLine[];
-  /** 레벨 필터 칩 표시. @default true */
+  /** Show level filter chips. @default true */
   filter?: boolean;
-  /** 새 라인 추가 시 자동 스크롤. @default true */
+  /** Show the search field. @default true */
+  search?: boolean;
+  /** Show tail pause, latest, and clear tools. @default true */
+  tools?: boolean;
+  /** Show per-line copy buttons. @default true */
+  copyable?: boolean;
+  /** Keep the newest line in view as lines append. @default true */
   autoScroll?: boolean;
   height?: number;
+  density?: 'compact' | 'comfortable';
+  /** Wrap log messages. Virtualization is disabled while wrapping is enabled. @default false */
+  wrap?: boolean;
+  /** Render only visible rows for large fixed-height log streams. @default true */
+  virtualized?: boolean;
+  /** Extra rows to render above and below the viewport while virtualized. @default 8 */
+  overscan?: number;
+  initialQuery?: string;
+  onClear?: () => void;
+  onCopyLine?: (line: LogLine, text: string) => void;
 }
 
-/** 레벨 색상 로그·콘솔 스트림 뷰어(필터 + tail 자동 스크롤). Code의 스트리밍 보완재. */
+/** Monospace log/console stream viewer with filters, search, tail controls, and copy affordances. */
 export function LogViewer(props: LogViewerProps): JSX.Element;

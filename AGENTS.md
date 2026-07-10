@@ -16,6 +16,15 @@
 - Do not present inferred behavior as WDS behavior. If the source PDF, screenshot, resource folder, or Figma node does not show it, label it as LDS compatibility or leave it out of the WDS-facing story.
 - Keep source evidence traceable in `docs/references/wds/` and guard important claims with scripts where practical.
 
+## New Component / Redesign Fit
+
+- Before adding a new component, or materially redesigning an existing one, inspect the closest existing LDS components in the same family, their `.prompt.md` files, Storybook stories, and relevant docs/tokens. Treat existing spacing, typography, divider alignment, radius, hover/focus/disabled behavior, icon usage, and Storybook naming conventions as design-system constraints.
+- Also compare the requested component against common implementation expectations for that component category (for example: file browser, property field, chart, picker, menu, or dialog). Before coding, identify what is missing, what is extra or scope creep, and what should remain intentionally omitted for this DS layer.
+- Implement the comparison outcome, not just the requested surface: add missing states, props, ARIA behavior, and stories that belong to the reusable component contract; avoid app-specific extras; and document intentional exclusions as Product or LK Robotics extensions when needed.
+- Classify the work before implementation as WDS Core, LK Theme Override, LK Product Extension, or LK Robotics Extension. Do not introduce ad hoc visual language or screen-specific UI patterns as if they were core design-system components.
+- If the requested component overlaps with an existing component, prefer extending or composing the existing component. If a new component is still needed, document the distinction in its prompt/story so future agents do not duplicate the pattern.
+- For new components and substantial redesigns, the final notes or PR summary should name the sibling components/docs that were checked, the general component expectations compared against, and any intentional deviation from their conventions.
+
 ## Component Variant/Axis Parity — authoritative source (MANDATORY)
 
 - A component's variant axes MUST be read from the `.fig` **internal component-set definition**: decode `docs/references/wds/Wanted Design System (Community).fig`, locate that one component's COMPONENT_SET (variant container), and read ONLY its own direct variant children / component-property definitions. Scope strictly to that component set.

@@ -29,7 +29,11 @@
 | Tree | expanded, collapsed, selected, nested, keyboard | data tree story |
 | TopicTree | same as Tree plus topic metadata | domain topic tree story |
 | ContentEditor | title/body, toolbar, draft status, readonly, invalid, action slots | writing editor story |
-| CanvasEditorShell | toolbar, canvas, properties panel, status bar, history controls | editor shell story |
+| CanvasEditorShell | title/description, headerStart navigation or frame toggle, toolbar, subheader, tool rail, optional layer panel, canvas, docked/contextual drawer panel, optional status | neutral shell contract plus task-authoring and map-editor state stories |
+| CanvasEditorCommandBar | right-side viewer actions with handlers, undo, redo, reset, disabled history, extra command slot | editor workspace stories |
+| LayerPanel | visible, hidden by headerStart frame toggle, locked, active, nested, disabled, empty | editor shell story |
+| SelectionInspector | selected object drawer, empty state when docked, clear selection, status, sections, fields, action slots | editor shell story |
+| ViewportStatusBar | mode, cursor/camera, zoom, selected count, snap, FPS, passive trailing readout | editor shell story |
 | ViewerToolbar | zoom, layer toggle, fullscreen, code view, disabled action | viewer toolbar story |
 | TelemetryValue | value, unit, tone, stale, timestamp, compact density | numeric readout story |
 | Modal/Drawer/Sheet | open, close, focus trap, escape, restore | overlay stories |
@@ -49,4 +53,4 @@
 - Public story는 사람이 쓰는 이름을 가진다.
 - visual parity story는 `!dev`와 `visual-parity` tag를 유지한다.
 - 상태가 많은 컴포넌트는 single playground와 state matrix story를 분리한다.
-- domain/editor/viewer 컴포넌트는 통합 화면에서 한 번 더 검증한다.
+- domain/editor/viewer 컴포넌트는 맵/포인트클라우드 편집 워크스페이스에서 한 번 더 검증한다.

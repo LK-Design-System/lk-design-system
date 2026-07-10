@@ -30,7 +30,7 @@
 
 - **Marks vs text split.** `--color-positive/cautionary/danger` are defined as `var(--bw-green/amber/red)` in every theme, so remapping *marks* from raw `--bw-*` was a **zero-visual-change** cleanup. Only *text* changed appearance — intentionally, to reach WCAG-AA (`--bw-amber` ≈ 2.6:1 and `--bw-red` ≈ 3.3:1 on white both failed as text; the DS already shipped AA variants that weren't being used).
 - **`--color-danger-text` made theme-complete.** It was light-only (`#AE4E4B`). Using it for text on cards that flip dark would have regressed dark mode, so `#E08A88` was added to the dark/auto/light-island blocks.
-- **CanvasEditorShell / EditorShell is NOT a WDS component.** It is a **4th-layer LK Robotics Extension** — WDS has no canvas/mission-path editor, so there is no WDS parity source. Its frame + toolbars + badge are real DS components on theme tokens; the demo panel markup had drifted and was cleaned in `905fae2`.
+- **CanvasEditorShell / mission route editor workspace is NOT a WDS component.** It is a **4th-layer LK Robotics Extension** — WDS has no canvas/mission-path editor, so there is no WDS parity source. Its frame + toolbars + badge are real DS components on theme tokens; the demo panel markup had drifted and was cleaned in `905fae2`.
 - **Sibling card sizes left unequal on purpose.** RobotStatusCard's 48px avatar vs EquipmentStatusCard's 38px icon tile are role-appropriate; only the tile *fill* token was unified.
 - **Redo icon is a mirrored `flip-backward`.** No `flip-forward` glyph ships; a mirrored undo is the standard redo affordance.
 

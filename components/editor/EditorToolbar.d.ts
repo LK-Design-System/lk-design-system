@@ -6,6 +6,8 @@ export interface EditorTool {
   icon?: React.ReactNode;
   /** 접근성 라벨 + 툴팁. */
   label?: string;
+  /** 비활성 툴. */
+  disabled?: boolean;
 }
 
 export interface EditorToolbarProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -18,6 +20,10 @@ export interface EditorToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEle
   onChange?: (value: string) => void;
   /** @default "vertical" */
   orientation?: 'vertical' | 'horizontal';
+  /** toolbar 접근성 라벨. @default "편집 도구" */
+  label?: string;
+  /** 전체 툴바 비활성화. */
+  disabled?: boolean;
 }
 
 /** 캔버스 에디터용 단일 선택 툴 그룹(선택·그리기·지우기·폴리곤·팬). 활성 툴은 시그널 잉크. */

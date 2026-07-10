@@ -250,7 +250,7 @@
     },
     {
       "wds": "Robotics extension",
-      "lk": "RobotStatusCard, EquipmentStatusCard, TopicTree, Joystick, Map2DCanvas, Scene3DFrame, TelemetryGauge, TelemetryValue, ViewerToolbar, VideoStreamTile, CanvasEditorShell",
+      "lk": "RobotStatusCard, EquipmentStatusCard, TopicTree, Joystick, Map2DCanvas, Scene3DFrame, TelemetryGauge, TelemetryValue, ViewerToolbar, VideoStreamTile, CanvasEditorCommandBar, CanvasEditorShell",
       "layer": "lk-robotics-extension"
     }
   ]

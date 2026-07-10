@@ -696,6 +696,11 @@
           "publicExport": true
         },
         {
+          "name": "CanvasEditorCommandBar",
+          "file": "components/editor/CanvasEditorCommandBar.jsx",
+          "publicExport": true
+        },
+        {
           "name": "CanvasEditorShell",
           "file": "components/editor/CanvasEditorShell.jsx",
           "publicExport": true

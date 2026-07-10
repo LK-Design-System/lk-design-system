@@ -1,44 +1,383 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
+
+const ROW_HEIGHT = 40;
+const LEADING_SIZE = 24;
+
+function getEntryKey(entry) {
+  return entry.id ?? entry.name;
+}
+
+function canSelectEntry(entry, selectionMode) {
+  if (selectionMode === 'any') return true;
+  if (selectionMode === 'none') return false;
+  if (selectionMode === 'folder') return entry.type === 'dir';
+  return selectionMode === entry.type;
+}
+
+function getEntryActionLabel(entry, canOpen, canSelect) {
+  if (entry.type === 'dir') {
+    if (canOpen) return '폴더 열기';
+    if (canSelect) return '폴더 선택';
+    return '폴더';
+  }
+  return canSelect ? '파일 선택' : '파일';
+}
+
+function StateRow({ icon, children, tone = 'neutral', role, ariaLive }) {
+  const color =
+    tone === 'negative'
+      ? 'var(--color-semantic-status-negative)'
+      : 'var(--color-semantic-label-assistive)';
+
+  return (
+    <li
+      aria-disabled="true"
+      style={{
+        minHeight: 104,
+        display: 'grid',
+        placeItems: 'center',
+        padding: '20px 12px',
+        boxSizing: 'border-box',
+        color,
+        fontSize: 'var(--label1-size)',
+        lineHeight: 'var(--label1-line)',
+        fontWeight: 'var(--fw-medium)',
+        letterSpacing: 0,
+        textAlign: 'center',
+      }}
+    >
+      <span
+        role={role}
+        aria-live={ariaLive}
+        style={{ display: 'inline-grid', gap: 8, justifyItems: 'center' }}
+      >
+        <Icon name={icon} size={20} aria-hidden="true" />
+        <span>{children}</span>
+      </span>
+    </li>
+  );
+}
+
+function UpButton({ disabled, onClick }) {
+  const [hovered, setHovered] = React.useState(false);
+
+  return (
+    <button
+      type="button"
+      onClick={(event) => {
+        if (!disabled && onClick) onClick(event);
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      aria-label="상위 폴더로 이동"
+      disabled={disabled}
+      style={{
+        width: 30,
+        height: 30,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 0,
+        border: '1px solid var(--color-semantic-line-normal-normal)',
+        borderRadius: 'var(--radius-sm)',
+        background: disabled
+          ? 'var(--color-semantic-fill-normal)'
+          : hovered
+            ? 'var(--color-semantic-fill-alternative)'
+            : 'var(--color-semantic-background-elevated-normal)',
+        color: disabled
+          ? 'var(--color-semantic-label-disable)'
+          : 'var(--color-semantic-label-neutral)',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        fontFamily: 'inherit',
+        lineHeight: 0,
+        flexShrink: 0,
+        transition:
+          'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
+      }}
+    >
+      <Icon name="arrow-up" size={15} aria-hidden="true" />
+    </button>
+  );
+}
+
+function FileBrowserRow({ entry, selected, onOpen, onSelect, selectionMode, readOnly }) {
+  const [hovered, setHovered] = React.useState(false);
+  const isDir = entry.type === 'dir';
+  const canOpen = isDir && !!onOpen;
+  const canSelect = canSelectEntry(entry, selectionMode);
+  const actionUnavailable = isDir ? !canOpen && !(canSelect && onSelect) : !(canSelect && onSelect);
+  const unavailable = !!entry.disabled || actionUnavailable;
+  const disabled = readOnly || unavailable;
+  const isSelected = canSelect && selected != null && selected === getEntryKey(entry);
+  const sizeText = entry.size == null ? '' : String(entry.size);
+  const actionLabel = getEntryActionLabel(entry, canOpen, canSelect);
+  const selectedLabel = isSelected ? ', 선택됨' : '';
+  const sizeLabel = sizeText ? `, ${sizeText}` : '';
+  const iconColor = unavailable
+    ? 'var(--color-semantic-label-disable)'
+    : isDir || isSelected
+      ? 'var(--color-semantic-primary-normal)'
+      : 'var(--color-semantic-label-assistive)';
+  const titleColor = unavailable
+    ? 'var(--color-semantic-label-disable)'
+    : isSelected
+      ? 'var(--color-semantic-primary-normal)'
+      : 'var(--color-semantic-label-normal)';
+  const background = disabled
+    ? 'transparent'
+    : hovered
+      ? 'var(--color-semantic-fill-alternative)'
+      : 'transparent';
+
+  return (
+    <li role="listitem" style={{ margin: 0, padding: 0 }}>
+      <button
+        type="button"
+        disabled={disabled}
+        aria-current={isSelected ? 'true' : undefined}
+        aria-label={`${entry.name}, ${actionLabel}${sizeLabel}${selectedLabel}`}
+        data-selected={isSelected ? '' : undefined}
+        onClick={() => {
+          if (disabled) return;
+          if (canOpen) onOpen(entry);
+          else if (canSelect && onSelect) onSelect(entry);
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          position: 'relative',
+          display: 'grid',
+          gridTemplateColumns: `${LEADING_SIZE}px minmax(0, 1fr) auto`,
+          alignItems: 'center',
+          gap: 10,
+          width: '100%',
+          minHeight: ROW_HEIGHT,
+          padding: '0 10px',
+          boxSizing: 'border-box',
+          border: 'none',
+          borderRadius: 'var(--radius-sm)',
+          background,
+          color: 'var(--color-semantic-label-normal)',
+          cursor: unavailable ? 'not-allowed' : readOnly ? 'default' : 'pointer',
+          textAlign: 'left',
+          fontFamily: 'inherit',
+          transition:
+            'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
+        }}
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            width: LEADING_SIZE,
+            height: LEADING_SIZE,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: iconColor,
+            flexShrink: 0,
+          }}
+        >
+          <Icon name={isDir ? 'folder' : 'document'} size={18} aria-hidden="true" />
+        </span>
+
+        <span
+          style={{
+            minWidth: 0,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            color: titleColor,
+            fontSize: 'var(--label1-size)',
+            lineHeight: 'var(--label1-line)',
+            fontWeight: isDir || isSelected ? 'var(--fw-semibold)' : 'var(--fw-medium)',
+            letterSpacing: 0,
+          }}
+        >
+          {entry.name}
+        </span>
+
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: 8,
+            minWidth: 0,
+            color: unavailable
+              ? 'var(--color-semantic-label-disable)'
+              : isSelected
+                ? 'var(--color-semantic-primary-normal)'
+                : 'var(--color-semantic-label-assistive)',
+          }}
+        >
+          {entry.size != null && !isDir && (
+            <span
+              style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                fontSize: 'var(--label2-size)',
+                lineHeight: 'var(--label2-line)',
+                fontWeight: 'var(--fw-medium)',
+                fontVariantNumeric: 'tabular-nums',
+                letterSpacing: 0,
+              }}
+            >
+              {entry.size}
+            </span>
+          )}
+          {isSelected && <Icon name="check" size={16} aria-hidden="true" />}
+          {canOpen && <Icon name="chevron-right" size={14} aria-hidden="true" />}
+        </span>
+      </button>
+    </li>
+  );
+}
 
 /**
- * LK ROBOTICS — FileBrowser
+ * LDS Product Data — FileBrowser
  * Server-side file / directory navigator. Presentational: the host supplies the
  * current `path`, `entries` ([{name, type:'dir'|'file', size}]), and handles
- * `onOpen(dir)` / `onUp` / `onSelect(entry)`. Renders a breadcrumb path bar, an
- * up control, and a typed row list. Pairs with a Modal for a "pick a folder".
+ * `onOpen(dir)` / `onUp` / `onSelect(entry)`. Renders a path bar, an up control,
+ * and a typed row list. Pairs with Modal for folder or file picking flows.
  */
-const FolderIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg>;
-const FileIcon = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /></svg>;
+export function FileBrowser({
+  path = '/',
+  entries = [],
+  selected,
+  selectionMode = 'file',
+  onOpen,
+  onUp,
+  onSelect,
+  height = 300,
+  emptyLabel = '비어 있습니다',
+  loading = false,
+  loadingLabel = '불러오는 중입니다',
+  error,
+  readOnly = false,
+  style,
+  'aria-label': ariaLabel,
+  ...rest
+}) {
+  const hasError = error != null;
+  const upDisabled = readOnly || loading || path === '/' || !onUp;
 
-export function FileBrowser({ path = '/', entries = [], selected, onOpen, onUp, onSelect, height = 300, style, ...rest }) {
   return (
-    <div style={{ display: 'grid', gridTemplateRows: 'auto 1fr', width: 420, border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: 'var(--bw-white)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', borderBottom: '1px solid var(--bw-border)', background: 'var(--color-semantic-background-elevated-alternative)' }}>
-        <button type="button" onClick={onUp} aria-label="상위 폴더" disabled={path === '/' || !onUp}
-          style={{ width: 28, height: 28, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-sm)', background: 'var(--bw-white)', cursor: path === '/' ? 'not-allowed' : 'pointer', color: 'var(--color-semantic-label-neutral)', fontFamily: 'inherit', flexShrink: 0 }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6" /></svg>
-        </button>
-        <code style={{ fontSize: 12.5, color: 'var(--color-semantic-label-neutral)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', direction: 'rtl', textAlign: 'left', flex: 1 }}>{path}</code>
+    <div
+      role="group"
+      aria-label={ariaLabel || '파일 브라우저'}
+      aria-busy={loading ? 'true' : undefined}
+      aria-disabled={readOnly ? 'true' : undefined}
+      style={{
+        display: 'grid',
+        gridTemplateRows: 'auto minmax(0, 1fr)',
+        width: '100%',
+        maxWidth: 420,
+        minWidth: 0,
+        border: '1px solid var(--color-semantic-line-normal-normal)',
+        borderRadius: 'var(--radius-md)',
+        overflow: 'hidden',
+        background: 'var(--color-semantic-background-elevated-normal)',
+        fontFamily: 'var(--font-sans)',
+        boxSizing: 'border-box',
+        ...style,
+      }}
+      {...rest}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          minWidth: 0,
+          padding: '8px 10px',
+          borderBottom: '1px solid var(--color-semantic-line-normal-normal)',
+          background: 'var(--color-semantic-background-elevated-alternative)',
+          boxSizing: 'border-box',
+        }}
+      >
+        <UpButton disabled={upDisabled} onClick={onUp} />
+        <code
+          aria-label={`현재 경로 ${path}`}
+          title={path}
+          style={{
+            minWidth: 0,
+            flex: 1,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            direction: 'rtl',
+            textAlign: 'left',
+            color: 'var(--color-semantic-label-neutral)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--label2-size)',
+            lineHeight: 'var(--label2-line)',
+            fontWeight: 'var(--fw-medium)',
+            letterSpacing: 0,
+          }}
+        >
+          {path}
+        </code>
+        {readOnly && (
+          <span
+            aria-label="읽기 전용"
+            title="읽기 전용"
+            style={{
+              width: 24,
+              height: 24,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              color: 'var(--color-semantic-label-assistive)',
+            }}
+          >
+            <Icon name="lock" size={15} aria-hidden="true" />
+          </span>
+        )}
       </div>
-      <ul style={{ listStyle: 'none', margin: 0, padding: 4, overflow: 'auto', maxHeight: height }}>
-        {entries.length === 0 && <li style={{ padding: '18px 10px', textAlign: 'center', color: 'var(--color-semantic-label-assistive)', fontSize: 13 }}>비어 있습니다</li>}
-        {entries.map((e) => {
-          const isDir = e.type === 'dir';
-          const isSel = selected != null && selected === e.name;
-          return (
-            <li key={e.name}>
-              <button type="button"
-                onClick={() => (isDir ? onOpen && onOpen(e) : onSelect && onSelect(e))}
-                onDoubleClick={() => (!isDir && onOpen ? undefined : undefined)}
-                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', height: 34, padding: '0 8px', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer', textAlign: 'left', background: isSel ? 'var(--lk-accent-tint)' : 'transparent', color: 'var(--color-semantic-label-normal)', fontFamily: 'inherit' }}>
-                <span aria-hidden="true" style={{ display: 'inline-flex', color: isDir ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-assistive)', flexShrink: 0 }}>{isDir ? FolderIcon : FileIcon}</span>
-                <span style={{ flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: isDir ? 'var(--fw-semibold)' : 'var(--fw-medium)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{e.name}</span>
-                {e.size != null && !isDir && <span style={{ fontSize: 11.5, color: 'var(--color-semantic-label-assistive)', fontVariantNumeric: 'tabular-nums' }}>{e.size}</span>}
-                {isDir && <span aria-hidden="true" style={{ color: 'var(--color-semantic-label-assistive)' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg></span>}
-              </button>
-            </li>
-          );
-        })}
+
+      <ul
+        role="list"
+        aria-label="파일 및 폴더"
+        aria-busy={loading ? 'true' : undefined}
+        style={{
+          display: 'grid',
+          gap: 2,
+          listStyle: 'none',
+          margin: 0,
+          padding: 4,
+          overflow: 'auto',
+          maxHeight: height,
+          minHeight: 0,
+          boxSizing: 'border-box',
+        }}
+      >
+        {loading ? (
+          <StateRow icon="hourglass" role="status" ariaLive="polite">
+            {loadingLabel}
+          </StateRow>
+        ) : hasError ? (
+          <StateRow icon="circle-exclamation" tone="negative" role="alert">
+            {error}
+          </StateRow>
+        ) : entries.length === 0 ? (
+          <StateRow icon="folder">{emptyLabel}</StateRow>
+        ) : (
+          entries.map((entry) => (
+            <FileBrowserRow
+              key={getEntryKey(entry)}
+              entry={entry}
+              selected={selected}
+              selectionMode={selectionMode}
+              readOnly={readOnly}
+              onOpen={onOpen}
+              onSelect={onSelect}
+            />
+          ))
+        )}
       </ul>
     </div>
   );

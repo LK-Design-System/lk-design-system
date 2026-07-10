@@ -1,10 +1,17 @@
-**Scene3DFrame** — 3D 뷰포트(three/fiber) 크롬 셸. 다크 프레임 + 좌상단 HUD(타이틀·배지) + 우상단 툴바 슬롯 + 로딩/빈 상태. 실제 3D 캔버스는 `children`으로.
+**Scene3DFrame** - Chrome shell for a 3D viewport.
+
+Use it for the dark viewport surface, top-left title/badges/HUD, optional overlay, bottom-left status chip, loading, and empty states. The actual 3D canvas is passed as `children`.
 
 ```jsx
-<Scene3DFrame title="POINT CLOUD" badges={<ConnectionBadge status="online" size="sm" />}
-  toolbar={<ViewerToolbar orientation="horizontal">…</ViewerToolbar>} style={{ height: 320 }}>
-  <Canvas> …three/fiber… </Canvas>
+<Scene3DFrame
+  title="POINT CLOUD"
+  badges={<ConnectionBadge status="online" size="sm" />}
+  status="1.2M pts / 38 FPS"
+  style={{ height: 320 }}
+>
+  <Canvas>...</Canvas>
 </Scene3DFrame>
 ```
 
-- **title · badges · toolbar** 슬롯 · **loading** · **empty**. 렌더는 앱, 셸은 DS.
+- In standalone viewer stories, the optional `toolbar` slot may be used for viewport-local controls.
+- Inside `CanvasEditorShell`, put viewer/home/layer command buttons in the shell top `toolbar`; keep `Scene3DFrame` internal UI to HUD, overlay, and status.

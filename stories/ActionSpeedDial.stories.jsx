@@ -1,7 +1,7 @@
 import { SpeedDial, Icon } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/Components/Action/Speed Dial',
+  title: 'LDS Product/Action/Speed Dial',
   parameters: {
     docs: {
       description: {

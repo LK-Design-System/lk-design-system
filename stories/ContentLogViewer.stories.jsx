@@ -1,7 +1,7 @@
 import { LogViewer } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Core/Components/Content/Log Viewer',
+  title: 'LDS Product/Content/Log Viewer',
   parameters: {
     docs: {
       description: {

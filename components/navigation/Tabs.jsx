@@ -95,7 +95,7 @@ export function Tabs({
               letterSpacing: 0,
               color: active
                 ? "var(--color-semantic-label-normal)"
-                : "var(--color-semantic-label-alternative)",
+                : "var(--color-semantic-label-neutral)",
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)",
               ...item.style,
@@ -111,7 +111,7 @@ export function Tabs({
                   fontWeight: "var(--fw-semibold)",
                   color: active
                     ? "var(--color-semantic-primary-normal)"
-                    : "var(--color-semantic-label-assistive)",
+                    : "var(--color-semantic-label-neutral)",
                 }}
               >
                 {item.count}
@@ -126,7 +126,7 @@ export function Tabs({
                   justifyContent: "center",
                   color: active
                     ? "var(--color-semantic-label-normal)"
-                    : "var(--color-semantic-label-alternative)",
+                    : "var(--color-semantic-label-neutral)",
                 }}
               >
                 {trailing === true ? (

@@ -3,6 +3,8 @@ import * as React from 'react';
 export interface ViewerToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /** @default "vertical" */
   orientation?: 'vertical' | 'horizontal';
+  /** toolbar 접근성 라벨. @default "뷰어 컨트롤" */
+  label?: string;
   children?: React.ReactNode;
 }
 

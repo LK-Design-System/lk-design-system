@@ -1,45 +1,229 @@
 import React from 'react';
+import { Button } from '../buttons/Button.jsx';
+import { Switch } from '../selection/Switch.jsx';
+
+function getLabelText(label) {
+  return typeof label === 'string' ? label : '속성';
+}
+
+function normalizeNumberValue(value) {
+  if (value === '') return '';
+  const numeric = Number(value);
+  return Number.isNaN(numeric) ? '' : numeric;
+}
 
 /**
- * LK ROBOTICS — PropertyField
- * A single tunable parameter row: label + control + a per-field Apply that only
- * enables once the value differs from the committed baseline (dirty tracking).
- * `type` = 'number' | 'text' | 'toggle'; `onApply(value)` commits. Used for
- * nav-tuning / settings panels where each param is applied independently.
+ * LDS Product Selection and Input — PropertyField
+ * A single tunable parameter row: label + control + per-field Apply. It is a
+ * product settings pattern, not a new input primitive.
  */
-export function PropertyField({ label, hint, value: committed, type = 'text', min, max, step = 1, unit, onApply, style, ...rest }) {
+export function PropertyField({
+  label,
+  hint,
+  value: committed,
+  type = 'text',
+  min,
+  max,
+  step = 1,
+  unit,
+  disabled = false,
+  readOnly = false,
+  applyLabel = '적용',
+  dirtyLabel = '변경됨',
+  onApply,
+  style,
+  ...rest
+}) {
+  const fieldId = React.useId();
+  const inputId = `property-${fieldId}`;
+  const hintId = hint != null ? `${inputId}-hint` : undefined;
+  const labelText = getLabelText(label);
+  const applyText = typeof applyLabel === 'string' ? applyLabel : '적용';
   const [draft, setDraft] = React.useState(committed);
-  React.useEffect(() => { setDraft(committed); }, [committed]);
+
+  React.useEffect(() => {
+    setDraft(committed);
+  }, [committed]);
+
   const dirty = draft !== committed;
-  const apply = () => { if (dirty) onApply && onApply(draft); };
+  const interactionDisabled = disabled || readOnly;
+  const canApply = dirty && !interactionDisabled && typeof onApply === 'function';
+  const controlDisabled = disabled;
+  const controlReadOnly = readOnly;
+
+  const apply = () => {
+    if (canApply) onApply(draft);
+  };
+
+  const sharedControlLabel = `${labelText}${dirty ? `, ${dirtyLabel}` : ''}`;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 1fr) auto auto', alignItems: 'center', gap: 10, padding: '8px 0', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-      <div style={{ display: 'grid', gap: 1, minWidth: 0 }}>
-        <span style={{ fontSize: 13.5, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)' }}>{label}{dirty && <span aria-label="변경됨" style={{ color: 'var(--color-semantic-status-cautionary)' }}> •</span>}</span>
-        {hint != null && <span style={{ fontSize: 11.5, color: 'var(--color-semantic-label-alternative)' }}>{hint}</span>}
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(128px, 1fr) auto auto',
+        alignItems: 'center',
+        columnGap: 'var(--space-3)',
+        rowGap: 'var(--space-2)',
+        width: '100%',
+        minWidth: 0,
+        padding: '8px 0',
+        fontFamily: 'var(--font-sans)',
+        boxSizing: 'border-box',
+        ...style,
+      }}
+      {...rest}
+    >
+      <div style={{ display: 'grid', gap: 2, minWidth: 0 }}>
+        <label
+          htmlFor={type === 'toggle' ? undefined : inputId}
+          style={{
+            minWidth: 0,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            fontSize: 'var(--label2-size)',
+            lineHeight: 'var(--label2-line)',
+            fontWeight: 'var(--fw-semibold)',
+            letterSpacing: 0,
+            color: disabled
+              ? 'var(--color-semantic-label-disable)'
+              : 'var(--color-semantic-label-normal)',
+          }}
+        >
+          {label}
+          {dirty && (
+            <span
+              aria-label={dirtyLabel}
+              title={dirtyLabel}
+              style={{
+                marginLeft: 4,
+                color: 'var(--color-semantic-status-cautionary)',
+              }}
+            >
+              •
+            </span>
+          )}
+        </label>
+        {hint != null && (
+          <span
+            id={hintId}
+            style={{
+              minWidth: 0,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              fontSize: 'var(--caption1-size)',
+              lineHeight: 'var(--caption1-line)',
+              fontWeight: 'var(--fw-medium)',
+              letterSpacing: 0,
+              color: disabled
+                ? 'var(--color-semantic-label-disable)'
+                : 'var(--color-semantic-label-alternative)',
+            }}
+          >
+            {hint}
+          </span>
+        )}
       </div>
 
       {type === 'toggle' ? (
-        <button type="button" role="switch" aria-checked={!!draft} aria-label={String(label)} onClick={() => setDraft(!draft)}
-          style={{ width: 52, height: 26, borderRadius: 'var(--radius-pill)', border: 'none', cursor: 'pointer', position: 'relative', background: draft ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-interaction-inactive)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
-          <span aria-hidden="true" style={{ position: 'absolute', top: 3, left: draft ? 29 : 3, width: 20, height: 20, borderRadius: '50%', background: 'var(--color-semantic-static-white)', transition: 'left var(--dur-fast) var(--ease-out)' }} />
-        </button>
+        <Switch
+          size="sm"
+          checked={!!draft}
+          disabled={interactionDisabled}
+          aria-label={sharedControlLabel}
+          aria-describedby={hintId}
+          onChange={(next) => setDraft(next)}
+        />
       ) : (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <input type={type === 'number' ? 'number' : 'text'} value={draft ?? ''} min={min} max={max} step={step} aria-label={String(label)}
-            onChange={(e) => setDraft(type === 'number' ? (e.target.value === '' ? '' : Number(e.target.value)) : e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') apply(); }}
-            style={{ width: type === 'number' ? 88 : 160, height: 34, padding: '0 10px', border: `1px solid ${dirty ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-md)', outline: 'none', background: 'var(--bw-white)', fontFamily: 'inherit', fontSize: 13.5, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)', textAlign: type === 'number' ? 'right' : 'left', fontVariantNumeric: 'tabular-nums' }} />
-          {unit != null && <span style={{ fontSize: 12.5, color: 'var(--color-semantic-label-alternative)' }}>{unit}</span>}
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: 6,
+            minWidth: 0,
+          }}
+        >
+          <input
+            id={inputId}
+            type={type === 'number' ? 'number' : 'text'}
+            value={draft ?? ''}
+            min={min}
+            max={max}
+            step={step}
+            disabled={controlDisabled}
+            readOnly={controlReadOnly}
+            aria-label={sharedControlLabel}
+            aria-describedby={hintId}
+            onChange={(event) => {
+              setDraft(
+                type === 'number'
+                  ? normalizeNumberValue(event.target.value)
+                  : event.target.value
+              );
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') apply();
+              if (event.key === 'Escape') setDraft(committed);
+            }}
+            style={{
+              width: type === 'number' ? 88 : 160,
+              height: 34,
+              padding: '0 10px',
+              border: `1px solid ${
+                dirty
+                  ? 'var(--color-semantic-status-cautionary)'
+                  : 'var(--component-input-border-color)'
+              }`,
+              borderRadius: 'var(--radius-md)',
+              outline: 'none',
+              background: controlDisabled
+                ? 'var(--color-semantic-fill-normal)'
+                : 'var(--color-semantic-background-elevated-normal)',
+              fontFamily: 'inherit',
+              fontSize: 'var(--label2-size)',
+              lineHeight: 'var(--label2-line)',
+              fontWeight: 'var(--fw-semibold)',
+              letterSpacing: 0,
+              color: controlDisabled
+                ? 'var(--color-semantic-label-disable)'
+                : 'var(--color-semantic-label-normal)',
+              textAlign: type === 'number' ? 'right' : 'left',
+              fontVariantNumeric: 'tabular-nums',
+              boxSizing: 'border-box',
+            }}
+          />
+          {unit != null && (
+            <span
+              style={{
+                minWidth: 24,
+                fontSize: 'var(--caption1-size)',
+                lineHeight: 'var(--caption1-line)',
+                fontWeight: 'var(--fw-medium)',
+                letterSpacing: 0,
+                color: disabled
+                  ? 'var(--color-semantic-label-disable)'
+                  : 'var(--color-semantic-label-alternative)',
+              }}
+            >
+              {unit}
+            </span>
+          )}
         </span>
       )}
 
-      <button type="button" onClick={apply} disabled={!dirty} aria-label={`${label} 적용`}
-        style={{ height: 32, padding: '0 12px', borderRadius: 'var(--radius-sm)', border: 'none', cursor: dirty ? 'pointer' : 'not-allowed', fontFamily: 'inherit', fontSize: 13, fontWeight: 'var(--fw-bold)',
-          background: dirty ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-interaction-disable)', color: dirty ? 'var(--component-button-primary-fg)' : 'var(--color-semantic-label-disable)' }}>
-        적용
-      </button>
+      <Button
+        size="sm"
+        variant="solid"
+        color="primary"
+        disabled={!canApply}
+        onClick={apply}
+        aria-label={`${labelText} ${applyText}`}
+      >
+        {applyLabel}
+      </Button>
     </div>
   );
 }

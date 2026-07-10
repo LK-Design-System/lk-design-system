@@ -46,7 +46,6 @@
       "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
       "storyEvidence": [
         "stories/ActionArea.stories.jsx",
-        "stories/ActionSpeedDial.stories.jsx",
         "stories/Button.stories.jsx",
         "stories/ButtonsExtended.stories.jsx"
       ],
@@ -56,7 +55,6 @@
         "ButtonGroup",
         "Fab",
         "IconButton",
-        "SpeedDial",
         "SplitButton",
         "TextButton",
         "ToggleIcon"
@@ -67,12 +65,14 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/ActionSpeedDial.stories.jsx",
         "stories/ActionUtility.stories.jsx",
         "stories/SocialButtons.stories.jsx"
       ],
       "exports": [
         "CopyButton",
         "Link",
+        "SpeedDial",
         "SocialButton"
       ]
     },
@@ -124,9 +124,7 @@
         "stories/ContentBadgesAnnotations.stories.jsx",
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentListsMedia.stories.jsx",
-        "stories/ContentLogViewer.stories.jsx",
         "stories/ContentMedia.stories.jsx",
-        "stories/ContentReorderList.stories.jsx",
         "stories/ContentStepList.stories.jsx",
         "stories/ContentTimeline.stories.jsx"
       ],
@@ -140,9 +138,7 @@
         "ContentBadge",
         "Kbd",
         "ListCell",
-        "LogViewer",
         "Overline",
-        "ReorderList",
         "SourceTag",
         "StatusBadge",
         "StepList",
@@ -152,14 +148,18 @@
       ]
     },
     {
-      "name": "Writing editor extension",
+      "name": "Content product extensions",
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
-        "stories/ContentEditor.stories.jsx"
+        "stories/ContentEditor.stories.jsx",
+        "stories/ContentLogViewer.stories.jsx",
+        "stories/ContentReorderList.stories.jsx"
       ],
       "exports": [
-        "ContentEditor"
+        "ContentEditor",
+        "LogViewer",
+        "ReorderList"
       ]
     },
     {
@@ -178,7 +178,7 @@
         "stories/DataTablesHierarchy.stories.jsx",
         "stories/DataToolbar.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreeSelect.stories.jsx"
+        "stories/DataTreeSelectionPanel.stories.jsx"
       ],
       "exports": [
         "BarChart",
@@ -194,7 +194,7 @@
         "Sparkline",
         "Table",
         "Tree",
-        "TreeSelect"
+        "TreeSelectionPanel"
       ]
     },
     {
@@ -254,21 +254,25 @@
       ]
     },
     {
-      "name": "Form product extensions",
+      "name": "Selection and input product extensions",
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateTime.stories.jsx",
-        "stories/FormSelectionControls.stories.jsx"
+        "stories/FormSelectionControls.stories.jsx",
+        "stories/SelectionIconPicker.stories.jsx",
+        "stories/SelectionWheelPicker.stories.jsx"
       ],
       "exports": [
         "ColorSwatch",
         "DatePicker",
         "FileUpload",
+        "IconPicker",
         "NumberField",
         "PinInput",
-        "TimePicker"
+        "TimePicker",
+        "WheelPicker"
       ]
     },
     {
@@ -279,17 +283,14 @@
       "storyEvidence": [
         "stories/FormSelectionControls.stories.jsx",
         "stories/SelectionChips.stories.jsx",
-        "stories/SelectionIconPicker.stories.jsx",
         "stories/SelectionSegmentedToggle.stories.jsx",
         "stories/SelectionStepper.stories.jsx",
-        "stories/SelectionSwitch.stories.jsx",
-        "stories/SelectionWheelPicker.stories.jsx"
+        "stories/SelectionSwitch.stories.jsx"
       ],
       "exports": [
         "Checkbox",
         "CheckboxGroup",
         "FilterChip",
-        "IconPicker",
         "MultiSelectChip",
         "Radio",
         "RadioGroup",
@@ -298,8 +299,7 @@
         "Slider",
         "Stepper",
         "Switch",
-        "ToggleButton",
-        "WheelPicker"
+        "ToggleButton"
       ]
     },
     {
@@ -321,7 +321,6 @@
       "wdsFamily": "Layout/Essential, Divider",
       "storyEvidence": [
         "stories/Layout.stories.jsx",
-        "stories/LayoutDockPanel.stories.jsx",
         "stories/LayoutEssentials.stories.jsx",
         "stories/LayoutGrid.stories.jsx",
         "stories/LayoutScrollAccess.stories.jsx",
@@ -335,7 +334,6 @@
         "Columns",
         "Container",
         "Divider",
-        "DockPanel",
         "Grid",
         "MobileSystemBars",
         "ScrollArea",
@@ -347,13 +345,15 @@
       ]
     },
     {
-      "name": "Page header extension",
+      "name": "Layout product extensions",
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/LayoutDockPanel.stories.jsx",
         "stories/LayoutPageHeader.stories.jsx"
       ],
       "exports": [
+        "DockPanel",
         "PageHeader"
       ]
     },
@@ -493,6 +493,7 @@
       ],
       "exports": [
         "BatteryGauge",
+        "CanvasEditorCommandBar",
         "CanvasEditorShell",
         "ConnectionBadge",
         "DirectionalPad",
@@ -500,13 +501,16 @@
         "EquipmentStatusCard",
         "HistoryToolbar",
         "Joystick",
+        "LayerPanel",
         "Map2DCanvas",
         "RobotStatusCard",
         "Scene3DFrame",
+        "SelectionInspector",
         "TelemetryGauge",
         "TelemetryValue",
         "TopicTree",
         "VideoStreamTile",
+        "ViewportStatusBar",
         "ViewerToolbar",
         "ViewerToolbarButton"
       ]

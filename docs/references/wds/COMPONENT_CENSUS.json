@@ -940,6 +940,7 @@
     "ButtonGroup",
     "Calendar",
     "Callout",
+    "CanvasEditorCommandBar",
     "CanvasEditorShell",
     "Carousel",
     "Center",

@@ -25,7 +25,8 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공 |
 | DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시 |
 | ContentEditor | 제목 input, 본문 textarea, toolbar button, 상태 live region 순서가 자연스러워야 함 |
-| CanvasEditorShell, ViewerToolbar | viewport와 toolbar 사이 이동 순서, 단축키 충돌, undo/redo 상태 announce |
+| CanvasEditorShell, CanvasEditorCommandBar, EditorToolbar, LayerPanel, SelectionInspector, ViewerToolbar | viewport와 toolbar/panel/drawer 사이 이동 순서, headerStart 레이어 토글의 accessible name과 pressed state, 방향키 scope, 단축키 충돌, undo/redo 상태 announce, 선택 해제 버튼의 accessible name |
+| Map2DCanvas, Scene3DFrame | viewport region name, keyboard zoom/pan 정책, 앱 캔버스 이벤트와 DS pan interaction 충돌 방지 |
 
 ## Focus policy
 

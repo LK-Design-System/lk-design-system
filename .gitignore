@@ -28,6 +28,7 @@ desktop.ini
 *.swo
 .idea/
 .vscode/
+.claude/
 
 # Temporary work files
 *.tmp

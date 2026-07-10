@@ -6,7 +6,7 @@
 
 - Storybook에는 컴포넌트와 컴포넌트 상태를 둔다.
 - 완성 화면과 서비스 절차는 애플리케이션 문서에서 다룬다.
-- 도메인 맥락이 필요한 경우에도 `RobotStatusCard`, `Map2DCanvas`, `CanvasEditorShell`, `ViewerToolbar`, `Joystick`, `TelemetryGauge`, `TelemetryValue` 같은 개별 컴포넌트 story 안에서 대표 상태만 보여준다.
+- 도메인 맥락이 필요한 경우에도 `RobotStatusCard`, `Map2DCanvas`, `CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`, `ViewerToolbar`, `Joystick`, `TelemetryGauge`, `TelemetryValue` 같은 개별 컴포넌트 story 안에서 대표 상태만 보여준다.
 - Do not publish end-to-end flow pages as design system stories.
 
 ## Status semantics
@@ -23,9 +23,13 @@
 
 | 컴포넌트 | 계약 |
 | --- | --- |
-| `CanvasEditorShell` | toolbar, canvas, panel, status 영역을 분리하고 history action은 오른쪽 status 영역에 둔다. |
+| `CanvasEditorShell` | title/description, headerStart, toolbar, subheader, tool rail, optional layer panel, canvas, docked panel/drawer, optional status 영역을 분리한다. `headerStart`는 뒤로가기 또는 실제 좌측 구조 패널 토글에 쓰고, `objects`/`pgm` 같은 편집 모드 탭은 `subheader`에 둔다. 모든 워크스페이스가 모든 슬롯을 사용한다고 가정하지 않는다. |
+| `CanvasEditorCommandBar` | 우상단 문서/history command는 실제 handler나 disabled 상태가 있을 때만 노출하고 같은 34px command button 규격으로 정렬한다. undo/redo는 헤더 위치와 접근성 라벨을 유지하되, reset은 실제 workflow가 제공할 때만 노출한다. |
+| `LayerPanel` | 실제 레이어, 디스플레이, 토픽, 파일, 클래스, 엔티티의 visibility/lock/active 상태가 있는 경우에만 사용한다. 원본 `lk_web_viz` 맵 편집은 `objects`/`pgm` 탭, 왼쪽 도구 레일, 오른쪽 속성 사이드바 중심이므로 `LayerPanel`을 기본 구조로 간주하지 않는다. |
+| `SelectionInspector` | 레이어가 아니라 waypoint, lane, zone, point-cloud crop volume, annotation 같은 캔버스 객체의 선택 상태를 제공한다. 반복적인 속성 편집은 docked panel, 가벼운 확인은 drawer를 사용하고, 전체 선택 해제 액션은 header의 같은 위치에 둔다. |
+| `ViewportStatusBar` | mode, cursor/camera, zoom, selected count, snap, point count, FPS를 조밀하게 표시하되 command action은 포함하지 않는다. |
 | `HistoryToolbar` | icon-only button은 accessible name을 갖고 undo/redo disabled 이유가 전달되어야 한다. |
-| `Map2DCanvas` | grid, waypoint, route, zone은 토큰 색상과 동일한 좌표 체계를 사용한다. |
+| `Map2DCanvas` | grid, waypoint, route, zone은 토큰 색상과 동일한 좌표 체계를 사용하고, 선택/드로잉 모드에서는 pan interaction을 끌 수 있어야 한다. |
 | `TopicTree` | 기본 Tree와 selection, density, expand affordance를 맞춘다. |
 
 ## Control contracts

@@ -56,7 +56,7 @@ const componentItems = [
   ['데이터', 'AvatarGroup', 'components/data/data-avatargroup.card.html', 'AvatarGroup', '컴포넌트/피드백'],
   ['데이터', 'Calendar', 'components/data/data-calendar.card.html', 'Calendar', '컴포넌트/데이터'],
   ['데이터', 'Table', 'components/data/data-table.card.html', 'Table, StatusBadge', '컴포넌트/데이터'],
-  ['에디터', '맵 에디터 셸', 'components/editor/editor.card.html', 'CanvasEditorShell, EditorToolbar, HistoryToolbar', '컴포넌트/로보틱스와 뷰어'],
+  ['에디터', '맵 에디터 셸', 'components/editor/editor.card.html', 'CanvasEditorShell, CanvasEditorCommandBar, EditorToolbar, HistoryToolbar, LayerPanel, SelectionInspector, ViewportStatusBar', '컴포넌트/로보틱스와 뷰어'],
   ['피드백', 'Avatar', 'components/feedback/feedback-avatar.card.html', 'Avatar', '컴포넌트/피드백'],
   ['피드백', 'Badge', 'components/feedback/feedback-badge.card.html', 'Badge', '컴포넌트/피드백'],
   ['피드백', 'Chip', 'components/feedback/feedback-chip.card.html', 'Chip', '컴포넌트/피드백'],
@@ -315,7 +315,7 @@ export const SourceInventory = {
         <Metric label="원본 지침" value={guidelineItems.length} caption="guidelines/*.html" />
         <Metric label="원본 요소 카드" value={componentItems.length} caption="components/**/*.card.html" />
         <Metric label="템플릿 카드" value={templateItems.length} caption="templates-cards/*.html" />
-        <Metric label="현재 컴포넌트" value="169" caption="React component entries" />
+        <Metric label="현재 컴포넌트" value="173" caption="React component entries" />
       </section>
 
       <Section

@@ -3,6 +3,8 @@ import * as React from 'react';
 export interface SpeedDialAction {
   icon: React.ReactNode;
   label: React.ReactNode;
+  /** Accessible name when label is not a plain string. */
+  ariaLabel?: string;
   onClick?: () => void;
   danger?: boolean;
 }
