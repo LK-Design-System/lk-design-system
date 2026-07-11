@@ -75,7 +75,7 @@ export function FileUploadQueue({
         }`}
       </style>
 
-      <header style={{ padding: 'var(--space-4)', background: 'var(--color-semantic-fill-normal)', borderBottom: '1px solid var(--color-semantic-line-normal-normal)' }}>
+      <header style={{ padding: 'var(--space-4)', borderBottom: '1px solid var(--color-semantic-line-normal-normal)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '28px minmax(0, 1fr)', gap: 'var(--space-3)', alignItems: 'center' }}>
           <Icon name="document" size={22} color="var(--color-semantic-label-neutral)" aria-hidden="true" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>

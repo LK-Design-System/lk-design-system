@@ -1,10 +1,12 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
+import { statusToneStyle } from './status-presentation.js';
 
 const TONES = {
-  info: { c: 'var(--component-banner-info-icon)', bg: 'var(--component-banner-info-bg)', border: 'var(--component-banner-info-border)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
-  success: { c: 'var(--component-banner-positive-icon)', bg: 'var(--component-banner-positive-bg)', border: 'var(--component-banner-positive-border)', d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
-  warning: { c: 'var(--component-banner-cautionary-icon)', bg: 'var(--component-banner-cautionary-bg)', border: 'var(--component-banner-cautionary-border)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
-  error: { c: 'var(--component-banner-negative-icon)', bg: 'var(--component-banner-negative-bg)', border: 'var(--component-banner-negative-border)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
+  info: { tone: 'signal', c: 'var(--component-banner-info-icon)', bg: 'var(--component-banner-info-bg)', border: 'var(--component-banner-info-border)' },
+  success: { tone: 'positive', c: 'var(--component-banner-positive-icon)', bg: 'var(--component-banner-positive-bg)', border: 'var(--component-banner-positive-border)' },
+  warning: { tone: 'cautionary', c: 'var(--component-banner-cautionary-icon)', bg: 'var(--component-banner-cautionary-bg)', border: 'var(--component-banner-cautionary-border)' },
+  error: { tone: 'negative', c: 'var(--component-banner-negative-icon)', bg: 'var(--component-banner-negative-bg)', border: 'var(--component-banner-negative-border)' },
 };
 
 /**
@@ -26,7 +28,7 @@ export function Banner({ tone = 'info', title, children, action, onClose, style,
       }}
       {...rest}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 1 }} dangerouslySetInnerHTML={{ __html: t.d }} />
+      <Icon name={statusToneStyle(t.tone).icon} size={20} color={t.c} aria-hidden="true" style={{ flexShrink: 0, marginTop: 1 }} />
       <div style={{ flex: 1, minWidth: 0 }}>
         {title != null && <div style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', marginBottom: children != null ? 3 : 0 }}>{title}</div>}
         {children != null && <div style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}

@@ -109,7 +109,7 @@ function assertMixedGrouping(root, expectedIssues) {
 function FocusableSummaryExample(args) {
   const summaryRef = React.useRef(null);
   return (
-    <div style={{ width: '100%', maxWidth: 760 }}>
+    <div style={{ width: '100%', maxWidth: 640 }}>
       <ValidationSummary {...args} ref={summaryRef} />
       <button
         type="button"
@@ -156,7 +156,7 @@ const meta = {
     },
   },
   render: (args) => (
-    <div style={{ width: '100%', maxWidth: 760 }}>
+    <div style={{ width: '100%', maxWidth: 640 }}>
       <ValidationSummary {...args} />
     </div>
   ),
@@ -167,7 +167,7 @@ export default meta;
 export const ErrorsAndWarnings = {
   name: '오류와 warning 분리',
   args: {
-    description: '오류 2개를 수정해야 저장할 수 있습니다. 주의 1개도 함께 검토하세요.',
+    description: '아래 항목을 수정해야 저장할 수 있습니다. 주의 항목도 함께 검토하세요.',
     issues: mixedIssues,
     onIssueActivate: () => {},
     announce: true,

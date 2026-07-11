@@ -97,7 +97,7 @@ export const QueueStates = {
         onCancel={() => {}}
         onRemove={() => {}}
       />
-      <FileUploadQueue items={[]} emptyLabel="처리 중인 파일이 없습니다." />
+      <FileUploadQueue title="완료된 큐" items={[]} emptyLabel="처리 중인 파일이 없습니다." />
     </main>
   ),
 };

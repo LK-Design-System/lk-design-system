@@ -64,6 +64,7 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
     ? `검증 결과: 오류 ${errorCount}개, 주의 ${warningCount}개`
     : '검증 결과: 문제 없음';
   const resolvedTabIndex = tabIndex ?? (errorCount > 0 ? -1 : undefined);
+  const topSeverity = errorCount > 0 ? severityMeta('error') : warningCount > 0 ? severityMeta('warning') : null;
   const groups = [
     {
       key: 'error',
@@ -92,7 +93,7 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
         boxSizing: 'border-box',
         overflow: 'hidden',
         containerType: 'inline-size',
-        border: '1px solid var(--color-semantic-line-normal-normal)',
+        border: `1px solid ${topSeverity ? topSeverity.border : 'var(--color-semantic-line-normal-normal)'}`,
         borderRadius: 'var(--radius-lg)',
         background: 'var(--color-semantic-background-elevated-normal)',
         color: 'var(--color-semantic-label-normal)',
@@ -199,8 +200,8 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
                   alignItems: 'center',
                   gap: 'var(--space-2)',
                   padding: 'var(--space-2) var(--space-4)',
-                  borderBottom: '1px solid var(--color-semantic-line-normal-alternative)',
-                  background: 'var(--color-semantic-background-elevated-alternative)',
+                  borderBottom: `1px solid ${group.border}`,
+                  background: group.surface,
                 }}
               >
                 <Icon name={group.icon} size={16} color={group.foreground} aria-hidden="true" />
@@ -258,7 +259,6 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
                       style={{
                         display: 'grid',
                         gap: 'var(--space-1)',
-                        minHeight: 64,
                         padding: 'var(--space-3) var(--space-4)',
                         boxSizing: 'border-box',
                       }}
