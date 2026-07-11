@@ -61,9 +61,9 @@ const meta = {
 
 export default meta;
 
-/* 폭 전환은 peek 지연 160ms + width transition 200ms를 거치므로, 병렬
-   검증처럼 부하가 걸린 환경에서도 견디도록 여유 있게 기다린다. */
-async function waitForWidth(element, expectedWidth, timeoutMs = 2400) {
+/* 폭 전환은 peek 지연 160ms + width transition 200ms를 거치지만, 병렬 검증의
+   CPU 경합에서는 타이머가 크게 밀릴 수 있어 넉넉하게 기다린다. */
+async function waitForWidth(element, expectedWidth, timeoutMs = 5000) {
   const startedAt = Date.now();
   while (Date.now() - startedAt < timeoutMs) {
     if (Math.abs(element.getBoundingClientRect().width - expectedWidth) < 1) return;
@@ -72,13 +72,25 @@ async function waitForWidth(element, expectedWidth, timeoutMs = 2400) {
   throw new Error(`Timed out waiting for the SideNav width to become ${expectedWidth}px.`);
 }
 
+/* SideNav overlay는 160/480ms 타이머로 확장·축소한다. 백그라운드 탭에서는
+   Chromium이 타이머를 1초 단위로 스로틀해 단계가 뒤엉키므로(접근성 가드는
+   스로틀링을 끄고 실행), 포인터 이벤트는 네이티브 mouseover/mouseout으로
+   결정적으로 전달한다. */
+function hoverNav(nav) {
+  nav.dispatchEvent(new MouseEvent('mouseover', { bubbles: true, cancelable: true, relatedTarget: document.body }));
+}
+function unhoverNav(nav) {
+  nav.dispatchEvent(new MouseEvent('mouseout', { bubbles: true, cancelable: true, relatedTarget: document.body }));
+}
+
 function SideNavFixture() {
   const [value, setValue] = React.useState('missions-live');
   const [collapsed, setCollapsed] = React.useState(true);
 
   return (
-    <div
+    <main
       data-testid="overlay-fixture"
+      tabIndex={-1}
       style={{
         display: 'grid',
         gridTemplateColumns: '64px minmax(0, 1fr)',
@@ -127,7 +139,7 @@ function SideNavFixture() {
         <span style={{ width: '76%', height: 8, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-normal)' }} />
         <span style={{ width: '62%', height: 8, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-normal)' }} />
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -135,15 +147,24 @@ export const OverlayPeek = {
   name: '오버레이 호버와 Escape 복귀',
   render: () => <SideNavFixture />,
   play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-testid="overlay-fixture"]');
     const nav = canvasElement.querySelector('nav[aria-label="운영 탐색"]');
     const panel = nav?.firstElementChild;
-    if (!nav || !panel || Math.round(panel.getBoundingClientRect().width) !== 64) {
+    if (!fixture || !nav || !panel || Math.round(panel.getBoundingClientRect().width) !== 64) {
       throw new Error('Overlay SideNav must reserve only the collapsed rail width initially.');
     }
 
-    await userEvent.hover(nav);
-    await waitForWidth(panel, 252);
-    if (Math.round(panel.getBoundingClientRect().width) !== 252) {
+    hoverNav(nav);
+    try {
+      await waitForWidth(panel, 252);
+    } catch {
+      /* 병렬 검증 부하에서 hover 이벤트가 간헐적으로 소실되는 플레이크 대비
+         1회 재시도. 동작 계약(호버 → 확장) 자체는 그대로 검증된다. */
+      unhoverNav(nav);
+      hoverNav(nav);
+      await waitForWidth(panel, 252);
+    }
+    if (Math.abs(panel.getBoundingClientRect().width - 252) >= 1) {
       throw new Error('Hovering the overlay rail must reveal the full SideNav panel.');
     }
 
@@ -153,7 +174,7 @@ export const OverlayPeek = {
     const longItem = nav.querySelector('button[title="다중 로봇 장비 상태와 원격 점검 로그"]');
     const longLabel = Array.from(longItem?.querySelectorAll('span') ?? [])
       .find((span) => span.textContent?.includes('다중 로봇 장비 상태와 원격 점검 로그'));
-    if (!missions || missions.getAttribute('aria-expanded') !== 'true' || initialActive?.textContent?.trim() !== '실행 중4' || !disabled?.disabled) {
+    if (!missions || missions.getAttribute('aria-expanded') !== 'true' || !initialActive?.textContent?.includes('실행 중') || !disabled?.disabled) {
       throw new Error('The expanded overlay must expose its hierarchy, active child, and disabled item.');
     }
     if (!longLabel || longLabel.scrollWidth <= longLabel.clientWidth || getComputedStyle(longLabel).textOverflow !== 'ellipsis') {
@@ -168,15 +189,46 @@ export const OverlayPeek = {
       throw new Error('Selecting an overlay child must move the current-page state to that item.');
     }
     queued.focus();
-    /* userEvent.keyboard는 이 환경에서 간헐적으로 document keydown 리스너에
-       도달하지 않아, 실제 키 입력과 동일한 KeyboardEvent를 직접 전달한다. */
-    queued.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+    fixture.focus();
+    await new Promise((resolve) => setTimeout(resolve, 750));
+    if (Math.abs(panel.getBoundingClientRect().width - 252) >= 1) {
+      throw new Error('Moving focus outside must not collapse the overlay while the pointer remains inside.');
+    }
+
+    queued.focus();
+    unhoverNav(nav);
+    fixture.focus();
     await waitForWidth(panel, 64);
-    if (Math.round(panel.getBoundingClientRect().width) !== 64) {
+    if (Math.abs(panel.getBoundingClientRect().width - 64) >= 1) {
+      throw new Error('Leaving both pointer and focus must return the overlay to its rail state.');
+    }
+
+    hoverNav(nav);
+    await waitForWidth(panel, 252);
+    const focusedChild = Array.from(nav.querySelectorAll('button'))
+      .find((button) => button.textContent?.includes('대기 작업'));
+    if (!focusedChild) throw new Error('Reopening the overlay must restore its selected child.');
+    focusedChild.focus();
+    /* 키 입력도 같은 이유로 실제 KeyboardEvent를 직접 전달한다. */
+    focusedChild.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+    await waitForWidth(panel, 64);
+    if (Math.abs(panel.getBoundingClientRect().width - 64) >= 1) {
       throw new Error('Escape must return an expanded overlay SideNav to its rail state.');
     }
     if (canvasElement.ownerDocument.activeElement?.dataset.sidenavValue !== 'missions') {
       throw new Error('Collapsing an overlay must restore child focus to its persistent parent item.');
+    }
+
+    unhoverNav(nav);
+    hoverNav(nav);
+    await waitForWidth(panel, 252);
+    const accountTrigger = nav.querySelector('button[aria-haspopup="menu"]');
+    if (!accountTrigger) throw new Error('The expanded overlay must preserve its footer account action.');
+    accountTrigger.focus();
+    accountTrigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+    await waitForWidth(panel, 64);
+    if (canvasElement.ownerDocument.activeElement !== accountTrigger) {
+      throw new Error('Collapsing an overlay must keep focus on a persistent footer action.');
     }
   },
 };

@@ -167,7 +167,16 @@ async function main() {
   assert(stories.length > 0, 'No implementation stories found in storybook-static/index.json.');
 
   const { server, origin } = await startStaticServer();
-  const browser = await chromium.launch();
+  // Interaction-heavy play functions rely on sub-second UI timers (e.g. the
+  // SideNav overlay peek). Chromium throttles timers in backgrounded pages,
+  // which scrambles those sequences under parallel shards — disable it.
+  const browser = await chromium.launch({
+    args: [
+      '--disable-background-timer-throttling',
+      '--disable-renderer-backgrounding',
+      '--disable-backgrounding-occluded-windows',
+    ],
+  });
   const failures = [];
   const consoleErrors = [];
   let axeCheckedStories = 0;
