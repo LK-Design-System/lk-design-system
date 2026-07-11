@@ -39,7 +39,7 @@ function MenuItem({ item, variant, close }) {
         fontFamily: "var(--font-sans)",
         fontSize: 14,
         color: item.danger
-          ? "var(--color-semantic-status-negative)"
+          ? "var(--color-semantic-status-negative-text)"
           : item.disabled
             ? "var(--color-semantic-label-disable)"
             : "var(--color-semantic-label-normal)",
@@ -145,9 +145,12 @@ export function Menubar({
       {...rest}
     >
       {menus.map((menu, index) => (
-        <div key={index} style={{ position: "relative" }}>
+        <div key={index} role="none" style={{ position: "relative" }}>
           <button
             type="button"
+            role="menuitem"
+            aria-haspopup="menu"
+            aria-expanded={open === index}
             onClick={() =>
               setOpen((current) => (current === index ? -1 : index))
             }

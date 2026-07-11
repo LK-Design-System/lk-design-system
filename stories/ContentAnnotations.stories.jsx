@@ -43,7 +43,7 @@ function AnchorBox({ label = 'target' }) {
         border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-md)',
         background: 'var(--color-semantic-background-elevated-normal)',
-        color: 'var(--color-semantic-label-assistive)',
+        color: 'var(--color-semantic-label-alternative)',
         fontSize: 11,
       }}
     >

@@ -1,11 +1,16 @@
 import React from 'react';
 
-// Battery colour by charge level — carried as a mark on both the fill and the
-// % readout (the readout uses the same status hue, AA-legible on card surfaces).
+// Battery colour by charge level — the fill uses the vivid status hue while
+// the % readout uses the matching status *text* token so it stays AA-legible.
 function fillForLevel(b) {
   return b <= 20 ? 'var(--color-semantic-status-negative)'
     : b <= 50 ? 'var(--color-semantic-status-cautionary)'
     : 'var(--color-semantic-status-positive)';
+}
+function textForLevel(b) {
+  return b <= 20 ? 'var(--color-semantic-status-negative-text)'
+    : b <= 50 ? 'var(--color-semantic-status-cautionary-text)'
+    : 'var(--color-semantic-status-positive-text)';
 }
 
 /**
@@ -27,7 +32,7 @@ export function BatteryGauge({ value = 0, showLabel = true, size = 'md', style, 
         <span style={{ display: 'block', height: '100%', width: `${b}%`, background: fill, borderRadius: 1 }} />
         <span style={{ position: 'absolute', right: -3, top: '50%', transform: 'translateY(-50%)', width: 2, height: 5, background: 'var(--color-semantic-label-alternative)', borderRadius: '0 1px 1px 0' }} />
       </span>
-      {showLabel && <span aria-hidden="true" style={{ fontSize: sm ? 11 : 12, fontWeight: 'var(--fw-bold)', color: fill, fontVariantNumeric: 'tabular-nums' }}>{b}%</span>}
+      {showLabel && <span aria-hidden="true" style={{ fontSize: sm ? 11 : 12, fontWeight: 'var(--fw-bold)', color: textForLevel(b), fontVariantNumeric: 'tabular-nums' }}>{b}%</span>}
     </span>
   );
 }

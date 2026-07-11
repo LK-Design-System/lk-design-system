@@ -18,7 +18,7 @@ export function NavRail({ items = [], value, defaultValue, onChange, style, ...r
         return (
           <button
             key={o.value} type="button" aria-current={active ? 'page' : undefined} onClick={() => pick(o.value)} title={typeof o.label === 'string' ? o.label : undefined}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5, width: 68, height: 60, border: 'none', borderRadius: 'var(--radius-lg)', cursor: 'pointer', background: active ? 'var(--color-semantic-primary-surface-strong)' : 'transparent', color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)', transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)' }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5, width: 68, height: 60, border: 'none', borderRadius: 'var(--radius-lg)', cursor: 'pointer', background: active ? 'var(--color-semantic-primary-surface-strong)' : 'transparent', color: active ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-alternative)', transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)' }}
           >
             {o.icon}
             <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)' }}>{o.label}</span>

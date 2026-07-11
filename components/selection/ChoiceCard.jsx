@@ -189,7 +189,7 @@ export function ChoiceCard({
           ? selected
           : undefined
       }
-      aria-selected={isFrame ? selected || undefined : undefined}
+      aria-selected={["option", "tab", "row", "gridcell", "treeitem"].includes(resolvedRole) ? selected || undefined : undefined}
       aria-disabled={disabled || undefined}
       data-presentation={presentation}
       data-selected={selected ? "" : undefined}
@@ -211,7 +211,7 @@ export function ChoiceCard({
         <span
           style={{
             flexShrink: 0,
-            color: selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
+            color: selected ? "var(--color-semantic-primary-heavy)" : "var(--color-semantic-label-neutral)",
             display: "inline-flex",
           }}
         >

@@ -71,7 +71,7 @@ export function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone 
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0, whiteSpace: 'nowrap',
           fontSize: 13, fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
           {moving ? (
-            <span aria-label={direction === 'up' ? '상승 중' : '하강 중'} style={{ display: 'inline-flex', color: c, animation: 'lk-equip-dim 1.5s var(--ease-in-out) infinite' }}>
+            <span role="img" aria-label={direction === 'up' ? '상승 중' : '하강 중'} style={{ display: 'inline-flex', color: c, animation: 'lk-equip-dim 1.5s var(--ease-in-out) infinite' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
                 {direction === 'up' ? <path d="M12 19V5M5 12l7-7 7 7" /> : <path d="M12 5v14M19 12l-7 7-7-7" />}
               </svg>

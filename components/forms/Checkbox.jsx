@@ -77,7 +77,7 @@ export function Checkbox({
       };
 
   return (
-    <label
+    <label data-disabled={disabledState ? "" : undefined}
       htmlFor={id}
       onClick={toggle}
       onMouseEnter={() => setHover(true)}

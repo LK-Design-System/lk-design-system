@@ -26,7 +26,7 @@ export function Timeline({ items = [], style, ...rest }) {
               {!last && <span style={{ flex: 1, width: 2, background: 'var(--color-semantic-line-solid-normal)', marginTop: 4 }} />}
             </div>
             <div style={{ paddingBottom: last ? 0 : 22 }}>
-              {it.time != null && <div style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', letterSpacing: '0.2px', color: 'var(--color-semantic-label-assistive)', marginBottom: 3 }}>{it.time}</div>}
+              {it.time != null && <div style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', letterSpacing: '0.2px', color: 'var(--color-semantic-label-alternative)', marginBottom: 3 }}>{it.time}</div>}
               <div style={{ fontSize: 15.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{it.title}</div>
               {it.description != null && <div style={{ marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{it.description}</div>}
             </div>

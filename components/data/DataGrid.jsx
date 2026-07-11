@@ -163,7 +163,7 @@ export function DataGrid({
           {(loading || error != null || sorted.length === 0) && (
             <tr>
               <td colSpan={colSpan} style={{ padding: 'var(--space-8) var(--space-4)', textAlign: 'center', borderBottom: 0 }}>
-                <div role={error != null ? 'alert' : 'status'} aria-live="polite" style={{ display: 'inline-grid', justifyItems: 'center', gap: 'var(--space-2)', color: error != null ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-assistive)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
+                <div role={error != null ? 'alert' : 'status'} aria-live="polite" style={{ display: 'inline-grid', justifyItems: 'center', gap: 'var(--space-2)', color: error != null ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
                   <span>{loading ? loadingLabel : error ?? emptyLabel}</span>
                   {stateActions}
                 </div>

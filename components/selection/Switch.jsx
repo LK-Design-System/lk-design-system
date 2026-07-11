@@ -49,7 +49,7 @@ export function Switch({
   const offBg = platform === 'ios' ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-interaction-inactive)';
   const trackBg = disabledState ? (on ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)') : on ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-strong)' : offBg;
   return (
-    <label
+    <label data-disabled={disabledState ? "" : undefined}
       htmlFor={id}
       onClick={toggle}
       onMouseEnter={() => setHover(true)}

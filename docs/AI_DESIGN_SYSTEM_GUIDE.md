@@ -24,6 +24,8 @@ AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제�
 - 컴포넌트 소스는 component 토큰을 우선 사용합니다.
 - primitive 토큰은 semantic/component 토큰을 정의하거나 수정할 때만 사용합니다.
 
+label 계열은 대비 기준으로 용도가 나뉩니다. `label-strong`·`label-normal`·`label-neutral`·`label-alternative`는 AA(4.5:1)를 충족하므로 텍스트에 사용할 수 있습니다 (`label-alternative`는 WDS의 0.61 알파가 AA에 미달해 LK retone에서 0.74로 올린 값입니다 — `tokens/source.json`의 note 참조). `label-assistive`와 `label-disable`은 AA 미달이므로 placeholder·disabled·장식적 보조 요소 전용이며, 화면 이해에 필요한 텍스트에는 쓰지 않습니다.
+
 ## AI 사용 규칙
 
 UI 코드를 생성할 때:
@@ -107,6 +109,21 @@ UI 코드를 생성할 때:
 - `--component-confirm-dialog-max-width`
 
 warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadge` text와 함께 제공합니다.
+
+## Severity surface 문법
+
+상태(severity)를 표현하는 표면은 아래 문법을 따릅니다. 새 status·요약·목록 컴포넌트를 추가할 때 이 표에서 역할을 먼저 고르고, 다른 조합을 발명하지 않습니다.
+
+| 역할 | 예 | 표면 처리 |
+| --- | --- | --- |
+| 단일 메시지 표면 | `Callout`, `Banner` | 전체 tinted surface + 같은 tone의 hairline border |
+| 제출/검증 결과 요약 | `ValidationSummary` | 중립 목록 본문 + severity 구역 heading band(tone surface/border) + 최고 심각도의 외곽 hairline |
+| 진행형 작업 목록 | `FileUploadQueue` | 카드 외곽·헤더는 항상 중립. 상태는 행 단위 `StatusBadge`·아이콘·텍스트로만 표현 |
+
+- 색은 semantic `status-*` 토큰(또는 그 alias인 `component-banner/callout-*`)만 사용합니다. severity 색을 새로 정의하지 않습니다.
+- severity 글리프는 `Icon` registry + `statusToneStyle` 매핑(`signal=circle-info-fill`, `positive=circle-check-fill`, `cautionary=triangle-exclamation-fill`, `negative=circle-close-fill`)으로 고정합니다. 인라인 SVG로 다시 그리지 않습니다.
+- 카운트 문법: 심각도별로 그룹핑된 요약은 구역 band heading에 카운트를 표시하고, 상태가 섞인 단일 목록은 헤더의 `StatusBadge` 칩으로 요약합니다. 두 방식을 한 컴포넌트에서 함께 쓰지 않습니다.
+- 색만으로 의미를 전달하지 않습니다. tint에는 항상 아이콘 또는 명시적 상태 문구가 동반되어야 합니다.
 
 ## 프롬프트 템플릿
 

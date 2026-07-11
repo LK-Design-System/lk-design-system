@@ -149,7 +149,7 @@ export const StatusInventory = {
         저장 전 필수 입력값을 확인합니다.
       </Callout>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)', alignItems: 'center' }}>
-        <CircularProgress value={72} showValue />
+        <CircularProgress value={72} label="진행률" showValue />
         <Meter label="완료율" value={47} max={100} />
         <ProgressBar label="진행률" value={64} showValue />
         <Spinner label="동기화 중" />
@@ -187,10 +187,10 @@ export const CircularProgressCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 560, height: 200, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap' }}>
-        <CircularProgress value={72} showValue />
-        <CircularProgress value={100} tone="positive" size={40} />
-        <CircularProgress value={34} tone="cautionary" size={40} />
-        <CircularProgress value={58} size={64} thickness={6} showValue />
+        <CircularProgress value={72} label="진행률" showValue />
+        <CircularProgress value={100} label="완료" tone="positive" size={40} />
+        <CircularProgress value={34} label="주의 진행률" tone="cautionary" size={40} />
+        <CircularProgress value={58} label="처리 진행률" size={64} thickness={6} showValue />
       </div>
     </div>
   ),
@@ -229,7 +229,7 @@ export const ProgressBarCard = {
     <div data-visual-crop-root style={{ width: 320, height: 140, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
         <ProgressBar value={68} label="업로드" showValue />
-        <ProgressBar indeterminate />
+        <ProgressBar indeterminate aria-label="처리 중" />
       </div>
     </div>
   ),

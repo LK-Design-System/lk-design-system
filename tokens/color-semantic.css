@@ -16,11 +16,11 @@
   --color-semantic-line-normal-normal: rgba(112, 115, 124, 0.22);
   --color-semantic-line-normal-alternative: rgba(112, 115, 124, 0.08);
   --color-semantic-inverse-background: #1B1C1E;
-  --color-semantic-inverse-label: #F7F7F8;
+  --color-semantic-inverse-label: #FFFFFF;
   --color-semantic-primary-strong: #336CA1;
   --color-semantic-primary-heavy: #2D6090;
   --color-semantic-label-neutral: rgba(46, 47, 51, 0.88);
-  --color-semantic-label-alternative: rgba(55, 56, 60, 0.61);
+  --color-semantic-label-alternative: rgba(55, 56, 60, 0.74);
   --color-semantic-label-assistive: rgba(55, 56, 60, 0.28);
   --color-semantic-label-disable: rgba(55, 56, 60, 0.16);
   --color-semantic-background-normal-alternative: #F7F7F8;
@@ -136,7 +136,7 @@
   --color-semantic-primary-strong: #3C80BF;
   --color-semantic-primary-heavy: #3775AF;
   --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
-  --color-semantic-label-alternative: rgba(174, 176, 182, 0.61);
+  --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
   --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
   --color-semantic-label-disable: rgba(152, 155, 162, 0.16);
   --color-semantic-background-normal-alternative: #0F0F10;
@@ -253,7 +253,7 @@
     --color-semantic-primary-strong: #3C80BF;
     --color-semantic-primary-heavy: #3775AF;
     --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
-    --color-semantic-label-alternative: rgba(174, 176, 182, 0.61);
+    --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
     --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
     --color-semantic-label-disable: rgba(152, 155, 162, 0.16);
     --color-semantic-background-normal-alternative: #0F0F10;

@@ -62,7 +62,7 @@ export function Footer({
   if (compact) {
     return (
       <footer style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px 24px', flexWrap: 'wrap', padding: '14px 2px', borderTop: '1px solid var(--color-semantic-line-normal-normal)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-        <span style={{ fontSize: 12.5, letterSpacing: 0, color: 'var(--color-semantic-label-assistive)' }}>{copyright}</span>
+        <span style={{ fontSize: 12.5, letterSpacing: 0, color: 'var(--color-semantic-label-alternative)' }}>{copyright}</span>
         {links.length > 0 && (
           <span style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
             {links.map((l, i) => linkEl('c' + i, l, 'var(--color-semantic-label-alternative)', 'var(--color-semantic-label-normal)', 12.5))}
@@ -100,10 +100,10 @@ export function Footer({
             <div style={{ height: 1, background: 'var(--color-semantic-inverse-line-normal)', margin: '32px 0 24px' }} />
           </React.Fragment>
         )}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: 'var(--color-semantic-inverse-label-assistive-soft)', wordBreak: 'keep-all' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: 'var(--color-semantic-inverse-label-neutral-soft)', wordBreak: 'keep-all' }}>
           {contact.length > 0 && entryRow(contact)}
           {locations.length > 0 && entryRow(locations)}
-          <span style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 20px', color: 'var(--color-semantic-inverse-label-disable-soft)' }}>
+          <span style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 20px', color: 'var(--color-semantic-inverse-label-alternative-soft)' }}>
             {copyright}
             {links.length > 0 && (
               <span style={{ display: 'flex', alignItems: 'center', gap: 16 }}>

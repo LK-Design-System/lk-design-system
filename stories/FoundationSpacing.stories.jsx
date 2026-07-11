@@ -44,7 +44,7 @@ const statusBarStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  color: 'var(--color-semantic-label-assistive)',
+  color: 'var(--color-semantic-label-alternative)',
   fontSize: 11,
   fontWeight: 800,
   borderBottom: '1px solid var(--color-semantic-line-normal-normal)',

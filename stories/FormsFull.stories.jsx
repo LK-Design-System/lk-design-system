@@ -193,7 +193,7 @@ export const TextInputTimerAndCounter = {
           label="인증 코드"
           placeholder="6자리 코드"
           inputMode="numeric"
-          actionRight={<span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-status-negative)', fontWeight: 'var(--fw-bold)', fontSize: 13 }}>02:59</span>}
+          actionRight={<span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-status-negative-text)', fontWeight: 'var(--fw-bold)', fontSize: 13 }}>02:59</span>}
           helper="타이머는 actionRight 슬롯으로 합성합니다."
         />
         <Input

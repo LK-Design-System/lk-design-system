@@ -92,7 +92,7 @@ export function Snackbar({
             style={{
               fontSize: 13,
               lineHeight: 1.45,
-              color: "var(--color-semantic-inverse-label-neutral-soft)",
+              color: "var(--color-semantic-inverse-label-strong-soft)",
               letterSpacing: 0,
               wordBreak: "keep-all",
             }}

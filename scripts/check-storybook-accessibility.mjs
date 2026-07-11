@@ -31,39 +31,21 @@ const axeRules = [
   'select-name',
   'svg-img-alt',
 ];
-const axeGuardTitles = new Set([
-  'LDS Product/Content/Source Disclosure',
-  'LDS Product/Data/Tree Picker',
-  'LDS Product/Layout/Editor Panel',
-  'LDS Product/MLOps/Execution Status',
-  'LDS Product/MLOps/Metric Comparison',
-  'LDS Product/MLOps/Review Decision',
-  'LDS Product/Operations/Annotated Image',
-  'LDS Product/Operations/Batch Operation Summary',
-  'LDS Product/Operations/Change Summary',
-  'LDS Product/Operations/Command Lifecycle',
-  'LDS Product/Operations/Connection Status',
-  'LDS Product/Operations/Preflight Summary',
-  'LDS Product/Operations/Safety Confirm Dialog',
-  'LDS Product/Operations/Time Rule Editor',
-  'LDS Product/Selection and Input/File Upload Queue',
-  'LDS Product/Selection and Input/Searchable Multi Select',
-  'LDS Product/Selection and Input/Secret Field',
-  'LDS Product/Selection and Input/Validation Summary',
-  'LDS Robotics/Control/Manual Control Session',
-  'LDS Robotics/Editor/Canvas Shell',
-  'LDS Robotics/Editor/Command Bar',
-  'LDS Robotics/Editor/Editor Toolbar',
-  'LDS Robotics/Editor/Layer Panel',
-  'LDS Robotics/Editor/Selection Inspector',
-  'LDS Robotics/Editor/Viewport Status Bar',
-  'LDS Robotics/Viewer/2D Map',
-  'LDS Robotics/Viewer/3D Frame',
-  'LDS Robotics/Viewer/Frame',
-  'LDS Robotics/Viewer/Telemetry',
-  'LDS Robotics/Viewer/Toolbar',
-  'LDS Robotics/Viewer/Video Stream',
-]);
+// Axe (including color-contrast) runs on every implementation story. Optional
+// A11Y_SHARD="i/n" splits the story list for parallel local runs.
+function shardStories(stories) {
+  const shard = process.env.A11Y_SHARD;
+  if (!shard) return { stories, suffix: '' };
+  const match = /^([1-9]\d*)\/([1-9]\d*)$/.exec(shard.trim());
+  if (!match) throw new Error(`A11Y_SHARD must look like "1/3"; received "${shard}".`);
+  const index = Number(match[1]);
+  const total = Number(match[2]);
+  if (index > total) throw new Error(`A11Y_SHARD index ${index} exceeds shard count ${total}.`);
+  return {
+    stories: stories.filter((_, storyIndex) => storyIndex % total === index - 1),
+    suffix: `-shard-${index}-of-${total}`,
+  };
+}
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -181,7 +163,7 @@ async function gotoStoryReady(page, url, storyId) {
 
 async function main() {
   const index = JSON.parse(await readFile(path.join(staticDir, 'index.json'), 'utf8'));
-  const stories = implementationStories(index.entries || {});
+  const { stories, suffix } = shardStories(implementationStories(index.entries || {}));
   assert(stories.length > 0, 'No implementation stories found in storybook-static/index.json.');
 
   const { server, origin } = await startStaticServer();
@@ -201,24 +183,39 @@ async function main() {
 
     for (const story of stories) {
       await gotoStoryReady(page, storyUrl(origin, story.id), story.id);
-      let axeResults = { violations: [] };
-      if (axeGuardTitles.has(story.title)) {
-        axeCheckedStories += 1;
-        await page.evaluate(() => document.fonts?.ready).catch(() => {});
-        await page.addScriptTag({ content: axe.source });
-        axeResults = await page.evaluate(async (rules) => {
-          const root = document.querySelector('#storybook-root') || document.body;
-          for (let attempt = 0; attempt < 50; attempt += 1) {
-            try {
-              return await window.axe.run(root, { runOnly: { type: 'rule', values: rules } });
-            } catch (error) {
-              if (!String(error?.message || error).includes('already running') || attempt === 49) throw error;
-              await new Promise((resolve) => setTimeout(resolve, 100));
-            }
+      axeCheckedStories += 1;
+      await page.evaluate(() => document.fonts?.ready).catch(() => {});
+      await page.addScriptTag({ content: axe.source });
+      const axeResults = await page.evaluate(async (rules) => {
+        const root = document.querySelector('#storybook-root') || document.body;
+        let results;
+        for (let attempt = 0; attempt < 50; attempt += 1) {
+          try {
+            results = await window.axe.run(root, { runOnly: { type: 'rule', values: rules } });
+            break;
+          } catch (error) {
+            if (!String(error?.message || error).includes('already running') || attempt === 49) throw error;
+            await new Promise((resolve) => setTimeout(resolve, 100));
           }
-          throw new Error('Axe did not become available.');
-        }, axeRules);
-      }
+        }
+        if (!results) throw new Error('Axe did not become available.');
+        // WCAG 1.4.3 exempts text in inactive UI components. Axe only detects
+        // native :disabled, so custom controls mark their label root with
+        // data-disabled / aria-disabled and are exempted here explicitly.
+        results.violations = results.violations
+          .map((violation) => {
+            if (violation.id !== 'color-contrast') return violation;
+            const nodes = violation.nodes.filter((node) => {
+              const selector = Array.isArray(node.target) ? node.target[node.target.length - 1] : node.target;
+              let element = null;
+              try { element = document.querySelector(selector); } catch { element = null; }
+              return !(element && element.closest('[data-disabled], [aria-disabled="true"], :disabled'));
+            });
+            return { ...violation, nodes };
+          })
+          .filter((violation) => violation.nodes.length > 0);
+        return results;
+      }, axeRules);
       const storyFailures = await page.evaluate(() => {
         const root = document.querySelector('#storybook-root') || document.body;
         const controlSelector = [
@@ -321,7 +318,7 @@ async function main() {
     consoleErrors: uniqueConsoleErrors,
   };
   await mkdir(outDir, { recursive: true });
-  await writeFile(path.join(outDir, 'manifest.json'), JSON.stringify(report, null, 2), 'utf8');
+  await writeFile(path.join(outDir, `manifest${suffix}.json`), JSON.stringify(report, null, 2), 'utf8');
 
   assert(uniqueConsoleErrors.length === 0, `Storybook implementation stories emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
   assert(failures.length === 0, `Storybook accessibility guard failed:\n${failures.join('\n')}`);

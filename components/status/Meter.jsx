@@ -25,7 +25,7 @@ export function Meter({ value = 0, max = 100, label, thresholds, size = 'md', sh
           {showValue && <span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-label-alternative)' }}>{value}/{max}</span>}
         </div>
       )}
-      <ProgressBar value={value} max={max} size={size === 'sm' ? 'md' : 'lg'} color={c} />
+      <ProgressBar value={value} max={max} size={size === 'sm' ? 'md' : 'lg'} color={c} aria-label={typeof label === 'string' ? label : undefined} />
     </div>
   );
 }

@@ -36,7 +36,7 @@ export function ButtonGroup({ options = [], value, defaultValue, onChange, size 
             style={{
               height: h, padding: '0 16px', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
               fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-semibold)', letterSpacing: 0,
-              color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-neutral)',
+              color: active ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-neutral)',
               background: active ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)',
               border: `1px solid ${active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`,
               marginLeft: first ? 0 : -1, zIndex: active ? 1 : 0,

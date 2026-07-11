@@ -14,7 +14,7 @@ import { BrandLogo } from '../brand/BrandLogo.jsx';
  * - 'outline' (기본, DS 네이티브) — 서피스 + 헤어라인 + 풀컬러 마크.
  *   시맨틱 토큰이라 다크 테마 자동 대응(애플 마크는 currentColor → 잉크).
  * - 'brand' — 킷의 플랫폼 원색 필 재현(구글 화이트+섀도 · 애플 블랙 ·
- *   페이스북 #1877F2). 플랫폼 강조가 필요할 때만.
+ *   페이스북은 흰 텍스트 AA(4.5:1)를 위해 공식 #1877F2를 #1465D8로 어둡게 조정). 플랫폼 강조가 필요할 때만.
  * 마크는 BrandLogo 재사용, 기본 카피는 KR("Google로 계속하기").
  */
 export function SocialButton({
@@ -40,7 +40,7 @@ export function SocialButton({
   const brandFills = {
     google:   { bg: 'rgb(255,255,255)', bgHover: 'rgb(255,255,255)', fg: 'rgba(0,0,0,0.54)', bd: 'none', shadow: KIT_SHADOW, mono: false },
     apple:    { bg: 'rgb(0,0,0)',       bgHover: 'rgb(0,0,0)',       fg: '#FFFFFF',          bd: 'none', shadow: KIT_SHADOW, mono: false },
-    facebook: { bg: 'rgb(24,119,242)',  bgHover: 'rgb(24,119,242)',  fg: '#FFFFFF',          bd: 'none', shadow: 'none',     mono: true },
+    facebook: { bg: 'rgb(20,101,216)',  bgHover: 'rgb(20,101,216)',  fg: '#FFFFFF',          bd: 'none', shadow: 'none',     mono: true },
   };
   const outline = {
     bg: 'var(--color-semantic-background-elevated-normal, #FFFFFF)', bgHover: 'var(--color-semantic-background-elevated-normal, #FFFFFF)',

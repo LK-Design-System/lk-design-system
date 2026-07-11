@@ -44,7 +44,7 @@ const platformStyle = {
 const variantColor = {
   normal: "var(--color-semantic-primary-normal)",
   assistive: "var(--color-semantic-label-neutral)",
-  negative: "var(--color-semantic-status-negative)",
+  negative: "var(--color-semantic-status-negative-text)",
 };
 
 function normalizeVariant(value) {

@@ -154,7 +154,7 @@
   --component-chip-bg-hover: var(--color-semantic-background-elevated-normal);
   --component-chip-bg-selected: var(--color-semantic-primary-surface-strong);
   --component-chip-fg: var(--color-semantic-label-normal);
-  --component-chip-fg-active: var(--color-semantic-primary-normal);
+  --component-chip-fg-active: var(--color-semantic-primary-heavy);
   --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
   --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
   --component-chip-solid-bg: var(--color-semantic-primary-normal);

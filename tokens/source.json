@@ -1773,7 +1773,7 @@
         "$type": "color",
         "css": "--color-semantic-inverse-label",
         "modes": {
-          "light": "#F7F7F8",
+          "light": "#FFFFFF",
           "dark": "#171719"
         },
         "origin": "wds-structure-lk-retone"
@@ -1809,10 +1809,11 @@
         "$type": "color",
         "css": "--color-semantic-label-alternative",
         "modes": {
-          "light": "rgba(55, 56, 60, 0.61)",
-          "dark": "rgba(174, 176, 182, 0.61)"
+          "light": "rgba(55, 56, 60, 0.74)",
+          "dark": "rgba(174, 176, 182, 0.74)"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "note": "WDS 0.61 alpha fails WCAG AA (3.64:1 on white, 3.53:1 on elevated-alternative); retoned to 0.74 for >=4.5:1 small-text contrast."
       },
       "label-assistive": {
         "$type": "color",

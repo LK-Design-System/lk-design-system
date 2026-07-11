@@ -61,7 +61,7 @@ export function PropertyField({
   const sharedControlLabel = `${labelText}${dirty ? `, ${dirtyLabel}` : ''}`;
 
   return (
-    <div
+    <div data-disabled={disabled ? "" : undefined}
       style={{
         display: 'grid',
         gridTemplateColumns: 'minmax(128px, 1fr) auto auto',

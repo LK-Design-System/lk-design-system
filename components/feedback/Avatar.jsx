@@ -184,6 +184,7 @@ export function Avatar({
 
   return (
     <span
+      role={rest['aria-label'] != null || rest['aria-labelledby'] != null ? 'img' : undefined}
       aria-disabled={deactivated || undefined}
       data-variant={normalizedVariant}
       data-interaction={

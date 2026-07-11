@@ -108,7 +108,7 @@ export function Legend({
         <li
           aria-disabled="true"
           style={{
-            color: 'var(--color-semantic-label-assistive)',
+            color: 'var(--color-semantic-label-alternative)',
             fontSize: cfg.fontSize,
             lineHeight: cfg.lineHeight,
             fontWeight: 'var(--fw-medium)',
@@ -123,7 +123,7 @@ export function Legend({
         const disabled = !!item.disabled;
         const muted = !!item.muted || disabled;
         const itemColor = muted
-          ? 'var(--color-semantic-label-assistive)'
+          ? 'var(--color-semantic-label-alternative)'
           : 'var(--color-semantic-label-neutral)';
 
         return (
@@ -141,7 +141,7 @@ export function Legend({
               lineHeight: cfg.lineHeight,
               fontWeight: 'var(--fw-medium)',
               letterSpacing: 0,
-              opacity: muted ? 0.72 : 1,
+              opacity: 1,
             }}
           >
             <Swatch
@@ -165,7 +165,7 @@ export function Legend({
               <span
                 style={{
                   color: muted
-                    ? 'var(--color-semantic-label-assistive)'
+                    ? 'var(--color-semantic-label-alternative)'
                     : 'var(--color-semantic-label-alternative)',
                   fontVariantNumeric: 'tabular-nums',
                   justifySelf: 'end',

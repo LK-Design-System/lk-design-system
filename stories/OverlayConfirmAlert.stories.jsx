@@ -19,7 +19,7 @@ export default meta;
 
 const alertVariantColor = {
   normal: 'var(--color-semantic-primary-normal)',
-  negative: 'var(--color-semantic-status-negative)',
+  negative: 'var(--color-semantic-status-negative-text)',
   assistive: 'var(--color-semantic-label-neutral)',
 };
 

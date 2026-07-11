@@ -73,6 +73,9 @@ export function ListCell({
   const dividerRight =
     resolvedTrailing != null || chevron ? paddingX + 24 : paddingX;
   const resolvedRole = role ?? (clickable ? "button" : undefined);
+  // aria-selected is only valid on selection roles; toggle buttons use
+  // aria-pressed and plain cells rely on data-selected styling hooks.
+  const supportsAriaSelected = ["option", "tab", "row", "gridcell", "treeitem"].includes(resolvedRole);
   const resolvedTabIndex = disabledState
     ? -1
     : (tabIndex ?? (clickable ? 0 : undefined));
@@ -101,7 +104,8 @@ export function ListCell({
     <div
       role={resolvedRole}
       aria-disabled={disabledState || undefined}
-      aria-selected={selected || undefined}
+      aria-selected={supportsAriaSelected ? selected || undefined : undefined}
+      aria-pressed={resolvedRole === "button" && selected ? true : undefined}
       data-selected={selected ? "" : undefined}
       data-disabled={disabledState ? "" : undefined}
       data-interaction={

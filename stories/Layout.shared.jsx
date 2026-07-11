@@ -148,7 +148,7 @@ export const ScrollAreaCard = {
 };
 
 const parityBox = (children) => (
-  <div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 14, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 600, textAlign: 'center' }}>
+  <div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 14, color: 'var(--color-semantic-primary-heavy)', fontSize: 13, fontWeight: 600, textAlign: 'center' }}>
     {children}
   </div>
 );
@@ -176,18 +176,18 @@ export const ColumnsColCard = {
     <div data-visual-crop-root style={{ width: 700, height: 260, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <div>
         <div style={{ marginBottom: 22 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', marginBottom: 10 }}>main 8 / aside 4 (md)</div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', marginBottom: 10 }}>main 8 / aside 4 (md)</div>
           <Columns gap={12}>
-            <Col md={8}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · md&nbsp;8</div></Col>
+            <Col md={8}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-heavy)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · md&nbsp;8</div></Col>
             <Col md={4}><div style={{ background: 'var(--color-semantic-fill-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-label-neutral)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>aside · md&nbsp;4</div></Col>
           </Columns>
         </div>
         <div style={{ marginBottom: 22 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', marginBottom: 10 }}>thirds — full → half (sm) → third (md)</div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', marginBottom: 10 }}>thirds — full → half (sm) → third (md)</div>
           <Columns gap={12}>
-            <Col sm={6} md={4}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>1</div></Col>
-            <Col sm={6} md={4}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>2</div></Col>
-            <Col sm={12} md={4}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>3</div></Col>
+            <Col sm={6} md={4}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-heavy)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>1</div></Col>
+            <Col sm={6} md={4}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-heavy)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>2</div></Col>
+            <Col sm={12} md={4}><div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-heavy)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>3</div></Col>
           </Columns>
         </div>
       </div>
@@ -230,7 +230,7 @@ export const SplitCard = {
     <div data-visual-crop-root style={{ width: 700, height: 140, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <Split template="260px 1fr" gap={16}>
         <div style={{ background: 'var(--color-semantic-fill-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-label-neutral)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>sidebar · 260</div>
-        <div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · 1fr</div>
+        <div style={{ background: 'var(--color-semantic-primary-surface-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', padding: 16, color: 'var(--color-semantic-primary-heavy)', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>main · 1fr</div>
       </Split>
     </div>
   ),

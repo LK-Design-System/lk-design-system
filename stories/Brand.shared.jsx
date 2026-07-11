@@ -153,7 +153,7 @@ export const LockupOverlineCard = {
     <div style={{ background: 'var(--color-semantic-background-normal-normal)', padding: '22px 24px', fontFamily: 'var(--font-sans)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', marginBottom: 10 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', marginBottom: 10 }}>
             Lockup — mark · stacked · inline
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-static-white)', border: '1px solid var(--color-semantic-line-solid-normal)' }}>
@@ -168,7 +168,7 @@ export const LockupOverlineCard = {
           </div>
         </div>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', marginBottom: 10 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', marginBottom: 10 }}>
             Overline (eyebrow kicker)
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -189,7 +189,7 @@ export const BrandLogoCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 680, height: 460, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <div>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', margin: '0 0 12px' }}>
           Full-colour marks · 40px
         </div>
         <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22 }}>
@@ -201,7 +201,7 @@ export const BrandLogoCard = {
           ))}
         </div>
 
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', margin: '0 0 12px' }}>
           플랫폼 · 소셜 · 40px
         </div>
         <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22 }}>
@@ -213,7 +213,7 @@ export const BrandLogoCard = {
           ))}
         </div>
 
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', margin: '0 0 12px' }}>
           In a sign-in button
         </div>
         <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22 }}>
@@ -228,7 +228,7 @@ export const BrandLogoCard = {
           </span>
         </div>
 
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', margin: '0 0 12px' }}>
           다크 서피스 · mono
         </div>
         <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22, background: 'var(--color-semantic-inverse-background)', padding: '14px 18px', borderRadius: 'var(--radius-md)', color: 'var(--color-semantic-inverse-label)' }}>

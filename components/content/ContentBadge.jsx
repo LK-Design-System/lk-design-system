@@ -11,6 +11,19 @@ const TONES = {
   negative: "var(--color-semantic-status-negative)",
 };
 
+// Text on soft/outlined badges uses the AA status *text* tokens; the vivid
+// TONES hues remain for solid fills and border mixes.
+const TEXT_TONES = {
+  signal: "var(--color-semantic-primary-heavy)",
+  accent: "var(--color-semantic-primary-heavy)",
+  navy: "var(--color-semantic-inverse-background)",
+  neutral: "var(--color-semantic-label-alternative)",
+  positive: "var(--color-semantic-status-positive-text)",
+  cautionary: "var(--color-semantic-status-cautionary-text)",
+  warning: "var(--color-semantic-status-cautionary-text)",
+  negative: "var(--color-semantic-status-negative-text)",
+};
+
 /* WDS scale: heights derive from padding + line-height (no fixed height). */
 const SIZE_XS = {
   padding: "3px 6px",
@@ -115,12 +128,12 @@ export function ContentBadge({
       },
       default: {
         background: softBg,
-        color: baseColor,
+        color: accentContentColor || TEXT_TONES[resolvedTone] || TEXT_TONES.neutral,
         border: "1px solid transparent",
       },
       outlined: {
         background: "transparent",
-        color: baseColor,
+        color: accentContentColor || TEXT_TONES[resolvedTone] || TEXT_TONES.neutral,
         border: `1px solid ${borderColor}`,
       },
     }[resolvedVariant] || {};

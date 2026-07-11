@@ -30,7 +30,7 @@ export function ConnectionBadge({ status = 'online', label, showLabel = true, si
   const h = size === 'sm' ? 11 : 14;
   const bw = size === 'sm' ? 3 : 4;
   return (
-    <span data-status={status} aria-label={typeof (label || cfg.label) === 'string' ? (label || cfg.label) : undefined} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-sans)',
+    <span data-status={status} role={typeof (label || cfg.label) === 'string' ? 'img' : undefined} aria-label={typeof (label || cfg.label) === 'string' ? (label || cfg.label) : undefined} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-sans)',
       fontSize: size === 'sm' ? 12 : 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)', ...style }} {...rest}>
       <span style={{ display: 'inline-flex', alignItems: 'flex-end', gap: 2, height: h,
         animation: animated ? 'lk-conn-blink 1s var(--ease-in-out) infinite' : 'none' }}>

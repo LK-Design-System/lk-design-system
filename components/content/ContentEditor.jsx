@@ -140,7 +140,7 @@ export function ContentEditor({
       {...rest}
     >
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4) var(--space-4) var(--space-3)' }}>
-        <label htmlFor={resolvedTitleId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-alternative)' }}>
+        <label htmlFor={resolvedTitleId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
           {titleLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
         </label>
         <input
@@ -204,7 +204,7 @@ export function ContentEditor({
         )}
       </div>
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4)' }}>
-        <label htmlFor={resolvedBodyId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-alternative)' }}>
+        <label htmlFor={resolvedBodyId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
           {bodyLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
         </label>
         <textarea

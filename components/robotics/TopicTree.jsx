@@ -87,7 +87,7 @@ function TopicNode({ node, depth, onToggle }) {
         )}
         {(hasHz || node.subscribable) && (
           <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            {hasHz && <span style={{ fontSize: 12, lineHeight: '18px', color: 'var(--color-semantic-label-assistive)', fontVariantNumeric: 'tabular-nums' }}>{node.hz} Hz</span>}
+            {hasHz && <span style={{ fontSize: 12, lineHeight: '18px', color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{node.hz} Hz</span>}
             {node.subscribable && (
               <span onClick={(e) => e.stopPropagation()} style={{ display: 'inline-flex' }}>
                 <Switch size="sm" checked={!!node.subscribed} onChange={() => onToggle && onToggle(node)} />

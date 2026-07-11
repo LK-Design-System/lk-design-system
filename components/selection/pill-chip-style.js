@@ -17,7 +17,7 @@ export function pillChipStyle(active, disabled, size = 'md') {
     opacity: disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)',
     fontSize: sm ? 'var(--label2-size)' : 'var(--label1-size)',
     fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-    color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-neutral)',
+    color: active ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-neutral)',
     transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
     whiteSpace: 'nowrap',
   };

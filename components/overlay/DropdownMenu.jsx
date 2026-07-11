@@ -136,7 +136,7 @@ function MenuItemButton({
         fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
         letterSpacing: 0,
         color: item.danger
-          ? "var(--color-semantic-status-negative)"
+          ? "var(--color-semantic-status-negative-text)"
           : disabled
             ? "var(--color-semantic-label-disable)"
             : "var(--color-semantic-label-normal)",
@@ -172,7 +172,7 @@ function MenuItemButton({
         <span
           style={{
             fontSize: 12,
-            color: "var(--color-semantic-label-assistive)",
+            color: "var(--color-semantic-label-alternative)",
             flexShrink: 0,
           }}
         >
@@ -237,7 +237,6 @@ export function DropdownMenu({
       </span>
       {visible && (
         <div
-          role="menu"
           style={{
             position: "absolute",
             top: "calc(100% + 8px)",
@@ -258,28 +257,30 @@ export function DropdownMenu({
             gap: 4,
           }}
         >
-          {items.map((item, index) =>
-            item.divider ? (
-              <div
-                key={index}
-                role="separator"
-                style={{
-                  height: 1,
-                  background: "var(--color-semantic-line-solid-normal)",
-                  margin: "6px 4px",
-                }}
-              />
-            ) : (
-              <MenuItemButton
-                key={index}
-                item={item}
-                variant={item.variant || variant}
-                cellPadding={cellPadding}
-                verticalPadding={verticalPadding}
-                onSelect={() => setVisible(false)}
-              />
-            ),
-          )}
+          <div role="menu" style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            {items.map((item, index) =>
+              item.divider ? (
+                <div
+                  key={index}
+                  role="separator"
+                  style={{
+                    height: 1,
+                    background: "var(--color-semantic-line-solid-normal)",
+                    margin: "6px 4px",
+                  }}
+                />
+              ) : (
+                <MenuItemButton
+                  key={index}
+                  item={item}
+                  variant={item.variant || variant}
+                  cellPadding={cellPadding}
+                  verticalPadding={verticalPadding}
+                  onSelect={() => setVisible(false)}
+                />
+              ),
+            )}
+          </div>
           {(menuActionArea || action) && (
             <div
               style={{

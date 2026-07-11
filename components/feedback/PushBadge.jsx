@@ -7,7 +7,7 @@ import React from 'react';
  * `max`). White ring so it reads on any surface.
  */
 export function PushBadge({ children, count, dot = false, max = 99, tone = 'negative', style, ...rest }) {
-  const c = tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'navy' ? 'var(--color-semantic-inverse-background)' : 'var(--color-semantic-status-negative)';
+  const c = tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'navy' ? 'var(--color-semantic-inverse-background)' : 'var(--color-semantic-status-negative-text)';
   const show = dot || (count != null && count > 0);
   const label = count > max ? `${max}+` : count;
   return (

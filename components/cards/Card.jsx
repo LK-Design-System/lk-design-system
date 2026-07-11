@@ -108,8 +108,8 @@ export function Card({
             {caption != null && <div style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-medium)' }}>{caption}</div>}
             {title != null && <div style={{ fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
             {description != null && <div style={{ fontSize: 13, lineHeight: 1.5, color: dark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
-            {subCaption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--color-semantic-label-assistive)' }}>{subCaption}</div>}
-            {metaCaption != null && <div style={{ fontSize: 11, lineHeight: 1.3, color: 'var(--color-semantic-label-assistive)', fontVariantNumeric: 'tabular-nums' }}>{metaCaption}</div>}
+            {subCaption != null && <div style={{ fontSize: 12, lineHeight: 1.35, color: 'var(--color-semantic-label-alternative)' }}>{subCaption}</div>}
+            {metaCaption != null && <div style={{ fontSize: 11, lineHeight: 1.3, color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{metaCaption}</div>}
           </div>
           {trailingContent != null && <div style={{ flexShrink: 0 }}>{trailingContent}</div>}
         </div>

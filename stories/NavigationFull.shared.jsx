@@ -55,7 +55,7 @@ function AccentTintAction({ children }) {
       onMouseLeave={() => setHover(false)}
       style={{
         background: hover ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-primary-surface-normal)',
-        color: 'var(--color-semantic-primary-normal)',
+        color: 'var(--color-semantic-primary-heavy)',
         border: 'none',
         boxShadow: 'none',
       }}

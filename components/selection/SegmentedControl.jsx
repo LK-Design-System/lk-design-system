@@ -67,7 +67,7 @@ export function SegmentedControl({
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 4,
               cursor: disabledState || o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
               fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)', letterSpacing: 0,
-              color: disabledState || o.disabled ? 'var(--color-semantic-label-disable)' : active ? 'var(--color-semantic-primary-normal)' : activeFocus ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
+              color: disabledState || o.disabled ? 'var(--color-semantic-label-disable)' : active ? 'var(--color-semantic-primary-heavy)' : activeFocus ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-neutral)',
               background: active ? (outlined ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)') : activeHover || activeFocus ? 'var(--color-semantic-fill-normal)' : 'transparent',
               borderRadius: outlined ? 0 : segmentRadius,
               borderLeft: outlined && index > 0 ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',

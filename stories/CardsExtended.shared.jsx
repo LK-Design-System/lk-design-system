@@ -181,7 +181,7 @@ function SpecsBlock() {
         <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)' }}>
           제원 · Specifications
         </span>
-        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-label-assistive)' }}>
+        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-label-alternative)' }}>
           CORE
         </span>
       </div>
@@ -197,7 +197,7 @@ function DarkSpecsBlock() {
         <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-primary-normal)' }}>
           제원 · Specifications
         </span>
-        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-inverse-label-assistive-soft)' }}>
+        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.4, fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-inverse-label-neutral-soft)' }}>
           CORE
         </span>
       </div>

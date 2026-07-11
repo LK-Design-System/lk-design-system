@@ -65,7 +65,6 @@ export function Category({
 
   return (
     <div
-      role="list"
       style={{
         display: "flex",
         alignItems: "center",
@@ -84,7 +83,7 @@ export function Category({
         const colors = alternative
           ? {
               bg: active ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
-              fg: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
+              fg: active ? "var(--color-semantic-primary-heavy)" : "var(--color-semantic-label-neutral)",
               border: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)",
             }
           : {
