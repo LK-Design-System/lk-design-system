@@ -65,11 +65,11 @@ export function ProductCard({
           {category && <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-primary-normal)' }}>{category}</span>}
           <h3 style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 800, letterSpacing: 'var(--ls-h5)', color: 'var(--color-semantic-inverse-label)', whiteSpace: 'nowrap' }}>{id}</h3>
         </div>
-        {description && <p style={{ margin: 0, fontSize: 14, lineHeight: 1.62, color: 'var(--color-semantic-inverse-label)', wordBreak: 'keep-all' }}>{description}</p>}
+        {description && <p style={{ margin: 0, fontSize: 'var(--label1-size)', lineHeight: 1.62, color: 'var(--color-semantic-inverse-label)', wordBreak: 'keep-all' }}>{description}</p>}
         {cta && (
           <span style={{
             alignSelf: 'flex-end', marginTop: 4, whiteSpace: 'nowrap',
-            fontSize: 12.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
+            fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0,
             color: hover ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-inverse-label-neutral-soft)',
             textDecoration: hover ? 'underline' : 'none', textUnderlineOffset: 3,
             transition: 'color var(--dur-fast) var(--ease-out)',

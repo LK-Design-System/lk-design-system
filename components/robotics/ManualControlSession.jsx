@@ -196,7 +196,7 @@ export function ManualControlSession({
         borderRadius: 'var(--component-card-radius)',
         background: 'var(--color-semantic-background-elevated-normal)',
         boxShadow: focused && controlMode !== 'pointer'
-          ? '0 0 0 3px var(--color-semantic-focus-ring)'
+          ? '0 0 0 4px var(--color-semantic-focus-ring)'
           : 'var(--component-card-shadow-sm)',
         fontFamily: 'var(--font-sans)',
         outline: 'none',

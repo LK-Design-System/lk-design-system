@@ -22,3 +22,4 @@
 - **접힘** — 앱 셸에서는 `overlay` + `collapsed/onCollapsedChange`를 권장합니다. 접힌 레일에서 hover-in 시 펼쳐지고 hover-out, 바깥 클릭, Esc에서 다시 접힙니다. 명시적 토글이 필요한 관리 화면에서만 `collapsible`를 켭니다. 접히면 아이콘 레일(`collapsedWidth` 기본 64): 라벨→툴팁, 배지→도트, 헤딩→헤어라인, 브랜드→`headerCollapsed`.
 - **header / headerCollapsed / footer** — 브랜드는 `Lockup` 사용(inline 20px / mark 22px 권장). 푸터는 `height` 지정 시 바닥 고정.
 - 활성은 시안 워시 + 시그널 잉크. 고정 아이콘 레일은 `NavRail`, 모바일 하단은 `BottomNav`.
+- 타입 스케일 정합: 섹션 헤딩 10.5px → `--caption2-size`(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → `--label2-size`(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다.

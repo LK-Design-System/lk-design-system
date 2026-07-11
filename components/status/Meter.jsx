@@ -20,7 +20,7 @@ export function Meter({ value = 0, max = 100, label, thresholds, size = 'md', sh
   return (
     <div style={{ ...style }} {...rest}>
       {(label != null || showValue) && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 6, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 6, fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)' }}>
           <span>{label}</span>
           {showValue && <span style={{ fontVariantNumeric: 'tabular-nums', color: 'var(--color-semantic-label-alternative)' }}>{value}/{max}</span>}
         </div>

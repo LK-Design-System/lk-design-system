@@ -39,7 +39,7 @@ function CheckMark({ variant, checked, disabled }) {
       style={{
         width: 14,
         height: 14,
-        borderRadius: 4,
+        borderRadius: "var(--radius-5)",
         border: `1.5px solid ${checked ? activeColor : "var(--color-semantic-line-solid-normal)"}`,
         background: checked ? activeColor : "transparent",
         color: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-inverse-label)",
@@ -140,7 +140,7 @@ function MenuItemButton({
           : disabled
             ? "var(--color-semantic-label-disable)"
             : "var(--color-semantic-label-normal)",
-        opacity: disabled ? 0.72 : 1,
+        opacity: disabled ? 0.45 : 1,
       }}
     >
       {item.icon || (
@@ -171,7 +171,7 @@ function MenuItemButton({
       {item.shortcut && (
         <span
           style={{
-            fontSize: 12,
+            fontSize: "var(--caption1-size)",
             color: "var(--color-semantic-label-alternative)",
             flexShrink: 0,
           }}
@@ -297,11 +297,11 @@ export function DropdownMenu({
                     height: 28,
                     padding: "0 10px",
                     border: "none",
-                    borderRadius: 7,
+                    borderRadius: "var(--radius-8)",
                     background: "var(--color-semantic-primary-normal)",
                     color: "var(--color-semantic-inverse-label)",
                     fontFamily: "var(--font-sans)",
-                    fontSize: 12,
+                    fontSize: "var(--caption1-size)",
                     fontWeight: "var(--fw-bold)",
                   }}
                 >

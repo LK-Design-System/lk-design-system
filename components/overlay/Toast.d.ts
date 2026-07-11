@@ -17,6 +17,8 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   action?: React.ReactNode;
   onAction?: () => void;
   onClose?: () => void;
+  /** 닫기 버튼의 접근성 레이블. @default "닫기" */
+  closeLabel?: string;
   /** leadingIcon axis. @default true */
   leadingIcon?: boolean;
   icon?: React.ReactNode;

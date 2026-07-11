@@ -20,6 +20,7 @@
 - `helper`는 `timestamp`를 대체하지 않습니다. 둘 다 있으면 함께 표시합니다.
 - 작은 폭에서 값·단위·badge·metadata가 줄바꿈되며, 컴포넌트 자체가 고정 최소 너비를 만들지 않습니다.
 - 수치 갱신 자체는 live region으로 알리지 않습니다. 연결 끊김·임계값 진입 같은 의미 있는 전환은 상위 상태 컴포넌트가 알립니다.
+- 타입 스케일 정합: metadata 행 11.5px → `--caption2-size`(11px)로 스냅했습니다. 12px label(caption1)보다 한 단계 아래를 유지해 위계를 지킵니다. 값 숫자는 sm 18px → `--headline1-size`(18px), md 21px → `--heading2-size`(20px, −1px 의도된 변경)로 스냅했으며 fw-extra 굵기가 프로미넌스를 유지합니다.
 
 ## 내부 LDS 비교와 범위
 

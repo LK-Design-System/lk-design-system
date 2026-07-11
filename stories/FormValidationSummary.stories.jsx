@@ -165,7 +165,7 @@ const meta = {
 export default meta;
 
 export const ErrorsAndWarnings = {
-  name: '오류와 warning 분리',
+  name: '오류와 주의 분리',
   args: {
     description: '아래 항목을 수정해야 저장할 수 있습니다. 주의 항목도 함께 검토하세요.',
     issues: mixedIssues,
@@ -190,7 +190,7 @@ export const ErrorsAndWarnings = {
 };
 
 export const ErrorsOnly = {
-  name: '오류 전용 summary',
+  name: '오류 전용 요약',
   args: {
     title: '저장할 수 없습니다',
     description: '아래 오류를 수정한 뒤 다시 저장하세요.',
@@ -213,7 +213,7 @@ export const ErrorsOnly = {
 };
 
 export const WarningOnly = {
-  name: 'Warning only · 비차단',
+  name: '주의만 · 비차단',
   args: {
     title: '저장 전에 검토하세요',
     description: '주의 항목은 저장을 막지 않습니다. 현재 설정으로 계속할 수 있습니다.',
@@ -300,7 +300,7 @@ export const NarrowLongCopy = {
 };
 
 export const FieldLinksAndKeyboardFocus = {
-  name: '오류 문장 link · keyboard focus',
+  name: '오류 문장 링크 · 키보드 포커스',
   args: {
     title: '수정이 필요한 항목',
     description: '오류 문장을 선택하면 해당 field 또는 field group으로 돌아갑니다.',

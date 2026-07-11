@@ -57,7 +57,7 @@ export function Switch({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 12,
         cursor: disabledState ? 'not-allowed' : readOnly ? 'default' : 'pointer',
-        fontFamily: 'var(--font-sans)', fontSize: 15, letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)',
+        fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)',
         ...style,
       }}
     >

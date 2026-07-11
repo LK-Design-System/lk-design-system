@@ -26,3 +26,10 @@
 - 중앙에는 실제 조작기만 두고, UI arm과 dead-man은 하단 command rail에 둡니다. dead-man control은 UI arm 이후에만 노출합니다.
 - 입력 가능 상태도 같은 Banner 위치에서 갱신해 enable/dead-man 전환 중 조작기 위치가 이동하지 않게 합니다.
 - 이 컴포넌트는 연결·권한·arm·dead-man·focus에 따른 재사용 가능한 차단 경계까지만 소유합니다. 로봇별 주행 화면, 명령 이력, ACK workflow, 장비 상태 dashboard는 제품 화면 또는 별도 Robotics 조합 패턴으로 남깁니다.
+
+## LDS fit and external research basis
+
+- 확인한 LDS 형제 계약은 `ConnectionBadge`, `Banner`, `Button variant="danger"`, `Joystick`, `DirectionalPad`, `Timeline`, `DescriptionList`입니다. 이 컴포넌트는 그 요소를 배치하는 session boundary이며 별도의 상태색, 카드, 조작기, 결과 timeline을 만들지 않습니다.
+- [ROS 2 `teleop_twist_joy`](https://docs.ros.org/en/iron/p/teleop_twist_joy/index.html)는 이동을 위해 enable button을 요구하는 설정을 기본값으로 두지만 rate limiting과 autorepeat는 별도 입력 계층의 책임이라고 명시합니다. 따라서 LDS dead-man UI는 command eligibility를 표현할 뿐 cadence나 실제 정지를 보장한다고 주장하지 않습니다.
+- [ROS 2 `diff_drive_controller`](https://control.ros.org/humble/doc/ros2_controllers/diff_drive_controller/doc/userdoc.html)는 stale command timeout 뒤 자동 정지를 controller 기능으로 둡니다. 이 근거에 따라 blur·unmount·link loss에서 release를 요청하되 실제 stop 보장은 제품 transport와 robot/controller watchdog에 남깁니다.
+- [HTML Standard의 inert subtree](https://html.spec.whatwg.org/multipage/interaction.html#inert-subtrees)는 포인터 hit testing, focus, 편집, 접근성 트리 노출을 함께 차단합니다. 차단 이유와 re-arm action은 inert subtree 밖의 `Banner`와 command rail에 유지해 모든 사용자가 상태를 인지하고 복구할 수 있게 합니다.

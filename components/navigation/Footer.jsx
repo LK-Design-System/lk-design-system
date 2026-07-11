@@ -38,7 +38,7 @@ function BackToTopButton() {
   };
   return (
     <button type="button" onClick={toTop} aria-label="맨 위로"
-      style={{ position: 'fixed', right: 28, bottom: 28, zIndex: 60, width: 50, height: 50, borderRadius: 999,
+      style={{ position: 'fixed', right: 28, bottom: 28, zIndex: 60, width: 50, height: 50, borderRadius: 'var(--radius-pill)',
         border: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-brand-ink)', cursor: 'pointer',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-md)',
         opacity: show ? 1 : 0, transform: show ? 'none' : 'translateY(8px)', pointerEvents: show ? 'auto' : 'none',
@@ -62,10 +62,10 @@ export function Footer({
   if (compact) {
     return (
       <footer style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px 24px', flexWrap: 'wrap', padding: '14px 2px', borderTop: '1px solid var(--color-semantic-line-normal-normal)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-        <span style={{ fontSize: 12.5, letterSpacing: 0, color: 'var(--color-semantic-label-alternative)' }}>{copyright}</span>
+        <span style={{ fontSize: 'var(--caption1-size)', letterSpacing: 0, color: 'var(--color-semantic-label-alternative)' }}>{copyright}</span>
         {links.length > 0 && (
           <span style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-            {links.map((l, i) => linkEl('c' + i, l, 'var(--color-semantic-label-alternative)', 'var(--color-semantic-label-normal)', 12.5))}
+            {links.map((l, i) => linkEl('c' + i, l, 'var(--color-semantic-label-alternative)', 'var(--color-semantic-label-normal)', 'var(--caption1-size)'))}
           </span>
         )}
       </footer>
@@ -92,22 +92,22 @@ export function Footer({
               {brand != null && <div style={{ flex: '1 1 240px', minWidth: 220 }}>{brand}</div>}
               {columns.map((col, ci) => (
                 <nav key={ci} aria-label={typeof col.heading === 'string' ? col.heading : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 11, minWidth: 108 }}>
-                  {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: 'var(--color-semantic-inverse-label)', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
-                  {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'var(--color-semantic-inverse-label-alternative-soft)', 'var(--color-semantic-inverse-label-strong-soft)', 13.5))}
+                  {col.heading != null && <span style={{ fontSize: 'var(--body2-size)', fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: 'var(--color-semantic-inverse-label)', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
+                  {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'var(--color-semantic-inverse-label-alternative-soft)', 'var(--color-semantic-inverse-label-strong-soft)', 'var(--label2-size)'))}
                 </nav>
               ))}
             </div>
             <div style={{ height: 1, background: 'var(--color-semantic-inverse-line-normal)', margin: '32px 0 24px' }} />
           </React.Fragment>
         )}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: 'var(--color-semantic-inverse-label-neutral-soft)', wordBreak: 'keep-all' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 'var(--label2-size)', lineHeight: 1.6, color: 'var(--color-semantic-inverse-label-neutral-soft)', wordBreak: 'keep-all' }}>
           {contact.length > 0 && entryRow(contact)}
           {locations.length > 0 && entryRow(locations)}
           <span style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 20px', color: 'var(--color-semantic-inverse-label-alternative-soft)' }}>
             {copyright}
             {links.length > 0 && (
               <span style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                {links.map((l, i) => linkEl('p' + i, l, 'var(--color-semantic-inverse-label-alternative-soft)', 'var(--color-semantic-inverse-label-strong-soft)', 12.5))}
+                {links.map((l, i) => linkEl('p' + i, l, 'var(--color-semantic-inverse-label-alternative-soft)', 'var(--color-semantic-inverse-label-strong-soft)', 'var(--caption1-size)'))}
               </span>
             )}
           </span>

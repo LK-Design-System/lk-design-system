@@ -73,7 +73,7 @@ export function SegmentedControl({
               borderLeft: outlined && index > 0 ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
               boxShadow: [
                 active && !outlined ? 'var(--shadow-xs)' : null,
-                activeFocus ? '0 0 0 3px var(--color-semantic-focus-ring)' : null,
+                activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : null,
               ].filter(Boolean).join(', ') || 'none',
               transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
               whiteSpace: 'nowrap',

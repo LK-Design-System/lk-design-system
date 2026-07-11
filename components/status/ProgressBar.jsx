@@ -46,7 +46,7 @@ export function ProgressBar({
   return (
     <div style={{ ...style }} {...rest}>
       {(label != null || showValue) && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)' }}>
           <span>{label}</span>
           {showValue && <span style={{ color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{Math.round(pct)}%</span>}
         </div>

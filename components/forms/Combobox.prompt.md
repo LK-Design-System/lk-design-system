@@ -5,3 +5,4 @@
 ```
 
 - **options** — 문자열 또는 `{ value, label }`. **value / defaultValue / onChange** — string[]. 검색이 필요 없는 소규모 목록을 위한 호환 API입니다. 검색·비동기 데이터·설명·disabled option에는 `SearchableMultiSelect`, 단일 선택 패싯에는 `FilterChip`, 자유 태그에는 `TagInput`을 쓰세요.
+- 타입 스케일 정합: 옵션 행 14.5px → `--body2-size`(15px)로 스냅했습니다. 트리거 텍스트와 옵션 텍스트가 같은 스케일 단계에 정렬됩니다.

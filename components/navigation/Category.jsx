@@ -2,12 +2,12 @@ import React from "react";
 
 /* WDS chip geometry: pad-x 7/8/11/12, inter-chip gap 4/6/8/10 (S/M/L/XL). */
 const SIZE = {
-  small: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
-  sm: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
-  medium: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
-  md: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
-  large: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
-  lg: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
+  small: { height: 24, padding: "0 7px", fontSize: "var(--label2-size)", radius: 6, gap: 4 },
+  sm: { height: 24, padding: "0 7px", fontSize: "var(--label2-size)", radius: 6, gap: 4 },
+  medium: { height: 32, padding: "0 8px", fontSize: "var(--label1-size)", radius: 8, gap: 6 },
+  md: { height: 32, padding: "0 8px", fontSize: "var(--label1-size)", radius: 8, gap: 6 },
+  large: { height: 36, padding: "0 11px", fontSize: "var(--body2-size)", radius: 10, gap: 8 },
+  lg: { height: 36, padding: "0 11px", fontSize: "var(--body2-size)", radius: 10, gap: 8 },
   xlarge: {
     height: 40,
     padding: "0 12px",

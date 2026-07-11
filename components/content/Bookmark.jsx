@@ -28,7 +28,7 @@ export function Bookmark({ active, defaultActive, onChange, size = 24, disabled 
       style={{
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 4,
         border: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1, color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-assistive)',
+        opacity: disabled ? 0.45 : 1, color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-assistive)',
         transition: 'color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)', ...style,
       }}
       {...rest}

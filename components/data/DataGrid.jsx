@@ -24,7 +24,7 @@ function checkboxStyle(checked, indeterminate = false) {
     width: 16,
     height: 16,
     margin: 0,
-    borderRadius: 4,
+    borderRadius: 'var(--radius-5)',
     border: `1px solid ${filled ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`,
     backgroundColor: filled ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)',
     backgroundImage: indeterminate ? DASH_IMG : checked ? CHECK_IMG : 'none',

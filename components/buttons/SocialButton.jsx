@@ -62,7 +62,7 @@ export function SocialButton({
     flexShrink: iconOnly ? 0 : undefined,
     boxSizing: 'border-box',
     fontFamily: 'var(--font-sans)',
-    fontSize: '16px',
+    fontSize: 'var(--body1-size)',
     fontWeight: 'var(--fw-bold)',
     letterSpacing: 0,
     lineHeight: 1,

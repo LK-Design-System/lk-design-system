@@ -30,7 +30,7 @@ const selectStyle = {
   borderRadius: "var(--radius-8)",
   background: "var(--color-semantic-background-elevated-normal)",
   fontFamily: "var(--font-sans)",
-  fontSize: 13,
+  fontSize: "var(--label2-size)",
   color: "var(--color-semantic-label-normal)",
 };
 
@@ -191,7 +191,7 @@ export function Pagination({
           {showCounter && (
             <span
               style={{
-                fontSize: 13,
+                fontSize: "var(--label2-size)",
                 color: "var(--color-semantic-label-alternative)",
                 fontVariantNumeric: "tabular-nums",
               }}
@@ -205,7 +205,7 @@ export function Pagination({
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
-                fontSize: 13,
+                fontSize: "var(--label2-size)",
                 color: "var(--color-semantic-label-neutral)",
               }}
             >
@@ -226,7 +226,7 @@ export function Pagination({
                   borderRadius: "var(--radius-md)",
                   padding: "0 8px",
                   fontFamily: "var(--font-sans)",
-                  fontSize: 13,
+                  fontSize: "var(--label2-size)",
                 }}
               />
             </label>

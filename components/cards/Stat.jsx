@@ -28,8 +28,8 @@ export function Stat({
       }}
       {...rest}
     >
-      <span style={{ fontSize: '40px', fontWeight: 'var(--fw-extra)', letterSpacing: 0, lineHeight: 1, color: valColor, fontVariantNumeric: 'tabular-nums' }}>{value}</span>
-      <span style={{ fontSize: '15px', lineHeight: 1.5, maxWidth: stacked ? 'none' : 160, color: labColor, wordBreak: 'keep-all' }}>{label}</span>
+      <span style={{ fontSize: 'var(--display2-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, lineHeight: 1, color: valColor, fontVariantNumeric: 'tabular-nums' }}>{value}</span>
+      <span style={{ fontSize: 'var(--body2-size)', lineHeight: 1.5, maxWidth: stacked ? 'none' : 160, color: labColor, wordBreak: 'keep-all' }}>{label}</span>
     </div>
   );
 }

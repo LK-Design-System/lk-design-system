@@ -10,7 +10,7 @@ export function Kbd({ children, style, ...rest }) {
     <kbd
       style={{
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: 22, height: 22, padding: '0 6px',
-        fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)',
+        fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)',
         background: 'var(--color-semantic-background-elevated-normal)',
         borderColor: 'var(--color-semantic-line-normal-normal)',
         borderStyle: 'solid',

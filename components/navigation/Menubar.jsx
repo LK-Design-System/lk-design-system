@@ -37,13 +37,13 @@ function MenuItem({ item, variant, close }) {
         borderRadius: "var(--radius-md)",
         textAlign: "left",
         fontFamily: "var(--font-sans)",
-        fontSize: 14,
+        fontSize: "var(--label1-size)",
         color: item.danger
           ? "var(--color-semantic-status-negative-text)"
           : item.disabled
             ? "var(--color-semantic-label-disable)"
             : "var(--color-semantic-label-normal)",
-        opacity: item.disabled ? 0.55 : 1,
+        opacity: item.disabled ? 0.45 : 1,
       }}
     >
       <span
@@ -84,7 +84,7 @@ function MenuItem({ item, variant, close }) {
             {item.label}
           </span>
           {item.description && (
-            <span style={{ fontSize: 12, color: "var(--color-semantic-label-alternative)" }}>
+            <span style={{ fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-alternative)" }}>
               {item.description}
             </span>
           )}
@@ -93,7 +93,7 @@ function MenuItem({ item, variant, close }) {
       {item.shortcut && (
         <span
           style={{
-            fontSize: 12,
+            fontSize: "var(--caption1-size)",
             color: "var(--color-semantic-label-assistive)",
             flexShrink: 0,
           }}
@@ -165,7 +165,7 @@ export function Menubar({
               background: open === index ? "var(--color-semantic-fill-normal)" : "transparent",
               cursor: "pointer",
               fontFamily: "var(--font-sans)",
-              fontSize: 14,
+              fontSize: "var(--label1-size)",
               fontWeight: "var(--fw-semibold)",
               color: "var(--color-semantic-label-normal)",
             }}
@@ -227,11 +227,11 @@ export function Menubar({
                         height: 28,
                         padding: "0 10px",
                         border: "none",
-                        borderRadius: 7,
+                        borderRadius: "var(--radius-8)",
                         background: "var(--color-semantic-primary-normal)",
                         color: "var(--color-semantic-inverse-label)",
                         fontFamily: "var(--font-sans)",
-                        fontSize: 12,
+                        fontSize: "var(--caption1-size)",
                         fontWeight: "var(--fw-bold)",
                       }}
                     >

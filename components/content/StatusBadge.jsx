@@ -34,7 +34,7 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
         display: 'inline-flex', alignItems: 'center', gap: 4, boxSizing: 'border-box',
         height: 20, padding: '0 6px', borderRadius: 4, /* WDS _Badge/Status r4 */
         background: 'var(--component-status-badge-surface)',
-        fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
+        fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
         color: 'var(--component-status-badge-foreground)', ...style,
       }}
       {...rest}

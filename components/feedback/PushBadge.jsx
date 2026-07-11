@@ -16,7 +16,7 @@ export function PushBadge({ children, count, dot = false, max = 99, tone = 'nega
       {show && (dot ? (
         <span style={{ position: 'absolute', top: -1, right: -1, width: 9, height: 9, borderRadius: '50%', background: c, border: '2px solid var(--color-semantic-background-elevated-normal)', boxSizing: 'content-box' }} />
       ) : (
-        <span style={{ position: 'absolute', top: -7, right: -9, minWidth: 18, height: 18, padding: '0 5px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: c, color: 'var(--color-semantic-static-white)', borderRadius: 'var(--radius-pill)', border: '2px solid var(--color-semantic-background-elevated-normal)', boxSizing: 'content-box', fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 'var(--fw-bold)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{label}</span>
+        <span style={{ position: 'absolute', top: -7, right: -9, minWidth: 18, height: 18, padding: '0 5px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: c, color: 'var(--color-semantic-static-white)', borderRadius: 'var(--radius-pill)', border: '2px solid var(--color-semantic-background-elevated-normal)', boxSizing: 'content-box', fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{label}</span>
       ))}
     </span>
   );

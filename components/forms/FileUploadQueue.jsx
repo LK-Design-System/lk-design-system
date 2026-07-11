@@ -63,7 +63,7 @@ export function FileUploadQueue({
       <style>
         {`@container (max-width: 520px) {
           .lk-file-upload-queue__item {
-            grid-template-columns: 28px minmax(0, 1fr) !important;
+            grid-template-columns: 36px minmax(0, 1fr) !important;
             padding: var(--space-3) !important;
           }
           .lk-file-upload-queue__actions {
@@ -76,7 +76,7 @@ export function FileUploadQueue({
       </style>
 
       <header style={{ padding: 'var(--space-4)', borderBottom: '1px solid var(--color-semantic-line-normal-normal)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '28px minmax(0, 1fr)', gap: 'var(--space-3)', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '36px minmax(0, 1fr)', gap: 'var(--space-3)', alignItems: 'center' }}>
           <Icon name="document" size={22} color="var(--color-semantic-label-neutral)" aria-hidden="true" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
             <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)' }}>{title}</strong>
@@ -120,7 +120,7 @@ export function FileUploadQueue({
                 className="lk-file-upload-queue__item"
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '28px minmax(0, 1fr) auto',
+                  gridTemplateColumns: '36px minmax(0, 1fr) auto',
                   columnGap: 'var(--space-3)',
                   rowGap: 'var(--space-2)',
                   alignItems: 'center',
@@ -130,8 +130,8 @@ export function FileUploadQueue({
                   borderTop: index > 0 ? '1px solid var(--color-semantic-line-normal-alternative)' : 'none',
                 }}
               >
-                <span aria-hidden="true" style={{ alignSelf: 'start', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 'var(--radius-pill)', color: itemTone.foreground, background: itemTone.surface }}>
-                  <Icon name="document" size={16} aria-hidden="true" />
+                <span aria-hidden="true" style={{ alignSelf: 'start', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, borderRadius: 'var(--radius-md)', color: itemTone.foreground, background: itemTone.surface }}>
+                  <Icon name="document" size={18} aria-hidden="true" />
                 </span>
                 <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
                   <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>

@@ -69,7 +69,7 @@ export function AvatarGroup({
           justifyContent: "center",
           background: "var(--color-semantic-background-normal-alternative)",
           color: "var(--color-semantic-label-alternative)",
-          fontSize: 12,
+          fontSize: 'var(--caption1-size)',
           fontWeight: "var(--fw-semibold)",
           whiteSpace: "nowrap",
         }}

@@ -12,6 +12,8 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /** close button axis. @default false */
   closeButton?: boolean;
   onClose?: () => void;
+  /** 닫기 버튼의 접근성 레이블. @default "닫기" */
+  closeLabel?: string;
   /** snackbar width. @default 384 */
   width?: number | string;
 }

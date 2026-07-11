@@ -17,7 +17,7 @@ export function SearchField({ value, defaultValue, onChange, onSearch, placehold
     <div style={{
       display: 'inline-flex', alignItems: 'center', gap: 10, height: h, width: '100%', padding: '0 14px', boxSizing: 'border-box',
       background: 'var(--color-semantic-background-elevated-normal)', border: `1px solid ${focus ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, borderRadius: 'var(--radius-input)',
-      boxShadow: focus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none', opacity: disabled ? 0.5 : 1,
+      boxShadow: focus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none', opacity: disabled ? 0.45 : 1,
       transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)', ...style,
     }}>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
@@ -27,7 +27,7 @@ export function SearchField({ value, defaultValue, onChange, onSearch, placehold
         onChange={(e) => set(e.target.value)}
         onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
         onKeyDown={(e) => { if (e.key === 'Enter' && onSearch) onSearch(val); }}
-        style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 15, color: 'var(--color-semantic-label-normal)' }}
+        style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', color: 'var(--color-semantic-label-normal)' }}
         {...rest}
       />
       {val && (

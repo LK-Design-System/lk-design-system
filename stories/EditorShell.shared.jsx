@@ -119,7 +119,7 @@ export function EditorStoryFrame({ children, maxWidth = 1120, height = 620 }) {
   );
 }
 
-function CanvasSurface({ activeTool = 'select', selectedObject, onSelectObject, zoom, onZoomChange }) {
+function CanvasSurface({ activeTool = 'select', selectedObject, onSelectObject, zoom, onZoomChange, showZoomPill = true }) {
   const selectObject = (value) => {
     if (activeTool === 'select') onSelectObject(value);
   };
@@ -184,11 +184,16 @@ function CanvasSurface({ activeTool = 'select', selectedObject, onSelectObject, 
         </ViewerToolbarButton>
       </ViewerToolbar>
 
+      {/* Status 영역이 배율 표시를 소유하면(showZoomPill=false) pill은 도구 모드만 남긴다. */}
       <div style={{ position: 'absolute', left: 'var(--space-3)', bottom: 'var(--space-3)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', minHeight: 28, padding: '0 var(--space-2)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-neutral)', boxShadow: 'var(--shadow-sm)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}>
         <Icon name="crosshair" size={14} aria-hidden="true" />
         <span>{editorTools.find((item) => item.value === activeTool)?.label}</span>
-        <span aria-hidden="true">·</span>
-        <span>{zoom}%</span>
+        {showZoomPill && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{zoom}%</span>
+          </>
+        )}
       </div>
     </div>
   );
@@ -286,7 +291,7 @@ export function WorkspaceRegionsExample() {
           />
         )}
       >
-        <CanvasSurface activeTool={tool} selectedObject={selectedObject} onSelectObject={setSelectedObject} zoom={zoom} onZoomChange={setZoom} />
+        <CanvasSurface activeTool={tool} selectedObject={selectedObject} onSelectObject={setSelectedObject} zoom={zoom} onZoomChange={setZoom} showZoomPill={false} />
       </CanvasEditorShell>
     </EditorStoryFrame>
   );

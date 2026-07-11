@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextButton } from '../buttons/TextButton.jsx';
+import { Icon } from '../icon/Icon.jsx';
 import { StatusBadge } from './StatusBadge.jsx';
 
 const AVAILABILITY_META = {
@@ -11,6 +12,31 @@ const AVAILABILITY_META = {
   unknown: { label: '상태 불명', tone: 'offline' },
 };
 
+function hasDisclosureContent(source) {
+  return source.excerpt != null
+    || source.description != null
+    || source.observedAt != null
+    || source.updatedAt != null
+    || (source.metadata?.length ?? 0) > 0;
+}
+
+function actionAriaLabel(source, resolvedActionLabel) {
+  if (source.actionAriaLabel != null) return source.actionAriaLabel;
+  if (typeof source.label === 'string' && typeof resolvedActionLabel === 'string') {
+    return `${source.label}: ${resolvedActionLabel}`;
+  }
+  return undefined;
+}
+
+function ExternalLinkContent({ children }) {
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', minWidth: 0 }}>
+      <span style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{children}</span>
+      <Icon name="external-link" size={14} aria-hidden="true" style={{ flexShrink: 0 }} />
+    </span>
+  );
+}
+
 /** Product-provided provenance and availability for evidence sources. */
 export function SourceDisclosure({
   title = '출처',
@@ -20,6 +46,7 @@ export function SourceDisclosure({
   emptyMessage = '표시할 출처가 없습니다.',
   onSourceActivate,
   openLabel = '출처 열기',
+  className,
   style,
   ...rest
 }) {
@@ -27,37 +54,205 @@ export function SourceDisclosure({
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
 
   return (
-    <section aria-labelledby={titleId} style={{ display: 'grid', gap: 'var(--space-3)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+    <section
+      {...rest}
+      aria-labelledby={titleId}
+      className={['lk-source-disclosure', className].filter(Boolean).join(' ')}
+      style={{
+        display: 'grid',
+        gap: 'var(--space-3)',
+        minWidth: 0,
+        containerType: 'inline-size',
+        fontFamily: 'var(--font-sans)',
+        ...style,
+      }}
+    >
+      <style>
+        {`.lk-source-disclosure__summary {
+          list-style: none;
+        }
+        .lk-source-disclosure__summary::-webkit-details-marker {
+          display: none;
+        }
+        .lk-source-disclosure__summary:hover {
+          background: var(--color-semantic-fill-alternative);
+        }
+        .lk-source-disclosure__summary:focus-visible {
+          outline: 2px solid var(--color-semantic-focus-ring);
+          outline-offset: -2px;
+        }
+        .lk-source-disclosure__details[open] .lk-source-disclosure__chevron {
+          transform: rotate(180deg);
+        }
+        @container (max-width: 400px) {
+          .lk-source-disclosure__summary,
+          .lk-source-disclosure__static-row {
+            padding: var(--space-3) !important;
+          }
+          .lk-source-disclosure__summary-content {
+            grid-template-columns: minmax(0, 1fr) 16px !important;
+          }
+          .lk-source-disclosure__static-content {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+          .lk-source-disclosure__status {
+            grid-column: 1;
+            grid-row: 2;
+            justify-self: start;
+          }
+          .lk-source-disclosure__chevron {
+            grid-column: 2;
+            grid-row: 1;
+          }
+          .lk-source-disclosure__panel {
+            padding: var(--space-2) var(--space-3) var(--space-3) !important;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .lk-source-disclosure__chevron {
+            transition: none !important;
+          }
+        }`}
+      </style>
+
       <header style={{ display: 'grid', gap: 'var(--space-1)' }}>
-        <Heading id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)' }}>{title}</Heading>
-        {description != null && <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>{description}</p>}
+        <Heading
+          id={titleId}
+          style={{
+            margin: 0,
+            color: 'var(--color-semantic-label-strong)',
+            fontSize: 'var(--body1-size)',
+            lineHeight: 'var(--body1-line)',
+            fontWeight: 'var(--fw-bold)',
+            letterSpacing: 'var(--body1-spacing)',
+          }}
+        >
+          {title}
+        </Heading>
+        {description != null && (
+          <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
+            {description}
+          </p>
+        )}
       </header>
 
       {sources.length === 0 ? (
-        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)' }}>{emptyMessage}</p>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
+          {emptyMessage}
+        </p>
       ) : (
-        <ol style={{ margin: 0, padding: 0, overflow: 'hidden', listStyle: 'none', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+        <ul
+          style={{
+            margin: 0,
+            padding: 0,
+            overflow: 'hidden',
+            listStyle: 'none',
+            border: '1px solid var(--color-semantic-line-normal-normal)',
+            borderRadius: 'var(--radius-md)',
+            background: 'var(--color-semantic-background-elevated-normal)',
+          }}
+        >
           {sources.map((source, index) => {
             const availability = AVAILABILITY_META[source.availability ?? 'unknown'] ?? AVAILABILITY_META.unknown;
-            const hasDetails = source.excerpt != null || source.description != null || source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0 || source.href != null || typeof onSourceActivate === 'function';
-            const summary = (
-              <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-3)', width: '100%', minWidth: 0 }}>
-                <span style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
-                  <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', overflowWrap: 'anywhere' }}>{source.label}</strong>
-                  {(source.kind != null || source.location != null) && <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>{[source.kind, source.location].filter(Boolean).join(' · ')}</span>}
-                </span>
-                <StatusBadge tone={availability.tone}>{source.availabilityLabel ?? availability.label}</StatusBadge>
+            const hasDetails = hasDisclosureContent(source);
+            const hasAction = source.href != null || typeof onSourceActivate === 'function';
+            const resolvedActionLabel = source.actionLabel ?? openLabel;
+            const resolvedActionAriaLabel = actionAriaLabel(source, resolvedActionLabel);
+            const directAction = !hasDetails && hasAction;
+            const directLabel = directAction && source.href != null ? (
+              <TextButton
+                as="a"
+                href={source.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="sm"
+                underline
+                aria-label={source.actionAriaLabel}
+                className="lk-textbtn lk-source-disclosure__source-link"
+                style={{ justifyContent: 'flex-start', maxWidth: '100%', minHeight: 0, lineHeight: 'var(--label1-line)', textAlign: 'left', whiteSpace: 'normal' }}
+              >
+                <ExternalLinkContent>{source.label}</ExternalLinkContent>
+              </TextButton>
+            ) : directAction ? (
+              <TextButton
+                size="sm"
+                underline
+                aria-label={source.actionAriaLabel}
+                onClick={() => onSourceActivate(source)}
+                className="lk-textbtn lk-source-disclosure__source-link"
+                style={{ justifyContent: 'flex-start', maxWidth: '100%', minHeight: 0, lineHeight: 'var(--label1-line)', textAlign: 'left', whiteSpace: 'normal' }}
+              >
+                {source.label}
+              </TextButton>
+            ) : (
+              <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>
+                {source.label}
+              </strong>
+            );
+            const identity = (
+              <span style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
+                {directLabel}
+                {(source.kind != null || source.location != null) && (
+                  <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', overflowWrap: 'anywhere' }}>
+                    {[source.kind, source.location].filter(Boolean).join(' · ')}
+                  </span>
+                )}
+              </span>
+            );
+            const rowSummary = (
+              <span
+                className={hasDetails ? 'lk-source-disclosure__summary-content' : 'lk-source-disclosure__static-content'}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: hasDetails ? 'minmax(0, 1fr) auto 16px' : 'minmax(0, 1fr) auto',
+                  alignItems: 'start',
+                  columnGap: 'var(--space-2)',
+                  rowGap: 'var(--space-1)',
+                  width: '100%',
+                  minWidth: 0,
+                }}
+              >
+                {identity}
+                <StatusBadge className="lk-source-disclosure__status" tone={availability.tone} style={{ flexShrink: 0, whiteSpace: 'nowrap' }}>
+                  {source.availabilityLabel ?? availability.label}
+                </StatusBadge>
+                {hasDetails && (
+                  <Icon
+                    className="lk-source-disclosure__chevron"
+                    name="chevron-down-small"
+                    size={16}
+                    color="var(--color-semantic-label-alternative)"
+                    aria-hidden="true"
+                    style={{ transition: 'transform var(--dur-base) var(--ease-out)' }}
+                  />
+                )}
               </span>
             );
 
             return (
               <li key={source.id} style={{ borderTop: index > 0 ? '1px solid var(--color-semantic-line-normal-alternative)' : 'none' }}>
                 {hasDetails ? (
-                  <details open={source.defaultExpanded || undefined}>
-                    <summary style={{ padding: 'var(--space-3) var(--space-4)', cursor: 'pointer' }}>{summary}</summary>
-                    <div style={{ display: 'grid', gap: 'var(--space-3)', padding: '0 var(--space-4) var(--space-4) var(--space-6)' }}>
-                      {source.description != null && <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>{source.description}</p>}
-                      {source.excerpt != null && <blockquote style={{ margin: 0, padding: 'var(--space-3)', borderLeft: '3px solid var(--color-semantic-line-normal-strong)', background: 'var(--color-semantic-fill-alternative)', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>{source.excerpt}</blockquote>}
+                  <details className="lk-source-disclosure__details" open={source.defaultExpanded || undefined}>
+                    <summary
+                      className="lk-source-disclosure__summary"
+                      style={{ padding: 'var(--space-3) var(--space-4)', cursor: 'pointer', transition: 'background var(--dur-fast) var(--ease-out)' }}
+                    >
+                      {rowSummary}
+                    </summary>
+                    <div className="lk-source-disclosure__panel" style={{ display: 'grid', gap: 'var(--space-3)', padding: 'var(--space-2) var(--space-4) var(--space-4)' }}>
+                      {source.description != null && (
+                        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
+                          {source.description}
+                        </p>
+                      )}
+                      {source.excerpt != null && (
+                        <blockquote
+                          cite={source.href}
+                          style={{ margin: 0, padding: '0 0 0 var(--space-3)', borderLeft: '3px solid var(--color-semantic-line-normal-strong)', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}
+                        >
+                          {source.excerpt}
+                        </blockquote>
+                      )}
                       {(source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0) && (
                         <dl style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(140px, 100%), 1fr))', gap: 'var(--space-3)', margin: 0 }}>
                           {source.observedAt != null && <div><dt style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>관측 시각</dt><dd style={{ margin: 'var(--space-1) 0 0', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--caption1-size)' }}>{source.observedAt}</dd></div>}
@@ -66,19 +261,25 @@ export function SourceDisclosure({
                         </dl>
                       )}
                       {source.href != null ? (
-                        <TextButton as="a" href={source.href} target="_blank" rel="noopener noreferrer" size="sm" tone="neutral" underline>{source.actionLabel ?? openLabel}</TextButton>
+                        <TextButton as="a" href={source.href} target="_blank" rel="noopener noreferrer" size="sm" underline aria-label={resolvedActionAriaLabel}>
+                          <ExternalLinkContent>{resolvedActionLabel}</ExternalLinkContent>
+                        </TextButton>
                       ) : typeof onSourceActivate === 'function' ? (
-                        <TextButton size="sm" tone="neutral" underline onClick={() => onSourceActivate(source)}>{source.actionLabel ?? openLabel}</TextButton>
+                        <TextButton size="sm" underline aria-label={resolvedActionAriaLabel} onClick={() => onSourceActivate(source)}>
+                          {resolvedActionLabel}
+                        </TextButton>
                       ) : null}
                     </div>
                   </details>
                 ) : (
-                  <div style={{ padding: 'var(--space-3) var(--space-4)' }}>{summary}</div>
+                  <div className="lk-source-disclosure__static-row" style={{ padding: 'var(--space-3) var(--space-4)' }}>
+                    {rowSummary}
+                  </div>
                 )}
               </li>
             );
           })}
-        </ol>
+        </ul>
       )}
     </section>
   );

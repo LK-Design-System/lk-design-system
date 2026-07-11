@@ -13,8 +13,8 @@ export function DescriptionList({ items = [], columns = 1, style, ...rest }) {
     <dl style={{ margin: 0, display: 'grid', gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {items.map((it, i) => (
         <div key={i} style={{ display: 'flex', gap: 16, padding: '12px 0', borderBottom: i >= lastRowStart ? 'none' : '1px solid var(--color-semantic-line-solid-normal)' }}>
-          <dt style={{ flex: '0 0 34%', fontSize: 14, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-alternative)' }}>{it.term}</dt>
-          <dd style={{ margin: 0, flex: 1, fontSize: 14.5, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)', wordBreak: 'keep-all' }}>{it.description}</dd>
+          <dt style={{ flex: '0 0 34%', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-alternative)' }}>{it.term}</dt>
+          <dd style={{ margin: 0, flex: 1, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)', wordBreak: 'keep-all' }}>{it.description}</dd>
         </div>
       ))}
     </dl>

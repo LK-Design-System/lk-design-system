@@ -5,7 +5,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '상단 바와 SideNav를 조합한 애플리케이션 내비게이션 패턴입니다.',
+        component: '상단 바와 사이드 내비게이션을 조합한 애플리케이션 내비게이션 패턴입니다.',
       },
     },
   },

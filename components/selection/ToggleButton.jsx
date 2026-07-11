@@ -41,7 +41,7 @@ export function ToggleButton({
         background: on ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)',
         border: `1px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`,
         borderRadius: 'var(--radius-md)', cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 15,
+        opacity: disabled ? 0.45 : 1, fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)',
         fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
         color: on ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-neutral)',
         transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',

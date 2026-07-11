@@ -37,7 +37,7 @@ export function TelemetryValue({
     ? (hasCustomStaleLabel ? staleLabel : '지연')
     : (hasCustomStatusLabel ? statusLabel : (tone === 'neutral' ? null : STATUS_LABEL[tone]));
   const showStatus = resolvedStatusLabel != null && (!stale || showStaleBadge);
-  const valueSize = size === 'sm' ? 18 : 21;
+  const valueSize = size === 'sm' ? 'var(--headline1-size)' : 'var(--heading2-size)';
   const justifyContent = align === 'end' ? 'flex-end' : 'flex-start';
 
   return (
@@ -57,7 +57,7 @@ export function TelemetryValue({
       {...rest}
     >
       {label != null && (
-        <span style={{ maxWidth: '100%', color: 'var(--color-semantic-label-neutral)', fontSize: 12, lineHeight: 1.35, fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere', textAlign: align === 'end' ? 'right' : 'left' }}>
+        <span style={{ maxWidth: '100%', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 1.35, fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere', textAlign: align === 'end' ? 'right' : 'left' }}>
           {label}
         </span>
       )}
@@ -77,7 +77,7 @@ export function TelemetryValue({
       </div>
 
       {(helper != null || timestamp != null) && (
-        <div style={{ display: 'flex', justifyContent, columnGap: 'var(--space-2)', rowGap: 2, maxWidth: '100%', minWidth: 0, flexWrap: 'wrap', color: 'var(--color-semantic-label-neutral)', fontSize: 11.5, lineHeight: 1.4, fontVariantNumeric: 'tabular-nums', textAlign: align === 'end' ? 'right' : 'left' }}>
+        <div style={{ display: 'flex', justifyContent, columnGap: 'var(--space-2)', rowGap: 2, maxWidth: '100%', minWidth: 0, flexWrap: 'wrap', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption2-size)', lineHeight: 1.4, fontVariantNumeric: 'tabular-nums', textAlign: align === 'end' ? 'right' : 'left' }}>
           {helper != null && <span style={{ maxWidth: '100%', overflowWrap: 'anywhere' }}>{helper}</span>}
           {helper != null && timestamp != null && <span aria-hidden="true">·</span>}
           {timestamp != null && <span style={{ maxWidth: '100%', overflowWrap: 'anywhere' }}>{timestamp}</span>}

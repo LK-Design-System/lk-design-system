@@ -36,7 +36,7 @@ function HistoryFrame({ children }) {
 }
 
 export const AvailableHistory = {
-  name: 'Undo·redo와 문서 초기화',
+  name: '실행 취소·다시 실행과 문서 초기화',
   render: () => (
     <HistoryFrame>
       <HistoryToolbar
@@ -51,7 +51,7 @@ export const AvailableHistory = {
 };
 
 export const MissingHandlers = {
-  name: 'Handler가 없으면 비활성',
+  name: '핸들러가 없으면 비활성',
   render: () => (
     <HistoryFrame>
       <HistoryToolbar canUndo canRedo />

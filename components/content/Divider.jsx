@@ -51,7 +51,7 @@ export function Divider({
         <span
           style={{
             fontFamily: "var(--font-sans)",
-            fontSize: 13,
+            fontSize: "var(--label2-size)",
             fontWeight: "var(--fw-semibold)",
             letterSpacing: 0,
             color: "var(--color-semantic-label-alternative)",

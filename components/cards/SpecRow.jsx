@@ -21,7 +21,7 @@ export function SpecRow({ label, value, labelWidth = '34%', divider = true, styl
       }}
       {...rest}
     >
-      <div style={{ fontSize: 14, fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--ls-small)', color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{label}</div>
+      <div style={{ fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--ls-small)', color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{label}</div>
       <div style={{ fontSize: 'var(--fs-small)', fontWeight: 'var(--fw-semibold)', lineHeight: 'var(--lh-small)', letterSpacing: 'var(--ls-small)', color: 'var(--color-semantic-label-normal)', fontVariantNumeric: 'tabular-nums', wordBreak: 'keep-all' }}>{value}</div>
     </div>
   );

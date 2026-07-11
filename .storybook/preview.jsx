@@ -97,7 +97,7 @@ export const parameters = {
         'LDS Theme',
         ['Brand', 'Theme'],
         'LDS Product',
-        ['Action', 'Content', 'Data', 'Feedback', 'Layout', 'Overlay', 'Selection and Input'],
+        ['Action', 'Content', 'Data', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
         'LDS Robotics',
         ['Editor', 'Robotics', 'Viewer'],
       ],

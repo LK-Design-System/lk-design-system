@@ -178,7 +178,7 @@ export function TelemetryGauge({
       {(label != null || resolvedStatusLabel != null) && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)', maxWidth: '100%', minWidth: 0, flexWrap: 'wrap' }}>
           {label != null && (
-            <span id={labelId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 12, lineHeight: 1.35, fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere', textAlign: 'center' }}>
+            <span id={labelId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 1.35, fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere', textAlign: 'center' }}>
               {label}
             </span>
           )}

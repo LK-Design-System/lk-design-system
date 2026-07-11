@@ -30,7 +30,7 @@ function getItemKey(item, index) {
 
 function Swatch({ shape = 'square', color, dashed = false, disabled = false, size }) {
   const cfg = SIZE[size] || SIZE.md;
-  const opacity = disabled ? 0.42 : 1;
+  const opacity = disabled ? 0.45 : 1;
 
   if (shape === 'line') {
     return (

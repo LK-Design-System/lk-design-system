@@ -109,7 +109,7 @@ export const Disabled = {
 };
 
 export const MixedAvailability = {
-  name: '첫 행 비활성·roving focus 유지',
+  name: '첫 행 비활성·포커스 이동 유지',
   render: () => (
     <PanelFrame>
       <LayerPanel

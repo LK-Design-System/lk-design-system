@@ -25,7 +25,7 @@ export function ChecklistItem({
         )}
       </span>
       <span style={{
-        fontSize: '16.5px', fontWeight: 'var(--fw-semibold)', lineHeight: 1.5, letterSpacing: 0,
+        fontSize: 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: 1.5, letterSpacing: 0,
         color: dark ? 'var(--color-semantic-static-white)' : muted ? 'var(--color-semantic-label-alternative)' : 'var(--color-semantic-label-neutral)',
         opacity: dark && muted ? 0.7 : 1,
         textDecoration: cross ? 'line-through' : 'none',

@@ -108,7 +108,7 @@ export function Checkbox({
             <path d="M20 6 9 17l-5-5" />
           </svg>
         )}
-        {mixed && <span style={{ width: d - 8, height: 2, borderRadius: 999, background: checkStroke }} />}
+        {mixed && <span style={{ width: d - 8, height: 2, borderRadius: 'var(--radius-pill)', background: checkStroke }} />}
       </span>
       {label && <span style={labelStyle}>{label}</span>}
     </label>

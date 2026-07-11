@@ -9,3 +9,4 @@
 ```
 
 - **items** — `{ term, description }`. **columns** — 쌍의 반응형 그리드.
+- 타입 스케일 정합: 값(dd) 14.5px → `--body2-size`(15px)로 스냅했습니다. 14px 용어(dt)보다 한 단계 위를 유지해 term/description 위계가 살아 있습니다.

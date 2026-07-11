@@ -20,3 +20,5 @@ const [col, setCol] = React.useState(false);
   items={...}
 />
 ```
+
+- 타입 스케일 정합: 항목 13.5px → `--label2-size`(13px), 상세 11.5px → `--caption1-size`(12px)로 스냅했습니다. 이름(13px bold)과의 위계는 굵기·색으로 유지됩니다.

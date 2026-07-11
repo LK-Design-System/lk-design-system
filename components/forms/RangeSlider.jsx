@@ -37,7 +37,7 @@ export function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100
         <input className="lk-rangeslider" type="range" min={min} max={max} step={step} value={hi} onChange={(e) => set(lo, Number(e.target.value))} aria-label="maximum" />
       </div>
       {showValue && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4, fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
           <span>{lo}</span><span>{hi}</span>
         </div>
       )}

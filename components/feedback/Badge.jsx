@@ -27,8 +27,8 @@ export function Badge({ children, tone = 'signal', dot = false, style, ...rest }
       style={{
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         minWidth: 20, height: 20, padding: '0 6px',
-        fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', fontSize: 12,
-        color: palette.fg, background: palette.bg, borderRadius: 4,
+        fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--caption1-size)',
+        color: palette.fg, background: palette.bg, borderRadius: 4, /* WDS _Badge/Value r4 (no 4px token) */
         ...style,
       }}
       {...rest}

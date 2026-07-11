@@ -24,9 +24,9 @@ export function Combobox({ options = [], value, defaultValue = [], onChange, pla
   const h = size === 'sm' ? 40 : 50;
   return (
     <div ref={ref} style={{ position: 'relative', ...style }} {...rest}>
-      <button type="button" onClick={() => setOpen((o) => !o)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, width: '100%', minHeight: h, padding: '6px 12px', boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: `1px solid ${open ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, borderRadius: 'var(--radius-input)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, color: sel.length ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }}>
+      <button type="button" onClick={() => setOpen((o) => !o)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, width: '100%', minHeight: h, padding: '6px 12px', boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: `1px solid ${open ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, borderRadius: 'var(--radius-input)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', color: sel.length ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }}>
         <span style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
-          {sel.length ? sel.map((v) => <span key={v} style={{ display: 'inline-flex', height: 24, alignItems: 'center', padding: '0 9px', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-primary-heavy)', borderRadius: 'var(--radius-pill)', fontSize: 13, fontWeight: 'var(--fw-semibold)' }}>{labelFor(v)}</span>) : placeholder}
+          {sel.length ? sel.map((v) => <span key={v} style={{ display: 'inline-flex', height: 24, alignItems: 'center', padding: '0 9px', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-primary-heavy)', borderRadius: 'var(--radius-pill)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>{labelFor(v)}</span>) : placeholder}
         </span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="m6 9 6 6 6-6" /></svg>
       </button>
@@ -36,7 +36,7 @@ export function Combobox({ options = [], value, defaultValue = [], onChange, pla
             const on = sel.includes(o.value);
             return (
               <div key={o.value} role="option" aria-selected={on} onClick={() => toggle(o.value)} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-semantic-fill-normal)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 10px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, color: 'var(--color-semantic-label-normal)' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 10px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', color: 'var(--color-semantic-label-normal)' }}>
                 <span style={{ width: 18, height: 18, borderRadius: 'var(--radius-sm)', border: `1px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, background: on ? 'var(--color-semantic-primary-normal)' : 'transparent', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   {on && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-static-white)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
                 </span>

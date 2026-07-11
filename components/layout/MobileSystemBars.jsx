@@ -35,7 +35,7 @@ export function MobileSystemBars({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            fontSize: 12,
+            fontSize: "var(--caption1-size)",
             fontWeight: "var(--fw-bold)",
           }}
         >

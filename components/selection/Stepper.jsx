@@ -57,7 +57,7 @@ export function Stepper({
       style={{
         display: 'inline-flex', alignItems: 'center', height: h, width: 'fit-content',
         border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)',
-        background: 'var(--color-semantic-background-elevated-normal)', opacity: disabled ? 0.5 : 1, ...style,
+        background: 'var(--color-semantic-background-elevated-normal)', opacity: disabled ? 0.45 : 1, ...style,
       }}
       {...rest}
     >

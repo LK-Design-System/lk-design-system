@@ -20,8 +20,8 @@ export function EmptyState({ icon, title, description, action, style, ...rest })
           borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-primary-surface-normal)', color: 'var(--color-semantic-primary-normal)', marginBottom: 12,
         }}>{icon}</div>
       )}
-      {title != null && <div style={{ fontSize: 18, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</div>}
-      {description != null && <div style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
+      {title != null && <div style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</div>}
+      {description != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: 1.65, color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
       {action != null && <div style={{ marginTop: 14 }}>{action}</div>}
     </div>
   );

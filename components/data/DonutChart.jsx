@@ -38,7 +38,7 @@ export function DonutChart({ segments = [], size = 140, thickness = 18, showTota
       {legend && segments.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {segments.map((s, i) => (
-            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--color-semantic-label-neutral)' }}>
+            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', color: 'var(--color-semantic-label-neutral)' }}>
               <span style={{ width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] }} />
               {s.label}
               <b style={{ marginLeft: 2, color: 'var(--color-semantic-label-normal)' }}>{Math.round((s.value / total) * 100)}%</b>

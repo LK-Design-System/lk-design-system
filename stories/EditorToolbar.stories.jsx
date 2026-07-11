@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'EditorToolbar는 캔버스 편집 모드 중 하나를 선택하는 32px 단일 선택 도구 그룹입니다. roving Tab stop, 방향키, Home/End와 ARIA 단축키 선언을 지원합니다.',
+          'EditorToolbar는 캔버스 편집 모드 중 하나를 선택하는 32px 단일 선택 도구 그룹입니다. roving Tab stop, 방향키, Home/End와 ARIA 단축키 선언을 지원하며, 외곽 rail surface와 divider는 CanvasEditorShell이 소유합니다.',
       },
     },
   },
@@ -43,10 +43,6 @@ function ToolbarExample({ orientation = 'vertical', disabled = false, itemDisabl
         style={{
           display: 'inline-flex',
           alignItems: 'flex-start',
-          padding: 8,
-          border: '1px solid var(--color-semantic-line-normal-normal)',
-          borderRadius: 'var(--radius-md)',
-          background: 'var(--color-semantic-background-elevated-normal)',
         }}
       >
         <EditorToolbar
@@ -114,6 +110,7 @@ export const Vertical = {
     if (canvasElement.ownerDocument.activeElement !== items[0]) {
       throw new Error('Vertical Home did not move focus to the first editor tool.');
     }
+    items[0].blur();
   },
 };
 
@@ -147,6 +144,7 @@ export const Horizontal = {
     if (canvasElement.ownerDocument.activeElement !== items[0]) {
       throw new Error('Home did not move focus to the first editor tool.');
     }
+    items[0].blur();
   },
 };
 
@@ -225,5 +223,6 @@ export const ItemDisabled = {
     if (reorderedItems.filter((item) => item.tabIndex === 0).length !== 1) {
       throw new Error('Reordering created multiple EditorToolbar Tab stops.');
     }
+    marker.blur();
   },
 };

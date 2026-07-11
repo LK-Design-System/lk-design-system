@@ -32,7 +32,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
               <button key={i} type="button" role="menuitem" disabled={it.disabled}
                 onClick={() => { setOpen(false); it.onClick && it.onClick(); }}
                 onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(-1)}
-                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 8, cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 'var(--radius-8)', cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
                 {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--color-semantic-label-alternative)' }}>{it.icon}</span>}
                 <span style={{ flex: 1, minWidth: 0 }}>{it.label}</span>
               </button>
@@ -45,8 +45,8 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
         <Avatar name={typeof name === 'string' ? name : undefined} src={src} status={status} size={30} style={{ flexShrink: 0 }} />
         {!collapsed && (
           <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <span style={{ fontSize: 13, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal, var(--color-semantic-label-normal))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
-            {detail != null && <span style={{ fontSize: 11.5, color: 'var(--color-semantic-label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail}</span>}
+            <span style={{ fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal, var(--color-semantic-label-normal))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
+            {detail != null && <span style={{ fontSize: 'var(--caption1-size)', color: 'var(--color-semantic-label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail}</span>}
           </span>
         )}
         {!collapsed && (

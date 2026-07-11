@@ -7,7 +7,7 @@ import React from 'react';
  */
 export function Breadcrumb({ items = [], style, ...rest }) {
   return (
-    <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, fontFamily: 'var(--font-sans)', fontSize: 13.5, ...style }} {...rest}>
+    <nav aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', ...style }} {...rest}>
       {items.map((it, i) => {
         const last = i === items.length - 1;
         return (

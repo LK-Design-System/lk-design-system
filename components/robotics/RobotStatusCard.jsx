@@ -18,11 +18,11 @@ export function RobotStatusCard({ name, image, status = 'online', battery, mode,
       <div style={{ width: 48, height: 48, borderRadius: 'var(--radius-md)', flexShrink: 0, overflow: 'hidden',
         background: 'var(--color-semantic-fill-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {image ? <img src={image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          : <span style={{ fontSize: 17, fontWeight: 'var(--fw-extra)', color: 'var(--color-semantic-label-neutral)' }}>{String(name || '?').slice(0, 2)}</span>}
+          : <span style={{ fontSize: 'var(--headline2-size)', fontWeight: 'var(--fw-extra)', color: 'var(--color-semantic-label-neutral)' }}>{String(name || '?').slice(0, 2)}</span>}
       </div>
-      <span style={{ flex: 1, minWidth: 0, fontSize: 16, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
+      <span style={{ flex: 1, minWidth: 0, fontSize: 'var(--body1-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 7, flexShrink: 0 }}>
-        {mode != null && <span style={{ fontSize: 11, fontWeight: 'var(--fw-bold)', letterSpacing: 0, padding: '2px 8px', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-primary-surface-normal)', color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap' }}>{mode}</span>}
+        {mode != null && <span style={{ fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, padding: '2px 8px', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-primary-surface-normal)', color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap' }}>{mode}</span>}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <ConnectionBadge status={status} showLabel={false} size="sm" />
           {hasBat && <BatteryGauge value={battery} />}

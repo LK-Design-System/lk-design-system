@@ -7,3 +7,4 @@
 ```
 
 - **steps** — `{ id, label, detail }[]` · **editable** · **onAdd / addLabel**. 읽기 전용 진행 표시는 `Steps`를 쓰세요.
+- 타입 스케일 정합: detail 12.5px → `--caption1-size`(12px)로 스냅했습니다(−0.5px, 라벨 label1 대비 보조 위계 유지). 번호 배지(caption1)·라벨(label1)·미니/추가 버튼(label2)과 함께 전 사이트가 토큰 스케일 위에 있습니다.

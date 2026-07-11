@@ -184,7 +184,7 @@ function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal
     if (label == null) {
       return /* @__PURE__ */ jsx3("span", { role: "status", "aria-label": ariaLabel, "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: mark });
     }
-    return /* @__PURE__ */ jsxs3("span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-sans)", fontSize: 14, color: "inherit", ...style }, ...rest, children: [
+    return /* @__PURE__ */ jsxs3("span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
       mark,
       /* @__PURE__ */ jsx3("span", { children: label })
     ] });
@@ -209,7 +209,7 @@ function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal
   if (label == null) {
     return /* @__PURE__ */ jsx3("span", { role: "status", "aria-label": "\uBD88\uB7EC\uC624\uB294 \uC911", "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: ring });
   }
-  return /* @__PURE__ */ jsxs3("span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-sans)", fontSize: 14, color: "inherit", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs3("span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
     ring,
     /* @__PURE__ */ jsx3("span", { children: label })
   ] });
@@ -478,7 +478,7 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
         height: size === "sm" ? 36 : 44,
         padding: "0 14px",
         borderRadius: "var(--radius-md)",
-        fontSize: 14,
+        fontSize: "var(--label1-size)",
         lineHeight: "normal",
         fontWeight: "var(--fw-bold)",
         letterSpacing: 0,
@@ -727,7 +727,7 @@ function SocialButton({
     flexShrink: iconOnly ? 0 : void 0,
     boxSizing: "border-box",
     fontFamily: "var(--font-sans)",
-    fontSize: "16px",
+    fontSize: "var(--body1-size)",
     fontWeight: "var(--fw-bold)",
     letterSpacing: 0,
     lineHeight: 1,
@@ -3068,10 +3068,10 @@ function Card({
       leadingContent != null && /* @__PURE__ */ jsx16("div", { style: { flexShrink: 0 }, children: leadingContent }),
       /* @__PURE__ */ jsxs11("div", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
         caption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)" }, children: caption }),
-        title != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-strong)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
-        description != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: 13, lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label-neutral-soft)" : "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
-        subCaption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--color-semantic-label-alternative)" }, children: subCaption }),
-        metaCaption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: 11, lineHeight: 1.3, color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: metaCaption })
+        title != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-strong)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
+        description != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: "var(--label2-size)", lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label-neutral-soft)" : "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
+        subCaption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: "var(--caption1-size)", lineHeight: 1.35, color: "var(--color-semantic-label-alternative)" }, children: subCaption }),
+        metaCaption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: "var(--caption2-size)", lineHeight: 1.3, color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: metaCaption })
       ] }),
       trailingContent != null && /* @__PURE__ */ jsx16("div", { style: { flexShrink: 0 }, children: trailingContent })
     ] }),
@@ -3127,7 +3127,7 @@ function ChecklistItem({
       /* @__PURE__ */ jsx17("path", { d: "m6 6 12 12" })
     ] }) }),
     /* @__PURE__ */ jsx17("span", { style: {
-      fontSize: "16.5px",
+      fontSize: "var(--body1-size)",
       fontWeight: "var(--fw-semibold)",
       lineHeight: 1.5,
       letterSpacing: 0,
@@ -3177,10 +3177,10 @@ function FeatureCard({
       },
       ...rest,
       children: [
-        icon && /* @__PURE__ */ jsx18("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: 14, color: t.fg, background: t.bg }, children: icon }),
+        icon && /* @__PURE__ */ jsx18("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: "var(--radius-14)", color: t.fg, background: t.bg }, children: icon }),
         /* @__PURE__ */ jsxs13("div", { style: { display: "flex", flexDirection: "column", gap: "8px" }, children: [
-          /* @__PURE__ */ jsx18("h4", { style: { fontSize: "19px", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
-          /* @__PURE__ */ jsx18("p", { style: { fontSize: "15.5px", lineHeight: 1.7, color: "var(--color-semantic-label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
+          /* @__PURE__ */ jsx18("h4", { style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
+          /* @__PURE__ */ jsx18("p", { style: { fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -3197,17 +3197,17 @@ function MetricCard({ label, value, delta, deltaTone = "auto", caption, icon, st
   const deltaText = typeof delta === "number" ? `${delta > 0 ? "+" : ""}${delta}%` : delta;
   return /* @__PURE__ */ jsxs14("div", { style: { background: "var(--component-card-bg)", border: "var(--component-card-border)", borderRadius: "var(--component-card-radius)", padding: "22px 24px", boxShadow: "var(--shadow-xs)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsxs14("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14 }, children: [
-      /* @__PURE__ */ jsx19("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "1.4px", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)" }, children: label }),
+      /* @__PURE__ */ jsx19("span", { style: { fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)", letterSpacing: "1.4px", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)" }, children: label }),
       icon && /* @__PURE__ */ jsx19("span", { style: { color: "var(--color-semantic-primary-normal)", display: "inline-flex" }, children: icon })
     ] }),
     /* @__PURE__ */ jsxs14("div", { style: { display: "flex", alignItems: "flex-end", gap: 10, flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ jsx19("span", { style: { fontSize: 34, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
-      delta != null && /* @__PURE__ */ jsxs14("span", { style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: 13, fontWeight: "var(--fw-bold)", color: dc }, children: [
+      /* @__PURE__ */ jsx19("span", { style: { fontSize: "var(--title1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
+      delta != null && /* @__PURE__ */ jsxs14("span", { style: { display: "inline-flex", alignItems: "center", gap: 3, fontSize: "var(--label2-size)", fontWeight: "var(--fw-bold)", color: dc }, children: [
         (tone === "up" || tone === "down") && /* @__PURE__ */ jsx19("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx19("path", { d: up ? "M7 17 17 7M9 7h8v8" : "M7 7l10 10M17 9v8H9" }) }),
         deltaText
       ] })
     ] }),
-    caption != null && /* @__PURE__ */ jsx19("div", { style: { marginTop: 8, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: caption })
+    caption != null && /* @__PURE__ */ jsx19("div", { style: { marginTop: 8, fontSize: "var(--label2-size)", color: "var(--color-semantic-label-alternative)" }, children: caption })
   ] });
 }
 
@@ -3244,9 +3244,9 @@ function NewsCard({ image, category, title, excerpt, source, date, cta, href = "
         image && /* @__PURE__ */ jsx20("div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--color-semantic-background-normal-alternative)" }, children: /* @__PURE__ */ jsx20("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
         /* @__PURE__ */ jsxs15("div", { style: { padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9, flex: 1 }, children: [
           category && /* @__PURE__ */ jsx20("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)" }, children: category }),
-          title && /* @__PURE__ */ jsx20("h3", { style: { margin: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1.36, color: "var(--color-semantic-label-strong)", wordBreak: "keep-all" }, children: title }),
-          excerpt && /* @__PURE__ */ jsx20("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: excerpt }),
-          (source || date || cta) && /* @__PURE__ */ jsxs15("div", { style: { marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--color-semantic-label-alternative)" }, children: [
+          title && /* @__PURE__ */ jsx20("h3", { style: { margin: 0, fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1.36, color: "var(--color-semantic-label-strong)", wordBreak: "keep-all" }, children: title }),
+          excerpt && /* @__PURE__ */ jsx20("p", { style: { margin: 0, fontSize: "var(--label1-size)", lineHeight: 1.62, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: excerpt }),
+          (source || date || cta) && /* @__PURE__ */ jsxs15("div", { style: { marginTop: "auto", paddingTop: 12, display: "flex", alignItems: "center", gap: 8, fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-alternative)" }, children: [
             source && /* @__PURE__ */ jsx20("span", { style: { fontWeight: 600 }, children: source }),
             source && date && /* @__PURE__ */ jsx20("span", { "aria-hidden": "true", children: "\xB7" }),
             date && /* @__PURE__ */ jsx20("span", { style: { fontVariantNumeric: "tabular-nums" }, children: date }),
@@ -3340,12 +3340,12 @@ function ProductCard({
             category && /* @__PURE__ */ jsx21("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-primary-normal)" }, children: category }),
             /* @__PURE__ */ jsx21("h3", { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: 800, letterSpacing: "var(--ls-h5)", color: "var(--color-semantic-inverse-label)", whiteSpace: "nowrap" }, children: id })
           ] }),
-          description && /* @__PURE__ */ jsx21("p", { style: { margin: 0, fontSize: 14, lineHeight: 1.62, color: "var(--color-semantic-inverse-label)", wordBreak: "keep-all" }, children: description }),
+          description && /* @__PURE__ */ jsx21("p", { style: { margin: 0, fontSize: "var(--label1-size)", lineHeight: 1.62, color: "var(--color-semantic-inverse-label)", wordBreak: "keep-all" }, children: description }),
           cta && /* @__PURE__ */ jsx21("span", { style: {
             alignSelf: "flex-end",
             marginTop: 4,
             whiteSpace: "nowrap",
-            fontSize: 12.5,
+            fontSize: "var(--label2-size)",
             fontWeight: "var(--fw-bold)",
             letterSpacing: 0,
             color: hover ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-inverse-label-neutral-soft)",
@@ -3377,7 +3377,7 @@ function SpecRow({ label, value, labelWidth = "34%", divider = true, style, ...r
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx22("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-small)", color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: label }),
+        /* @__PURE__ */ jsx22("div", { style: { fontSize: "var(--label1-size)", fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-small)", color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: label }),
         /* @__PURE__ */ jsx22("div", { style: { fontSize: "var(--fs-small)", fontWeight: "var(--fw-semibold)", lineHeight: "var(--lh-small)", letterSpacing: "var(--ls-small)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums", wordBreak: "keep-all" }, children: value })
       ]
     }
@@ -3411,8 +3411,8 @@ function Stat({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx23("span", { style: { fontSize: "40px", fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1, color: valColor, fontVariantNumeric: "tabular-nums" }, children: value }),
-        /* @__PURE__ */ jsx23("span", { style: { fontSize: "15px", lineHeight: 1.5, maxWidth: stacked ? "none" : 160, color: labColor, wordBreak: "keep-all" }, children: label })
+        /* @__PURE__ */ jsx23("span", { style: { fontSize: "var(--display2-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1, color: valColor, fontVariantNumeric: "tabular-nums" }, children: value }),
+        /* @__PURE__ */ jsx23("span", { style: { fontSize: "var(--body2-size)", lineHeight: 1.5, maxWidth: stacked ? "none" : 160, color: labColor, wordBreak: "keep-all" }, children: label })
       ]
     }
   );
@@ -3450,7 +3450,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
             cursor: "pointer",
             textAlign: "left",
             fontFamily: "var(--font-sans)",
-            fontSize: 17,
+            fontSize: "var(--headline2-size)",
             fontWeight: "var(--fw-bold)",
             letterSpacing: 0,
             color: isOpen ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)",
@@ -3477,7 +3477,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
           ]
         }
       ),
-      /* @__PURE__ */ jsx24("div", { style: { display: "grid", gridTemplateRows: isOpen ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ jsx24("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ jsx24("div", { style: { padding: "0 4px 20px", fontFamily: "var(--font-sans)", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: it.content }) }) })
+      /* @__PURE__ */ jsx24("div", { style: { display: "grid", gridTemplateRows: isOpen ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ jsx24("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ jsx24("div", { style: { padding: "0 4px 20px", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: it.content }) }) })
     ] }, i);
   }) });
 }
@@ -3487,8 +3487,8 @@ import React27 from "react";
 import { jsx as jsx25, jsxs as jsxs20 } from "react/jsx-runtime";
 function Blockquote({ children, cite, style, ...rest }) {
   return /* @__PURE__ */ jsxs20("blockquote", { style: { margin: 0, padding: "6px 0 6px 20px", borderLeft: "3px solid var(--color-semantic-primary-normal)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx25("div", { style: { fontSize: 17, lineHeight: 1.7, letterSpacing: 0, color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children }),
-    cite != null && /* @__PURE__ */ jsxs20("div", { style: { marginTop: 8, fontSize: 13.5, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: [
+    /* @__PURE__ */ jsx25("div", { style: { fontSize: "var(--headline2-size)", lineHeight: 1.7, letterSpacing: 0, color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children }),
+    cite != null && /* @__PURE__ */ jsxs20("div", { style: { marginTop: 8, fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: [
       "\u2014 ",
       cite
     ] })
@@ -3532,7 +3532,7 @@ function Bookmark({ active, defaultActive, onChange, size = 24, disabled = false
         border: "none",
         background: "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
+        opacity: disabled ? 0.45 : 1,
         color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)",
         transition: "color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)",
         ...style
@@ -3572,7 +3572,7 @@ function Bubble({ children, tone = "navy", tail = "bottom", style, ...rest }) {
         borderRadius: "var(--radius-xl)",
         boxShadow: "var(--shadow-md)",
         fontFamily: "var(--font-sans)",
-        fontSize: 14,
+        fontSize: "var(--label1-size)",
         lineHeight: 1.6,
         letterSpacing: 0,
         wordBreak: "keep-all",
@@ -3593,7 +3593,7 @@ import { jsx as jsx28 } from "react/jsx-runtime";
 var MONO2 = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace)';
 function Code({ children, block = false, style, ...rest }) {
   if (block) {
-    return /* @__PURE__ */ jsx28("pre", { style: { margin: 0, padding: "14px 16px", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", borderRadius: "var(--radius-lg)", overflowX: "auto", fontFamily: MONO2, fontSize: 13, lineHeight: 1.6, ...style }, ...rest, children: /* @__PURE__ */ jsx28("code", { children }) });
+    return /* @__PURE__ */ jsx28("pre", { style: { margin: 0, padding: "14px 16px", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", borderRadius: "var(--radius-lg)", overflowX: "auto", fontFamily: MONO2, fontSize: "var(--label2-size)", lineHeight: 1.6, ...style }, ...rest, children: /* @__PURE__ */ jsx28("code", { children }) });
   }
   return /* @__PURE__ */ jsx28("code", { style: { padding: "2px 6px", background: "var(--color-semantic-fill-strong)", color: "var(--color-semantic-label-normal)", borderRadius: "var(--radius-sm)", fontFamily: MONO2, fontSize: "0.9em", ...style }, ...rest, children });
 }
@@ -3610,14 +3610,14 @@ function Collapsible({ title, children, defaultOpen = false, style, ...rest }) {
         type: "button",
         "aria-expanded": open,
         onClick: () => setOpen((o) => !o),
-        style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 4px", border: "none", background: "transparent", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" },
+        style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 4px", border: "none", background: "transparent", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" },
         children: [
           /* @__PURE__ */ jsx29("span", { children: title }),
           /* @__PURE__ */ jsx29("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-base) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ jsx29("path", { d: "m6 9 6 6 6-6" }) })
         ]
       }
     ),
-    /* @__PURE__ */ jsx29("div", { style: { display: "grid", gridTemplateRows: open ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ jsx29("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ jsx29("div", { style: { padding: "0 4px 14px", fontFamily: "var(--font-sans)", fontSize: 14.5, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }) }) })
+    /* @__PURE__ */ jsx29("div", { style: { display: "grid", gridTemplateRows: open ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ jsx29("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ jsx29("div", { style: { padding: "0 4px 14px", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }) }) })
   ] });
 }
 
@@ -3646,7 +3646,7 @@ var TEXT_TONES = {
 };
 var SIZE_XS = {
   padding: "3px 6px",
-  fontSize: 11,
+  fontSize: "var(--caption2-size)",
   lineHeight: "var(--caption2-line)",
   gap: 2,
   icon: 12,
@@ -3654,7 +3654,7 @@ var SIZE_XS = {
 };
 var SIZE_SM = {
   padding: "4px 6px",
-  fontSize: 12,
+  fontSize: "var(--caption1-size)",
   lineHeight: "var(--caption1-line)",
   gap: 3,
   icon: 14,
@@ -3662,7 +3662,7 @@ var SIZE_SM = {
 };
 var SIZE_MD = {
   padding: "5px 8px",
-  fontSize: 13,
+  fontSize: "var(--label2-size)",
   lineHeight: "var(--label2-line)",
   gap: 4,
   icon: 16,
@@ -3896,7 +3896,7 @@ function ContentEditor({
       ...rest,
       children: [
         /* @__PURE__ */ jsxs24("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4) var(--space-4) var(--space-3)" }, children: [
-          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedTitleId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
+          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedTitleId, style: { fontSize: "var(--label2-size)", lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
             titleLabel,
             required && /* @__PURE__ */ jsx30("span", { style: { color: "var(--color-semantic-status-negative)" }, children: " *" })
           ] }),
@@ -3926,11 +3926,11 @@ function ContentEditor({
                 background: "transparent",
                 color: "var(--color-semantic-label-strong)",
                 fontFamily: "var(--font-sans)",
-                fontSize: 22,
+                fontSize: "var(--heading1-size)",
                 lineHeight: 1.35,
                 fontWeight: "var(--fw-extra)",
                 letterSpacing: 0,
-                opacity: disabled ? 0.55 : 1,
+                opacity: disabled ? 0.45 : 1,
                 ...titleInputProps?.style
               }
             }
@@ -3962,12 +3962,12 @@ function ContentEditor({
                 },
                 item.value
               )) }),
-              status != null && /* @__PURE__ */ jsx30("div", { role: "status", "aria-live": "polite", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: 13, lineHeight: 1.35 }, children: status })
+              status != null && /* @__PURE__ */ jsx30("div", { role: "status", "aria-live": "polite", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: 1.35 }, children: status })
             ]
           }
         ),
         /* @__PURE__ */ jsxs24("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4)" }, children: [
-          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedBodyId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
+          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedBodyId, style: { fontSize: "var(--label2-size)", lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
             bodyLabel,
             required && /* @__PURE__ */ jsx30("span", { style: { color: "var(--color-semantic-status-negative)" }, children: " *" })
           ] }),
@@ -4001,11 +4001,11 @@ function ContentEditor({
                 background: "transparent",
                 color: "var(--color-semantic-label-normal)",
                 fontFamily: "var(--font-sans)",
-                fontSize: 15,
+                fontSize: "var(--body2-size)",
                 lineHeight: 1.68,
                 letterSpacing: 0,
                 boxSizing: "border-box",
-                opacity: disabled ? 0.55 : 1,
+                opacity: disabled ? 0.45 : 1,
                 ...textareaProps?.style
               }
             }
@@ -4025,7 +4025,7 @@ function ContentEditor({
               background: "var(--color-semantic-background-normal-alternative)"
             },
             children: [
-              /* @__PURE__ */ jsxs24("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, color: "var(--color-semantic-label-alternative)", fontSize: 12.5, lineHeight: 1.45 }, children: [
+              /* @__PURE__ */ jsxs24("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: 1.45 }, children: [
                 meta != null && /* @__PURE__ */ jsx30("span", { children: meta }),
                 helper != null && /* @__PURE__ */ jsx30("span", { children: helper }),
                 maxLength != null && /* @__PURE__ */ jsxs24("span", { children: [
@@ -4090,7 +4090,7 @@ function Divider({
             {
               style: {
                 fontFamily: "var(--font-sans)",
-                fontSize: 13,
+                fontSize: "var(--label2-size)",
                 fontWeight: "var(--fw-semibold)",
                 letterSpacing: 0,
                 color: "var(--color-semantic-label-alternative)",
@@ -4135,7 +4135,7 @@ function Kbd({ children, style, ...rest }) {
         height: 22,
         padding: "0 6px",
         fontFamily: "var(--font-sans)",
-        fontSize: 12,
+        fontSize: "var(--caption1-size)",
         fontWeight: "var(--fw-bold)",
         color: "var(--color-semantic-label-neutral)",
         background: "var(--color-semantic-background-elevated-normal)",
@@ -4682,7 +4682,7 @@ function LogViewer({
       ] }),
       tools && /* @__PURE__ */ jsxs28("div", { role: "group", "aria-label": "\uB85C\uADF8 \uB3C4\uAD6C", style: { display: "inline-flex", gap: 6, flex: "0 0 auto" }, children: [
         /* @__PURE__ */ jsx35(IconButton2, { label: paused ? "\uB85C\uADF8 tail \uC7AC\uAC1C" : "\uB85C\uADF8 tail \uC77C\uC2DC\uC815\uC9C0", icon: paused ? "play" : "pause", active: paused, onClick: togglePause }),
-        /* @__PURE__ */ jsx35(IconButton2, { label: "\uCD5C\uC2E0 \uB85C\uADF8\uB85C \uC774\uB3D9", icon: "arrow-down", rail: true, onClick: jumpToLatest, children: latestCount > 0 && /* @__PURE__ */ jsx35("span", { "aria-hidden": "true", style: { position: "absolute", top: -5, right: -5, minWidth: 16, height: 16, padding: "0 4px", boxSizing: "border-box", borderRadius: 8, background: "var(--color-semantic-status-negative)", color: "var(--color-semantic-static-white)", fontSize: "var(--caption2-size)", lineHeight: "16px", fontWeight: "var(--fw-bold)" }, children: latestCount > 99 ? "99+" : `+${latestCount}` }) }),
+        /* @__PURE__ */ jsx35(IconButton2, { label: "\uCD5C\uC2E0 \uB85C\uADF8\uB85C \uC774\uB3D9", icon: "arrow-down", rail: true, onClick: jumpToLatest, children: latestCount > 0 && /* @__PURE__ */ jsx35("span", { "aria-hidden": "true", style: { position: "absolute", top: -5, right: -5, minWidth: 16, height: 16, padding: "0 4px", boxSizing: "border-box", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-status-negative)", color: "var(--color-semantic-static-white)", fontSize: "var(--caption2-size)", lineHeight: "16px", fontWeight: "var(--fw-bold)" }, children: latestCount > 99 ? "99+" : `+${latestCount}` }) }),
         /* @__PURE__ */ jsx35(IconButton2, { label: "\uD45C\uC2DC \uB85C\uADF8 \uC9C0\uC6B0\uAE30", icon: "trash", disabled: currentLines.length === 0, onClick: clearVisible }),
         onExport && /* @__PURE__ */ jsx35(IconButton2, { label: "\uB85C\uADF8 \uB0B4\uBCF4\uB0B4\uAE30", icon: "download", disabled: shown.length === 0, onClick: () => onExport(shown) })
       ] })
@@ -5208,7 +5208,7 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
         /* WDS _Badge/Status r4 */
         background: "var(--component-status-badge-surface)",
         fontFamily: "var(--font-sans)",
-        fontSize: 12,
+        fontSize: "var(--caption1-size)",
         fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
         color: "var(--component-status-badge-foreground)",
@@ -5233,6 +5233,22 @@ var AVAILABILITY_META = {
   error: { label: "\uD655\uC778 \uC2E4\uD328", tone: "negative" },
   unknown: { label: "\uC0C1\uD0DC \uBD88\uBA85", tone: "offline" }
 };
+function hasDisclosureContent(source) {
+  return source.excerpt != null || source.description != null || source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0;
+}
+function actionAriaLabel(source, resolvedActionLabel) {
+  if (source.actionAriaLabel != null) return source.actionAriaLabel;
+  if (typeof source.label === "string" && typeof resolvedActionLabel === "string") {
+    return `${source.label}: ${resolvedActionLabel}`;
+  }
+  return void 0;
+}
+function ExternalLinkContent({ children }) {
+  return /* @__PURE__ */ jsxs31("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
+    /* @__PURE__ */ jsx39("span", { style: { minWidth: 0, overflowWrap: "anywhere" }, children }),
+    /* @__PURE__ */ jsx39(Icon, { name: "external-link", size: 14, "aria-hidden": "true", style: { flexShrink: 0 } })
+  ] });
+}
 function SourceDisclosure({
   title = "\uCD9C\uCC98",
   headingLevel = 2,
@@ -5241,50 +5257,211 @@ function SourceDisclosure({
   emptyMessage = "\uD45C\uC2DC\uD560 \uCD9C\uCC98\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
   onSourceActivate,
   openLabel = "\uCD9C\uCC98 \uC5F4\uAE30",
+  className,
   style,
   ...rest
 }) {
   const titleId = React42.useId();
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
-  return /* @__PURE__ */ jsxs31("section", { "aria-labelledby": titleId, style: { display: "grid", gap: "var(--space-3)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs31("header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
-      /* @__PURE__ */ jsx39(Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)" }, children: title }),
-      description != null && /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: description })
-    ] }),
-    sources.length === 0 ? /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)" }, children: emptyMessage }) : /* @__PURE__ */ jsx39("ol", { style: { margin: 0, padding: 0, overflow: "hidden", listStyle: "none", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)" }, children: sources.map((source, index) => {
-      const availability = AVAILABILITY_META[source.availability ?? "unknown"] ?? AVAILABILITY_META.unknown;
-      const hasDetails = source.excerpt != null || source.description != null || source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0 || source.href != null || typeof onSourceActivate === "function";
-      const summary = /* @__PURE__ */ jsxs31("span", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-3)", width: "100%", minWidth: 0 }, children: [
-        /* @__PURE__ */ jsxs31("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx39("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", overflowWrap: "anywhere" }, children: source.label }),
-          (source.kind != null || source.location != null) && /* @__PURE__ */ jsx39("span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [source.kind, source.location].filter(Boolean).join(" \xB7 ") })
+  return /* @__PURE__ */ jsxs31(
+    "section",
+    {
+      ...rest,
+      "aria-labelledby": titleId,
+      className: ["lk-source-disclosure", className].filter(Boolean).join(" "),
+      style: {
+        display: "grid",
+        gap: "var(--space-3)",
+        minWidth: 0,
+        containerType: "inline-size",
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
+      children: [
+        /* @__PURE__ */ jsx39("style", { children: `.lk-source-disclosure__summary {
+          list-style: none;
+        }
+        .lk-source-disclosure__summary::-webkit-details-marker {
+          display: none;
+        }
+        .lk-source-disclosure__summary:hover {
+          background: var(--color-semantic-fill-alternative);
+        }
+        .lk-source-disclosure__summary:focus-visible {
+          outline: 2px solid var(--color-semantic-focus-ring);
+          outline-offset: -2px;
+        }
+        .lk-source-disclosure__details[open] .lk-source-disclosure__chevron {
+          transform: rotate(180deg);
+        }
+        @container (max-width: 400px) {
+          .lk-source-disclosure__summary,
+          .lk-source-disclosure__static-row {
+            padding: var(--space-3) !important;
+          }
+          .lk-source-disclosure__summary-content {
+            grid-template-columns: minmax(0, 1fr) 16px !important;
+          }
+          .lk-source-disclosure__static-content {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+          .lk-source-disclosure__status {
+            grid-column: 1;
+            grid-row: 2;
+            justify-self: start;
+          }
+          .lk-source-disclosure__chevron {
+            grid-column: 2;
+            grid-row: 1;
+          }
+          .lk-source-disclosure__panel {
+            padding: var(--space-2) var(--space-3) var(--space-3) !important;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .lk-source-disclosure__chevron {
+            transition: none !important;
+          }
+        }` }),
+        /* @__PURE__ */ jsxs31("header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
+          /* @__PURE__ */ jsx39(
+            Heading,
+            {
+              id: titleId,
+              style: {
+                margin: 0,
+                color: "var(--color-semantic-label-strong)",
+                fontSize: "var(--body1-size)",
+                lineHeight: "var(--body1-line)",
+                fontWeight: "var(--fw-bold)",
+                letterSpacing: "var(--body1-spacing)"
+              },
+              children: title
+            }
+          ),
+          description != null && /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: description })
         ] }),
-        /* @__PURE__ */ jsx39(StatusBadge, { tone: availability.tone, children: source.availabilityLabel ?? availability.label })
-      ] });
-      return /* @__PURE__ */ jsx39("li", { style: { borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none" }, children: hasDetails ? /* @__PURE__ */ jsxs31("details", { open: source.defaultExpanded || void 0, children: [
-        /* @__PURE__ */ jsx39("summary", { style: { padding: "var(--space-3) var(--space-4)", cursor: "pointer" }, children: summary }),
-        /* @__PURE__ */ jsxs31("div", { style: { display: "grid", gap: "var(--space-3)", padding: "0 var(--space-4) var(--space-4) var(--space-6)" }, children: [
-          source.description != null && /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: source.description }),
-          source.excerpt != null && /* @__PURE__ */ jsx39("blockquote", { style: { margin: 0, padding: "var(--space-3)", borderLeft: "3px solid var(--color-semantic-line-normal-strong)", background: "var(--color-semantic-fill-alternative)", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: source.excerpt }),
-          (source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0) && /* @__PURE__ */ jsxs31("dl", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: "var(--space-3)", margin: 0 }, children: [
-            source.observedAt != null && /* @__PURE__ */ jsxs31("div", { children: [
-              /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: "\uAD00\uCE21 \uC2DC\uAC01" }),
-              /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)" }, children: source.observedAt })
-            ] }),
-            source.updatedAt != null && /* @__PURE__ */ jsxs31("div", { children: [
-              /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: "\uAC31\uC2E0 \uC2DC\uAC01" }),
-              /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)" }, children: source.updatedAt })
-            ] }),
-            (source.metadata ?? []).map((item) => /* @__PURE__ */ jsxs31("div", { children: [
-              /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: item.label }),
-              /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", overflowWrap: "anywhere" }, children: item.value })
-            ] }, item.label))
-          ] }),
-          source.href != null ? /* @__PURE__ */ jsx39(TextButton, { as: "a", href: source.href, target: "_blank", rel: "noopener noreferrer", size: "sm", tone: "neutral", underline: true, children: source.actionLabel ?? openLabel }) : typeof onSourceActivate === "function" ? /* @__PURE__ */ jsx39(TextButton, { size: "sm", tone: "neutral", underline: true, onClick: () => onSourceActivate(source), children: source.actionLabel ?? openLabel }) : null
-        ] })
-      ] }) : /* @__PURE__ */ jsx39("div", { style: { padding: "var(--space-3) var(--space-4)" }, children: summary }) }, source.id);
-    }) })
-  ] });
+        sources.length === 0 ? /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: emptyMessage }) : /* @__PURE__ */ jsx39(
+          "ul",
+          {
+            style: {
+              margin: 0,
+              padding: 0,
+              overflow: "hidden",
+              listStyle: "none",
+              border: "1px solid var(--color-semantic-line-normal-normal)",
+              borderRadius: "var(--radius-md)",
+              background: "var(--color-semantic-background-elevated-normal)"
+            },
+            children: sources.map((source, index) => {
+              const availability = AVAILABILITY_META[source.availability ?? "unknown"] ?? AVAILABILITY_META.unknown;
+              const hasDetails = hasDisclosureContent(source);
+              const hasAction = source.href != null || typeof onSourceActivate === "function";
+              const resolvedActionLabel = source.actionLabel ?? openLabel;
+              const resolvedActionAriaLabel = actionAriaLabel(source, resolvedActionLabel);
+              const directAction = !hasDetails && hasAction;
+              const directLabel = directAction && source.href != null ? /* @__PURE__ */ jsx39(
+                TextButton,
+                {
+                  as: "a",
+                  href: source.href,
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                  size: "sm",
+                  underline: true,
+                  "aria-label": source.actionAriaLabel,
+                  className: "lk-textbtn lk-source-disclosure__source-link",
+                  style: { justifyContent: "flex-start", maxWidth: "100%", minHeight: 0, lineHeight: "var(--label1-line)", textAlign: "left", whiteSpace: "normal" },
+                  children: /* @__PURE__ */ jsx39(ExternalLinkContent, { children: source.label })
+                }
+              ) : directAction ? /* @__PURE__ */ jsx39(
+                TextButton,
+                {
+                  size: "sm",
+                  underline: true,
+                  "aria-label": source.actionAriaLabel,
+                  onClick: () => onSourceActivate(source),
+                  className: "lk-textbtn lk-source-disclosure__source-link",
+                  style: { justifyContent: "flex-start", maxWidth: "100%", minHeight: 0, lineHeight: "var(--label1-line)", textAlign: "left", whiteSpace: "normal" },
+                  children: source.label
+                }
+              ) : /* @__PURE__ */ jsx39("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-semibold)", overflowWrap: "anywhere" }, children: source.label });
+              const identity = /* @__PURE__ */ jsxs31("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+                directLabel,
+                (source.kind != null || source.location != null) && /* @__PURE__ */ jsx39("span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: [source.kind, source.location].filter(Boolean).join(" \xB7 ") })
+              ] });
+              const rowSummary = /* @__PURE__ */ jsxs31(
+                "span",
+                {
+                  className: hasDetails ? "lk-source-disclosure__summary-content" : "lk-source-disclosure__static-content",
+                  style: {
+                    display: "grid",
+                    gridTemplateColumns: hasDetails ? "minmax(0, 1fr) auto 16px" : "minmax(0, 1fr) auto",
+                    alignItems: "start",
+                    columnGap: "var(--space-2)",
+                    rowGap: "var(--space-1)",
+                    width: "100%",
+                    minWidth: 0
+                  },
+                  children: [
+                    identity,
+                    /* @__PURE__ */ jsx39(StatusBadge, { className: "lk-source-disclosure__status", tone: availability.tone, style: { flexShrink: 0, whiteSpace: "nowrap" }, children: source.availabilityLabel ?? availability.label }),
+                    hasDetails && /* @__PURE__ */ jsx39(
+                      Icon,
+                      {
+                        className: "lk-source-disclosure__chevron",
+                        name: "chevron-down-small",
+                        size: 16,
+                        color: "var(--color-semantic-label-alternative)",
+                        "aria-hidden": "true",
+                        style: { transition: "transform var(--dur-base) var(--ease-out)" }
+                      }
+                    )
+                  ]
+                }
+              );
+              return /* @__PURE__ */ jsx39("li", { style: { borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none" }, children: hasDetails ? /* @__PURE__ */ jsxs31("details", { className: "lk-source-disclosure__details", open: source.defaultExpanded || void 0, children: [
+                /* @__PURE__ */ jsx39(
+                  "summary",
+                  {
+                    className: "lk-source-disclosure__summary",
+                    style: { padding: "var(--space-3) var(--space-4)", cursor: "pointer", transition: "background var(--dur-fast) var(--ease-out)" },
+                    children: rowSummary
+                  }
+                ),
+                /* @__PURE__ */ jsxs31("div", { className: "lk-source-disclosure__panel", style: { display: "grid", gap: "var(--space-3)", padding: "var(--space-2) var(--space-4) var(--space-4)" }, children: [
+                  source.description != null && /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: source.description }),
+                  source.excerpt != null && /* @__PURE__ */ jsx39(
+                    "blockquote",
+                    {
+                      cite: source.href,
+                      style: { margin: 0, padding: "0 0 0 var(--space-3)", borderLeft: "3px solid var(--color-semantic-line-normal-strong)", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" },
+                      children: source.excerpt
+                    }
+                  ),
+                  (source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0) && /* @__PURE__ */ jsxs31("dl", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: "var(--space-3)", margin: 0 }, children: [
+                    source.observedAt != null && /* @__PURE__ */ jsxs31("div", { children: [
+                      /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: "\uAD00\uCE21 \uC2DC\uAC01" }),
+                      /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)" }, children: source.observedAt })
+                    ] }),
+                    source.updatedAt != null && /* @__PURE__ */ jsxs31("div", { children: [
+                      /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: "\uAC31\uC2E0 \uC2DC\uAC01" }),
+                      /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)" }, children: source.updatedAt })
+                    ] }),
+                    (source.metadata ?? []).map((item) => /* @__PURE__ */ jsxs31("div", { children: [
+                      /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: item.label }),
+                      /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", overflowWrap: "anywhere" }, children: item.value })
+                    ] }, item.label))
+                  ] }),
+                  source.href != null ? /* @__PURE__ */ jsx39(TextButton, { as: "a", href: source.href, target: "_blank", rel: "noopener noreferrer", size: "sm", underline: true, "aria-label": resolvedActionAriaLabel, children: /* @__PURE__ */ jsx39(ExternalLinkContent, { children: resolvedActionLabel }) }) : typeof onSourceActivate === "function" ? /* @__PURE__ */ jsx39(TextButton, { size: "sm", underline: true, "aria-label": resolvedActionAriaLabel, onClick: () => onSourceActivate(source), children: resolvedActionLabel }) : null
+                ] })
+              ] }) : /* @__PURE__ */ jsx39("div", { className: "lk-source-disclosure__static-row", style: { padding: "var(--space-3) var(--space-4)" }, children: rowSummary }) }, source.id);
+            })
+          }
+        )
+      ]
+    }
+  );
 }
 
 // components/content/SourceTag.jsx
@@ -5314,7 +5491,7 @@ function SourceTag({ children, label = "SOURCE", href, tone = "default", style, 
         background: onDark ? "var(--color-semantic-inverse-fill-normal)" : "var(--color-semantic-fill-normal)",
         border: `1px solid ${onDark ? "var(--color-semantic-inverse-fill-strong)" : "var(--color-semantic-line-normal-normal)"}`,
         fontFamily: "var(--font-sans)",
-        fontSize: 12.5,
+        fontSize: "var(--caption1-size)",
         whiteSpace: "nowrap",
         textDecoration: "none",
         cursor: isLink ? "pointer" : "default",
@@ -5324,7 +5501,7 @@ function SourceTag({ children, label = "SOURCE", href, tone = "default", style, 
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx40("span", { style: { fontFamily: MONO3, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: onDark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-heavy)" }, children: label }),
+        /* @__PURE__ */ jsx40("span", { style: { fontFamily: MONO3, fontSize: "var(--caption2-size)", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: onDark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-heavy)" }, children: label }),
         /* @__PURE__ */ jsx40("span", { "aria-hidden": "true", style: { width: 1, height: 12, background: "currentColor", opacity: 0.28 } }),
         /* @__PURE__ */ jsx40("span", { style: { fontWeight: 600 }, children }),
         isLink && /* @__PURE__ */ jsx40("span", { "aria-hidden": "true", style: { opacity: hover ? 1 : 0.55, transition: "opacity var(--dur-fast) var(--ease-out)" }, children: "\u2197" })
@@ -5356,9 +5533,9 @@ function Mini({ children, onClick, disabled, label }) {
         background: "var(--color-semantic-background-elevated-normal)",
         color: "var(--color-semantic-label-neutral)",
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.4 : 1,
+        opacity: disabled ? 0.45 : 1,
         fontFamily: "inherit",
-        fontSize: 13
+        fontSize: "var(--label2-size)"
       },
       children
     }
@@ -5379,10 +5556,10 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
   };
   return /* @__PURE__ */ jsxs33("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     steps.map((st, i) => /* @__PURE__ */ jsxs33("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", marginBottom: 8 }, children: [
-      /* @__PURE__ */ jsx41("span", { style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--color-semantic-primary-surface-normal)", color: "var(--color-semantic-primary-normal)", fontSize: 12, fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
+      /* @__PURE__ */ jsx41("span", { style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--color-semantic-primary-surface-normal)", color: "var(--color-semantic-primary-normal)", fontSize: "var(--caption1-size)", fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
       /* @__PURE__ */ jsxs33("div", { style: { flex: 1, minWidth: 0 }, children: [
-        /* @__PURE__ */ jsx41("div", { style: { fontSize: 14, fontWeight: 700, color: "var(--color-semantic-label-strong)" }, children: st.label }),
-        st.detail != null && /* @__PURE__ */ jsx41("div", { style: { fontSize: 12.5, color: "var(--color-semantic-label-alternative)", marginTop: 1 }, children: st.detail })
+        /* @__PURE__ */ jsx41("div", { style: { fontSize: "var(--label1-size)", fontWeight: 700, color: "var(--color-semantic-label-strong)" }, children: st.label }),
+        st.detail != null && /* @__PURE__ */ jsx41("div", { style: { fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-alternative)", marginTop: 1 }, children: st.detail })
       ] }),
       editable && /* @__PURE__ */ jsxs33("div", { style: { display: "inline-flex", gap: 2, flexShrink: 0 }, children: [
         /* @__PURE__ */ jsx41(Mini, { onClick: () => move(i, -1), disabled: i === 0, label: "\uC704\uB85C", children: "\u2191" }),
@@ -5395,7 +5572,7 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
       {
         type: "button",
         onClick: onAdd,
-        style: { width: "100%", padding: 10, border: "1px dashed var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "transparent", color: "var(--color-semantic-label-alternative)", cursor: "pointer", fontSize: 13, fontWeight: 700, fontFamily: "var(--font-sans)" },
+        style: { width: "100%", padding: 10, border: "1px dashed var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "transparent", color: "var(--color-semantic-label-alternative)", cursor: "pointer", fontSize: "var(--label2-size)", fontWeight: 700, fontFamily: "var(--font-sans)" },
         children: [
           "+ ",
           addLabel
@@ -5545,9 +5722,9 @@ function Timeline({ items = [], style, ...rest }) {
         !last && /* @__PURE__ */ jsx43("span", { style: { flex: 1, width: 2, background: "var(--color-semantic-line-solid-normal)", marginTop: 4 } })
       ] }),
       /* @__PURE__ */ jsxs35("div", { style: { paddingBottom: last ? 0 : 22 }, children: [
-        it.time != null && /* @__PURE__ */ jsx43("div", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--color-semantic-label-alternative)", marginBottom: 3 }, children: it.time }),
-        /* @__PURE__ */ jsx43("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: it.title }),
-        it.description != null && /* @__PURE__ */ jsx43("div", { style: { marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: it.description })
+        it.time != null && /* @__PURE__ */ jsx43("div", { style: { fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--color-semantic-label-alternative)", marginBottom: 3 }, children: it.time }),
+        /* @__PURE__ */ jsx43("div", { style: { fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: it.title }),
+        it.description != null && /* @__PURE__ */ jsx43("div", { style: { marginTop: 3, fontSize: "var(--label2-size)", lineHeight: 1.6, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: it.description })
       ] })
     ] }, i);
   }) });
@@ -5747,10 +5924,13 @@ function Tooltip({
 
 // components/data/AnnotatedImage.jsx
 import React48 from "react";
-import { jsx as jsx45, jsxs as jsxs37 } from "react/jsx-runtime";
+import { Fragment as Fragment4, jsx as jsx45, jsxs as jsxs37 } from "react/jsx-runtime";
 var ANNOTATION_TONE = {
   signal: "var(--color-semantic-primary-normal)",
   positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)",
+  // Compatibility aliases; prefer LDS status tone names above.
   warning: "var(--color-semantic-status-cautionary)",
   danger: "var(--color-semantic-status-negative)",
   neutral: "var(--color-semantic-label-neutral)"
@@ -5769,6 +5949,17 @@ function imageContentBox(frame, image, objectFit) {
   const height = image.height * scale;
   return { left: (frame.width - width) / 2, top: (frame.height - height) / 2, width, height };
 }
+function annotationLabel(annotation, fallback) {
+  return annotation.label ?? fallback;
+}
+function pointLabelPosition(point) {
+  const x = Math.max(0, Math.min(1, Number(point.x) || 0));
+  const y = Math.max(0, Math.min(1, Number(point.y) || 0));
+  const horizontal = x > 0.65 ? { right: "calc(100% + var(--space-1))" } : { left: "calc(100% + var(--space-1))" };
+  if (y < 0.12) return { ...horizontal, top: "100%", marginTop: "var(--space-1)" };
+  if (y > 0.88) return { ...horizontal, bottom: "100%", marginBottom: "var(--space-1)" };
+  return { ...horizontal, top: "50%", transform: "translateY(-50%)" };
+}
 function AnnotatedImage({
   src,
   alt,
@@ -5781,9 +5972,10 @@ function AnnotatedImage({
   loadingMessage = "\uC774\uBBF8\uC9C0\uB97C \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4.",
   emptyMessage = "\uD45C\uC2DC\uD560 \uC774\uBBF8\uC9C0\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
   errorMessage = "\uC774\uBBF8\uC9C0\uB97C \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
-  summaryLabel = "\uC774\uBBF8\uC9C0 annotation \uC694\uC57D",
+  summaryLabel = "\uC774\uBBF8\uC9C0 \uC8FC\uC11D \uC694\uC57D",
   aspectRatio = "16 / 9",
   objectFit = "contain",
+  labelDisplay = "auto",
   style,
   ...rest
 }) {
@@ -5794,6 +5986,8 @@ function AnnotatedImage({
   const [imageSize, setImageSize] = React48.useState({ width: 0, height: 0 });
   const [frameSize, setFrameSize] = React48.useState({ width: 0, height: 0 });
   const frameRef = React48.useRef(null);
+  const overlayId = React48.useId();
+  const detailsId = React48.useId();
   const annotations = regions.length + points.length;
   const overlayBox = imageContentBox(frameSize, imageSize, objectFit);
   React48.useEffect(() => {
@@ -5817,101 +6011,150 @@ function AnnotatedImage({
     if (!controlled) setInternalVisible(next);
     onAnnotationsVisibleChange?.(next);
   };
-  return /* @__PURE__ */ jsxs37("figure", { style: { display: "grid", gap: "var(--space-3)", width: "100%", minWidth: 0, margin: 0, boxSizing: "border-box", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs37(
-      "div",
-      {
-        ref: frameRef,
-        style: {
-          position: "relative",
-          width: "100%",
-          minHeight: src ? void 0 : "12rem",
-          aspectRatio: src ? aspectRatio : void 0,
-          overflow: "hidden",
-          border: "1px solid var(--color-semantic-line-normal-normal)",
-          borderRadius: "var(--radius-lg)",
-          background: "var(--color-semantic-inverse-background)"
-        },
-        children: [
-          src && /* @__PURE__ */ jsx45(
-            "img",
-            {
-              src,
-              alt,
-              onLoad: (event) => {
-                setImageSize({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight });
-                setImageState("loaded");
-              },
-              onError: () => setImageState("error"),
-              style: { display: "block", width: "100%", height: "100%", objectFit }
-            }
-          ),
-          imageState !== "loaded" && /* @__PURE__ */ jsx45(
-            "div",
-            {
-              role: imageState === "error" ? "alert" : "status",
-              style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", padding: "var(--space-6)", color: "var(--color-semantic-inverse-label-neutral-soft)", textAlign: "center", background: "var(--color-semantic-inverse-background)" },
-              children: imageState === "loading" ? loadingMessage : imageState === "error" ? errorMessage : emptyMessage
-            }
-          ),
-          imageState === "loaded" && annotations > 0 && /* @__PURE__ */ jsx45(
-            ToggleIcon,
-            {
-              size: "sm",
-              pressed: visible,
-              onChange: setVisible,
-              label: "Annotation \uD45C\uC2DC",
-              title: visible ? "Annotation \uC228\uAE30\uAE30" : "Annotation \uBCF4\uAE30",
-              style: { position: "absolute", zIndex: 2, top: "var(--space-3)", right: "var(--space-3)", color: "var(--color-semantic-label-normal)", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", boxShadow: "var(--shadow-md)" },
-              children: /* @__PURE__ */ jsx45(Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
-            }
-          ),
-          imageState === "loaded" && visible && annotations > 0 && /* @__PURE__ */ jsxs37(
-            "div",
-            {
-              "aria-hidden": "true",
-              style: { position: "absolute", left: overlayBox.left, top: overlayBox.top, width: overlayBox.width, height: overlayBox.height, pointerEvents: "none" },
-              children: [
-                regions.map((region, index) => {
-                  const color = ANNOTATION_TONE[region.tone] ?? ANNOTATION_TONE.signal;
-                  return /* @__PURE__ */ jsx45("span", { style: { position: "absolute", left: percent(region.x), top: percent(region.y), width: percent(region.width), height: percent(region.height), boxSizing: "border-box", border: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)" }, children: /* @__PURE__ */ jsxs37("span", { style: { position: "absolute", left: "calc(-1 * var(--border-thick))", top: "calc(-1 * var(--space-6))", maxWidth: "12.5rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", borderLeft: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)" }, children: [
-                    region.label ?? `Region ${index + 1}`,
-                    region.score != null ? ` ${Math.round(region.score * 100)}%` : ""
-                  ] }) }, region.id ?? index);
-                }),
-                points.map((point, index) => {
-                  const color = ANNOTATION_TONE[point.tone] ?? ANNOTATION_TONE.warning;
-                  const pointText = point.label ?? (point.value != null ? `${point.value}${point.unit ?? ""}` : `Point ${index + 1}`);
-                  return /* @__PURE__ */ jsx45("span", { style: { position: "absolute", left: percent(point.x), top: percent(point.y), width: percent((point.radius ?? 0.03) * 2), aspectRatio: "1", transform: "translate(-50%, -50%)", border: `var(--border-thick) solid ${color}`, borderRadius: "50%", background: "transparent" }, children: /* @__PURE__ */ jsx45("span", { style: { position: "absolute", left: "calc(100% + var(--space-1))", top: "50%", maxWidth: "10rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", transform: "translateY(-50%)", borderLeft: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)" }, children: pointText }) }, point.id ?? index);
-                })
-              ]
-            }
-          )
-        ]
-      }
-    ),
-    (caption != null || annotations > 0) && /* @__PURE__ */ jsxs37("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap" }, children: [
-      caption != null && /* @__PURE__ */ jsx45("figcaption", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: caption }),
-      annotations > 0 && /* @__PURE__ */ jsxs37("details", { style: { marginLeft: "auto" }, children: [
-        /* @__PURE__ */ jsxs37("summary", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", cursor: "pointer" }, children: [
-          summaryLabel,
-          " (",
-          annotations,
-          ")"
-        ] }),
-        /* @__PURE__ */ jsxs37("ul", { style: { margin: "var(--space-2) 0 0", paddingLeft: "var(--space-5)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: [
-          regions.map((region, index) => /* @__PURE__ */ jsxs37("li", { children: [
-            region.label ?? `Region ${index + 1}`,
-            region.score != null ? `, \uC2E0\uB8B0\uB3C4 ${Math.round(region.score * 100)}%` : ""
-          ] }, region.id ?? index)),
-          points.map((point, index) => /* @__PURE__ */ jsxs37("li", { children: [
-            point.label ?? `Point ${index + 1}`,
-            point.value != null ? `, ${point.value}${point.unit ?? ""}` : ""
-          ] }, point.id ?? index))
+  return /* @__PURE__ */ jsxs37(
+    "figure",
+    {
+      "data-label-display": labelDisplay,
+      style: { display: "grid", gap: "var(--space-3)", width: "100%", minWidth: 0, margin: 0, boxSizing: "border-box", fontFamily: "var(--font-sans)", ...style },
+      ...rest,
+      children: [
+        /* @__PURE__ */ jsx45("style", { children: `.lk-annotated-image__point-label {
+          display: inline-flex;
+        }
+        @container (max-width: 420px) {
+          .lk-annotated-image__label-text[data-collapse="true"],
+          .lk-annotated-image__point-label[data-collapse="true"] {
+            display: none;
+          }
+        }` }),
+        /* @__PURE__ */ jsxs37(
+          "div",
+          {
+            ref: frameRef,
+            style: {
+              position: "relative",
+              width: "100%",
+              minHeight: src ? void 0 : "12rem",
+              aspectRatio: src ? aspectRatio : void 0,
+              overflow: "hidden",
+              border: "1px solid var(--color-semantic-line-normal-normal)",
+              borderRadius: "var(--radius-lg)",
+              background: "var(--color-semantic-inverse-background)",
+              containerType: "inline-size"
+            },
+            children: [
+              src && /* @__PURE__ */ jsx45(
+                "img",
+                {
+                  src,
+                  alt,
+                  "aria-details": annotations > 0 ? detailsId : void 0,
+                  onLoad: (event) => {
+                    setImageSize({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight });
+                    setImageState("loaded");
+                  },
+                  onError: () => setImageState("error"),
+                  style: { display: "block", width: "100%", height: "100%", objectFit }
+                }
+              ),
+              imageState !== "loaded" && /* @__PURE__ */ jsx45(
+                "div",
+                {
+                  role: imageState === "error" ? "alert" : "status",
+                  style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", padding: "var(--space-6)", color: "var(--color-semantic-inverse-label-neutral-soft)", textAlign: "center", background: "var(--color-semantic-inverse-background)" },
+                  children: imageState === "loading" ? loadingMessage : imageState === "error" ? errorMessage : emptyMessage
+                }
+              ),
+              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ jsx45(
+                ToggleIcon,
+                {
+                  size: "sm",
+                  variant: "on-dark",
+                  pressed: visible,
+                  onChange: setVisible,
+                  label: "\uC8FC\uC11D \uD45C\uC2DC",
+                  title: visible ? "\uC8FC\uC11D \uC228\uAE30\uAE30" : "\uC8FC\uC11D \uBCF4\uAE30",
+                  "aria-controls": overlayId,
+                  style: { position: "absolute", zIndex: 2, top: "var(--space-3)", right: "var(--space-3)", boxShadow: "var(--shadow-md)" },
+                  children: /* @__PURE__ */ jsx45(Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
+                }
+              ),
+              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ jsxs37(
+                "div",
+                {
+                  id: overlayId,
+                  "aria-hidden": "true",
+                  hidden: !visible,
+                  style: { position: "absolute", left: overlayBox.left, top: overlayBox.top, width: overlayBox.width, height: overlayBox.height, pointerEvents: "none" },
+                  children: [
+                    regions.map((region, index) => {
+                      const color = ANNOTATION_TONE[region.tone] ?? ANNOTATION_TONE.signal;
+                      const label = annotationLabel(region, `\uC601\uC5ED ${index + 1}`);
+                      const marker = index + 1;
+                      return /* @__PURE__ */ jsx45("span", { style: { position: "absolute", left: percent(region.x), top: percent(region.y), width: percent(region.width), height: percent(region.height), boxSizing: "border-box", border: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)" }, children: /* @__PURE__ */ jsxs37("span", { style: { position: "absolute", left: "var(--space-1)", top: "var(--space-1)", display: "inline-flex", alignItems: "center", gap: "var(--space-1)", maxWidth: "min(12.5rem, calc(100% - var(--space-2)))", padding: "var(--space-1) var(--space-2)", overflow: "hidden", boxSizing: "border-box", borderLeft: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)", background: "color-mix(in srgb, var(--color-semantic-inverse-background) 88%, transparent)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)" }, children: [
+                        /* @__PURE__ */ jsx45("span", { style: { flexShrink: 0, fontVariantNumeric: "tabular-nums" }, children: marker }),
+                        /* @__PURE__ */ jsxs37(
+                          "span",
+                          {
+                            className: "lk-annotated-image__label-text",
+                            "data-collapse": labelDisplay === "auto" ? "true" : void 0,
+                            style: { display: labelDisplay === "index" ? "none" : void 0, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" },
+                            children: [
+                              label,
+                              region.score != null ? ` ${Math.round(region.score * 100)}%` : ""
+                            ]
+                          }
+                        )
+                      ] }) }, region.id ?? index);
+                    }),
+                    points.map((point, index) => {
+                      const color = ANNOTATION_TONE[point.tone] ?? ANNOTATION_TONE.cautionary;
+                      const marker = regions.length + index + 1;
+                      const pointText = annotationLabel(point, point.value != null ? /* @__PURE__ */ jsxs37(Fragment4, { children: [
+                        point.value,
+                        point.unit
+                      ] }) : `\uC9C0\uC810 ${index + 1}`);
+                      return /* @__PURE__ */ jsxs37("span", { style: { position: "absolute", left: percent(point.x), top: percent(point.y), width: percent((point.radius ?? 0.03) * 2), minWidth: 18, aspectRatio: "1", transform: "translate(-50%, -50%)", display: "grid", placeItems: "center", border: `var(--border-thick) solid ${color}`, borderRadius: "50%", background: "color-mix(in srgb, var(--color-semantic-inverse-background) 82%, transparent)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption2-size)", lineHeight: 1, fontWeight: "var(--fw-bold)", fontVariantNumeric: "tabular-nums" }, children: [
+                        marker,
+                        labelDisplay !== "index" && /* @__PURE__ */ jsx45("span", { className: "lk-annotated-image__point-label", "data-collapse": labelDisplay === "auto" ? "true" : void 0, style: { position: "absolute", ...pointLabelPosition(point), alignItems: "center", maxWidth: "10rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", borderLeft: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)", background: "color-mix(in srgb, var(--color-semantic-inverse-background) 88%, transparent)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)" }, children: /* @__PURE__ */ jsx45("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: pointText }) })
+                      ] }, point.id ?? index);
+                    })
+                  ]
+                }
+              )
+            ]
+          }
+        ),
+        (caption != null || annotations > 0) && /* @__PURE__ */ jsxs37("figcaption", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
+          caption != null && /* @__PURE__ */ jsx45("span", { children: caption }),
+          annotations > 0 && /* @__PURE__ */ jsxs37("details", { id: detailsId, style: { marginLeft: "auto" }, children: [
+            /* @__PURE__ */ jsxs37("summary", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", cursor: "pointer" }, children: [
+              summaryLabel,
+              " (",
+              annotations,
+              ")"
+            ] }),
+            /* @__PURE__ */ jsxs37("ol", { style: { margin: "var(--space-2) 0 0", paddingLeft: "var(--space-5)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
+              regions.map((region, index) => /* @__PURE__ */ jsxs37("li", { children: [
+                "\uC601\uC5ED \xB7 ",
+                annotationLabel(region, `\uC601\uC5ED ${index + 1}`),
+                region.score != null ? `, \uC2E0\uB8B0\uB3C4 ${Math.round(region.score * 100)}%` : ""
+              ] }, region.id ?? index)),
+              points.map((point, index) => /* @__PURE__ */ jsxs37("li", { children: [
+                "\uC9C0\uC810 \xB7 ",
+                annotationLabel(point, `\uC9C0\uC810 ${index + 1}`),
+                point.value != null && /* @__PURE__ */ jsxs37(Fragment4, { children: [
+                  ", ",
+                  point.value,
+                  point.unit
+                ] })
+              ] }, point.id ?? index))
+            ] })
+          ] })
         ] })
-      ] })
-    ] })
-  ] });
+      ]
+    }
+  );
 }
 
 // components/data/BarChart.jsx
@@ -5920,9 +6163,9 @@ import { jsx as jsx46, jsxs as jsxs38 } from "react/jsx-runtime";
 function BarChart({ data = [], height = 160, gap = 12, showValue = true, color = "var(--color-semantic-primary-normal)", style, ...rest }) {
   const max = Math.max(...data.map((d) => d.value), 1);
   return /* @__PURE__ */ jsx46("div", { style: { display: "flex", alignItems: "flex-end", gap, height, fontFamily: "var(--font-sans)", ...style }, ...rest, children: data.map((d, i) => /* @__PURE__ */ jsxs38("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%", justifyContent: "flex-end" }, children: [
-    showValue && /* @__PURE__ */ jsx46("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: d.value }),
+    showValue && /* @__PURE__ */ jsx46("span", { style: { fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: d.value }),
     /* @__PURE__ */ jsx46("div", { style: { width: "100%", maxWidth: 48, height: `${d.value / max * 100}%`, minHeight: 2, background: d.color || color, borderRadius: "var(--radius-md) var(--radius-md) 0 0", transition: "height var(--dur-slow) var(--ease-out)" } }),
-    /* @__PURE__ */ jsx46("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: d.label })
+    /* @__PURE__ */ jsx46("span", { style: { fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: d.label })
   ] }, i)) });
 }
 
@@ -5989,7 +6232,7 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
         background,
         color,
         fontFamily: "var(--font-sans)",
-        fontSize: 14,
+        fontSize: "var(--label1-size)",
         fontWeight: selected ? "var(--fw-bold)" : "var(--fw-medium)",
         fontVariantNumeric: "tabular-nums",
         transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
@@ -6069,7 +6312,7 @@ function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...
       ...rest,
       children: [
         /* @__PURE__ */ jsxs39("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }, children: [
-          /* @__PURE__ */ jsxs39("div", { "aria-live": "polite", style: { fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)" }, children: [
+          /* @__PURE__ */ jsxs39("div", { "aria-live": "polite", style: { fontSize: "var(--body1-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)" }, children: [
             view.getFullYear(),
             "\uB144 ",
             view.getMonth() + 1,
@@ -6088,7 +6331,7 @@ function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...
               "aria-label": `${weekday}\uC694\uC77C`,
               style: {
                 textAlign: "center",
-                fontSize: 12,
+                fontSize: "var(--caption1-size)",
                 fontWeight: "var(--fw-semibold)",
                 color: index === 0 ? "var(--color-semantic-accent-foreground-red)" : index === 6 ? "var(--color-semantic-accent-foreground-blue)" : "var(--color-semantic-label-neutral)"
               },
@@ -6189,7 +6432,7 @@ function checkboxStyle(checked, indeterminate = false) {
     width: 16,
     height: 16,
     margin: 0,
-    borderRadius: 4,
+    borderRadius: "var(--radius-5)",
     border: `1px solid ${filled ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
     backgroundColor: filled ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)",
     backgroundImage: indeterminate ? DASH_IMG : checked ? CHECK_IMG : "none",
@@ -6368,7 +6611,7 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
     border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
     borderRadius: "var(--radius-input)",
     boxShadow: focus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
-    opacity: disabled ? 0.5 : 1,
+    opacity: disabled ? 0.45 : 1,
     transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
     ...style
   }, children: [
@@ -6389,7 +6632,7 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
         onKeyDown: (e) => {
           if (e.key === "Enter" && onSearch) onSearch(val);
         },
-        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--color-semantic-label-normal)" },
+        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", color: "var(--color-semantic-label-normal)" },
         ...rest
       }
     ),
@@ -6479,8 +6722,8 @@ import { jsx as jsx52, jsxs as jsxs44 } from "react/jsx-runtime";
 function DescriptionList({ items = [], columns = 1, style, ...rest }) {
   const lastRowStart = items.length - ((items.length - 1) % columns + 1);
   return /* @__PURE__ */ jsx52("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ jsxs44("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: i >= lastRowStart ? "none" : "1px solid var(--color-semantic-line-solid-normal)" }, children: [
-    /* @__PURE__ */ jsx52("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: it.term }),
-    /* @__PURE__ */ jsx52("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children: it.description })
+    /* @__PURE__ */ jsx52("dt", { style: { flex: "0 0 34%", fontSize: "var(--label1-size)", fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: it.term }),
+    /* @__PURE__ */ jsx52("dd", { style: { margin: 0, flex: 1, fontSize: "var(--body2-size)", fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children: it.description })
   ] }, i)) });
 }
 
@@ -6513,7 +6756,7 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
       ] }),
       (showTotal || centerLabel != null) && /* @__PURE__ */ jsx53("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
     ] }),
-    legend && segments.length > 0 && /* @__PURE__ */ jsx53("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs45("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--color-semantic-label-neutral)" }, children: [
+    legend && segments.length > 0 && /* @__PURE__ */ jsx53("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs45("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", color: "var(--color-semantic-label-neutral)" }, children: [
       /* @__PURE__ */ jsx53("span", { style: { width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] } }),
       s.label,
       /* @__PURE__ */ jsxs45("b", { style: { marginLeft: 2, color: "var(--color-semantic-label-normal)" }, children: [
@@ -6667,7 +6910,7 @@ function getItemKey(item, index) {
 }
 function Swatch({ shape = "square", color, dashed = false, disabled = false, size }) {
   const cfg = SIZE2[size] || SIZE2.md;
-  const opacity = disabled ? 0.42 : 1;
+  const opacity = disabled ? 0.45 : 1;
   if (shape === "line") {
     return /* @__PURE__ */ jsx55(
       "span",
@@ -7211,7 +7454,7 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
           borderRadius: "var(--radius-md)",
           textAlign: "left",
           fontFamily: "var(--font-sans)",
-          fontSize: 14,
+          fontSize: "var(--label1-size)",
           fontWeight: level === 0 ? "var(--fw-semibold)" : "var(--fw-medium)",
           color: level === 0 ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-normal)",
           transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
@@ -7392,7 +7635,7 @@ function Checkbox({
             ...rest,
             children: [
               (on || isMark) && /* @__PURE__ */ jsx60("svg", { width: iconSize, height: iconSize, viewBox: "0 0 24 24", fill: "none", stroke: isMark ? "currentColor" : checkStroke, strokeWidth: "3.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx60("path", { d: "M20 6 9 17l-5-5" }) }),
-              mixed && /* @__PURE__ */ jsx60("span", { style: { width: d - 8, height: 2, borderRadius: 999, background: checkStroke } })
+              mixed && /* @__PURE__ */ jsx60("span", { style: { width: d - 8, height: 2, borderRadius: "var(--radius-pill)", background: checkStroke } })
             ]
           }
         ),
@@ -7576,10 +7819,14 @@ function PickerNode({
   focusNode,
   focusFirstChild,
   moveFocus,
+  onTypeAhead,
   onToggleSelection,
   onToggleExpanded
 }) {
   const [focused, setFocused] = React65.useState(false);
+  const [hovered, setHovered] = React65.useState(false);
+  const [expandHovered, setExpandHovered] = React65.useState(false);
+  const groupId = React65.useId();
   if (!matchesQuery(node, query)) return null;
   const children = node.children ?? [];
   const branch = children.length > 0;
@@ -7587,8 +7834,8 @@ function PickerNode({
   const expanded = query ? true : expandedSet.has(node.id);
   const visibleSelectionIds = selectionIds(node, selectionBehavior, false, true);
   const actionableSelectionIds = selectionIds(node, selectionBehavior, nodeDisabled, false);
-  const selectable = visibleSelectionIds.length > 0;
-  const state = selectionState(visibleSelectionIds, selectedSet);
+  const selectable = nodeDisabled ? visibleSelectionIds.length > 0 : actionableSelectionIds.length > 0;
+  const state = selectionState(actionableSelectionIds.length > 0 ? actionableSelectionIds : visibleSelectionIds, selectedSet);
   const label = nodeText2(node);
   const toggleSelection = () => {
     if (!nodeDisabled && actionableSelectionIds.length > 0) onToggleSelection(actionableSelectionIds, state.checked);
@@ -7601,6 +7848,7 @@ function PickerNode({
         role: "treeitem",
         "aria-level": depth + 1,
         "aria-expanded": branch ? expanded : void 0,
+        "aria-owns": branch && expanded ? groupId : void 0,
         "aria-checked": selectable ? state.mixed ? "mixed" : state.checked : void 0,
         "aria-disabled": nodeDisabled || void 0,
         tabIndex: nodeDisabled ? -1 : activeId === node.id ? 0 : -1,
@@ -7610,6 +7858,8 @@ function PickerNode({
           focusNode(node.id, false);
         },
         onBlur: () => setFocused(false),
+        onMouseEnter: () => setHovered(true),
+        onMouseLeave: () => setHovered(false),
         onClick: (event) => {
           if (event.target.closest("button, label")) return;
           if (selectable) toggleSelection();
@@ -7648,6 +7898,10 @@ function PickerNode({
             if (selectable) toggleSelection();
             else if (branch && !query) onToggleExpanded(node.id);
           }
+          if (event.key.length === 1 && event.key !== " " && !event.altKey && !event.ctrlKey && !event.metaKey) {
+            event.preventDefault();
+            onTypeAhead(node.id, event.key);
+          }
         },
         style: {
           padding: "var(--space-1) var(--space-2)",
@@ -7658,32 +7912,28 @@ function PickerNode({
           columnGap: "var(--space-0)",
           minHeight: "var(--control-h-md)",
           borderRadius: "var(--radius-sm)",
-          background: focused ? "var(--color-semantic-fill-alternative)" : "transparent",
-          boxShadow: focused ? "0 0 0 3px var(--color-semantic-focus-ring)" : "none",
+          background: focused ? "var(--color-semantic-fill-alternative)" : hovered && !nodeDisabled ? "var(--color-semantic-fill-normal)" : "transparent",
+          boxShadow: focused ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
           outline: "none",
-          cursor: nodeDisabled ? "not-allowed" : "pointer"
+          cursor: nodeDisabled ? "not-allowed" : "pointer",
+          position: "relative",
+          zIndex: focused ? 1 : 0,
+          transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
         },
         children: [
           branch && !query ? /* @__PURE__ */ jsx62(
             "span",
             {
-              onClick: (event) => event.stopPropagation(),
-              style: { display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 0 },
-              children: /* @__PURE__ */ jsx62(
-                IconButton,
-                {
-                  variant: "ghost",
-                  round: false,
-                  onClick: () => onToggleExpanded(node.id),
-                  label: `${label} ${expanded ? "\uC811\uAE30" : "\uD3BC\uCE58\uAE30"}`,
-                  size: "sm",
-                  disabled: nodeDisabled,
-                  tabIndex: -1,
-                  "aria-expanded": expanded,
-                  style: { background: "transparent", border: "none", borderRadius: "var(--radius-sm)" },
-                  children: /* @__PURE__ */ jsx62("span", { "aria-hidden": "true", style: { display: "inline-flex", transform: expanded ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx62(Icon, { name: "chevron-right", size: 16, "aria-hidden": "true" }) })
-                }
-              )
+              "aria-hidden": "true",
+              "data-tree-picker-expand": "",
+              onMouseEnter: () => setExpandHovered(true),
+              onMouseLeave: () => setExpandHovered(false),
+              onClick: (event) => {
+                event.stopPropagation();
+                if (!nodeDisabled) onToggleExpanded(node.id);
+              },
+              style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: "var(--component-toggle-icon-size-sm)", height: "var(--component-toggle-icon-size-sm)", lineHeight: 0, borderRadius: "var(--radius-sm)", background: expandHovered && !nodeDisabled ? "var(--color-semantic-fill-alternative)" : "transparent", cursor: nodeDisabled ? "not-allowed" : "pointer", transition: "background var(--dur-fast) var(--ease-out)" },
+              children: /* @__PURE__ */ jsx62("span", { style: { display: "inline-flex", transform: expanded ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx62(Icon, { name: "chevron-right", size: 16, "aria-hidden": "true" }) })
             }
           ) : /* @__PURE__ */ jsx62("span", { "aria-hidden": "true", style: { width: "var(--component-toggle-icon-size-sm)" } }),
           selectable ? /* @__PURE__ */ jsx62(
@@ -7705,17 +7955,17 @@ function PickerNode({
               )
             }
           ) : /* @__PURE__ */ jsx62("span", { "aria-hidden": "true" }),
-          /* @__PURE__ */ jsxs54("span", { style: { minWidth: 0, marginLeft: "var(--space-2)", display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", alignItems: "center", gap: "var(--space-2)" }, children: [
-            /* @__PURE__ */ jsxs54("span", { style: { minWidth: 0, display: "grid", gap: "var(--space-0)" }, children: [
-              /* @__PURE__ */ jsx62("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label2-size)", fontWeight: branch ? "var(--fw-semibold)" : "var(--fw-medium)" }, children: node.label }),
+          /* @__PURE__ */ jsxs54("span", { style: { minWidth: 0, marginLeft: "var(--space-2)", display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
+            /* @__PURE__ */ jsxs54("span", { style: { minWidth: 0, display: "grid", gap: "var(--space-0)", flex: "1 1 10rem" }, children: [
+              /* @__PURE__ */ jsx62("span", { title: typeof node.label === "string" ? node.label : void 0, style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", fontSize: "var(--label2-size)", fontWeight: branch ? "var(--fw-semibold)" : "var(--fw-medium)" }, children: node.label }),
               node.description != null && /* @__PURE__ */ jsx62("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: node.description })
             ] }),
-            node.meta != null && /* @__PURE__ */ jsx62("span", { style: { color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }, children: node.meta })
+            node.meta != null && /* @__PURE__ */ jsx62("span", { style: { marginLeft: "auto", color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }, children: node.meta })
           ] })
         ]
       }
     ),
-    branch && expanded && /* @__PURE__ */ jsx62("ul", { role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: children.map((child) => /* @__PURE__ */ jsx62(
+    branch && expanded && /* @__PURE__ */ jsx62("ul", { id: groupId, role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: children.map((child) => /* @__PURE__ */ jsx62(
       PickerNode,
       {
         node: child,
@@ -7731,6 +7981,7 @@ function PickerNode({
         focusNode,
         focusFirstChild,
         moveFocus,
+        onTypeAhead,
         onToggleSelection,
         onToggleExpanded
       },
@@ -7762,6 +8013,7 @@ function TreePicker({
 }) {
   const treeId = React65.useId();
   const nodeRefs = React65.useRef(/* @__PURE__ */ new Map());
+  const typeAheadRef = React65.useRef({ value: "", timer: null });
   const selectionControlled = selectedIds !== void 0;
   const [internalSelectedIds, setInternalSelectedIds] = React65.useState(defaultSelectedIds);
   const currentSelectedIds = selectionControlled ? selectedIds : internalSelectedIds;
@@ -7777,10 +8029,12 @@ function TreePicker({
   const visibleNodes = nodes.filter((node) => matchesQuery(node, normalizedQuery));
   const visibleRows = visibleTreeNodes(nodes, normalizedQuery, expandedSet, null, disabled);
   const visibleIds = visibleRows.filter((row) => !row.disabled).map((row) => row.id);
-  const [activeId, setActiveId] = React65.useState(visibleIds[0]);
+  const preferredActiveId = visibleIds.find((id) => selectedSet.has(id)) ?? visibleIds[0];
+  const visibleIdsKey = JSON.stringify(visibleIds);
+  const [activeId, setActiveId] = React65.useState(preferredActiveId);
   React65.useEffect(() => {
-    if (!visibleIds.includes(activeId)) setActiveId(visibleIds[0]);
-  }, [activeId, visibleIds.join("|")]);
+    if (!visibleIds.includes(activeId)) setActiveId(preferredActiveId);
+  }, [activeId, preferredActiveId, visibleIdsKey]);
   const registerNode = (id, element) => {
     if (element) nodeRefs.current.set(id, element);
     else nodeRefs.current.delete(id);
@@ -7802,6 +8056,28 @@ function TreePicker({
     if (direction === "next") focusNode(visibleIds[Math.min(index + 1, visibleIds.length - 1)]);
     if (direction === "previous") focusNode(visibleIds[Math.max(index - 1, 0)]);
   };
+  const typeAhead = (id, key) => {
+    const normalizedKey = key.toLocaleLowerCase();
+    const previous = typeAheadRef.current.value;
+    const repeatedCharacter = previous.length > 0 && [...previous].every((character) => character === normalizedKey);
+    const nextValue = repeatedCharacter ? normalizedKey : `${previous}${normalizedKey}`;
+    typeAheadRef.current.value = nextValue;
+    if (typeAheadRef.current.timer != null) window.clearTimeout(typeAheadRef.current.timer);
+    typeAheadRef.current.timer = window.setTimeout(() => {
+      typeAheadRef.current.value = "";
+      typeAheadRef.current.timer = null;
+    }, 500);
+    const currentIndex = visibleIds.indexOf(id);
+    const orderedIds = currentIndex < 0 ? visibleIds : [...visibleIds.slice(currentIndex + 1), ...visibleIds.slice(0, currentIndex + 1)];
+    const match = orderedIds.find((candidateId) => {
+      const row = visibleRows.find((candidate) => candidate.id === candidateId);
+      return row && nodeText2(row.node).toLocaleLowerCase().startsWith(nextValue);
+    });
+    focusNode(match);
+  };
+  React65.useEffect(() => () => {
+    if (typeAheadRef.current.timer != null) window.clearTimeout(typeAheadRef.current.timer);
+  }, []);
   const commitSelection = (next) => {
     const nextIds = [...next];
     if (!selectionControlled) setInternalSelectedIds(nextIds);
@@ -7877,6 +8153,7 @@ function TreePicker({
             focusNode,
             focusFirstChild,
             moveFocus,
+            onTypeAhead: typeAhead,
             onToggleSelection: toggleSelection,
             onToggleExpanded: toggleExpanded
           },
@@ -9032,9 +9309,12 @@ function EditorToolbar({
           position: relative;
           z-index: 1;
         }
+        /* ToggleIcon paints its own inline colours, so the pressed override
+           needs !important; values follow the DS selected-state grammar
+           (primary-heavy on primary surface). */
         .lk-editor-toolbar__button[aria-pressed="true"]:not([aria-disabled="true"]) {
           background: var(--color-semantic-primary-surface-normal) !important;
-          color: var(--color-semantic-primary-normal) !important;
+          color: var(--color-semantic-primary-heavy) !important;
         }
       ` }),
         items.map((it) => {
@@ -9299,7 +9579,7 @@ function LayerRow({
           minHeight: "var(--control-h-md)",
           borderRadius: "var(--radius-sm)",
           background: active ? "var(--color-semantic-fill-normal)" : "transparent",
-          boxShadow: focused ? "0 0 0 3px var(--color-semantic-focus-ring)" : "none",
+          boxShadow: focused ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
           outline: "none",
           boxSizing: "border-box",
           cursor: layerDisabled ? "not-allowed" : "pointer"
@@ -9324,10 +9604,10 @@ function LayerRow({
             /* @__PURE__ */ jsx68("span", { "aria-hidden": "true", style: { width: "var(--space-2)", height: "var(--space-2)", borderRadius: "50%", background: color, opacity: visible ? 1 : 0.35 } }),
             /* @__PURE__ */ jsxs60("span", { style: { display: "grid", gap: "var(--space-0)", minWidth: 0, opacity: visible ? 1 : 0.55 }, children: [
               /* @__PURE__ */ jsx68("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)", letterSpacing: 0 }, children: layer.label }),
-              layer.description != null && /* @__PURE__ */ jsx68("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", letterSpacing: 0 }, children: layer.description })
+              layer.description != null && /* @__PURE__ */ jsx68("span", { className: "lk-layer-panel__row-description", style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", letterSpacing: 0 }, children: layer.description })
             ] })
           ] }),
-          rowMeta != null && /* @__PURE__ */ jsx68("span", { style: { maxWidth: 76, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: rowMeta }),
+          rowMeta != null && /* @__PURE__ */ jsx68("span", { className: "lk-layer-panel__row-meta", style: { maxWidth: 76, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: rowMeta }),
           /* @__PURE__ */ jsx68(
             IconButton,
             {
@@ -9505,6 +9785,7 @@ function LayerPanel({
   return /* @__PURE__ */ jsxs60(
     "section",
     {
+      className: "lk-layer-panel",
       style: {
         display: "grid",
         gridTemplateRows: "auto minmax(0, 1fr)",
@@ -9514,11 +9795,22 @@ function LayerPanel({
         height: "100%",
         padding: "var(--space-3)",
         boxSizing: "border-box",
+        containerType: "inline-size",
         fontFamily: "var(--font-sans)",
         ...style
       },
       ...rest,
       children: [
+        /* @__PURE__ */ jsx68("style", { children: `
+        /* \uC881\uC740 \uB3C4\uD0B9 \uD3ED\uC5D0\uC11C\uB294 \uD589\uC758 \uBCF4\uC870 \uCEA1\uC158\uACFC meta\uB97C \uC228\uACA8 label + visibility/lock
+           \uB9C8\uC774\uD06C\uB85C \uCEE8\uD2B8\uB864\uB9CC \uB0A8\uAE34\uB2E4 (Figma layers\uC758 \uCD95\uC57D \uD589\uACFC \uAC19\uC740 \uC6B0\uC120\uC21C\uC704). */
+        @container (max-width: 260px) {
+          .lk-layer-panel__row-description,
+          .lk-layer-panel__row-meta {
+            display: none !important;
+          }
+        }
+      ` }),
         /* @__PURE__ */ jsxs60("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0 }, children: [
           /* @__PURE__ */ jsx68(Icon, { name: "layers", size: 16, "aria-hidden": "true" }),
           /* @__PURE__ */ jsx68("strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
@@ -9608,7 +9900,7 @@ function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
 }
 
 // components/editor/SelectionInspector.jsx
-import { Fragment as Fragment4, jsx as jsx70, jsxs as jsxs61 } from "react/jsx-runtime";
+import { Fragment as Fragment5, jsx as jsx70, jsxs as jsxs61 } from "react/jsx-runtime";
 function displayValue(value, mixed) {
   if (mixed || value == null || value === "") return "\u2014";
   if (typeof value === "boolean") return String(value);
@@ -9753,7 +10045,7 @@ function SelectionInspector({
             ] })
           ] })
         ] }),
-        /* @__PURE__ */ jsx70("div", { style: { minHeight: 0, overflow: "auto", padding: hasItem ? "0 var(--space-4) var(--space-4)" : "var(--space-4)", boxSizing: "border-box" }, children: hasItem ? /* @__PURE__ */ jsxs61(Fragment4, { children: [
+        /* @__PURE__ */ jsx70("div", { style: { minHeight: 0, overflow: "auto", padding: hasItem ? "0 var(--space-4) var(--space-4)" : "var(--space-4)", boxSizing: "border-box" }, children: hasItem ? /* @__PURE__ */ jsxs61(Fragment5, { children: [
           sections.map((section, index) => /* @__PURE__ */ jsx70(InspectorSection, { section }, `${section.title || "section"}-${index}`)),
           children
         ] }) : /* @__PURE__ */ jsxs61("div", { role: "status", style: { minHeight: 180, display: "grid", placeItems: "center", alignContent: "center", gap: "var(--space-3)", color: "var(--color-semantic-label-neutral)", textAlign: "center" }, children: [
@@ -10223,7 +10515,7 @@ function AvatarGroup({
           justifyContent: "center",
           background: "var(--color-semantic-background-normal-alternative)",
           color: "var(--color-semantic-label-alternative)",
-          fontSize: 12,
+          fontSize: "var(--caption1-size)",
           fontWeight: "var(--fw-semibold)",
           whiteSpace: "nowrap"
         },
@@ -10320,10 +10612,11 @@ function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
         padding: "0 6px",
         fontFamily: "var(--font-sans)",
         fontWeight: "var(--fw-bold)",
-        fontSize: 12,
+        fontSize: "var(--caption1-size)",
         color: palette.fg,
         background: palette.bg,
         borderRadius: 4,
+        /* WDS _Badge/Value r4 (no 4px token) */
         ...style
       },
       ...rest,
@@ -10492,12 +10785,53 @@ function Chip({
 
 // components/feedback/Notification.jsx
 import React80 from "react";
+
+// components/status/status-presentation.js
+var STATUS_TONE_STYLE = {
+  positive: {
+    icon: "circle-check-fill",
+    foreground: "var(--color-semantic-status-positive-text)",
+    surface: "var(--color-semantic-status-positive-surface)",
+    border: "var(--color-semantic-status-positive-border)"
+  },
+  cautionary: {
+    icon: "triangle-exclamation-fill",
+    foreground: "var(--color-semantic-status-cautionary-text)",
+    surface: "var(--color-semantic-status-cautionary-surface)",
+    border: "var(--color-semantic-status-cautionary-border)"
+  },
+  negative: {
+    icon: "circle-close-fill",
+    foreground: "var(--color-semantic-status-negative-text)",
+    surface: "var(--color-semantic-status-negative-surface)",
+    border: "var(--color-semantic-status-negative-border)"
+  },
+  signal: {
+    icon: "circle-info-fill",
+    foreground: "var(--color-semantic-status-info-text)",
+    surface: "var(--color-semantic-status-info-surface)",
+    border: "var(--color-semantic-status-info-border)"
+  },
+  offline: {
+    icon: "circle-info",
+    foreground: "var(--color-semantic-status-neutral-text)",
+    surface: "var(--color-semantic-status-neutral-surface)",
+    border: "var(--color-semantic-status-neutral-border)"
+  }
+};
+function statusToneStyle(tone, fallback = "offline") {
+  return STATUS_TONE_STYLE[tone] ?? STATUS_TONE_STYLE[fallback];
+}
+
+// components/feedback/Notification.jsx
 import { jsx as jsx76, jsxs as jsxs66 } from "react/jsx-runtime";
 function Notification({
   icon,
   title,
   description,
   time,
+  dateTime,
+  tone,
   unread = false,
   onClick,
   onFocus,
@@ -10548,20 +10882,36 @@ function Notification({
         cursor: onClick ? "pointer" : "default",
         textAlign: "start",
         background,
-        boxShadow: focused ? "inset 0 0 0 2px var(--color-semantic-primary-normal)" : "none",
+        boxShadow: focused ? "inset 0 0 0 2px var(--color-semantic-focus-indicator)" : "none",
         color: "inherit",
         fontFamily: "var(--font-sans)",
         ...style
       },
       children: [
-        icon != null && /* @__PURE__ */ jsx76("span", { style: { width: 36, height: 36, borderRadius: "var(--radius-sm)", background: "var(--color-semantic-fill-normal)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--color-semantic-primary-normal)" }, children: icon }),
+        icon != null && /* @__PURE__ */ jsx76(
+          "span",
+          {
+            "aria-hidden": "true",
+            style: {
+              width: 36,
+              height: 36,
+              borderRadius: "var(--radius-md)",
+              background: tone ? statusToneStyle(tone).surface : "var(--color-semantic-fill-normal)",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: tone ? statusToneStyle(tone).foreground : "var(--color-semantic-primary-heavy)"
+            },
+            children: icon
+          }
+        ),
         /* @__PURE__ */ jsxs66("div", { style: { minWidth: 0 }, children: [
           /* @__PURE__ */ jsxs66("div", { style: { display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "var(--space-3)", minWidth: 0 }, children: [
             /* @__PURE__ */ jsxs66("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0 }, children: [
               /* @__PURE__ */ jsx76("span", { style: { overflow: "hidden", textOverflow: "ellipsis", color: "var(--color-semantic-label-normal)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--label1-spacing)" }, children: title }),
-              unread && /* @__PURE__ */ jsx76("span", { "aria-label": "\uC77D\uC9C0 \uC54A\uC74C", style: { width: 6, height: 6, borderRadius: "50%", background: "var(--color-semantic-primary-normal)", flexShrink: 0 } })
+              unread && /* @__PURE__ */ jsx76("span", { role: "img", "aria-label": "\uC77D\uC9C0 \uC54A\uC74C", style: { width: 6, height: 6, borderRadius: "50%", background: "var(--color-semantic-primary-normal)", flexShrink: 0 } })
             ] }),
-            time != null && /* @__PURE__ */ jsx76("time", { style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", letterSpacing: "var(--caption1-spacing)" }, children: time })
+            time != null && /* @__PURE__ */ jsx76("time", { dateTime, style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", letterSpacing: "var(--caption1-spacing)" }, children: time })
           ] }),
           description != null && /* @__PURE__ */ jsx76("div", { style: { marginTop: "var(--space-1)", overflow: "hidden", textOverflow: "ellipsis", color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", letterSpacing: "var(--label2-spacing)", wordBreak: "keep-all" }, children: description })
         ] })
@@ -10579,7 +10929,7 @@ function PushBadge({ children, count, dot = false, max = 99, tone = "negative", 
   const label = count > max ? `${max}+` : count;
   return /* @__PURE__ */ jsxs67("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     children,
-    show && (dot ? /* @__PURE__ */ jsx77("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--color-semantic-background-elevated-normal)", boxSizing: "content-box" } }) : /* @__PURE__ */ jsx77("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--color-semantic-static-white)", borderRadius: "var(--radius-pill)", border: "2px solid var(--color-semantic-background-elevated-normal)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
+    show && (dot ? /* @__PURE__ */ jsx77("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--color-semantic-background-elevated-normal)", boxSizing: "content-box" } }) : /* @__PURE__ */ jsx77("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--color-semantic-static-white)", borderRadius: "var(--radius-pill)", border: "2px solid var(--color-semantic-background-elevated-normal)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
   ] });
 }
 
@@ -10650,7 +11000,7 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
         },
         onFocus: () => setOpen(true),
         onBlur: () => setTimeout(() => setOpen(false), 120),
-        style: { width: "100%", height: h, padding: "0 16px", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 16, color: "var(--color-semantic-label-normal)", background: "var(--color-semantic-background-elevated-normal)" }
+        style: { width: "100%", height: h, padding: "0 16px", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", outline: "none", fontFamily: "var(--font-sans)", fontSize: "var(--body1-size)", color: "var(--color-semantic-label-normal)", background: "var(--color-semantic-background-elevated-normal)" }
       }
     ),
     open && filtered.length > 0 && /* @__PURE__ */ jsx79("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: "auto", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: 6 }, children: filtered.map((o, i) => /* @__PURE__ */ jsx79(
@@ -10667,7 +11017,7 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
         onMouseLeave: (e) => {
           e.currentTarget.style.background = "transparent";
         },
-        style: { padding: "10px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--color-semantic-label-normal)" },
+        style: { padding: "10px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", color: "var(--color-semantic-label-normal)" },
         children: o.label
       },
       i
@@ -10691,12 +11041,12 @@ function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direc
   };
   return /* @__PURE__ */ jsx80("div", { role: "group", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = Array.isArray(val) && val.includes(o.value);
-    return /* @__PURE__ */ jsxs69("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+    return /* @__PURE__ */ jsxs69("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.45 : 1, fontFamily: "var(--font-sans)" }, children: [
       /* @__PURE__ */ jsx80("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
       /* @__PURE__ */ jsx80("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, background: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx80("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx80("path", { d: "M20 6 9 17l-5-5" }) }) }),
       /* @__PURE__ */ jsxs69("span", { children: [
-        /* @__PURE__ */ jsx80("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ jsx80("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
+        /* @__PURE__ */ jsx80("span", { style: { fontSize: "var(--body2-size)", fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ jsx80("span", { style: { display: "block", marginTop: 2, fontSize: "var(--label2-size)", color: "var(--color-semantic-label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
@@ -10758,8 +11108,8 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
   };
   const h = size === "sm" ? 40 : 50;
   return /* @__PURE__ */ jsxs70("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs70("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)" }, children: [
-      /* @__PURE__ */ jsx82("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ jsx82("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-heavy)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
+    /* @__PURE__ */ jsxs70("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", color: sel.length ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)" }, children: [
+      /* @__PURE__ */ jsx82("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ jsx82("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-heavy)", borderRadius: "var(--radius-pill)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
       /* @__PURE__ */ jsx82("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx82("path", { d: "m6 9 6 6 6-6" }) })
     ] }),
     open && /* @__PURE__ */ jsx82("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
@@ -10776,7 +11126,7 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
           onMouseLeave: (e) => {
             e.currentTarget.style.background = "transparent";
           },
-          style: { display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--color-semantic-label-normal)" },
+          style: { display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", color: "var(--color-semantic-label-normal)" },
           children: [
             /* @__PURE__ */ jsx82("span", { style: { width: 18, height: 18, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, background: on ? "var(--color-semantic-primary-normal)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: on && /* @__PURE__ */ jsx82("svg", { width: "11", height: "11", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx82("path", { d: "M20 6 9 17l-5-5" }) }) }),
             o.label
@@ -11132,7 +11482,7 @@ function ProgressBar({
   const pct = Math.max(0, Math.min(100, value / max * 100));
   const ariaLabel = ariaLabelProp ?? (typeof label === "string" ? label : void 0);
   return /* @__PURE__ */ jsxs73("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs73("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs73("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
       /* @__PURE__ */ jsx85("span", { children: label }),
       showValue && /* @__PURE__ */ jsxs73("span", { style: { color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
         Math.round(pct),
@@ -11156,43 +11506,6 @@ function ProgressBar({
       }
     )
   ] });
-}
-
-// components/status/status-presentation.js
-var STATUS_TONE_STYLE = {
-  positive: {
-    icon: "circle-check-fill",
-    foreground: "var(--color-semantic-status-positive-text)",
-    surface: "var(--color-semantic-status-positive-surface)",
-    border: "var(--color-semantic-status-positive-border)"
-  },
-  cautionary: {
-    icon: "triangle-exclamation-fill",
-    foreground: "var(--color-semantic-status-cautionary-text)",
-    surface: "var(--color-semantic-status-cautionary-surface)",
-    border: "var(--color-semantic-status-cautionary-border)"
-  },
-  negative: {
-    icon: "circle-close-fill",
-    foreground: "var(--color-semantic-status-negative-text)",
-    surface: "var(--color-semantic-status-negative-surface)",
-    border: "var(--color-semantic-status-negative-border)"
-  },
-  signal: {
-    icon: "circle-info-fill",
-    foreground: "var(--color-semantic-status-info-text)",
-    surface: "var(--color-semantic-status-info-surface)",
-    border: "var(--color-semantic-status-info-border)"
-  },
-  offline: {
-    icon: "circle-info",
-    foreground: "var(--color-semantic-status-neutral-text)",
-    surface: "var(--color-semantic-status-neutral-surface)",
-    border: "var(--color-semantic-status-neutral-border)"
-  }
-};
-function statusToneStyle(tone, fallback = "offline") {
-  return STATUS_TONE_STYLE[tone] ?? STATUS_TONE_STYLE[fallback];
 }
 
 // components/forms/FileUploadQueue.jsx
@@ -11249,7 +11562,7 @@ function FileUploadQueue({
       children: [
         /* @__PURE__ */ jsx86("style", { children: `@container (max-width: 520px) {
           .lk-file-upload-queue__item {
-            grid-template-columns: 28px minmax(0, 1fr) !important;
+            grid-template-columns: 36px minmax(0, 1fr) !important;
             padding: var(--space-3) !important;
           }
           .lk-file-upload-queue__actions {
@@ -11259,7 +11572,7 @@ function FileUploadQueue({
             margin-top: var(--space-1);
           }
         }` }),
-        /* @__PURE__ */ jsx86("header", { style: { padding: "var(--space-4)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)" }, children: /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gridTemplateColumns: "28px minmax(0, 1fr)", gap: "var(--space-3)", alignItems: "center" }, children: [
+        /* @__PURE__ */ jsx86("header", { style: { padding: "var(--space-4)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)" }, children: /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gridTemplateColumns: "36px minmax(0, 1fr)", gap: "var(--space-3)", alignItems: "center" }, children: [
           /* @__PURE__ */ jsx86(Icon, { name: "document", size: 22, color: "var(--color-semantic-label-neutral)", "aria-hidden": "true" }),
           /* @__PURE__ */ jsxs74("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
             /* @__PURE__ */ jsx86("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)" }, children: title }),
@@ -11293,7 +11606,7 @@ function FileUploadQueue({
               className: "lk-file-upload-queue__item",
               style: {
                 display: "grid",
-                gridTemplateColumns: "28px minmax(0, 1fr) auto",
+                gridTemplateColumns: "36px minmax(0, 1fr) auto",
                 columnGap: "var(--space-3)",
                 rowGap: "var(--space-2)",
                 alignItems: "center",
@@ -11303,7 +11616,7 @@ function FileUploadQueue({
                 borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none"
               },
               children: [
-                /* @__PURE__ */ jsx86("span", { "aria-hidden": "true", style: { alignSelf: "start", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, borderRadius: "var(--radius-pill)", color: itemTone.foreground, background: itemTone.surface }, children: /* @__PURE__ */ jsx86(Icon, { name: "document", size: 16, "aria-hidden": "true" }) }),
+                /* @__PURE__ */ jsx86("span", { "aria-hidden": "true", style: { alignSelf: "start", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: "var(--radius-md)", color: itemTone.foreground, background: itemTone.surface }, children: /* @__PURE__ */ jsx86(Icon, { name: "document", size: 18, "aria-hidden": "true" }) }),
                 /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
                   /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
                     /* @__PURE__ */ jsxs74("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, flexWrap: "wrap" }, children: [
@@ -11351,12 +11664,12 @@ import React91 from "react";
 import { jsx as jsx87, jsxs as jsxs75 } from "react/jsx-runtime";
 function FormField({ label, required = false, helper, error, htmlFor, children, style, ...rest }) {
   return /* @__PURE__ */ jsxs75("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    label != null && /* @__PURE__ */ jsxs75("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: [
+    label != null && /* @__PURE__ */ jsxs75("label", { htmlFor, style: { fontSize: "var(--label1-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: [
       label,
       required && /* @__PURE__ */ jsx87("span", { style: { color: "var(--color-semantic-status-negative-text)", marginLeft: 3 }, children: "*" })
     ] }),
     children,
-    (error != null || helper != null) && /* @__PURE__ */ jsx87("span", { style: { fontSize: 13, lineHeight: 1.5, color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)" }, children: error != null ? error : helper })
+    (error != null || helper != null) && /* @__PURE__ */ jsx87("span", { style: { fontSize: "var(--label2-size)", lineHeight: 1.5, color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)" }, children: error != null ? error : helper })
   ] });
 }
 
@@ -11372,8 +11685,8 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  const Addon = ({ node, side }) => /* @__PURE__ */ jsx88("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--color-semantic-line-solid-normal)" }, children: node });
-  return /* @__PURE__ */ jsxs76("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", background: "var(--color-semantic-background-elevated-normal)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
+  const Addon = ({ node, side }) => /* @__PURE__ */ jsx88("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--color-semantic-line-solid-normal)" }, children: node });
+  return /* @__PURE__ */ jsxs76("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", background: "var(--color-semantic-background-elevated-normal)", overflow: "hidden", opacity: disabled ? 0.45 : 1, ...style }, ...rest, children: [
     prefix != null && /* @__PURE__ */ jsx88(Addon, { node: prefix, side: "left" }),
     /* @__PURE__ */ jsx88(
       "input",
@@ -11383,7 +11696,7 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
         placeholder,
         "aria-label": ariaLabel ?? inputProps?.["aria-label"] ?? (typeof placeholder === "string" ? placeholder : "\uC785\uB825"),
         onChange: (e) => set(e.target.value),
-        style: { flex: 1, minWidth: 0, padding: "0 14px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--color-semantic-label-normal)" },
+        style: { flex: 1, minWidth: 0, padding: "0 14px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", color: "var(--color-semantic-label-normal)" },
         ...inputProps
       }
     ),
@@ -11444,7 +11757,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
           setFocused(false);
           onBlur?.(event);
         },
-        style: { width: 92, padding: "0 12px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)" }
+        style: { width: 92, padding: "0 12px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-semibold)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)" }
       }
     ),
     /* @__PURE__ */ jsxs77("div", { style: { display: "flex", flexDirection: "column", width: 28 }, children: [
@@ -11468,7 +11781,7 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs78("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
+  return /* @__PURE__ */ jsxs78("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none", opacity: disabled ? 0.45 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
     /* @__PURE__ */ jsx90(
       "input",
       {
@@ -11480,7 +11793,7 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
         onChange: (e) => set(e.target.value),
         onFocus: () => setFocus(true),
         onBlur: () => setFocus(false),
-        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, color: "var(--color-semantic-label-normal)" },
+        style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", color: "var(--color-semantic-label-normal)" },
         ...rest
       }
     ),
@@ -11573,7 +11886,7 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
         commit(next);
         refs.current[Math.min(normalizedLength - 1, i + pasted.length)]?.focus();
       },
-      style: { width: boxW, height: boxH, textAlign: "center", border: `1px solid ${focusedIndex === i ? "var(--component-input-border-color-focus)" : cells[i] ? "var(--color-semantic-primary-normal)" : "var(--component-input-border-color)"}`, borderRadius: "var(--radius-md)", outline: "none", boxShadow: focusedIndex === i ? "var(--component-input-focus-shadow)" : "none", fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: "var(--fw-bold)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)" }
+      style: { width: boxW, height: boxH, textAlign: "center", border: `1px solid ${focusedIndex === i ? "var(--component-input-border-color-focus)" : cells[i] ? "var(--color-semantic-primary-normal)" : "var(--component-input-border-color)"}`, borderRadius: "var(--radius-md)", outline: "none", boxShadow: focusedIndex === i ? "var(--component-input-focus-shadow)" : "none", fontFamily: "var(--font-sans)", fontSize: "var(--headline1-size)", fontWeight: "var(--fw-bold)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)" }
     },
     i
   )) });
@@ -11640,7 +11953,7 @@ function Switch({
         gap: 12,
         cursor: disabledState ? "not-allowed" : readOnly ? "default" : "pointer",
         fontFamily: "var(--font-sans)",
-        fontSize: 15,
+        fontSize: "var(--body2-size)",
         letterSpacing: 0,
         color: disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
         ...style
@@ -11979,7 +12292,7 @@ function Radio({
         gap: tight ? 8 : 12,
         cursor: disabledState ? "not-allowed" : "pointer",
         fontFamily: "var(--font-sans)",
-        fontSize: "15px",
+        fontSize: "var(--body2-size)",
         letterSpacing: 0,
         color: disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-brand-ink)",
         fontWeight: bold ? "var(--fw-bold)" : void 0,
@@ -12041,12 +12354,12 @@ function RadioGroup({ options = [], value, defaultValue, onChange, name, directi
   const gname = name || autoId;
   return /* @__PURE__ */ jsx95("div", { role: "radiogroup", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = o.value === val;
-    return /* @__PURE__ */ jsxs82("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+    return /* @__PURE__ */ jsxs82("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.45 : 1, fontFamily: "var(--font-sans)" }, children: [
       /* @__PURE__ */ jsx95("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
       /* @__PURE__ */ jsx95("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-interaction-inactive)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx95("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } }) }),
       /* @__PURE__ */ jsxs82("span", { children: [
-        /* @__PURE__ */ jsx95("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ jsx95("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
+        /* @__PURE__ */ jsx95("span", { style: { fontSize: "var(--body2-size)", fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ jsx95("span", { style: { display: "block", marginTop: 2, fontSize: "var(--label2-size)", color: "var(--color-semantic-label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
@@ -12090,7 +12403,7 @@ function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step 
       /* @__PURE__ */ jsx96("input", { className: "lk-rangeslider", type: "range", min, max, step, value: lo, onChange: (e) => set(Number(e.target.value), hi), "aria-label": "minimum" }),
       /* @__PURE__ */ jsx96("input", { className: "lk-rangeslider", type: "range", min, max, step, value: hi, onChange: (e) => set(lo, Number(e.target.value)), "aria-label": "maximum" })
     ] }),
-    showValue && /* @__PURE__ */ jsxs83("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
+    showValue && /* @__PURE__ */ jsxs83("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
       /* @__PURE__ */ jsx96("span", { children: lo }),
       /* @__PURE__ */ jsx96("span", { children: hi })
     ] })
@@ -12128,6 +12441,7 @@ function SearchableMultiSelect({
   onSearchChange,
   filterOption,
   label,
+  helper,
   placeholder = "\uAC80\uC0C9\uD574\uC11C \uC120\uD0DD",
   loading = false,
   error,
@@ -12135,7 +12449,10 @@ function SearchableMultiSelect({
   loadingLabel = "\uBD88\uB7EC\uC624\uB294 \uC911",
   maxSelections,
   maxSelectionLabel,
+  required = false,
   disabled = false,
+  readOnly = false,
+  onBlur,
   style,
   ...rest
 }) {
@@ -12147,11 +12464,11 @@ function SearchableMultiSelect({
   const [focused, setFocused] = React101.useState(false);
   const listboxId = React101.useId();
   const inputId = React101.useId();
-  const errorId = React101.useId();
-  const statusId = React101.useId();
+  const messageId = React101.useId();
   const inputRef = React101.useRef(null);
   const selected = controlled ? value : internalValue;
   const search = searchControlled ? searchValue : internalSearch;
+  const locked = disabled || readOnly;
   const selectedSet = new Set(selected);
   const selectedOptions = selected.map((selectedValue) => options.find((option) => option.value === selectedValue) ?? { value: selectedValue, label: String(selectedValue) });
   const maxReached = maxSelections != null && selected.length >= maxSelections;
@@ -12159,11 +12476,16 @@ function SearchableMultiSelect({
   const filteredOptions = options.filter((option) => filterOption ? filterOption(option, search) : [option.label, option.description, option.value].filter(Boolean).join(" ").toLowerCase().includes(String(search).trim().toLowerCase())).map((option) => ({ ...option, effectiveDisabled: Boolean(option.disabled || maxReached && !selectedSet.has(option.value)) }));
   const optionsKey = JSON.stringify(filteredOptions.map((option) => [option.value, option.effectiveDisabled]));
   const [activeIndex, setActiveIndex] = React101.useState(() => firstEnabledIndex(filteredOptions));
-  const activeOption = open && !loading && error == null && filteredOptions[activeIndex] && !filteredOptions[activeIndex].effectiveDisabled ? filteredOptions[activeIndex] : void 0;
-  const popupStatus = loading ? loadingLabel : filteredOptions.length === 0 ? emptyLabel : maxReached ? resolvedMaxLabel : "";
+  const popupOpen = open && !locked;
+  const hasOptionList = !loading && filteredOptions.length > 0;
+  const activeOption = popupOpen && hasOptionList && filteredOptions[activeIndex] && !filteredOptions[activeIndex].effectiveDisabled ? filteredOptions[activeIndex] : void 0;
+  const message = error ?? helper;
   React101.useEffect(() => {
     setActiveIndex((index) => filteredOptions[index] && !filteredOptions[index].effectiveDisabled ? index : firstEnabledIndex(filteredOptions));
   }, [optionsKey]);
+  React101.useEffect(() => {
+    if (locked) setOpen(false);
+  }, [locked]);
   const commit = (next) => {
     if (!controlled) setInternalValue(next);
     onChange?.(next);
@@ -12174,162 +12496,168 @@ function SearchableMultiSelect({
     setActiveIndex(-1);
   };
   const toggle = (option) => {
-    if (loading || error != null || option.disabled) return;
+    if (locked || loading || option.effectiveDisabled) return;
     if (selectedSet.has(option.value)) commit(selected.filter((item) => item !== option.value));
     else if (!maxReached) commit([...selected, option.value]);
     setOpen(true);
     inputRef.current?.focus();
   };
   const remove = (selectedValue) => {
-    if (disabled) return;
+    if (locked) return;
     commit(selected.filter((item) => item !== selectedValue));
+    inputRef.current?.focus();
   };
   return /* @__PURE__ */ jsxs84(
     "div",
     {
+      ...rest,
       "aria-busy": loading || void 0,
       onBlur: (event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {
           setFocused(false);
           setOpen(false);
         }
+        onBlur?.(event);
       },
-      style: { position: "relative", display: "grid", gap: "var(--component-input-stack-gap)", fontFamily: "var(--font-sans)", ...style },
-      ...rest,
+      "data-readonly": readOnly ? "true" : void 0,
+      style: { position: "relative", display: "grid", minWidth: 0, gap: "var(--component-input-stack-gap)", fontFamily: "var(--font-sans)", ...style },
       children: [
-        label != null && /* @__PURE__ */ jsx97("label", { htmlFor: inputId, style: { color: "var(--component-input-label-color)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", fontWeight: "var(--component-input-label-font-weight)" }, children: label }),
-        /* @__PURE__ */ jsxs84(
-          "div",
-          {
-            onMouseDown: (event) => {
-              if (event.target !== inputRef.current && !event.target.closest("button")) event.preventDefault();
-              inputRef.current?.focus();
-              if (!disabled) setOpen(true);
-            },
-            style: {
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "var(--space-1)",
-              minHeight: "var(--component-input-height)",
-              padding: "var(--space-2) var(--component-input-padding-x)",
-              boxSizing: "border-box",
-              border: `var(--component-input-border-width) solid ${error != null ? "var(--component-input-border-color-invalid)" : focused ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)"}`,
-              borderRadius: "var(--component-input-radius)",
-              background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)",
-              boxShadow: focused && error == null ? "var(--component-input-focus-shadow)" : "none",
-              cursor: disabled ? "not-allowed" : "text"
-            },
-            children: [
-              selectedOptions.map((option) => /* @__PURE__ */ jsxs84(Chip, { size: "sm", variant: "outlined", disabled, style: { paddingRight: "var(--space-0)" }, children: [
-                /* @__PURE__ */ jsx97("span", { children: option.label }),
+        label != null && /* @__PURE__ */ jsxs84("label", { htmlFor: inputId, style: { color: "var(--component-input-label-color)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", fontWeight: "var(--component-input-label-font-weight)" }, children: [
+          label,
+          required && /* @__PURE__ */ jsx97("span", { style: { color: "var(--color-semantic-status-negative-text)" }, children: " *" })
+        ] }),
+        /* @__PURE__ */ jsxs84("div", { style: { position: "relative", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs84(
+            "div",
+            {
+              onMouseDown: (event) => {
+                if (event.target !== inputRef.current && !event.target.closest("button")) event.preventDefault();
+                inputRef.current?.focus();
+                if (!locked) setOpen(true);
+              },
+              style: {
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "var(--space-1)",
+                width: "100%",
+                minHeight: "var(--component-input-height)",
+                padding: "var(--space-2) var(--component-input-padding-x)",
+                boxSizing: "border-box",
+                border: `var(--component-input-border-width) solid ${error != null ? "var(--component-input-border-color-invalid)" : focused ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)"}`,
+                borderRadius: "var(--component-input-radius)",
+                background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)",
+                boxShadow: focused && error == null ? "var(--component-input-focus-shadow)" : "none",
+                cursor: disabled ? "not-allowed" : readOnly ? "default" : "text"
+              },
+              children: [
+                selectedOptions.map((option) => /* @__PURE__ */ jsxs84(Chip, { size: "sm", variant: "outlined", disabled, style: { maxWidth: "100%", paddingRight: locked ? void 0 : "var(--space-0)" }, children: [
+                  /* @__PURE__ */ jsx97("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }, children: option.label }),
+                  !locked && /* @__PURE__ */ jsx97(
+                    IconButton,
+                    {
+                      variant: "soft",
+                      round: false,
+                      size: 24,
+                      label: `${optionText(option)} \uC120\uD0DD \uD574\uC81C`,
+                      onClick: () => remove(option.value),
+                      style: { flex: "0 0 auto", background: "transparent" },
+                      children: /* @__PURE__ */ jsx97(Icon, { name: "close", size: 14, "aria-hidden": "true" })
+                    }
+                  )
+                ] }, String(option.value))),
                 /* @__PURE__ */ jsx97(
-                  IconButton,
+                  "input",
                   {
-                    variant: "soft",
-                    round: false,
-                    size: 24,
-                    label: `${optionText(option)} \uC120\uD0DD \uD574\uC81C`,
+                    ref: inputRef,
+                    id: inputId,
+                    value: search,
+                    placeholder: maxReached && !search ? `\uCD5C\uB300 ${maxSelections}\uAC1C \uC120\uD0DD\uB428` : placeholder,
                     disabled,
-                    onClick: () => remove(option.value),
-                    style: { background: "transparent" },
-                    children: /* @__PURE__ */ jsx97(Icon, { name: "close", size: 14, "aria-hidden": "true" })
+                    readOnly,
+                    role: "combobox",
+                    "aria-expanded": popupOpen,
+                    "aria-controls": popupOpen ? listboxId : void 0,
+                    "aria-autocomplete": "list",
+                    "aria-activedescendant": activeOption ? optionDomId(listboxId, activeOption) : void 0,
+                    "aria-invalid": error != null || void 0,
+                    "aria-describedby": message != null ? messageId : void 0,
+                    "aria-required": required || void 0,
+                    "aria-readonly": readOnly || void 0,
+                    "aria-busy": loading || void 0,
+                    onFocus: () => {
+                      setFocused(true);
+                      if (!locked) setOpen(true);
+                    },
+                    onChange: (event) => {
+                      if (!locked) {
+                        setSearch(event.target.value);
+                        setOpen(true);
+                      }
+                    },
+                    onKeyDown: (event) => {
+                      if (locked) return;
+                      if (event.key === "ArrowDown") {
+                        event.preventDefault();
+                        setOpen(true);
+                        setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, 1));
+                      }
+                      if (event.key === "ArrowUp") {
+                        event.preventDefault();
+                        setOpen(true);
+                        setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, -1));
+                      }
+                      if (event.key === "Enter" && open && activeOption) {
+                        event.preventDefault();
+                        toggle(activeOption);
+                      }
+                      if (event.key === "Escape") {
+                        event.preventDefault();
+                        setOpen(false);
+                      }
+                      if (event.key === "Backspace" && !search && selected.length > 0) {
+                        event.preventDefault();
+                        remove(selected[selected.length - 1]);
+                      }
+                    },
+                    style: { flex: "1 1 8rem", minWidth: 72, height: 28, padding: 0, border: 0, outline: 0, background: "transparent", color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)", cursor: disabled ? "not-allowed" : readOnly ? "default" : "text", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)" }
                   }
                 )
-              ] }, String(option.value))),
-              /* @__PURE__ */ jsx97(
-                "input",
+              ]
+            }
+          ),
+          popupOpen && /* @__PURE__ */ jsxs84("div", { style: { position: "absolute", zIndex: 40, left: 0, right: 0, top: "calc(100% + 6px)", padding: 6, display: "grid", gap: 2, boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", background: "var(--color-semantic-surface-overlay)", boxShadow: "var(--shadow-md)" }, children: [
+            /* @__PURE__ */ jsx97("div", { id: listboxId, role: "listbox", "aria-multiselectable": "true", "aria-busy": loading || void 0, style: { maxHeight: 248, overflowY: "auto", display: "flex", flexDirection: "column", gap: 2 }, children: hasOptionList && filteredOptions.map((option, index) => {
+              const selectedOption = selectedSet.has(option.value);
+              return /* @__PURE__ */ jsxs84(
+                "div",
                 {
-                  ref: inputRef,
-                  id: inputId,
-                  value: search,
-                  placeholder: maxReached && !search ? `\uCD5C\uB300 ${maxSelections}\uAC1C \uC120\uD0DD\uB428` : placeholder,
-                  disabled,
-                  role: "combobox",
-                  "aria-expanded": open && error == null,
-                  "aria-controls": open && error == null ? listboxId : void 0,
-                  "aria-autocomplete": "list",
-                  "aria-activedescendant": activeOption ? optionDomId(listboxId, activeOption) : void 0,
-                  "aria-invalid": error != null || void 0,
-                  "aria-describedby": [error != null ? errorId : null, popupStatus ? statusId : null].filter(Boolean).join(" ") || void 0,
-                  onFocus: () => {
-                    setFocused(true);
-                    setOpen(true);
+                  id: optionDomId(listboxId, option),
+                  role: "option",
+                  "aria-selected": selectedOption,
+                  "aria-disabled": option.effectiveDisabled || void 0,
+                  onMouseDown: (event) => event.preventDefault(),
+                  onMouseEnter: () => {
+                    if (!option.effectiveDisabled) setActiveIndex(index);
                   },
-                  onChange: (event) => {
-                    setSearch(event.target.value);
-                    setOpen(true);
-                  },
-                  onKeyDown: (event) => {
-                    if (event.key === "ArrowDown") {
-                      event.preventDefault();
-                      setOpen(true);
-                      setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, 1));
-                    }
-                    if (event.key === "ArrowUp") {
-                      event.preventDefault();
-                      setOpen(true);
-                      setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, -1));
-                    }
-                    if (event.key === "Enter" && open && activeOption) {
-                      event.preventDefault();
-                      toggle(activeOption);
-                    }
-                    if (event.key === "Escape") {
-                      event.preventDefault();
-                      setOpen(false);
-                    }
-                    if (event.key === "Backspace" && !search && selected.length > 0) {
-                      event.preventDefault();
-                      remove(selected[selected.length - 1]);
-                    }
-                  },
-                  style: { flex: "1 1 8rem", minWidth: 96, height: 28, padding: 0, border: 0, outline: 0, background: "transparent", color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)" }
-                }
-              )
-            ]
-          }
-        ),
-        error != null && /* @__PURE__ */ jsx97("span", { id: errorId, role: "alert", style: { color: "var(--color-semantic-status-negative-text)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: error }),
-        /* @__PURE__ */ jsx97(
-          "span",
-          {
-            id: statusId,
-            role: "status",
-            "aria-live": "polite",
-            style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 },
-            children: open ? popupStatus : ""
-          }
-        ),
-        open && !disabled && error == null && /* @__PURE__ */ jsxs84("div", { id: listboxId, role: "listbox", "aria-multiselectable": "true", style: { position: "absolute", zIndex: 40, left: 0, right: 0, top: "calc(100% + 6px)", maxHeight: 260, overflowY: "auto", padding: 6, display: "flex", flexDirection: "column", gap: 2, border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", background: "var(--color-semantic-surface-overlay)", boxShadow: "var(--shadow-md)" }, children: [
-          loading || filteredOptions.length === 0 ? /* @__PURE__ */ jsx97("div", { role: "option", "aria-selected": "false", "aria-disabled": "true", style: { padding: "var(--space-4)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", textAlign: "center" }, children: loading ? loadingLabel : emptyLabel }) : filteredOptions.map((option, index) => {
-            const selectedOption = selectedSet.has(option.value);
-            return /* @__PURE__ */ jsxs84(
-              "div",
-              {
-                id: optionDomId(listboxId, option),
-                role: "option",
-                "aria-selected": selectedOption,
-                "aria-disabled": option.effectiveDisabled || void 0,
-                onMouseDown: (event) => event.preventDefault(),
-                onMouseEnter: () => {
-                  if (!option.effectiveDisabled) setActiveIndex(index);
+                  onClick: () => toggle(option),
+                  style: { display: "grid", gridTemplateColumns: "18px minmax(0, 1fr)", alignItems: "center", gap: "var(--space-2)", width: "100%", padding: "var(--space-2) var(--space-3)", borderRadius: "var(--radius-md)", background: index === activeIndex ? "var(--color-semantic-fill-alternative)" : "transparent", color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", textAlign: "left", cursor: option.effectiveDisabled ? "not-allowed" : "pointer", fontFamily: "inherit", boxSizing: "border-box" },
+                  children: [
+                    /* @__PURE__ */ jsx97("span", { "aria-hidden": "true", style: { display: "grid", placeItems: "center", width: 18, height: 18, boxSizing: "border-box", border: `1.5px solid ${selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-5)", background: selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-static-white)" }, children: selectedOption && /* @__PURE__ */ jsx97(Icon, { name: "check", size: 12, "aria-hidden": "true" }) }),
+                    /* @__PURE__ */ jsxs84("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+                      /* @__PURE__ */ jsx97("span", { style: { overflowWrap: "anywhere", fontSize: "var(--label1-size)", fontWeight: "var(--fw-semibold)" }, children: option.label }),
+                      option.description != null && /* @__PURE__ */ jsx97("span", { style: { overflowWrap: "anywhere", color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: option.description })
+                    ] })
+                  ]
                 },
-                onClick: () => toggle(option),
-                style: { display: "grid", gridTemplateColumns: "18px minmax(0, 1fr)", alignItems: "center", gap: "var(--space-2)", width: "100%", padding: "var(--space-2) var(--space-3)", borderRadius: "var(--radius-md)", background: index === activeIndex ? "var(--color-semantic-fill-alternative)" : "transparent", color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", textAlign: "left", cursor: option.effectiveDisabled ? "not-allowed" : "pointer", fontFamily: "inherit", boxSizing: "border-box" },
-                children: [
-                  /* @__PURE__ */ jsx97("span", { "aria-hidden": "true", style: { display: "grid", placeItems: "center", width: 18, height: 18, boxSizing: "border-box", border: `1.5px solid ${selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-5)", background: selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-static-white)" }, children: selectedOption && /* @__PURE__ */ jsx97(Icon, { name: "check", size: 12, "aria-hidden": "true" }) }),
-                  /* @__PURE__ */ jsxs84("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
-                    /* @__PURE__ */ jsx97("span", { style: { fontSize: "var(--label1-size)", fontWeight: "var(--fw-semibold)" }, children: option.label }),
-                    option.description != null && /* @__PURE__ */ jsx97("span", { style: { color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: option.description })
-                  ] })
-                ]
-              },
-              String(option.value)
-            );
-          }),
-          maxReached && /* @__PURE__ */ jsx97("div", { role: "option", "aria-selected": "false", "aria-disabled": "true", style: { padding: "var(--space-2) var(--space-3)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: resolvedMaxLabel })
-        ] })
+                String(option.value)
+              );
+            }) }),
+            !hasOptionList && /* @__PURE__ */ jsx97("div", { role: "status", "aria-live": "polite", style: { padding: "var(--space-4)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", textAlign: "center" }, children: loading ? loadingLabel : emptyLabel }),
+            hasOptionList && maxReached && /* @__PURE__ */ jsx97("div", { role: "status", "aria-live": "polite", style: { padding: "var(--space-2) var(--space-3)", borderTop: "1px solid var(--color-semantic-line-normal-neutral)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: resolvedMaxLabel })
+          ] })
+        ] }),
+        message != null && /* @__PURE__ */ jsx97("span", { id: messageId, role: error != null ? "alert" : void 0, style: { color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: message })
       ]
     }
   );
@@ -12338,10 +12666,21 @@ function SearchableMultiSelect({
 // components/forms/SecretField.jsx
 import React102 from "react";
 import { jsx as jsx98, jsxs as jsxs85 } from "react/jsx-runtime";
+function textLabel(value, fallback) {
+  return typeof value === "string" || typeof value === "number" ? String(value).trim() || fallback : fallback;
+}
+function contextualActionLabel(fieldLabel, actionLabel) {
+  const action = textLabel(actionLabel, "\uB3D9\uC791");
+  if (!fieldLabel) return action;
+  return action.includes(fieldLabel) ? action : `${fieldLabel} ${action}`;
+}
 function SecretField({
   label = "\uBE44\uBC00 \uAC12",
   value = "",
   helper,
+  error,
+  invalid = false,
+  actionContext,
   revealable = true,
   copyable = true,
   revealDurationMs = 1e4,
@@ -12350,21 +12689,37 @@ function SecretField({
   onRevealChange,
   onCopy,
   onCopyError,
+  revealLabel = "\uBCF4\uAE30",
+  hideLabel = "\uC228\uAE30\uAE30",
   copyLabel = "\uBCF5\uC0AC",
   copiedLabel = "\uBCF5\uC0AC\uB428",
   copyErrorLabel = "\uBCF5\uC0AC \uC2E4\uD328",
   disabled = false,
+  size = "md",
+  id,
   style,
   ...rest
 }) {
   const controlled = revealed !== void 0;
   const [internalRevealed, setInternalRevealed] = React102.useState(defaultRevealed);
   const [copyState, setCopyState] = React102.useState("idle");
-  const show = controlled ? revealed : internalRevealed;
+  const requestedShow = controlled ? revealed : internalRevealed;
+  const hasValue = String(value).length > 0;
+  const canReveal = revealable && !disabled && hasValue;
+  const show = canReveal && requestedShow;
   const timerRef = React102.useRef(null);
   const copyTimerRef = React102.useRef(null);
+  const copyRequestRef = React102.useRef(0);
   const onRevealChangeRef = React102.useRef(onRevealChange);
+  const autoId = React102.useId();
+  const inputId = id ?? `secret-${autoId}`;
+  const fieldLabel = actionContext === false ? "" : textLabel(actionContext ?? label, "\uBE44\uBC00 \uAC12");
   onRevealChangeRef.current = onRevealChange;
+  React102.useEffect(() => {
+    if (!requestedShow || canReveal) return;
+    if (!controlled) setInternalRevealed(false);
+    onRevealChangeRef.current?.(false);
+  }, [canReveal, controlled, requestedShow]);
   React102.useEffect(() => {
     if (timerRef.current) window.clearTimeout(timerRef.current);
     if (!show || revealDurationMs <= 0) return void 0;
@@ -12374,47 +12729,69 @@ function SecretField({
     }, revealDurationMs);
     return () => window.clearTimeout(timerRef.current);
   }, [controlled, revealDurationMs, show]);
+  React102.useEffect(() => {
+    copyRequestRef.current += 1;
+    if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current);
+    setCopyState("idle");
+  }, [copyable, disabled, value]);
   React102.useEffect(() => () => {
+    copyRequestRef.current += 1;
     if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current);
   }, []);
   const setShow = (next) => {
+    if (next && !canReveal) return;
     if (!controlled) setInternalRevealed(next);
     onRevealChangeRef.current?.(next);
   };
   const copy = async () => {
+    if (disabled || !copyable || !hasValue) return;
     if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current);
+    const copiedValue = String(value);
+    const requestId = ++copyRequestRef.current;
     try {
       if (!navigator.clipboard?.writeText) throw new Error("Clipboard API is unavailable.");
-      await navigator.clipboard.writeText(String(value));
+      await navigator.clipboard.writeText(copiedValue);
+      onCopy?.(copiedValue);
+      if (requestId !== copyRequestRef.current) return;
       setCopyState("success");
-      onCopy?.(value);
-    } catch (error) {
+    } catch (error2) {
+      onCopyError?.(error2);
+      if (requestId !== copyRequestRef.current) return;
       setCopyState("error");
-      onCopyError?.(error);
     }
     copyTimerRef.current = window.setTimeout(() => setCopyState("idle"), 1400);
   };
+  const revealActionLabel = contextualActionLabel(fieldLabel, show ? hideLabel : revealLabel);
+  const copyActionText = copyState === "success" ? copiedLabel : copyState === "error" ? copyErrorLabel : copyLabel;
+  const copyActionLabel = contextualActionLabel(fieldLabel, copyActionText);
+  const copyTone = disabled || !hasValue ? void 0 : copyState === "success" ? "var(--color-semantic-status-positive)" : copyState === "error" ? "var(--color-semantic-status-negative)" : void 0;
   const actions = revealable || copyable ? /* @__PURE__ */ jsxs85("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-0)" }, children: [
-    revealable && /* @__PURE__ */ jsx98(IconButton, { variant: "plain", round: false, size: "sm", disabled, onClick: () => setShow(!show), label: show ? "\uBE44\uBC00 \uAC12 \uC228\uAE30\uAE30" : "\uBE44\uBC00 \uAC12 \uBCF4\uAE30", children: /* @__PURE__ */ jsx98(Icon, { name: show ? "eye-slash" : "eye", size: 16, "aria-hidden": "true" }) }),
-    copyable && /* @__PURE__ */ jsx98(IconButton, { variant: "plain", round: false, size: "sm", disabled, onClick: copy, label: copyState === "success" ? copiedLabel : copyState === "error" ? copyErrorLabel : copyLabel, children: /* @__PURE__ */ jsx98(Icon, { name: copyState === "success" ? "circle-check" : "copy", size: 16, "aria-hidden": "true" }) })
+    revealable && /* @__PURE__ */ jsx98(IconButton, { variant: "plain", round: false, size: "sm", disabled: disabled || !hasValue, "aria-controls": inputId, onClick: () => setShow(!show), label: revealActionLabel, children: /* @__PURE__ */ jsx98(Icon, { name: show ? "eye-slash" : "eye", size: 16, "aria-hidden": "true" }) }),
+    copyable && /* @__PURE__ */ jsx98(IconButton, { variant: "plain", round: false, size: "sm", disabled: disabled || !hasValue, "aria-controls": inputId, onClick: copy, label: copyActionLabel, style: copyTone ? { color: copyTone } : void 0, children: /* @__PURE__ */ jsx98(Icon, { name: copyState === "success" ? "circle-check" : copyState === "error" ? "circle-close" : "copy", size: 16, "aria-hidden": "true" }) })
   ] }) : void 0;
   return /* @__PURE__ */ jsxs85("div", { style: { display: "grid", gap: "var(--space-1)", ...style }, children: [
     /* @__PURE__ */ jsx98(
       Input,
       {
         ...rest,
+        id: inputId,
         label,
         value,
         type: show ? "text" : "password",
         readOnly: true,
         disabled,
+        invalid,
+        error,
+        size,
         helper: helper ?? (show && revealDurationMs > 0 ? `${Math.ceil(revealDurationMs / 1e3)}\uCD08 \uD6C4 \uC790\uB3D9\uC73C\uB85C \uC228\uAE41\uB2C8\uB2E4.` : void 0),
         actionRight: actions,
         autoComplete: "off",
+        autoCapitalize: "off",
+        autoCorrect: "off",
         spellCheck: false
       }
     ),
-    /* @__PURE__ */ jsx98("span", { role: "status", "aria-live": "polite", style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 }, children: copyState === "success" ? copiedLabel : copyState === "error" ? copyErrorLabel : "" })
+    /* @__PURE__ */ jsx98("span", { role: "status", "aria-live": "polite", style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 }, children: copyState === "success" || copyState === "error" ? copyActionLabel : "" })
   ] });
 }
 
@@ -12532,7 +12909,7 @@ function Select({
           children: [
             /* @__PURE__ */ jsxs86("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, minWidth: 0, overflow: "hidden" }, children: [
               iconLeft && /* @__PURE__ */ jsx99("span", { style: { display: "inline-flex", flex: "0 0 auto", color: "var(--color-semantic-label-assistive)" }, children: iconLeft }),
-              curr && render === "chip" ? /* @__PURE__ */ jsx99("span", { style: { display: "inline-flex", alignItems: "center", maxWidth: "100%", height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-heavy)", fontSize: 13, fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr.label }) : /* @__PURE__ */ jsx99("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder })
+              curr && render === "chip" ? /* @__PURE__ */ jsx99("span", { style: { display: "inline-flex", alignItems: "center", maxWidth: "100%", height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-heavy)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr.label }) : /* @__PURE__ */ jsx99("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder })
             ] }),
             /* @__PURE__ */ jsx99("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: visualOpen ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ jsx99("path", { d: "m6 9 6 6 6-6" }) })
           ]
@@ -12552,7 +12929,7 @@ function Select({
             onMouseLeave: (e) => {
               if (!on) e.currentTarget.style.background = "transparent";
             },
-            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "9px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: on ? "var(--color-semantic-primary-heavy)" : "var(--color-semantic-label-normal)", background: on ? "var(--color-semantic-primary-surface-strong)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "9px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", color: on ? "var(--color-semantic-primary-heavy)" : "var(--color-semantic-label-normal)", background: on ? "var(--color-semantic-primary-surface-strong)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
             children: [
               /* @__PURE__ */ jsx99("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: o.label }),
               on && /* @__PURE__ */ jsx99("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx99("path", { d: "M20 6 9 17l-5-5" }) })
@@ -12617,7 +12994,7 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
         ...rest
       }
     ),
-    showValue && /* @__PURE__ */ jsx100("span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
+    showValue && /* @__PURE__ */ jsx100("span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
   ] });
 }
 
@@ -12639,8 +13016,8 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
     setDraft("");
   };
   const remove = (t) => set(tags.filter((x) => x !== t));
-  return /* @__PURE__ */ jsxs88("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", background: "var(--color-semantic-background-elevated-normal)", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
-    tags.map((t) => /* @__PURE__ */ jsxs88("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-heavy)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-semibold)" }, children: [
+  return /* @__PURE__ */ jsxs88("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", background: "var(--color-semantic-background-elevated-normal)", opacity: disabled ? 0.45 : 1, ...style }, ...rest, children: [
+    tags.map((t) => /* @__PURE__ */ jsxs88("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-heavy)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)" }, children: [
       t,
       /* @__PURE__ */ jsx101("button", { type: "button", "aria-label": "remove", onClick: () => remove(t), style: { display: "inline-flex", border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-primary-heavy)", padding: 2 }, children: /* @__PURE__ */ jsx101("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", children: /* @__PURE__ */ jsx101("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
     ] }, t)),
@@ -12658,7 +13035,7 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
             add(draft);
           } else if (e.key === "Backspace" && !draft && tags.length) remove(tags[tags.length - 1]);
         },
-        style: { flex: 1, minWidth: 90, height: 28, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--color-semantic-label-normal)" }
+        style: { flex: 1, minWidth: 90, height: 28, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "var(--color-semantic-label-normal)" }
       }
     )
   ] });
@@ -13263,7 +13640,7 @@ function MobileSystemBars({
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              fontSize: 12,
+              fontSize: "var(--caption1-size)",
               fontWeight: "var(--fw-bold)"
             },
             children: [
@@ -13459,7 +13836,7 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
           if (!isControlled) setInternal(it.href);
           onChange && onChange(it.href);
         },
-        style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", fontSize: 14, fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" },
+        style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", fontSize: "var(--label1-size)", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" },
         children: it.label
       },
       it.href
@@ -13503,7 +13880,7 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
         },
         children: [
           o.icon,
-          /* @__PURE__ */ jsx121("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: o.label })
+          /* @__PURE__ */ jsx121("span", { style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption2-size)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: o.label })
         ]
       },
       o.value
@@ -13515,7 +13892,7 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
 import React126 from "react";
 import { jsx as jsx122, jsxs as jsxs95 } from "react/jsx-runtime";
 function Breadcrumb({ items = [], style, ...rest }) {
-  return /* @__PURE__ */ jsx122("nav", { "aria-label": "breadcrumb", style: { display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13.5, ...style }, ...rest, children: items.map((it, i) => {
+  return /* @__PURE__ */ jsx122("nav", { "aria-label": "breadcrumb", style: { display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", ...style }, ...rest, children: items.map((it, i) => {
     const last = i === items.length - 1;
     return /* @__PURE__ */ jsxs95(React126.Fragment, { children: [
       last || !it.href ? /* @__PURE__ */ jsx122("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: it.label }) : /* @__PURE__ */ jsx122("a", { href: it.href, style: { color: "var(--color-semantic-label-neutral)", fontWeight: "var(--fw-medium)", letterSpacing: 0, textDecoration: "none" }, children: it.label }),
@@ -13528,12 +13905,12 @@ function Breadcrumb({ items = [], style, ...rest }) {
 import React127 from "react";
 import { jsx as jsx123 } from "react/jsx-runtime";
 var SIZE3 = {
-  small: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
-  sm: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
-  medium: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
-  md: { height: 32, padding: "0 8px", fontSize: 14, radius: 8, gap: 6 },
-  large: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
-  lg: { height: 36, padding: "0 11px", fontSize: 15, radius: 10, gap: 8 },
+  small: { height: 24, padding: "0 7px", fontSize: "var(--label2-size)", radius: 6, gap: 4 },
+  sm: { height: 24, padding: "0 7px", fontSize: "var(--label2-size)", radius: 6, gap: 4 },
+  medium: { height: 32, padding: "0 8px", fontSize: "var(--label1-size)", radius: 8, gap: 6 },
+  md: { height: 32, padding: "0 8px", fontSize: "var(--label1-size)", radius: 8, gap: 6 },
+  large: { height: 36, padding: "0 11px", fontSize: "var(--body2-size)", radius: 10, gap: 8 },
+  lg: { height: 36, padding: "0 11px", fontSize: "var(--body2-size)", radius: 10, gap: 8 },
   xlarge: {
     height: 40,
     padding: "0 12px",
@@ -13684,7 +14061,7 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...r
           borderRadius: "var(--radius-sm)",
           cursor: "pointer",
           fontFamily: "inherit",
-          fontSize: 14,
+          fontSize: "var(--label1-size)",
           fontWeight: on ? 800 : 600,
           background: on ? "var(--color-semantic-primary-normal)" : "transparent",
           color: on ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-neutral)",
@@ -13735,7 +14112,7 @@ function BackToTopButton() {
         zIndex: 60,
         width: 50,
         height: 50,
-        borderRadius: 999,
+        borderRadius: "var(--radius-pill)",
         border: "1px solid var(--color-semantic-line-solid-normal)",
         background: "var(--color-semantic-background-elevated-normal)",
         color: "var(--color-semantic-brand-ink)",
@@ -13780,8 +14157,8 @@ function Footer({
   );
   if (compact) {
     return /* @__PURE__ */ jsxs96("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--color-semantic-line-normal-normal)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-      /* @__PURE__ */ jsx125("span", { style: { fontSize: 12.5, letterSpacing: 0, color: "var(--color-semantic-label-alternative)" }, children: copyright }),
-      links.length > 0 && /* @__PURE__ */ jsx125("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--color-semantic-label-alternative)", "var(--color-semantic-label-normal)", 12.5)) })
+      /* @__PURE__ */ jsx125("span", { style: { fontSize: "var(--caption1-size)", letterSpacing: 0, color: "var(--color-semantic-label-alternative)" }, children: copyright }),
+      links.length > 0 && /* @__PURE__ */ jsx125("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--color-semantic-label-alternative)", "var(--color-semantic-label-normal)", "var(--caption1-size)")) })
     ] });
   }
   const entryRow = (items) => /* @__PURE__ */ jsx125("div", { style: { display: "flex", flexWrap: "wrap", gap: "4px 14px" }, children: items.map((it, i) => /* @__PURE__ */ jsxs96("span", { style: { whiteSpace: "nowrap" }, children: [
@@ -13796,18 +14173,18 @@ function Footer({
         /* @__PURE__ */ jsxs96("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
           brand != null && /* @__PURE__ */ jsx125("div", { style: { flex: "1 1 240px", minWidth: 220 }, children: brand }),
           columns.map((col, ci) => /* @__PURE__ */ jsxs96("nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: 11, minWidth: 108 }, children: [
-            col.heading != null && /* @__PURE__ */ jsx125("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "var(--color-semantic-inverse-label)", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
-            (col.links || []).map((l, li) => linkEl(ci + "-" + li, l, "var(--color-semantic-inverse-label-alternative-soft)", "var(--color-semantic-inverse-label-strong-soft)", 13.5))
+            col.heading != null && /* @__PURE__ */ jsx125("span", { style: { fontSize: "var(--body2-size)", fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "var(--color-semantic-inverse-label)", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
+            (col.links || []).map((l, li) => linkEl(ci + "-" + li, l, "var(--color-semantic-inverse-label-alternative-soft)", "var(--color-semantic-inverse-label-strong-soft)", "var(--label2-size)"))
           ] }, ci))
         ] }),
         /* @__PURE__ */ jsx125("div", { style: { height: 1, background: "var(--color-semantic-inverse-line-normal)", margin: "32px 0 24px" } })
       ] }),
-      /* @__PURE__ */ jsxs96("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, fontSize: 13, lineHeight: 1.6, color: "var(--color-semantic-inverse-label-neutral-soft)", wordBreak: "keep-all" }, children: [
+      /* @__PURE__ */ jsxs96("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, fontSize: "var(--label2-size)", lineHeight: 1.6, color: "var(--color-semantic-inverse-label-neutral-soft)", wordBreak: "keep-all" }, children: [
         contact.length > 0 && entryRow(contact),
         locations.length > 0 && entryRow(locations),
         /* @__PURE__ */ jsxs96("span", { style: { marginTop: 18, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "4px 20px", color: "var(--color-semantic-inverse-label-alternative-soft)" }, children: [
           copyright,
-          links.length > 0 && /* @__PURE__ */ jsx125("span", { style: { display: "flex", alignItems: "center", gap: 16 }, children: links.map((l, i) => linkEl("p" + i, l, "var(--color-semantic-inverse-label-alternative-soft)", "var(--color-semantic-inverse-label-strong-soft)", 12.5)) })
+          links.length > 0 && /* @__PURE__ */ jsx125("span", { style: { display: "flex", alignItems: "center", gap: 16 }, children: links.map((l, i) => linkEl("p" + i, l, "var(--color-semantic-inverse-label-alternative-soft)", "var(--color-semantic-inverse-label-strong-soft)", "var(--caption1-size)")) })
         ] })
       ] })
     ] })
@@ -13848,9 +14225,9 @@ function MenuItem({ item, variant, close }) {
         borderRadius: "var(--radius-md)",
         textAlign: "left",
         fontFamily: "var(--font-sans)",
-        fontSize: 14,
+        fontSize: "var(--label1-size)",
         color: item.danger ? "var(--color-semantic-status-negative-text)" : item.disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
-        opacity: item.disabled ? 0.55 : 1
+        opacity: item.disabled ? 0.45 : 1
       },
       children: [
         /* @__PURE__ */ jsxs97(
@@ -13892,7 +14269,7 @@ function MenuItem({ item, variant, close }) {
                     children: item.label
                   }
                 ),
-                item.description && /* @__PURE__ */ jsx126("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)" }, children: item.description })
+                item.description && /* @__PURE__ */ jsx126("span", { style: { fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-alternative)" }, children: item.description })
               ] })
             ]
           }
@@ -13901,7 +14278,7 @@ function MenuItem({ item, variant, close }) {
           "span",
           {
             style: {
-              fontSize: 12,
+              fontSize: "var(--caption1-size)",
               color: "var(--color-semantic-label-assistive)",
               flexShrink: 0
             },
@@ -13966,7 +14343,7 @@ function Menubar({
               background: open === index ? "var(--color-semantic-fill-normal)" : "transparent",
               cursor: "pointer",
               fontFamily: "var(--font-sans)",
-              fontSize: 14,
+              fontSize: "var(--label1-size)",
               fontWeight: "var(--fw-semibold)",
               color: "var(--color-semantic-label-normal)"
             },
@@ -14032,11 +14409,11 @@ function Menubar({
                         height: 28,
                         padding: "0 10px",
                         border: "none",
-                        borderRadius: 7,
+                        borderRadius: "var(--radius-8)",
                         background: "var(--color-semantic-primary-normal)",
                         color: "var(--color-semantic-inverse-label)",
                         fontFamily: "var(--font-sans)",
-                        fontSize: 12,
+                        fontSize: "var(--caption1-size)",
                         fontWeight: "var(--fw-bold)"
                       },
                       children: "Apply"
@@ -14075,7 +14452,7 @@ function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) 
         style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5, width: 68, height: 60, border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", background: active ? "var(--color-semantic-primary-surface-strong)" : "transparent", color: active ? "var(--color-semantic-primary-heavy)" : "var(--color-semantic-label-alternative)", transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" },
         children: [
           o.icon,
-          /* @__PURE__ */ jsx127("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)" }, children: o.label })
+          /* @__PURE__ */ jsx127("span", { style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption2-size)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)" }, children: o.label })
         ]
       },
       o.value
@@ -14211,7 +14588,7 @@ var selectStyle = {
   borderRadius: "var(--radius-8)",
   background: "var(--color-semantic-background-elevated-normal)",
   fontFamily: "var(--font-sans)",
-  fontSize: 13,
+  fontSize: "var(--label2-size)",
   color: "var(--color-semantic-label-normal)"
 };
 function Pagination({
@@ -14358,7 +14735,7 @@ function Pagination({
             "span",
             {
               style: {
-                fontSize: 13,
+                fontSize: "var(--label2-size)",
                 color: "var(--color-semantic-label-alternative)",
                 fontVariantNumeric: "tabular-nums"
               },
@@ -14376,7 +14753,7 @@ function Pagination({
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
-                fontSize: 13,
+                fontSize: "var(--label2-size)",
                 color: "var(--color-semantic-label-neutral)"
               },
               children: [
@@ -14399,7 +14776,7 @@ function Pagination({
                       borderRadius: "var(--radius-md)",
                       padding: "0 8px",
                       fontFamily: "var(--font-sans)",
-                      fontSize: 13
+                      fontSize: "var(--label2-size)"
                     }
                   }
                 )
@@ -14510,8 +14887,8 @@ function SideNav({
     transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
     ...extra
   });
-  const labelSpan = (active, children) => /* @__PURE__ */ jsx130("span", { style: { flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children });
-  const pill = (active, badge) => /* @__PURE__ */ jsx130("span", { style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: 9, fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-surface-strong)", color: active ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-primary-heavy)" }, children: badge });
+  const labelSpan = (active, children) => /* @__PURE__ */ jsx130("span", { style: { flex: 1, minWidth: 0, fontSize: "var(--label1-size)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children });
+  const pill = (active, badge) => /* @__PURE__ */ jsx130("span", { style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: "var(--radius-pill)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-surface-strong)", color: active ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-primary-heavy)" }, children: badge });
   const dot = /* @__PURE__ */ jsx130("span", { style: { position: "absolute", top: 7, right: 7, width: 7, height: 7, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } });
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
   const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-xl)", padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
@@ -14526,7 +14903,7 @@ function SideNav({
           onClick: () => setCol(!col),
           title: col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
           "aria-label": col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
-          style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: 8, background: "transparent", color: "var(--color-semantic-label-assistive)", cursor: "pointer" },
+          style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: "var(--radius-8)", background: "transparent", color: "var(--color-semantic-label-assistive)", cursor: "pointer" },
           children: /* @__PURE__ */ jsxs101("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
             /* @__PURE__ */ jsx130("rect", { x: "3", y: "4", width: "18", height: "16", rx: "3" }),
             /* @__PURE__ */ jsx130("path", { d: "M9.5 4v16" }),
@@ -14536,7 +14913,7 @@ function SideNav({
       )
     ] }),
     /* @__PURE__ */ jsx130("div", { className: "lk-sidenav__scroll", style: { display: "flex", flexDirection: "column", gap: 2, flex: "1 1 auto", minHeight: 0, overflowX: "hidden", overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none" }, children: items.map((o, i) => {
-      if (o.heading) return col ? /* @__PURE__ */ jsx130("div", { style: { height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px" } }, "h" + i) : /* @__PURE__ */ jsx130("div", { style: { fontFamily: "var(--font-sans)", fontSize: 10.5, fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-label-assistive)", padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px" }, children: o.heading }, "h" + i);
+      if (o.heading) return col ? /* @__PURE__ */ jsx130("div", { style: { height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px" } }, "h" + i) : /* @__PURE__ */ jsx130("div", { style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-label-assistive)", padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px" }, children: o.heading }, "h" + i);
       const kids = o.children || [];
       const title = typeof o.label === "string" ? o.label : void 0;
       if (kids.length > 0) {
@@ -14581,7 +14958,7 @@ function SideNav({
                 ...hoverProps(c.value),
                 style: row(ca, c.disabled, { padding: "8px 12px 8px 42px" }, hovKey === c.value),
                 children: [
-                  /* @__PURE__ */ jsx130("span", { style: { flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: c.label }),
+                  /* @__PURE__ */ jsx130("span", { style: { flex: 1, minWidth: 0, fontSize: "var(--label2-size)", fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: c.label }),
                   c.badge != null && pill(ca, c.badge)
                 ]
               },
@@ -14642,8 +15019,8 @@ function Steps({ steps = [], current = 0, style, ...rest }) {
     const fg = done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)";
     return /* @__PURE__ */ jsxs102(React135.Fragment, { children: [
       /* @__PURE__ */ jsxs102("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
-        /* @__PURE__ */ jsx131("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx131("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx131("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
-        /* @__PURE__ */ jsx131("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
+        /* @__PURE__ */ jsx131("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx131("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx131("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
+        /* @__PURE__ */ jsx131("span", { style: { fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
       ] }),
       i < steps.length - 1 && /* @__PURE__ */ jsx131("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < current ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)", minWidth: 24 } })
     ] }, i);
@@ -14728,7 +15105,7 @@ function Tabs({
         /* @__PURE__ */ jsx132("style", { children: `
         .lk-tabs__tab:focus-visible {
           outline: none;
-          box-shadow: inset 0 0 0 2px var(--color-semantic-focus-ring);
+          box-shadow: inset 0 0 0 2px var(--color-semantic-focus-indicator);
           border-radius: var(--radius-sm);
           z-index: 1;
         }
@@ -14943,7 +15320,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
               color: fg,
               cursor: "pointer",
               fontFamily: "var(--font-sans)",
-              fontSize: 14.5,
+              fontSize: "var(--body2-size)",
               fontWeight: 700,
               letterSpacing: 0,
               textDecoration: "none",
@@ -14991,7 +15368,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
               padding: 8,
               background: "var(--color-semantic-background-elevated-normal)",
               border: "1px solid var(--color-semantic-line-normal-normal)",
-              borderRadius: 14,
+              borderRadius: "var(--radius-14)",
               boxShadow: "var(--shadow-md)",
               opacity: open ? 1 : 0,
               visibility: open ? "visible" : "hidden",
@@ -15012,12 +15389,12 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
                     width: "100%",
                     padding: "10px 12px",
                     border: "none",
-                    borderRadius: 10,
+                    borderRadius: "var(--radius-10)",
                     background: "transparent",
                     color: "var(--color-semantic-label-normal)",
                     cursor: "pointer",
                     fontFamily: "var(--font-sans)",
-                    fontSize: 14,
+                    fontSize: "var(--label1-size)",
                     fontWeight: 600,
                     textAlign: "left",
                     textDecoration: "none"
@@ -15075,7 +15452,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         },
         onMouseEnter: () => setHov(i),
         onMouseLeave: () => setHov(-1),
-        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--component-menu-item-hover-bg)" : "transparent", color: it.danger ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-normal)", transition: "background var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: "var(--radius-8)", cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--component-menu-item-hover-bg)" : "transparent", color: it.danger ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-normal)", transition: "background var(--dur-fast) var(--ease-out)" },
         children: [
           it.icon != null && /* @__PURE__ */ jsx135("span", { style: { flexShrink: 0, display: "inline-flex", color: it.danger ? "inherit" : "var(--color-semantic-label-alternative)" }, children: it.icon }),
           /* @__PURE__ */ jsx135("span", { style: { flex: 1, minWidth: 0 }, children: it.label })
@@ -15095,8 +15472,8 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         children: [
           /* @__PURE__ */ jsx135(Avatar, { name: typeof name === "string" ? name : void 0, src, status, size: 30, style: { flexShrink: 0 } }),
           !collapsed && /* @__PURE__ */ jsxs105("span", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }, children: [
-            /* @__PURE__ */ jsx135("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal, var(--color-semantic-label-normal))", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
-            detail != null && /* @__PURE__ */ jsx135("span", { style: { fontSize: 11.5, color: "var(--color-semantic-label-alternative)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
+            /* @__PURE__ */ jsx135("span", { style: { fontSize: "var(--label2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal, var(--color-semantic-label-normal))", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
+            detail != null && /* @__PURE__ */ jsx135("span", { style: { fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-alternative)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
           ] }),
           !collapsed && /* @__PURE__ */ jsx135("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx135("path", { d: "M6 15l6-6 6 6" }) })
         ]
@@ -15124,16 +15501,16 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, childre
       const active = i === cur;
       return /* @__PURE__ */ jsxs106(React140.Fragment, { children: [
         /* @__PURE__ */ jsxs106("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
-          /* @__PURE__ */ jsx136("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: done ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", border: `2px solid ${done || active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, color: done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx136("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx136("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
-          /* @__PURE__ */ jsx136("span", { style: { fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
+          /* @__PURE__ */ jsx136("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: done ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", border: `2px solid ${done || active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, color: done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)", fontSize: "var(--label1-size)", fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx136("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx136("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
+          /* @__PURE__ */ jsx136("span", { style: { fontSize: "var(--label2-size)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
         ] }),
         i < steps.length - 1 && /* @__PURE__ */ jsx136("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < cur ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)", minWidth: 24 } })
       ] }, i);
     }) }),
     /* @__PURE__ */ jsx136("div", { children: typeof children === "function" ? children(cur) : children }),
     footer !== null && /* @__PURE__ */ jsxs106("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
-      /* @__PURE__ */ jsx136("button", { type: "button", onClick: () => go(cur - 1), disabled: cur === 0, style: { height: 44, padding: "0 18px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-normal)", cursor: cur === 0 ? "not-allowed" : "pointer", opacity: cur === 0 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
-      /* @__PURE__ */ jsx136("button", { type: "button", onClick: () => go(cur + 1), disabled: cur === steps.length - 1, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--color-semantic-primary-normal)", color: "var(--color-semantic-static-white)", cursor: cur === steps.length - 1 ? "not-allowed" : "pointer", opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uB2E4\uC74C" })
+      /* @__PURE__ */ jsx136("button", { type: "button", onClick: () => go(cur - 1), disabled: cur === 0, style: { height: 44, padding: "0 18px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-normal)", cursor: cur === 0 ? "not-allowed" : "pointer", opacity: cur === 0 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
+      /* @__PURE__ */ jsx136("button", { type: "button", onClick: () => go(cur + 1), disabled: cur === steps.length - 1, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--color-semantic-primary-normal)", color: "var(--color-semantic-static-white)", cursor: cur === steps.length - 1 ? "not-allowed" : "pointer", opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)" }, children: "\uB2E4\uC74C" })
     ] })
   ] });
 }
@@ -15374,9 +15751,9 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
         /* @__PURE__ */ jsx138("circle", { cx: "11", cy: "11", r: "7" }),
         /* @__PURE__ */ jsx138("path", { d: "m21 21-4.3-4.3" })
       ] }),
-      /* @__PURE__ */ jsx138("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--color-semantic-label-normal)" } })
+      /* @__PURE__ */ jsx138("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--headline2-size)", color: "var(--color-semantic-label-normal)" } })
     ] }),
-    /* @__PURE__ */ jsx138("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ jsx138("div", { style: { padding: 28, textAlign: "center", color: "var(--color-semantic-label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ jsxs108(
+    /* @__PURE__ */ jsx138("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ jsx138("div", { style: { padding: 28, textAlign: "center", color: "var(--color-semantic-label-alternative)", fontSize: "var(--label1-size)" }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ jsxs108(
       "button",
       {
         type: "button",
@@ -15390,11 +15767,11 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
         onMouseLeave: (e) => {
           e.currentTarget.style.background = "transparent";
         },
-        style: { width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "11px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-normal)" },
+        style: { width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "11px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-normal)" },
         children: [
           c.icon && /* @__PURE__ */ jsx138("span", { style: { color: "var(--color-semantic-primary-normal)", display: "inline-flex" }, children: c.icon }),
           /* @__PURE__ */ jsx138("span", { style: { flex: 1 }, children: c.label }),
-          c.shortcut && /* @__PURE__ */ jsx138("span", { style: { fontSize: 12, color: "var(--color-semantic-label-assistive)", fontWeight: "var(--fw-semibold)" }, children: c.shortcut })
+          c.shortcut && /* @__PURE__ */ jsx138("span", { style: { fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-assistive)", fontWeight: "var(--fw-semibold)" }, children: c.shortcut })
         ]
       },
       i
@@ -15598,10 +15975,10 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
           ...rest,
           children: [
             (title != null || onClose) && /* @__PURE__ */ jsxs110("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 22px", borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
-              /* @__PURE__ */ jsx141("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-              onClose && /* @__PURE__ */ jsx141("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx141("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx141("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+              /* @__PURE__ */ jsx141("div", { style: { flex: 1, minWidth: 0, fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+              onClose && /* @__PURE__ */ jsx141("button", { type: "button", "aria-label": "\uB2EB\uAE30", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx141("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx141("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
-            /* @__PURE__ */ jsx141("div", { style: { flex: 1, padding: "20px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
+            /* @__PURE__ */ jsx141("div", { style: { flex: 1, padding: "20px 22px", overflow: "auto", fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
             footer != null && /* @__PURE__ */ jsx141("div", { style: { padding: "16px 22px", borderTop: "1px solid var(--color-semantic-line-solid-normal)", display: "flex", justifyContent: "flex-end", gap: 10 }, children: footer })
           ]
         }
@@ -15652,7 +16029,7 @@ function CheckMark({ variant, checked, disabled }) {
       style: {
         width: 14,
         height: 14,
-        borderRadius: 4,
+        borderRadius: "var(--radius-5)",
         border: `1.5px solid ${checked ? activeColor : "var(--color-semantic-line-solid-normal)"}`,
         background: checked ? activeColor : "transparent",
         color: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-inverse-label)",
@@ -15732,7 +16109,7 @@ function MenuItemButton({
         fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
         letterSpacing: 0,
         color: item.danger ? "var(--color-semantic-status-negative-text)" : disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
-        opacity: disabled ? 0.72 : 1
+        opacity: disabled ? 0.45 : 1
       },
       children: [
         item.icon || /* @__PURE__ */ jsx142(CheckMark, { variant, checked, disabled }),
@@ -15764,7 +16141,7 @@ function MenuItemButton({
           "span",
           {
             style: {
-              fontSize: 12,
+              fontSize: "var(--caption1-size)",
               color: "var(--color-semantic-label-alternative)",
               flexShrink: 0
             },
@@ -15887,11 +16264,11 @@ function DropdownMenu({
                         height: 28,
                         padding: "0 10px",
                         border: "none",
-                        borderRadius: 7,
+                        borderRadius: "var(--radius-8)",
                         background: "var(--color-semantic-primary-normal)",
                         color: "var(--color-semantic-inverse-label)",
                         fontFamily: "var(--font-sans)",
-                        fontSize: 12,
+                        fontSize: "var(--caption1-size)",
                         fontWeight: "var(--fw-bold)"
                       },
                       children: "Apply"
@@ -15992,7 +16369,7 @@ function LightboxStage({ url, alt, count, go, onClose, style, rest }) {
   return /* @__PURE__ */ jsxs113("div", { role: "dialog", "aria-modal": "true", onClick: (e) => {
     if (e.target === e.currentTarget && onClose) onClose();
   }, style: { position: "fixed", inset: 0, zIndex: 130, display: "flex", alignItems: "center", justifyContent: "center", background: "var(--material-dimmer)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx144("button", { type: "button", "aria-label": "close", onClick: onClose, style: { position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--color-semantic-inverse-fill-normal)", color: "var(--color-semantic-inverse-label)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx144("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx144("path", { d: "M18 6 6 18M6 6l12 12" }) }) }),
+    /* @__PURE__ */ jsx144("button", { type: "button", "aria-label": "\uB2EB\uAE30", onClick: onClose, style: { position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--color-semantic-inverse-fill-normal)", color: "var(--color-semantic-inverse-label)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx144("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx144("path", { d: "M18 6 6 18M6 6l12 12" }) }) }),
     /* @__PURE__ */ jsxs113("div", { style: { position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: loaded ? 0 : 280, minHeight: loaded ? 0 : 200 }, children: [
       /* @__PURE__ */ jsx144("img", { ref: imgRef, src: url, alt, onLoad: () => setLoaded(true), style: { display: "block", maxWidth: "86vw", maxHeight: "86vh", borderRadius: "var(--radius-lg)", boxShadow: loaded ? "var(--shadow-xl)" : "none", opacity: loaded ? 1 : 0, transition: "opacity .18s ease" } }),
       !loaded && /* @__PURE__ */ jsx144("span", { "aria-hidden": "true", style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", display: "inline-flex" }, children: /* @__PURE__ */ jsx144("svg", { width: "34", height: "34", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-inverse-icon-muted)", strokeWidth: "2.4", strokeLinecap: "round", children: /* @__PURE__ */ jsx144("path", { d: "M12 2a10 10 0 1 0 10 10", children: /* @__PURE__ */ jsx144("animateTransform", { attributeName: "transform", type: "rotate", from: "0 12 12", to: "360 12 12", dur: "0.8s", repeatCount: "indefinite" }) }) }) }),
@@ -16033,10 +16410,10 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
           ...rest,
           children: [
             (title != null || onClose) && /* @__PURE__ */ jsxs114("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
-              /* @__PURE__ */ jsx145("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-              onClose && /* @__PURE__ */ jsx145("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx145("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx145("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+              /* @__PURE__ */ jsx145("div", { style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+              onClose && /* @__PURE__ */ jsx145("button", { type: "button", "aria-label": "\uB2EB\uAE30", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx145("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx145("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
-            /* @__PURE__ */ jsx145("div", { style: { padding: "20px 24px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
+            /* @__PURE__ */ jsx145("div", { style: { padding: "20px 24px", overflow: "auto", fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
             footer != null && /* @__PURE__ */ jsx145("div", { style: { display: "flex", justifyContent: "flex-end", gap: 10, padding: "16px 24px", borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: footer })
           ]
         }
@@ -16105,8 +16482,8 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
           ...rest,
           children: [
             /* @__PURE__ */ jsx147("div", { style: { display: "flex", justifyContent: "center", paddingTop: 10 }, children: /* @__PURE__ */ jsx147("span", { style: { width: 40, height: 4, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-interaction-inactive)" } }) }),
-            title != null && /* @__PURE__ */ jsx147("div", { style: { padding: "14px 22px 4px", fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-            /* @__PURE__ */ jsx147("div", { style: { flex: 1, padding: "14px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
+            title != null && /* @__PURE__ */ jsx147("div", { style: { padding: "14px 22px 4px", fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+            /* @__PURE__ */ jsx147("div", { style: { flex: 1, padding: "14px 22px", overflow: "auto", fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
             footer != null && /* @__PURE__ */ jsx147("div", { style: { padding: "14px 22px 22px", display: "flex", gap: 10 }, children: footer })
           ]
         }
@@ -16118,25 +16495,7 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
 // components/overlay/Snackbar.jsx
 import React152 from "react";
 import { jsx as jsx148, jsxs as jsxs117 } from "react/jsx-runtime";
-var ICON = /* @__PURE__ */ jsxs117(
-  "svg",
-  {
-    width: "22",
-    height: "22",
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "2",
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    "aria-hidden": "true",
-    children: [
-      /* @__PURE__ */ jsx148("circle", { cx: "12", cy: "12", r: "9" }),
-      /* @__PURE__ */ jsx148("path", { d: "M12 8h.01" }),
-      /* @__PURE__ */ jsx148("path", { d: "M11 12h1v5h1" })
-    ]
-  }
-);
+var ICON = /* @__PURE__ */ jsx148(Icon, { name: "circle-info-fill", size: 22, "aria-hidden": "true" });
 function Snackbar({
   heading,
   description,
@@ -16147,10 +16506,12 @@ function Snackbar({
   leadingIcon = false,
   closeButton = false,
   onClose,
+  closeLabel = "\uB2EB\uAE30",
   width = 384,
   style,
   ...rest
 }) {
+  const [actionHover, setActionHover] = React152.useState(false);
   const hasDescription = description != null || children != null;
   const minHeight = heading != null && hasDescription ? 72 : hasDescription ? 68 : 54;
   return /* @__PURE__ */ jsxs117(
@@ -16166,7 +16527,7 @@ function Snackbar({
         maxWidth: "100%",
         minHeight,
         padding: "11px 16px",
-        borderRadius: 12,
+        borderRadius: "var(--radius-lg)",
         background: "var(--component-transient-feedback-bg)",
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
         WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
@@ -16194,9 +16555,9 @@ function Snackbar({
             {
               style: {
                 fontSize: "var(--body2-size)",
-                lineHeight: 1.35,
+                lineHeight: "var(--body2-line)",
                 fontWeight: "var(--fw-semibold)",
-                letterSpacing: 0
+                letterSpacing: "var(--body2-spacing)"
               },
               children: heading
             }
@@ -16205,35 +16566,49 @@ function Snackbar({
             "span",
             {
               style: {
-                fontSize: 13,
-                lineHeight: 1.45,
+                fontSize: "var(--label2-size)",
+                lineHeight: "var(--label2-line)",
                 color: "var(--color-semantic-inverse-label-strong-soft)",
-                letterSpacing: 0,
+                letterSpacing: "var(--label2-spacing)",
                 wordBreak: "keep-all"
               },
               children: description ?? children
             }
           ),
-          heading == null && !hasDescription && /* @__PURE__ */ jsx148("span", { style: { fontSize: 14, lineHeight: 1.4 }, children })
+          heading == null && !hasDescription && /* Single-line message matches Toast's one-liner step (body2) so the
+             two transient surfaces speak the same size for the same role. */
+          /* @__PURE__ */ jsx148("span", { style: { fontSize: "var(--body2-size)", lineHeight: "var(--body2-line)", letterSpacing: "var(--body2-spacing)" }, children })
         ] }),
         action != null && /* @__PURE__ */ jsx148(
           "button",
           {
             type: "button",
             onClick: onAction,
+            onMouseEnter: () => setActionHover(true),
+            onMouseLeave: () => setActionHover(false),
             style: {
               flexShrink: 0,
               alignSelf: "center",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
               /* WDS content-to-action gap is 32px (container gap 12 + 20). */
               marginLeft: 20,
+              /* WCAG 2.2 target size: 24px hit area without moving the layout. */
+              minWidth: 24,
+              minHeight: 24,
+              marginTop: -4,
+              marginBottom: -4,
               border: "none",
               background: "transparent",
               color: "var(--color-semantic-inverse-label)",
               fontFamily: "var(--font-sans)",
-              fontSize: 13,
+              fontSize: "var(--label2-size)",
               fontWeight: "var(--fw-bold)",
               cursor: "pointer",
-              padding: 0
+              padding: "4px 0",
+              textDecoration: actionHover ? "underline" : "none",
+              textUnderlineOffset: 3
             },
             children: action
           }
@@ -16242,16 +16617,22 @@ function Snackbar({
           "button",
           {
             type: "button",
-            "aria-label": "close",
+            "aria-label": closeLabel,
             onClick: onClose,
             style: {
               flexShrink: 0,
               alignSelf: "center",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minWidth: 24,
+              minHeight: 24,
+              padding: 4,
+              margin: -4,
               border: "none",
               background: "transparent",
               color: "var(--color-semantic-inverse-label)",
-              cursor: "pointer",
-              padding: 0
+              cursor: "pointer"
             },
             children: /* @__PURE__ */ jsx148(
               "svg",
@@ -16277,34 +16658,23 @@ function Snackbar({
 
 // components/overlay/Toast.jsx
 import React153 from "react";
-import { Fragment as Fragment5, jsx as jsx149, jsxs as jsxs118 } from "react/jsx-runtime";
+import { jsx as jsx149, jsxs as jsxs118 } from "react/jsx-runtime";
 var ICONS = {
   normal: {
     color: "var(--color-semantic-inverse-label)",
-    node: /* @__PURE__ */ jsx149("circle", { cx: "12", cy: "12", r: "8" })
+    name: "circle-info-fill"
   },
   positive: {
     color: "var(--color-semantic-status-positive)",
-    node: /* @__PURE__ */ jsxs118(Fragment5, { children: [
-      /* @__PURE__ */ jsx149("circle", { cx: "12", cy: "12", r: "9" }),
-      /* @__PURE__ */ jsx149("path", { d: "m8.5 12.2 2.2 2.2 4.8-5" })
-    ] })
+    name: statusToneStyle("positive").icon
   },
   cautionary: {
     color: "var(--color-semantic-status-cautionary)",
-    node: /* @__PURE__ */ jsxs118(Fragment5, { children: [
-      /* @__PURE__ */ jsx149("path", { d: "M12 3.8 21 19H3L12 3.8Z" }),
-      /* @__PURE__ */ jsx149("path", { d: "M12 9v4" }),
-      /* @__PURE__ */ jsx149("path", { d: "M12 16h.01" })
-    ] })
+    name: statusToneStyle("cautionary").icon
   },
   negative: {
     color: "var(--color-semantic-status-negative)",
-    node: /* @__PURE__ */ jsxs118(Fragment5, { children: [
-      /* @__PURE__ */ jsx149("circle", { cx: "12", cy: "12", r: "9" }),
-      /* @__PURE__ */ jsx149("path", { d: "M12 8v5" }),
-      /* @__PURE__ */ jsx149("path", { d: "M12 16h.01" })
-    ] })
+    name: statusToneStyle("negative").icon
   }
 };
 function normalizeTone(value) {
@@ -16321,11 +16691,13 @@ function Toast({
   action,
   onAction,
   onClose,
+  closeLabel = "\uB2EB\uAE30",
   leadingIcon = true,
   icon,
   style,
   ...rest
 }) {
+  const [actionHover, setActionHover] = React153.useState(false);
   const normalized = normalizeTone(variant || tone);
   const t = ICONS[normalized] || ICONS.normal;
   return /* @__PURE__ */ jsxs118(
@@ -16344,7 +16716,7 @@ function Toast({
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
         WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
         color: "var(--color-semantic-inverse-label)",
-        borderRadius: 12,
+        borderRadius: "var(--radius-lg)",
         boxShadow: "var(--shadow-lg)",
         fontFamily: "var(--font-sans)",
         ...style
@@ -16356,20 +16728,7 @@ function Toast({
           {
             "aria-hidden": "true",
             style: { display: "inline-flex", flexShrink: 0, color: t.color },
-            children: icon || /* @__PURE__ */ jsx149(
-              "svg",
-              {
-                width: "22",
-                height: "22",
-                viewBox: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                strokeWidth: "2",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                children: t.node
-              }
-            )
+            children: icon || /* @__PURE__ */ jsx149(Icon, { name: t.name, size: 22, "aria-hidden": "true" })
           }
         ),
         /* @__PURE__ */ jsx149(
@@ -16378,10 +16737,10 @@ function Toast({
             style: {
               flex: 1,
               minWidth: 0,
-              fontSize: 15,
-              lineHeight: 1.45,
+              fontSize: "var(--body2-size)",
+              lineHeight: "var(--body2-line)",
               fontWeight: "var(--fw-semibold)",
-              letterSpacing: 0,
+              letterSpacing: "var(--body2-spacing)",
               color: "var(--color-semantic-inverse-label)",
               wordBreak: "keep-all"
             },
@@ -16393,16 +16752,27 @@ function Toast({
           {
             type: "button",
             onClick: onAction,
+            onMouseEnter: () => setActionHover(true),
+            onMouseLeave: () => setActionHover(false),
             style: {
               flexShrink: 0,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              /* WCAG 2.2 target size: keep a 24px hit area without moving the layout. */
+              minWidth: 24,
+              minHeight: 24,
+              margin: "-4px 0",
               border: "none",
               background: "transparent",
               color: "var(--color-semantic-inverse-label)",
               fontFamily: "var(--font-sans)",
-              fontSize: 13,
+              fontSize: "var(--label2-size)",
               fontWeight: "var(--fw-bold)",
               cursor: "pointer",
-              padding: 0
+              padding: "4px 0",
+              textDecoration: actionHover ? "underline" : "none",
+              textUnderlineOffset: 3
             },
             children: action
           }
@@ -16411,12 +16781,17 @@ function Toast({
           "button",
           {
             type: "button",
-            "aria-label": "close",
+            "aria-label": closeLabel,
             onClick: onClose,
             style: {
               flexShrink: 0,
               display: "inline-flex",
-              padding: 2,
+              alignItems: "center",
+              justifyContent: "center",
+              minWidth: 24,
+              minHeight: 24,
+              padding: 4,
+              margin: -2,
               border: "none",
               background: "transparent",
               cursor: "pointer",
@@ -16595,7 +16970,7 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
       color: isDisabled ? "var(--color-semantic-label-disable)" : isActive ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
       touchAction: "none",
       fontFamily: "var(--font-sans)",
-      fontSize: 12,
+      fontSize: "var(--caption1-size)",
       fontWeight: "var(--fw-bold)",
       lineHeight: 1,
       whiteSpace: "nowrap",
@@ -16742,8 +17117,8 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           color: "var(--color-semantic-label-alternative)"
         }, children: icon }),
         /* @__PURE__ */ jsxs121("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ jsx153("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-          (hasChips || ringCaption != null) && /* @__PURE__ */ jsx153("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
+          title != null && /* @__PURE__ */ jsx153("div", { style: { fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+          (hasChips || ringCaption != null) && /* @__PURE__ */ jsx153("div", { style: { marginTop: 3, fontSize: "var(--caption1-size)", fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
         ] }),
         ringLabel != null && /* @__PURE__ */ jsxs121("span", { style: {
           display: "inline-flex",
@@ -16751,7 +17126,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           gap: 6,
           flexShrink: 0,
           whiteSpace: "nowrap",
-          fontSize: 13,
+          fontSize: "var(--label2-size)",
           fontWeight: "var(--fw-semibold)",
           letterSpacing: 0,
           color: "var(--color-semantic-label-neutral)",
@@ -16852,7 +17227,7 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
           boxShadow: focus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "inset var(--shadow-sm)",
           touchAction: "none",
           cursor: disabled ? "not-allowed" : active ? "grabbing" : "grab",
-          opacity: disabled ? 0.5 : 1
+          opacity: disabled ? 0.45 : 1
         },
         children: [
           /* @__PURE__ */ jsx154("span", { style: { position: "absolute", left: "50%", top: 10, bottom: 10, width: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateX(-0.5px)" } }),
@@ -16874,7 +17249,7 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
         ]
       }
     ),
-    label != null && /* @__PURE__ */ jsx154("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: label })
+    label != null && /* @__PURE__ */ jsx154("span", { style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: label })
   ] });
 }
 
@@ -16890,8 +17265,15 @@ var TONES4 = {
   warning: { tone: "cautionary", c: "var(--component-banner-cautionary-icon)", bg: "var(--component-banner-cautionary-bg)", border: "var(--component-banner-cautionary-border)" },
   error: { tone: "negative", c: "var(--component-banner-negative-icon)", bg: "var(--component-banner-negative-bg)", border: "var(--component-banner-negative-border)" }
 };
-function Banner({ tone = "info", title, children, action, onClose, style, ...rest }) {
-  const t = TONES4[tone] || TONES4.info;
+function normalizeTone2(value) {
+  if (value === "signal") return "info";
+  if (value === "positive") return "success";
+  if (value === "cautionary") return "warning";
+  if (value === "negative") return "error";
+  return value || "info";
+}
+function Banner({ tone = "info", title, children, action, onClose, closeLabel = "\uB2EB\uAE30", style, ...rest }) {
+  const t = TONES4[normalizeTone2(tone)] || TONES4.info;
   return /* @__PURE__ */ jsxs123(
     "div",
     {
@@ -16911,11 +17293,11 @@ function Banner({ tone = "info", title, children, action, onClose, style, ...res
       children: [
         /* @__PURE__ */ jsx155(Icon, { name: statusToneStyle(t.tone).icon, size: 20, color: t.c, "aria-hidden": "true", style: { flexShrink: 0, marginTop: 1 } }),
         /* @__PURE__ */ jsxs123("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ jsx155("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ jsx155("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+          title != null && /* @__PURE__ */ jsx155("div", { style: { fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ jsx155("div", { style: { fontSize: "var(--label1-size)", lineHeight: 1.6, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] }),
         action != null && /* @__PURE__ */ jsx155("div", { style: { flexShrink: 0 }, children: action }),
-        onClose && /* @__PURE__ */ jsx155("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx155("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx155("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+        onClose && /* @__PURE__ */ jsx155("button", { type: "button", "aria-label": closeLabel, onClick: onClose, style: { flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: 24, minHeight: 24, padding: 4, margin: -3, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-neutral)" }, children: /* @__PURE__ */ jsx155("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx155("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
       ]
     }
   );
@@ -17091,7 +17473,7 @@ function ManualControlSession({
         border: "var(--component-card-border)",
         borderRadius: "var(--component-card-radius)",
         background: "var(--color-semantic-background-elevated-normal)",
-        boxShadow: focused && controlMode !== "pointer" ? "0 0 0 3px var(--color-semantic-focus-ring)" : "var(--component-card-shadow-sm)",
+        boxShadow: focused && controlMode !== "pointer" ? "0 0 0 4px var(--color-semantic-focus-ring)" : "var(--component-card-shadow-sm)",
         fontFamily: "var(--font-sans)",
         outline: "none",
         ...style
@@ -17211,10 +17593,10 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }, children: image ? /* @__PURE__ */ jsx157("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx157("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
-    /* @__PURE__ */ jsx157("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
+    }, children: image ? /* @__PURE__ */ jsx157("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx157("span", { style: { fontSize: "var(--headline2-size)", fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
+    /* @__PURE__ */ jsx157("span", { style: { flex: 1, minWidth: 0, fontSize: "var(--body1-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
     /* @__PURE__ */ jsxs125("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
-      mode != null && /* @__PURE__ */ jsx157("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-surface-normal)", color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap" }, children: mode }),
+      mode != null && /* @__PURE__ */ jsx157("span", { style: { fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-surface-normal)", color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap" }, children: mode }),
       /* @__PURE__ */ jsxs125("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
         /* @__PURE__ */ jsx157(ConnectionBadge, { status, showLabel: false, size: "sm" }),
         hasBat && /* @__PURE__ */ jsx157(BatteryGauge, { value: battery })
@@ -17268,7 +17650,7 @@ function TopicNode({ node, depth, onToggle }) {
           background: hover ? "var(--color-semantic-background-normal-alternative)" : "transparent",
           textAlign: "left",
           fontFamily: "var(--font-sans)",
-          fontSize: 14,
+          fontSize: "var(--label1-size)",
           fontWeight: depth === 0 ? "var(--fw-semibold)" : "var(--fw-medium)",
           lineHeight: "18px",
           color: depth === 0 ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-normal)",
@@ -17301,7 +17683,7 @@ function TopicNode({ node, depth, onToggle }) {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                fontSize: 12,
+                fontSize: "var(--caption1-size)",
                 lineHeight: "18px",
                 color: "var(--color-semantic-label-alternative)",
                 fontFamily: "var(--font-mono)"
@@ -17310,7 +17692,7 @@ function TopicNode({ node, depth, onToggle }) {
             }
           ),
           (hasHz || node.subscribable) && /* @__PURE__ */ jsxs126("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: [
-            hasHz && /* @__PURE__ */ jsxs126("span", { style: { fontSize: 12, lineHeight: "18px", color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
+            hasHz && /* @__PURE__ */ jsxs126("span", { style: { fontSize: "var(--caption1-size)", lineHeight: "18px", color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
               node.hz,
               " Hz"
             ] }),
@@ -17492,7 +17874,7 @@ function ChoiceCard({
             "div",
             {
               style: {
-                fontSize: 15,
+                fontSize: "var(--body2-size)",
                 fontWeight: "var(--fw-bold)",
                 letterSpacing: 0,
                 color: "var(--color-semantic-label-strong)",
@@ -17506,7 +17888,7 @@ function ChoiceCard({
             {
               style: {
                 marginTop: 3,
-                fontSize: 13,
+                fontSize: "var(--label2-size)",
                 lineHeight: 1.55,
                 color: "var(--color-semantic-label-alternative)",
                 wordBreak: "keep-all"
@@ -17956,7 +18338,7 @@ function SegmentedControl({
               borderLeft: outlined && index > 0 ? "1px solid var(--color-semantic-line-solid-normal)" : "none",
               boxShadow: [
                 active && !outlined ? "var(--shadow-xs)" : null,
-                activeFocus ? "0 0 0 3px var(--color-semantic-focus-ring)" : null
+                activeFocus ? "0 0 0 4px var(--color-semantic-focus-ring)" : null
               ].filter(Boolean).join(", ") || "none",
               transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
               whiteSpace: "nowrap"
@@ -18044,7 +18426,7 @@ function Stepper({
         border: "1px solid var(--color-semantic-line-solid-normal)",
         borderRadius: "var(--radius-md)",
         background: "var(--color-semantic-background-elevated-normal)",
-        opacity: disabled ? 0.5 : 1,
+        opacity: disabled ? 0.45 : 1,
         ...style
       },
       ...rest,
@@ -18240,9 +18622,9 @@ function ToggleButton({
         border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
         borderRadius: "var(--radius-md)",
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
+        opacity: disabled ? 0.45 : 1,
         fontFamily: "var(--font-sans)",
-        fontSize: 15,
+        fontSize: "var(--body2-size)",
         fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
         color: on ? "var(--color-semantic-primary-heavy)" : "var(--color-semantic-label-neutral)",
@@ -18516,7 +18898,7 @@ function WheelPicker({
                     fontWeight: typeStyle.fontWeight,
                     letterSpacing: 0,
                     color: optionDisabled ? "var(--color-semantic-label-disable)" : highlighted ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-neutral)",
-                    opacity: optionDisabled ? 0.42 : 1,
+                    opacity: optionDisabled ? 0.45 : 1,
                     transform: visual.transform,
                     transformOrigin: "center center",
                     transformStyle: "preserve-3d",
@@ -18609,8 +18991,8 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
           }
         ),
         /* @__PURE__ */ jsxs135("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ jsx168("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ jsx168("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+          title != null && /* @__PURE__ */ jsx168("div", { style: { fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ jsx168("div", { style: { fontSize: "var(--label1-size)", lineHeight: 1.65, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -18718,8 +19100,8 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
           color: "var(--color-semantic-primary-normal)",
           marginBottom: 12
         }, children: icon }),
-        title != null && /* @__PURE__ */ jsx170("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-        description != null && /* @__PURE__ */ jsx170("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
+        title != null && /* @__PURE__ */ jsx170("div", { style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+        description != null && /* @__PURE__ */ jsx170("div", { style: { fontSize: "var(--label1-size)", lineHeight: 1.65, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
         action != null && /* @__PURE__ */ jsx170("div", { style: { marginTop: 14 }, children: action })
       ]
     }
@@ -18738,7 +19120,7 @@ function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue
     else c = "var(--color-semantic-status-positive)";
   }
   return /* @__PURE__ */ jsxs138("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs138("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs138("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
       /* @__PURE__ */ jsx171("span", { children: label }),
       showValue && /* @__PURE__ */ jsxs138("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--color-semantic-label-alternative)" }, children: [
         value,
@@ -18993,7 +19375,7 @@ var ViewerFrame = React176.forwardRef(function ViewerFrame2({
   const stateSummary = /* @__PURE__ */ jsxs139(React176.Fragment, { children: [
     /* @__PURE__ */ jsx172(StateMark, { presentation, icon: stateIcon }),
     /* @__PURE__ */ jsxs139("span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
-      /* @__PURE__ */ jsx172("span", { style: { fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
+      /* @__PURE__ */ jsx172("span", { style: { fontSize: "var(--caption1-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
       descriptionContent != null && /* @__PURE__ */ jsx172(
         "span",
         {
@@ -19137,7 +19519,7 @@ var ViewerFrame = React176.forwardRef(function ViewerFrame2({
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
                           color: "var(--viewer-foreground)",
-                          fontSize: 12,
+                          fontSize: "var(--caption1-size)",
                           lineHeight: 1.35,
                           fontWeight: "var(--fw-bold)"
                         },
@@ -19162,7 +19544,7 @@ var ViewerFrame = React176.forwardRef(function ViewerFrame2({
                           borderRadius: "var(--radius-pill)",
                           background: "var(--viewer-surface-elevated)",
                           color: "var(--viewer-foreground)",
-                          fontSize: 11,
+                          fontSize: "var(--caption2-size)",
                           fontWeight: "var(--fw-semibold)"
                         },
                         children: [
@@ -19226,7 +19608,7 @@ var ViewerFrame = React176.forwardRef(function ViewerFrame2({
               borderRadius: "var(--radius-sm)",
               background: "var(--viewer-surface-elevated)",
               color: "var(--viewer-muted)",
-              fontSize: 11,
+              fontSize: "var(--caption2-size)",
               lineHeight: 1.35,
               fontWeight: "var(--fw-semibold)",
               fontVariantNumeric: "tabular-nums",
@@ -19277,7 +19659,7 @@ var ViewerFrame = React176.forwardRef(function ViewerFrame2({
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                     color: "var(--viewer-muted)",
-                    fontSize: 11,
+                    fontSize: "var(--caption2-size)",
                     fontWeight: "var(--fw-semibold)",
                     fontVariantNumeric: "tabular-nums"
                   },
@@ -19320,7 +19702,7 @@ var ViewerFrame = React176.forwardRef(function ViewerFrame2({
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                     color: "var(--viewer-foreground)",
-                    fontSize: 12,
+                    fontSize: "var(--caption1-size)",
                     lineHeight: 1.35,
                     fontWeight: "var(--fw-bold)",
                     textAlign: "left"
@@ -19353,8 +19735,8 @@ var ViewerFrame = React176.forwardRef(function ViewerFrame2({
                         children: [
                           /* @__PURE__ */ jsx172("div", { "data-viewer-blocking-icon": "", style: { display: "flex", alignItems: "center", justifyContent: "center", minHeight: 24 }, children: /* @__PURE__ */ jsx172(StateMark, { presentation, icon: stateIcon }) }),
                           /* @__PURE__ */ jsxs139("div", { style: { display: "grid", justifyItems: "center", gap: 4 }, children: [
-                            /* @__PURE__ */ jsx172("strong", { style: { color: "var(--viewer-foreground)", fontSize: 14, lineHeight: 1.4 }, children: labelContent }),
-                            descriptionContent != null && /* @__PURE__ */ jsx172("span", { "data-viewer-blocking-description": "", style: { color: "var(--viewer-muted)", fontSize: 12, lineHeight: 1.55, overflowWrap: "anywhere" }, children: descriptionContent })
+                            /* @__PURE__ */ jsx172("strong", { style: { color: "var(--viewer-foreground)", fontSize: "var(--label1-size)", lineHeight: 1.4 }, children: labelContent }),
+                            descriptionContent != null && /* @__PURE__ */ jsx172("span", { "data-viewer-blocking-description": "", style: { color: "var(--viewer-muted)", fontSize: "var(--caption1-size)", lineHeight: 1.55, overflowWrap: "anywhere" }, children: descriptionContent })
                           ] })
                         ]
                       }
@@ -19970,7 +20352,7 @@ function TelemetryGauge({
           }
         ),
         (label != null || resolvedStatusLabel != null) && /* @__PURE__ */ jsxs141("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-2)", maxWidth: "100%", minWidth: 0, flexWrap: "wrap" }, children: [
-          label != null && /* @__PURE__ */ jsx176("span", { id: labelId, style: { color: "var(--color-semantic-label-neutral)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere", textAlign: "center" }, children: label }),
+          label != null && /* @__PURE__ */ jsx176("span", { id: labelId, style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere", textAlign: "center" }, children: label }),
           resolvedStatusLabel != null && /* @__PURE__ */ jsx176(StatusBadge, { tone: resolvedTone, children: resolvedStatusLabel })
         ] })
       ]
@@ -20008,7 +20390,7 @@ function TelemetryValue({
   const hasCustomStaleLabel = staleLabel != null && staleLabel !== false && staleLabel !== "";
   const resolvedStatusLabel = stale ? hasCustomStaleLabel ? staleLabel : "\uC9C0\uC5F0" : hasCustomStatusLabel ? statusLabel : tone === "neutral" ? null : STATUS_LABEL2[tone];
   const showStatus = resolvedStatusLabel != null && (!stale || showStaleBadge);
-  const valueSize = size === "sm" ? 18 : 21;
+  const valueSize = size === "sm" ? "var(--headline1-size)" : "var(--heading2-size)";
   const justifyContent = align === "end" ? "flex-end" : "flex-start";
   return /* @__PURE__ */ jsxs142(
     "div",
@@ -20027,7 +20409,7 @@ function TelemetryValue({
       },
       ...rest,
       children: [
-        label != null && /* @__PURE__ */ jsx177("span", { style: { maxWidth: "100%", color: "var(--color-semantic-label-neutral)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere", textAlign: align === "end" ? "right" : "left" }, children: label }),
+        label != null && /* @__PURE__ */ jsx177("span", { style: { maxWidth: "100%", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere", textAlign: align === "end" ? "right" : "left" }, children: label }),
         /* @__PURE__ */ jsxs142("div", { style: { display: "flex", alignItems: "center", justifyContent, columnGap: "var(--space-2)", rowGap: "var(--space-1)", maxWidth: "100%", minWidth: 0, flexWrap: "wrap" }, children: [
           /* @__PURE__ */ jsxs142("span", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-1)", maxWidth: "100%", minWidth: 0 }, children: [
             /* @__PURE__ */ jsx177("strong", { style: { maxWidth: "100%", color: stale ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-label-strong)", fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums", overflowWrap: "anywhere" }, children: value }),
@@ -20035,7 +20417,7 @@ function TelemetryValue({
           ] }),
           showStatus && /* @__PURE__ */ jsx177(StatusBadge, { tone: resolvedTone, children: resolvedStatusLabel })
         ] }),
-        (helper != null || timestamp != null) && /* @__PURE__ */ jsxs142("div", { style: { display: "flex", justifyContent, columnGap: "var(--space-2)", rowGap: 2, maxWidth: "100%", minWidth: 0, flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: 11.5, lineHeight: 1.4, fontVariantNumeric: "tabular-nums", textAlign: align === "end" ? "right" : "left" }, children: [
+        (helper != null || timestamp != null) && /* @__PURE__ */ jsxs142("div", { style: { display: "flex", justifyContent, columnGap: "var(--space-2)", rowGap: 2, maxWidth: "100%", minWidth: 0, flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption2-size)", lineHeight: 1.4, fontVariantNumeric: "tabular-nums", textAlign: align === "end" ? "right" : "left" }, children: [
           helper != null && /* @__PURE__ */ jsx177("span", { style: { maxWidth: "100%", overflowWrap: "anywhere" }, children: helper }),
           helper != null && timestamp != null && /* @__PURE__ */ jsx177("span", { "aria-hidden": "true", children: "\xB7" }),
           timestamp != null && /* @__PURE__ */ jsx177("span", { style: { maxWidth: "100%", overflowWrap: "anywhere" }, children: timestamp })

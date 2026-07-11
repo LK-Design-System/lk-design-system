@@ -83,7 +83,7 @@ export function PinInput({ length = 6, value, defaultValue = '', onChange, onCom
             commit(next);
             refs.current[Math.min(normalizedLength - 1, i + pasted.length)]?.focus();
           }}
-          style={{ width: boxW, height: boxH, textAlign: 'center', border: `1px solid ${focusedIndex === i ? 'var(--component-input-border-color-focus)' : cells[i] ? 'var(--color-semantic-primary-normal)' : 'var(--component-input-border-color)'}`, borderRadius: 'var(--radius-md)', outline: 'none', boxShadow: focusedIndex === i ? 'var(--component-input-focus-shadow)' : 'none', fontFamily: 'var(--font-sans)', fontSize: 18, fontWeight: 'var(--fw-bold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
+          style={{ width: boxW, height: boxH, textAlign: 'center', border: `1px solid ${focusedIndex === i ? 'var(--component-input-border-color-focus)' : cells[i] ? 'var(--color-semantic-primary-normal)' : 'var(--component-input-border-color)'}`, borderRadius: 'var(--radius-md)', outline: 'none', boxShadow: focusedIndex === i ? 'var(--component-input-focus-shadow)' : 'none', fontFamily: 'var(--font-sans)', fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-bold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
         />
       ))}
     </div>

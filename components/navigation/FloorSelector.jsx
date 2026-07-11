@@ -19,7 +19,7 @@ export function FloorSelector({ floors = [], value, defaultValue, onChange, styl
         return (
           <button key={f.value} type="button" role="option" aria-selected={on} onClick={() => pick(f.value)}
             style={{ minWidth: 44, height: 40, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 0, borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-              fontFamily: 'inherit', fontSize: 14, fontWeight: on ? 800 : 600, background: on ? 'var(--color-semantic-primary-normal)' : 'transparent', color: on ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-neutral)',
+              fontFamily: 'inherit', fontSize: 'var(--label1-size)', fontWeight: on ? 800 : 600, background: on ? 'var(--color-semantic-primary-normal)' : 'transparent', color: on ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-neutral)',
               transition: 'background var(--dur-fast) var(--ease-out)' }}>
             {f.label}
           </button>

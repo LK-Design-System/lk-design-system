@@ -38,13 +38,13 @@ export function FeatureCard({
       {...rest}
     >
       {icon && (
-        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 52, height: 52, borderRadius: 14, color: t.fg, background: t.bg }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 52, height: 52, borderRadius: 'var(--radius-14)', color: t.fg, background: t.bg }}>
           {icon}
         </span>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <h4 style={{ fontSize: '19px', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-strong)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
-        <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: 'var(--color-semantic-label-alternative)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
+        <h4 style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-strong)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
+        <p style={{ fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-alternative)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
       </div>
     </div>
   );

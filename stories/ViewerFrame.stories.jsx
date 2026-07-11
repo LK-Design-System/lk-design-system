@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Map·3D·Video가 공유하는 LK Robotics viewport frame입니다. 콘텐츠 가용성에 따라 중앙 blocking state와 콘텐츠를 유지하는 edge state를 구분합니다.',
+        component: '지도·3D·영상이 공유하는 LK Robotics 뷰포트 프레임입니다. 콘텐츠 가용성에 따라 중앙 차단 상태와 콘텐츠를 유지하는 가장자리 상태를 구분합니다.',
       },
     },
   },
@@ -32,7 +32,7 @@ function Preview({ appearance = 'dark' }) {
         fontWeight: 'var(--fw-semibold)',
       }}
     >
-      renderer slot
+      렌더러 영역
     </div>
   );
 }
@@ -44,7 +44,7 @@ function LocalToolbar({ appearance }) {
       <ViewerToolbarButton label="확대" onClick={() => setZoom((value) => Math.min(200, value + 10))}><Icon name="plus" size={16} /></ViewerToolbarButton>
       <ViewerToolbarButton label="축소" onClick={() => setZoom((value) => Math.max(50, value - 10))}><Icon name="minus" size={16} /></ViewerToolbarButton>
       <ViewerToolbarButton label="보기 초기화" onClick={() => setZoom(100)}><Icon name="reset" size={16} /></ViewerToolbarButton>
-      <output aria-live="polite" style={{ color: 'var(--viewer-muted)', fontSize: 11, fontVariantNumeric: 'tabular-nums' }}>{zoom}%</output>
+      <output aria-live="polite" style={{ color: 'var(--viewer-muted)', fontSize: 'var(--caption2-size)', fontVariantNumeric: 'tabular-nums' }}>{zoom}%</output>
     </ViewerToolbar>
   );
 }
@@ -76,7 +76,7 @@ function BlockingFocusFixture() {
 }
 
 export const StatePlacement = {
-  name: 'Blocking · Edge · Ready',
+  name: '차단 · 가장자리 · 준비 상태',
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
       <ViewerFrame label="준비된 뷰포트" source="AMR-07" state="ready" status="38 FPS" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
@@ -106,8 +106,104 @@ export const StatePlacement = {
   },
 };
 
+export const LiveAndBlockingStates = {
+  name: '라이브 · 소스 없음 · 표시 오류',
+  render: () => (
+    <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
+      <ViewerFrame label="라이브 카메라 뷰포트" source="AMR-07 · 전면 카메라" state="live" status="30 FPS" style={{ height: 220 }}>
+        <Preview />
+      </ViewerFrame>
+      <ViewerFrame
+        label="소스가 없는 뷰포트"
+        source="카메라 슬롯 A"
+        state="no-source"
+        stateAction={<Button size="sm" onClick={() => {}}>소스 선택</Button>}
+        style={{ height: 220 }}
+      >
+        <Preview />
+      </ViewerFrame>
+      <ViewerFrame
+        label="오류가 발생한 뷰포트"
+        source="AMR-11 · 후면 카메라"
+        state="error"
+        stateAction={<Button size="sm" onClick={() => {}}>다시 시도</Button>}
+        style={{ height: 220 }}
+      >
+        <Preview />
+      </ViewerFrame>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const live = canvasElement.querySelector('[data-viewer-state="live"]');
+    const noSource = canvasElement.querySelector('[data-viewer-state="no-source"]');
+    const error = canvasElement.querySelector('[data-viewer-state="error"]');
+    if (!live || !noSource || !error) throw new Error('The representative Viewer states are incomplete.');
+
+    const liveCorner = live.querySelector('[data-viewer-topbar] [role="status"]');
+    if (live.hasAttribute('data-viewer-blocking') || !liveCorner?.textContent?.includes('라이브')) {
+      throw new Error('Live must preserve renderer content and use the compact corner status.');
+    }
+    if (live.querySelector('[data-viewer-content]')?.hasAttribute('inert')) {
+      throw new Error('Live content must remain interactive.');
+    }
+
+    const neutralStatus = noSource.querySelector('[data-viewer-blocking-live][role="status"]');
+    if (!noSource.hasAttribute('data-viewer-blocking') || !neutralStatus?.textContent?.includes('소스 없음') || noSource.querySelector('[role="alert"]')) {
+      throw new Error('No-source must use a neutral polite blocking state.');
+    }
+
+    const errorAlert = error.querySelector('[data-viewer-blocking-live][role="alert"]');
+    if (!error.hasAttribute('data-viewer-blocking') || !errorAlert?.textContent?.includes('표시 오류')) {
+      throw new Error('Error must use the negative assertive blocking state.');
+    }
+  },
+};
+
+export const NarrowBlockingState = {
+  name: '좁은 폭 · 차단 정보와 복구 동작',
+  render: () => (
+    <div style={{ width: 232, maxWidth: '100%' }}>
+      <ViewerFrame
+        label="좁은 오류 뷰포트"
+        source="AMR-11 · 매우 긴 후면 카메라 소스 이름"
+        state="error"
+        stateDescription="카메라 콘텐츠를 불러오지 못했습니다. 연결을 확인한 뒤 다시 시도하세요."
+        stateAction={<Button size="sm" onClick={() => {}}>다시 시도</Button>}
+        style={{ aspectRatio: '16 / 9' }}
+      >
+        <Preview />
+      </ViewerFrame>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector('[data-lds-viewer-frame]');
+    const blocking = frame?.querySelector('[data-viewer-blocking-state]');
+    const icon = frame?.querySelector('[data-viewer-blocking-icon]');
+    const description = frame?.querySelector('[data-viewer-blocking-description]');
+    const action = frame?.querySelector('[data-viewer-blocking-action] button');
+    if (!frame || !blocking || !icon || !description || !action) {
+      throw new Error('The narrow blocking-state anatomy is incomplete.');
+    }
+    if (frame.clientWidth >= 240 || frame.scrollWidth > frame.clientWidth + 1) {
+      throw new Error('The narrow fixture must exercise the sub-240px contract without horizontal overflow.');
+    }
+    if (getComputedStyle(icon).display !== 'none') {
+      throw new Error('The blocking icon must collapse below 240px.');
+    }
+    const descriptionRect = description.getBoundingClientRect();
+    if (descriptionRect.width > 1 || descriptionRect.height > 1) {
+      throw new Error('Secondary blocking copy must remain accessible but visually collapse below 240px.');
+    }
+    const frameRect = frame.getBoundingClientRect();
+    const actionRect = action.getBoundingClientRect();
+    if (actionRect.left < frameRect.left - 1 || actionRect.right > frameRect.right + 1 || actionRect.bottom > frameRect.bottom + 1) {
+      throw new Error('The recovery action must remain fully inside the narrow ViewerFrame.');
+    }
+  },
+};
+
 export const LightMapFrame = {
-  name: 'Light map appearance',
+  name: '밝은 지도 외형',
   render: () => (
     <div style={{ width: '100%', maxWidth: 640 }}>
       <ViewerFrame
@@ -126,7 +222,7 @@ export const LightMapFrame = {
 };
 
 export const BlockingFocusTransition = {
-  name: 'Blocking 전환 포커스 복구',
+  name: '차단 전환 포커스 복구',
   render: () => <div style={{ width: '100%', maxWidth: 520 }}><BlockingFocusFixture /></div>,
   play: async ({ canvasElement }) => {
     const load = canvasElement.querySelector('[data-testid="viewer-load"]');

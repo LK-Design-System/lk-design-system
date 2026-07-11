@@ -4,7 +4,7 @@ function Mini({ children, onClick, disabled, label }) {
   return (
     <button type="button" onClick={onClick} disabled={disabled} title={label} aria-label={label}
       style={{ width: 28, height: 28, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--color-semantic-line-normal-normal)',
-        borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-neutral)', cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1, fontFamily: 'inherit', fontSize: 13 }}>
+        borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-neutral)', cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, fontFamily: 'inherit', fontSize: 'var(--label2-size)' }}>
       {children}
     </button>
   );
@@ -23,10 +23,10 @@ export function StepList({ steps = [], onChange, editable = true, onAdd, addLabe
     <div style={{ fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {steps.map((st, i) => (
         <div key={st.id != null ? st.id : i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)', marginBottom: 8 }}>
-          <span style={{ width: 24, height: 24, borderRadius: '50%', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--color-semantic-primary-surface-normal)', color: 'var(--color-semantic-primary-normal)', fontSize: 12, fontWeight: 800, fontVariantNumeric: 'tabular-nums' }}>{i + 1}</span>
+          <span style={{ width: 24, height: 24, borderRadius: '50%', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--color-semantic-primary-surface-normal)', color: 'var(--color-semantic-primary-normal)', fontSize: 'var(--caption1-size)', fontWeight: 800, fontVariantNumeric: 'tabular-nums' }}>{i + 1}</span>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-semantic-label-strong)' }}>{st.label}</div>
-            {st.detail != null && <div style={{ fontSize: 12.5, color: 'var(--color-semantic-label-alternative)', marginTop: 1 }}>{st.detail}</div>}
+            <div style={{ fontSize: 'var(--label1-size)', fontWeight: 700, color: 'var(--color-semantic-label-strong)' }}>{st.label}</div>
+            {st.detail != null && <div style={{ fontSize: 'var(--caption1-size)', color: 'var(--color-semantic-label-alternative)', marginTop: 1 }}>{st.detail}</div>}
           </div>
           {editable && (
             <div style={{ display: 'inline-flex', gap: 2, flexShrink: 0 }}>
@@ -39,7 +39,7 @@ export function StepList({ steps = [], onChange, editable = true, onAdd, addLabe
       ))}
       {editable && onAdd && (
         <button type="button" onClick={onAdd}
-          style={{ width: '100%', padding: 10, border: '1px dashed var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', background: 'transparent', color: 'var(--color-semantic-label-alternative)', cursor: 'pointer', fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-sans)' }}>
+          style={{ width: '100%', padding: 10, border: '1px dashed var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', background: 'transparent', color: 'var(--color-semantic-label-alternative)', cursor: 'pointer', fontSize: 'var(--label2-size)', fontWeight: 700, fontFamily: 'var(--font-sans)' }}>
           + {addLabel}
         </button>
       )}

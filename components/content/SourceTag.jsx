@@ -26,7 +26,7 @@ export function SourceTag({ children, label = 'SOURCE', href, tone = 'default', 
         borderRadius: 'var(--radius-pill)',
         background: onDark ? 'var(--color-semantic-inverse-fill-normal)' : 'var(--color-semantic-fill-normal)',
         border: `1px solid ${onDark ? 'var(--color-semantic-inverse-fill-strong)' : 'var(--color-semantic-line-normal-normal)'}`,
-        fontFamily: 'var(--font-sans)', fontSize: 12.5, whiteSpace: 'nowrap', textDecoration: 'none',
+        fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', whiteSpace: 'nowrap', textDecoration: 'none',
         cursor: isLink ? 'pointer' : 'default',
         color: onDark ? 'var(--color-semantic-inverse-label-strong-soft)' : 'var(--color-semantic-label-neutral)',
         transition: 'border-color var(--dur-fast) var(--ease-out)',
@@ -34,7 +34,7 @@ export function SourceTag({ children, label = 'SOURCE', href, tone = 'default', 
       }}
       {...rest}
     >
-      <span style={{ fontFamily: MONO, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: onDark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-heavy)' }}>{label}</span>
+      <span style={{ fontFamily: MONO, fontSize: 'var(--caption2-size)', fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: onDark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-heavy)' }}>{label}</span>
       <span aria-hidden="true" style={{ width: 1, height: 12, background: 'currentColor', opacity: 0.28 }} />
       <span style={{ fontWeight: 600 }}>{children}</span>
       {isLink && <span aria-hidden="true" style={{ opacity: hover ? 1 : 0.55, transition: 'opacity var(--dur-fast) var(--ease-out)' }}>↗</span>}

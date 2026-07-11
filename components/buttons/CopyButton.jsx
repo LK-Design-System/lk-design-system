@@ -29,7 +29,7 @@ export function CopyButton({ value, children = '복사', copiedLabel = '복사�
         height: size === 'sm' ? 36 : 44,
         padding: '0 14px',
         borderRadius: 'var(--radius-md)',
-        fontSize: 14,
+        fontSize: 'var(--label1-size)',
         lineHeight: 'normal',
         fontWeight: 'var(--fw-bold)',
         letterSpacing: 0,

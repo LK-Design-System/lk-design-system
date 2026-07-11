@@ -123,7 +123,12 @@ warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadg
 - 색은 semantic `status-*` 토큰(또는 그 alias인 `component-banner/callout-*`)만 사용합니다. severity 색을 새로 정의하지 않습니다.
 - severity 글리프는 `Icon` registry + `statusToneStyle` 매핑(`signal=circle-info-fill`, `positive=circle-check-fill`, `cautionary=triangle-exclamation-fill`, `negative=circle-close-fill`)으로 고정합니다. 인라인 SVG로 다시 그리지 않습니다.
 - 카운트 문법: 심각도별로 그룹핑된 요약은 구역 band heading에 카운트를 표시하고, 상태가 섞인 단일 목록은 헤더의 `StatusBadge` 칩으로 요약합니다. 두 방식을 한 컴포넌트에서 함께 쓰지 않습니다.
+- 행 목록의 리딩 아이콘은 **36px 둥근 사각(`radius-md`) tinted 타일**로 통일합니다 — `ListCell`·`FeatureCard`·`StepList`·`DataGrid`에 걸쳐 서명된 LK icon-tile 패턴이며(`docs/references/wds/COMPONENT_STYLE_PARITY.md` 참조), severity가 있으면 타일 wash를 tone surface/전경으로 칠합니다(`FileUploadQueue`, `Notification`). 원형 등 새 chip 모양을 만들지 않습니다.
 - 색만으로 의미를 전달하지 않습니다. tint에는 항상 아이콘 또는 명시적 상태 문구가 동반되어야 합니다.
+- tone 어휘의 canonical 형태는 `positive · cautionary · negative · signal`(+중립)입니다. 새 컴포넌트는 이 어휘만 받고, 기존 호환용 별칭(`success/warning/error/info` 등)은 Toast처럼 내부에서 canonical로 정규화합니다. 새 별칭을 만들지 않습니다.
+- severity 글리프는 손으로 그리지 않습니다. Toast·Snackbar·Banner처럼 공통 `Icon` registry + `statusToneStyle` 매핑을 사용합니다. 체브런·체크·닫기 같은 기능성 마이크로 글리프의 인라인 SVG는 허용됩니다.
+- keyboard focus는 `tokens/focus.css`의 전역 `:focus-visible` 링이 기본입니다. 컴포넌트가 focus 시각을 더할 때는 두 형태만 허용합니다 — 입력형 필드의 soft glow `0 0 0 4px var(--color-semantic-focus-ring)`, 클리핑되는 행·셀의 `inset 0 0 0 2px var(--color-semantic-focus-indicator)`. 다른 두께·색 조합을 만들지 않습니다.
+- disabled 표현은 `label-disable` 계열 색 교체가 기본입니다. 아이콘·스와치처럼 색 교체가 어려운 요소에만 opacity를 쓰되 값은 **0.45** 하나로 통일합니다.
 
 ## 프롬프트 템플릿
 

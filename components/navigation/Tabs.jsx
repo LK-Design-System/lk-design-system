@@ -87,7 +87,7 @@ export function Tabs({
       <style>{`
         .lk-tabs__tab:focus-visible {
           outline: none;
-          box-shadow: inset 0 0 0 2px var(--color-semantic-focus-ring);
+          box-shadow: inset 0 0 0 2px var(--color-semantic-focus-indicator);
           border-radius: var(--radius-sm);
           z-index: 1;
         }

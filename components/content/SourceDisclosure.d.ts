@@ -21,10 +21,12 @@ export interface SourceDisclosureItem {
   metadata?: SourceDisclosureMetadata[];
   href?: string;
   actionLabel?: React.ReactNode;
+  /** Accessible action name when label or actionLabel is not a plain string. */
+  actionAriaLabel?: string;
   defaultExpanded?: boolean;
 }
 
-export interface SourceDisclosureProps extends React.HTMLAttributes<HTMLElement> {
+export interface SourceDisclosureProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   title?: React.ReactNode;
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   description?: React.ReactNode;

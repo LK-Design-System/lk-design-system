@@ -39,7 +39,7 @@ export function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, 
         }}
         {...rest}
       />
-      {showValue && <span style={{ minWidth: 36, textAlign: 'right', fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{val}</span>}
+      {showValue && <span style={{ minWidth: 36, textAlign: 'right', fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{val}</span>}
     </div>
   );
 }

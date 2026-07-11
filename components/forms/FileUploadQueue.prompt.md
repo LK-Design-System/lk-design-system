@@ -1,4 +1,4 @@
-**FileUploadQueue**는 파일 선택 이후의 업로드·변환·검증 상태를 파일별로 표시합니다.
+**FileUploadQueue**는 파일 선택 이후의 업로드·변환·검증 상태를 파일별로 표시하는 **LK Product Extension**입니다. WDS Core parity를 주장하지 않습니다.
 
 ```jsx
 <FileUploadQueue
@@ -18,6 +18,12 @@
 - retry/cancel/remove/open은 파일 행에 속하는 32px small actions이며 전역 submit CTA로 사용하지 않습니다. 진행 중 `cancel`과 완료 후 목록 `remove`는 서로 다른 callback입니다.
 - 반복 action은 파일명을 accessible name에 포함하고, queue 집계 상태 변화만 하나의 polite live region으로 알립니다. 초기 행 badge와 진행률 tick은 반복해서 announce하지 않습니다.
 - parser, storage, retry 구현은 앱이 소유합니다.
+
+## Internal LDS comparison
+
+- `FileUpload`은 파일 선택과 dropzone만 소유하며, 선택 이후의 파일별 비동기 lifecycle은 `FileUploadQueue`가 소유합니다.
+- `StatusBadge`, `ProgressBar`, `Button`, 공통 상태 토큰의 크기·색·상태·focus 계약을 재사용합니다. queue 전용 badge, progress, action 문법을 만들지 않습니다.
+- `ValidationSummary`는 제출을 막는 field 오류의 수정 경로이고, 이 컴포넌트는 파일별 처리 activity와 결과를 표시하므로 서로 대체하지 않습니다.
 
 ## External research basis
 

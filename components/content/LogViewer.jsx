@@ -255,7 +255,7 @@ export function LogViewer({
             <div role="group" aria-label="로그 도구" style={{ display: 'inline-flex', gap: 6, flex: '0 0 auto' }}>
               <IconButton label={paused ? '로그 tail 재개' : '로그 tail 일시정지'} icon={paused ? 'play' : 'pause'} active={paused} onClick={togglePause} />
               <IconButton label="최신 로그로 이동" icon="arrow-down" rail onClick={jumpToLatest}>
-                {latestCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -5, right: -5, minWidth: 16, height: 16, padding: '0 4px', boxSizing: 'border-box', borderRadius: 8, background: 'var(--color-semantic-status-negative)', color: 'var(--color-semantic-static-white)', fontSize: 'var(--caption2-size)', lineHeight: '16px', fontWeight: 'var(--fw-bold)' }}>{latestCount > 99 ? '99+' : `+${latestCount}`}</span>}
+                {latestCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -5, right: -5, minWidth: 16, height: 16, padding: '0 4px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-status-negative)', color: 'var(--color-semantic-static-white)', fontSize: 'var(--caption2-size)', lineHeight: '16px', fontWeight: 'var(--fw-bold)' }}>{latestCount > 99 ? '99+' : `+${latestCount}`}</span>}
               </IconButton>
               <IconButton label="표시 로그 지우기" icon="trash" disabled={currentLines.length === 0} onClick={clearVisible} />
               {onExport && <IconButton label="로그 내보내기" icon="download" disabled={shown.length === 0} onClick={() => onExport(shown)} />}

@@ -27,7 +27,7 @@ const TEXT_TONES = {
 /* WDS scale: heights derive from padding + line-height (no fixed height). */
 const SIZE_XS = {
   padding: "3px 6px",
-  fontSize: 11,
+  fontSize: "var(--caption2-size)",
   lineHeight: "var(--caption2-line)",
   gap: 2,
   icon: 12,
@@ -35,7 +35,7 @@ const SIZE_XS = {
 };
 const SIZE_SM = {
   padding: "4px 6px",
-  fontSize: 12,
+  fontSize: "var(--caption1-size)",
   lineHeight: "var(--caption1-line)",
   gap: 3,
   icon: 14,
@@ -43,7 +43,7 @@ const SIZE_SM = {
 };
 const SIZE_MD = {
   padding: "5px 8px",
-  fontSize: 13,
+  fontSize: "var(--label2-size)",
   lineHeight: "var(--label2-line)",
   gap: 4,
   icon: 16,

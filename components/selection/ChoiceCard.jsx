@@ -222,7 +222,7 @@ export function ChoiceCard({
         {!isFrame && title != null && (
           <div
             style={{
-              fontSize: 15,
+              fontSize: "var(--body2-size)",
               fontWeight: "var(--fw-bold)",
               letterSpacing: 0,
               color: "var(--color-semantic-label-strong)",
@@ -236,7 +236,7 @@ export function ChoiceCard({
           <div
             style={{
               marginTop: 3,
-              fontSize: 13,
+              fontSize: "var(--label2-size)",
               lineHeight: 1.55,
               color: "var(--color-semantic-label-alternative)",
               wordBreak: "keep-all",

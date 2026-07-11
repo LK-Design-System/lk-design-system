@@ -25,7 +25,9 @@
 | 계층 패널 도메인 | [NVIDIA Omniverse Stage window](https://docs.omniverse.nvidia.com/kit/docs/omni.kit.window.stage/latest/Overview.html) | `LayerPanel`은 실제 scene/stage/entity 계층과 visibility/lock/selection이 있을 때만 사용한다. 업무 단계나 임의의 정보 목록을 계층으로 위장하지 않는다. |
 | 상태 표시줄 | [Blender status bar](https://docs.blender.org/manual/en/latest/interface/window_system/status_bar.html) | 하단 status는 현재 입력 힌트, 메시지, 통계 같은 수동적이고 문맥적인 정보를 우선순위에 따라 한 줄로 보여준다. 영구 CTA나 문서 명령을 넣지 않는다. |
 | 키보드와 의미 구조 | [WAI-ARIA Toolbar](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/), [Tree View](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/), [Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/), [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/), [Keyboard Interface](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/) | Toolbar는 단일 Tab 진입점과 방향키/Home/End 이동을, Tree는 계층 방향키와 명확한 focus/selection을, splitter는 값과 키보드 resize를 제공한다. 좁은 화면의 영역 전환은 실제 tabs semantics를 사용한다. |
-| 포인터 대안과 목표 크기 | [WCAG 2.2 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html), [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum) | drag resize/reorder에는 키보드나 버튼 대안을 제공한다. 밀집 편집기라도 상호작용 목표가 겹치거나 지나치게 작아지지 않게 하고 LDS의 32px 소형 icon-button 규격을 일관되게 사용한다. |
+| 포인터 대안과 목표 크기 | [WCAG 2.2 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html), [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum) | drag resize/reorder에는 키보드나 버튼 대안을 제공한다. 독립 컨트롤은 LDS의 32px 소형 icon-button 규격을 기본으로 쓴다. 예외로 tree row 내부 마이크로 컨트롤(펼침/visibility/lock)은 20px까지 허용하되 WCAG 2.5.8 spacing exception을 만족해야 한다 — 20px 버튼은 인접 타깃과 최소 4px 간격(24px 지름 원이 접하는 하한, `--space-1`)이 필수이며 이 간격을 절대 줄이지 않는다. |
+| 워크벤치 상태 표시줄 운영 | [VS Code UX Guidelines: Status Bar](https://code.visualstudio.com/api/ux-guidelines/status-bar), [Sidebars](https://code.visualstudio.com/api/ux-guidelines/sidebars), [Panel](https://code.visualstudio.com/api/ux-guidelines/panel) — 2026-07-11 재조사 추가 | status bar는 전역 정보(선택 상태·문제)를 왼쪽, 문맥 정보(모드·좌표·배율)를 오른쪽에 그룹핑한다. 항목 수를 최소화하고 짧은 텍스트를 쓰며, 배경색 강조는 경고/오류의 최후 수단으로만 쓴다. 같은 값(예: 확대 배율)을 viewport overlay와 status bar에 동시 표시하지 않는다 — status 영역이 있으면 status bar가 표시를 소유하고 viewport pill은 도구 모드만 남긴다. |
+| 패널 내부 툴바 밀도 | [JetBrains IntelliJ Platform: Toolbar](https://plugins.jetbrains.com/docs/intellij/toolbar.html) — 2026-07-11 재조사 추가 | 관련 아이콘은 그룹핑하고 그룹 사이만 separator로 나누되, 아이콘 5개 이하면 separator를 생략한다. 세로 툴바는 상단 정렬, 가로 툴바는 자주 쓰는 항목을 왼쪽에 둔다. 콘텐츠가 툴바 아래로 스크롤될 때만 툴바 경계선을 보인다. |
 
 ## Research conclusions applied
 
@@ -36,6 +38,8 @@
 - 넓은 화면에서는 hierarchy와 Inspector를 resize/collapse/restore할 수 있다. 좁은 화면에서는 별도의 semantic region navigation으로 한 보조 영역만 노출하고, workspace mode와 responsive navigation을 같은 슬롯으로 재사용하지 않는다.
 - focus와 selection은 같은 상태가 아니다. 캔버스와 Tree는 선택을 공유하되 키보드 포커스를 독립적으로 보이게 한다.
 - 임의 위치 docking, 사용자가 만든 레이아웃의 직렬화/복원, floating window manager, 제품 workflow와 저장 정책은 LDS 셸 범위에서 의도적으로 제외한다.
+- (2026-07-11 재조사 반영) 하나의 상태 값은 하나의 영역만 표시한다. 셸에 status 영역이 있으면 확대 배율·모드 요약은 status bar가 소유하고, viewport 내 pill은 현재 도구 모드처럼 viewport 고유 정보만 남긴다.
+- (2026-07-11 재조사 반영) EditorToolbar처럼 아이콘 5개 이하의 도구 레일은 separator 없이 gap만으로 구분한다. 패널 툴바 경계선은 콘텐츠가 스크롤될 때만 나타낸다.
 
 ## Storybook boundary
 

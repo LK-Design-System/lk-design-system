@@ -11,6 +11,8 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   action?: React.ReactNode;
   /** 닫기 버튼 표시; 클릭 시 호출. */
   onClose?: () => void;
+  /** 닫기 버튼의 접근성 레이블. @default "닫기" */
+  closeLabel?: string;
 }
 
 /** 인라인 공지 바 — 틴트 서피스, 톤 아이콘, 메시지, 선택적 액션/닫기. */

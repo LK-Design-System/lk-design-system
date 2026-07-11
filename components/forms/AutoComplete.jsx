@@ -24,7 +24,7 @@ export function AutoComplete({ options = [], value, defaultValue, onChange, onSe
         onChange={(e) => { set(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 120)}
-        style={{ width: '100%', height: h, padding: '0 16px', boxSizing: 'border-box', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-input)', outline: 'none', fontFamily: 'var(--font-sans)', fontSize: 16, color: 'var(--color-semantic-label-normal)', background: 'var(--color-semantic-background-elevated-normal)' }}
+        style={{ width: '100%', height: h, padding: '0 16px', boxSizing: 'border-box', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-input)', outline: 'none', fontFamily: 'var(--font-sans)', fontSize: 'var(--body1-size)', color: 'var(--color-semantic-label-normal)', background: 'var(--color-semantic-background-elevated-normal)' }}
       />
       {open && filtered.length > 0 && (
         <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: 'auto', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-md)', padding: 6 }}>
@@ -34,7 +34,7 @@ export function AutoComplete({ options = [], value, defaultValue, onChange, onSe
               onMouseDown={(e) => { e.preventDefault(); pick(o); }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-semantic-fill-normal)'; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-              style={{ padding: '10px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, color: 'var(--color-semantic-label-normal)' }}
+              style={{ padding: '10px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', color: 'var(--color-semantic-label-normal)' }}
             >
               {o.label}
             </div>

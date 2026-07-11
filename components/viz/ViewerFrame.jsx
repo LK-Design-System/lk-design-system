@@ -264,7 +264,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
     <React.Fragment>
       <StateMark presentation={presentation} icon={stateIcon} />
       <span style={{ display: 'grid', gap: 2, minWidth: 0 }}>
-        <span style={{ fontSize: 12, lineHeight: 1.35, fontWeight: 'var(--fw-bold)', color: 'var(--viewer-foreground)' }}>
+        <span style={{ fontSize: 'var(--caption1-size)', lineHeight: 1.35, fontWeight: 'var(--fw-bold)', color: 'var(--viewer-foreground)' }}>
           {labelContent}
         </span>
         {descriptionContent != null && (
@@ -420,7 +420,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
                         color: 'var(--viewer-foreground)',
-                        fontSize: 12,
+                        fontSize: 'var(--caption1-size)',
                         lineHeight: 1.35,
                         fontWeight: 'var(--fw-bold)',
                       }}
@@ -445,7 +445,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                         borderRadius: 'var(--radius-pill)',
                         background: 'var(--viewer-surface-elevated)',
                         color: 'var(--viewer-foreground)',
-                        fontSize: 11,
+                        fontSize: 'var(--caption2-size)',
                         fontWeight: 'var(--fw-semibold)',
                       }}
                     >
@@ -513,7 +513,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             borderRadius: 'var(--radius-sm)',
             background: 'var(--viewer-surface-elevated)',
             color: 'var(--viewer-muted)',
-            fontSize: 11,
+            fontSize: 'var(--caption2-size)',
             lineHeight: 1.35,
             fontWeight: 'var(--fw-semibold)',
             fontVariantNumeric: 'tabular-nums',
@@ -562,7 +562,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 color: 'var(--viewer-muted)',
-                fontSize: 11,
+                fontSize: 'var(--caption2-size)',
                 fontWeight: 'var(--fw-semibold)',
                 fontVariantNumeric: 'tabular-nums',
               }}
@@ -604,7 +604,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 color: 'var(--viewer-foreground)',
-                fontSize: 12,
+                fontSize: 'var(--caption1-size)',
                 lineHeight: 1.35,
                 fontWeight: 'var(--fw-bold)',
                 textAlign: 'left',
@@ -636,11 +636,11 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                 <StateMark presentation={presentation} icon={stateIcon} />
               </div>
               <div style={{ display: 'grid', justifyItems: 'center', gap: 4 }}>
-                <strong style={{ color: 'var(--viewer-foreground)', fontSize: 14, lineHeight: 1.4 }}>
+                <strong style={{ color: 'var(--viewer-foreground)', fontSize: 'var(--label1-size)', lineHeight: 1.4 }}>
                   {labelContent}
                 </strong>
                 {descriptionContent != null && (
-                  <span data-viewer-blocking-description="" style={{ color: 'var(--viewer-muted)', fontSize: 12, lineHeight: 1.55, overflowWrap: 'anywhere' }}>
+                  <span data-viewer-blocking-description="" style={{ color: 'var(--viewer-muted)', fontSize: 'var(--caption1-size)', lineHeight: 1.55, overflowWrap: 'anywhere' }}>
                     {descriptionContent}
                   </span>
                 )}

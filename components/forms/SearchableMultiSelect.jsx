@@ -36,6 +36,7 @@ export function SearchableMultiSelect({
   onSearchChange,
   filterOption,
   label,
+  helper,
   placeholder = '검색해서 선택',
   loading = false,
   error,
@@ -43,7 +44,10 @@ export function SearchableMultiSelect({
   loadingLabel = '불러오는 중',
   maxSelections,
   maxSelectionLabel,
+  required = false,
   disabled = false,
+  readOnly = false,
+  onBlur,
   style,
   ...rest
 }) {
@@ -55,11 +59,11 @@ export function SearchableMultiSelect({
   const [focused, setFocused] = React.useState(false);
   const listboxId = React.useId();
   const inputId = React.useId();
-  const errorId = React.useId();
-  const statusId = React.useId();
+  const messageId = React.useId();
   const inputRef = React.useRef(null);
   const selected = controlled ? value : internalValue;
   const search = searchControlled ? searchValue : internalSearch;
+  const locked = disabled || readOnly;
   const selectedSet = new Set(selected);
   const selectedOptions = selected.map((selectedValue) => options.find((option) => option.value === selectedValue) ?? { value: selectedValue, label: String(selectedValue) });
   const maxReached = maxSelections != null && selected.length >= maxSelections;
@@ -71,20 +75,20 @@ export function SearchableMultiSelect({
     .map((option) => ({ ...option, effectiveDisabled: Boolean(option.disabled || (maxReached && !selectedSet.has(option.value))) }));
   const optionsKey = JSON.stringify(filteredOptions.map((option) => [option.value, option.effectiveDisabled]));
   const [activeIndex, setActiveIndex] = React.useState(() => firstEnabledIndex(filteredOptions));
-  const activeOption = open && !loading && error == null && filteredOptions[activeIndex] && !filteredOptions[activeIndex].effectiveDisabled
+  const popupOpen = open && !locked;
+  const hasOptionList = !loading && filteredOptions.length > 0;
+  const activeOption = popupOpen && hasOptionList && filteredOptions[activeIndex] && !filteredOptions[activeIndex].effectiveDisabled
     ? filteredOptions[activeIndex]
     : undefined;
-  const popupStatus = loading
-    ? loadingLabel
-    : filteredOptions.length === 0
-      ? emptyLabel
-      : maxReached
-        ? resolvedMaxLabel
-        : '';
+  const message = error ?? helper;
 
   React.useEffect(() => {
     setActiveIndex((index) => filteredOptions[index] && !filteredOptions[index].effectiveDisabled ? index : firstEnabledIndex(filteredOptions));
   }, [optionsKey]);
+
+  React.useEffect(() => {
+    if (locked) setOpen(false);
+  }, [locked]);
 
   const commit = (next) => {
     if (!controlled) setInternalValue(next);
@@ -98,7 +102,7 @@ export function SearchableMultiSelect({
   };
 
   const toggle = (option) => {
-    if (loading || error != null || option.disabled) return;
+    if (locked || loading || option.effectiveDisabled) return;
     if (selectedSet.has(option.value)) commit(selected.filter((item) => item !== option.value));
     else if (!maxReached) commit([...selected, option.value]);
     setOpen(true);
@@ -106,39 +110,44 @@ export function SearchableMultiSelect({
   };
 
   const remove = (selectedValue) => {
-    if (disabled) return;
+    if (locked) return;
     commit(selected.filter((item) => item !== selectedValue));
+    inputRef.current?.focus();
   };
 
   return (
     <div
+      {...rest}
       aria-busy={loading || undefined}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {
           setFocused(false);
           setOpen(false);
         }
+        onBlur?.(event);
       }}
-      style={{ position: 'relative', display: 'grid', gap: 'var(--component-input-stack-gap)', fontFamily: 'var(--font-sans)', ...style }}
-      {...rest}
+      data-readonly={readOnly ? 'true' : undefined}
+      style={{ position: 'relative', display: 'grid', minWidth: 0, gap: 'var(--component-input-stack-gap)', fontFamily: 'var(--font-sans)', ...style }}
     >
       {label != null && (
         <label htmlFor={inputId} style={{ color: 'var(--component-input-label-color)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', fontWeight: 'var(--component-input-label-font-weight)' }}>
-          {label}
+          {label}{required && <span style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>}
         </label>
       )}
 
-      <div
-        onMouseDown={(event) => {
-          if (event.target !== inputRef.current && !event.target.closest('button')) event.preventDefault();
-          inputRef.current?.focus();
-          if (!disabled) setOpen(true);
-        }}
-        style={{
+      <div style={{ position: 'relative', minWidth: 0 }}>
+        <div
+          onMouseDown={(event) => {
+            if (event.target !== inputRef.current && !event.target.closest('button')) event.preventDefault();
+            inputRef.current?.focus();
+            if (!locked) setOpen(true);
+          }}
+          style={{
           display: 'flex',
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: 'var(--space-1)',
+          width: '100%',
           minHeight: 'var(--component-input-height)',
           padding: 'var(--space-2) var(--component-input-padding-x)',
           boxSizing: 'border-box',
@@ -146,23 +155,24 @@ export function SearchableMultiSelect({
           borderRadius: 'var(--component-input-radius)',
           background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)',
           boxShadow: focused && error == null ? 'var(--component-input-focus-shadow)' : 'none',
-          cursor: disabled ? 'not-allowed' : 'text',
-        }}
-      >
+          cursor: disabled ? 'not-allowed' : readOnly ? 'default' : 'text',
+          }}
+        >
         {selectedOptions.map((option) => (
-          <Chip key={String(option.value)} size="sm" variant="outlined" disabled={disabled} style={{ paddingRight: 'var(--space-0)' }}>
-            <span>{option.label}</span>
-            <IconButton
-              variant="soft"
-              round={false}
-              size={24}
-              label={`${optionText(option)} 선택 해제`}
-              disabled={disabled}
-              onClick={() => remove(option.value)}
-              style={{ background: 'transparent' }}
-            >
-              <Icon name="close" size={14} aria-hidden="true" />
-            </IconButton>
+          <Chip key={String(option.value)} size="sm" variant="outlined" disabled={disabled} style={{ maxWidth: '100%', paddingRight: locked ? undefined : 'var(--space-0)' }}>
+            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>{option.label}</span>
+            {!locked && (
+              <IconButton
+                variant="soft"
+                round={false}
+                size={24}
+                label={`${optionText(option)} 선택 해제`}
+                onClick={() => remove(option.value)}
+                style={{ flex: '0 0 auto', background: 'transparent' }}
+              >
+                <Icon name="close" size={14} aria-hidden="true" />
+              </IconButton>
+            )}
           </Chip>
         ))}
         <input
@@ -171,43 +181,35 @@ export function SearchableMultiSelect({
           value={search}
           placeholder={maxReached && !search ? `최대 ${maxSelections}개 선택됨` : placeholder}
           disabled={disabled}
+          readOnly={readOnly}
           role="combobox"
-          aria-expanded={open && error == null}
-          aria-controls={open && error == null ? listboxId : undefined}
+          aria-expanded={popupOpen}
+          aria-controls={popupOpen ? listboxId : undefined}
           aria-autocomplete="list"
           aria-activedescendant={activeOption ? optionDomId(listboxId, activeOption) : undefined}
           aria-invalid={error != null || undefined}
-          aria-describedby={[error != null ? errorId : null, popupStatus ? statusId : null].filter(Boolean).join(' ') || undefined}
-          onFocus={() => { setFocused(true); setOpen(true); }}
-          onChange={(event) => { setSearch(event.target.value); setOpen(true); }}
+          aria-describedby={message != null ? messageId : undefined}
+          aria-required={required || undefined}
+          aria-readonly={readOnly || undefined}
+          aria-busy={loading || undefined}
+          onFocus={() => { setFocused(true); if (!locked) setOpen(true); }}
+          onChange={(event) => { if (!locked) { setSearch(event.target.value); setOpen(true); } }}
           onKeyDown={(event) => {
+            if (locked) return;
             if (event.key === 'ArrowDown') { event.preventDefault(); setOpen(true); setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, 1)); }
             if (event.key === 'ArrowUp') { event.preventDefault(); setOpen(true); setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, -1)); }
             if (event.key === 'Enter' && open && activeOption) { event.preventDefault(); toggle(activeOption); }
             if (event.key === 'Escape') { event.preventDefault(); setOpen(false); }
             if (event.key === 'Backspace' && !search && selected.length > 0) { event.preventDefault(); remove(selected[selected.length - 1]); }
           }}
-          style={{ flex: '1 1 8rem', minWidth: 96, height: 28, padding: 0, border: 0, outline: 0, background: 'transparent', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)' }}
+          style={{ flex: '1 1 8rem', minWidth: 72, height: 28, padding: 0, border: 0, outline: 0, background: 'transparent', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)', cursor: disabled ? 'not-allowed' : readOnly ? 'default' : 'text', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)' }}
         />
-      </div>
+        </div>
 
-      {error != null && <span id={errorId} role="alert" style={{ color: 'var(--color-semantic-status-negative-text)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>{error}</span>}
-      <span
-        id={statusId}
-        role="status"
-        aria-live="polite"
-        style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
-      >
-        {open ? popupStatus : ''}
-      </span>
-
-      {open && !disabled && error == null && (
-        <div id={listboxId} role="listbox" aria-multiselectable="true" style={{ position: 'absolute', zIndex: 40, left: 0, right: 0, top: 'calc(100% + 6px)', maxHeight: 260, overflowY: 'auto', padding: 6, display: 'flex', flexDirection: 'column', gap: 2, border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-surface-overlay)', boxShadow: 'var(--shadow-md)' }}>
-          {loading || filteredOptions.length === 0 ? (
-            <div role="option" aria-selected="false" aria-disabled="true" style={{ padding: 'var(--space-4)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', textAlign: 'center' }}>
-              {loading ? loadingLabel : emptyLabel}
-            </div>
-          ) : filteredOptions.map((option, index) => {
+        {popupOpen && (
+          <div style={{ position: 'absolute', zIndex: 40, left: 0, right: 0, top: 'calc(100% + 6px)', padding: 6, display: 'grid', gap: 2, boxSizing: 'border-box', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-surface-overlay)', boxShadow: 'var(--shadow-md)' }}>
+            <div id={listboxId} role="listbox" aria-multiselectable="true" aria-busy={loading || undefined} style={{ maxHeight: 248, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {hasOptionList && filteredOptions.map((option, index) => {
             const selectedOption = selectedSet.has(option.value);
             return (
               <div
@@ -225,15 +227,20 @@ export function SearchableMultiSelect({
                   {selectedOption && <Icon name="check" size={12} aria-hidden="true" />}
                 </span>
                 <span style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
-                  <span style={{ fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-semibold)' }}>{option.label}</span>
-                  {option.description != null && <span style={{ color: option.effectiveDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{option.description}</span>}
+                  <span style={{ overflowWrap: 'anywhere', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-semibold)' }}>{option.label}</span>
+                  {option.description != null && <span style={{ overflowWrap: 'anywhere', color: option.effectiveDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{option.description}</span>}
                 </span>
               </div>
             );
-          })}
-          {maxReached && <div role="option" aria-selected="false" aria-disabled="true" style={{ padding: 'var(--space-2) var(--space-3)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{resolvedMaxLabel}</div>}
-        </div>
-      )}
+              })}
+            </div>
+            {!hasOptionList && <div role="status" aria-live="polite" style={{ padding: 'var(--space-4)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', textAlign: 'center' }}>{loading ? loadingLabel : emptyLabel}</div>}
+            {hasOptionList && maxReached && <div role="status" aria-live="polite" style={{ padding: 'var(--space-2) var(--space-3)', borderTop: '1px solid var(--color-semantic-line-normal-neutral)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{resolvedMaxLabel}</div>}
+          </div>
+        )}
+      </div>
+
+      {message != null && <span id={messageId} role={error != null ? 'alert' : undefined} style={{ color: error != null ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>{message}</span>}
     </div>
   );
 }

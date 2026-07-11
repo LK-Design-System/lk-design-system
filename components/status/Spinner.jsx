@@ -55,7 +55,7 @@ export function Spinner({ size, thickness, color = 'var(--color-semantic-primary
       );
     }
     return (
-      <span role="status" aria-live="polite" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-sans)', fontSize: 14, color: 'inherit', ...style }} {...rest}>
+      <span role="status" aria-live="polite" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', color: 'inherit', ...style }} {...rest}>
         {mark}
         <span>{label}</span>
       </span>
@@ -88,7 +88,7 @@ export function Spinner({ size, thickness, color = 'var(--color-semantic-primary
   }
 
   return (
-    <span role="status" aria-live="polite" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-sans)', fontSize: 14, color: 'inherit', ...style }} {...rest}>
+    <span role="status" aria-live="polite" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', color: 'inherit', ...style }} {...rest}>
       {ring}
       <span>{label}</span>
     </span>

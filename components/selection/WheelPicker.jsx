@@ -289,7 +289,7 @@ export function WheelPicker({
                   : highlighted
                     ? 'var(--color-semantic-label-strong)'
                     : 'var(--color-semantic-label-neutral)',
-                opacity: optionDisabled ? 0.42 : 1,
+                opacity: optionDisabled ? 0.45 : 1,
                 transform: visual.transform,
                 transformOrigin: 'center center',
                 transformStyle: 'preserve-3d',

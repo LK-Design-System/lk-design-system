@@ -140,7 +140,7 @@ export function ContentEditor({
       {...rest}
     >
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4) var(--space-4) var(--space-3)' }}>
-        <label htmlFor={resolvedTitleId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
+        <label htmlFor={resolvedTitleId} style={{ fontSize: 'var(--label2-size)', lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
           {titleLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
         </label>
         <input
@@ -161,11 +161,11 @@ export function ContentEditor({
             background: 'transparent',
             color: 'var(--color-semantic-label-strong)',
             fontFamily: 'var(--font-sans)',
-            fontSize: 22,
+            fontSize: 'var(--heading1-size)',
             lineHeight: 1.35,
             fontWeight: 'var(--fw-extra)',
             letterSpacing: 0,
-            opacity: disabled ? 0.55 : 1,
+            opacity: disabled ? 0.45 : 1,
             ...titleInputProps?.style,
           }}
         />
@@ -198,13 +198,13 @@ export function ContentEditor({
             ))}
         </div>
         {status != null && (
-          <div role="status" aria-live="polite" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 13, lineHeight: 1.35 }}>
+          <div role="status" aria-live="polite" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 1.35 }}>
             {status}
           </div>
         )}
       </div>
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4)' }}>
-        <label htmlFor={resolvedBodyId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
+        <label htmlFor={resolvedBodyId} style={{ fontSize: 'var(--label2-size)', lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
           {bodyLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
         </label>
         <textarea
@@ -229,11 +229,11 @@ export function ContentEditor({
             background: 'transparent',
             color: 'var(--color-semantic-label-normal)',
             fontFamily: 'var(--font-sans)',
-            fontSize: 15,
+            fontSize: 'var(--body2-size)',
             lineHeight: 1.68,
             letterSpacing: 0,
             boxSizing: 'border-box',
-            opacity: disabled ? 0.55 : 1,
+            opacity: disabled ? 0.45 : 1,
             ...textareaProps?.style,
           }}
         />
@@ -251,7 +251,7 @@ export function ContentEditor({
             background: 'var(--color-semantic-background-normal-alternative)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 12.5, lineHeight: 1.45 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 1.45 }}>
             {meta != null && <span>{meta}</span>}
             {helper != null && <span>{helper}</span>}
             {maxLength != null && <span>{bodyLength}/{maxLength}</span>}

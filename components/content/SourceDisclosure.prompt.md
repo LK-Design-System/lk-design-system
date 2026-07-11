@@ -1,4 +1,4 @@
-**SourceDisclosure**는 source provenance, availability, freshness metadata와 source로 돌아가는 경로만 제공합니다.
+**SourceDisclosure**는 제품이 제공한 source provenance, availability, freshness metadata와 원본으로 돌아가는 경로를 하나의 중립 목록으로 보여주는 **LK Product Extension**입니다.
 
 ```jsx
 <SourceDisclosure
@@ -10,13 +10,32 @@
       availability: 'available',
       observedAt: '2026-07-10 09:14',
       excerpt: 'thermal sensor response timeout',
+      href: 'https://example.com/ops-log',
     },
   ]}
 />
 ```
 
-- source 조회, permission, freshness 계산, excerpt 생성은 제품이 소유합니다.
-- LDS는 `availability`를 URL이나 timestamp에서 추론하지 않습니다.
-- Markdown, diagram, image, diff 같은 renderer는 이 컴포넌트 밖에 둡니다.
-- source action은 LDS `TextButton`을 native anchor 또는 `onSourceActivate`로 연결합니다. underline action chrome을 다시 만들지 않습니다.
-- 여러 source는 card를 반복하지 않고 하나의 bordered divider list로 묶습니다. 각 행의 native `details`가 필요한 provenance만 펼칩니다.
+- 한 source를 본문 옆에서 짧게 귀속할 때는 `SourceTag`, 여러 source의 상태와 provenance를 비교할 때는 `SourceDisclosure`를 사용합니다. FAQ/문서 섹션처럼 일반 콘텐츠를 접을 때는 `Accordion` 또는 `Collapsible`가 소유합니다.
+- 읽기 순서는 source label → kind/location → availability → disclosure cue이며, 펼친 뒤 description/excerpt → 관측·갱신 metadata → 원본 action으로 이어집니다.
+- description, excerpt, timestamp 또는 metadata처럼 선택적인 상세 정보가 있을 때만 native `details/summary`를 사용합니다. action만 있는 source는 불필요한 disclosure를 만들지 않고 source label 자체를 link/button으로 제공합니다.
+- disclosure chevron은 상태를 보조하는 장식 icon이고 `summary` 전체가 trigger입니다. native keyboard/expanded semantics를 유지하며 별도 `aria-expanded`를 중복 구현하지 않습니다.
+- availability는 `StatusBadge`의 dot + 명시적 텍스트 한 번으로만 표현합니다. disclosure chevron과 external-link icon은 각각 펼침 상태와 새 창 이동만 설명합니다.
+- `href` action은 새 탭으로 열리고 external-link icon을 표시합니다. 복합 label/action에는 `actionAriaLabel`을 제공합니다.
+- excerpt는 `blockquote`이며 `href`가 있으면 HTML `cite` 속성으로 원본 URL을 연결합니다.
+- 좁은 폭에서는 availability가 identity 아래로 이동하고 chevron은 첫 행 끝에 남습니다. 내부 가로 스크롤이나 source별 중첩 card를 만들지 않습니다.
+- source 조회, permission, freshness 계산, excerpt 생성과 renderer 선택은 제품이 소유합니다. LDS는 URL이나 timestamp에서 availability를 추론하지 않습니다.
+
+## Internal LDS comparison
+
+- `SourceTag`: 단일 출처용 compact pill과 외부 이동 표시를 재사용 기준으로 확인했습니다.
+- `StatusBadge`: neutral badge surface, colored dot, 상태 text 계약을 그대로 사용합니다.
+- `Accordion` / `Collapsible`: 행 끝 chevron, 전체 header trigger, focus·expanded cue를 시각 기준으로 삼되 SourceDisclosure는 native `details/summary`를 유지합니다.
+
+## External research basis
+
+- [GOV.UK Details](https://design-system.service.gov.uk/components/details/)는 일부 사용자만 필요한 부가 정보에 disclosure를 사용하고, 대부분에게 필요한 정보는 숨기지 않으며 summary text를 짧고 설명적으로 쓰도록 합니다. 따라서 action만 있는 source는 직접 link로 노출합니다.
+- [WAI-ARIA APG Accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)은 header 전체의 Enter/Space 조작, expanded state, header와 panel의 명확한 연결을 요구합니다. 이 컴포넌트는 동일한 interaction 기대를 native `details/summary` semantics로 충족합니다.
+- [Carbon Accordion](https://carbondesignsystem.com/components/accordion/usage/)은 header·end icon·panel anatomy, 간결한 title, 수평 overflow 금지와 좁은 공간의 정렬을 제시합니다. LDS chevron을 행 끝에 두고 panel을 identity와 정렬한 근거입니다.
+- [USWDS Collection](https://designsystem.digital.gov/components/collection/)은 source/attribution metadata를 list item으로 묶고, 모호한 “read more” 대신 각 item의 고유한 heading을 원본에 연결하며 외부 이동을 표시하도록 합니다. SourceDisclosure도 action-only item의 label을 직접 이동 경로로 사용합니다.
+- [W3C Design System Quote](https://design-system.w3.org/components/quote.html)는 인용 원본 URL을 `blockquote`의 `cite` 속성으로 제공하도록 안내합니다.

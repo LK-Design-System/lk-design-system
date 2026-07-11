@@ -74,7 +74,7 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
         background,
         color,
         fontFamily: 'var(--font-sans)',
-        fontSize: 14,
+        fontSize: 'var(--label1-size)',
         fontWeight: selected ? 'var(--fw-bold)' : 'var(--fw-medium)',
         fontVariantNumeric: 'tabular-nums',
         transition: 'background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
@@ -163,7 +163,7 @@ export function Calendar({ value, defaultValue, onChange, autoFocus = false, sty
       {...rest}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-        <div aria-live="polite" style={{ fontSize: 16, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-normal)' }}>
+        <div aria-live="polite" style={{ fontSize: 'var(--body1-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-normal)' }}>
           {view.getFullYear()}년 {view.getMonth() + 1}월
         </div>
         <div style={{ display: 'flex', gap: 4 }}>
@@ -185,7 +185,7 @@ export function Calendar({ value, defaultValue, onChange, autoFocus = false, sty
               aria-label={`${weekday}요일`}
               style={{
                 textAlign: 'center',
-                fontSize: 12,
+                fontSize: 'var(--caption1-size)',
                 fontWeight: 'var(--fw-semibold)',
                 color: index === 0
                   ? 'var(--color-semantic-accent-foreground-red)'

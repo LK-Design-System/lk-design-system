@@ -17,10 +17,11 @@ const meta = {
 
 export default meta;
 
-function CommandBarFrame({ children }) {
+function CommandBarFrame({ children, maxWidth = 760 }) {
   return (
-    <EditorStoryFrame maxWidth={760} height="auto">
+    <EditorStoryFrame maxWidth={maxWidth} height="auto">
       <div
+        data-testid="command-bar-frame"
         style={{
           display: 'flex',
           justifyContent: 'flex-end',
@@ -92,4 +93,72 @@ export const MediumDensity = {
       </CanvasEditorCommandBar>
     </CommandBarFrame>
   ),
+};
+
+export const NarrowCommandTargets = {
+  name: '좁은 폭 · 긴 문서 작업',
+  render: () => (
+    <CommandBarFrame maxWidth={360}>
+      <CanvasEditorCommandBar
+        data-testid="narrow-command-bar"
+        documentLabel="문서 내보내기 작업"
+        extraLabel="검토 완료 작업"
+        documentActions={[
+          {
+            value: 'archive-export',
+            label: '장기 보관 형식으로 문서 내보내기',
+            icon: 'download',
+            onClick: () => {},
+          },
+        ]}
+        canUndo
+        canRedo
+        onUndo={() => {}}
+        onRedo={() => {}}
+        onReset={() => {}}
+        style={{
+          width: '100%',
+          maxWidth: '100%',
+          flexShrink: 1,
+          justifyContent: 'flex-end',
+        }}
+      >
+        <Button
+          size="sm"
+          onClick={() => {}}
+          style={{ width: 128, minHeight: 32, height: 'auto', paddingBlock: 'var(--space-1)', whiteSpace: 'normal', textAlign: 'center' }}
+        >
+          검토 완료본 저장 후 승인 요청
+        </Button>
+      </CanvasEditorCommandBar>
+    </CommandBarFrame>
+  ),
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector('[data-testid="command-bar-frame"]');
+    const commandBar = canvasElement.querySelector('[data-testid="narrow-command-bar"]');
+    const documentToolbar = canvasElement.querySelector('[role="toolbar"][aria-label="문서 내보내기 작업"]');
+    const customGroup = canvasElement.querySelector('[role="group"][aria-label="검토 완료 작업"]');
+    const documentAction = canvasElement.querySelector('button[aria-label="장기 보관 형식으로 문서 내보내기"]');
+    const customAction = Array.from(customGroup?.querySelectorAll('button') ?? [])
+      .find((button) => button.textContent?.trim() === '검토 완료본 저장 후 승인 요청');
+
+    if (!frame || !commandBar || !documentToolbar || !customGroup || !documentAction || !customAction) {
+      throw new Error('The narrow command bar must preserve its document and custom action groups.');
+    }
+    if (Math.round(frame.getBoundingClientRect().width) !== 360) {
+      throw new Error('The narrow command bar fixture must render at the 360px target width.');
+    }
+    if (commandBar.scrollWidth > commandBar.clientWidth + 1 || frame.scrollWidth > frame.clientWidth + 1) {
+      throw new Error('The wrapped command bar must not introduce horizontal overflow.');
+    }
+    if (customAction.getBoundingClientRect().height <= 32 || customAction.scrollWidth > customAction.clientWidth + 1) {
+      throw new Error('The long custom action must wrap inside its target without clipping at 360px.');
+    }
+    for (const action of [documentAction, customAction]) {
+      const target = action.getBoundingClientRect();
+      if (target.width < 32 || target.height < 32) {
+        throw new Error('Document and custom actions must preserve at least a 32px target.');
+      }
+    }
+  },
 };

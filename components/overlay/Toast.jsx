@@ -1,38 +1,26 @@
 import React from "react";
+import { Icon } from "../icon/Icon.jsx";
+import { statusToneStyle } from "../status/status-presentation.js";
 
+// Glyphs come from the shared Icon registry (statusToneStyle grammar); the
+// colours stay Toast-specific because vivid status hues read best on the
+// dark transient surface.
 const ICONS = {
   normal: {
     color: "var(--color-semantic-inverse-label)",
-    node: <circle cx="12" cy="12" r="8" />,
+    name: "circle-info-fill",
   },
   positive: {
     color: "var(--color-semantic-status-positive)",
-    node: (
-      <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="m8.5 12.2 2.2 2.2 4.8-5" />
-      </>
-    ),
+    name: statusToneStyle("positive").icon,
   },
   cautionary: {
     color: "var(--color-semantic-status-cautionary)",
-    node: (
-      <>
-        <path d="M12 3.8 21 19H3L12 3.8Z" />
-        <path d="M12 9v4" />
-        <path d="M12 16h.01" />
-      </>
-    ),
+    name: statusToneStyle("cautionary").icon,
   },
   negative: {
     color: "var(--color-semantic-status-negative)",
-    node: (
-      <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="M12 8v5" />
-        <path d="M12 16h.01" />
-      </>
-    ),
+    name: statusToneStyle("negative").icon,
   },
 };
 
@@ -55,11 +43,13 @@ export function Toast({
   action,
   onAction,
   onClose,
+  closeLabel = "닫기",
   leadingIcon = true,
   icon,
   style,
   ...rest
 }) {
+  const [actionHover, setActionHover] = React.useState(false);
   const normalized = normalizeTone(variant || tone);
   const t = ICONS[normalized] || ICONS.normal;
   return (
@@ -77,7 +67,7 @@ export function Toast({
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
         WebkitBackdropFilter: "blur(var(--component-transient-feedback-blur))",
         color: "var(--color-semantic-inverse-label)",
-        borderRadius: 12,
+        borderRadius: "var(--radius-lg)",
         boxShadow: "var(--shadow-lg)",
         fontFamily: "var(--font-sans)",
         ...style,
@@ -89,30 +79,17 @@ export function Toast({
           aria-hidden="true"
           style={{ display: "inline-flex", flexShrink: 0, color: t.color }}
         >
-          {icon || (
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {t.node}
-            </svg>
-          )}
+          {icon || <Icon name={t.name} size={22} aria-hidden="true" />}
         </span>
       )}
       <span
         style={{
           flex: 1,
           minWidth: 0,
-          fontSize: 15,
-          lineHeight: 1.45,
+          fontSize: "var(--body2-size)",
+          lineHeight: "var(--body2-line)",
           fontWeight: "var(--fw-semibold)",
-          letterSpacing: 0,
+          letterSpacing: "var(--body2-spacing)",
           color: "var(--color-semantic-inverse-label)",
           wordBreak: "keep-all",
         }}
@@ -123,16 +100,27 @@ export function Toast({
         <button
           type="button"
           onClick={onAction}
+          onMouseEnter={() => setActionHover(true)}
+          onMouseLeave={() => setActionHover(false)}
           style={{
             flexShrink: 0,
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            /* WCAG 2.2 target size: keep a 24px hit area without moving the layout. */
+            minWidth: 24,
+            minHeight: 24,
+            margin: "-4px 0",
             border: "none",
             background: "transparent",
             color: "var(--color-semantic-inverse-label)",
             fontFamily: "var(--font-sans)",
-            fontSize: 13,
+            fontSize: "var(--label2-size)",
             fontWeight: "var(--fw-bold)",
             cursor: "pointer",
-            padding: 0,
+            padding: "4px 0",
+            textDecoration: actionHover ? "underline" : "none",
+            textUnderlineOffset: 3,
           }}
         >
           {action}
@@ -141,12 +129,17 @@ export function Toast({
       {onClose && (
         <button
           type="button"
-          aria-label="close"
+          aria-label={closeLabel}
           onClick={onClose}
           style={{
             flexShrink: 0,
             display: "inline-flex",
-            padding: 2,
+            alignItems: "center",
+            justifyContent: "center",
+            minWidth: 24,
+            minHeight: 24,
+            padding: 4,
+            margin: -2,
             border: "none",
             background: "transparent",
             cursor: "pointer",

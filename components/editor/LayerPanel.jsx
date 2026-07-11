@@ -211,7 +211,7 @@ function LayerRow({
           minHeight: 'var(--control-h-md)',
           borderRadius: 'var(--radius-sm)',
           background: active ? 'var(--color-semantic-fill-normal)' : 'transparent',
-          boxShadow: focused ? '0 0 0 3px var(--color-semantic-focus-ring)' : 'none',
+          boxShadow: focused ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
           outline: 'none',
           boxSizing: 'border-box',
           cursor: layerDisabled ? 'not-allowed' : 'pointer',
@@ -240,7 +240,7 @@ function LayerRow({
             {layer.label}
           </span>
           {layer.description != null && (
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: layerDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-medium)', letterSpacing: 0 }}>
+            <span className="lk-layer-panel__row-description" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: layerDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-medium)', letterSpacing: 0 }}>
               {layer.description}
             </span>
           )}
@@ -248,7 +248,7 @@ function LayerRow({
       </span>
 
       {rowMeta != null && (
-        <span style={{ maxWidth: 76, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', color: layerDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
+        <span className="lk-layer-panel__row-meta" style={{ maxWidth: 76, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', color: layerDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
           {rowMeta}
         </span>
       )}
@@ -449,6 +449,7 @@ export function LayerPanel({
 
   return (
     <section
+      className="lk-layer-panel"
       style={{
         display: 'grid',
         gridTemplateRows: 'auto minmax(0, 1fr)',
@@ -458,11 +459,22 @@ export function LayerPanel({
         height: '100%',
         padding: 'var(--space-3)',
         boxSizing: 'border-box',
+        containerType: 'inline-size',
         fontFamily: 'var(--font-sans)',
         ...style,
       }}
       {...rest}
     >
+      <style>{`
+        /* 좁은 도킹 폭에서는 행의 보조 캡션과 meta를 숨겨 label + visibility/lock
+           마이크로 컨트롤만 남긴다 (Figma layers의 축약 행과 같은 우선순위). */
+        @container (max-width: 260px) {
+          .lk-layer-panel__row-description,
+          .lk-layer-panel__row-meta {
+            display: none !important;
+          }
+        }
+      `}</style>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0 }}>
         <Icon name="layers" size={16} aria-hidden="true" />
         <strong style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', letterSpacing: 0 }}>

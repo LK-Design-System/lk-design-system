@@ -1,5 +1,4 @@
 import React from 'react';
-import { IconButton } from '../buttons/IconButton.jsx';
 import { Checkbox } from '../forms/Checkbox.jsx';
 import { Input } from '../forms/Input.jsx';
 import { Icon } from '../icon/Icon.jsx';
@@ -74,10 +73,14 @@ function PickerNode({
   focusNode,
   focusFirstChild,
   moveFocus,
+  onTypeAhead,
   onToggleSelection,
   onToggleExpanded,
 }) {
   const [focused, setFocused] = React.useState(false);
+  const [hovered, setHovered] = React.useState(false);
+  const [expandHovered, setExpandHovered] = React.useState(false);
+  const groupId = React.useId();
   if (!matchesQuery(node, query)) return null;
   const children = node.children ?? [];
   const branch = children.length > 0;
@@ -85,8 +88,8 @@ function PickerNode({
   const expanded = query ? true : expandedSet.has(node.id);
   const visibleSelectionIds = selectionIds(node, selectionBehavior, false, true);
   const actionableSelectionIds = selectionIds(node, selectionBehavior, nodeDisabled, false);
-  const selectable = visibleSelectionIds.length > 0;
-  const state = selectionState(visibleSelectionIds, selectedSet);
+  const selectable = nodeDisabled ? visibleSelectionIds.length > 0 : actionableSelectionIds.length > 0;
+  const state = selectionState(actionableSelectionIds.length > 0 ? actionableSelectionIds : visibleSelectionIds, selectedSet);
   const label = nodeText(node);
 
   const toggleSelection = () => {
@@ -100,6 +103,7 @@ function PickerNode({
       role="treeitem"
       aria-level={depth + 1}
       aria-expanded={branch ? expanded : undefined}
+      aria-owns={branch && expanded ? groupId : undefined}
       aria-checked={selectable ? (state.mixed ? 'mixed' : state.checked) : undefined}
       aria-disabled={nodeDisabled || undefined}
       tabIndex={nodeDisabled ? -1 : activeId === node.id ? 0 : -1}
@@ -109,6 +113,8 @@ function PickerNode({
         focusNode(node.id, false);
       }}
       onBlur={() => setFocused(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       onClick={(event) => {
         if (event.target.closest('button, label')) return;
         if (selectable) toggleSelection();
@@ -135,6 +141,10 @@ function PickerNode({
           if (selectable) toggleSelection();
           else if (branch && !query) onToggleExpanded(node.id);
         }
+        if (event.key.length === 1 && event.key !== ' ' && !event.altKey && !event.ctrlKey && !event.metaKey) {
+          event.preventDefault();
+          onTypeAhead(node.id, event.key);
+        }
       }}
       style={{
         padding: 'var(--space-1) var(--space-2)',
@@ -145,32 +155,30 @@ function PickerNode({
         columnGap: 'var(--space-0)',
         minHeight: 'var(--control-h-md)',
         borderRadius: 'var(--radius-sm)',
-        background: focused ? 'var(--color-semantic-fill-alternative)' : 'transparent',
-        boxShadow: focused ? '0 0 0 3px var(--color-semantic-focus-ring)' : 'none',
+        background: focused ? 'var(--color-semantic-fill-alternative)' : hovered && !nodeDisabled ? 'var(--color-semantic-fill-normal)' : 'transparent',
+        boxShadow: focused ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
         outline: 'none',
         cursor: nodeDisabled ? 'not-allowed' : 'pointer',
+        position: 'relative',
+        zIndex: focused ? 1 : 0,
+        transition: 'background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
       }}
     >
       {branch && !query ? (
         <span
-          onClick={(event) => event.stopPropagation()}
-          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 0 }}
+          aria-hidden="true"
+          data-tree-picker-expand=""
+          onMouseEnter={() => setExpandHovered(true)}
+          onMouseLeave={() => setExpandHovered(false)}
+          onClick={(event) => {
+            event.stopPropagation();
+            if (!nodeDisabled) onToggleExpanded(node.id);
+          }}
+          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 'var(--component-toggle-icon-size-sm)', height: 'var(--component-toggle-icon-size-sm)', lineHeight: 0, borderRadius: 'var(--radius-sm)', background: expandHovered && !nodeDisabled ? 'var(--color-semantic-fill-alternative)' : 'transparent', cursor: nodeDisabled ? 'not-allowed' : 'pointer', transition: 'background var(--dur-fast) var(--ease-out)' }}
         >
-          <IconButton
-            variant="ghost"
-            round={false}
-            onClick={() => onToggleExpanded(node.id)}
-            label={`${label} ${expanded ? '접기' : '펼치기'}`}
-            size="sm"
-            disabled={nodeDisabled}
-            tabIndex={-1}
-            aria-expanded={expanded}
-            style={{ background: 'transparent', border: 'none', borderRadius: 'var(--radius-sm)' }}
-          >
-            <span aria-hidden="true" style={{ display: 'inline-flex', transform: expanded ? 'rotate(90deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}>
-              <Icon name="chevron-right" size={16} aria-hidden="true" />
-            </span>
-          </IconButton>
+          <span style={{ display: 'inline-flex', transform: expanded ? 'rotate(90deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}>
+            <Icon name="chevron-right" size={16} aria-hidden="true" />
+          </span>
         </span>
       ) : (
         <span aria-hidden="true" style={{ width: 'var(--component-toggle-icon-size-sm)' }} />
@@ -193,17 +201,17 @@ function PickerNode({
         </span>
       ) : <span aria-hidden="true" />}
 
-      <span style={{ minWidth: 0, marginLeft: 'var(--space-2)', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto', alignItems: 'center', gap: 'var(--space-2)' }}>
-        <span style={{ minWidth: 0, display: 'grid', gap: 'var(--space-0)' }}>
-          <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--label2-size)', fontWeight: branch ? 'var(--fw-semibold)' : 'var(--fw-medium)' }}>{node.label}</span>
+      <span style={{ minWidth: 0, marginLeft: 'var(--space-2)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+        <span style={{ minWidth: 0, display: 'grid', gap: 'var(--space-0)', flex: '1 1 10rem' }}>
+          <span title={typeof node.label === 'string' ? node.label : undefined} style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: nodeDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', fontSize: 'var(--label2-size)', fontWeight: branch ? 'var(--fw-semibold)' : 'var(--fw-medium)' }}>{node.label}</span>
           {node.description != null && <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: nodeDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{node.description}</span>}
         </span>
-        {node.meta != null && <span style={{ color: nodeDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>{node.meta}</span>}
+        {node.meta != null && <span style={{ marginLeft: 'auto', color: nodeDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>{node.meta}</span>}
       </span>
     </div>
 
       {branch && expanded && (
-        <ul role="group" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+        <ul id={groupId} role="group" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
           {children.map((child) => (
             <PickerNode
               key={child.id}
@@ -220,6 +228,7 @@ function PickerNode({
               focusNode={focusNode}
               focusFirstChild={focusFirstChild}
               moveFocus={moveFocus}
+              onTypeAhead={onTypeAhead}
               onToggleSelection={onToggleSelection}
               onToggleExpanded={onToggleExpanded}
             />
@@ -255,6 +264,7 @@ export function TreePicker({
 }) {
   const treeId = React.useId();
   const nodeRefs = React.useRef(new Map());
+  const typeAheadRef = React.useRef({ value: '', timer: null });
   const selectionControlled = selectedIds !== undefined;
   const [internalSelectedIds, setInternalSelectedIds] = React.useState(defaultSelectedIds);
   const currentSelectedIds = selectionControlled ? selectedIds : internalSelectedIds;
@@ -272,11 +282,13 @@ export function TreePicker({
   const visibleNodes = nodes.filter((node) => matchesQuery(node, normalizedQuery));
   const visibleRows = visibleTreeNodes(nodes, normalizedQuery, expandedSet, null, disabled);
   const visibleIds = visibleRows.filter((row) => !row.disabled).map((row) => row.id);
-  const [activeId, setActiveId] = React.useState(visibleIds[0]);
+  const preferredActiveId = visibleIds.find((id) => selectedSet.has(id)) ?? visibleIds[0];
+  const visibleIdsKey = JSON.stringify(visibleIds);
+  const [activeId, setActiveId] = React.useState(preferredActiveId);
 
   React.useEffect(() => {
-    if (!visibleIds.includes(activeId)) setActiveId(visibleIds[0]);
-  }, [activeId, visibleIds.join('|')]);
+    if (!visibleIds.includes(activeId)) setActiveId(preferredActiveId);
+  }, [activeId, preferredActiveId, visibleIdsKey]);
 
   const registerNode = (id, element) => {
     if (element) nodeRefs.current.set(id, element);
@@ -302,6 +314,33 @@ export function TreePicker({
     if (direction === 'next') focusNode(visibleIds[Math.min(index + 1, visibleIds.length - 1)]);
     if (direction === 'previous') focusNode(visibleIds[Math.max(index - 1, 0)]);
   };
+
+  const typeAhead = (id, key) => {
+    const normalizedKey = key.toLocaleLowerCase();
+    const previous = typeAheadRef.current.value;
+    const repeatedCharacter = previous.length > 0 && [...previous].every((character) => character === normalizedKey);
+    const nextValue = repeatedCharacter ? normalizedKey : `${previous}${normalizedKey}`;
+    typeAheadRef.current.value = nextValue;
+    if (typeAheadRef.current.timer != null) window.clearTimeout(typeAheadRef.current.timer);
+    typeAheadRef.current.timer = window.setTimeout(() => {
+      typeAheadRef.current.value = '';
+      typeAheadRef.current.timer = null;
+    }, 500);
+
+    const currentIndex = visibleIds.indexOf(id);
+    const orderedIds = currentIndex < 0
+      ? visibleIds
+      : [...visibleIds.slice(currentIndex + 1), ...visibleIds.slice(0, currentIndex + 1)];
+    const match = orderedIds.find((candidateId) => {
+      const row = visibleRows.find((candidate) => candidate.id === candidateId);
+      return row && nodeText(row.node).toLocaleLowerCase().startsWith(nextValue);
+    });
+    focusNode(match);
+  };
+
+  React.useEffect(() => () => {
+    if (typeAheadRef.current.timer != null) window.clearTimeout(typeAheadRef.current.timer);
+  }, []);
 
   const commitSelection = (next) => {
     const nextIds = [...next];
@@ -381,6 +420,7 @@ export function TreePicker({
             focusNode={focusNode}
             focusFirstChild={focusFirstChild}
             moveFocus={moveFocus}
+            onTypeAhead={typeAhead}
             onToggleSelection={toggleSelection}
             onToggleExpanded={toggleExpanded}
           />

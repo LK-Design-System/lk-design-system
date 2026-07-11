@@ -4,6 +4,7 @@ import { EditorStoryFrame, inspectorItem, inspectorSections } from './EditorShel
 
 const meta = {
   title: 'LDS Robotics/Editor/Selection Inspector',
+  component: SelectionInspector,
   parameters: {
     docs: {
       description: {

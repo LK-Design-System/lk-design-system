@@ -73,9 +73,12 @@ export function EditorToolbar({
           position: relative;
           z-index: 1;
         }
+        /* ToggleIcon paints its own inline colours, so the pressed override
+           needs !important; values follow the DS selected-state grammar
+           (primary-heavy on primary surface). */
         .lk-editor-toolbar__button[aria-pressed="true"]:not([aria-disabled="true"]) {
           background: var(--color-semantic-primary-surface-normal) !important;
-          color: var(--color-semantic-primary-normal) !important;
+          color: var(--color-semantic-primary-heavy) !important;
         }
       `}</style>
       {items.map((it) => {
