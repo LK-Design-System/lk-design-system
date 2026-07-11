@@ -1,13 +1,34 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { ViewerFrame, VIEWER_BLOCKING_STATES } from './ViewerFrame.jsx';
 import { ViewerToolbar, ViewerToolbarButton } from './ViewerToolbar.jsx';
+
+const DEFAULT_VIEWPORT = { x: 0, y: 0, z: 1 };
+
+function finiteOr(value, fallback) {
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function isInteractiveDescendant(target) {
+  return target instanceof Element && Boolean(target.closest([
+    '[data-lk-viewport-control]',
+    'button',
+    'a[href]',
+    'input',
+    'select',
+    'textarea',
+    '[contenteditable="true"]',
+    '[role="button"]',
+    '[role="slider"]',
+  ].join(',')));
+}
 
 /**
  * LK ROBOTICS — Map2DCanvas
- * A pan / zoom canvas shell for 2D maps (occupancy grid / PGM). Drag to pan,
- * wheel to zoom, grid background, zoom controls + % readout. The actual map
- * (image, SVG overlays, konva stage) is passed as `children` and is transformed
- * together — heavy rendering stays in the app.
+ *
+ * Renderer-independent pan / zoom shell for 2D maps. Ordinary image, SVG, and
+ * canvas content starts at the viewport's top-left by default. Renderers that
+ * use a world-space origin may opt into `contentOrigin="center"` explicitly.
  */
 export function Map2DCanvas({
   children,
@@ -16,93 +37,278 @@ export function Map2DCanvas({
   grid = true,
   controls = true,
   panEnabled = true,
+  wheelZoom = true,
   keyboard = true,
+  contentOrigin = 'top-left',
   viewport,
-  defaultViewport = { x: 0, y: 0, z: 1 },
+  defaultViewport = DEFAULT_VIEWPORT,
   onViewportChange,
+  onFit,
+  toolbar,
   overlay,
   status,
+  source,
+  badges,
+  hud,
+  state = 'ready',
+  stateLabel,
+  stateDescription,
+  stateIcon,
+  stateAction,
+  appearance = 'light',
   label = '2D 맵 캔버스',
   style,
-  ...rest
+  tabIndex,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  onPointerCancel,
+  onWheel,
+  onKeyDown,
+  ...rootProps
 }) {
   const controlled = viewport !== undefined;
   const [internalViewport, setInternalViewport] = React.useState(defaultViewport);
-  const t = { x: 0, y: 0, z: 1, ...(controlled ? viewport : internalViewport) };
-  const drag = React.useRef(null);
-  const clamp = (z) => Math.max(minZoom, Math.min(maxZoom, z));
+  const renderedViewport = {
+    ...DEFAULT_VIEWPORT,
+    ...(controlled ? viewport : internalViewport),
+  };
+  const viewportRef = React.useRef(renderedViewport);
+  const rootRef = React.useRef(null);
+  const dragRef = React.useRef(null);
+  const wheelHandlerRef = React.useRef(null);
+  const interactionBlocked = VIEWER_BLOCKING_STATES.includes(state);
+
+  viewportRef.current = renderedViewport;
+
+  const clampZoom = (zoom) => Math.max(minZoom, Math.min(maxZoom, zoom));
+  const normalizeViewport = (next) => ({
+    x: finiteOr(next?.x, 0),
+    y: finiteOr(next?.y, 0),
+    z: clampZoom(finiteOr(next?.z, 1)),
+  });
+
   const commitViewport = (nextOrUpdater) => {
-    const next = typeof nextOrUpdater === 'function' ? nextOrUpdater(t) : nextOrUpdater;
-    const normalized = { x: next.x || 0, y: next.y || 0, z: clamp(next.z == null ? 1 : next.z) };
+    const current = viewportRef.current;
+    const next = typeof nextOrUpdater === 'function'
+      ? nextOrUpdater(current)
+      : nextOrUpdater;
+    const normalized = normalizeViewport(next);
+
+    // Keep rapid wheel / pointer events cumulative even before React renders.
+    viewportRef.current = normalized;
     if (!controlled) setInternalViewport(normalized);
-    onViewportChange && onViewportChange(normalized);
+    onViewportChange?.(normalized);
   };
-  const down = (e) => {
-    const target = e.target;
-    if (!panEnabled || e.button !== 0 || (target && target.closest && target.closest('[data-lk-viewport-control]'))) return;
-    drag.current = { x: e.clientX, y: e.clientY, tx: t.x, ty: t.y };
-    e.currentTarget.setPointerCapture(e.pointerId);
+
+  const getOriginOffset = () => {
+    const root = rootRef.current;
+    if (contentOrigin !== 'center' || !root) return { x: 0, y: 0 };
+    return { x: root.clientWidth / 2, y: root.clientHeight / 2 };
   };
-  const move = (e) => {
-    const d = drag.current;
-    if (!d) return;
-    // Snapshot d locally — drag.current can be nulled by `up` before this functional
-    // update actually flushes, which crashed with "Cannot read properties of null (reading 'tx')".
-    commitViewport((p) => ({ ...p, x: d.tx + (e.clientX - d.x), y: d.ty + (e.clientY - d.y) }));
+
+  const zoomAt = (factor, focalPoint) => {
+    const current = viewportRef.current;
+    const nextZoom = clampZoom(current.z * factor);
+    if (nextZoom === current.z) return;
+
+    const origin = getOriginOffset();
+    const root = rootRef.current;
+    const focal = focalPoint ?? {
+      x: (root?.clientWidth ?? 0) / 2 - origin.x,
+      y: (root?.clientHeight ?? 0) / 2 - origin.y,
+    };
+    const ratio = nextZoom / current.z;
+
+    commitViewport({
+      x: focal.x - (focal.x - current.x) * ratio,
+      y: focal.y - (focal.y - current.y) * ratio,
+      z: nextZoom,
+    });
   };
-  const up = () => { drag.current = null; };
-  const wheel = (e) => { e.preventDefault(); commitViewport((p) => ({ ...p, z: clamp(p.z * (e.deltaY < 0 ? 1.1 : 0.9)) })); };
-  const zoom = (f) => commitViewport((p) => ({ ...p, z: clamp(p.z * f) }));
-  const reset = () => commitViewport({ x: 0, y: 0, z: 1 });
-  const renderedChildren = typeof children === 'function' ? children({ viewport: t, setViewport: commitViewport }) : children;
+
+  const resetViewport = () => commitViewport(defaultViewport);
+
+  const handlePointerDown = (event) => {
+    if (interactionBlocked) return;
+    onPointerDown?.(event);
+    if (event.defaultPrevented) return;
+
+    if (!panEnabled || event.button !== 0 || isInteractiveDescendant(event.target)) return;
+
+    const current = viewportRef.current;
+    dragRef.current = {
+      pointerX: event.clientX,
+      pointerY: event.clientY,
+      viewportX: current.x,
+      viewportY: current.y,
+    };
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+  };
+
+  const handlePointerMove = (event) => {
+    if (interactionBlocked) return;
+    onPointerMove?.(event);
+    if (event.defaultPrevented) return;
+
+    const drag = dragRef.current;
+    if (!drag) return;
+    commitViewport((current) => ({
+      ...current,
+      x: drag.viewportX + (event.clientX - drag.pointerX),
+      y: drag.viewportY + (event.clientY - drag.pointerY),
+    }));
+  };
+
+  const endPointerInteraction = (event, consumerHandler) => {
+    dragRef.current = null;
+    if (interactionBlocked) return;
+    consumerHandler?.(event);
+  };
+
+  const handleWheel = (event) => {
+    if (interactionBlocked) return;
+    onWheel?.(event);
+    if (event.defaultPrevented || !wheelZoom || event.deltaY === 0 || isInteractiveDescendant(event.target)) return;
+
+    event.preventDefault();
+    const rect = event.currentTarget.getBoundingClientRect();
+    const origin = contentOrigin === 'center'
+      ? { x: rect.width / 2, y: rect.height / 2 }
+      : { x: 0, y: 0 };
+    const focalPoint = {
+      x: event.clientX - rect.left - origin.x,
+      y: event.clientY - rect.top - origin.y,
+    };
+    const boundedDelta = Math.max(-0.22, Math.min(0.22, -event.deltaY * 0.0015));
+    zoomAt(Math.exp(boundedDelta), focalPoint);
+  };
+
+  wheelHandlerRef.current = handleWheel;
+  React.useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return undefined;
+    const listener = (event) => wheelHandlerRef.current?.(event);
+    root.addEventListener('wheel', listener, { passive: false });
+    return () => root.removeEventListener('wheel', listener);
+  }, []);
+
+  const handleKeyDown = (event) => {
+    if (interactionBlocked) return;
+    onKeyDown?.(event);
+    if (event.defaultPrevented || !keyboard) return;
+
+    // Keyboard shortcuts belong to the focusable viewport itself. Descendant
+    // toolbar buttons, fields, sliders, and renderer controls keep their keys.
+    if (event.target !== event.currentTarget) return;
+
+    const step = event.shiftKey ? 48 : 18;
+    if (event.key === '+' || event.key === '=') {
+      event.preventDefault();
+      zoomAt(1.12);
+    } else if (event.key === '-' || event.key === '_') {
+      event.preventDefault();
+      zoomAt(0.88);
+    } else if (event.key === '0') {
+      event.preventDefault();
+      resetViewport();
+    } else if (panEnabled && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+      event.preventDefault();
+      commitViewport((current) => ({
+        ...current,
+        x: current.x + (event.key === 'ArrowLeft' ? step : event.key === 'ArrowRight' ? -step : 0),
+        y: current.y + (event.key === 'ArrowUp' ? step : event.key === 'ArrowDown' ? -step : 0),
+      }));
+    }
+  };
+
+  const t = renderedViewport;
+  const renderedChildren = typeof children === 'function'
+    ? children({ viewport: t, setViewport: commitViewport })
+    : children;
+  const centeredContent = contentOrigin === 'center';
+  const gridPosition = centeredContent
+    ? `calc(50% + ${t.x}px) calc(50% + ${t.y}px)`
+    : `${t.x}px ${t.y}px`;
+  const viewerToolbar = controls ? (
+    <ViewerToolbar
+      orientation="vertical"
+      appearance={appearance === 'dark' ? 'on-dark' : 'surface'}
+      label="지도 보기"
+      data-lk-viewport-control=""
+    >
+      <ViewerToolbarButton label="확대" onClick={() => zoomAt(1.2)}>
+        <Icon name="plus" size={16} aria-hidden="true" />
+      </ViewerToolbarButton>
+      <ViewerToolbarButton label="축소" onClick={() => zoomAt(0.8)}>
+        <Icon name="minus" size={16} aria-hidden="true" />
+      </ViewerToolbarButton>
+      {onFit != null && (
+        <ViewerToolbarButton label="전체 보기" onClick={onFit}>
+          <Icon name="full" size={16} aria-hidden="true" />
+        </ViewerToolbarButton>
+      )}
+      <ViewerToolbarButton label="보기 초기화" onClick={resetViewport}>
+        <Icon name="reset" size={16} aria-hidden="true" />
+      </ViewerToolbarButton>
+    </ViewerToolbar>
+  ) : undefined;
+
   return (
-    <div
-      role="region"
-      aria-label={label}
-      tabIndex={keyboard ? 0 : undefined}
-      onPointerDown={down}
-      onPointerMove={move}
-      onPointerUp={up}
-      onPointerCancel={up}
-      onWheel={wheel}
-      onKeyDown={(event) => {
-        if (!keyboard) return;
-        const step = event.shiftKey ? 48 : 18;
-        if (event.key === '+' || event.key === '=') {
-          event.preventDefault();
-          zoom(1.12);
-        } else if (event.key === '-' || event.key === '_') {
-          event.preventDefault();
-          zoom(0.88);
-        } else if (event.key === '0') {
-          event.preventDefault();
-          reset();
-        } else if (panEnabled && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-          event.preventDefault();
-          commitViewport((p) => ({
-            ...p,
-            x: p.x + (event.key === 'ArrowLeft' ? step : event.key === 'ArrowRight' ? -step : 0),
-            y: p.y + (event.key === 'ArrowUp' ? step : event.key === 'ArrowDown' ? -step : 0),
-          }));
-        }
-      }}
-      style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100%', minHeight: 200, borderRadius: 'var(--radius-lg)',
-        border: '1px solid var(--color-semantic-line-normal-normal)', background: 'var(--color-semantic-background-normal-alternative)', cursor: panEnabled ? 'grab' : 'default', touchAction: 'none', fontFamily: 'var(--font-sans)', outline: 'none',
-        backgroundImage: grid ? 'linear-gradient(var(--color-semantic-line-normal-neutral) 1px,transparent 1px),linear-gradient(90deg,var(--color-semantic-line-normal-neutral) 1px,transparent 1px)' : 'none',
+    <ViewerFrame
+      {...rootProps}
+      ref={rootRef}
+      label={label}
+      appearance={appearance}
+      source={source}
+      badges={badges}
+      hud={hud}
+      toolbar={toolbar !== undefined ? toolbar : viewerToolbar}
+      toolbarPlacement="bottom-right"
+      overlay={overlay}
+      status={status ?? (controls ? `${Math.round(t.z * 100)}%` : undefined)}
+      state={state}
+      stateLabel={stateLabel}
+      stateDescription={stateDescription}
+      stateIcon={stateIcon}
+      stateAction={stateAction}
+      data-lk-map-canvas=""
+      tabIndex={interactionBlocked ? undefined : keyboard ? 0 : tabIndex}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={(event) => endPointerInteraction(event, onPointerUp)}
+      onPointerCancel={(event) => endPointerInteraction(event, onPointerCancel)}
+      onKeyDown={handleKeyDown}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        width: '100%',
+        height: '100%',
+        minHeight: 200,
+        '--map-grid-line': 'var(--viewer-border)',
+        backgroundColor: appearance === 'dark' ? 'var(--viewer-surface)' : 'var(--viewer-surface-elevated)',
+        cursor: interactionBlocked ? 'default' : panEnabled ? 'grab' : 'default',
+        touchAction: !interactionBlocked && panEnabled ? 'none' : 'auto',
+        backgroundImage: grid
+          ? 'linear-gradient(var(--map-grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--map-grid-line) 1px,transparent 1px)'
+          : 'none',
         backgroundSize: grid ? `${24 * t.z}px ${24 * t.z}px` : undefined,
-        backgroundPosition: grid ? `${t.x}px ${t.y}px` : undefined, ...style }} {...rest}>
-      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, transformOrigin: '0 0' }}>
+        backgroundPosition: grid ? gridPosition : undefined,
+        ...style,
+      }}
+    >
+      <div
+        data-lk-map-content=""
+        style={{
+          position: 'absolute',
+          left: centeredContent ? '50%' : 0,
+          top: centeredContent ? '50%' : 0,
+          transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`,
+          transformOrigin: '0 0',
+        }}
+      >
         {renderedChildren}
       </div>
-      {overlay != null && <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>{overlay}</div>}
-      {controls && (
-        <ViewerToolbar orientation="vertical" style={{ position: 'absolute', right: 10, bottom: 10 }} data-lk-viewport-control="">
-          <ViewerToolbarButton label="확대" onClick={() => zoom(1.2)}><Icon name="plus" size={18} /></ViewerToolbarButton>
-          <ViewerToolbarButton label="축소" onClick={() => zoom(0.8)}><Icon name="minus" size={18} /></ViewerToolbarButton>
-          <ViewerToolbarButton label="초기화" onClick={reset}><Icon name="reset" size={18} /></ViewerToolbarButton>
-        </ViewerToolbar>
-      )}
-      {(status != null || controls) && <span style={{ position: 'absolute', left: 10, bottom: 10, fontSize: 11, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-sm)', padding: '2px 7px', fontVariantNumeric: 'tabular-nums', boxShadow: 'var(--shadow-xs)' }}>{status ?? `${Math.round(t.z * 100)}%`}</span>}
-    </div>
+    </ViewerFrame>
   );
 }

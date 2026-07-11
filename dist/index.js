@@ -59,7 +59,7 @@ function joinLetters(parts, groups) {
 // components/brand/Lockup.jsx
 import { jsx, jsxs } from "react/jsx-runtime";
 function Lockup({ variant = "inline", tone = "ink", color, height, title = "LK ROBOTICS", decorative = false, style, ...rest }) {
-  const fill = color || (tone === "white" ? "var(--static-white)" : tone === "brand" ? "var(--color-semantic-primary-normal)" : tone === "current" ? "currentColor" : "var(--color-semantic-label-normal)");
+  const fill = color || (tone === "white" ? "var(--color-semantic-static-white)" : tone === "brand" ? "var(--color-semantic-primary-normal)" : tone === "current" ? "currentColor" : "var(--color-semantic-label-normal)");
   const vb = LK_LOGO_VIEWBOX[variant] || LK_LOGO_VIEWBOX.inline;
   const h = height != null ? height : variant === "mark" ? 32 : variant === "stacked" ? 64 : 28;
   const a11y = decorative ? { "aria-hidden": true } : { role: "img", "aria-label": title };
@@ -81,6 +81,7 @@ function ActionArea({
   safeArea = false,
   divider = true,
   compact = false,
+  align = "start",
   style,
   ...rest
 }) {
@@ -92,7 +93,7 @@ function ActionArea({
         display: "grid",
         gap: "var(--component-action-area-gap)",
         padding: compact ? "var(--space-3) var(--component-action-area-padding-x)" : "var(--component-action-area-padding-y) var(--component-action-area-padding-x)",
-        paddingBottom: safeArea ? "var(--mobile-bottom-action-padding-bottom)" : void 0,
+        ...safeArea ? { paddingBottom: "var(--mobile-bottom-action-padding-bottom)" } : {},
         background: "var(--component-action-area-bg)",
         borderTop: divider ? "var(--component-action-area-border)" : "none",
         boxShadow: sticky ? "var(--component-action-area-shadow-sticky)" : "none",
@@ -121,6 +122,13 @@ function ActionArea({
               display: "flex",
               gap: "var(--space-2)",
               alignItems: "center",
+              justifyContent: {
+                start: "flex-start",
+                end: "flex-end",
+                center: "center",
+                between: "space-between"
+              }[align] || "flex-start",
+              flexWrap: "wrap",
               width: "100%"
             },
             children
@@ -299,13 +307,14 @@ function Button({
     primary: { bg: "var(--component-button-primary-bg)", bgHover: "var(--component-button-primary-bg-hover)", fg: "var(--component-button-primary-fg)", bd: "none", elevated: true },
     secondary: { bg: "var(--component-button-secondary-bg)", bgHover: "var(--component-button-secondary-bg-hover)", fg: "var(--component-button-secondary-fg)", bd: "none", elevated: true },
     signal: { bg: "var(--component-button-signal-bg)", bgHover: "var(--component-button-signal-bg-hover)", fg: "var(--component-button-signal-fg)", bd: "none", elevated: true },
+    danger: { bg: "var(--component-button-danger-bg)", bgHover: "var(--component-button-danger-bg-hover)", fg: "var(--component-button-danger-fg)", bd: "none", elevated: false },
     dark: { bg: "var(--component-button-dark-bg)", bgHover: "var(--component-button-dark-bg-hover)", fg: "var(--component-button-dark-fg)", bd: "none", elevated: true },
     flat: { bg: "var(--component-button-flat-bg)", bgHover: "var(--component-button-flat-bg-hover)", fg: "var(--component-button-flat-fg)", bd: "none", elevated: false },
     ghost: { bg: "var(--component-button-ghost-bg)", bgHover: "var(--component-button-ghost-bg-hover)", fg: "var(--component-button-ghost-fg)", bd: "var(--component-button-ghost-border)", bdHover: "var(--component-button-ghost-border-hover)", elevated: false },
     "on-dark": { bg: "var(--component-button-on-dark-bg)", bgHover: "var(--component-button-on-dark-bg-hover)", fg: "var(--component-button-on-dark-fg)", bd: "var(--component-button-on-dark-border)", elevated: false },
     "solid-primary": { bg: "var(--component-button-primary-bg)", bgHover: "var(--component-button-primary-bg-hover)", fg: "var(--component-button-primary-fg)", bd: "none", elevated: true },
     "solid-assistive": { bg: "var(--component-button-flat-bg)", bgHover: "var(--component-button-flat-bg-hover)", fg: "var(--component-button-flat-fg)", bd: "none", elevated: false },
-    "outlined-primary": { bg: "transparent", bgHover: "var(--lk-accent-tint)", fg: "var(--color-semantic-primary-normal)", bd: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", bdHover: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", elevated: false },
+    "outlined-primary": { bg: "transparent", bgHover: "var(--color-semantic-primary-surface-normal)", fg: "var(--color-semantic-primary-normal)", bd: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", bdHover: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", elevated: false },
     "outlined-assistive": { bg: "transparent", bgHover: "var(--color-semantic-fill-normal)", fg: "var(--color-semantic-label-normal)", bd: "var(--border-thin) solid var(--color-semantic-line-normal-normal)", bdHover: "var(--border-thin) solid var(--color-semantic-line-solid-normal)", elevated: false }
   };
   const p = palettes[wdsVariant] || palettes.primary;
@@ -425,8 +434,8 @@ function ButtonGroup({ options = [], value, defaultValue, onChange, size = "md",
           fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)",
           letterSpacing: 0,
           color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
-          background: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-          border: `1px solid ${active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+          background: active ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
+          border: `1px solid ${active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
           marginLeft: first ? 0 : -1,
           zIndex: active ? 1 : 0,
           borderTopLeftRadius: first ? "var(--radius-md)" : 0,
@@ -474,7 +483,7 @@ function CopyButton({ value, children = "\uBCF5\uC0AC", copiedLabel = "\uBCF5\uC
         fontWeight: "var(--fw-bold)",
         letterSpacing: 0,
         color: copied ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)",
-        ...copied ? { background: "var(--lk-accent-tint-2)" } : null,
+        ...copied ? { background: "var(--color-semantic-primary-surface-strong)" } : null,
         ...style
       },
       ...rest,
@@ -498,8 +507,8 @@ function Fab({ children, variant = "signal", size = "md", label, style, ...rest 
     signal: { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)", sh: "var(--shadow-accent)" },
     dark: { bg: "var(--color-semantic-inverse-background)", fg: "var(--color-semantic-inverse-label)", sh: "var(--shadow-md)" },
     primary: { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)", sh: "var(--shadow-accent)" },
-    secondary: { bg: "var(--bw-indigo)", fg: "var(--color-semantic-static-white)", sh: "var(--shadow-indigo)" },
-    white: { bg: "var(--bw-white)", fg: "var(--color-semantic-label-normal)", sh: "var(--shadow-md)" }
+    secondary: { bg: "var(--color-semantic-secondary-normal)", fg: "var(--color-semantic-static-white)", sh: "var(--shadow-indigo)" },
+    white: { bg: "var(--color-semantic-background-elevated-normal)", fg: "var(--color-semantic-label-normal)", sh: "var(--shadow-md)" }
   };
   const p = palettes[variant] || palettes.signal;
   return /* @__PURE__ */ jsx7(
@@ -514,7 +523,7 @@ function Fab({ children, variant = "signal", size = "md", label, style, ...rest 
         width: d,
         height: d,
         borderRadius: "50%",
-        border: variant === "white" ? "1px solid var(--bw-border)" : "none",
+        border: variant === "white" ? "1px solid var(--color-semantic-line-solid-normal)" : "none",
         background: p.bg,
         color: p.fg,
         cursor: "pointer",
@@ -544,7 +553,10 @@ function IconButton({
   disable = false,
   onMouseEnter,
   onMouseLeave,
+  className,
+  onClick,
   type,
+  "aria-disabled": ariaDisabled,
   ...rest
 }) {
   const [hover, setHover] = React9.useState(false);
@@ -556,21 +568,38 @@ function IconButton({
     md: 40
   }[size] || 40;
   const palettes = {
-    soft: { bg: "var(--bw-indigo-tint)", bgHover: "var(--bw-indigo-tint)", fg: "var(--bw-ink)", bd: "none" },
-    solid: { bg: "var(--bw-indigo)", bgHover: "var(--bw-indigo)", fg: "var(--color-semantic-inverse-label)", bd: "none" },
+    soft: { bg: "var(--color-semantic-secondary-surface)", bgHover: "var(--color-semantic-secondary-surface)", fg: "var(--color-semantic-brand-ink)", bd: "none" },
+    solid: { bg: "var(--color-semantic-secondary-normal)", bgHover: "var(--color-semantic-secondary-normal)", fg: "var(--color-semantic-inverse-label)", bd: "none" },
     signal: { bg: "var(--color-semantic-primary-normal)", bgHover: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)", bd: "none" },
-    ghost: { bg: "var(--bw-white)", bgHover: "var(--bw-white)", fg: "var(--bw-ink)", bd: "1px solid var(--bw-border)" },
-    "on-dark": { bg: "var(--inverse-fill-normal)", bgHover: "var(--inverse-fill-hover)", fg: "var(--color-semantic-inverse-label)", bd: "1px solid var(--inverse-line-strong)" }
+    ghost: { bg: "var(--color-semantic-background-elevated-normal)", bgHover: "var(--color-semantic-background-elevated-normal)", fg: "var(--color-semantic-brand-ink)", bd: "1px solid var(--color-semantic-line-solid-normal)" },
+    plain: { bg: "transparent", bgHover: "color-mix(in srgb, var(--viewer-foreground, var(--color-semantic-label-normal)) 7%, transparent)", fg: "var(--viewer-foreground, var(--color-semantic-label-normal))", bd: "1px solid transparent" },
+    "on-dark": {
+      bg: "color-mix(in srgb, var(--color-semantic-static-white) 10%, transparent)",
+      bgHover: "color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)",
+      fg: "var(--color-semantic-static-white)",
+      bd: "1px solid color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)"
+    }
   };
   const p = palettes[alternative ? "on-dark" : variant] || palettes.soft;
   const disabledState = disabled || disable;
+  const ariaBlocked = ariaDisabled === true || ariaDisabled === "true";
+  const blocked = disabledState || ariaBlocked;
   return /* @__PURE__ */ jsx8(
     "button",
     {
+      ...rest,
       type: type ?? "button",
       "aria-label": label,
-      className: `lk-iconbtn lk-iconbtn--${variant}`,
+      "aria-disabled": ariaBlocked || void 0,
+      className: ["lk-iconbtn", `lk-iconbtn--${variant}`, className].filter(Boolean).join(" "),
       disabled: disabledState,
+      onClick: (event) => {
+        if (blocked) {
+          event.preventDefault();
+          return;
+        }
+        onClick?.(event);
+      },
       onMouseEnter: (e) => {
         setHover(true);
         onMouseEnter && onMouseEnter(e);
@@ -585,18 +614,17 @@ function IconButton({
         justifyContent: "center",
         width: resolvedSize,
         height: resolvedSize,
-        color: disabledState ? "var(--color-semantic-label-disable)" : p.fg,
-        background: disabledState ? "var(--color-semantic-fill-normal)" : hover ? p.bgHover : p.bg,
-        border: p.bd,
+        color: blocked ? "var(--color-semantic-label-disable)" : p.fg,
+        background: blocked ? "var(--color-semantic-fill-normal)" : hover ? p.bgHover : p.bg,
+        border: blocked ? "var(--border-thin) solid var(--color-semantic-line-normal-neutral)" : p.bd,
         borderRadius: round ? "var(--radius-pill)" : "var(--radius-md)",
-        cursor: disabledState ? "not-allowed" : "pointer",
+        cursor: blocked ? "not-allowed" : "pointer",
         opacity: 1,
         boxShadow: "none",
         transition: "var(--component-button-transition)",
         WebkitTapHighlightColor: "transparent",
         ...style
       },
-      ...rest,
       children
     }
   );
@@ -680,8 +708,8 @@ function SocialButton({
     bg: "var(--color-semantic-background-elevated-normal, #FFFFFF)",
     bgHover: "var(--color-semantic-background-elevated-normal, #FFFFFF)",
     fg: "var(--color-semantic-label-normal)",
-    bd: "1px solid var(--bw-border)",
-    bdHover: "1px solid var(--bw-border)",
+    bd: "1px solid var(--color-semantic-line-solid-normal)",
+    bdHover: "1px solid var(--color-semantic-line-solid-normal)",
     shadow: "none",
     mono: false
   };
@@ -2668,12 +2696,12 @@ function SplitButton({ children, onClick, items = [], variant = "primary", size 
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  const pal = variant === "signal" ? { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)" } : variant === "dark" ? { bg: "var(--color-semantic-inverse-background)", fg: "var(--color-semantic-inverse-label)" } : variant === "secondary" ? { bg: "var(--bw-indigo)", fg: "var(--color-semantic-static-white)" } : { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)" };
+  const pal = variant === "signal" ? { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)" } : variant === "dark" ? { bg: "var(--color-semantic-inverse-background)", fg: "var(--color-semantic-inverse-label)" } : variant === "secondary" ? { bg: "var(--color-semantic-secondary-normal)", fg: "var(--color-semantic-static-white)" } : { bg: "var(--color-semantic-primary-normal)", fg: "var(--color-semantic-static-white)" };
   const h = size === "sm" ? 44 : 52;
   return /* @__PURE__ */ jsxs9("div", { ref, style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx12("button", { type: "button", onClick, style: { height: h, padding: "0 20px", border: "none", borderTopLeftRadius: "var(--radius-md)", borderBottomLeftRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--component-button-font-size-lg)", fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children }),
-    /* @__PURE__ */ jsx12("button", { type: "button", "aria-label": "more actions", onClick: () => setOpen((o) => !o), style: { height: h, width: 42, border: "none", borderLeft: "1px solid var(--inverse-line-strong)", borderTopRightRadius: "var(--radius-md)", borderBottomRightRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx12("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx12("path", { d: "m6 9 6 6 6-6" }) }) }),
-    open && /* @__PURE__ */ jsx12("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40, minWidth: 184, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--component-menu-radius)", boxShadow: "var(--shadow-md)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)" }, children: items.map((it, i) => /* @__PURE__ */ jsxs9("button", { type: "button", role: "menuitem", onClick: () => {
+    /* @__PURE__ */ jsx12("button", { type: "button", "aria-label": "more actions", onClick: () => setOpen((o) => !o), style: { height: h, width: 42, border: "none", borderLeft: "1px solid var(--color-semantic-inverse-line-strong)", borderTopRightRadius: "var(--radius-md)", borderBottomRightRadius: "var(--radius-md)", background: pal.bg, color: pal.fg, cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx12("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx12("path", { d: "m6 9 6 6 6-6" }) }) }),
+    open && /* @__PURE__ */ jsx12("div", { role: "menu", style: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40, minWidth: 184, background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--component-menu-radius)", boxShadow: "var(--shadow-md)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)" }, children: items.map((it, i) => /* @__PURE__ */ jsxs9("button", { type: "button", role: "menuitem", onClick: () => {
       setOpen(false);
       it.onClick && it.onClick();
     }, onMouseEnter: (e) => {
@@ -2716,7 +2744,7 @@ function TextButton({
     large: "lg"
   }[size] || size;
   const normalizedColor = color === "assistive" ? "assistive" : color === "primary" ? "primary" : void 0;
-  const textColor = normalizedColor === "assistive" ? "var(--color-semantic-label-alternative)" : normalizedColor === "primary" ? "var(--color-semantic-primary-normal)" : tone === "neutral" ? "var(--color-semantic-label-neutral)" : tone === "danger" ? "var(--bw-red)" : "var(--color-semantic-primary-normal)";
+  const textColor = normalizedColor === "assistive" ? "var(--color-semantic-label-alternative)" : normalizedColor === "primary" ? "var(--color-semantic-primary-normal)" : tone === "neutral" ? "var(--color-semantic-label-neutral)" : tone === "danger" ? "var(--color-semantic-status-negative)" : "var(--color-semantic-primary-normal)";
   const fs = normalizedSize === "sm" ? "var(--label1-size)" : normalizedSize === "lg" ? 17 : "var(--body1-size)";
   const ls = normalizedSize === "sm" ? "var(--label1-spacing)" : "var(--body1-spacing)";
   const h = normalizedSize === "sm" ? 28 : normalizedSize === "lg" ? 36 : 32;
@@ -2787,45 +2815,89 @@ function ToggleIcon({
   onChange,
   label,
   size = "md",
+  variant = "default",
   disabled = false,
   style,
+  className,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
   type,
+  "aria-disabled": ariaDisabled,
   ...rest
 }) {
   const [internal, setInternal] = React16.useState(defaultPressed);
+  const [hover, setHover] = React16.useState(false);
   const active = pressed ?? internal;
+  const ariaBlocked = ariaDisabled === true || ariaDisabled === "true";
+  const blocked = disabled || ariaBlocked;
   const side = size === "sm" ? "var(--component-toggle-icon-size-sm)" : "var(--component-toggle-icon-size-md)";
-  const setNext = () => {
-    if (disabled) return;
+  const setNext = (event) => {
+    if (blocked) {
+      event.preventDefault();
+      return;
+    }
+    onClick?.(event);
+    if (event.defaultPrevented) return;
     const next = !active;
     if (pressed === void 0) setInternal(next);
     onChange && onChange(next);
   };
+  const palettes = {
+    default: {
+      background: "var(--component-toggle-icon-bg)",
+      hoverBackground: "var(--color-semantic-fill-alternative)",
+      foreground: "var(--component-toggle-icon-fg)",
+      border: "var(--component-toggle-icon-border)"
+    },
+    plain: {
+      background: "transparent",
+      hoverBackground: "color-mix(in srgb, var(--viewer-foreground, var(--color-semantic-label-normal)) 7%, transparent)",
+      foreground: "var(--viewer-foreground, var(--color-semantic-label-normal))",
+      border: "var(--border-thin) solid transparent"
+    },
+    "on-dark": {
+      background: "color-mix(in srgb, var(--color-semantic-static-white) 10%, transparent)",
+      hoverBackground: "color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)",
+      foreground: "var(--color-semantic-static-white)",
+      border: "var(--border-thin) solid color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)"
+    }
+  };
+  const palette = palettes[variant] ?? palettes.default;
   return /* @__PURE__ */ jsx14(
     "button",
     {
+      ...rest,
       type: type ?? "button",
       "aria-label": label,
       "aria-pressed": active,
+      "aria-disabled": ariaBlocked || void 0,
       disabled,
-      className: "lk-toggle-icon",
+      className: ["lk-toggle-icon", `lk-toggle-icon--${variant}`, className].filter(Boolean).join(" "),
       onClick: setNext,
+      onMouseEnter: (event) => {
+        setHover(true);
+        onMouseEnter?.(event);
+      },
+      onMouseLeave: (event) => {
+        setHover(false);
+        onMouseLeave?.(event);
+      },
       style: {
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
         width: side,
         height: side,
-        color: disabled ? "var(--color-semantic-label-disable)" : active ? "var(--component-toggle-icon-fg-active)" : "var(--component-toggle-icon-fg)",
-        background: disabled ? "var(--color-semantic-fill-normal)" : active ? "var(--component-toggle-icon-bg-active)" : "var(--component-toggle-icon-bg)",
-        border: disabled ? "var(--border-thin) solid var(--color-semantic-line-normal-neutral)" : active ? "var(--border-thin) solid transparent" : "var(--component-toggle-icon-border)",
+        color: blocked ? "var(--color-semantic-label-disable)" : active ? "var(--component-toggle-icon-fg-active)" : palette.foreground,
+        background: blocked ? "var(--color-semantic-fill-normal)" : active ? "var(--component-toggle-icon-bg-active)" : hover ? palette.hoverBackground : palette.background,
+        border: blocked ? "var(--border-thin) solid var(--color-semantic-line-normal-neutral)" : active ? "var(--border-thin) solid transparent" : palette.border,
         borderRadius: "var(--component-toggle-icon-radius)",
-        cursor: disabled ? "not-allowed" : "pointer",
+        cursor: blocked ? "not-allowed" : "pointer",
         transition: "var(--component-button-transition)",
         WebkitTapHighlightColor: "transparent",
         ...style
       },
-      ...rest,
       children
     }
   );
@@ -2869,7 +2941,7 @@ function Skeleton({
   const normalizedTone = color === "white" || tone === "white" ? "light" : tone;
   const customColor = color && color !== "normal" && color !== "white" ? color : void 0;
   const resolvedWidth = length ?? width;
-  const shimmer = customColor ? `linear-gradient(90deg, ${customColor} 25%, color-mix(in srgb, ${customColor} 84%, white) 37%, ${customColor} 63%)` : normalizedTone === "light" ? "linear-gradient(90deg, var(--inverse-fill-normal) 25%, var(--inverse-line-strong) 37%, var(--inverse-fill-normal) 63%)" : "linear-gradient(90deg, var(--color-semantic-fill-normal) 25%, var(--color-semantic-fill-strong) 37%, var(--color-semantic-fill-normal) 63%)";
+  const shimmer = customColor ? `linear-gradient(90deg, ${customColor} 25%, color-mix(in srgb, ${customColor} 84%, white) 37%, ${customColor} 63%)` : normalizedTone === "light" ? "linear-gradient(90deg, var(--color-semantic-inverse-fill-normal) 25%, var(--color-semantic-inverse-line-strong) 37%, var(--color-semantic-inverse-fill-normal) 63%)" : "linear-gradient(90deg, var(--color-semantic-fill-normal) 25%, var(--color-semantic-fill-strong) 37%, var(--color-semantic-fill-normal) 63%)";
   const base = {
     background: shimmer,
     backgroundSize: "200% 100%",
@@ -2926,9 +2998,9 @@ function SaveButton({ saved = false, onClick }) {
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        border: "1px solid var(--bw-border)",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
         borderRadius: "var(--radius-md)",
-        background: saved ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
+        background: saved ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
         color: saved ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
         cursor: "pointer",
         flexShrink: 0
@@ -2997,7 +3069,7 @@ function Card({
       /* @__PURE__ */ jsxs11("div", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
         caption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)" }, children: caption }),
         title != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: compact ? 15 : 16, lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-strong)", fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title }),
-        description != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: 13, lineHeight: 1.5, color: dark ? "var(--inverse-label-neutral)" : "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
+        description != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: 13, lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label-neutral-soft)" : "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
         subCaption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: 12, lineHeight: 1.35, color: "var(--color-semantic-label-assistive)" }, children: subCaption }),
         metaCaption != null && /* @__PURE__ */ jsx16("div", { style: { fontSize: 11, lineHeight: 1.3, color: "var(--color-semantic-label-assistive)", fontVariantNumeric: "tabular-nums" }, children: metaCaption })
       ] }),
@@ -3048,7 +3120,7 @@ function ChecklistItem({
   ...rest
 }) {
   const ok = !cross;
-  const color = ok ? dark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-normal)" : "var(--bw-red)";
+  const color = ok ? dark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-normal)" : "var(--color-semantic-status-negative)";
   return /* @__PURE__ */ jsxs12("div", { style: { display: "flex", alignItems: "flex-start", gap: "11px", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx17("span", { style: { display: "inline-flex", flexShrink: 0, marginTop: 2, color }, children: ok ? /* @__PURE__ */ jsx17("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx17("path", { d: "M20 6 9 17l-5-5" }) }) : /* @__PURE__ */ jsxs12("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: [
       /* @__PURE__ */ jsx17("path", { d: "M18 6 6 18" }),
@@ -3071,11 +3143,11 @@ function ChecklistItem({
 import React20 from "react";
 import { jsx as jsx18, jsxs as jsxs13 } from "react/jsx-runtime";
 var ICON_TONES = {
-  signal: { fg: "var(--color-semantic-primary-normal)", bg: "var(--lk-accent-tint)" },
+  signal: { fg: "var(--color-semantic-primary-normal)", bg: "var(--color-semantic-primary-surface-normal)" },
   // teal tile (default)
-  steel: { fg: "var(--color-semantic-status-positive)", bg: "var(--status-positive-tint)" },
-  amber: { fg: "var(--color-semantic-status-cautionary)", bg: "var(--status-cautionary-tint)" },
-  navy: { fg: "var(--bw-ink)", bg: "var(--color-semantic-fill-strong)" }
+  steel: { fg: "var(--color-semantic-accent-foreground-blue)", bg: "var(--color-semantic-primary-surface-normal)" },
+  amber: { fg: "var(--color-semantic-accent-foreground-orange)", bg: "color-mix(in srgb, var(--color-semantic-accent-foreground-orange) 14%, transparent)" },
+  navy: { fg: "var(--color-semantic-brand-ink)", bg: "var(--color-semantic-fill-strong)" }
 };
 function FeatureCard({
   icon,
@@ -3121,7 +3193,7 @@ import { jsx as jsx19, jsxs as jsxs14 } from "react/jsx-runtime";
 function MetricCard({ label, value, delta, deltaTone = "auto", caption, icon, style, ...rest }) {
   const tone = deltaTone === "auto" ? typeof delta === "number" ? delta >= 0 ? "up" : "down" : "flat" : deltaTone;
   const up = tone === "up";
-  const dc = up ? "var(--bw-green)" : tone === "down" ? "var(--bw-red)" : "var(--color-semantic-label-alternative)";
+  const dc = up ? "var(--color-semantic-status-positive)" : tone === "down" ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-alternative)";
   const deltaText = typeof delta === "number" ? `${delta > 0 ? "+" : ""}${delta}%` : delta;
   return /* @__PURE__ */ jsxs14("div", { style: { background: "var(--component-card-bg)", border: "var(--component-card-border)", borderRadius: "var(--component-card-radius)", padding: "22px 24px", boxShadow: "var(--shadow-xs)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsxs14("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14 }, children: [
@@ -3192,7 +3264,7 @@ function NewsCard({ image, category, title, excerpt, source, date, cta, href = "
 // components/cards/ProductCard.jsx
 import React23 from "react";
 import { jsx as jsx21, jsxs as jsxs16 } from "react/jsx-runtime";
-var PC_FADE = "linear-gradient(180deg, var(--static-black) 46%, transparent 96%)";
+var PC_FADE = "linear-gradient(180deg, var(--color-semantic-static-black) 46%, transparent 96%)";
 function ProductCard({
   id,
   category,
@@ -3217,7 +3289,7 @@ function ProductCard({
         flexDirection: "column",
         justifyContent: "flex-end",
         aspectRatio: "4 / 5",
-        background: "linear-gradient(180deg, var(--lk-stage-from) 0%, var(--lk-stage-to) 100%)",
+        background: "linear-gradient(180deg, var(--color-semantic-brand-stage-from) 0%, var(--color-semantic-brand-stage-to) 100%)",
         border: "1px solid var(--border-hairline-dark)",
         borderRadius: "var(--radius-2xl)",
         overflow: "hidden",
@@ -3276,7 +3348,7 @@ function ProductCard({
             fontSize: 12.5,
             fontWeight: "var(--fw-bold)",
             letterSpacing: 0,
-            color: hover ? "var(--color-semantic-inverse-label)" : "var(--inverse-label-neutral)",
+            color: hover ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-inverse-label-neutral-soft)",
             textDecoration: hover ? "underline" : "none",
             textUnderlineOffset: 3,
             transition: "color var(--dur-fast) var(--ease-out)"
@@ -3324,9 +3396,9 @@ function Stat({
   style,
   ...rest
 }) {
-  const colors = { ink: "var(--color-semantic-label-strong)", signal: "var(--color-semantic-primary-normal)", steel: "var(--bw-green-600)" };
+  const colors = { ink: "var(--color-semantic-label-strong)", signal: "var(--color-semantic-primary-normal)", steel: "var(--color-semantic-accent-foreground-blue)" };
   const valColor = dark ? "var(--color-semantic-static-white)" : colors[accent] || colors.ink;
-  const labColor = dark ? "var(--text-on-dark-muted)" : "var(--color-semantic-label-alternative)";
+  const labColor = dark ? "var(--color-semantic-inverse-label-neutral-soft)" : "var(--color-semantic-label-alternative)";
   return /* @__PURE__ */ jsxs18(
     "div",
     {
@@ -3357,9 +3429,9 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
     else next.add(i);
     return next;
   });
-  return /* @__PURE__ */ jsx24("div", { style: { borderTop: "1px solid var(--bw-border)", ...style }, ...rest, children: items.map((it, i) => {
+  return /* @__PURE__ */ jsx24("div", { style: { borderTop: "1px solid var(--color-semantic-line-solid-normal)", ...style }, ...rest, children: items.map((it, i) => {
     const isOpen = open.has(i);
-    return /* @__PURE__ */ jsxs19("div", { style: { borderBottom: "1px solid var(--bw-border)" }, children: [
+    return /* @__PURE__ */ jsxs19("div", { style: { borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
       /* @__PURE__ */ jsxs19(
         "button",
         {
@@ -3478,7 +3550,7 @@ function Bubble({ children, tone = "navy", tail = "bottom", style, ...rest }) {
   const dark = tone === "navy";
   const bg = dark ? "var(--color-semantic-inverse-background)" : "var(--color-semantic-background-elevated-normal)";
   const fg = dark ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-normal)";
-  const bd = dark ? "none" : "1px solid var(--bw-border)";
+  const bd = dark ? "none" : "1px solid var(--color-semantic-line-solid-normal)";
   const tailBase = { position: "absolute", width: 12, height: 12, background: bg, transform: "rotate(45deg)" };
   const tails = {
     bottom: { ...tailBase, bottom: -6, left: "50%", marginLeft: -6, borderRight: bd, borderBottom: bd },
@@ -3557,10 +3629,10 @@ var TONES = {
   accent: "var(--color-semantic-primary-normal)",
   navy: "var(--color-semantic-inverse-background)",
   neutral: "var(--color-semantic-label-alternative)",
-  positive: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  warning: "var(--bw-amber)",
-  negative: "var(--bw-red)"
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  warning: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)"
 };
 var SIZE_XS = {
   padding: "3px 6px",
@@ -3716,7 +3788,7 @@ function ToolbarButton({ item, active, disabled, onAction }) {
         height: 34,
         border: "1px solid var(--color-semantic-line-normal-normal)",
         borderRadius: "var(--radius-sm)",
-        background: active ? "var(--lk-accent-tint-2)" : hover && !isDisabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
+        background: active ? "var(--color-semantic-primary-surface-strong)" : hover && !isDisabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
         color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
         cursor: isDisabled ? "not-allowed" : "pointer",
         opacity: isDisabled ? 0.45 : 1,
@@ -3777,7 +3849,7 @@ function ContentEditor({
   const activeSet = React33.useMemo(() => new Set(activeToolbarItems), [activeToolbarItems]);
   const hasFooter = meta != null || status != null || helper != null || actions != null || footer != null || maxLength != null;
   const bodyLength = String(currentValue ?? "").length;
-  const ring = invalid ? "var(--bw-red)" : titleFocus || bodyFocus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-normal-normal)";
+  const ring = invalid ? "var(--color-semantic-status-negative)" : titleFocus || bodyFocus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-normal-normal)";
   const handleTitleChange = (event) => {
     const next = event.target.value;
     if (!isTitleControlled) setInternalTitle(next);
@@ -3805,7 +3877,7 @@ function ContentEditor({
         border: `1px solid ${ring}`,
         borderRadius: "var(--radius-md)",
         background: "var(--color-semantic-background-elevated-normal)",
-        boxShadow: titleFocus || bodyFocus ? "0 0 0 4px var(--focus-ring)" : "none",
+        boxShadow: titleFocus || bodyFocus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
         fontFamily: "var(--font-sans)",
         color: "var(--color-semantic-label-normal)",
         transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
@@ -3814,9 +3886,9 @@ function ContentEditor({
       ...rest,
       children: [
         /* @__PURE__ */ jsxs24("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4) var(--space-4) var(--space-3)" }, children: [
-          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedTitleId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--bw-red)" : "var(--color-semantic-label-alternative)" }, children: [
+          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedTitleId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-alternative)" }, children: [
             titleLabel,
-            required && /* @__PURE__ */ jsx30("span", { style: { color: "var(--bw-red)" }, children: " *" })
+            required && /* @__PURE__ */ jsx30("span", { style: { color: "var(--color-semantic-status-negative)" }, children: " *" })
           ] }),
           /* @__PURE__ */ jsx30(
             "input",
@@ -3885,9 +3957,9 @@ function ContentEditor({
           }
         ),
         /* @__PURE__ */ jsxs24("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4)" }, children: [
-          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedBodyId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--bw-red)" : "var(--color-semantic-label-alternative)" }, children: [
+          /* @__PURE__ */ jsxs24("label", { htmlFor: resolvedBodyId, style: { fontSize: 13, lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-alternative)" }, children: [
             bodyLabel,
-            required && /* @__PURE__ */ jsx30("span", { style: { color: "var(--bw-red)" }, children: " *" })
+            required && /* @__PURE__ */ jsx30("span", { style: { color: "var(--color-semantic-status-negative)" }, children: " *" })
           ] }),
           /* @__PURE__ */ jsx30(
             "textarea",
@@ -4191,7 +4263,7 @@ function ListCell({
            opacity. */
         color: disabledState ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)",
         borderRadius: "var(--radius-lg)",
-        outline: activeFocus && !disabledState ? "2px solid var(--focus-ring)" : "none",
+        outline: activeFocus && !disabledState ? "2px solid var(--color-semantic-focus-ring)" : "none",
         outlineOffset: -2,
         transition: "background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
         ...style
@@ -4209,7 +4281,7 @@ function ListCell({
               alignItems: "center",
               justifyContent: "center",
               color: "var(--color-semantic-primary-normal)",
-              background: "var(--lk-accent-tint)",
+              background: "var(--color-semantic-primary-surface-normal)",
               borderRadius: "var(--radius-md)",
               ...leadingStyle
             },
@@ -4305,10 +4377,62 @@ function ListCell({
 }
 
 // components/content/LogViewer.jsx
+import React38 from "react";
+
+// components/robotics/ConnectionBadge.jsx
 import React37 from "react";
 import { jsx as jsx34, jsxs as jsxs27 } from "react/jsx-runtime";
+var CFG = {
+  connecting: { c: "var(--color-semantic-primary-normal)", bars: 1, label: "\uC5F0\uACB0 \uC911" },
+  online: { c: "var(--color-semantic-status-positive)", bars: 3, label: "\uC628\uB77C\uC778" },
+  reconnecting: { c: "var(--color-semantic-status-cautionary)", bars: 2, label: "\uC7AC\uC5F0\uACB0 \uC911" },
+  weak: { c: "var(--color-semantic-status-cautionary)", bars: 1, label: "\uC2E0\uD638 \uC57D\uD568" },
+  stale: { c: "var(--color-semantic-status-cautionary)", bars: 1, label: "\uB370\uC774\uD130 \uC9C0\uC5F0" },
+  error: { c: "var(--color-semantic-status-negative)", bars: 0, label: "\uC5F0\uACB0 \uC624\uB958" },
+  offline: { c: "var(--color-semantic-label-disable)", bars: 0, label: "\uC624\uD504\uB77C\uC778" }
+};
+function ConnectionBadge({ status = "online", label, showLabel = true, size = "md", style, ...rest }) {
+  React37.useEffect(() => {
+    if (typeof document === "undefined" || document.getElementById("lk-conn-kf")) return;
+    const el = document.createElement("style");
+    el.id = "lk-conn-kf";
+    el.textContent = "@keyframes lk-conn-blink{0%,100%{opacity:1}50%{opacity:.35}}";
+    document.head.appendChild(el);
+  }, []);
+  const cfg = CFG[status] || CFG.online;
+  const animated = status === "connecting" || status === "reconnecting" || status === "stale";
+  const h = size === "sm" ? 11 : 14;
+  const bw = size === "sm" ? 3 : 4;
+  return /* @__PURE__ */ jsxs27("span", { "data-status": status, "aria-label": typeof (label || cfg.label) === "string" ? label || cfg.label : void 0, style: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 7,
+    fontFamily: "var(--font-sans)",
+    fontSize: size === "sm" ? 12 : 13,
+    fontWeight: "var(--fw-semibold)",
+    color: "var(--color-semantic-label-neutral)",
+    ...style
+  }, ...rest, children: [
+    /* @__PURE__ */ jsx34("span", { style: {
+      display: "inline-flex",
+      alignItems: "flex-end",
+      gap: 2,
+      height: h,
+      animation: animated ? "lk-conn-blink 1s var(--ease-in-out) infinite" : "none"
+    }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx34("span", { style: {
+      width: bw,
+      height: Math.round(h * ((i + 1) / 3)),
+      borderRadius: 1,
+      background: i < cfg.bars ? cfg.c : "var(--color-semantic-fill-strong)"
+    } }, i)) }),
+    showLabel && /* @__PURE__ */ jsx34("span", { children: label || cfg.label })
+  ] });
+}
+
+// components/content/LogViewer.jsx
+import { jsx as jsx35, jsxs as jsxs28 } from "react/jsx-runtime";
 var LEVELS = {
-  debug: { c: "var(--color-semantic-label-assistive)", log: "var(--inverse-label-neutral)", label: "DEBUG" },
+  debug: { c: "var(--color-semantic-label-assistive)", log: "var(--color-semantic-inverse-label-neutral-soft)", label: "DEBUG" },
   info: { c: "var(--color-semantic-primary-normal)", log: "var(--color-semantic-accent-background-light-blue)", label: "INFO" },
   warn: { c: "var(--color-semantic-status-cautionary)", log: "var(--color-semantic-status-cautionary)", label: "WARN" },
   error: { c: "var(--color-semantic-status-negative)", log: "var(--color-semantic-status-negative)", label: "ERROR" }
@@ -4322,7 +4446,7 @@ function nodeText(value) {
   if (value == null || typeof value === "boolean") return "";
   if (typeof value === "string" || typeof value === "number") return String(value);
   if (Array.isArray(value)) return value.map(nodeText).filter(Boolean).join(" ");
-  if (React37.isValidElement(value)) return nodeText(value.props.children);
+  if (React38.isValidElement(value)) return nodeText(value.props.children);
   return "";
 }
 function formatLine(line) {
@@ -4330,7 +4454,7 @@ function formatLine(line) {
   return [line.time, cfg.label, line.source, line.text].map(nodeText).filter(Boolean).join(" ");
 }
 function IconButton2({ label, icon, active = false, disabled = false, rail = false, children, onClick }) {
-  return /* @__PURE__ */ jsxs27(
+  return /* @__PURE__ */ jsxs28(
     "button",
     {
       type: "button",
@@ -4356,8 +4480,8 @@ function IconButton2({ label, icon, active = false, disabled = false, rail = fal
         padding: 0
       },
       children: [
-        /* @__PURE__ */ jsx34(Icon, { name: icon, size: 15, "aria-hidden": "true" }),
-        rail && /* @__PURE__ */ jsx34("span", { "aria-hidden": "true", style: { position: "absolute", left: 8, right: 8, bottom: 6, height: 1.5, borderRadius: "var(--radius-pill)", background: "currentColor" } }),
+        /* @__PURE__ */ jsx35(Icon, { name: icon, size: 15, "aria-hidden": "true" }),
+        rail && /* @__PURE__ */ jsx35("span", { "aria-hidden": "true", style: { position: "absolute", left: 8, right: 8, bottom: 6, height: 1.5, borderRadius: "var(--radius-pill)", background: "currentColor" } }),
         children
       ]
     }
@@ -4376,28 +4500,32 @@ function LogViewer({
   virtualized = true,
   overscan = 8,
   initialQuery = "",
+  streamStatus,
+  lastUpdatedAt,
+  droppedCount = 0,
+  onExport,
   onClear,
   onCopyLine,
   style,
   ...rest
 }) {
-  const [active, setActive] = React37.useState(() => new Set(ORDER));
-  const [query, setQuery] = React37.useState(initialQuery);
-  const [paused, setPaused] = React37.useState(false);
-  const [pausedLines, setPausedLines] = React37.useState([]);
-  const [clearedUntil, setClearedUntil] = React37.useState(0);
-  const [copiedIndex, setCopiedIndex] = React37.useState(null);
-  const [scrollTop, setScrollTop] = React37.useState(0);
-  const [viewportHeight, setViewportHeight] = React37.useState(height);
-  const [tailLocked, setTailLocked] = React37.useState(true);
-  const [unreadCount, setUnreadCount] = React37.useState(0);
-  const boxRef = React37.useRef(null);
-  const previousLineCountRef = React37.useRef(lines.length);
+  const [active, setActive] = React38.useState(() => new Set(ORDER));
+  const [query, setQuery] = React38.useState(initialQuery);
+  const [paused, setPaused] = React38.useState(false);
+  const [pausedLines, setPausedLines] = React38.useState([]);
+  const [clearedUntil, setClearedUntil] = React38.useState(0);
+  const [copiedIndex, setCopiedIndex] = React38.useState(null);
+  const [scrollTop, setScrollTop] = React38.useState(0);
+  const [viewportHeight, setViewportHeight] = React38.useState(height);
+  const [tailLocked, setTailLocked] = React38.useState(true);
+  const [unreadCount, setUnreadCount] = React38.useState(0);
+  const boxRef = React38.useRef(null);
+  const previousLineCountRef = React38.useRef(lines.length);
   const metrics = DENSITY[density] || DENSITY.comfortable;
   const normalizedQuery = query.trim().toLowerCase();
-  const currentLines = React37.useMemo(() => lines.slice(clearedUntil), [lines, clearedUntil]);
+  const currentLines = React38.useMemo(() => lines.slice(clearedUntil), [lines, clearedUntil]);
   const sourceLines = paused ? pausedLines : currentLines;
-  const shown = React37.useMemo(() => sourceLines.filter((line) => {
+  const shown = React38.useMemo(() => sourceLines.filter((line) => {
     const level = line.level || "info";
     if (!active.has(level)) return false;
     if (!normalizedQuery) return true;
@@ -4415,7 +4543,7 @@ function LogViewer({
   const visibleLines = virtualActive ? shown.slice(virtualStart, virtualEnd) : shown;
   const topSpacer = virtualStart * rowHeight;
   const bottomSpacer = (shown.length - virtualEnd) * rowHeight;
-  const updateScrollState = React37.useCallback(() => {
+  const updateScrollState = React38.useCallback(() => {
     const box = boxRef.current;
     if (!box) return;
     const nextTop = box.scrollTop;
@@ -4426,7 +4554,7 @@ function LogViewer({
     setTailLocked(atTail);
     if (atTail) setUnreadCount(0);
   }, [height, rowHeight]);
-  const scrollToLatest = React37.useCallback(() => {
+  const scrollToLatest = React38.useCallback(() => {
     const box = boxRef.current;
     if (box) {
       box.scrollTop = box.scrollHeight;
@@ -4436,22 +4564,22 @@ function LogViewer({
     setTailLocked(true);
     setUnreadCount(0);
   }, [height]);
-  React37.useEffect(() => {
+  React38.useEffect(() => {
     if (clearedUntil > lines.length) setClearedUntil(0);
   }, [clearedUntil, lines.length]);
-  React37.useEffect(() => {
+  React38.useEffect(() => {
     const previous = previousLineCountRef.current;
     const added = Math.max(0, lines.length - previous);
     if (lines.length < previous) setUnreadCount(0);
     if (added > 0 && (paused || !tailLocked)) setUnreadCount((count) => Math.min(999, count + added));
     previousLineCountRef.current = lines.length;
   }, [lines.length, paused, tailLocked]);
-  React37.useEffect(() => {
+  React38.useEffect(() => {
     if (!paused && autoScroll && tailLocked) {
       window.requestAnimationFrame(scrollToLatest);
     }
   }, [lines.length, shown.length, autoScroll, paused, tailLocked, scrollToLatest]);
-  React37.useLayoutEffect(() => {
+  React38.useLayoutEffect(() => {
     updateScrollState();
   }, [height, density, virtualActive, shown.length, updateScrollState]);
   const toggle = (lvl) => setActive((s) => {
@@ -4493,28 +4621,42 @@ function LogViewer({
       setCopiedIndex(null);
     }
   };
-  return /* @__PURE__ */ jsxs27("div", { style: { display: "grid", gap: "var(--space-2)", width: "100%", maxWidth: "100%", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    (filter || search || tools) && /* @__PURE__ */ jsxs27("div", { style: { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }, children: [
-      filter && /* @__PURE__ */ jsx34("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", flex: "1 1 220px" }, children: ORDER.map((lvl) => {
+  return /* @__PURE__ */ jsxs28("div", { style: { display: "grid", gap: "var(--space-2)", width: "100%", maxWidth: "100%", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    (streamStatus != null || lastUpdatedAt != null || droppedCount > 0) && /* @__PURE__ */ jsxs28("div", { role: "status", "aria-live": "polite", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: [
+      /* @__PURE__ */ jsxs28("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
+        streamStatus != null && /* @__PURE__ */ jsx35(ConnectionBadge, { status: streamStatus, size: "sm" }),
+        lastUpdatedAt != null && /* @__PURE__ */ jsxs28("span", { children: [
+          "\uB9C8\uC9C0\uB9C9 \uC218\uC2E0 ",
+          /* @__PURE__ */ jsx35("strong", { children: lastUpdatedAt })
+        ] })
+      ] }),
+      droppedCount > 0 && /* @__PURE__ */ jsxs28("span", { style: { color: "var(--color-semantic-status-cautionary)", fontWeight: "var(--fw-semibold)" }, children: [
+        "\uB204\uB77D ",
+        droppedCount,
+        "\uC904"
+      ] })
+    ] }),
+    (filter || search || tools) && /* @__PURE__ */ jsxs28("div", { style: { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }, children: [
+      filter && /* @__PURE__ */ jsx35("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", flex: "1 1 220px" }, children: ORDER.map((lvl) => {
         const on = active.has(lvl);
-        return /* @__PURE__ */ jsxs27(
+        return /* @__PURE__ */ jsxs28(
           "button",
           {
             type: "button",
             onClick: () => toggle(lvl),
             "aria-pressed": on,
-            style: { display: "inline-flex", alignItems: "center", gap: 5, height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", border: `1px solid ${on ? LEVELS[lvl].c : "var(--color-semantic-line-normal-normal)"}`, background: on ? "var(--lk-accent-tint)" : "transparent", cursor: "pointer", fontFamily: "inherit", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: on ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)" },
+            style: { display: "inline-flex", alignItems: "center", gap: 5, height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", border: `1px solid ${on ? LEVELS[lvl].c : "var(--color-semantic-line-normal-normal)"}`, background: on ? "var(--color-semantic-primary-surface-normal)" : "transparent", cursor: "pointer", fontFamily: "inherit", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: on ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)" },
             children: [
-              /* @__PURE__ */ jsx34("span", { "aria-hidden": "true", style: { width: 6, height: 6, borderRadius: "50%", background: LEVELS[lvl].c } }),
+              /* @__PURE__ */ jsx35("span", { "aria-hidden": "true", style: { width: 6, height: 6, borderRadius: "50%", background: LEVELS[lvl].c } }),
               LEVELS[lvl].label
             ]
           },
           lvl
         );
       }) }),
-      search && /* @__PURE__ */ jsxs27("label", { style: { flex: "1 1 180px", maxWidth: 260, minWidth: 160, height: 28, display: "inline-flex", alignItems: "center", gap: 7, padding: "0 9px", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-assistive)" }, children: [
-        /* @__PURE__ */ jsx34(Icon, { name: "search", size: 14, "aria-hidden": "true" }),
-        /* @__PURE__ */ jsx34(
+      search && /* @__PURE__ */ jsxs28("label", { style: { flex: "1 1 180px", maxWidth: 260, minWidth: 160, height: 28, display: "inline-flex", alignItems: "center", gap: 7, padding: "0 9px", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-assistive)" }, children: [
+        /* @__PURE__ */ jsx35(Icon, { name: "search", size: 14, "aria-hidden": "true" }),
+        /* @__PURE__ */ jsx35(
           "input",
           {
             value: query,
@@ -4524,51 +4666,52 @@ function LogViewer({
             style: { minWidth: 0, flex: 1, border: "none", outline: "none", background: "transparent", color: "var(--color-semantic-label-normal)", fontFamily: "inherit", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-semibold)" }
           }
         ),
-        query && /* @__PURE__ */ jsx34("button", { type: "button", "aria-label": "\uAC80\uC0C9\uC5B4 \uC9C0\uC6B0\uAE30", onClick: () => setQuery(""), style: { width: 18, height: 18, border: "none", background: "transparent", color: "var(--color-semantic-label-assistive)", cursor: "pointer", padding: 0, display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx34(Icon, { name: "close", size: 12, "aria-hidden": "true" }) })
+        query && /* @__PURE__ */ jsx35("button", { type: "button", "aria-label": "\uAC80\uC0C9\uC5B4 \uC9C0\uC6B0\uAE30", onClick: () => setQuery(""), style: { width: 18, height: 18, border: "none", background: "transparent", color: "var(--color-semantic-label-assistive)", cursor: "pointer", padding: 0, display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx35(Icon, { name: "close", size: 12, "aria-hidden": "true" }) })
       ] }),
-      tools && /* @__PURE__ */ jsxs27("div", { role: "group", "aria-label": "\uB85C\uADF8 \uB3C4\uAD6C", style: { display: "inline-flex", gap: 6, flex: "0 0 auto" }, children: [
-        /* @__PURE__ */ jsx34(IconButton2, { label: paused ? "\uB85C\uADF8 tail \uC7AC\uAC1C" : "\uB85C\uADF8 tail \uC77C\uC2DC\uC815\uC9C0", icon: paused ? "play" : "pause", active: paused, onClick: togglePause }),
-        /* @__PURE__ */ jsx34(IconButton2, { label: "\uCD5C\uC2E0 \uB85C\uADF8\uB85C \uC774\uB3D9", icon: "arrow-down", rail: true, onClick: jumpToLatest, children: latestCount > 0 && /* @__PURE__ */ jsx34("span", { "aria-hidden": "true", style: { position: "absolute", top: -5, right: -5, minWidth: 16, height: 16, padding: "0 4px", boxSizing: "border-box", borderRadius: 8, background: "var(--color-semantic-status-negative)", color: "var(--color-semantic-static-white)", fontSize: "var(--caption2-size)", lineHeight: "16px", fontWeight: "var(--fw-bold)" }, children: latestCount > 99 ? "99+" : `+${latestCount}` }) }),
-        /* @__PURE__ */ jsx34(IconButton2, { label: "\uD45C\uC2DC \uB85C\uADF8 \uC9C0\uC6B0\uAE30", icon: "trash", disabled: currentLines.length === 0, onClick: clearVisible })
+      tools && /* @__PURE__ */ jsxs28("div", { role: "group", "aria-label": "\uB85C\uADF8 \uB3C4\uAD6C", style: { display: "inline-flex", gap: 6, flex: "0 0 auto" }, children: [
+        /* @__PURE__ */ jsx35(IconButton2, { label: paused ? "\uB85C\uADF8 tail \uC7AC\uAC1C" : "\uB85C\uADF8 tail \uC77C\uC2DC\uC815\uC9C0", icon: paused ? "play" : "pause", active: paused, onClick: togglePause }),
+        /* @__PURE__ */ jsx35(IconButton2, { label: "\uCD5C\uC2E0 \uB85C\uADF8\uB85C \uC774\uB3D9", icon: "arrow-down", rail: true, onClick: jumpToLatest, children: latestCount > 0 && /* @__PURE__ */ jsx35("span", { "aria-hidden": "true", style: { position: "absolute", top: -5, right: -5, minWidth: 16, height: 16, padding: "0 4px", boxSizing: "border-box", borderRadius: 8, background: "var(--color-semantic-status-negative)", color: "var(--color-semantic-static-white)", fontSize: "var(--caption2-size)", lineHeight: "16px", fontWeight: "var(--fw-bold)" }, children: latestCount > 99 ? "99+" : `+${latestCount}` }) }),
+        /* @__PURE__ */ jsx35(IconButton2, { label: "\uD45C\uC2DC \uB85C\uADF8 \uC9C0\uC6B0\uAE30", icon: "trash", disabled: currentLines.length === 0, onClick: clearVisible }),
+        onExport && /* @__PURE__ */ jsx35(IconButton2, { label: "\uB85C\uADF8 \uB0B4\uBCF4\uB0B4\uAE30", icon: "download", disabled: shown.length === 0, onClick: () => onExport(shown) })
       ] })
     ] }),
-    /* @__PURE__ */ jsxs27("div", { ref: boxRef, role: "log", "aria-live": paused ? "off" : "polite", "aria-label": "\uB85C\uADF8 \uC2A4\uD2B8\uB9BC", onScroll: updateScrollState, style: { height, overflow: "auto", scrollbarGutter: "stable", padding: metrics.panelPadding, borderRadius: "var(--radius-md)", background: "var(--color-semantic-inverse-background)", border: "1px solid var(--inverse-line-normal)", fontFamily: "var(--font-mono)", fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }, children: [
-      shown.length === 0 && /* @__PURE__ */ jsx34("div", { style: { minHeight: "100%", display: "grid", placeItems: "center", color: "var(--inverse-label-neutral)", fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)" }, children: normalizedQuery ? "\uAC80\uC0C9 \uACB0\uACFC \uC5C6\uC74C" : "\uB85C\uADF8 \uC5C6\uC74C" }),
-      virtualActive && topSpacer > 0 && /* @__PURE__ */ jsx34("div", { "aria-hidden": "true", style: { height: topSpacer } }),
+    /* @__PURE__ */ jsxs28("div", { ref: boxRef, role: "log", "aria-live": paused ? "off" : "polite", "aria-label": "\uB85C\uADF8 \uC2A4\uD2B8\uB9BC", onScroll: updateScrollState, style: { height, overflow: "auto", scrollbarGutter: "stable", padding: metrics.panelPadding, borderRadius: "var(--radius-md)", background: "var(--color-semantic-inverse-background)", border: "1px solid var(--color-semantic-inverse-line-normal)", fontFamily: "var(--font-mono)", fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }, children: [
+      shown.length === 0 && /* @__PURE__ */ jsx35("div", { style: { minHeight: "100%", display: "grid", placeItems: "center", color: "var(--color-semantic-inverse-label-neutral-soft)", fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)" }, children: normalizedQuery ? "\uAC80\uC0C9 \uACB0\uACFC \uC5C6\uC74C" : "\uB85C\uADF8 \uC5C6\uC74C" }),
+      virtualActive && topSpacer > 0 && /* @__PURE__ */ jsx35("div", { "aria-hidden": "true", style: { height: topSpacer } }),
       visibleLines.map((line, visibleIndex) => {
         const index = virtualStart + visibleIndex;
         const cfg = LEVELS[line.level] || LEVELS.info;
         const copied = copiedIndex === index;
-        return /* @__PURE__ */ jsxs27("div", { style: { display: "grid", gridTemplateColumns, columnGap: 10, alignItems: "baseline", minHeight: metrics.rowMinHeight, height: virtualActive ? rowHeight : void 0, overflow: virtualActive ? "hidden" : void 0, whiteSpace: virtualActive || !wrap ? "nowrap" : "pre-wrap", wordBreak: virtualActive || !wrap ? "normal" : "break-word" }, children: [
-          /* @__PURE__ */ jsx34("span", { style: { color: "var(--inverse-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: line.time }),
-          /* @__PURE__ */ jsx34("span", { style: { color: cfg.log, fontWeight: "var(--fw-bold)" }, children: cfg.label }),
-          /* @__PURE__ */ jsx34("span", { style: { color: "var(--inverse-label-neutral)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: line.source }),
-          /* @__PURE__ */ jsx34("span", { style: { color: "var(--color-semantic-inverse-label)", minWidth: 0, overflow: virtualActive || !wrap ? "hidden" : "visible", textOverflow: virtualActive || !wrap ? "ellipsis" : "clip" }, children: line.text }),
-          copyable && /* @__PURE__ */ jsx34(
+        return /* @__PURE__ */ jsxs28("div", { style: { display: "grid", gridTemplateColumns, columnGap: 10, alignItems: "baseline", minHeight: metrics.rowMinHeight, height: virtualActive ? rowHeight : void 0, overflow: virtualActive ? "hidden" : void 0, whiteSpace: virtualActive || !wrap ? "nowrap" : "pre-wrap", wordBreak: virtualActive || !wrap ? "normal" : "break-word" }, children: [
+          /* @__PURE__ */ jsx35("span", { style: { color: "var(--color-semantic-inverse-label-neutral-soft)", fontVariantNumeric: "tabular-nums" }, children: line.time }),
+          /* @__PURE__ */ jsx35("span", { style: { color: cfg.log, fontWeight: "var(--fw-bold)" }, children: cfg.label }),
+          /* @__PURE__ */ jsx35("span", { style: { color: "var(--color-semantic-inverse-label-neutral-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: line.source }),
+          /* @__PURE__ */ jsx35("span", { style: { color: "var(--color-semantic-inverse-label)", minWidth: 0, overflow: virtualActive || !wrap ? "hidden" : "visible", textOverflow: virtualActive || !wrap ? "ellipsis" : "clip" }, children: line.text }),
+          copyable && /* @__PURE__ */ jsx35(
             "button",
             {
               type: "button",
               "aria-label": "\uB85C\uADF8 \uB77C\uC778 \uBCF5\uC0AC",
               title: "\uB85C\uADF8 \uB77C\uC778 \uBCF5\uC0AC",
               onClick: () => copyLine(line, index),
-              style: { width: 24, height: 24, border: "none", borderRadius: "var(--radius-sm)", background: copied ? "var(--inverse-fill-strong)" : "transparent", color: copied ? "var(--color-semantic-status-positive)" : "var(--inverse-label-neutral)", cursor: "pointer", padding: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", alignSelf: "center" },
-              children: /* @__PURE__ */ jsx34(Icon, { name: copied ? "circle-check" : "copy", size: 14, "aria-hidden": "true" })
+              style: { width: 24, height: 24, border: "none", borderRadius: "var(--radius-sm)", background: copied ? "var(--color-semantic-inverse-fill-strong)" : "transparent", color: copied ? "var(--color-semantic-status-positive)" : "var(--color-semantic-inverse-label-neutral-soft)", cursor: "pointer", padding: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", alignSelf: "center" },
+              children: /* @__PURE__ */ jsx35(Icon, { name: copied ? "circle-check" : "copy", size: 14, "aria-hidden": "true" })
             }
           )
         ] }, index);
       }),
-      virtualActive && bottomSpacer > 0 && /* @__PURE__ */ jsx34("div", { "aria-hidden": "true", style: { height: bottomSpacer } })
+      virtualActive && bottomSpacer > 0 && /* @__PURE__ */ jsx35("div", { "aria-hidden": "true", style: { height: bottomSpacer } })
     ] })
   ] });
 }
 
 // components/content/Overline.jsx
-import React38 from "react";
-import { jsx as jsx35 } from "react/jsx-runtime";
+import React39 from "react";
+import { jsx as jsx36 } from "react/jsx-runtime";
 function Overline({ children, as = "div", tone = "muted", onDark = false, style, ...rest }) {
   const Comp = as;
-  const color = onDark ? tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "ink" ? "var(--color-semantic-static-white)" : "var(--inverse-label-neutral)" : tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "ink" ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-alternative)";
-  return /* @__PURE__ */ jsx35(
+  const color = onDark ? tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "ink" ? "var(--color-semantic-static-white)" : "var(--color-semantic-inverse-label-neutral-soft)" : tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "ink" ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-alternative)";
+  return /* @__PURE__ */ jsx36(
     Comp,
     {
       style: {
@@ -4588,8 +4731,8 @@ function Overline({ children, as = "div", tone = "muted", onDark = false, style,
 }
 
 // components/content/ReorderList.jsx
-import React39 from "react";
-import { Fragment as Fragment3, jsx as jsx36, jsxs as jsxs28 } from "react/jsx-runtime";
+import React40 from "react";
+import { Fragment as Fragment3, jsx as jsx37, jsxs as jsxs29 } from "react/jsx-runtime";
 var DENSITY2 = {
   comfortable: {
     minHeight: 60,
@@ -4632,7 +4775,7 @@ function nodeLabel(node, fallback) {
 }
 function MoveButton({ direction, label, disabled, onClick }) {
   const icon = direction === "up" ? "arrow-up" : "arrow-down";
-  return /* @__PURE__ */ jsx36(
+  return /* @__PURE__ */ jsx37(
     "button",
     {
       type: "button",
@@ -4662,7 +4805,7 @@ function MoveButton({ direction, label, disabled, onClick }) {
         lineHeight: 0,
         WebkitTapHighlightColor: "transparent"
       },
-      children: /* @__PURE__ */ jsx36(Icon, { name: icon, size: 15, "aria-hidden": "true" })
+      children: /* @__PURE__ */ jsx37(Icon, { name: icon, size: 15, "aria-hidden": "true" })
     }
   );
 }
@@ -4680,14 +4823,14 @@ function ReorderList({
   "aria-label": ariaLabel,
   ...rest
 }) {
-  const [dragId, setDragId] = React39.useState(null);
-  const [dropTarget, setDropTarget] = React39.useState(null);
-  const [focusId, setFocusId] = React39.useState(null);
-  const [hoverId, setHoverId] = React39.useState(null);
-  const [announcement, setAnnouncement] = React39.useState("");
+  const [dragId, setDragId] = React40.useState(null);
+  const [dropTarget, setDropTarget] = React40.useState(null);
+  const [focusId, setFocusId] = React40.useState(null);
+  const [hoverId, setHoverId] = React40.useState(null);
+  const [announcement, setAnnouncement] = React40.useState("");
   const ids = items.map((item) => item.id);
-  const instructionId = React39.useId();
-  const liveId = React39.useId();
+  const instructionId = React40.useId();
+  const liveId = React40.useId();
   const cfg = DENSITY2[density] || DENSITY2.comfortable;
   const getAccessibleLabel = (item, index) => {
     if (getItemLabel) return getItemLabel(item, index);
@@ -4727,10 +4870,10 @@ function ReorderList({
     "minmax(0, 1fr)",
     showMoveButtons || items.some((item) => item.trailing != null) ? "auto" : null
   ].filter(Boolean).join(" ");
-  return /* @__PURE__ */ jsxs28(Fragment3, { children: [
-    /* @__PURE__ */ jsx36("span", { id: instructionId, style: hiddenStyle, children: "Alt\uC640 \uC704\uCABD \uB610\uB294 \uC544\uB798\uCABD \uD654\uC0B4\uD45C \uD0A4\uB85C \uD56D\uBAA9 \uC21C\uC11C\uB97C \uBC14\uAFC0 \uC218 \uC788\uC2B5\uB2C8\uB2E4." }),
-    /* @__PURE__ */ jsx36("span", { id: liveId, role: "status", "aria-live": "polite", style: hiddenStyle, children: announcement }),
-    /* @__PURE__ */ jsxs28(
+  return /* @__PURE__ */ jsxs29(Fragment3, { children: [
+    /* @__PURE__ */ jsx37("span", { id: instructionId, style: hiddenStyle, children: "Alt\uC640 \uC704\uCABD \uB610\uB294 \uC544\uB798\uCABD \uD654\uC0B4\uD45C \uD0A4\uB85C \uD56D\uBAA9 \uC21C\uC11C\uB97C \uBC14\uAFC0 \uC218 \uC788\uC2B5\uB2C8\uB2E4." }),
+    /* @__PURE__ */ jsx37("span", { id: liveId, role: "status", "aria-live": "polite", style: hiddenStyle, children: announcement }),
+    /* @__PURE__ */ jsxs29(
       "ul",
       {
         role,
@@ -4751,7 +4894,7 @@ function ReorderList({
         },
         ...rest,
         children: [
-          items.length === 0 && /* @__PURE__ */ jsx36(
+          items.length === 0 && /* @__PURE__ */ jsx37(
             "li",
             {
               "aria-disabled": "true",
@@ -4782,7 +4925,7 @@ function ReorderList({
             const hasTrailing = item.trailing != null || showMoveButtons;
             const dividerLeft = cfg.paddingX + HANDLE_COLUMN_WIDTH + cfg.gap + (showIndex ? INDEX_COLUMN_WIDTH + cfg.gap : 0);
             const dividerRight = cfg.paddingX + (hasTrailing ? TRAILING_DIVIDER_OFFSET : 0);
-            return /* @__PURE__ */ jsxs28(
+            return /* @__PURE__ */ jsxs29(
               "li",
               {
                 role: "listitem",
@@ -4842,7 +4985,7 @@ function ReorderList({
                   outline: "none"
                 },
                 children: [
-                  (dropBefore || dropAfter) && /* @__PURE__ */ jsx36(
+                  (dropBefore || dropAfter) && /* @__PURE__ */ jsx37(
                     "span",
                     {
                       "aria-hidden": "true",
@@ -4854,12 +4997,12 @@ function ReorderList({
                         zIndex: 1,
                         height: 2,
                         background: "var(--color-semantic-primary-normal)",
-                        boxShadow: "0 0 0 1px var(--lk-accent-tint)",
+                        boxShadow: "0 0 0 1px var(--color-semantic-primary-surface-normal)",
                         pointerEvents: "none"
                       }
                     }
                   ),
-                  /* @__PURE__ */ jsxs28(
+                  /* @__PURE__ */ jsxs29(
                     "div",
                     {
                       style: {
@@ -4873,12 +5016,12 @@ function ReorderList({
                         boxSizing: "border-box",
                         borderRadius: "var(--radius-sm)",
                         background: itemDisabled ? "transparent" : focused ? "var(--color-semantic-fill-normal)" : hovered || dragging ? "var(--color-semantic-fill-alternative)" : "transparent",
-                        boxShadow: focused && !itemDisabled ? "inset 0 0 0 2px var(--lk-focus-ring)" : "none",
+                        boxShadow: focused && !itemDisabled ? "inset 0 0 0 2px var(--color-semantic-focus-indicator)" : "none",
                         cursor: itemDisabled ? "not-allowed" : dragging ? "grabbing" : "grab",
                         transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
                       },
                       children: [
-                        index > 0 && /* @__PURE__ */ jsx36(
+                        index > 0 && /* @__PURE__ */ jsx37(
                           "span",
                           {
                             "aria-hidden": "true",
@@ -4894,7 +5037,7 @@ function ReorderList({
                             }
                           }
                         ),
-                        /* @__PURE__ */ jsx36(
+                        /* @__PURE__ */ jsx37(
                           "span",
                           {
                             "aria-hidden": "true",
@@ -4907,10 +5050,10 @@ function ReorderList({
                               color: itemDisabled ? "var(--color-semantic-label-disable)" : focused ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)",
                               cursor: itemDisabled ? "not-allowed" : dragging ? "grabbing" : "grab"
                             },
-                            children: /* @__PURE__ */ jsx36(Icon, { name: "handle", size: 18, "aria-hidden": "true" })
+                            children: /* @__PURE__ */ jsx37(Icon, { name: "handle", size: 18, "aria-hidden": "true" })
                           }
                         ),
-                        showIndex && /* @__PURE__ */ jsx36(
+                        showIndex && /* @__PURE__ */ jsx37(
                           "span",
                           {
                             "aria-hidden": "true",
@@ -4925,8 +5068,8 @@ function ReorderList({
                             children: index + 1
                           }
                         ),
-                        /* @__PURE__ */ jsxs28("span", { style: { minWidth: 0 }, children: [
-                          /* @__PURE__ */ jsx36(
+                        /* @__PURE__ */ jsxs29("span", { style: { minWidth: 0 }, children: [
+                          /* @__PURE__ */ jsx37(
                             "span",
                             {
                               style: {
@@ -4944,7 +5087,7 @@ function ReorderList({
                               children: item.label
                             }
                           ),
-                          item.detail != null && /* @__PURE__ */ jsx36(
+                          item.detail != null && /* @__PURE__ */ jsx37(
                             "span",
                             {
                               style: {
@@ -4964,7 +5107,7 @@ function ReorderList({
                             }
                           )
                         ] }),
-                        (item.trailing != null || showMoveButtons) && /* @__PURE__ */ jsxs28(
+                        (item.trailing != null || showMoveButtons) && /* @__PURE__ */ jsxs29(
                           "span",
                           {
                             style: {
@@ -4976,9 +5119,9 @@ function ReorderList({
                               color: itemDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)"
                             },
                             children: [
-                              item.trailing != null && /* @__PURE__ */ jsx36("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: item.trailing }),
-                              showMoveButtons && /* @__PURE__ */ jsxs28("span", { style: { display: "inline-flex", alignItems: "center", gap: 4, flexShrink: 0 }, children: [
-                                /* @__PURE__ */ jsx36(
+                              item.trailing != null && /* @__PURE__ */ jsx37("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: item.trailing }),
+                              showMoveButtons && /* @__PURE__ */ jsxs29("span", { style: { display: "inline-flex", alignItems: "center", gap: 4, flexShrink: 0 }, children: [
+                                /* @__PURE__ */ jsx37(
                                   MoveButton,
                                   {
                                     direction: "up",
@@ -4987,7 +5130,7 @@ function ReorderList({
                                     onClick: () => move(index, index - 1, "button")
                                   }
                                 ),
-                                /* @__PURE__ */ jsx36(
+                                /* @__PURE__ */ jsx37(
                                   MoveButton,
                                   {
                                     direction: "down",
@@ -5014,64 +5157,21 @@ function ReorderList({
   ] });
 }
 
-// components/content/SourceTag.jsx
-import React40 from "react";
-import { jsx as jsx37, jsxs as jsxs29 } from "react/jsx-runtime";
-var MONO3 = "var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace)";
-function SourceTag({ children, label = "SOURCE", href, tone = "default", style, ...rest }) {
-  const isLink = href != null;
-  const Comp = isLink ? "a" : "span";
-  const [hover, setHover] = React40.useState(false);
-  const onDark = tone === "onDark";
-  return /* @__PURE__ */ jsxs29(
-    Comp,
-    {
-      href,
-      target: isLink ? "_blank" : void 0,
-      rel: isLink ? "noopener noreferrer" : void 0,
-      onMouseEnter: () => setHover(true),
-      onMouseLeave: () => setHover(false),
-      style: {
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
-        height: "var(--component-tag-height)",
-        paddingInline: 11,
-        borderRadius: "var(--radius-pill)",
-        background: onDark ? "var(--inverse-fill-normal)" : "var(--color-semantic-fill-normal)",
-        border: `1px solid ${onDark ? "var(--inverse-fill-strong)" : "var(--color-semantic-line-normal-normal)"}`,
-        fontFamily: "var(--font-sans)",
-        fontSize: 12.5,
-        whiteSpace: "nowrap",
-        textDecoration: "none",
-        cursor: isLink ? "pointer" : "default",
-        color: onDark ? "var(--inverse-label-strong)" : "var(--color-semantic-label-neutral)",
-        transition: "border-color var(--dur-fast) var(--ease-out)",
-        ...style
-      },
-      ...rest,
-      children: [
-        /* @__PURE__ */ jsx37("span", { style: { fontFamily: MONO3, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: onDark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-normal)" }, children: label }),
-        /* @__PURE__ */ jsx37("span", { "aria-hidden": "true", style: { width: 1, height: 12, background: "currentColor", opacity: 0.28 } }),
-        /* @__PURE__ */ jsx37("span", { style: { fontWeight: 600 }, children }),
-        isLink && /* @__PURE__ */ jsx37("span", { "aria-hidden": "true", style: { opacity: hover ? 1 : 0.55, transition: "opacity var(--dur-fast) var(--ease-out)" }, children: "\u2197" })
-      ]
-    }
-  );
-}
+// components/content/SourceDisclosure.jsx
+import React42 from "react";
 
 // components/content/StatusBadge.jsx
 import React41 from "react";
 import { jsx as jsx38, jsxs as jsxs30 } from "react/jsx-runtime";
 var DOT = {
-  positive: "var(--bw-green)",
-  online: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  warning: "var(--bw-amber)",
-  negative: "var(--bw-red)",
-  offline: "var(--bw-gray-300)",
-  signal: "var(--color-semantic-primary-normal)",
-  critical: "var(--color-semantic-status-negative)"
+  positive: "var(--component-status-badge-positive-indicator)",
+  online: "var(--component-status-badge-positive-indicator)",
+  cautionary: "var(--component-status-badge-cautionary-indicator)",
+  warning: "var(--component-status-badge-cautionary-indicator)",
+  negative: "var(--component-status-badge-negative-indicator)",
+  offline: "var(--component-status-badge-offline-indicator)",
+  signal: "var(--component-status-badge-signal-indicator)",
+  critical: "var(--component-status-badge-critical-indicator)"
 };
 function StatusBadge({ children, tone = "positive", pulse = false, style, ...rest }) {
   React41.useEffect(() => {
@@ -5094,12 +5194,12 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
         padding: "0 6px",
         borderRadius: 4,
         /* WDS _Badge/Status r4 */
-        background: "var(--color-semantic-fill-strong)",
+        background: "var(--component-status-badge-surface)",
         fontFamily: "var(--font-sans)",
         fontSize: 12,
         fontWeight: "var(--fw-semibold)",
         letterSpacing: 0,
-        color: "var(--color-semantic-label-normal)",
+        color: "var(--component-status-badge-foreground)",
         ...style
       },
       ...rest,
@@ -5111,11 +5211,121 @@ function StatusBadge({ children, tone = "positive", pulse = false, style, ...res
   );
 }
 
-// components/content/StepList.jsx
-import React42 from "react";
+// components/content/SourceDisclosure.jsx
 import { jsx as jsx39, jsxs as jsxs31 } from "react/jsx-runtime";
+var AVAILABILITY_META = {
+  available: { label: "\uC0AC\uC6A9 \uAC00\uB2A5", tone: "positive" },
+  stale: { label: "\uC624\uB798\uB428", tone: "cautionary" },
+  missing: { label: "\uCC3E\uC744 \uC218 \uC5C6\uC74C", tone: "negative" },
+  restricted: { label: "\uC811\uADFC \uC81C\uD55C", tone: "cautionary" },
+  error: { label: "\uD655\uC778 \uC2E4\uD328", tone: "negative" },
+  unknown: { label: "\uC0C1\uD0DC \uBD88\uBA85", tone: "offline" }
+};
+function SourceDisclosure({
+  title = "\uCD9C\uCC98",
+  headingLevel = 2,
+  description,
+  sources = [],
+  emptyMessage = "\uD45C\uC2DC\uD560 \uCD9C\uCC98\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  onSourceActivate,
+  openLabel = "\uCD9C\uCC98 \uC5F4\uAE30",
+  style,
+  ...rest
+}) {
+  const titleId = React42.useId();
+  const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
+  return /* @__PURE__ */ jsxs31("section", { "aria-labelledby": titleId, style: { display: "grid", gap: "var(--space-3)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs31("header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
+      /* @__PURE__ */ jsx39(Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)" }, children: title }),
+      description != null && /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: description })
+    ] }),
+    sources.length === 0 ? /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)" }, children: emptyMessage }) : /* @__PURE__ */ jsx39("ol", { style: { margin: 0, padding: 0, overflow: "hidden", listStyle: "none", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)" }, children: sources.map((source, index) => {
+      const availability = AVAILABILITY_META[source.availability ?? "unknown"] ?? AVAILABILITY_META.unknown;
+      const hasDetails = source.excerpt != null || source.description != null || source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0 || source.href != null || typeof onSourceActivate === "function";
+      const summary = /* @__PURE__ */ jsxs31("span", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-3)", width: "100%", minWidth: 0 }, children: [
+        /* @__PURE__ */ jsxs31("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsx39("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", overflowWrap: "anywhere" }, children: source.label }),
+          (source.kind != null || source.location != null) && /* @__PURE__ */ jsx39("span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [source.kind, source.location].filter(Boolean).join(" \xB7 ") })
+        ] }),
+        /* @__PURE__ */ jsx39(StatusBadge, { tone: availability.tone, children: source.availabilityLabel ?? availability.label })
+      ] });
+      return /* @__PURE__ */ jsx39("li", { style: { borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none" }, children: hasDetails ? /* @__PURE__ */ jsxs31("details", { open: source.defaultExpanded || void 0, children: [
+        /* @__PURE__ */ jsx39("summary", { style: { padding: "var(--space-3) var(--space-4)", cursor: "pointer" }, children: summary }),
+        /* @__PURE__ */ jsxs31("div", { style: { display: "grid", gap: "var(--space-3)", padding: "0 var(--space-4) var(--space-4) var(--space-6)" }, children: [
+          source.description != null && /* @__PURE__ */ jsx39("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: source.description }),
+          source.excerpt != null && /* @__PURE__ */ jsx39("blockquote", { style: { margin: 0, padding: "var(--space-3)", borderLeft: "3px solid var(--color-semantic-line-normal-strong)", background: "var(--color-semantic-fill-alternative)", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: source.excerpt }),
+          (source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0) && /* @__PURE__ */ jsxs31("dl", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: "var(--space-3)", margin: 0 }, children: [
+            source.observedAt != null && /* @__PURE__ */ jsxs31("div", { children: [
+              /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: "\uAD00\uCE21 \uC2DC\uAC01" }),
+              /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)" }, children: source.observedAt })
+            ] }),
+            source.updatedAt != null && /* @__PURE__ */ jsxs31("div", { children: [
+              /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: "\uAC31\uC2E0 \uC2DC\uAC01" }),
+              /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)" }, children: source.updatedAt })
+            ] }),
+            (source.metadata ?? []).map((item) => /* @__PURE__ */ jsxs31("div", { children: [
+              /* @__PURE__ */ jsx39("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: item.label }),
+              /* @__PURE__ */ jsx39("dd", { style: { margin: "var(--space-1) 0 0", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", overflowWrap: "anywhere" }, children: item.value })
+            ] }, item.label))
+          ] }),
+          source.href != null ? /* @__PURE__ */ jsx39(TextButton, { as: "a", href: source.href, target: "_blank", rel: "noopener noreferrer", size: "sm", tone: "neutral", underline: true, children: source.actionLabel ?? openLabel }) : typeof onSourceActivate === "function" ? /* @__PURE__ */ jsx39(TextButton, { size: "sm", tone: "neutral", underline: true, onClick: () => onSourceActivate(source), children: source.actionLabel ?? openLabel }) : null
+        ] })
+      ] }) : /* @__PURE__ */ jsx39("div", { style: { padding: "var(--space-3) var(--space-4)" }, children: summary }) }, source.id);
+    }) })
+  ] });
+}
+
+// components/content/SourceTag.jsx
+import React43 from "react";
+import { jsx as jsx40, jsxs as jsxs32 } from "react/jsx-runtime";
+var MONO3 = "var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace)";
+function SourceTag({ children, label = "SOURCE", href, tone = "default", style, ...rest }) {
+  const isLink = href != null;
+  const Comp = isLink ? "a" : "span";
+  const [hover, setHover] = React43.useState(false);
+  const onDark = tone === "onDark";
+  return /* @__PURE__ */ jsxs32(
+    Comp,
+    {
+      href,
+      target: isLink ? "_blank" : void 0,
+      rel: isLink ? "noopener noreferrer" : void 0,
+      onMouseEnter: () => setHover(true),
+      onMouseLeave: () => setHover(false),
+      style: {
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
+        height: "var(--component-tag-height)",
+        paddingInline: 11,
+        borderRadius: "var(--radius-pill)",
+        background: onDark ? "var(--color-semantic-inverse-fill-normal)" : "var(--color-semantic-fill-normal)",
+        border: `1px solid ${onDark ? "var(--color-semantic-inverse-fill-strong)" : "var(--color-semantic-line-normal-normal)"}`,
+        fontFamily: "var(--font-sans)",
+        fontSize: 12.5,
+        whiteSpace: "nowrap",
+        textDecoration: "none",
+        cursor: isLink ? "pointer" : "default",
+        color: onDark ? "var(--color-semantic-inverse-label-strong-soft)" : "var(--color-semantic-label-neutral)",
+        transition: "border-color var(--dur-fast) var(--ease-out)",
+        ...style
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ jsx40("span", { style: { fontFamily: MONO3, fontSize: 10.5, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: onDark ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-normal)" }, children: label }),
+        /* @__PURE__ */ jsx40("span", { "aria-hidden": "true", style: { width: 1, height: 12, background: "currentColor", opacity: 0.28 } }),
+        /* @__PURE__ */ jsx40("span", { style: { fontWeight: 600 }, children }),
+        isLink && /* @__PURE__ */ jsx40("span", { "aria-hidden": "true", style: { opacity: hover ? 1 : 0.55, transition: "opacity var(--dur-fast) var(--ease-out)" }, children: "\u2197" })
+      ]
+    }
+  );
+}
+
+// components/content/StepList.jsx
+import React44 from "react";
+import { jsx as jsx41, jsxs as jsxs33 } from "react/jsx-runtime";
 function Mini({ children, onClick, disabled, label }) {
-  return /* @__PURE__ */ jsx39(
+  return /* @__PURE__ */ jsx41(
     "button",
     {
       type: "button",
@@ -5155,20 +5365,20 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
   const remove = (i) => {
     onChange && onChange(steps.filter((_, k) => k !== i));
   };
-  return /* @__PURE__ */ jsxs31("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    steps.map((st, i) => /* @__PURE__ */ jsxs31("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", marginBottom: 8 }, children: [
-      /* @__PURE__ */ jsx39("span", { style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--lk-accent-tint)", color: "var(--color-semantic-primary-normal)", fontSize: 12, fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
-      /* @__PURE__ */ jsxs31("div", { style: { flex: 1, minWidth: 0 }, children: [
-        /* @__PURE__ */ jsx39("div", { style: { fontSize: 14, fontWeight: 700, color: "var(--color-semantic-label-strong)" }, children: st.label }),
-        st.detail != null && /* @__PURE__ */ jsx39("div", { style: { fontSize: 12.5, color: "var(--color-semantic-label-alternative)", marginTop: 1 }, children: st.detail })
+  return /* @__PURE__ */ jsxs33("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    steps.map((st, i) => /* @__PURE__ */ jsxs33("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", marginBottom: 8 }, children: [
+      /* @__PURE__ */ jsx41("span", { style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--color-semantic-primary-surface-normal)", color: "var(--color-semantic-primary-normal)", fontSize: 12, fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
+      /* @__PURE__ */ jsxs33("div", { style: { flex: 1, minWidth: 0 }, children: [
+        /* @__PURE__ */ jsx41("div", { style: { fontSize: 14, fontWeight: 700, color: "var(--color-semantic-label-strong)" }, children: st.label }),
+        st.detail != null && /* @__PURE__ */ jsx41("div", { style: { fontSize: 12.5, color: "var(--color-semantic-label-alternative)", marginTop: 1 }, children: st.detail })
       ] }),
-      editable && /* @__PURE__ */ jsxs31("div", { style: { display: "inline-flex", gap: 2, flexShrink: 0 }, children: [
-        /* @__PURE__ */ jsx39(Mini, { onClick: () => move(i, -1), disabled: i === 0, label: "\uC704\uB85C", children: "\u2191" }),
-        /* @__PURE__ */ jsx39(Mini, { onClick: () => move(i, 1), disabled: i === steps.length - 1, label: "\uC544\uB798\uB85C", children: "\u2193" }),
-        /* @__PURE__ */ jsx39(Mini, { onClick: () => remove(i), label: "\uC0AD\uC81C", children: "\u2715" })
+      editable && /* @__PURE__ */ jsxs33("div", { style: { display: "inline-flex", gap: 2, flexShrink: 0 }, children: [
+        /* @__PURE__ */ jsx41(Mini, { onClick: () => move(i, -1), disabled: i === 0, label: "\uC704\uB85C", children: "\u2191" }),
+        /* @__PURE__ */ jsx41(Mini, { onClick: () => move(i, 1), disabled: i === steps.length - 1, label: "\uC544\uB798\uB85C", children: "\u2193" }),
+        /* @__PURE__ */ jsx41(Mini, { onClick: () => remove(i), label: "\uC0AD\uC81C", children: "\u2715" })
       ] })
     ] }, st.id != null ? st.id : i)),
-    editable && onAdd && /* @__PURE__ */ jsxs31(
+    editable && onAdd && /* @__PURE__ */ jsxs33(
       "button",
       {
         type: "button",
@@ -5184,8 +5394,8 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
 }
 
 // components/content/Thumbnail.jsx
-import React43 from "react";
-import { jsx as jsx40, jsxs as jsxs32 } from "react/jsx-runtime";
+import React45 from "react";
+import { jsx as jsx42, jsxs as jsxs34 } from "react/jsx-runtime";
 var toLen = (v) => typeof v === "number" ? v + "px" : v;
 var ALIGN = {
   "top-left": { top: 8, left: 8 },
@@ -5238,7 +5448,7 @@ function Thumbnail({
   const borderStyle = border === true ? "1px solid var(--color-semantic-line-normal-normal)" : border || "0";
   const pos = ALIGN[overlayAlign] || ALIGN["top-left"];
   const hasOverlay = overlay || children;
-  return /* @__PURE__ */ jsxs32(
+  return /* @__PURE__ */ jsxs34(
     "div",
     {
       style: {
@@ -5255,7 +5465,7 @@ function Thumbnail({
       },
       ...rest,
       children: [
-        src && /* @__PURE__ */ jsx40(
+        src && /* @__PURE__ */ jsx42(
           "img",
           {
             src,
@@ -5268,7 +5478,7 @@ function Thumbnail({
             }
           }
         ),
-        !src && placeholder && /* @__PURE__ */ jsx40(
+        !src && placeholder && /* @__PURE__ */ jsx42(
           "span",
           {
             "aria-hidden": "true",
@@ -5279,10 +5489,10 @@ function Thumbnail({
               placeItems: "center",
               pointerEvents: "none"
             },
-            children: /* @__PURE__ */ jsx40(Icon, { name: placeholderIcon, size: Math.min(32, Math.max(18, 24)) })
+            children: /* @__PURE__ */ jsx42(Icon, { name: placeholderIcon, size: Math.min(32, Math.max(18, 24)) })
           }
         ),
-        hasOverlay && /* @__PURE__ */ jsxs32(
+        hasOverlay && /* @__PURE__ */ jsxs34(
           "div",
           {
             style: {
@@ -5304,36 +5514,36 @@ function Thumbnail({
 }
 
 // components/content/Timeline.jsx
-import React44 from "react";
-import { jsx as jsx41, jsxs as jsxs33 } from "react/jsx-runtime";
+import React46 from "react";
+import { jsx as jsx43, jsxs as jsxs35 } from "react/jsx-runtime";
 var DOT2 = {
   signal: "var(--color-semantic-primary-normal)",
-  positive: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  negative: "var(--bw-red)",
-  neutral: "var(--bw-gray-300)"
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)",
+  neutral: "var(--color-semantic-interaction-inactive)"
 };
 function Timeline({ items = [], style, ...rest }) {
-  return /* @__PURE__ */ jsx41("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => {
+  return /* @__PURE__ */ jsx43("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => {
     const last = i === items.length - 1;
     const c = DOT2[it.tone] || DOT2.signal;
-    return /* @__PURE__ */ jsxs33("div", { style: { display: "flex", gap: 14 }, children: [
-      /* @__PURE__ */ jsxs33("div", { style: { display: "flex", flexDirection: "column", alignItems: "center" }, children: [
-        /* @__PURE__ */ jsx41("span", { style: { width: 12, height: 12, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxShadow: `0 0 0 1px ${c}`, flexShrink: 0, marginTop: 4 } }),
-        !last && /* @__PURE__ */ jsx41("span", { style: { flex: 1, width: 2, background: "var(--bw-border)", marginTop: 4 } })
+    return /* @__PURE__ */ jsxs35("div", { style: { display: "flex", gap: 14 }, children: [
+      /* @__PURE__ */ jsxs35("div", { style: { display: "flex", flexDirection: "column", alignItems: "center" }, children: [
+        /* @__PURE__ */ jsx43("span", { style: { width: 12, height: 12, borderRadius: "50%", background: c, border: "2px solid var(--color-semantic-background-elevated-normal)", boxShadow: `0 0 0 1px ${c}`, flexShrink: 0, marginTop: 4 } }),
+        !last && /* @__PURE__ */ jsx43("span", { style: { flex: 1, width: 2, background: "var(--color-semantic-line-solid-normal)", marginTop: 4 } })
       ] }),
-      /* @__PURE__ */ jsxs33("div", { style: { paddingBottom: last ? 0 : 22 }, children: [
-        it.time != null && /* @__PURE__ */ jsx41("div", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--color-semantic-label-assistive)", marginBottom: 3 }, children: it.time }),
-        /* @__PURE__ */ jsx41("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: it.title }),
-        it.description != null && /* @__PURE__ */ jsx41("div", { style: { marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: it.description })
+      /* @__PURE__ */ jsxs35("div", { style: { paddingBottom: last ? 0 : 22 }, children: [
+        it.time != null && /* @__PURE__ */ jsx43("div", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.2px", color: "var(--color-semantic-label-assistive)", marginBottom: 3 }, children: it.time }),
+        /* @__PURE__ */ jsx43("div", { style: { fontSize: 15.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: it.title }),
+        it.description != null && /* @__PURE__ */ jsx43("div", { style: { marginTop: 3, fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: it.description })
       ] })
     ] }, i);
   }) });
 }
 
 // components/content/Tooltip.jsx
-import React45 from "react";
-import { jsx as jsx42, jsxs as jsxs34 } from "react/jsx-runtime";
+import React47 from "react";
+import { jsx as jsx44, jsxs as jsxs36 } from "react/jsx-runtime";
 var POS = {
   top: { bottom: "100%", left: "50%" },
   bottom: { top: "100%", left: "50%" },
@@ -5424,7 +5634,7 @@ function Tooltip({
   style,
   ...rest
 }) {
-  const [show, setShow] = React45.useState(defaultOpen);
+  const [show, setShow] = React47.useState(defaultOpen);
   const visible = open ?? show;
   const place = position || placement || "top";
   const pos = POS[place] || POS.top;
@@ -5432,10 +5642,10 @@ function Tooltip({
   const arrowHalf = compact ? 7 : 10;
   const arrowHeight = compact ? 6 : 8;
   const normalizedAlign = normalizeAlign(align);
-  const wrapperRef = React45.useRef(null);
-  const [target, setTarget] = React45.useState(null);
+  const wrapperRef = React47.useRef(null);
+  const [target, setTarget] = React47.useState(null);
   const edgeAligned = START_ALIGNS.has(normalizedAlign) || END_ALIGNS.has(normalizedAlign);
-  React45.useLayoutEffect(() => {
+  React47.useLayoutEffect(() => {
     if (!arrow || !edgeAligned || !wrapperRef.current) return;
     const node = wrapperRef.current;
     const measure = () => {
@@ -5450,7 +5660,7 @@ function Tooltip({
     ro.observe(node);
     return () => ro.disconnect();
   }, [arrow, edgeAligned, place, size]);
-  return /* @__PURE__ */ jsxs34(
+  return /* @__PURE__ */ jsxs36(
     "span",
     {
       ref: wrapperRef,
@@ -5462,10 +5672,11 @@ function Tooltip({
       ...rest,
       children: [
         children,
-        /* @__PURE__ */ jsxs34(
+        /* @__PURE__ */ jsxs36(
           "span",
           {
             role: "tooltip",
+            "aria-hidden": !visible,
             style: {
               position: "absolute",
               ...pos,
@@ -5486,22 +5697,23 @@ function Tooltip({
               borderRadius: compact ? 6 : 8,
               whiteSpace: "nowrap",
               boxShadow: "var(--shadow-md)",
+              visibility: visible ? "visible" : "hidden",
               opacity: visible ? 1 : 0,
               transition: "opacity var(--dur-fast) var(--ease-out)"
             },
             children: [
-              /* @__PURE__ */ jsx42("span", { children: content }),
-              shortcut != null && /* @__PURE__ */ jsx42(
+              /* @__PURE__ */ jsx44("span", { children: content }),
+              shortcut != null && /* @__PURE__ */ jsx44(
                 "span",
                 {
                   style: {
-                    color: "var(--inverse-label-alternative)",
+                    color: "var(--color-semantic-inverse-label-alternative-soft)",
                     fontWeight: "var(--fw-bold)"
                   },
                   children: shortcut
                 }
               ),
-              arrow && /* @__PURE__ */ jsx42(
+              arrow && /* @__PURE__ */ jsx44(
                 "span",
                 {
                   "aria-hidden": "true",
@@ -5521,129 +5733,433 @@ function Tooltip({
   );
 }
 
+// components/data/AnnotatedImage.jsx
+import React48 from "react";
+import { jsx as jsx45, jsxs as jsxs37 } from "react/jsx-runtime";
+var ANNOTATION_TONE = {
+  signal: "var(--color-semantic-primary-normal)",
+  positive: "var(--color-semantic-status-positive)",
+  warning: "var(--color-semantic-status-cautionary)",
+  danger: "var(--color-semantic-status-negative)",
+  neutral: "var(--color-semantic-label-neutral)"
+};
+function percent(value) {
+  return `${Math.max(0, Math.min(1, Number(value) || 0)) * 100}%`;
+}
+function imageContentBox(frame, image, objectFit) {
+  if (!frame.width || !frame.height || !image.width || !image.height) {
+    return { left: 0, top: 0, width: frame.width, height: frame.height };
+  }
+  if (objectFit === "fill") return { left: 0, top: 0, width: frame.width, height: frame.height };
+  const containScale = Math.min(frame.width / image.width, frame.height / image.height);
+  const scale = objectFit === "cover" ? Math.max(frame.width / image.width, frame.height / image.height) : objectFit === "none" ? 1 : objectFit === "scale-down" ? Math.min(1, containScale) : containScale;
+  const width = image.width * scale;
+  const height = image.height * scale;
+  return { left: (frame.width - width) / 2, top: (frame.height - height) / 2, width, height };
+}
+function AnnotatedImage({
+  src,
+  alt,
+  caption,
+  regions = [],
+  points = [],
+  annotationsVisible,
+  defaultAnnotationsVisible = true,
+  onAnnotationsVisibleChange,
+  loadingMessage = "\uC774\uBBF8\uC9C0\uB97C \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4.",
+  emptyMessage = "\uD45C\uC2DC\uD560 \uC774\uBBF8\uC9C0\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  errorMessage = "\uC774\uBBF8\uC9C0\uB97C \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
+  summaryLabel = "\uC774\uBBF8\uC9C0 annotation \uC694\uC57D",
+  aspectRatio = "16 / 9",
+  objectFit = "contain",
+  style,
+  ...rest
+}) {
+  const controlled = annotationsVisible !== void 0;
+  const [internalVisible, setInternalVisible] = React48.useState(defaultAnnotationsVisible);
+  const visible = controlled ? annotationsVisible : internalVisible;
+  const [imageState, setImageState] = React48.useState(src ? "loading" : "empty");
+  const [imageSize, setImageSize] = React48.useState({ width: 0, height: 0 });
+  const [frameSize, setFrameSize] = React48.useState({ width: 0, height: 0 });
+  const frameRef = React48.useRef(null);
+  const annotations = regions.length + points.length;
+  const overlayBox = imageContentBox(frameSize, imageSize, objectFit);
+  React48.useEffect(() => {
+    setImageState(src ? "loading" : "empty");
+    setImageSize({ width: 0, height: 0 });
+  }, [src]);
+  React48.useLayoutEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return void 0;
+    const measure = () => setFrameSize({ width: frame.clientWidth, height: frame.clientHeight });
+    measure();
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", measure);
+      return () => window.removeEventListener("resize", measure);
+    }
+    const observer = new ResizeObserver(measure);
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, [aspectRatio, src]);
+  const setVisible = (next) => {
+    if (!controlled) setInternalVisible(next);
+    onAnnotationsVisibleChange?.(next);
+  };
+  return /* @__PURE__ */ jsxs37("figure", { style: { display: "grid", gap: "var(--space-3)", width: "100%", minWidth: 0, margin: 0, boxSizing: "border-box", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs37(
+      "div",
+      {
+        ref: frameRef,
+        style: {
+          position: "relative",
+          width: "100%",
+          minHeight: src ? void 0 : "12rem",
+          aspectRatio: src ? aspectRatio : void 0,
+          overflow: "hidden",
+          border: "1px solid var(--color-semantic-line-normal-normal)",
+          borderRadius: "var(--radius-lg)",
+          background: "var(--color-semantic-inverse-background)"
+        },
+        children: [
+          src && /* @__PURE__ */ jsx45(
+            "img",
+            {
+              src,
+              alt,
+              onLoad: (event) => {
+                setImageSize({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight });
+                setImageState("loaded");
+              },
+              onError: () => setImageState("error"),
+              style: { display: "block", width: "100%", height: "100%", objectFit }
+            }
+          ),
+          imageState !== "loaded" && /* @__PURE__ */ jsx45(
+            "div",
+            {
+              role: imageState === "error" ? "alert" : "status",
+              style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", padding: "var(--space-6)", color: "var(--color-semantic-inverse-label-neutral-soft)", textAlign: "center", background: "var(--color-semantic-inverse-background)" },
+              children: imageState === "loading" ? loadingMessage : imageState === "error" ? errorMessage : emptyMessage
+            }
+          ),
+          imageState === "loaded" && annotations > 0 && /* @__PURE__ */ jsx45(
+            ToggleIcon,
+            {
+              size: "sm",
+              pressed: visible,
+              onChange: setVisible,
+              label: "Annotation \uD45C\uC2DC",
+              title: visible ? "Annotation \uC228\uAE30\uAE30" : "Annotation \uBCF4\uAE30",
+              style: { position: "absolute", zIndex: 2, top: "var(--space-3)", right: "var(--space-3)", color: "var(--color-semantic-label-normal)", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", boxShadow: "var(--shadow-md)" },
+              children: /* @__PURE__ */ jsx45(Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
+            }
+          ),
+          imageState === "loaded" && visible && annotations > 0 && /* @__PURE__ */ jsxs37(
+            "div",
+            {
+              "aria-hidden": "true",
+              style: { position: "absolute", left: overlayBox.left, top: overlayBox.top, width: overlayBox.width, height: overlayBox.height, pointerEvents: "none" },
+              children: [
+                regions.map((region, index) => {
+                  const color = ANNOTATION_TONE[region.tone] ?? ANNOTATION_TONE.signal;
+                  return /* @__PURE__ */ jsx45("span", { style: { position: "absolute", left: percent(region.x), top: percent(region.y), width: percent(region.width), height: percent(region.height), boxSizing: "border-box", border: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)" }, children: /* @__PURE__ */ jsxs37("span", { style: { position: "absolute", left: "calc(-1 * var(--border-thick))", top: "calc(-1 * var(--space-6))", maxWidth: "12.5rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", borderLeft: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)" }, children: [
+                    region.label ?? `Region ${index + 1}`,
+                    region.score != null ? ` ${Math.round(region.score * 100)}%` : ""
+                  ] }) }, region.id ?? index);
+                }),
+                points.map((point, index) => {
+                  const color = ANNOTATION_TONE[point.tone] ?? ANNOTATION_TONE.warning;
+                  const pointText = point.label ?? (point.value != null ? `${point.value}${point.unit ?? ""}` : `Point ${index + 1}`);
+                  return /* @__PURE__ */ jsx45("span", { style: { position: "absolute", left: percent(point.x), top: percent(point.y), width: percent((point.radius ?? 0.03) * 2), aspectRatio: "1", transform: "translate(-50%, -50%)", border: `var(--border-thick) solid ${color}`, borderRadius: "50%", background: "transparent" }, children: /* @__PURE__ */ jsx45("span", { style: { position: "absolute", left: "calc(100% + var(--space-1))", top: "50%", maxWidth: "10rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", transform: "translateY(-50%)", borderLeft: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)" }, children: pointText }) }, point.id ?? index);
+                })
+              ]
+            }
+          )
+        ]
+      }
+    ),
+    (caption != null || annotations > 0) && /* @__PURE__ */ jsxs37("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap" }, children: [
+      caption != null && /* @__PURE__ */ jsx45("figcaption", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: caption }),
+      annotations > 0 && /* @__PURE__ */ jsxs37("details", { style: { marginLeft: "auto" }, children: [
+        /* @__PURE__ */ jsxs37("summary", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", cursor: "pointer" }, children: [
+          summaryLabel,
+          " (",
+          annotations,
+          ")"
+        ] }),
+        /* @__PURE__ */ jsxs37("ul", { style: { margin: "var(--space-2) 0 0", paddingLeft: "var(--space-5)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: [
+          regions.map((region, index) => /* @__PURE__ */ jsxs37("li", { children: [
+            region.label ?? `Region ${index + 1}`,
+            region.score != null ? `, \uC2E0\uB8B0\uB3C4 ${Math.round(region.score * 100)}%` : ""
+          ] }, region.id ?? index)),
+          points.map((point, index) => /* @__PURE__ */ jsxs37("li", { children: [
+            point.label ?? `Point ${index + 1}`,
+            point.value != null ? `, ${point.value}${point.unit ?? ""}` : ""
+          ] }, point.id ?? index))
+        ] })
+      ] })
+    ] })
+  ] });
+}
+
 // components/data/BarChart.jsx
-import React46 from "react";
-import { jsx as jsx43, jsxs as jsxs35 } from "react/jsx-runtime";
+import React49 from "react";
+import { jsx as jsx46, jsxs as jsxs38 } from "react/jsx-runtime";
 function BarChart({ data = [], height = 160, gap = 12, showValue = true, color = "var(--color-semantic-primary-normal)", style, ...rest }) {
   const max = Math.max(...data.map((d) => d.value), 1);
-  return /* @__PURE__ */ jsx43("div", { style: { display: "flex", alignItems: "flex-end", gap, height, fontFamily: "var(--font-sans)", ...style }, ...rest, children: data.map((d, i) => /* @__PURE__ */ jsxs35("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%", justifyContent: "flex-end" }, children: [
-    showValue && /* @__PURE__ */ jsx43("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: d.value }),
-    /* @__PURE__ */ jsx43("div", { style: { width: "100%", maxWidth: 48, height: `${d.value / max * 100}%`, minHeight: 2, background: d.color || color, borderRadius: "var(--radius-md) var(--radius-md) 0 0", transition: "height var(--dur-slow) var(--ease-out)" } }),
-    /* @__PURE__ */ jsx43("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: d.label })
+  return /* @__PURE__ */ jsx46("div", { style: { display: "flex", alignItems: "flex-end", gap, height, fontFamily: "var(--font-sans)", ...style }, ...rest, children: data.map((d, i) => /* @__PURE__ */ jsxs38("div", { style: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, height: "100%", justifyContent: "flex-end" }, children: [
+    showValue && /* @__PURE__ */ jsx46("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: d.value }),
+    /* @__PURE__ */ jsx46("div", { style: { width: "100%", maxWidth: 48, height: `${d.value / max * 100}%`, minHeight: 2, background: d.color || color, borderRadius: "var(--radius-md) var(--radius-md) 0 0", transition: "height var(--dur-slow) var(--ease-out)" } }),
+    /* @__PURE__ */ jsx46("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: d.label })
   ] }, i)) });
 }
 
 // components/data/Calendar.jsx
-import React47 from "react";
-import { jsx as jsx44, jsxs as jsxs36 } from "react/jsx-runtime";
-var WD = ["\uC77C", "\uC6D4", "\uD654", "\uC218", "\uBAA9", "\uAE08", "\uD1A0"];
-function ymd(d) {
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+import React50 from "react";
+import { jsx as jsx47, jsxs as jsxs39 } from "react/jsx-runtime";
+var WEEKDAYS = ["\uC77C", "\uC6D4", "\uD654", "\uC218", "\uBAA9", "\uAE08", "\uD1A0"];
+function ymd(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
-function DayCell({ d, selected, today, onPick }) {
-  const [h, setH] = React47.useState(false);
-  const dow = d.getDay();
-  const bg = selected ? "var(--color-semantic-primary-normal)" : h ? "var(--color-semantic-fill-normal)" : "transparent";
-  const color = selected ? "var(--color-semantic-static-white)" : dow === 0 ? "var(--bw-red)" : dow === 6 ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)";
-  return /* @__PURE__ */ jsx44(
+function parseDate(value) {
+  return value ? value instanceof Date ? value : new Date(value) : null;
+}
+function sameMonth(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth();
+}
+function addDays(date, amount) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + amount);
+}
+function addMonths(date, amount) {
+  const target = new Date(date.getFullYear(), date.getMonth() + amount, 1);
+  const lastDay = new Date(target.getFullYear(), target.getMonth() + 1, 0).getDate();
+  return new Date(target.getFullYear(), target.getMonth(), Math.min(date.getDate(), lastDay));
+}
+function formatDateLabel(date) {
+  return new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long"
+  }).format(date);
+}
+function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDown, onPick }) {
+  const [hovered, setHovered] = React50.useState(false);
+  const [focused, setFocused] = React50.useState(false);
+  const dayOfWeek = date.getDay();
+  const background = selected ? "var(--color-semantic-primary-normal)" : hovered ? "var(--color-semantic-fill-normal)" : "transparent";
+  const color = selected ? "var(--color-semantic-static-white)" : dayOfWeek === 0 ? "var(--color-semantic-accent-foreground-red)" : dayOfWeek === 6 ? "var(--color-semantic-accent-foreground-blue)" : "var(--color-semantic-label-normal)";
+  return /* @__PURE__ */ jsx47(
     "button",
     {
+      ref: buttonRef,
       type: "button",
-      onClick: () => onPick(d),
-      onMouseEnter: () => setH(true),
-      onMouseLeave: () => setH(false),
+      tabIndex,
+      "aria-label": formatDateLabel(date),
+      "aria-current": today ? "date" : void 0,
+      onClick: () => onPick(date),
+      onFocus: () => {
+        setFocused(true);
+        onFocus();
+      },
+      onBlur: () => setFocused(false),
+      onKeyDown,
+      onMouseEnter: () => setHovered(true),
+      onMouseLeave: () => setHovered(false),
       style: {
+        width: "100%",
         height: 38,
         borderRadius: "var(--radius-md)",
         cursor: "pointer",
         border: today && !selected ? "1px solid var(--color-semantic-primary-normal)" : "1px solid transparent",
-        background: bg,
+        outline: "none",
+        boxShadow: focused ? "var(--component-input-focus-shadow)" : "none",
+        background,
         color,
         fontFamily: "var(--font-sans)",
         fontSize: 14,
         fontWeight: selected ? "var(--fw-bold)" : "var(--fw-medium)",
         fontVariantNumeric: "tabular-nums",
-        transition: "background var(--dur-fast) var(--ease-out)"
+        transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
       },
-      children: d.getDate()
+      children: date.getDate()
     }
   );
 }
-function Calendar({ value, defaultValue, onChange, style, ...rest }) {
-  const parse = (v) => v ? v instanceof Date ? v : new Date(v) : null;
+function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React47.useState(parse(defaultValue));
-  const sel = isControlled ? parse(value) : internal;
-  const now = /* @__PURE__ */ new Date();
-  const [view, setView] = React47.useState(() => sel ? new Date(sel.getFullYear(), sel.getMonth(), 1) : new Date(now.getFullYear(), now.getMonth(), 1));
-  const todayStr = ymd(now);
-  const startDow = new Date(view.getFullYear(), view.getMonth(), 1).getDay();
-  const days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
-  const cells = [];
-  for (let i = 0; i < startDow; i++) cells.push(null);
-  for (let dd = 1; dd <= days; dd++) cells.push(new Date(view.getFullYear(), view.getMonth(), dd));
-  const pick = (d) => {
-    if (!isControlled) setInternal(d);
-    onChange && onChange(d);
+  const [internal, setInternal] = React50.useState(() => parseDate(defaultValue));
+  const selected = isControlled ? parseDate(value) : internal;
+  const today = React50.useMemo(() => /* @__PURE__ */ new Date(), []);
+  const initialDate = selected ?? today;
+  const [view, setView] = React50.useState(() => new Date(initialDate.getFullYear(), initialDate.getMonth(), 1));
+  const [focusDate, setFocusDate] = React50.useState(initialDate);
+  const dayRefs = React50.useRef(/* @__PURE__ */ new Map());
+  const pendingFocus = React50.useRef(autoFocus);
+  const startDay = new Date(view.getFullYear(), view.getMonth(), 1).getDay();
+  const dayCount = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+  const cells = [
+    ...Array.from({ length: startDay }, () => null),
+    ...Array.from({ length: dayCount }, (_, index) => new Date(view.getFullYear(), view.getMonth(), index + 1))
+  ];
+  while (cells.length % 7 !== 0) cells.push(null);
+  const weeks = Array.from({ length: cells.length / 7 }, (_, index) => cells.slice(index * 7, index * 7 + 7));
+  React50.useLayoutEffect(() => {
+    if (!pendingFocus.current) return;
+    const target = dayRefs.current.get(ymd(focusDate));
+    if (target) {
+      target.focus();
+      pendingFocus.current = false;
+    }
+  }, [focusDate, view]);
+  React50.useEffect(() => {
+    if (!selected || sameMonth(selected, view)) return;
+    pendingFocus.current = true;
+    setView(new Date(selected.getFullYear(), selected.getMonth(), 1));
+    setFocusDate(selected);
+  }, [selected, view]);
+  const moveFocus = (nextDate) => {
+    pendingFocus.current = true;
+    setFocusDate(nextDate);
+    if (!sameMonth(nextDate, view)) {
+      setView(new Date(nextDate.getFullYear(), nextDate.getMonth(), 1));
+    }
   };
-  const navMonth = (delta) => setView(new Date(view.getFullYear(), view.getMonth() + delta, 1));
-  const navBtn = { width: 32, height: 32, display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", cursor: "pointer", color: "var(--color-semantic-label-neutral)" };
-  return /* @__PURE__ */ jsxs36("div", { style: { width: 300, fontFamily: "var(--font-sans)", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 16, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs36("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }, children: [
-      /* @__PURE__ */ jsxs36("div", { style: { fontSize: 16, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: [
-        view.getFullYear(),
-        "\uB144 ",
-        view.getMonth() + 1,
-        "\uC6D4"
-      ] }),
-      /* @__PURE__ */ jsxs36("div", { style: { display: "flex", gap: 4 }, children: [
-        /* @__PURE__ */ jsx44("button", { type: "button", "aria-label": "previous month", onClick: () => navMonth(-1), style: navBtn, children: /* @__PURE__ */ jsx44("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx44("path", { d: "m15 18-6-6 6-6" }) }) }),
-        /* @__PURE__ */ jsx44("button", { type: "button", "aria-label": "next month", onClick: () => navMonth(1), style: navBtn, children: /* @__PURE__ */ jsx44("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx44("path", { d: "m9 18 6-6-6-6" }) }) })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx44("div", { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 2, marginBottom: 6 }, children: WD.map((w, i) => /* @__PURE__ */ jsx44("div", { style: { textAlign: "center", fontSize: 12, fontWeight: "var(--fw-semibold)", color: i === 0 ? "var(--bw-red)" : i === 6 ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)" }, children: w }, w)) }),
-    /* @__PURE__ */ jsx44("div", { style: { display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 2 }, children: cells.map((d, i) => d ? /* @__PURE__ */ jsx44(DayCell, { d, selected: sel && ymd(sel) === ymd(d), today: todayStr === ymd(d), onPick: pick }, i) : /* @__PURE__ */ jsx44("span", {}, i)) })
-  ] });
+  const pick = (date) => {
+    if (!isControlled) setInternal(date);
+    onChange?.(date);
+  };
+  const navigateMonth = (amount) => moveFocus(addMonths(focusDate, amount));
+  const navigationButtonStyle = {
+    width: 32,
+    height: 32,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "1px solid var(--color-semantic-line-solid-normal)",
+    borderRadius: "var(--radius-md)",
+    background: "var(--color-semantic-background-elevated-normal)",
+    cursor: "pointer",
+    color: "var(--color-semantic-label-neutral)"
+  };
+  return /* @__PURE__ */ jsxs39(
+    "div",
+    {
+      style: {
+        width: 300,
+        fontFamily: "var(--font-sans)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
+        borderRadius: "var(--radius-xl)",
+        padding: 16,
+        ...style
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ jsxs39("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }, children: [
+          /* @__PURE__ */ jsxs39("div", { "aria-live": "polite", style: { fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)" }, children: [
+            view.getFullYear(),
+            "\uB144 ",
+            view.getMonth() + 1,
+            "\uC6D4"
+          ] }),
+          /* @__PURE__ */ jsxs39("div", { style: { display: "flex", gap: 4 }, children: [
+            /* @__PURE__ */ jsx47("button", { type: "button", "aria-label": "\uC774\uC804 \uB2EC", onClick: () => navigateMonth(-1), style: navigationButtonStyle, children: /* @__PURE__ */ jsx47("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx47("path", { d: "m15 18-6-6 6-6" }) }) }),
+            /* @__PURE__ */ jsx47("button", { type: "button", "aria-label": "\uB2E4\uC74C \uB2EC", onClick: () => navigateMonth(1), style: navigationButtonStyle, children: /* @__PURE__ */ jsx47("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx47("path", { d: "m9 18 6-6-6-6" }) }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs39("div", { role: "grid", "aria-label": `${view.getFullYear()}\uB144 ${view.getMonth() + 1}\uC6D4`, children: [
+          /* @__PURE__ */ jsx47("div", { role: "row", style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 2, marginBottom: 6 }, children: WEEKDAYS.map((weekday, index) => /* @__PURE__ */ jsx47(
+            "div",
+            {
+              role: "columnheader",
+              "aria-label": `${weekday}\uC694\uC77C`,
+              style: {
+                textAlign: "center",
+                fontSize: 12,
+                fontWeight: "var(--fw-semibold)",
+                color: index === 0 ? "var(--color-semantic-accent-foreground-red)" : index === 6 ? "var(--color-semantic-accent-foreground-blue)" : "var(--color-semantic-label-neutral)"
+              },
+              children: weekday
+            },
+            weekday
+          )) }),
+          weeks.map((week, weekIndex) => /* @__PURE__ */ jsx47("div", { role: "row", style: { display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 2 }, children: week.map((date, dayIndex) => /* @__PURE__ */ jsx47("div", { role: "gridcell", "aria-selected": date ? Boolean(selected && ymd(selected) === ymd(date)) : void 0, children: date && /* @__PURE__ */ jsx47(
+            DayCell,
+            {
+              date,
+              selected: Boolean(selected && ymd(selected) === ymd(date)),
+              today: ymd(today) === ymd(date),
+              tabIndex: ymd(focusDate) === ymd(date) ? 0 : -1,
+              buttonRef: (node) => {
+                if (node) dayRefs.current.set(ymd(date), node);
+                else dayRefs.current.delete(ymd(date));
+              },
+              onFocus: () => setFocusDate(date),
+              onPick: pick,
+              onKeyDown: (event) => {
+                const movement = {
+                  ArrowLeft: -1,
+                  ArrowRight: 1,
+                  ArrowUp: -7,
+                  ArrowDown: 7,
+                  Home: -date.getDay(),
+                  End: 6 - date.getDay()
+                }[event.key];
+                if (movement != null) {
+                  event.preventDefault();
+                  moveFocus(addDays(date, movement));
+                } else if (event.key === "PageUp" || event.key === "PageDown") {
+                  event.preventDefault();
+                  moveFocus(addMonths(date, event.key === "PageUp" ? -1 : 1));
+                }
+              }
+            }
+          ) }, date ? ymd(date) : `empty-${dayIndex}`)) }, weekIndex))
+        ] })
+      ]
+    }
+  );
 }
 
 // components/data/Carousel.jsx
-import React48 from "react";
-import { jsx as jsx45, jsxs as jsxs37 } from "react/jsx-runtime";
+import React51 from "react";
+import { jsx as jsx48, jsxs as jsxs40 } from "react/jsx-runtime";
 function navBtnStyle(side) {
   return { position: "absolute", top: "50%", [side]: 12, transform: "translateY(-50%)", width: 40, height: 40, borderRadius: "50%", border: "none", background: "var(--scrim-dark)", color: "var(--color-semantic-static-white)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 2 };
 }
 function Carousel({ slides = [], showDots = true, showArrows = true, style, ...rest }) {
-  const [i, setI] = React48.useState(0);
+  const [i, setI] = React51.useState(0);
   const n = slides.length;
   const go = (d) => setI((p) => (p + d + n) % n);
-  return /* @__PURE__ */ jsxs37("div", { style: { position: "relative", overflow: "hidden", borderRadius: "var(--radius-2xl)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx45("div", { style: { display: "flex", transform: `translateX(-${i * 100}%)`, transition: "transform var(--dur-slow) var(--ease-out)" }, children: slides.map((s, idx) => /* @__PURE__ */ jsx45("div", { style: { flex: "0 0 100%", minWidth: "100%" }, children: s }, idx)) }),
-    showArrows && n > 1 && /* @__PURE__ */ jsxs37(React48.Fragment, { children: [
-      /* @__PURE__ */ jsx45("button", { type: "button", "aria-label": "previous", onClick: () => go(-1), style: navBtnStyle("left"), children: /* @__PURE__ */ jsx45("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx45("path", { d: "m15 18-6-6 6-6" }) }) }),
-      /* @__PURE__ */ jsx45("button", { type: "button", "aria-label": "next", onClick: () => go(1), style: navBtnStyle("right"), children: /* @__PURE__ */ jsx45("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx45("path", { d: "m9 18 6-6-6-6" }) }) })
+  return /* @__PURE__ */ jsxs40("div", { style: { position: "relative", overflow: "hidden", borderRadius: "var(--radius-2xl)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx48("div", { style: { display: "flex", transform: `translateX(-${i * 100}%)`, transition: "transform var(--dur-slow) var(--ease-out)" }, children: slides.map((s, idx) => /* @__PURE__ */ jsx48("div", { style: { flex: "0 0 100%", minWidth: "100%" }, children: s }, idx)) }),
+    showArrows && n > 1 && /* @__PURE__ */ jsxs40(React51.Fragment, { children: [
+      /* @__PURE__ */ jsx48("button", { type: "button", "aria-label": "previous", onClick: () => go(-1), style: navBtnStyle("left"), children: /* @__PURE__ */ jsx48("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx48("path", { d: "m15 18-6-6 6-6" }) }) }),
+      /* @__PURE__ */ jsx48("button", { type: "button", "aria-label": "next", onClick: () => go(1), style: navBtnStyle("right"), children: /* @__PURE__ */ jsx48("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx48("path", { d: "m9 18 6-6-6-6" }) }) })
     ] }),
-    showDots && n > 1 && /* @__PURE__ */ jsx45("div", { style: { position: "absolute", bottom: 14, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 8, zIndex: 2 }, children: slides.map((_, idx) => /* @__PURE__ */ jsx45("button", { type: "button", "aria-label": `slide ${idx + 1}`, onClick: () => setI(idx), style: { width: idx === i ? 22 : 8, height: 8, borderRadius: "var(--radius-pill)", border: "none", cursor: "pointer", padding: 0, background: idx === i ? "var(--bw-white)" : "var(--inverse-label-alternative)", transition: "width var(--dur-base) var(--ease-out)" } }, idx)) })
+    showDots && n > 1 && /* @__PURE__ */ jsx48("div", { style: { position: "absolute", bottom: 14, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 8, zIndex: 2 }, children: slides.map((_, idx) => /* @__PURE__ */ jsx48("button", { type: "button", "aria-label": `slide ${idx + 1}`, onClick: () => setI(idx), style: { width: idx === i ? 22 : 8, height: 8, borderRadius: "var(--radius-pill)", border: "none", cursor: "pointer", padding: 0, background: idx === i ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-inverse-label-alternative-soft)", transition: "width var(--dur-base) var(--ease-out)" } }, idx)) })
   ] });
 }
 
 // components/data/DataGrid.jsx
-import React49 from "react";
+import React52 from "react";
 
 // components/data/table-cell-styles.js
 function thStyle(pad2) {
-  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" };
+  return { padding: pad2, borderBottom: "1px solid var(--color-semantic-line-solid-normal)", fontSize: 12, fontWeight: "var(--fw-bold)", letterSpacing: "0.4px", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" };
 }
 function tdStyle(pad2) {
-  return { padding: pad2, borderBottom: "1px solid var(--bw-border)", fontSize: 14, color: "var(--color-semantic-label-neutral)", whiteSpace: "nowrap" };
+  return { padding: pad2, borderBottom: "1px solid var(--color-semantic-line-solid-normal)", fontSize: 14, color: "var(--color-semantic-label-neutral)", whiteSpace: "nowrap" };
 }
 
 // components/data/DataGrid.jsx
-import { jsx as jsx46, jsxs as jsxs38 } from "react/jsx-runtime";
-function sortRows(rows, key, dir) {
-  if (!key) return rows;
-  const s = [...rows].sort((a, b) => {
-    const x = a[key];
-    const y = b[key];
+import { jsx as jsx49, jsxs as jsxs41 } from "react/jsx-runtime";
+function sortRowEntries(entries, key, dir) {
+  if (!key) return entries;
+  const s = [...entries].sort((a, b) => {
+    const x = a.row[key];
+    const y = b.row[key];
     if (x == null) return 1;
     if (y == null) return -1;
     if (typeof x === "number" && typeof y === "number") return x - y;
@@ -5662,7 +6178,7 @@ function checkboxStyle(checked, indeterminate = false) {
     height: 16,
     margin: 0,
     borderRadius: 4,
-    border: `1px solid ${filled ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+    border: `1px solid ${filled ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
     backgroundColor: filled ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)",
     backgroundImage: indeterminate ? DASH_IMG : checked ? CHECK_IMG : "none",
     backgroundPosition: "center",
@@ -5671,63 +6187,94 @@ function checkboxStyle(checked, indeterminate = false) {
     verticalAlign: "middle"
   };
 }
-function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, defaultSelectedRows = [], onSelectionChange, bulkActions, onClearSelection, size = "md", style, ...rest }) {
-  const [sort, setSort] = React49.useState({ key: null, dir: "asc" });
+function DataGrid({
+  columns = [],
+  rows = [],
+  selectable = false,
+  selectedRows,
+  defaultSelectedRows = [],
+  onSelectionChange,
+  getRowId,
+  sort: controlledSort,
+  defaultSort = { key: null, dir: "asc" },
+  onSortChange,
+  sortingMode = "client",
+  onRowActivate,
+  bulkActions,
+  onClearSelection,
+  loading = false,
+  loadingLabel = "\uBD88\uB7EC\uC624\uB294 \uC911",
+  error,
+  emptyLabel = "\uD45C\uC2DC\uD560 \uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  stateActions,
+  size = "md",
+  style,
+  ...rest
+}) {
+  const [internalSort, setInternalSort] = React52.useState(defaultSort);
+  const sortControlled = controlledSort !== void 0;
+  const sort = sortControlled ? controlledSort : internalSort;
   const isControlled = selectedRows !== void 0;
-  const [internalSel, setInternalSel] = React49.useState(() => new Set(defaultSelectedRows));
+  const [internalSel, setInternalSel] = React52.useState(() => new Set(defaultSelectedRows));
   const sel = isControlled ? new Set(selectedRows) : internalSel;
   const pad2 = size === "sm" ? "10px 12px" : "13px 16px";
   const headerH = size === "sm" ? 50 : 58;
-  const sorted = sortRows(rows, sort.key, sort.dir);
-  const toggleSort = (c) => {
-    if (!c.sortable) return;
-    setSort((s) => s.key === c.key ? { key: c.key, dir: s.dir === "asc" ? "desc" : "asc" } : { key: c.key, dir: "asc" });
+  const entries = rows.map((row, index) => ({ row, id: getRowId ? getRowId(row, index) : index, sourceIndex: index }));
+  const sorted = sortingMode === "manual" ? entries : sortRowEntries(entries, sort?.key, sort?.dir);
+  const toggleSort = (column) => {
+    if (!column.sortable) return;
+    const next = sort?.key === column.key ? { key: column.key, dir: sort.dir === "asc" ? "desc" : "asc" } : { key: column.key, dir: "asc" };
+    if (!sortControlled) setInternalSort(next);
+    onSortChange && onSortChange(next);
   };
   const applySel = (n) => {
     if (!isControlled) setInternalSel(n);
     onSelectionChange && onSelectionChange([...n]);
   };
-  const toggleRow = (i) => {
+  const toggleRow = (id) => {
     const n = new Set(sel);
-    if (n.has(i)) n.delete(i);
-    else n.add(i);
+    if (n.has(id)) n.delete(id);
+    else n.add(id);
     applySel(n);
   };
+  const visibleIds = sorted.map((entry) => entry.id);
+  const allOn = selectable && visibleIds.length > 0 && visibleIds.every((id) => sel.has(id));
   const toggleAll = () => {
-    const n = sel.size === sorted.length ? /* @__PURE__ */ new Set() : new Set(sorted.map((_, i) => i));
+    const n = new Set(sel);
+    if (allOn) visibleIds.forEach((id) => n.delete(id));
+    else visibleIds.forEach((id) => n.add(id));
     applySel(n);
   };
-  const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
   const selecting = selectable && sel.size > 0;
   const colSpan = columns.length + (selectable ? 1 : 0);
-  return /* @__PURE__ */ jsx46("div", { style: { overflowX: "auto", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ jsxs38("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
-    /* @__PURE__ */ jsx46("thead", { children: selecting ? (
+  return /* @__PURE__ */ jsx49("div", { "aria-busy": loading || void 0, style: { overflowX: "auto", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", ...style }, ...rest, children: /* @__PURE__ */ jsxs41("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
+    /* @__PURE__ */ jsx49("thead", { children: selecting ? (
       /* Material-style selection band: replaces the column header at the
          same fixed height (no row shift), carrying the count, a clear
          affordance, and the bulk-action slot. The select-all checkbox
          stays in its own column so it remains reachable while selecting;
          it shows an indeterminate dash on a partial selection. */
-      /* @__PURE__ */ jsxs38("tr", { style: { height: headerH }, children: [
-        selectable && /* @__PURE__ */ jsx46("th", { style: { padding: pad2, width: 44, textAlign: "left", background: "var(--lk-accent-tint-2)", borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsx46("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn, !allOn) }) }),
-        /* @__PURE__ */ jsx46("th", { colSpan: columns.length, scope: "colgroup", style: { padding: 0, background: "var(--lk-accent-tint-2)", borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsxs38("div", { role: "status", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 12px" : "0 16px" }, children: [
-          /* @__PURE__ */ jsxs38("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
-            /* @__PURE__ */ jsxs38("span", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+      /* @__PURE__ */ jsxs41("tr", { style: { height: headerH }, children: [
+        selectable && /* @__PURE__ */ jsx49("th", { style: { padding: pad2, width: 44, textAlign: "left", background: "var(--color-semantic-primary-surface-strong)", borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: /* @__PURE__ */ jsx49("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn, !allOn) }) }),
+        /* @__PURE__ */ jsx49("th", { colSpan: columns.length, scope: "colgroup", style: { padding: 0, background: "var(--color-semantic-primary-surface-strong)", borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: /* @__PURE__ */ jsxs41("div", { role: "status", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 12px" : "0 16px" }, children: [
+          /* @__PURE__ */ jsxs41("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsxs41("span", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
               sel.size,
               "\uAC1C \uC120\uD0DD\uB428"
             ] }),
-            onClearSelection && /* @__PURE__ */ jsx46("button", { type: "button", onClick: onClearSelection, "aria-label": "\uC120\uD0DD \uD574\uC81C", title: "\uC120\uD0DD \uD574\uC81C", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22, padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: "var(--color-semantic-label-neutral)", cursor: "pointer" }, children: /* @__PURE__ */ jsx46(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
+            onClearSelection && /* @__PURE__ */ jsx49("button", { type: "button", onClick: onClearSelection, "aria-label": "\uC120\uD0DD \uD574\uC81C", title: "\uC120\uD0DD \uD574\uC81C", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 22, height: 22, padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: "var(--color-semantic-label-neutral)", cursor: "pointer" }, children: /* @__PURE__ */ jsx49(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
           ] }),
-          bulkActions != null && /* @__PURE__ */ jsx46("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: bulkActions })
+          bulkActions != null && /* @__PURE__ */ jsx49("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: bulkActions })
         ] }) })
       ] })
-    ) : /* @__PURE__ */ jsxs38("tr", { style: { height: headerH }, children: [
-      selectable && /* @__PURE__ */ jsx46("th", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)", width: 44, textAlign: "left" }, children: /* @__PURE__ */ jsx46("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn) }) }),
-      columns.map((c) => /* @__PURE__ */ jsx46(
+    ) : /* @__PURE__ */ jsxs41("tr", { style: { height: headerH }, children: [
+      selectable && /* @__PURE__ */ jsx49("th", { style: { padding: pad2, borderBottom: "1px solid var(--color-semantic-line-solid-normal)", width: 44, textAlign: "left" }, children: /* @__PURE__ */ jsx49("input", { type: "checkbox", checked: allOn, onChange: toggleAll, "aria-label": "\uC804\uCCB4 \uC120\uD0DD", style: checkboxStyle(allOn) }) }),
+      columns.map((c) => /* @__PURE__ */ jsx49(
         "th",
         {
           "aria-sort": c.sortable && sort.key === c.key ? sort.dir === "desc" ? "descending" : "ascending" : void 0,
           style: { ...thStyle(pad2), textAlign: c.align || "left", userSelect: "none" },
-          children: c.sortable ? /* @__PURE__ */ jsxs38(
+          children: c.sortable ? /* @__PURE__ */ jsxs41(
             "button",
             {
               type: "button",
@@ -5735,38 +6282,69 @@ function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, d
               style: { display: "inline-flex", alignItems: "center", gap: 5, padding: 0, border: 0, background: "transparent", cursor: "pointer", font: "inherit", letterSpacing: "inherit", textTransform: "inherit", color: "inherit" },
               children: [
                 c.label,
-                /* @__PURE__ */ jsx46("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { opacity: sort.key === c.key ? 1 : 0.3 }, children: /* @__PURE__ */ jsx46("path", { d: sort.key === c.key && sort.dir === "desc" ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
+                /* @__PURE__ */ jsx49("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { opacity: sort.key === c.key ? 1 : 0.3 }, children: /* @__PURE__ */ jsx49("path", { d: sort.key === c.key && sort.dir === "desc" ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
               ]
             }
-          ) : /* @__PURE__ */ jsx46("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: c.label })
+          ) : /* @__PURE__ */ jsx49("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: c.label })
         },
         c.key
       ))
     ] }) }),
-    /* @__PURE__ */ jsx46("tbody", { children: sorted.map((r, ri) => /* @__PURE__ */ jsxs38("tr", { style: { background: sel.has(ri) ? "var(--lk-accent-tint)" : "transparent" }, children: [
-      selectable && /* @__PURE__ */ jsx46("td", { style: { padding: pad2, borderBottom: "1px solid var(--bw-border)" }, children: /* @__PURE__ */ jsx46("input", { type: "checkbox", checked: sel.has(ri), onChange: () => toggleRow(ri), "aria-label": `${ri + 1}\uD589 \uC120\uD0DD`, style: checkboxStyle(sel.has(ri)) }) }),
-      columns.map((c) => /* @__PURE__ */ jsx46("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(r) : r[c.key] }, c.key))
-    ] }, ri)) })
+    /* @__PURE__ */ jsxs41("tbody", { children: [
+      (loading || error != null || sorted.length === 0) && /* @__PURE__ */ jsx49("tr", { children: /* @__PURE__ */ jsx49("td", { colSpan, style: { padding: "var(--space-8) var(--space-4)", textAlign: "center", borderBottom: 0 }, children: /* @__PURE__ */ jsxs41("div", { role: error != null ? "alert" : "status", "aria-live": "polite", style: { display: "inline-grid", justifyItems: "center", gap: "var(--space-2)", color: error != null ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-assistive)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: [
+        /* @__PURE__ */ jsx49("span", { children: loading ? loadingLabel : error ?? emptyLabel }),
+        stateActions
+      ] }) }) }),
+      !loading && error == null && sorted.map(({ row, id }, rowIndex) => {
+        const selected = sel.has(id);
+        const activate = (event) => {
+          if (!onRowActivate) return;
+          const target = event.target;
+          if (target?.closest?.("button, a, input, select, textarea")) return;
+          onRowActivate(row, id, event);
+        };
+        return /* @__PURE__ */ jsxs41(
+          "tr",
+          {
+            "aria-selected": selectable ? selected : void 0,
+            tabIndex: onRowActivate ? 0 : void 0,
+            onClick: activate,
+            onKeyDown: onRowActivate ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onRowActivate(row, id, event);
+              }
+            } : void 0,
+            style: { background: selected ? "var(--color-semantic-primary-surface-normal)" : "transparent", cursor: onRowActivate ? "pointer" : void 0 },
+            children: [
+              selectable && /* @__PURE__ */ jsx49("td", { style: { padding: pad2, borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: /* @__PURE__ */ jsx49("input", { type: "checkbox", checked: selected, onChange: () => toggleRow(id), "aria-label": `${rowIndex + 1}\uD589 \uC120\uD0DD`, style: checkboxStyle(selected) }) }),
+              columns.map((column) => /* @__PURE__ */ jsx49("td", { style: { ...tdStyle(pad2), textAlign: column.align || "left" }, children: typeof column.render === "function" ? column.render(row, id) : row[column.key] }, column.key))
+            ]
+          },
+          id
+        );
+      })
+    ] })
   ] }) });
 }
 
 // components/data/DataToolbar.jsx
-import React51 from "react";
+import React54 from "react";
 
 // components/forms/SearchField.jsx
-import React50 from "react";
-import { jsx as jsx47, jsxs as jsxs39 } from "react/jsx-runtime";
+import React53 from "react";
+import { jsx as jsx50, jsxs as jsxs42 } from "react/jsx-runtime";
 function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\uAC80\uC0C9", size = "md", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React50.useState(defaultValue || "");
-  const [focus, setFocus] = React50.useState(false);
+  const [internal, setInternal] = React53.useState(defaultValue || "");
+  const [focus, setFocus] = React53.useState(false);
   const val = isControlled ? value : internal;
   const set = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs39("div", { style: {
+  return /* @__PURE__ */ jsxs42("div", { style: {
     display: "inline-flex",
     alignItems: "center",
     gap: 10,
@@ -5774,19 +6352,19 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
     width: "100%",
     padding: "0 14px",
     boxSizing: "border-box",
-    background: "var(--bw-white)",
-    border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+    background: "var(--color-semantic-background-elevated-normal)",
+    border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
     borderRadius: "var(--radius-input)",
-    boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none",
+    boxShadow: focus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
     opacity: disabled ? 0.5 : 1,
     transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
     ...style
   }, children: [
-    /* @__PURE__ */ jsxs39("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
-      /* @__PURE__ */ jsx47("circle", { cx: "11", cy: "11", r: "7" }),
-      /* @__PURE__ */ jsx47("path", { d: "m21 21-4.3-4.3" })
+    /* @__PURE__ */ jsxs42("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: [
+      /* @__PURE__ */ jsx50("circle", { cx: "11", cy: "11", r: "7" }),
+      /* @__PURE__ */ jsx50("path", { d: "m21 21-4.3-4.3" })
     ] }),
-    /* @__PURE__ */ jsx47(
+    /* @__PURE__ */ jsx50(
       "input",
       {
         value: val,
@@ -5803,15 +6381,15 @@ function SearchField({ value, defaultValue, onChange, onSearch, placeholder = "\
         ...rest
       }
     ),
-    val && /* @__PURE__ */ jsx47("button", { type: "button", "aria-label": "\uC9C0\uC6B0\uAE30", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsxs39("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
-      /* @__PURE__ */ jsx47("circle", { cx: "12", cy: "12", r: "10" }),
-      /* @__PURE__ */ jsx47("path", { d: "M15 9l-6 6M9 9l6 6", stroke: "var(--bw-white)", strokeWidth: "2", strokeLinecap: "round" })
+    val && /* @__PURE__ */ jsx50("button", { type: "button", "aria-label": "\uC9C0\uC6B0\uAE30", onClick: () => set(""), style: { display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsxs42("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", children: [
+      /* @__PURE__ */ jsx50("circle", { cx: "12", cy: "12", r: "10" }),
+      /* @__PURE__ */ jsx50("path", { d: "M15 9l-6 6M9 9l6 6", stroke: "var(--color-semantic-background-elevated-normal)", strokeWidth: "2", strokeLinecap: "round" })
     ] }) })
   ] });
 }
 
 // components/data/DataToolbar.jsx
-import { jsx as jsx48, jsxs as jsxs40 } from "react/jsx-runtime";
+import { jsx as jsx51, jsxs as jsxs43 } from "react/jsx-runtime";
 function DataToolbar({
   title,
   description,
@@ -5827,7 +6405,7 @@ function DataToolbar({
   ...rest
 }) {
   const isSearchControlled = searchValue !== void 0;
-  const [internalSearch, setInternalSearch] = React51.useState(defaultSearchValue);
+  const [internalSearch, setInternalSearch] = React54.useState(defaultSearchValue);
   const currentSearch = isSearchControlled ? searchValue : internalSearch;
   const setSearch = (value) => {
     if (!isSearchControlled) setInternalSearch(value);
@@ -5835,37 +6413,37 @@ function DataToolbar({
   };
   const compact = size === "sm";
   const controlHeight = compact ? "var(--component-button-height-sm)" : "var(--component-button-height-md)";
-  return /* @__PURE__ */ jsxs40(
+  return /* @__PURE__ */ jsxs43(
     "div",
     {
       style: {
         display: "grid",
         gap: compact ? "var(--space-2)" : "var(--space-3)",
         padding: compact ? "10px 12px" : "14px 16px",
-        border: "1px solid var(--bw-border)",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
         borderRadius: "var(--radius-md)",
-        background: "var(--bw-white)",
+        background: "var(--color-semantic-background-elevated-normal)",
         fontFamily: "var(--font-sans)",
         minWidth: 0,
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs40("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs40("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
-            (title != null || count != null) && /* @__PURE__ */ jsxs40("div", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-2)", minWidth: 0 }, children: [
-              title != null && /* @__PURE__ */ jsx48("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
-              count != null && /* @__PURE__ */ jsxs40("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+        /* @__PURE__ */ jsxs43("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs43("div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
+            (title != null || count != null) && /* @__PURE__ */ jsxs43("div", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-2)", minWidth: 0 }, children: [
+              title != null && /* @__PURE__ */ jsx51("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
+              count != null && /* @__PURE__ */ jsxs43("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
                 count,
                 "\uAC1C"
               ] })
             ] }),
-            description != null && /* @__PURE__ */ jsx48("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)" }, children: description })
+            description != null && /* @__PURE__ */ jsx51("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)" }, children: description })
           ] }),
-          actions != null && /* @__PURE__ */ jsx48("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
+          actions != null && /* @__PURE__ */ jsx51("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
         ] }),
-        /* @__PURE__ */ jsxs40("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx48("div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ jsx48(
+        /* @__PURE__ */ jsxs43("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsx51("div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ jsx51(
             SearchField,
             {
               value: currentSearch,
@@ -5876,7 +6454,7 @@ function DataToolbar({
               style: { height: controlHeight }
             }
           ) }),
-          filters != null && /* @__PURE__ */ jsx48("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: filters })
+          filters != null && /* @__PURE__ */ jsx51("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: filters })
         ] })
       ]
     }
@@ -5884,42 +6462,49 @@ function DataToolbar({
 }
 
 // components/data/DescriptionList.jsx
-import React52 from "react";
-import { jsx as jsx49, jsxs as jsxs41 } from "react/jsx-runtime";
+import React55 from "react";
+import { jsx as jsx52, jsxs as jsxs44 } from "react/jsx-runtime";
 function DescriptionList({ items = [], columns = 1, style, ...rest }) {
   const lastRowStart = items.length - ((items.length - 1) % columns + 1);
-  return /* @__PURE__ */ jsx49("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ jsxs41("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: i >= lastRowStart ? "none" : "1px solid var(--bw-border)" }, children: [
-    /* @__PURE__ */ jsx49("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: it.term }),
-    /* @__PURE__ */ jsx49("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children: it.description })
+  return /* @__PURE__ */ jsx52("dl", { style: { margin: 0, display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, columnGap: 32, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it, i) => /* @__PURE__ */ jsxs44("div", { style: { display: "flex", gap: 16, padding: "12px 0", borderBottom: i >= lastRowStart ? "none" : "1px solid var(--color-semantic-line-solid-normal)" }, children: [
+    /* @__PURE__ */ jsx52("dt", { style: { flex: "0 0 34%", fontSize: 14, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: it.term }),
+    /* @__PURE__ */ jsx52("dd", { style: { margin: 0, flex: 1, fontSize: 14.5, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" }, children: it.description })
   ] }, i)) });
 }
 
 // components/data/DonutChart.jsx
-import React53 from "react";
-import { jsx as jsx50, jsxs as jsxs42 } from "react/jsx-runtime";
-var PALETTE = ["var(--color-semantic-primary-normal)", "var(--bw-blue)", "var(--bw-amber)", "var(--bw-green)", "var(--bw-red)", "var(--bw-gray-300)"];
+import React56 from "react";
+import { jsx as jsx53, jsxs as jsxs45 } from "react/jsx-runtime";
+var PALETTE = [
+  "var(--color-semantic-data-viz-series-1)",
+  "var(--color-semantic-data-viz-series-2)",
+  "var(--color-semantic-data-viz-series-3)",
+  "var(--color-semantic-data-viz-series-4)",
+  "var(--color-semantic-data-viz-series-5)",
+  "var(--color-semantic-data-viz-series-6)"
+];
 function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = true, centerLabel, legend = true, style, ...rest }) {
   const total = segments.reduce((s, x) => s + (x.value || 0), 0) || 1;
   const r = (size - thickness) / 2;
   const circ = 2 * Math.PI * r;
   let offset = 0;
-  return /* @__PURE__ */ jsxs42("div", { style: { display: "inline-flex", alignItems: "center", gap: 20, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs42("span", { style: { position: "relative", width: size, height: size }, children: [
-      /* @__PURE__ */ jsxs42("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
-        /* @__PURE__ */ jsx50("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
+  return /* @__PURE__ */ jsxs45("div", { style: { display: "inline-flex", alignItems: "center", gap: 20, ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs45("span", { style: { position: "relative", width: size, height: size }, children: [
+      /* @__PURE__ */ jsxs45("svg", { width: size, height: size, style: { transform: "rotate(-90deg)" }, children: [
+        /* @__PURE__ */ jsx53("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
         segments.map((s, i) => {
           const dash = (s.value || 0) / total * circ;
-          const el = /* @__PURE__ */ jsx50("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: s.color || PALETTE[i % PALETTE.length], strokeWidth: thickness, strokeDasharray: `${dash} ${circ - dash}`, strokeDashoffset: -offset }, i);
+          const el = /* @__PURE__ */ jsx53("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: s.color || PALETTE[i % PALETTE.length], strokeWidth: thickness, strokeDasharray: `${dash} ${circ - dash}`, strokeDashoffset: -offset }, i);
           offset += dash;
           return el;
         })
       ] }),
-      (showTotal || centerLabel != null) && /* @__PURE__ */ jsx50("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
+      (showTotal || centerLabel != null) && /* @__PURE__ */ jsx53("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: size * 0.2, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: centerLabel != null ? centerLabel : total })
     ] }),
-    legend && segments.length > 0 && /* @__PURE__ */ jsx50("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs42("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--color-semantic-label-neutral)" }, children: [
-      /* @__PURE__ */ jsx50("span", { style: { width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] } }),
+    legend && segments.length > 0 && /* @__PURE__ */ jsx53("div", { style: { display: "flex", flexDirection: "column", gap: 8 }, children: segments.map((s, i) => /* @__PURE__ */ jsxs45("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--color-semantic-label-neutral)" }, children: [
+      /* @__PURE__ */ jsx53("span", { style: { width: 10, height: 10, borderRadius: 3, background: s.color || PALETTE[i % PALETTE.length] } }),
       s.label,
-      /* @__PURE__ */ jsxs42("b", { style: { marginLeft: 2, color: "var(--color-semantic-label-normal)" }, children: [
+      /* @__PURE__ */ jsxs45("b", { style: { marginLeft: 2, color: "var(--color-semantic-label-normal)" }, children: [
         Math.round(s.value / total * 100),
         "%"
       ] })
@@ -5928,356 +6513,120 @@ function DonutChart({ segments = [], size = 140, thickness = 18, showTotal = tru
 }
 
 // components/data/FileBrowser.jsx
-import React54 from "react";
-import { jsx as jsx51, jsxs as jsxs43 } from "react/jsx-runtime";
-var ROW_HEIGHT = 40;
-var LEADING_SIZE = 24;
-function getEntryKey(entry) {
+import React57 from "react";
+import { jsx as jsx54, jsxs as jsxs46 } from "react/jsx-runtime";
+function entryKey(entry) {
   return entry.id ?? entry.name;
 }
-function canSelectEntry(entry, selectionMode) {
-  if (selectionMode === "any") return true;
-  if (selectionMode === "none") return false;
-  if (selectionMode === "folder") return entry.type === "dir";
-  return selectionMode === entry.type;
+function isSelectable(entry, mode) {
+  if (mode === "file-or-folder") return true;
+  if (mode === "none") return false;
+  if (mode === "folder") return entry.kind === "directory";
+  return entry.kind === "file";
 }
-function getEntryActionLabel(entry, canOpen, canSelect) {
-  if (entry.type === "dir") {
-    if (canOpen) return "\uD3F4\uB354 \uC5F4\uAE30";
-    if (canSelect) return "\uD3F4\uB354 \uC120\uD0DD";
-    return "\uD3F4\uB354";
-  }
-  return canSelect ? "\uD30C\uC77C \uC120\uD0DD" : "\uD30C\uC77C";
+function StateRow({ children, role }) {
+  return /* @__PURE__ */ jsx54("li", { role, style: { minHeight: 104, display: "grid", placeItems: "center", padding: "var(--space-4)", color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", textAlign: "center" }, children });
 }
-function StateRow({ icon, children, tone = "neutral", role, ariaLive }) {
-  const color = tone === "negative" ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-assistive)";
-  return /* @__PURE__ */ jsx51(
-    "li",
-    {
-      "aria-disabled": "true",
-      style: {
-        minHeight: 104,
-        display: "grid",
-        placeItems: "center",
-        padding: "20px 12px",
-        boxSizing: "border-box",
-        color,
-        fontSize: "var(--label1-size)",
-        lineHeight: "var(--label1-line)",
-        fontWeight: "var(--fw-medium)",
-        letterSpacing: 0,
-        textAlign: "center"
-      },
-      children: /* @__PURE__ */ jsxs43(
-        "span",
-        {
-          role,
-          "aria-live": ariaLive,
-          style: { display: "inline-grid", gap: 8, justifyItems: "center" },
-          children: [
-            /* @__PURE__ */ jsx51(Icon, { name: icon, size: 20, "aria-hidden": "true" }),
-            /* @__PURE__ */ jsx51("span", { children })
-          ]
-        }
-      )
-    }
-  );
-}
-function UpButton({ disabled, onClick }) {
-  const [hovered, setHovered] = React54.useState(false);
-  return /* @__PURE__ */ jsx51(
+function DirectoryOpenButton({ entry, disabled, onNavigate }) {
+  if (typeof onNavigate !== "function") return null;
+  return /* @__PURE__ */ jsx54(
     "button",
     {
       type: "button",
-      onClick: (event) => {
-        if (!disabled && onClick) onClick(event);
-      },
-      onMouseEnter: () => setHovered(true),
-      onMouseLeave: () => setHovered(false),
-      "aria-label": "\uC0C1\uC704 \uD3F4\uB354\uB85C \uC774\uB3D9",
+      "aria-label": `${entry.name} \uD3F4\uB354 \uC5F4\uAE30`,
+      title: `${entry.name} \uD3F4\uB354 \uC5F4\uAE30`,
       disabled,
-      style: {
-        width: 30,
-        height: 30,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 0,
-        border: "1px solid var(--color-semantic-line-normal-normal)",
-        borderRadius: "var(--radius-sm)",
-        background: disabled ? "var(--color-semantic-fill-normal)" : hovered ? "var(--color-semantic-fill-alternative)" : "var(--color-semantic-background-elevated-normal)",
-        color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)",
-        cursor: disabled ? "not-allowed" : "pointer",
-        fontFamily: "inherit",
-        lineHeight: 0,
-        flexShrink: 0,
-        transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
-      },
-      children: /* @__PURE__ */ jsx51(Icon, { name: "arrow-up", size: 15, "aria-hidden": "true" })
+      onClick: () => onNavigate(entry),
+      style: { width: 30, height: 30, display: "inline-flex", alignItems: "center", justifyContent: "center", padding: 0, border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", background: "var(--color-semantic-background-elevated-normal)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", cursor: disabled ? "not-allowed" : "pointer" },
+      children: /* @__PURE__ */ jsx54(Icon, { name: "chevron-right", size: 14, "aria-hidden": "true" })
     }
   );
-}
-function FileBrowserRow({ entry, selected, onOpen, onSelect, selectionMode, readOnly }) {
-  const [hovered, setHovered] = React54.useState(false);
-  const isDir = entry.type === "dir";
-  const canOpen = isDir && !!onOpen;
-  const canSelect = canSelectEntry(entry, selectionMode);
-  const actionUnavailable = isDir ? !canOpen && !(canSelect && onSelect) : !(canSelect && onSelect);
-  const unavailable = !!entry.disabled || actionUnavailable;
-  const disabled = readOnly || unavailable;
-  const isSelected = canSelect && selected != null && selected === getEntryKey(entry);
-  const sizeText = entry.size == null ? "" : String(entry.size);
-  const actionLabel = getEntryActionLabel(entry, canOpen, canSelect);
-  const selectedLabel = isSelected ? ", \uC120\uD0DD\uB428" : "";
-  const sizeLabel = sizeText ? `, ${sizeText}` : "";
-  const iconColor = unavailable ? "var(--color-semantic-label-disable)" : isDir || isSelected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)";
-  const titleColor = unavailable ? "var(--color-semantic-label-disable)" : isSelected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)";
-  const background = disabled ? "transparent" : hovered ? "var(--color-semantic-fill-alternative)" : "transparent";
-  return /* @__PURE__ */ jsx51("li", { role: "listitem", style: { margin: 0, padding: 0 }, children: /* @__PURE__ */ jsxs43(
-    "button",
-    {
-      type: "button",
-      disabled,
-      "aria-current": isSelected ? "true" : void 0,
-      "aria-label": `${entry.name}, ${actionLabel}${sizeLabel}${selectedLabel}`,
-      "data-selected": isSelected ? "" : void 0,
-      onClick: () => {
-        if (disabled) return;
-        if (canOpen) onOpen(entry);
-        else if (canSelect && onSelect) onSelect(entry);
-      },
-      onMouseEnter: () => setHovered(true),
-      onMouseLeave: () => setHovered(false),
-      style: {
-        position: "relative",
-        display: "grid",
-        gridTemplateColumns: `${LEADING_SIZE}px minmax(0, 1fr) auto`,
-        alignItems: "center",
-        gap: 10,
-        width: "100%",
-        minHeight: ROW_HEIGHT,
-        padding: "0 10px",
-        boxSizing: "border-box",
-        border: "none",
-        borderRadius: "var(--radius-sm)",
-        background,
-        color: "var(--color-semantic-label-normal)",
-        cursor: unavailable ? "not-allowed" : readOnly ? "default" : "pointer",
-        textAlign: "left",
-        fontFamily: "inherit",
-        transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
-      },
-      children: [
-        /* @__PURE__ */ jsx51(
-          "span",
-          {
-            "aria-hidden": "true",
-            style: {
-              width: LEADING_SIZE,
-              height: LEADING_SIZE,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: iconColor,
-              flexShrink: 0
-            },
-            children: /* @__PURE__ */ jsx51(Icon, { name: isDir ? "folder" : "document", size: 18, "aria-hidden": "true" })
-          }
-        ),
-        /* @__PURE__ */ jsx51(
-          "span",
-          {
-            style: {
-              minWidth: 0,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              color: titleColor,
-              fontSize: "var(--label1-size)",
-              lineHeight: "var(--label1-line)",
-              fontWeight: isDir || isSelected ? "var(--fw-semibold)" : "var(--fw-medium)",
-              letterSpacing: 0
-            },
-            children: entry.name
-          }
-        ),
-        /* @__PURE__ */ jsxs43(
-          "span",
-          {
-            style: {
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              gap: 8,
-              minWidth: 0,
-              color: unavailable ? "var(--color-semantic-label-disable)" : isSelected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)"
-            },
-            children: [
-              entry.size != null && !isDir && /* @__PURE__ */ jsx51(
-                "span",
-                {
-                  style: {
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    fontSize: "var(--label2-size)",
-                    lineHeight: "var(--label2-line)",
-                    fontWeight: "var(--fw-medium)",
-                    fontVariantNumeric: "tabular-nums",
-                    letterSpacing: 0
-                  },
-                  children: entry.size
-                }
-              ),
-              isSelected && /* @__PURE__ */ jsx51(Icon, { name: "check", size: 16, "aria-hidden": "true" }),
-              canOpen && /* @__PURE__ */ jsx51(Icon, { name: "chevron-right", size: 14, "aria-hidden": "true" })
-            ]
-          }
-        )
-      ]
-    }
-  ) });
 }
 function FileBrowser({
   path = "/",
   entries = [],
-  selected,
+  selectedId,
   selectionMode = "file",
-  onOpen,
+  onNavigate,
   onUp,
-  onSelect,
-  height = 300,
-  emptyLabel = "\uBE44\uC5B4 \uC788\uC2B5\uB2C8\uB2E4",
+  onSelectionChange,
+  maxHeight = 300,
+  emptyMessage = "\uC774 \uC704\uCE58\uC5D0 \uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
   loading = false,
-  loadingLabel = "\uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4",
+  loadingMessage = "\uD56D\uBAA9\uC744 \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4.",
   error,
-  readOnly = false,
+  disabled = false,
+  navigationDisabled = false,
   style,
   "aria-label": ariaLabel,
   ...rest
 }) {
-  const hasError = error != null;
-  const upDisabled = readOnly || loading || path === "/" || !onUp;
-  return /* @__PURE__ */ jsxs43(
+  const upDisabled = disabled || navigationDisabled || loading || path === "/" || typeof onUp !== "function";
+  return /* @__PURE__ */ jsxs46(
     "div",
     {
       role: "group",
-      "aria-label": ariaLabel || "\uD30C\uC77C \uBE0C\uB77C\uC6B0\uC800",
-      "aria-busy": loading ? "true" : void 0,
-      "aria-disabled": readOnly ? "true" : void 0,
-      style: {
-        display: "grid",
-        gridTemplateRows: "auto minmax(0, 1fr)",
-        width: "100%",
-        maxWidth: 420,
-        minWidth: 0,
-        border: "1px solid var(--color-semantic-line-normal-normal)",
-        borderRadius: "var(--radius-md)",
-        overflow: "hidden",
-        background: "var(--color-semantic-background-elevated-normal)",
-        fontFamily: "var(--font-sans)",
-        boxSizing: "border-box",
-        ...style
-      },
+      "aria-label": ariaLabel ?? "File browser",
+      "aria-busy": loading || void 0,
+      "aria-disabled": disabled || void 0,
+      style: { display: "grid", gridTemplateRows: "auto minmax(0, 1fr)", width: "100%", maxWidth: 440, minWidth: 0, border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", overflow: "hidden", background: "var(--color-semantic-background-elevated-normal)", fontFamily: "var(--font-sans)", boxSizing: "border-box", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs43(
-          "div",
-          {
-            style: {
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              minWidth: 0,
-              padding: "8px 10px",
-              borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
-              background: "var(--color-semantic-background-elevated-alternative)",
-              boxSizing: "border-box"
-            },
-            children: [
-              /* @__PURE__ */ jsx51(UpButton, { disabled: upDisabled, onClick: onUp }),
-              /* @__PURE__ */ jsx51(
-                "code",
-                {
-                  "aria-label": `\uD604\uC7AC \uACBD\uB85C ${path}`,
-                  title: path,
-                  style: {
-                    minWidth: 0,
-                    flex: 1,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    direction: "rtl",
-                    textAlign: "left",
-                    color: "var(--color-semantic-label-neutral)",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "var(--label2-size)",
-                    lineHeight: "var(--label2-line)",
-                    fontWeight: "var(--fw-medium)",
-                    letterSpacing: 0
-                  },
-                  children: path
-                }
-              ),
-              readOnly && /* @__PURE__ */ jsx51(
-                "span",
-                {
-                  "aria-label": "\uC77D\uAE30 \uC804\uC6A9",
-                  title: "\uC77D\uAE30 \uC804\uC6A9",
-                  style: {
-                    width: 24,
-                    height: 24,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    color: "var(--color-semantic-label-assistive)"
-                  },
-                  children: /* @__PURE__ */ jsx51(Icon, { name: "lock", size: 15, "aria-hidden": "true" })
-                }
-              )
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsx51(
-          "ul",
-          {
-            role: "list",
-            "aria-label": "\uD30C\uC77C \uBC0F \uD3F4\uB354",
-            "aria-busy": loading ? "true" : void 0,
-            style: {
-              display: "grid",
-              gap: 2,
-              listStyle: "none",
-              margin: 0,
-              padding: 4,
-              overflow: "auto",
-              maxHeight: height,
-              minHeight: 0,
-              boxSizing: "border-box"
-            },
-            children: loading ? /* @__PURE__ */ jsx51(StateRow, { icon: "hourglass", role: "status", ariaLive: "polite", children: loadingLabel }) : hasError ? /* @__PURE__ */ jsx51(StateRow, { icon: "circle-exclamation", tone: "negative", role: "alert", children: error }) : entries.length === 0 ? /* @__PURE__ */ jsx51(StateRow, { icon: "folder", children: emptyLabel }) : entries.map((entry) => /* @__PURE__ */ jsx51(
-              FileBrowserRow,
+        /* @__PURE__ */ jsxs46("header", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, padding: "var(--space-2) var(--space-3)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)", background: "var(--color-semantic-background-elevated-alternative)" }, children: [
+          /* @__PURE__ */ jsx54(
+            "button",
+            {
+              type: "button",
+              "aria-label": "\uC0C1\uC704 \uD3F4\uB354\uB85C \uC774\uB3D9",
+              disabled: upDisabled,
+              onClick: onUp,
+              style: { width: 30, height: 30, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0, padding: 0, border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", background: "var(--color-semantic-background-elevated-normal)", color: upDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", cursor: upDisabled ? "not-allowed" : "pointer" },
+              children: /* @__PURE__ */ jsx54(Icon, { name: "arrow-up", size: 15, "aria-hidden": "true" })
+            }
+          ),
+          /* @__PURE__ */ jsx54("code", { "aria-label": `\uD604\uC7AC \uACBD\uB85C ${path}`, title: path, style: { minWidth: 0, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-strong)", fontFamily: "var(--font-mono)", fontSize: "var(--label2-size)" }, children: path })
+        ] }),
+        /* @__PURE__ */ jsx54("ul", { "aria-label": "Files and folders", style: { display: "grid", gap: 2, margin: 0, padding: 4, overflow: "auto", maxHeight, listStyle: "none" }, children: loading ? /* @__PURE__ */ jsx54(StateRow, { role: "status", children: loadingMessage }) : error != null ? /* @__PURE__ */ jsx54(StateRow, { role: "alert", children: error }) : entries.length === 0 ? /* @__PURE__ */ jsx54(StateRow, { children: emptyMessage }) : entries.map((entry) => {
+          const key = entryKey(entry);
+          const directory = entry.kind === "directory";
+          const selectable = isSelectable(entry, selectionMode);
+          const selected = selectable && selectedId != null && selectedId === key;
+          const rowDisabled = disabled || Boolean(entry.disabled);
+          const navigationAvailable = directory && !navigationDisabled && typeof onNavigate === "function";
+          const primarySelects = selectable && typeof onSelectionChange === "function";
+          const primaryNavigates = !primarySelects && navigationAvailable;
+          const primaryDisabled = rowDisabled || !primarySelects && !primaryNavigates;
+          return /* @__PURE__ */ jsxs46("li", { style: { display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 4, alignItems: "center" }, children: [
+            /* @__PURE__ */ jsxs46(
+              "button",
               {
-                entry,
-                selected,
-                selectionMode,
-                readOnly,
-                onOpen,
-                onSelect
-              },
-              getEntryKey(entry)
-            ))
-          }
-        )
+                type: "button",
+                "aria-pressed": primarySelects ? selected : void 0,
+                "aria-label": `${entry.name}, ${directory ? "\uD3F4\uB354" : "\uD30C\uC77C"}${selected ? ", \uC120\uD0DD\uB428" : ""}`,
+                disabled: primaryDisabled,
+                onClick: () => {
+                  if (primarySelects) onSelectionChange(entry);
+                  else if (primaryNavigates) onNavigate(entry);
+                },
+                style: { display: "grid", gridTemplateColumns: "24px minmax(0, 1fr) auto", gap: "var(--space-2)", alignItems: "center", minHeight: 42, minWidth: 0, padding: "0 var(--space-3)", border: selected ? "1px solid var(--color-semantic-line-normal-strong)" : "1px solid transparent", borderRadius: "var(--radius-sm)", background: selected ? "var(--color-semantic-fill-normal)" : "transparent", color: rowDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-strong)", textAlign: "left", cursor: primaryDisabled ? "default" : "pointer", fontFamily: "inherit" },
+                children: [
+                  /* @__PURE__ */ jsx54(Icon, { name: directory ? "folder" : "document", size: 18, "aria-hidden": "true" }),
+                  /* @__PURE__ */ jsx54("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label1-size)", fontWeight: directory || selected ? "var(--fw-semibold)" : "var(--fw-medium)" }, children: entry.name }),
+                  entry.meta != null && /* @__PURE__ */ jsx54("span", { style: { color: rowDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", whiteSpace: "nowrap" }, children: entry.meta })
+                ]
+              }
+            ),
+            directory && primarySelects && /* @__PURE__ */ jsx54(DirectoryOpenButton, { entry, disabled: rowDisabled || navigationDisabled, onNavigate })
+          ] }, key);
+        }) })
       ]
     }
   );
 }
 
 // components/data/Legend.jsx
-import React55 from "react";
-import { jsx as jsx52, jsxs as jsxs44 } from "react/jsx-runtime";
+import React58 from "react";
+import { jsx as jsx55, jsxs as jsxs47 } from "react/jsx-runtime";
 var SIZE2 = {
   sm: {
     fontSize: "var(--caption1-size)",
@@ -6308,7 +6657,7 @@ function Swatch({ shape = "square", color, dashed = false, disabled = false, siz
   const cfg = SIZE2[size] || SIZE2.md;
   const opacity = disabled ? 0.42 : 1;
   if (shape === "line") {
-    return /* @__PURE__ */ jsx52(
+    return /* @__PURE__ */ jsx55(
       "span",
       {
         "aria-hidden": "true",
@@ -6325,7 +6674,7 @@ function Swatch({ shape = "square", color, dashed = false, disabled = false, siz
   }
   const isDot = shape === "dot";
   const boxSize = isDot ? cfg.marker : cfg.square;
-  return /* @__PURE__ */ jsx52(
+  return /* @__PURE__ */ jsx55(
     "span",
     {
       "aria-hidden": "true",
@@ -6352,7 +6701,7 @@ function Legend({
   const vertical = direction === "vertical";
   const cfg = SIZE2[size] || SIZE2.md;
   const hasItems = items.length > 0;
-  return /* @__PURE__ */ jsxs44(
+  return /* @__PURE__ */ jsxs47(
     "ul",
     {
       "aria-label": ariaLabel || "\uBC94\uB840",
@@ -6372,7 +6721,7 @@ function Legend({
       },
       ...rest,
       children: [
-        !hasItems && emptyLabel != null && /* @__PURE__ */ jsx52(
+        !hasItems && emptyLabel != null && /* @__PURE__ */ jsx55(
           "li",
           {
             "aria-disabled": "true",
@@ -6390,7 +6739,7 @@ function Legend({
           const disabled = !!item.disabled;
           const muted = !!item.muted || disabled;
           const itemColor = muted ? "var(--color-semantic-label-assistive)" : "var(--color-semantic-label-neutral)";
-          return /* @__PURE__ */ jsxs44(
+          return /* @__PURE__ */ jsxs47(
             "li",
             {
               "aria-disabled": disabled ? "true" : void 0,
@@ -6408,7 +6757,7 @@ function Legend({
                 opacity: muted ? 0.72 : 1
               },
               children: [
-                /* @__PURE__ */ jsx52(
+                /* @__PURE__ */ jsx55(
                   Swatch,
                   {
                     shape: item.shape,
@@ -6418,7 +6767,7 @@ function Legend({
                     size
                   }
                 ),
-                /* @__PURE__ */ jsx52(
+                /* @__PURE__ */ jsx55(
                   "span",
                   {
                     style: {
@@ -6430,7 +6779,7 @@ function Legend({
                     children: item.label
                   }
                 ),
-                item.value != null && /* @__PURE__ */ jsx52(
+                item.value != null && /* @__PURE__ */ jsx55(
                   "span",
                   {
                     style: {
@@ -6453,14 +6802,14 @@ function Legend({
 }
 
 // components/data/LineChart.jsx
-import React56 from "react";
-import { jsx as jsx53, jsxs as jsxs45 } from "react/jsx-runtime";
+import React59 from "react";
+import { jsx as jsx56, jsxs as jsxs48 } from "react/jsx-runtime";
 var PALETTE2 = [
-  "var(--color-semantic-primary-normal)",
-  "var(--color-semantic-status-positive)",
-  "var(--color-semantic-status-cautionary)",
-  "var(--color-semantic-status-negative)",
-  "var(--color-semantic-accent-foreground-violet)"
+  "var(--color-semantic-data-viz-series-1)",
+  "var(--color-semantic-data-viz-series-2)",
+  "var(--color-semantic-data-viz-series-3)",
+  "var(--color-semantic-data-viz-series-4)",
+  "var(--color-semantic-data-viz-series-5)"
 ];
 function isFiniteNumber(value) {
   return Number.isFinite(Number(value));
@@ -6552,7 +6901,7 @@ function LineChart({
   const fx = formatX || defaultFormatX;
   const fy = formatY || defaultFormatY;
   const hasData = allPoints.length > 0;
-  const rawId = React56.useId();
+  const rawId = React59.useId();
   const clipId = `line-chart-${rawId.replace(/:/g, "")}-clip`;
   const chartLabel = ariaLabel || (yLabel ? `${yLabel} \uB77C\uC778 \uCC28\uD2B8` : "\uB77C\uC778 \uCC28\uD2B8");
   const legendItems = normalized.map((item, index) => ({
@@ -6563,7 +6912,7 @@ function LineChart({
     dashed: item.dashed,
     disabled: item.points.length === 0
   }));
-  return /* @__PURE__ */ jsxs45(
+  return /* @__PURE__ */ jsxs48(
     "div",
     {
       style: {
@@ -6577,7 +6926,7 @@ function LineChart({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs45(
+        /* @__PURE__ */ jsxs48(
           "svg",
           {
             viewBox: `0 0 ${chartWidth} ${chartHeight}`,
@@ -6591,9 +6940,9 @@ function LineChart({
               overflow: "visible"
             },
             children: [
-              description && /* @__PURE__ */ jsx53("desc", { children: description }),
-              /* @__PURE__ */ jsx53("defs", { children: /* @__PURE__ */ jsx53("clipPath", { id: clipId, children: /* @__PURE__ */ jsx53("rect", { x: pad2.left, y: pad2.top, width: innerWidth, height: innerHeight }) }) }),
-              showGrid && yTickValues.map((tick) => /* @__PURE__ */ jsx53(
+              description && /* @__PURE__ */ jsx56("desc", { children: description }),
+              /* @__PURE__ */ jsx56("defs", { children: /* @__PURE__ */ jsx56("clipPath", { id: clipId, children: /* @__PURE__ */ jsx56("rect", { x: pad2.left, y: pad2.top, width: innerWidth, height: innerHeight }) }) }),
+              showGrid && yTickValues.map((tick) => /* @__PURE__ */ jsx56(
                 "line",
                 {
                   x1: pad2.left,
@@ -6605,7 +6954,7 @@ function LineChart({
                 },
                 `grid-${tick}`
               )),
-              /* @__PURE__ */ jsx53(
+              /* @__PURE__ */ jsx56(
                 "line",
                 {
                   x1: pad2.left,
@@ -6616,7 +6965,7 @@ function LineChart({
                   strokeWidth: "1"
                 }
               ),
-              /* @__PURE__ */ jsx53(
+              /* @__PURE__ */ jsx56(
                 "line",
                 {
                   x1: pad2.left,
@@ -6627,7 +6976,7 @@ function LineChart({
                   strokeWidth: "1"
                 }
               ),
-              yTickValues.map((tick) => /* @__PURE__ */ jsx53(
+              yTickValues.map((tick) => /* @__PURE__ */ jsx56(
                 "text",
                 {
                   x: pad2.left - 8,
@@ -6640,7 +6989,7 @@ function LineChart({
                 },
                 `y-${tick}`
               )),
-              xTickValues.map((tick, index) => /* @__PURE__ */ jsx53(
+              xTickValues.map((tick, index) => /* @__PURE__ */ jsx56(
                 "text",
                 {
                   x: sx(tick),
@@ -6653,7 +7002,7 @@ function LineChart({
                 },
                 `x-${tick}`
               )),
-              yLabel && /* @__PURE__ */ jsx53(
+              yLabel && /* @__PURE__ */ jsx56(
                 "text",
                 {
                   x: 14,
@@ -6668,9 +7017,9 @@ function LineChart({
               ),
               referenceLines.filter((line) => isFiniteNumber(line.y) && Number(line.y) >= yMin && Number(line.y) <= yMax).map((line, index) => {
                 const y = sy(Number(line.y));
-                const color = line.color || "var(--color-semantic-status-cautionary)";
-                return /* @__PURE__ */ jsxs45("g", { children: [
-                  /* @__PURE__ */ jsx53(
+                const color = line.color || "var(--color-semantic-data-viz-series-5)";
+                return /* @__PURE__ */ jsxs48("g", { children: [
+                  /* @__PURE__ */ jsx56(
                     "line",
                     {
                       x1: pad2.left,
@@ -6682,7 +7031,7 @@ function LineChart({
                       strokeDasharray: line.dashed === false ? void 0 : "4 4"
                     }
                   ),
-                  line.label != null && /* @__PURE__ */ jsx53(
+                  line.label != null && /* @__PURE__ */ jsx56(
                     "text",
                     {
                       x: pad2.left + innerWidth - 4,
@@ -6696,11 +7045,11 @@ function LineChart({
                   )
                 ] }, line.id ?? line.label ?? index);
               }),
-              /* @__PURE__ */ jsx53("g", { clipPath: `url(#${clipId})`, children: normalized.map((item, index) => {
+              /* @__PURE__ */ jsx56("g", { clipPath: `url(#${clipId})`, children: normalized.map((item, index) => {
                 const color = item.color || PALETTE2[index % PALETTE2.length];
                 const path = linePath(item.points, sx, sy);
-                return /* @__PURE__ */ jsxs45("g", { children: [
-                  item.points.length > 1 && /* @__PURE__ */ jsx53(
+                return /* @__PURE__ */ jsxs48("g", { children: [
+                  item.points.length > 1 && /* @__PURE__ */ jsx56(
                     "path",
                     {
                       d: path,
@@ -6712,7 +7061,7 @@ function LineChart({
                       strokeDasharray: item.dashed ? "5 4" : void 0
                     }
                   ),
-                  (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => /* @__PURE__ */ jsx53(
+                  (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => /* @__PURE__ */ jsx56(
                     "circle",
                     {
                       cx: sx(point.x),
@@ -6726,7 +7075,7 @@ function LineChart({
                   ))
                 ] }, item.id);
               }) }),
-              !hasData && /* @__PURE__ */ jsx53(
+              !hasData && /* @__PURE__ */ jsx56(
                 "text",
                 {
                   x: pad2.left + innerWidth / 2,
@@ -6742,7 +7091,7 @@ function LineChart({
             ]
           }
         ),
-        showLegend && normalized.length > 0 && /* @__PURE__ */ jsx53(
+        showLegend && normalized.length > 0 && /* @__PURE__ */ jsx56(
           Legend,
           {
             items: legendItems,
@@ -6751,7 +7100,7 @@ function LineChart({
             style: { paddingLeft: pad2.left, maxWidth: "100%" }
           }
         ),
-        xLabel && /* @__PURE__ */ jsx53(
+        xLabel && /* @__PURE__ */ jsx56(
           "div",
           {
             style: {
@@ -6769,53 +7118,53 @@ function LineChart({
 }
 
 // components/data/Sparkline.jsx
-import React57 from "react";
-import { jsx as jsx54, jsxs as jsxs46 } from "react/jsx-runtime";
+import React60 from "react";
+import { jsx as jsx57, jsxs as jsxs49 } from "react/jsx-runtime";
 function Sparkline({ data = [], width = 120, height = 32, color = "var(--color-semantic-primary-normal)", fill = true, strokeWidth = 2, style, ...rest }) {
-  if (!data.length) return /* @__PURE__ */ jsx54("svg", { width, height, style, ...rest });
+  if (!data.length) return /* @__PURE__ */ jsx57("svg", { width, height, style, ...rest });
   const min = Math.min(...data);
   const max = Math.max(...data);
   const range2 = max - min || 1;
   const pts = data.map((d, i) => [i / (data.length - 1 || 1) * width, height - (d - min) / range2 * (height - 4) - 2]);
   const line = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
   const area = `${line} L${width} ${height} L0 ${height} Z`;
-  return /* @__PURE__ */ jsxs46("svg", { width, height, viewBox: `0 0 ${width} ${height}`, style: { display: "block", ...style }, ...rest, children: [
-    fill && /* @__PURE__ */ jsx54("path", { d: area, fill: color, opacity: "0.12" }),
-    /* @__PURE__ */ jsx54("path", { d: line, fill: "none", stroke: color, strokeWidth, strokeLinecap: "round", strokeLinejoin: "round" })
+  return /* @__PURE__ */ jsxs49("svg", { width, height, viewBox: `0 0 ${width} ${height}`, style: { display: "block", ...style }, ...rest, children: [
+    fill && /* @__PURE__ */ jsx57("path", { d: area, fill: color, opacity: "0.12" }),
+    /* @__PURE__ */ jsx57("path", { d: line, fill: "none", stroke: color, strokeWidth, strokeLinecap: "round", strokeLinejoin: "round" })
   ] });
 }
 
 // components/data/Table.jsx
-import React58 from "react";
-import { jsx as jsx55, jsxs as jsxs47 } from "react/jsx-runtime";
+import React61 from "react";
+import { jsx as jsx58, jsxs as jsxs50 } from "react/jsx-runtime";
 function TableRow({ columns, row, pad: pad2, hover }) {
-  const [h, setH] = React58.useState(false);
-  return /* @__PURE__ */ jsx55(
+  const [h, setH] = React61.useState(false);
+  return /* @__PURE__ */ jsx58(
     "tr",
     {
       onMouseEnter: () => setH(true),
       onMouseLeave: () => setH(false),
       style: { background: hover && h ? "var(--color-semantic-fill-alternative)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
-      children: columns.map((c) => /* @__PURE__ */ jsx55("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(row) : row[c.key] }, c.key))
+      children: columns.map((c) => /* @__PURE__ */ jsx58("td", { style: { ...tdStyle(pad2), textAlign: c.align || "left" }, children: typeof c.render === "function" ? c.render(row) : row[c.key] }, c.key))
     }
   );
 }
 function Table({ columns = [], rows = [], size = "md", hover = true, style, ...rest }) {
   const pad2 = size === "sm" ? "10px 12px" : "14px 16px";
-  return /* @__PURE__ */ jsx55("div", { style: { overflowX: "auto", ...style }, ...rest, children: /* @__PURE__ */ jsxs47("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
-    /* @__PURE__ */ jsx55("thead", { children: /* @__PURE__ */ jsx55("tr", { children: columns.map((c) => /* @__PURE__ */ jsx55("th", { style: { ...thStyle(pad2), textAlign: c.align || "left", width: c.width }, children: c.label }, c.key)) }) }),
-    /* @__PURE__ */ jsx55("tbody", { children: rows.map((r, ri) => /* @__PURE__ */ jsx55(TableRow, { columns, row: r, pad: pad2, hover }, ri)) })
+  return /* @__PURE__ */ jsx58("div", { style: { overflowX: "auto", ...style }, ...rest, children: /* @__PURE__ */ jsxs50("table", { style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" }, children: [
+    /* @__PURE__ */ jsx58("thead", { children: /* @__PURE__ */ jsx58("tr", { children: columns.map((c) => /* @__PURE__ */ jsx58("th", { style: { ...thStyle(pad2), textAlign: c.align || "left", width: c.width }, children: c.label }, c.key)) }) }),
+    /* @__PURE__ */ jsx58("tbody", { children: rows.map((r, ri) => /* @__PURE__ */ jsx58(TableRow, { columns, row: r, pad: pad2, hover }, ri)) })
   ] }) });
 }
 
 // components/data/Tree.jsx
-import React59 from "react";
-import { jsx as jsx56, jsxs as jsxs48 } from "react/jsx-runtime";
+import React62 from "react";
+import { jsx as jsx59, jsxs as jsxs51 } from "react/jsx-runtime";
 function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle, onSelect, openOnHover }) {
   const key = node.id != null ? node.id : node.label;
   const has = node.children && node.children.length > 0;
   const open = expandedSet.has(key) || previewSet.has(key);
-  const [hovered, setHovered] = React59.useState(false);
+  const [hovered, setHovered] = React62.useState(false);
   const previewHandlers = openOnHover && has ? {
     onMouseEnter: () => setPreviewKey(key, true),
     onMouseLeave: () => setPreviewKey(key, false),
@@ -6824,8 +7173,8 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
       if (!event.currentTarget.contains(event.relatedTarget)) setPreviewKey(key, false);
     }
   } : {};
-  return /* @__PURE__ */ jsxs48("div", { ...previewHandlers, children: [
-    /* @__PURE__ */ jsxs48(
+  return /* @__PURE__ */ jsxs51("div", { ...previewHandlers, children: [
+    /* @__PURE__ */ jsxs51(
       "button",
       {
         type: "button",
@@ -6856,13 +7205,13 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
           transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
         },
         children: [
-          has ? /* @__PURE__ */ jsx56("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ jsx56("path", { d: "m9 18 6-6-6-6" }) }) : /* @__PURE__ */ jsx56("span", { style: { width: 14, flexShrink: 0 } }),
+          has ? /* @__PURE__ */ jsx59("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 }, children: /* @__PURE__ */ jsx59("path", { d: "m9 18 6-6-6-6" }) }) : /* @__PURE__ */ jsx59("span", { style: { width: 14, flexShrink: 0 } }),
           node.icon,
-          /* @__PURE__ */ jsx56("span", { children: node.label })
+          /* @__PURE__ */ jsx59("span", { children: node.label })
         ]
       }
     ),
-    has && open && node.children.map((c, i) => /* @__PURE__ */ jsx56(
+    has && open && node.children.map((c, i) => /* @__PURE__ */ jsx59(
       TreeNode,
       {
         node: c,
@@ -6879,8 +7228,8 @@ function TreeNode({ node, level, expandedSet, previewSet, setPreviewKey, toggle,
   ] });
 }
 function Tree({ nodes = [], defaultExpanded = [], onSelect, openOnHover = false, style, ...rest }) {
-  const [expanded, setExpanded] = React59.useState(() => new Set(defaultExpanded));
-  const [preview, setPreview] = React59.useState(() => /* @__PURE__ */ new Set());
+  const [expanded, setExpanded] = React62.useState(() => new Set(defaultExpanded));
+  const [preview, setPreview] = React62.useState(() => /* @__PURE__ */ new Set());
   const toggle = (k) => setExpanded((prev) => {
     const n = new Set(prev);
     if (n.has(k)) n.delete(k);
@@ -6893,7 +7242,7 @@ function Tree({ nodes = [], defaultExpanded = [], onSelect, openOnHover = false,
     else next.delete(key);
     return next;
   });
-  return /* @__PURE__ */ jsx56("div", { style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx56(
+  return /* @__PURE__ */ jsx59("div", { style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx59(
     TreeNode,
     {
       node: n,
@@ -6909,554 +7258,805 @@ function Tree({ nodes = [], defaultExpanded = [], onSelect, openOnHover = false,
   )) });
 }
 
-// components/data/TreeSelectionPanel.jsx
-import React60 from "react";
-import { jsx as jsx57, jsxs as jsxs49 } from "react/jsx-runtime";
-var ROW_HEIGHT2 = 36;
-var INDENT = 18;
-var CHECK_SIZE = 18;
-var CARET_SIZE = 20;
-function getNodeText(node) {
-  if (node.searchText != null) return String(node.searchText);
-  if (typeof node.label === "string" || typeof node.label === "number") return String(node.label);
-  if (typeof node.description === "string") return node.description;
-  return node.id;
-}
-function nodeMatches(node, query) {
-  if (!query) return true;
-  const own = getNodeText(node).toLowerCase().includes(query);
-  return own || (node.children || []).some((child) => nodeMatches(child, query));
-}
-function collectSelectableIds(node, cascade, inheritedDisabled = false, includeDisabled = true) {
-  const disabled = inheritedDisabled || !!node.disabled;
-  const children = node.children || [];
-  const hasChildren = children.length > 0;
-  const ids = [];
-  if (!hasChildren && node.selectable !== false && (includeDisabled || !disabled)) {
-    ids.push(node.id);
-  }
-  if (cascade) {
-    for (const child of children) {
-      ids.push(...collectSelectableIds(child, cascade, disabled, includeDisabled));
-    }
-  }
-  return ids;
-}
-function getCheckState(ids, checkedSet) {
-  if (ids.length === 0) return { checked: false, mixed: false };
-  const checkedCount = ids.filter((id) => checkedSet.has(id)).length;
-  return {
-    checked: checkedCount === ids.length,
-    mixed: checkedCount > 0 && checkedCount < ids.length
+// components/data/TreePicker.jsx
+import React65 from "react";
+
+// components/forms/Checkbox.jsx
+import React63 from "react";
+import { jsx as jsx60, jsxs as jsxs52 } from "react/jsx-runtime";
+function Checkbox({
+  label,
+  checked,
+  defaultChecked,
+  indeterminate = false,
+  onChange,
+  variant = "box",
+  size = "md",
+  status = "normal",
+  state,
+  bold = false,
+  tight = false,
+  interaction,
+  disabled = false,
+  disable = false,
+  labelStyle,
+  style,
+  id,
+  "aria-label": ariaLabel,
+  ...rest
+}) {
+  const stateChecked = state === "checked" ? true : state === "unchecked" ? false : void 0;
+  const isControlled = checked !== void 0 || stateChecked !== void 0;
+  const [internal, setInternal] = React63.useState(stateChecked ?? !!defaultChecked);
+  const [hover, setHover] = React63.useState(false);
+  const [focus, setFocus] = React63.useState(false);
+  const on = checked !== void 0 ? checked : stateChecked !== void 0 ? stateChecked : internal;
+  const isMark = variant === "mark";
+  const mixed = !isMark && (indeterminate || state === "indeterminate") && !on;
+  const activeHover = hover || interaction === "hovered";
+  const activeFocus = focus || interaction === "focused";
+  const disabledState = disabled || disable || interaction === "inactive";
+  const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size;
+  const toggle = () => {
+    if (disabledState) return;
+    if (!isControlled) setInternal(!on);
+    onChange && onChange(!on);
   };
-}
-function StateRow2({ children }) {
-  return /* @__PURE__ */ jsx57(
-    "li",
+  const d = isMark ? normalizedSize === "sm" ? 20 : 24 : normalizedSize === "sm" ? 16 : 18;
+  const iconSize = isMark ? d : normalizedSize === "sm" ? 14 : 16;
+  const markTone = status === "negative" ? "var(--color-semantic-status-negative)" : "var(--color-semantic-primary-normal)";
+  const markIdleColor = activeHover || activeFocus ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-interaction-inactive)";
+  const boxBackground = disabledState ? on || mixed ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-fill-normal)" : on || mixed ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)";
+  const boxBorder = disabledState ? "var(--color-semantic-line-normal-neutral)" : on || mixed ? "var(--color-semantic-primary-normal)" : activeHover || activeFocus ? "var(--color-semantic-line-solid-normal)" : "var(--color-semantic-line-solid-normal)";
+  const checkStroke = disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-static-white)";
+  const controlStyle = isMark ? {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: d,
+    height: d,
+    flexShrink: 0,
+    boxSizing: "border-box",
+    color: disabledState ? "var(--color-semantic-label-disable)" : on ? markTone : markIdleColor,
+    background: "transparent",
+    border: "0",
+    borderRadius: "var(--radius-pill)",
+    boxShadow: activeFocus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
+    transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
+    outline: "none"
+  } : {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: d,
+    height: d,
+    flexShrink: 0,
+    boxSizing: "border-box",
+    background: boxBackground,
+    border: `1.5px solid ${boxBorder}`,
+    borderRadius: "var(--radius-5)",
+    boxShadow: activeFocus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
+    transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
+  };
+  return /* @__PURE__ */ jsxs52(
+    "label",
     {
-      "aria-disabled": "true",
+      htmlFor: id,
+      onClick: toggle,
+      onMouseEnter: () => setHover(true),
+      onMouseLeave: () => setHover(false),
       style: {
-        listStyle: "none",
-        minHeight: 96,
-        display: "grid",
-        placeItems: "center",
-        padding: "20px 12px",
-        color: "var(--color-semantic-label-assistive)",
-        fontSize: "var(--label2-size)",
-        lineHeight: "var(--label2-line)",
-        fontWeight: "var(--fw-medium)",
-        letterSpacing: 0,
-        textAlign: "center"
-      },
-      children
-    }
-  );
-}
-function CheckControl({ label, checked, mixed, disabled, onToggle }) {
-  const active = checked || mixed;
-  return /* @__PURE__ */ jsxs49(
-    "button",
-    {
-      type: "button",
-      role: "checkbox",
-      "aria-checked": mixed ? "mixed" : checked,
-      "aria-label": label,
-      disabled,
-      onClick: (event) => {
-        event.stopPropagation();
-        if (!disabled) onToggle();
-      },
-      style: {
-        width: CHECK_SIZE,
-        height: CHECK_SIZE,
         display: "inline-flex",
         alignItems: "center",
-        justifyContent: "center",
-        padding: 0,
-        border: `1.5px solid ${disabled ? "var(--color-semantic-line-normal-neutral)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-normal-normal)"}`,
-        borderRadius: "var(--radius-5)",
-        background: disabled ? "var(--color-semantic-fill-normal)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)",
-        color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-static-white)",
-        cursor: disabled ? "not-allowed" : "pointer",
-        flexShrink: 0,
-        transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
+        gap: tight ? 4 : 8,
+        cursor: disabledState ? "not-allowed" : "pointer",
+        fontFamily: "var(--font-sans)",
+        fontSize: normalizedSize === "sm" ? "var(--label1-size)" : "15px",
+        letterSpacing: 0,
+        color: disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-brand-ink)",
+        fontWeight: bold ? "var(--fw-bold)" : void 0,
+        ...style
       },
       children: [
-        checked && /* @__PURE__ */ jsx57(Icon, { name: "check", size: 14, "aria-hidden": "true" }),
-        mixed && /* @__PURE__ */ jsx57(
+        /* @__PURE__ */ jsxs52(
           "span",
           {
-            "aria-hidden": "true",
-            style: {
-              width: 9,
-              height: 2,
-              borderRadius: "var(--radius-pill)",
-              background: "currentColor"
-            }
+            role: "checkbox",
+            "aria-checked": mixed ? "mixed" : on,
+            "aria-disabled": disabledState ? true : void 0,
+            "aria-label": ariaLabel ?? (typeof label === "string" ? label : isMark ? "check mark" : "checkbox"),
+            id,
+            tabIndex: disabledState ? -1 : 0,
+            onFocus: () => setFocus(true),
+            onBlur: () => setFocus(false),
+            onKeyDown: (e) => {
+              if (e.key === " " || e.key === "Enter") {
+                e.preventDefault();
+                toggle();
+              }
+            },
+            style: controlStyle,
+            ...rest,
+            children: [
+              (on || isMark) && /* @__PURE__ */ jsx60("svg", { width: iconSize, height: iconSize, viewBox: "0 0 24 24", fill: "none", stroke: isMark ? "currentColor" : checkStroke, strokeWidth: "3.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx60("path", { d: "M20 6 9 17l-5-5" }) }),
+              mixed && /* @__PURE__ */ jsx60("span", { style: { width: d - 8, height: 2, borderRadius: 999, background: checkStroke } })
+            ]
           }
-        )
+        ),
+        label && /* @__PURE__ */ jsx60("span", { style: labelStyle, children: label })
       ]
     }
   );
 }
-function TreeSelectionPanelNode({
-  node,
-  depth,
-  query,
-  checkedSet,
-  expandedSet,
-  cascade,
-  disabled,
-  toggleNode,
-  toggleOpen
+
+// components/forms/Input.jsx
+import React64 from "react";
+import { jsx as jsx61, jsxs as jsxs53 } from "react/jsx-runtime";
+function usePlaceholderStyle() {
+  React64.useEffect(() => {
+    if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
+    const el = document.createElement("style");
+    el.id = "lk-field-ph";
+    el.textContent = "[data-lds-field]::placeholder{color:var(--color-semantic-label-assistive);opacity:1}";
+    document.head.appendChild(el);
+  }, []);
+}
+function Input({
+  label,
+  helper,
+  error,
+  iconLeft,
+  iconRight,
+  actionRight,
+  leadingIcon,
+  trailingIcon,
+  trailingButton,
+  invalid = false,
+  required = false,
+  status = "normal",
+  size = "md",
+  height,
+  interaction,
+  active = false,
+  focus = false,
+  disable = false,
+  resize,
+  platform,
+  variant,
+  id,
+  style,
+  "aria-label": ariaLabel,
+  ...rest
 }) {
-  if (!nodeMatches(node, query)) return null;
-  const children = node.children || [];
-  const hasChildren = children.length > 0;
-  const nodeDisabled = disabled || !!node.disabled;
-  const expanded = query ? true : expandedSet.has(node.id);
-  const stateIds = collectSelectableIds(node, cascade, false, true);
-  const actionIds = collectSelectableIds(node, cascade, nodeDisabled, false);
-  const showCheckbox = stateIds.length > 0;
-  const checkboxDisabled = nodeDisabled || actionIds.length === 0;
-  const checkState = getCheckState(stateIds, checkedSet);
-  const labelText = getNodeText(node);
-  const canToggleByRow = showCheckbox && !checkboxDisabled;
-  const expandLabel = `${labelText} ${expanded ? "\uC811\uAE30" : "\uD3BC\uCE58\uAE30"}`;
-  const handleRowAction = () => {
-    if (hasChildren) toggleOpen(node.id);
-    else if (canToggleByRow) toggleNode(actionIds, checkState.checked);
-  };
-  return /* @__PURE__ */ jsxs49("li", { style: { listStyle: "none", margin: 0, padding: 0 }, children: [
-    /* @__PURE__ */ jsxs49(
+  const autoId = React64.useId();
+  const inputId = id || (label ? `in-${String(label).replace(/\s+/g, "-").toLowerCase()}` : `in-${autoId}`);
+  const message = error ?? helper;
+  const messageId = message != null ? `${inputId}-message` : void 0;
+  const [focused, setFocused] = React64.useState(false);
+  const [hover, setHover] = React64.useState(false);
+  const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size === "large" ? "lg" : size;
+  const disabled = !!rest.disabled || disable || interaction === "inactive";
+  const activeFocus = focused || focus || interaction === "focused" || interaction === "active-focused";
+  const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
+  const isInvalid = invalid || status === "negative" || error != null;
+  usePlaceholderStyle();
+  const ring = disabled ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--component-input-border-color-invalid)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--component-input-border-color-focus)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--component-input-border-color)";
+  const h = height || (normalizedSize === "sm" ? "var(--control-h-sm)" : normalizedSize === "lg" ? "var(--control-h-lg)" : "var(--component-input-height)");
+  const startIcon = leadingIcon ?? iconLeft;
+  const endIcon = trailingIcon ?? iconRight;
+  const endAction = trailingButton ?? actionRight;
+  return /* @__PURE__ */ jsxs53("div", { style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
+    label && /* @__PURE__ */ jsxs53("label", { htmlFor: inputId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
+      label,
+      required && /* @__PURE__ */ jsx61("span", { style: { color: "var(--color-semantic-status-negative-text)" }, children: " *" })
+    ] }),
+    /* @__PURE__ */ jsxs53(
       "div",
       {
+        onMouseEnter: () => setHover(true),
+        onMouseLeave: () => setHover(false),
         style: {
-          display: "grid",
-          gridTemplateColumns: `${CARET_SIZE}px ${CHECK_SIZE}px minmax(0, 1fr)`,
+          position: "relative",
+          display: "flex",
           alignItems: "center",
-          gap: 6,
-          minHeight: ROW_HEIGHT2,
-          padding: "3px 8px",
-          paddingLeft: 8 + depth * INDENT,
-          boxSizing: "border-box",
-          borderRadius: "var(--radius-sm)"
+          gap: "var(--component-input-gap)",
+          height: h,
+          padding: "0 var(--component-input-padding-x)",
+          background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)",
+          border: `var(--component-input-border-width) solid ${ring}`,
+          borderRadius: "var(--component-input-radius)",
+          boxShadow: activeFocus && !isInvalid ? "var(--component-input-focus-shadow)" : "none",
+          transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
         },
         children: [
-          hasChildren ? /* @__PURE__ */ jsx57(
-            "button",
+          startIcon && /* @__PURE__ */ jsx61("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: startIcon }),
+          /* @__PURE__ */ jsx61(
+            "input",
             {
-              type: "button",
-              "aria-label": expandLabel,
-              "aria-expanded": expanded,
-              disabled: nodeDisabled,
-              onClick: (event) => {
-                event.stopPropagation();
-                if (!nodeDisabled) toggleOpen(node.id);
+              id: inputId,
+              "data-lds-field": "",
+              ...rest,
+              disabled,
+              "aria-label": ariaLabel ?? (!label && typeof rest.placeholder === "string" ? rest.placeholder : void 0),
+              "aria-describedby": messageId ?? rest["aria-describedby"],
+              "aria-invalid": isInvalid || rest["aria-invalid"] || void 0,
+              onFocus: (e) => {
+                setFocused(true);
+                rest.onFocus && rest.onFocus(e);
               },
-              style: {
-                width: CARET_SIZE,
-                height: CARET_SIZE,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 0,
-                border: "none",
-                borderRadius: "var(--radius-sm)",
-                background: "transparent",
-                color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-alternative)",
-                cursor: nodeDisabled ? "default" : "pointer"
+              onBlur: (e) => {
+                setFocused(false);
+                rest.onBlur && rest.onBlur(e);
               },
-              children: /* @__PURE__ */ jsx57(
-                "span",
-                {
-                  "aria-hidden": "true",
-                  style: {
-                    display: "inline-flex",
-                    transform: expanded ? "rotate(90deg)" : "none",
-                    transition: "transform var(--dur-fast) var(--ease-out)"
-                  },
-                  children: /* @__PURE__ */ jsx57(Icon, { name: "chevron-right", size: 14, "aria-hidden": "true" })
-                }
-              )
+              style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)" }
             }
-          ) : /* @__PURE__ */ jsx57("span", { "aria-hidden": "true", style: { width: CARET_SIZE, height: CARET_SIZE } }),
-          showCheckbox ? /* @__PURE__ */ jsx57(
-            CheckControl,
-            {
-              label: `${labelText} \uC120\uD0DD`,
-              checked: checkState.checked,
-              mixed: checkState.mixed,
-              disabled: checkboxDisabled,
-              onToggle: () => toggleNode(actionIds, checkState.checked)
-            }
-          ) : /* @__PURE__ */ jsx57("span", { "aria-hidden": "true", style: { width: CHECK_SIZE, height: CHECK_SIZE } }),
-          /* @__PURE__ */ jsxs49(
-            "button",
-            {
-              type: "button",
-              "aria-expanded": hasChildren ? expanded : void 0,
-              disabled: nodeDisabled || !hasChildren && !canToggleByRow,
-              onClick: handleRowAction,
-              style: {
-                minWidth: 0,
-                width: "100%",
-                minHeight: 30,
-                display: "grid",
-                gridTemplateColumns: "minmax(0, 1fr) auto",
-                alignItems: "center",
-                gap: 6,
-                padding: "0 6px",
-                border: "none",
-                borderRadius: "var(--radius-sm)",
-                background: "transparent",
-                color: nodeDisabled ? "var(--color-semantic-label-disable)" : depth === 0 ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-normal)",
-                cursor: nodeDisabled || !hasChildren && !canToggleByRow ? "default" : "pointer",
-                textAlign: "left",
-                fontFamily: "var(--font-sans)"
-              },
-              children: [
-                /* @__PURE__ */ jsxs49("span", { style: { display: "grid", gap: 1, minWidth: 0 }, children: [
-                  /* @__PURE__ */ jsx57(
-                    "span",
-                    {
-                      style: {
-                        minWidth: 0,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        fontSize: "var(--label2-size)",
-                        lineHeight: "var(--label2-line)",
-                        fontWeight: hasChildren ? "var(--fw-semibold)" : "var(--fw-medium)",
-                        letterSpacing: 0
-                      },
-                      children: node.label
-                    }
-                  ),
-                  node.description != null && /* @__PURE__ */ jsx57(
-                    "span",
-                    {
-                      style: {
-                        minWidth: 0,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-assistive)",
-                        fontSize: "var(--caption1-size)",
-                        lineHeight: "var(--caption1-line)",
-                        fontWeight: "var(--fw-medium)",
-                        letterSpacing: 0
-                      },
-                      children: node.description
-                    }
-                  )
-                ] }),
-                node.meta != null && /* @__PURE__ */ jsx57(
-                  "span",
-                  {
-                    style: {
-                      maxWidth: 96,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-alternative)",
-                      fontSize: "var(--caption1-size)",
-                      lineHeight: "var(--caption1-line)",
-                      fontWeight: "var(--fw-medium)",
-                      fontVariantNumeric: "tabular-nums"
-                    },
-                    children: node.meta
-                  }
-                )
-              ]
-            }
-          )
+          ),
+          endIcon && /* @__PURE__ */ jsx61("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: endIcon }),
+          endAction && /* @__PURE__ */ jsx61("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: endAction })
         ]
       }
     ),
-    hasChildren && expanded && /* @__PURE__ */ jsx57("ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: children.map((child) => /* @__PURE__ */ jsx57(
-      TreeSelectionPanelNode,
+    message != null && /* @__PURE__ */ jsx61("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative-text)" : status === "positive" ? "var(--color-semantic-status-positive-text)" : "var(--color-semantic-label-neutral)" }, children: message })
+  ] });
+}
+
+// components/data/TreePicker.jsx
+import { jsx as jsx62, jsxs as jsxs54 } from "react/jsx-runtime";
+function nodeText2(node) {
+  if (node.searchText != null) return String(node.searchText);
+  if (typeof node.label === "string" || typeof node.label === "number") return String(node.label);
+  if (typeof node.description === "string") return node.description;
+  return String(node.id);
+}
+function matchesQuery(node, query) {
+  if (!query) return true;
+  if (nodeText2(node).toLowerCase().includes(query)) return true;
+  return (node.children ?? []).some((child) => matchesQuery(child, query));
+}
+function isSelectable2(node) {
+  const branch = (node.children?.length ?? 0) > 0;
+  return node.selectable ?? !branch;
+}
+function selectionIds(node, behavior, inheritedDisabled = false, includeDisabled = true) {
+  const disabled = inheritedDisabled || Boolean(node.disabled);
+  const children = node.children ?? [];
+  const ids = [];
+  if (behavior === "independent") {
+    if (isSelectable2(node) && (includeDisabled || !disabled)) ids.push(node.id);
+    return ids;
+  }
+  if (children.length === 0) {
+    if (isSelectable2(node) && (includeDisabled || !disabled)) ids.push(node.id);
+    return ids;
+  }
+  for (const child of children) ids.push(...selectionIds(child, behavior, disabled, includeDisabled));
+  return ids;
+}
+function selectionState(ids, selectedSet) {
+  const count = ids.filter((id) => selectedSet.has(id)).length;
+  return {
+    checked: ids.length > 0 && count === ids.length,
+    mixed: count > 0 && count < ids.length
+  };
+}
+function visibleTreeNodes(nodes, query, expandedSet, parentId = null, inheritedDisabled = false, result = []) {
+  for (const node of nodes) {
+    if (!matchesQuery(node, query)) continue;
+    const disabled = inheritedDisabled || Boolean(node.disabled);
+    result.push({ id: node.id, parentId, node, disabled });
+    const expanded = Boolean(query) || expandedSet.has(node.id);
+    if (expanded && (node.children?.length ?? 0) > 0) visibleTreeNodes(node.children, query, expandedSet, node.id, disabled, result);
+  }
+  return result;
+}
+function PickerNode({
+  node,
+  parentId,
+  depth,
+  query,
+  selectedSet,
+  expandedSet,
+  selectionBehavior,
+  disabled,
+  activeId,
+  registerNode,
+  focusNode,
+  focusFirstChild,
+  moveFocus,
+  onToggleSelection,
+  onToggleExpanded
+}) {
+  const [focused, setFocused] = React65.useState(false);
+  if (!matchesQuery(node, query)) return null;
+  const children = node.children ?? [];
+  const branch = children.length > 0;
+  const nodeDisabled = disabled || Boolean(node.disabled);
+  const expanded = query ? true : expandedSet.has(node.id);
+  const visibleSelectionIds = selectionIds(node, selectionBehavior, false, true);
+  const actionableSelectionIds = selectionIds(node, selectionBehavior, nodeDisabled, false);
+  const selectable = visibleSelectionIds.length > 0;
+  const state = selectionState(visibleSelectionIds, selectedSet);
+  const label = nodeText2(node);
+  const toggleSelection = () => {
+    if (!nodeDisabled && actionableSelectionIds.length > 0) onToggleSelection(actionableSelectionIds, state.checked);
+  };
+  return /* @__PURE__ */ jsxs54("li", { role: "none", style: { margin: 0, padding: 0, listStyle: "none" }, children: [
+    /* @__PURE__ */ jsxs54(
+      "div",
+      {
+        ref: (element) => registerNode(node.id, element),
+        role: "treeitem",
+        "aria-level": depth + 1,
+        "aria-expanded": branch ? expanded : void 0,
+        "aria-checked": selectable ? state.mixed ? "mixed" : state.checked : void 0,
+        "aria-disabled": nodeDisabled || void 0,
+        tabIndex: nodeDisabled ? -1 : activeId === node.id ? 0 : -1,
+        "data-tree-picker-id": node.id,
+        onFocus: () => {
+          setFocused(true);
+          focusNode(node.id, false);
+        },
+        onBlur: () => setFocused(false),
+        onClick: (event) => {
+          if (event.target.closest("button, label")) return;
+          if (selectable) toggleSelection();
+          else if (branch && !query) onToggleExpanded(node.id);
+        },
+        onKeyDown: (event) => {
+          if (event.target !== event.currentTarget) return;
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            moveFocus(node.id, "next");
+          }
+          if (event.key === "ArrowUp") {
+            event.preventDefault();
+            moveFocus(node.id, "previous");
+          }
+          if (event.key === "Home") {
+            event.preventDefault();
+            moveFocus(node.id, "first");
+          }
+          if (event.key === "End") {
+            event.preventDefault();
+            moveFocus(node.id, "last");
+          }
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            if (branch && !expanded && !query) onToggleExpanded(node.id);
+            else if (branch) focusFirstChild(node.id);
+          }
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            if (branch && expanded && !query) onToggleExpanded(node.id);
+            else focusNode(parentId);
+          }
+          if (event.key === " " || event.key === "Enter") {
+            event.preventDefault();
+            if (selectable) toggleSelection();
+            else if (branch && !query) onToggleExpanded(node.id);
+          }
+        },
+        style: {
+          padding: "var(--space-1) var(--space-2)",
+          paddingLeft: `calc(var(--space-2) + ${depth} * var(--space-4))`,
+          display: "grid",
+          gridTemplateColumns: "var(--component-toggle-icon-size-sm) auto minmax(0, 1fr)",
+          alignItems: "center",
+          columnGap: "var(--space-0)",
+          minHeight: "var(--control-h-md)",
+          borderRadius: "var(--radius-sm)",
+          background: focused ? "var(--color-semantic-fill-alternative)" : "transparent",
+          boxShadow: focused ? "0 0 0 3px var(--color-semantic-focus-ring)" : "none",
+          outline: "none",
+          cursor: nodeDisabled ? "not-allowed" : "pointer"
+        },
+        children: [
+          branch && !query ? /* @__PURE__ */ jsx62(
+            "span",
+            {
+              onClick: (event) => event.stopPropagation(),
+              style: { display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 0 },
+              children: /* @__PURE__ */ jsx62(
+                IconButton,
+                {
+                  variant: "ghost",
+                  round: false,
+                  onClick: () => onToggleExpanded(node.id),
+                  label: `${label} ${expanded ? "\uC811\uAE30" : "\uD3BC\uCE58\uAE30"}`,
+                  size: "sm",
+                  disabled: nodeDisabled,
+                  tabIndex: -1,
+                  "aria-expanded": expanded,
+                  style: { background: "transparent", border: "none", borderRadius: "var(--radius-sm)" },
+                  children: /* @__PURE__ */ jsx62("span", { "aria-hidden": "true", style: { display: "inline-flex", transform: expanded ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx62(Icon, { name: "chevron-right", size: 16, "aria-hidden": "true" }) })
+                }
+              )
+            }
+          ) : /* @__PURE__ */ jsx62("span", { "aria-hidden": "true", style: { width: "var(--component-toggle-icon-size-sm)" } }),
+          selectable ? /* @__PURE__ */ jsx62(
+            "span",
+            {
+              onClick: (event) => event.stopPropagation(),
+              style: { display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 0 },
+              children: /* @__PURE__ */ jsx62(
+                Checkbox,
+                {
+                  checked: state.checked,
+                  indeterminate: state.mixed,
+                  disabled: nodeDisabled || actionableSelectionIds.length === 0,
+                  onChange: toggleSelection,
+                  "aria-label": `${label} \uC120\uD0DD`,
+                  "aria-hidden": "true",
+                  tabIndex: -1
+                }
+              )
+            }
+          ) : /* @__PURE__ */ jsx62("span", { "aria-hidden": "true" }),
+          /* @__PURE__ */ jsxs54("span", { style: { minWidth: 0, marginLeft: "var(--space-2)", display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", alignItems: "center", gap: "var(--space-2)" }, children: [
+            /* @__PURE__ */ jsxs54("span", { style: { minWidth: 0, display: "grid", gap: "var(--space-0)" }, children: [
+              /* @__PURE__ */ jsx62("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label2-size)", fontWeight: branch ? "var(--fw-semibold)" : "var(--fw-medium)" }, children: node.label }),
+              node.description != null && /* @__PURE__ */ jsx62("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: node.description })
+            ] }),
+            node.meta != null && /* @__PURE__ */ jsx62("span", { style: { color: nodeDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }, children: node.meta })
+          ] })
+        ]
+      }
+    ),
+    branch && expanded && /* @__PURE__ */ jsx62("ul", { role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: children.map((child) => /* @__PURE__ */ jsx62(
+      PickerNode,
       {
         node: child,
+        parentId: node.id,
         depth: depth + 1,
         query,
-        checkedSet,
+        selectedSet,
         expandedSet,
-        cascade,
+        selectionBehavior,
         disabled: nodeDisabled,
-        toggleNode,
-        toggleOpen
+        activeId,
+        registerNode,
+        focusNode,
+        focusFirstChild,
+        moveFocus,
+        onToggleSelection,
+        onToggleExpanded
       },
       child.id
     )) })
   ] });
 }
-function TreeSelectionPanel({
+function TreePicker({
   nodes = [],
-  checked,
-  defaultChecked = [],
-  onChange,
+  selectedIds,
+  defaultSelectedIds = [],
+  onSelectedIdsChange,
+  expandedIds,
+  defaultExpandedIds = [],
+  onExpandedIdsChange,
   query,
   defaultQuery = "",
   onQueryChange,
-  placeholder = "\uAC80\uC0C9",
-  label = "\uD2B8\uB9AC \uC120\uD0DD",
-  defaultExpanded = [],
-  cascade = true,
-  height = 260,
-  emptyLabel = "\uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4",
-  noResultsLabel = "\uAC80\uC0C9 \uACB0\uACFC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4",
+  selectionBehavior = "descendants",
+  searchLabel = "\uACC4\uCE35 \uAC80\uC0C9",
+  searchPlaceholder = "\uAC80\uC0C9",
+  label = "\uACC4\uCE35\uC5D0\uC11C \uC120\uD0DD",
+  emptyMessage = "\uC120\uD0DD\uD560 \uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  noResultsMessage = "\uC77C\uCE58\uD558\uB294 \uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  maxHeight = 280,
   disabled = false,
   style,
   ...rest
 }) {
-  const isCheckedControlled = checked !== void 0;
-  const [internalChecked, setInternalChecked] = React60.useState(() => new Set(defaultChecked));
-  const checkedSet = isCheckedControlled ? new Set(checked) : internalChecked;
-  const isQueryControlled = query !== void 0;
-  const [internalQuery, setInternalQuery] = React60.useState(defaultQuery);
-  const currentQuery = isQueryControlled ? query : internalQuery;
+  const treeId = React65.useId();
+  const nodeRefs = React65.useRef(/* @__PURE__ */ new Map());
+  const selectionControlled = selectedIds !== void 0;
+  const [internalSelectedIds, setInternalSelectedIds] = React65.useState(defaultSelectedIds);
+  const currentSelectedIds = selectionControlled ? selectedIds : internalSelectedIds;
+  const selectedSet = new Set(currentSelectedIds);
+  const expansionControlled = expandedIds !== void 0;
+  const [internalExpandedIds, setInternalExpandedIds] = React65.useState(defaultExpandedIds);
+  const currentExpandedIds = expansionControlled ? expandedIds : internalExpandedIds;
+  const expandedSet = new Set(currentExpandedIds);
+  const queryControlled = query !== void 0;
+  const [internalQuery, setInternalQuery] = React65.useState(defaultQuery);
+  const currentQuery = queryControlled ? query : internalQuery;
   const normalizedQuery = currentQuery.trim().toLowerCase();
-  const [expanded, setExpanded] = React60.useState(() => new Set(defaultExpanded));
-  const visibleNodes = nodes.filter((node) => nodeMatches(node, normalizedQuery));
-  const commitChecked = (next) => {
-    if (!isCheckedControlled) setInternalChecked(next);
-    onChange && onChange([...next]);
+  const visibleNodes = nodes.filter((node) => matchesQuery(node, normalizedQuery));
+  const visibleRows = visibleTreeNodes(nodes, normalizedQuery, expandedSet, null, disabled);
+  const visibleIds = visibleRows.filter((row) => !row.disabled).map((row) => row.id);
+  const [activeId, setActiveId] = React65.useState(visibleIds[0]);
+  React65.useEffect(() => {
+    if (!visibleIds.includes(activeId)) setActiveId(visibleIds[0]);
+  }, [activeId, visibleIds.join("|")]);
+  const registerNode = (id, element) => {
+    if (element) nodeRefs.current.set(id, element);
+    else nodeRefs.current.delete(id);
   };
-  const setQuery = (value) => {
-    if (!isQueryControlled) setInternalQuery(value);
-    onQueryChange && onQueryChange(value);
+  const focusNode = (id, moveDomFocus = true) => {
+    if (id == null || !visibleIds.includes(id)) return;
+    setActiveId(id);
+    if (moveDomFocus) nodeRefs.current.get(id)?.focus();
   };
-  const toggleNode = (ids, allChecked) => {
+  const focusFirstChild = (parentId) => {
+    const child = visibleRows.find((row) => row.parentId === parentId && !row.disabled);
+    focusNode(child?.id);
+  };
+  const moveFocus = (id, direction) => {
+    const index = visibleIds.indexOf(id);
+    if (index < 0 || visibleIds.length === 0) return;
+    if (direction === "first") focusNode(visibleIds[0]);
+    if (direction === "last") focusNode(visibleIds[visibleIds.length - 1]);
+    if (direction === "next") focusNode(visibleIds[Math.min(index + 1, visibleIds.length - 1)]);
+    if (direction === "previous") focusNode(visibleIds[Math.max(index - 1, 0)]);
+  };
+  const commitSelection = (next) => {
+    const nextIds = [...next];
+    if (!selectionControlled) setInternalSelectedIds(nextIds);
+    onSelectedIdsChange?.(nextIds);
+  };
+  const toggleSelection = (ids, allSelected) => {
     if (disabled || ids.length === 0) return;
-    const next = new Set(checkedSet);
+    const next = new Set(selectedSet);
     for (const id of ids) {
-      if (allChecked) next.delete(id);
+      if (allSelected) next.delete(id);
       else next.add(id);
     }
-    commitChecked(next);
+    commitSelection(next);
   };
-  const toggleOpen = (id) => {
-    if (disabled) return;
-    setExpanded((previous) => {
-      const next = new Set(previous);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const toggleExpanded = (id) => {
+    if (disabled || normalizedQuery) return;
+    const next = new Set(expandedSet);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    const nextIds = [...next];
+    if (!expansionControlled) setInternalExpandedIds(nextIds);
+    onExpandedIdsChange?.(nextIds);
   };
-  return /* @__PURE__ */ jsxs49(
-    "div",
-    {
-      style: {
-        display: "grid",
-        gap: "var(--space-2)",
-        width: "100%",
-        maxWidth: 360,
-        minWidth: 0,
-        fontFamily: "var(--font-sans)",
-        ...style
-      },
-      ...rest,
-      children: [
-        /* @__PURE__ */ jsxs49("div", { style: { position: "relative", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx57(
-            "span",
-            {
-              "aria-hidden": "true",
-              style: {
-                position: "absolute",
-                left: 10,
-                top: "50%",
-                transform: "translateY(-50%)",
-                display: "inline-flex",
-                color: "var(--color-semantic-label-assistive)",
-                pointerEvents: "none"
-              },
-              children: /* @__PURE__ */ jsx57(Icon, { name: "search", size: 15, "aria-hidden": "true" })
-            }
-          ),
-          /* @__PURE__ */ jsx57(
-            "input",
-            {
-              value: currentQuery,
-              onChange: (event) => setQuery(event.target.value),
-              disabled,
-              placeholder,
-              "aria-label": placeholder,
-              style: {
-                width: "100%",
-                height: 36,
-                padding: "0 34px",
-                boxSizing: "border-box",
-                border: "1px solid var(--color-semantic-line-normal-normal)",
-                borderRadius: "var(--radius-md)",
-                background: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
-                color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
-                fontFamily: "var(--font-sans)",
-                fontSize: "var(--label2-size)",
-                lineHeight: "var(--label2-line)",
-                fontWeight: "var(--fw-medium)",
-                letterSpacing: 0
-              }
-            }
-          ),
-          currentQuery && !disabled && /* @__PURE__ */ jsx57(
-            "button",
-            {
-              type: "button",
-              "aria-label": "\uAC80\uC0C9\uC5B4 \uC9C0\uC6B0\uAE30",
-              onClick: () => setQuery(""),
-              style: {
-                position: "absolute",
-                right: 7,
-                top: "50%",
-                transform: "translateY(-50%)",
-                width: 24,
-                height: 24,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 0,
-                border: "none",
-                borderRadius: "var(--radius-sm)",
-                background: "transparent",
-                color: "var(--color-semantic-label-assistive)",
-                cursor: "pointer"
-              },
-              children: /* @__PURE__ */ jsx57(Icon, { name: "circle-close-fill", size: 15, "aria-hidden": "true" })
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsx57(
-          "ul",
+  const changeQuery = (value) => {
+    if (!queryControlled) setInternalQuery(value);
+    onQueryChange?.(value);
+  };
+  return /* @__PURE__ */ jsxs54("div", { style: { width: "100%", minWidth: 0, display: "grid", gap: "var(--space-2)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx62(
+      Input,
+      {
+        type: "search",
+        size: "sm",
+        label: searchLabel,
+        value: currentQuery,
+        onChange: (event) => changeQuery(event.target.value),
+        placeholder: searchPlaceholder,
+        disabled,
+        leadingIcon: /* @__PURE__ */ jsx62(Icon, { name: "search", size: 16, "aria-hidden": "true" }),
+        "aria-controls": treeId
+      }
+    ),
+    visibleNodes.length === 0 ? /* @__PURE__ */ jsx62(
+      "div",
+      {
+        id: treeId,
+        role: "status",
+        style: { minHeight: 104, maxHeight, display: "grid", placeItems: "center", padding: "var(--space-4)", boxSizing: "border-box", color: "var(--color-semantic-label-neutral)", textAlign: "center", fontSize: "var(--label2-size)", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)" },
+        children: nodes.length === 0 ? emptyMessage : noResultsMessage
+      }
+    ) : /* @__PURE__ */ jsx62(
+      "ul",
+      {
+        id: treeId,
+        role: "tree",
+        "aria-label": label,
+        "aria-multiselectable": "true",
+        "aria-disabled": disabled || void 0,
+        style: { minHeight: 104, maxHeight, margin: 0, padding: "var(--space-1)", overflow: "auto", listStyle: "none", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)" },
+        children: visibleNodes.map((node) => /* @__PURE__ */ jsx62(
+          PickerNode,
           {
-            "aria-label": label,
-            "aria-disabled": disabled ? "true" : void 0,
-            style: {
-              margin: 0,
-              padding: 4,
-              listStyle: "none",
-              border: "1px solid var(--color-semantic-line-normal-normal)",
-              borderRadius: "var(--radius-md)",
-              background: "var(--color-semantic-background-elevated-normal)",
-              maxHeight: height,
-              minHeight: 0,
-              overflow: "auto",
-              boxSizing: "border-box"
-            },
-            children: nodes.length === 0 ? /* @__PURE__ */ jsx57(StateRow2, { children: emptyLabel }) : visibleNodes.length === 0 ? /* @__PURE__ */ jsx57(StateRow2, { children: noResultsLabel }) : visibleNodes.map((node) => /* @__PURE__ */ jsx57(
-              TreeSelectionPanelNode,
-              {
-                node,
-                depth: 0,
-                query: normalizedQuery,
-                checkedSet,
-                expandedSet: expanded,
-                cascade,
-                disabled,
-                toggleNode,
-                toggleOpen
-              },
-              node.id
-            ))
-          }
-        )
-      ]
-    }
-  );
-}
-
-// components/editor/CanvasEditorCommandBar.jsx
-import React62 from "react";
-
-// components/editor/HistoryToolbar.jsx
-import React61 from "react";
-import { jsx as jsx58, jsxs as jsxs50 } from "react/jsx-runtime";
-function HistoryToolbar({ canUndo = false, canRedo = false, onUndo, onRedo, onReset, style, ...rest }) {
-  const base = {
-    width: 34,
-    height: 34,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "1px solid var(--color-semantic-line-normal-normal)",
-    borderRadius: "var(--radius-sm)",
-    background: "var(--color-semantic-background-elevated-normal)",
-    color: "var(--color-semantic-label-neutral)",
-    lineHeight: 0
-  };
-  return /* @__PURE__ */ jsxs50("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx58("button", { type: "button", disabled: !canUndo, onClick: onUndo, title: "\uC2E4\uD589 \uCDE8\uC18C", "aria-label": "\uC2E4\uD589 \uCDE8\uC18C", style: { ...base, cursor: canUndo ? "pointer" : "not-allowed", opacity: canUndo ? 1 : 0.4 }, children: /* @__PURE__ */ jsx58(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }),
-    /* @__PURE__ */ jsx58("button", { type: "button", disabled: !canRedo, onClick: onRedo, title: "\uB2E4\uC2DC \uC2E4\uD589", "aria-label": "\uB2E4\uC2DC \uC2E4\uD589", style: { ...base, cursor: canRedo ? "pointer" : "not-allowed", opacity: canRedo ? 1 : 0.4 }, children: /* @__PURE__ */ jsx58("span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ jsx58(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }) }),
-    onReset && /* @__PURE__ */ jsx58("button", { type: "button", onClick: onReset, title: "\uCD08\uAE30\uD654", "aria-label": "\uCD08\uAE30\uD654", style: { ...base, cursor: "pointer" }, children: /* @__PURE__ */ jsx58(Icon, { name: "reset", size: 16, "aria-hidden": "true" }) })
+            node,
+            parentId: null,
+            depth: 0,
+            query: normalizedQuery,
+            selectedSet,
+            expandedSet,
+            selectionBehavior,
+            disabled,
+            activeId,
+            registerNode,
+            focusNode,
+            focusFirstChild,
+            moveFocus,
+            onToggleSelection: toggleSelection,
+            onToggleExpanded: toggleExpanded
+          },
+          node.id
+        ))
+      }
+    )
   ] });
 }
 
 // components/editor/CanvasEditorCommandBar.jsx
-import { jsx as jsx59, jsxs as jsxs51 } from "react/jsx-runtime";
+import React67 from "react";
+
+// components/editor/HistoryToolbar.jsx
+import React66 from "react";
+import { jsx as jsx63, jsxs as jsxs55 } from "react/jsx-runtime";
+function HistoryToolbar({
+  label = "\uD3B8\uC9D1 \uC774\uB825",
+  canUndo = false,
+  canRedo = false,
+  onUndo,
+  onRedo,
+  onReset,
+  undoKeyShortcuts,
+  redoKeyShortcuts,
+  size = "sm",
+  role = "toolbar",
+  tabIndex,
+  onKeyDown,
+  style,
+  "aria-label": ariaLabel,
+  ...rest
+}) {
+  const toolbarRef = React66.useRef(null);
+  const [focusIndex, setFocusIndex] = React66.useState(0);
+  const undoEnabled = canUndo && typeof onUndo === "function";
+  const redoEnabled = canRedo && typeof onRedo === "function";
+  const resetVisible = typeof onReset === "function";
+  const actions = [
+    { key: "undo", label: "\uC2E4\uD589 \uCDE8\uC18C", icon: /* @__PURE__ */ jsx63(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }), enabled: undoEnabled, onClick: onUndo, shortcuts: undoKeyShortcuts },
+    { key: "redo", label: "\uB2E4\uC2DC \uC2E4\uD589", icon: /* @__PURE__ */ jsx63("span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ jsx63(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }), enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
+    ...resetVisible ? [{ key: "reset", label: "\uBCC0\uACBD\uC0AC\uD56D \uCD08\uAE30\uD654", icon: /* @__PURE__ */ jsx63(Icon, { name: "reset", size: 16, "aria-hidden": "true" }), enabled: true, onClick: onReset }] : []
+  ];
+  const enabledIndices = actions.reduce((indices, action, index) => {
+    if (action.enabled) indices.push(index);
+    return indices;
+  }, []);
+  const tabStopIndex = enabledIndices.includes(focusIndex) ? focusIndex : enabledIndices[0];
+  const moveFocus = (event) => {
+    if (!enabledIndices.length) return;
+    const currentIndex = enabledIndices.indexOf(focusIndex);
+    let nextIndex;
+    if (event.key === "Home") nextIndex = enabledIndices[0];
+    else if (event.key === "End") nextIndex = enabledIndices[enabledIndices.length - 1];
+    else if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      nextIndex = enabledIndices[(Math.max(0, currentIndex) + 1) % enabledIndices.length];
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      nextIndex = enabledIndices[(currentIndex <= 0 ? enabledIndices.length : currentIndex) - 1];
+    } else return;
+    event.preventDefault();
+    setFocusIndex(nextIndex);
+    toolbarRef.current?.querySelector(`[data-history-index="${nextIndex}"]`)?.focus();
+  };
+  return /* @__PURE__ */ jsx63(
+    "div",
+    {
+      ref: toolbarRef,
+      role,
+      "aria-label": ariaLabel ?? label,
+      "aria-orientation": role === "toolbar" ? "horizontal" : void 0,
+      "aria-disabled": enabledIndices.length === 0 || void 0,
+      tabIndex: enabledIndices.length === 0 ? tabIndex ?? 0 : tabIndex,
+      onKeyDown: (event) => {
+        moveFocus(event);
+        onKeyDown?.(event);
+      },
+      style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", fontFamily: "var(--font-sans)", ...style },
+      ...rest,
+      children: actions.map((action, index) => /* @__PURE__ */ jsxs55(React66.Fragment, { children: [
+        action.key === "reset" && /* @__PURE__ */ jsx63(Divider, { vertical: true, style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" } }),
+        /* @__PURE__ */ jsx63(
+          IconButton,
+          {
+            "data-history-index": index,
+            variant: "ghost",
+            round: false,
+            size,
+            disabled: !action.enabled,
+            onClick: action.enabled ? action.onClick : void 0,
+            onFocus: () => setFocusIndex(index),
+            tabIndex: action.enabled && index === tabStopIndex ? 0 : -1,
+            title: action.label,
+            label: action.label,
+            "aria-keyshortcuts": action.shortcuts,
+            children: action.icon
+          }
+        )
+      ] }, action.key))
+    }
+  );
+}
+
+// components/editor/CanvasEditorCommandBar.jsx
+import { jsx as jsx64, jsxs as jsxs56 } from "react/jsx-runtime";
 function actionKey(action, index) {
   return action.key ?? action.value ?? action.label ?? index;
 }
 function actionIcon(icon) {
-  if (typeof icon === "string") return /* @__PURE__ */ jsx59(Icon, { name: icon, size: 16, "aria-hidden": "true" });
+  if (typeof icon === "string") return /* @__PURE__ */ jsx64(Icon, { name: icon, size: 16, "aria-hidden": "true" });
   return icon;
 }
-function CommandButton({ action }) {
-  const disabled = !!action.disabled;
+function CommandButton({ action, size, index, tabStopIndex, onFocus }) {
+  const disabled = !!action.disabled || typeof action.onClick !== "function";
   const active = !!action.active;
-  return /* @__PURE__ */ jsx59(
-    "button",
+  return /* @__PURE__ */ jsx64(
+    IconButton,
     {
-      type: "button",
-      "aria-label": action.label,
+      "data-command-index": index,
+      variant: active ? "signal" : "ghost",
+      round: false,
+      size,
+      label: action.label,
       title: action.label,
       "aria-pressed": action.active === void 0 ? void 0 : active,
+      "aria-keyshortcuts": action.ariaKeyShortcuts,
       disabled,
-      onClick: action.onClick,
-      style: {
-        width: 34,
-        height: 34,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "1px solid var(--color-semantic-line-normal-normal)",
-        borderRadius: "var(--radius-sm)",
-        background: active ? "var(--lk-accent-tint)" : "var(--color-semantic-background-elevated-normal)",
-        color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
-        lineHeight: 0,
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.4 : 1,
-        transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
-      },
+      tabIndex: !disabled && index === tabStopIndex ? 0 : -1,
+      onFocus,
+      onClick: disabled ? void 0 : action.onClick,
       children: actionIcon(action.icon)
     }
   );
 }
+function ActionToolbar({ actions, label, size }) {
+  const toolbarRef = React67.useRef(null);
+  const [focusIndex, setFocusIndex] = React67.useState(0);
+  const enabledIndices = actions.reduce((indices, action, index) => {
+    if (!action.disabled && typeof action.onClick === "function") indices.push(index);
+    return indices;
+  }, []);
+  const tabStopIndex = enabledIndices.includes(focusIndex) ? focusIndex : enabledIndices[0];
+  const moveFocus = (event) => {
+    if (!enabledIndices.length) return;
+    const currentIndex = enabledIndices.indexOf(focusIndex);
+    let nextIndex;
+    if (event.key === "Home") nextIndex = enabledIndices[0];
+    else if (event.key === "End") nextIndex = enabledIndices[enabledIndices.length - 1];
+    else if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      nextIndex = enabledIndices[(Math.max(0, currentIndex) + 1) % enabledIndices.length];
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      nextIndex = enabledIndices[(currentIndex <= 0 ? enabledIndices.length : currentIndex) - 1];
+    } else return;
+    event.preventDefault();
+    setFocusIndex(nextIndex);
+    toolbarRef.current?.querySelector(`[data-command-index="${nextIndex}"]`)?.focus();
+  };
+  return /* @__PURE__ */ jsx64(
+    "div",
+    {
+      ref: toolbarRef,
+      role: "toolbar",
+      "aria-label": label,
+      "aria-orientation": "horizontal",
+      "aria-disabled": enabledIndices.length === 0 || void 0,
+      tabIndex: enabledIndices.length === 0 ? 0 : void 0,
+      onKeyDown: moveFocus,
+      style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)" },
+      children: actions.map((action, index) => /* @__PURE__ */ jsx64(
+        CommandButton,
+        {
+          action,
+          size,
+          index,
+          tabStopIndex,
+          onFocus: () => setFocusIndex(index)
+        },
+        actionKey(action, index)
+      ))
+    }
+  );
+}
+function visibleActions(actions) {
+  return actions.filter(
+    (action) => action && !action.hidden && (typeof action.onClick === "function" || action.disabled)
+  );
+}
 function CanvasEditorCommandBar({
-  label = "\uCE94\uBC84\uC2A4 \uD3B8\uC9D1 \uBA85\uB839",
-  viewLabel = "\uBDF0\uC5B4 \uBA85\uB839",
+  label = "\uBB38\uC11C \uD3B8\uC9D1 \uBA85\uB839",
+  documentLabel = "\uBB38\uC11C \uBA85\uB839",
+  documentActions = [],
+  viewLabel = "\uD638\uD658 \uBDF0 \uBA85\uB839",
   viewActions = [],
+  size = "sm",
   showHistory = true,
   historyLabel = "\uD3B8\uC9D1 \uC774\uB825",
   canUndo = false,
@@ -7464,130 +8064,507 @@ function CanvasEditorCommandBar({
   onUndo,
   onRedo,
   onReset,
+  undoKeyShortcuts,
+  redoKeyShortcuts,
   children,
-  extraLabel = "\uCD94\uAC00 \uBA85\uB839",
+  extraLabel = "\uBB38\uC11C \uC791\uC5C5",
   style,
+  "aria-label": ariaLabel,
   ...rest
 }) {
-  const actions = viewActions.filter((action) => action && !action.hidden && (action.onClick || action.disabled));
-  const undoEnabled = canUndo && typeof onUndo === "function";
-  const redoEnabled = canRedo && typeof onRedo === "function";
-  return /* @__PURE__ */ jsxs51(
+  const actions = visibleActions(documentActions);
+  const legacyViewActions = visibleActions(viewActions);
+  const groups = [];
+  if (showHistory) {
+    groups.push({
+      key: "history",
+      node: /* @__PURE__ */ jsx64(
+        HistoryToolbar,
+        {
+          label: historyLabel,
+          canUndo,
+          canRedo,
+          onUndo,
+          onRedo,
+          onReset,
+          undoKeyShortcuts,
+          redoKeyShortcuts,
+          size
+        }
+      )
+    });
+  }
+  if (actions.length > 0) {
+    groups.push({ key: "document", node: /* @__PURE__ */ jsx64(ActionToolbar, { actions, label: documentLabel, size }) });
+  }
+  if (legacyViewActions.length > 0) {
+    groups.push({ key: "legacy-view", node: /* @__PURE__ */ jsx64(ActionToolbar, { actions: legacyViewActions, label: viewLabel, size }) });
+  }
+  if (children != null) {
+    groups.push({
+      key: "extra",
+      node: /* @__PURE__ */ jsx64("div", { role: "group", "aria-label": extraLabel, style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }, children })
+    });
+  }
+  return /* @__PURE__ */ jsx64(
     "div",
     {
-      role: "group",
-      "aria-label": label,
-      style: { display: "inline-flex", alignItems: "center", gap: 6, flexShrink: 0, ...style },
       ...rest,
-      children: [
-        actions.length > 0 && /* @__PURE__ */ jsx59("div", { role: "toolbar", "aria-label": viewLabel, "aria-orientation": "horizontal", style: { display: "inline-flex", alignItems: "center", gap: 4 }, children: actions.map((action, index) => /* @__PURE__ */ jsx59(
-          CommandButton,
+      role: "group",
+      "aria-label": ariaLabel ?? label,
+      style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexShrink: 0, ...style },
+      children: groups.map((group, index) => /* @__PURE__ */ jsxs56(React67.Fragment, { children: [
+        index > 0 && /* @__PURE__ */ jsx64(
+          Divider,
           {
-            action
-          },
-          actionKey(action, index)
-        )) }),
-        showHistory && /* @__PURE__ */ jsx59(
-          HistoryToolbar,
-          {
-            role: "toolbar",
-            "aria-label": historyLabel,
-            canUndo: undoEnabled,
-            canRedo: redoEnabled,
-            onUndo,
-            onRedo,
-            onReset
+            vertical: true,
+            style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" }
           }
         ),
-        children != null && /* @__PURE__ */ jsx59("div", { role: "group", "aria-label": extraLabel, style: { display: "inline-flex", alignItems: "center", gap: 6 }, children })
-      ]
+        group.node
+      ] }, group.key))
     }
   );
 }
 
 // components/editor/CanvasEditorShell.jsx
-import React63 from "react";
-import { jsx as jsx60, jsxs as jsxs52 } from "react/jsx-runtime";
-var DRAWER_EXIT_MS = 220;
+import React69 from "react";
+
+// components/layout/DockPanel.jsx
+import React68 from "react";
+import { jsx as jsx65, jsxs as jsxs57 } from "react/jsx-runtime";
+var DEFAULT_WIDTH = 300;
+var DEFAULT_MIN_WIDTH = 240;
+var DEFAULT_MAX_WIDTH = 520;
+var DEFAULT_RESIZE_STEP = 16;
+function toCssSize(value) {
+  return typeof value === "number" ? `${value}px` : value;
+}
+function toNumber(value) {
+  return typeof value === "number" && Number.isFinite(value) ? value : void 0;
+}
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+function nextOpenValue(value) {
+  return !value;
+}
+function getHandleIcon(side, open) {
+  if (side === "left") return open ? "chevron-left" : "chevron-right";
+  return open ? "chevron-right" : "chevron-left";
+}
+function getResizeDelta(key, side, step) {
+  if (key === "ArrowLeft") return side === "left" ? -step : step;
+  if (key === "ArrowRight") return side === "left" ? step : -step;
+  return 0;
+}
+function DockPanel({
+  side = "right",
+  open,
+  defaultOpen = true,
+  onOpenChange,
+  title,
+  width = DEFAULT_WIDTH,
+  minWidth = DEFAULT_MIN_WIDTH,
+  maxWidth = DEFAULT_MAX_WIDTH,
+  resizeStep = DEFAULT_RESIZE_STEP,
+  resizable = false,
+  onWidthChange,
+  closeOnEscape = true,
+  bodyPadding = "var(--space-4)",
+  footer,
+  children,
+  style,
+  bodyStyle,
+  "aria-label": ariaLabel,
+  ...rest
+}) {
+  const controlled = open !== void 0;
+  const [internalOpen, setInternalOpen] = React68.useState(defaultOpen);
+  const [resizeFocused, setResizeFocused] = React68.useState(false);
+  const [isResizing, setIsResizing] = React68.useState(false);
+  const isOpen = controlled ? open : internalOpen;
+  const isLeft = side === "left";
+  const panelId = React68.useId();
+  const titleId = `${panelId}-title`;
+  const handleRef = React68.useRef(null);
+  const dragRef = React68.useRef(null);
+  const numericWidth = toNumber(width);
+  const minPanelWidth = toNumber(minWidth) ?? DEFAULT_MIN_WIDTH;
+  const maxPanelWidth = Math.max(minPanelWidth, toNumber(maxWidth) ?? DEFAULT_MAX_WIDTH);
+  const canResize = Boolean(resizable && numericWidth !== void 0);
+  const boundedInitialWidth = clamp(numericWidth ?? DEFAULT_WIDTH, minPanelWidth, maxPanelWidth);
+  const [resizedWidth, setResizedWidth] = React68.useState(boundedInitialWidth);
+  const activeNumericWidth = canResize ? resizedWidth : numericWidth;
+  const panelWidth = activeNumericWidth !== void 0 ? `${activeNumericWidth}px` : toCssSize(width);
+  const titleText = typeof title === "string" ? title : void 0;
+  React68.useEffect(() => {
+    if (numericWidth === void 0) return;
+    setResizedWidth(clamp(numericWidth, minPanelWidth, maxPanelWidth));
+  }, [numericWidth, minPanelWidth, maxPanelWidth]);
+  const setOpen = (value) => {
+    if (!controlled) setInternalOpen(value);
+    onOpenChange && onOpenChange(value);
+  };
+  const focusHandle = () => {
+    const run = () => handleRef.current && handleRef.current.focus();
+    if (typeof requestAnimationFrame === "function") requestAnimationFrame(run);
+    else setTimeout(run, 0);
+  };
+  const setPanelWidth = (value) => {
+    const nextWidth = clamp(value, minPanelWidth, maxPanelWidth);
+    setResizedWidth(nextWidth);
+    onWidthChange && onWidthChange(nextWidth);
+  };
+  const handleResizePointerDown = (event) => {
+    if (!canResize || !isOpen || event.button !== 0) return;
+    event.preventDefault();
+    event.currentTarget.setPointerCapture && event.currentTarget.setPointerCapture(event.pointerId);
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startWidth: activeNumericWidth
+    };
+    setIsResizing(true);
+  };
+  const handleResizePointerMove = (event) => {
+    const drag = dragRef.current;
+    if (!drag || activeNumericWidth === void 0) return;
+    const delta = event.clientX - drag.startX;
+    setPanelWidth(drag.startWidth + (isLeft ? delta : -delta));
+  };
+  const handleResizePointerEnd = (event) => {
+    if (!dragRef.current) return;
+    event.currentTarget.releasePointerCapture && event.currentTarget.releasePointerCapture(dragRef.current.pointerId);
+    dragRef.current = null;
+    setIsResizing(false);
+  };
+  const handleResizeKeyDown = (event) => {
+    if (!canResize || activeNumericWidth === void 0) return;
+    const step = (event.shiftKey ? resizeStep * 4 : resizeStep) || DEFAULT_RESIZE_STEP;
+    if (event.key === "Home") {
+      event.preventDefault();
+      setPanelWidth(minPanelWidth);
+      return;
+    }
+    if (event.key === "End") {
+      event.preventDefault();
+      setPanelWidth(maxPanelWidth);
+      return;
+    }
+    const delta = getResizeDelta(event.key, side, step);
+    if (delta === 0) return;
+    event.preventDefault();
+    setPanelWidth(activeNumericWidth + delta);
+  };
+  const handlePanelKeyDown = (event) => {
+    if (!closeOnEscape || event.key !== "Escape") return;
+    event.stopPropagation();
+    setOpen(false);
+    focusHandle();
+  };
+  const panelName = titleText || ariaLabel || "\uB3C4\uD0B9 \uD328\uB110";
+  const handleLabel = isOpen ? `${panelName} \uC811\uAE30` : `${panelName} \uD3BC\uCE58\uAE30`;
+  const resizeLabel = `${panelName} \uB108\uBE44 \uC870\uC808`;
+  return /* @__PURE__ */ jsx65(
+    "div",
+    {
+      "data-side": side,
+      "data-state": isOpen ? "open" : "closed",
+      "data-resizing": isResizing ? "true" : void 0,
+      style: {
+        position: "relative",
+        height: "100%",
+        display: "flex",
+        justifyContent: isLeft ? "flex-start" : "flex-end",
+        minWidth: 0,
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
+      ...rest,
+      children: /* @__PURE__ */ jsxs57(
+        "div",
+        {
+          style: {
+            position: "relative",
+            width: isOpen ? panelWidth : 0,
+            height: "100%",
+            minWidth: 0,
+            overflow: "visible",
+            transition: isResizing ? "none" : "width var(--dur-normal, 220ms) var(--ease-out)"
+          },
+          children: [
+            /* @__PURE__ */ jsx65(
+              "button",
+              {
+                ref: handleRef,
+                type: "button",
+                "aria-label": handleLabel,
+                title: handleLabel,
+                "aria-controls": panelId,
+                "aria-expanded": isOpen,
+                onClick: () => setOpen(nextOpenValue(isOpen)),
+                style: {
+                  position: "absolute",
+                  top: "var(--space-4)",
+                  [isLeft ? "right" : "left"]: -24,
+                  width: 24,
+                  height: 48,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  border: "1px solid var(--color-semantic-line-normal-normal)",
+                  [isLeft ? "borderLeft" : "borderRight"]: "none",
+                  borderRadius: isLeft ? "0 var(--radius-sm) var(--radius-sm) 0" : "var(--radius-sm) 0 0 var(--radius-sm)",
+                  background: "var(--color-semantic-background-elevated-normal)",
+                  color: "var(--color-semantic-label-neutral)",
+                  boxSizing: "border-box",
+                  boxShadow: "var(--shadow-sm)",
+                  cursor: "pointer",
+                  zIndex: 3,
+                  lineHeight: 0
+                },
+                children: /* @__PURE__ */ jsx65(Icon, { name: getHandleIcon(side, isOpen), size: 14, "aria-hidden": "true" })
+              }
+            ),
+            canResize && isOpen && activeNumericWidth !== void 0 && /* @__PURE__ */ jsx65(
+              "div",
+              {
+                role: "separator",
+                tabIndex: 0,
+                "aria-label": resizeLabel,
+                "aria-controls": panelId,
+                "aria-orientation": "vertical",
+                "aria-valuemin": minPanelWidth,
+                "aria-valuemax": maxPanelWidth,
+                "aria-valuenow": Math.round(activeNumericWidth),
+                onPointerDown: handleResizePointerDown,
+                onPointerMove: handleResizePointerMove,
+                onPointerUp: handleResizePointerEnd,
+                onPointerCancel: handleResizePointerEnd,
+                onKeyDown: handleResizeKeyDown,
+                onFocus: () => setResizeFocused(true),
+                onBlur: () => setResizeFocused(false),
+                style: {
+                  position: "absolute",
+                  top: 0,
+                  bottom: 0,
+                  [isLeft ? "right" : "left"]: -4,
+                  width: 8,
+                  display: "flex",
+                  alignItems: "stretch",
+                  justifyContent: "center",
+                  touchAction: "none",
+                  cursor: "col-resize",
+                  zIndex: 2,
+                  outline: "none"
+                },
+                children: /* @__PURE__ */ jsx65(
+                  "span",
+                  {
+                    "aria-hidden": "true",
+                    style: {
+                      width: 1,
+                      background: isResizing || resizeFocused ? "var(--color-semantic-primary-normal)" : "transparent",
+                      transition: "background var(--dur-fast) var(--ease-out)"
+                    }
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ jsxs57(
+              "aside",
+              {
+                id: panelId,
+                role: "region",
+                hidden: !isOpen,
+                inert: isOpen ? void 0 : true,
+                "aria-hidden": isOpen ? void 0 : true,
+                "aria-label": title == null ? ariaLabel || "\uB3C4\uD0B9 \uD328\uB110" : void 0,
+                "aria-labelledby": title == null ? void 0 : titleId,
+                onKeyDown: handlePanelKeyDown,
+                style: {
+                  width: panelWidth,
+                  height: "100%",
+                  minWidth: 0,
+                  display: isOpen ? "grid" : "none",
+                  gridTemplateRows: [
+                    title == null ? null : "auto",
+                    "minmax(0, 1fr)",
+                    footer == null ? null : "auto"
+                  ].filter(Boolean).join(" "),
+                  boxSizing: "border-box",
+                  overflow: "hidden",
+                  background: "var(--color-semantic-background-elevated-normal)",
+                  borderLeft: isLeft ? "none" : "1px solid var(--color-semantic-line-normal-normal)",
+                  borderRight: isLeft ? "1px solid var(--color-semantic-line-normal-normal)" : "none",
+                  boxShadow: "var(--shadow-md)"
+                },
+                children: [
+                  title != null && /* @__PURE__ */ jsx65(
+                    "header",
+                    {
+                      style: {
+                        minHeight: 48,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "var(--space-2)",
+                        padding: "0 var(--space-4)",
+                        borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
+                        boxSizing: "border-box"
+                      },
+                      children: /* @__PURE__ */ jsx65(
+                        "div",
+                        {
+                          id: titleId,
+                          style: {
+                            minWidth: 0,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            fontSize: "var(--label1-size)",
+                            lineHeight: "var(--label1-line)",
+                            fontWeight: "var(--fw-bold)",
+                            color: "var(--color-semantic-label-strong)"
+                          },
+                          children: title
+                        }
+                      )
+                    }
+                  ),
+                  /* @__PURE__ */ jsx65(
+                    "div",
+                    {
+                      style: {
+                        minHeight: 0,
+                        overflow: "auto",
+                        padding: bodyPadding,
+                        boxSizing: "border-box",
+                        ...bodyStyle
+                      },
+                      children
+                    }
+                  ),
+                  footer != null && /* @__PURE__ */ jsx65(
+                    "footer",
+                    {
+                      style: {
+                        padding: "var(--space-3) var(--space-4)",
+                        borderTop: "1px solid var(--color-semantic-line-normal-normal)",
+                        boxSizing: "border-box"
+                      },
+                      children: footer
+                    }
+                  )
+                ]
+              }
+            )
+          ]
+        }
+      )
+    }
+  );
+}
+
+// components/editor/CanvasEditorShell.jsx
+import { jsx as jsx66, jsxs as jsxs58 } from "react/jsx-runtime";
+function useControllableOpen(value, defaultValue, onChange) {
+  const controlled = value !== void 0;
+  const [internal, setInternal] = React69.useState(defaultValue);
+  const current = controlled ? value : internal;
+  const setCurrent = React69.useCallback((next, reason = "toggle") => {
+    if (!controlled) setInternal(next);
+    onChange?.(next, reason);
+  }, [controlled, onChange]);
+  return [current, setCurrent];
+}
 function CanvasEditorShell({
   title,
   description,
   headerStart,
   toolbar,
   subheader,
+  responsiveNavigation,
   tools,
   layers,
   children,
   panel,
   panelMode = "docked",
-  panelOpen = true,
+  panelOpen,
+  defaultPanelOpen = true,
   onPanelOpenChange,
+  layersOpen,
+  defaultLayersOpen = true,
+  onLayersOpenChange,
   status,
   panelWidth = 280,
+  panelMinWidth = 240,
+  panelMaxWidth = 420,
+  onPanelWidthChange,
   layerPanelWidth = 236,
+  layerPanelMinWidth = 200,
+  layerPanelMaxWidth = 360,
+  onLayerPanelWidthChange,
+  resizablePanels = true,
+  mobileActiveRegion = "canvas",
   toolsLabel = "\uD3B8\uC9D1 \uB3C4\uAD6C",
   layersLabel = "\uB808\uC774\uC5B4",
   canvasLabel = "\uD3B8\uC9D1 \uCE94\uBC84\uC2A4",
   panelLabel = "\uC18D\uC131 \uD328\uB110",
   statusLabel = "\uD3B8\uC9D1 \uC0C1\uD0DC",
+  className,
   style,
   ...rest
 }) {
   const shellClass = "lk-canvas-editor-shell";
+  const rootClassName = [shellClass, className].filter(Boolean).join(" ");
   const hasTools = tools != null;
   const hasLayers = layers != null;
-  const hasPanelContent = panel != null;
-  const wantsPanel = hasPanelContent && panelOpen !== false;
+  const hasPanel = panel != null;
   const isPanelDrawer = panelMode === "drawer";
-  const wantsDrawerPanel = wantsPanel && isPanelDrawer;
-  const [drawerRendered, setDrawerRendered] = React63.useState(wantsDrawerPanel);
-  const [drawerVisible, setDrawerVisible] = React63.useState(false);
-  React63.useEffect(() => {
-    if (!isPanelDrawer) {
-      setDrawerRendered(false);
-      setDrawerVisible(false);
-      return void 0;
-    }
-    if (wantsDrawerPanel) {
-      setDrawerRendered(true);
-      const frame = requestAnimationFrame(() => setDrawerVisible(true));
-      return () => cancelAnimationFrame(frame);
-    }
-    setDrawerVisible(false);
-    const timeout = setTimeout(() => setDrawerRendered(false), DRAWER_EXIT_MS);
-    return () => clearTimeout(timeout);
-  }, [isPanelDrawer, wantsDrawerPanel]);
-  React63.useEffect(() => {
-    if (!isPanelDrawer || !wantsDrawerPanel || typeof onPanelOpenChange !== "function") return void 0;
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") onPanelOpenChange(false, "escape");
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isPanelDrawer, onPanelOpenChange, wantsDrawerPanel]);
-  const hasDockedPanel = wantsPanel && !isPanelDrawer;
-  const hasDrawerPanel = isPanelDrawer && drawerRendered;
+  const [isPanelOpen, setPanelOpen] = useControllableOpen(
+    panelOpen,
+    defaultPanelOpen,
+    onPanelOpenChange
+  );
+  const [isLayersOpen, setLayersOpen] = useControllableOpen(
+    layersOpen,
+    defaultLayersOpen,
+    onLayersOpenChange
+  );
+  const panelReasonRef = React69.useRef("toggle");
+  const layersReasonRef = React69.useRef("toggle");
+  const hasHeader = title != null || description != null || headerStart != null || toolbar != null;
   const bodyClass = [
     "lk-canvas-editor-shell__body",
     hasTools ? "lk-canvas-editor-shell__body--tools" : "",
     hasLayers ? "lk-canvas-editor-shell__body--layers" : "",
-    hasDockedPanel ? "lk-canvas-editor-shell__body--panel" : "",
-    hasDrawerPanel ? "lk-canvas-editor-shell__body--drawer" : ""
+    hasPanel && !isPanelDrawer ? "lk-canvas-editor-shell__body--panel" : "",
+    hasPanel && isPanelDrawer ? "lk-canvas-editor-shell__body--drawer" : ""
   ].filter(Boolean).join(" ");
-  const hasHeader = title != null || description != null || headerStart != null || toolbar != null;
-  return /* @__PURE__ */ jsxs52(
+  const handlePanelOpenChange = (open) => {
+    const reason = panelReasonRef.current;
+    panelReasonRef.current = "toggle";
+    setPanelOpen(open, reason);
+  };
+  const handleLayersOpenChange = (open) => {
+    const reason = layersReasonRef.current;
+    layersReasonRef.current = "toggle";
+    setLayersOpen(open, reason);
+  };
+  return /* @__PURE__ */ jsxs58(
     "div",
     {
-      className: shellClass,
+      className: rootClassName,
       style: {
-        "--lk-editor-panel-width": `${panelWidth}px`,
-        "--lk-editor-layer-panel-width": `${layerPanelWidth}px`,
         display: "flex",
         flexDirection: "column",
         width: "100%",
         height: "100%",
         minWidth: 0,
         minHeight: 320,
+        containerType: "inline-size",
         border: "1px solid var(--color-semantic-line-normal-normal)",
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
@@ -7598,12 +8575,25 @@ function CanvasEditorShell({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx60("style", { children: `@media (max-width: 760px) {
+        /* @__PURE__ */ jsx66("style", { children: `.lk-canvas-editor-shell__responsive-navigation {
+          display: none;
+        }
+        .${shellClass} .lk-canvas-editor-shell__layers > [data-side] > div > button,
+        .${shellClass} .lk-canvas-editor-shell__panel > [data-side] > div > button {
+          top: 72px !important;
+        }
+        @container (max-width: 760px) {
+          .${shellClass} .lk-canvas-editor-shell__responsive-navigation {
+            display: block;
+          }
+          .${shellClass} .lk-canvas-editor-shell__header-description {
+            display: none !important;
+          }
           .${shellClass} .lk-canvas-editor-shell__body {
             grid-template-columns: minmax(0, 1fr) !important;
-            grid-template-rows: minmax(260px, 1fr) auto auto !important;
+            grid-template-rows: minmax(260px, 1fr) !important;
           }
-          .${shellClass} .lk-canvas-editor-shell__body--tools {
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="canvas"][data-mobile-has-tools="true"] {
             grid-template-columns: auto minmax(0, 1fr) !important;
           }
           .${shellClass} .lk-canvas-editor-shell__tools {
@@ -7611,69 +8601,86 @@ function CanvasEditorShell({
             grid-row: 1 !important;
           }
           .${shellClass} .lk-canvas-editor-shell__canvas {
-            grid-column: 1 / -1 !important;
+            grid-column: 1 !important;
             grid-row: 1 !important;
           }
-          .${shellClass} .lk-canvas-editor-shell__body--tools .lk-canvas-editor-shell__canvas {
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="canvas"][data-mobile-has-tools="true"] .lk-canvas-editor-shell__canvas {
             grid-column: 2 !important;
           }
-          .${shellClass} .lk-canvas-editor-shell__layers {
-            grid-column: 1 / -1 !important;
-            grid-row: 2 !important;
-            width: auto !important;
-            max-height: 200px !important;
-            border-right: 0 !important;
-            border-top: 1px solid var(--color-semantic-line-normal-normal) !important;
-          }
+          .${shellClass} .lk-canvas-editor-shell__layers,
           .${shellClass} .lk-canvas-editor-shell__panel--docked {
             grid-column: 1 / -1 !important;
-            grid-row: 3 !important;
-            width: auto !important;
-            max-height: 220px !important;
-            border-left: 0 !important;
-            border-top: 1px solid var(--color-semantic-line-normal-normal) !important;
+            grid-row: 1 !important;
+            width: 100% !important;
+          }
+          .${shellClass} .lk-canvas-editor-shell__layers > [data-side],
+          .${shellClass} .lk-canvas-editor-shell__panel--docked > [data-side],
+          .${shellClass} .lk-canvas-editor-shell__layers > [data-side] > div,
+          .${shellClass} .lk-canvas-editor-shell__panel--docked > [data-side] > div,
+          .${shellClass} .lk-canvas-editor-shell__layers aside,
+          .${shellClass} .lk-canvas-editor-shell__panel--docked aside {
+            width: 100% !important;
+          }
+          .${shellClass} .lk-canvas-editor-shell__layers > [data-side] > div > button,
+          .${shellClass} .lk-canvas-editor-shell__panel--docked > [data-side] > div > button,
+          .${shellClass} .lk-canvas-editor-shell__layers [role="separator"],
+          .${shellClass} .lk-canvas-editor-shell__panel--docked [role="separator"] {
+            display: none !important;
+          }
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="canvas"] .lk-canvas-editor-shell__layers,
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="canvas"] .lk-canvas-editor-shell__panel--docked,
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__tools,
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__canvas,
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__panel--docked,
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__tools,
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__canvas,
+          .${shellClass} .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__layers {
+            display: none !important;
           }
           .${shellClass} .lk-canvas-editor-shell__panel--drawer {
-            width: min(var(--lk-editor-panel-width), calc(100% - 48px)) !important;
+            width: min(${panelWidth}px, calc(100% - 40px)) !important;
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .${shellClass} .lk-canvas-editor-shell__panel--drawer {
+          .${shellClass} [data-side] > div {
             transition: none !important;
           }
         }` }),
-        hasHeader && /* @__PURE__ */ jsxs52(
+        hasHeader && /* @__PURE__ */ jsxs58(
           "header",
           {
             className: "lk-canvas-editor-shell__header",
             style: {
               display: "flex",
               alignItems: "center",
-              gap: 10,
+              gap: "var(--space-3)",
               minHeight: 56,
-              padding: headerStart != null ? "8px 14px 8px 8px" : "8px 14px",
+              padding: headerStart != null ? "var(--space-2) var(--space-4) var(--space-2) var(--space-2)" : "var(--space-2) var(--space-4)",
               borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
               boxSizing: "border-box",
               flexShrink: 0
             },
             children: [
-              headerStart != null && /* @__PURE__ */ jsx60("div", { style: { display: "inline-flex", alignItems: "center", gap: 4, flexShrink: 0 }, children: headerStart }),
-              (title != null || description != null) && /* @__PURE__ */ jsxs52("div", { style: { display: "grid", gap: 1, minWidth: 0, flex: 1 }, children: [
-                title != null && /* @__PURE__ */ jsx60("h2", { style: { minWidth: 0, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--headline2-size)", lineHeight: "var(--headline2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
-                description != null && /* @__PURE__ */ jsx60("div", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-neutral)", letterSpacing: 0 }, children: description })
+              headerStart != null && /* @__PURE__ */ jsx66("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", flexShrink: 0 }, children: headerStart }),
+              (title != null || description != null) && /* @__PURE__ */ jsxs58("div", { style: { display: "grid", gap: 1, minWidth: 0, flex: 1 }, children: [
+                title != null && /* @__PURE__ */ jsx66("h2", { style: { minWidth: 0, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--headline2-size)", lineHeight: "var(--headline2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
+                description != null && /* @__PURE__ */ jsx66("div", { className: "lk-canvas-editor-shell__header-description", style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-neutral)", letterSpacing: 0 }, children: description })
               ] }),
-              toolbar != null && /* @__PURE__ */ jsx60("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, marginLeft: title == null && description == null ? "auto" : 0, flexShrink: 0 }, children: toolbar })
+              toolbar != null && /* @__PURE__ */ jsx66("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", marginLeft: title == null && description == null ? "auto" : 0, flexShrink: 0 }, children: toolbar })
             ]
           }
         ),
-        subheader != null && /* @__PURE__ */ jsx60("div", { className: "lk-canvas-editor-shell__subheader", style: { flexShrink: 0 }, children: subheader }),
-        /* @__PURE__ */ jsxs52(
+        subheader != null && /* @__PURE__ */ jsx66("div", { className: "lk-canvas-editor-shell__subheader", style: { flexShrink: 0 }, children: subheader }),
+        responsiveNavigation != null && /* @__PURE__ */ jsx66("div", { className: "lk-canvas-editor-shell__responsive-navigation", style: { flexShrink: 0 }, children: responsiveNavigation }),
+        /* @__PURE__ */ jsxs58(
           "div",
           {
             className: bodyClass,
+            "data-mobile-region": mobileActiveRegion,
+            "data-mobile-has-tools": hasTools ? "true" : "false",
             style: {
               display: "grid",
-              gridTemplateColumns: `${hasTools ? "auto " : ""}${hasLayers ? "var(--lk-editor-layer-panel-width) " : ""}minmax(0, 1fr)${hasDockedPanel ? " var(--lk-editor-panel-width)" : ""}`,
+              gridTemplateColumns: `${hasTools ? "auto " : ""}${hasLayers ? "auto " : ""}minmax(0, 1fr)${hasPanel && !isPanelDrawer ? " auto" : ""}`,
               gridTemplateRows: "minmax(0, 1fr)",
               position: "relative",
               flex: 1,
@@ -7682,25 +8689,45 @@ function CanvasEditorShell({
               overflow: "hidden"
             },
             children: [
-              hasTools && /* @__PURE__ */ jsx60(
-                "nav",
+              hasTools && /* @__PURE__ */ jsx66(
+                "div",
                 {
-                  className: "lk-canvas-editor-shell__tools",
+                  role: "group",
                   "aria-label": toolsLabel,
-                  style: { display: "flex", flexDirection: "column", gap: 4, minHeight: 0, padding: 8, borderRight: "1px solid var(--color-semantic-line-normal-normal)", background: "var(--color-semantic-background-elevated-normal)", boxSizing: "border-box" },
+                  className: "lk-canvas-editor-shell__tools",
+                  style: { display: "flex", flexDirection: "column", gap: "var(--space-1)", minHeight: 0, padding: "var(--space-2)", borderRight: "1px solid var(--color-semantic-line-normal-normal)", background: "var(--color-semantic-background-elevated-normal)", boxSizing: "border-box" },
                   children: tools
                 }
               ),
-              hasLayers && /* @__PURE__ */ jsx60(
-                "aside",
+              hasLayers && /* @__PURE__ */ jsx66(
+                "div",
                 {
                   className: "lk-canvas-editor-shell__layers",
-                  "aria-label": layersLabel,
-                  style: { width: layerPanelWidth, minWidth: 0, minHeight: 0, borderRight: "1px solid var(--color-semantic-line-normal-normal)", overflow: "auto", background: "var(--color-semantic-background-elevated-normal)", boxSizing: "border-box" },
-                  children: layers
+                  onKeyDownCapture: (event) => {
+                    if (event.key === "Escape") layersReasonRef.current = "escape";
+                  },
+                  style: { minWidth: 0, minHeight: 0, zIndex: 2 },
+                  children: /* @__PURE__ */ jsx66(
+                    DockPanel,
+                    {
+                      side: "left",
+                      open: isLayersOpen,
+                      onOpenChange: handleLayersOpenChange,
+                      width: layerPanelWidth,
+                      minWidth: layerPanelMinWidth,
+                      maxWidth: layerPanelMaxWidth,
+                      resizable: resizablePanels,
+                      onWidthChange: onLayerPanelWidthChange,
+                      bodyPadding: 0,
+                      bodyStyle: { overflow: "hidden" },
+                      "aria-label": layersLabel,
+                      style: { width: "100%" },
+                      children: layers
+                    }
+                  )
                 }
               ),
-              /* @__PURE__ */ jsx60(
+              /* @__PURE__ */ jsx66(
                 "section",
                 {
                   className: "lk-canvas-editor-shell__canvas",
@@ -7709,53 +8736,72 @@ function CanvasEditorShell({
                   children
                 }
               ),
-              hasDockedPanel && /* @__PURE__ */ jsx60(
-                "aside",
+              hasPanel && !isPanelDrawer && /* @__PURE__ */ jsx66(
+                "div",
                 {
-                  "aria-label": panelLabel,
                   className: "lk-canvas-editor-shell__panel lk-canvas-editor-shell__panel--docked",
-                  style: { width: panelWidth, minWidth: 0, minHeight: 0, borderLeft: "1px solid var(--color-semantic-line-normal-normal)", overflow: "auto", background: "var(--color-semantic-background-elevated-normal)", boxSizing: "border-box" },
-                  children: panel
+                  onKeyDownCapture: (event) => {
+                    if (event.key === "Escape") panelReasonRef.current = "escape";
+                  },
+                  style: { minWidth: 0, minHeight: 0, zIndex: 2 },
+                  children: /* @__PURE__ */ jsx66(
+                    DockPanel,
+                    {
+                      side: "right",
+                      open: isPanelOpen,
+                      onOpenChange: handlePanelOpenChange,
+                      width: panelWidth,
+                      minWidth: panelMinWidth,
+                      maxWidth: panelMaxWidth,
+                      resizable: resizablePanels,
+                      onWidthChange: onPanelWidthChange,
+                      bodyPadding: 0,
+                      bodyStyle: { overflow: "hidden" },
+                      "aria-label": panelLabel,
+                      style: { width: "100%" },
+                      children: panel
+                    }
+                  )
                 }
               ),
-              hasDrawerPanel && /* @__PURE__ */ jsx60(
-                "aside",
+              hasPanel && isPanelDrawer && /* @__PURE__ */ jsx66(
+                "div",
                 {
-                  "aria-label": panelLabel,
-                  "aria-hidden": !drawerVisible,
-                  inert: !drawerVisible ? "" : void 0,
                   className: "lk-canvas-editor-shell__panel lk-canvas-editor-shell__panel--drawer",
-                  style: {
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    zIndex: 3,
-                    width: panelWidth,
-                    maxWidth: "calc(100% - 48px)",
-                    minWidth: 0,
-                    overflow: "auto",
-                    borderLeft: "1px solid var(--color-semantic-line-normal-normal)",
-                    background: "var(--color-semantic-background-elevated-normal)",
-                    boxShadow: "var(--shadow-lg)",
-                    boxSizing: "border-box",
-                    opacity: drawerVisible ? 1 : 0,
-                    pointerEvents: drawerVisible ? "auto" : "none",
-                    transform: drawerVisible ? "translateX(0)" : "translateX(100%)",
-                    transition: "transform var(--dur-slow) var(--ease-out), opacity var(--dur-base) var(--ease-out)",
-                    willChange: "transform, opacity"
+                  onKeyDownCapture: (event) => {
+                    if (event.key === "Escape") panelReasonRef.current = "escape";
                   },
-                  children: panel
+                  style: { position: "absolute", inset: "0 0 0 auto", zIndex: 4, width: isPanelOpen ? panelWidth : 0, minWidth: 0, pointerEvents: "auto" },
+                  children: /* @__PURE__ */ jsx66(
+                    DockPanel,
+                    {
+                      side: "right",
+                      open: isPanelOpen,
+                      onOpenChange: handlePanelOpenChange,
+                      width: panelWidth,
+                      minWidth: panelMinWidth,
+                      maxWidth: panelMaxWidth,
+                      resizable: resizablePanels,
+                      onWidthChange: onPanelWidthChange,
+                      bodyPadding: 0,
+                      bodyStyle: { overflow: "hidden" },
+                      "aria-label": panelLabel,
+                      style: { width: "100%" },
+                      children: panel
+                    }
+                  )
                 }
               )
             ]
           }
         ),
-        status != null && /* @__PURE__ */ jsx60(
-          "footer",
+        status != null && /* @__PURE__ */ jsx66(
+          "div",
           {
+            role: "status",
             "aria-label": statusLabel,
-            style: { display: "flex", alignItems: "center", gap: 12, minHeight: 34, padding: "5px 14px", borderTop: "1px solid var(--color-semantic-line-normal-normal)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: "var(--color-semantic-label-neutral)", background: "var(--color-semantic-background-normal-alternative)", boxSizing: "border-box", flexShrink: 0 },
+            className: "lk-canvas-editor-shell__status",
+            style: { display: "flex", alignItems: "center", minWidth: 0, minHeight: 32, padding: "var(--space-1) var(--space-4)", borderTop: "1px solid var(--color-semantic-line-normal-normal)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: "var(--color-semantic-label-neutral)", background: "var(--color-semantic-background-normal-alternative)", boxSizing: "border-box", flexShrink: 0 },
             children: status
           }
         )
@@ -7765,103 +8811,307 @@ function CanvasEditorShell({
 }
 
 // components/editor/EditorToolbar.jsx
-import React64 from "react";
-import { jsx as jsx61 } from "react/jsx-runtime";
-function EditorToolbar({ items = [], value, defaultValue, onChange, orientation = "vertical", label = "\uD3B8\uC9D1 \uB3C4\uAD6C", disabled = false, style, ...rest }) {
+import React71 from "react";
+
+// components/internal/useRovingToolbar.js
+import React70 from "react";
+function itemKey(item) {
+  return item?.getAttribute?.("data-lk-toolbar-key") ?? null;
+}
+function useRovingToolbar({
+  itemSelector,
+  orientation = "vertical",
+  preferredKey,
+  includeAriaDisabled = false,
+  stopPropagation = false,
+  onKeyDown,
+  onFocusCapture
+}) {
+  const toolbarRef = React70.useRef(null);
+  const lastFocusedItemRef = React70.useRef(null);
+  const lastFocusedKeyRef = React70.useRef(null);
+  const lastFocusedIndexRef = React70.useRef(-1);
+  const focusWithinRef = React70.useRef(false);
+  const toolbarItems = (includeUnavailable = false) => {
+    const toolbar = toolbarRef.current;
+    if (!toolbar) return [];
+    return Array.from(toolbar.querySelectorAll(itemSelector)).filter((item) => {
+      if (item.closest('[role="toolbar"]') !== toolbar) return false;
+      if (includeUnavailable) return true;
+      if (item.disabled) return false;
+      return includeAriaDisabled || item.getAttribute("aria-disabled") !== "true";
+    });
+  };
+  const syncTabStops = (requestedItem, restoreLostFocus = false) => {
+    const toolbar = toolbarRef.current;
+    const allItems = toolbarItems(true);
+    const focusableItems = toolbarItems();
+    if (focusableItems.length === 0) {
+      allItems.forEach((item) => {
+        item.tabIndex = -1;
+      });
+      lastFocusedItemRef.current = null;
+      lastFocusedKeyRef.current = null;
+      lastFocusedIndexRef.current = -1;
+      return;
+    }
+    const ownerDocument = toolbar?.ownerDocument;
+    const activeElement = ownerDocument?.activeElement;
+    const activeItem = focusableItems.includes(activeElement) ? activeElement : null;
+    const unavailableActiveIndex = activeItem ? -1 : allItems.indexOf(activeElement);
+    const availabilityFallback = unavailableActiveIndex < 0 ? null : allItems.slice(unavailableActiveIndex + 1).find((item) => focusableItems.includes(item)) ?? allItems.slice(0, unavailableActiveIndex).reverse().find((item) => focusableItems.includes(item));
+    const lostFocusIndex = Math.min(lastFocusedIndexRef.current, allItems.length - 1);
+    const lostFocusFallback = !restoreLostFocus || unavailableActiveIndex >= 0 || lostFocusIndex < 0 ? null : allItems.slice(lostFocusIndex).find((item) => focusableItems.includes(item)) ?? allItems.slice(0, lostFocusIndex).reverse().find((item) => focusableItems.includes(item));
+    const rememberedItem = focusableItems.includes(lastFocusedItemRef.current) ? lastFocusedItemRef.current : focusableItems.find((item) => itemKey(item) === lastFocusedKeyRef.current);
+    const preferredItem = preferredKey == null ? null : focusableItems.find((item) => itemKey(item) === String(preferredKey));
+    const existingTabStop = focusableItems.find((item) => item.tabIndex === 0);
+    const nextTabStop = focusableItems.includes(requestedItem) ? requestedItem : activeItem ?? availabilityFallback ?? lostFocusFallback ?? rememberedItem ?? preferredItem ?? existingTabStop ?? focusableItems[0];
+    allItems.forEach((item) => {
+      item.tabIndex = item === nextTabStop ? 0 : -1;
+    });
+    lastFocusedItemRef.current = nextTabStop;
+    lastFocusedKeyRef.current = itemKey(nextTabStop);
+    lastFocusedIndexRef.current = allItems.indexOf(nextTabStop);
+    if ((unavailableActiveIndex >= 0 || restoreLostFocus) && activeElement !== nextTabStop) {
+      nextTabStop.focus();
+    }
+  };
+  React70.useLayoutEffect(() => {
+    const lostFocusedItem = !!lastFocusedItemRef.current && !toolbarItems().includes(lastFocusedItemRef.current);
+    syncTabStops(void 0, focusWithinRef.current && lostFocusedItem);
+    const toolbar = toolbarRef.current;
+    const Observer = toolbar?.ownerDocument?.defaultView?.MutationObserver;
+    if (!toolbar || !Observer) return void 0;
+    const ownerDocument = toolbar.ownerDocument;
+    const handleDocumentFocusIn = (event) => {
+      focusWithinRef.current = toolbar.contains(event.target);
+    };
+    const handleDocumentPointerDown = (event) => {
+      if (!toolbar.contains(event.target)) focusWithinRef.current = false;
+    };
+    ownerDocument.addEventListener("focusin", handleDocumentFocusIn, true);
+    ownerDocument.addEventListener("pointerdown", handleDocumentPointerDown, true);
+    const observer = new Observer((mutations) => {
+      const lastFocusedItem = lastFocusedItemRef.current;
+      const lostFocusedItem2 = !!lastFocusedItem && mutations.some((mutation) => {
+        if (mutation.type === "attributes") {
+          return mutation.target === lastFocusedItem && !toolbarItems().includes(lastFocusedItem);
+        }
+        return Array.from(mutation.removedNodes).some((node) => node === lastFocusedItem || node.contains?.(lastFocusedItem));
+      });
+      syncTabStops(void 0, focusWithinRef.current && lostFocusedItem2);
+    });
+    observer.observe(toolbar, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["disabled", "aria-disabled", "data-lk-toolbar-key"]
+    });
+    return () => {
+      observer.disconnect();
+      ownerDocument.removeEventListener("focusin", handleDocumentFocusIn, true);
+      ownerDocument.removeEventListener("pointerdown", handleDocumentPointerDown, true);
+    };
+  });
+  const handleFocusCapture = (event) => {
+    onFocusCapture?.(event);
+    if (event.defaultPrevented) return;
+    const item = event.target.closest?.(itemSelector);
+    if (!item || item.closest('[role="toolbar"]') !== toolbarRef.current) return;
+    if (!toolbarItems().includes(item)) return;
+    lastFocusedItemRef.current = item;
+    lastFocusedKeyRef.current = itemKey(item);
+    focusWithinRef.current = true;
+    syncTabStops(item);
+  };
+  const handleKeyDown = (event) => {
+    onKeyDown?.(event);
+    if (event.defaultPrevented) return;
+    const toolbar = toolbarRef.current;
+    const items = toolbarItems();
+    const item = event.target.closest?.(itemSelector);
+    const currentIndex = items.indexOf(item);
+    if (currentIndex < 0 || item.closest('[role="toolbar"]') !== toolbar) return;
+    const previousKey = orientation === "vertical" ? "ArrowUp" : "ArrowLeft";
+    const nextKey = orientation === "vertical" ? "ArrowDown" : "ArrowRight";
+    let nextIndex;
+    if (event.key === previousKey) nextIndex = (currentIndex - 1 + items.length) % items.length;
+    if (event.key === nextKey) nextIndex = (currentIndex + 1) % items.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = items.length - 1;
+    if (nextIndex === void 0) return;
+    event.preventDefault();
+    if (stopPropagation) event.stopPropagation();
+    const nextItem = items[nextIndex];
+    lastFocusedItemRef.current = nextItem;
+    lastFocusedKeyRef.current = itemKey(nextItem);
+    syncTabStops(nextItem);
+    nextItem.focus();
+  };
+  return {
+    toolbarRef,
+    handleFocusCapture,
+    handleKeyDown
+  };
+}
+
+// components/editor/EditorToolbar.jsx
+import { jsx as jsx67, jsxs as jsxs59 } from "react/jsx-runtime";
+function EditorToolbar({
+  items = [],
+  value,
+  defaultValue,
+  onChange,
+  orientation = "vertical",
+  label = "\uD3B8\uC9D1 \uB3C4\uAD6C",
+  disabled = false,
+  disabledReason,
+  tooltipPosition,
+  style,
+  className,
+  onKeyDown,
+  onFocusCapture,
+  ...rest
+}) {
   const controlled = value !== void 0;
   const first = items[0] && (items[0].value != null ? items[0].value : items[0]);
-  const [internal, setInternal] = React64.useState(defaultValue != null ? defaultValue : first);
-  const buttonRefs = React64.useRef([]);
+  const [internal, setInternal] = React71.useState(defaultValue != null ? defaultValue : first);
   const cur = controlled ? value : internal;
-  const activeEnabledIndex = items.findIndex((item) => {
+  const activeEnabledItem = items.find((item) => {
     const itemValue = item.value != null ? item.value : item;
     return itemValue === cur && !disabled && !item.disabled;
   });
-  const firstEnabledIndex = items.findIndex((item) => !disabled && !item.disabled);
+  const firstEnabledItem = items.find((item) => !disabled && !item.disabled);
+  const preferredFocusItem = activeEnabledItem ?? firstEnabledItem ?? (!disabled ? items[0] : void 0);
+  const preferredFocusValue = preferredFocusItem != null ? preferredFocusItem.value != null ? preferredFocusItem.value : preferredFocusItem : void 0;
+  const { toolbarRef, handleFocusCapture, handleKeyDown } = useRovingToolbar({
+    itemSelector: "[data-lk-editor-toolbar-item]",
+    orientation,
+    preferredKey: preferredFocusValue,
+    includeAriaDisabled: true,
+    onKeyDown,
+    onFocusCapture
+  });
   const pick = (v, itemDisabled) => {
     if (disabled || itemDisabled) return;
     if (!controlled) setInternal(v);
     onChange && onChange(v);
   };
-  const moveFocus = (currentIndex, direction) => {
-    const enabled = items.map((item, index) => ({ item, index })).filter(({ item }) => !disabled && !item.disabled);
-    if (enabled.length === 0) return;
-    const currentEnabledIndex = enabled.findIndex(({ index }) => index === currentIndex);
-    const startIndex = currentEnabledIndex === -1 ? 0 : currentEnabledIndex;
-    const next = enabled[(startIndex + direction + enabled.length) % enabled.length];
-    buttonRefs.current[next.index]?.focus();
-  };
-  const focusBoundary = (boundary) => {
-    const enabled = items.map((item, index) => ({ item, index })).filter(({ item }) => !disabled && !item.disabled);
-    const target = boundary === "start" ? enabled[0] : enabled[enabled.length - 1];
-    if (target) buttonRefs.current[target.index]?.focus();
-  };
-  return /* @__PURE__ */ jsx61("div", { role: "toolbar", "aria-label": label, "aria-orientation": orientation, style: { display: "inline-flex", flexDirection: orientation === "vertical" ? "column" : "row", gap: 3, ...style }, ...rest, children: items.map((it, i) => {
-    const v = it.value != null ? it.value : it;
-    const on = v === cur;
-    const itemDisabled = disabled || !!it.disabled;
-    return /* @__PURE__ */ jsx61(
-      "button",
-      {
-        ref: (node) => {
-          buttonRefs.current[i] = node;
-        },
-        type: "button",
-        title: it.label || v,
-        "aria-label": it.label || v,
-        "aria-pressed": on,
-        tabIndex: on && !itemDisabled || activeEnabledIndex === -1 && i === firstEnabledIndex ? 0 : -1,
-        disabled: itemDisabled,
-        onClick: () => pick(v, itemDisabled),
-        onKeyDown: (event) => {
-          const previousKeys = orientation === "vertical" ? ["ArrowUp"] : ["ArrowLeft"];
-          const nextKeys = orientation === "vertical" ? ["ArrowDown"] : ["ArrowRight"];
-          if (previousKeys.includes(event.key)) {
-            event.preventDefault();
-            moveFocus(i, -1);
-          }
-          if (nextKeys.includes(event.key)) {
-            event.preventDefault();
-            moveFocus(i, 1);
-          }
-          if (event.key === "Home") {
-            event.preventDefault();
-            focusBoundary("start");
-          }
-          if (event.key === "End") {
-            event.preventDefault();
-            focusBoundary("end");
-          }
-        },
-        style: {
-          width: 38,
-          height: 38,
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: 0,
-          borderRadius: "var(--radius-sm)",
-          background: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)",
-          color: on ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-neutral)",
-          boxShadow: on ? "none" : "inset 0 0 0 1px var(--color-semantic-line-normal-normal)",
-          opacity: itemDisabled ? 0.42 : 1,
-          cursor: itemDisabled ? "not-allowed" : "pointer",
-          transition: "background var(--dur-fast) var(--ease-out)"
-        },
-        children: it.icon || v
-      },
-      v
-    );
-  }) });
+  const resolvedTooltipPosition = tooltipPosition ?? (orientation === "vertical" ? "right" : "bottom");
+  return /* @__PURE__ */ jsxs59(
+    "div",
+    {
+      ...rest,
+      ref: toolbarRef,
+      className: ["lk-editor-toolbar", className].filter(Boolean).join(" "),
+      role: "toolbar",
+      "aria-label": label,
+      "aria-orientation": orientation,
+      "aria-disabled": disabled || void 0,
+      "aria-description": disabled && typeof disabledReason === "string" ? disabledReason : void 0,
+      "data-orientation": orientation,
+      onKeyDown: handleKeyDown,
+      onFocusCapture: handleFocusCapture,
+      style: { display: "inline-flex", width: "fit-content", maxWidth: "100%", boxSizing: "border-box", flexDirection: orientation === "vertical" ? "column" : "row", gap: 2, ...style },
+      children: [
+        /* @__PURE__ */ jsx67("style", { children: `
+        .lk-editor-toolbar__button {
+          position: relative;
+          z-index: 1;
+        }
+        .lk-editor-toolbar__button[aria-pressed="true"]:not([aria-disabled="true"]) {
+          background: var(--color-semantic-primary-surface-normal) !important;
+          color: var(--color-semantic-primary-normal) !important;
+        }
+      ` }),
+        items.map((it) => {
+          const v = it.value != null ? it.value : it;
+          const on = v === cur;
+          const itemDisabled = disabled || !!it.disabled;
+          const itemLabel = it.label || String(v);
+          const itemDisabledReason = it.disabledReason ?? disabledReason;
+          return /* @__PURE__ */ jsx67(
+            Tooltip,
+            {
+              content: itemDisabled && itemDisabledReason != null ? /* @__PURE__ */ jsxs59("span", { style: { display: "grid", gap: 2 }, children: [
+                /* @__PURE__ */ jsx67("span", { children: itemLabel }),
+                /* @__PURE__ */ jsx67("span", { style: { color: "var(--color-semantic-inverse-label-alternative-soft)", fontWeight: "var(--fw-medium)" }, children: itemDisabledReason })
+              ] }) : itemLabel,
+              shortcut: it.shortcut,
+              position: resolvedTooltipPosition,
+              size: "sm",
+              children: /* @__PURE__ */ jsx67(
+                ToggleIcon,
+                {
+                  className: "lk-editor-toolbar__button",
+                  label: itemLabel,
+                  size: "sm",
+                  variant: "plain",
+                  pressed: on,
+                  "aria-disabled": itemDisabled || void 0,
+                  "aria-keyshortcuts": it.ariaKeyShortcuts ?? (typeof it.shortcut === "string" ? it.shortcut : void 0),
+                  "aria-description": itemDisabled && typeof itemDisabledReason === "string" ? itemDisabledReason : void 0,
+                  "data-lk-editor-toolbar-item": "",
+                  "data-lk-toolbar-key": String(v),
+                  tabIndex: !disabled && v === preferredFocusValue ? 0 : -1,
+                  disabled,
+                  onChange: () => pick(v, itemDisabled),
+                  style: {
+                    flex: "0 0 auto",
+                    padding: 0,
+                    lineHeight: 0
+                  },
+                  children: /* @__PURE__ */ jsx67("span", { "aria-hidden": "true", style: { width: 16, height: 16, display: "inline-grid", placeItems: "center", flex: "0 0 auto" }, children: it.icon || v })
+                }
+              )
+            },
+            v
+          );
+        })
+      ]
+    }
+  );
 }
 
 // components/editor/LayerPanel.jsx
-import React65 from "react";
-import { jsx as jsx62, jsxs as jsxs53 } from "react/jsx-runtime";
+import React72 from "react";
+import { jsx as jsx68, jsxs as jsxs60 } from "react/jsx-runtime";
+var LAYER_TONE = {
+  neutral: "var(--color-semantic-label-neutral)",
+  signal: "var(--color-semantic-primary-normal)",
+  positive: "var(--color-semantic-status-positive)",
+  warning: "var(--color-semantic-status-cautionary)",
+  danger: "var(--color-semantic-status-negative)"
+};
 function collectLayerIds(layers, predicate, ids = []) {
   for (const layer of layers) {
     if (predicate(layer)) ids.push(layer.id);
     if (layer.children) collectLayerIds(layer.children, predicate, ids);
+  }
+  return ids;
+}
+function collectFocusableLayerIds(layers, inheritedDisabled = false, ids = []) {
+  for (const layer of layers) {
+    const disabled = inheritedDisabled || Boolean(layer.disabled);
+    if (!disabled) ids.push(layer.id);
+    if (layer.children) collectFocusableLayerIds(layer.children, disabled, ids);
+  }
+  return ids;
+}
+function collectVisibleFocusableLayerIds(layers, expandedSet, inheritedDisabled = false, ids = []) {
+  for (const layer of layers) {
+    const disabled = inheritedDisabled || Boolean(layer.disabled);
+    if (!disabled) ids.push(layer.id);
+    if (layer.children && expandedSet.has(layer.id)) {
+      collectVisibleFocusableLayerIds(layer.children, expandedSet, disabled, ids);
+    }
+  }
+  return ids;
+}
+function collectExpandedLayerIds(layers, ids = []) {
+  for (const layer of layers) {
+    if ((layer.children?.length ?? 0) > 0 && layer.expanded !== false) ids.push(layer.id);
+    if (layer.children) collectExpandedLayerIds(layer.children, ids);
   }
   return ids;
 }
@@ -7870,136 +9120,261 @@ function getLayerText(layer) {
   if (typeof layer.description === "string") return layer.description;
   return layer.id;
 }
+function focusTreeRow(current, direction, onFocusLayer) {
+  const tree = current.closest('[role="tree"]');
+  if (!tree) return;
+  const rows = Array.from(tree.querySelectorAll('[role="treeitem"]')).filter((row) => row.getAttribute("aria-disabled") !== "true");
+  const index = rows.indexOf(current);
+  if (index < 0) return;
+  let target;
+  if (direction === "first") target = rows[0];
+  if (direction === "last") target = rows[rows.length - 1];
+  if (direction === "next") target = rows[Math.min(index + 1, rows.length - 1)];
+  if (direction === "previous") target = rows[Math.max(index - 1, 0)];
+  if (direction === "child") {
+    const level = Number(current.getAttribute("aria-level"));
+    target = rows.slice(index + 1).find((row) => Number(row.getAttribute("aria-level")) === level + 1);
+  }
+  if (direction === "parent") {
+    const level = Number(current.getAttribute("aria-level"));
+    target = rows.slice(0, index).reverse().find((row) => Number(row.getAttribute("aria-level")) === level - 1);
+  }
+  if (target) {
+    onFocusLayer(target.getAttribute("data-layer-id"));
+    target.focus();
+  }
+}
+function focusTreeRowByText(current, query, onFocusLayer) {
+  const tree = current.closest('[role="tree"]');
+  if (!tree) return;
+  const rows = Array.from(tree.querySelectorAll('[role="treeitem"]')).filter((row) => row.getAttribute("aria-disabled") !== "true");
+  const start = rows.indexOf(current);
+  const ordered = [...rows.slice(start + 1), ...rows.slice(0, start + 1)];
+  const normalized = query.toLocaleLowerCase();
+  const target = ordered.find((row) => (row.getAttribute("data-layer-text") || "").toLocaleLowerCase().startsWith(normalized));
+  if (target) {
+    onFocusLayer(target.getAttribute("data-layer-id"));
+    target.focus();
+  }
+}
+function focusLayerAction(current, action = "visibility") {
+  current.querySelector(`[data-layer-action="${action}"]`)?.focus();
+}
+function handleLayerActionKeyDown(event, nextAction) {
+  const row = event.currentTarget.closest('[role="treeitem"]');
+  if (!row) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    row.focus();
+  }
+  if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+    event.preventDefault();
+    focusLayerAction(row, nextAction);
+  }
+}
 function LayerRow({
   layer,
   depth,
   visibleSet,
   lockedSet,
+  expandedSet,
   activeId,
+  focusId,
   disabled,
+  onFocusLayer,
   onSelect,
   onToggleVisible,
-  onToggleLocked
+  onToggleLocked,
+  onToggleExpanded,
+  onTypeahead
 }) {
-  const layerDisabled = disabled || !!layer.disabled;
+  const [focused, setFocused] = React72.useState(false);
+  const layerDisabled = disabled || Boolean(layer.disabled);
   const visible = visibleSet.has(layer.id);
   const locked = lockedSet.has(layer.id);
   const active = activeId === layer.id;
   const labelText = getLayerText(layer);
-  const color = layer.color || "var(--color-semantic-primary-normal)";
-  return /* @__PURE__ */ jsxs53("li", { style: { listStyle: "none", margin: 0, padding: 0 }, children: [
-    /* @__PURE__ */ jsxs53(
+  const color = LAYER_TONE[layer.tone] || LAYER_TONE.signal;
+  const hasChildren = (layer.children?.length ?? 0) > 0;
+  const expanded = hasChildren && expandedSet.has(layer.id);
+  const semanticStatus = layer.toneLabel ?? layer.status;
+  const rowMeta = semanticStatus ?? layer.meta ?? layer.count;
+  const accessibleMeta = typeof rowMeta === "string" || typeof rowMeta === "number" ? `, ${rowMeta}` : "";
+  const select = () => {
+    if (layerDisabled) return;
+    onFocusLayer(layer.id);
+    onSelect(layer.id);
+  };
+  return /* @__PURE__ */ jsxs60("li", { role: "none", style: { margin: 0, padding: 0, listStyle: "none" }, children: [
+    /* @__PURE__ */ jsxs60(
       "div",
       {
+        role: "treeitem",
+        "aria-level": depth + 1,
+        "aria-selected": active,
+        "aria-expanded": hasChildren ? expanded : void 0,
+        "aria-disabled": layerDisabled || void 0,
+        "aria-label": `${labelText}${accessibleMeta}, ${visible ? "\uD45C\uC2DC\uB428" : "\uC228\uAE40"}, ${locked ? "\uC7A0\uAE40" : "\uC7A0\uAE08 \uD574\uC81C"}`,
+        "aria-keyshortcuts": layerDisabled ? void 0 : "F2",
+        "aria-description": layerDisabled ? void 0 : "F2 \uD0A4\uB85C \uD45C\uC2DC \uBC0F \uC7A0\uAE08 \uC791\uC5C5\uC73C\uB85C \uC774\uB3D9",
+        tabIndex: layerDisabled ? -1 : focusId === layer.id ? 0 : -1,
+        "data-layer-id": layer.id,
+        "data-layer-text": labelText,
+        onFocus: (event) => {
+          if (event.target !== event.currentTarget) return;
+          setFocused(true);
+          onFocusLayer(layer.id);
+        },
+        onBlur: (event) => {
+          if (event.target === event.currentTarget) setFocused(false);
+        },
+        onClick: (event) => {
+          if (!event.target.closest("button")) select();
+        },
+        onKeyDown: (event) => {
+          if (event.target !== event.currentTarget) return;
+          if (event.key === "ArrowDown") {
+            event.preventDefault();
+            focusTreeRow(event.currentTarget, "next", onFocusLayer);
+          }
+          if (event.key === "ArrowUp") {
+            event.preventDefault();
+            focusTreeRow(event.currentTarget, "previous", onFocusLayer);
+          }
+          if (event.key === "Home") {
+            event.preventDefault();
+            focusTreeRow(event.currentTarget, "first", onFocusLayer);
+          }
+          if (event.key === "End") {
+            event.preventDefault();
+            focusTreeRow(event.currentTarget, "last", onFocusLayer);
+          }
+          if (event.key === "ArrowRight" && hasChildren) {
+            event.preventDefault();
+            if (!expanded) onToggleExpanded(layer.id, true);
+            else focusTreeRow(event.currentTarget, "child", onFocusLayer);
+          }
+          if (event.key === "ArrowLeft") {
+            if (hasChildren && expanded) {
+              event.preventDefault();
+              onToggleExpanded(layer.id, false);
+            } else if (depth > 0) {
+              event.preventDefault();
+              focusTreeRow(event.currentTarget, "parent", onFocusLayer);
+            }
+          }
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            select();
+          }
+          if (event.key === "F2") {
+            event.preventDefault();
+            focusLayerAction(event.currentTarget);
+          }
+          if (!event.altKey && !event.ctrlKey && !event.metaKey && event.key.length === 1 && event.key.trim() !== "") {
+            event.preventDefault();
+            onTypeahead(event.currentTarget, event.key);
+          }
+        },
         style: {
+          padding: "var(--space-1) var(--space-2)",
+          paddingLeft: `calc(var(--space-2) + ${depth} * var(--space-4))`,
           display: "grid",
-          gridTemplateColumns: "26px 26px minmax(0, 1fr) auto",
+          gridTemplateColumns: "20px minmax(0, 1fr) auto var(--component-toggle-icon-size-sm) var(--component-toggle-icon-size-sm)",
           alignItems: "center",
-          gap: 4,
-          minHeight: 38,
-          padding: "3px 8px",
-          paddingLeft: 8 + depth * 16,
+          gap: "var(--space-1)",
+          minHeight: "var(--control-h-md)",
           borderRadius: "var(--radius-sm)",
-          background: active ? "var(--lk-accent-tint)" : "transparent",
-          boxSizing: "border-box"
+          background: active ? "var(--color-semantic-fill-normal)" : "transparent",
+          boxShadow: focused ? "0 0 0 3px var(--color-semantic-focus-ring)" : "none",
+          outline: "none",
+          boxSizing: "border-box",
+          cursor: layerDisabled ? "not-allowed" : "pointer"
         },
         children: [
-          /* @__PURE__ */ jsx62(
+          hasChildren ? /* @__PURE__ */ jsx68(
             "button",
             {
               type: "button",
-              "aria-label": `${labelText} ${visible ? "\uC228\uAE30\uAE30" : "\uBCF4\uC774\uAE30"}`,
+              tabIndex: -1,
+              disabled: layerDisabled,
+              "aria-label": `${labelText} ${expanded ? "\uC811\uAE30" : "\uD3BC\uCE58\uAE30"}`,
+              onClick: (event) => {
+                event.stopPropagation();
+                onToggleExpanded(layer.id, !expanded);
+              },
+              style: { width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center", padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", cursor: layerDisabled ? "not-allowed" : "pointer" },
+              children: /* @__PURE__ */ jsx68(Icon, { name: expanded ? "chevron-down-small" : "chevron-right-small", size: 14, "aria-hidden": "true" })
+            }
+          ) : /* @__PURE__ */ jsx68("span", { "aria-hidden": "true", style: { width: 20, height: 20 } }),
+          /* @__PURE__ */ jsxs60("span", { style: { minWidth: 0, display: "grid", gridTemplateColumns: "var(--space-2) minmax(0, 1fr)", alignItems: "center", gap: "var(--space-2)" }, children: [
+            /* @__PURE__ */ jsx68("span", { "aria-hidden": "true", style: { width: "var(--space-2)", height: "var(--space-2)", borderRadius: "50%", background: color, opacity: visible ? 1 : 0.35 } }),
+            /* @__PURE__ */ jsxs60("span", { style: { display: "grid", gap: "var(--space-0)", minWidth: 0, opacity: visible ? 1 : 0.55 }, children: [
+              /* @__PURE__ */ jsx68("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)", letterSpacing: 0 }, children: layer.label }),
+              layer.description != null && /* @__PURE__ */ jsx68("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", letterSpacing: 0 }, children: layer.description })
+            ] })
+          ] }),
+          rowMeta != null && /* @__PURE__ */ jsx68("span", { style: { maxWidth: 76, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: rowMeta }),
+          /* @__PURE__ */ jsx68(
+            IconButton,
+            {
+              variant: "ghost",
+              round: false,
+              size: "sm",
+              label: `${labelText} ${visible ? "\uC228\uAE30\uAE30" : "\uBCF4\uC774\uAE30"}`,
               "aria-pressed": visible,
               disabled: layerDisabled,
-              onClick: () => onToggleVisible(layer.id, !visible),
-              style: {
-                width: 26,
-                height: 26,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 0,
-                border: 0,
-                borderRadius: "var(--radius-sm)",
-                background: "transparent",
-                color: layerDisabled ? "var(--color-semantic-label-disable)" : visible ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-label-assistive)",
-                cursor: layerDisabled ? "not-allowed" : "pointer"
+              "data-layer-action": "visibility",
+              tabIndex: -1,
+              style: { gridColumn: 4 },
+              onClick: (event) => {
+                event.stopPropagation();
+                onToggleVisible(layer.id, !visible);
               },
-              children: /* @__PURE__ */ jsx62(Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
+              onKeyDown: (event) => handleLayerActionKeyDown(event, "lock"),
+              children: /* @__PURE__ */ jsx68(Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
             }
           ),
-          /* @__PURE__ */ jsx62(
-            "button",
+          /* @__PURE__ */ jsx68(
+            IconButton,
             {
-              type: "button",
-              "aria-label": `${labelText} ${locked ? "\uC7A0\uAE08 \uD574\uC81C" : "\uC7A0\uAE08"}`,
+              variant: locked ? "soft" : "ghost",
+              round: false,
+              size: "sm",
+              label: `${labelText} ${locked ? "\uC7A0\uAE08 \uD574\uC81C" : "\uC7A0\uAE08"}`,
               "aria-pressed": locked,
               disabled: layerDisabled,
-              onClick: () => onToggleLocked(layer.id, !locked),
-              style: {
-                width: 26,
-                height: 26,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 0,
-                border: 0,
-                borderRadius: "var(--radius-sm)",
-                background: locked ? "var(--color-semantic-fill-strong)" : "transparent",
-                color: layerDisabled ? "var(--color-semantic-label-disable)" : locked ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-label-assistive)",
-                cursor: layerDisabled ? "not-allowed" : "pointer"
+              "data-layer-action": "lock",
+              tabIndex: -1,
+              style: { gridColumn: 5 },
+              onClick: (event) => {
+                event.stopPropagation();
+                onToggleLocked(layer.id, !locked);
               },
-              children: /* @__PURE__ */ jsx62(Icon, { name: locked ? "lock" : "lock-open", size: 15, "aria-hidden": "true" })
+              onKeyDown: (event) => handleLayerActionKeyDown(event, "visibility"),
+              children: /* @__PURE__ */ jsx68(Icon, { name: locked ? "lock" : "lock-open", size: 16, "aria-hidden": "true" })
             }
-          ),
-          /* @__PURE__ */ jsxs53(
-            "button",
-            {
-              type: "button",
-              "aria-pressed": active,
-              disabled: layerDisabled,
-              onClick: () => onSelect(layer.id),
-              style: {
-                minWidth: 0,
-                width: "100%",
-                display: "grid",
-                gridTemplateColumns: "10px minmax(0, 1fr)",
-                alignItems: "center",
-                gap: 7,
-                padding: "2px 4px",
-                border: 0,
-                borderRadius: "var(--radius-sm)",
-                background: "transparent",
-                color: layerDisabled ? "var(--color-semantic-label-disable)" : active ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-normal)",
-                textAlign: "left",
-                cursor: layerDisabled ? "default" : "pointer",
-                fontFamily: "var(--font-sans)"
-              },
-              children: [
-                /* @__PURE__ */ jsx62("span", { "aria-hidden": "true", style: { width: 8, height: 8, borderRadius: "50%", background: color, opacity: visible ? 1 : 0.35 } }),
-                /* @__PURE__ */ jsxs53("span", { style: { display: "grid", gap: 1, minWidth: 0, opacity: visible ? 1 : 0.55 }, children: [
-                  /* @__PURE__ */ jsx62("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-semibold)", letterSpacing: 0 }, children: layer.label }),
-                  layer.description != null && /* @__PURE__ */ jsx62("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", letterSpacing: 0 }, children: layer.description })
-                ] })
-              ]
-            }
-          ),
-          (layer.count != null || layer.meta != null || layer.status != null) && /* @__PURE__ */ jsx62("span", { style: { maxWidth: 68, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: layer.meta ?? layer.status ?? layer.count })
+          )
         ]
       }
     ),
-    layer.children && layer.children.length > 0 && /* @__PURE__ */ jsx62("ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: layer.children.map((child) => /* @__PURE__ */ jsx62(
+    hasChildren && expanded && /* @__PURE__ */ jsx68("ul", { role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: layer.children.map((child) => /* @__PURE__ */ jsx68(
       LayerRow,
       {
         layer: child,
         depth: depth + 1,
         visibleSet,
         lockedSet,
+        expandedSet,
         activeId,
+        focusId,
         disabled: layerDisabled,
+        onFocusLayer,
         onSelect,
         onToggleVisible,
-        onToggleLocked
+        onToggleLocked,
+        onToggleExpanded,
+        onTypeahead
       },
       child.id
     )) })
@@ -8016,6 +9391,9 @@ function LayerPanel({
   lockedLayerIds,
   defaultLockedLayerIds,
   onLockedLayerIdsChange,
+  expandedLayerIds,
+  defaultExpandedLayerIds,
+  onExpandedLayerIdsChange,
   title = "\uB808\uC774\uC5B4",
   label = "\uB808\uC774\uC5B4 \uBAA9\uB85D",
   emptyLabel = "\uB808\uC774\uC5B4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4",
@@ -8023,24 +9401,58 @@ function LayerPanel({
   style,
   ...rest
 }) {
-  const initialVisible = React65.useMemo(
+  const initialVisible = React72.useMemo(
     () => defaultVisibleLayerIds || collectLayerIds(layers, (layer) => layer.visible !== false),
     [defaultVisibleLayerIds, layers]
   );
-  const initialLocked = React65.useMemo(
-    () => defaultLockedLayerIds || collectLayerIds(layers, (layer) => !!layer.locked),
+  const initialLocked = React72.useMemo(
+    () => defaultLockedLayerIds || collectLayerIds(layers, (layer) => Boolean(layer.locked)),
     [defaultLockedLayerIds, layers]
   );
-  const [internalActive, setInternalActive] = React65.useState(defaultActiveLayerId || layers[0]?.id);
-  const [internalVisible, setInternalVisible] = React65.useState(() => new Set(initialVisible));
-  const [internalLocked, setInternalLocked] = React65.useState(() => new Set(initialLocked));
+  const initialExpanded = React72.useMemo(
+    () => defaultExpandedLayerIds ?? collectExpandedLayerIds(layers),
+    [defaultExpandedLayerIds, layers]
+  );
+  const initialFocusableIds = collectFocusableLayerIds(layers);
+  const initialActive = defaultActiveLayerId ?? initialFocusableIds[0] ?? layers[0]?.id;
+  const [internalActive, setInternalActive] = React72.useState(initialActive);
+  const [focusId, setFocusId] = React72.useState(initialFocusableIds.includes(initialActive) ? initialActive : initialFocusableIds[0]);
+  const [internalVisible, setInternalVisible] = React72.useState(() => new Set(initialVisible));
+  const [internalLocked, setInternalLocked] = React72.useState(() => new Set(initialLocked));
+  const [internalExpanded, setInternalExpanded] = React72.useState(() => new Set(initialExpanded));
+  const typeaheadRef = React72.useRef({ query: "", time: 0 });
+  const previousActiveRef = React72.useRef(initialActive);
   const currentActive = activeLayerId !== void 0 ? activeLayerId : internalActive;
-  const visibleSet = visibleLayerIds !== void 0 ? new Set(visibleLayerIds) : internalVisible;
-  const lockedSet = lockedLayerIds !== void 0 ? new Set(lockedLayerIds) : internalLocked;
+  const visibleSet = React72.useMemo(
+    () => visibleLayerIds !== void 0 ? new Set(visibleLayerIds) : internalVisible,
+    [internalVisible, visibleLayerIds]
+  );
+  const lockedSet = React72.useMemo(
+    () => lockedLayerIds !== void 0 ? new Set(lockedLayerIds) : internalLocked,
+    [internalLocked, lockedLayerIds]
+  );
+  const expandedSet = React72.useMemo(
+    () => expandedLayerIds !== void 0 ? new Set(expandedLayerIds) : internalExpanded,
+    [expandedLayerIds, internalExpanded]
+  );
+  const layerIds = collectLayerIds(layers, () => true);
+  const focusableLayerIds = collectVisibleFocusableLayerIds(layers, expandedSet, disabled);
+  const focusableLayerKey = focusableLayerIds.join("|");
+  React72.useEffect(() => {
+    const activeChanged = previousActiveRef.current !== currentActive;
+    if (activeChanged && currentActive != null && focusableLayerIds.includes(currentActive)) {
+      setFocusId(currentActive);
+    } else if (!focusableLayerIds.includes(focusId)) {
+      setFocusId(
+        currentActive != null && focusableLayerIds.includes(currentActive) ? currentActive : focusableLayerIds[0]
+      );
+    }
+    previousActiveRef.current = currentActive;
+  }, [currentActive, focusId, focusableLayerKey]);
   const selectLayer = (id) => {
     if (disabled) return;
     if (activeLayerId === void 0) setInternalActive(id);
-    onActiveLayerChange && onActiveLayerChange(id);
+    onActiveLayerChange?.(id);
   };
   const setVisible = (id, visible) => {
     if (disabled) return;
@@ -8048,7 +9460,7 @@ function LayerPanel({
     if (visible) next.add(id);
     else next.delete(id);
     if (visibleLayerIds === void 0) setInternalVisible(next);
-    onVisibleLayerIdsChange && onVisibleLayerIdsChange([...next], id, visible);
+    onVisibleLayerIdsChange?.([...next], id, visible);
   };
   const setLocked = (id, locked) => {
     if (disabled) return;
@@ -8056,54 +9468,74 @@ function LayerPanel({
     if (locked) next.add(id);
     else next.delete(id);
     if (lockedLayerIds === void 0) setInternalLocked(next);
-    onLockedLayerIdsChange && onLockedLayerIdsChange([...next], id, locked);
+    onLockedLayerIdsChange?.([...next], id, locked);
   };
-  return /* @__PURE__ */ jsxs53(
+  const setExpanded = (id, expanded) => {
+    if (disabled) return;
+    const next = new Set(expandedSet);
+    if (expanded) next.add(id);
+    else next.delete(id);
+    if (expandedLayerIds === void 0) setInternalExpanded(next);
+    if (!expanded) setFocusId(id);
+    onExpandedLayerIdsChange?.(layerIds.filter((layerId) => next.has(layerId)), id, expanded);
+  };
+  const typeahead = (current, key) => {
+    const now = Date.now();
+    const previous = typeaheadRef.current;
+    const normalizedKey = key.toLocaleLowerCase();
+    const withinWindow = now - previous.time < 500;
+    const repeatedCharacter = withinWindow && previous.query.length > 0 && [...previous.query].every((character) => character === normalizedKey);
+    const query = withinWindow && !repeatedCharacter ? `${previous.query}${normalizedKey}` : normalizedKey;
+    typeaheadRef.current = { query, time: now };
+    focusTreeRowByText(current, query, setFocusId);
+  };
+  return /* @__PURE__ */ jsxs60(
     "section",
     {
       style: {
         display: "grid",
         gridTemplateRows: "auto minmax(0, 1fr)",
-        gap: 8,
+        gap: "var(--space-2)",
         width: "100%",
         minWidth: 0,
         height: "100%",
-        padding: 12,
+        padding: "var(--space-3)",
         boxSizing: "border-box",
         fontFamily: "var(--font-sans)",
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs53("div", { style: { display: "flex", alignItems: "center", gap: 8, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx62(Icon, { name: "layers", size: 16, "aria-hidden": "true" }),
-          /* @__PURE__ */ jsx62("strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
-          /* @__PURE__ */ jsx62("span", { style: { marginLeft: "auto", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: collectLayerIds(layers, () => true).length })
+        /* @__PURE__ */ jsxs60("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsx68(Icon, { name: "layers", size: 16, "aria-hidden": "true" }),
+          /* @__PURE__ */ jsx68("strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
+          /* @__PURE__ */ jsx68("span", { style: { marginLeft: "auto", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: layerIds.length })
         ] }),
-        /* @__PURE__ */ jsx62(
+        layers.length === 0 ? /* @__PURE__ */ jsx68("div", { role: "status", style: { display: "grid", placeItems: "center", minHeight: 120, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)", textAlign: "center" }, children: emptyLabel }) : /* @__PURE__ */ jsx68(
           "ul",
           {
+            role: "tree",
             "aria-label": label,
-            "aria-disabled": disabled ? "true" : void 0,
-            style: {
-              minHeight: 0,
-              overflow: "auto",
-              margin: 0,
-              padding: 0,
-              listStyle: "none"
-            },
-            children: layers.length === 0 ? /* @__PURE__ */ jsx62("li", { style: { listStyle: "none", display: "grid", placeItems: "center", minHeight: 120, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)", textAlign: "center" }, children: emptyLabel }) : layers.map((layer) => /* @__PURE__ */ jsx62(
+            "aria-multiselectable": "false",
+            "aria-disabled": disabled || void 0,
+            style: { minHeight: 0, overflow: "auto", margin: 0, padding: 0, listStyle: "none" },
+            children: layers.map((layer) => /* @__PURE__ */ jsx68(
               LayerRow,
               {
                 layer,
                 depth: 0,
                 visibleSet,
                 lockedSet,
+                expandedSet,
                 activeId: currentActive,
+                focusId,
                 disabled,
+                onFocusLayer: setFocusId,
                 onSelect: selectLayer,
                 onToggleVisible: setVisible,
-                onToggleLocked: setLocked
+                onToggleLocked: setLocked,
+                onToggleExpanded: setExpanded,
+                onTypeahead: typeahead
               },
               layer.id
             ))
@@ -8115,12 +9547,68 @@ function LayerPanel({
 }
 
 // components/editor/SelectionInspector.jsx
-import React66 from "react";
-import { jsx as jsx63, jsxs as jsxs54 } from "react/jsx-runtime";
+import React74 from "react";
+
+// components/feedback/Tag.jsx
+import React73 from "react";
+import { jsx as jsx69 } from "react/jsx-runtime";
+var TONES2 = {
+  signal: { fg: "var(--color-semantic-primary-normal)", bg: "var(--color-semantic-primary-surface-strong)" },
+  // brand teal chip (default)
+  neutral: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" },
+  // ink neutral
+  steel: { fg: "var(--color-semantic-accent-foreground-blue)", bg: "var(--color-semantic-secondary-surface)" },
+  amber: { fg: "var(--color-semantic-data-viz-series-5)", bg: "color-mix(in srgb, var(--color-semantic-data-viz-series-5) 14%, transparent)" },
+  red: { fg: "var(--color-semantic-accent-foreground-red)", bg: "color-mix(in srgb, var(--color-semantic-accent-foreground-red) 14%, transparent)" },
+  // back-compat aliases (live site uses tone="indigo")
+  indigo: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" },
+  green: { fg: "var(--color-semantic-data-viz-series-4)", bg: "color-mix(in srgb, var(--color-semantic-data-viz-series-4) 14%, transparent)" },
+  ink: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" }
+};
+function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
+  const t = TONES2[tone] || TONES2.signal;
+  return /* @__PURE__ */ jsx69(
+    "span",
+    {
+      className: `lk-tag lk-tag--${tone}`,
+      style: {
+        display: "inline-flex",
+        alignItems: "center",
+        height: "var(--component-tag-height)",
+        padding: "0 12px",
+        fontFamily: "var(--font-sans)",
+        fontWeight: "var(--fw-bold)",
+        fontSize: "var(--fs-caption)",
+        lineHeight: 1,
+        letterSpacing: "var(--ls-caption)",
+        textTransform: "uppercase",
+        whiteSpace: "nowrap",
+        color: solid ? "var(--color-semantic-static-white)" : t.fg,
+        background: solid ? t.solidBg || t.fg : t.bg,
+        borderRadius: "var(--radius-pill)",
+        ...style
+      },
+      ...rest,
+      children
+    }
+  );
+}
+
+// components/editor/SelectionInspector.jsx
+import { Fragment as Fragment4, jsx as jsx70, jsxs as jsxs61 } from "react/jsx-runtime";
+function displayValue(value, mixed) {
+  if (mixed || value == null || value === "") return "\u2014";
+  if (typeof value === "boolean") return String(value);
+  return value;
+}
 function FieldValue({ field }) {
-  const toneColor = "var(--color-semantic-label-strong)";
-  return /* @__PURE__ */ jsxs54(
-    "strong",
+  const toneColor = {
+    warning: "var(--color-semantic-status-cautionary-text)",
+    danger: "var(--color-semantic-status-negative-text)"
+  }[field.tone] || (field.mixed ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-label-strong)");
+  const align = field.align ?? (typeof field.value === "number" ? "right" : "left");
+  return /* @__PURE__ */ jsxs61(
+    "span",
     {
       style: {
         minWidth: 0,
@@ -8130,48 +9618,71 @@ function FieldValue({ field }) {
         color: toneColor,
         fontSize: "var(--label2-size)",
         lineHeight: "var(--label2-line)",
-        fontWeight: "var(--fw-bold)",
+        fontWeight: field.mixed ? "var(--fw-medium)" : "var(--fw-semibold)",
         letterSpacing: 0,
-        textAlign: "right",
+        textAlign: align,
         fontVariantNumeric: "tabular-nums"
       },
       children: [
-        field.value,
-        field.unit != null && /* @__PURE__ */ jsx63("span", { style: { marginLeft: 3, color: "var(--color-semantic-label-neutral)", fontWeight: "var(--fw-medium)" }, children: field.unit })
+        displayValue(field.value, field.mixed),
+        !field.mixed && field.unit != null && /* @__PURE__ */ jsx70("span", { style: { marginLeft: "var(--space-1)", color: "var(--color-semantic-label-neutral)", fontWeight: "var(--fw-medium)" }, children: field.unit })
       ]
     }
   );
 }
-function InspectorSection({ section }) {
-  return /* @__PURE__ */ jsxs54("section", { style: { display: "grid", gap: 0, minWidth: 0 }, children: [
-    section.title != null && /* @__PURE__ */ jsx63("h4", { style: { margin: "14px 0 5px", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-extra)", letterSpacing: 1.2, textTransform: "uppercase", color: "var(--color-semantic-label-neutral)" }, children: section.title }),
-    /* @__PURE__ */ jsx63("div", { style: { borderTop: "1px solid var(--color-semantic-line-normal-normal)" }, children: (section.fields || []).map((field, index) => /* @__PURE__ */ jsxs54(
-      "div",
-      {
-        style: {
-          display: "grid",
-          gridTemplateColumns: "minmax(72px, 0.8fr) minmax(0, 1fr)",
-          alignItems: "center",
-          gap: 10,
-          minHeight: 34,
-          padding: "7px 0",
-          borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
-          boxSizing: "border-box"
-        },
-        children: [
-          /* @__PURE__ */ jsx63("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)", letterSpacing: 0 }, children: field.label }),
-          field.valueNode || /* @__PURE__ */ jsx63(FieldValue, { field })
-        ]
+function InspectorFields({ fields = [] }) {
+  return /* @__PURE__ */ jsx70("div", { children: fields.map((field, index) => /* @__PURE__ */ jsxs61(
+    "div",
+    {
+      style: {
+        display: "grid",
+        gridTemplateColumns: "minmax(88px, 0.8fr) minmax(0, 1.2fr)",
+        alignItems: "center",
+        gap: "var(--space-3)",
+        minHeight: "var(--control-h-md)",
+        padding: "var(--space-2) 0",
+        borderBottom: "1px solid var(--color-semantic-line-normal-alternative)",
+        boxSizing: "border-box"
       },
-      `${field.label}-${index}`
-    )) }),
+      children: [
+        /* @__PURE__ */ jsx70("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)", letterSpacing: 0 }, children: field.label }),
+        field.valueNode != null ? displayValue(field.valueNode, field.mixed) : /* @__PURE__ */ jsx70(FieldValue, { field })
+      ]
+    },
+    `${field.label}-${index}`
+  )) });
+}
+function InspectorSection({ section }) {
+  const collapsible = section.collapsible !== false && section.title != null;
+  const [expanded, setExpanded] = React74.useState(section.defaultExpanded !== false);
+  const contentId = React74.useId();
+  const content = /* @__PURE__ */ jsxs61("div", { id: contentId, hidden: collapsible && !expanded, children: [
+    /* @__PURE__ */ jsx70(InspectorFields, { fields: section.fields }),
     section.children
+  ] });
+  return /* @__PURE__ */ jsxs61("section", { style: { minWidth: 0, borderTop: "1px solid var(--color-semantic-line-normal-alternative)" }, children: [
+    section.title != null && (collapsible ? /* @__PURE__ */ jsxs61(
+      "button",
+      {
+        type: "button",
+        "aria-expanded": expanded,
+        "aria-controls": contentId,
+        onClick: () => setExpanded((value) => !value),
+        style: { width: "100%", minHeight: 40, display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-2)", padding: 0, border: 0, background: "transparent", color: "var(--color-semantic-label-strong)", fontFamily: "var(--font-sans)", cursor: "pointer", textAlign: "left" },
+        children: [
+          /* @__PURE__ */ jsx70("span", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-bold)" }, children: section.title }),
+          /* @__PURE__ */ jsx70(Icon, { name: expanded ? "chevron-up-small" : "chevron-down-small", size: 16, "aria-hidden": "true" })
+        ]
+      }
+    ) : /* @__PURE__ */ jsx70("h4", { style: { minHeight: 40, display: "flex", alignItems: "center", margin: 0, fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)" }, children: section.title })),
+    content
   ] });
 }
 function SelectionInspector({
   item,
+  selectionCount,
   title = "\uC120\uD0DD \uAC1D\uCCB4",
-  emptyLabel = "\uC120\uD0DD\uB41C \uAC1D\uCCB4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4",
+  emptyLabel = "\uC120\uD0DD\uD55C \uAC1D\uCCB4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4",
   sections = [],
   actions,
   onClearSelection,
@@ -8182,121 +9693,208 @@ function SelectionInspector({
   ...rest
 }) {
   const hasItem = item != null;
+  const count = selectionCount ?? (hasItem ? 1 : 0);
   const canClearSelection = hasItem && typeof onClearSelection === "function";
-  return /* @__PURE__ */ jsxs54(
-    "aside",
+  const selectionName = count > 1 ? `${count}\uAC1C \uAC1D\uCCB4 \uC120\uD0DD` : item?.label;
+  return /* @__PURE__ */ jsxs61(
+    "section",
     {
+      "aria-label": typeof title === "string" ? title : "\uC120\uD0DD \uAC1D\uCCB4 \uC18D\uC131",
       style: {
-        display: "flex",
-        flexDirection: "column",
+        display: "grid",
+        gridTemplateRows: hasItem && actions != null ? "auto minmax(0, 1fr) auto" : "auto minmax(0, 1fr)",
         width: "100%",
         minWidth: 0,
         height: "100%",
-        minHeight: "100%",
+        minHeight: 0,
         overflow: "hidden",
         boxSizing: "border-box",
+        background: "var(--color-semantic-background-elevated-normal)",
         fontFamily: "var(--font-sans)",
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs54("div", { style: { flex: 1, minHeight: 0, overflow: "auto", display: "grid", alignContent: "start", gap: 12, padding: 16, boxSizing: "border-box" }, children: [
-          /* @__PURE__ */ jsxs54("header", { style: { display: "grid", gap: 4, minWidth: 0 }, children: [
-            /* @__PURE__ */ jsxs54("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-2)", minWidth: 0 }, children: [
-              /* @__PURE__ */ jsx63("span", { style: { minWidth: 0, fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-extra)", letterSpacing: 1.2, textTransform: "uppercase", color: "var(--color-semantic-label-neutral)" }, children: title }),
-              canClearSelection && /* @__PURE__ */ jsxs54(
-                Button,
-                {
-                  type: "button",
-                  size: "sm",
-                  variant: "outlined",
-                  color: "assistive",
-                  "aria-label": clearSelectionAriaLabel,
-                  onClick: onClearSelection,
-                  children: [
-                    /* @__PURE__ */ jsx63(Icon, { name: "close", size: 14, "aria-hidden": "true" }),
-                    clearSelectionLabel
-                  ]
-                }
-              )
-            ] }),
-            hasItem ? /* @__PURE__ */ jsxs54("div", { style: { display: "grid", gap: 6, minWidth: 0 }, children: [
-              /* @__PURE__ */ jsx63("div", { style: { minWidth: 0 }, children: /* @__PURE__ */ jsx63("h3", { style: { minWidth: 0, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--headline2-size)", lineHeight: "var(--headline2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: item.label }) }),
-              /* @__PURE__ */ jsxs54("div", { style: { display: "flex", alignItems: "center", gap: 6, minWidth: 0, flexWrap: "wrap" }, children: [
-                item.kind != null && /* @__PURE__ */ jsx63("span", { style: { height: 20, display: "inline-flex", alignItems: "center", padding: "0 6px", borderRadius: 4, background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-neutral)", fontSize: 12, lineHeight: "20px", fontWeight: "var(--fw-semibold)" }, children: item.kind }),
-                item.status != null && /* @__PURE__ */ jsx63(StatusBadge, { tone: item.statusTone || "signal", children: item.status })
-              ] })
-            ] }) : /* @__PURE__ */ jsx63("div", { style: { minHeight: 128, display: "grid", placeItems: "center", padding: 16, border: "1px dashed var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)", textAlign: "center" }, children: emptyLabel })
+        /* @__PURE__ */ jsxs61("header", { style: { display: "grid", gap: "var(--space-2)", minWidth: 0, padding: "var(--space-3) var(--space-4)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)", boxSizing: "border-box" }, children: [
+          /* @__PURE__ */ jsxs61("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-2)", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsx70("strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)" }, children: title }),
+            canClearSelection && /* @__PURE__ */ jsx70(
+              IconButton,
+              {
+                type: "button",
+                size: "sm",
+                variant: "ghost",
+                round: false,
+                label: clearSelectionAriaLabel,
+                title: typeof clearSelectionLabel === "string" ? clearSelectionLabel : clearSelectionAriaLabel,
+                onClick: onClearSelection,
+                children: /* @__PURE__ */ jsx70(Icon, { name: "close", size: 16, "aria-hidden": "true" })
+              }
+            )
           ] }),
-          hasItem && sections.map((section, index) => /* @__PURE__ */ jsx63(InspectorSection, { section }, `${section.title || "section"}-${index}`)),
-          hasItem && children
+          hasItem && /* @__PURE__ */ jsxs61("div", { style: { display: "grid", gap: "var(--space-2)", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsx70("h3", { style: { minWidth: 0, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--headline2-size)", lineHeight: "var(--headline2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: selectionName }),
+            /* @__PURE__ */ jsxs61("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, flexWrap: "wrap" }, children: [
+              item.kind != null && /* @__PURE__ */ jsx70(Tag, { tone: "neutral", children: item.kind }),
+              item.status != null && /* @__PURE__ */ jsx70(StatusBadge, { tone: item.statusTone || "signal", children: item.status })
+            ] })
+          ] })
         ] }),
-        hasItem && actions != null && /* @__PURE__ */ jsx63("div", { style: { display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "flex-end", padding: "12px 16px", borderTop: "1px solid var(--color-semantic-line-normal-normal)", background: "var(--color-semantic-background-elevated-normal)", boxSizing: "border-box" }, children: actions })
+        /* @__PURE__ */ jsx70("div", { style: { minHeight: 0, overflow: "auto", padding: hasItem ? "0 var(--space-4) var(--space-4)" : "var(--space-4)", boxSizing: "border-box" }, children: hasItem ? /* @__PURE__ */ jsxs61(Fragment4, { children: [
+          sections.map((section, index) => /* @__PURE__ */ jsx70(InspectorSection, { section }, `${section.title || "section"}-${index}`)),
+          children
+        ] }) : /* @__PURE__ */ jsxs61("div", { role: "status", style: { minHeight: 180, display: "grid", placeItems: "center", alignContent: "center", gap: "var(--space-3)", color: "var(--color-semantic-label-neutral)", textAlign: "center" }, children: [
+          /* @__PURE__ */ jsx70(Icon, { name: "crosshair", size: 24, "aria-hidden": "true" }),
+          /* @__PURE__ */ jsx70("span", { style: { maxWidth: 220, fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)" }, children: emptyLabel })
+        ] }) }),
+        hasItem && actions != null && /* @__PURE__ */ jsx70(ActionArea, { compact: true, align: "end", children: actions })
       ]
     }
   );
 }
 
 // components/editor/ViewportStatusBar.jsx
-import React67 from "react";
-import { jsx as jsx64, jsxs as jsxs55 } from "react/jsx-runtime";
-function statusColor(tone) {
-  if (tone === "danger") return "var(--color-semantic-status-negative)";
-  if (tone === "warning") return "var(--color-semantic-status-cautionary)";
-  if (tone === "positive") return "var(--color-semantic-status-positive)";
-  if (tone === "signal") return "var(--color-semantic-primary-normal)";
-  return "var(--color-semantic-label-strong)";
+import React75 from "react";
+import { jsx as jsx71, jsxs as jsxs62 } from "react/jsx-runtime";
+var STATUS_TONE = {
+  danger: { badge: "negative", label: "\uC704\uD5D8" },
+  warning: { badge: "cautionary", label: "\uC8FC\uC758" },
+  positive: { badge: "positive", label: "\uC815\uC0C1" },
+  signal: { badge: "signal", label: "\uD65C\uC131" }
+};
+var PRIORITY_ORDER = { high: 0, normal: 1, low: 2 };
+function numericStyle(mono) {
+  return {
+    fontVariantNumeric: "tabular-nums",
+    fontFamily: mono ? "var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace)" : "inherit"
+  };
 }
-function ViewportStatusBar({ items = [], children, style, ...rest }) {
-  return /* @__PURE__ */ jsxs55(
+function StatusValue({ item }) {
+  const unit = item.unit != null ? /* @__PURE__ */ jsx71("span", { style: { whiteSpace: "nowrap" }, children: item.unit }) : null;
+  if (item.tone != null && item.tone !== "default") {
+    const tone = STATUS_TONE[item.tone] ?? { badge: "offline", label: "\uC0C1\uD0DC" };
+    return /* @__PURE__ */ jsxs62(StatusBadge, { tone: tone.badge, style: { minWidth: 0, maxWidth: "100%", overflow: "hidden", flexShrink: 1 }, children: [
+      /* @__PURE__ */ jsxs62("span", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-1)", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ...numericStyle(item.mono) }, children: [
+        item.value,
+        unit
+      ] }),
+      /* @__PURE__ */ jsxs62("span", { style: { whiteSpace: "nowrap" }, children: [
+        "\xB7 ",
+        item.toneLabel ?? tone.label
+      ] })
+    ] });
+  }
+  return /* @__PURE__ */ jsxs62(
+    "strong",
+    {
+      style: {
+        display: "inline-flex",
+        alignItems: "baseline",
+        gap: "var(--space-1)",
+        minWidth: 0,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        color: "var(--color-semantic-label-strong)",
+        fontWeight: "var(--fw-bold)",
+        ...numericStyle(item.mono)
+      },
+      children: [
+        /* @__PURE__ */ jsx71("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }, children: item.value }),
+        unit
+      ]
+    }
+  );
+}
+function PersistentItem({ item }) {
+  const priority = item.priority ?? "normal";
+  const shrink = priority === "high" ? 0 : priority === "low" ? 2 : 1;
+  return /* @__PURE__ */ jsxs62(
+    "span",
+    {
+      title: item.title,
+      style: {
+        display: "inline-flex",
+        alignItems: "baseline",
+        gap: "var(--space-1)",
+        flex: `0 ${shrink} auto`,
+        minWidth: priority === "high" ? "max-content" : 0,
+        maxWidth: "100%",
+        overflow: "hidden",
+        color: "var(--color-semantic-label-neutral)",
+        fontSize: "var(--caption1-size)",
+        lineHeight: "var(--caption1-line)",
+        fontWeight: "var(--fw-medium)",
+        letterSpacing: 0
+      },
+      children: [
+        /* @__PURE__ */ jsx71("span", { style: { flexShrink: 0, whiteSpace: "nowrap" }, children: item.label }),
+        /* @__PURE__ */ jsx71(StatusValue, { item })
+      ]
+    }
+  );
+}
+function ViewportStatusBar({
+  label = "\uBDF0\uD3EC\uD2B8 \uC0C1\uD0DC",
+  items = [],
+  message,
+  messageTone = "default",
+  messageToneLabel,
+  children,
+  style,
+  "aria-label": ariaLabel,
+  ...rest
+}) {
+  const orderedItems = items.map((item, index) => ({ item, index })).sort((a, b) => {
+    const priorityDifference = (PRIORITY_ORDER[a.item.priority ?? "normal"] ?? 1) - (PRIORITY_ORDER[b.item.priority ?? "normal"] ?? 1);
+    return priorityDifference || a.index - b.index;
+  });
+  const messageToneConfig = STATUS_TONE[messageTone];
+  return /* @__PURE__ */ jsxs62(
     "div",
     {
+      ...rest,
+      role: "group",
+      "aria-label": ariaLabel ?? label,
       style: {
         display: "flex",
         alignItems: "center",
-        gap: 10,
+        gap: "var(--space-4)",
         minWidth: 0,
         width: "100%",
-        flexWrap: "wrap",
+        overflow: "hidden",
+        flexWrap: "nowrap",
+        whiteSpace: "nowrap",
         fontFamily: "var(--font-sans)",
         ...style
       },
-      ...rest,
       children: [
-        items.map((item, index) => /* @__PURE__ */ jsxs55(React67.Fragment, { children: [
-          index > 0 && /* @__PURE__ */ jsx64("span", { "aria-hidden": "true", style: { width: 1, height: 14, background: "var(--color-semantic-line-normal-normal)" } }),
-          /* @__PURE__ */ jsxs55(
-            "span",
-            {
-              title: item.title,
-              style: {
-                display: "inline-flex",
-                alignItems: "baseline",
-                gap: 4,
-                minWidth: 0,
-                color: "var(--color-semantic-label-alternative)",
-                fontSize: "var(--caption1-size)",
-                lineHeight: "var(--caption1-line)",
-                fontWeight: "var(--fw-medium)",
-                letterSpacing: 0
-              },
-              children: [
-                /* @__PURE__ */ jsx64("span", { style: { whiteSpace: "nowrap" }, children: item.label }),
-                /* @__PURE__ */ jsx64("strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: statusColor(item.tone), fontWeight: "var(--fw-bold)", fontVariantNumeric: "tabular-nums", fontFamily: item.mono ? "var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace)" : "inherit" }, children: item.value }),
-                item.unit != null && /* @__PURE__ */ jsx64("span", { style: { whiteSpace: "nowrap" }, children: item.unit })
-              ]
-            }
-          )
-        ] }, `${item.label}-${index}`)),
-        children != null && /* @__PURE__ */ jsx64("span", { style: { display: "inline-flex", alignItems: "center", gap: 6, marginLeft: "auto" }, children })
+        message != null && /* @__PURE__ */ jsx71(
+          "span",
+          {
+            role: "status",
+            "aria-live": "polite",
+            "aria-atomic": "true",
+            style: { display: "inline-flex", alignItems: "center", minWidth: 0, maxWidth: "min(46%, 420px)", overflow: "hidden", flex: "0 1 auto" },
+            children: messageToneConfig ? /* @__PURE__ */ jsxs62(StatusBadge, { tone: messageToneConfig.badge, style: { minWidth: 0, maxWidth: "100%", overflow: "hidden" }, children: [
+              /* @__PURE__ */ jsx71("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: message }),
+              /* @__PURE__ */ jsxs62("span", { style: { whiteSpace: "nowrap" }, children: [
+                "\xB7 ",
+                messageToneLabel ?? messageToneConfig.label
+              ] })
+            ] }) : /* @__PURE__ */ jsx71("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-semibold)" }, children: message })
+          }
+        ),
+        orderedItems.map(({ item, index }) => /* @__PURE__ */ jsx71(PersistentItem, { item }, item.key ?? `${String(item.label)}-${index}`)),
+        children != null && /* @__PURE__ */ jsx71("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, overflow: "hidden", marginLeft: "auto", flex: "0 1 auto" }, children })
       ]
     }
   );
 }
 
 // components/feedback/Avatar.jsx
-import React68 from "react";
-import { jsx as jsx65, jsxs as jsxs56 } from "react/jsx-runtime";
+import React76 from "react";
+import { jsx as jsx72, jsxs as jsxs63 } from "react/jsx-runtime";
 var PLACEHOLDER_PATHS = {
   person: "M24 0H0V24H24V0ZM12.0007 5.90324C10.3806 5.90324 9.06734 7.21654 9.06734 8.83657C9.06734 10.4566 10.3806 11.7699 12.0007 11.7699C13.6207 11.7699 14.934 10.4566 14.934 8.83657C14.934 7.21654 13.6207 5.90324 12.0007 5.90324ZM7.94485 13.9487C9.02103 13.369 10.4593 13.0673 12.0006 13.0673C13.5419 13.0673 14.9802 13.369 16.0564 13.9487C17.1318 14.528 17.9339 15.4448 17.9339 16.6673L17.9339 16.8852C17.9339 17.0096 17.934 17.1363 17.9251 17.2446C17.9153 17.3651 17.8916 17.5146 17.814 17.6667C17.7086 17.8737 17.5403 18.042 17.3334 18.1474C17.1812 18.225 17.0317 18.2487 16.9112 18.2585C16.803 18.2674 16.6763 18.2674 16.5519 18.2674H16.5519L7.44952 18.2679C7.32508 18.2679 7.1984 18.268 7.0901 18.2591C6.96962 18.2493 6.82012 18.2256 6.66795 18.1481C6.46096 18.0426 6.29267 17.8743 6.1872 17.6673C6.10967 17.5152 6.08595 17.3657 6.07611 17.2452C6.06726 17.1369 6.06728 17.0102 6.0673 16.8858L6.0673 16.6673C6.0673 15.4448 6.86943 14.528 7.94485 13.9487Z",
   company: "M24 0H0V24H24V0ZM7.91302 5.40129H7.91304H12.0909H12.0909C12.3518 5.40128 12.5828 5.40127 12.7742 5.4169C12.9781 5.43356 13.1893 5.4709 13.395 5.57568C13.696 5.72908 13.9408 5.97384 14.0942 6.2749C14.199 6.48054 14.2363 6.69177 14.253 6.89563C14.2686 7.08704 14.2686 7.31806 14.2686 7.57901V7.57903V7.57905V7.57906L14.2686 10.7346H16.0908H16.0908H16.0909H16.0909C16.3519 10.7346 16.5828 10.7346 16.7742 10.7502C16.9781 10.7669 17.1893 10.8042 17.3949 10.909C17.696 11.0624 17.9408 11.3072 18.0942 11.6082C18.1989 11.8139 18.2363 12.0251 18.2529 12.229C18.2686 12.4204 18.2686 12.6514 18.2686 12.9124V18.6013H13.6827L13.6686 18.6014L13.6545 18.6013H10.0109L10.0019 18.6014L9.99291 18.6013H5.73527L5.73527 7.57903V7.57901C5.73526 7.31803 5.73525 7.08706 5.75089 6.89563C5.76754 6.69177 5.80488 6.48054 5.90966 6.2749C6.06306 5.97384 6.30782 5.72908 6.60888 5.57568C6.81452 5.4709 7.02575 5.43356 7.22961 5.4169C7.42102 5.40127 7.65205 5.40128 7.91302 5.40129ZM13.0686 17.4013H10.6019V15.3347C10.6019 15.0033 10.3333 14.7347 10.0019 14.7347C9.67054 14.7347 9.40191 15.0033 9.40191 15.3347V17.4013H6.93529V7.40125C6.93529 6.9823 6.94269 6.91512 6.95486 6.87765C6.99443 6.75587 7.08991 6.6604 7.21168 6.62083C7.24915 6.60865 7.31633 6.60125 7.73528 6.60125H12.2686C12.6876 6.60125 12.7547 6.60865 12.7922 6.62083C12.914 6.6604 13.0095 6.75587 13.049 6.87765C13.0612 6.91512 13.0686 6.9823 13.0686 7.40125V17.4013ZM14.2686 17.4013H17.0686V12.7346C17.0686 12.3156 17.0612 12.2485 17.049 12.211C17.0094 12.0892 16.914 11.9937 16.7922 11.9542C16.7547 11.942 16.6875 11.9346 16.2686 11.9346H14.2686V17.4013ZM8.06858 8.66802C8.06858 8.33665 8.33721 8.06802 8.66858 8.06802H11.3352C11.6666 8.06802 11.9352 8.33665 11.9352 8.66802C11.9352 8.99939 11.6666 9.26802 11.3352 9.26802H8.66858C8.33721 9.26802 8.06858 8.99939 8.06858 8.66802ZM8.06858 11.3347C8.06858 11.0033 8.33721 10.7347 8.66858 10.7347H11.3352C11.6666 10.7347 11.9352 11.0033 11.9352 11.3347C11.9352 11.6661 11.6666 11.9347 11.3352 11.9347H8.66858C8.33721 11.9347 8.06858 11.6661 8.06858 11.3347Z",
@@ -8357,7 +9955,7 @@ function resolveInteractionStyle(interaction) {
   return states[state] || {};
 }
 function PlaceholderGlyph({ kind, deactivated }) {
-  return /* @__PURE__ */ jsx65(
+  return /* @__PURE__ */ jsx72(
     "svg",
     {
       "aria-hidden": "true",
@@ -8367,9 +9965,9 @@ function PlaceholderGlyph({ kind, deactivated }) {
       fill: "none",
       style: {
         display: "block",
-        color: deactivated ? "var(--bw-white)" : "var(--color-semantic-label-assistive)"
+        color: deactivated ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-label-assistive)"
       },
-      children: /* @__PURE__ */ jsx65(
+      children: /* @__PURE__ */ jsx72(
         "path",
         {
           fillRule: "evenodd",
@@ -8402,18 +10000,18 @@ function Avatar({
   const resolvedSize = resolveAvatarSize(size);
   const normalizedVariant = normalizeVariant2(variant);
   const initials = initialsFromName(name);
-  const statusColor2 = status === "online" ? "var(--color-semantic-primary-normal)" : status === "busy" ? "var(--bw-red)" : "var(--bw-gray-300)";
+  const statusColor = status === "online" ? "var(--color-semantic-primary-normal)" : status === "busy" ? "var(--color-semantic-status-negative)" : "var(--color-semantic-interaction-inactive)";
   const placeholderKind = resolvePlaceholderKind(
     placeholder,
     normalizedVariant
   );
   const showInitials = placeholderKind === "initials" && initials;
-  const fallbackBg = deactivated ? "var(--bw-gray-300)" : "var(--bw-indigo-tint)";
-  const fallbackFg = deactivated ? "var(--bw-white)" : "var(--bw-ink)";
+  const fallbackBg = deactivated ? "var(--color-semantic-interaction-inactive)" : "var(--color-semantic-secondary-surface)";
+  const fallbackFg = deactivated ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-brand-ink)";
   const interactionStyle = resolveInteractionStyle(interaction);
   const resolvedBorderWeight = borderColor && !borderWeight ? 1 : borderWeight;
   const border = resolvedBorderWeight ? `${typeof resolvedBorderWeight === "number" ? `${resolvedBorderWeight}px` : resolvedBorderWeight} solid ${borderColor || "var(--color-semantic-line-normal-normal)"}` : "none";
-  const ringShadow = ring ? "0 0 0 4px var(--bw-white), 0 0 0 5px var(--bw-border)" : "";
+  const ringShadow = ring ? "0 0 0 4px var(--color-semantic-background-elevated-normal), 0 0 0 5px var(--color-semantic-line-solid-normal)" : "";
   const stateShadow = interactionStyle.boxShadow || "";
   const boxShadow = [ringShadow, stateShadow].filter(Boolean).join(", ") || "none";
   const avatarRadius = resolveAvatarRadius(normalizedVariant, resolvedSize);
@@ -8430,7 +10028,7 @@ function Avatar({
   const showPushBadge = pushBadge !== false && pushBadge != null && !deactivated;
   const pushBadgeSize = Math.max(10, Math.round(resolvedSize * 0.28));
   const pushBadgeLabel = pushBadge === true ? "" : pushBadge;
-  return /* @__PURE__ */ jsxs56(
+  return /* @__PURE__ */ jsxs63(
     "span",
     {
       "aria-disabled": deactivated || void 0,
@@ -8447,7 +10045,7 @@ function Avatar({
       },
       ...rest,
       children: [
-        src ? /* @__PURE__ */ jsx65(
+        src ? /* @__PURE__ */ jsx72(
           "img",
           {
             src,
@@ -8456,7 +10054,7 @@ function Avatar({
             height: resolvedSize,
             style: { ...avatarBoxStyle, display: "block", objectFit: "cover" }
           }
-        ) : /* @__PURE__ */ jsx65(
+        ) : /* @__PURE__ */ jsx72(
           "span",
           {
             style: {
@@ -8470,7 +10068,7 @@ function Avatar({
               fontWeight: "var(--fw-bold)",
               fontSize: Math.round(resolvedSize * 0.38)
             },
-            children: showInitials ? initials : /* @__PURE__ */ jsx65(
+            children: showInitials ? initials : /* @__PURE__ */ jsx72(
               PlaceholderGlyph,
               {
                 kind: placeholderKind === "initials" ? normalizedVariant : placeholderKind,
@@ -8479,7 +10077,7 @@ function Avatar({
             )
           }
         ),
-        deactivated && /* @__PURE__ */ jsx65(
+        deactivated && /* @__PURE__ */ jsx72(
           "span",
           {
             "aria-hidden": "true",
@@ -8490,7 +10088,7 @@ function Avatar({
               overflow: "hidden",
               pointerEvents: "none"
             },
-            children: /* @__PURE__ */ jsx65(
+            children: /* @__PURE__ */ jsx72(
               "span",
               {
                 style: {
@@ -8500,7 +10098,7 @@ function Avatar({
                   width: "148%",
                   height: Math.max(4, Math.round(resolvedSize * 0.12)),
                   borderRadius: "var(--radius-pill)",
-                  background: "color-mix(in srgb, var(--bw-gray-300) 76%, var(--color-semantic-background-elevated-normal))",
+                  background: "color-mix(in srgb, var(--color-semantic-interaction-inactive) 76%, var(--color-semantic-background-elevated-normal))",
                   transform: "translateY(-50%) rotate(-45deg)",
                   transformOrigin: "center"
                 }
@@ -8508,7 +10106,7 @@ function Avatar({
             )
           }
         ),
-        status && !deactivated && /* @__PURE__ */ jsx65(
+        status && !deactivated && /* @__PURE__ */ jsx72(
           "span",
           {
             style: {
@@ -8517,13 +10115,13 @@ function Avatar({
               bottom: 0,
               width: Math.max(10, resolvedSize * 0.24),
               height: Math.max(10, resolvedSize * 0.24),
-              background: statusColor2,
+              background: statusColor,
               borderRadius: "50%",
-              border: "2px solid var(--bw-white)"
+              border: "2px solid var(--color-semantic-background-elevated-normal)"
             }
           }
         ),
-        showPushBadge && /* @__PURE__ */ jsx65(
+        showPushBadge && /* @__PURE__ */ jsx72(
           "span",
           {
             "aria-hidden": "true",
@@ -8535,7 +10133,7 @@ function Avatar({
               height: pushBadgeSize,
               paddingInline: pushBadgeLabel ? 4 : 0,
               borderRadius: "var(--radius-pill)",
-              border: "2px solid var(--bw-white)",
+              border: "2px solid var(--color-semantic-background-elevated-normal)",
               boxSizing: "border-box",
               display: "inline-flex",
               alignItems: "center",
@@ -8555,8 +10153,8 @@ function Avatar({
 }
 
 // components/feedback/AvatarGroup.jsx
-import React69 from "react";
-import { jsx as jsx66, jsxs as jsxs57 } from "react/jsx-runtime";
+import React77 from "react";
+import { jsx as jsx73, jsxs as jsxs64 } from "react/jsx-runtime";
 var AVATAR_GROUP_SIZES = {
   xsmall: 24,
   default: 32,
@@ -8584,7 +10182,7 @@ function AvatarGroup({
     width: resolvedSize,
     height: resolvedSize,
     borderRadius: "50%",
-    border: "1.5px solid var(--bw-white)",
+    border: "1.5px solid var(--color-semantic-background-elevated-normal)",
     boxSizing: "border-box",
     display: "inline-flex",
     alignItems: "center",
@@ -8597,9 +10195,9 @@ function AvatarGroup({
   };
   const renderTrailingContent = () => {
     if (trailingContent === false || trailingContent == null) return null;
-    if (React69.isValidElement(trailingContent)) return trailingContent;
+    if (React77.isValidElement(trailingContent)) return trailingContent;
     const label = trailingContent === true ? trailingLabel ?? `\uC678 ${extra}\uBA85` : trailingContent;
-    return /* @__PURE__ */ jsx66(
+    return /* @__PURE__ */ jsx73(
       "span",
       {
         style: {
@@ -8619,7 +10217,7 @@ function AvatarGroup({
       }
     );
   };
-  return /* @__PURE__ */ jsxs57(
+  return /* @__PURE__ */ jsxs64(
     "div",
     {
       style: {
@@ -8630,8 +10228,8 @@ function AvatarGroup({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs57("span", { style: { display: "inline-flex", alignItems: "center" }, children: [
-          shown.map((it, i) => /* @__PURE__ */ jsx66(
+        /* @__PURE__ */ jsxs64("span", { style: { display: "inline-flex", alignItems: "center" }, children: [
+          shown.map((it, i) => /* @__PURE__ */ jsx73(
             Avatar,
             {
               src: it.src,
@@ -8644,7 +10242,7 @@ function AvatarGroup({
               interaction: it.interaction,
               pushBadge: it.pushBadge,
               size: resolvedSize,
-              borderColor: "var(--bw-white)",
+              borderColor: "var(--color-semantic-background-elevated-normal)",
               borderWeight: 1.5,
               title: it.name,
               style: {
@@ -8654,7 +10252,7 @@ function AvatarGroup({
             },
             i
           )),
-          extra > 0 && !trailingContent && /* @__PURE__ */ jsxs57(
+          extra > 0 && !trailingContent && /* @__PURE__ */ jsxs64(
             "span",
             {
               style: {
@@ -8678,25 +10276,25 @@ function AvatarGroup({
 }
 
 // components/feedback/Badge.jsx
-import React70 from "react";
-import { jsx as jsx67 } from "react/jsx-runtime";
-var COLORS = {
-  signal: "var(--color-semantic-primary-normal)",
-  navy: "var(--color-semantic-inverse-background)",
-  steel: "var(--bw-blue)",
-  amber: "var(--bw-amber)",
-  red: "var(--bw-red)",
+import React78 from "react";
+import { jsx as jsx74 } from "react/jsx-runtime";
+var PALETTES = {
+  signal: { bg: "var(--component-badge-signal-bg)", fg: "var(--component-badge-signal-fg)", dot: "var(--color-semantic-primary-normal)" },
+  navy: { bg: "var(--component-badge-navy-bg)", fg: "var(--component-badge-navy-fg)", dot: "var(--color-semantic-secondary-normal)" },
+  steel: { bg: "var(--component-badge-steel-bg)", fg: "var(--component-badge-steel-fg)", dot: "var(--color-semantic-accent-foreground-blue)" },
+  amber: { bg: "var(--component-badge-cautionary-bg)", fg: "var(--component-badge-cautionary-fg)", dot: "var(--color-semantic-status-cautionary-foreground)" },
+  red: { bg: "var(--component-badge-negative-bg)", fg: "var(--component-badge-negative-fg)", dot: "var(--color-semantic-status-negative-foreground)" },
   // aliases
-  indigo: "var(--color-semantic-inverse-background)",
-  green: "var(--bw-green)",
-  ink: "var(--color-semantic-inverse-background)"
+  indigo: { bg: "var(--component-badge-navy-bg)", fg: "var(--component-badge-navy-fg)", dot: "var(--color-semantic-secondary-normal)" },
+  green: { bg: "var(--component-badge-positive-bg)", fg: "var(--component-badge-positive-fg)", dot: "var(--color-semantic-status-positive-foreground)" },
+  ink: { bg: "var(--component-badge-navy-bg)", fg: "var(--component-badge-navy-fg)", dot: "var(--color-semantic-secondary-normal)" }
 };
 function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
-  const c = COLORS[tone] || COLORS.signal;
+  const palette = PALETTES[tone] || PALETTES.signal;
   if (dot) {
-    return /* @__PURE__ */ jsx67("span", { style: { display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: c, ...style }, ...rest });
+    return /* @__PURE__ */ jsx74("span", { style: { display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: palette.dot, ...style }, ...rest });
   }
-  return /* @__PURE__ */ jsx67(
+  return /* @__PURE__ */ jsx74(
     "span",
     {
       style: {
@@ -8709,8 +10307,8 @@ function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
         fontFamily: "var(--font-sans)",
         fontWeight: "var(--fw-bold)",
         fontSize: 12,
-        color: "var(--color-semantic-static-white)",
-        background: c,
+        color: palette.fg,
+        background: palette.bg,
         borderRadius: 4,
         ...style
       },
@@ -8721,8 +10319,8 @@ function Badge({ children, tone = "signal", dot = false, style, ...rest }) {
 }
 
 // components/feedback/Chip.jsx
-import React71 from "react";
-import { jsx as jsx68, jsxs as jsxs58 } from "react/jsx-runtime";
+import React79 from "react";
+import { jsx as jsx75, jsxs as jsxs65 } from "react/jsx-runtime";
 function Chip({
   children,
   as = "span",
@@ -8740,7 +10338,7 @@ function Chip({
   onClick,
   ...rest
 }) {
-  const [hover, setHover] = React71.useState(false);
+  const [hover, setHover] = React79.useState(false);
   const disabledState = disabled || disable;
   const activeState = active || selected || hover && !disabledState;
   const normalizedSize = {
@@ -8810,7 +10408,7 @@ function Chip({
   };
   const p = palettes[variant] || palettes.default;
   const Comp = as;
-  return /* @__PURE__ */ jsxs58(
+  return /* @__PURE__ */ jsxs65(
     Comp,
     {
       disabled: as === "button" ? disabledState : void 0,
@@ -8853,7 +10451,7 @@ function Chip({
       },
       ...rest,
       children: [
-        thumbnail && /* @__PURE__ */ jsx68(
+        thumbnail && /* @__PURE__ */ jsx75(
           "span",
           {
             "aria-hidden": "true",
@@ -8871,7 +10469,7 @@ function Chip({
             children: thumbnail
           }
         ),
-        !thumbnail && leading && /* @__PURE__ */ jsx68("span", { "aria-hidden": "true", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: leading }),
+        !thumbnail && leading && /* @__PURE__ */ jsx75("span", { "aria-hidden": "true", style: { display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: leading }),
         children
       ]
     }
@@ -8879,26 +10477,79 @@ function Chip({
 }
 
 // components/feedback/Notification.jsx
-import React72 from "react";
-import { jsx as jsx69, jsxs as jsxs59 } from "react/jsx-runtime";
-function Notification({ icon, title, description, time, unread = false, onClick, style, ...rest }) {
-  return /* @__PURE__ */ jsxs59(
-    "div",
+import React80 from "react";
+import { jsx as jsx76, jsxs as jsxs66 } from "react/jsx-runtime";
+function Notification({
+  icon,
+  title,
+  description,
+  time,
+  unread = false,
+  onClick,
+  onFocus,
+  onBlur,
+  onMouseEnter,
+  onMouseLeave,
+  style,
+  ...rest
+}) {
+  const [hovered, setHovered] = React80.useState(false);
+  const [focused, setFocused] = React80.useState(false);
+  const Root = onClick ? "button" : "div";
+  const background = unread ? hovered ? "var(--color-semantic-primary-surface-strong)" : "var(--component-notification-unread-surface)" : hovered ? "var(--color-semantic-fill-alternative)" : "transparent";
+  return /* @__PURE__ */ jsxs66(
+    Root,
     {
-      role: onClick ? "button" : void 0,
-      tabIndex: onClick ? 0 : void 0,
-      onClick,
-      style: { display: "flex", gap: 12, padding: "14px 16px", borderRadius: "var(--radius-lg)", cursor: onClick ? "pointer" : "default", background: unread ? "var(--lk-accent-tint)" : "transparent", fontFamily: "var(--font-sans)", ...style },
       ...rest,
+      ...onClick ? { type: "button" } : {},
+      onClick,
+      onFocus: (event) => {
+        setFocused(true);
+        onFocus && onFocus(event);
+      },
+      onBlur: (event) => {
+        setFocused(false);
+        onBlur && onBlur(event);
+      },
+      onMouseEnter: (event) => {
+        if (onClick) setHovered(true);
+        onMouseEnter && onMouseEnter(event);
+      },
+      onMouseLeave: (event) => {
+        setHovered(false);
+        onMouseLeave && onMouseLeave(event);
+      },
+      style: {
+        display: "grid",
+        gridTemplateColumns: icon != null ? "36px minmax(0, 1fr)" : "minmax(0, 1fr)",
+        alignItems: "start",
+        columnGap: "var(--space-3)",
+        width: "100%",
+        minWidth: 0,
+        padding: "var(--space-3) var(--space-4)",
+        boxSizing: "border-box",
+        border: "none",
+        borderRadius: "inherit",
+        appearance: "none",
+        cursor: onClick ? "pointer" : "default",
+        textAlign: "start",
+        background,
+        boxShadow: focused ? "inset 0 0 0 2px var(--color-semantic-primary-normal)" : "none",
+        color: "inherit",
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
       children: [
-        icon != null && /* @__PURE__ */ jsx69("span", { style: { flexShrink: 0, width: 38, height: 38, borderRadius: "var(--radius-md)", background: unread ? "var(--bw-white)" : "var(--lk-accent-tint)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--color-semantic-primary-normal)" }, children: icon }),
-        /* @__PURE__ */ jsxs59("div", { style: { flex: 1, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs59("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-            /* @__PURE__ */ jsx69("span", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-            unread && /* @__PURE__ */ jsx69("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "var(--bw-red)", flexShrink: 0 } })
+        icon != null && /* @__PURE__ */ jsx76("span", { style: { width: 36, height: 36, borderRadius: "var(--radius-sm)", background: "var(--color-semantic-fill-normal)", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--color-semantic-primary-normal)" }, children: icon }),
+        /* @__PURE__ */ jsxs66("div", { style: { minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs66("div", { style: { display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "var(--space-3)", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsxs66("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0 }, children: [
+              /* @__PURE__ */ jsx76("span", { style: { overflow: "hidden", textOverflow: "ellipsis", color: "var(--color-semantic-label-normal)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--label1-spacing)" }, children: title }),
+              unread && /* @__PURE__ */ jsx76("span", { "aria-label": "\uC77D\uC9C0 \uC54A\uC74C", style: { width: 6, height: 6, borderRadius: "50%", background: "var(--color-semantic-primary-normal)", flexShrink: 0 } })
+            ] }),
+            time != null && /* @__PURE__ */ jsx76("time", { style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", letterSpacing: "var(--caption1-spacing)" }, children: time })
           ] }),
-          description != null && /* @__PURE__ */ jsx69("div", { style: { marginTop: 2, fontSize: 13, lineHeight: 1.55, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
-          time != null && /* @__PURE__ */ jsx69("div", { style: { marginTop: 4, fontSize: 12, color: "var(--color-semantic-label-assistive)" }, children: time })
+          description != null && /* @__PURE__ */ jsx76("div", { style: { marginTop: "var(--space-1)", overflow: "hidden", textOverflow: "ellipsis", color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", letterSpacing: "var(--label2-spacing)", wordBreak: "keep-all" }, children: description })
         ] })
       ]
     }
@@ -8906,25 +10557,25 @@ function Notification({ icon, title, description, time, unread = false, onClick,
 }
 
 // components/feedback/PushBadge.jsx
-import React73 from "react";
-import { jsx as jsx70, jsxs as jsxs60 } from "react/jsx-runtime";
+import React81 from "react";
+import { jsx as jsx77, jsxs as jsxs67 } from "react/jsx-runtime";
 function PushBadge({ children, count, dot = false, max = 99, tone = "negative", style, ...rest }) {
-  const c = tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "navy" ? "var(--color-semantic-inverse-background)" : "var(--bw-red)";
+  const c = tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "navy" ? "var(--color-semantic-inverse-background)" : "var(--color-semantic-status-negative)";
   const show = dot || count != null && count > 0;
   const label = count > max ? `${max}+` : count;
-  return /* @__PURE__ */ jsxs60("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs67("span", { style: { position: "relative", display: "inline-flex", ...style }, ...rest, children: [
     children,
-    show && (dot ? /* @__PURE__ */ jsx70("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--bw-white)", boxSizing: "content-box" } }) : /* @__PURE__ */ jsx70("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--color-semantic-static-white)", borderRadius: "var(--radius-pill)", border: "2px solid var(--bw-white)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
+    show && (dot ? /* @__PURE__ */ jsx77("span", { style: { position: "absolute", top: -1, right: -1, width: 9, height: 9, borderRadius: "50%", background: c, border: "2px solid var(--color-semantic-background-elevated-normal)", boxSizing: "content-box" } }) : /* @__PURE__ */ jsx77("span", { style: { position: "absolute", top: -7, right: -9, minWidth: 18, height: 18, padding: "0 5px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: c, color: "var(--color-semantic-static-white)", borderRadius: "var(--radius-pill)", border: "2px solid var(--color-semantic-background-elevated-normal)", boxSizing: "content-box", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: label }))
   ] });
 }
 
 // components/feedback/Rating.jsx
-import React74 from "react";
-import { jsx as jsx71 } from "react/jsx-runtime";
+import React82 from "react";
+import { jsx as jsx78 } from "react/jsx-runtime";
 function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnly = false, style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React74.useState(defaultValue);
-  const [hover, setHover] = React74.useState(null);
+  const [internal, setInternal] = React82.useState(defaultValue);
+  const [hover, setHover] = React82.useState(null);
   const val = isControlled ? value : internal;
   const shown = hover != null ? hover : val;
   const set = (v) => {
@@ -8932,9 +10583,9 @@ function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnl
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
-  return /* @__PURE__ */ jsx71("span", { style: { display: "inline-flex", gap: 2, ...style }, ...rest, children: Array.from({ length: max }).map((_, i) => {
+  return /* @__PURE__ */ jsx78("span", { style: { display: "inline-flex", gap: 2, ...style }, ...rest, children: Array.from({ length: max }).map((_, i) => {
     const filled = i < shown;
-    return /* @__PURE__ */ jsx71(
+    return /* @__PURE__ */ jsx78(
       "span",
       {
         onMouseEnter: () => {
@@ -8944,66 +10595,21 @@ function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, readOnl
           if (!readOnly) setHover(null);
         },
         onClick: () => set(i + 1),
-        style: { display: "inline-flex", cursor: readOnly ? "default" : "pointer", color: filled ? "var(--bw-amber)" : "var(--bw-gray-300)" },
-        children: /* @__PURE__ */ jsx71("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: filled ? "currentColor" : "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx71("path", { d: "M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 18.6 6.2 21l1.1-6.5-4.7-4.6 6.5-.95z" }) })
+        style: { display: "inline-flex", cursor: readOnly ? "default" : "pointer", color: filled ? "var(--color-semantic-accent-foreground-orange)" : "var(--color-semantic-interaction-inactive)" },
+        children: /* @__PURE__ */ jsx78("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: filled ? "currentColor" : "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx78("path", { d: "M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 18.6 6.2 21l1.1-6.5-4.7-4.6 6.5-.95z" }) })
       },
       i
     );
   }) });
 }
 
-// components/feedback/Tag.jsx
-import React75 from "react";
-import { jsx as jsx72 } from "react/jsx-runtime";
-var TONES2 = {
-  signal: { fg: "var(--color-semantic-primary-normal)", bg: "var(--lk-accent-tint-2)" },
-  // brand teal chip (default)
-  neutral: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" },
-  // ink neutral
-  steel: { fg: "var(--bw-steel)", bg: "var(--bw-indigo-tint)" },
-  amber: { fg: "var(--color-semantic-status-cautionary)", bg: "var(--status-cautionary-tint)" },
-  red: { fg: "var(--color-semantic-status-negative)", bg: "var(--status-danger-tint)" },
-  // back-compat aliases (live site uses tone="indigo")
-  indigo: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" },
-  green: { fg: "var(--color-semantic-status-positive)", bg: "var(--status-positive-tint)" },
-  ink: { fg: "var(--color-semantic-label-strong)", bg: "var(--color-semantic-fill-strong)", solidBg: "var(--color-semantic-inverse-background)" }
-};
-function Tag({ children, tone = "signal", solid = false, style, ...rest }) {
-  const t = TONES2[tone] || TONES2.signal;
-  return /* @__PURE__ */ jsx72(
-    "span",
-    {
-      className: `lk-tag lk-tag--${tone}`,
-      style: {
-        display: "inline-flex",
-        alignItems: "center",
-        height: "var(--component-tag-height)",
-        padding: "0 12px",
-        fontFamily: "var(--font-sans)",
-        fontWeight: "var(--fw-bold)",
-        fontSize: "var(--fs-caption)",
-        lineHeight: 1,
-        letterSpacing: "var(--ls-caption)",
-        textTransform: "uppercase",
-        whiteSpace: "nowrap",
-        color: solid ? "var(--color-semantic-static-white)" : t.fg,
-        background: solid ? t.solidBg || t.fg : t.bg,
-        borderRadius: "var(--radius-pill)",
-        ...style
-      },
-      ...rest,
-      children
-    }
-  );
-}
-
 // components/forms/AutoComplete.jsx
-import React76 from "react";
-import { jsx as jsx73, jsxs as jsxs61 } from "react/jsx-runtime";
+import React83 from "react";
+import { jsx as jsx79, jsxs as jsxs68 } from "react/jsx-runtime";
 function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, placeholder = "\uC785\uB825\uD558\uC138\uC694", size = "md", style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React76.useState(defaultValue || "");
-  const [open, setOpen] = React76.useState(false);
+  const [internal, setInternal] = React83.useState(defaultValue || "");
+  const [open, setOpen] = React83.useState(false);
   const val = isControlled ? value : internal;
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const filtered = val ? norm.filter((o) => String(o.label).toLowerCase().includes(String(val).toLowerCase())) : norm;
@@ -9017,8 +10623,8 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
     setOpen(false);
   };
   const h = size === "sm" ? 40 : 48;
-  return /* @__PURE__ */ jsxs61("div", { style: { position: "relative", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx73(
+  return /* @__PURE__ */ jsxs68("div", { style: { position: "relative", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx79(
       "input",
       {
         value: val,
@@ -9030,10 +10636,10 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
         },
         onFocus: () => setOpen(true),
         onBlur: () => setTimeout(() => setOpen(false), 120),
-        style: { width: "100%", height: h, padding: "0 16px", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 16, color: "var(--color-semantic-label-normal)", background: "var(--bw-white)" }
+        style: { width: "100%", height: h, padding: "0 16px", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 16, color: "var(--color-semantic-label-normal)", background: "var(--color-semantic-background-elevated-normal)" }
       }
     ),
-    open && filtered.length > 0 && /* @__PURE__ */ jsx73("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: 6 }, children: filtered.map((o, i) => /* @__PURE__ */ jsx73(
+    open && filtered.length > 0 && /* @__PURE__ */ jsx79("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 30, maxHeight: 240, overflowY: "auto", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: 6 }, children: filtered.map((o, i) => /* @__PURE__ */ jsx79(
       "div",
       {
         role: "option",
@@ -9055,141 +10661,13 @@ function AutoComplete({ options = [], value, defaultValue, onChange, onSelect, p
   ] });
 }
 
-// components/forms/Checkbox.jsx
-import React77 from "react";
-import { jsx as jsx74, jsxs as jsxs62 } from "react/jsx-runtime";
-function Checkbox({
-  label,
-  checked,
-  defaultChecked,
-  indeterminate = false,
-  onChange,
-  variant = "box",
-  size = "md",
-  status = "normal",
-  state,
-  bold = false,
-  tight = false,
-  interaction,
-  disabled = false,
-  disable = false,
-  labelStyle,
-  style,
-  id,
-  "aria-label": ariaLabel,
-  ...rest
-}) {
-  const stateChecked = state === "checked" ? true : state === "unchecked" ? false : void 0;
-  const isControlled = checked !== void 0 || stateChecked !== void 0;
-  const [internal, setInternal] = React77.useState(stateChecked ?? !!defaultChecked);
-  const [hover, setHover] = React77.useState(false);
-  const [focus, setFocus] = React77.useState(false);
-  const on = checked !== void 0 ? checked : stateChecked !== void 0 ? stateChecked : internal;
-  const isMark = variant === "mark";
-  const mixed = !isMark && (indeterminate || state === "indeterminate") && !on;
-  const activeHover = hover || interaction === "hovered";
-  const activeFocus = focus || interaction === "focused";
-  const disabledState = disabled || disable || interaction === "inactive";
-  const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size;
-  const toggle = () => {
-    if (disabledState) return;
-    if (!isControlled) setInternal(!on);
-    onChange && onChange(!on);
-  };
-  const d = isMark ? normalizedSize === "sm" ? 20 : 24 : normalizedSize === "sm" ? 16 : 18;
-  const iconSize = isMark ? d : normalizedSize === "sm" ? 14 : 16;
-  const markTone = status === "negative" ? "var(--color-semantic-status-negative)" : "var(--color-semantic-primary-normal)";
-  const markIdleColor = activeHover || activeFocus ? "var(--color-semantic-label-neutral)" : "var(--bw-gray-300)";
-  const boxBackground = disabledState ? on || mixed ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-fill-normal)" : on || mixed ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-normal)" : "var(--bw-white)";
-  const boxBorder = disabledState ? "var(--color-semantic-line-normal-neutral)" : on || mixed ? "var(--color-semantic-primary-normal)" : activeHover || activeFocus ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
-  const checkStroke = disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-static-white)";
-  const controlStyle = isMark ? {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: d,
-    height: d,
-    flexShrink: 0,
-    boxSizing: "border-box",
-    color: disabledState ? "var(--color-semantic-label-disable)" : on ? markTone : markIdleColor,
-    background: "transparent",
-    border: "0",
-    borderRadius: "var(--radius-pill)",
-    boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
-    transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
-    outline: "none"
-  } : {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: d,
-    height: d,
-    flexShrink: 0,
-    boxSizing: "border-box",
-    background: boxBackground,
-    border: `1.5px solid ${boxBorder}`,
-    borderRadius: "var(--radius-5)",
-    boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
-    transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
-  };
-  return /* @__PURE__ */ jsxs62(
-    "label",
-    {
-      htmlFor: id,
-      onClick: toggle,
-      onMouseEnter: () => setHover(true),
-      onMouseLeave: () => setHover(false),
-      style: {
-        display: "inline-flex",
-        alignItems: "center",
-        gap: tight ? 4 : 8,
-        cursor: disabledState ? "not-allowed" : "pointer",
-        fontFamily: "var(--font-sans)",
-        fontSize: normalizedSize === "sm" ? "var(--label1-size)" : "15px",
-        letterSpacing: 0,
-        color: disabledState ? "var(--color-semantic-label-disable)" : "var(--bw-ink)",
-        fontWeight: bold ? "var(--fw-bold)" : void 0,
-        ...style
-      },
-      children: [
-        /* @__PURE__ */ jsxs62(
-          "span",
-          {
-            role: "checkbox",
-            "aria-checked": mixed ? "mixed" : on,
-            "aria-disabled": disabledState ? true : void 0,
-            "aria-label": ariaLabel ?? (typeof label === "string" ? label : isMark ? "check mark" : "checkbox"),
-            id,
-            tabIndex: disabledState ? -1 : 0,
-            onFocus: () => setFocus(true),
-            onBlur: () => setFocus(false),
-            onKeyDown: (e) => {
-              if (e.key === " " || e.key === "Enter") {
-                e.preventDefault();
-                toggle();
-              }
-            },
-            style: controlStyle,
-            ...rest,
-            children: [
-              (on || isMark) && /* @__PURE__ */ jsx74("svg", { width: iconSize, height: iconSize, viewBox: "0 0 24 24", fill: "none", stroke: isMark ? "currentColor" : checkStroke, strokeWidth: "3.2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx74("path", { d: "M20 6 9 17l-5-5" }) }),
-              mixed && /* @__PURE__ */ jsx74("span", { style: { width: d - 8, height: 2, borderRadius: 999, background: checkStroke } })
-            ]
-          }
-        ),
-        label && /* @__PURE__ */ jsx74("span", { style: labelStyle, children: label })
-      ]
-    }
-  );
-}
-
 // components/forms/CheckboxGroup.jsx
-import React78 from "react";
-import { jsx as jsx75, jsxs as jsxs63 } from "react/jsx-runtime";
+import React84 from "react";
+import { jsx as jsx80, jsxs as jsxs69 } from "react/jsx-runtime";
 function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direction = "column", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React78.useState(defaultValue);
+  const [internal, setInternal] = React84.useState(defaultValue);
   const val = isControlled ? value : internal;
   const toggle = (v) => {
     const arr = Array.isArray(val) ? val : [];
@@ -9197,40 +10675,40 @@ function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direc
     if (!isControlled) setInternal(next);
     onChange && onChange(next);
   };
-  return /* @__PURE__ */ jsx75("div", { role: "group", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
+  return /* @__PURE__ */ jsx80("div", { role: "group", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = Array.isArray(val) && val.includes(o.value);
-    return /* @__PURE__ */ jsxs63("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
-      /* @__PURE__ */ jsx75("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
-      /* @__PURE__ */ jsx75("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, background: on ? "var(--color-semantic-primary-normal)" : "var(--bw-white)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx75("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx75("path", { d: "M20 6 9 17l-5-5" }) }) }),
-      /* @__PURE__ */ jsxs63("span", { children: [
-        /* @__PURE__ */ jsx75("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ jsx75("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
+    return /* @__PURE__ */ jsxs69("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+      /* @__PURE__ */ jsx80("input", { type: "checkbox", checked: on, disabled: o.disabled, onChange: () => toggle(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
+      /* @__PURE__ */ jsx80("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, background: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx80("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.4", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx80("path", { d: "M20 6 9 17l-5-5" }) }) }),
+      /* @__PURE__ */ jsxs69("span", { children: [
+        /* @__PURE__ */ jsx80("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ jsx80("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
 }
 
 // components/forms/ColorSwatch.jsx
-import React79 from "react";
-import { jsx as jsx76 } from "react/jsx-runtime";
+import React85 from "react";
+import { jsx as jsx81 } from "react/jsx-runtime";
 function ColorSwatch({ colors = [], value, defaultValue, onChange, size = 28, shape = "rounded", style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React79.useState(defaultValue);
+  const [internal, setInternal] = React85.useState(defaultValue);
   const val = isControlled ? value : internal;
   const pick = (c) => {
     if (!isControlled) setInternal(c);
     onChange && onChange(c);
   };
   const radius = shape === "circle" ? "50%" : "var(--radius-md)";
-  return /* @__PURE__ */ jsx76("div", { style: { display: "inline-flex", gap: 10, flexWrap: "wrap", ...style }, ...rest, children: colors.map((c) => {
+  return /* @__PURE__ */ jsx81("div", { style: { display: "inline-flex", gap: 10, flexWrap: "wrap", ...style }, ...rest, children: colors.map((c) => {
     const on = c === val;
-    return /* @__PURE__ */ jsx76(
+    return /* @__PURE__ */ jsx81(
       "button",
       {
         type: "button",
         "aria-label": c,
         onClick: () => pick(c),
-        style: { width: size, height: size, borderRadius: radius, background: c, cursor: "pointer", padding: 0, border: "2px solid var(--bw-white)", boxShadow: on ? "0 0 0 2px var(--color-semantic-primary-normal)" : "inset 0 0 0 1px var(--color-semantic-line-normal-normal)", transition: "box-shadow var(--dur-fast) var(--ease-out)" }
+        style: { width: size, height: size, borderRadius: radius, background: c, cursor: "pointer", padding: 0, border: "2px solid var(--color-semantic-background-elevated-normal)", boxShadow: on ? "0 0 0 2px var(--color-semantic-primary-normal)" : "inset 0 0 0 1px var(--color-semantic-line-normal-normal)", transition: "box-shadow var(--dur-fast) var(--ease-out)" }
       },
       c
     );
@@ -9238,16 +10716,16 @@ function ColorSwatch({ colors = [], value, defaultValue, onChange, size = 28, sh
 }
 
 // components/forms/Combobox.jsx
-import React80 from "react";
-import { jsx as jsx77, jsxs as jsxs64 } from "react/jsx-runtime";
+import React86 from "react";
+import { jsx as jsx82, jsxs as jsxs70 } from "react/jsx-runtime";
 function Combobox({ options = [], value, defaultValue = [], onChange, placeholder = "\uC120\uD0DD", size = "md", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React80.useState(defaultValue);
+  const [internal, setInternal] = React86.useState(defaultValue);
   const sel = isControlled ? value : internal;
-  const [open, setOpen] = React80.useState(false);
-  const ref = React80.useRef(null);
-  React80.useEffect(() => {
+  const [open, setOpen] = React86.useState(false);
+  const ref = React86.useRef(null);
+  React86.useEffect(() => {
     if (!open) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -9265,14 +10743,14 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
     return o ? o.label : v;
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs64("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs64("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)" }, children: [
-      /* @__PURE__ */ jsx77("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ jsx77("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--lk-accent-tint-2)", color: "var(--color-semantic-primary-normal)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
-      /* @__PURE__ */ jsx77("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx77("path", { d: "m6 9 6 6 6-6" }) })
+  return /* @__PURE__ */ jsxs70("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs70("button", { type: "button", onClick: () => setOpen((o) => !o), style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", minHeight: h, padding: "6px 12px", boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel.length ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)" }, children: [
+      /* @__PURE__ */ jsx82("span", { style: { display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }, children: sel.length ? sel.map((v) => /* @__PURE__ */ jsx82("span", { style: { display: "inline-flex", height: 24, alignItems: "center", padding: "0 9px", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-normal)", borderRadius: "var(--radius-pill)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: labelFor(v) }, v)) : placeholder }),
+      /* @__PURE__ */ jsx82("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx82("path", { d: "m6 9 6 6 6-6" }) })
     ] }),
-    open && /* @__PURE__ */ jsx77("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
+    open && /* @__PURE__ */ jsx82("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
       const on = sel.includes(o.value);
-      return /* @__PURE__ */ jsxs64(
+      return /* @__PURE__ */ jsxs70(
         "div",
         {
           role: "option",
@@ -9286,7 +10764,7 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
           },
           style: { display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: "var(--color-semantic-label-normal)" },
           children: [
-            /* @__PURE__ */ jsx77("span", { style: { width: 18, height: 18, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, background: on ? "var(--color-semantic-primary-normal)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: on && /* @__PURE__ */ jsx77("svg", { width: "11", height: "11", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx77("path", { d: "M20 6 9 17l-5-5" }) }) }),
+            /* @__PURE__ */ jsx82("span", { style: { width: 18, height: 18, borderRadius: "var(--radius-sm)", border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, background: on ? "var(--color-semantic-primary-normal)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: on && /* @__PURE__ */ jsx82("svg", { width: "11", height: "11", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-static-white)", strokeWidth: "3.5", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx82("path", { d: "M20 6 9 17l-5-5" }) }) }),
             o.label
           ]
         },
@@ -9297,15 +10775,19 @@ function Combobox({ options = [], value, defaultValue = [], onChange, placeholde
 }
 
 // components/forms/DatePicker.jsx
-import React81 from "react";
-import { jsx as jsx78, jsxs as jsxs65 } from "react/jsx-runtime";
-function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC \uC120\uD0DD", size = "md", style, ...rest }) {
+import React87 from "react";
+import { jsx as jsx83, jsxs as jsxs71 } from "react/jsx-runtime";
+function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC \uC120\uD0DD", size = "md", disabled = false, style, "aria-label": ariaLabel, onKeyDown, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React81.useState(defaultValue || null);
+  const [internal, setInternal] = React87.useState(defaultValue || null);
   const sel = isControlled ? value : internal;
-  const [open, setOpen] = React81.useState(false);
-  const ref = React81.useRef(null);
-  React81.useEffect(() => {
+  const [open, setOpen] = React87.useState(false);
+  const [focused, setFocused] = React87.useState(false);
+  const ref = React87.useRef(null);
+  const buttonRef = React87.useRef(null);
+  const popupId = React87.useId();
+  const expanded = open && !disabled;
+  React87.useEffect(() => {
     if (!open) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -9313,236 +10795,573 @@ function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
+  React87.useEffect(() => {
+    if (disabled && open) setOpen(false);
+  }, [disabled, open]);
   const fmt = (d) => {
     if (!d) return "";
     const dt = d instanceof Date ? d : new Date(d);
     return `${dt.getFullYear()}. ${String(dt.getMonth() + 1).padStart(2, "0")}. ${String(dt.getDate()).padStart(2, "0")}`;
   };
   const h = size === "sm" ? 40 : 50;
+  const formattedValue = sel ? fmt(sel) : "";
+  const triggerLabel = `${ariaLabel ?? placeholder}${formattedValue ? `, ${formattedValue}` : ""}`;
   const pick = (d) => {
     if (!isControlled) setInternal(d);
-    onChange && onChange(d);
+    onChange?.(d);
     setOpen(false);
+    window.requestAnimationFrame(() => buttonRef.current?.focus());
   };
-  return /* @__PURE__ */ jsxs65("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs65(
-      "button",
-      {
-        type: "button",
-        onClick: () => setOpen((o) => !o),
-        style: { display: "inline-flex", alignItems: "center", gap: 10, height: h, padding: "0 14px", minWidth: 200, background: "var(--bw-white)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, color: sel ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)" },
-        children: [
-          /* @__PURE__ */ jsxs65("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-            /* @__PURE__ */ jsx78("rect", { x: "3", y: "4.5", width: "18", height: "17", rx: "2.5" }),
-            /* @__PURE__ */ jsx78("path", { d: "M3 9.5h18M8 2.5v4M16 2.5v4" })
-          ] }),
-          /* @__PURE__ */ jsx78("span", { style: { flex: 1, textAlign: "left" }, children: sel ? fmt(sel) : placeholder })
-        ]
-      }
-    ),
-    open && /* @__PURE__ */ jsx78("div", { style: { position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 40 }, children: /* @__PURE__ */ jsx78(Calendar, { value: sel || void 0, onChange: pick }) })
-  ] });
+  return /* @__PURE__ */ jsxs71(
+    "div",
+    {
+      ref,
+      style: { position: "relative", display: "inline-block", ...style },
+      onKeyDown: (event) => {
+        onKeyDown?.(event);
+        if (event.defaultPrevented) return;
+        if (event.key === "Escape" && open) {
+          event.preventDefault();
+          setOpen(false);
+          buttonRef.current?.focus();
+        }
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ jsxs71(
+          "button",
+          {
+            ref: buttonRef,
+            type: "button",
+            disabled,
+            "aria-label": triggerLabel,
+            "aria-haspopup": "dialog",
+            "aria-expanded": expanded,
+            "aria-controls": expanded ? popupId : void 0,
+            onClick: () => setOpen((current) => !current),
+            onFocus: () => setFocused(true),
+            onBlur: () => setFocused(false),
+            style: { display: "inline-flex", alignItems: "center", gap: 10, height: h, padding: "0 14px", minWidth: 200, background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)", border: `1px solid ${focused || open ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)"}`, borderRadius: "var(--component-input-radius)", boxShadow: focused || open ? "var(--component-input-focus-shadow)" : "none", cursor: disabled ? "not-allowed" : "pointer", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", color: disabled ? "var(--color-semantic-label-disable)" : sel ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)" },
+            children: [
+              /* @__PURE__ */ jsxs71("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+                /* @__PURE__ */ jsx83("rect", { x: "3", y: "4.5", width: "18", height: "17", rx: "2.5" }),
+                /* @__PURE__ */ jsx83("path", { d: "M3 9.5h18M8 2.5v4M16 2.5v4" })
+              ] }),
+              /* @__PURE__ */ jsx83("span", { style: { flex: 1, textAlign: "left" }, children: formattedValue || placeholder })
+            ]
+          }
+        ),
+        expanded && /* @__PURE__ */ jsx83("div", { id: popupId, role: "dialog", "aria-label": ariaLabel ?? placeholder, style: { position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 40 }, children: /* @__PURE__ */ jsx83(Calendar, { value: sel || void 0, onChange: pick, autoFocus: true }) })
+      ]
+    }
+  );
 }
 
 // components/forms/FileUpload.jsx
-import React82 from "react";
-import { jsx as jsx79, jsxs as jsxs66 } from "react/jsx-runtime";
-function FileUpload({ onFiles, accept, multiple = false, hint = "\uD074\uB9AD\uD558\uAC70\uB098 \uD30C\uC77C\uC744 \uB04C\uC5B4\uB2E4 \uB193\uC73C\uC138\uC694", disabled = false, style, ...rest }) {
-  const inputRef = React82.useRef(null);
-  const [drag, setDrag] = React82.useState(false);
-  const [names, setNames] = React82.useState([]);
+import React88 from "react";
+import { jsx as jsx84, jsxs as jsxs72 } from "react/jsx-runtime";
+function matchesAccept(file, accept) {
+  const rules = String(accept ?? "").split(",").map((rule) => rule.trim().toLowerCase()).filter(Boolean);
+  if (rules.length === 0) return true;
+  const name = String(file?.name ?? "").toLowerCase();
+  const type = String(file?.type ?? "").toLowerCase();
+  return rules.some((rule) => {
+    if (rule.startsWith(".")) return name.endsWith(rule);
+    if (rule.endsWith("/*")) return type.startsWith(rule.slice(0, -1));
+    return type === rule;
+  });
+}
+function FileUpload({
+  onFiles,
+  onRejectedFiles,
+  accept,
+  multiple = false,
+  capture,
+  inputAriaLabel,
+  inputAriaDescribedBy,
+  inputAriaInvalid,
+  hint = "\uD074\uB9AD\uD558\uAC70\uB098 \uD30C\uC77C\uC744 \uB04C\uC5B4\uB2E4 \uB193\uC73C\uC138\uC694",
+  disabled = false,
+  className,
+  style,
+  onDragEnter,
+  onDragOver,
+  onDragLeave,
+  onDrop,
+  ...rest
+}) {
+  const inputId = React88.useId();
+  const [drag, setDrag] = React88.useState(false);
+  const [focused, setFocused] = React88.useState(false);
+  const [names, setNames] = React88.useState([]);
   const handle = (files) => {
-    const arr = Array.from(files || []);
-    setNames(arr.map((f) => f.name));
-    onFiles && onFiles(arr);
+    const candidates = Array.from(files ?? []);
+    const limited = multiple ? candidates : candidates.slice(0, 1);
+    const overflow = multiple ? [] : candidates.slice(1);
+    const accepted = limited.filter((file) => matchesAccept(file, accept));
+    const rejected = [
+      ...limited.filter((file) => !matchesAccept(file, accept)),
+      ...overflow
+    ];
+    setNames(accepted.map((file) => file.name));
+    onFiles?.(accepted);
+    if (rejected.length > 0) onRejectedFiles?.(rejected);
   };
-  return /* @__PURE__ */ jsxs66(
+  return /* @__PURE__ */ jsxs72(
     "div",
     {
-      onClick: () => {
-        if (!disabled && inputRef.current) inputRef.current.click();
-      },
-      onDragOver: (e) => {
-        e.preventDefault();
+      ...rest,
+      className: ["lk-file-upload", className].filter(Boolean).join(" "),
+      "aria-disabled": disabled || void 0,
+      "data-drag-active": drag ? "" : void 0,
+      "data-focus-visible": focused ? "" : void 0,
+      onDragEnter: (event) => {
+        event.preventDefault();
         if (!disabled) setDrag(true);
+        onDragEnter?.(event);
       },
-      onDragLeave: () => setDrag(false),
-      onDrop: (e) => {
-        e.preventDefault();
+      onDragOver: (event) => {
+        event.preventDefault();
+        if (!disabled) setDrag(true);
+        onDragOver?.(event);
+      },
+      onDragLeave: (event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setDrag(false);
+        onDragLeave?.(event);
+      },
+      onDrop: (event) => {
+        event.preventDefault();
         setDrag(false);
-        if (!disabled) handle(e.dataTransfer.files);
+        if (!disabled) handle(event.dataTransfer.files);
+        onDrop?.(event);
       },
       style: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10,
-        padding: "32px 20px",
-        textAlign: "center",
-        border: `1.5px dashed ${drag ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
-        borderRadius: "var(--radius-xl)",
-        background: drag ? "var(--lk-accent-tint)" : "var(--bw-white)",
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.5 : 1,
+        position: "relative",
+        width: "100%",
+        minWidth: 0,
+        boxSizing: "border-box",
+        border: `1.5px dashed ${drag || focused ? "var(--component-input-border-color-focus)" : "var(--color-semantic-line-solid-normal)"}`,
+        borderRadius: "var(--component-input-radius)",
+        background: disabled ? "var(--color-semantic-fill-normal)" : drag ? "var(--color-semantic-primary-surface-normal)" : "var(--component-input-bg)",
+        boxShadow: focused ? "var(--component-input-focus-shadow)" : "none",
+        color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)",
         fontFamily: "var(--font-sans)",
-        transition: "border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out)",
+        transition: "border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
+        ...style
+      },
+      children: [
+        /* @__PURE__ */ jsx84(
+          "input",
+          {
+            id: inputId,
+            type: "file",
+            accept,
+            multiple,
+            capture,
+            disabled,
+            "aria-label": inputAriaLabel,
+            "aria-describedby": inputAriaDescribedBy,
+            "aria-invalid": inputAriaInvalid,
+            onFocus: () => setFocused(true),
+            onBlur: () => setFocused(false),
+            onChange: (event) => {
+              handle(event.currentTarget.files);
+              event.currentTarget.value = "";
+            },
+            style: {
+              position: "absolute",
+              width: 1,
+              height: 1,
+              padding: 0,
+              margin: -1,
+              overflow: "hidden",
+              clip: "rect(0, 0, 0, 0)",
+              whiteSpace: "nowrap",
+              border: 0
+            }
+          }
+        ),
+        /* @__PURE__ */ jsxs72(
+          "label",
+          {
+            htmlFor: inputId,
+            style: {
+              minHeight: 144,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "var(--space-3)",
+              padding: "var(--space-6) var(--space-4)",
+              boxSizing: "border-box",
+              textAlign: "center",
+              cursor: disabled ? "not-allowed" : "pointer"
+            },
+            children: [
+              /* @__PURE__ */ jsx84(
+                "span",
+                {
+                  "aria-hidden": "true",
+                  style: {
+                    display: "inline-flex",
+                    width: 40,
+                    height: 40,
+                    borderRadius: "var(--radius-md)",
+                    background: disabled ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-primary-surface-normal)",
+                    color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-primary-normal)",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  },
+                  children: /* @__PURE__ */ jsx84(Icon, { name: "upload", size: 20, "aria-hidden": "true" })
+                }
+              ),
+              /* @__PURE__ */ jsx84(
+                "span",
+                {
+                  style: {
+                    maxWidth: "100%",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    color: names.length > 0 && !disabled ? "var(--color-semantic-label-normal)" : "inherit",
+                    fontSize: "var(--label1-size)",
+                    lineHeight: "var(--label1-line)",
+                    fontWeight: "var(--fw-semibold)",
+                    wordBreak: "break-word"
+                  },
+                  children: hint
+                }
+              ),
+              names.length > 0 && /* @__PURE__ */ jsx84(
+                "span",
+                {
+                  "aria-hidden": "true",
+                  style: {
+                    maxWidth: "100%",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
+                    fontSize: "var(--caption1-size)",
+                    lineHeight: "var(--caption1-line)",
+                    fontWeight: "var(--fw-medium)",
+                    wordBreak: "break-word"
+                  },
+                  children: names.join(", ")
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx84(
+          "span",
+          {
+            role: "status",
+            "aria-live": "polite",
+            style: {
+              position: "absolute",
+              width: 1,
+              height: 1,
+              padding: 0,
+              margin: -1,
+              overflow: "hidden",
+              clip: "rect(0, 0, 0, 0)",
+              whiteSpace: "nowrap",
+              border: 0
+            },
+            children: names.length > 0 ? `${names.join(", ")}, \uC120\uD0DD\uB428` : ""
+          }
+        )
+      ]
+    }
+  );
+}
+
+// components/forms/FileUploadQueue.jsx
+import React90 from "react";
+
+// components/status/ProgressBar.jsx
+import React89 from "react";
+import { jsx as jsx85, jsxs as jsxs73 } from "react/jsx-runtime";
+function useKeyframes3(id, css) {
+  React89.useEffect(() => {
+    if (typeof document === "undefined" || document.getElementById(id)) return;
+    const el = document.createElement("style");
+    el.id = id;
+    el.textContent = css;
+    document.head.appendChild(el);
+  }, [id, css]);
+}
+var TONES3 = {
+  signal: "var(--color-semantic-primary-normal)",
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)"
+};
+function ProgressBar({
+  value = 0,
+  max = 100,
+  indeterminate = false,
+  tone = "signal",
+  color,
+  size = "md",
+  label,
+  showValue = false,
+  style,
+  "aria-label": ariaLabelProp,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-valuetext": ariaValueText,
+  ...rest
+}) {
+  useKeyframes3("lk-prog-kf", "@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none}}");
+  const c = color || TONES3[tone] || TONES3.signal;
+  const h = size === "sm" ? 4 : size === "lg" ? 10 : 6;
+  const pct = Math.max(0, Math.min(100, value / max * 100));
+  const ariaLabel = ariaLabelProp ?? (typeof label === "string" ? label : void 0);
+  return /* @__PURE__ */ jsxs73("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs73("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
+      /* @__PURE__ */ jsx85("span", { children: label }),
+      showValue && /* @__PURE__ */ jsxs73("span", { style: { color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
+        Math.round(pct),
+        "%"
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx85(
+      "div",
+      {
+        role: "progressbar",
+        "aria-label": ariaLabel,
+        "aria-labelledby": ariaLabelledBy,
+        "aria-describedby": ariaDescribedBy,
+        "aria-busy": indeterminate || void 0,
+        "aria-valuenow": indeterminate ? void 0 : Math.round(pct),
+        "aria-valuemin": 0,
+        "aria-valuemax": 100,
+        "aria-valuetext": ariaValueText ?? (indeterminate ? "\uC9C4\uD589 \uC911" : `${Math.round(pct)}%`),
+        style: { position: "relative", height: h, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)", overflow: "hidden" },
+        children: indeterminate ? /* @__PURE__ */ jsx85("span", { "data-lds-progress-indeterminate": true, style: { position: "absolute", top: 0, bottom: 0, left: 0, width: "45%", background: c, borderRadius: "var(--radius-pill)", animation: "lk-prog-indet 1.3s var(--ease-in-out) infinite" } }) : /* @__PURE__ */ jsx85("span", { style: { position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out)" } })
+      }
+    )
+  ] });
+}
+
+// components/status/status-presentation.js
+var STATUS_TONE_STYLE = {
+  positive: {
+    icon: "circle-check-fill",
+    foreground: "var(--color-semantic-status-positive-text)",
+    surface: "var(--color-semantic-status-positive-surface)",
+    border: "var(--color-semantic-status-positive-border)"
+  },
+  cautionary: {
+    icon: "triangle-exclamation-fill",
+    foreground: "var(--color-semantic-status-cautionary-text)",
+    surface: "var(--color-semantic-status-cautionary-surface)",
+    border: "var(--color-semantic-status-cautionary-border)"
+  },
+  negative: {
+    icon: "circle-close-fill",
+    foreground: "var(--color-semantic-status-negative-text)",
+    surface: "var(--color-semantic-status-negative-surface)",
+    border: "var(--color-semantic-status-negative-border)"
+  },
+  signal: {
+    icon: "circle-info-fill",
+    foreground: "var(--color-semantic-status-info-text)",
+    surface: "var(--color-semantic-status-info-surface)",
+    border: "var(--color-semantic-status-info-border)"
+  },
+  offline: {
+    icon: "circle-info",
+    foreground: "var(--color-semantic-status-neutral-text)",
+    surface: "var(--color-semantic-status-neutral-surface)",
+    border: "var(--color-semantic-status-neutral-border)"
+  }
+};
+function statusToneStyle(tone, fallback = "offline") {
+  return STATUS_TONE_STYLE[tone] ?? STATUS_TONE_STYLE[fallback];
+}
+
+// components/forms/FileUploadQueue.jsx
+import { jsx as jsx86, jsxs as jsxs74 } from "react/jsx-runtime";
+var STATUS_META = {
+  queued: { label: "\uB300\uAE30", tone: "offline" },
+  uploading: { label: "\uC5C5\uB85C\uB4DC \uC911", tone: "signal" },
+  processing: { label: "\uCC98\uB9AC \uC911", tone: "signal" },
+  succeeded: { label: "\uC644\uB8CC", tone: "positive" },
+  failed: { label: "\uC2E4\uD328", tone: "negative" }
+};
+function queueSummary(items) {
+  const groups = [
+    { key: "queued", label: "\uB300\uAE30", tone: "offline", count: items.filter((item) => item.status === "queued").length },
+    { key: "active", label: "\uC9C4\uD589", tone: "signal", count: items.filter((item) => item.status === "uploading" || item.status === "processing").length },
+    { key: "succeeded", label: "\uC644\uB8CC", tone: "positive", count: items.filter((item) => item.status === "succeeded").length },
+    { key: "failed", label: "\uC2E4\uD328", tone: "negative", count: items.filter((item) => item.status === "failed").length }
+  ];
+  return groups.filter((group) => group.count > 0);
+}
+function FileUploadQueue({
+  items = [],
+  title = "\uD30C\uC77C \uCC98\uB9AC",
+  emptyLabel = "\uCC98\uB9AC\uD560 \uD30C\uC77C\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  onRetry,
+  onCancel,
+  onRemove,
+  onOpen,
+  className,
+  style,
+  ...rest
+}) {
+  const summary = queueSummary(items);
+  const summaryLabel = summary.length > 0 ? summary.map((group) => `${group.label} ${group.count}\uAC1C`).join(", ") : "\uD30C\uC77C \uC5C6\uC74C";
+  return /* @__PURE__ */ jsxs74(
+    "section",
+    {
+      "aria-label": typeof title === "string" ? title : "\uD30C\uC77C \uCC98\uB9AC",
+      className: ["lk-file-upload-queue", className].filter(Boolean).join(" "),
+      style: {
+        width: "100%",
+        minWidth: 0,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        containerType: "inline-size",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
+        borderRadius: "var(--radius-lg)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        color: "var(--color-semantic-label-normal)",
+        fontFamily: "var(--font-sans)",
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx79("span", { style: { display: "inline-flex", width: 44, height: 44, borderRadius: "var(--radius-lg)", background: "var(--lk-accent-tint)", color: "var(--color-semantic-primary-normal)", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsxs66("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-          /* @__PURE__ */ jsx79("path", { d: "M12 16V4M7 9l5-5 5 5" }),
-          /* @__PURE__ */ jsx79("path", { d: "M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" })
+        /* @__PURE__ */ jsx86("style", { children: `@container (max-width: 520px) {
+          .lk-file-upload-queue__item {
+            grid-template-columns: 28px minmax(0, 1fr) !important;
+            padding: var(--space-3) !important;
+          }
+          .lk-file-upload-queue__actions {
+            grid-column: 2;
+            justify-self: end !important;
+            justify-content: flex-end !important;
+            margin-top: var(--space-1);
+          }
+        }` }),
+        /* @__PURE__ */ jsx86("header", { style: { padding: "var(--space-4)", background: "var(--color-semantic-fill-normal)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)" }, children: /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gridTemplateColumns: "28px minmax(0, 1fr)", gap: "var(--space-3)", alignItems: "center" }, children: [
+          /* @__PURE__ */ jsx86(Icon, { name: "document", size: 22, color: "var(--color-semantic-label-neutral)", "aria-hidden": "true" }),
+          /* @__PURE__ */ jsxs74("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsx86("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)" }, children: title }),
+            /* @__PURE__ */ jsx86(
+              "span",
+              {
+                role: "status",
+                "aria-live": "polite",
+                "aria-atomic": "true",
+                "aria-label": summaryLabel,
+                style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", flexWrap: "wrap" },
+                children: summary.length > 0 ? summary.map((group) => /* @__PURE__ */ jsxs74(StatusBadge, { tone: group.tone, children: [
+                  group.label,
+                  " ",
+                  group.count
+                ] }, group.key)) : /* @__PURE__ */ jsx86(StatusBadge, { tone: "offline", children: "0\uAC1C" })
+              }
+            )
+          ] })
         ] }) }),
-        /* @__PURE__ */ jsx79("div", { style: { fontSize: 14, fontWeight: "var(--fw-semibold)", color: names.length ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)", wordBreak: "break-all" }, children: names.length ? names.join(", ") : hint }),
-        /* @__PURE__ */ jsx79("input", { ref: inputRef, type: "file", accept, multiple, disabled, onChange: (e) => handle(e.target.files), style: { display: "none" } })
+        items.length === 0 ? /* @__PURE__ */ jsx86("div", { role: "status", style: { padding: "var(--space-6) var(--space-4)", color: "var(--color-semantic-label-neutral)", textAlign: "center", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: emptyLabel }) : /* @__PURE__ */ jsx86("ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: items.map((item, index) => {
+          const meta = STATUS_META[item.status] || STATUS_META.queued;
+          const itemTone = statusToneStyle(meta.tone);
+          const busy = item.status === "uploading" || item.status === "processing";
+          const progressPercent = item.progress != null ? Math.max(0, Math.min(100, Math.round(item.progress))) : null;
+          const canRemove = !busy && typeof onRemove === "function";
+          const hasActions = item.status === "failed" && onRetry || item.status === "succeeded" && onOpen || busy && onCancel || canRemove;
+          return /* @__PURE__ */ jsxs74(
+            "li",
+            {
+              className: "lk-file-upload-queue__item",
+              style: {
+                display: "grid",
+                gridTemplateColumns: "28px minmax(0, 1fr) auto",
+                columnGap: "var(--space-3)",
+                rowGap: "var(--space-2)",
+                alignItems: "center",
+                minHeight: 64,
+                padding: "var(--space-3) var(--space-4)",
+                boxSizing: "border-box",
+                borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none"
+              },
+              children: [
+                /* @__PURE__ */ jsx86("span", { "aria-hidden": "true", style: { alignSelf: "start", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, borderRadius: "var(--radius-pill)", color: itemTone.foreground, background: itemTone.surface }, children: /* @__PURE__ */ jsx86(Icon, { name: "document", size: 16, "aria-hidden": "true" }) }),
+                /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+                  /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+                    /* @__PURE__ */ jsxs74("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, flexWrap: "wrap" }, children: [
+                      /* @__PURE__ */ jsx86("strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-normal)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: item.name }),
+                      /* @__PURE__ */ jsx86(StatusBadge, { tone: meta.tone, style: { flexShrink: 0 }, children: item.label ?? meta.label })
+                    ] }),
+                    (item.sizeLabel != null || item.message != null) && /* @__PURE__ */ jsx86("span", { style: { color: item.status === "failed" ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: item.message ?? item.sizeLabel })
+                  ] }),
+                  busy && /* @__PURE__ */ jsxs74("div", { style: { display: "grid", gridTemplateColumns: item.progress != null ? "minmax(96px, 1fr) auto" : "minmax(96px, 1fr)", alignItems: "center", gap: "var(--space-2)", minWidth: 0 }, children: [
+                    /* @__PURE__ */ jsx86(
+                      ProgressBar,
+                      {
+                        "aria-label": `${item.name} ${meta.label}`,
+                        value: item.progress,
+                        indeterminate: item.progress == null,
+                        size: "md",
+                        tone: "signal",
+                        style: { minWidth: 0 }
+                      }
+                    ),
+                    item.progress != null && /* @__PURE__ */ jsxs74("span", { "aria-hidden": "true", style: { minWidth: "var(--space-8)", textAlign: "right", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums" }, children: [
+                      progressPercent,
+                      "%"
+                    ] })
+                  ] })
+                ] }),
+                hasActions && /* @__PURE__ */ jsxs74("div", { className: "lk-file-upload-queue__actions", style: { alignSelf: "center", display: "inline-flex", alignItems: "center", justifyContent: "flex-end", justifySelf: "end", gap: "var(--space-1)", flexWrap: "wrap" }, children: [
+                  item.status === "failed" && onRetry && /* @__PURE__ */ jsx86(Button, { variant: "ghost", size: "sm", "aria-label": `${item.name} \uB2E4\uC2DC \uC2DC\uB3C4`, onClick: () => onRetry(item), children: "\uB2E4\uC2DC \uC2DC\uB3C4" }),
+                  item.status === "succeeded" && onOpen && /* @__PURE__ */ jsx86(Button, { variant: "ghost", size: "sm", "aria-label": `${item.name} \uC5F4\uAE30`, onClick: () => onOpen(item), children: "\uC5F4\uAE30" }),
+                  busy && onCancel && /* @__PURE__ */ jsx86(Button, { variant: "ghost", size: "sm", "aria-label": `${item.name} \uCC98\uB9AC \uCDE8\uC18C`, onClick: () => onCancel(item), children: "\uCDE8\uC18C" }),
+                  canRemove && /* @__PURE__ */ jsx86(Button, { variant: "flat", size: "sm", "aria-label": `${item.name} ${item.status === "succeeded" ? "\uBAA9\uB85D\uC5D0\uC11C \uC81C\uAC70" : "\uC81C\uAC70"}`, onClick: () => onRemove(item), children: "\uC81C\uAC70" })
+                ] })
+              ]
+            },
+            item.id
+          );
+        }) })
       ]
     }
   );
 }
 
 // components/forms/FormField.jsx
-import React83 from "react";
-import { jsx as jsx80, jsxs as jsxs67 } from "react/jsx-runtime";
+import React91 from "react";
+import { jsx as jsx87, jsxs as jsxs75 } from "react/jsx-runtime";
 function FormField({ label, required = false, helper, error, htmlFor, children, style, ...rest }) {
-  return /* @__PURE__ */ jsxs67("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    label != null && /* @__PURE__ */ jsxs67("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: [
+  return /* @__PURE__ */ jsxs75("div", { style: { display: "flex", flexDirection: "column", gap: 8, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    label != null && /* @__PURE__ */ jsxs75("label", { htmlFor, style: { fontSize: 14, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: [
       label,
-      required && /* @__PURE__ */ jsx80("span", { style: { color: "var(--bw-red)", marginLeft: 3 }, children: "*" })
+      required && /* @__PURE__ */ jsx87("span", { style: { color: "var(--color-semantic-status-negative-text)", marginLeft: 3 }, children: "*" })
     ] }),
     children,
-    (error != null || helper != null) && /* @__PURE__ */ jsx80("span", { style: { fontSize: 13, lineHeight: 1.5, color: error != null ? "var(--bw-red)" : "var(--color-semantic-label-alternative)" }, children: error != null ? error : helper })
-  ] });
-}
-
-// components/forms/Input.jsx
-import React84 from "react";
-import { jsx as jsx81, jsxs as jsxs68 } from "react/jsx-runtime";
-function usePlaceholderStyle() {
-  React84.useEffect(() => {
-    if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
-    const el = document.createElement("style");
-    el.id = "lk-field-ph";
-    el.textContent = "[data-lds-field]::placeholder{color:var(--color-semantic-label-assistive);opacity:1}";
-    document.head.appendChild(el);
-  }, []);
-}
-function Input({
-  label,
-  helper,
-  error,
-  iconLeft,
-  iconRight,
-  actionRight,
-  leadingIcon,
-  trailingIcon,
-  trailingButton,
-  invalid = false,
-  required = false,
-  status = "normal",
-  size = "md",
-  height,
-  interaction,
-  active = false,
-  focus = false,
-  disable = false,
-  resize,
-  platform,
-  variant,
-  id,
-  style,
-  "aria-label": ariaLabel,
-  ...rest
-}) {
-  const autoId = React84.useId();
-  const inputId = id || (label ? `in-${String(label).replace(/\s+/g, "-").toLowerCase()}` : `in-${autoId}`);
-  const message = error ?? helper;
-  const messageId = message != null ? `${inputId}-message` : void 0;
-  const [focused, setFocused] = React84.useState(false);
-  const [hover, setHover] = React84.useState(false);
-  const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size === "large" ? "lg" : size;
-  const disabled = !!rest.disabled || disable || interaction === "inactive";
-  const activeFocus = focused || focus || interaction === "focused" || interaction === "active-focused";
-  const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
-  const isInvalid = invalid || status === "negative" || error != null;
-  usePlaceholderStyle();
-  const ring = disabled ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--component-input-border-color-invalid)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--component-input-border-color-focus)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--component-input-border-color)";
-  const h = height || (normalizedSize === "sm" ? "var(--control-h-sm)" : normalizedSize === "lg" ? "var(--control-h-lg)" : "var(--component-input-height)");
-  const startIcon = leadingIcon ?? iconLeft;
-  const endIcon = trailingIcon ?? iconRight;
-  const endAction = trailingButton ?? actionRight;
-  return /* @__PURE__ */ jsxs68("div", { style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
-    label && /* @__PURE__ */ jsxs68("label", { htmlFor: inputId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
-      label,
-      required && /* @__PURE__ */ jsx81("span", { style: { color: "var(--component-input-required-color)" }, children: " *" })
-    ] }),
-    /* @__PURE__ */ jsxs68(
-      "div",
-      {
-        onMouseEnter: () => setHover(true),
-        onMouseLeave: () => setHover(false),
-        style: {
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          gap: "var(--component-input-gap)",
-          height: h,
-          padding: "0 var(--component-input-padding-x)",
-          background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)",
-          border: `var(--component-input-border-width) solid ${ring}`,
-          borderRadius: "var(--component-input-radius)",
-          boxShadow: activeFocus && !isInvalid ? "var(--component-input-focus-shadow)" : "none",
-          transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
-        },
-        children: [
-          startIcon && /* @__PURE__ */ jsx81("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: startIcon }),
-          /* @__PURE__ */ jsx81(
-            "input",
-            {
-              id: inputId,
-              "data-lds-field": "",
-              ...rest,
-              disabled,
-              "aria-label": ariaLabel ?? (!label && typeof rest.placeholder === "string" ? rest.placeholder : void 0),
-              "aria-describedby": messageId ?? rest["aria-describedby"],
-              "aria-invalid": isInvalid || rest["aria-invalid"] || void 0,
-              onFocus: (e) => {
-                setFocused(true);
-                rest.onFocus && rest.onFocus(e);
-              },
-              onBlur: (e) => {
-                setFocused(false);
-                rest.onBlur && rest.onBlur(e);
-              },
-              style: { flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", letterSpacing: "var(--component-input-letter-spacing)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)" }
-            }
-          ),
-          endIcon && /* @__PURE__ */ jsx81("span", { style: { color: "var(--component-input-icon-color)", display: "inline-flex", flex: "0 0 auto" }, children: endIcon }),
-          endAction && /* @__PURE__ */ jsx81("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: endAction })
-        ]
-      }
-    ),
-    message != null && /* @__PURE__ */ jsx81("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message })
+    (error != null || helper != null) && /* @__PURE__ */ jsx87("span", { style: { fontSize: 13, lineHeight: 1.5, color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)" }, children: error != null ? error : helper })
   ] });
 }
 
 // components/forms/InputGroup.jsx
-import React85 from "react";
-import { jsx as jsx82, jsxs as jsxs69 } from "react/jsx-runtime";
+import React92 from "react";
+import { jsx as jsx88, jsxs as jsxs76 } from "react/jsx-runtime";
 function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder, size = "md", disabled = false, inputProps, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React85.useState(defaultValue || "");
+  const [internal, setInternal] = React92.useState(defaultValue || "");
   const val = isControlled ? value : internal;
   const set = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  const Addon = ({ node, side }) => /* @__PURE__ */ jsx82("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--bw-border)" }, children: node });
-  return /* @__PURE__ */ jsxs69("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
-    prefix != null && /* @__PURE__ */ jsx82(Addon, { node: prefix, side: "left" }),
-    /* @__PURE__ */ jsx82(
+  const Addon = ({ node, side }) => /* @__PURE__ */ jsx88("span", { style: { display: "inline-flex", alignItems: "center", padding: "0 12px", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-semibold)", whiteSpace: "nowrap", [side === "left" ? "borderRight" : "borderLeft"]: "1px solid var(--color-semantic-line-solid-normal)" }, children: node });
+  return /* @__PURE__ */ jsxs76("div", { style: { display: "inline-flex", alignItems: "stretch", height: h, width: "100%", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", background: "var(--color-semantic-background-elevated-normal)", overflow: "hidden", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
+    prefix != null && /* @__PURE__ */ jsx88(Addon, { node: prefix, side: "left" }),
+    /* @__PURE__ */ jsx88(
       "input",
       {
         value: val,
@@ -9554,17 +11373,19 @@ function InputGroup({ prefix, suffix, value, defaultValue, onChange, placeholder
         ...inputProps
       }
     ),
-    suffix != null && /* @__PURE__ */ jsx82(Addon, { node: suffix, side: "right" })
+    suffix != null && /* @__PURE__ */ jsx88(Addon, { node: suffix, side: "right" })
   ] });
 }
 
 // components/forms/NumberField.jsx
-import React86 from "react";
-import { jsx as jsx83, jsxs as jsxs70 } from "react/jsx-runtime";
-function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = "md", disabled = false, placeholder, style, "aria-label": ariaLabel, ...rest }) {
+import React93 from "react";
+import { jsx as jsx89, jsxs as jsxs77 } from "react/jsx-runtime";
+function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity, step = 1, onChange, size = "md", disabled = false, readOnly = false, placeholder, style, "aria-label": ariaLabel, onFocus, onBlur, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React86.useState(defaultValue);
+  const [internal, setInternal] = React93.useState(defaultValue);
+  const [focused, setFocused] = React93.useState(false);
   const val = isControlled ? value : internal;
+  const resolvedLabel = ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uC22B\uC790 \uC785\uB825");
   const commit = (v) => {
     const c = Math.min(max, Math.max(min, v));
     if (!isControlled) setInternal(c);
@@ -9572,60 +11393,69 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
   };
   const h = size === "sm" ? 40 : 50;
   const Arrow = ({ dir }) => {
-    const off = disabled || (dir < 0 ? val <= min : val >= max);
-    return /* @__PURE__ */ jsx83(
+    const off = disabled || readOnly || (dir < 0 ? val <= min : val >= max);
+    return /* @__PURE__ */ jsx89(
       "button",
       {
         type: "button",
         tabIndex: -1,
-        "aria-label": dir < 0 ? "decrease" : "increase",
+        "aria-label": `${resolvedLabel} ${dir < 0 ? "\uAC12 \uAC10\uC18C" : "\uAC12 \uC99D\uAC00"}`,
         disabled: off,
         onClick: () => commit(Number(val) + dir * step),
-        style: { flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, border: "none", borderLeft: "1px solid var(--bw-border)", background: "transparent", cursor: off ? "not-allowed" : "pointer", color: off ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)" },
-        children: /* @__PURE__ */ jsx83("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx83("path", { d: dir < 0 ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
+        style: { flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, border: "none", borderLeft: "1px solid var(--color-semantic-line-solid-normal)", background: "transparent", cursor: off ? "not-allowed" : "pointer", color: off ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)" },
+        children: /* @__PURE__ */ jsx89("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx89("path", { d: dir < 0 ? "m6 9 6 6 6-6" : "m6 15 6-6 6 6" }) })
       }
     );
   };
-  return /* @__PURE__ */ jsxs70("div", { style: { display: "inline-flex", alignItems: "stretch", width: "fit-content", height: h, border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, overflow: "hidden", ...style }, children: [
-    /* @__PURE__ */ jsx83(
+  return /* @__PURE__ */ jsxs77("div", { style: { display: "inline-flex", alignItems: "stretch", width: "fit-content", height: h, border: `1px solid ${focused ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)"}`, borderRadius: "var(--component-input-radius)", background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)", boxShadow: focused ? "var(--component-input-focus-shadow)" : "none", overflow: "hidden", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
+    /* @__PURE__ */ jsx89(
       "input",
       {
+        ...rest,
         type: "number",
         value: val,
         min: min === -Infinity ? void 0 : min,
         max: max === Infinity ? void 0 : max,
         step,
         disabled,
+        readOnly,
         placeholder,
-        "aria-label": ariaLabel ?? (typeof placeholder === "string" ? placeholder : "\uC22B\uC790 \uC785\uB825"),
+        "aria-label": resolvedLabel,
         onChange: (e) => commit(e.target.value === "" ? 0 : Number(e.target.value)),
-        style: { width: 92, padding: "0 12px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)" },
-        ...rest
+        onFocus: (event) => {
+          setFocused(true);
+          onFocus?.(event);
+        },
+        onBlur: (event) => {
+          setFocused(false);
+          onBlur?.(event);
+        },
+        style: { width: 92, padding: "0 12px", border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)" }
       }
     ),
-    /* @__PURE__ */ jsxs70("div", { style: { display: "flex", flexDirection: "column", width: 28 }, children: [
-      /* @__PURE__ */ jsx83(Arrow, { dir: 1 }),
-      /* @__PURE__ */ jsx83(Arrow, { dir: -1 })
+    /* @__PURE__ */ jsxs77("div", { style: { display: "flex", flexDirection: "column", width: 28 }, children: [
+      /* @__PURE__ */ jsx89(Arrow, { dir: 1 }),
+      /* @__PURE__ */ jsx89(Arrow, { dir: -1 })
     ] })
   ] });
 }
 
 // components/forms/PasswordInput.jsx
-import React87 from "react";
-import { jsx as jsx84, jsxs as jsxs71 } from "react/jsx-runtime";
+import React94 from "react";
+import { jsx as jsx90, jsxs as jsxs78 } from "react/jsx-runtime";
 function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uBC00\uBC88\uD638", size = "md", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React87.useState(defaultValue || "");
-  const [show, setShow] = React87.useState(false);
-  const [focus, setFocus] = React87.useState(false);
+  const [internal, setInternal] = React94.useState(defaultValue || "");
+  const [show, setShow] = React94.useState(false);
+  const [focus, setFocus] = React94.useState(false);
   const val = isControlled ? value : internal;
   const set = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const h = size === "sm" ? 40 : 50;
-  return /* @__PURE__ */ jsxs71("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
-    /* @__PURE__ */ jsx84(
+  return /* @__PURE__ */ jsxs78("div", { style: { display: "inline-flex", alignItems: "center", gap: 8, height: h, width: "100%", padding: "0 12px 0 14px", boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: `1px solid ${focus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-input)", boxShadow: focus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none", opacity: disabled ? 0.5 : 1, transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
+    /* @__PURE__ */ jsx90(
       "input",
       {
         value: val,
@@ -9640,50 +11470,75 @@ function PasswordInput({ value, defaultValue, onChange, placeholder = "\uBE44\uB
         ...rest
       }
     ),
-    /* @__PURE__ */ jsx84("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: show ? /* @__PURE__ */ jsxs71("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-      /* @__PURE__ */ jsx84("path", { d: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" }),
-      /* @__PURE__ */ jsx84("circle", { cx: "12", cy: "12", r: "3" })
-    ] }) : /* @__PURE__ */ jsxs71("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-      /* @__PURE__ */ jsx84("path", { d: "M3 3l18 18" }),
-      /* @__PURE__ */ jsx84("path", { d: "M10.6 10.6a3 3 0 0 0 4.2 4.2" }),
-      /* @__PURE__ */ jsx84("path", { d: "M9.4 5.2A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a15.9 15.9 0 0 1-3.4 4.3M6.6 6.6A15.8 15.8 0 0 0 2 12s3.5 7 10 7a9.5 9.5 0 0 0 2.6-.35" })
+    /* @__PURE__ */ jsx90("button", { type: "button", "aria-label": show ? "hide" : "show", onClick: () => setShow((s) => !s), style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: show ? /* @__PURE__ */ jsxs78("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+      /* @__PURE__ */ jsx90("path", { d: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" }),
+      /* @__PURE__ */ jsx90("circle", { cx: "12", cy: "12", r: "3" })
+    ] }) : /* @__PURE__ */ jsxs78("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+      /* @__PURE__ */ jsx90("path", { d: "M3 3l18 18" }),
+      /* @__PURE__ */ jsx90("path", { d: "M10.6 10.6a3 3 0 0 0 4.2 4.2" }),
+      /* @__PURE__ */ jsx90("path", { d: "M9.4 5.2A9.6 9.6 0 0 1 12 5c6.5 0 10 7 10 7a15.9 15.9 0 0 1-3.4 4.3M6.6 6.6A15.8 15.8 0 0 0 2 12s3.5 7 10 7a9.5 9.5 0 0 0 2.6-.35" })
     ] }) })
   ] });
 }
 
 // components/forms/PinInput.jsx
-import React88 from "react";
-import { jsx as jsx85 } from "react/jsx-runtime";
+import React95 from "react";
+import { jsx as jsx91 } from "react/jsx-runtime";
+function toCells(source, length) {
+  const characters = Array.from(String(source ?? "")).slice(0, length);
+  return Array.from({ length }, (_, index) => characters[index] === " " ? "" : characters[index] ?? "");
+}
+function serializeCells(cells) {
+  return cells.map((character) => character || " ").join("").trimEnd();
+}
 function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, mask = false, disabled = false, size = "md", style, "aria-label": ariaLabel, ...rest }) {
+  const normalizedLength = Math.max(1, Math.floor(Number(length) || 1));
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React88.useState(defaultValue);
-  const raw = (isControlled ? value : internal) || "";
-  const refs = React88.useRef([]);
+  const [cells, setCells] = React95.useState(() => toCells(isControlled ? value : defaultValue, normalizedLength));
+  const refs = React95.useRef([]);
+  const [focusedIndex, setFocusedIndex] = React95.useState(-1);
+  React95.useEffect(() => {
+    setCells((current) => {
+      if (isControlled) return toCells(value, normalizedLength);
+      return Array.from({ length: normalizedLength }, (_, index) => current[index] ?? "");
+    });
+  }, [isControlled, normalizedLength, value]);
   const commit = (next) => {
-    const v = next.slice(0, length);
-    if (!isControlled) setInternal(v);
-    onChange && onChange(v);
-    if (v.length === length && onComplete) onComplete(v);
+    const normalized = Array.from({ length: normalizedLength }, (_, index) => next[index] ?? "");
+    const serialized = serializeCells(normalized);
+    if (!isControlled) setCells(normalized);
+    onChange?.(serialized);
+    if (normalized.every(Boolean)) onComplete?.(normalized.join(""));
   };
   const onInput = (i, e) => {
     const c = e.target.value.slice(-1);
-    const arr = raw.split("");
+    const arr = [...cells];
     arr[i] = c;
-    commit(arr.join("").slice(0, length));
+    commit(arr);
     if (c && refs.current[i + 1]) refs.current[i + 1].focus();
   };
   const onKey = (i, e) => {
-    if (e.key === "Backspace" && !raw[i] && refs.current[i - 1]) refs.current[i - 1].focus();
+    if (e.key !== "Backspace" && e.key !== "Delete") return;
+    e.preventDefault();
+    const next = [...cells];
+    if (e.key === "Backspace" && !next[i] && i > 0) {
+      next[i - 1] = "";
+      commit(next);
+      refs.current[i - 1]?.focus();
+      return;
+    }
+    next[i] = "";
+    commit(next);
   };
   const boxH = size === "sm" ? 40 : 48;
   const boxW = size === "sm" ? 36 : 44;
-  return /* @__PURE__ */ jsx85("div", { style: { display: "inline-flex", gap: 8, ...style }, ...rest, children: Array.from({ length }).map((_, i) => /* @__PURE__ */ jsx85(
+  return /* @__PURE__ */ jsx91("div", { ...rest, role: "group", "aria-label": ariaLabel ?? "PIN", style: { display: "inline-flex", gap: 8, ...style }, children: Array.from({ length: normalizedLength }).map((_, i) => /* @__PURE__ */ jsx91(
     "input",
     {
       ref: (el) => {
         refs.current[i] = el;
       },
-      value: raw[i] || "",
+      value: cells[i] || "",
       disabled,
       inputMode: "numeric",
       "aria-label": `${ariaLabel ?? "PIN"} ${i + 1}`,
@@ -9691,18 +11546,31 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
       type: mask ? "password" : "text",
       onChange: (e) => onInput(i, e),
       onKeyDown: (e) => onKey(i, e),
-      style: { width: boxW, height: boxH, textAlign: "center", border: `1px solid ${raw[i] ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-md)", outline: "none", fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)", background: "var(--bw-white)" }
+      onFocus: () => setFocusedIndex(i),
+      onBlur: () => setFocusedIndex(-1),
+      onPaste: (event) => {
+        const pasted = event.clipboardData.getData("text").replace(/\s+/g, "").slice(0, normalizedLength - i);
+        if (!pasted) return;
+        event.preventDefault();
+        const next = [...cells];
+        pasted.split("").forEach((character, offset) => {
+          next[i + offset] = character;
+        });
+        commit(next);
+        refs.current[Math.min(normalizedLength - 1, i + pasted.length)]?.focus();
+      },
+      style: { width: boxW, height: boxH, textAlign: "center", border: `1px solid ${focusedIndex === i ? "var(--component-input-border-color-focus)" : cells[i] ? "var(--color-semantic-primary-normal)" : "var(--component-input-border-color)"}`, borderRadius: "var(--radius-md)", outline: "none", boxShadow: focusedIndex === i ? "var(--component-input-focus-shadow)" : "none", fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: "var(--fw-bold)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)" }
     },
     i
   )) });
 }
 
 // components/forms/PropertyField.jsx
-import React90 from "react";
+import React97 from "react";
 
 // components/selection/Switch.jsx
-import React89 from "react";
-import { jsx as jsx86, jsxs as jsxs72 } from "react/jsx-runtime";
+import React96 from "react";
+import { jsx as jsx92, jsxs as jsxs79 } from "react/jsx-runtime";
 function Switch({
   checked,
   defaultChecked,
@@ -9716,31 +11584,35 @@ function Switch({
   focus: forcedFocus = false,
   disabled = false,
   disable = false,
+  readOnly = false,
   labelStyle,
   style,
   id,
   "aria-label": ariaLabel,
+  onFocus,
+  onBlur,
+  onKeyDown,
   ...rest
 }) {
   const stateChecked = state === "checked" || state === "on" ? true : state === "unchecked" || state === "off" ? false : void 0;
   const isControlled = checked !== void 0 || stateChecked !== void 0;
-  const [internal, setInternal] = React89.useState(stateChecked ?? !!defaultChecked);
-  const [focus, setFocus] = React89.useState(false);
-  const [hover, setHover] = React89.useState(false);
+  const [internal, setInternal] = React96.useState(stateChecked ?? !!defaultChecked);
+  const [focus, setFocus] = React96.useState(false);
+  const [hover, setHover] = React96.useState(false);
   const on = checked !== void 0 ? checked : stateChecked !== void 0 ? stateChecked : internal;
   const disabledState = disabled || disable || interaction === "inactive";
   const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size;
   const activeFocus = focus || forcedFocus || interaction === "focused";
   const activeHover = hover || active || interaction === "hovered";
   const toggle = () => {
-    if (disabledState) return;
+    if (disabledState || readOnly) return;
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
   const d = normalizedSize === "sm" ? { w: 40, h: 24, k: 18, p: 3, tx: 16 } : { w: 52, h: 32, k: 24, p: 4, tx: 20 };
-  const offBg = platform === "ios" ? "var(--color-semantic-fill-strong)" : "var(--bw-gray-300)";
+  const offBg = platform === "ios" ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-interaction-inactive)";
   const trackBg = disabledState ? on ? "var(--color-semantic-fill-strong)" : "var(--color-semantic-fill-normal)" : on ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-strong)" : offBg;
-  return /* @__PURE__ */ jsxs72(
+  return /* @__PURE__ */ jsxs79(
     "label",
     {
       htmlFor: id,
@@ -9751,7 +11623,7 @@ function Switch({
         display: "inline-flex",
         alignItems: "center",
         gap: 12,
-        cursor: disabledState ? "not-allowed" : "pointer",
+        cursor: disabledState ? "not-allowed" : readOnly ? "default" : "pointer",
         fontFamily: "var(--font-sans)",
         fontSize: 15,
         letterSpacing: 0,
@@ -9759,20 +11631,30 @@ function Switch({
         ...style
       },
       children: [
-        /* @__PURE__ */ jsx86(
+        /* @__PURE__ */ jsx92(
           "span",
           {
+            ...rest,
             role: "switch",
             "aria-checked": on,
             "aria-disabled": disabledState ? true : void 0,
+            "aria-readonly": readOnly || void 0,
             "aria-label": ariaLabel ?? (typeof label === "string" ? label : "switch"),
             id,
             tabIndex: disabledState ? -1 : 0,
-            onFocus: () => setFocus(true),
-            onBlur: () => setFocus(false),
-            onKeyDown: (e) => {
-              if (e.key === " " || e.key === "Enter") {
-                e.preventDefault();
+            onFocus: (event) => {
+              setFocus(true);
+              onFocus?.(event);
+            },
+            onBlur: (event) => {
+              setFocus(false);
+              onBlur?.(event);
+            },
+            onKeyDown: (event) => {
+              onKeyDown?.(event);
+              if (event.defaultPrevented) return;
+              if (event.key === " " || event.key === "Enter") {
+                event.preventDefault();
                 toggle();
               }
             },
@@ -9783,11 +11665,10 @@ function Switch({
               height: d.h,
               borderRadius: "var(--radius-pill)",
               background: trackBg,
-              boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
+              boxShadow: activeFocus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
               transition: "background var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
             },
-            ...rest,
-            children: /* @__PURE__ */ jsx86(
+            children: /* @__PURE__ */ jsx92(
               "span",
               {
                 style: {
@@ -9806,14 +11687,14 @@ function Switch({
             )
           }
         ),
-        label != null && /* @__PURE__ */ jsx86("span", { style: labelStyle, children: label })
+        label != null && /* @__PURE__ */ jsx92("span", { style: labelStyle, children: label })
       ]
     }
   );
 }
 
 // components/forms/PropertyField.jsx
-import { jsx as jsx87, jsxs as jsxs73 } from "react/jsx-runtime";
+import { jsx as jsx93, jsxs as jsxs80 } from "react/jsx-runtime";
 function getLabelText(label) {
   return typeof label === "string" ? label : "\uC18D\uC131";
 }
@@ -9839,13 +11720,16 @@ function PropertyField({
   style,
   ...rest
 }) {
-  const fieldId = React90.useId();
+  const fieldId = React97.useId();
   const inputId = `property-${fieldId}`;
   const hintId = hint != null ? `${inputId}-hint` : void 0;
+  const unitId = type !== "toggle" && unit != null ? `${inputId}-unit` : void 0;
+  const descriptionIds = [hintId, unitId].filter(Boolean).join(" ") || void 0;
   const labelText = getLabelText(label);
   const applyText = typeof applyLabel === "string" ? applyLabel : "\uC801\uC6A9";
-  const [draft, setDraft] = React90.useState(committed);
-  React90.useEffect(() => {
+  const [draft, setDraft] = React97.useState(committed);
+  const [focused, setFocused] = React97.useState(false);
+  React97.useEffect(() => {
     setDraft(committed);
   }, [committed]);
   const dirty = draft !== committed;
@@ -9857,7 +11741,7 @@ function PropertyField({
     if (canApply) onApply(draft);
   };
   const sharedControlLabel = `${labelText}${dirty ? `, ${dirtyLabel}` : ""}`;
-  return /* @__PURE__ */ jsxs73(
+  return /* @__PURE__ */ jsxs80(
     "div",
     {
       style: {
@@ -9875,8 +11759,8 @@ function PropertyField({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs73("div", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs73(
+        /* @__PURE__ */ jsxs80("div", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs80(
             "label",
             {
               htmlFor: type === "toggle" ? void 0 : inputId,
@@ -9893,7 +11777,7 @@ function PropertyField({
               },
               children: [
                 label,
-                dirty && /* @__PURE__ */ jsx87(
+                dirty && /* @__PURE__ */ jsx93(
                   "span",
                   {
                     "aria-label": dirtyLabel,
@@ -9908,7 +11792,7 @@ function PropertyField({
               ]
             }
           ),
-          hint != null && /* @__PURE__ */ jsx87(
+          hint != null && /* @__PURE__ */ jsx93(
             "span",
             {
               id: hintId,
@@ -9921,23 +11805,24 @@ function PropertyField({
                 lineHeight: "var(--caption1-line)",
                 fontWeight: "var(--fw-medium)",
                 letterSpacing: 0,
-                color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-alternative)"
+                color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)"
               },
               children: hint
             }
           )
         ] }),
-        type === "toggle" ? /* @__PURE__ */ jsx87(
+        type === "toggle" ? /* @__PURE__ */ jsx93(
           Switch,
           {
             size: "sm",
             checked: !!draft,
-            disabled: interactionDisabled,
+            disabled,
+            readOnly,
             "aria-label": sharedControlLabel,
-            "aria-describedby": hintId,
+            "aria-describedby": descriptionIds,
             onChange: (next) => setDraft(next)
           }
-        ) : /* @__PURE__ */ jsxs73(
+        ) : /* @__PURE__ */ jsxs80(
           "span",
           {
             style: {
@@ -9948,7 +11833,7 @@ function PropertyField({
               minWidth: 0
             },
             children: [
-              /* @__PURE__ */ jsx87(
+              /* @__PURE__ */ jsx93(
                 "input",
                 {
                   id: inputId,
@@ -9960,7 +11845,9 @@ function PropertyField({
                   disabled: controlDisabled,
                   readOnly: controlReadOnly,
                   "aria-label": sharedControlLabel,
-                  "aria-describedby": hintId,
+                  "aria-describedby": descriptionIds,
+                  onFocus: () => setFocused(true),
+                  onBlur: () => setFocused(false),
                   onChange: (event) => {
                     setDraft(
                       type === "number" ? normalizeNumberValue(event.target.value) : event.target.value
@@ -9974,9 +11861,10 @@ function PropertyField({
                     width: type === "number" ? 88 : 160,
                     height: 34,
                     padding: "0 10px",
-                    border: `1px solid ${dirty ? "var(--color-semantic-status-cautionary)" : "var(--component-input-border-color)"}`,
+                    border: `1px solid ${focused ? "var(--component-input-border-color-focus)" : dirty ? "var(--color-semantic-status-cautionary)" : "var(--component-input-border-color)"}`,
                     borderRadius: "var(--radius-md)",
                     outline: "none",
+                    boxShadow: focused ? "var(--component-input-focus-shadow)" : "none",
                     background: controlDisabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
                     fontFamily: "inherit",
                     fontSize: "var(--label2-size)",
@@ -9986,20 +11874,22 @@ function PropertyField({
                     color: controlDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
                     textAlign: type === "number" ? "right" : "left",
                     fontVariantNumeric: "tabular-nums",
-                    boxSizing: "border-box"
+                    boxSizing: "border-box",
+                    transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
                   }
                 }
               ),
-              unit != null && /* @__PURE__ */ jsx87(
+              unit != null && /* @__PURE__ */ jsx93(
                 "span",
                 {
+                  id: unitId,
                   style: {
                     minWidth: 24,
                     fontSize: "var(--caption1-size)",
                     lineHeight: "var(--caption1-line)",
                     fontWeight: "var(--fw-medium)",
                     letterSpacing: 0,
-                    color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-alternative)"
+                    color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)"
                   },
                   children: unit
                 }
@@ -10007,7 +11897,7 @@ function PropertyField({
             ]
           }
         ),
-        /* @__PURE__ */ jsx87(
+        /* @__PURE__ */ jsx93(
           Button,
           {
             size: "sm",
@@ -10025,8 +11915,8 @@ function PropertyField({
 }
 
 // components/forms/Radio.jsx
-import React91 from "react";
-import { jsx as jsx88, jsxs as jsxs74 } from "react/jsx-runtime";
+import React98 from "react";
+import { jsx as jsx94, jsxs as jsxs81 } from "react/jsx-runtime";
 function Radio({
   label,
   checked,
@@ -10047,8 +11937,8 @@ function Radio({
   "aria-label": ariaLabel,
   ...rest
 }) {
-  const [hover, setHover] = React91.useState(false);
-  const [focus, setFocus] = React91.useState(false);
+  const [hover, setHover] = React98.useState(false);
+  const [focus, setFocus] = React98.useState(false);
   const stateChecked = state === "checked" ? true : state === "unchecked" ? false : void 0;
   const visualChecked = checked ?? stateChecked ?? defaultChecked;
   const disabledState = disabled || disable || interaction === "inactive";
@@ -10057,10 +11947,10 @@ function Radio({
   const activeFocus = focus || interaction === "focused";
   const d = normalizedSize === "sm" ? 16 : 20;
   const dot = normalizedSize === "sm" ? 6 : 8;
-  const radioBorder = disabledState ? "var(--color-semantic-line-normal-neutral)" : visualChecked || activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
-  const radioBg = disabledState ? "var(--color-semantic-fill-normal)" : visualChecked ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-normal)" : "var(--bw-white)";
+  const radioBorder = disabledState ? "var(--color-semantic-line-normal-neutral)" : visualChecked || activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--color-semantic-line-solid-normal)";
+  const radioBg = disabledState ? "var(--color-semantic-fill-normal)" : visualChecked ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)";
   const radioDot = disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-static-white)";
-  return /* @__PURE__ */ jsxs74(
+  return /* @__PURE__ */ jsxs81(
     "label",
     {
       htmlFor: id,
@@ -10074,12 +11964,12 @@ function Radio({
         fontFamily: "var(--font-sans)",
         fontSize: "15px",
         letterSpacing: 0,
-        color: disabledState ? "var(--color-semantic-label-disable)" : "var(--bw-ink)",
+        color: disabledState ? "var(--color-semantic-label-disable)" : "var(--color-semantic-brand-ink)",
         fontWeight: bold ? "var(--fw-bold)" : void 0,
         ...style
       },
       children: [
-        /* @__PURE__ */ jsx88(
+        /* @__PURE__ */ jsx94(
           "input",
           {
             type: "radio",
@@ -10098,7 +11988,7 @@ function Radio({
             style: { position: "absolute", opacity: 0, width: 0, height: 0 }
           }
         ),
-        /* @__PURE__ */ jsx88("span", { "aria-hidden": "true", style: {
+        /* @__PURE__ */ jsx94("span", { "aria-hidden": "true", style: {
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
@@ -10109,47 +11999,47 @@ function Radio({
           background: radioBg,
           border: `1.5px solid ${radioBorder}`,
           borderRadius: "var(--radius-pill)",
-          boxShadow: activeFocus ? "0 0 0 4px var(--focus-ring)" : "none",
+          boxShadow: activeFocus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
           transition: "border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
-        }, children: visualChecked && /* @__PURE__ */ jsx88("span", { style: { width: dot, height: dot, borderRadius: "50%", background: radioDot } }) }),
-        label && /* @__PURE__ */ jsx88("span", { style: labelStyle, children: label })
+        }, children: visualChecked && /* @__PURE__ */ jsx94("span", { style: { width: dot, height: dot, borderRadius: "50%", background: radioDot } }) }),
+        label && /* @__PURE__ */ jsx94("span", { style: labelStyle, children: label })
       ]
     }
   );
 }
 
 // components/forms/RadioGroup.jsx
-import React92 from "react";
-import { jsx as jsx89, jsxs as jsxs75 } from "react/jsx-runtime";
+import React99 from "react";
+import { jsx as jsx95, jsxs as jsxs82 } from "react/jsx-runtime";
 function RadioGroup({ options = [], value, defaultValue, onChange, name, direction = "column", style, ...rest }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React92.useState(defaultValue);
+  const [internal, setInternal] = React99.useState(defaultValue);
   const val = isControlled ? value : internal;
   const pick = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
-  const autoId = React92.useId();
+  const autoId = React99.useId();
   const gname = name || autoId;
-  return /* @__PURE__ */ jsx89("div", { role: "radiogroup", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
+  return /* @__PURE__ */ jsx95("div", { role: "radiogroup", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = o.value === val;
-    return /* @__PURE__ */ jsxs75("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
-      /* @__PURE__ */ jsx89("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
-      /* @__PURE__ */ jsx89("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-gray-300)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx89("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } }) }),
-      /* @__PURE__ */ jsxs75("span", { children: [
-        /* @__PURE__ */ jsx89("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
-        o.description != null && /* @__PURE__ */ jsx89("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
+    return /* @__PURE__ */ jsxs82("label", { style: { display: "inline-flex", alignItems: "flex-start", gap: 10, cursor: o.disabled ? "not-allowed" : "pointer", opacity: o.disabled ? 0.5 : 1, fontFamily: "var(--font-sans)" }, children: [
+      /* @__PURE__ */ jsx95("input", { type: "radio", name: gname, checked: on, disabled: o.disabled, onChange: () => pick(o.value), style: { position: "absolute", opacity: 0, width: 0, height: 0 } }),
+      /* @__PURE__ */ jsx95("span", { style: { marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: "50%", border: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-interaction-inactive)"}`, display: "inline-flex", alignItems: "center", justifyContent: "center", transition: "border-color var(--dur-fast) var(--ease-out)" }, children: on && /* @__PURE__ */ jsx95("span", { style: { width: 10, height: 10, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } }) }),
+      /* @__PURE__ */ jsxs82("span", { children: [
+        /* @__PURE__ */ jsx95("span", { style: { fontSize: 15, fontWeight: "var(--fw-semibold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: o.label }),
+        o.description != null && /* @__PURE__ */ jsx95("span", { style: { display: "block", marginTop: 2, fontSize: 13, color: "var(--color-semantic-label-alternative)" }, children: o.description })
       ] })
     ] }, o.value);
   }) });
 }
 
 // components/forms/RangeSlider.jsx
-import React93 from "react";
-import { jsx as jsx90, jsxs as jsxs76 } from "react/jsx-runtime";
+import React100 from "react";
+import { jsx as jsx96, jsxs as jsxs83 } from "react/jsx-runtime";
 function useRangeStyles() {
-  React93.useEffect(() => {
+  React100.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-rangeslider-css")) return;
     const el = document.createElement("style");
     el.id = "lk-rangeslider-css";
@@ -10165,7 +12055,7 @@ input.lk-rangeslider::-moz-range-thumb{pointer-events:auto;width:18px;height:18p
 function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step = 1, onChange, showValue = false, style, ...rest }) {
   useRangeStyles();
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React93.useState(defaultValue);
+  const [internal, setInternal] = React100.useState(defaultValue);
   const [lo, hi] = isControlled ? value : internal;
   const set = (nlo, nhi) => {
     const a = Math.min(nlo, nhi);
@@ -10176,23 +12066,344 @@ function RangeSlider({ value, defaultValue = [20, 80], min = 0, max = 100, step 
   };
   const pctLo = (lo - min) / (max - min) * 100;
   const pctHi = (hi - min) / (max - min) * 100;
-  return /* @__PURE__ */ jsxs76("div", { style: { ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs76("div", { style: { position: "relative", height: 24 }, children: [
-      /* @__PURE__ */ jsx90("div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)" } }),
-      /* @__PURE__ */ jsx90("div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-normal)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
-      /* @__PURE__ */ jsx90("input", { className: "lk-rangeslider", type: "range", min, max, step, value: lo, onChange: (e) => set(Number(e.target.value), hi), "aria-label": "minimum" }),
-      /* @__PURE__ */ jsx90("input", { className: "lk-rangeslider", type: "range", min, max, step, value: hi, onChange: (e) => set(lo, Number(e.target.value)), "aria-label": "maximum" })
+  return /* @__PURE__ */ jsxs83("div", { style: { ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs83("div", { style: { position: "relative", height: 24 }, children: [
+      /* @__PURE__ */ jsx96("div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)" } }),
+      /* @__PURE__ */ jsx96("div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-normal)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
+      /* @__PURE__ */ jsx96("input", { className: "lk-rangeslider", type: "range", min, max, step, value: lo, onChange: (e) => set(Number(e.target.value), hi), "aria-label": "minimum" }),
+      /* @__PURE__ */ jsx96("input", { className: "lk-rangeslider", type: "range", min, max, step, value: hi, onChange: (e) => set(lo, Number(e.target.value)), "aria-label": "maximum" })
     ] }),
-    showValue && /* @__PURE__ */ jsxs76("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
-      /* @__PURE__ */ jsx90("span", { children: lo }),
-      /* @__PURE__ */ jsx90("span", { children: hi })
+    showValue && /* @__PURE__ */ jsxs83("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 4, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: [
+      /* @__PURE__ */ jsx96("span", { children: lo }),
+      /* @__PURE__ */ jsx96("span", { children: hi })
     ] })
   ] });
 }
 
+// components/forms/SearchableMultiSelect.jsx
+import React101 from "react";
+import { jsx as jsx97, jsxs as jsxs84 } from "react/jsx-runtime";
+function optionText(option) {
+  if (typeof option.label === "string" || typeof option.label === "number") return String(option.label);
+  return String(option.value);
+}
+function optionDomId(listboxId, option) {
+  return `${listboxId}-${encodeURIComponent(String(option.value))}`;
+}
+function firstEnabledIndex(options) {
+  return options.findIndex((option) => !option.effectiveDisabled);
+}
+function moveEnabledIndex(options, currentIndex, direction) {
+  const enabledIndexes = options.flatMap((option, index) => option.effectiveDisabled ? [] : [index]);
+  if (enabledIndexes.length === 0) return -1;
+  const currentPosition = enabledIndexes.indexOf(currentIndex);
+  if (currentPosition < 0) return direction > 0 ? enabledIndexes[0] : enabledIndexes[enabledIndexes.length - 1];
+  const nextPosition = Math.max(0, Math.min(enabledIndexes.length - 1, currentPosition + direction));
+  return enabledIndexes[nextPosition];
+}
+function SearchableMultiSelect({
+  options = [],
+  value,
+  defaultValue = [],
+  onChange,
+  searchValue,
+  defaultSearchValue = "",
+  onSearchChange,
+  filterOption,
+  label,
+  placeholder = "\uAC80\uC0C9\uD574\uC11C \uC120\uD0DD",
+  loading = false,
+  error,
+  emptyLabel = "\uC870\uAC74\uC5D0 \uB9DE\uB294 \uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  loadingLabel = "\uBD88\uB7EC\uC624\uB294 \uC911",
+  maxSelections,
+  maxSelectionLabel,
+  disabled = false,
+  style,
+  ...rest
+}) {
+  const controlled = value !== void 0;
+  const searchControlled = searchValue !== void 0;
+  const [internalValue, setInternalValue] = React101.useState(defaultValue);
+  const [internalSearch, setInternalSearch] = React101.useState(defaultSearchValue);
+  const [open, setOpen] = React101.useState(false);
+  const [focused, setFocused] = React101.useState(false);
+  const listboxId = React101.useId();
+  const inputId = React101.useId();
+  const errorId = React101.useId();
+  const statusId = React101.useId();
+  const inputRef = React101.useRef(null);
+  const selected = controlled ? value : internalValue;
+  const search = searchControlled ? searchValue : internalSearch;
+  const selectedSet = new Set(selected);
+  const selectedOptions = selected.map((selectedValue) => options.find((option) => option.value === selectedValue) ?? { value: selectedValue, label: String(selectedValue) });
+  const maxReached = maxSelections != null && selected.length >= maxSelections;
+  const resolvedMaxLabel = maxSelectionLabel ?? `\uCD5C\uB300 ${maxSelections}\uAC1C\uB97C \uC120\uD0DD\uD588\uC2B5\uB2C8\uB2E4.`;
+  const filteredOptions = options.filter((option) => filterOption ? filterOption(option, search) : [option.label, option.description, option.value].filter(Boolean).join(" ").toLowerCase().includes(String(search).trim().toLowerCase())).map((option) => ({ ...option, effectiveDisabled: Boolean(option.disabled || maxReached && !selectedSet.has(option.value)) }));
+  const optionsKey = JSON.stringify(filteredOptions.map((option) => [option.value, option.effectiveDisabled]));
+  const [activeIndex, setActiveIndex] = React101.useState(() => firstEnabledIndex(filteredOptions));
+  const activeOption = open && !loading && error == null && filteredOptions[activeIndex] && !filteredOptions[activeIndex].effectiveDisabled ? filteredOptions[activeIndex] : void 0;
+  const popupStatus = loading ? loadingLabel : filteredOptions.length === 0 ? emptyLabel : maxReached ? resolvedMaxLabel : "";
+  React101.useEffect(() => {
+    setActiveIndex((index) => filteredOptions[index] && !filteredOptions[index].effectiveDisabled ? index : firstEnabledIndex(filteredOptions));
+  }, [optionsKey]);
+  const commit = (next) => {
+    if (!controlled) setInternalValue(next);
+    onChange?.(next);
+  };
+  const setSearch = (next) => {
+    if (!searchControlled) setInternalSearch(next);
+    onSearchChange?.(next);
+    setActiveIndex(-1);
+  };
+  const toggle = (option) => {
+    if (loading || error != null || option.disabled) return;
+    if (selectedSet.has(option.value)) commit(selected.filter((item) => item !== option.value));
+    else if (!maxReached) commit([...selected, option.value]);
+    setOpen(true);
+    inputRef.current?.focus();
+  };
+  const remove = (selectedValue) => {
+    if (disabled) return;
+    commit(selected.filter((item) => item !== selectedValue));
+  };
+  return /* @__PURE__ */ jsxs84(
+    "div",
+    {
+      "aria-busy": loading || void 0,
+      onBlur: (event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setFocused(false);
+          setOpen(false);
+        }
+      },
+      style: { position: "relative", display: "grid", gap: "var(--component-input-stack-gap)", fontFamily: "var(--font-sans)", ...style },
+      ...rest,
+      children: [
+        label != null && /* @__PURE__ */ jsx97("label", { htmlFor: inputId, style: { color: "var(--component-input-label-color)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", fontWeight: "var(--component-input-label-font-weight)" }, children: label }),
+        /* @__PURE__ */ jsxs84(
+          "div",
+          {
+            onMouseDown: (event) => {
+              if (event.target !== inputRef.current && !event.target.closest("button")) event.preventDefault();
+              inputRef.current?.focus();
+              if (!disabled) setOpen(true);
+            },
+            style: {
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "var(--space-1)",
+              minHeight: "var(--component-input-height)",
+              padding: "var(--space-2) var(--component-input-padding-x)",
+              boxSizing: "border-box",
+              border: `var(--component-input-border-width) solid ${error != null ? "var(--component-input-border-color-invalid)" : focused ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)"}`,
+              borderRadius: "var(--component-input-radius)",
+              background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)",
+              boxShadow: focused && error == null ? "var(--component-input-focus-shadow)" : "none",
+              cursor: disabled ? "not-allowed" : "text"
+            },
+            children: [
+              selectedOptions.map((option) => /* @__PURE__ */ jsxs84(Chip, { size: "sm", variant: "outlined", disabled, style: { paddingRight: "var(--space-0)" }, children: [
+                /* @__PURE__ */ jsx97("span", { children: option.label }),
+                /* @__PURE__ */ jsx97(
+                  IconButton,
+                  {
+                    variant: "soft",
+                    round: false,
+                    size: 24,
+                    label: `${optionText(option)} \uC120\uD0DD \uD574\uC81C`,
+                    disabled,
+                    onClick: () => remove(option.value),
+                    style: { background: "transparent" },
+                    children: /* @__PURE__ */ jsx97(Icon, { name: "close", size: 14, "aria-hidden": "true" })
+                  }
+                )
+              ] }, String(option.value))),
+              /* @__PURE__ */ jsx97(
+                "input",
+                {
+                  ref: inputRef,
+                  id: inputId,
+                  value: search,
+                  placeholder: maxReached && !search ? `\uCD5C\uB300 ${maxSelections}\uAC1C \uC120\uD0DD\uB428` : placeholder,
+                  disabled,
+                  role: "combobox",
+                  "aria-expanded": open && error == null,
+                  "aria-controls": open && error == null ? listboxId : void 0,
+                  "aria-autocomplete": "list",
+                  "aria-activedescendant": activeOption ? optionDomId(listboxId, activeOption) : void 0,
+                  "aria-invalid": error != null || void 0,
+                  "aria-describedby": [error != null ? errorId : null, popupStatus ? statusId : null].filter(Boolean).join(" ") || void 0,
+                  onFocus: () => {
+                    setFocused(true);
+                    setOpen(true);
+                  },
+                  onChange: (event) => {
+                    setSearch(event.target.value);
+                    setOpen(true);
+                  },
+                  onKeyDown: (event) => {
+                    if (event.key === "ArrowDown") {
+                      event.preventDefault();
+                      setOpen(true);
+                      setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, 1));
+                    }
+                    if (event.key === "ArrowUp") {
+                      event.preventDefault();
+                      setOpen(true);
+                      setActiveIndex((index) => moveEnabledIndex(filteredOptions, index, -1));
+                    }
+                    if (event.key === "Enter" && open && activeOption) {
+                      event.preventDefault();
+                      toggle(activeOption);
+                    }
+                    if (event.key === "Escape") {
+                      event.preventDefault();
+                      setOpen(false);
+                    }
+                    if (event.key === "Backspace" && !search && selected.length > 0) {
+                      event.preventDefault();
+                      remove(selected[selected.length - 1]);
+                    }
+                  },
+                  style: { flex: "1 1 8rem", minWidth: 96, height: 28, padding: 0, border: 0, outline: 0, background: "transparent", color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)", fontFamily: "var(--font-sans)", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)" }
+                }
+              )
+            ]
+          }
+        ),
+        error != null && /* @__PURE__ */ jsx97("span", { id: errorId, role: "alert", style: { color: "var(--color-semantic-status-negative-text)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: error }),
+        /* @__PURE__ */ jsx97(
+          "span",
+          {
+            id: statusId,
+            role: "status",
+            "aria-live": "polite",
+            style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 },
+            children: open ? popupStatus : ""
+          }
+        ),
+        open && !disabled && error == null && /* @__PURE__ */ jsxs84("div", { id: listboxId, role: "listbox", "aria-multiselectable": "true", style: { position: "absolute", zIndex: 40, left: 0, right: 0, top: "calc(100% + 6px)", maxHeight: 260, overflowY: "auto", padding: 6, display: "flex", flexDirection: "column", gap: 2, border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", background: "var(--color-semantic-surface-overlay)", boxShadow: "var(--shadow-md)" }, children: [
+          loading || filteredOptions.length === 0 ? /* @__PURE__ */ jsx97("div", { role: "option", "aria-selected": "false", "aria-disabled": "true", style: { padding: "var(--space-4)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", textAlign: "center" }, children: loading ? loadingLabel : emptyLabel }) : filteredOptions.map((option, index) => {
+            const selectedOption = selectedSet.has(option.value);
+            return /* @__PURE__ */ jsxs84(
+              "div",
+              {
+                id: optionDomId(listboxId, option),
+                role: "option",
+                "aria-selected": selectedOption,
+                "aria-disabled": option.effectiveDisabled || void 0,
+                onMouseDown: (event) => event.preventDefault(),
+                onMouseEnter: () => {
+                  if (!option.effectiveDisabled) setActiveIndex(index);
+                },
+                onClick: () => toggle(option),
+                style: { display: "grid", gridTemplateColumns: "18px minmax(0, 1fr)", alignItems: "center", gap: "var(--space-2)", width: "100%", padding: "var(--space-2) var(--space-3)", borderRadius: "var(--radius-md)", background: index === activeIndex ? "var(--color-semantic-fill-alternative)" : "transparent", color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", textAlign: "left", cursor: option.effectiveDisabled ? "not-allowed" : "pointer", fontFamily: "inherit", boxSizing: "border-box" },
+                children: [
+                  /* @__PURE__ */ jsx97("span", { "aria-hidden": "true", style: { display: "grid", placeItems: "center", width: 18, height: 18, boxSizing: "border-box", border: `1.5px solid ${selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-5)", background: selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-static-white)" }, children: selectedOption && /* @__PURE__ */ jsx97(Icon, { name: "check", size: 12, "aria-hidden": "true" }) }),
+                  /* @__PURE__ */ jsxs84("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+                    /* @__PURE__ */ jsx97("span", { style: { fontSize: "var(--label1-size)", fontWeight: "var(--fw-semibold)" }, children: option.label }),
+                    option.description != null && /* @__PURE__ */ jsx97("span", { style: { color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: option.description })
+                  ] })
+                ]
+              },
+              String(option.value)
+            );
+          }),
+          maxReached && /* @__PURE__ */ jsx97("div", { role: "option", "aria-selected": "false", "aria-disabled": "true", style: { padding: "var(--space-2) var(--space-3)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: resolvedMaxLabel })
+        ] })
+      ]
+    }
+  );
+}
+
+// components/forms/SecretField.jsx
+import React102 from "react";
+import { jsx as jsx98, jsxs as jsxs85 } from "react/jsx-runtime";
+function SecretField({
+  label = "\uBE44\uBC00 \uAC12",
+  value = "",
+  helper,
+  revealable = true,
+  copyable = true,
+  revealDurationMs = 1e4,
+  revealed,
+  defaultRevealed = false,
+  onRevealChange,
+  onCopy,
+  onCopyError,
+  copyLabel = "\uBCF5\uC0AC",
+  copiedLabel = "\uBCF5\uC0AC\uB428",
+  copyErrorLabel = "\uBCF5\uC0AC \uC2E4\uD328",
+  disabled = false,
+  style,
+  ...rest
+}) {
+  const controlled = revealed !== void 0;
+  const [internalRevealed, setInternalRevealed] = React102.useState(defaultRevealed);
+  const [copyState, setCopyState] = React102.useState("idle");
+  const show = controlled ? revealed : internalRevealed;
+  const timerRef = React102.useRef(null);
+  const copyTimerRef = React102.useRef(null);
+  const onRevealChangeRef = React102.useRef(onRevealChange);
+  onRevealChangeRef.current = onRevealChange;
+  React102.useEffect(() => {
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    if (!show || revealDurationMs <= 0) return void 0;
+    timerRef.current = window.setTimeout(() => {
+      if (!controlled) setInternalRevealed(false);
+      onRevealChangeRef.current?.(false);
+    }, revealDurationMs);
+    return () => window.clearTimeout(timerRef.current);
+  }, [controlled, revealDurationMs, show]);
+  React102.useEffect(() => () => {
+    if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current);
+  }, []);
+  const setShow = (next) => {
+    if (!controlled) setInternalRevealed(next);
+    onRevealChangeRef.current?.(next);
+  };
+  const copy = async () => {
+    if (copyTimerRef.current) window.clearTimeout(copyTimerRef.current);
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard API is unavailable.");
+      await navigator.clipboard.writeText(String(value));
+      setCopyState("success");
+      onCopy?.(value);
+    } catch (error) {
+      setCopyState("error");
+      onCopyError?.(error);
+    }
+    copyTimerRef.current = window.setTimeout(() => setCopyState("idle"), 1400);
+  };
+  const actions = revealable || copyable ? /* @__PURE__ */ jsxs85("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-0)" }, children: [
+    revealable && /* @__PURE__ */ jsx98(IconButton, { variant: "plain", round: false, size: "sm", disabled, onClick: () => setShow(!show), label: show ? "\uBE44\uBC00 \uAC12 \uC228\uAE30\uAE30" : "\uBE44\uBC00 \uAC12 \uBCF4\uAE30", children: /* @__PURE__ */ jsx98(Icon, { name: show ? "eye-slash" : "eye", size: 16, "aria-hidden": "true" }) }),
+    copyable && /* @__PURE__ */ jsx98(IconButton, { variant: "plain", round: false, size: "sm", disabled, onClick: copy, label: copyState === "success" ? copiedLabel : copyState === "error" ? copyErrorLabel : copyLabel, children: /* @__PURE__ */ jsx98(Icon, { name: copyState === "success" ? "circle-check" : "copy", size: 16, "aria-hidden": "true" }) })
+  ] }) : void 0;
+  return /* @__PURE__ */ jsxs85("div", { style: { display: "grid", gap: "var(--space-1)", ...style }, children: [
+    /* @__PURE__ */ jsx98(
+      Input,
+      {
+        ...rest,
+        label,
+        value,
+        type: show ? "text" : "password",
+        readOnly: true,
+        disabled,
+        helper: helper ?? (show && revealDurationMs > 0 ? `${Math.ceil(revealDurationMs / 1e3)}\uCD08 \uD6C4 \uC790\uB3D9\uC73C\uB85C \uC228\uAE41\uB2C8\uB2E4.` : void 0),
+        actionRight: actions,
+        autoComplete: "off",
+        spellCheck: false
+      }
+    ),
+    /* @__PURE__ */ jsx98("span", { role: "status", "aria-live": "polite", style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 }, children: copyState === "success" ? copiedLabel : copyState === "error" ? copyErrorLabel : "" })
+  ] });
+}
+
 // components/forms/Select.jsx
-import React94 from "react";
-import { jsx as jsx91, jsxs as jsxs77 } from "react/jsx-runtime";
+import React103 from "react";
+import { jsx as jsx99, jsxs as jsxs86 } from "react/jsx-runtime";
 function Select({
   label,
   helper,
@@ -10223,21 +12434,21 @@ function Select({
   style,
   ...rest
 }) {
-  const norm = React94.useMemo(() => {
+  const norm = React103.useMemo(() => {
     if (options && options.length) return options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
-    return React94.Children.toArray(children).filter((c) => c && c.type === "option").map((c) => ({ value: c.props.value != null ? c.props.value : String(c.props.children), label: c.props.children }));
+    return React103.Children.toArray(children).filter((c) => c && c.type === "option").map((c) => ({ value: c.props.value != null ? c.props.value : String(c.props.children), label: c.props.children }));
   }, [options, children]);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React94.useState(defaultValue);
+  const [internal, setInternal] = React103.useState(defaultValue);
   const sel = isControlled ? value : internal;
-  const [open, setOpen] = React94.useState(defaultOpen);
-  const [hover, setHover] = React94.useState(false);
-  const ref = React94.useRef(null);
-  const autoId = React94.useId();
+  const [open, setOpen] = React103.useState(defaultOpen);
+  const [hover, setHover] = React103.useState(false);
+  const ref = React103.useRef(null);
+  const autoId = React103.useId();
   const selId = id || (label ? `sel-${String(label).replace(/\s+/g, "-").toLowerCase()}` : `sel-${autoId}`);
   const message = error ?? helper;
   const messageId = message != null ? `${selId}-message` : void 0;
-  React94.useEffect(() => {
+  React103.useEffect(() => {
     if (!open) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -10258,14 +12469,14 @@ function Select({
   const visualOpen = open || interaction === "open";
   const activeFocus = visualOpen || focus || interaction === "focused" || interaction === "active-focused";
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
-  const ring = disabledState ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
-  return /* @__PURE__ */ jsxs77("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ jsxs77("label", { htmlFor: selId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
+  const ring = disabledState ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--color-semantic-line-solid-normal)";
+  return /* @__PURE__ */ jsxs86("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
+    label && /* @__PURE__ */ jsxs86("label", { htmlFor: selId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
-      required && /* @__PURE__ */ jsx91("span", { style: { color: "var(--bw-red)" }, children: " *" })
+      required && /* @__PURE__ */ jsx99("span", { style: { color: "var(--color-semantic-status-negative-text)" }, children: " *" })
     ] }),
-    /* @__PURE__ */ jsxs77("div", { ref, onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false), style: { position: "relative" }, children: [
-      /* @__PURE__ */ jsxs77(
+    /* @__PURE__ */ jsxs86("div", { ref, onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false), style: { position: "relative" }, children: [
+      /* @__PURE__ */ jsxs86(
         "button",
         {
           id: selId,
@@ -10288,11 +12499,11 @@ function Select({
             height: h,
             padding: "0 var(--component-input-padding-x)",
             boxSizing: "border-box",
-            background: disabledState ? "var(--color-semantic-fill-normal)" : "var(--bw-white)",
+            background: disabledState ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
             color: disabledState ? "var(--color-semantic-label-disable)" : curr ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-assistive)",
             border: `1px solid ${ring}`,
             borderRadius: "var(--radius-input)",
-            boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--focus-ring)" : "none",
+            boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
             cursor: disabledState ? "not-allowed" : "pointer",
             fontFamily: "var(--font-sans)",
             fontSize: "var(--component-input-font-size)",
@@ -10302,17 +12513,17 @@ function Select({
             transition: "var(--component-button-transition)"
           },
           children: [
-            /* @__PURE__ */ jsxs77("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, minWidth: 0, overflow: "hidden" }, children: [
-              iconLeft && /* @__PURE__ */ jsx91("span", { style: { display: "inline-flex", flex: "0 0 auto", color: "var(--color-semantic-label-assistive)" }, children: iconLeft }),
-              curr && render === "chip" ? /* @__PURE__ */ jsx91("span", { style: { display: "inline-flex", alignItems: "center", maxWidth: "100%", height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint-2)", color: "var(--color-semantic-primary-normal)", fontSize: 13, fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr.label }) : /* @__PURE__ */ jsx91("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder })
+            /* @__PURE__ */ jsxs86("span", { style: { display: "inline-flex", alignItems: "center", gap: 8, minWidth: 0, overflow: "hidden" }, children: [
+              iconLeft && /* @__PURE__ */ jsx99("span", { style: { display: "inline-flex", flex: "0 0 auto", color: "var(--color-semantic-label-assistive)" }, children: iconLeft }),
+              curr && render === "chip" ? /* @__PURE__ */ jsx99("span", { style: { display: "inline-flex", alignItems: "center", maxWidth: "100%", height: 24, padding: "0 9px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-normal)", fontSize: 13, fontWeight: "var(--fw-semibold)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr.label }) : /* @__PURE__ */ jsx99("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: curr ? curr.label : placeholder })
             ] }),
-            /* @__PURE__ */ jsx91("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: visualOpen ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ jsx91("path", { d: "m6 9 6 6 6-6" }) })
+            /* @__PURE__ */ jsx99("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, transform: visualOpen ? "rotate(180deg)" : "none", transition: "var(--component-button-transition)" }, children: /* @__PURE__ */ jsx99("path", { d: "m6 9 6 6 6-6" }) })
           ]
         }
       ),
-      visualOpen && /* @__PURE__ */ jsx91("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--surface-overlay)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
+      visualOpen && /* @__PURE__ */ jsx99("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: "auto", background: "var(--color-semantic-surface-overlay)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: norm.map((o) => {
         const on = o.value === sel;
-        return /* @__PURE__ */ jsxs77(
+        return /* @__PURE__ */ jsxs86(
           "div",
           {
             role: "option",
@@ -10324,47 +12535,47 @@ function Select({
             onMouseLeave: (e) => {
               if (!on) e.currentTarget.style.background = "transparent";
             },
-            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "9px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)", background: on ? "var(--lk-accent-tint-2)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "9px 12px", borderRadius: "var(--radius-md)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)", background: on ? "var(--color-semantic-primary-surface-strong)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
             children: [
-              /* @__PURE__ */ jsx91("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: o.label }),
-              on && /* @__PURE__ */ jsx91("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx91("path", { d: "M20 6 9 17l-5-5" }) })
+              /* @__PURE__ */ jsx99("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: o.label }),
+              on && /* @__PURE__ */ jsx99("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx99("path", { d: "M20 6 9 17l-5-5" }) })
             ]
           },
           o.value
         );
       }) })
     ] }),
-    message != null && /* @__PURE__ */ jsx91("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ jsx99("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative-text)" : status === "positive" ? "var(--color-semantic-status-positive-text)" : "var(--color-semantic-label-neutral)" }, children: message })
   ] });
 }
 
 // components/forms/Slider.jsx
-import React95 from "react";
-import { jsx as jsx92, jsxs as jsxs78 } from "react/jsx-runtime";
+import React104 from "react";
+import { jsx as jsx100, jsxs as jsxs87 } from "react/jsx-runtime";
 function useSliderStyles() {
-  React95.useEffect(() => {
+  React104.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-slider-css")) return;
     const el = document.createElement("style");
     el.id = "lk-slider-css";
     el.textContent = `
 input.lk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;margin-top:0;}
 input.lk-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--color-semantic-background-elevated-normal);border:2px solid var(--color-semantic-primary-normal);box-shadow:var(--shadow-control);cursor:pointer;}
-input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--bw-gray-300);cursor:not-allowed;}`;
+input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--color-semantic-interaction-inactive);cursor:not-allowed;}`;
     document.head.appendChild(el);
   }, []);
 }
 function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChange, disabled = false, showValue = false, style, "aria-label": ariaLabel, ...rest }) {
   useSliderStyles();
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React95.useState(defaultValue);
+  const [internal, setInternal] = React104.useState(defaultValue);
   const val = isControlled ? value : internal;
   const set = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const pct = (val - min) / (max - min) * 100;
-  return /* @__PURE__ */ jsxs78("div", { style: { display: "flex", alignItems: "center", gap: 14, ...style }, children: [
-    /* @__PURE__ */ jsx92(
+  return /* @__PURE__ */ jsxs87("div", { style: { display: "flex", alignItems: "center", gap: 14, ...style }, children: [
+    /* @__PURE__ */ jsx100(
       "input",
       {
         className: "lk-slider",
@@ -10389,18 +12600,18 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
         ...rest
       }
     ),
-    showValue && /* @__PURE__ */ jsx92("span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
+    showValue && /* @__PURE__ */ jsx100("span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
   ] });
 }
 
 // components/forms/TagInput.jsx
-import React96 from "react";
-import { jsx as jsx93, jsxs as jsxs79 } from "react/jsx-runtime";
+import React105 from "react";
+import { jsx as jsx101, jsxs as jsxs88 } from "react/jsx-runtime";
 function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB825 \uD6C4 Enter", disabled = false, style, "aria-label": ariaLabel, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React96.useState(defaultValue);
+  const [internal, setInternal] = React105.useState(defaultValue);
   const tags = isControlled ? value : internal;
-  const [draft, setDraft] = React96.useState("");
+  const [draft, setDraft] = React105.useState("");
   const set = (next) => {
     if (!isControlled) setInternal(next);
     onChange && onChange(next);
@@ -10411,12 +12622,12 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
     setDraft("");
   };
   const remove = (t) => set(tags.filter((x) => x !== t));
-  return /* @__PURE__ */ jsxs79("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-input)", background: "var(--bw-white)", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
-    tags.map((t) => /* @__PURE__ */ jsxs79("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--lk-accent-tint-2)", color: "var(--color-semantic-primary-normal)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-semibold)" }, children: [
+  return /* @__PURE__ */ jsxs88("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", background: "var(--color-semantic-background-elevated-normal)", opacity: disabled ? 0.5 : 1, ...style }, ...rest, children: [
+    tags.map((t) => /* @__PURE__ */ jsxs88("span", { style: { display: "inline-flex", alignItems: "center", gap: 5, height: 28, padding: "0 6px 0 11px", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-primary-normal)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-semibold)" }, children: [
       t,
-      /* @__PURE__ */ jsx93("button", { type: "button", "aria-label": "remove", onClick: () => remove(t), style: { display: "inline-flex", border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-primary-normal)", padding: 2 }, children: /* @__PURE__ */ jsx93("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", children: /* @__PURE__ */ jsx93("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+      /* @__PURE__ */ jsx101("button", { type: "button", "aria-label": "remove", onClick: () => remove(t), style: { display: "inline-flex", border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-primary-normal)", padding: 2 }, children: /* @__PURE__ */ jsx101("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", children: /* @__PURE__ */ jsx101("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
     ] }, t)),
-    /* @__PURE__ */ jsx93(
+    /* @__PURE__ */ jsx101(
       "input",
       {
         value: draft,
@@ -10437,10 +12648,10 @@ function TagInput({ value, defaultValue = [], onChange, placeholder = "\uC785\uB
 }
 
 // components/forms/Textarea.jsx
-import React97 from "react";
-import { jsx as jsx94, jsxs as jsxs80 } from "react/jsx-runtime";
+import React106 from "react";
+import { jsx as jsx102, jsxs as jsxs89 } from "react/jsx-runtime";
 function usePlaceholderStyle2() {
-  React97.useEffect(() => {
+  React106.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-field-ph")) return;
     const el = document.createElement("style");
     el.id = "lk-field-ph";
@@ -10466,27 +12677,27 @@ function Textarea({
   style,
   ...rest
 }) {
-  const autoId = React97.useId();
+  const autoId = React106.useId();
   const taId = id || (label ? `ta-${String(label).replace(/\s+/g, "-").toLowerCase()}` : `ta-${autoId}`);
   const message = error ?? helper;
   const messageId = message != null ? `${taId}-message` : void 0;
-  const [focused, setFocused] = React97.useState(false);
-  const [hover, setHover] = React97.useState(false);
+  const [focused, setFocused] = React106.useState(false);
+  const [hover, setHover] = React106.useState(false);
   const normalizedSize = size === "small" ? "sm" : size === "medium" ? "md" : size === "large" ? "lg" : size;
   const disabled = !!rest.disabled || disable || interaction === "inactive";
   const activeFocus = focused || focus || interaction === "focused" || interaction === "active-focused";
   const activeHover = hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused";
   const isInvalid = invalid || status === "negative" || error != null;
   usePlaceholderStyle2();
-  const ring = disabled ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--bw-red)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--bw-border)";
+  const ring = disabled ? "var(--color-semantic-line-normal-neutral)" : isInvalid ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : activeFocus ? "var(--color-semantic-primary-normal)" : activeHover ? "var(--color-semantic-line-solid-normal)" : "var(--color-semantic-line-solid-normal)";
   const minHeight = normalizedSize === "sm" ? 96 : normalizedSize === "lg" ? 160 : 120;
   const resizeMode = resize === "fixed" ? "none" : resize === "limit" ? "vertical" : "vertical";
-  return /* @__PURE__ */ jsxs80("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
-    label && /* @__PURE__ */ jsxs80("label", { htmlFor: taId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
+  return /* @__PURE__ */ jsxs89("div", { style: { display: "flex", flexDirection: "column", gap: "8px", ...style }, children: [
+    label && /* @__PURE__ */ jsxs89("label", { htmlFor: taId, style: { fontWeight: "var(--component-input-label-font-weight)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", letterSpacing: "var(--component-input-label-letter-spacing)", color: "var(--component-input-label-color)" }, children: [
       label,
-      required && /* @__PURE__ */ jsx94("span", { style: { color: "var(--bw-red)" }, children: " *" })
+      required && /* @__PURE__ */ jsx102("span", { style: { color: "var(--color-semantic-status-negative-text)" }, children: " *" })
     ] }),
-    /* @__PURE__ */ jsx94(
+    /* @__PURE__ */ jsx102(
       "textarea",
       {
         id: taId,
@@ -10518,11 +12729,11 @@ function Textarea({
           minHeight,
           maxHeight: resize === "limit" ? minHeight * 2 : void 0,
           padding: "var(--space-3)",
-          background: disabled ? "var(--color-semantic-fill-normal)" : "var(--bw-white)",
-          color: disabled ? "var(--color-semantic-label-disable)" : "var(--bw-ink)",
+          background: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
+          color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-brand-ink)",
           border: `1px solid ${ring}`,
           borderRadius: "var(--radius-input)",
-          boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--focus-ring)" : "none",
+          boxShadow: activeFocus && !isInvalid ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
           transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
           fontFamily: "var(--font-sans)",
           fontSize: "var(--component-input-font-size)",
@@ -10533,124 +12744,442 @@ function Textarea({
         }
       }
     ),
-    message != null && /* @__PURE__ */ jsx94("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative)" : status === "positive" ? "var(--color-semantic-status-positive)" : "var(--color-semantic-label-alternative)" }, children: message })
+    message != null && /* @__PURE__ */ jsx102("span", { id: messageId, style: { fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", color: error != null || status === "negative" ? "var(--color-semantic-status-negative-text)" : status === "positive" ? "var(--color-semantic-status-positive-text)" : "var(--color-semantic-label-neutral)" }, children: message })
   ] });
 }
 
 // components/forms/TimePicker.jsx
-import React98 from "react";
-import { jsx as jsx95, jsxs as jsxs81 } from "react/jsx-runtime";
-function pad(n) {
-  return String(n).padStart(2, "0");
+import React107 from "react";
+import { jsx as jsx103, jsxs as jsxs90 } from "react/jsx-runtime";
+function pad(number) {
+  return String(number).padStart(2, "0");
 }
-function TimeDropdown({ value, options, onChange, height, ariaLabel }) {
-  const [open, setOpen] = React98.useState(false);
-  const ref = React98.useRef(null);
-  React98.useEffect(() => {
-    if (!open) return void 0;
-    const onDoc = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
-    };
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
-  }, [open]);
-  return /* @__PURE__ */ jsxs81("div", { ref, style: { position: "relative" }, children: [
-    /* @__PURE__ */ jsxs81(
-      "button",
+function TimeSelect({ value, options, onChange, height, ariaLabel, disabled }) {
+  const [focused, setFocused] = React107.useState(false);
+  return /* @__PURE__ */ jsxs90("span", { style: { position: "relative", display: "inline-flex" }, children: [
+    /* @__PURE__ */ jsx103(
+      "select",
       {
-        type: "button",
+        value,
+        disabled,
         "aria-label": ariaLabel,
-        "aria-haspopup": "listbox",
-        "aria-expanded": open,
-        onClick: () => setOpen((o) => !o),
-        style: { display: "inline-flex", alignItems: "center", gap: 8, height, padding: "0 12px", boxSizing: "border-box", background: "var(--bw-white)", border: `1px solid ${open ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, borderRadius: "var(--radius-md)", boxShadow: open ? "0 0 0 4px var(--focus-ring)" : "none", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)" },
-        children: [
-          pad(value),
-          /* @__PURE__ */ jsx95("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-alternative)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx95("path", { d: "m6 9 6 6 6-6" }) })
-        ]
+        onChange: (event) => onChange(Number(event.target.value)),
+        onFocus: () => setFocused(true),
+        onBlur: () => setFocused(false),
+        style: {
+          appearance: "none",
+          minWidth: 76,
+          height,
+          padding: "0 34px 0 12px",
+          boxSizing: "border-box",
+          background: disabled ? "var(--color-semantic-fill-normal)" : "var(--component-input-bg)",
+          border: `1px solid ${focused ? "var(--component-input-border-color-focus)" : "var(--component-input-border-color)"}`,
+          borderRadius: "var(--component-input-radius)",
+          boxShadow: focused ? "var(--component-input-focus-shadow)" : "none",
+          color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-text-color)",
+          cursor: disabled ? "not-allowed" : "pointer",
+          outline: "none",
+          fontFamily: "var(--font-sans)",
+          fontSize: "var(--component-input-font-size)",
+          lineHeight: "var(--component-input-line-height)",
+          fontWeight: "var(--fw-semibold)",
+          fontVariantNumeric: "tabular-nums",
+          transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
+        },
+        children: options.map((option) => /* @__PURE__ */ jsx103("option", { value: option, children: pad(option) }, option))
       }
     ),
-    open && /* @__PURE__ */ jsx95("div", { role: "listbox", style: { position: "absolute", top: "calc(100% + 6px)", left: 0, minWidth: "100%", zIndex: 40, maxHeight: 220, overflowY: "auto", background: "var(--surface-overlay)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-md)", padding: 6, display: "flex", flexDirection: "column", gap: 2 }, children: options.map((x) => {
-      const on = x === value;
-      return /* @__PURE__ */ jsx95(
-        "div",
-        {
-          role: "option",
-          "aria-selected": on,
-          onClick: () => {
-            onChange(x);
-            setOpen(false);
-          },
-          onMouseEnter: (e) => {
-            if (!on) e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
-          },
-          onMouseLeave: (e) => {
-            if (!on) e.currentTarget.style.background = "transparent";
-          },
-          style: { padding: "7px 12px", borderRadius: "var(--radius-sm)", cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 14.5, textAlign: "center", color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)", background: on ? "var(--lk-accent-tint-2)" : "transparent", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)" },
-          children: pad(x)
+    /* @__PURE__ */ jsx103(
+      "span",
+      {
+        "aria-hidden": "true",
+        style: {
+          position: "absolute",
+          top: "50%",
+          right: 10,
+          display: "inline-flex",
+          color: disabled ? "var(--color-semantic-label-disable)" : "var(--component-input-icon-color)",
+          transform: "translateY(-50%)",
+          pointerEvents: "none"
         },
-        x
-      );
-    }) })
+        children: /* @__PURE__ */ jsx103(Icon, { name: "chevron-down-small", size: 16, "aria-hidden": "true" })
+      }
+    )
   ] });
 }
-function TimePicker({ value, defaultValue = "09:00", onChange, minuteStep = 5, size = "md", style, ...rest }) {
+function TimePicker({
+  value,
+  defaultValue = "09:00",
+  onChange,
+  minuteStep = 5,
+  hourLabel = "\uC2DC",
+  minuteLabel = "\uBD84",
+  size = "md",
+  disabled = false,
+  style,
+  ...rest
+}) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React98.useState(defaultValue);
-  const v = isControlled ? value : internal;
-  const [h, m] = (v || "00:00").split(":").map(Number);
-  const set = (nh, nm) => {
-    const nv = `${pad(nh)}:${pad(nm)}`;
-    if (!isControlled) setInternal(nv);
-    onChange && onChange(nv);
-  };
+  const [internal, setInternal] = React107.useState(defaultValue);
+  const renderedValue = isControlled ? value : internal;
+  const [rawHour, rawMinute] = String(renderedValue || "00:00").split(":").map(Number);
+  const hour = Number.isFinite(rawHour) ? Math.max(0, Math.min(23, rawHour)) : 0;
+  const minute = Number.isFinite(rawMinute) ? Math.max(0, Math.min(59, rawMinute)) : 0;
+  const normalizedStep = Number.isFinite(minuteStep) ? Math.max(1, Math.min(60, Math.round(minuteStep))) : 5;
   const height = size === "sm" ? 40 : 50;
-  const hours = Array.from({ length: 24 }, (_, i) => i);
-  const mins = Array.from({ length: Math.ceil(60 / minuteStep) }, (_, i) => i * minuteStep);
-  return /* @__PURE__ */ jsxs81("div", { style: { display: "inline-flex", alignItems: "center", gap: 6, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx95(TimeDropdown, { value: h, options: hours, onChange: (nh) => set(nh, m), height, ariaLabel: "hour" }),
-    /* @__PURE__ */ jsx95("span", { style: { fontFamily: "var(--font-sans)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-alternative)" }, children: ":" }),
-    /* @__PURE__ */ jsx95(TimeDropdown, { value: m, options: mins, onChange: (nm) => set(h, nm), height, ariaLabel: "minute" })
-  ] });
+  const hours = Array.from({ length: 24 }, (_, index) => index);
+  const minutes = Array.from({ length: Math.ceil(60 / normalizedStep) }, (_, index) => index * normalizedStep).filter((option) => option < 60);
+  if (!minutes.includes(minute)) minutes.push(minute);
+  minutes.sort((a, b) => a - b);
+  const commit = (nextHour, nextMinute) => {
+    const nextValue = `${pad(nextHour)}:${pad(nextMinute)}`;
+    if (!isControlled) setInternal(nextValue);
+    onChange?.(nextValue);
+  };
+  return /* @__PURE__ */ jsxs90(
+    "div",
+    {
+      ...rest,
+      style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", fontFamily: "var(--font-sans)", ...style },
+      children: [
+        /* @__PURE__ */ jsx103(TimeSelect, { value: hour, options: hours, onChange: (nextHour) => commit(nextHour, minute), height, ariaLabel: hourLabel, disabled }),
+        /* @__PURE__ */ jsx103("span", { "aria-hidden": "true", style: { fontWeight: "var(--fw-bold)", color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-alternative)" }, children: ":" }),
+        /* @__PURE__ */ jsx103(TimeSelect, { value: minute, options: minutes, onChange: (nextMinute) => commit(hour, nextMinute), height, ariaLabel: minuteLabel, disabled })
+      ]
+    }
+  );
 }
 
+// components/forms/ValidationSummary.jsx
+import React108 from "react";
+import { jsx as jsx104, jsxs as jsxs91 } from "react/jsx-runtime";
+var SEVERITY_META = {
+  error: {
+    label: "\uC624\uB958",
+    tone: "negative"
+  },
+  warning: {
+    label: "\uC8FC\uC758",
+    tone: "cautionary"
+  }
+};
+var VISUALLY_HIDDEN_STYLE = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  border: 0
+};
+function severityMeta(severity) {
+  const meta = SEVERITY_META[severity] ?? SEVERITY_META.error;
+  return { ...meta, ...statusToneStyle(meta.tone) };
+}
+var ValidationSummary = React108.forwardRef(function ValidationSummary2({
+  title,
+  headingLevel = 2,
+  description,
+  issues = [],
+  emptyMessage = "\uC800\uC7A5 \uB610\uB294 \uC81C\uCD9C\uC744 \uC9C4\uD589\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+  onIssueActivate,
+  actionLabel = "\uC774\uB3D9",
+  announce = false,
+  tabIndex,
+  className,
+  style,
+  ...rest
+}, forwardedRef) {
+  const titleId = React108.useId();
+  const errorHeadingId = React108.useId();
+  const warningHeadingId = React108.useId();
+  const resolvedHeadingLevel = Math.min(6, Math.max(2, headingLevel));
+  const Heading = `h${resolvedHeadingLevel}`;
+  const GroupHeading = `h${Math.min(6, resolvedHeadingLevel + 1)}`;
+  const errorIssues = issues.filter((issue) => issue.severity !== "warning");
+  const warningIssues = issues.filter((issue) => issue.severity === "warning");
+  const errorCount = errorIssues.length;
+  const warningCount = warningIssues.length;
+  const resolvedTitle = title ?? (issues.length > 0 ? "\uC218\uC815\uC774 \uD544\uC694\uD55C \uD56D\uBAA9" : "\uD655\uC778\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4");
+  const summaryLabel = issues.length > 0 ? `\uAC80\uC99D \uACB0\uACFC: \uC624\uB958 ${errorCount}\uAC1C, \uC8FC\uC758 ${warningCount}\uAC1C` : "\uAC80\uC99D \uACB0\uACFC: \uBB38\uC81C \uC5C6\uC74C";
+  const resolvedTabIndex = tabIndex ?? (errorCount > 0 ? -1 : void 0);
+  const groups = [
+    {
+      key: "error",
+      headingId: errorHeadingId,
+      items: errorIssues,
+      ...severityMeta("error")
+    },
+    {
+      key: "warning",
+      headingId: warningHeadingId,
+      items: warningIssues,
+      ...severityMeta("warning")
+    }
+  ].filter((group) => group.items.length > 0);
+  return /* @__PURE__ */ jsxs91(
+    "section",
+    {
+      ...rest,
+      ref: forwardedRef,
+      "aria-labelledby": titleId,
+      tabIndex: resolvedTabIndex,
+      className: ["lk-validation-summary", className].filter(Boolean).join(" "),
+      style: {
+        width: "100%",
+        minWidth: 0,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        containerType: "inline-size",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
+        borderRadius: "var(--radius-lg)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        color: "var(--color-semantic-label-normal)",
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
+      children: [
+        /* @__PURE__ */ jsx104("style", { children: `.lk-validation-summary:focus {
+          outline: 2px solid var(--color-semantic-focus-indicator);
+          outline-offset: 2px;
+        }
+        .lk-validation-summary__group + .lk-validation-summary__group {
+          border-top: 1px solid var(--color-semantic-line-normal-normal);
+        }
+        .lk-validation-summary__item + .lk-validation-summary__item {
+          border-top: 1px solid var(--color-semantic-line-normal-alternative);
+        }
+        @container (max-width: 360px) {
+          .lk-validation-summary__header,
+          .lk-validation-summary__item {
+            padding: var(--space-3) !important;
+          }
+          .lk-validation-summary__group-heading {
+            padding: var(--space-2) var(--space-3) !important;
+          }
+        }` }),
+        /* @__PURE__ */ jsxs91(
+          "header",
+          {
+            className: "lk-validation-summary__header",
+            style: {
+              display: "grid",
+              gap: "var(--space-1)",
+              padding: "var(--space-4)",
+              borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
+              background: "var(--color-semantic-background-elevated-normal)"
+            },
+            children: [
+              /* @__PURE__ */ jsx104(
+                Heading,
+                {
+                  id: titleId,
+                  style: {
+                    margin: 0,
+                    color: "var(--color-semantic-label-strong)",
+                    fontSize: "var(--body1-size)",
+                    lineHeight: "var(--body1-line)",
+                    fontWeight: "var(--fw-bold)",
+                    letterSpacing: "var(--body1-spacing)"
+                  },
+                  children: resolvedTitle
+                }
+              ),
+              description != null && /* @__PURE__ */ jsx104(
+                "p",
+                {
+                  style: {
+                    margin: 0,
+                    color: "var(--color-semantic-label-neutral)",
+                    fontSize: "var(--caption1-size)",
+                    lineHeight: "var(--caption1-line)",
+                    wordBreak: "keep-all"
+                  },
+                  children: description
+                }
+              )
+            ]
+          }
+        ),
+        announce && /* @__PURE__ */ jsx104(
+          "span",
+          {
+            role: errorCount > 0 ? "alert" : "status",
+            "aria-live": errorCount > 0 ? void 0 : "polite",
+            "aria-atomic": "true",
+            style: VISUALLY_HIDDEN_STYLE,
+            children: summaryLabel
+          }
+        ),
+        issues.length === 0 ? /* @__PURE__ */ jsx104(
+          "p",
+          {
+            style: {
+              margin: 0,
+              padding: "var(--space-3) var(--space-4)",
+              color: "var(--color-semantic-label-neutral)",
+              fontSize: "var(--label1-size)",
+              lineHeight: "var(--label1-line)"
+            },
+            children: emptyMessage
+          }
+        ) : /* @__PURE__ */ jsx104("div", { className: "lk-validation-summary__groups", children: groups.map((group) => /* @__PURE__ */ jsxs91(
+          "section",
+          {
+            "aria-labelledby": group.headingId,
+            className: "lk-validation-summary__group",
+            "data-severity": group.key,
+            children: [
+              /* @__PURE__ */ jsxs91(
+                "div",
+                {
+                  className: "lk-validation-summary__group-heading",
+                  style: {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "var(--space-2)",
+                    padding: "var(--space-2) var(--space-4)",
+                    borderBottom: "1px solid var(--color-semantic-line-normal-alternative)",
+                    background: "var(--color-semantic-background-elevated-alternative)"
+                  },
+                  children: [
+                    /* @__PURE__ */ jsx104(Icon, { name: group.icon, size: 16, color: group.foreground, "aria-hidden": "true" }),
+                    /* @__PURE__ */ jsxs91(
+                      GroupHeading,
+                      {
+                        id: group.headingId,
+                        style: {
+                          margin: 0,
+                          color: group.foreground,
+                          fontSize: "var(--label1-size)",
+                          lineHeight: "var(--label1-line)",
+                          fontWeight: "var(--fw-semibold)",
+                          letterSpacing: "var(--label1-spacing)"
+                        },
+                        children: [
+                          group.label,
+                          " ",
+                          group.items.length,
+                          "\uAC1C"
+                        ]
+                      }
+                    )
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsx104("ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: group.items.map((issue) => {
+                const canActivate = typeof onIssueActivate === "function";
+                const actionContent = issue.message ?? issue.label ?? issue.actionLabel ?? actionLabel;
+                const sharedActionProps = {
+                  size: "sm",
+                  underline: true,
+                  tone: group.key === "error" ? "danger" : "signal",
+                  "aria-label": issue.actionAriaLabel,
+                  className: "lk-textbtn lk-validation-summary__issue-link",
+                  style: {
+                    alignSelf: "start",
+                    justifyContent: "flex-start",
+                    maxWidth: "100%",
+                    minHeight: 0,
+                    ...group.key === "error" ? { color: group.foreground } : {},
+                    lineHeight: "var(--label1-line)",
+                    textAlign: "left",
+                    whiteSpace: "normal",
+                    wordBreak: "keep-all"
+                  }
+                };
+                const action = issue.href != null ? /* @__PURE__ */ jsx104(TextButton, { ...sharedActionProps, as: "a", href: issue.href, children: actionContent }) : canActivate ? /* @__PURE__ */ jsx104(TextButton, { ...sharedActionProps, onClick: () => onIssueActivate(issue), children: actionContent }) : null;
+                return /* @__PURE__ */ jsxs91(
+                  "li",
+                  {
+                    className: "lk-validation-summary__item",
+                    "data-severity": group.key,
+                    style: {
+                      display: "grid",
+                      gap: "var(--space-1)",
+                      minHeight: 64,
+                      padding: "var(--space-3) var(--space-4)",
+                      boxSizing: "border-box"
+                    },
+                    children: [
+                      /* @__PURE__ */ jsx104(
+                        "strong",
+                        {
+                          style: {
+                            color: "var(--color-semantic-label-neutral)",
+                            fontSize: "var(--caption1-size)",
+                            lineHeight: "var(--caption1-line)",
+                            fontWeight: "var(--fw-semibold)"
+                          },
+                          children: issue.label
+                        }
+                      ),
+                      action ?? /* @__PURE__ */ jsx104(
+                        "span",
+                        {
+                          style: {
+                            color: "var(--color-semantic-label-normal)",
+                            fontSize: "var(--label1-size)",
+                            lineHeight: "var(--label1-line)",
+                            fontWeight: "var(--fw-medium)",
+                            wordBreak: "keep-all"
+                          },
+                          children: issue.message
+                        }
+                      )
+                    ]
+                  },
+                  issue.id
+                );
+              }) })
+            ]
+          },
+          group.key
+        )) })
+      ]
+    }
+  );
+});
+ValidationSummary.displayName = "ValidationSummary";
+
 // components/layout/AspectRatio.jsx
-import React99 from "react";
-import { jsx as jsx96 } from "react/jsx-runtime";
+import React109 from "react";
+import { jsx as jsx105 } from "react/jsx-runtime";
 function AspectRatio({ children, ratio = 16 / 9, style, ...rest }) {
-  return /* @__PURE__ */ jsx96("div", { style: { position: "relative", width: "100%", aspectRatio: String(ratio), overflow: "hidden", ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx105("div", { style: { position: "relative", width: "100%", aspectRatio: String(ratio), overflow: "hidden", ...style }, ...rest, children });
 }
 
 // components/layout/Center.jsx
-import React100 from "react";
-import { jsx as jsx97 } from "react/jsx-runtime";
+import React110 from "react";
+import { jsx as jsx106 } from "react/jsx-runtime";
 function Center({ children, minHeight, style, ...rest }) {
-  return /* @__PURE__ */ jsx97("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", minHeight, ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx106("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", minHeight, ...style }, ...rest, children });
 }
 
 // components/layout/Cluster.jsx
-import React101 from "react";
-import { jsx as jsx98 } from "react/jsx-runtime";
+import React111 from "react";
+import { jsx as jsx107 } from "react/jsx-runtime";
 function Cluster({ children, gap = 10, align = "center", justify = "flex-start", style, ...rest }) {
-  return /* @__PURE__ */ jsx98("div", { style: { display: "flex", flexWrap: "wrap", gap, alignItems: align, justifyContent: justify, ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx107("div", { style: { display: "flex", flexWrap: "wrap", gap, alignItems: align, justifyContent: justify, ...style }, ...rest, children });
 }
 
 // components/layout/Col.jsx
-import React102 from "react";
-import { jsx as jsx99 } from "react/jsx-runtime";
+import React112 from "react";
+import { jsx as jsx108 } from "react/jsx-runtime";
 function Col({ children, span, sm, md, lg, style, ...rest }) {
   const vars = {};
   if (span != null) vars["--col-span"] = span;
   if (sm != null) vars["--col-span-sm"] = sm;
   if (md != null) vars["--col-span-md"] = md;
   if (lg != null) vars["--col-span-lg"] = lg;
-  return /* @__PURE__ */ jsx99("div", { className: "lk-col", style: { ...vars, ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx108("div", { className: "lk-col", style: { ...vars, ...style }, ...rest, children });
 }
 
 // components/layout/Columns.jsx
-import React103 from "react";
-import { jsx as jsx100 } from "react/jsx-runtime";
+import React113 from "react";
+import { jsx as jsx109 } from "react/jsx-runtime";
 var toLen2 = (v) => typeof v === "number" ? v + "px" : v;
 function Columns({ children, columns = 12, gap, columnGap, rowGap, style, ...rest }) {
   const vars = { "--cols": columns };
@@ -10660,362 +13189,31 @@ function Columns({ children, columns = 12, gap, columnGap, rowGap, style, ...res
   }
   if (columnGap != null) vars["--col-gap"] = toLen2(columnGap);
   if (rowGap != null) vars["--row-gap"] = toLen2(rowGap);
-  return /* @__PURE__ */ jsx100("div", { className: "lk-grid", style: { ...vars, ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx109("div", { className: "lk-grid", style: { ...vars, ...style }, ...rest, children });
 }
 
 // components/layout/Container.jsx
-import React104 from "react";
-import { jsx as jsx101 } from "react/jsx-runtime";
+import React114 from "react";
+import { jsx as jsx110 } from "react/jsx-runtime";
 function Container({ children, size = "default", style, ...rest }) {
   if (size === "default") {
-    return /* @__PURE__ */ jsx101("div", { className: "lk-container-fluid", style, ...rest, children });
+    return /* @__PURE__ */ jsx110("div", { className: "lk-container-fluid", style, ...rest, children });
   }
   const max = size === "read" ? "var(--container-read)" : "var(--container-wide)";
-  return /* @__PURE__ */ jsx101("div", { style: { maxWidth: max, marginInline: "auto", paddingInline: "var(--grid-margin)", width: "100%", boxSizing: "border-box", ...style }, ...rest, children });
-}
-
-// components/layout/DockPanel.jsx
-import React105 from "react";
-import { jsx as jsx102, jsxs as jsxs82 } from "react/jsx-runtime";
-var DEFAULT_WIDTH = 300;
-var DEFAULT_MIN_WIDTH = 240;
-var DEFAULT_MAX_WIDTH = 520;
-var DEFAULT_RESIZE_STEP = 16;
-function toCssSize(value) {
-  return typeof value === "number" ? `${value}px` : value;
-}
-function toNumber(value) {
-  return typeof value === "number" && Number.isFinite(value) ? value : void 0;
-}
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
-function nextOpenValue(value) {
-  return !value;
-}
-function getHandleIcon(side, open) {
-  if (side === "left") return open ? "chevron-left" : "chevron-right";
-  return open ? "chevron-right" : "chevron-left";
-}
-function getResizeDelta(key, side, step) {
-  if (key === "ArrowLeft") return side === "left" ? -step : step;
-  if (key === "ArrowRight") return side === "left" ? step : -step;
-  return 0;
-}
-function DockPanel({
-  side = "right",
-  open,
-  defaultOpen = true,
-  onOpenChange,
-  title,
-  width = DEFAULT_WIDTH,
-  minWidth = DEFAULT_MIN_WIDTH,
-  maxWidth = DEFAULT_MAX_WIDTH,
-  resizeStep = DEFAULT_RESIZE_STEP,
-  resizable = false,
-  onWidthChange,
-  closeOnEscape = true,
-  bodyPadding = "var(--space-4)",
-  footer,
-  children,
-  style,
-  bodyStyle,
-  "aria-label": ariaLabel,
-  ...rest
-}) {
-  const controlled = open !== void 0;
-  const [internalOpen, setInternalOpen] = React105.useState(defaultOpen);
-  const [resizeFocused, setResizeFocused] = React105.useState(false);
-  const [isResizing, setIsResizing] = React105.useState(false);
-  const isOpen = controlled ? open : internalOpen;
-  const isLeft = side === "left";
-  const panelId = React105.useId();
-  const titleId = `${panelId}-title`;
-  const handleRef = React105.useRef(null);
-  const dragRef = React105.useRef(null);
-  const numericWidth = toNumber(width);
-  const minPanelWidth = toNumber(minWidth) ?? DEFAULT_MIN_WIDTH;
-  const maxPanelWidth = Math.max(minPanelWidth, toNumber(maxWidth) ?? DEFAULT_MAX_WIDTH);
-  const canResize = Boolean(resizable && numericWidth !== void 0);
-  const boundedInitialWidth = clamp(numericWidth ?? DEFAULT_WIDTH, minPanelWidth, maxPanelWidth);
-  const [resizedWidth, setResizedWidth] = React105.useState(boundedInitialWidth);
-  const activeNumericWidth = canResize ? resizedWidth : numericWidth;
-  const panelWidth = activeNumericWidth !== void 0 ? `${activeNumericWidth}px` : toCssSize(width);
-  const titleText = typeof title === "string" ? title : void 0;
-  React105.useEffect(() => {
-    if (numericWidth === void 0) return;
-    setResizedWidth(clamp(numericWidth, minPanelWidth, maxPanelWidth));
-  }, [numericWidth, minPanelWidth, maxPanelWidth]);
-  const setOpen = (value) => {
-    if (!controlled) setInternalOpen(value);
-    onOpenChange && onOpenChange(value);
-  };
-  const focusHandle = () => {
-    const run = () => handleRef.current && handleRef.current.focus();
-    if (typeof requestAnimationFrame === "function") requestAnimationFrame(run);
-    else setTimeout(run, 0);
-  };
-  const setPanelWidth = (value) => {
-    const nextWidth = clamp(value, minPanelWidth, maxPanelWidth);
-    setResizedWidth(nextWidth);
-    onWidthChange && onWidthChange(nextWidth);
-  };
-  const handleResizePointerDown = (event) => {
-    if (!canResize || !isOpen || event.button !== 0) return;
-    event.preventDefault();
-    event.currentTarget.setPointerCapture && event.currentTarget.setPointerCapture(event.pointerId);
-    dragRef.current = {
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startWidth: activeNumericWidth
-    };
-    setIsResizing(true);
-  };
-  const handleResizePointerMove = (event) => {
-    const drag = dragRef.current;
-    if (!drag || activeNumericWidth === void 0) return;
-    const delta = event.clientX - drag.startX;
-    setPanelWidth(drag.startWidth + (isLeft ? delta : -delta));
-  };
-  const handleResizePointerEnd = (event) => {
-    if (!dragRef.current) return;
-    event.currentTarget.releasePointerCapture && event.currentTarget.releasePointerCapture(dragRef.current.pointerId);
-    dragRef.current = null;
-    setIsResizing(false);
-  };
-  const handleResizeKeyDown = (event) => {
-    if (!canResize || activeNumericWidth === void 0) return;
-    const step = (event.shiftKey ? resizeStep * 4 : resizeStep) || DEFAULT_RESIZE_STEP;
-    if (event.key === "Home") {
-      event.preventDefault();
-      setPanelWidth(minPanelWidth);
-      return;
-    }
-    if (event.key === "End") {
-      event.preventDefault();
-      setPanelWidth(maxPanelWidth);
-      return;
-    }
-    const delta = getResizeDelta(event.key, side, step);
-    if (delta === 0) return;
-    event.preventDefault();
-    setPanelWidth(activeNumericWidth + delta);
-  };
-  const handlePanelKeyDown = (event) => {
-    if (!closeOnEscape || event.key !== "Escape") return;
-    event.stopPropagation();
-    setOpen(false);
-    focusHandle();
-  };
-  const handleLabel = isOpen ? "\uB3C4\uD0B9 \uD328\uB110 \uC811\uAE30" : "\uB3C4\uD0B9 \uD328\uB110 \uD3BC\uCE58\uAE30";
-  const resizeLabel = titleText ? `${titleText} \uB108\uBE44 \uC870\uC808` : "\uB3C4\uD0B9 \uD328\uB110 \uB108\uBE44 \uC870\uC808";
-  return /* @__PURE__ */ jsx102(
-    "div",
-    {
-      "data-side": side,
-      "data-state": isOpen ? "open" : "closed",
-      "data-resizing": isResizing ? "true" : void 0,
-      style: {
-        position: "relative",
-        height: "100%",
-        display: "flex",
-        justifyContent: isLeft ? "flex-start" : "flex-end",
-        minWidth: 0,
-        fontFamily: "var(--font-sans)",
-        ...style
-      },
-      ...rest,
-      children: /* @__PURE__ */ jsxs82(
-        "div",
-        {
-          style: {
-            position: "relative",
-            width: isOpen ? panelWidth : 0,
-            height: "100%",
-            minWidth: 0,
-            overflow: "visible",
-            transition: isResizing ? "none" : "width var(--dur-normal, 220ms) var(--ease-out)"
-          },
-          children: [
-            /* @__PURE__ */ jsx102(
-              "button",
-              {
-                ref: handleRef,
-                type: "button",
-                "aria-label": handleLabel,
-                "aria-controls": panelId,
-                "aria-expanded": isOpen,
-                onClick: () => setOpen(nextOpenValue(isOpen)),
-                style: {
-                  position: "absolute",
-                  top: "var(--space-4)",
-                  [isLeft ? "right" : "left"]: -24,
-                  width: 24,
-                  height: 48,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 0,
-                  border: "1px solid var(--color-semantic-line-normal-normal)",
-                  [isLeft ? "borderLeft" : "borderRight"]: "none",
-                  borderRadius: isLeft ? "0 var(--radius-sm) var(--radius-sm) 0" : "var(--radius-sm) 0 0 var(--radius-sm)",
-                  background: "var(--color-semantic-background-elevated-normal)",
-                  color: "var(--color-semantic-label-neutral)",
-                  boxSizing: "border-box",
-                  boxShadow: "var(--shadow-sm)",
-                  cursor: "pointer",
-                  zIndex: 3,
-                  lineHeight: 0
-                },
-                children: /* @__PURE__ */ jsx102(Icon, { name: getHandleIcon(side, isOpen), size: 14, "aria-hidden": "true" })
-              }
-            ),
-            canResize && isOpen && activeNumericWidth !== void 0 && /* @__PURE__ */ jsx102(
-              "div",
-              {
-                role: "separator",
-                tabIndex: 0,
-                "aria-label": resizeLabel,
-                "aria-controls": panelId,
-                "aria-orientation": "vertical",
-                "aria-valuemin": minPanelWidth,
-                "aria-valuemax": maxPanelWidth,
-                "aria-valuenow": Math.round(activeNumericWidth),
-                onPointerDown: handleResizePointerDown,
-                onPointerMove: handleResizePointerMove,
-                onPointerUp: handleResizePointerEnd,
-                onPointerCancel: handleResizePointerEnd,
-                onKeyDown: handleResizeKeyDown,
-                onFocus: () => setResizeFocused(true),
-                onBlur: () => setResizeFocused(false),
-                style: {
-                  position: "absolute",
-                  top: 0,
-                  bottom: 0,
-                  [isLeft ? "right" : "left"]: -4,
-                  width: 8,
-                  display: "flex",
-                  alignItems: "stretch",
-                  justifyContent: "center",
-                  touchAction: "none",
-                  cursor: "col-resize",
-                  zIndex: 2,
-                  outline: "none"
-                },
-                children: /* @__PURE__ */ jsx102(
-                  "span",
-                  {
-                    "aria-hidden": "true",
-                    style: {
-                      width: 1,
-                      background: isResizing || resizeFocused ? "var(--color-semantic-primary-normal)" : "transparent",
-                      transition: "background var(--dur-fast) var(--ease-out)"
-                    }
-                  }
-                )
-              }
-            ),
-            /* @__PURE__ */ jsxs82(
-              "aside",
-              {
-                id: panelId,
-                role: "region",
-                hidden: !isOpen,
-                inert: isOpen ? void 0 : true,
-                "aria-hidden": isOpen ? void 0 : true,
-                "aria-label": title == null ? ariaLabel || "\uB3C4\uD0B9 \uD328\uB110" : void 0,
-                "aria-labelledby": title == null ? void 0 : titleId,
-                onKeyDown: handlePanelKeyDown,
-                style: {
-                  width: panelWidth,
-                  height: "100%",
-                  minWidth: 0,
-                  display: isOpen ? "grid" : "none",
-                  gridTemplateRows: `${title == null ? "0" : "auto"} minmax(0, 1fr) ${footer == null ? "0" : "auto"}`,
-                  boxSizing: "border-box",
-                  overflow: "hidden",
-                  background: "var(--color-semantic-background-elevated-normal)",
-                  borderLeft: isLeft ? "none" : "1px solid var(--color-semantic-line-normal-normal)",
-                  borderRight: isLeft ? "1px solid var(--color-semantic-line-normal-normal)" : "none",
-                  boxShadow: "var(--shadow-md)"
-                },
-                children: [
-                  title != null && /* @__PURE__ */ jsx102(
-                    "header",
-                    {
-                      style: {
-                        minHeight: 48,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "var(--space-2)",
-                        padding: "0 var(--space-4)",
-                        borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
-                        boxSizing: "border-box"
-                      },
-                      children: /* @__PURE__ */ jsx102(
-                        "div",
-                        {
-                          id: titleId,
-                          style: {
-                            minWidth: 0,
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                            fontSize: "var(--label1-size)",
-                            lineHeight: "var(--label1-line)",
-                            fontWeight: "var(--fw-bold)",
-                            color: "var(--color-semantic-label-strong)"
-                          },
-                          children: title
-                        }
-                      )
-                    }
-                  ),
-                  /* @__PURE__ */ jsx102(
-                    "div",
-                    {
-                      style: {
-                        minHeight: 0,
-                        overflow: "auto",
-                        padding: bodyPadding,
-                        boxSizing: "border-box",
-                        ...bodyStyle
-                      },
-                      children
-                    }
-                  ),
-                  footer != null && /* @__PURE__ */ jsx102(
-                    "footer",
-                    {
-                      style: {
-                        padding: "var(--space-3) var(--space-4)",
-                        borderTop: "1px solid var(--color-semantic-line-normal-normal)",
-                        boxSizing: "border-box"
-                      },
-                      children: footer
-                    }
-                  )
-                ]
-              }
-            )
-          ]
-        }
-      )
-    }
-  );
+  return /* @__PURE__ */ jsx110("div", { style: { maxWidth: max, marginInline: "auto", paddingInline: "var(--grid-margin)", width: "100%", boxSizing: "border-box", ...style }, ...rest, children });
 }
 
 // components/layout/Grid.jsx
-import React106 from "react";
-import { jsx as jsx103 } from "react/jsx-runtime";
+import React115 from "react";
+import { jsx as jsx111 } from "react/jsx-runtime";
 function Grid({ children, columns, minItemWidth, gap = 20, style, ...rest }) {
   const template = minItemWidth ? `repeat(auto-fill, minmax(${typeof minItemWidth === "number" ? minItemWidth + "px" : minItemWidth}, 1fr))` : columns ? `repeat(${columns}, minmax(0, 1fr))` : void 0;
-  return /* @__PURE__ */ jsx103("div", { style: { display: "grid", gridTemplateColumns: template, gap, ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx111("div", { style: { display: "grid", gridTemplateColumns: template, gap, ...style }, ...rest, children });
 }
 
 // components/layout/MobileSystemBars.jsx
-import React107 from "react";
-import { jsx as jsx104, jsxs as jsxs83 } from "react/jsx-runtime";
+import React116 from "react";
+import { jsx as jsx112, jsxs as jsxs92 } from "react/jsx-runtime";
 function MobileSystemBars({
   platform = "ios",
   showStatus = true,
@@ -11025,7 +13223,7 @@ function MobileSystemBars({
   ...rest
 }) {
   const isAndroid = platform === "android";
-  return /* @__PURE__ */ jsxs83(
+  return /* @__PURE__ */ jsxs92(
     "div",
     {
       "aria-hidden": "true",
@@ -11039,7 +13237,7 @@ function MobileSystemBars({
       },
       ...rest,
       children: [
-        showStatus && /* @__PURE__ */ jsxs83(
+        showStatus && /* @__PURE__ */ jsxs92(
           "div",
           {
             style: {
@@ -11052,14 +13250,14 @@ function MobileSystemBars({
               fontWeight: "var(--fw-bold)"
             },
             children: [
-              /* @__PURE__ */ jsx104("span", { children: time }),
-              /* @__PURE__ */ jsxs83(
+              /* @__PURE__ */ jsx112("span", { children: time }),
+              /* @__PURE__ */ jsxs92(
                 "span",
                 {
                   style: { display: "inline-flex", alignItems: "center", gap: 4 },
                   children: [
-                    /* @__PURE__ */ jsx104("span", { children: isAndroid ? "LTE" : "5G" }),
-                    /* @__PURE__ */ jsx104(
+                    /* @__PURE__ */ jsx112("span", { children: isAndroid ? "LTE" : "5G" }),
+                    /* @__PURE__ */ jsx112(
                       "span",
                       {
                         style: {
@@ -11076,8 +13274,8 @@ function MobileSystemBars({
             ]
           }
         ),
-        /* @__PURE__ */ jsx104("span", {}),
-        showHome && /* @__PURE__ */ jsx104(
+        /* @__PURE__ */ jsx112("span", {}),
+        showHome && /* @__PURE__ */ jsx112(
           "div",
           {
             style: {
@@ -11085,7 +13283,7 @@ function MobileSystemBars({
               display: "grid",
               placeItems: "center"
             },
-            children: /* @__PURE__ */ jsx104(
+            children: /* @__PURE__ */ jsx112(
               "span",
               {
                 style: {
@@ -11104,8 +13302,8 @@ function MobileSystemBars({
 }
 
 // components/layout/PageHeader.jsx
-import React108 from "react";
-import { jsx as jsx105, jsxs as jsxs84 } from "react/jsx-runtime";
+import React117 from "react";
+import { jsx as jsx113, jsxs as jsxs93 } from "react/jsx-runtime";
 function PageHeader({
   eyebrow,
   breadcrumb,
@@ -11122,7 +13320,7 @@ function PageHeader({
   const compact = size === "sm";
   const titleSize = compact ? "var(--heading2-size)" : "var(--heading1-size)";
   const titleLine = compact ? "var(--heading2-line)" : "var(--heading1-line)";
-  return /* @__PURE__ */ jsxs84(
+  return /* @__PURE__ */ jsxs93(
     "header",
     {
       style: {
@@ -11138,42 +13336,42 @@ function PageHeader({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs84("div", { style: { display: "grid", gap: compact ? 4 : 6, minWidth: 0 }, children: [
-          breadcrumb != null && /* @__PURE__ */ jsx105("div", { style: { minWidth: 0 }, children: breadcrumb }),
-          eyebrow != null && /* @__PURE__ */ jsx105("div", { style: { fontSize: 13, lineHeight: 1.45, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-alternative)" }, children: eyebrow }),
-          /* @__PURE__ */ jsxs84("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-            /* @__PURE__ */ jsx105("h1", { style: { margin: 0, minWidth: 0, color: "var(--color-semantic-label-strong)", fontSize: titleSize, lineHeight: titleLine, fontWeight: "var(--fw-extra)", letterSpacing: 0, wordBreak: "keep-all" }, children: title }),
-            status != null && /* @__PURE__ */ jsx105("div", { style: { flexShrink: 0 }, children: status })
+        /* @__PURE__ */ jsxs93("div", { style: { display: "grid", gap: compact ? 4 : 6, minWidth: 0 }, children: [
+          breadcrumb != null && /* @__PURE__ */ jsx113("div", { style: { minWidth: 0 }, children: breadcrumb }),
+          eyebrow != null && /* @__PURE__ */ jsx113("div", { style: { fontSize: 13, lineHeight: 1.45, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-alternative)" }, children: eyebrow }),
+          /* @__PURE__ */ jsxs93("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsx113("h1", { style: { margin: 0, minWidth: 0, color: "var(--color-semantic-label-strong)", fontSize: titleSize, lineHeight: titleLine, fontWeight: "var(--fw-extra)", letterSpacing: 0, wordBreak: "keep-all" }, children: title }),
+            status != null && /* @__PURE__ */ jsx113("div", { style: { flexShrink: 0 }, children: status })
           ] }),
-          description != null && /* @__PURE__ */ jsx105("p", { style: { margin: 0, maxWidth: 680, color: "var(--color-semantic-label-neutral)", fontSize: 14, lineHeight: 1.55, wordBreak: "keep-all" }, children: description }),
-          meta != null && /* @__PURE__ */ jsx105("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", color: "var(--color-semantic-label-alternative)", fontSize: 13, lineHeight: 1.45 }, children: meta })
+          description != null && /* @__PURE__ */ jsx113("p", { style: { margin: 0, maxWidth: 680, color: "var(--color-semantic-label-neutral)", fontSize: 14, lineHeight: 1.55, wordBreak: "keep-all" }, children: description }),
+          meta != null && /* @__PURE__ */ jsx113("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", color: "var(--color-semantic-label-alternative)", fontSize: 13, lineHeight: 1.45 }, children: meta })
         ] }),
-        actions != null && /* @__PURE__ */ jsx105("div", { style: { display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: actions })
+        actions != null && /* @__PURE__ */ jsx113("div", { style: { display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: actions })
       ]
     }
   );
 }
 
 // components/layout/ScrollArea.jsx
-import React109 from "react";
-import { jsx as jsx106 } from "react/jsx-runtime";
+import React118 from "react";
+import { jsx as jsx114 } from "react/jsx-runtime";
 function useScrollStyles() {
-  React109.useEffect(() => {
+  React118.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-scrollarea-css")) return;
     const el = document.createElement("style");
     el.id = "lk-scrollarea-css";
-    el.textContent = ".lk-scrollarea{scrollbar-width:thin;scrollbar-color:var(--bw-gray-300) transparent;}.lk-scrollarea::-webkit-scrollbar{width:7px;height:7px;}.lk-scrollarea::-webkit-scrollbar-thumb{background:var(--bw-gray-300);border-radius:99px;}.lk-scrollarea::-webkit-scrollbar-thumb:hover{background:var(--bw-gray);}.lk-scrollarea::-webkit-scrollbar-track{background:transparent;}";
+    el.textContent = ".lk-scrollarea{scrollbar-width:thin;scrollbar-color:var(--color-semantic-interaction-inactive) transparent;}.lk-scrollarea::-webkit-scrollbar{width:7px;height:7px;}.lk-scrollarea::-webkit-scrollbar-thumb{background:var(--color-semantic-interaction-inactive);border-radius:99px;}.lk-scrollarea::-webkit-scrollbar-thumb:hover{background:var(--color-semantic-label-alternative);}.lk-scrollarea::-webkit-scrollbar-track{background:transparent;}";
     document.head.appendChild(el);
   }, []);
 }
 function ScrollArea({ children, maxHeight = 280, style, ...rest }) {
   useScrollStyles();
-  return /* @__PURE__ */ jsx106("div", { className: "lk-scrollarea", style: { maxHeight, overflow: "auto", ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx114("div", { className: "lk-scrollarea", style: { maxHeight, overflow: "auto", ...style }, ...rest, children });
 }
 
 // components/layout/Section.jsx
-import React110 from "react";
-import { jsx as jsx107 } from "react/jsx-runtime";
+import React119 from "react";
+import { jsx as jsx115 } from "react/jsx-runtime";
 var toLen3 = (v) => typeof v === "number" ? v + "px" : v;
 var SURFACES = {
   subtle: "var(--color-semantic-background-normal-alternative)",
@@ -11188,54 +13386,54 @@ function Section({ children, surface, py, container = true, innerStyle, style, .
     ...py != null ? { "--section-py": toLen3(py) } : {},
     ...style
   };
-  const inner = container ? /* @__PURE__ */ jsx107("div", { className: "lk-container-fluid", style: innerStyle, children }) : children;
-  return /* @__PURE__ */ jsx107("section", { className: "lk-section", style: outer, ...rest, children: inner });
+  const inner = container ? /* @__PURE__ */ jsx115("div", { className: "lk-container-fluid", style: innerStyle, children }) : children;
+  return /* @__PURE__ */ jsx115("section", { className: "lk-section", style: outer, ...rest, children: inner });
 }
 
 // components/layout/Spacer.jsx
-import React111 from "react";
-import { jsx as jsx108 } from "react/jsx-runtime";
+import React120 from "react";
+import { jsx as jsx116 } from "react/jsx-runtime";
 function Spacer({ size, axis = "vertical", style, ...rest }) {
-  if (size == null) return /* @__PURE__ */ jsx108("span", { style: { flex: 1, ...style }, ...rest });
-  return /* @__PURE__ */ jsx108("span", { style: { display: "block", flexShrink: 0, width: axis === "horizontal" ? size : void 0, height: axis === "vertical" ? size : void 0, ...style }, ...rest });
+  if (size == null) return /* @__PURE__ */ jsx116("span", { style: { flex: 1, ...style }, ...rest });
+  return /* @__PURE__ */ jsx116("span", { style: { display: "block", flexShrink: 0, width: axis === "horizontal" ? size : void 0, height: axis === "vertical" ? size : void 0, ...style }, ...rest });
 }
 
 // components/layout/Split.jsx
-import React112 from "react";
-import { jsx as jsx109 } from "react/jsx-runtime";
+import React121 from "react";
+import { jsx as jsx117 } from "react/jsx-runtime";
 var toLen4 = (v) => typeof v === "number" ? v + "px" : v;
 function Split({ children, template = "1fr 1fr", at = "md", gap, style, ...rest }) {
   const vars = { "--split-template": template };
   if (gap != null) vars["--split-gap"] = toLen4(gap);
-  return /* @__PURE__ */ jsx109("div", { className: "lk-split", "data-at": at === "lg" ? "lg" : void 0, style: { ...vars, ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx117("div", { className: "lk-split", "data-at": at === "lg" ? "lg" : void 0, style: { ...vars, ...style }, ...rest, children });
 }
 
 // components/layout/Stack.jsx
-import React113 from "react";
-import { jsx as jsx110 } from "react/jsx-runtime";
+import React122 from "react";
+import { jsx as jsx118 } from "react/jsx-runtime";
 function Stack({ children, direction = "column", gap = 16, align, justify, wrap = false, as = "div", style, ...rest }) {
   const Comp = as;
-  return /* @__PURE__ */ jsx110(Comp, { style: { display: "flex", flexDirection: direction, gap, alignItems: align, justifyContent: justify, flexWrap: wrap ? "wrap" : "nowrap", ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx118(Comp, { style: { display: "flex", flexDirection: direction, gap, alignItems: align, justifyContent: justify, flexWrap: wrap ? "wrap" : "nowrap", ...style }, ...rest, children });
 }
 
 // components/layout/VisuallyHidden.jsx
-import React114 from "react";
-import { jsx as jsx111 } from "react/jsx-runtime";
+import React123 from "react";
+import { jsx as jsx119 } from "react/jsx-runtime";
 function VisuallyHidden({ children, as = "span", ...rest }) {
   const Comp = as;
-  return /* @__PURE__ */ jsx111(Comp, { style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 }, ...rest, children });
+  return /* @__PURE__ */ jsx119(Comp, { style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 }, ...rest, children });
 }
 
 // components/navigation/Anchor.jsx
-import React115 from "react";
-import { jsx as jsx112 } from "react/jsx-runtime";
+import React124 from "react";
+import { jsx as jsx120 } from "react/jsx-runtime";
 function Anchor({ items = [], active, onChange, style, ...rest }) {
   const isControlled = active !== void 0;
-  const [internal, setInternal] = React115.useState(items[0] && items[0].href);
+  const [internal, setInternal] = React124.useState(items[0] && items[0].href);
   const cur = isControlled ? active : internal;
-  return /* @__PURE__ */ jsx112("nav", { style: { display: "flex", flexDirection: "column", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it) => {
+  return /* @__PURE__ */ jsx120("nav", { style: { display: "flex", flexDirection: "column", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: items.map((it) => {
     const on = it.href === cur;
-    return /* @__PURE__ */ jsx112(
+    return /* @__PURE__ */ jsx120(
       "a",
       {
         href: it.href,
@@ -11243,7 +13441,7 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
           if (!isControlled) setInternal(it.href);
           onChange && onChange(it.href);
         },
-        style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", fontSize: 14, fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" },
+        style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, color: on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", fontSize: 14, fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" },
         children: it.label
       },
       it.href
@@ -11252,19 +13450,19 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
 }
 
 // components/navigation/BottomNav.jsx
-import React116 from "react";
-import { jsx as jsx113, jsxs as jsxs85 } from "react/jsx-runtime";
+import React125 from "react";
+import { jsx as jsx121, jsxs as jsxs94 } from "react/jsx-runtime";
 function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React116.useState(defaultValue != null ? defaultValue : items[0] && items[0].value);
+  const [internal, setInternal] = React125.useState(defaultValue != null ? defaultValue : items[0] && items[0].value);
   const val = isControlled ? value : internal;
   const pick = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
-  return /* @__PURE__ */ jsx113("nav", { style: { display: "flex", alignItems: "stretch", background: "var(--bw-white)", borderTop: "1px solid var(--bw-border)", ...style }, ...rest, children: items.map((o) => {
+  return /* @__PURE__ */ jsx121("nav", { style: { display: "flex", alignItems: "stretch", background: "var(--color-semantic-background-elevated-normal)", borderTop: "1px solid var(--color-semantic-line-solid-normal)", ...style }, ...rest, children: items.map((o) => {
     const active = o.value === val;
-    return /* @__PURE__ */ jsxs85(
+    return /* @__PURE__ */ jsxs94(
       "button",
       {
         type: "button",
@@ -11287,7 +13485,7 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
         },
         children: [
           o.icon,
-          /* @__PURE__ */ jsx113("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: o.label })
+          /* @__PURE__ */ jsx121("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: o.label })
         ]
       },
       o.value
@@ -11296,21 +13494,21 @@ function BottomNav({ items = [], value, defaultValue, onChange, style, ...rest }
 }
 
 // components/navigation/Breadcrumb.jsx
-import React117 from "react";
-import { jsx as jsx114, jsxs as jsxs86 } from "react/jsx-runtime";
+import React126 from "react";
+import { jsx as jsx122, jsxs as jsxs95 } from "react/jsx-runtime";
 function Breadcrumb({ items = [], style, ...rest }) {
-  return /* @__PURE__ */ jsx114("nav", { "aria-label": "breadcrumb", style: { display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13.5, ...style }, ...rest, children: items.map((it, i) => {
+  return /* @__PURE__ */ jsx122("nav", { "aria-label": "breadcrumb", style: { display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: "var(--font-sans)", fontSize: 13.5, ...style }, ...rest, children: items.map((it, i) => {
     const last = i === items.length - 1;
-    return /* @__PURE__ */ jsxs86(React117.Fragment, { children: [
-      last || !it.href ? /* @__PURE__ */ jsx114("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: it.label }) : /* @__PURE__ */ jsx114("a", { href: it.href, style: { color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)", letterSpacing: 0, textDecoration: "none" }, children: it.label }),
-      !last && /* @__PURE__ */ jsx114("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx114("path", { d: "m9 18 6-6-6-6" }) })
+    return /* @__PURE__ */ jsxs95(React126.Fragment, { children: [
+      last || !it.href ? /* @__PURE__ */ jsx122("span", { "aria-current": last ? "page" : void 0, style: { color: last ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", fontWeight: last ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0 }, children: it.label }) : /* @__PURE__ */ jsx122("a", { href: it.href, style: { color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)", letterSpacing: 0, textDecoration: "none" }, children: it.label }),
+      !last && /* @__PURE__ */ jsx122("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx122("path", { d: "m9 18 6-6-6-6" }) })
     ] }, i);
   }) });
 }
 
 // components/navigation/Category.jsx
-import React118 from "react";
-import { jsx as jsx115 } from "react/jsx-runtime";
+import React127 from "react";
+import { jsx as jsx123 } from "react/jsx-runtime";
 var SIZE3 = {
   small: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
   sm: { height: 24, padding: "0 7px", fontSize: 12.5, radius: 6, gap: 4 },
@@ -11353,7 +13551,7 @@ function Category({
   const normalized = items.map(normalizeItem);
   const initial = defaultValue ?? normalized.find((item) => item.active)?.value ?? normalized[0]?.value;
   const controlled = value !== void 0;
-  const [internal, setInternal] = React118.useState(initial);
+  const [internal, setInternal] = React127.useState(initial);
   const selected = controlled ? value : internal;
   const s = SIZE3[size] || SIZE3.medium;
   const alternative = variant === "alternative";
@@ -11362,7 +13560,7 @@ function Category({
     if (!controlled) setInternal(item.value);
     onChange?.(item.value, item);
   };
-  return /* @__PURE__ */ jsx115(
+  return /* @__PURE__ */ jsx123(
     "div",
     {
       role: "list",
@@ -11381,15 +13579,15 @@ function Category({
       children: normalized.map((item) => {
         const active = item.value === selected || item.active;
         const colors = alternative ? {
-          bg: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
+          bg: active ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
           fg: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
-          border: active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"
+          border: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"
         } : {
-          bg: active ? "var(--color-semantic-label-normal)" : "var(--bw-white)",
+          bg: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-background-elevated-normal)",
           fg: active ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-neutral)",
-          border: active ? "var(--color-semantic-label-normal)" : "var(--bw-border)"
+          border: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-line-solid-normal)"
         };
-        return /* @__PURE__ */ jsx115(
+        return /* @__PURE__ */ jsx123(
           "button",
           {
             type: "button",
@@ -11428,18 +13626,18 @@ function Category({
 }
 
 // components/navigation/FloorSelector.jsx
-import React119 from "react";
-import { jsx as jsx116 } from "react/jsx-runtime";
+import React128 from "react";
+import { jsx as jsx124 } from "react/jsx-runtime";
 function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...rest }) {
   const controlled = value !== void 0;
   const norm = floors.map((f) => typeof f === "string" ? { value: f, label: f } : f);
-  const [internal, setInternal] = React119.useState(defaultValue != null ? defaultValue : norm[0] && norm[0].value);
+  const [internal, setInternal] = React128.useState(defaultValue != null ? defaultValue : norm[0] && norm[0].value);
   const cur = controlled ? value : internal;
   const pick = (v) => {
     if (!controlled) setInternal(v);
     onChange && onChange(v);
   };
-  return /* @__PURE__ */ jsx116("div", { role: "listbox", "aria-label": "\uCE35 \uC120\uD0DD", style: {
+  return /* @__PURE__ */ jsx124("div", { role: "listbox", "aria-label": "\uCE35 \uC120\uD0DD", style: {
     display: "inline-flex",
     flexDirection: "column",
     gap: 3,
@@ -11452,7 +13650,7 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...r
     ...style
   }, ...rest, children: norm.map((f) => {
     const on = f.value === cur;
-    return /* @__PURE__ */ jsx116(
+    return /* @__PURE__ */ jsx124(
       "button",
       {
         type: "button",
@@ -11483,8 +13681,8 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...r
 }
 
 // components/navigation/Footer.jsx
-import React120 from "react";
-import { jsx as jsx117, jsxs as jsxs87 } from "react/jsx-runtime";
+import React129 from "react";
+import { jsx as jsx125, jsxs as jsxs96 } from "react/jsx-runtime";
 var DEFAULT_CONTACT = [
   { label: "\uB300\uD45C\uC804\uD654", value: "02-3159-2865" },
   { label: "\uC0AC\uC5C5\uC790\uB4F1\uB85D\uBC88\uD638", value: "391-81-03300" }
@@ -11496,8 +13694,8 @@ var DEFAULT_LOCATIONS = [
 ];
 var DEFAULT_COPYRIGHT = "Copyright \u24D2 2024 - 2026 LK ROBOTICS Inc. All rights reserved.";
 function BackToTopButton() {
-  const [show, setShow] = React120.useState(false);
-  React120.useEffect(() => {
+  const [show, setShow] = React129.useState(false);
+  React129.useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 600);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -11507,7 +13705,7 @@ function BackToTopButton() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
   };
-  return /* @__PURE__ */ jsx117(
+  return /* @__PURE__ */ jsx125(
     "button",
     {
       type: "button",
@@ -11521,9 +13719,9 @@ function BackToTopButton() {
         width: 50,
         height: 50,
         borderRadius: 999,
-        border: "1px solid var(--bw-border)",
-        background: "var(--bw-white)",
-        color: "var(--bw-ink)",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        color: "var(--color-semantic-brand-ink)",
         cursor: "pointer",
         display: "inline-flex",
         alignItems: "center",
@@ -11534,7 +13732,7 @@ function BackToTopButton() {
         pointerEvents: show ? "auto" : "none",
         transition: "opacity 180ms var(--ease-out), transform 180ms var(--ease-out)"
       },
-      children: /* @__PURE__ */ jsx117("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx117("path", { d: "m18 15-6-6-6 6" }) })
+      children: /* @__PURE__ */ jsx125("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx125("path", { d: "m18 15-6-6-6 6" }) })
     }
   );
 }
@@ -11551,8 +13749,8 @@ function Footer({
   style,
   ...rest
 }) {
-  const [hov, setHov] = React120.useState(null);
-  const linkEl = (key, l, base, hover, size, weight) => /* @__PURE__ */ jsx117(
+  const [hov, setHov] = React129.useState(null);
+  const linkEl = (key, l, base, hover, size, weight) => /* @__PURE__ */ jsx125(
     "a",
     {
       href: l.href || "#",
@@ -11564,35 +13762,35 @@ function Footer({
     key
   );
   if (compact) {
-    return /* @__PURE__ */ jsxs87("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--color-semantic-line-normal-normal)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-      /* @__PURE__ */ jsx117("span", { style: { fontSize: 12.5, letterSpacing: 0, color: "var(--color-semantic-label-assistive)" }, children: copyright }),
-      links.length > 0 && /* @__PURE__ */ jsx117("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--color-semantic-label-alternative)", "var(--color-semantic-label-normal)", 12.5)) })
+    return /* @__PURE__ */ jsxs96("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px 24px", flexWrap: "wrap", padding: "14px 2px", borderTop: "1px solid var(--color-semantic-line-normal-normal)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+      /* @__PURE__ */ jsx125("span", { style: { fontSize: 12.5, letterSpacing: 0, color: "var(--color-semantic-label-assistive)" }, children: copyright }),
+      links.length > 0 && /* @__PURE__ */ jsx125("span", { style: { display: "flex", alignItems: "center", gap: 18 }, children: links.map((l, i) => linkEl("c" + i, l, "var(--color-semantic-label-alternative)", "var(--color-semantic-label-normal)", 12.5)) })
     ] });
   }
-  const entryRow = (items) => /* @__PURE__ */ jsx117("div", { style: { display: "flex", flexWrap: "wrap", gap: "4px 14px" }, children: items.map((it, i) => /* @__PURE__ */ jsxs87("span", { style: { whiteSpace: "nowrap" }, children: [
-    /* @__PURE__ */ jsx117("span", { style: { color: "var(--inverse-label-neutral)", fontWeight: 700 }, children: it.label }),
+  const entryRow = (items) => /* @__PURE__ */ jsx125("div", { style: { display: "flex", flexWrap: "wrap", gap: "4px 14px" }, children: items.map((it, i) => /* @__PURE__ */ jsxs96("span", { style: { whiteSpace: "nowrap" }, children: [
+    /* @__PURE__ */ jsx125("span", { style: { color: "var(--color-semantic-inverse-label-neutral-soft)", fontWeight: 700 }, children: it.label }),
     " ",
     it.value
   ] }, i)) });
-  return /* @__PURE__ */ jsxs87("footer", { style: { background: "var(--color-semantic-inverse-background)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    backToTop && /* @__PURE__ */ jsx117(BackToTopButton, {}),
-    /* @__PURE__ */ jsxs87("div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
-      (brand != null || columns.length > 0) && /* @__PURE__ */ jsxs87(React120.Fragment, { children: [
-        /* @__PURE__ */ jsxs87("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
-          brand != null && /* @__PURE__ */ jsx117("div", { style: { flex: "1 1 240px", minWidth: 220 }, children: brand }),
-          columns.map((col, ci) => /* @__PURE__ */ jsxs87("nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: 11, minWidth: 108 }, children: [
-            col.heading != null && /* @__PURE__ */ jsx117("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "var(--color-semantic-inverse-label)", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
-            (col.links || []).map((l, li) => linkEl(ci + "-" + li, l, "var(--inverse-label-alternative)", "var(--inverse-label-strong)", 13.5))
+  return /* @__PURE__ */ jsxs96("footer", { style: { background: "var(--color-semantic-inverse-background)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    backToTop && /* @__PURE__ */ jsx125(BackToTopButton, {}),
+    /* @__PURE__ */ jsxs96("div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
+      (brand != null || columns.length > 0) && /* @__PURE__ */ jsxs96(React129.Fragment, { children: [
+        /* @__PURE__ */ jsxs96("div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
+          brand != null && /* @__PURE__ */ jsx125("div", { style: { flex: "1 1 240px", minWidth: 220 }, children: brand }),
+          columns.map((col, ci) => /* @__PURE__ */ jsxs96("nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: 11, minWidth: 108 }, children: [
+            col.heading != null && /* @__PURE__ */ jsx125("span", { style: { fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "var(--color-semantic-inverse-label)", marginBottom: 2, wordBreak: "keep-all" }, children: col.heading }),
+            (col.links || []).map((l, li) => linkEl(ci + "-" + li, l, "var(--color-semantic-inverse-label-alternative-soft)", "var(--color-semantic-inverse-label-strong-soft)", 13.5))
           ] }, ci))
         ] }),
-        /* @__PURE__ */ jsx117("div", { style: { height: 1, background: "var(--inverse-line-normal)", margin: "32px 0 24px" } })
+        /* @__PURE__ */ jsx125("div", { style: { height: 1, background: "var(--color-semantic-inverse-line-normal)", margin: "32px 0 24px" } })
       ] }),
-      /* @__PURE__ */ jsxs87("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, fontSize: 13, lineHeight: 1.6, color: "var(--inverse-label-assistive)", wordBreak: "keep-all" }, children: [
+      /* @__PURE__ */ jsxs96("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, fontSize: 13, lineHeight: 1.6, color: "var(--color-semantic-inverse-label-assistive-soft)", wordBreak: "keep-all" }, children: [
         contact.length > 0 && entryRow(contact),
         locations.length > 0 && entryRow(locations),
-        /* @__PURE__ */ jsxs87("span", { style: { marginTop: 18, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "4px 20px", color: "var(--inverse-label-disable)" }, children: [
+        /* @__PURE__ */ jsxs96("span", { style: { marginTop: 18, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "4px 20px", color: "var(--color-semantic-inverse-label-disable-soft)" }, children: [
           copyright,
-          links.length > 0 && /* @__PURE__ */ jsx117("span", { style: { display: "flex", alignItems: "center", gap: 16 }, children: links.map((l, i) => linkEl("p" + i, l, "var(--inverse-label-alternative)", "var(--inverse-label-strong)", 12.5)) })
+          links.length > 0 && /* @__PURE__ */ jsx125("span", { style: { display: "flex", alignItems: "center", gap: 16 }, children: links.map((l, i) => linkEl("p" + i, l, "var(--color-semantic-inverse-label-alternative-soft)", "var(--color-semantic-inverse-label-strong-soft)", 12.5)) })
         ] })
       ] })
     ] })
@@ -11600,12 +13798,12 @@ function Footer({
 }
 
 // components/navigation/Menubar.jsx
-import React121 from "react";
-import { jsx as jsx118, jsxs as jsxs88 } from "react/jsx-runtime";
+import React130 from "react";
+import { jsx as jsx126, jsxs as jsxs97 } from "react/jsx-runtime";
 function MenuItem({ item, variant, close }) {
-  const [hover, setHover] = React121.useState(false);
+  const [hover, setHover] = React130.useState(false);
   const checked = Boolean(item.checked);
-  return /* @__PURE__ */ jsxs88(
+  return /* @__PURE__ */ jsxs97(
     "button",
     {
       type: "button",
@@ -11634,11 +13832,11 @@ function MenuItem({ item, variant, close }) {
         textAlign: "left",
         fontFamily: "var(--font-sans)",
         fontSize: 14,
-        color: item.danger ? "var(--bw-red)" : item.disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
+        color: item.danger ? "var(--color-semantic-status-negative)" : item.disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
         opacity: item.disabled ? 0.55 : 1
       },
       children: [
-        /* @__PURE__ */ jsxs88(
+        /* @__PURE__ */ jsxs97(
           "span",
           {
             style: {
@@ -11648,7 +13846,7 @@ function MenuItem({ item, variant, close }) {
               minWidth: 0
             },
             children: [
-              variant !== "normal" && /* @__PURE__ */ jsx118(
+              variant !== "normal" && /* @__PURE__ */ jsx126(
                 "span",
                 {
                   "aria-hidden": "true",
@@ -11656,7 +13854,7 @@ function MenuItem({ item, variant, close }) {
                     width: 14,
                     height: 14,
                     borderRadius: variant === "radio" ? "50%" : 4,
-                    border: `1.5px solid ${checked ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+                    border: `1.5px solid ${checked ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
                     background: checked && variant === "checkbox" ? "var(--color-semantic-primary-normal)" : "transparent",
                     flexShrink: 0,
                     marginTop: item.description ? 2 : 0
@@ -11664,8 +13862,8 @@ function MenuItem({ item, variant, close }) {
                 }
               ),
               item.icon,
-              /* @__PURE__ */ jsxs88("span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
-                /* @__PURE__ */ jsx118(
+              /* @__PURE__ */ jsxs97("span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
+                /* @__PURE__ */ jsx126(
                   "span",
                   {
                     style: {
@@ -11677,12 +13875,12 @@ function MenuItem({ item, variant, close }) {
                     children: item.label
                   }
                 ),
-                item.description && /* @__PURE__ */ jsx118("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)" }, children: item.description })
+                item.description && /* @__PURE__ */ jsx126("span", { style: { fontSize: 12, color: "var(--color-semantic-label-alternative)" }, children: item.description })
               ] })
             ]
           }
         ),
-        item.shortcut && /* @__PURE__ */ jsx118(
+        item.shortcut && /* @__PURE__ */ jsx126(
           "span",
           {
             style: {
@@ -11705,9 +13903,9 @@ function Menubar({
   style,
   ...rest
 }) {
-  const [open, setOpen] = React121.useState(-1);
-  const ref = React121.useRef(null);
-  React121.useEffect(() => {
+  const [open, setOpen] = React130.useState(-1);
+  const ref = React130.useRef(null);
+  React130.useEffect(() => {
     if (open < 0) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(-1);
@@ -11715,7 +13913,7 @@ function Menubar({
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  return /* @__PURE__ */ jsx118(
+  return /* @__PURE__ */ jsx126(
     "div",
     {
       ref,
@@ -11725,14 +13923,14 @@ function Menubar({
         alignItems: "center",
         gap: 2,
         padding: 4,
-        background: "var(--bw-white)",
-        border: "1px solid var(--bw-border)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
         borderRadius: "var(--radius-md)",
         ...style
       },
       ...rest,
-      children: menus.map((menu, index) => /* @__PURE__ */ jsxs88("div", { style: { position: "relative" }, children: [
-        /* @__PURE__ */ jsx118(
+      children: menus.map((menu, index) => /* @__PURE__ */ jsxs97("div", { style: { position: "relative" }, children: [
+        /* @__PURE__ */ jsx126(
           "button",
           {
             type: "button",
@@ -11755,7 +13953,7 @@ function Menubar({
             children: menu.label
           }
         ),
-        open === index && /* @__PURE__ */ jsxs88(
+        open === index && /* @__PURE__ */ jsxs97(
           "div",
           {
             role: "menu",
@@ -11767,26 +13965,26 @@ function Menubar({
               minWidth: 184,
               maxHeight: menu.maxHeight || maxHeight,
               overflowY: menu.maxHeight || maxHeight ? "auto" : void 0,
-              background: "var(--bw-white)",
-              border: "1px solid var(--bw-border)",
+              background: "var(--color-semantic-background-elevated-normal)",
+              border: "1px solid var(--color-semantic-line-solid-normal)",
               borderRadius: "var(--radius-lg)",
               boxShadow: "var(--shadow-md)",
               padding: 6
             },
             children: [
               (menu.items || []).map(
-                (item, itemIndex) => item.divider ? /* @__PURE__ */ jsx118(
+                (item, itemIndex) => item.divider ? /* @__PURE__ */ jsx126(
                   "div",
                   {
                     role: "separator",
                     style: {
                       height: 1,
-                      background: "var(--bw-border)",
+                      background: "var(--color-semantic-line-solid-normal)",
                       margin: "6px 4px"
                     }
                   },
                   itemIndex
-                ) : /* @__PURE__ */ jsx118(
+                ) : /* @__PURE__ */ jsx126(
                   MenuItem,
                   {
                     item,
@@ -11796,17 +13994,17 @@ function Menubar({
                   itemIndex
                 )
               ),
-              (menu.menuActionArea || menuActionArea || menu.action) && /* @__PURE__ */ jsx118(
+              (menu.menuActionArea || menuActionArea || menu.action) && /* @__PURE__ */ jsx126(
                 "div",
                 {
                   style: {
                     display: "flex",
                     justifyContent: "flex-end",
                     padding: "8px 4px 2px",
-                    borderTop: "1px solid var(--bw-border)",
+                    borderTop: "1px solid var(--color-semantic-line-solid-normal)",
                     marginTop: 4
                   },
-                  children: menu.action || /* @__PURE__ */ jsx118(
+                  children: menu.action || /* @__PURE__ */ jsx126(
                     "button",
                     {
                       type: "button",
@@ -11835,29 +14033,29 @@ function Menubar({
 }
 
 // components/navigation/NavRail.jsx
-import React122 from "react";
-import { jsx as jsx119, jsxs as jsxs89 } from "react/jsx-runtime";
+import React131 from "react";
+import { jsx as jsx127, jsxs as jsxs98 } from "react/jsx-runtime";
 function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React122.useState(defaultValue != null ? defaultValue : items[0] && items[0].value);
+  const [internal, setInternal] = React131.useState(defaultValue != null ? defaultValue : items[0] && items[0].value);
   const val = isControlled ? value : internal;
   const pick = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
-  return /* @__PURE__ */ jsx119("nav", { style: { display: "inline-flex", flexDirection: "column", gap: 6, padding: 10, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", ...style }, ...rest, children: items.map((o) => {
+  return /* @__PURE__ */ jsx127("nav", { style: { display: "inline-flex", flexDirection: "column", gap: 6, padding: 10, background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-xl)", ...style }, ...rest, children: items.map((o) => {
     const active = o.value === val;
-    return /* @__PURE__ */ jsxs89(
+    return /* @__PURE__ */ jsxs98(
       "button",
       {
         type: "button",
         "aria-current": active ? "page" : void 0,
         onClick: () => pick(o.value),
         title: typeof o.label === "string" ? o.label : void 0,
-        style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5, width: 68, height: 60, border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", background: active ? "var(--lk-accent-tint-2)" : "transparent", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 5, width: 68, height: 60, border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", background: active ? "var(--color-semantic-primary-surface-strong)" : "transparent", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)", transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" },
         children: [
           o.icon,
-          /* @__PURE__ */ jsx119("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)" }, children: o.label })
+          /* @__PURE__ */ jsx127("span", { style: { fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)" }, children: o.label })
         ]
       },
       o.value
@@ -11866,8 +14064,8 @@ function NavRail({ items = [], value, defaultValue, onChange, style, ...rest }) 
 }
 
 // components/navigation/PageIndicator.jsx
-import React123 from "react";
-import { jsx as jsx120, jsxs as jsxs90 } from "react/jsx-runtime";
+import React132 from "react";
+import { jsx as jsx128, jsxs as jsxs99 } from "react/jsx-runtime";
 var COUNTER_SIZE = {
   small: { height: 26, padding: "0 10px", fontSize: "var(--label2-size)" },
   sm: { height: 26, padding: "0 10px", fontSize: "var(--label2-size)" },
@@ -11890,7 +14088,7 @@ function PageIndicator({
     const small = size === "small" || size === "sm";
     const dotSize = small ? 6 : 10;
     const dotGap = small ? 6 : 10;
-    return /* @__PURE__ */ jsx120(
+    return /* @__PURE__ */ jsx128(
       "div",
       {
         role: "group",
@@ -11906,7 +14104,7 @@ function PageIndicator({
           const p = index + 1;
           const active = p === current;
           const Dot = onChange ? "button" : "span";
-          return /* @__PURE__ */ jsx120(
+          return /* @__PURE__ */ jsx128(
             Dot,
             {
               type: onChange ? "button" : void 0,
@@ -11919,7 +14117,7 @@ function PageIndicator({
                 padding: 0,
                 border: "none",
                 borderRadius: "50%",
-                background: active ? alternative ? "var(--static-white)" : "var(--color-semantic-label-normal)" : alternative ? "var(--inverse-label-disable)" : "var(--color-semantic-fill-strong)",
+                background: active ? alternative ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-normal)" : alternative ? "var(--color-semantic-inverse-label-disable-soft)" : "var(--color-semantic-fill-strong)",
                 cursor: onChange ? "pointer" : "default"
               }
             },
@@ -11930,7 +14128,7 @@ function PageIndicator({
     );
   }
   const s = COUNTER_SIZE[size] || COUNTER_SIZE.medium;
-  return /* @__PURE__ */ jsxs90(
+  return /* @__PURE__ */ jsxs99(
     "span",
     {
       role: "status",
@@ -11963,8 +14161,8 @@ function PageIndicator({
 }
 
 // components/navigation/Pagination.jsx
-import React124 from "react";
-import { jsx as jsx121, jsxs as jsxs91 } from "react/jsx-runtime";
+import React133 from "react";
+import { jsx as jsx129, jsxs as jsxs100 } from "react/jsx-runtime";
 function range(a, b) {
   const r = [];
   for (let i = a; i <= b; i += 1) r.push(i);
@@ -11989,9 +14187,9 @@ function buildPages(page, count, siblingCount, variant) {
 var selectStyle = {
   height: 32,
   padding: "0 8px",
-  border: "1px solid var(--bw-border)",
+  border: "1px solid var(--color-semantic-line-solid-normal)",
   borderRadius: "var(--radius-8)",
-  background: "var(--bw-white)",
+  background: "var(--color-semantic-background-elevated-normal)",
   fontFamily: "var(--font-sans)",
   fontSize: 13,
   color: "var(--color-semantic-label-normal)"
@@ -12019,7 +14217,7 @@ function Pagination({
   const go = (p) => {
     if (p >= 1 && p <= total && p !== current) onChange?.(p);
   };
-  const Arrow = ({ dir, disabled }) => /* @__PURE__ */ jsx121(
+  const Arrow = ({ dir, disabled }) => /* @__PURE__ */ jsx129(
     "button",
     {
       type: "button",
@@ -12038,7 +14236,7 @@ function Pagination({
         cursor: disabled ? "not-allowed" : "pointer",
         color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)"
       },
-      children: /* @__PURE__ */ jsx121(
+      children: /* @__PURE__ */ jsx129(
         "svg",
         {
           width: "18",
@@ -12050,12 +14248,12 @@ function Pagination({
           strokeLinecap: "round",
           strokeLinejoin: "round",
           "aria-hidden": "true",
-          children: /* @__PURE__ */ jsx121("path", { d: dir === "prev" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6" })
+          children: /* @__PURE__ */ jsx129("path", { d: dir === "prev" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6" })
         }
       )
     }
   );
-  return /* @__PURE__ */ jsxs91(
+  return /* @__PURE__ */ jsxs100(
     "nav",
     {
       "aria-label": "pagination",
@@ -12070,17 +14268,17 @@ function Pagination({
       },
       ...rest,
       children: [
-        leadingContent ?? (pageSize != null && /* @__PURE__ */ jsx121(
+        leadingContent ?? (pageSize != null && /* @__PURE__ */ jsx129(
           "select",
           {
             value: pageSize,
             onChange: (event) => onPageSizeChange?.(Number(event.target.value)),
             style: selectStyle,
             "aria-label": "items per page",
-            children: pageSizeOptions.map((option) => /* @__PURE__ */ jsx121("option", { value: option, children: option }, option))
+            children: pageSizeOptions.map((option) => /* @__PURE__ */ jsx129("option", { value: option, children: option }, option))
           }
         )),
-        /* @__PURE__ */ jsxs91(
+        /* @__PURE__ */ jsxs100(
           "span",
           {
             style: {
@@ -12091,9 +14289,9 @@ function Pagination({
               minWidth: 0
             },
             children: [
-              /* @__PURE__ */ jsx121(Arrow, { dir: "prev", disabled: current <= 1 }),
+              /* @__PURE__ */ jsx129(Arrow, { dir: "prev", disabled: current <= 1 }),
               pages.map(
-                (p, i) => typeof p === "string" ? /* @__PURE__ */ jsx121(
+                (p, i) => typeof p === "string" ? /* @__PURE__ */ jsx129(
                   "span",
                   {
                     style: {
@@ -12105,7 +14303,7 @@ function Pagination({
                     children: "..."
                   },
                   p + i
-                ) : /* @__PURE__ */ jsx121(
+                ) : /* @__PURE__ */ jsx129(
                   "button",
                   {
                     type: "button",
@@ -12131,12 +14329,12 @@ function Pagination({
                   p
                 )
               ),
-              /* @__PURE__ */ jsx121(Arrow, { dir: "next", disabled: current >= total })
+              /* @__PURE__ */ jsx129(Arrow, { dir: "next", disabled: current >= total })
             ]
           }
         ),
-        trailingContent ?? /* @__PURE__ */ jsxs91("span", { style: { display: "inline-flex", alignItems: "center", gap: 8 }, children: [
-          showCounter && /* @__PURE__ */ jsxs91(
+        trailingContent ?? /* @__PURE__ */ jsxs100("span", { style: { display: "inline-flex", alignItems: "center", gap: 8 }, children: [
+          showCounter && /* @__PURE__ */ jsxs100(
             "span",
             {
               style: {
@@ -12151,7 +14349,7 @@ function Pagination({
               ]
             }
           ),
-          showPageJump && /* @__PURE__ */ jsxs91(
+          showPageJump && /* @__PURE__ */ jsxs100(
             "label",
             {
               style: {
@@ -12162,8 +14360,8 @@ function Pagination({
                 color: "var(--color-semantic-label-neutral)"
               },
               children: [
-                /* @__PURE__ */ jsx121("span", { children: pageJumpLabel }),
-                /* @__PURE__ */ jsx121(
+                /* @__PURE__ */ jsx129("span", { children: pageJumpLabel }),
+                /* @__PURE__ */ jsx129(
                   "input",
                   {
                     type: "number",
@@ -12177,7 +14375,7 @@ function Pagination({
                     style: {
                       width: 48,
                       height: 32,
-                      border: "1px solid var(--bw-border)",
+                      border: "1px solid var(--color-semantic-line-solid-normal)",
                       borderRadius: "var(--radius-md)",
                       padding: "0 8px",
                       fontFamily: "var(--font-sans)",
@@ -12195,9 +14393,9 @@ function Pagination({
 }
 
 // components/navigation/SideNav.jsx
-import React125 from "react";
-import { jsx as jsx122, jsxs as jsxs92 } from "react/jsx-runtime";
-var Chevron = ({ open }) => /* @__PURE__ */ jsx122("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx122("path", { d: "M6 9l6 6 6-6" }) });
+import React134 from "react";
+import { jsx as jsx130, jsxs as jsxs101 } from "react/jsx-runtime";
+var Chevron = ({ open }) => /* @__PURE__ */ jsx130("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx130("path", { d: "M6 9l6 6 6-6" }) });
 function SideNav({
   items = [],
   value,
@@ -12224,22 +14422,22 @@ function SideNav({
       (i.children || []).forEach((c) => flat.push(c));
     }
   });
-  const [internal, setInternal] = React125.useState(defaultValue != null ? defaultValue : flat[0] && flat[0].value);
+  const [internal, setInternal] = React134.useState(defaultValue != null ? defaultValue : flat[0] && flat[0].value);
   const val = isControlled ? value : internal;
   const pick = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const colControlled = collapsed !== void 0;
-  const [colInternal, setColInternal] = React125.useState(defaultCollapsed || overlay);
+  const [colInternal, setColInternal] = React134.useState(defaultCollapsed || overlay);
   const col = colControlled ? collapsed : colInternal;
   const setCol = (c) => {
     if (!colControlled) setColInternal(c);
     onCollapsedChange && onCollapsedChange(c);
   };
-  const navRef = React125.useRef(null);
+  const navRef = React134.useRef(null);
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
-  const peekT = React125.useRef(null);
+  const peekT = React134.useRef(null);
   const peek = (expand) => {
     clearTimeout(peekT.current);
     peekT.current = setTimeout(() => {
@@ -12247,8 +14445,8 @@ function SideNav({
       setCol(!expand);
     }, expand ? 160 : 480);
   };
-  React125.useEffect(() => () => clearTimeout(peekT.current), []);
-  React125.useEffect(() => {
+  React134.useEffect(() => () => clearTimeout(peekT.current), []);
+  React134.useEffect(() => {
     if (!overlay || col) return void 0;
     const down = (e) => {
       if (hasPopover()) return;
@@ -12264,14 +14462,14 @@ function SideNav({
       document.removeEventListener("keydown", key);
     };
   });
-  const [open, setOpen] = React125.useState(() => {
+  const [open, setOpen] = React134.useState(() => {
     const o = {};
     items.forEach((i) => {
       if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true;
     });
     return o;
   });
-  const [hovKey, setHovKey] = React125.useState(null);
+  const [hovKey, setHovKey] = React134.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
   const row = (active, disabled, extra, hovered) => ({
     position: "relative",
@@ -12287,21 +14485,21 @@ function SideNav({
     opacity: disabled ? 0.45 : 1,
     textAlign: "left",
     fontFamily: "var(--font-sans)",
-    background: active ? "var(--lk-accent-tint-2)" : hovered && !disabled ? "var(--lk-accent-tint)" : "transparent",
+    background: active ? "var(--color-semantic-primary-surface-strong)" : hovered && !disabled ? "var(--color-semantic-primary-surface-normal)" : "transparent",
     color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
     transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
     ...extra
   });
-  const labelSpan = (active, children) => /* @__PURE__ */ jsx122("span", { style: { flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children });
-  const pill = (active, badge) => /* @__PURE__ */ jsx122("span", { style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: 9, fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? "var(--color-semantic-primary-normal)" : "var(--lk-accent-tint-2)", color: active ? "var(--bw-white)" : "var(--color-semantic-primary-normal)" }, children: badge });
-  const dot = /* @__PURE__ */ jsx122("span", { style: { position: "absolute", top: 7, right: 7, width: 7, height: 7, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } });
+  const labelSpan = (active, children) => /* @__PURE__ */ jsx130("span", { style: { flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children });
+  const pill = (active, badge) => /* @__PURE__ */ jsx130("span", { style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: 9, fontSize: 11, fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-primary-surface-strong)", color: active ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-primary-normal)" }, children: badge });
+  const dot = /* @__PURE__ */ jsx130("span", { style: { position: "absolute", top: 7, right: 7, width: 7, height: 7, borderRadius: "50%", background: "var(--color-semantic-primary-normal)" } });
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
-  const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-xl)", padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
-  const inner = /* @__PURE__ */ jsxs92(React125.Fragment, { children: [
-    /* @__PURE__ */ jsx122("style", { children: `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}` }),
-    (brand != null || collapsible) && /* @__PURE__ */ jsxs92("div", { style: { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 24, padding: col ? "14px 10px 10px" : "14px 10px 18px" }, children: [
+  const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-xl)", padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
+  const inner = /* @__PURE__ */ jsxs101(React134.Fragment, { children: [
+    /* @__PURE__ */ jsx130("style", { children: `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}` }),
+    (brand != null || collapsible) && /* @__PURE__ */ jsxs101("div", { style: { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 24, padding: col ? "14px 10px 10px" : "14px 10px 18px" }, children: [
       brand,
-      collapsible && /* @__PURE__ */ jsx122(
+      collapsible && /* @__PURE__ */ jsx130(
         "button",
         {
           type: "button",
@@ -12309,16 +14507,16 @@ function SideNav({
           title: col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
           "aria-label": col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
           style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: 8, background: "transparent", color: "var(--color-semantic-label-assistive)", cursor: "pointer" },
-          children: /* @__PURE__ */ jsxs92("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
-            /* @__PURE__ */ jsx122("rect", { x: "3", y: "4", width: "18", height: "16", rx: "3" }),
-            /* @__PURE__ */ jsx122("path", { d: "M9.5 4v16" }),
-            /* @__PURE__ */ jsx122("path", { d: col ? "M13.5 9l3 3-3 3" : "M17 9l-3 3 3 3" })
+          children: /* @__PURE__ */ jsxs101("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
+            /* @__PURE__ */ jsx130("rect", { x: "3", y: "4", width: "18", height: "16", rx: "3" }),
+            /* @__PURE__ */ jsx130("path", { d: "M9.5 4v16" }),
+            /* @__PURE__ */ jsx130("path", { d: col ? "M13.5 9l3 3-3 3" : "M17 9l-3 3 3 3" })
           ] })
         }
       )
     ] }),
-    /* @__PURE__ */ jsx122("div", { className: "lk-sidenav__scroll", style: { display: "flex", flexDirection: "column", gap: 2, flex: "1 1 auto", minHeight: 0, overflowX: "hidden", overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none" }, children: items.map((o, i) => {
-      if (o.heading) return col ? /* @__PURE__ */ jsx122("div", { style: { height: 1, flexShrink: 0, background: "var(--bw-border)", margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px" } }, "h" + i) : /* @__PURE__ */ jsx122("div", { style: { fontFamily: "var(--font-sans)", fontSize: 10.5, fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-label-assistive)", padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px" }, children: o.heading }, "h" + i);
+    /* @__PURE__ */ jsx130("div", { className: "lk-sidenav__scroll", style: { display: "flex", flexDirection: "column", gap: 2, flex: "1 1 auto", minHeight: 0, overflowX: "hidden", overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none" }, children: items.map((o, i) => {
+      if (o.heading) return col ? /* @__PURE__ */ jsx130("div", { style: { height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px" } }, "h" + i) : /* @__PURE__ */ jsx130("div", { style: { fontFamily: "var(--font-sans)", fontSize: 10.5, fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-label-assistive)", padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px" }, children: o.heading }, "h" + i);
       const kids = o.children || [];
       const title = typeof o.label === "string" ? o.label : void 0;
       if (kids.length > 0) {
@@ -12332,8 +14530,8 @@ function SideNav({
             setOpen((s) => ({ ...s, [o.value]: !s[o.value] }));
           }
         };
-        return /* @__PURE__ */ jsxs92(React125.Fragment, { children: [
-          /* @__PURE__ */ jsxs92(
+        return /* @__PURE__ */ jsxs101(React134.Fragment, { children: [
+          /* @__PURE__ */ jsxs101(
             "button",
             {
               type: "button",
@@ -12344,16 +14542,16 @@ function SideNav({
               ...hoverProps(o.value),
               style: row(false, o.disabled, { color: childActive ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)" }, hovKey === o.value),
               children: [
-                o.icon != null && /* @__PURE__ */ jsx122("span", { style: { flexShrink: 0, display: "inline-flex" }, children: o.icon }),
+                o.icon != null && /* @__PURE__ */ jsx130("span", { style: { flexShrink: 0, display: "inline-flex" }, children: o.icon }),
                 !col && labelSpan(childActive, o.label),
-                !col && /* @__PURE__ */ jsx122(Chevron, { open: isOpen }),
+                !col && /* @__PURE__ */ jsx130(Chevron, { open: isOpen }),
                 col && childActive && dot
               ]
             }
           ),
-          !col && isOpen && /* @__PURE__ */ jsx122("div", { style: { display: "flex", flexDirection: "column", gap: 2, margin: "0 0 4px" }, children: kids.map((c) => {
+          !col && isOpen && /* @__PURE__ */ jsx130("div", { style: { display: "flex", flexDirection: "column", gap: 2, margin: "0 0 4px" }, children: kids.map((c) => {
             const ca = c.value === val;
-            return /* @__PURE__ */ jsxs92(
+            return /* @__PURE__ */ jsxs101(
               "button",
               {
                 type: "button",
@@ -12363,7 +14561,7 @@ function SideNav({
                 ...hoverProps(c.value),
                 style: row(ca, c.disabled, { padding: "8px 12px 8px 42px" }, hovKey === c.value),
                 children: [
-                  /* @__PURE__ */ jsx122("span", { style: { flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: c.label }),
+                  /* @__PURE__ */ jsx130("span", { style: { flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: c.label }),
                   c.badge != null && pill(ca, c.badge)
                 ]
               },
@@ -12373,7 +14571,7 @@ function SideNav({
         ] }, o.value);
       }
       const active = o.value === val;
-      return /* @__PURE__ */ jsxs92(
+      return /* @__PURE__ */ jsxs101(
         "button",
         {
           type: "button",
@@ -12384,7 +14582,7 @@ function SideNav({
           ...hoverProps(o.value),
           style: row(active, o.disabled, null, hovKey === o.value),
           children: [
-            o.icon != null && /* @__PURE__ */ jsx122("span", { style: { flexShrink: 0, display: "inline-flex" }, children: o.icon }),
+            o.icon != null && /* @__PURE__ */ jsx130("span", { style: { flexShrink: 0, display: "inline-flex" }, children: o.icon }),
             !col && labelSpan(active, o.label),
             !col && o.badge != null && pill(active, o.badge),
             col && o.badge != null && dot
@@ -12393,9 +14591,9 @@ function SideNav({
         o.value
       );
     }) }),
-    /* @__PURE__ */ jsx122("div", { style: { marginTop: "auto", paddingTop: 8 }, children: footer != null && /* @__PURE__ */ jsx122("div", { style: { paddingTop: 10, marginLeft: 2, marginRight: 2, borderTop: "1px solid var(--bw-border)" }, children: footer }) })
+    /* @__PURE__ */ jsx130("div", { style: { marginTop: "auto", paddingTop: 8 }, children: footer != null && /* @__PURE__ */ jsx130("div", { style: { paddingTop: 10, marginLeft: 2, marginRight: 2, borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: footer }) })
   ] });
-  return /* @__PURE__ */ jsx122(
+  return /* @__PURE__ */ jsx130(
     "nav",
     {
       ref: navRef,
@@ -12406,35 +14604,35 @@ function SideNav({
       onMouseLeave: overlay ? () => peek(false) : void 0,
       style: overlay ? { position: "relative", width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style },
       ...rest,
-      children: overlay ? /* @__PURE__ */ jsx122("div", { style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: col ? "none" : "var(--shadow-lg)" }, children: inner }) : inner
+      children: overlay ? /* @__PURE__ */ jsx130("div", { style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: col ? "none" : "var(--shadow-lg)" }, children: inner }) : inner
     }
   );
 }
 
 // components/navigation/Steps.jsx
-import React126 from "react";
-import { jsx as jsx123, jsxs as jsxs93 } from "react/jsx-runtime";
+import React135 from "react";
+import { jsx as jsx131, jsxs as jsxs102 } from "react/jsx-runtime";
 function Steps({ steps = [], current = 0, style, ...rest }) {
-  return /* @__PURE__ */ jsx123("div", { style: { display: "flex", alignItems: "flex-start", ...style }, ...rest, children: steps.map((s, i) => {
+  return /* @__PURE__ */ jsx131("div", { style: { display: "flex", alignItems: "flex-start", ...style }, ...rest, children: steps.map((s, i) => {
     const label = typeof s === "string" ? s : s.label;
     const done = i < current;
     const active = i === current;
-    const bg = done ? "var(--color-semantic-primary-normal)" : "var(--bw-white)";
-    const bd = done || active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)";
+    const bg = done ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)";
+    const bd = done || active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)";
     const fg = done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)";
-    return /* @__PURE__ */ jsxs93(React126.Fragment, { children: [
-      /* @__PURE__ */ jsxs93("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
-        /* @__PURE__ */ jsx123("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx123("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx123("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
-        /* @__PURE__ */ jsx123("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
+    return /* @__PURE__ */ jsxs102(React135.Fragment, { children: [
+      /* @__PURE__ */ jsxs102("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
+        /* @__PURE__ */ jsx131("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx131("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx131("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
+        /* @__PURE__ */ jsx131("span", { style: { fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
       ] }),
-      i < steps.length - 1 && /* @__PURE__ */ jsx123("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < current ? "var(--color-semantic-primary-normal)" : "var(--bw-border)", minWidth: 24 } })
+      i < steps.length - 1 && /* @__PURE__ */ jsx131("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < current ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)", minWidth: 24 } })
     ] }, i);
   }) });
 }
 
 // components/navigation/Tabs.jsx
-import React127 from "react";
-import { jsx as jsx124, jsxs as jsxs94 } from "react/jsx-runtime";
+import React136 from "react";
+import { jsx as jsx132, jsxs as jsxs103 } from "react/jsx-runtime";
 var SIZE4 = {
   small: { height: 40, fontSize: "var(--body2-size)", countSize: 13 },
   sm: { height: 40, fontSize: "var(--body2-size)", countSize: 13 },
@@ -12457,12 +14655,13 @@ function Tabs({
   style,
   ...rest
 }) {
+  const listRef = React136.useRef(null);
   const norm = items.map(
     (o) => typeof o === "string" ? { value: o, label: o } : o
   );
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React127.useState(
-    defaultValue != null ? defaultValue : norm[0]?.value
+  const [internal, setInternal] = React136.useState(
+    defaultValue != null ? defaultValue : norm.find((item) => !item.disabled)?.value
   );
   const selected = isControlled ? value : internal;
   const s = SIZE4[size] || SIZE4.medium;
@@ -12472,10 +14671,27 @@ function Tabs({
     if (!isControlled) setInternal(item.value);
     onChange?.(item.value, item);
   };
-  return /* @__PURE__ */ jsx124(
+  const move = (event, item) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    const enabledItems = norm.filter((candidate) => !candidate.disabled);
+    const currentIndex = enabledItems.findIndex((candidate) => candidate.value === item.value);
+    if (currentIndex < 0 || enabledItems.length === 0) return;
+    event.preventDefault();
+    let nextIndex = currentIndex;
+    if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + enabledItems.length) % enabledItems.length;
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % enabledItems.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = enabledItems.length - 1;
+    const nextItem = enabledItems[nextIndex];
+    pick(nextItem);
+    Array.from(listRef.current?.querySelectorAll('[role="tab"]') ?? []).find((tab) => tab.dataset.tabValue === String(nextItem.value))?.focus();
+  };
+  return /* @__PURE__ */ jsxs103(
     "div",
     {
+      ref: listRef,
       role: "tablist",
+      "aria-orientation": "horizontal",
       style: {
         display: "flex",
         alignItems: "stretch",
@@ -12483,123 +14699,138 @@ function Tabs({
         maxWidth: "100%",
         overflowX: scroll === "auto" || scroll === true ? "auto" : "visible",
         paddingInline: padding ? 8 : 0,
-        borderBottom: "1px solid var(--bw-border)",
+        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
         scrollbarWidth: "none",
         ...style
       },
       ...rest,
-      children: norm.map((item) => {
-        const active = item.value === selected || item.active;
-        const trailing = item.trailingIconButton ?? item.trailing ?? trailingIconButton;
-        return /* @__PURE__ */ jsxs94(
-          "button",
-          {
-            type: "button",
-            role: "tab",
-            "aria-selected": active,
-            disabled: item.disabled,
-            onClick: () => pick(item),
-            style: {
-              flex: fill ? 1 : "0 0 auto",
-              minWidth: 0,
-              position: "relative",
-              height: s.height,
-              padding: 0,
-              border: "none",
-              background: "transparent",
-              cursor: item.disabled ? "not-allowed" : "pointer",
-              opacity: item.disabled ? 0.45 : 1,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 7,
-              fontFamily: "var(--font-sans)",
-              fontSize: s.fontSize,
-              fontWeight: "var(--fw-semibold)",
-              letterSpacing: 0,
-              color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)",
-              whiteSpace: "nowrap",
-              transition: "color var(--dur-fast) var(--ease-out)",
-              ...item.style
-            },
-            children: [
-              /* @__PURE__ */ jsx124("span", { style: { overflow: "hidden", textOverflow: "ellipsis" }, children: item.label }),
-              item.count != null && /* @__PURE__ */ jsx124(
-                "span",
-                {
-                  style: {
-                    fontSize: s.countSize,
-                    fontWeight: "var(--fw-semibold)",
-                    color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)"
-                  },
-                  children: item.count
-                }
-              ),
-              trailing && /* @__PURE__ */ jsx124(
-                "span",
-                {
-                  "aria-hidden": "true",
-                  style: {
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)"
-                  },
-                  children: trailing === true ? /* @__PURE__ */ jsx124(
-                    "svg",
-                    {
-                      width: "15",
-                      height: "15",
-                      viewBox: "0 0 24 24",
-                      fill: "none",
-                      stroke: "currentColor",
-                      strokeWidth: "2.3",
-                      strokeLinecap: "round",
-                      strokeLinejoin: "round",
-                      children: /* @__PURE__ */ jsx124("path", { d: "m9 18 6-6-6-6" })
-                    }
-                  ) : trailing
-                }
-              ),
-              /* @__PURE__ */ jsx124(
-                "span",
-                {
-                  "aria-hidden": "true",
-                  style: {
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: -1,
-                    height: 2,
-                    borderRadius: 0,
-                    background: active ? "var(--color-semantic-label-normal)" : "transparent",
-                    transition: "background var(--dur-fast) var(--ease-out)"
+      children: [
+        /* @__PURE__ */ jsx132("style", { children: `
+        .lk-tabs__tab:focus-visible {
+          outline: none;
+          box-shadow: inset 0 0 0 2px var(--color-semantic-focus-ring);
+          border-radius: var(--radius-sm);
+          z-index: 1;
+        }
+      ` }),
+        norm.map((item) => {
+          const active = item.value === selected || item.active;
+          const trailing = item.trailingIconButton ?? item.trailing ?? trailingIconButton;
+          return /* @__PURE__ */ jsxs103(
+            "button",
+            {
+              className: "lk-tabs__tab",
+              type: "button",
+              role: "tab",
+              "aria-selected": active,
+              tabIndex: !item.disabled && active ? 0 : -1,
+              "data-tab-value": item.value,
+              disabled: item.disabled,
+              onClick: () => pick(item),
+              onKeyDown: (event) => move(event, item),
+              style: {
+                flex: fill ? 1 : "0 0 auto",
+                minWidth: 0,
+                position: "relative",
+                height: s.height,
+                padding: 0,
+                border: "none",
+                background: "transparent",
+                cursor: item.disabled ? "not-allowed" : "pointer",
+                opacity: item.disabled ? 0.45 : 1,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 7,
+                fontFamily: "var(--font-sans)",
+                fontSize: s.fontSize,
+                fontWeight: "var(--fw-semibold)",
+                letterSpacing: 0,
+                color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)",
+                whiteSpace: "nowrap",
+                transition: "color var(--dur-fast) var(--ease-out)",
+                outline: "none",
+                ...item.style
+              },
+              children: [
+                /* @__PURE__ */ jsx132("span", { style: { overflow: "hidden", textOverflow: "ellipsis" }, children: item.label }),
+                item.count != null && /* @__PURE__ */ jsx132(
+                  "span",
+                  {
+                    style: {
+                      fontSize: s.countSize,
+                      fontWeight: "var(--fw-semibold)",
+                      color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)"
+                    },
+                    children: item.count
                   }
-                }
-              )
-            ]
-          },
-          item.value
-        );
-      })
+                ),
+                trailing && /* @__PURE__ */ jsx132(
+                  "span",
+                  {
+                    "aria-hidden": "true",
+                    style: {
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-neutral)"
+                    },
+                    children: trailing === true ? /* @__PURE__ */ jsx132(
+                      "svg",
+                      {
+                        width: "15",
+                        height: "15",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        stroke: "currentColor",
+                        strokeWidth: "2.3",
+                        strokeLinecap: "round",
+                        strokeLinejoin: "round",
+                        children: /* @__PURE__ */ jsx132("path", { d: "m9 18 6-6-6-6" })
+                      }
+                    ) : trailing
+                  }
+                ),
+                /* @__PURE__ */ jsx132(
+                  "span",
+                  {
+                    "aria-hidden": "true",
+                    style: {
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      bottom: -1,
+                      height: 2,
+                      borderRadius: 0,
+                      background: active ? "var(--color-semantic-label-normal)" : "transparent",
+                      transition: "background var(--dur-fast) var(--ease-out)"
+                    }
+                  }
+                )
+              ]
+            },
+            item.value
+          );
+        })
+      ]
     }
   );
 }
 
 // components/navigation/Toolbar.jsx
-import React128 from "react";
-import { jsx as jsx125 } from "react/jsx-runtime";
+import React137 from "react";
+import { jsx as jsx133 } from "react/jsx-runtime";
 function Toolbar({ children, style, ...rest }) {
-  return /* @__PURE__ */ jsx125("div", { role: "toolbar", style: { display: "inline-flex", alignItems: "center", gap: 6, padding: 6, background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-xs)", ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx133("div", { role: "toolbar", style: { display: "inline-flex", alignItems: "center", gap: 6, padding: 6, background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", boxShadow: "var(--shadow-xs)", ...style }, ...rest, children });
 }
 
 // components/navigation/TopBar.jsx
-import React129 from "react";
-import { jsx as jsx126, jsxs as jsxs95 } from "react/jsx-runtime";
-var TopBarToneContext = React129.createContext("light");
+import React138 from "react";
+import { jsx as jsx134, jsxs as jsxs104 } from "react/jsx-runtime";
+var TopBarToneContext = React138.createContext("light");
 function TopBar({ brand, children, actions, navAlign = "start", sticky = false, bordered = true, dark = false, height = 64, style, ...rest }) {
   const tone = dark ? "dark" : "light";
-  return /* @__PURE__ */ jsxs95(
+  return /* @__PURE__ */ jsxs104(
     "header",
     {
       style: {
@@ -12616,9 +14847,9 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
         height,
         paddingInline: "clamp(16px, 4vw, 32px)",
         boxSizing: "border-box",
-        background: dark ? "linear-gradient(135deg, var(--lk-navy-from), var(--lk-navy-to))" : sticky ? "color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)" : "var(--color-semantic-background-elevated-normal)",
+        background: dark ? "linear-gradient(135deg, var(--color-semantic-brand-canvas-from), var(--color-semantic-brand-canvas-to))" : sticky ? "color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)" : "var(--color-semantic-background-elevated-normal)",
         color: dark ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-normal)",
-        borderBottom: bordered ? `1px solid ${dark ? "var(--inverse-fill-normal)" : "var(--color-semantic-line-normal-normal)"}` : "none",
+        borderBottom: bordered ? `1px solid ${dark ? "var(--color-semantic-inverse-fill-normal)" : "var(--color-semantic-line-normal-normal)"}` : "none",
         backdropFilter: sticky ? "saturate(150%) blur(8px)" : "none",
         WebkitBackdropFilter: sticky ? "saturate(150%) blur(8px)" : "none",
         fontFamily: "var(--font-sans)",
@@ -12626,25 +14857,25 @@ function TopBar({ brand, children, actions, navAlign = "start", sticky = false, 
       },
       ...rest,
       children: [
-        brand != null && /* @__PURE__ */ jsx126("div", { style: { display: "flex", alignItems: "center", flexShrink: 0 }, children: brand }),
-        children != null ? /* @__PURE__ */ jsx126(TopBarToneContext.Provider, { value: tone, children: /* @__PURE__ */ jsx126("nav", { style: { display: "flex", alignItems: "center", alignSelf: "stretch", gap: 4, flex: "1 1 auto", minWidth: 0, overflowX: "auto", overflowY: "hidden", scrollbarWidth: "none", WebkitOverflowScrolling: "touch", justifyContent: navAlign === "center" ? "safe center" : "flex-start" }, children }) }) : /* @__PURE__ */ jsx126("div", { style: { flex: 1 } }),
-        actions != null && /* @__PURE__ */ jsx126("div", { style: { display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: actions })
+        brand != null && /* @__PURE__ */ jsx134("div", { style: { display: "flex", alignItems: "center", flexShrink: 0 }, children: brand }),
+        children != null ? /* @__PURE__ */ jsx134(TopBarToneContext.Provider, { value: tone, children: /* @__PURE__ */ jsx134("nav", { style: { display: "flex", alignItems: "center", alignSelf: "stretch", gap: 4, flex: "1 1 auto", minWidth: 0, overflowX: "auto", overflowY: "hidden", scrollbarWidth: "none", WebkitOverflowScrolling: "touch", justifyContent: navAlign === "center" ? "safe center" : "flex-start" }, children }) }) : /* @__PURE__ */ jsx134("div", { style: { flex: 1 } }),
+        actions != null && /* @__PURE__ */ jsx134("div", { style: { display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: actions })
       ]
     }
   );
 }
 function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = "light", style, onClick, ...rest }) {
-  const tone = React129.useContext(TopBarToneContext);
+  const tone = React138.useContext(TopBarToneContext);
   const onDark = tone === "dark";
-  const [hover, setHover] = React129.useState(false);
-  const [focusWithin, setFocusWithin] = React129.useState(false);
-  const [clickOpen, setClickOpen] = React129.useState(false);
+  const [hover, setHover] = React138.useState(false);
+  const [focusWithin, setFocusWithin] = React138.useState(false);
+  const [clickOpen, setClickOpen] = React138.useState(false);
   const hasMenu = !!menuItems?.length;
   const open = hasMenu && (hover || focusWithin || clickOpen);
   const activeOrHover = active || hover || focusWithin || clickOpen;
   const Comp = href ? "a" : "button";
-  const fg = active ? onDark ? "var(--color-semantic-static-white)" : "var(--color-semantic-primary-normal)" : activeOrHover ? onDark ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-strong)" : onDark ? "var(--inverse-label-neutral)" : "var(--color-semantic-label-alternative)";
-  return /* @__PURE__ */ jsxs95(
+  const fg = active ? onDark ? "var(--color-semantic-static-white)" : "var(--color-semantic-primary-normal)" : activeOrHover ? onDark ? "var(--color-semantic-static-white)" : "var(--color-semantic-label-strong)" : onDark ? "var(--color-semantic-inverse-label-neutral-soft)" : "var(--color-semantic-label-alternative)";
+  return /* @__PURE__ */ jsxs104(
     "span",
     {
       style: { position: "relative", display: "inline-flex", alignSelf: "stretch", ...style },
@@ -12659,7 +14890,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs95(
+        /* @__PURE__ */ jsxs104(
           Comp,
           {
             href,
@@ -12701,7 +14932,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
             },
             children: [
               children,
-              /* @__PURE__ */ jsx126(
+              /* @__PURE__ */ jsx134(
                 "span",
                 {
                   "aria-hidden": "true",
@@ -12722,7 +14953,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
             ]
           }
         ),
-        menuItems?.length ? /* @__PURE__ */ jsx126(
+        menuItems?.length ? /* @__PURE__ */ jsx134(
           "div",
           {
             role: "menu",
@@ -12749,7 +14980,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
             },
             children: menuItems.map((item) => {
               const ItemComp = item.href ? "a" : "button";
-              return /* @__PURE__ */ jsx126(
+              return /* @__PURE__ */ jsx134(
                 ItemComp,
                 {
                   href: item.href,
@@ -12772,7 +15003,7 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
                     textDecoration: "none"
                   },
                   onMouseEnter: (event) => {
-                    event.currentTarget.style.background = "var(--bw-mist)";
+                    event.currentTarget.style.background = "var(--color-semantic-background-normal-alternative)";
                   },
                   onMouseLeave: (event) => {
                     event.currentTarget.style.background = "transparent";
@@ -12790,13 +15021,13 @@ function TopBarNavItem({ children, active = false, href, menuItems, menuTheme = 
 }
 
 // components/navigation/UserMenu.jsx
-import React130 from "react";
-import { jsx as jsx127, jsxs as jsxs96 } from "react/jsx-runtime";
+import React139 from "react";
+import { jsx as jsx135, jsxs as jsxs105 } from "react/jsx-runtime";
 function UserMenu({ name, detail, src, status, items = [], collapsed = false, style, ...rest }) {
-  const [open, setOpen] = React130.useState(false);
-  const [hov, setHov] = React130.useState(-1);
-  const ref = React130.useRef(null);
-  React130.useEffect(() => {
+  const [open, setOpen] = React139.useState(false);
+  const [hov, setHov] = React139.useState(-1);
+  const ref = React139.useRef(null);
+  React139.useEffect(() => {
     if (!open) return void 0;
     const h = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -12811,8 +15042,8 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
       document.removeEventListener("keydown", k);
     };
   }, [open]);
-  return /* @__PURE__ */ jsxs96("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    open && /* @__PURE__ */ jsx127("div", { role: "menu", style: { position: "absolute", bottom: "calc(100% + 8px)", left: 0, minWidth: collapsed ? 200 : "100%", boxSizing: "border-box", background: "var(--bw-white)", border: "1px solid var(--bw-border)", borderRadius: "var(--component-menu-radius)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)", boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx127("div", { style: { height: 1, background: "var(--bw-border)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ jsxs96(
+  return /* @__PURE__ */ jsxs105("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
+    open && /* @__PURE__ */ jsx135("div", { role: "menu", style: { position: "absolute", bottom: "calc(100% + 8px)", left: 0, minWidth: collapsed ? 200 : "100%", boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--component-menu-radius)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)", boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx135("div", { style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ jsxs105(
       "button",
       {
         type: "button",
@@ -12824,15 +15055,15 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         },
         onMouseEnter: () => setHov(i),
         onMouseLeave: () => setHov(-1),
-        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--component-menu-item-hover-bg)" : "transparent", color: it.danger ? "var(--status-danger, var(--color-semantic-status-negative))" : "var(--color-semantic-label-normal, var(--color-semantic-label-normal))", transition: "background var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8px 10px", border: "none", borderRadius: 8, cursor: it.disabled ? "not-allowed" : "pointer", opacity: it.disabled ? 0.45 : 1, textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 13.5, fontWeight: "var(--fw-medium)", letterSpacing: 0, background: hov === i && !it.disabled ? "var(--component-menu-item-hover-bg)" : "transparent", color: it.danger ? "var(--color-semantic-status-negative)" : "var(--color-semantic-label-normal)", transition: "background var(--dur-fast) var(--ease-out)" },
         children: [
-          it.icon != null && /* @__PURE__ */ jsx127("span", { style: { flexShrink: 0, display: "inline-flex", color: it.danger ? "inherit" : "var(--color-semantic-label-alternative)" }, children: it.icon }),
-          /* @__PURE__ */ jsx127("span", { style: { flex: 1, minWidth: 0 }, children: it.label })
+          it.icon != null && /* @__PURE__ */ jsx135("span", { style: { flexShrink: 0, display: "inline-flex", color: it.danger ? "inherit" : "var(--color-semantic-label-alternative)" }, children: it.icon }),
+          /* @__PURE__ */ jsx135("span", { style: { flex: 1, minWidth: 0 }, children: it.label })
         ]
       },
       i
     )) }),
-    /* @__PURE__ */ jsxs96(
+    /* @__PURE__ */ jsxs105(
       "button",
       {
         type: "button",
@@ -12840,14 +15071,14 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
         "aria-expanded": open,
         title: collapsed && typeof name === "string" ? name : void 0,
         onClick: () => setOpen(!open),
-        style: { display: "flex", alignItems: "center", justifyContent: collapsed ? "center" : "flex-start", gap: 10, width: "100%", padding: collapsed ? "6px 0" : "6px 8px", boxSizing: "border-box", border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", background: open ? "var(--lk-accent-tint)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
+        style: { display: "flex", alignItems: "center", justifyContent: collapsed ? "center" : "flex-start", gap: 10, width: "100%", padding: collapsed ? "6px 0" : "6px 8px", boxSizing: "border-box", border: "none", borderRadius: "var(--radius-lg)", cursor: "pointer", textAlign: "left", fontFamily: "var(--font-sans)", background: open ? "var(--color-semantic-primary-surface-normal)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)" },
         children: [
-          /* @__PURE__ */ jsx127(Avatar, { name: typeof name === "string" ? name : void 0, src, status, size: 30, style: { flexShrink: 0 } }),
-          !collapsed && /* @__PURE__ */ jsxs96("span", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }, children: [
-            /* @__PURE__ */ jsx127("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal, var(--color-semantic-label-normal))", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
-            detail != null && /* @__PURE__ */ jsx127("span", { style: { fontSize: 11.5, color: "var(--color-semantic-label-assistive)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
+          /* @__PURE__ */ jsx135(Avatar, { name: typeof name === "string" ? name : void 0, src, status, size: 30, style: { flexShrink: 0 } }),
+          !collapsed && /* @__PURE__ */ jsxs105("span", { style: { flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 1 }, children: [
+            /* @__PURE__ */ jsx135("span", { style: { fontSize: 13, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal, var(--color-semantic-label-normal))", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: name }),
+            detail != null && /* @__PURE__ */ jsx135("span", { style: { fontSize: 11.5, color: "var(--color-semantic-label-assistive)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: detail })
           ] }),
-          !collapsed && /* @__PURE__ */ jsx127("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx127("path", { d: "M6 15l6-6 6 6" }) })
+          !collapsed && /* @__PURE__ */ jsx135("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ jsx135("path", { d: "M6 15l6-6 6 6" }) })
         ]
       }
     )
@@ -12855,41 +15086,41 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
 }
 
 // components/navigation/Wizard.jsx
-import React131 from "react";
-import { jsx as jsx128, jsxs as jsxs97 } from "react/jsx-runtime";
+import React140 from "react";
+import { jsx as jsx136, jsxs as jsxs106 } from "react/jsx-runtime";
 function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, children, footer, style, ...rest }) {
   const isControlled = current !== void 0;
-  const [internal, setInternal] = React131.useState(defaultCurrent);
+  const [internal, setInternal] = React140.useState(defaultCurrent);
   const cur = isControlled ? current : internal;
   const go = (n) => {
     const c = Math.max(0, Math.min(steps.length - 1, n));
     if (!isControlled) setInternal(c);
     onStepChange && onStepChange(c);
   };
-  return /* @__PURE__ */ jsxs97("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx128("div", { style: { display: "flex", alignItems: "flex-start", marginBottom: 28 }, children: steps.map((s, i) => {
+  return /* @__PURE__ */ jsxs106("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx136("div", { style: { display: "flex", alignItems: "flex-start", marginBottom: 28 }, children: steps.map((s, i) => {
       const label = typeof s === "string" ? s : s.label;
       const done = i < cur;
       const active = i === cur;
-      return /* @__PURE__ */ jsxs97(React131.Fragment, { children: [
-        /* @__PURE__ */ jsxs97("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
-          /* @__PURE__ */ jsx128("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: done ? "var(--color-semantic-primary-normal)" : "var(--bw-white)", border: `2px solid ${done || active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`, color: done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx128("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx128("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
-          /* @__PURE__ */ jsx128("span", { style: { fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
+      return /* @__PURE__ */ jsxs106(React140.Fragment, { children: [
+        /* @__PURE__ */ jsxs106("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }, children: [
+          /* @__PURE__ */ jsx136("span", { style: { width: 32, height: 32, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", background: done ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", border: `2px solid ${done || active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, color: done ? "var(--color-semantic-static-white)" : active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-assistive)", fontSize: 14, fontWeight: "var(--fw-bold)" }, children: done ? /* @__PURE__ */ jsx136("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx136("path", { d: "M20 6 9 17l-5-5" }) }) : i + 1 }),
+          /* @__PURE__ */ jsx136("span", { style: { fontSize: 13, fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", whiteSpace: "nowrap" }, children: label })
         ] }),
-        i < steps.length - 1 && /* @__PURE__ */ jsx128("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < cur ? "var(--color-semantic-primary-normal)" : "var(--bw-border)", minWidth: 24 } })
+        i < steps.length - 1 && /* @__PURE__ */ jsx136("span", { style: { flex: 1, height: 2, marginTop: 15, background: i < cur ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)", minWidth: 24 } })
       ] }, i);
     }) }),
-    /* @__PURE__ */ jsx128("div", { children: typeof children === "function" ? children(cur) : children }),
-    footer !== null && /* @__PURE__ */ jsxs97("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
-      /* @__PURE__ */ jsx128("button", { type: "button", onClick: () => go(cur - 1), disabled: cur === 0, style: { height: 44, padding: "0 18px", border: "1px solid var(--bw-border)", borderRadius: "var(--radius-md)", background: "var(--bw-white)", color: "var(--color-semantic-label-normal)", cursor: cur === 0 ? "not-allowed" : "pointer", opacity: cur === 0 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
-      /* @__PURE__ */ jsx128("button", { type: "button", onClick: () => go(cur + 1), disabled: cur === steps.length - 1, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--color-semantic-primary-normal)", color: "var(--color-semantic-static-white)", cursor: cur === steps.length - 1 ? "not-allowed" : "pointer", opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uB2E4\uC74C" })
+    /* @__PURE__ */ jsx136("div", { children: typeof children === "function" ? children(cur) : children }),
+    footer !== null && /* @__PURE__ */ jsxs106("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
+      /* @__PURE__ */ jsx136("button", { type: "button", onClick: () => go(cur - 1), disabled: cur === 0, style: { height: 44, padding: "0 18px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-normal)", cursor: cur === 0 ? "not-allowed" : "pointer", opacity: cur === 0 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
+      /* @__PURE__ */ jsx136("button", { type: "button", onClick: () => go(cur + 1), disabled: cur === steps.length - 1, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--color-semantic-primary-normal)", color: "var(--color-semantic-static-white)", cursor: cur === steps.length - 1 ? "not-allowed" : "pointer", opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-bold)" }, children: "\uB2E4\uC74C" })
     ] })
   ] });
 }
 
 // components/overlay/Alert.jsx
-import React132 from "react";
-import { jsx as jsx129, jsxs as jsxs98 } from "react/jsx-runtime";
+import React141 from "react";
+import { jsx as jsx137, jsxs as jsxs107 } from "react/jsx-runtime";
 var platformStyle = {
   /* iOS internals retained as an LDS simplification (WDS iOS table layout
    * is not decodable from the source). */
@@ -12936,7 +15167,7 @@ var platformStyle = {
 var variantColor = {
   normal: "var(--color-semantic-primary-normal)",
   assistive: "var(--color-semantic-label-neutral)",
-  negative: "var(--bw-red)"
+  negative: "var(--color-semantic-status-negative)"
 };
 function normalizeVariant3(value) {
   if (value === "danger" || value === "error") return "negative";
@@ -12965,7 +15196,7 @@ function Alert({
   ...rest
 }) {
   const dismiss = onClose || onCancel;
-  React132.useEffect(() => {
+  React141.useEffect(() => {
     if (!open) return void 0;
     const onKey = (e) => {
       if (e.key === "Escape") dismiss?.();
@@ -12992,7 +15223,7 @@ function Alert({
     letterSpacing: 0,
     whiteSpace: "nowrap"
   };
-  return /* @__PURE__ */ jsx129(
+  return /* @__PURE__ */ jsx137(
     "div",
     {
       role: "presentation",
@@ -13010,7 +15241,7 @@ function Alert({
         background: "var(--material-control-dimmer)",
         backdropFilter: "blur(1px)"
       },
-      children: /* @__PURE__ */ jsxs98(
+      children: /* @__PURE__ */ jsxs107(
         "div",
         {
           role: "dialog",
@@ -13019,7 +15250,7 @@ function Alert({
           style: {
             width: "100%",
             maxWidth: p.maxWidth,
-            background: "var(--bw-white)",
+            background: "var(--color-semantic-background-elevated-normal)",
             borderRadius: p.radius,
             boxShadow: "var(--shadow-xl)",
             padding: p.padding,
@@ -13028,7 +15259,7 @@ function Alert({
           },
           ...rest,
           children: [
-            heading && title != null && /* @__PURE__ */ jsx129(
+            heading && title != null && /* @__PURE__ */ jsx137(
               "div",
               {
                 style: {
@@ -13041,7 +15272,7 @@ function Alert({
                 children: title
               }
             ),
-            body != null && /* @__PURE__ */ jsx129(
+            body != null && /* @__PURE__ */ jsx137(
               "div",
               {
                 style: {
@@ -13053,7 +15284,7 @@ function Alert({
                 children: body
               }
             ),
-            /* @__PURE__ */ jsx129(
+            /* @__PURE__ */ jsx137(
               "div",
               {
                 style: {
@@ -13062,8 +15293,8 @@ function Alert({
                   gap: p.footerGap,
                   marginTop: 20
                 },
-                children: actions != null ? actions : /* @__PURE__ */ jsxs98(React132.Fragment, { children: [
-                  secondary && /* @__PURE__ */ jsx129(
+                children: actions != null ? actions : /* @__PURE__ */ jsxs107(React141.Fragment, { children: [
+                  secondary && /* @__PURE__ */ jsx137(
                     "button",
                     {
                       type: "button",
@@ -13076,7 +15307,7 @@ function Alert({
                       children: secondary
                     }
                   ),
-                  /* @__PURE__ */ jsx129(
+                  /* @__PURE__ */ jsx137(
                     "button",
                     {
                       type: "button",
@@ -13100,11 +15331,11 @@ function Alert({
 }
 
 // components/overlay/CommandPalette.jsx
-import React133 from "react";
-import { jsx as jsx130, jsxs as jsxs99 } from "react/jsx-runtime";
+import React142 from "react";
+import { jsx as jsx138, jsxs as jsxs108 } from "react/jsx-runtime";
 function CommandPalette({ open = false, onClose, commands = [], placeholder = "\uBA85\uB839 \uAC80\uC0C9\u2026", style, ...rest }) {
-  const [q, setQ] = React133.useState("");
-  React133.useEffect(() => {
+  const [q, setQ] = React142.useState("");
+  React142.useEffect(() => {
     if (!open) return void 0;
     setQ("");
     const onKey = (e) => {
@@ -13115,17 +15346,17 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
   }, [open, onClose]);
   if (!open) return null;
   const filtered = q ? commands.filter((c) => String(c.label).toLowerCase().includes(q.toLowerCase())) : commands;
-  return /* @__PURE__ */ jsx130("div", { role: "presentation", onClick: (e) => {
+  return /* @__PURE__ */ jsx138("div", { role: "presentation", onClick: (e) => {
     if (e.target === e.currentTarget && onClose) onClose();
-  }, style: { position: "fixed", inset: 0, zIndex: 110, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "12vh", background: "var(--scrim-dark)", backdropFilter: "blur(2px)" }, children: /* @__PURE__ */ jsxs99("div", { role: "dialog", "aria-modal": "true", style: { width: "100%", maxWidth: 560, background: "var(--bw-white)", borderRadius: "var(--radius-2xl)", boxShadow: "var(--shadow-xl)", overflow: "hidden", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs99("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: "1px solid var(--bw-border)" }, children: [
-      /* @__PURE__ */ jsxs99("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-        /* @__PURE__ */ jsx130("circle", { cx: "11", cy: "11", r: "7" }),
-        /* @__PURE__ */ jsx130("path", { d: "m21 21-4.3-4.3" })
+  }, style: { position: "fixed", inset: 0, zIndex: 110, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "12vh", background: "var(--scrim-dark)", backdropFilter: "blur(2px)" }, children: /* @__PURE__ */ jsxs108("div", { role: "dialog", "aria-modal": "true", style: { width: "100%", maxWidth: 560, background: "var(--color-semantic-background-elevated-normal)", borderRadius: "var(--radius-2xl)", boxShadow: "var(--shadow-xl)", overflow: "hidden", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs108("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
+      /* @__PURE__ */ jsxs108("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-label-assistive)", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+        /* @__PURE__ */ jsx138("circle", { cx: "11", cy: "11", r: "7" }),
+        /* @__PURE__ */ jsx138("path", { d: "m21 21-4.3-4.3" })
       ] }),
-      /* @__PURE__ */ jsx130("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--color-semantic-label-normal)" } })
+      /* @__PURE__ */ jsx138("input", { autoFocus: true, value: q, onChange: (e) => setQ(e.target.value), placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: 17, color: "var(--color-semantic-label-normal)" } })
     ] }),
-    /* @__PURE__ */ jsx130("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ jsx130("div", { style: { padding: 28, textAlign: "center", color: "var(--color-semantic-label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ jsxs99(
+    /* @__PURE__ */ jsx138("div", { style: { maxHeight: 340, overflowY: "auto", padding: 8 }, children: filtered.length === 0 ? /* @__PURE__ */ jsx138("div", { style: { padding: 28, textAlign: "center", color: "var(--color-semantic-label-alternative)", fontSize: 14 }, children: "\uACB0\uACFC \uC5C6\uC74C" }) : filtered.map((c, i) => /* @__PURE__ */ jsxs108(
       "button",
       {
         type: "button",
@@ -13141,9 +15372,9 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
         },
         style: { width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "11px 12px", border: "none", background: "transparent", cursor: "pointer", borderRadius: "var(--radius-md)", textAlign: "left", fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-normal)" },
         children: [
-          c.icon && /* @__PURE__ */ jsx130("span", { style: { color: "var(--color-semantic-primary-normal)", display: "inline-flex" }, children: c.icon }),
-          /* @__PURE__ */ jsx130("span", { style: { flex: 1 }, children: c.label }),
-          c.shortcut && /* @__PURE__ */ jsx130("span", { style: { fontSize: 12, color: "var(--color-semantic-label-assistive)", fontWeight: "var(--fw-semibold)" }, children: c.shortcut })
+          c.icon && /* @__PURE__ */ jsx138("span", { style: { color: "var(--color-semantic-primary-normal)", display: "inline-flex" }, children: c.icon }),
+          /* @__PURE__ */ jsx138("span", { style: { flex: 1 }, children: c.label }),
+          c.shortcut && /* @__PURE__ */ jsx138("span", { style: { fontSize: 12, color: "var(--color-semantic-label-assistive)", fontWeight: "var(--fw-semibold)" }, children: c.shortcut })
         ]
       },
       i
@@ -13152,20 +15383,24 @@ function CommandPalette({ open = false, onClose, commands = [], placeholder = "\
 }
 
 // components/overlay/ConfirmDialog.jsx
-import React134 from "react";
-import { jsx as jsx131, jsxs as jsxs100 } from "react/jsx-runtime";
-var TONES3 = {
-  default: "var(--color-semantic-primary-normal)",
-  danger: "var(--bw-red)",
-  warning: "var(--bw-amber)"
+import React143 from "react";
+import { jsx as jsx139, jsxs as jsxs109 } from "react/jsx-runtime";
+var TONE_META = {
+  danger: { badge: "negative", label: "\uC704\uD5D8" },
+  warning: { badge: "cautionary", label: "\uC8FC\uC758" }
 };
 function ConfirmDialog({
   open = false,
   title,
   children,
   tone = "default",
+  toneLabel,
+  headingLevel = 2,
   confirmLabel = "\uD655\uC778",
   cancelLabel = "\uCDE8\uC18C",
+  confirmDisabled = false,
+  confirmLoading = false,
+  confirmLoadingLabel = "\uCC98\uB9AC \uC911",
   onConfirm,
   onCancel,
   onClose,
@@ -13173,55 +15408,95 @@ function ConfirmDialog({
   style,
   ...rest
 }) {
-  const titleId = React134.useId();
+  const titleId = React143.useId();
+  const descriptionId = React143.useId();
+  const dialogRef = React143.useRef(null);
+  const restoreFocusRef = React143.useRef(null);
   const dismiss = onCancel || onClose;
-  React134.useEffect(() => {
+  const dismissRef = React143.useRef(dismiss);
+  const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
+  const toneMeta = TONE_META[tone];
+  React143.useEffect(() => {
+    dismissRef.current = dismiss;
+  });
+  React143.useEffect(() => {
     if (!open) return void 0;
+    restoreFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const focusableSelector = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusInitial = window.requestAnimationFrame(() => {
+      const focusables = Array.from(dialogRef.current?.querySelectorAll(focusableSelector) ?? []);
+      const cancel = dialogRef.current?.querySelector("[data-confirm-dialog-cancel]");
+      (cancel ?? focusables[0] ?? dialogRef.current)?.focus();
+    });
     const onKey = (event) => {
-      if (event.key === "Escape" && dismiss) dismiss();
+      if (event.key === "Escape" && dismissRef.current) {
+        event.preventDefault();
+        dismissRef.current();
+      }
+      if (event.key === "Tab") {
+        const focusables = Array.from(dialogRef.current?.querySelectorAll(focusableSelector) ?? []);
+        if (focusables.length === 0) {
+          event.preventDefault();
+          dialogRef.current?.focus();
+          return;
+        }
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+        if (event.shiftKey && (active === first || !dialogRef.current?.contains(active))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (active === last || !dialogRef.current?.contains(active))) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [open, dismiss]);
+    return () => {
+      window.cancelAnimationFrame(focusInitial);
+      document.removeEventListener("keydown", onKey);
+      restoreFocusRef.current?.focus?.();
+    };
+  }, [open]);
   if (!open) return null;
-  const accent = TONES3[tone] || TONES3.default;
-  return /* @__PURE__ */ jsx131(
+  return /* @__PURE__ */ jsx139(
     "div",
     {
       role: "presentation",
       onClick: closeOnScrim ? (event) => {
         if (event.target === event.currentTarget && dismiss) dismiss();
       } : void 0,
-      style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--component-dialog-scrim)", backdropFilter: "blur(var(--component-dialog-scrim-blur))" },
-      children: /* @__PURE__ */ jsxs100(
+      style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: "var(--space-6)", background: "var(--component-dialog-scrim)", backdropFilter: "blur(var(--component-dialog-scrim-blur))" },
+      children: /* @__PURE__ */ jsxs109(
         "div",
         {
+          ref: dialogRef,
           role: "dialog",
           "aria-modal": "true",
           "aria-labelledby": title != null ? titleId : void 0,
           "aria-label": title == null ? "\uD655\uC778 \uB2E4\uC774\uC5BC\uB85C\uADF8" : void 0,
-          style: { width: "100%", maxWidth: 420, display: "grid", gap: "var(--space-4)", background: "var(--bw-white)", borderRadius: "var(--component-dialog-radius)", boxShadow: "var(--shadow-xl)", padding: "28px 28px 24px", fontFamily: "var(--font-sans)", ...style },
+          "aria-describedby": children != null ? descriptionId : void 0,
+          "data-tone": tone,
+          tabIndex: -1,
+          style: { width: "100%", maxWidth: "var(--component-confirm-dialog-max-width)", display: "grid", gap: "var(--space-4)", background: "var(--color-semantic-background-elevated-normal)", borderRadius: "var(--component-dialog-radius)", boxShadow: "var(--shadow-xl)", padding: "var(--space-6)", fontFamily: "var(--font-sans)", ...style },
           ...rest,
           children: [
-            /* @__PURE__ */ jsxs100("div", { style: { display: "grid", gap: "var(--space-2)" }, children: [
-              title != null && /* @__PURE__ */ jsx131("h2", { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-normal)", fontSize: 20, lineHeight: 1.35, fontWeight: "var(--fw-extra)", letterSpacing: 0 }, children: title }),
-              children != null && /* @__PURE__ */ jsx131("div", { style: { color: "var(--color-semantic-label-neutral)", fontSize: 15, lineHeight: 1.7, wordBreak: "keep-all" }, children })
+            /* @__PURE__ */ jsxs109("div", { style: { display: "grid", gap: "var(--space-2)" }, children: [
+              toneMeta != null && /* @__PURE__ */ jsx139("span", { style: { justifySelf: "start" }, children: /* @__PURE__ */ jsx139(StatusBadge, { tone: toneMeta.badge, children: toneLabel ?? toneMeta.label }) }),
+              title != null && /* @__PURE__ */ jsx139(Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-normal)", fontSize: "var(--heading3-size)", lineHeight: "var(--heading3-line)", fontWeight: "var(--fw-extra)" }, children: title }),
+              children != null && /* @__PURE__ */ jsx139("div", { id: descriptionId, style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", wordBreak: "keep-all" }, children })
             ] }),
-            /* @__PURE__ */ jsxs100("div", { style: { display: "flex", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
-              /* @__PURE__ */ jsx131(Button, { variant: "ghost", onClick: () => dismiss && dismiss(), style: { height: 44, borderRadius: "var(--radius-md)", fontWeight: "var(--fw-bold)", letterSpacing: 0 }, children: cancelLabel }),
-              /* @__PURE__ */ jsx131(
+            /* @__PURE__ */ jsxs109(ActionArea, { compact: true, divider: false, align: "end", style: { padding: 0, background: "transparent" }, children: [
+              /* @__PURE__ */ jsx139(Button, { "data-confirm-dialog-cancel": true, variant: "ghost", onClick: () => dismissRef.current?.(), children: cancelLabel }),
+              /* @__PURE__ */ jsx139(
                 Button,
                 {
-                  variant: "primary",
+                  variant: tone === "danger" ? "danger" : "primary",
                   onClick: onConfirm,
-                  style: {
-                    height: 44,
-                    borderRadius: "var(--radius-md)",
-                    fontWeight: "var(--fw-bold)",
-                    letterSpacing: 0,
-                    boxShadow: "none",
-                    ...tone !== "default" ? { background: accent } : null
-                  },
+                  disabled: confirmDisabled,
+                  loading: confirmLoading,
+                  loadingLabel: confirmLoadingLabel,
                   children: confirmLabel
                 }
               )
@@ -13234,11 +15509,11 @@ function ConfirmDialog({
 }
 
 // components/overlay/Dimmer.jsx
-import React135 from "react";
-import { jsx as jsx132 } from "react/jsx-runtime";
+import React144 from "react";
+import { jsx as jsx140 } from "react/jsx-runtime";
 function Dimmer({ open = false, children, onClick, blur = false, style, ...rest }) {
   if (!open) return null;
-  return /* @__PURE__ */ jsx132(
+  return /* @__PURE__ */ jsx140(
     "div",
     {
       onClick,
@@ -13262,11 +15537,11 @@ function Dimmer({ open = false, children, onClick, blur = false, style, ...rest 
 }
 
 // components/overlay/Drawer.jsx
-import React136 from "react";
-import { jsx as jsx133, jsxs as jsxs101 } from "react/jsx-runtime";
+import React145 from "react";
+import { jsx as jsx141, jsxs as jsxs110 } from "react/jsx-runtime";
 function Drawer({ open = false, side = "right", width = 380, title, children, footer, onClose, closeOnScrim = true, style, ...rest }) {
-  const [shown, setShown] = React136.useState(false);
-  React136.useEffect(() => {
+  const [shown, setShown] = React145.useState(false);
+  React145.useEffect(() => {
     if (open) {
       const id = requestAnimationFrame(() => setShown(true));
       return () => cancelAnimationFrame(id);
@@ -13274,7 +15549,7 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
     setShown(false);
     return void 0;
   }, [open]);
-  React136.useEffect(() => {
+  React145.useEffect(() => {
     if (!open) return void 0;
     const onKey = (e) => {
       if (e.key === "Escape" && onClose) onClose();
@@ -13285,7 +15560,7 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
   if (!open) return null;
   const isRight = side === "right";
   const hidden = isRight ? "translateX(100%)" : "translateX(-100%)";
-  return /* @__PURE__ */ jsx133(
+  return /* @__PURE__ */ jsx141(
     "div",
     {
       role: "presentation",
@@ -13293,21 +15568,21 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
         if (e.target === e.currentTarget && onClose) onClose();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: 100, background: "var(--scrim-dark)", backdropFilter: "blur(2px)", opacity: shown ? 1 : 0, transition: "opacity var(--dur-base) var(--ease-out)" },
-      children: /* @__PURE__ */ jsxs101(
+      children: /* @__PURE__ */ jsxs110(
         "div",
         {
           role: "dialog",
           "aria-modal": "true",
           "aria-label": typeof title === "string" ? title : void 0,
-          style: { position: "absolute", top: 0, bottom: 0, [isRight ? "right" : "left"]: 0, width, maxWidth: "92vw", display: "flex", flexDirection: "column", background: "var(--bw-white)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", transform: shown ? "none" : hidden, transition: "transform var(--dur-slow) var(--ease-out)", ...style },
+          style: { position: "absolute", top: 0, bottom: 0, [isRight ? "right" : "left"]: 0, width, maxWidth: "92vw", display: "flex", flexDirection: "column", background: "var(--color-semantic-background-elevated-normal)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", transform: shown ? "none" : hidden, transition: "transform var(--dur-slow) var(--ease-out)", ...style },
           ...rest,
           children: [
-            (title != null || onClose) && /* @__PURE__ */ jsxs101("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 22px", borderBottom: "1px solid var(--bw-border)" }, children: [
-              /* @__PURE__ */ jsx133("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-              onClose && /* @__PURE__ */ jsx133("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx133("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx133("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+            (title != null || onClose) && /* @__PURE__ */ jsxs110("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 22px", borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
+              /* @__PURE__ */ jsx141("div", { style: { flex: 1, minWidth: 0, fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+              onClose && /* @__PURE__ */ jsx141("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx141("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx141("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
-            /* @__PURE__ */ jsx133("div", { style: { flex: 1, padding: "20px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
-            footer != null && /* @__PURE__ */ jsx133("div", { style: { padding: "16px 22px", borderTop: "1px solid var(--bw-border)", display: "flex", justifyContent: "flex-end", gap: 10 }, children: footer })
+            /* @__PURE__ */ jsx141("div", { style: { flex: 1, padding: "20px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
+            footer != null && /* @__PURE__ */ jsx141("div", { style: { padding: "16px 22px", borderTop: "1px solid var(--color-semantic-line-solid-normal)", display: "flex", justifyContent: "flex-end", gap: 10 }, children: footer })
           ]
         }
       )
@@ -13316,13 +15591,13 @@ function Drawer({ open = false, side = "right", width = 380, title, children, fo
 }
 
 // components/overlay/DropdownMenu.jsx
-import React137 from "react";
-import { jsx as jsx134, jsxs as jsxs102 } from "react/jsx-runtime";
+import React146 from "react";
+import { jsx as jsx142, jsxs as jsxs111 } from "react/jsx-runtime";
 function CheckMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
   const activeColor = disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-primary-normal)";
   if (variant === "radio") {
-    return /* @__PURE__ */ jsx134(
+    return /* @__PURE__ */ jsx142(
       "span",
       {
         "aria-hidden": "true",
@@ -13330,13 +15605,13 @@ function CheckMark({ variant, checked, disabled }) {
           width: 14,
           height: 14,
           borderRadius: "50%",
-          border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
+          border: `1.5px solid ${checked ? activeColor : "var(--color-semantic-line-solid-normal)"}`,
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
           flexShrink: 0
         },
-        children: checked && /* @__PURE__ */ jsx134(
+        children: checked && /* @__PURE__ */ jsx142(
           "span",
           {
             style: {
@@ -13350,7 +15625,7 @@ function CheckMark({ variant, checked, disabled }) {
       }
     );
   }
-  return /* @__PURE__ */ jsx134(
+  return /* @__PURE__ */ jsx142(
     "span",
     {
       "aria-hidden": "true",
@@ -13358,7 +15633,7 @@ function CheckMark({ variant, checked, disabled }) {
         width: 14,
         height: 14,
         borderRadius: 4,
-        border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
+        border: `1.5px solid ${checked ? activeColor : "var(--color-semantic-line-solid-normal)"}`,
         background: checked ? activeColor : "transparent",
         color: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-inverse-label)",
         display: "inline-flex",
@@ -13366,7 +15641,7 @@ function CheckMark({ variant, checked, disabled }) {
         justifyContent: "center",
         flexShrink: 0
       },
-      children: checked && /* @__PURE__ */ jsx134(
+      children: checked && /* @__PURE__ */ jsx142(
         "svg",
         {
           width: "11",
@@ -13377,7 +15652,7 @@ function CheckMark({ variant, checked, disabled }) {
           strokeWidth: "3",
           strokeLinecap: "round",
           strokeLinejoin: "round",
-          children: /* @__PURE__ */ jsx134("path", { d: "m5 12 4 4 10-10" })
+          children: /* @__PURE__ */ jsx142("path", { d: "m5 12 4 4 10-10" })
         }
       )
     }
@@ -13395,7 +15670,7 @@ function MenuItemButton({
   verticalPadding,
   onSelect
 }) {
-  const [hover, setHover] = React137.useState(false);
+  const [hover, setHover] = React146.useState(false);
   const cell = normalizeCellPadding(cellPadding);
   const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
   const denseCell = cell === "8px";
@@ -13405,7 +15680,7 @@ function MenuItemButton({
   const active = checked || Boolean(item.active);
   const description = item.description ?? item.captionContent;
   const minHeight = description ? denseVertical ? 62 : 70 : denseVertical ? 40 : 48;
-  return /* @__PURE__ */ jsxs102(
+  return /* @__PURE__ */ jsxs111(
     "button",
     {
       type: "button",
@@ -13436,13 +15711,13 @@ function MenuItemButton({
         fontSize: "var(--body1-size)",
         fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
         letterSpacing: 0,
-        color: item.danger ? "var(--bw-red)" : disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
+        color: item.danger ? "var(--color-semantic-status-negative)" : disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
         opacity: disabled ? 0.72 : 1
       },
       children: [
-        item.icon || /* @__PURE__ */ jsx134(CheckMark, { variant, checked, disabled }),
-        /* @__PURE__ */ jsxs102("span", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
-          /* @__PURE__ */ jsx134(
+        item.icon || /* @__PURE__ */ jsx142(CheckMark, { variant, checked, disabled }),
+        /* @__PURE__ */ jsxs111("span", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
+          /* @__PURE__ */ jsx142(
             "span",
             {
               style: {
@@ -13453,7 +15728,7 @@ function MenuItemButton({
               children: item.label
             }
           ),
-          description && /* @__PURE__ */ jsx134(
+          description && /* @__PURE__ */ jsx142(
             "span",
             {
               style: {
@@ -13465,7 +15740,7 @@ function MenuItemButton({
             }
           )
         ] }),
-        item.shortcut && /* @__PURE__ */ jsx134(
+        item.shortcut && /* @__PURE__ */ jsx142(
           "span",
           {
             style: {
@@ -13498,14 +15773,14 @@ function DropdownMenu({
   ...rest
 }) {
   const controlled = open !== void 0;
-  const [internalOpen, setInternalOpen] = React137.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React146.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
-  const ref = React137.useRef(null);
+  const ref = React146.useRef(null);
   const setVisible = (next) => {
     if (!controlled) setInternalOpen(next);
     onOpenChange?.(next);
   };
-  React137.useEffect(() => {
+  React146.useEffect(() => {
     if (!visible) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setVisible(false);
@@ -13513,14 +15788,14 @@ function DropdownMenu({
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [visible]);
-  return /* @__PURE__ */ jsxs102(
+  return /* @__PURE__ */ jsxs111(
     "div",
     {
       ref,
       style: { position: "relative", display: "inline-block", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx134(
+        /* @__PURE__ */ jsx142(
           "span",
           {
             onClick: () => setVisible(!visible),
@@ -13528,7 +15803,7 @@ function DropdownMenu({
             children: trigger
           }
         ),
-        visible && /* @__PURE__ */ jsxs102(
+        visible && /* @__PURE__ */ jsxs111(
           "div",
           {
             role: "menu",
@@ -13541,8 +15816,8 @@ function DropdownMenu({
               minWidth: width,
               maxHeight,
               overflowY: maxHeight ? "auto" : void 0,
-              background: "var(--bw-white)",
-              border: "1px solid var(--bw-border)",
+              background: "var(--color-semantic-background-elevated-normal)",
+              border: "1px solid var(--color-semantic-line-solid-normal)",
               borderRadius: "var(--component-menu-radius)",
               boxShadow: "var(--shadow-md)",
               padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)",
@@ -13553,18 +15828,18 @@ function DropdownMenu({
             },
             children: [
               items.map(
-                (item, index) => item.divider ? /* @__PURE__ */ jsx134(
+                (item, index) => item.divider ? /* @__PURE__ */ jsx142(
                   "div",
                   {
                     role: "separator",
                     style: {
                       height: 1,
-                      background: "var(--bw-border)",
+                      background: "var(--color-semantic-line-solid-normal)",
                       margin: "6px 4px"
                     }
                   },
                   index
-                ) : /* @__PURE__ */ jsx134(
+                ) : /* @__PURE__ */ jsx142(
                   MenuItemButton,
                   {
                     item,
@@ -13576,16 +15851,16 @@ function DropdownMenu({
                   index
                 )
               ),
-              (menuActionArea || action) && /* @__PURE__ */ jsx134(
+              (menuActionArea || action) && /* @__PURE__ */ jsx142(
                 "div",
                 {
                   style: {
                     display: "flex",
                     justifyContent: "flex-end",
                     padding: "8px 4px 2px",
-                    borderTop: "1px solid var(--bw-border)"
+                    borderTop: "1px solid var(--color-semantic-line-solid-normal)"
                   },
-                  children: action || /* @__PURE__ */ jsx134(
+                  children: action || /* @__PURE__ */ jsx142(
                     "button",
                     {
                       type: "button",
@@ -13614,7 +15889,7 @@ function DropdownMenu({
 }
 
 // components/overlay/HoverCard.jsx
-import React138 from "react";
+import React147 from "react";
 
 // components/overlay/anchored-panel-style.js
 function anchoredPanelStyle(width) {
@@ -13623,8 +15898,8 @@ function anchoredPanelStyle(width) {
     top: "calc(100% + 8px)",
     zIndex: 40,
     width,
-    background: "var(--bw-white)",
-    border: "1px solid var(--bw-border)",
+    background: "var(--color-semantic-background-elevated-normal)",
+    border: "1px solid var(--color-semantic-line-solid-normal)",
     borderRadius: "var(--radius-lg)",
     boxShadow: "var(--shadow-md)",
     padding: 16,
@@ -13636,10 +15911,10 @@ function anchoredPanelStyle(width) {
 }
 
 // components/overlay/HoverCard.jsx
-import { jsx as jsx135, jsxs as jsxs103 } from "react/jsx-runtime";
+import { jsx as jsx143, jsxs as jsxs112 } from "react/jsx-runtime";
 function HoverCard({ trigger, children, align = "left", width = 280, style, ...rest }) {
-  const [open, setOpen] = React138.useState(false);
-  const t = React138.useRef(null);
+  const [open, setOpen] = React147.useState(false);
+  const t = React147.useRef(null);
   const show = () => {
     clearTimeout(t.current);
     t.current = setTimeout(() => setOpen(true), 120);
@@ -13648,31 +15923,31 @@ function HoverCard({ trigger, children, align = "left", width = 280, style, ...r
     clearTimeout(t.current);
     t.current = setTimeout(() => setOpen(false), 120);
   };
-  return /* @__PURE__ */ jsxs103("span", { style: { position: "relative", display: "inline-flex" }, onMouseEnter: show, onMouseLeave: hide, ...rest, children: [
+  return /* @__PURE__ */ jsxs112("span", { style: { position: "relative", display: "inline-flex" }, onMouseEnter: show, onMouseLeave: hide, ...rest, children: [
     trigger,
-    open && /* @__PURE__ */ jsx135("div", { style: { ...anchoredPanelStyle(width), [align]: 0, ...style }, children })
+    open && /* @__PURE__ */ jsx143("div", { style: { ...anchoredPanelStyle(width), [align]: 0, ...style }, children })
   ] });
 }
 
 // components/overlay/Lightbox.jsx
-import React139 from "react";
-import { jsx as jsx136, jsxs as jsxs104 } from "react/jsx-runtime";
+import React148 from "react";
+import { jsx as jsx144, jsxs as jsxs113 } from "react/jsx-runtime";
 function lbArrow(side) {
   return { position: "absolute", [side]: 12, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--material-control-dimmer)", color: "var(--color-semantic-inverse-label)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" };
 }
 function Lightbox({ open = false, images = [], index = 0, onClose, onIndexChange, style, ...rest }) {
-  const [i, setI] = React139.useState(index);
-  React139.useEffect(() => {
+  const [i, setI] = React148.useState(index);
+  React148.useEffect(() => {
     setI(index);
   }, [index]);
-  const go = React139.useCallback((d) => {
+  const go = React148.useCallback((d) => {
     setI((prev) => {
       const n = (prev + d + images.length) % images.length;
       onIndexChange && onIndexChange(n);
       return n;
     });
   }, [images.length, onIndexChange]);
-  React139.useEffect(() => {
+  React148.useEffect(() => {
     if (!open) return void 0;
     const onKey = (e) => {
       if (e.key === "Escape" && onClose) onClose();
@@ -13685,34 +15960,34 @@ function Lightbox({ open = false, images = [], index = 0, onClose, onIndexChange
   if (!open) return null;
   const src = images[i];
   const url = typeof src === "string" ? src : src && src.src;
-  return /* @__PURE__ */ jsx136(LightboxStage, { url, alt: src && src.alt || "", count: images.length, go, onClose, style, rest }, "stage");
+  return /* @__PURE__ */ jsx144(LightboxStage, { url, alt: src && src.alt || "", count: images.length, go, onClose, style, rest }, "stage");
 }
 function LightboxStage({ url, alt, count, go, onClose, style, rest }) {
-  const [loaded, setLoaded] = React139.useState(false);
-  const imgRef = React139.useRef(null);
-  React139.useEffect(() => {
+  const [loaded, setLoaded] = React148.useState(false);
+  const imgRef = React148.useRef(null);
+  React148.useEffect(() => {
     setLoaded(false);
     const el = imgRef.current;
     if (el && el.complete && el.naturalWidth > 0) setLoaded(true);
   }, [url]);
-  return /* @__PURE__ */ jsxs104("div", { role: "dialog", "aria-modal": "true", onClick: (e) => {
+  return /* @__PURE__ */ jsxs113("div", { role: "dialog", "aria-modal": "true", onClick: (e) => {
     if (e.target === e.currentTarget && onClose) onClose();
   }, style: { position: "fixed", inset: 0, zIndex: 130, display: "flex", alignItems: "center", justifyContent: "center", background: "var(--material-dimmer)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx136("button", { type: "button", "aria-label": "close", onClick: onClose, style: { position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--inverse-fill-normal)", color: "var(--color-semantic-inverse-label)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx136("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx136("path", { d: "M18 6 6 18M6 6l12 12" }) }) }),
-    /* @__PURE__ */ jsxs104("div", { style: { position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: loaded ? 0 : 280, minHeight: loaded ? 0 : 200 }, children: [
-      /* @__PURE__ */ jsx136("img", { ref: imgRef, src: url, alt, onLoad: () => setLoaded(true), style: { display: "block", maxWidth: "86vw", maxHeight: "86vh", borderRadius: "var(--radius-lg)", boxShadow: loaded ? "var(--shadow-xl)" : "none", opacity: loaded ? 1 : 0, transition: "opacity .18s ease" } }),
-      !loaded && /* @__PURE__ */ jsx136("span", { "aria-hidden": "true", style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", display: "inline-flex" }, children: /* @__PURE__ */ jsx136("svg", { width: "34", height: "34", viewBox: "0 0 24 24", fill: "none", stroke: "var(--inverse-icon-muted)", strokeWidth: "2.4", strokeLinecap: "round", children: /* @__PURE__ */ jsx136("path", { d: "M12 2a10 10 0 1 0 10 10", children: /* @__PURE__ */ jsx136("animateTransform", { attributeName: "transform", type: "rotate", from: "0 12 12", to: "360 12 12", dur: "0.8s", repeatCount: "indefinite" }) }) }) }),
-      loaded && count > 1 && /* @__PURE__ */ jsx136("button", { type: "button", "aria-label": "previous", onClick: () => go(-1), style: lbArrow("left"), children: /* @__PURE__ */ jsx136("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx136("path", { d: "m15 18-6-6 6-6" }) }) }),
-      loaded && count > 1 && /* @__PURE__ */ jsx136("button", { type: "button", "aria-label": "next", onClick: () => go(1), style: lbArrow("right"), children: /* @__PURE__ */ jsx136("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx136("path", { d: "m9 18 6-6-6-6" }) }) })
+    /* @__PURE__ */ jsx144("button", { type: "button", "aria-label": "close", onClick: onClose, style: { position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "var(--color-semantic-inverse-fill-normal)", color: "var(--color-semantic-inverse-label)", cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx144("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx144("path", { d: "M18 6 6 18M6 6l12 12" }) }) }),
+    /* @__PURE__ */ jsxs113("div", { style: { position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center", minWidth: loaded ? 0 : 280, minHeight: loaded ? 0 : 200 }, children: [
+      /* @__PURE__ */ jsx144("img", { ref: imgRef, src: url, alt, onLoad: () => setLoaded(true), style: { display: "block", maxWidth: "86vw", maxHeight: "86vh", borderRadius: "var(--radius-lg)", boxShadow: loaded ? "var(--shadow-xl)" : "none", opacity: loaded ? 1 : 0, transition: "opacity .18s ease" } }),
+      !loaded && /* @__PURE__ */ jsx144("span", { "aria-hidden": "true", style: { position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", display: "inline-flex" }, children: /* @__PURE__ */ jsx144("svg", { width: "34", height: "34", viewBox: "0 0 24 24", fill: "none", stroke: "var(--color-semantic-inverse-icon-muted)", strokeWidth: "2.4", strokeLinecap: "round", children: /* @__PURE__ */ jsx144("path", { d: "M12 2a10 10 0 1 0 10 10", children: /* @__PURE__ */ jsx144("animateTransform", { attributeName: "transform", type: "rotate", from: "0 12 12", to: "360 12 12", dur: "0.8s", repeatCount: "indefinite" }) }) }) }),
+      loaded && count > 1 && /* @__PURE__ */ jsx144("button", { type: "button", "aria-label": "previous", onClick: () => go(-1), style: lbArrow("left"), children: /* @__PURE__ */ jsx144("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx144("path", { d: "m15 18-6-6 6-6" }) }) }),
+      loaded && count > 1 && /* @__PURE__ */ jsx144("button", { type: "button", "aria-label": "next", onClick: () => go(1), style: lbArrow("right"), children: /* @__PURE__ */ jsx144("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx144("path", { d: "m9 18 6-6-6-6" }) }) })
     ] })
   ] });
 }
 
 // components/overlay/Modal.jsx
-import React140 from "react";
-import { jsx as jsx137, jsxs as jsxs105 } from "react/jsx-runtime";
+import React149 from "react";
+import { jsx as jsx145, jsxs as jsxs114 } from "react/jsx-runtime";
 function Modal({ open = false, title, children, footer, onClose, width = 520, closeOnScrim = true, style, ...rest }) {
-  React140.useEffect(() => {
+  React149.useEffect(() => {
     if (!open) return void 0;
     const onKey = (e) => {
       if (e.key === "Escape" && onClose) onClose();
@@ -13721,7 +15996,7 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
   if (!open) return null;
-  return /* @__PURE__ */ jsx137(
+  return /* @__PURE__ */ jsx145(
     "div",
     {
       role: "presentation",
@@ -13729,21 +16004,21 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
         if (e.target === e.currentTarget && onClose) onClose();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--component-dialog-scrim)", backdropFilter: "blur(var(--component-dialog-scrim-blur))" },
-      children: /* @__PURE__ */ jsxs105(
+      children: /* @__PURE__ */ jsxs114(
         "div",
         {
           role: "dialog",
           "aria-modal": "true",
           "aria-label": typeof title === "string" ? title : void 0,
-          style: { width: "100%", maxWidth: width, maxHeight: "86vh", display: "flex", flexDirection: "column", background: "var(--bw-white)", borderRadius: "var(--component-dialog-radius)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", overflow: "hidden", ...style },
+          style: { width: "100%", maxWidth: width, maxHeight: "86vh", display: "flex", flexDirection: "column", background: "var(--color-semantic-background-elevated-normal)", borderRadius: "var(--component-dialog-radius)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", overflow: "hidden", ...style },
           ...rest,
           children: [
-            (title != null || onClose) && /* @__PURE__ */ jsxs105("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--bw-border)" }, children: [
-              /* @__PURE__ */ jsx137("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-              onClose && /* @__PURE__ */ jsx137("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx137("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx137("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+            (title != null || onClose) && /* @__PURE__ */ jsxs114("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "20px 24px", borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
+              /* @__PURE__ */ jsx145("div", { style: { fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+              onClose && /* @__PURE__ */ jsx145("button", { type: "button", "aria-label": "close", onClick: onClose, style: { display: "inline-flex", padding: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx145("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx145("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
             ] }),
-            /* @__PURE__ */ jsx137("div", { style: { padding: "20px 24px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
-            footer != null && /* @__PURE__ */ jsx137("div", { style: { display: "flex", justifyContent: "flex-end", gap: 10, padding: "16px 24px", borderTop: "1px solid var(--bw-border)" }, children: footer })
+            /* @__PURE__ */ jsx145("div", { style: { padding: "20px 24px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
+            footer != null && /* @__PURE__ */ jsx145("div", { style: { display: "flex", justifyContent: "flex-end", gap: 10, padding: "16px 24px", borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: footer })
           ]
         }
       )
@@ -13752,12 +16027,12 @@ function Modal({ open = false, title, children, footer, onClose, width = 520, cl
 }
 
 // components/overlay/Popover.jsx
-import React141 from "react";
-import { jsx as jsx138, jsxs as jsxs106 } from "react/jsx-runtime";
+import React150 from "react";
+import { jsx as jsx146, jsxs as jsxs115 } from "react/jsx-runtime";
 function Popover({ trigger, children, align = "left", width = 260, style, ...rest }) {
-  const [open, setOpen] = React141.useState(false);
-  const ref = React141.useRef(null);
-  React141.useEffect(() => {
+  const [open, setOpen] = React150.useState(false);
+  const ref = React150.useRef(null);
+  React150.useEffect(() => {
     if (!open) return void 0;
     const onDoc = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -13765,18 +16040,18 @@ function Popover({ trigger, children, align = "left", width = 260, style, ...res
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-  return /* @__PURE__ */ jsxs106("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsx138("span", { onClick: () => setOpen((o) => !o), style: { display: "inline-flex" }, children: trigger }),
-    open && /* @__PURE__ */ jsx138("div", { role: "dialog", style: { ...anchoredPanelStyle(width), [align]: 0 }, children })
+  return /* @__PURE__ */ jsxs115("div", { ref, style: { position: "relative", display: "inline-block", ...style }, ...rest, children: [
+    /* @__PURE__ */ jsx146("span", { onClick: () => setOpen((o) => !o), style: { display: "inline-flex" }, children: trigger }),
+    open && /* @__PURE__ */ jsx146("div", { role: "dialog", style: { ...anchoredPanelStyle(width), [align]: 0 }, children })
   ] });
 }
 
 // components/overlay/Sheet.jsx
-import React142 from "react";
-import { jsx as jsx139, jsxs as jsxs107 } from "react/jsx-runtime";
+import React151 from "react";
+import { jsx as jsx147, jsxs as jsxs116 } from "react/jsx-runtime";
 function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = true, height, style, ...rest }) {
-  const [shown, setShown] = React142.useState(false);
-  React142.useEffect(() => {
+  const [shown, setShown] = React151.useState(false);
+  React151.useEffect(() => {
     if (open) {
       const id = requestAnimationFrame(() => setShown(true));
       return () => cancelAnimationFrame(id);
@@ -13784,7 +16059,7 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
     setShown(false);
     return void 0;
   }, [open]);
-  React142.useEffect(() => {
+  React151.useEffect(() => {
     if (!open) return void 0;
     const onKey = (e) => {
       if (e.key === "Escape" && onClose) onClose();
@@ -13793,7 +16068,7 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
   if (!open) return null;
-  return /* @__PURE__ */ jsx139(
+  return /* @__PURE__ */ jsx147(
     "div",
     {
       role: "presentation",
@@ -13801,19 +16076,19 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
         if (e.target === e.currentTarget && onClose) onClose();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: 100, background: "var(--scrim-dark)", backdropFilter: "blur(2px)", opacity: shown ? 1 : 0, transition: "opacity var(--dur-base) var(--ease-out)" },
-      children: /* @__PURE__ */ jsxs107(
+      children: /* @__PURE__ */ jsxs116(
         "div",
         {
           role: "dialog",
           "aria-modal": "true",
           "aria-label": typeof title === "string" ? title : void 0,
-          style: { position: "absolute", left: 0, right: 0, bottom: 0, maxHeight: "88vh", height, display: "flex", flexDirection: "column", background: "var(--bw-white)", borderTopLeftRadius: "var(--radius-3xl)", borderTopRightRadius: "var(--radius-3xl)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", transform: shown ? "none" : "translateY(100%)", transition: "transform var(--dur-slow) var(--ease-out)", ...style },
+          style: { position: "absolute", left: 0, right: 0, bottom: 0, maxHeight: "88vh", height, display: "flex", flexDirection: "column", background: "var(--color-semantic-background-elevated-normal)", borderTopLeftRadius: "var(--radius-3xl)", borderTopRightRadius: "var(--radius-3xl)", boxShadow: "var(--shadow-xl)", fontFamily: "var(--font-sans)", transform: shown ? "none" : "translateY(100%)", transition: "transform var(--dur-slow) var(--ease-out)", ...style },
           ...rest,
           children: [
-            /* @__PURE__ */ jsx139("div", { style: { display: "flex", justifyContent: "center", paddingTop: 10 }, children: /* @__PURE__ */ jsx139("span", { style: { width: 40, height: 4, borderRadius: "var(--radius-pill)", background: "var(--bw-gray-300)" } }) }),
-            title != null && /* @__PURE__ */ jsx139("div", { style: { padding: "14px 22px 4px", fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-            /* @__PURE__ */ jsx139("div", { style: { flex: 1, padding: "14px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
-            footer != null && /* @__PURE__ */ jsx139("div", { style: { padding: "14px 22px 22px", display: "flex", gap: 10 }, children: footer })
+            /* @__PURE__ */ jsx147("div", { style: { display: "flex", justifyContent: "center", paddingTop: 10 }, children: /* @__PURE__ */ jsx147("span", { style: { width: 40, height: 4, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-interaction-inactive)" } }) }),
+            title != null && /* @__PURE__ */ jsx147("div", { style: { padding: "14px 22px 4px", fontSize: 18, fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+            /* @__PURE__ */ jsx147("div", { style: { flex: 1, padding: "14px 22px", overflow: "auto", fontSize: 15, lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
+            footer != null && /* @__PURE__ */ jsx147("div", { style: { padding: "14px 22px 22px", display: "flex", gap: 10 }, children: footer })
           ]
         }
       )
@@ -13822,9 +16097,9 @@ function Sheet({ open = false, title, children, footer, onClose, closeOnScrim = 
 }
 
 // components/overlay/Snackbar.jsx
-import React143 from "react";
-import { jsx as jsx140, jsxs as jsxs108 } from "react/jsx-runtime";
-var ICON = /* @__PURE__ */ jsxs108(
+import React152 from "react";
+import { jsx as jsx148, jsxs as jsxs117 } from "react/jsx-runtime";
+var ICON = /* @__PURE__ */ jsxs117(
   "svg",
   {
     width: "22",
@@ -13837,9 +16112,9 @@ var ICON = /* @__PURE__ */ jsxs108(
     strokeLinejoin: "round",
     "aria-hidden": "true",
     children: [
-      /* @__PURE__ */ jsx140("circle", { cx: "12", cy: "12", r: "9" }),
-      /* @__PURE__ */ jsx140("path", { d: "M12 8h.01" }),
-      /* @__PURE__ */ jsx140("path", { d: "M11 12h1v5h1" })
+      /* @__PURE__ */ jsx148("circle", { cx: "12", cy: "12", r: "9" }),
+      /* @__PURE__ */ jsx148("path", { d: "M12 8h.01" }),
+      /* @__PURE__ */ jsx148("path", { d: "M11 12h1v5h1" })
     ]
   }
 );
@@ -13859,7 +16134,7 @@ function Snackbar({
 }) {
   const hasDescription = description != null || children != null;
   const minHeight = heading != null && hasDescription ? 72 : hasDescription ? 68 : 54;
-  return /* @__PURE__ */ jsxs108(
+  return /* @__PURE__ */ jsxs117(
     "div",
     {
       role: "status",
@@ -13883,7 +16158,7 @@ function Snackbar({
       },
       ...rest,
       children: [
-        leadingIcon && /* @__PURE__ */ jsx140(
+        leadingIcon && /* @__PURE__ */ jsx148(
           "span",
           {
             style: {
@@ -13894,8 +16169,8 @@ function Snackbar({
             children: icon
           }
         ),
-        /* @__PURE__ */ jsxs108("span", { style: { display: "grid", gap: 3, minWidth: 0, flex: 1 }, children: [
-          heading != null && /* @__PURE__ */ jsx140(
+        /* @__PURE__ */ jsxs117("span", { style: { display: "grid", gap: 3, minWidth: 0, flex: 1 }, children: [
+          heading != null && /* @__PURE__ */ jsx148(
             "strong",
             {
               style: {
@@ -13907,22 +16182,22 @@ function Snackbar({
               children: heading
             }
           ),
-          hasDescription && /* @__PURE__ */ jsx140(
+          hasDescription && /* @__PURE__ */ jsx148(
             "span",
             {
               style: {
                 fontSize: 13,
                 lineHeight: 1.45,
-                color: "var(--inverse-label-neutral)",
+                color: "var(--color-semantic-inverse-label-neutral-soft)",
                 letterSpacing: 0,
                 wordBreak: "keep-all"
               },
               children: description ?? children
             }
           ),
-          heading == null && !hasDescription && /* @__PURE__ */ jsx140("span", { style: { fontSize: 14, lineHeight: 1.4 }, children })
+          heading == null && !hasDescription && /* @__PURE__ */ jsx148("span", { style: { fontSize: 14, lineHeight: 1.4 }, children })
         ] }),
-        action != null && /* @__PURE__ */ jsx140(
+        action != null && /* @__PURE__ */ jsx148(
           "button",
           {
             type: "button",
@@ -13944,7 +16219,7 @@ function Snackbar({
             children: action
           }
         ),
-        (closeButton || onClose) && /* @__PURE__ */ jsx140(
+        (closeButton || onClose) && /* @__PURE__ */ jsx148(
           "button",
           {
             type: "button",
@@ -13959,7 +16234,7 @@ function Snackbar({
               cursor: "pointer",
               padding: 0
             },
-            children: /* @__PURE__ */ jsx140(
+            children: /* @__PURE__ */ jsx148(
               "svg",
               {
                 width: "16",
@@ -13971,7 +16246,7 @@ function Snackbar({
                 strokeLinecap: "round",
                 strokeLinejoin: "round",
                 "aria-hidden": "true",
-                children: /* @__PURE__ */ jsx140("path", { d: "M18 6 6 18M6 6l12 12" })
+                children: /* @__PURE__ */ jsx148("path", { d: "M18 6 6 18M6 6l12 12" })
               }
             )
           }
@@ -13982,34 +16257,34 @@ function Snackbar({
 }
 
 // components/overlay/Toast.jsx
-import React144 from "react";
-import { Fragment as Fragment4, jsx as jsx141, jsxs as jsxs109 } from "react/jsx-runtime";
+import React153 from "react";
+import { Fragment as Fragment5, jsx as jsx149, jsxs as jsxs118 } from "react/jsx-runtime";
 var ICONS = {
   normal: {
     color: "var(--color-semantic-inverse-label)",
-    node: /* @__PURE__ */ jsx141("circle", { cx: "12", cy: "12", r: "8" })
+    node: /* @__PURE__ */ jsx149("circle", { cx: "12", cy: "12", r: "8" })
   },
   positive: {
-    color: "var(--bw-green)",
-    node: /* @__PURE__ */ jsxs109(Fragment4, { children: [
-      /* @__PURE__ */ jsx141("circle", { cx: "12", cy: "12", r: "9" }),
-      /* @__PURE__ */ jsx141("path", { d: "m8.5 12.2 2.2 2.2 4.8-5" })
+    color: "var(--color-semantic-status-positive)",
+    node: /* @__PURE__ */ jsxs118(Fragment5, { children: [
+      /* @__PURE__ */ jsx149("circle", { cx: "12", cy: "12", r: "9" }),
+      /* @__PURE__ */ jsx149("path", { d: "m8.5 12.2 2.2 2.2 4.8-5" })
     ] })
   },
   cautionary: {
-    color: "var(--bw-amber)",
-    node: /* @__PURE__ */ jsxs109(Fragment4, { children: [
-      /* @__PURE__ */ jsx141("path", { d: "M12 3.8 21 19H3L12 3.8Z" }),
-      /* @__PURE__ */ jsx141("path", { d: "M12 9v4" }),
-      /* @__PURE__ */ jsx141("path", { d: "M12 16h.01" })
+    color: "var(--color-semantic-status-cautionary)",
+    node: /* @__PURE__ */ jsxs118(Fragment5, { children: [
+      /* @__PURE__ */ jsx149("path", { d: "M12 3.8 21 19H3L12 3.8Z" }),
+      /* @__PURE__ */ jsx149("path", { d: "M12 9v4" }),
+      /* @__PURE__ */ jsx149("path", { d: "M12 16h.01" })
     ] })
   },
   negative: {
-    color: "var(--bw-red)",
-    node: /* @__PURE__ */ jsxs109(Fragment4, { children: [
-      /* @__PURE__ */ jsx141("circle", { cx: "12", cy: "12", r: "9" }),
-      /* @__PURE__ */ jsx141("path", { d: "M12 8v5" }),
-      /* @__PURE__ */ jsx141("path", { d: "M12 16h.01" })
+    color: "var(--color-semantic-status-negative)",
+    node: /* @__PURE__ */ jsxs118(Fragment5, { children: [
+      /* @__PURE__ */ jsx149("circle", { cx: "12", cy: "12", r: "9" }),
+      /* @__PURE__ */ jsx149("path", { d: "M12 8v5" }),
+      /* @__PURE__ */ jsx149("path", { d: "M12 16h.01" })
     ] })
   }
 };
@@ -14034,7 +16309,7 @@ function Toast({
 }) {
   const normalized = normalizeTone(variant || tone);
   const t = ICONS[normalized] || ICONS.normal;
-  return /* @__PURE__ */ jsxs109(
+  return /* @__PURE__ */ jsxs118(
     "div",
     {
       role: "status",
@@ -14057,12 +16332,12 @@ function Toast({
       },
       ...rest,
       children: [
-        leadingIcon && /* @__PURE__ */ jsx141(
+        leadingIcon && /* @__PURE__ */ jsx149(
           "span",
           {
             "aria-hidden": "true",
             style: { display: "inline-flex", flexShrink: 0, color: t.color },
-            children: icon || /* @__PURE__ */ jsx141(
+            children: icon || /* @__PURE__ */ jsx149(
               "svg",
               {
                 width: "22",
@@ -14078,7 +16353,7 @@ function Toast({
             )
           }
         ),
-        /* @__PURE__ */ jsx141(
+        /* @__PURE__ */ jsx149(
           "span",
           {
             style: {
@@ -14094,7 +16369,7 @@ function Toast({
             children
           }
         ),
-        action != null && /* @__PURE__ */ jsx141(
+        action != null && /* @__PURE__ */ jsx149(
           "button",
           {
             type: "button",
@@ -14113,7 +16388,7 @@ function Toast({
             children: action
           }
         ),
-        onClose && /* @__PURE__ */ jsx141(
+        onClose && /* @__PURE__ */ jsx149(
           "button",
           {
             type: "button",
@@ -14128,7 +16403,7 @@ function Toast({
               cursor: "pointer",
               color: "var(--color-semantic-inverse-label)"
             },
-            children: /* @__PURE__ */ jsx141(
+            children: /* @__PURE__ */ jsx149(
               "svg",
               {
                 width: "16",
@@ -14140,7 +16415,7 @@ function Toast({
                 strokeLinecap: "round",
                 strokeLinejoin: "round",
                 "aria-hidden": "true",
-                children: /* @__PURE__ */ jsx141("path", { d: "M18 6 6 18M6 6l12 12" })
+                children: /* @__PURE__ */ jsx149("path", { d: "M18 6 6 18M6 6l12 12" })
               }
             )
           }
@@ -14151,8 +16426,8 @@ function Toast({
 }
 
 // components/overlay/ToastStack.jsx
-import React145 from "react";
-import { jsx as jsx142 } from "react/jsx-runtime";
+import React154 from "react";
+import { jsx as jsx150 } from "react/jsx-runtime";
 function ToastStack({ children, position = "bottom-right", gap = 10, style, ...rest }) {
   const pos = {
     "bottom-right": { bottom: 20, right: 20, alignItems: "flex-end" },
@@ -14161,12 +16436,12 @@ function ToastStack({ children, position = "bottom-right", gap = 10, style, ...r
     "top-left": { top: 20, left: 20, alignItems: "flex-start" },
     "bottom-center": { bottom: 20, left: "50%", transform: "translateX(-50%)", alignItems: "center" }
   }[position] || {};
-  return /* @__PURE__ */ jsx142("div", { style: { position: "fixed", zIndex: 120, display: "flex", flexDirection: "column", gap, ...pos, ...style }, ...rest, children });
+  return /* @__PURE__ */ jsx150("div", { style: { position: "fixed", zIndex: 120, display: "flex", flexDirection: "column", gap, ...pos, ...style }, ...rest, children });
 }
 
 // components/robotics/BatteryGauge.jsx
-import React146 from "react";
-import { jsx as jsx143, jsxs as jsxs110 } from "react/jsx-runtime";
+import React155 from "react";
+import { jsx as jsx151, jsxs as jsxs119 } from "react/jsx-runtime";
 function fillForLevel(b) {
   return b <= 20 ? "var(--color-semantic-status-negative)" : b <= 50 ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
 }
@@ -14176,7 +16451,7 @@ function BatteryGauge({ value = 0, showLabel = true, size = "md", style, ...rest
   const sm = size === "sm";
   const w = sm ? 20 : 24;
   const h = sm ? 10 : 12;
-  return /* @__PURE__ */ jsxs110(
+  return /* @__PURE__ */ jsxs119(
     "span",
     {
       role: "img",
@@ -14184,11 +16459,11 @@ function BatteryGauge({ value = 0, showLabel = true, size = "md", style, ...rest
       style: { display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs110("span", { "aria-hidden": "true", style: { position: "relative", width: w, height: h, border: "1.5px solid var(--color-semantic-label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
-          /* @__PURE__ */ jsx143("span", { style: { display: "block", height: "100%", width: `${b}%`, background: fill, borderRadius: 1 } }),
-          /* @__PURE__ */ jsx143("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--color-semantic-label-alternative)", borderRadius: "0 1px 1px 0" } })
+        /* @__PURE__ */ jsxs119("span", { "aria-hidden": "true", style: { position: "relative", width: w, height: h, border: "1.5px solid var(--color-semantic-label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
+          /* @__PURE__ */ jsx151("span", { style: { display: "block", height: "100%", width: `${b}%`, background: fill, borderRadius: 1 } }),
+          /* @__PURE__ */ jsx151("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--color-semantic-label-alternative)", borderRadius: "0 1px 1px 0" } })
         ] }),
-        showLabel && /* @__PURE__ */ jsxs110("span", { "aria-hidden": "true", style: { fontSize: sm ? 11 : 12, fontWeight: "var(--fw-bold)", color: fill, fontVariantNumeric: "tabular-nums" }, children: [
+        showLabel && /* @__PURE__ */ jsxs119("span", { "aria-hidden": "true", style: { fontSize: sm ? 11 : 12, fontWeight: "var(--fw-bold)", color: fill, fontVariantNumeric: "tabular-nums" }, children: [
           b,
           "%"
         ] })
@@ -14197,55 +16472,9 @@ function BatteryGauge({ value = 0, showLabel = true, size = "md", style, ...rest
   );
 }
 
-// components/robotics/ConnectionBadge.jsx
-import React147 from "react";
-import { jsx as jsx144, jsxs as jsxs111 } from "react/jsx-runtime";
-var CFG = {
-  online: { c: "var(--color-semantic-status-positive)", bars: 3, label: "\uC628\uB77C\uC778" },
-  reconnecting: { c: "var(--color-semantic-status-cautionary)", bars: 2, label: "\uC7AC\uC5F0\uACB0" },
-  weak: { c: "var(--color-semantic-status-cautionary)", bars: 1, label: "\uC57D\uD568" },
-  offline: { c: "var(--color-semantic-label-disable)", bars: 0, label: "\uC624\uD504\uB77C\uC778" }
-};
-function ConnectionBadge({ status = "online", label, showLabel = true, size = "md", style, ...rest }) {
-  React147.useEffect(() => {
-    if (typeof document === "undefined" || document.getElementById("lk-conn-kf")) return;
-    const el = document.createElement("style");
-    el.id = "lk-conn-kf";
-    el.textContent = "@keyframes lk-conn-blink{0%,100%{opacity:1}50%{opacity:.35}}";
-    document.head.appendChild(el);
-  }, []);
-  const cfg = CFG[status] || CFG.online;
-  const h = size === "sm" ? 11 : 14;
-  const bw = size === "sm" ? 3 : 4;
-  return /* @__PURE__ */ jsxs111("span", { style: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 7,
-    fontFamily: "var(--font-sans)",
-    fontSize: size === "sm" ? 12 : 13,
-    fontWeight: "var(--fw-semibold)",
-    color: "var(--color-semantic-label-neutral)",
-    ...style
-  }, ...rest, children: [
-    /* @__PURE__ */ jsx144("span", { style: {
-      display: "inline-flex",
-      alignItems: "flex-end",
-      gap: 2,
-      height: h,
-      animation: status === "reconnecting" ? "lk-conn-blink 1s var(--ease-in-out) infinite" : "none"
-    }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx144("span", { style: {
-      width: bw,
-      height: Math.round(h * ((i + 1) / 3)),
-      borderRadius: 1,
-      background: i < cfg.bars ? cfg.c : "var(--color-semantic-fill-strong)"
-    } }, i)) }),
-    showLabel && /* @__PURE__ */ jsx144("span", { children: label || cfg.label })
-  ] });
-}
-
 // components/robotics/DirectionalPad.jsx
-import React148 from "react";
-import { jsx as jsx145, jsxs as jsxs112 } from "react/jsx-runtime";
+import React156 from "react";
+import { jsx as jsx152, jsxs as jsxs120 } from "react/jsx-runtime";
 var DIRS = {
   up: { icon: "arrow-up-thick", gridArea: "1 / 2" },
   left: { icon: "arrow-left-thick", gridArea: "2 / 1" },
@@ -14269,11 +16498,11 @@ var normalizeNumber = (value, fallback) => {
   return Number.isFinite(next) ? next : fallback;
 };
 function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center, onCenter, label = "\uBC29\uD5A5 \uD328\uB4DC", directionLabels, centerLabel = "\uAC00\uC6B4\uB370", style, ...rest }) {
-  const timer = React148.useRef(null);
-  const activeRef = React148.useRef(null);
-  const [activeDirection, setActiveDirection] = React148.useState(null);
-  const [hoveredControl, setHoveredControl] = React148.useState(null);
-  const [centerActive, setCenterActive] = React148.useState(false);
+  const timer = React156.useRef(null);
+  const activeRef = React156.useRef(null);
+  const [activeDirection, setActiveDirection] = React156.useState(null);
+  const [hoveredControl, setHoveredControl] = React156.useState(null);
+  const [centerActive, setCenterActive] = React156.useState(false);
   const controlSize = Math.max(36, normalizeNumber(size, 48));
   const repeatRate = Math.max(1, normalizeNumber(rate, 8));
   const repeatDelay = Math.max(40, 1e3 / repeatRate);
@@ -14282,19 +16511,19 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
   const canStep = !disabled && typeof onStep === "function";
   const canCenter = !disabled && typeof onCenter === "function";
   const showCenter = center != null || typeof onCenter === "function";
-  const clearTimer = React148.useCallback(() => {
+  const clearTimer = React156.useCallback(() => {
     if (timer.current) {
       clearInterval(timer.current);
       timer.current = null;
     }
   }, []);
-  const stop = React148.useCallback(() => {
+  const stop = React156.useCallback(() => {
     clearTimer();
     activeRef.current = null;
     setActiveDirection(null);
   }, [clearTimer]);
-  React148.useEffect(() => clearTimer, [clearTimer]);
-  React148.useEffect(() => {
+  React156.useEffect(() => clearTimer, [clearTimer]);
+  React156.useEffect(() => {
     if (disabled) {
       stop();
       setCenterActive(false);
@@ -14340,7 +16569,7 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
       border: `1px solid ${isActive ? "var(--color-semantic-primary-normal)" : isHovered ? "var(--color-semantic-line-solid-normal)" : "var(--color-semantic-line-normal-normal)"}`,
       borderRadius: round ? "var(--radius-pill)" : "var(--radius-md)",
       cursor: isDisabled ? "not-allowed" : "pointer",
-      background: isDisabled ? "var(--color-semantic-fill-normal)" : isActive ? "var(--lk-accent-tint-2)" : isHovered ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
+      background: isDisabled ? "var(--color-semantic-fill-normal)" : isActive ? "var(--color-semantic-primary-surface-strong)" : isHovered ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
       color: isDisabled ? "var(--color-semantic-label-disable)" : isActive ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
       touchAction: "none",
       fontFamily: "var(--font-sans)",
@@ -14353,7 +16582,7 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
       transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
     };
   };
-  const btn = (dir) => /* @__PURE__ */ jsx145(
+  const btn = (dir) => /* @__PURE__ */ jsx152(
     "button",
     {
       type: "button",
@@ -14384,10 +16613,10 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
       },
       onBlur: stop,
       style: getButtonStyle(dir, activeDirection === dir, !canStep),
-      children: /* @__PURE__ */ jsx145(Icon, { name: DIRS[dir].icon, size: iconSize, "aria-hidden": "true" })
+      children: /* @__PURE__ */ jsx152(Icon, { name: DIRS[dir].icon, size: iconSize, "aria-hidden": "true" })
     }
   );
-  return /* @__PURE__ */ jsxs112(
+  return /* @__PURE__ */ jsxs120(
     "div",
     {
       role: "group",
@@ -14403,7 +16632,7 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
       children: [
         btn("up"),
         btn("left"),
-        showCenter ? /* @__PURE__ */ jsx145(
+        showCenter ? /* @__PURE__ */ jsx152(
           "button",
           {
             type: "button",
@@ -14426,9 +16655,9 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
             },
             onBlur: () => setCenterActive(false),
             style: getButtonStyle("center", centerActive, !canCenter, true),
-            children: center ?? /* @__PURE__ */ jsx145(Icon, { name: "home", size: iconSize, "aria-hidden": "true" })
+            children: center ?? /* @__PURE__ */ jsx152(Icon, { name: "home", size: iconSize, "aria-hidden": "true" })
           }
-        ) : /* @__PURE__ */ jsx145("span", { "aria-hidden": "true", style: { gridArea: "2 / 2", width: controlSize, height: controlSize } }),
+        ) : /* @__PURE__ */ jsx152("span", { "aria-hidden": "true", style: { gridArea: "2 / 2", width: controlSize, height: controlSize } }),
         btn("right"),
         btn("down")
       ]
@@ -14437,8 +16666,8 @@ function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, center,
 }
 
 // components/robotics/EquipmentStatusCard.jsx
-import React149 from "react";
-import { jsx as jsx146, jsxs as jsxs113 } from "react/jsx-runtime";
+import React157 from "react";
+import { jsx as jsx153, jsxs as jsxs121 } from "react/jsx-runtime";
 var TONE = {
   positive: "var(--color-semantic-status-positive)",
   cautionary: "var(--color-semantic-status-cautionary)",
@@ -14447,7 +16676,7 @@ var TONE = {
   neutral: "var(--color-semantic-label-alternative)"
 };
 function useDimKeyframes() {
-  React149.useEffect(() => {
+  React157.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-equip-dim-kf")) return;
     const el = document.createElement("style");
     el.id = "lk-equip-dim-kf";
@@ -14460,7 +16689,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
   const c = TONE[tone] || TONE.neutral;
   const moving = direction != null;
   const hasChips = chips && chips.length > 0;
-  return /* @__PURE__ */ jsxs113(
+  return /* @__PURE__ */ jsxs121(
     "div",
     {
       style: {
@@ -14479,7 +16708,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
       },
       ...rest,
       children: [
-        icon != null && /* @__PURE__ */ jsx146("span", { style: {
+        icon != null && /* @__PURE__ */ jsx153("span", { style: {
           width: 38,
           height: 38,
           borderRadius: "var(--radius-md)",
@@ -14490,11 +16719,11 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           justifyContent: "center",
           color: "var(--color-semantic-label-alternative)"
         }, children: icon }),
-        /* @__PURE__ */ jsxs113("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ jsx146("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
-          (hasChips || ringCaption != null) && /* @__PURE__ */ jsx146("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
+        /* @__PURE__ */ jsxs121("div", { style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ jsx153("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
+          (hasChips || ringCaption != null) && /* @__PURE__ */ jsx153("div", { style: { marginTop: 3, fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: hasChips ? chips.map((ch) => ch.label).join(" \xB7 ") : ringCaption })
         ] }),
-        ringLabel != null && /* @__PURE__ */ jsxs113("span", { style: {
+        ringLabel != null && /* @__PURE__ */ jsxs121("span", { style: {
           display: "inline-flex",
           alignItems: "center",
           gap: 6,
@@ -14506,7 +16735,7 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
           color: "var(--color-semantic-label-neutral)",
           fontVariantNumeric: "tabular-nums"
         }, children: [
-          moving ? /* @__PURE__ */ jsx146("span", { "aria-label": direction === "up" ? "\uC0C1\uC2B9 \uC911" : "\uD558\uAC15 \uC911", style: { display: "inline-flex", color: c, animation: "lk-equip-dim 1.5s var(--ease-in-out) infinite" }, children: /* @__PURE__ */ jsx146("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: direction === "up" ? /* @__PURE__ */ jsx146("path", { d: "M12 19V5M5 12l7-7 7 7" }) : /* @__PURE__ */ jsx146("path", { d: "M12 5v14M19 12l-7 7-7-7" }) }) }) : connection != null ? /* @__PURE__ */ jsx146(ConnectionBadge, { status: connection, showLabel: false, size: "sm", style: { flexShrink: 0 } }) : /* @__PURE__ */ jsx146("span", { style: { width: 7, height: 7, borderRadius: "50%", background: c, flexShrink: 0 } }),
+          moving ? /* @__PURE__ */ jsx153("span", { "aria-label": direction === "up" ? "\uC0C1\uC2B9 \uC911" : "\uD558\uAC15 \uC911", style: { display: "inline-flex", color: c, animation: "lk-equip-dim 1.5s var(--ease-in-out) infinite" }, children: /* @__PURE__ */ jsx153("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.6", strokeLinecap: "round", strokeLinejoin: "round", children: direction === "up" ? /* @__PURE__ */ jsx153("path", { d: "M12 19V5M5 12l7-7 7 7" }) : /* @__PURE__ */ jsx153("path", { d: "M12 5v14M19 12l-7 7-7-7" }) }) }) : connection != null ? /* @__PURE__ */ jsx153(ConnectionBadge, { status: connection, showLabel: false, size: "sm", style: { flexShrink: 0 } }) : /* @__PURE__ */ jsx153("span", { style: { width: 7, height: 7, borderRadius: "50%", background: c, flexShrink: 0 } }),
           ringLabel
         ] })
       ]
@@ -14515,13 +16744,13 @@ function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = "neut
 }
 
 // components/robotics/Joystick.jsx
-import React150 from "react";
-import { jsx as jsx147, jsxs as jsxs114 } from "react/jsx-runtime";
+import React158 from "react";
+import { jsx as jsx154, jsxs as jsxs122 } from "react/jsx-runtime";
 function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = false, label, style, ...rest }) {
-  const ref = React150.useRef(null);
-  const [pos, setPos] = React150.useState({ x: 0, y: 0 });
-  const [active, setActive] = React150.useState(false);
-  const [focus, setFocus] = React150.useState(false);
+  const ref = React158.useRef(null);
+  const [pos, setPos] = React158.useState({ x: 0, y: 0 });
+  const [active, setActive] = React158.useState(false);
+  const [focus, setFocus] = React158.useState(false);
   const R = size / 2;
   const knob = Math.round(size * 0.32);
   const max = R - knob / 2 - 4;
@@ -14575,8 +16804,8 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
     }
     emit(x, y);
   };
-  return /* @__PURE__ */ jsxs114("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 10, ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs114(
+  return /* @__PURE__ */ jsxs122("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 10, ...style }, ...rest, children: [
+    /* @__PURE__ */ jsxs122(
       "div",
       {
         ref,
@@ -14598,15 +16827,15 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
           outline: "none",
           background: "var(--color-semantic-fill-normal)",
           border: "1px solid var(--color-semantic-line-normal-normal)",
-          boxShadow: focus ? "0 0 0 4px var(--focus-ring)" : "inset var(--shadow-sm)",
+          boxShadow: focus ? "0 0 0 4px var(--color-semantic-focus-ring)" : "inset var(--shadow-sm)",
           touchAction: "none",
           cursor: disabled ? "not-allowed" : active ? "grabbing" : "grab",
           opacity: disabled ? 0.5 : 1
         },
         children: [
-          /* @__PURE__ */ jsx147("span", { style: { position: "absolute", left: "50%", top: 10, bottom: 10, width: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateX(-0.5px)" } }),
-          /* @__PURE__ */ jsx147("span", { style: { position: "absolute", top: "50%", left: 10, right: 10, height: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateY(-0.5px)" } }),
-          /* @__PURE__ */ jsx147("span", { style: {
+          /* @__PURE__ */ jsx154("span", { style: { position: "absolute", left: "50%", top: 10, bottom: 10, width: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateX(-0.5px)" } }),
+          /* @__PURE__ */ jsx154("span", { style: { position: "absolute", top: "50%", left: 10, right: 10, height: 1, background: "var(--color-semantic-line-normal-neutral)", transform: "translateY(-0.5px)" } }),
+          /* @__PURE__ */ jsx154("span", { style: {
             position: "absolute",
             left: "50%",
             top: "50%",
@@ -14623,16 +16852,319 @@ function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled = fals
         ]
       }
     ),
-    label != null && /* @__PURE__ */ jsx147("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: label })
+    label != null && /* @__PURE__ */ jsx154("span", { style: { fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)" }, children: label })
   ] });
 }
 
+// components/robotics/ManualControlSession.jsx
+import React160 from "react";
+
+// components/status/Banner.jsx
+import React159 from "react";
+import { jsx as jsx155, jsxs as jsxs123 } from "react/jsx-runtime";
+var TONES4 = {
+  info: { c: "var(--component-banner-info-icon)", bg: "var(--component-banner-info-bg)", border: "var(--component-banner-info-border)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
+  success: { c: "var(--component-banner-positive-icon)", bg: "var(--component-banner-positive-bg)", border: "var(--component-banner-positive-border)", d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
+  warning: { c: "var(--component-banner-cautionary-icon)", bg: "var(--component-banner-cautionary-bg)", border: "var(--component-banner-cautionary-border)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
+  error: { c: "var(--component-banner-negative-icon)", bg: "var(--component-banner-negative-bg)", border: "var(--component-banner-negative-border)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' }
+};
+function Banner({ tone = "info", title, children, action, onClose, style, ...rest }) {
+  const t = TONES4[tone] || TONES4.info;
+  return /* @__PURE__ */ jsxs123(
+    "div",
+    {
+      role: "status",
+      style: {
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 12,
+        padding: "14px 16px",
+        background: t.bg,
+        border: `1px solid ${t.border}`,
+        borderRadius: "var(--radius-lg)",
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ jsx155("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, marginTop: 1 }, dangerouslySetInnerHTML: { __html: t.d } }),
+        /* @__PURE__ */ jsxs123("div", { style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ jsx155("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ jsx155("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+        ] }),
+        action != null && /* @__PURE__ */ jsx155("div", { style: { flexShrink: 0 }, children: action }),
+        onClose && /* @__PURE__ */ jsx155("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx155("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx155("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
+      ]
+    }
+  );
+}
+
+// components/robotics/ManualControlSession.jsx
+import { jsx as jsx156, jsxs as jsxs124 } from "react/jsx-runtime";
+var LINK_LABELS = {
+  ready: "\uC5F0\uACB0 \uC900\uBE44\uB428",
+  stale: "\uC5F0\uACB0 \uC815\uBCF4 \uC624\uB798\uB428",
+  lost: "\uC5F0\uACB0 \uB04A\uAE40"
+};
+var AUTHORITY_LABELS = {
+  checking: "\uAD8C\uD55C \uD655\uC778 \uC911",
+  granted: "\uAD8C\uD55C \uBD80\uC5EC\uB428",
+  denied: "\uAD8C\uD55C \uAC70\uBD80\uB428",
+  revoked: "\uAD8C\uD55C \uD68C\uC218\uB428"
+};
+var LINK_CONNECTION_STATUS = {
+  ready: "online",
+  stale: "stale",
+  lost: "offline"
+};
+var CONTROL_MODE_LABELS = {
+  pointer: "\uD3EC\uC778\uD130",
+  keyboard: "\uD0A4\uBCF4\uB4DC",
+  hybrid: "\uD3EC\uC778\uD130 + \uD0A4\uBCF4\uB4DC"
+};
+var GUARD_STATUS = {
+  "link-unavailable": {
+    tone: "error",
+    title: "\uC81C\uC5B4 \uC5F0\uACB0 \uC5C6\uC74C",
+    message: "\uC5F0\uACB0\uC774 \uBCF5\uAD6C\uB418\uBA74 UI \uC81C\uC5B4\uB97C \uB2E4\uC2DC \uD65C\uC131\uD654\uD558\uC138\uC694."
+  },
+  "authority-unavailable": {
+    tone: "error",
+    title: "\uC81C\uC5B4 \uAD8C\uD55C \uC5C6\uC74C",
+    message: "\uC11C\uBC84\uC5D0\uC11C \uC774 \uC138\uC158\uC758 \uC81C\uC5B4 \uAD8C\uD55C\uC744 \uBD80\uC5EC\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4."
+  },
+  disarmed: {
+    tone: "warning",
+    title: "UI \uC81C\uC5B4 \uAEBC\uC9D0",
+    message: "UI \uC81C\uC5B4\uB97C \uD65C\uC131\uD654\uD574\uC57C \uC870\uC791\uAE30\uB97C \uC0AC\uC6A9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  },
+  "deadman-released": {
+    tone: "warning",
+    title: "Dead-man \uC785\uB825 \uB300\uAE30",
+    message: "Dead-man \uC785\uB825\uC744 \uC720\uC9C0\uD558\uB294 \uB3D9\uC548\uB9CC \uC81C\uC5B4 \uBA85\uB839\uC744 \uBCF4\uB0BC \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  },
+  "focus-lost": {
+    tone: "warning",
+    title: "\uC81C\uC5B4 \uD3EC\uCEE4\uC2A4 \uD574\uC81C",
+    message: "\uC81C\uC5B4 \uC601\uC5ED\uC744 \uB2E4\uC2DC \uC120\uD0DD\uD574 \uD3EC\uCEE4\uC2A4\uB97C \uBCF5\uAD6C\uD558\uC138\uC694."
+  }
+};
+var READY_STATUS = {
+  tone: "success",
+  title: "\uC81C\uC5B4 \uC785\uB825 \uAC00\uB2A5",
+  message: "\uC870\uC791\uAE30 \uC785\uB825\uC774 \uD65C\uC131\uD654\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+};
+function releaseReason({ linkReady, authorityGranted, armed, deadmanRequired, deadmanActive, focusSatisfied, windowActive }) {
+  if (!linkReady) return "link-unavailable";
+  if (!authorityGranted) return "authority-unavailable";
+  if (!armed) return "disarmed";
+  if (deadmanRequired && !deadmanActive) return "deadman-released";
+  if (!windowActive || !focusSatisfied) return "focus-lost";
+  return null;
+}
+function guardStatus(reason) {
+  return reason == null ? READY_STATUS : GUARD_STATUS[reason] || GUARD_STATUS.disarmed;
+}
+function blockMessage(reason) {
+  return reason == null ? null : guardStatus(reason).message;
+}
+function statusTone(value, positiveValue) {
+  if (value === positiveValue) return "positive";
+  if (value === "checking" || value === "stale") return "cautionary";
+  return "negative";
+}
+function ManualControlSession({
+  title = "\uC218\uB3D9 \uC81C\uC5B4 \uC138\uC158",
+  linkState = "lost",
+  authority = "checking",
+  armed = false,
+  deadmanRequired = true,
+  deadmanActive = false,
+  controlMode = "pointer",
+  focusRequired = false,
+  sessionMeta,
+  deadmanControl,
+  onArmedChange,
+  onSafetyReleaseRequest,
+  onEmergencyStopRequest,
+  onFocusChange,
+  children,
+  onFocus,
+  onBlur,
+  style,
+  ...rest
+}) {
+  const [focused, setFocused] = React160.useState(false);
+  const [windowActive, setWindowActive] = React160.useState(true);
+  const controlsRef = React160.useRef(null);
+  const linkReady = linkState === "ready";
+  const authorityGranted = authority === "granted";
+  const focusSatisfied = !focusRequired || controlMode === "pointer" || focused;
+  const reason = releaseReason({ linkReady, authorityGranted, armed, deadmanRequired, deadmanActive, focusSatisfied, windowActive });
+  const interactionEnabled = reason == null;
+  const guard = guardStatus(reason);
+  const latestEnabled = React160.useRef(interactionEnabled);
+  const previousEnabled = React160.useRef(interactionEnabled);
+  const releaseRequest = React160.useRef(onSafetyReleaseRequest);
+  const armedChange = React160.useRef(onArmedChange);
+  React160.useEffect(() => {
+    latestEnabled.current = interactionEnabled;
+    releaseRequest.current = onSafetyReleaseRequest;
+    armedChange.current = onArmedChange;
+  });
+  React160.useEffect(() => {
+    if (previousEnabled.current && !interactionEnabled && reason != null) {
+      releaseRequest.current?.(reason);
+      if (reason === "link-unavailable" || reason === "authority-unavailable" || reason === "focus-lost") {
+        armedChange.current?.(false);
+      }
+    }
+    previousEnabled.current = interactionEnabled;
+  }, [interactionEnabled, reason]);
+  React160.useEffect(() => {
+    const handleWindowBlur = () => setWindowActive(false);
+    const handleWindowFocus = () => setWindowActive(true);
+    const handleVisibility = () => setWindowActive(document.visibilityState === "visible");
+    window.addEventListener("blur", handleWindowBlur);
+    window.addEventListener("focus", handleWindowFocus);
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      window.removeEventListener("blur", handleWindowBlur);
+      window.removeEventListener("focus", handleWindowFocus);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, []);
+  React160.useEffect(() => () => {
+    if (latestEnabled.current) releaseRequest.current?.("unmount");
+  }, []);
+  React160.useEffect(() => {
+    if (!interactionEnabled && controlsRef.current?.contains(document.activeElement)) {
+      document.activeElement?.blur();
+    }
+  }, [interactionEnabled]);
+  const setFocusState = (next) => {
+    setFocused(next);
+    onFocusChange?.(next);
+  };
+  const renderedControls = typeof children === "function" ? children({ interactionEnabled, blockReason: blockMessage(reason), focused, controlMode }) : children;
+  const canRequestArm = linkReady && authorityGranted;
+  return /* @__PURE__ */ jsxs124(
+    "section",
+    {
+      "aria-label": typeof title === "string" ? title : "\uC218\uB3D9 \uC81C\uC5B4 \uC138\uC158",
+      tabIndex: controlMode === "pointer" ? void 0 : 0,
+      onFocus: (event) => {
+        setFocusState(true);
+        onFocus?.(event);
+      },
+      onBlur: (event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocusState(false);
+        onBlur?.(event);
+      },
+      style: {
+        width: "100%",
+        minWidth: 0,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        border: "var(--component-card-border)",
+        borderRadius: "var(--component-card-radius)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        boxShadow: focused && controlMode !== "pointer" ? "0 0 0 3px var(--color-semantic-focus-ring)" : "var(--component-card-shadow-sm)",
+        fontFamily: "var(--font-sans)",
+        outline: "none",
+        ...style
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ jsxs124("header", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", padding: "var(--space-4) var(--space-5)" }, children: [
+          /* @__PURE__ */ jsxs124("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsx156("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", overflowWrap: "anywhere" }, children: title }),
+            sessionMeta != null && /* @__PURE__ */ jsx156("span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-semibold)", overflowWrap: "anywhere" }, children: sessionMeta })
+          ] }),
+          /* @__PURE__ */ jsxs124("div", { style: { display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
+            /* @__PURE__ */ jsx156(ConnectionBadge, { status: LINK_CONNECTION_STATUS[linkState] || "offline", label: LINK_LABELS[linkState], size: "sm" }),
+            /* @__PURE__ */ jsx156(StatusBadge, { tone: statusTone(authority, "granted"), children: AUTHORITY_LABELS[authority] }),
+            /* @__PURE__ */ jsxs124(
+              Button,
+              {
+                variant: "danger",
+                size: "sm",
+                disabled: typeof onEmergencyStopRequest !== "function",
+                onClick: onEmergencyStopRequest,
+                children: [
+                  /* @__PURE__ */ jsx156(Icon, { name: "circle-block", size: 16, "aria-hidden": "true" }),
+                  "\uBE44\uC0C1 \uC815\uC9C0 \uC694\uCCAD"
+                ]
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx156(
+          Banner,
+          {
+            role: "status",
+            tone: guard.tone,
+            title: guard.title,
+            style: { borderTop: "none", borderRight: "none", borderLeft: "none", borderRadius: 0, padding: "var(--space-3) var(--space-5)" },
+            children: guard.message
+          }
+        ),
+        renderedControls != null && /* @__PURE__ */ jsx156(
+          "div",
+          {
+            ref: controlsRef,
+            "aria-label": "\uC81C\uC5B4 \uC785\uB825",
+            "aria-disabled": !interactionEnabled,
+            inert: !interactionEnabled ? true : void 0,
+            "data-interaction-enabled": interactionEnabled ? "true" : "false",
+            onClickCapture: (event) => {
+              if (!interactionEnabled) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+            },
+            onKeyDownCapture: (event) => {
+              if (!interactionEnabled) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+            },
+            style: { display: "flex", minHeight: 240, alignItems: "center", justifyContent: "center", padding: "var(--space-5)", opacity: interactionEnabled ? 1 : 0.42, pointerEvents: interactionEnabled ? "auto" : "none", transition: "opacity var(--dur-fast) var(--ease-out)" },
+            children: renderedControls
+          }
+        ),
+        /* @__PURE__ */ jsxs124("footer", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", padding: "var(--space-3) var(--space-5)", borderTop: "1px solid var(--color-semantic-line-normal-alternative)", background: "var(--color-semantic-fill-normal)" }, children: [
+          /* @__PURE__ */ jsxs124("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-semibold)" }, children: [
+            /* @__PURE__ */ jsx156(Icon, { name: "joystick", size: 16, "aria-hidden": "true" }),
+            "\uC785\uB825 \uBC29\uC2DD \xB7 ",
+            CONTROL_MODE_LABELS[controlMode] || controlMode
+          ] }),
+          /* @__PURE__ */ jsxs124("div", { style: { display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
+            /* @__PURE__ */ jsx156(
+              Button,
+              {
+                variant: armed ? "outlined" : "primary",
+                color: armed ? "assistive" : "primary",
+                "aria-pressed": armed,
+                disabled: typeof onArmedChange !== "function" || !armed && !canRequestArm,
+                onClick: () => onArmedChange?.(!armed),
+                children: armed ? "UI \uC81C\uC5B4 \uD574\uC81C" : "UI \uC81C\uC5B4 \uD65C\uC131\uD654"
+              }
+            ),
+            armed && deadmanRequired && deadmanControl != null && deadmanControl
+          ] })
+        ] })
+      ]
+    }
+  );
+}
+
 // components/robotics/RobotStatusCard.jsx
-import React151 from "react";
-import { jsx as jsx148, jsxs as jsxs115 } from "react/jsx-runtime";
+import React161 from "react";
+import { jsx as jsx157, jsxs as jsxs125 } from "react/jsx-runtime";
 function RobotStatusCard({ name, image, status = "online", battery, mode, selected = false, onClick, style, ...rest }) {
   const hasBat = typeof battery === "number";
-  return /* @__PURE__ */ jsxs115("div", { onClick, style: {
+  return /* @__PURE__ */ jsxs125("div", { onClick, style: {
     display: "flex",
     gap: 16,
     alignItems: "center",
@@ -14642,12 +17174,12 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
     background: "var(--color-semantic-background-elevated-normal)",
     border: selected ? "var(--border-thin) solid var(--color-semantic-primary-normal)" : "var(--component-card-border)",
     borderRadius: "var(--component-card-radius)",
-    boxShadow: selected ? "0 0 0 3px var(--focus-ring)" : "var(--component-card-shadow-sm)",
+    boxShadow: selected ? "0 0 0 3px var(--color-semantic-focus-ring)" : "var(--component-card-shadow-sm)",
     cursor: onClick ? "pointer" : "default",
     fontFamily: "var(--font-sans)",
     ...style
   }, ...rest, children: [
-    /* @__PURE__ */ jsx148("div", { style: {
+    /* @__PURE__ */ jsx157("div", { style: {
       width: 48,
       height: 48,
       borderRadius: "var(--radius-md)",
@@ -14657,26 +17189,26 @@ function RobotStatusCard({ name, image, status = "online", battery, mode, select
       display: "flex",
       alignItems: "center",
       justifyContent: "center"
-    }, children: image ? /* @__PURE__ */ jsx148("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx148("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
-    /* @__PURE__ */ jsx148("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
-    /* @__PURE__ */ jsxs115("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
-      mode != null && /* @__PURE__ */ jsx148("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--lk-accent-tint)", color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap" }, children: mode }),
-      /* @__PURE__ */ jsxs115("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-        /* @__PURE__ */ jsx148(ConnectionBadge, { status, showLabel: false, size: "sm" }),
-        hasBat && /* @__PURE__ */ jsx148(BatteryGauge, { value: battery })
+    }, children: image ? /* @__PURE__ */ jsx157("img", { src: image, alt: "", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx157("span", { style: { fontSize: 17, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-neutral)" }, children: String(name || "?").slice(0, 2) }) }),
+    /* @__PURE__ */ jsx157("span", { style: { flex: 1, minWidth: 0, fontSize: 16, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: name }),
+    /* @__PURE__ */ jsxs125("div", { style: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 7, flexShrink: 0 }, children: [
+      mode != null && /* @__PURE__ */ jsx157("span", { style: { fontSize: 11, fontWeight: "var(--fw-bold)", letterSpacing: 0, padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-primary-surface-normal)", color: "var(--color-semantic-label-normal)", whiteSpace: "nowrap" }, children: mode }),
+      /* @__PURE__ */ jsxs125("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+        /* @__PURE__ */ jsx157(ConnectionBadge, { status, showLabel: false, size: "sm" }),
+        hasBat && /* @__PURE__ */ jsx157(BatteryGauge, { value: battery })
       ] })
     ] })
   ] });
 }
 
 // components/robotics/TopicTree.jsx
-import React152 from "react";
-import { jsx as jsx149, jsxs as jsxs116 } from "react/jsx-runtime";
+import React162 from "react";
+import { jsx as jsx158, jsxs as jsxs126 } from "react/jsx-runtime";
 function TopicNode({ node, depth, onToggle }) {
   const kids = node.children || [];
   const has = kids.length > 0;
-  const [open, setOpen] = React152.useState(depth < 1);
-  const [hover, setHover] = React152.useState(false);
+  const [open, setOpen] = React162.useState(depth < 1);
+  const [hover, setHover] = React162.useState(false);
   const hasHz = typeof node.hz === "number";
   const toggleOpen = () => {
     if (has) setOpen((value) => !value);
@@ -14688,8 +17220,8 @@ function TopicNode({ node, depth, onToggle }) {
       toggleOpen();
     }
   };
-  return /* @__PURE__ */ jsxs116("div", { children: [
-    /* @__PURE__ */ jsxs116(
+  return /* @__PURE__ */ jsxs126("div", { children: [
+    /* @__PURE__ */ jsxs126(
       "div",
       {
         role: "treeitem",
@@ -14721,7 +17253,7 @@ function TopicNode({ node, depth, onToggle }) {
           transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
         },
         children: [
-          /* @__PURE__ */ jsx149(
+          /* @__PURE__ */ jsx158(
             "span",
             {
               "aria-hidden": "true",
@@ -14735,11 +17267,11 @@ function TopicNode({ node, depth, onToggle }) {
                 transform: has && open ? "rotate(90deg)" : "none",
                 transition: "transform var(--dur-fast) var(--ease-out)"
               },
-              children: has && /* @__PURE__ */ jsx149(Icon, { name: "chevron-right", size: 14 })
+              children: has && /* @__PURE__ */ jsx158(Icon, { name: "chevron-right", size: 14 })
             }
           ),
-          /* @__PURE__ */ jsx149("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: node.name }),
-          node.type && /* @__PURE__ */ jsx149(
+          /* @__PURE__ */ jsx158("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: node.name }),
+          node.type && /* @__PURE__ */ jsx158(
             "code",
             {
               style: {
@@ -14755,26 +17287,26 @@ function TopicNode({ node, depth, onToggle }) {
               children: node.type
             }
           ),
-          (hasHz || node.subscribable) && /* @__PURE__ */ jsxs116("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: [
-            hasHz && /* @__PURE__ */ jsxs116("span", { style: { fontSize: 12, lineHeight: "18px", color: "var(--color-semantic-label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
+          (hasHz || node.subscribable) && /* @__PURE__ */ jsxs126("span", { style: { marginLeft: "auto", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }, children: [
+            hasHz && /* @__PURE__ */ jsxs126("span", { style: { fontSize: 12, lineHeight: "18px", color: "var(--color-semantic-label-assistive)", fontVariantNumeric: "tabular-nums" }, children: [
               node.hz,
               " Hz"
             ] }),
-            node.subscribable && /* @__PURE__ */ jsx149("span", { onClick: (e) => e.stopPropagation(), style: { display: "inline-flex" }, children: /* @__PURE__ */ jsx149(Switch, { size: "sm", checked: !!node.subscribed, onChange: () => onToggle && onToggle(node) }) })
+            node.subscribable && /* @__PURE__ */ jsx158("span", { onClick: (e) => e.stopPropagation(), style: { display: "inline-flex" }, children: /* @__PURE__ */ jsx158(Switch, { size: "sm", checked: !!node.subscribed, onChange: () => onToggle && onToggle(node) }) })
           ] })
         ]
       }
     ),
-    open && has && /* @__PURE__ */ jsx149("div", { children: kids.map((k, i) => /* @__PURE__ */ jsx149(TopicNode, { node: k, depth: depth + 1, onToggle }, i)) })
+    open && has && /* @__PURE__ */ jsx158("div", { children: kids.map((k, i) => /* @__PURE__ */ jsx158(TopicNode, { node: k, depth: depth + 1, onToggle }, i)) })
   ] });
 }
 function TopicTree({ nodes = [], onToggleSubscribe, style, ...rest }) {
-  return /* @__PURE__ */ jsx149("div", { role: "tree", style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx149(TopicNode, { node: n, depth: 0, onToggle: onToggleSubscribe }, i)) });
+  return /* @__PURE__ */ jsx158("div", { role: "tree", style: { display: "grid", gap: 2, fontFamily: "var(--font-sans)", ...style }, ...rest, children: nodes.map((n, i) => /* @__PURE__ */ jsx158(TopicNode, { node: n, depth: 0, onToggle: onToggleSubscribe }, i)) });
 }
 
 // components/selection/ChoiceCard.jsx
-import React153 from "react";
-import { jsx as jsx150, jsxs as jsxs117 } from "react/jsx-runtime";
+import React163 from "react";
+import { jsx as jsx159, jsxs as jsxs127 } from "react/jsx-runtime";
 var radiusMap = {
   sm: "var(--radius-frame-sm)",
   md: "var(--radius-frame-md)",
@@ -14821,8 +17353,8 @@ function ChoiceCard({
   onKeyDown,
   ...rest
 }) {
-  const [hover, setHover] = React153.useState(false);
-  const [focus, setFocus] = React153.useState(false);
+  const [hover, setHover] = React163.useState(false);
+  const [focus, setFocus] = React163.useState(false);
   const isFrame = presentation === "frame";
   const resolvedShadow = shadow ?? (isFrame ? "xs" : "none");
   const activeHover = hover || interaction === "hovered";
@@ -14836,11 +17368,11 @@ function ChoiceCard({
   const frameShadow = [
     shadowMap[resolvedShadow] && shadowMap[resolvedShadow] !== "none" ? shadowMap[resolvedShadow] : null,
     `inset 0 0 0 ${frameInset}px ${frameBorder}`,
-    activeFocus && !disabled ? "0 0 0 4px var(--focus-ring)" : null
+    activeFocus && !disabled ? "0 0 0 4px var(--color-semantic-focus-ring)" : null
   ].filter(Boolean).join(", ");
   const choiceShadow = [
     `inset 0 0 0 ${selected ? 1.5 : 1}px ${choiceBorder}`,
-    activeFocus && !disabled ? "0 0 0 4px var(--focus-ring)" : null
+    activeFocus && !disabled ? "0 0 0 4px var(--color-semantic-focus-ring)" : null
   ].filter(Boolean).join(", ");
   const toggle = () => {
     if (!disabled && onSelect) onSelect(!selected);
@@ -14878,7 +17410,7 @@ function ChoiceCard({
     display: "block",
     padding: paddingMap[padding] ?? paddingMap.md,
     borderRadius: radiusMap[radius] ?? radiusMap.md,
-    background: disabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--lk-accent-tint-2)" : "var(--color-semantic-background-elevated-normal)",
+    background: disabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
     boxShadow: frameShadow,
     color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
     cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
@@ -14893,7 +17425,7 @@ function ChoiceCard({
     gap: 12,
     padding: 16,
     borderRadius: "var(--radius-xl)",
-    background: disabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--lk-accent-tint)" : "var(--color-semantic-background-elevated-normal)",
+    background: disabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--color-semantic-primary-surface-normal)" : "var(--color-semantic-background-elevated-normal)",
     color: disabled ? "var(--color-semantic-label-disable)" : void 0,
     boxShadow: choiceShadow,
     cursor: disabled ? "not-allowed" : "pointer",
@@ -14901,7 +17433,7 @@ function ChoiceCard({
     outline: "none",
     ...style
   };
-  return /* @__PURE__ */ jsxs117(
+  return /* @__PURE__ */ jsxs127(
     "div",
     {
       role: resolvedRole,
@@ -14922,7 +17454,7 @@ function ChoiceCard({
       style: isFrame ? frameStyle : choiceStyle,
       ...rest,
       children: [
-        !isFrame && icon != null && /* @__PURE__ */ jsx150(
+        !isFrame && icon != null && /* @__PURE__ */ jsx159(
           "span",
           {
             style: {
@@ -14933,8 +17465,8 @@ function ChoiceCard({
             children: icon
           }
         ),
-        /* @__PURE__ */ jsxs117("div", { style: isFrame ? void 0 : { flex: 1, minWidth: 0 }, children: [
-          !isFrame && title != null && /* @__PURE__ */ jsx150(
+        /* @__PURE__ */ jsxs127("div", { style: isFrame ? void 0 : { flex: 1, minWidth: 0 }, children: [
+          !isFrame && title != null && /* @__PURE__ */ jsx159(
             "div",
             {
               style: {
@@ -14947,7 +17479,7 @@ function ChoiceCard({
               children: title
             }
           ),
-          !isFrame && description != null && /* @__PURE__ */ jsx150(
+          !isFrame && description != null && /* @__PURE__ */ jsx159(
             "div",
             {
               style: {
@@ -14962,7 +17494,7 @@ function ChoiceCard({
           ),
           children
         ] }),
-        !isFrame && showIndicator && /* @__PURE__ */ jsx150(
+        !isFrame && showIndicator && /* @__PURE__ */ jsx159(
           "span",
           {
             "aria-hidden": "true",
@@ -14979,7 +17511,7 @@ function ChoiceCard({
               color: "var(--color-semantic-static-white)",
               transition: "background var(--dur-fast) var(--ease-out)"
             },
-            children: selected && /* @__PURE__ */ jsx150(
+            children: selected && /* @__PURE__ */ jsx159(
               "svg",
               {
                 width: "12",
@@ -14990,7 +17522,7 @@ function ChoiceCard({
                 strokeWidth: "3.4",
                 strokeLinecap: "round",
                 strokeLinejoin: "round",
-                children: /* @__PURE__ */ jsx150("path", { d: "M20 6 9 17l-5-5" })
+                children: /* @__PURE__ */ jsx159("path", { d: "M20 6 9 17l-5-5" })
               }
             )
           }
@@ -15001,7 +17533,7 @@ function ChoiceCard({
 }
 
 // components/selection/FilterChip.jsx
-import React154 from "react";
+import React164 from "react";
 
 // components/selection/pill-chip-style.js
 function pillChipStyle(active, disabled, size = "md") {
@@ -15013,8 +17545,8 @@ function pillChipStyle(active, disabled, size = "md") {
     // small buttons/inputs in dense toolbars; md keeps the default pill.
     height: sm ? "var(--component-button-height-sm)" : "var(--component-filter-chip-height)",
     padding: sm ? "0 12px" : "0 15px",
-    background: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-    border: `1px solid ${active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+    background: active ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
+    border: `1px solid ${active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
     borderRadius: "var(--radius-pill)",
     cursor: disabled ? "not-allowed" : "pointer",
     opacity: disabled ? 0.5 : 1,
@@ -15029,7 +17561,7 @@ function pillChipStyle(active, disabled, size = "md") {
 }
 
 // components/selection/FilterChip.jsx
-import { jsx as jsx151, jsxs as jsxs118 } from "react/jsx-runtime";
+import { jsx as jsx160, jsxs as jsxs128 } from "react/jsx-runtime";
 function FilterChip({
   children,
   active = false,
@@ -15041,8 +17573,8 @@ function FilterChip({
   style,
   ...rest
 }) {
-  const [hover, setHover] = React154.useState(false);
-  return /* @__PURE__ */ jsxs118(
+  const [hover, setHover] = React164.useState(false);
+  return /* @__PURE__ */ jsxs128(
     "button",
     {
       type: "button",
@@ -15059,17 +17591,17 @@ function FilterChip({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx151("span", { children }),
-        count != null && /* @__PURE__ */ jsx151("span", { style: { fontWeight: "var(--fw-bold)", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)" }, children: count }),
-        caret && /* @__PURE__ */ jsx151("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx151("path", { d: "m6 9 6 6 6-6" }) })
+        /* @__PURE__ */ jsx160("span", { children }),
+        count != null && /* @__PURE__ */ jsx160("span", { style: { fontWeight: "var(--fw-bold)", color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)" }, children: count }),
+        caret && /* @__PURE__ */ jsx160("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx160("path", { d: "m6 9 6 6 6-6" }) })
       ]
     }
   );
 }
 
 // components/selection/IconPicker.jsx
-import React155 from "react";
-import { jsx as jsx152 } from "react/jsx-runtime";
+import React165 from "react";
+import { jsx as jsx161 } from "react/jsx-runtime";
 var sizeMap = {
   sm: { tile: 36, iconBox: 18, radius: "var(--radius-sm)" },
   md: { tile: 44, iconBox: 20, radius: "var(--radius-md)" },
@@ -15113,15 +17645,17 @@ function IconPicker({
   const { tile, iconBox, radius } = sizeMap[normalizedSize];
   const columnCount = Math.max(1, Number.isFinite(columns) ? Math.trunc(columns) : 6);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React155.useState(defaultValue);
+  const [internal, setInternal] = React165.useState(defaultValue);
   const current = isControlled ? value : internal;
-  const optionRefs = React155.useRef([]);
+  const optionRefs = React165.useRef([]);
   const selectedIndex = options.findIndex((option) => option.value === current);
   const selectedEnabledIndex = selectedIndex >= 0 && !options[selectedIndex]?.disabled ? selectedIndex : -1;
-  const firstEnabledIndex = findEnabledFrom(options, 0);
-  const tabStopIndex = selectedEnabledIndex >= 0 ? selectedEnabledIndex : firstEnabledIndex;
-  const [focusIndex, setFocusIndex] = React155.useState(tabStopIndex);
-  React155.useEffect(() => {
+  const firstEnabledIndex2 = findEnabledFrom(options, 0);
+  const tabStopIndex = selectedEnabledIndex >= 0 ? selectedEnabledIndex : firstEnabledIndex2;
+  const [focusIndex, setFocusIndex] = React165.useState(tabStopIndex);
+  const [focusedIndex, setFocusedIndex] = React165.useState(-1);
+  const [hoveredIndex, setHoveredIndex] = React165.useState(-1);
+  React165.useEffect(() => {
     setFocusIndex(tabStopIndex);
   }, [tabStopIndex]);
   const pick = (option) => {
@@ -15140,9 +17674,9 @@ function IconPicker({
     if (disabled || options[index]?.disabled) return;
     const keyMap = {
       ArrowRight: [index + 1, 1],
-      ArrowDown: [index + columnCount, 1],
+      ArrowDown: [index + 1, 1],
       ArrowLeft: [index - 1, -1],
-      ArrowUp: [index - columnCount, -1]
+      ArrowUp: [index - 1, -1]
     };
     if (keyMap[event.key]) {
       event.preventDefault();
@@ -15152,7 +17686,7 @@ function IconPicker({
     }
     if (event.key === "Home") {
       event.preventDefault();
-      focusAndPick(firstEnabledIndex);
+      focusAndPick(firstEnabledIndex2);
       return;
     }
     if (event.key === "End") {
@@ -15160,7 +17694,7 @@ function IconPicker({
       focusAndPick(lastEnabledIndex(options));
     }
   };
-  return /* @__PURE__ */ jsx152(
+  return /* @__PURE__ */ jsx161(
     "div",
     {
       role: "radiogroup",
@@ -15176,7 +17710,7 @@ function IconPicker({
         ...style
       },
       ...rest,
-      children: options.length === 0 ? /* @__PURE__ */ jsx152(
+      children: options.length === 0 ? /* @__PURE__ */ jsx161(
         "div",
         {
           "aria-disabled": "true",
@@ -15201,7 +17735,7 @@ function IconPicker({
         const selected = option.value === current;
         const optionDisabled = disabled || !!option.disabled;
         const labelText = optionLabel(option);
-        return /* @__PURE__ */ jsx152(
+        return /* @__PURE__ */ jsx161(
           "button",
           {
             ref: (node) => {
@@ -15217,8 +17751,16 @@ function IconPicker({
             "data-selected": selected ? "" : void 0,
             onClick: () => pick(option),
             onFocus: () => {
-              if (!optionDisabled) setFocusIndex(index);
+              if (!optionDisabled) {
+                setFocusIndex(index);
+                setFocusedIndex(index);
+              }
             },
+            onBlur: () => setFocusedIndex(-1),
+            onMouseEnter: () => {
+              if (!optionDisabled) setHoveredIndex(index);
+            },
+            onMouseLeave: () => setHoveredIndex(-1),
             onKeyDown: (event) => handleKeyDown(event, index),
             style: {
               width: tile,
@@ -15229,14 +17771,16 @@ function IconPicker({
               padding: 0,
               border: `1px solid ${selected && !optionDisabled ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-normal-normal)"}`,
               borderRadius: radius,
-              background: optionDisabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--lk-accent-tint-2)" : "var(--color-semantic-background-elevated-normal)",
+              background: optionDisabled ? "var(--color-semantic-fill-normal)" : selected ? "var(--color-semantic-primary-surface-strong)" : hoveredIndex === index ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)",
               color: optionDisabled ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
               cursor: optionDisabled ? "not-allowed" : "pointer",
+              outline: "none",
+              boxShadow: focusedIndex === index && !optionDisabled ? "0 0 0 4px var(--color-semantic-focus-ring)" : "none",
               fontFamily: "var(--font-sans)",
               boxSizing: "border-box",
-              transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
+              transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
             },
-            children: /* @__PURE__ */ jsx152(
+            children: /* @__PURE__ */ jsx161(
               "span",
               {
                 "aria-hidden": "true",
@@ -15259,8 +17803,8 @@ function IconPicker({
 }
 
 // components/selection/MultiSelectChip.jsx
-import React156 from "react";
-import { jsx as jsx153, jsxs as jsxs119 } from "react/jsx-runtime";
+import React166 from "react";
+import { jsx as jsx162, jsxs as jsxs129 } from "react/jsx-runtime";
 function MultiSelectChip({
   children,
   selected,
@@ -15272,7 +17816,7 @@ function MultiSelectChip({
   ...rest
 }) {
   const isControlled = selected !== void 0;
-  const [internal, setInternal] = React156.useState(!!defaultSelected);
+  const [internal, setInternal] = React166.useState(!!defaultSelected);
   const on = isControlled ? selected : internal;
   const sm = size === "sm";
   const toggle = () => {
@@ -15280,7 +17824,7 @@ function MultiSelectChip({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
-  return /* @__PURE__ */ jsxs119(
+  return /* @__PURE__ */ jsxs129(
     "button",
     {
       type: "button",
@@ -15296,16 +17840,16 @@ function MultiSelectChip({
       },
       ...rest,
       children: [
-        on && /* @__PURE__ */ jsx153("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx153("path", { d: "M20 6 9 17l-5-5" }) }),
-        /* @__PURE__ */ jsx153("span", { children })
+        on && /* @__PURE__ */ jsx162("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx162("path", { d: "M20 6 9 17l-5-5" }) }),
+        /* @__PURE__ */ jsx162("span", { children })
       ]
     }
   );
 }
 
 // components/selection/SegmentedControl.jsx
-import React157 from "react";
-import { jsx as jsx154, jsxs as jsxs120 } from "react/jsx-runtime";
+import React167 from "react";
+import { jsx as jsx163, jsxs as jsxs130 } from "react/jsx-runtime";
 function SegmentedControl({
   options = [],
   value,
@@ -15323,7 +17867,7 @@ function SegmentedControl({
 }) {
   const norm = options.map((o) => typeof o === "string" ? { value: o, label: o } : o);
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React157.useState(defaultValue != null ? defaultValue : norm[0] && norm[0].value);
+  const [internal, setInternal] = React167.useState(defaultValue != null ? defaultValue : norm[0] && norm[0].value);
   const val = isControlled ? value : internal;
   const disabledState = disabled || disable || interaction === "inactive";
   const pick = (v) => {
@@ -15339,7 +17883,7 @@ function SegmentedControl({
   const trackPad = normalizedSize === "lg" ? 3 : 2;
   const outlined = variant === "outlined";
   const fill = full || resize === "fill";
-  return /* @__PURE__ */ jsx154(
+  return /* @__PURE__ */ jsx163(
     "div",
     {
       role: "tablist",
@@ -15349,8 +17893,8 @@ function SegmentedControl({
         justifySelf: fill ? void 0 : "start",
         padding: outlined ? 0 : trackPad,
         gap: outlined ? 0 : 2,
-        background: outlined ? "var(--bw-white)" : "var(--color-semantic-fill-normal)",
-        border: outlined ? "1px solid var(--bw-border)" : "none",
+        background: outlined ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-fill-normal)",
+        border: outlined ? "1px solid var(--color-semantic-line-solid-normal)" : "none",
         borderRadius: trackRadius,
         overflow: "hidden",
         ...style
@@ -15362,7 +17906,7 @@ function SegmentedControl({
         const active = selected || optionInteraction === "active" || optionInteraction === "active-focused";
         const activeHover = optionInteraction === "hovered";
         const activeFocus = optionInteraction === "focused" || optionInteraction === "active-focused";
-        return /* @__PURE__ */ jsxs120(
+        return /* @__PURE__ */ jsxs130(
           "button",
           {
             type: "button",
@@ -15385,18 +17929,18 @@ function SegmentedControl({
               fontWeight: active ? "var(--fw-semibold)" : "var(--fw-medium)",
               letterSpacing: 0,
               color: disabledState || o.disabled ? "var(--color-semantic-label-disable)" : active ? "var(--color-semantic-primary-normal)" : activeFocus ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)",
-              background: active ? outlined ? "var(--lk-accent-tint-2)" : "var(--bw-white)" : activeHover || activeFocus ? "var(--color-semantic-fill-normal)" : "transparent",
+              background: active ? outlined ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)" : activeHover || activeFocus ? "var(--color-semantic-fill-normal)" : "transparent",
               borderRadius: outlined ? 0 : segmentRadius,
-              borderLeft: outlined && index > 0 ? "1px solid var(--bw-border)" : "none",
+              borderLeft: outlined && index > 0 ? "1px solid var(--color-semantic-line-solid-normal)" : "none",
               boxShadow: [
                 active && !outlined ? "var(--shadow-xs)" : null,
-                activeFocus ? "0 0 0 3px var(--focus-ring)" : null
+                activeFocus ? "0 0 0 3px var(--color-semantic-focus-ring)" : null
               ].filter(Boolean).join(", ") || "none",
               transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
               whiteSpace: "nowrap"
             },
             children: [
-              o.icon && /* @__PURE__ */ jsx154("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: o.icon }),
+              o.icon && /* @__PURE__ */ jsx163("span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: o.icon }),
               o.label
             ]
           },
@@ -15408,8 +17952,8 @@ function SegmentedControl({
 }
 
 // components/selection/Stepper.jsx
-import React158 from "react";
-import { jsx as jsx155, jsxs as jsxs121 } from "react/jsx-runtime";
+import React168 from "react";
+import { jsx as jsx164, jsxs as jsxs131 } from "react/jsx-runtime";
 function Stepper({
   value,
   defaultValue = 0,
@@ -15423,7 +17967,7 @@ function Stepper({
   ...rest
 }) {
   const isControlled = value !== void 0;
-  const [internal, setInternal] = React158.useState(defaultValue);
+  const [internal, setInternal] = React168.useState(defaultValue);
   const val = isControlled ? value : internal;
   const set = (next) => {
     const clamped = Math.min(max, Math.max(min, next));
@@ -15434,7 +17978,7 @@ function Stepper({
   const StepBtn = ({ kind }) => {
     const isMinus = kind === "minus";
     const off = disabled || (isMinus ? val <= min : val >= max);
-    return /* @__PURE__ */ jsx155(
+    return /* @__PURE__ */ jsx164(
       "button",
       {
         type: "button",
@@ -15460,14 +18004,14 @@ function Stepper({
           borderRadius: "var(--radius-md)",
           transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
         },
-        children: /* @__PURE__ */ jsxs121("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
-          /* @__PURE__ */ jsx155("path", { d: "M5 12h14" }),
-          !isMinus && /* @__PURE__ */ jsx155("path", { d: "M12 5v14" })
+        children: /* @__PURE__ */ jsxs131("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
+          /* @__PURE__ */ jsx164("path", { d: "M5 12h14" }),
+          !isMinus && /* @__PURE__ */ jsx164("path", { d: "M12 5v14" })
         ] })
       }
     );
   };
-  return /* @__PURE__ */ jsxs121(
+  return /* @__PURE__ */ jsxs131(
     "div",
     {
       style: {
@@ -15475,16 +18019,16 @@ function Stepper({
         alignItems: "center",
         height: h,
         width: "fit-content",
-        border: "1px solid var(--bw-border)",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
         borderRadius: "var(--radius-md)",
-        background: "var(--bw-white)",
+        background: "var(--color-semantic-background-elevated-normal)",
         opacity: disabled ? 0.5 : 1,
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx155(StepBtn, { kind: "minus" }),
-        /* @__PURE__ */ jsx155(
+        /* @__PURE__ */ jsx164(StepBtn, { kind: "minus" }),
+        /* @__PURE__ */ jsx164(
           "span",
           {
             "aria-live": "polite",
@@ -15501,15 +18045,15 @@ function Stepper({
             children: val
           }
         ),
-        /* @__PURE__ */ jsx155(StepBtn, { kind: "plus" })
+        /* @__PURE__ */ jsx164(StepBtn, { kind: "plus" })
       ]
     }
   );
 }
 
 // components/selection/ThemeToggle.jsx
-import React159 from "react";
-import { jsx as jsx156, jsxs as jsxs122 } from "react/jsx-runtime";
+import React169 from "react";
+import { jsx as jsx165, jsxs as jsxs132 } from "react/jsx-runtime";
 var ICONS2 = {
   light: '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>',
   dark: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
@@ -15529,13 +18073,13 @@ function ThemeToggle({
   style,
   ...rest
 }) {
-  const resolveTarget = React159.useCallback(() => {
+  const resolveTarget = React169.useCallback(() => {
     if (target === null) return null;
     if (target && target.nodeType) return target;
     if (typeof target === "string") return document.querySelector(target);
     return typeof document !== "undefined" ? document.documentElement : null;
   }, [target]);
-  const [internal, setInternal] = React159.useState(() => {
+  const [internal, setInternal] = React169.useState(() => {
     if (value) return value;
     if (persist) {
       try {
@@ -15547,7 +18091,7 @@ function ThemeToggle({
     return defaultValue;
   });
   const cur = value != null ? value : internal;
-  const apply = React159.useCallback((v) => {
+  const apply = React169.useCallback((v) => {
     const el = resolveTarget();
     if (el) el.setAttribute("data-theme", v);
     if (persist) {
@@ -15557,7 +18101,7 @@ function ThemeToggle({
       }
     }
   }, [resolveTarget, storageKey, persist]);
-  React159.useEffect(() => {
+  React169.useEffect(() => {
     apply(cur);
   }, [cur, apply]);
   const pick = (v) => {
@@ -15569,7 +18113,7 @@ function ThemeToggle({
   const h = size === "sm" ? 32 : 38;
   const fs = size === "sm" ? 12.5 : 13.5;
   const isz = size === "sm" ? 15 : 16;
-  return /* @__PURE__ */ jsx156(
+  return /* @__PURE__ */ jsx165(
     "div",
     {
       role: "radiogroup",
@@ -15589,7 +18133,7 @@ function ThemeToggle({
       ...rest,
       children: options.map((v) => {
         const on = cur === v;
-        return /* @__PURE__ */ jsxs122(
+        return /* @__PURE__ */ jsxs132(
           "button",
           {
             type: "button",
@@ -15618,8 +18162,8 @@ function ThemeToggle({
               transition: "var(--component-button-transition)"
             },
             children: [
-              /* @__PURE__ */ jsx156("svg", { width: isz, height: isz, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", dangerouslySetInnerHTML: { __html: ICONS2[v] || "" } }),
-              showLabels && /* @__PURE__ */ jsx156("span", { children: LABELS[v] || v })
+              /* @__PURE__ */ jsx165("svg", { width: isz, height: isz, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", dangerouslySetInnerHTML: { __html: ICONS2[v] || "" } }),
+              showLabels && /* @__PURE__ */ jsx165("span", { children: LABELS[v] || v })
             ]
           },
           v
@@ -15630,8 +18174,8 @@ function ThemeToggle({
 }
 
 // components/selection/ToggleButton.jsx
-import React160 from "react";
-import { jsx as jsx157, jsxs as jsxs123 } from "react/jsx-runtime";
+import React170 from "react";
+import { jsx as jsx166, jsxs as jsxs133 } from "react/jsx-runtime";
 function ToggleButton({
   children,
   pressed,
@@ -15645,7 +18189,7 @@ function ToggleButton({
   ...rest
 }) {
   const isControlled = pressed !== void 0;
-  const [internal, setInternal] = React160.useState(!!defaultPressed);
+  const [internal, setInternal] = React170.useState(!!defaultPressed);
   const on = isControlled ? pressed : internal;
   const toggle = () => {
     if (disabled) return;
@@ -15654,7 +18198,7 @@ function ToggleButton({
   };
   const h = size === "sm" ? 36 : 44;
   const iconOnly = children == null;
-  return /* @__PURE__ */ jsxs123(
+  return /* @__PURE__ */ jsxs133(
     "button",
     {
       type: "button",
@@ -15670,8 +18214,8 @@ function ToggleButton({
         height: h,
         width: iconOnly ? h : void 0,
         padding: iconOnly ? 0 : "0 16px",
-        background: on ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
-        border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+        background: on ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
+        border: `1px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
         borderRadius: "var(--radius-md)",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.5 : 1,
@@ -15687,15 +18231,15 @@ function ToggleButton({
       ...rest,
       children: [
         icon,
-        children != null && /* @__PURE__ */ jsx157("span", { children })
+        children != null && /* @__PURE__ */ jsx166("span", { children })
       ]
     }
   );
 }
 
 // components/selection/WheelPicker.jsx
-import React161 from "react";
-import { jsx as jsx158, jsxs as jsxs124 } from "react/jsx-runtime";
+import React171 from "react";
+import { jsx as jsx167, jsxs as jsxs134 } from "react/jsx-runtime";
 function normalizeOption(option) {
   if (option && typeof option === "object") {
     return {
@@ -15777,19 +18321,19 @@ function WheelPicker({
   style,
   ...rest
 }) {
-  const opts = React161.useMemo(() => options.map(normalizeOption), [options]);
+  const opts = React171.useMemo(() => options.map(normalizeOption), [options]);
   const controlled = value !== void 0;
-  const firstEnabledIndex = findNearestEnabled(opts, 0, 1);
-  const [internal, setInternal] = React161.useState(() => {
+  const firstEnabledIndex2 = findNearestEnabled(opts, 0, 1);
+  const [internal, setInternal] = React171.useState(() => {
     if (defaultValue != null) return defaultValue;
-    return firstEnabledIndex >= 0 ? opts[firstEnabledIndex]?.value : void 0;
+    return firstEnabledIndex2 >= 0 ? opts[firstEnabledIndex2]?.value : void 0;
   });
-  const [focused, setFocused] = React161.useState(false);
+  const [focused, setFocused] = React171.useState(false);
   const current = controlled ? value : internal;
   const selectedIndex = opts.findIndex((option) => option.value === current);
-  const activeIndex = selectedIndex >= 0 ? selectedIndex : firstEnabledIndex;
-  const listRef = React161.useRef(null);
-  const listId = React161.useId();
+  const activeIndex = selectedIndex >= 0 ? selectedIndex : firstEnabledIndex2;
+  const listRef = React171.useRef(null);
+  const listId = React171.useId();
   const rows = getVisibleRows(visible);
   const rowHeight = getItemHeight(itemHeight);
   const pad2 = Math.floor(rows / 2);
@@ -15798,13 +18342,12 @@ function WheelPicker({
   const hasOptions = opts.length > 0;
   const activeOptionId = activeIndex >= 0 ? getOptionId(listId, activeIndex) : void 0;
   const surfaceColor = inactive ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-background-elevated-normal)";
-  const focusShadow = focused && !inactive ? "0 0 0 4px var(--focus-ring)" : null;
-  const insetShadow = "inset 0 1px 0 var(--color-semantic-background-elevated-normal), inset 0 -1px 0 var(--color-semantic-line-normal-alternative)";
-  React161.useEffect(() => {
-    if (controlled || selectedIndex >= 0 || firstEnabledIndex < 0) return;
-    setInternal(opts[firstEnabledIndex].value);
-  }, [controlled, firstEnabledIndex, opts, selectedIndex]);
-  React161.useEffect(() => {
+  const focusShadow = focused && !inactive ? "0 0 0 4px var(--color-semantic-focus-ring)" : null;
+  React171.useEffect(() => {
+    if (controlled || selectedIndex >= 0 || firstEnabledIndex2 < 0) return;
+    setInternal(opts[firstEnabledIndex2].value);
+  }, [controlled, firstEnabledIndex2, opts, selectedIndex]);
+  React171.useEffect(() => {
     if (!listRef.current || activeIndex < 0) return;
     listRef.current.scrollTop = activeIndex * rowHeight;
   }, [activeIndex, rowHeight]);
@@ -15848,7 +18391,7 @@ function WheelPicker({
       pickIndex(activeIndex + pad2);
     }
   };
-  return /* @__PURE__ */ jsxs124(
+  return /* @__PURE__ */ jsx167(
     "div",
     {
       "data-disabled": inactive ? "true" : void 0,
@@ -15859,86 +18402,84 @@ function WheelPicker({
         height: rowHeight * rows,
         overflow: "hidden",
         borderRadius: "var(--radius-md)",
-        border: focused && !inactive ? "1px solid var(--color-semantic-primary-normal)" : "1px solid var(--color-semantic-line-normal-normal)",
+        border: "1px solid transparent",
         background: surfaceColor,
         fontFamily: "var(--font-sans)",
         opacity: inactive ? 0.65 : 1,
-        boxShadow: [focusShadow, insetShadow].filter(Boolean).join(", "),
+        boxShadow: focusShadow ?? "none",
         transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)",
         boxSizing: "border-box",
         ...style
       },
       ...rest,
-      children: [
-        /* @__PURE__ */ jsx158(
-          "div",
-          {
-            "aria-hidden": "true",
-            style: {
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: rowHeight * 1.2,
-              zIndex: 3,
-              background: `linear-gradient(to bottom, ${surfaceColor} 0%, transparent 76%)`,
-              pointerEvents: "none"
-            }
-          }
-        ),
-        /* @__PURE__ */ jsx158(
-          "div",
-          {
-            "aria-hidden": "true",
-            style: {
-              position: "absolute",
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: rowHeight * 1.2,
-              zIndex: 3,
-              background: `linear-gradient(to top, ${surfaceColor} 0%, transparent 76%)`,
-              pointerEvents: "none"
-            }
-          }
-        ),
-        /* @__PURE__ */ jsxs124(
-          "ul",
-          {
-            ref: listRef,
-            role: "listbox",
-            "aria-label": label,
-            "aria-activedescendant": activeOptionId,
-            "aria-disabled": inactive || void 0,
-            "aria-readonly": readOnly || void 0,
-            tabIndex: inactive ? -1 : 0,
-            onScroll: handleScroll,
-            onKeyDown: handleKeyDown,
-            onFocus: () => setFocused(true),
-            onBlur: () => setFocused(false),
-            style: {
-              position: "relative",
-              zIndex: 1,
-              listStyle: "none",
-              margin: 0,
-              padding: `${pad2 * rowHeight}px 0`,
-              height: "100%",
-              overflowY: locked ? "hidden" : "auto",
-              scrollSnapType: locked ? "none" : "y mandatory",
-              WebkitOverflowScrolling: "touch",
-              scrollbarWidth: "none",
-              outline: "none",
-              boxSizing: "border-box",
-              perspective: rowHeight * rows * 1.6,
-              perspectiveOrigin: "50% 50%"
-            },
-            children: [
-              !hasOptions && /* @__PURE__ */ jsx158(
+      children: /* @__PURE__ */ jsxs134(
+        "ul",
+        {
+          ref: listRef,
+          role: "listbox",
+          "aria-label": label,
+          "aria-activedescendant": activeOptionId,
+          "aria-disabled": inactive || void 0,
+          "aria-readonly": readOnly || void 0,
+          tabIndex: inactive ? -1 : 0,
+          onScroll: handleScroll,
+          onKeyDown: handleKeyDown,
+          onFocus: () => setFocused(true),
+          onBlur: () => setFocused(false),
+          style: {
+            position: "relative",
+            zIndex: 1,
+            listStyle: "none",
+            margin: 0,
+            padding: `${pad2 * rowHeight}px 0`,
+            height: "100%",
+            overflowY: locked ? "hidden" : "auto",
+            scrollSnapType: locked ? "none" : "y mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            outline: "none",
+            boxSizing: "border-box",
+            perspective: rowHeight * rows * 1.6,
+            perspectiveOrigin: "50% 50%"
+          },
+          children: [
+            !hasOptions && /* @__PURE__ */ jsx167(
+              "li",
+              {
+                role: "option",
+                "aria-disabled": "true",
+                "aria-selected": "false",
+                style: {
+                  height: rowHeight,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0 var(--space-3)",
+                  boxSizing: "border-box",
+                  color: "var(--color-semantic-label-assistive)",
+                  fontSize: "var(--label2-size)",
+                  lineHeight: "var(--label2-line)",
+                  fontWeight: "var(--fw-medium)",
+                  textAlign: "center",
+                  wordBreak: "keep-all"
+                },
+                children: emptyLabel
+              }
+            ),
+            opts.map((option, index) => {
+              const visual = getWheelVisual(index, activeIndex, pad2);
+              const typeStyle = getWheelTypeStyle(visual.distance);
+              const selected = index === selectedIndex;
+              const highlighted = index === activeIndex;
+              const optionDisabled = Boolean(option.disabled);
+              return /* @__PURE__ */ jsx167(
                 "li",
                 {
+                  id: getOptionId(listId, index),
                   role: "option",
-                  "aria-disabled": "true",
-                  "aria-selected": "false",
+                  "aria-selected": selected,
+                  "aria-disabled": optionDisabled || void 0,
+                  onClick: () => pickValue(option, index),
                   style: {
                     height: rowHeight,
                     display: "flex",
@@ -15946,124 +18487,58 @@ function WheelPicker({
                     justifyContent: "center",
                     padding: "0 var(--space-3)",
                     boxSizing: "border-box",
-                    color: "var(--color-semantic-label-assistive)",
-                    fontSize: "var(--label2-size)",
-                    lineHeight: "var(--label2-line)",
-                    fontWeight: "var(--fw-medium)",
-                    textAlign: "center",
-                    wordBreak: "keep-all"
+                    scrollSnapAlign: "center",
+                    cursor: locked || optionDisabled ? "default" : "pointer",
+                    fontSize: typeStyle.fontSize,
+                    lineHeight: typeStyle.lineHeight,
+                    fontWeight: typeStyle.fontWeight,
+                    letterSpacing: 0,
+                    color: optionDisabled ? "var(--color-semantic-label-disable)" : highlighted ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-neutral)",
+                    opacity: optionDisabled ? 0.42 : 1,
+                    transform: visual.transform,
+                    transformOrigin: "center center",
+                    transformStyle: "preserve-3d",
+                    backfaceVisibility: "hidden",
+                    transition: "opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
+                    userSelect: "none"
                   },
-                  children: emptyLabel
-                }
-              ),
-              opts.map((option, index) => {
-                const visual = getWheelVisual(index, activeIndex, pad2);
-                const typeStyle = getWheelTypeStyle(visual.distance);
-                const selected = index === selectedIndex;
-                const highlighted = index === activeIndex;
-                const optionDisabled = Boolean(option.disabled);
-                return /* @__PURE__ */ jsx158(
-                  "li",
-                  {
-                    id: getOptionId(listId, index),
-                    role: "option",
-                    "aria-selected": selected,
-                    "aria-disabled": optionDisabled || void 0,
-                    onClick: () => pickValue(option, index),
-                    style: {
-                      height: rowHeight,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "0 var(--space-3)",
-                      boxSizing: "border-box",
-                      scrollSnapAlign: "center",
-                      cursor: locked || optionDisabled ? "default" : "pointer",
-                      fontSize: typeStyle.fontSize,
-                      lineHeight: typeStyle.lineHeight,
-                      fontWeight: typeStyle.fontWeight,
-                      letterSpacing: 0,
-                      color: optionDisabled ? "var(--color-semantic-label-disable)" : highlighted ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-alternative)",
-                      opacity: optionDisabled ? 0.42 : Math.max(0.42, 1 - visual.distance * 0.18),
-                      transform: visual.transform,
-                      transformOrigin: "center center",
-                      transformStyle: "preserve-3d",
-                      backfaceVisibility: "hidden",
-                      transition: "opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
-                      userSelect: "none"
-                    },
-                    children: /* @__PURE__ */ jsx158(
-                      "span",
-                      {
-                        style: {
-                          minWidth: 0,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap"
-                        },
-                        children: option.label
-                      }
-                    )
-                  },
-                  option.value
-                );
-              })
-            ]
-          }
-        )
-      ]
-    }
-  );
-}
-
-// components/status/Banner.jsx
-import React162 from "react";
-import { jsx as jsx159, jsxs as jsxs125 } from "react/jsx-runtime";
-var TONES4 = {
-  info: { c: "var(--color-semantic-primary-normal)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
-  success: { c: "var(--bw-green)", d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
-  warning: { c: "var(--bw-amber)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
-  error: { c: "var(--bw-red)", d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' }
-};
-function Banner({ tone = "info", title, children, action, onClose, style, ...rest }) {
-  const t = TONES4[tone] || TONES4.info;
-  return /* @__PURE__ */ jsxs125(
-    "div",
-    {
-      role: "status",
-      style: {
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 12,
-        padding: "14px 16px",
-        background: `color-mix(in srgb, ${t.c} 9%, var(--color-semantic-background-elevated-normal))`,
-        border: `1px solid color-mix(in srgb, ${t.c} 26%, var(--color-semantic-background-elevated-normal))`,
-        borderRadius: "var(--radius-lg)",
-        fontFamily: "var(--font-sans)",
-        ...style
-      },
-      ...rest,
-      children: [
-        /* @__PURE__ */ jsx159("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: t.c, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", style: { flexShrink: 0, marginTop: 1 }, dangerouslySetInnerHTML: { __html: t.d } }),
-        /* @__PURE__ */ jsxs125("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ jsx159("div", { style: { fontSize: 14.5, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 3 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ jsx159("div", { style: { fontSize: 13.5, lineHeight: 1.6, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
-        ] }),
-        action != null && /* @__PURE__ */ jsx159("div", { style: { flexShrink: 0 }, children: action }),
-        onClose && /* @__PURE__ */ jsx159("button", { type: "button", "aria-label": "close", onClick: onClose, style: { flexShrink: 0, display: "inline-flex", padding: 2, border: "none", background: "transparent", cursor: "pointer", color: "var(--color-semantic-label-assistive)" }, children: /* @__PURE__ */ jsx159("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx159("path", { d: "M18 6 6 18M6 6l12 12" }) }) })
-      ]
+                  children: /* @__PURE__ */ jsx167(
+                    "span",
+                    {
+                      style: {
+                        minWidth: 0,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      },
+                      children: option.label
+                    }
+                  )
+                },
+                option.value
+              );
+            })
+          ]
+        }
+      )
     }
   );
 }
 
 // components/status/Callout.jsx
-import React163 from "react";
-import { jsx as jsx160, jsxs as jsxs126 } from "react/jsx-runtime";
-var CT = { signal: "var(--color-semantic-primary-normal)", positive: "var(--bw-green)", cautionary: "var(--bw-amber)", negative: "var(--bw-red)", navy: "var(--bw-ink)" };
+import React172 from "react";
+import { jsx as jsx168, jsxs as jsxs135 } from "react/jsx-runtime";
+var CT = {
+  signal: { fg: "var(--component-callout-info-icon)", bg: "var(--component-callout-info-bg)", border: "var(--component-callout-info-border)" },
+  positive: { fg: "var(--component-callout-positive-icon)", bg: "var(--component-callout-positive-bg)", border: "var(--component-callout-positive-border)" },
+  cautionary: { fg: "var(--component-callout-cautionary-icon)", bg: "var(--component-callout-cautionary-bg)", border: "var(--component-callout-cautionary-border)" },
+  negative: { fg: "var(--component-callout-negative-icon)", bg: "var(--component-callout-negative-bg)", border: "var(--component-callout-negative-border)" },
+  navy: { fg: "var(--component-callout-neutral-icon)", bg: "var(--component-callout-neutral-bg)", border: "var(--component-callout-neutral-border)" }
+};
 var ICON_SIZE = 20;
-function normalizeIcon(icon) {
-  if (!React163.isValidElement(icon)) return icon;
-  return React163.cloneElement(icon, {
+function normalizeIcon(icon, fallbackIcon) {
+  if (!React172.isValidElement(icon)) return fallbackIcon;
+  return React172.cloneElement(icon, {
     size: icon.props.size ?? ICON_SIZE,
     width: icon.props.width ?? ICON_SIZE,
     height: icon.props.height ?? ICON_SIZE,
@@ -16071,27 +18546,32 @@ function normalizeIcon(icon) {
   });
 }
 function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
-  const c = CT[tone] || CT.signal;
-  const normalizedIcon = normalizeIcon(icon);
-  return /* @__PURE__ */ jsxs126(
+  const normalizedTone = CT[tone] ? tone : "signal";
+  const palette = CT[normalizedTone];
+  const c = palette.fg;
+  const defaultIcon = /* @__PURE__ */ jsx168(Icon, { name: statusToneStyle(normalizedTone === "navy" ? "offline" : normalizedTone).icon, size: ICON_SIZE });
+  const normalizedIcon = normalizeIcon(icon, defaultIcon);
+  return /* @__PURE__ */ jsxs135(
     "div",
     {
       style: {
         display: "flex",
         gap: 14,
         padding: "16px 18px",
-        background: `color-mix(in srgb, ${c} 7%, var(--color-semantic-background-elevated-normal))`,
-        border: `1px solid color-mix(in srgb, ${c} 32%, var(--color-semantic-line-normal-normal))`,
+        boxSizing: "border-box",
+        background: palette.bg,
+        border: `1px solid ${palette.border}`,
         borderRadius: "var(--radius-lg)",
-        boxShadow: `inset 0 1px 0 color-mix(in srgb, ${c} 12%, transparent)`,
+        boxShadow: "none",
         fontFamily: "var(--font-sans)",
         ...style
       },
       ...rest,
       children: [
-        icon && /* @__PURE__ */ jsx160(
+        /* @__PURE__ */ jsx168(
           "span",
           {
+            "aria-hidden": "true",
             style: {
               width: ICON_SIZE,
               height: ICON_SIZE,
@@ -16106,9 +18586,9 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
             children: normalizedIcon
           }
         ),
-        /* @__PURE__ */ jsxs126("div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ jsx160("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ jsx160("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+        /* @__PURE__ */ jsxs135("div", { style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ jsx168("div", { style: { fontSize: 15, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
+          children != null && /* @__PURE__ */ jsx168("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -16116,10 +18596,10 @@ function Callout({ tone = "signal", title, children, icon, style, ...rest }) {
 }
 
 // components/status/CircularProgress.jsx
-import React164 from "react";
-import { jsx as jsx161, jsxs as jsxs127 } from "react/jsx-runtime";
-function useKeyframes3(id, css) {
-  React164.useEffect(() => {
+import React173 from "react";
+import { jsx as jsx169, jsxs as jsxs136 } from "react/jsx-runtime";
+function useKeyframes4(id, css) {
+  React173.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
     const el = document.createElement("style");
     el.id = id;
@@ -16129,9 +18609,9 @@ function useKeyframes3(id, css) {
 }
 var TONES5 = {
   signal: "var(--color-semantic-primary-normal)",
-  positive: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  negative: "var(--bw-red)"
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)"
 };
 function CircularProgress({
   value = 0,
@@ -16145,14 +18625,14 @@ function CircularProgress({
   style,
   ...rest
 }) {
-  useKeyframes3("lk-circular-kf", "@keyframes lk-circular-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-circular-progress]{animation:none}}");
+  useKeyframes4("lk-circular-kf", "@keyframes lk-circular-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-circular-progress]{animation:none}}");
   const c = TONES5[tone] || TONES5.signal;
   const pct = Math.max(0, Math.min(100, value / max * 100));
   const r = (size - thickness) / 2;
   const circ = 2 * Math.PI * r;
   const dashOffset = indeterminate ? circ * 0.72 : circ * (1 - pct / 100);
   const ariaLabel = typeof label === "string" ? label : void 0;
-  return /* @__PURE__ */ jsxs127(
+  return /* @__PURE__ */ jsxs136(
     "span",
     {
       role: "progressbar",
@@ -16165,7 +18645,7 @@ function CircularProgress({
       style: { position: "relative", display: "inline-flex", width: size, height: size, ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs127(
+        /* @__PURE__ */ jsxs136(
           "svg",
           {
             "data-lds-circular-progress": true,
@@ -16173,22 +18653,22 @@ function CircularProgress({
             height: size,
             style: { transform: "rotate(-90deg)", transformOrigin: "center", animation: indeterminate ? "lk-circular-spin 0.9s linear infinite" : void 0 },
             children: [
-              /* @__PURE__ */ jsx161("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
-              /* @__PURE__ */ jsx161("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: circ, strokeDashoffset: dashOffset, style: { transition: indeterminate ? void 0 : "stroke-dashoffset var(--dur-base) var(--ease-out)" } })
+              /* @__PURE__ */ jsx169("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness }),
+              /* @__PURE__ */ jsx169("circle", { cx: size / 2, cy: size / 2, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: circ, strokeDashoffset: dashOffset, style: { transition: indeterminate ? void 0 : "stroke-dashoffset var(--dur-base) var(--ease-out)" } })
             ]
           }
         ),
-        showValue && !indeterminate && /* @__PURE__ */ jsx161("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: Math.round(size * 0.28), fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: Math.round(pct) })
+        showValue && !indeterminate && /* @__PURE__ */ jsx169("span", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-sans)", fontSize: Math.round(size * 0.28), fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-normal)", fontVariantNumeric: "tabular-nums" }, children: Math.round(pct) })
       ]
     }
   );
 }
 
 // components/status/EmptyState.jsx
-import React165 from "react";
-import { jsx as jsx162, jsxs as jsxs128 } from "react/jsx-runtime";
+import React174 from "react";
+import { jsx as jsx170, jsxs as jsxs137 } from "react/jsx-runtime";
 function EmptyState({ icon, title, description, action, style, ...rest }) {
-  return /* @__PURE__ */ jsxs128(
+  return /* @__PURE__ */ jsxs137(
     "div",
     {
       style: {
@@ -16205,150 +18685,825 @@ function EmptyState({ icon, title, description, action, style, ...rest }) {
       },
       ...rest,
       children: [
-        icon != null && /* @__PURE__ */ jsx162("div", { style: {
+        icon != null && /* @__PURE__ */ jsx170("div", { style: {
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
           width: 56,
           height: 56,
           borderRadius: "var(--radius-xl)",
-          background: "var(--lk-accent-tint)",
+          background: "var(--color-semantic-primary-surface-normal)",
           color: "var(--color-semantic-primary-normal)",
           marginBottom: 12
         }, children: icon }),
-        title != null && /* @__PURE__ */ jsx162("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
-        description != null && /* @__PURE__ */ jsx162("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
-        action != null && /* @__PURE__ */ jsx162("div", { style: { marginTop: 14 }, children: action })
+        title != null && /* @__PURE__ */ jsx170("div", { style: { fontSize: 18, fontWeight: "var(--fw-bold)", letterSpacing: 0, color: "var(--color-semantic-label-normal)" }, children: title }),
+        description != null && /* @__PURE__ */ jsx170("div", { style: { fontSize: 14, lineHeight: 1.65, color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all" }, children: description }),
+        action != null && /* @__PURE__ */ jsx170("div", { style: { marginTop: 14 }, children: action })
       ]
     }
   );
 }
 
 // components/status/Meter.jsx
-import React167 from "react";
-
-// components/status/ProgressBar.jsx
-import React166 from "react";
-import { jsx as jsx163, jsxs as jsxs129 } from "react/jsx-runtime";
-function useKeyframes4(id, css) {
-  React166.useEffect(() => {
-    if (typeof document === "undefined" || document.getElementById(id)) return;
-    const el = document.createElement("style");
-    el.id = id;
-    el.textContent = css;
-    document.head.appendChild(el);
-  }, [id, css]);
-}
-var TONES6 = {
-  signal: "var(--color-semantic-primary-normal)",
-  positive: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  negative: "var(--bw-red)"
-};
-function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = "signal", color, size = "md", label, showValue = false, style, ...rest }) {
-  useKeyframes4("lk-prog-kf", "@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none}}");
-  const c = color || TONES6[tone] || TONES6.signal;
-  const h = size === "sm" ? 4 : size === "lg" ? 10 : 6;
-  const pct = Math.max(0, Math.min(100, value / max * 100));
-  const ariaLabel = typeof label === "string" ? label : void 0;
-  return /* @__PURE__ */ jsxs129("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs129("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 8, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
-      /* @__PURE__ */ jsx163("span", { children: label }),
-      showValue && /* @__PURE__ */ jsxs129("span", { style: { color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
-        Math.round(pct),
-        "%"
-      ] })
-    ] }),
-    /* @__PURE__ */ jsx163(
-      "div",
-      {
-        role: "progressbar",
-        "aria-label": ariaLabel,
-        "aria-busy": indeterminate || void 0,
-        "aria-valuenow": indeterminate ? void 0 : Math.round(pct),
-        "aria-valuemin": 0,
-        "aria-valuemax": 100,
-        "aria-valuetext": indeterminate ? "loading" : `${Math.round(pct)}%`,
-        style: { position: "relative", height: h, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)", overflow: "hidden" },
-        children: indeterminate ? /* @__PURE__ */ jsx163("span", { "data-lds-progress-indeterminate": true, style: { position: "absolute", top: 0, bottom: 0, left: 0, width: "45%", background: c, borderRadius: "var(--radius-pill)", animation: "lk-prog-indet 1.3s var(--ease-in-out) infinite" } }) : /* @__PURE__ */ jsx163("span", { style: { position: "absolute", top: 0, left: 0, bottom: 0, width: `${pct}%`, background: c, borderRadius: "var(--radius-pill)", transition: "width var(--dur-base) var(--ease-out)" } })
-      }
-    )
-  ] });
-}
-
-// components/status/Meter.jsx
-import { jsx as jsx164, jsxs as jsxs130 } from "react/jsx-runtime";
+import React175 from "react";
+import { jsx as jsx171, jsxs as jsxs138 } from "react/jsx-runtime";
 function Meter({ value = 0, max = 100, label, thresholds, size = "md", showValue = true, style, ...rest }) {
   const pct = Math.max(0, Math.min(100, value / max * 100));
   let c = "var(--color-semantic-primary-normal)";
   if (thresholds) {
-    if (pct <= thresholds.low) c = "var(--bw-red)";
-    else if (pct <= thresholds.high) c = "var(--bw-amber)";
-    else c = "var(--bw-green)";
+    if (pct <= thresholds.low) c = "var(--color-semantic-status-negative)";
+    else if (pct <= thresholds.high) c = "var(--color-semantic-status-cautionary)";
+    else c = "var(--color-semantic-status-positive)";
   }
-  return /* @__PURE__ */ jsxs130("div", { style: { ...style }, ...rest, children: [
-    (label != null || showValue) && /* @__PURE__ */ jsxs130("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
-      /* @__PURE__ */ jsx164("span", { children: label }),
-      showValue && /* @__PURE__ */ jsxs130("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--color-semantic-label-alternative)" }, children: [
+  return /* @__PURE__ */ jsxs138("div", { style: { ...style }, ...rest, children: [
+    (label != null || showValue) && /* @__PURE__ */ jsxs138("div", { style: { display: "flex", justifyContent: "space-between", gap: 12, marginBottom: 6, fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-neutral)" }, children: [
+      /* @__PURE__ */ jsx171("span", { children: label }),
+      showValue && /* @__PURE__ */ jsxs138("span", { style: { fontVariantNumeric: "tabular-nums", color: "var(--color-semantic-label-alternative)" }, children: [
         value,
         "/",
         max
       ] })
     ] }),
-    /* @__PURE__ */ jsx164(ProgressBar, { value, max, size: size === "sm" ? "md" : "lg", color: c })
+    /* @__PURE__ */ jsx171(ProgressBar, { value, max, size: size === "sm" ? "md" : "lg", color: c })
   ] });
 }
 
 // components/viz/Map2DCanvas.jsx
-import React169 from "react";
+import React178 from "react";
 
-// components/viz/ViewerToolbar.jsx
-import React168 from "react";
-import { jsx as jsx165 } from "react/jsx-runtime";
-function ViewerToolbar({ children, orientation = "vertical", label = "\uBDF0\uC5B4 \uCEE8\uD2B8\uB864", style, ...rest }) {
-  return /* @__PURE__ */ jsx165("div", { role: "toolbar", "aria-label": label, "aria-orientation": orientation, style: {
-    display: "inline-flex",
-    flexDirection: orientation === "vertical" ? "column" : "row",
-    gap: 2,
-    padding: 4,
-    background: "var(--color-semantic-background-elevated-normal)",
-    border: "1px solid var(--color-semantic-line-normal-normal)",
-    borderRadius: "var(--radius-md)",
-    boxShadow: "var(--shadow-md)",
-    ...style
-  }, ...rest, children });
-}
-function ViewerToolbarButton({ children, active = false, label, style, ...rest }) {
-  const disabled = !!rest.disabled;
-  return /* @__PURE__ */ jsx165(
-    "button",
+// components/viz/ViewerFrame.jsx
+import React176 from "react";
+import { jsx as jsx172, jsxs as jsxs139 } from "react/jsx-runtime";
+var VIEWER_STATES = Object.freeze([
+  "idle",
+  "no-source",
+  "loading",
+  "connecting",
+  "ready",
+  "live",
+  "degraded",
+  "stale",
+  "frozen",
+  "paused",
+  "unavailable",
+  "disconnected",
+  "no-signal",
+  "error"
+]);
+var STATE_PRESENTATION = {
+  idle: {
+    label: "\uC18C\uC2A4 \uB300\uAE30 \uC911",
+    description: "\uD45C\uC2DC\uD560 \uC18C\uC2A4\uB97C \uC5F0\uACB0\uD574 \uC8FC\uC138\uC694.",
+    icon: "video",
+    tone: "neutral",
+    blocking: true
+  },
+  "no-source": {
+    label: "\uC18C\uC2A4 \uC5C6\uC74C",
+    description: "\uD45C\uC2DC\uD560 \uCF58\uD150\uCE20\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
+    icon: "video",
+    tone: "neutral",
+    blocking: true
+  },
+  loading: {
+    label: "\uBD88\uB7EC\uC624\uB294 \uC911",
+    description: "\uCF58\uD150\uCE20\uB97C \uC900\uBE44\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4.",
+    busy: true,
+    tone: "primary",
+    blocking: true
+  },
+  connecting: {
+    label: "\uC5F0\uACB0 \uC911",
+    description: "\uC18C\uC2A4\uC640 \uC5F0\uACB0\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4.",
+    busy: true,
+    tone: "primary",
+    blocking: true
+  },
+  ready: {
+    label: "\uC900\uBE44\uB428",
+    icon: "circle-check",
+    tone: "positive",
+    blocking: false
+  },
+  live: {
+    label: "\uB77C\uC774\uBE0C",
+    icon: "circle-fill",
+    tone: "negative",
+    blocking: false,
+    corner: true
+  },
+  degraded: {
+    label: "\uD488\uC9C8 \uC800\uD558",
+    description: "\uB9C8\uC9C0\uB9C9 \uCF58\uD150\uCE20\uB97C \uC720\uC9C0\uD558\uBA70 \uC218\uC2E0 \uC0C1\uD0DC\uB97C \uD655\uC778\uD569\uB2C8\uB2E4.",
+    icon: "circle-exclamation",
+    tone: "cautionary",
+    blocking: false,
+    edge: true
+  },
+  stale: {
+    label: "\uB370\uC774\uD130 \uC9C0\uC5F0",
+    description: "\uB9C8\uC9C0\uB9C9\uC73C\uB85C \uC218\uC2E0\uD55C \uCF58\uD150\uCE20\uB97C \uD45C\uC2DC\uD569\uB2C8\uB2E4.",
+    icon: "clock",
+    tone: "cautionary",
+    blocking: false,
+    edge: true
+  },
+  frozen: {
+    label: "\uD654\uBA74 \uBA48\uCDA4",
+    description: "\uB9C8\uC9C0\uB9C9 \uD504\uB808\uC784\uC744 \uD45C\uC2DC\uD569\uB2C8\uB2E4.",
+    icon: "pause",
+    tone: "cautionary",
+    blocking: false,
+    edge: true
+  },
+  paused: {
+    label: "\uC77C\uC2DC\uC815\uC9C0",
+    description: "\uB9C8\uC9C0\uB9C9 \uD504\uB808\uC784\uC744 \uD45C\uC2DC\uD569\uB2C8\uB2E4.",
+    icon: "pause",
+    tone: "neutral",
+    blocking: false,
+    edge: true
+  },
+  unavailable: {
+    label: "\uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC74C",
+    description: "\uC774 \uCF58\uD150\uCE20 \uC18C\uC2A4\uB97C \uC0AC\uC6A9\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.",
+    icon: "circle-block",
+    tone: "neutral",
+    blocking: true
+  },
+  disconnected: {
+    label: "\uC5F0\uACB0 \uB04A\uAE40",
+    description: "\uC18C\uC2A4 \uC5F0\uACB0\uC744 \uD655\uC778\uD574 \uC8FC\uC138\uC694.",
+    icon: "signal",
+    tone: "negative",
+    blocking: true
+  },
+  "no-signal": {
+    label: "\uC2E0\uD638 \uC5C6\uC74C",
+    description: "\uC18C\uC2A4 \uC2E0\uD638\uAC00 \uAC10\uC9C0\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.",
+    icon: "signal",
+    tone: "negative",
+    blocking: true
+  },
+  error: {
+    label: "\uD45C\uC2DC \uC624\uB958",
+    description: "\uCF58\uD150\uCE20\uB97C \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
+    icon: "triangle-exclamation",
+    tone: "negative",
+    blocking: true
+  }
+};
+var VIEWER_BLOCKING_STATES = Object.freeze(
+  VIEWER_STATES.filter((state) => STATE_PRESENTATION[state].blocking)
+);
+var TONE_COLOR = {
+  primary: "var(--color-semantic-primary-normal)",
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)",
+  neutral: "var(--viewer-muted)"
+};
+function StateMark({ presentation, icon }) {
+  if (presentation.busy && icon == null) {
+    return /* @__PURE__ */ jsx172(
+      Spinner,
+      {
+        size: 20,
+        thickness: 2,
+        color: "var(--color-semantic-primary-normal)",
+        role: "presentation",
+        "aria-hidden": "true"
+      }
+    );
+  }
+  return /* @__PURE__ */ jsx172(
+    "span",
     {
-      type: "button",
-      "aria-label": label,
-      title: label,
+      "aria-hidden": "true",
       style: {
-        width: 34,
-        height: 34,
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        border: 0,
-        borderRadius: "var(--radius-sm)",
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.42 : 1,
-        background: active ? "var(--lk-accent-tint)" : "transparent",
-        color: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
-        transition: "background var(--dur-fast) var(--ease-out)",
+        flex: "0 0 auto",
+        color: TONE_COLOR[presentation.tone] ?? TONE_COLOR.neutral
+      },
+      children: icon ?? /* @__PURE__ */ jsx172(Icon, { name: presentation.icon ?? "circle-info", size: 16 })
+    }
+  );
+}
+var ViewerFrame = React176.forwardRef(function ViewerFrame2({
+  children,
+  label,
+  source,
+  badges,
+  hud,
+  toolbar,
+  overlay,
+  status,
+  state = "ready",
+  stateLabel,
+  stateDescription,
+  stateIcon,
+  stateAction,
+  appearance = "dark",
+  toolbarPlacement = "top-right",
+  style,
+  tabIndex,
+  onFocusCapture,
+  ...rest
+}, forwardedRef) {
+  const rootRef = React176.useRef(null);
+  const blockingLayerRef = React176.useRef(null);
+  const lastFocusWithinRef = React176.useRef(null);
+  const focusInsideBlockingLayerRef = React176.useRef(false);
+  const returnFocusRef = React176.useRef(null);
+  const wasBlockingRef = React176.useRef(false);
+  const resolvedState = STATE_PRESENTATION[state] ? state : "ready";
+  const presentation = STATE_PRESENTATION[resolvedState];
+  const blocking = presentation.blocking;
+  const busy = Boolean(presentation.busy);
+  const labelContent = stateLabel ?? presentation.label;
+  const descriptionContent = stateDescription === void 0 ? presentation.description : stateDescription;
+  const topToolbar = toolbarPlacement === "top-right" ? toolbar : null;
+  const bottomToolbar = toolbarPlacement === "bottom-right" ? toolbar : null;
+  React176.useImperativeHandle(forwardedRef, () => rootRef.current, []);
+  React176.useLayoutEffect(() => {
+    if (typeof document === "undefined") return;
+    const wasBlocking = wasBlockingRef.current;
+    wasBlockingRef.current = blocking;
+    if (!blocking) {
+      const focusNeedsRestore = document.activeElement === document.body || document.activeElement === document.documentElement;
+      if (wasBlocking && focusInsideBlockingLayerRef.current && focusNeedsRestore) {
+        const exactTarget = returnFocusRef.current;
+        const exactTargetAvailable = exactTarget instanceof HTMLElement && rootRef.current?.contains(exactTarget) && !exactTarget.matches('[disabled], [aria-disabled="true"]') && !exactTarget.closest("[inert]");
+        const restoredTarget = exactTargetAvailable ? exactTarget : rootRef.current?.querySelector(
+          '[data-viewer-toolbar] [data-lk-viewer-toolbar-item]:not([disabled]):not([aria-disabled="true"])'
+        ) ?? rootRef.current;
+        restoredTarget?.focus?.({ preventScroll: true });
+      }
+      focusInsideBlockingLayerRef.current = false;
+      returnFocusRef.current = null;
+      return;
+    }
+    const focused = document.activeElement;
+    const blockedRegions = rootRef.current?.querySelectorAll("[data-viewer-blocked-region]") ?? [];
+    const blockedFocusTarget = Array.from(blockedRegions).reduce((target, region) => {
+      if (target) return target;
+      if (focused instanceof HTMLElement && region.contains(focused)) return focused;
+      if (lastFocusWithinRef.current instanceof HTMLElement && region.contains(lastFocusWithinRef.current)) {
+        return lastFocusWithinRef.current;
+      }
+      return null;
+    }, null);
+    const focusWasBlocked = blockedFocusTarget != null;
+    if (!focusWasBlocked) return;
+    returnFocusRef.current = blockedFocusTarget;
+    const focusTarget = blockingLayerRef.current?.querySelector([
+      "button:not([disabled])",
+      "a[href]",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(",")) ?? blockingLayerRef.current;
+    focusTarget?.focus?.({ preventScroll: true });
+  }, [blocking, resolvedState]);
+  const stateSummary = /* @__PURE__ */ jsxs139(React176.Fragment, { children: [
+    /* @__PURE__ */ jsx172(StateMark, { presentation, icon: stateIcon }),
+    /* @__PURE__ */ jsxs139("span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
+      /* @__PURE__ */ jsx172("span", { style: { fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
+      descriptionContent != null && /* @__PURE__ */ jsx172(
+        "span",
+        {
+          "data-viewer-edge-description": "",
+          style: {
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: 0
+          },
+          children: descriptionContent
+        }
+      )
+    ] })
+  ] });
+  return /* @__PURE__ */ jsxs139(
+    "div",
+    {
+      ...rest,
+      ref: rootRef,
+      role: "region",
+      "aria-label": label,
+      "aria-busy": busy || void 0,
+      tabIndex: tabIndex ?? -1,
+      onFocusCapture: (event) => {
+        lastFocusWithinRef.current = event.target;
+        focusInsideBlockingLayerRef.current = Boolean(event.target.closest?.("[data-viewer-blocking-state]"));
+        onFocusCapture?.(event);
+      },
+      "data-lds-viewer-frame": "",
+      "data-viewer-appearance": appearance,
+      "data-viewer-state": resolvedState,
+      "data-viewer-blocking": blocking ? "" : void 0,
+      style: {
+        "--viewer-surface": appearance === "light" ? "var(--component-viewer-light-surface)" : "var(--component-viewer-surface)",
+        "--viewer-surface-elevated": appearance === "light" ? "var(--component-viewer-light-surface-elevated)" : "var(--component-viewer-surface-elevated)",
+        "--viewer-foreground": appearance === "light" ? "var(--component-viewer-light-foreground)" : "var(--component-viewer-foreground)",
+        "--viewer-muted": appearance === "light" ? "var(--component-viewer-light-muted)" : "var(--component-viewer-muted)",
+        "--viewer-border": appearance === "light" ? "var(--component-viewer-light-border)" : "var(--component-viewer-border)",
+        position: "relative",
+        isolation: "isolate",
+        width: "100%",
+        overflow: "hidden",
+        boxSizing: "border-box",
+        border: "1px solid var(--viewer-border)",
+        borderRadius: "var(--radius-lg)",
+        background: "var(--viewer-surface)",
+        color: "var(--viewer-foreground)",
+        fontFamily: "var(--font-sans)",
+        containerType: "inline-size",
         ...style
       },
-      ...rest,
+      children: [
+        /* @__PURE__ */ jsx172("style", { children: `@container (max-width: 240px) {
+          [data-viewer-blocking-state] {
+            padding: 8px !important;
+          }
+          [data-viewer-blocking-body],
+          [data-viewer-blocking-live] {
+            gap: 4px !important;
+          }
+          [data-viewer-blocking-icon] {
+            display: none !important;
+          }
+          [data-viewer-blocking-description] {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+          }
+          [data-viewer-blocking-action] {
+            margin-top: 0 !important;
+          }
+        }` }),
+        /* @__PURE__ */ jsxs139(
+          "div",
+          {
+            "data-viewer-content": "",
+            "data-viewer-blocked-region": "",
+            inert: blocking ? true : void 0,
+            "aria-hidden": blocking || void 0,
+            style: { position: "absolute", inset: 0, zIndex: 0, overflow: "hidden" },
+            children: [
+              children,
+              overlay != null && /* @__PURE__ */ jsx172("div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none" }, children: overlay })
+            ]
+          }
+        ),
+        (source != null || badges != null || hud != null || topToolbar != null || presentation.corner) && /* @__PURE__ */ jsxs139(React176.Fragment, { children: [
+          /* @__PURE__ */ jsx172(
+            "div",
+            {
+              "aria-hidden": "true",
+              style: {
+                position: "absolute",
+                zIndex: 1,
+                inset: "0 0 auto",
+                height: 82,
+                pointerEvents: "none",
+                background: "linear-gradient(180deg, var(--viewer-surface) 0%, transparent 100%)"
+              }
+            }
+          ),
+          /* @__PURE__ */ jsxs139(
+            "div",
+            {
+              "data-viewer-topbar": "",
+              inert: blocking ? true : void 0,
+              "aria-hidden": blocking || void 0,
+              style: {
+                position: "absolute",
+                zIndex: 2,
+                inset: "0 0 auto",
+                display: "grid",
+                gridTemplateColumns: "minmax(0, 1fr) auto",
+                alignItems: "start",
+                gap: 8,
+                padding: 12,
+                pointerEvents: "none"
+              },
+              children: [
+                /* @__PURE__ */ jsxs139("div", { style: { display: "grid", gap: 7, minWidth: 0, justifyItems: "start" }, children: [
+                  (source != null || badges != null || presentation.corner) && /* @__PURE__ */ jsxs139("div", { style: { display: "flex", alignItems: "center", gap: 7, minWidth: 0, maxWidth: "100%" }, children: [
+                    source != null && /* @__PURE__ */ jsx172(
+                      "span",
+                      {
+                        "data-viewer-source": "",
+                        style: {
+                          minWidth: 0,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          color: "var(--viewer-foreground)",
+                          fontSize: 12,
+                          lineHeight: 1.35,
+                          fontWeight: "var(--fw-bold)"
+                        },
+                        children: source
+                      }
+                    ),
+                    presentation.corner && /* @__PURE__ */ jsxs139(
+                      "span",
+                      {
+                        role: "status",
+                        "aria-live": "polite",
+                        "aria-atomic": "true",
+                        style: {
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 4,
+                          flex: "0 0 auto",
+                          height: 22,
+                          padding: "0 7px",
+                          boxSizing: "border-box",
+                          border: "1px solid var(--viewer-border)",
+                          borderRadius: "var(--radius-pill)",
+                          background: "var(--viewer-surface-elevated)",
+                          color: "var(--viewer-foreground)",
+                          fontSize: 11,
+                          fontWeight: "var(--fw-semibold)"
+                        },
+                        children: [
+                          /* @__PURE__ */ jsx172(StateMark, { presentation, icon: stateIcon }),
+                          labelContent
+                        ]
+                      }
+                    ),
+                    badges
+                  ] }),
+                  hud != null && /* @__PURE__ */ jsx172("div", { "data-viewer-hud": "", style: { minWidth: 0, maxWidth: "100%", color: "var(--viewer-foreground)" }, children: hud })
+                ] }),
+                topToolbar != null && /* @__PURE__ */ jsx172(
+                  "div",
+                  {
+                    "data-viewer-toolbar": "",
+                    "data-viewer-blocked-region": "",
+                    inert: blocking ? true : void 0,
+                    "aria-hidden": blocking || void 0,
+                    style: { pointerEvents: blocking ? "none" : "auto" },
+                    children: topToolbar
+                  }
+                )
+              ]
+            }
+          )
+        ] }),
+        bottomToolbar != null && /* @__PURE__ */ jsx172(
+          "div",
+          {
+            "data-viewer-toolbar": "",
+            "data-viewer-blocked-region": "",
+            inert: blocking ? true : void 0,
+            "aria-hidden": blocking || void 0,
+            style: {
+              position: "absolute",
+              zIndex: 3,
+              right: 12,
+              bottom: presentation.edge ? 56 : 12,
+              pointerEvents: blocking ? "none" : "auto"
+            },
+            children: bottomToolbar
+          }
+        ),
+        !blocking && !presentation.edge && status != null && /* @__PURE__ */ jsx172(
+          "div",
+          {
+            "data-viewer-status": "",
+            style: {
+              position: "absolute",
+              zIndex: 2,
+              left: 12,
+              bottom: 12,
+              display: "inline-flex",
+              alignItems: "center",
+              maxWidth: "calc(100% - 24px)",
+              minHeight: 24,
+              boxSizing: "border-box",
+              padding: "4px 9px",
+              border: "1px solid var(--viewer-border)",
+              borderRadius: "var(--radius-sm)",
+              background: "var(--viewer-surface-elevated)",
+              color: "var(--viewer-muted)",
+              fontSize: 11,
+              lineHeight: 1.35,
+              fontWeight: "var(--fw-semibold)",
+              fontVariantNumeric: "tabular-nums",
+              overflowWrap: "anywhere"
+            },
+            children: status
+          }
+        ),
+        !blocking && presentation.edge && /* @__PURE__ */ jsxs139(
+          "div",
+          {
+            "data-viewer-edge-state": "",
+            style: {
+              position: "absolute",
+              zIndex: 3,
+              inset: "auto 0 0",
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "nowrap",
+              gap: "7px 10px",
+              minHeight: 44,
+              padding: "8px 12px",
+              boxSizing: "border-box",
+              borderTop: "1px solid var(--viewer-border)",
+              background: "var(--viewer-surface-elevated)",
+              overflow: "hidden"
+            },
+            children: [
+              /* @__PURE__ */ jsx172(
+                "div",
+                {
+                  role: "status",
+                  "aria-live": "polite",
+                  "aria-atomic": "true",
+                  style: { display: "flex", alignItems: "center", gap: 8, flex: "1 1 auto", minWidth: 0, overflow: "hidden" },
+                  children: stateSummary
+                }
+              ),
+              status != null && /* @__PURE__ */ jsx172(
+                "span",
+                {
+                  "data-viewer-edge-metadata": "",
+                  style: {
+                    flex: "0 1 auto",
+                    minWidth: 0,
+                    maxWidth: "45%",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    color: "var(--viewer-muted)",
+                    fontSize: 11,
+                    fontWeight: "var(--fw-semibold)",
+                    fontVariantNumeric: "tabular-nums"
+                  },
+                  children: status
+                }
+              ),
+              stateAction != null && /* @__PURE__ */ jsx172("div", { style: { flex: "0 0 auto" }, children: stateAction })
+            ]
+          }
+        ),
+        blocking && /* @__PURE__ */ jsxs139(
+          "div",
+          {
+            ref: blockingLayerRef,
+            role: "group",
+            "aria-label": typeof labelContent === "string" ? labelContent : void 0,
+            tabIndex: -1,
+            "data-viewer-blocking-state": "",
+            style: {
+              position: "absolute",
+              zIndex: 4,
+              inset: 0,
+              display: "grid",
+              gridTemplateRows: source != null ? "auto minmax(0, 1fr)" : "minmax(0, 1fr)",
+              alignItems: "stretch",
+              padding: 12,
+              boxSizing: "border-box",
+              background: "linear-gradient(180deg, var(--viewer-surface-elevated), var(--viewer-surface))",
+              textAlign: "center"
+            },
+            children: [
+              source != null && /* @__PURE__ */ jsx172(
+                "div",
+                {
+                  "data-viewer-blocking-source": "",
+                  style: {
+                    alignSelf: "start",
+                    justifySelf: "stretch",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    color: "var(--viewer-foreground)",
+                    fontSize: 12,
+                    lineHeight: 1.35,
+                    fontWeight: "var(--fw-bold)",
+                    textAlign: "left"
+                  },
+                  children: source
+                }
+              ),
+              /* @__PURE__ */ jsxs139(
+                "div",
+                {
+                  "data-viewer-blocking-body": "",
+                  style: {
+                    alignSelf: "center",
+                    justifySelf: "center",
+                    display: "grid",
+                    justifyItems: "center",
+                    gap: 10,
+                    width: "min(100%, 360px)",
+                    minHeight: 0
+                  },
+                  children: [
+                    /* @__PURE__ */ jsxs139(
+                      "div",
+                      {
+                        "data-viewer-blocking-live": "",
+                        role: resolvedState === "error" ? "alert" : "status",
+                        "aria-live": resolvedState === "error" ? "assertive" : "polite",
+                        "aria-atomic": "true",
+                        style: { display: "grid", justifyItems: "center", gap: 10 },
+                        children: [
+                          /* @__PURE__ */ jsx172("div", { "data-viewer-blocking-icon": "", style: { display: "flex", alignItems: "center", justifyContent: "center", minHeight: 24 }, children: /* @__PURE__ */ jsx172(StateMark, { presentation, icon: stateIcon }) }),
+                          /* @__PURE__ */ jsxs139("div", { style: { display: "grid", justifyItems: "center", gap: 4 }, children: [
+                            /* @__PURE__ */ jsx172("strong", { style: { color: "var(--viewer-foreground)", fontSize: 14, lineHeight: 1.4 }, children: labelContent }),
+                            descriptionContent != null && /* @__PURE__ */ jsx172("span", { "data-viewer-blocking-description": "", style: { color: "var(--viewer-muted)", fontSize: 12, lineHeight: 1.55, overflowWrap: "anywhere" }, children: descriptionContent })
+                          ] })
+                        ]
+                      }
+                    ),
+                    stateAction != null && /* @__PURE__ */ jsx172("div", { "data-viewer-blocking-action": "", style: { marginTop: 4 }, children: stateAction })
+                  ]
+                }
+              )
+            ]
+          }
+        )
+      ]
+    }
+  );
+});
+ViewerFrame.displayName = "ViewerFrame";
+
+// components/viz/ViewerToolbar.jsx
+import React177 from "react";
+import { jsx as jsx173 } from "react/jsx-runtime";
+var ViewerToolbarAppearanceContext = React177.createContext("minimal");
+var TOOLBAR_APPEARANCES = {
+  surface: {
+    gap: 2,
+    padding: 4,
+    background: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
+    border: "1px solid var(--viewer-border, var(--color-semantic-line-normal-normal))",
+    borderRadius: "var(--radius-md)",
+    boxShadow: "var(--shadow-sm)"
+  },
+  minimal: {
+    gap: "var(--space-1)",
+    padding: 0,
+    background: "transparent",
+    border: "none",
+    borderRadius: 0,
+    boxShadow: "none"
+  },
+  "on-dark": {
+    gap: "var(--space-1)",
+    padding: 0,
+    background: "transparent",
+    border: "none",
+    borderRadius: 0,
+    boxShadow: "none"
+  }
+};
+function ViewerToolbar({
+  children,
+  orientation = "vertical",
+  appearance = "minimal",
+  label = "\uBDF0\uC5B4 \uCEE8\uD2B8\uB864",
+  style,
+  onKeyDown,
+  onFocusCapture,
+  ...rootProps
+}) {
+  const resolvedAppearance = TOOLBAR_APPEARANCES[appearance] ? appearance : "minimal";
+  const { toolbarRef, handleFocusCapture, handleKeyDown } = useRovingToolbar({
+    itemSelector: "[data-lk-viewer-toolbar-item]",
+    orientation,
+    stopPropagation: true,
+    onKeyDown,
+    onFocusCapture
+  });
+  return /* @__PURE__ */ jsx173(ViewerToolbarAppearanceContext.Provider, { value: resolvedAppearance, children: /* @__PURE__ */ jsx173(
+    "div",
+    {
+      ...rootProps,
+      ref: toolbarRef,
+      role: "toolbar",
+      "aria-label": label,
+      "aria-orientation": orientation,
+      onKeyDown: handleKeyDown,
+      onFocusCapture: handleFocusCapture,
+      style: {
+        display: "inline-flex",
+        width: "fit-content",
+        maxWidth: "100%",
+        boxSizing: "border-box",
+        flexDirection: orientation === "vertical" ? "column" : "row",
+        alignItems: "center",
+        ...TOOLBAR_APPEARANCES[resolvedAppearance],
+        ...style
+      },
       children
+    }
+  ) });
+}
+function ViewerToolbarButton({
+  children,
+  kind,
+  pressed,
+  defaultPressed = false,
+  onPressedChange,
+  active,
+  label,
+  style,
+  disabled = false,
+  type = "button",
+  tabIndex,
+  className,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  ...buttonProps
+}) {
+  const appearance = React177.useContext(ViewerToolbarAppearanceContext);
+  const inferredToggle = pressed !== void 0 || active !== void 0;
+  const resolvedKind = kind ?? (inferredToggle ? "toggle" : "command");
+  const commonProps = {
+    ...buttonProps,
+    type,
+    disabled,
+    label,
+    title: label,
+    size: "sm",
+    tabIndex: tabIndex ?? 0,
+    "data-lk-viewer-toolbar-item": "",
+    "data-lk-toolbar-key": buttonProps["data-lk-toolbar-key"] ?? label,
+    className: ["lk-viewer-toolbar__button", className].filter(Boolean).join(" "),
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
+    style: { flex: "0 0 auto", padding: 0, ...style }
+  };
+  const icon = /* @__PURE__ */ jsx173("span", { "aria-hidden": "true", style: { width: 16, height: 16, display: "inline-grid", placeItems: "center", flex: "0 0 auto" }, children });
+  if (resolvedKind === "toggle") {
+    const controlledPressed = pressed ?? active;
+    return /* @__PURE__ */ jsx173(
+      ToggleIcon,
+      {
+        ...commonProps,
+        variant: appearance === "surface" ? "plain" : appearance === "on-dark" ? "on-dark" : "default",
+        pressed: controlledPressed,
+        defaultPressed,
+        onChange: onPressedChange,
+        children: icon
+      }
+    );
+  }
+  return /* @__PURE__ */ jsx173(
+    IconButton,
+    {
+      ...commonProps,
+      round: false,
+      variant: appearance === "surface" ? "plain" : appearance === "on-dark" ? "on-dark" : "ghost",
+      children: icon
     }
   );
 }
 
 // components/viz/Map2DCanvas.jsx
-import { jsx as jsx166, jsxs as jsxs131 } from "react/jsx-runtime";
+import { jsx as jsx174, jsxs as jsxs140 } from "react/jsx-runtime";
+var DEFAULT_VIEWPORT = { x: 0, y: 0, z: 1 };
+function finiteOr(value, fallback) {
+  return Number.isFinite(value) ? value : fallback;
+}
+function isInteractiveDescendant(target) {
+  return target instanceof Element && Boolean(target.closest([
+    "[data-lk-viewport-control]",
+    "button",
+    "a[href]",
+    "input",
+    "select",
+    "textarea",
+    '[contenteditable="true"]',
+    '[role="button"]',
+    '[role="slider"]'
+  ].join(",")));
+}
 function Map2DCanvas({
   children,
   minZoom = 0.25,
@@ -16356,188 +19511,466 @@ function Map2DCanvas({
   grid = true,
   controls = true,
   panEnabled = true,
+  wheelZoom = true,
   keyboard = true,
+  contentOrigin = "top-left",
   viewport,
-  defaultViewport = { x: 0, y: 0, z: 1 },
+  defaultViewport = DEFAULT_VIEWPORT,
   onViewportChange,
+  onFit,
+  toolbar,
   overlay,
   status,
+  source,
+  badges,
+  hud,
+  state = "ready",
+  stateLabel,
+  stateDescription,
+  stateIcon,
+  stateAction,
+  appearance = "light",
   label = "2D \uB9F5 \uCE94\uBC84\uC2A4",
   style,
-  ...rest
+  tabIndex,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  onPointerCancel,
+  onWheel,
+  onKeyDown,
+  ...rootProps
 }) {
   const controlled = viewport !== void 0;
-  const [internalViewport, setInternalViewport] = React169.useState(defaultViewport);
-  const t = { x: 0, y: 0, z: 1, ...controlled ? viewport : internalViewport };
-  const drag = React169.useRef(null);
-  const clamp3 = (z) => Math.max(minZoom, Math.min(maxZoom, z));
+  const [internalViewport, setInternalViewport] = React178.useState(defaultViewport);
+  const renderedViewport = {
+    ...DEFAULT_VIEWPORT,
+    ...controlled ? viewport : internalViewport
+  };
+  const viewportRef = React178.useRef(renderedViewport);
+  const rootRef = React178.useRef(null);
+  const dragRef = React178.useRef(null);
+  const wheelHandlerRef = React178.useRef(null);
+  const interactionBlocked = VIEWER_BLOCKING_STATES.includes(state);
+  viewportRef.current = renderedViewport;
+  const clampZoom = (zoom) => Math.max(minZoom, Math.min(maxZoom, zoom));
+  const normalizeViewport = (next) => ({
+    x: finiteOr(next?.x, 0),
+    y: finiteOr(next?.y, 0),
+    z: clampZoom(finiteOr(next?.z, 1))
+  });
   const commitViewport = (nextOrUpdater) => {
-    const next = typeof nextOrUpdater === "function" ? nextOrUpdater(t) : nextOrUpdater;
-    const normalized = { x: next.x || 0, y: next.y || 0, z: clamp3(next.z == null ? 1 : next.z) };
+    const current = viewportRef.current;
+    const next = typeof nextOrUpdater === "function" ? nextOrUpdater(current) : nextOrUpdater;
+    const normalized = normalizeViewport(next);
+    viewportRef.current = normalized;
     if (!controlled) setInternalViewport(normalized);
-    onViewportChange && onViewportChange(normalized);
+    onViewportChange?.(normalized);
   };
-  const down = (e) => {
-    const target = e.target;
-    if (!panEnabled || e.button !== 0 || target && target.closest && target.closest("[data-lk-viewport-control]")) return;
-    drag.current = { x: e.clientX, y: e.clientY, tx: t.x, ty: t.y };
-    e.currentTarget.setPointerCapture(e.pointerId);
+  const getOriginOffset = () => {
+    const root = rootRef.current;
+    if (contentOrigin !== "center" || !root) return { x: 0, y: 0 };
+    return { x: root.clientWidth / 2, y: root.clientHeight / 2 };
   };
-  const move = (e) => {
-    const d = drag.current;
-    if (!d) return;
-    commitViewport((p) => ({ ...p, x: d.tx + (e.clientX - d.x), y: d.ty + (e.clientY - d.y) }));
+  const zoomAt = (factor, focalPoint) => {
+    const current = viewportRef.current;
+    const nextZoom = clampZoom(current.z * factor);
+    if (nextZoom === current.z) return;
+    const origin = getOriginOffset();
+    const root = rootRef.current;
+    const focal = focalPoint ?? {
+      x: (root?.clientWidth ?? 0) / 2 - origin.x,
+      y: (root?.clientHeight ?? 0) / 2 - origin.y
+    };
+    const ratio = nextZoom / current.z;
+    commitViewport({
+      x: focal.x - (focal.x - current.x) * ratio,
+      y: focal.y - (focal.y - current.y) * ratio,
+      z: nextZoom
+    });
   };
-  const up = () => {
-    drag.current = null;
+  const resetViewport = () => commitViewport(defaultViewport);
+  const handlePointerDown = (event) => {
+    if (interactionBlocked) return;
+    onPointerDown?.(event);
+    if (event.defaultPrevented) return;
+    if (!panEnabled || event.button !== 0 || isInteractiveDescendant(event.target)) return;
+    const current = viewportRef.current;
+    dragRef.current = {
+      pointerX: event.clientX,
+      pointerY: event.clientY,
+      viewportX: current.x,
+      viewportY: current.y
+    };
+    event.currentTarget.setPointerCapture?.(event.pointerId);
   };
-  const wheel = (e) => {
-    e.preventDefault();
-    commitViewport((p) => ({ ...p, z: clamp3(p.z * (e.deltaY < 0 ? 1.1 : 0.9)) }));
+  const handlePointerMove = (event) => {
+    if (interactionBlocked) return;
+    onPointerMove?.(event);
+    if (event.defaultPrevented) return;
+    const drag = dragRef.current;
+    if (!drag) return;
+    commitViewport((current) => ({
+      ...current,
+      x: drag.viewportX + (event.clientX - drag.pointerX),
+      y: drag.viewportY + (event.clientY - drag.pointerY)
+    }));
   };
-  const zoom = (f) => commitViewport((p) => ({ ...p, z: clamp3(p.z * f) }));
-  const reset = () => commitViewport({ x: 0, y: 0, z: 1 });
+  const endPointerInteraction = (event, consumerHandler) => {
+    dragRef.current = null;
+    if (interactionBlocked) return;
+    consumerHandler?.(event);
+  };
+  const handleWheel = (event) => {
+    if (interactionBlocked) return;
+    onWheel?.(event);
+    if (event.defaultPrevented || !wheelZoom || event.deltaY === 0 || isInteractiveDescendant(event.target)) return;
+    event.preventDefault();
+    const rect = event.currentTarget.getBoundingClientRect();
+    const origin = contentOrigin === "center" ? { x: rect.width / 2, y: rect.height / 2 } : { x: 0, y: 0 };
+    const focalPoint = {
+      x: event.clientX - rect.left - origin.x,
+      y: event.clientY - rect.top - origin.y
+    };
+    const boundedDelta = Math.max(-0.22, Math.min(0.22, -event.deltaY * 15e-4));
+    zoomAt(Math.exp(boundedDelta), focalPoint);
+  };
+  wheelHandlerRef.current = handleWheel;
+  React178.useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return void 0;
+    const listener = (event) => wheelHandlerRef.current?.(event);
+    root.addEventListener("wheel", listener, { passive: false });
+    return () => root.removeEventListener("wheel", listener);
+  }, []);
+  const handleKeyDown = (event) => {
+    if (interactionBlocked) return;
+    onKeyDown?.(event);
+    if (event.defaultPrevented || !keyboard) return;
+    if (event.target !== event.currentTarget) return;
+    const step = event.shiftKey ? 48 : 18;
+    if (event.key === "+" || event.key === "=") {
+      event.preventDefault();
+      zoomAt(1.12);
+    } else if (event.key === "-" || event.key === "_") {
+      event.preventDefault();
+      zoomAt(0.88);
+    } else if (event.key === "0") {
+      event.preventDefault();
+      resetViewport();
+    } else if (panEnabled && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+      event.preventDefault();
+      commitViewport((current) => ({
+        ...current,
+        x: current.x + (event.key === "ArrowLeft" ? step : event.key === "ArrowRight" ? -step : 0),
+        y: current.y + (event.key === "ArrowUp" ? step : event.key === "ArrowDown" ? -step : 0)
+      }));
+    }
+  };
+  const t = renderedViewport;
   const renderedChildren = typeof children === "function" ? children({ viewport: t, setViewport: commitViewport }) : children;
-  return /* @__PURE__ */ jsxs131(
-    "div",
+  const centeredContent = contentOrigin === "center";
+  const gridPosition = centeredContent ? `calc(50% + ${t.x}px) calc(50% + ${t.y}px)` : `${t.x}px ${t.y}px`;
+  const viewerToolbar = controls ? /* @__PURE__ */ jsxs140(
+    ViewerToolbar,
     {
-      role: "region",
-      "aria-label": label,
-      tabIndex: keyboard ? 0 : void 0,
-      onPointerDown: down,
-      onPointerMove: move,
-      onPointerUp: up,
-      onPointerCancel: up,
-      onWheel: wheel,
-      onKeyDown: (event) => {
-        if (!keyboard) return;
-        const step = event.shiftKey ? 48 : 18;
-        if (event.key === "+" || event.key === "=") {
-          event.preventDefault();
-          zoom(1.12);
-        } else if (event.key === "-" || event.key === "_") {
-          event.preventDefault();
-          zoom(0.88);
-        } else if (event.key === "0") {
-          event.preventDefault();
-          reset();
-        } else if (panEnabled && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
-          event.preventDefault();
-          commitViewport((p) => ({
-            ...p,
-            x: p.x + (event.key === "ArrowLeft" ? step : event.key === "ArrowRight" ? -step : 0),
-            y: p.y + (event.key === "ArrowUp" ? step : event.key === "ArrowDown" ? -step : 0)
-          }));
-        }
-      },
+      orientation: "vertical",
+      appearance: appearance === "dark" ? "on-dark" : "surface",
+      label: "\uC9C0\uB3C4 \uBCF4\uAE30",
+      "data-lk-viewport-control": "",
+      children: [
+        /* @__PURE__ */ jsx174(ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoomAt(1.2), children: /* @__PURE__ */ jsx174(Icon, { name: "plus", size: 16, "aria-hidden": "true" }) }),
+        /* @__PURE__ */ jsx174(ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoomAt(0.8), children: /* @__PURE__ */ jsx174(Icon, { name: "minus", size: 16, "aria-hidden": "true" }) }),
+        onFit != null && /* @__PURE__ */ jsx174(ViewerToolbarButton, { label: "\uC804\uCCB4 \uBCF4\uAE30", onClick: onFit, children: /* @__PURE__ */ jsx174(Icon, { name: "full", size: 16, "aria-hidden": "true" }) }),
+        /* @__PURE__ */ jsx174(ViewerToolbarButton, { label: "\uBCF4\uAE30 \uCD08\uAE30\uD654", onClick: resetViewport, children: /* @__PURE__ */ jsx174(Icon, { name: "reset", size: 16, "aria-hidden": "true" }) })
+      ]
+    }
+  ) : void 0;
+  return /* @__PURE__ */ jsx174(
+    ViewerFrame,
+    {
+      ...rootProps,
+      ref: rootRef,
+      label,
+      appearance,
+      source,
+      badges,
+      hud,
+      toolbar: toolbar !== void 0 ? toolbar : viewerToolbar,
+      toolbarPlacement: "bottom-right",
+      overlay,
+      status: status ?? (controls ? `${Math.round(t.z * 100)}%` : void 0),
+      state,
+      stateLabel,
+      stateDescription,
+      stateIcon,
+      stateAction,
+      "data-lk-map-canvas": "",
+      tabIndex: interactionBlocked ? void 0 : keyboard ? 0 : tabIndex,
+      onPointerDown: handlePointerDown,
+      onPointerMove: handlePointerMove,
+      onPointerUp: (event) => endPointerInteraction(event, onPointerUp),
+      onPointerCancel: (event) => endPointerInteraction(event, onPointerCancel),
+      onKeyDown: handleKeyDown,
       style: {
         position: "relative",
         overflow: "hidden",
         width: "100%",
         height: "100%",
         minHeight: 200,
-        borderRadius: "var(--radius-lg)",
-        border: "1px solid var(--color-semantic-line-normal-normal)",
-        background: "var(--color-semantic-background-normal-alternative)",
-        cursor: panEnabled ? "grab" : "default",
-        touchAction: "none",
-        fontFamily: "var(--font-sans)",
-        outline: "none",
-        backgroundImage: grid ? "linear-gradient(var(--color-semantic-line-normal-neutral) 1px,transparent 1px),linear-gradient(90deg,var(--color-semantic-line-normal-neutral) 1px,transparent 1px)" : "none",
+        "--map-grid-line": "var(--viewer-border)",
+        backgroundColor: appearance === "dark" ? "var(--viewer-surface)" : "var(--viewer-surface-elevated)",
+        cursor: interactionBlocked ? "default" : panEnabled ? "grab" : "default",
+        touchAction: !interactionBlocked && panEnabled ? "none" : "auto",
+        backgroundImage: grid ? "linear-gradient(var(--map-grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--map-grid-line) 1px,transparent 1px)" : "none",
         backgroundSize: grid ? `${24 * t.z}px ${24 * t.z}px` : void 0,
-        backgroundPosition: grid ? `${t.x}px ${t.y}px` : void 0,
+        backgroundPosition: grid ? gridPosition : void 0,
         ...style
       },
-      ...rest,
-      children: [
-        /* @__PURE__ */ jsx166("div", { style: { position: "absolute", left: "50%", top: "50%", transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`, transformOrigin: "0 0" }, children: renderedChildren }),
-        overlay != null && /* @__PURE__ */ jsx166("div", { style: { position: "absolute", inset: 0, pointerEvents: "none" }, children: overlay }),
-        controls && /* @__PURE__ */ jsxs131(ViewerToolbar, { orientation: "vertical", style: { position: "absolute", right: 10, bottom: 10 }, "data-lk-viewport-control": "", children: [
-          /* @__PURE__ */ jsx166(ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoom(1.2), children: /* @__PURE__ */ jsx166(Icon, { name: "plus", size: 18 }) }),
-          /* @__PURE__ */ jsx166(ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoom(0.8), children: /* @__PURE__ */ jsx166(Icon, { name: "minus", size: 18 }) }),
-          /* @__PURE__ */ jsx166(ViewerToolbarButton, { label: "\uCD08\uAE30\uD654", onClick: reset, children: /* @__PURE__ */ jsx166(Icon, { name: "reset", size: 18 }) })
-        ] }),
-        (status != null || controls) && /* @__PURE__ */ jsx166("span", { style: { position: "absolute", left: 10, bottom: 10, fontSize: 11, fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", padding: "2px 7px", fontVariantNumeric: "tabular-nums", boxShadow: "var(--shadow-xs)" }, children: status ?? `${Math.round(t.z * 100)}%` })
-      ]
+      children: /* @__PURE__ */ jsx174(
+        "div",
+        {
+          "data-lk-map-content": "",
+          style: {
+            position: "absolute",
+            left: centeredContent ? "50%" : 0,
+            top: centeredContent ? "50%" : 0,
+            transform: `translate(${t.x}px, ${t.y}px) scale(${t.z})`,
+            transformOrigin: "0 0"
+          },
+          children: renderedChildren
+        }
+      )
     }
   );
 }
 
 // components/viz/Scene3DFrame.jsx
-import React170 from "react";
-import { jsx as jsx167, jsxs as jsxs132 } from "react/jsx-runtime";
-function Scene3DFrame({ children, title, badges, hud, toolbar, overlay, status, loading = false, empty, label = "3D \uBDF0\uD3EC\uD2B8", style, ...rest }) {
-  return /* @__PURE__ */ jsxs132("div", { role: "region", "aria-label": label, style: {
-    position: "relative",
-    width: "100%",
-    height: "100%",
-    minHeight: 220,
-    borderRadius: "var(--radius-lg)",
-    overflow: "hidden",
-    background: "var(--color-semantic-inverse-background)",
-    border: "1px solid var(--color-semantic-line-normal-normal)",
-    fontFamily: "var(--font-sans)",
-    ...style
-  }, ...rest, children: [
-    children,
-    overlay != null && /* @__PURE__ */ jsx167("div", { style: { position: "absolute", inset: 0, pointerEvents: "none" }, children: overlay }),
-    (title != null || badges != null || hud != null) && /* @__PURE__ */ jsxs132("div", { style: { position: "absolute", left: 12, top: 12, display: "grid", gap: 8, pointerEvents: "none" }, children: [
-      (title != null || badges != null) && /* @__PURE__ */ jsxs132("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-        title != null && /* @__PURE__ */ jsx167("span", { style: { fontSize: 12, fontWeight: "var(--fw-bold)", textTransform: "uppercase", color: "var(--color-semantic-inverse-label)", opacity: 0.9 }, children: title }),
-        badges
-      ] }),
-      hud
-    ] }),
-    toolbar != null && /* @__PURE__ */ jsx167("div", { style: { position: "absolute", right: 12, top: 12 }, children: toolbar }),
-    status != null && /* @__PURE__ */ jsx167("div", { style: { position: "absolute", left: 12, bottom: 12, display: "inline-flex", alignItems: "center", maxWidth: "calc(100% - 24px)", padding: "4px 9px", borderRadius: "var(--radius-sm)", background: "var(--material-control-dimmer)", color: "var(--inverse-label-neutral)", fontSize: 11, fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums" }, children: status }),
-    loading && /* @__PURE__ */ jsx167("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "var(--scrim-dark)", color: "var(--color-semantic-inverse-label)", fontSize: 13, fontWeight: "var(--fw-semibold)" }, children: "\uBD88\uB7EC\uC624\uB294 \uC911\u2026" }),
-    !loading && empty != null && /* @__PURE__ */ jsx167("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--inverse-label-alternative)", fontSize: 13 }, children: empty })
-  ] });
+import React179 from "react";
+import { jsx as jsx175 } from "react/jsx-runtime";
+function Scene3DFrame({
+  children,
+  title,
+  badges,
+  hud,
+  toolbar,
+  overlay,
+  status,
+  state,
+  stateLabel,
+  stateDescription,
+  stateIcon,
+  stateAction,
+  loading = false,
+  empty,
+  label,
+  appearance = "dark",
+  style,
+  ...rest
+}) {
+  const usesLegacyEmpty = state == null && !loading && empty != null;
+  const resolvedState = state ?? (loading ? "loading" : usesLegacyEmpty ? "no-source" : "ready");
+  const resolvedStateLabel = stateLabel ?? (usesLegacyEmpty ? empty : void 0);
+  const resolvedLabel = label ?? (typeof title === "string" && title.trim() ? `${title} 3D \uBDF0\uD3EC\uD2B8` : "3D \uBDF0\uD3EC\uD2B8");
+  return /* @__PURE__ */ jsx175(
+    ViewerFrame,
+    {
+      ...rest,
+      label: resolvedLabel,
+      appearance,
+      source: title,
+      badges,
+      hud,
+      toolbar,
+      overlay,
+      status,
+      state: resolvedState,
+      stateLabel: resolvedStateLabel,
+      stateDescription,
+      stateIcon,
+      stateAction,
+      style: { height: "100%", minHeight: 220, ...style },
+      children
+    }
+  );
 }
 
 // components/viz/TelemetryGauge.jsx
-import React171 from "react";
-import { jsx as jsx168, jsxs as jsxs133 } from "react/jsx-runtime";
-var TONE2 = { signal: "var(--color-semantic-primary-normal)", positive: "var(--color-semantic-status-positive)", cautionary: "var(--color-semantic-status-cautionary)", negative: "var(--color-semantic-status-negative)" };
-function TelemetryGauge({ value = 0, min = 0, max = 100, unit = "", label, size = 120, thickness = 10, thresholds, tone, style, ...rest }) {
-  const pct = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
-  let c = "var(--color-semantic-primary-normal)";
-  if (tone) c = TONE2[tone] || c;
-  else if (thresholds) {
-    const p = pct * 100;
-    c = p <= thresholds.low ? "var(--color-semantic-status-negative)" : p <= thresholds.high ? "var(--color-semantic-status-cautionary)" : "var(--color-semantic-status-positive)";
+import React180 from "react";
+import { jsx as jsx176, jsxs as jsxs141 } from "react/jsx-runtime";
+var TONE2 = {
+  signal: "var(--color-semantic-status-info-text)",
+  positive: "var(--color-semantic-status-positive-text)",
+  cautionary: "var(--color-semantic-status-cautionary-text)",
+  negative: "var(--color-semantic-status-negative-text)"
+};
+var STATUS_LABEL = {
+  signal: "\uC815\uBCF4",
+  positive: "\uC815\uC0C1",
+  cautionary: "\uC8FC\uC758",
+  negative: "\uC704\uD5D8"
+};
+function thresholdTone(percent2, thresholds) {
+  if (!thresholds) return void 0;
+  const low = Math.min(thresholds.low, thresholds.high);
+  const high = Math.max(thresholds.low, thresholds.high);
+  const direction = thresholds.direction ?? "higher-is-better";
+  if (direction === "lower-is-better") {
+    if (percent2 >= high) return "negative";
+    if (percent2 >= low) return "cautionary";
+    return "positive";
   }
-  const r = (size - thickness) / 2, cx = size / 2, cy = size / 2, C = 2 * Math.PI * r, arc = 0.75, dash = C * arc;
-  return /* @__PURE__ */ jsxs133("div", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ jsxs133("div", { style: { position: "relative", width: size, height: size }, children: [
-      /* @__PURE__ */ jsxs133("svg", { width: size, height: size, viewBox: `0 0 ${size} ${size}`, style: { transform: "rotate(135deg)" }, children: [
-        /* @__PURE__ */ jsx168("circle", { cx, cy, r, fill: "none", stroke: "var(--color-semantic-fill-strong)", strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash} ${C}` }),
-        /* @__PURE__ */ jsx168("circle", { cx, cy, r, fill: "none", stroke: c, strokeWidth: thickness, strokeLinecap: "round", strokeDasharray: `${dash * pct} ${C}`, style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" } })
-      ] }),
-      /* @__PURE__ */ jsxs133("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }, children: [
-        /* @__PURE__ */ jsx168("span", { style: { fontSize: size * 0.24, fontWeight: "var(--fw-extra)", color: "var(--color-semantic-label-strong)", fontVariantNumeric: "tabular-nums", lineHeight: 1 }, children: Math.round(value) }),
-        unit && /* @__PURE__ */ jsx168("span", { style: { fontSize: size * 0.11, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", marginTop: 2 }, children: unit })
-      ] })
-    ] }),
-    label != null && /* @__PURE__ */ jsx168("span", { style: { fontSize: 12, fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-alternative)", wordBreak: "keep-all", textAlign: "center" }, children: label })
-  ] });
+  if (percent2 <= low) return "negative";
+  if (percent2 <= high) return "cautionary";
+  return "positive";
+}
+function formatValue(value, precision) {
+  if (precision == null) return String(value);
+  const safePrecision = Math.max(0, Math.min(20, Math.trunc(precision)));
+  return value.toFixed(safePrecision);
+}
+function TelemetryGauge({
+  value = 0,
+  min = 0,
+  max = 100,
+  unit = "",
+  label,
+  size = 120,
+  thickness = 10,
+  thresholds,
+  tone,
+  statusLabel,
+  precision,
+  formatter,
+  valueText,
+  style,
+  ...rest
+}) {
+  const generatedId = React180.useId();
+  const labelId = `telemetry-gauge-${generatedId.replace(/:/g, "")}`;
+  const {
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    ...rootProps
+  } = rest;
+  const resolvedMin = Number.isFinite(min) ? min : 0;
+  const resolvedMax = Number.isFinite(max) && max > resolvedMin ? max : resolvedMin + 1;
+  const numericValue = Number.isFinite(value) ? value : resolvedMin;
+  const resolvedValue = Math.max(resolvedMin, Math.min(resolvedMax, numericValue));
+  const pct = (resolvedValue - resolvedMin) / (resolvedMax - resolvedMin);
+  const inferredTone = thresholdTone(pct * 100, thresholds);
+  const resolvedTone = tone || inferredTone || "signal";
+  const hasCustomStatusLabel = statusLabel != null && statusLabel !== false && statusLabel !== "";
+  const resolvedStatusLabel = hasCustomStatusLabel ? statusLabel : tone != null || inferredTone != null ? STATUS_LABEL[resolvedTone] : null;
+  const formattedNumber = formatValue(resolvedValue, precision);
+  const renderedValue = typeof formatter === "function" ? formatter(resolvedValue, { min: resolvedMin, max: resolvedMax, unit }) : formattedNumber;
+  const accessibleFormattedNumber = typeof renderedValue === "string" || typeof renderedValue === "number" ? String(renderedValue) : formattedNumber;
+  const baseValueText = `${accessibleFormattedNumber}${unit ? ` ${unit}` : ""}`;
+  const resolvedValueText = valueText ?? (typeof resolvedStatusLabel === "string" ? `${baseValueText}, ${resolvedStatusLabel}` : baseValueText);
+  const accessibleLabelledBy = ariaLabelledBy ?? (ariaLabel == null && label != null ? labelId : void 0);
+  const accessibleLabel = accessibleLabelledBy ? void 0 : ariaLabel ?? (typeof label === "string" ? label : "\uD154\uB808\uBA54\uD2B8\uB9AC \uAC12");
+  const radius = (size - thickness) / 2;
+  const center = size / 2;
+  const circumference = 2 * Math.PI * radius;
+  const arcLength = circumference * 0.75;
+  return /* @__PURE__ */ jsxs141(
+    "div",
+    {
+      style: {
+        display: "inline-grid",
+        justifyItems: "center",
+        gap: "var(--space-2)",
+        maxWidth: "100%",
+        minWidth: 0,
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
+      ...rootProps,
+      children: [
+        /* @__PURE__ */ jsxs141(
+          "div",
+          {
+            role: "meter",
+            "aria-label": accessibleLabel,
+            "aria-labelledby": accessibleLabelledBy,
+            "aria-describedby": ariaDescribedBy,
+            "aria-valuemin": resolvedMin,
+            "aria-valuemax": resolvedMax,
+            "aria-valuenow": resolvedValue,
+            "aria-valuetext": resolvedValueText,
+            style: { position: "relative", width: size, height: size, maxWidth: "100%" },
+            children: [
+              /* @__PURE__ */ jsxs141(
+                "svg",
+                {
+                  "aria-hidden": "true",
+                  width: size,
+                  height: size,
+                  viewBox: `0 0 ${size} ${size}`,
+                  style: { display: "block", transform: "rotate(135deg)" },
+                  children: [
+                    /* @__PURE__ */ jsx176(
+                      "circle",
+                      {
+                        cx: center,
+                        cy: center,
+                        r: radius,
+                        fill: "none",
+                        stroke: "var(--color-semantic-fill-strong)",
+                        strokeWidth: thickness,
+                        strokeLinecap: "round",
+                        strokeDasharray: `${arcLength} ${circumference}`
+                      }
+                    ),
+                    /* @__PURE__ */ jsx176(
+                      "circle",
+                      {
+                        cx: center,
+                        cy: center,
+                        r: radius,
+                        fill: "none",
+                        stroke: TONE2[resolvedTone] || TONE2.signal,
+                        strokeWidth: thickness,
+                        strokeLinecap: "round",
+                        strokeDasharray: `${arcLength * pct} ${circumference}`,
+                        style: { transition: "stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)" }
+                      }
+                    )
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxs141("div", { style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minWidth: 0 }, children: [
+                /* @__PURE__ */ jsx176("span", { style: { maxWidth: "82%", color: "var(--color-semantic-label-strong)", fontSize: size * 0.24, lineHeight: 1, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums", overflowWrap: "anywhere", textAlign: "center" }, children: renderedValue }),
+                unit && /* @__PURE__ */ jsx176("span", { style: { marginTop: 3, color: "var(--color-semantic-label-neutral)", fontSize: Math.max(12, size * 0.11), lineHeight: 1.2, fontWeight: "var(--fw-semibold)" }, children: unit })
+              ] })
+            ]
+          }
+        ),
+        (label != null || resolvedStatusLabel != null) && /* @__PURE__ */ jsxs141("div", { style: { display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-2)", maxWidth: "100%", minWidth: 0, flexWrap: "wrap" }, children: [
+          label != null && /* @__PURE__ */ jsx176("span", { id: labelId, style: { color: "var(--color-semantic-label-neutral)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere", textAlign: "center" }, children: label }),
+          resolvedStatusLabel != null && /* @__PURE__ */ jsx176(StatusBadge, { tone: resolvedTone, children: resolvedStatusLabel })
+        ] })
+      ]
+    }
+  );
 }
 
 // components/viz/TelemetryValue.jsx
-import React172 from "react";
-import { jsx as jsx169, jsxs as jsxs134 } from "react/jsx-runtime";
-var TONE3 = {
-  neutral: "var(--color-semantic-label-neutral)",
-  signal: "var(--color-semantic-primary-normal)",
-  positive: "var(--color-semantic-status-positive)",
-  cautionary: "var(--color-semantic-status-cautionary)",
-  negative: "var(--color-semantic-status-negative)"
+import React181 from "react";
+import { jsx as jsx177, jsxs as jsxs142 } from "react/jsx-runtime";
+var STATUS_LABEL2 = {
+  signal: "\uC815\uBCF4",
+  positive: "\uC815\uC0C1",
+  cautionary: "\uC8FC\uC758",
+  negative: "\uC704\uD5D8"
 };
 function TelemetryValue({
   label,
   value,
   unit,
   tone = "neutral",
+  statusLabel,
   timestamp,
   stale = false,
   staleLabel = "\uC9C0\uC5F0",
@@ -16548,15 +19981,23 @@ function TelemetryValue({
   style,
   ...rest
 }) {
-  const color = stale ? "var(--color-semantic-label-assistive)" : TONE3[tone] || TONE3.neutral;
+  const resolvedTone = stale ? "cautionary" : tone;
+  const hasCustomStatusLabel = statusLabel != null && statusLabel !== false && statusLabel !== "";
+  const hasCustomStaleLabel = staleLabel != null && staleLabel !== false && staleLabel !== "";
+  const resolvedStatusLabel = stale ? hasCustomStaleLabel ? staleLabel : "\uC9C0\uC5F0" : hasCustomStatusLabel ? statusLabel : tone === "neutral" ? null : STATUS_LABEL2[tone];
+  const showStatus = resolvedStatusLabel != null && (!stale || showStaleBadge);
   const valueSize = size === "sm" ? 18 : 21;
-  return /* @__PURE__ */ jsxs134(
+  const justifyContent = align === "end" ? "flex-end" : "flex-start";
+  return /* @__PURE__ */ jsxs142(
     "div",
     {
+      "data-tone": resolvedTone,
+      "data-stale": stale ? "true" : void 0,
       style: {
         display: "grid",
-        gap: 4,
+        gap: "var(--space-1)",
         justifyItems: align === "end" ? "end" : "start",
+        maxWidth: "100%",
         minWidth: 0,
         fontFamily: "var(--font-sans)",
         color: "var(--color-semantic-label-normal)",
@@ -16564,108 +20005,66 @@ function TelemetryValue({
       },
       ...rest,
       children: [
-        label != null && /* @__PURE__ */ jsx169("span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)" }, children: label }),
-        /* @__PURE__ */ jsxs134("div", { style: { display: "inline-flex", alignItems: "baseline", gap: 5, minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx169("strong", { style: { color, fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums" }, children: value }),
-          unit != null && /* @__PURE__ */ jsx169("span", { style: { color: stale ? "var(--color-semantic-label-assistive)" : "var(--color-semantic-label-alternative)", fontSize: size === "sm" ? 12 : 13, fontWeight: "var(--fw-bold)" }, children: unit }),
-          stale && showStaleBadge && /* @__PURE__ */ jsx169("span", { style: { alignSelf: "center", padding: "2px 6px", borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-alternative)", fontSize: 10.5, lineHeight: 1.2, fontWeight: "var(--fw-bold)" }, children: staleLabel })
+        label != null && /* @__PURE__ */ jsx177("span", { style: { maxWidth: "100%", color: "var(--color-semantic-label-neutral)", fontSize: 12, lineHeight: 1.35, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere", textAlign: align === "end" ? "right" : "left" }, children: label }),
+        /* @__PURE__ */ jsxs142("div", { style: { display: "flex", alignItems: "center", justifyContent, columnGap: "var(--space-2)", rowGap: "var(--space-1)", maxWidth: "100%", minWidth: 0, flexWrap: "wrap" }, children: [
+          /* @__PURE__ */ jsxs142("span", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-1)", maxWidth: "100%", minWidth: 0 }, children: [
+            /* @__PURE__ */ jsx177("strong", { style: { maxWidth: "100%", color: stale ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-label-strong)", fontSize: valueSize, lineHeight: 1.12, fontWeight: "var(--fw-extra)", fontVariantNumeric: "tabular-nums", overflowWrap: "anywhere" }, children: value }),
+            unit != null && /* @__PURE__ */ jsx177("span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: size === "sm" ? 12 : 13, lineHeight: 1.25, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere" }, children: unit })
+          ] }),
+          showStatus && /* @__PURE__ */ jsx177(StatusBadge, { tone: resolvedTone, children: resolvedStatusLabel })
         ] }),
-        (timestamp != null || helper != null) && /* @__PURE__ */ jsx169("span", { style: { color: "var(--color-semantic-label-assistive)", fontSize: 11.5, lineHeight: 1.35, fontVariantNumeric: "tabular-nums" }, children: helper != null ? helper : timestamp })
+        (helper != null || timestamp != null) && /* @__PURE__ */ jsxs142("div", { style: { display: "flex", justifyContent, columnGap: "var(--space-2)", rowGap: 2, maxWidth: "100%", minWidth: 0, flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: 11.5, lineHeight: 1.4, fontVariantNumeric: "tabular-nums", textAlign: align === "end" ? "right" : "left" }, children: [
+          helper != null && /* @__PURE__ */ jsx177("span", { style: { maxWidth: "100%", overflowWrap: "anywhere" }, children: helper }),
+          helper != null && timestamp != null && /* @__PURE__ */ jsx177("span", { "aria-hidden": "true", children: "\xB7" }),
+          timestamp != null && /* @__PURE__ */ jsx177("span", { style: { maxWidth: "100%", overflowWrap: "anywhere" }, children: timestamp })
+        ] })
       ]
     }
   );
 }
 
 // components/viz/VideoStreamTile.jsx
-import React173 from "react";
-import { jsx as jsx170, jsxs as jsxs135 } from "react/jsx-runtime";
-function usePulseKeyframes() {
-  React173.useEffect(() => {
-    if (typeof document === "undefined" || document.getElementById("lk-stream-kf")) return;
-    const el = document.createElement("style");
-    el.id = "lk-stream-kf";
-    el.textContent = "@keyframes lk-stream-pulse{0%,100%{opacity:1}50%{opacity:.3}}@keyframes lk-stream-spin{to{transform:rotate(360deg)}}";
-    document.head.appendChild(el);
-  }, []);
-}
-function VideoStreamTile({ children, label, status = "live", aspectRatio = "16 / 9", style, ...rest }) {
-  usePulseKeyframes();
-  const showHud = label != null;
-  return /* @__PURE__ */ jsxs135(
-    "div",
+import React182 from "react";
+import { jsx as jsx178 } from "react/jsx-runtime";
+function VideoStreamTile({
+  children,
+  label,
+  ariaLabel,
+  status,
+  state,
+  aspectRatio = "16 / 9",
+  badges,
+  hud,
+  toolbar,
+  overlay,
+  metadata,
+  stateLabel,
+  stateDescription,
+  stateIcon,
+  stateAction,
+  style,
+  ...rest
+}) {
+  const resolvedState = state ?? status ?? "idle";
+  const resolvedAriaLabel = ariaLabel ?? (typeof label === "string" && label.trim() ? `${label} \uC601\uC0C1 \uC2A4\uD2B8\uB9BC` : "\uC601\uC0C1 \uC2A4\uD2B8\uB9BC");
+  return /* @__PURE__ */ jsx178(
+    ViewerFrame,
     {
-      style: {
-        position: "relative",
-        width: "100%",
-        aspectRatio,
-        borderRadius: "var(--radius-lg)",
-        overflow: "hidden",
-        background: "var(--color-semantic-inverse-background)",
-        border: "1px solid var(--color-semantic-line-normal-normal)",
-        fontFamily: "var(--font-sans)",
-        ...style
-      },
       ...rest,
-      children: [
-        children,
-        showHud && /* @__PURE__ */ jsxs135(React173.Fragment, { children: [
-          /* @__PURE__ */ jsx170("div", { style: {
-            position: "absolute",
-            left: 0,
-            top: 0,
-            right: 0,
-            height: 52,
-            pointerEvents: "none",
-            background: "linear-gradient(180deg, var(--material-control-dimmer), transparent)"
-          } }),
-          /* @__PURE__ */ jsxs135("div", { style: { position: "absolute", left: 12, top: 12, display: "flex", alignItems: "center", gap: 7, pointerEvents: "none" }, children: [
-            status === "live" && /* @__PURE__ */ jsx170("span", { style: {
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "var(--color-semantic-status-negative)",
-              flexShrink: 0,
-              animation: "lk-stream-pulse 1.4s var(--ease-in-out) infinite"
-            } }),
-            /* @__PURE__ */ jsx170("span", { style: {
-              fontSize: 12,
-              fontWeight: "var(--fw-bold)",
-              textTransform: "uppercase",
-              color: "var(--color-semantic-inverse-label)",
-              opacity: 0.9
-            }, children: label })
-          ] })
-        ] }),
-        status === "loading" && /* @__PURE__ */ jsx170("div", { style: {
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "var(--scrim-dark)"
-        }, children: /* @__PURE__ */ jsx170("span", { style: { width: 30, height: 30, borderRadius: "50%", border: "3px solid var(--inverse-line-strong)", borderTopColor: "var(--color-semantic-primary-normal)", animation: "lk-stream-spin 0.8s linear infinite" } }) }),
-        status === "disconnected" && /* @__PURE__ */ jsxs135("div", { style: {
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-          justifyContent: "center",
-          background: "var(--material-dimmer)",
-          color: "var(--inverse-label-neutral)",
-          fontSize: 13,
-          fontWeight: "var(--fw-semibold)",
-          whiteSpace: "nowrap"
-        }, children: [
-          /* @__PURE__ */ jsxs135("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
-            /* @__PURE__ */ jsx170("path", { d: "M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" }),
-            /* @__PURE__ */ jsx170("path", { d: "M12 9v4" }),
-            /* @__PURE__ */ jsx170("path", { d: "M12 17h.01" })
-          ] }),
-          "\uC5F0\uACB0 \uB04A\uAE40"
-        ] })
-      ]
+      label: resolvedAriaLabel,
+      source: label,
+      badges,
+      hud,
+      toolbar,
+      overlay,
+      status: metadata,
+      state: resolvedState,
+      stateLabel,
+      stateDescription,
+      stateIcon,
+      stateAction,
+      style: { aspectRatio, ...style },
+      children
     }
   );
 }
@@ -16674,6 +20073,7 @@ export {
   ActionArea,
   Alert,
   Anchor,
+  AnnotatedImage,
   AspectRatio,
   AutoComplete,
   Avatar,
@@ -16737,6 +20137,7 @@ export {
   FeatureCard,
   FileBrowser,
   FileUpload,
+  FileUploadQueue,
   FilterChip,
   FloorSelector,
   Footer,
@@ -16760,6 +20161,7 @@ export {
   ListCell,
   Lockup,
   LogViewer,
+  ManualControlSession,
   Map2DCanvas,
   Menubar,
   Meter,
@@ -16791,6 +20193,8 @@ export {
   Scene3DFrame,
   ScrollArea,
   SearchField,
+  SearchableMultiSelect,
+  SecretField,
   Section,
   SegmentedControl,
   Select,
@@ -16801,6 +20205,7 @@ export {
   Slider,
   Snackbar,
   SocialButton,
+  SourceDisclosure,
   SourceTag,
   Spacer,
   Sparkline,
@@ -16838,9 +20243,13 @@ export {
   TopBarNavItem,
   TopicTree,
   Tree,
-  TreeSelectionPanel,
+  TreePicker,
   UserMenu,
+  VIEWER_BLOCKING_STATES,
+  VIEWER_STATES,
+  ValidationSummary,
   VideoStreamTile,
+  ViewerFrame,
   ViewerToolbar,
   ViewerToolbarButton,
   ViewportStatusBar,

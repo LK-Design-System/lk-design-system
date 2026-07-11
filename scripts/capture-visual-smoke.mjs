@@ -85,6 +85,67 @@ const targets = [
     match: { importPath: './stories/RoboticsAndViz.stories.jsx', exportName: 'RobotState' },
     viewport: { width: 1180, height: 820 },
   },
+  {
+    name: 'robotics-viewer-frame-states',
+    match: { importPath: './stories/ViewerFrame.stories.jsx', exportName: 'StatePlacement' },
+    viewport: { width: 980, height: 720 },
+  },
+  {
+    name: 'robotics-viewer-light-frame-on-dark',
+    match: { importPath: './stories/ViewerFrame.stories.jsx', exportName: 'LightMapFrame' },
+    query: { globals: 'backgrounds.value:Dark' },
+    viewport: { width: 720, height: 520 },
+  },
+  {
+    name: 'robotics-viewer-map',
+    match: { importPath: './stories/ViewerMap.stories.jsx', exportName: 'MapCanvasOverview' },
+    viewport: { width: 900, height: 620 },
+  },
+  {
+    name: 'robotics-viewer-map-narrow',
+    match: { importPath: './stories/ViewerMap.stories.jsx', exportName: 'KeyboardAndPointerContract' },
+    viewport: { width: 320, height: 520 },
+  },
+  {
+    name: 'robotics-viewer-3d-narrow',
+    match: { importPath: './stories/Viewer3D.stories.jsx', exportName: 'NarrowWidth' },
+    viewport: { width: 320, height: 520 },
+  },
+  {
+    name: 'robotics-viewer-toolbar',
+    match: { importPath: './stories/ViewerToolbar.stories.jsx', exportName: 'ViewerToolbarOverview' },
+    viewport: { width: 320, height: 520 },
+  },
+  {
+    name: 'robotics-viewer-video-states',
+    match: { importPath: './stories/ViewerVideo.stories.jsx', exportName: 'VideoStreamOverview' },
+    viewport: { width: 1000, height: 920 },
+  },
+  {
+    name: 'robotics-viewer-video-narrow',
+    match: { importPath: './stories/ViewerVideo.stories.jsx', exportName: 'NarrowWidth' },
+    viewport: { width: 320, height: 520 },
+  },
+  {
+    name: 'robotics-viewer-video-compact-states',
+    match: { importPath: './stories/ViewerVideo.stories.jsx', exportName: 'CommonStateContract' },
+    viewport: { width: 240, height: 900 },
+  },
+  {
+    name: 'robotics-viewer-telemetry-compact',
+    match: { importPath: './stories/ViewerTelemetry.stories.jsx', exportName: 'CompactReadouts' },
+    viewport: { width: 320, height: 900 },
+  },
+  {
+    name: 'product-validation-summary',
+    match: { importPath: './stories/FormValidationSummary.stories.jsx', exportName: 'ErrorsAndWarnings' },
+    viewport: { width: 860, height: 520 },
+  },
+  {
+    name: 'product-file-upload-queue',
+    match: { importPath: './stories/FormFileUploadQueue.stories.jsx', exportName: 'UploadAndConversion' },
+    viewport: { width: 800, height: 720 },
+  },
 ];
 
 function contentType(filePath) {
@@ -170,6 +231,12 @@ async function main() {
 
   const { server, origin } = await startStaticServer();
   const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: targets[0].viewport, deviceScaleFactor: 1 });
+  const runtimeErrors = [];
+  page.on('pageerror', (error) => runtimeErrors.push(error.message));
+  page.on('console', (message) => {
+    if (message.type() === 'error') runtimeErrors.push(message.text());
+  });
   const manifest = {
     generatedAt: new Date().toISOString(),
     storybookStatic: 'storybook-static',
@@ -180,17 +247,33 @@ async function main() {
   try {
     for (const target of targets) {
       const id = findStoryId(index.entries, target);
-      const page = await browser.newPage({ viewport: target.viewport, deviceScaleFactor: 1 });
+      runtimeErrors.length = 0;
+      await page.setViewportSize(target.viewport);
       const url = storyUrl(origin, id, target.query);
       await page.goto(url, { waitUntil: 'networkidle' });
+      const readinessHandle = await page.waitForFunction(() => {
+        const root = document.querySelector('#storybook-root');
+        const bodyText = document.body?.innerText || '';
+        const hasStoryError = bodyText.includes('The component failed to render properly')
+          || bodyText.includes('Cannot access');
+        if (hasStoryError) return { status: 'error', bodyText: bodyText.slice(0, 600) };
+        if (root?.children.length) return { status: 'ready' };
+        return null;
+      }, undefined, { timeout: 30000 });
+      const readiness = await readinessHandle.jsonValue();
+      if (readiness.status === 'error') {
+        throw new Error(`${target.name} failed to render: ${readiness.bodyText}`);
+      }
       await page.evaluate(async () => {
         if (document.fonts?.ready) await document.fonts.ready;
       });
       await page.waitForTimeout(600);
+      if (runtimeErrors.length > 0) {
+        throw new Error(`${target.name} emitted runtime errors: ${runtimeErrors.join(' | ')}`);
+      }
 
       const outputPath = path.join(outDir, `${target.name}.png`);
       await page.screenshot({ path: outputPath, fullPage: true, animations: 'disabled' });
-      await page.close();
 
       const fileStat = await stat(outputPath);
       if (fileStat.size < 1024) {
@@ -208,6 +291,7 @@ async function main() {
       });
     }
   } finally {
+    await page.close();
     await browser.close();
     await new Promise((resolve) => server.close(resolve));
   }

@@ -1,11 +1,29 @@
-**VideoStreamTile** — 라이브 영상 스트림(RTSP/WebRTC) 셸: 코너 라벨 칩(RGB/IR/EO) · 로딩/연결끊김 오버레이. 실제 iframe/video는 children으로 주입 — Scene3DFrame·Map2DCanvas와 같은 경계 계약. `lkrobotics-control-full` 감사에서 화면 3곳이 중복 구현하던 패턴을 흡수한 컴포넌트.
+**VideoStreamTile** is the video-source preset for `ViewerFrame`.
+
+Pass a `<video>`, WebRTC renderer, iframe, or image as `children`. The DS owns the named frame, source identity, local toolbar/HUD slots, aspect ratio, and normalized stream-state presentation. The application owns transport, autoplay policy, playback, recording, reconnection, and media permissions.
 
 ```jsx
-<VideoStreamTile label="RGB" status="live">
-  <iframe src={rtspUrl} style={{ width: '100%', height: '100%', border: 0 }} />
+<VideoStreamTile
+  label="AMR-07 · FRONT"
+  state="live"
+  metadata="1080p · 30 FPS"
+  toolbar={videoControls}
+>
+  <video aria-label="AMR-07 전면 카메라 영상" />
 </VideoStreamTile>
-<VideoStreamTile label="IR" status="disconnected" />
-<VideoStreamTile label="EO-1" status="loading" aspectRatio="4 / 3" />
 ```
 
-- **status="loading"/"disconnected"**면 children 위에 반투명 오버레이가 덮임. **aspectRatio**로 비율 조정(기본 16:9) — RGB/IR/EO를 나란히 그리드로 배치할 때 유용. 스트림 연결·재생 로직은 앱의 몫.
+- The default state is `idle`, never an unverified `live` claim.
+- `live` uses both icon and text. Loading/connecting states include visible text and `aria-busy`; they do not rely on a spinner alone.
+- `degraded`, `stale`, `frozen`, and user-requested `paused` are distinct non-blocking states. They preserve the last frame with an edge message.
+- `no-source`, `unavailable`, `disconnected`, `no-signal`, and `error` are blocking. Child media controls and local toolbar controls become `inert` and `aria-hidden`, while source identity remains visible.
+- A retry/resume control may be supplied through `stateAction`; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked.
+- Use the local toolbar for mute, captions, snapshot, and fullscreen. Recording archives, timelines, playback-session controls, and retry policy are intentionally omitted from this DS component.
+
+Classification: **LK Robotics Extension**. Siblings checked: `ViewerFrame`, `Scene3DFrame`, `AspectRatio`, `IconButton`, `Spinner`, and `StatusBadge`.
+
+- The [HTML media element specification](https://html.spec.whatwg.org/multipage/media.html) influenced the separation of paused, ended/unavailable, and error semantics from connection transport.
+- [WebRTC Statistics](https://www.w3.org/TR/webrtc-stats/) influenced the distinction between last-frame freshness, received frames, and connection health; apps compute those states and pass the result into this component.
+- [WCAG live captions](https://www.w3.org/WAI/WCAG22/Understanding/captions-live.html) and [Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) influenced the optional captions/pause toolbar contract without embedding a product player workflow.
+
+These expectations are adapted to LDS component roles and icons rather than copying another product's visual styling. The common state and placement contract is documented in [`ViewerFrame.prompt.md`](./ViewerFrame.prompt.md).

@@ -3,10 +3,67 @@ import { readFile, stat, writeFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
+import axe from 'axe-core';
 
 const root = process.cwd();
 const staticDir = path.join(root, 'storybook-static');
 const outDir = path.join(root, 'visual-artifacts', 'accessibility');
+const axeRules = [
+  'aria-allowed-attr',
+  'aria-conditional-attr',
+  'aria-prohibited-attr',
+  'aria-required-attr',
+  'aria-required-children',
+  'aria-required-parent',
+  'aria-roles',
+  'aria-valid-attr-value',
+  'aria-valid-attr',
+  'button-name',
+  'color-contrast',
+  'duplicate-id-aria',
+  'form-field-multiple-labels',
+  'image-alt',
+  'input-button-name',
+  'label',
+  'link-name',
+  'nested-interactive',
+  'aria-progressbar-name',
+  'select-name',
+  'svg-img-alt',
+];
+const axeGuardTitles = new Set([
+  'LDS Product/Content/Source Disclosure',
+  'LDS Product/Data/Tree Picker',
+  'LDS Product/Layout/Editor Panel',
+  'LDS Product/MLOps/Execution Status',
+  'LDS Product/MLOps/Metric Comparison',
+  'LDS Product/MLOps/Review Decision',
+  'LDS Product/Operations/Annotated Image',
+  'LDS Product/Operations/Batch Operation Summary',
+  'LDS Product/Operations/Change Summary',
+  'LDS Product/Operations/Command Lifecycle',
+  'LDS Product/Operations/Connection Status',
+  'LDS Product/Operations/Preflight Summary',
+  'LDS Product/Operations/Safety Confirm Dialog',
+  'LDS Product/Operations/Time Rule Editor',
+  'LDS Product/Selection and Input/File Upload Queue',
+  'LDS Product/Selection and Input/Searchable Multi Select',
+  'LDS Product/Selection and Input/Secret Field',
+  'LDS Product/Selection and Input/Validation Summary',
+  'LDS Robotics/Control/Manual Control Session',
+  'LDS Robotics/Editor/Canvas Shell',
+  'LDS Robotics/Editor/Command Bar',
+  'LDS Robotics/Editor/Editor Toolbar',
+  'LDS Robotics/Editor/Layer Panel',
+  'LDS Robotics/Editor/Selection Inspector',
+  'LDS Robotics/Editor/Viewport Status Bar',
+  'LDS Robotics/Viewer/2D Map',
+  'LDS Robotics/Viewer/3D Frame',
+  'LDS Robotics/Viewer/Frame',
+  'LDS Robotics/Viewer/Telemetry',
+  'LDS Robotics/Viewer/Toolbar',
+  'LDS Robotics/Viewer/Video Stream',
+]);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -79,7 +136,7 @@ async function waitForStoryReady(page, storyId) {
         if (!root) return false;
 
         const text = document.body?.innerText || '';
-        if (text.includes('Not found') || text.includes('No Preview') || text.includes('Cannot load story')) return false;
+        if (text.includes('Not found') || text.includes('No Preview') || text.includes('Cannot load story') || text.includes('The component failed to render properly')) return false;
 
         const href = new URL(window.location.href);
         if (href.searchParams.get('id') !== expectedId) return false;
@@ -131,6 +188,7 @@ async function main() {
   const browser = await chromium.launch();
   const failures = [];
   const consoleErrors = [];
+  let axeCheckedStories = 0;
 
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
@@ -143,6 +201,24 @@ async function main() {
 
     for (const story of stories) {
       await gotoStoryReady(page, storyUrl(origin, story.id), story.id);
+      let axeResults = { violations: [] };
+      if (axeGuardTitles.has(story.title)) {
+        axeCheckedStories += 1;
+        await page.evaluate(() => document.fonts?.ready).catch(() => {});
+        await page.addScriptTag({ content: axe.source });
+        axeResults = await page.evaluate(async (rules) => {
+          const root = document.querySelector('#storybook-root') || document.body;
+          for (let attempt = 0; attempt < 50; attempt += 1) {
+            try {
+              return await window.axe.run(root, { runOnly: { type: 'rule', values: rules } });
+            } catch (error) {
+              if (!String(error?.message || error).includes('already running') || attempt === 49) throw error;
+              await new Promise((resolve) => setTimeout(resolve, 100));
+            }
+          }
+          throw new Error('Axe did not become available.');
+        }, axeRules);
+      }
       const storyFailures = await page.evaluate(() => {
         const root = document.querySelector('#storybook-root') || document.body;
         const controlSelector = [
@@ -225,6 +301,11 @@ async function main() {
       });
 
       for (const failure of storyFailures) failures.push(`${story.title} / ${story.name}: ${failure}`);
+      for (const violation of axeResults.violations) {
+        for (const node of violation.nodes) {
+          failures.push(`${story.title} / ${story.name}: axe ${violation.id} (${violation.impact ?? 'unknown'}) ${node.target.join(' ')} — ${node.failureSummary}`);
+        }
+      }
     }
   } finally {
     await browser.close();
@@ -235,6 +316,7 @@ async function main() {
   const report = {
     generatedAt: new Date().toISOString(),
     checkedStories: stories.length,
+    axeCheckedStories,
     failures,
     consoleErrors: uniqueConsoleErrors,
   };
@@ -244,7 +326,7 @@ async function main() {
   assert(uniqueConsoleErrors.length === 0, `Storybook implementation stories emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
   assert(failures.length === 0, `Storybook accessibility guard failed:\n${failures.join('\n')}`);
 
-  console.log(`Validated Storybook accessibility guard: ${stories.length} implementation stories, 0 missing names, 0 implicit button types, 0 console errors.`);
+  console.log(`Validated Storybook accessibility guard: ${stories.length} implementation stories, ${axeCheckedStories} Axe-guarded stories, 0 violations, 0 missing names, 0 implicit button types, 0 console errors.`);
 }
 
 main().catch((error) => {

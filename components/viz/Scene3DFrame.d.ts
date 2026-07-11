@@ -1,27 +1,36 @@
 import * as React from 'react';
+import type { ViewerState } from './ViewerFrame';
 
-export interface Scene3DFrameProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** 3D 캔버스(three / @react-three/fiber 등)를 자식으로. */
+export interface Scene3DFrameProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
+  /** Three.js, R3F, point-cloud, or other renderer output. */
   children?: React.ReactNode;
-  /** 좌상단 HUD 타이틀(대문자). */
+  /** Visible scene or source identity. */
   title?: React.ReactNode;
-  /** 타이틀 옆 배지 노드. */
+  /** Passive badges adjacent to the scene identity. */
   badges?: React.ReactNode;
-  /** 좌상단 보조 HUD 슬롯. */
+  /** Compact passive diagnostics; keep the default HUD to essential values. */
   hud?: React.ReactNode;
-  /** 우상단 툴바 슬롯. */
+  /** Viewport-local camera, fit, zoom, and display controls. */
   toolbar?: React.ReactNode;
-  /** 캔버스 위 오버레이 슬롯. */
+  /** Non-interactive renderer overlay. */
   overlay?: React.ReactNode;
-  /** 좌하단 상태 칩. */
+  /** Passive renderer metadata such as FPS or point count. */
   status?: React.ReactNode;
-  /** 로딩 오버레이. @default false */
+  /** Normalized availability/freshness state. @default "ready" */
+  state?: ViewerState;
+  stateLabel?: React.ReactNode;
+  stateDescription?: React.ReactNode;
+  stateIcon?: React.ReactNode;
+  stateAction?: React.ReactNode;
+  /** @deprecated Use state="loading". */
   loading?: boolean;
-  /** 빈 상태 메시지(로딩이 아닐 때). */
+  /** @deprecated Use state="no-source" and stateLabel. */
   empty?: React.ReactNode;
-  /** 접근성 라벨. @default "3D 뷰포트" */
+  /** Theme-stable viewport presentation. @default "dark" */
+  appearance?: 'dark' | 'light';
+  /** Accessible region name. @default "3D 뷰포트" */
   label?: string;
 }
 
-/** 3D 뷰포트 크롬 셸 — 다크 프레임 + HUD(타이틀·배지) · 툴바 슬롯 · 로딩/빈 상태. */
-export function Scene3DFrame(props: Scene3DFrameProps): JSX.Element;
+/** Renderer-independent 3D viewport preset built on ViewerFrame. */
+export function Scene3DFrame(props: Scene3DFrameProps): React.JSX.Element;
