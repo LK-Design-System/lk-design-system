@@ -19,7 +19,7 @@ export default meta;
 
 const alertVariantColor = {
   normal: 'var(--color-semantic-primary-normal)',
-  negative: 'var(--bw-red)',
+  negative: 'var(--color-semantic-status-negative)',
   assistive: 'var(--color-semantic-label-neutral)',
 };
 
@@ -39,7 +39,7 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
           display: 'grid',
           placeItems: 'center',
           padding: 18,
-          background: 'var(--bw-gray-300)',
+          background: 'var(--color-semantic-interaction-inactive)',
         }}
       >
         <div
@@ -48,7 +48,7 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
             maxWidth: '100%',
             padding: ios ? '20px 14px 14px' : '18px 18px 14px',
             borderRadius: ios ? 18 : 8,
-            background: 'var(--bw-white)',
+            background: 'var(--color-semantic-background-elevated-normal)',
             boxShadow: 'var(--shadow-lg)',
             fontFamily: 'var(--font-sans)',
           }}
@@ -81,7 +81,7 @@ export const AlertPlatformPreview = {
   name: 'Alert 플랫폼·변형 미리보기',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980 }}>
-      <div style={{ padding: 24, borderRadius: 'var(--radius-lg)', background: 'var(--bw-mist)' }}>
+      <div style={{ padding: 24, borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-normal-alternative)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18, alignItems: 'start' }}>
           <AlertPreview platform="ios" variant="negative" />
           <AlertPreview platform="android" variant="normal" title="변경 사항을 게시할까요?" body="선택한 업데이트가 구성원에게 공개됩니다." />

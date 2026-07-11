@@ -50,7 +50,7 @@ function reorder(current, ids) {
 }
 
 export const ReorderLists = {
-  name: '정렬 리스트',
+  name: '기본',
   render: () => {
     const [items, setItems] = React.useState(panels);
 
@@ -66,7 +66,7 @@ export const ReorderLists = {
 };
 
 export const WithIndex = {
-  name: '순번 표시',
+  name: 'Compact 밀도 · 순번 표시',
   render: () => {
     const [items, setItems] = React.useState(panels);
 

@@ -11,8 +11,8 @@ export function pillChipStyle(active, disabled, size = 'md') {
     // small buttons/inputs in dense toolbars; md keeps the default pill.
     height: sm ? 'var(--component-button-height-sm)' : 'var(--component-filter-chip-height)',
     padding: sm ? '0 12px' : '0 15px',
-    background: active ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)',
-    border: `1px solid ${active ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`,
+    background: active ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)',
+    border: `1px solid ${active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`,
     borderRadius: 'var(--radius-pill)', cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)',
     fontSize: sm ? 'var(--label2-size)' : 'var(--label1-size)',

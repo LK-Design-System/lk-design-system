@@ -8,7 +8,7 @@ import {
 } from '../src/index.js';
 
 function TreeStatusDot({ tone = 'online' }) {
-  const color = tone === 'offline' || tone === 'disabled' ? 'var(--bw-gray-300)' : tone === 'weak' || tone === 'review' ? 'var(--bw-amber)' : 'var(--bw-green)';
+  const color = tone === 'offline' || tone === 'disabled' ? 'var(--color-semantic-interaction-inactive)' : tone === 'weak' || tone === 'review' ? 'var(--color-semantic-status-cautionary)' : 'var(--color-semantic-status-positive)';
   return (
     <span
       aria-hidden="true"
@@ -47,7 +47,7 @@ export const CalendarCard = {
   name: 'Calendar card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 360, height: 340, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 360, height: 340, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <Calendar defaultValue="2026-07-03" />
     </div>
   ),
@@ -79,8 +79,8 @@ export const TableCard = {
   name: 'Table card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 440, height: 260, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
-      <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 8 }}>
+    <div data-visual-crop-root style={{ width: 440, height: 260, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: 8 }}>
         <Table
           columns={[
             { key: 'code', label: '모델' },

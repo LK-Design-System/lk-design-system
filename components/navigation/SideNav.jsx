@@ -60,20 +60,20 @@ export function SideNav({
     position: 'relative', display: 'flex', alignItems: 'center', justifyContent: col ? 'center' : 'flex-start', gap: 11,
     width: '100%', padding: col ? '11px 0' : '10px 12px', border: 'none', borderRadius: 'var(--radius-lg)',
     cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)',
-    background: active ? 'var(--lk-accent-tint-2)' : hovered && !disabled ? 'var(--lk-accent-tint)' : 'transparent', color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
+    background: active ? 'var(--color-semantic-primary-surface-strong)' : hovered && !disabled ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
     transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra,
   });
   const labelSpan = (active, children) => (
     <span style={{ flex: 1, minWidth: 0, fontSize: 14, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{children}</span>
   );
   const pill = (active, badge) => (
-    <span style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 9, fontSize: 11, fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--color-semantic-primary-normal)' : 'var(--lk-accent-tint-2)', color: active ? 'var(--bw-white)' : 'var(--color-semantic-primary-normal)' }}>{badge}</span>
+    <span style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 9, fontSize: 11, fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-surface-strong)', color: active ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-primary-normal)' }}>{badge}</span>
   );
   const dot = <span style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)' }} />;
 
   const brand = col ? (headerCollapsed != null ? headerCollapsed : header) : header;
 
-  const shell = { display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
+  const shell = { display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const inner = (
     <React.Fragment>
       <style>{`.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}`}</style>
@@ -95,7 +95,7 @@ export function SideNav({
       <div className="lk-sidenav__scroll" style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: '1 1 auto', minHeight: 0, overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {items.map((o, i) => {
           if (o.heading) return col
-            ? <div key={'h' + i} style={{ height: 1, flexShrink: 0, background: 'var(--bw-border)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} />
+            ? <div key={'h' + i} style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} />
             : <div key={'h' + i} style={{ fontFamily: 'var(--font-sans)', fontSize: 10.5, fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div>;
 
           const kids = o.children || [];
@@ -146,7 +146,7 @@ export function SideNav({
       </div>
       <div style={{ marginTop: 'auto', paddingTop: 8 }}>
         {footer != null && (
-          <div style={{ paddingTop: 10, marginLeft: 2, marginRight: 2, borderTop: '1px solid var(--bw-border)' }}>{footer}</div>
+          <div style={{ paddingTop: 10, marginLeft: 2, marginRight: 2, borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
         )}
       </div>
     </React.Fragment>

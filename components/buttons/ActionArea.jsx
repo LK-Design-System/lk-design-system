@@ -13,6 +13,7 @@ export function ActionArea({
   safeArea = false,
   divider = true,
   compact = false,
+  align = "start",
   style,
   ...rest
 }) {
@@ -25,9 +26,9 @@ export function ActionArea({
         padding: compact
           ? "var(--space-3) var(--component-action-area-padding-x)"
           : "var(--component-action-area-padding-y) var(--component-action-area-padding-x)",
-        paddingBottom: safeArea
-          ? "var(--mobile-bottom-action-padding-bottom)"
-          : undefined,
+        ...(safeArea
+          ? { paddingBottom: "var(--mobile-bottom-action-padding-bottom)" }
+          : {}),
         background: "var(--component-action-area-bg)",
         borderTop: divider ? "var(--component-action-area-border)" : "none",
         boxShadow: sticky
@@ -56,6 +57,13 @@ export function ActionArea({
           display: "flex",
           gap: "var(--space-2)",
           alignItems: "center",
+          justifyContent: {
+            start: "flex-start",
+            end: "flex-end",
+            center: "center",
+            between: "space-between",
+          }[align] || "flex-start",
+          flexWrap: "wrap",
           width: "100%",
         }}
       >

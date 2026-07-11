@@ -6,7 +6,7 @@
 export function anchoredPanelStyle(width) {
   return {
     position: 'absolute', top: 'calc(100% + 8px)', zIndex: 40, width,
-    background: 'var(--bw-white)', border: '1px solid var(--bw-border)',
+    background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)',
     borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 16,
     fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.6,
     color: 'var(--color-semantic-label-neutral)',

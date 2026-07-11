@@ -20,10 +20,14 @@ export function Switch({
   focus: forcedFocus = false,
   disabled = false,
   disable = false,
+  readOnly = false,
   labelStyle,
   style,
   id,
   'aria-label': ariaLabel,
+  onFocus,
+  onBlur,
+  onKeyDown,
   ...rest
 }) {
   const stateChecked = state === 'checked' || state === 'on' ? true : state === 'unchecked' || state === 'off' ? false : undefined;
@@ -37,12 +41,12 @@ export function Switch({
   const activeFocus = focus || forcedFocus || interaction === 'focused';
   const activeHover = hover || active || interaction === 'hovered';
   const toggle = () => {
-    if (disabledState) return;
+    if (disabledState || readOnly) return;
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
   const d = normalizedSize === 'sm' ? { w: 40, h: 24, k: 18, p: 3, tx: 16 } : { w: 52, h: 32, k: 24, p: 4, tx: 20 };
-  const offBg = platform === 'ios' ? 'var(--color-semantic-fill-strong)' : 'var(--bw-gray-300)';
+  const offBg = platform === 'ios' ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-interaction-inactive)';
   const trackBg = disabledState ? (on ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)') : on ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-strong)' : offBg;
   return (
     <label
@@ -52,29 +56,37 @@ export function Switch({
       onMouseLeave={() => setHover(false)}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 12,
-        cursor: disabledState ? 'not-allowed' : 'pointer',
+        cursor: disabledState ? 'not-allowed' : readOnly ? 'default' : 'pointer',
         fontFamily: 'var(--font-sans)', fontSize: 15, letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)',
         ...style,
       }}
     >
       <span
+        {...rest}
         role="switch"
         aria-checked={on}
         aria-disabled={disabledState ? true : undefined}
+        aria-readonly={readOnly || undefined}
         aria-label={ariaLabel ?? (typeof label === 'string' ? label : 'switch')}
         id={id}
         tabIndex={disabledState ? -1 : 0}
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-        onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } }}
+        onFocus={(event) => { setFocus(true); onFocus?.(event); }}
+        onBlur={(event) => { setFocus(false); onBlur?.(event); }}
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (event.defaultPrevented) return;
+          if (event.key === ' ' || event.key === 'Enter') {
+            event.preventDefault();
+            toggle();
+          }
+        }}
         style={{
           position: 'relative', flexShrink: 0, width: d.w, height: d.h,
           borderRadius: 'var(--radius-pill)',
           background: trackBg,
-          boxShadow: activeFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
+          boxShadow: activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
           transition: 'background var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
         }}
-        {...rest}
       >
         <span
           style={{

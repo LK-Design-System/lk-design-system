@@ -5,10 +5,10 @@ const TONES = {
   accent: "var(--color-semantic-primary-normal)",
   navy: "var(--color-semantic-inverse-background)",
   neutral: "var(--color-semantic-label-alternative)",
-  positive: "var(--bw-green)",
-  cautionary: "var(--bw-amber)",
-  warning: "var(--bw-amber)",
-  negative: "var(--bw-red)",
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  warning: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)",
 };
 
 /* WDS scale: heights derive from padding + line-height (no fixed height). */

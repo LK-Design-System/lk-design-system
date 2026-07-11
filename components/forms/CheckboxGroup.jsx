@@ -23,7 +23,7 @@ export function CheckboxGroup({ options = [], value, defaultValue = [], onChange
         return (
           <label key={o.value} style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 10, cursor: o.disabled ? 'not-allowed' : 'pointer', opacity: o.disabled ? 0.5 : 1, fontFamily: 'var(--font-sans)' }}>
             <input type="checkbox" checked={on} disabled={o.disabled} onChange={() => toggle(o.value)} style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />
-            <span style={{ marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: 'var(--radius-sm)', border: `1px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, background: on ? 'var(--color-semantic-primary-normal)' : 'var(--bw-white)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)' }}>
+            <span style={{ marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: 'var(--radius-sm)', border: `1px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, background: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)' }}>
               {on && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-static-white)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
             </span>
             <span>

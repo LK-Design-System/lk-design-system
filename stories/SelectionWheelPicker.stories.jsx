@@ -3,6 +3,7 @@ import { WheelPicker } from '../src/index.js';
 
 const meta = {
   title: 'LDS Product/Selection and Input/Wheel Picker',
+  component: WheelPicker,
   parameters: {
     docs: {
       description: {
@@ -103,6 +104,17 @@ function ControlledHourExample() {
   );
 }
 
+function DisabledSpeedExample() {
+  const [speed, setSpeed] = React.useState('normal');
+  const label = speedOptions.find((option) => option.value === speed)?.label ?? speed;
+
+  return (
+    <PickerBlock label="속도" value={label}>
+      <WheelPicker options={speedOptions} value={speed} onChange={setSpeed} label="속도 선택" />
+    </PickerBlock>
+  );
+}
+
 function TimeExample() {
   const [hour, setHour] = React.useState(9);
   const [minute, setMinute] = React.useState(30);
@@ -150,9 +162,7 @@ export const DisabledOptions = {
   name: '휠 비활성 옵션',
   render: () => (
     <Stage>
-      <PickerBlock label="속도" value="보통">
-        <WheelPicker options={speedOptions} defaultValue="normal" label="속도 선택" />
-      </PickerBlock>
+      <DisabledSpeedExample />
       <PickerBlock label="읽기" value="2F">
         <WheelPicker options={floorOptions} defaultValue="2F" label="읽기 전용 층 선택" readOnly />
       </PickerBlock>

@@ -1,6 +1,6 @@
 **CanvasEditorShell** - Shared frame for canvas-based editors.
 
-The shell owns stable regions only: document header, optional mode tabs, edit-tool rail, optional structural panel, viewport, optional properties panel, and optional passive status. Product workflows own the content and decide which regions exist.
+The shell owns stable regions only: document header, optional mode tabs, edit-tool rail, optional structural panel, dominant viewport, optional properties panel, and optional passive status. Product workflows own the content and decide which regions exist.
 
 ```jsx
 <CanvasEditorShell
@@ -13,8 +13,13 @@ The shell owns stable regions only: document header, optional mode tabs, edit-to
     </CanvasEditorCommandBar>
   }
   subheader={<Tabs items={modes} value={mode} onChange={setMode} size="small" />}
+  responsiveNavigation={<Tabs items={regions} value={region} onChange={setRegion} size="small" />}
   tools={<EditorToolbar items={tools} value={tool} onChange={setTool} />}
+  layers={<LayerPanel layers={layers} activeLayerId={layerId} />}
   panel={<ObjectProperties selection={selection} />}
+  defaultLayersOpen
+  defaultPanelOpen
+  resizablePanels
 >
   <Map2DCanvas>...</Map2DCanvas>
 </CanvasEditorShell>
@@ -23,11 +28,21 @@ The shell owns stable regions only: document header, optional mode tabs, edit-to
 - `headerStart` is the leading header region. Use it for back navigation or a real structural-panel toggle, not decorative home/layer icons.
 - `toolbar` owns document-scoped commands such as undo, redo, save, import, and export.
 - `subheader` owns modes that replace tools, canvas behavior, save behavior, or the properties panel together.
+- `responsiveNavigation` owns narrow-screen region switching only. Do not reuse `subheader` for canvas/layers/properties navigation.
 - `tools` owns mutually exclusive edit modes. Viewport-local zoom/orbit controls stay inside the viewport.
 - `layers` is only for a real layer/display tree. Do not put task steps or selected-object details there.
-- Use a docked `panel` for repeated property editing. Use `panelMode="drawer"` only for lightweight contextual inspection; the drawer animates, becomes inert while closed, and reports Escape through `onPanelOpenChange`.
+- Desktop layer and property panels compose the existing `DockPanel`: they can collapse/restore and, by default, resize by pointer or keyboard. `layersOpen`/`panelOpen` may be controlled; the corresponding `default*Open` props provide uncontrolled defaults.
+- Use a docked `panel` for repeated property editing. Use `panelMode="drawer"` only for lightweight contextual inspection over the viewport. Escape closes a focused panel and returns focus to its restore handle.
 - Keep selected-object `Apply`, `Delete`, or clear-selection actions with the owning inspector. Keep document save in the header.
 - `status` is optional and passive. Do not move undo/redo or save into it.
+- 좁은 화면에서는 `mobileActiveRegion="canvas" | "layers" | "panel"`로 주 영역 하나만 노출합니다. 제품은 `responsiveNavigation`에 LDS Tabs/SegmentedControl을 조합합니다. 기본값은 캔버스입니다.
+
+Research basis (LK Robotics extension, not WDS parity):
+
+- [Figma UI3 navigation](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3), [Figma Layers panel](https://help.figma.com/hc/en-us/articles/360039831974-View-layers-and-assets-in-the-Layers-Panel), and [Unity interface](https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html) converge on a dominant center viewport, structural hierarchy at left, and contextual properties at right.
+- [Blender regions](https://docs.blender.org/manual/en/4.0/interface/window_system/regions.html) supports keeping high-frequency viewport regions local to the main editor area.
+- [WAI-ARIA Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/) informs keyboard-resizable panel boundaries; [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) informs narrow-screen region navigation.
+- Arbitrary docking graphs, saved workspace layouts, detached windows, and domain workflows are intentionally excluded from this DS shell.
 
 Original `lk_web_viz` workflow mapping:
 

@@ -1,35 +1,31 @@
 import * as React from 'react';
 
-export interface FileEntry {
+export interface FileBrowserEntry {
   id?: React.Key;
   name: string;
-  type: 'dir' | 'file';
-  size?: React.ReactNode;
+  kind: 'directory' | 'file';
+  meta?: React.ReactNode;
   disabled?: boolean;
 }
 
-type FileBrowserAllSelectionMode = `a${'n'}y`;
-
-export type FileBrowserSelectionMode = 'file' | 'folder' | FileBrowserAllSelectionMode | 'none';
+export type FileBrowserSelectionMode = 'file' | 'folder' | 'file-or-folder' | 'none';
 
 export interface FileBrowserProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** 현재 경로. @default "/" */
   path?: string;
-  entries?: FileEntry[];
-  /** 선택한 항목의 id 또는 name. */
-  selected?: React.Key;
-  /** 선택 가능한 항목 타입. @default "file" */
+  entries?: FileBrowserEntry[];
+  selectedId?: React.Key;
   selectionMode?: FileBrowserSelectionMode;
-  onOpen?: (dir: FileEntry) => void;
+  onNavigate?: (directory: FileBrowserEntry) => void;
   onUp?: () => void;
-  onSelect?: (entry: FileEntry) => void;
-  height?: React.CSSProperties['maxHeight'];
-  emptyLabel?: React.ReactNode;
+  onSelectionChange?: (entry: FileBrowserEntry) => void;
+  maxHeight?: React.CSSProperties['maxHeight'];
+  emptyMessage?: React.ReactNode;
   loading?: boolean;
-  loadingLabel?: React.ReactNode;
+  loadingMessage?: React.ReactNode;
   error?: React.ReactNode;
-  readOnly?: boolean;
+  disabled?: boolean;
+  navigationDisabled?: boolean;
 }
 
-/** 서버 파일·디렉터리 탐색기(경로 바 + 상위 이동 + 항목 리스트). */
+/** File and directory navigation with selection kept as an explicit separate action. */
 export function FileBrowser(props: FileBrowserProps): JSX.Element;

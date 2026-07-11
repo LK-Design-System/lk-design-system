@@ -37,9 +37,12 @@ export function PropertyField({
   const fieldId = React.useId();
   const inputId = `property-${fieldId}`;
   const hintId = hint != null ? `${inputId}-hint` : undefined;
+  const unitId = type !== 'toggle' && unit != null ? `${inputId}-unit` : undefined;
+  const descriptionIds = [hintId, unitId].filter(Boolean).join(' ') || undefined;
   const labelText = getLabelText(label);
   const applyText = typeof applyLabel === 'string' ? applyLabel : '적용';
   const [draft, setDraft] = React.useState(committed);
+  const [focused, setFocused] = React.useState(false);
 
   React.useEffect(() => {
     setDraft(committed);
@@ -119,7 +122,7 @@ export function PropertyField({
               letterSpacing: 0,
               color: disabled
                 ? 'var(--color-semantic-label-disable)'
-                : 'var(--color-semantic-label-alternative)',
+                : 'var(--color-semantic-label-neutral)',
             }}
           >
             {hint}
@@ -131,9 +134,10 @@ export function PropertyField({
         <Switch
           size="sm"
           checked={!!draft}
-          disabled={interactionDisabled}
+          disabled={disabled}
+          readOnly={readOnly}
           aria-label={sharedControlLabel}
-          aria-describedby={hintId}
+          aria-describedby={descriptionIds}
           onChange={(next) => setDraft(next)}
         />
       ) : (
@@ -156,7 +160,9 @@ export function PropertyField({
             disabled={controlDisabled}
             readOnly={controlReadOnly}
             aria-label={sharedControlLabel}
-            aria-describedby={hintId}
+            aria-describedby={descriptionIds}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
             onChange={(event) => {
               setDraft(
                 type === 'number'
@@ -173,12 +179,15 @@ export function PropertyField({
               height: 34,
               padding: '0 10px',
               border: `1px solid ${
-                dirty
+                focused
+                  ? 'var(--component-input-border-color-focus)'
+                  : dirty
                   ? 'var(--color-semantic-status-cautionary)'
                   : 'var(--component-input-border-color)'
               }`,
               borderRadius: 'var(--radius-md)',
               outline: 'none',
+              boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none',
               background: controlDisabled
                 ? 'var(--color-semantic-fill-normal)'
                 : 'var(--color-semantic-background-elevated-normal)',
@@ -193,10 +202,12 @@ export function PropertyField({
               textAlign: type === 'number' ? 'right' : 'left',
               fontVariantNumeric: 'tabular-nums',
               boxSizing: 'border-box',
+              transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
             }}
           />
           {unit != null && (
             <span
+              id={unitId}
               style={{
                 minWidth: 24,
                 fontSize: 'var(--caption1-size)',
@@ -205,7 +216,7 @@ export function PropertyField({
                 letterSpacing: 0,
                 color: disabled
                   ? 'var(--color-semantic-label-disable)'
-                  : 'var(--color-semantic-label-alternative)',
+                  : 'var(--color-semantic-label-neutral)',
               }}
             >
               {unit}

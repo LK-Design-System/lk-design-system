@@ -7,71 +7,21 @@
     "runtimeEntry": "styles.css",
     "runtimeCssFiles": [
       "tokens/fonts.css",
-      "tokens/colors.css",
+      "tokens/color-atomic.css",
+      "tokens/color-semantic.css",
+      "tokens/color-components.css",
       "tokens/typography.css",
       "tokens/spacing.css",
       "tokens/grid.css",
       "tokens/effects.css",
       "tokens/components.css",
-      "tokens/base.css"
+      "tokens/base.css",
+      "tokens/focus.css"
     ],
     "rule": "primitive 토큰은 원천 결정을, semantic 토큰은 제품 의미를, component 토큰은 재사용 가능한 컴포넌트 계약을 정의한다."
   },
   "primitive": {
     "description": "브랜드 원값, 스케일, 효과 값입니다. primitive 토큰은 semantic 토큰을 정의하거나 수정할 때만 사용합니다.",
-    "color": {
-      "brandNavy": {
-        "$type": "color",
-        "$value": "#0E1329",
-        "css": "--bw-ink",
-        "$description": "LK ROBOTICS navy ink 원값입니다."
-      },
-      "graphite": {
-        "$type": "color",
-        "$value": "#2C3547",
-        "css": "--bw-indigo"
-      },
-      "paper": {
-        "$type": "color",
-        "$value": "#FFFFFF",
-        "css": "--bw-paper"
-      },
-      "mist": {
-        "$type": "color",
-        "$value": "#F7F7F8",
-        "css": "--bw-mist"
-      },
-      "band": {
-        "$type": "color",
-        "$value": "#F4F4F5",
-        "css": "--bw-band"
-      },
-      "border": {
-        "$type": "color",
-        "$value": "#E1E2E4",
-        "css": "--bw-border"
-      },
-      "gray": {
-        "$type": "color",
-        "$value": "#70737C",
-        "css": "--bw-gray"
-      },
-      "successMuted": {
-        "$type": "color",
-        "$value": "#4F765D",
-        "css": "--bw-green"
-      },
-      "cautionMuted": {
-        "$type": "color",
-        "$value": "#C29A52",
-        "css": "--bw-amber"
-      },
-      "dangerMuted": {
-        "$type": "color",
-        "$value": "#CF6360",
-        "css": "--bw-red"
-      }
-    },
     "space": {
       "0": {
         "$type": "dimension",
@@ -336,6 +286,19 @@
           "--label1-spacing"
         ]
       },
+      "caption1": {
+        "$type": "typography",
+        "$value": {
+          "fontSize": "12px",
+          "lineHeight": "16px",
+          "letterSpacing": "0.0252em"
+        },
+        "css": [
+          "--caption1-size",
+          "--caption1-line",
+          "--caption1-spacing"
+        ]
+      },
       "headline2": {
         "$type": "typography",
         "$value": {
@@ -574,16 +537,988 @@
         "css": "--interaction-opacity-pressed",
         "source": "Decorate/Interaction"
       }
+    },
+    "colorRamps": {
+      "cool-neutral": {
+        "label": "Cool Neutral",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "5": {
+            "$type": "color",
+            "$value": "#0F0F10",
+            "css": "--color-atomic-cool-neutral-5"
+          },
+          "7": {
+            "$type": "color",
+            "$value": "#141415",
+            "css": "--color-atomic-cool-neutral-7"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#171719",
+            "css": "--color-atomic-cool-neutral-10"
+          },
+          "15": {
+            "$type": "color",
+            "$value": "#1B1C1E",
+            "css": "--color-atomic-cool-neutral-15"
+          },
+          "17": {
+            "$type": "color",
+            "$value": "#212225",
+            "css": "--color-atomic-cool-neutral-17"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#292A2D",
+            "css": "--color-atomic-cool-neutral-20"
+          },
+          "22": {
+            "$type": "color",
+            "$value": "#2E2F33",
+            "css": "--color-atomic-cool-neutral-22"
+          },
+          "23": {
+            "$type": "color",
+            "$value": "#333438",
+            "css": "--color-atomic-cool-neutral-23"
+          },
+          "25": {
+            "$type": "color",
+            "$value": "#37383C",
+            "css": "--color-atomic-cool-neutral-25"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#46474C",
+            "css": "--color-atomic-cool-neutral-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#5A5C63",
+            "css": "--color-atomic-cool-neutral-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#70737C",
+            "css": "--color-atomic-cool-neutral-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#878A93",
+            "css": "--color-atomic-cool-neutral-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#989BA2",
+            "css": "--color-atomic-cool-neutral-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#AEB0B6",
+            "css": "--color-atomic-cool-neutral-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#C2C4C8",
+            "css": "--color-atomic-cool-neutral-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#DBDCDF",
+            "css": "--color-atomic-cool-neutral-95"
+          },
+          "96": {
+            "$type": "color",
+            "$value": "#E1E2E4",
+            "css": "--color-atomic-cool-neutral-96"
+          },
+          "97": {
+            "$type": "color",
+            "$value": "#EAEBEC",
+            "css": "--color-atomic-cool-neutral-97"
+          },
+          "98": {
+            "$type": "color",
+            "$value": "#F4F4F5",
+            "css": "--color-atomic-cool-neutral-98"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#F7F7F8",
+            "css": "--color-atomic-cool-neutral-99"
+          }
+        }
+      },
+      "red": {
+        "label": "Red",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "10": {
+            "$type": "color",
+            "$value": "#370606",
+            "css": "--color-atomic-red-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#6F0E0E",
+            "css": "--color-atomic-red-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#AA1C1C",
+            "css": "--color-atomic-red-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#D63D3D",
+            "css": "--color-atomic-red-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#EE5656",
+            "css": "--color-atomic-red-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#F16F6F",
+            "css": "--color-atomic-red-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#F49292",
+            "css": "--color-atomic-red-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#F8B8B8",
+            "css": "--color-atomic-red-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#FAD6D6",
+            "css": "--color-atomic-red-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#FCEDED",
+            "css": "--color-atomic-red-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#FFFAFA",
+            "css": "--color-atomic-red-99"
+          }
+        }
+      },
+      "green": {
+        "label": "Green",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "10": {
+            "$type": "color",
+            "$value": "#04240E",
+            "css": "--color-atomic-green-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#07441B",
+            "css": "--color-atomic-green-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#0B6D2C",
+            "css": "--color-atomic-green-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#0F953C",
+            "css": "--color-atomic-green-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#13BE4C",
+            "css": "--color-atomic-green-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#3FD270",
+            "css": "--color-atomic-green-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#78DF9A",
+            "css": "--color-atomic-green-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#A0EEBA",
+            "css": "--color-atomic-green-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#C2F7D4",
+            "css": "--color-atomic-green-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#E2FCEB",
+            "css": "--color-atomic-green-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#F5FEF8",
+            "css": "--color-atomic-green-99"
+          }
+        }
+      },
+      "violet": {
+        "label": "Violet",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "0": {
+            "$type": "color",
+            "$value": "#000000",
+            "css": "--color-atomic-violet-0"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#130841",
+            "css": "--color-atomic-violet-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#29147F",
+            "css": "--color-atomic-violet-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#4125B3",
+            "css": "--color-atomic-violet-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#5333D3",
+            "css": "--color-atomic-violet-40"
+          },
+          "45": {
+            "$type": "color",
+            "$value": "#5E3FDB",
+            "css": "--color-atomic-violet-45"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#6748E1",
+            "css": "--color-atomic-violet-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#7E63E8",
+            "css": "--color-atomic-violet-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#9E89F0",
+            "css": "--color-atomic-violet-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#C0B1F7",
+            "css": "--color-atomic-violet-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#DBD4FA",
+            "css": "--color-atomic-violet-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#F0ECFC",
+            "css": "--color-atomic-violet-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#FBFAFF",
+            "css": "--color-atomic-violet-99"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#FFFFFF",
+            "css": "--color-atomic-violet-100"
+          }
+        }
+      },
+      "neutral": {
+        "label": "Neutral",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "5": {
+            "$type": "color",
+            "$value": "#0F0F10",
+            "css": "--color-atomic-neutral-5"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#161719",
+            "css": "--color-atomic-neutral-10"
+          },
+          "15": {
+            "$type": "color",
+            "$value": "#1B1C1E",
+            "css": "--color-atomic-neutral-15"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#292A2D",
+            "css": "--color-atomic-neutral-20"
+          },
+          "22": {
+            "$type": "color",
+            "$value": "#2F3033",
+            "css": "--color-atomic-neutral-22"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#45474C",
+            "css": "--color-atomic-neutral-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#5A5C62",
+            "css": "--color-atomic-neutral-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#70737A",
+            "css": "--color-atomic-neutral-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#878A91",
+            "css": "--color-atomic-neutral-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#989BA1",
+            "css": "--color-atomic-neutral-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#AEB0B5",
+            "css": "--color-atomic-neutral-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#C3C4C8",
+            "css": "--color-atomic-neutral-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#DBDCDE",
+            "css": "--color-atomic-neutral-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#F7F7F8",
+            "css": "--color-atomic-neutral-99"
+          }
+        }
+      },
+      "blue": {
+        "label": "Blue",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "10": {
+            "$type": "color",
+            "$value": "#0B1722",
+            "css": "--color-atomic-blue-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#162E45",
+            "css": "--color-atomic-blue-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#21476A",
+            "css": "--color-atomic-blue-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#2D6090",
+            "css": "--color-atomic-blue-40"
+          },
+          "45": {
+            "$type": "color",
+            "$value": "#336CA1",
+            "css": "--color-atomic-blue-45"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#3775AF",
+            "css": "--color-atomic-blue-50"
+          },
+          "55": {
+            "$type": "color",
+            "$value": "#3C80BF",
+            "css": "--color-atomic-blue-55"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#4E8DC7",
+            "css": "--color-atomic-blue-60"
+          },
+          "65": {
+            "$type": "color",
+            "$value": "#639ACE",
+            "css": "--color-atomic-blue-65"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#79A9D5",
+            "css": "--color-atomic-blue-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#A7C6E3",
+            "css": "--color-atomic-blue-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#CDDFEF",
+            "css": "--color-atomic-blue-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#EBF2F9",
+            "css": "--color-atomic-blue-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#F8FBFD",
+            "css": "--color-atomic-blue-99"
+          }
+        }
+      },
+      "orange": {
+        "label": "Orange",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "10": {
+            "$type": "color",
+            "$value": "#341F05",
+            "css": "--color-atomic-orange-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#623C0A",
+            "css": "--color-atomic-orange-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#965B0F",
+            "css": "--color-atomic-orange-30"
+          },
+          "39": {
+            "$type": "color",
+            "$value": "#C97A14",
+            "css": "--color-atomic-orange-39"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#CC7C14",
+            "css": "--color-atomic-orange-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#EB9C33",
+            "css": "--color-atomic-orange-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#EFAF5C",
+            "css": "--color-atomic-orange-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#F3C486",
+            "css": "--color-atomic-orange-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#F7D6AB",
+            "css": "--color-atomic-orange-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#F9E7CE",
+            "css": "--color-atomic-orange-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#FCF4E9",
+            "css": "--color-atomic-orange-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#FEFCF8",
+            "css": "--color-atomic-orange-99"
+          }
+        }
+      },
+      "red-orange": {
+        "label": "Red Orange",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "10": {
+            "$type": "color",
+            "$value": "#261004",
+            "css": "--color-atomic-red-orange-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#542508",
+            "css": "--color-atomic-red-orange-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#8A3B0E",
+            "css": "--color-atomic-red-orange-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#C05313",
+            "css": "--color-atomic-red-orange-40"
+          },
+          "48": {
+            "$type": "color",
+            "$value": "#E8661A",
+            "css": "--color-atomic-red-orange-48"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#EA7029",
+            "css": "--color-atomic-red-orange-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#ED864A",
+            "css": "--color-atomic-red-orange-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#F1A173",
+            "css": "--color-atomic-red-orange-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#F6C0A1",
+            "css": "--color-atomic-red-orange-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#F9DAC9",
+            "css": "--color-atomic-red-orange-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#FCEFE7",
+            "css": "--color-atomic-red-orange-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#FEFAF8",
+            "css": "--color-atomic-red-orange-99"
+          }
+        }
+      },
+      "lime": {
+        "label": "Lime",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "0": {
+            "$type": "color",
+            "$value": "#000000",
+            "css": "--color-atomic-lime-0"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#132904",
+            "css": "--color-atomic-lime-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#265108",
+            "css": "--color-atomic-lime-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#3B7C0C",
+            "css": "--color-atomic-lime-30"
+          },
+          "37": {
+            "$type": "color",
+            "$value": "#4B9D10",
+            "css": "--color-atomic-lime-37"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#51AC11",
+            "css": "--color-atomic-lime-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#63CE18",
+            "css": "--color-atomic-lime-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#87DB49",
+            "css": "--color-atomic-lime-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#AAE87D",
+            "css": "--color-atomic-lime-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#C3F0A3",
+            "css": "--color-atomic-lime-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#D9F7C4",
+            "css": "--color-atomic-lime-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#EDFCE2",
+            "css": "--color-atomic-lime-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#FAFEF6",
+            "css": "--color-atomic-lime-99"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#FFFFFF",
+            "css": "--color-atomic-lime-100"
+          }
+        }
+      },
+      "cyan": {
+        "label": "Cyan",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "0": {
+            "$type": "color",
+            "$value": "#000000",
+            "css": "--color-atomic-cyan-0"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#05252A",
+            "css": "--color-atomic-cyan-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#0A4852",
+            "css": "--color-atomic-cyan-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#106F7F",
+            "css": "--color-atomic-cyan-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#1698AE",
+            "css": "--color-atomic-cyan-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#1BBDD9",
+            "css": "--color-atomic-cyan-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#64CDDF",
+            "css": "--color-atomic-cyan-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#85DBEA",
+            "css": "--color-atomic-cyan-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#A9E9F4",
+            "css": "--color-atomic-cyan-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#C7F1F8",
+            "css": "--color-atomic-cyan-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#E5F8FC",
+            "css": "--color-atomic-cyan-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#F9FEFE",
+            "css": "--color-atomic-cyan-99"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#FFFFFF",
+            "css": "--color-atomic-cyan-100"
+          }
+        }
+      },
+      "light-blue": {
+        "label": "Light Blue",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "0": {
+            "$type": "color",
+            "$value": "#000000",
+            "css": "--color-atomic-light-blue-0"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#05212B",
+            "css": "--color-atomic-light-blue-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#0A4356",
+            "css": "--color-atomic-light-blue-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#0F6986",
+            "css": "--color-atomic-light-blue-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#1590B9",
+            "css": "--color-atomic-light-blue-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#19B2E4",
+            "css": "--color-atomic-light-blue-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#4CC4EB",
+            "css": "--color-atomic-light-blue-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#79D3F0",
+            "css": "--color-atomic-light-blue-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#A6E1F5",
+            "css": "--color-atomic-light-blue-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#C7ECF8",
+            "css": "--color-atomic-light-blue-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#E6F6FB",
+            "css": "--color-atomic-light-blue-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#F7FDFE",
+            "css": "--color-atomic-light-blue-99"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#FFFFFF",
+            "css": "--color-atomic-light-blue-100"
+          }
+        }
+      },
+      "pink": {
+        "label": "Pink",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "0": {
+            "$type": "color",
+            "$value": "#000000",
+            "css": "--color-atomic-pink-0"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#3A0731",
+            "css": "--color-atomic-pink-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#6F105F",
+            "css": "--color-atomic-pink-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#A2258D",
+            "css": "--color-atomic-pink-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#C645B1",
+            "css": "--color-atomic-pink-40"
+          },
+          "46": {
+            "$type": "color",
+            "$value": "#DA58C5",
+            "css": "--color-atomic-pink-46"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#E764D1",
+            "css": "--color-atomic-pink-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#EE7EDB",
+            "css": "--color-atomic-pink-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#F59BE6",
+            "css": "--color-atomic-pink-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#F8BCEE",
+            "css": "--color-atomic-pink-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#FAD5F4",
+            "css": "--color-atomic-pink-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#FCEDFA",
+            "css": "--color-atomic-pink-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#FFFAFE",
+            "css": "--color-atomic-pink-99"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#FFFFFF",
+            "css": "--color-atomic-pink-100"
+          }
+        }
+      },
+      "purple": {
+        "label": "Purple",
+        "source": "WDS atomic structure, LK-approved retone",
+        "tokens": {
+          "0": {
+            "$type": "color",
+            "$value": "#000000",
+            "css": "--color-atomic-purple-0"
+          },
+          "10": {
+            "$type": "color",
+            "$value": "#27083F",
+            "css": "--color-atomic-purple-10"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#561575",
+            "css": "--color-atomic-purple-20"
+          },
+          "30": {
+            "$type": "color",
+            "$value": "#822AAB",
+            "css": "--color-atomic-purple-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#A744D3",
+            "css": "--color-atomic-purple-40"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#C464F0",
+            "css": "--color-atomic-purple-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#CE7FF2",
+            "css": "--color-atomic-purple-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#D99AF5",
+            "css": "--color-atomic-purple-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#E5BCF8",
+            "css": "--color-atomic-purple-80"
+          },
+          "90": {
+            "$type": "color",
+            "$value": "#F0D7FB",
+            "css": "--color-atomic-purple-90"
+          },
+          "95": {
+            "$type": "color",
+            "$value": "#F8EEFD",
+            "css": "--color-atomic-purple-95"
+          },
+          "99": {
+            "$type": "color",
+            "$value": "#FEFBFF",
+            "css": "--color-atomic-purple-99"
+          },
+          "100": {
+            "$type": "color",
+            "$value": "#FFFFFF",
+            "css": "--color-atomic-purple-100"
+          }
+        }
+      }
     }
   },
   "semantic": {
     "description": "제품 UI에서 쓰는 의미 기반 토큰입니다. 제품 화면에서는 primitive보다 semantic 토큰을 우선 사용합니다.",
     "action": {
+      "primary": {
+        "$type": "color",
+        "$value": "var(--color-semantic-primary-normal)",
+        "css": "--color-semantic-primary-normal",
+        "ref": "semantic.colorRoles.primary-normal"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "var(--color-semantic-primary-normal)",
+        "css": "--color-semantic-primary-normal",
+        "ref": "semantic.colorRoles.primary-normal"
+      },
       "secondary": {
         "$type": "color",
-        "$value": "var(--color-secondary)",
-        "css": "--color-secondary",
-        "ref": "primitive.color.graphite"
+        "$value": "var(--color-semantic-secondary-normal)",
+        "css": "--color-semantic-secondary-normal",
+        "ref": "semantic.colorRoles.secondary-normal"
       }
     },
     "control": {
@@ -604,15 +1539,76 @@
       },
       "focusRing": {
         "$type": "shadow",
-        "$value": "0 0 0 4px var(--focus-ring)",
-        "css": "--focus-ring"
+        "$value": "0 0 0 4px var(--color-semantic-focus-ring)",
+        "css": "--color-semantic-focus-ring",
+        "ref": "semantic.colorRoles.focus-ring"
       }
     },
     "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "var(--color-semantic-line-normal-normal)",
+        "css": "--color-semantic-line-normal-normal",
+        "ref": "semantic.colorRoles.line-normal-normal"
+      },
       "hairline": {
         "$type": "border",
         "$value": "var(--border-hairline)",
         "css": "--border-hairline"
+      }
+    },
+    "surface": {
+      "card": {
+        "$type": "color",
+        "$value": "var(--color-semantic-background-elevated-normal)",
+        "css": "--color-semantic-background-elevated-normal",
+        "ref": "semantic.colorRoles.background-elevated-normal"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "var(--color-semantic-background-elevated-normal)",
+        "css": "--color-semantic-background-elevated-normal",
+        "ref": "semantic.colorRoles.background-elevated-normal"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "var(--color-semantic-inverse-background)",
+        "css": "--color-semantic-inverse-background",
+        "ref": "semantic.colorRoles.inverse-background"
+      }
+    },
+    "text": {
+      "body": {
+        "$type": "color",
+        "$value": "var(--color-semantic-label-normal)",
+        "css": "--color-semantic-label-normal",
+        "ref": "semantic.colorRoles.label-normal"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "var(--color-semantic-label-strong)",
+        "css": "--color-semantic-label-strong",
+        "ref": "semantic.colorRoles.label-strong"
+      },
+      "onSignal": {
+        "$type": "color",
+        "$value": "var(--color-semantic-static-white)",
+        "css": "--color-semantic-static-white",
+        "ref": "semantic.colorRoles.static-white"
+      },
+      "onInverse": {
+        "$type": "color",
+        "$value": "var(--color-semantic-inverse-label)",
+        "css": "--color-semantic-inverse-label",
+        "ref": "semantic.colorRoles.inverse-label"
+      }
+    },
+    "status": {
+      "danger": {
+        "$type": "color",
+        "$value": "var(--color-semantic-status-negative)",
+        "css": "--color-semantic-status-negative",
+        "ref": "semantic.colorRoles.status-negative"
       }
     },
     "layout": {
@@ -672,6 +1668,1080 @@
           "--ease-out"
         ]
       }
+    },
+    "colorRoles": {
+      "static-white": {
+        "$type": "color",
+        "css": "--color-semantic-static-white",
+        "modes": {
+          "light": "#FFFFFF",
+          "dark": "#FFFFFF"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "primary-normal": {
+        "$type": "color",
+        "css": "--color-semantic-primary-normal",
+        "modes": {
+          "light": "#3878B3",
+          "dark": "#5390C9"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "background-normal-normal": {
+        "$type": "color",
+        "css": "--color-semantic-background-normal-normal",
+        "modes": {
+          "light": "#FFFFFF",
+          "dark": "#1B1C1E"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "fill-strong": {
+        "$type": "color",
+        "css": "--color-semantic-fill-strong",
+        "modes": {
+          "light": "rgba(112, 115, 124, 0.16)",
+          "dark": "rgba(112, 115, 124, 0.28)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "label-normal": {
+        "$type": "color",
+        "css": "--color-semantic-label-normal",
+        "modes": {
+          "light": "#171718",
+          "dark": "#F7F7F7"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "fill-normal": {
+        "$type": "color",
+        "css": "--color-semantic-fill-normal",
+        "modes": {
+          "light": "rgba(112, 115, 124, 0.08)",
+          "dark": "rgba(112, 115, 124, 0.22)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "static-black": {
+        "$type": "color",
+        "css": "--color-semantic-static-black",
+        "modes": {
+          "light": "#000000",
+          "dark": "#000000"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "label-strong": {
+        "$type": "color",
+        "css": "--color-semantic-label-strong",
+        "modes": {
+          "light": "#000000",
+          "dark": "#FFFFFF"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-normal-normal": {
+        "$type": "color",
+        "css": "--color-semantic-line-normal-normal",
+        "modes": {
+          "light": "rgba(112, 115, 124, 0.22)",
+          "dark": "rgba(112, 115, 124, 0.32)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-normal-alternative": {
+        "$type": "color",
+        "css": "--color-semantic-line-normal-alternative",
+        "modes": {
+          "light": "rgba(112, 115, 124, 0.08)",
+          "dark": "rgba(112, 115, 124, 0.22)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "inverse-background": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-background",
+        "modes": {
+          "light": "#1B1C1E",
+          "dark": "#FFFFFF"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "inverse-label": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-label",
+        "modes": {
+          "light": "#F7F7F8",
+          "dark": "#171719"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "primary-strong": {
+        "$type": "color",
+        "css": "--color-semantic-primary-strong",
+        "modes": {
+          "light": "#336CA1",
+          "dark": "#3C80BF"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "primary-heavy": {
+        "$type": "color",
+        "css": "--color-semantic-primary-heavy",
+        "modes": {
+          "light": "#2D6090",
+          "dark": "#3775AF"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "label-neutral": {
+        "$type": "color",
+        "css": "--color-semantic-label-neutral",
+        "modes": {
+          "light": "rgba(46, 47, 51, 0.88)",
+          "dark": "rgba(194, 196, 200, 0.88)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "label-alternative": {
+        "$type": "color",
+        "css": "--color-semantic-label-alternative",
+        "modes": {
+          "light": "rgba(55, 56, 60, 0.61)",
+          "dark": "rgba(174, 176, 182, 0.61)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "label-assistive": {
+        "$type": "color",
+        "css": "--color-semantic-label-assistive",
+        "modes": {
+          "light": "rgba(55, 56, 60, 0.28)",
+          "dark": "rgba(174, 176, 182, 0.28)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "label-disable": {
+        "$type": "color",
+        "css": "--color-semantic-label-disable",
+        "modes": {
+          "light": "rgba(55, 56, 60, 0.16)",
+          "dark": "rgba(152, 155, 162, 0.16)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "background-normal-alternative": {
+        "$type": "color",
+        "css": "--color-semantic-background-normal-alternative",
+        "modes": {
+          "light": "#F7F7F8",
+          "dark": "#0F0F10"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "background-elevated-normal": {
+        "$type": "color",
+        "css": "--color-semantic-background-elevated-normal",
+        "modes": {
+          "light": "#FFFFFF",
+          "dark": "#212225"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "background-elevated-alternative": {
+        "$type": "color",
+        "css": "--color-semantic-background-elevated-alternative",
+        "modes": {
+          "light": "#F7F7F8",
+          "dark": "#141415"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "interaction-inactive": {
+        "$type": "color",
+        "css": "--color-semantic-interaction-inactive",
+        "modes": {
+          "light": "#989BA2",
+          "dark": "#5A5C63"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "interaction-disable": {
+        "$type": "color",
+        "css": "--color-semantic-interaction-disable",
+        "modes": {
+          "light": "#F4F4F5",
+          "dark": "#2E2F33"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-normal-neutral": {
+        "$type": "color",
+        "css": "--color-semantic-line-normal-neutral",
+        "modes": {
+          "light": "rgba(112, 115, 124, 0.16)",
+          "dark": "rgba(112, 115, 124, 0.28)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-normal-_strong": {
+        "$type": "color",
+        "css": "--color-semantic-line-normal-_strong",
+        "modes": {
+          "light": "rgba(112, 115, 124, 0.52)",
+          "dark": "rgba(194, 196, 200, 0.52)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "fill-alternative": {
+        "$type": "color",
+        "css": "--color-semantic-fill-alternative",
+        "modes": {
+          "light": "rgba(112, 115, 124, 0.05)",
+          "dark": "rgba(112, 115, 124, 0.12)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "status-positive": {
+        "$type": "color",
+        "css": "--color-semantic-status-positive",
+        "modes": {
+          "light": "#13BE4C",
+          "dark": "#3FD270"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "status-cautionary": {
+        "$type": "color",
+        "css": "--color-semantic-status-cautionary",
+        "modes": {
+          "light": "#EB9C33",
+          "dark": "#EFAF5C"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "status-negative": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative",
+        "modes": {
+          "light": "#EE5656",
+          "dark": "#F16F6F"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-background-lime": {
+        "$type": "color",
+        "css": "--color-semantic-accent-background-lime",
+        "modes": {
+          "light": "#63CE18",
+          "dark": "#87DB49"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-background-cyan": {
+        "$type": "color",
+        "css": "--color-semantic-accent-background-cyan",
+        "modes": {
+          "light": "#16BDDA",
+          "dark": "#5BCEE1"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-background-light-blue": {
+        "$type": "color",
+        "css": "--color-semantic-accent-background-light-blue",
+        "modes": {
+          "light": "#7BA9D5",
+          "dark": "#95BADD"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-background-violet": {
+        "$type": "color",
+        "css": "--color-semantic-accent-background-violet",
+        "modes": {
+          "light": "#6748E1",
+          "dark": "#7E63E8"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-background-pink": {
+        "$type": "color",
+        "css": "--color-semantic-accent-background-pink",
+        "modes": {
+          "light": "#E764D1",
+          "dark": "#EE7EDB"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "material-dimmer": {
+        "$type": "color",
+        "css": "--color-semantic-material-dimmer",
+        "modes": {
+          "light": "rgba(23, 23, 25, 0.52)",
+          "dark": "rgba(23, 23, 25, 0.74)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "inverse-primary": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-primary",
+        "modes": {
+          "light": "#4E8DC7",
+          "dark": "#3775AF"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-solid-normal": {
+        "$type": "color",
+        "css": "--color-semantic-line-solid-normal",
+        "modes": {
+          "light": "#E1E2E4",
+          "dark": "#37383C"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-solid-neutral": {
+        "$type": "color",
+        "css": "--color-semantic-line-solid-neutral",
+        "modes": {
+          "light": "#EAEBEC",
+          "dark": "#333438"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-solid-alternative": {
+        "$type": "color",
+        "css": "--color-semantic-line-solid-alternative",
+        "modes": {
+          "light": "#F4F4F5",
+          "dark": "#2E2F33"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "line-solid-_strong": {
+        "$type": "color",
+        "css": "--color-semantic-line-solid-_strong",
+        "modes": {
+          "light": "#AEB0B6",
+          "dark": "#70737C"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-background-red-orange": {
+        "$type": "color",
+        "css": "--color-semantic-accent-background-red-orange",
+        "modes": {
+          "light": "#EA7029",
+          "dark": "#ED864A"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-background-purple": {
+        "$type": "color",
+        "css": "--color-semantic-accent-background-purple",
+        "modes": {
+          "light": "#C464F0",
+          "dark": "#CE7FF2"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-lime": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-lime",
+        "modes": {
+          "light": "#4B9D10",
+          "dark": "#63CE18"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-cyan": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-cyan",
+        "modes": {
+          "light": "#1198AF",
+          "dark": "#16BDDA"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-light-blue": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-light-blue",
+        "modes": {
+          "light": "#498AC6",
+          "dark": "#7BA9D5"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-violet": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-violet",
+        "modes": {
+          "light": "#5E3FDB",
+          "dark": "#9E89F0"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-purple": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-purple",
+        "modes": {
+          "light": "#A744D3",
+          "dark": "#CE7FF2"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-pink": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-pink",
+        "modes": {
+          "light": "#DA58C5",
+          "dark": "#EE7EDB"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-red-orange": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-red-orange",
+        "modes": {
+          "light": "#E8661A",
+          "dark": "#ED864A"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-red": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-red",
+        "modes": {
+          "light": "#D63D3D",
+          "dark": "#F16F6F"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-orange": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-orange",
+        "modes": {
+          "light": "#C97A14",
+          "dark": "#EB9C33"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-green": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-green",
+        "modes": {
+          "light": "#0F953C",
+          "dark": "#3FD270"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-foreground-blue": {
+        "$type": "color",
+        "css": "--color-semantic-accent-foreground-blue",
+        "modes": {
+          "light": "#336CA1",
+          "dark": "#639ACE"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "material-background-onbackground": {
+        "$type": "color",
+        "css": "--color-semantic-material-background-onbackground",
+        "modes": {
+          "light": "#1A1B1E",
+          "dark": "#E2E3E6"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "material-outline-outline": {
+        "$type": "color",
+        "css": "--color-semantic-material-outline-outline",
+        "modes": {
+          "light": "#73767E",
+          "dark": "#8E9199"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "background-transparent-normal": {
+        "$type": "color",
+        "css": "--color-semantic-background-transparent-normal",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.08)",
+          "dark": "rgba(33, 34, 37, 0.61)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "background-transparent-alternative": {
+        "$type": "color",
+        "css": "--color-semantic-background-transparent-alternative",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.28)",
+          "dark": "rgba(33, 34, 37, 0.61)"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-violet": {
+        "$type": "color",
+        "css": "--color-semantic-accent-violet",
+        "modes": {
+          "light": "transparent",
+          "dark": "transparent"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "accent-cyan": {
+        "$type": "color",
+        "css": "--color-semantic-accent-cyan",
+        "modes": {
+          "light": "transparent",
+          "dark": "transparent"
+        },
+        "origin": "wds-structure-lk-retone"
+      },
+      "brand-ink": {
+        "$type": "color",
+        "css": "--color-semantic-brand-ink",
+        "modes": {
+          "light": "#0E1329",
+          "dark": "#E7EAF2"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-surface-raised": {
+        "$type": "color",
+        "css": "--color-semantic-brand-surface-raised",
+        "modes": {
+          "light": "#2A3042",
+          "dark": "#2A3247"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-canvas-from": {
+        "$type": "color",
+        "css": "--color-semantic-brand-canvas-from",
+        "modes": {
+          "light": "#141C3C",
+          "dark": "#141C3C"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-canvas-to": {
+        "$type": "color",
+        "css": "--color-semantic-brand-canvas-to",
+        "modes": {
+          "light": "#0C1024",
+          "dark": "#0C1024"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-stage-from": {
+        "$type": "color",
+        "css": "--color-semantic-brand-stage-from",
+        "modes": {
+          "light": "#161D33",
+          "dark": "#161D33"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-stage-to": {
+        "$type": "color",
+        "css": "--color-semantic-brand-stage-to",
+        "modes": {
+          "light": "#0E1329",
+          "dark": "#0E1329"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "secondary-normal": {
+        "$type": "color",
+        "css": "--color-semantic-secondary-normal",
+        "modes": {
+          "light": "#2C3547",
+          "dark": "#2C3547"
+        },
+        "origin": "lds-extension",
+        "group": "secondary"
+      },
+      "secondary-surface": {
+        "$type": "color",
+        "css": "--color-semantic-secondary-surface",
+        "modes": {
+          "light": "#EAECF1",
+          "dark": "rgba(255, 255, 255, 0.10)"
+        },
+        "origin": "lds-extension",
+        "group": "secondary"
+      },
+      "background-band": {
+        "$type": "color",
+        "css": "--color-semantic-background-band",
+        "modes": {
+          "light": "#F4F4F5",
+          "dark": "#0E121F"
+        },
+        "origin": "lds-extension",
+        "group": "background"
+      },
+      "surface-overlay": {
+        "$type": "color",
+        "css": "--color-semantic-surface-overlay",
+        "modes": {
+          "light": "#FFFFFF",
+          "dark": "#1A2036"
+        },
+        "origin": "lds-extension",
+        "group": "background"
+      },
+      "primary-surface-normal": {
+        "$type": "color",
+        "css": "--color-semantic-primary-surface-normal",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-primary-normal) 10%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "primary"
+      },
+      "primary-surface-strong": {
+        "$type": "color",
+        "css": "--color-semantic-primary-surface-strong",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "primary"
+      },
+      "focus-ring": {
+        "$type": "color",
+        "css": "--color-semantic-focus-ring",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "interaction"
+      },
+      "focus-indicator": {
+        "$type": "color",
+        "css": "--color-semantic-focus-indicator",
+        "modes": {
+          "light": "#2F6FB0",
+          "dark": "#7FB0DE"
+        },
+        "origin": "lds-extension",
+        "group": "interaction",
+        "$description": "Keyboard focus outline color with at least 3:1 contrast on the supported light and dark surfaces."
+      },
+      "status-info": {
+        "$type": "color",
+        "css": "--color-semantic-status-info",
+        "modes": {
+          "light": "var(--color-semantic-primary-normal)",
+          "dark": "var(--color-semantic-primary-normal)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-info-foreground": {
+        "$type": "color",
+        "css": "--color-semantic-status-info-foreground",
+        "modes": {
+          "light": "var(--color-semantic-primary-normal)",
+          "dark": "var(--color-semantic-primary-normal)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-info-surface": {
+        "$type": "color",
+        "css": "--color-semantic-status-info-surface",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-primary-normal) 12%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-primary-normal) 16%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-info-border": {
+        "$type": "color",
+        "css": "--color-semantic-status-info-border",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-primary-normal) 36%, var(--color-semantic-line-normal-normal))",
+          "dark": "color-mix(in srgb, var(--color-semantic-primary-normal) 42%, var(--color-semantic-line-normal-normal))"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-info-text": {
+        "$type": "color",
+        "css": "--color-semantic-status-info-text",
+        "modes": {
+          "light": "#2D6090",
+          "dark": "#8CC8F5"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-positive-surface": {
+        "$type": "color",
+        "css": "--color-semantic-status-positive-surface",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-status-positive) 14%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-positive) 18%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-positive-foreground": {
+        "$type": "color",
+        "css": "--color-semantic-status-positive-foreground",
+        "modes": {
+          "light": "var(--color-semantic-status-positive)",
+          "dark": "var(--color-semantic-status-positive)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-positive-border": {
+        "$type": "color",
+        "css": "--color-semantic-status-positive-border",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-status-positive) 38%, var(--color-semantic-line-normal-normal))",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-positive) 44%, var(--color-semantic-line-normal-normal))"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-positive-text": {
+        "$type": "color",
+        "css": "--color-semantic-status-positive-text",
+        "modes": {
+          "light": "#087A32",
+          "dark": "#5EE087"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-cautionary-surface": {
+        "$type": "color",
+        "css": "--color-semantic-status-cautionary-surface",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-status-cautionary) 18%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-cautionary) 20%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-cautionary-foreground": {
+        "$type": "color",
+        "css": "--color-semantic-status-cautionary-foreground",
+        "modes": {
+          "light": "var(--color-semantic-status-cautionary)",
+          "dark": "var(--color-semantic-status-cautionary)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-cautionary-border": {
+        "$type": "color",
+        "css": "--color-semantic-status-cautionary-border",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-status-cautionary) 42%, var(--color-semantic-line-normal-normal))",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-cautionary) 48%, var(--color-semantic-line-normal-normal))"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-cautionary-text": {
+        "$type": "color",
+        "css": "--color-semantic-status-cautionary-text",
+        "modes": {
+          "light": "#7A4A00",
+          "dark": "#F4BE76"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-negative-surface": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative-surface",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-status-negative) 14%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-negative) 20%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-negative-foreground": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative-foreground",
+        "modes": {
+          "light": "var(--color-semantic-status-negative)",
+          "dark": "var(--color-semantic-status-negative)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-negative-border": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative-border",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-status-negative) 38%, var(--color-semantic-line-normal-normal))",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-negative) 44%, var(--color-semantic-line-normal-normal))"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-negative-text": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative-text",
+        "modes": {
+          "light": "#A82727",
+          "dark": "#FF8585"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-neutral-surface": {
+        "$type": "color",
+        "css": "--color-semantic-status-neutral-surface",
+        "modes": {
+          "light": "var(--color-semantic-fill-normal)",
+          "dark": "var(--color-semantic-fill-normal)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-neutral-border": {
+        "$type": "color",
+        "css": "--color-semantic-status-neutral-border",
+        "modes": {
+          "light": "var(--color-semantic-line-normal-neutral)",
+          "dark": "var(--color-semantic-line-normal-neutral)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "status-neutral-text": {
+        "$type": "color",
+        "css": "--color-semantic-status-neutral-text",
+        "modes": {
+          "light": "var(--color-semantic-label-neutral)",
+          "dark": "var(--color-semantic-label-neutral)"
+        },
+        "origin": "lds-extension",
+        "group": "status"
+      },
+      "accent-blue-text": {
+        "$type": "color",
+        "css": "--color-semantic-accent-blue-text",
+        "modes": {
+          "light": "#336CA1",
+          "dark": "#B5D5F2"
+        },
+        "origin": "lds-extension",
+        "group": "accent"
+      },
+      "inverse-label-strong-soft": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-label-strong-soft",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.92)",
+          "dark": "rgba(255, 255, 255, 0.92)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-label-neutral-soft": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-label-neutral-soft",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.62)",
+          "dark": "rgba(255, 255, 255, 0.62)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-label-alternative-soft": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-label-alternative-soft",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.50)",
+          "dark": "rgba(255, 255, 255, 0.50)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-label-assistive-soft": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-label-assistive-soft",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.45)",
+          "dark": "rgba(255, 255, 255, 0.45)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-label-disable-soft": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-label-disable-soft",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.38)",
+          "dark": "rgba(255, 255, 255, 0.38)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-icon-muted": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-icon-muted",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.75)",
+          "dark": "rgba(255, 255, 255, 0.75)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-fill-normal": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-fill-normal",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.12)",
+          "dark": "rgba(255, 255, 255, 0.12)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-fill-hover": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-fill-hover",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.14)",
+          "dark": "rgba(255, 255, 255, 0.14)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-fill-strong": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-fill-strong",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.16)",
+          "dark": "rgba(255, 255, 255, 0.16)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-line-normal": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-line-normal",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.14)",
+          "dark": "rgba(255, 255, 255, 0.14)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "inverse-line-strong": {
+        "$type": "color",
+        "css": "--color-semantic-inverse-line-strong",
+        "modes": {
+          "light": "rgba(255, 255, 255, 0.22)",
+          "dark": "rgba(255, 255, 255, 0.22)"
+        },
+        "origin": "lds-extension",
+        "group": "inverse"
+      },
+      "data-viz-series-1": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-1",
+        "modes": {
+          "light": "var(--color-semantic-primary-normal)",
+          "dark": "var(--color-semantic-primary-normal)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      },
+      "data-viz-series-2": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-2",
+        "modes": {
+          "light": "var(--color-semantic-accent-foreground-cyan)",
+          "dark": "var(--color-semantic-accent-foreground-cyan)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      },
+      "data-viz-series-3": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-3",
+        "modes": {
+          "light": "var(--color-semantic-accent-foreground-violet)",
+          "dark": "var(--color-semantic-accent-foreground-violet)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      },
+      "data-viz-series-4": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-4",
+        "modes": {
+          "light": "var(--color-semantic-accent-foreground-green)",
+          "dark": "var(--color-semantic-accent-foreground-green)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      },
+      "data-viz-series-5": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-5",
+        "modes": {
+          "light": "var(--color-semantic-accent-foreground-orange)",
+          "dark": "var(--color-semantic-accent-foreground-orange)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      },
+      "data-viz-series-6": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-6",
+        "modes": {
+          "light": "var(--color-semantic-accent-foreground-purple)",
+          "dark": "var(--color-semantic-accent-foreground-purple)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      },
+      "data-viz-series-7": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-7",
+        "modes": {
+          "light": "var(--color-semantic-accent-foreground-light-blue)",
+          "dark": "var(--color-semantic-accent-foreground-light-blue)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      },
+      "data-viz-series-8": {
+        "$type": "color",
+        "css": "--color-semantic-data-viz-series-8",
+        "modes": {
+          "light": "var(--color-semantic-label-alternative)",
+          "dark": "var(--color-semantic-label-alternative)"
+        },
+        "origin": "lds-extension",
+        "group": "data-viz"
+      }
     }
   },
   "component": {
@@ -726,6 +2796,25 @@
           "css": "--component-button-primary-fg",
           "ref": "semantic.text.onSignal"
         },
+        "dangerBg": {
+          "$type": "color",
+          "$value": "var(--component-button-danger-bg)",
+          "css": "--component-button-danger-bg",
+          "ref": "primitive.colorRamps.red.tokens.30",
+          "$description": "LDS safety extension for destructive or emergency requests; not a WDS parity axis."
+        },
+        "dangerBgHover": {
+          "$type": "color",
+          "$value": "var(--component-button-danger-bg-hover)",
+          "css": "--component-button-danger-bg-hover",
+          "ref": "primitive.colorRamps.red.tokens.20"
+        },
+        "dangerFg": {
+          "$type": "color",
+          "$value": "var(--component-button-danger-fg)",
+          "css": "--component-button-danger-fg",
+          "ref": "semantic.colorRoles.static-white"
+        },
         "secondaryBg": {
           "$type": "color",
           "$value": "var(--component-button-secondary-bg)",
@@ -736,7 +2825,7 @@
           "$type": "color",
           "$value": "var(--component-button-signal-bg)",
           "css": "--component-button-signal-bg",
-          "ref": "primitive.color.signalSteelAzure"
+          "ref": "semantic.colorRoles.primary-normal"
         },
         "disabledOpacity": {
           "$type": "number",
@@ -792,6 +2881,17 @@
           "css": "--component-action-area-border",
           "ref": "semantic.border.subtle",
           "source": "Action/Action Area"
+        }
+      }
+    },
+    "confirmDialog": {
+      "component": "components/overlay/ConfirmDialog.jsx",
+      "tokens": {
+        "maxWidth": {
+          "$type": "dimension",
+          "$value": "var(--component-confirm-dialog-max-width)",
+          "css": "--component-confirm-dialog-max-width",
+          "$description": "LDS web confirmation dialog reading width; not a WDS variant axis."
         }
       }
     },
@@ -1202,6 +3302,323 @@
           "$value": "var(--component-card-shadow-lg)",
           "css": "--component-card-shadow-lg",
           "ref": "primitive.effect.shadowLg"
+        }
+      }
+    },
+    "statusBadge": {
+      "component": "components/content/StatusBadge.jsx",
+      "tokens": {
+        "surface": {
+          "$type": "color",
+          "css": "--component-status-badge-surface",
+          "$value": "var(--color-semantic-fill-strong)",
+          "generated": true
+        },
+        "foreground": {
+          "$type": "color",
+          "css": "--component-status-badge-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true
+        },
+        "positiveIndicator": {
+          "$type": "color",
+          "css": "--component-status-badge-positive-indicator",
+          "$value": "var(--color-semantic-status-positive-foreground)",
+          "generated": true
+        },
+        "cautionaryIndicator": {
+          "$type": "color",
+          "css": "--component-status-badge-cautionary-indicator",
+          "$value": "var(--color-semantic-status-cautionary-foreground)",
+          "generated": true
+        },
+        "negativeIndicator": {
+          "$type": "color",
+          "css": "--component-status-badge-negative-indicator",
+          "$value": "var(--color-semantic-status-negative-foreground)",
+          "generated": true
+        },
+        "offlineIndicator": {
+          "$type": "color",
+          "css": "--component-status-badge-offline-indicator",
+          "$value": "var(--color-semantic-interaction-inactive)",
+          "generated": true
+        },
+        "signalIndicator": {
+          "$type": "color",
+          "css": "--component-status-badge-signal-indicator",
+          "$value": "var(--color-semantic-primary-normal)",
+          "generated": true
+        },
+        "criticalIndicator": {
+          "$type": "color",
+          "css": "--component-status-badge-critical-indicator",
+          "$value": "var(--color-semantic-status-negative-foreground)",
+          "generated": true
+        }
+      }
+    },
+    "badge": {
+      "component": "components/feedback/Badge.jsx",
+      "tokens": {
+        "signalBg": {
+          "$type": "color",
+          "css": "--component-badge-signal-bg",
+          "$value": "var(--color-semantic-primary-normal)",
+          "modes": {
+            "light": "var(--color-semantic-primary-normal)",
+            "dark": "var(--color-semantic-primary-heavy)"
+          },
+          "generated": true
+        },
+        "signalFg": {
+          "$type": "color",
+          "css": "--component-badge-signal-fg",
+          "$value": "var(--color-semantic-static-white)",
+          "generated": true
+        },
+        "navyBg": {
+          "$type": "color",
+          "css": "--component-badge-navy-bg",
+          "$value": "var(--color-semantic-secondary-normal)",
+          "generated": true
+        },
+        "navyFg": {
+          "$type": "color",
+          "css": "--component-badge-navy-fg",
+          "$value": "var(--color-semantic-static-white)",
+          "generated": true
+        },
+        "steelBg": {
+          "$type": "color",
+          "css": "--component-badge-steel-bg",
+          "$value": "var(--color-semantic-primary-surface-strong)",
+          "generated": true
+        },
+        "steelFg": {
+          "$type": "color",
+          "css": "--component-badge-steel-fg",
+          "$value": "var(--color-semantic-accent-blue-text)",
+          "generated": true
+        },
+        "positiveBg": {
+          "$type": "color",
+          "css": "--component-badge-positive-bg",
+          "$value": "var(--color-semantic-status-positive-surface)",
+          "generated": true
+        },
+        "positiveFg": {
+          "$type": "color",
+          "css": "--component-badge-positive-fg",
+          "$value": "var(--color-semantic-status-positive-text)",
+          "generated": true
+        },
+        "cautionaryBg": {
+          "$type": "color",
+          "css": "--component-badge-cautionary-bg",
+          "$value": "var(--color-semantic-status-cautionary-surface)",
+          "generated": true
+        },
+        "cautionaryFg": {
+          "$type": "color",
+          "css": "--component-badge-cautionary-fg",
+          "$value": "var(--color-semantic-status-cautionary-text)",
+          "generated": true
+        },
+        "negativeBg": {
+          "$type": "color",
+          "css": "--component-badge-negative-bg",
+          "$value": "var(--color-semantic-status-negative-surface)",
+          "generated": true
+        },
+        "negativeFg": {
+          "$type": "color",
+          "css": "--component-badge-negative-fg",
+          "$value": "var(--color-semantic-status-negative-text)",
+          "generated": true
+        }
+      }
+    },
+    "callout": {
+      "component": "components/status/Callout.jsx",
+      "tokens": {
+        "infoBg": {
+          "$type": "color",
+          "css": "--component-callout-info-bg",
+          "$value": "var(--color-semantic-status-info-surface)",
+          "generated": true
+        },
+        "infoBorder": {
+          "$type": "color",
+          "css": "--component-callout-info-border",
+          "$value": "var(--color-semantic-status-info-border)",
+          "generated": true
+        },
+        "infoIcon": {
+          "$type": "color",
+          "css": "--component-callout-info-icon",
+          "$value": "var(--color-semantic-status-info-text)",
+          "generated": true
+        },
+        "positiveBg": {
+          "$type": "color",
+          "css": "--component-callout-positive-bg",
+          "$value": "var(--color-semantic-status-positive-surface)",
+          "generated": true
+        },
+        "positiveBorder": {
+          "$type": "color",
+          "css": "--component-callout-positive-border",
+          "$value": "var(--color-semantic-status-positive-border)",
+          "generated": true
+        },
+        "positiveIcon": {
+          "$type": "color",
+          "css": "--component-callout-positive-icon",
+          "$value": "var(--color-semantic-status-positive-text)",
+          "generated": true
+        },
+        "cautionaryBg": {
+          "$type": "color",
+          "css": "--component-callout-cautionary-bg",
+          "$value": "var(--color-semantic-status-cautionary-surface)",
+          "generated": true
+        },
+        "cautionaryBorder": {
+          "$type": "color",
+          "css": "--component-callout-cautionary-border",
+          "$value": "var(--color-semantic-status-cautionary-border)",
+          "generated": true
+        },
+        "cautionaryIcon": {
+          "$type": "color",
+          "css": "--component-callout-cautionary-icon",
+          "$value": "var(--color-semantic-status-cautionary-text)",
+          "generated": true
+        },
+        "negativeBg": {
+          "$type": "color",
+          "css": "--component-callout-negative-bg",
+          "$value": "var(--color-semantic-status-negative-surface)",
+          "generated": true
+        },
+        "negativeBorder": {
+          "$type": "color",
+          "css": "--component-callout-negative-border",
+          "$value": "var(--color-semantic-status-negative-border)",
+          "generated": true
+        },
+        "negativeIcon": {
+          "$type": "color",
+          "css": "--component-callout-negative-icon",
+          "$value": "var(--color-semantic-status-negative-text)",
+          "generated": true
+        },
+        "neutralBg": {
+          "$type": "color",
+          "css": "--component-callout-neutral-bg",
+          "$value": "var(--color-semantic-status-neutral-surface)",
+          "generated": true
+        },
+        "neutralBorder": {
+          "$type": "color",
+          "css": "--component-callout-neutral-border",
+          "$value": "var(--color-semantic-status-neutral-border)",
+          "generated": true
+        },
+        "neutralIcon": {
+          "$type": "color",
+          "css": "--component-callout-neutral-icon",
+          "$value": "var(--color-semantic-status-neutral-text)",
+          "generated": true
+        }
+      }
+    },
+    "banner": {
+      "component": "components/status/Banner.jsx",
+      "tokens": {
+        "infoBg": {
+          "$type": "color",
+          "css": "--component-banner-info-bg",
+          "$value": "var(--color-semantic-status-info-surface)",
+          "generated": true
+        },
+        "infoBorder": {
+          "$type": "color",
+          "css": "--component-banner-info-border",
+          "$value": "var(--color-semantic-status-info-border)",
+          "generated": true
+        },
+        "infoIcon": {
+          "$type": "color",
+          "css": "--component-banner-info-icon",
+          "$value": "var(--color-semantic-status-info-text)",
+          "generated": true
+        },
+        "positiveBg": {
+          "$type": "color",
+          "css": "--component-banner-positive-bg",
+          "$value": "var(--color-semantic-status-positive-surface)",
+          "generated": true
+        },
+        "positiveBorder": {
+          "$type": "color",
+          "css": "--component-banner-positive-border",
+          "$value": "var(--color-semantic-status-positive-border)",
+          "generated": true
+        },
+        "positiveIcon": {
+          "$type": "color",
+          "css": "--component-banner-positive-icon",
+          "$value": "var(--color-semantic-status-positive-text)",
+          "generated": true
+        },
+        "cautionaryBg": {
+          "$type": "color",
+          "css": "--component-banner-cautionary-bg",
+          "$value": "var(--color-semantic-status-cautionary-surface)",
+          "generated": true
+        },
+        "cautionaryBorder": {
+          "$type": "color",
+          "css": "--component-banner-cautionary-border",
+          "$value": "var(--color-semantic-status-cautionary-border)",
+          "generated": true
+        },
+        "cautionaryIcon": {
+          "$type": "color",
+          "css": "--component-banner-cautionary-icon",
+          "$value": "var(--color-semantic-status-cautionary-text)",
+          "generated": true
+        },
+        "negativeBg": {
+          "$type": "color",
+          "css": "--component-banner-negative-bg",
+          "$value": "var(--color-semantic-status-negative-surface)",
+          "generated": true
+        },
+        "negativeBorder": {
+          "$type": "color",
+          "css": "--component-banner-negative-border",
+          "$value": "var(--color-semantic-status-negative-border)",
+          "generated": true
+        },
+        "negativeIcon": {
+          "$type": "color",
+          "css": "--component-banner-negative-icon",
+          "$value": "var(--color-semantic-status-negative-text)",
+          "generated": true
+        }
+      }
+    },
+    "notification": {
+      "component": "components/feedback/Notification.jsx",
+      "tokens": {
+        "unreadSurface": {
+          "$type": "color",
+          "css": "--component-notification-unread-surface",
+          "$value": "var(--color-semantic-primary-surface-normal)",
+          "generated": true
         }
       }
     }

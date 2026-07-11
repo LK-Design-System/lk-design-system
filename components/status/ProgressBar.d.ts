@@ -9,7 +9,7 @@ export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
   indeterminate?: boolean;
   /** Fill tone. @default "signal" */
   tone?: 'signal' | 'positive' | 'cautionary' | 'negative';
-  /** Custom fill color (CSS color value or token, e.g. "var(--bw-green)"). Overrides `tone` when set. */
+  /** Custom fill color (CSS color value or token, e.g. "var(--color-semantic-status-positive)"). Overrides `tone` when set. */
   color?: string;
   /** Track height. @default "md" */
   size?: 'sm' | 'md' | 'lg';

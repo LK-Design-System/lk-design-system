@@ -143,11 +143,11 @@ export const ActionAreaStates = {
 
         <section style={{ display: 'grid', gap: 'var(--space-5)' }}>
           <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-            {label('compact + divider={false}')}
+            {label('compact + divider={false} + align="end"')}
             <div style={frame}>
-              <ActionArea compact divider={false}>
-                <Button variant="solid" color="primary" style={{ flex: 1 }}>저장</Button>
-                <Button variant="outlined" color="assistive" style={{ flex: 1 }}>취소</Button>
+              <ActionArea compact divider={false} align="end">
+                <Button variant="outlined" color="assistive">취소</Button>
+                <Button variant="solid" color="primary">저장</Button>
               </ActionArea>
             </div>
           </div>

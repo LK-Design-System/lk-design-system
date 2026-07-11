@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { ConnectionBadge } from '../robotics/ConnectionBadge.jsx';
 
 /**
  * LDS Product Content — LogViewer
@@ -8,7 +9,7 @@ import { Icon } from '../icon/Icon.jsx';
  * search, tail pause/resume, latest jump, visible clear, and per-line copy.
  */
 const LEVELS = {
-  debug: { c: 'var(--color-semantic-label-assistive)', log: 'var(--inverse-label-neutral)', label: 'DEBUG' },
+  debug: { c: 'var(--color-semantic-label-assistive)', log: 'var(--color-semantic-inverse-label-neutral-soft)', label: 'DEBUG' },
   info: { c: 'var(--color-semantic-primary-normal)', log: 'var(--color-semantic-accent-background-light-blue)', label: 'INFO' },
   warn: { c: 'var(--color-semantic-status-cautionary)', log: 'var(--color-semantic-status-cautionary)', label: 'WARN' },
   error: { c: 'var(--color-semantic-status-negative)', log: 'var(--color-semantic-status-negative)', label: 'ERROR' },
@@ -79,6 +80,10 @@ export function LogViewer({
   virtualized = true,
   overscan = 8,
   initialQuery = '',
+  streamStatus,
+  lastUpdatedAt,
+  droppedCount = 0,
+  onExport,
   onClear,
   onCopyLine,
   style,
@@ -204,6 +209,15 @@ export function LogViewer({
 
   return (
     <div style={{ display: 'grid', gap: 'var(--space-2)', width: '100%', maxWidth: '100%', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+      {(streamStatus != null || lastUpdatedAt != null || droppedCount > 0) && (
+        <div role="status" aria-live="polite" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+            {streamStatus != null && <ConnectionBadge status={streamStatus} size="sm" />}
+            {lastUpdatedAt != null && <span>마지막 수신 <strong>{lastUpdatedAt}</strong></span>}
+          </div>
+          {droppedCount > 0 && <span style={{ color: 'var(--color-semantic-status-cautionary)', fontWeight: 'var(--fw-semibold)' }}>누락 {droppedCount}줄</span>}
+        </div>
+      )}
       {(filter || search || tools) && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           {filter && (
@@ -212,7 +226,7 @@ export function LogViewer({
                 const on = active.has(lvl);
                 return (
                   <button key={lvl} type="button" onClick={() => toggle(lvl)} aria-pressed={on}
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 5, height: 24, padding: '0 9px', borderRadius: 'var(--radius-pill)', border: `1px solid ${on ? LEVELS[lvl].c : 'var(--color-semantic-line-normal-normal)'}`, background: on ? 'var(--lk-accent-tint)' : 'transparent', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: on ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-assistive)' }}>
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 5, height: 24, padding: '0 9px', borderRadius: 'var(--radius-pill)', border: `1px solid ${on ? LEVELS[lvl].c : 'var(--color-semantic-line-normal-normal)'}`, background: on ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: on ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-assistive)' }}>
                     <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: '50%', background: LEVELS[lvl].c }} />
                     {LEVELS[lvl].label}
                   </button>
@@ -244,13 +258,14 @@ export function LogViewer({
                 {latestCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -5, right: -5, minWidth: 16, height: 16, padding: '0 4px', boxSizing: 'border-box', borderRadius: 8, background: 'var(--color-semantic-status-negative)', color: 'var(--color-semantic-static-white)', fontSize: 'var(--caption2-size)', lineHeight: '16px', fontWeight: 'var(--fw-bold)' }}>{latestCount > 99 ? '99+' : `+${latestCount}`}</span>}
               </IconButton>
               <IconButton label="표시 로그 지우기" icon="trash" disabled={currentLines.length === 0} onClick={clearVisible} />
+              {onExport && <IconButton label="로그 내보내기" icon="download" disabled={shown.length === 0} onClick={() => onExport(shown)} />}
             </div>
           )}
         </div>
       )}
-      <div ref={boxRef} role="log" aria-live={paused ? 'off' : 'polite'} aria-label="로그 스트림" onScroll={updateScrollState} style={{ height, overflow: 'auto', scrollbarGutter: 'stable', padding: metrics.panelPadding, borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--inverse-line-normal)', fontFamily: 'var(--font-mono)', fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }}>
+      <div ref={boxRef} role="log" aria-live={paused ? 'off' : 'polite'} aria-label="로그 스트림" onScroll={updateScrollState} style={{ height, overflow: 'auto', scrollbarGutter: 'stable', padding: metrics.panelPadding, borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--color-semantic-inverse-line-normal)', fontFamily: 'var(--font-mono)', fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }}>
         {shown.length === 0 && (
-          <div style={{ minHeight: '100%', display: 'grid', placeItems: 'center', color: 'var(--inverse-label-neutral)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
+          <div style={{ minHeight: '100%', display: 'grid', placeItems: 'center', color: 'var(--color-semantic-inverse-label-neutral-soft)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
             {normalizedQuery ? '검색 결과 없음' : '로그 없음'}
           </div>
         )}
@@ -261,9 +276,9 @@ export function LogViewer({
           const copied = copiedIndex === index;
           return (
             <div key={index} style={{ display: 'grid', gridTemplateColumns, columnGap: 10, alignItems: 'baseline', minHeight: metrics.rowMinHeight, height: virtualActive ? rowHeight : undefined, overflow: virtualActive ? 'hidden' : undefined, whiteSpace: virtualActive || !wrap ? 'nowrap' : 'pre-wrap', wordBreak: virtualActive || !wrap ? 'normal' : 'break-word' }}>
-              <span style={{ color: 'var(--inverse-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{line.time}</span>
+              <span style={{ color: 'var(--color-semantic-inverse-label-neutral-soft)', fontVariantNumeric: 'tabular-nums' }}>{line.time}</span>
               <span style={{ color: cfg.log, fontWeight: 'var(--fw-bold)' }}>{cfg.label}</span>
-              <span style={{ color: 'var(--inverse-label-neutral)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{line.source}</span>
+              <span style={{ color: 'var(--color-semantic-inverse-label-neutral-soft)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{line.source}</span>
               <span style={{ color: 'var(--color-semantic-inverse-label)', minWidth: 0, overflow: virtualActive || !wrap ? 'hidden' : 'visible', textOverflow: virtualActive || !wrap ? 'ellipsis' : 'clip' }}>{line.text}</span>
               {copyable && (
                 <button
@@ -271,7 +286,7 @@ export function LogViewer({
                   aria-label="로그 라인 복사"
                   title="로그 라인 복사"
                   onClick={() => copyLine(line, index)}
-                  style={{ width: 24, height: 24, border: 'none', borderRadius: 'var(--radius-sm)', background: copied ? 'var(--inverse-fill-strong)' : 'transparent', color: copied ? 'var(--color-semantic-status-positive)' : 'var(--inverse-label-neutral)', cursor: 'pointer', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}
+                  style={{ width: 24, height: 24, border: 'none', borderRadius: 'var(--radius-sm)', background: copied ? 'var(--color-semantic-inverse-fill-strong)' : 'transparent', color: copied ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-inverse-label-neutral-soft)', cursor: 'pointer', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}
                 >
                   <Icon name={copied ? 'circle-check' : 'copy'} size={14} aria-hidden="true" />
                 </button>

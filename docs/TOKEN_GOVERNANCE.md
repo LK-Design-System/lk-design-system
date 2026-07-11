@@ -23,6 +23,53 @@ Rules:
 - Component tokens must point back to semantic or primitive tokens unless a
   documented exception exists.
 
+## Color architecture
+
+`tokens/source.json` is also the only editable runtime source for color. The
+WDS `.fig`, PDFs, screenshots, and `docs/references/wds/COLOR_ARCHITECTURE.json`
+are traceable evidence, not runtime inputs.
+
+The generated color flow is:
+
+```text
+tokens/source.json
+  -> tokens/color-atomic.css
+  -> tokens/color-semantic.css
+  -> tokens/color-components.css
+  -> stories/color-system.data.js
+```
+
+Run `npm run generate:colors` after editing the source contract. Generated
+files must not be edited by hand. `npm run check:colors` verifies generated
+drift, layer boundaries, and the approved light/dark contrast pairs.
+
+Color usage rules:
+
+- Atomic tokens (`--color-atomic-*`) exist for palette construction. Component
+  implementations must not reference them directly.
+- Semantic tokens (`--color-semantic-*`) express product meaning and are the
+  default choice for general UI.
+- Component tokens (`--component-*`) bind a reusable component to a stable
+  combination of semantic roles.
+- Status is a four-role family: `foreground`, `surface`, `border`, and `text`.
+  Do not reuse one status value for all four jobs.
+- Data visualization uses `--color-semantic-data-viz-series-*`. A chart series
+  must not use positive, cautionary, or negative unless that series actually
+  communicates that status.
+- Decorative colors such as ratings and categorical tags use accent or
+  data-visualization roles, not status roles.
+- Light and dark values are mandatory for every semantic color. Component
+  color contracts are emitted in light, dark, and auto selectors so aliases
+  resolve inside the correct theme scope.
+
+### Removed compatibility names
+
+The former `--bw-*` palette and `tokens/colors.css` compatibility layer are not
+shipped. Product and design-system code must migrate directly to semantic or
+component roles. `npm run check:colors` blocks reintroduction of the removed
+names. This is an intentional breaking cleanup; no new compatibility aliases
+may be added without an explicit product migration decision.
+
 ## Lifecycle
 
 | State | Meaning | Allowed usage |
@@ -64,7 +111,7 @@ Figma names must map predictably:
 
 | Figma | JSON | CSS |
 | --- | --- | --- |
-| `primitive/color/brand/navy` | `primitive.color.brandNavy` | `--bw-ink` |
+| `semantic/color/brand/ink` | `semantic.colorRoles.brand-ink` | `--color-semantic-brand-ink` |
 | `semantic/action/primary` | `semantic.action.primary` | `--color-primary` |
 | `component/button/primary/bg` | `component.button.tokens.primaryBg` | `--component-button-primary-bg` |
 | `component/input/border/focus` | `component.input.tokens.borderColorFocus` | `--component-input-border-color-focus` |
@@ -99,8 +146,6 @@ Review checklist:
 Automation backlog:
 
 - Figma Variables export script or documented plugin preset
-- `tokens/source.json` to CSS transformer
-- Generated CSS versus committed CSS drift check
 - Token-change report for reviews
 
 ## Change impact levels

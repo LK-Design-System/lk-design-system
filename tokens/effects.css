@@ -23,7 +23,7 @@
   --shadow-control: 0 1px 3px rgba(8, 14, 33, 0.28);
 
   /* ---- Borders --------------------------------------------------------- */
-  --border-hairline: 1px solid var(--bw-border);
+  --border-hairline: 1px solid var(--color-semantic-line-solid-normal);
   --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.08); /* @kind other */
 
   /* ---- Glass / overlay ------------------------------------------------- */

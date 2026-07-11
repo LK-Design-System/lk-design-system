@@ -1,5 +1,10 @@
 import React from 'react';
-import { ATOMIC, SEMANTIC } from './color-system.data.js';
+import {
+  ATOMIC,
+  COLOR_SYSTEM_META,
+  SEMANTIC_GROUPS,
+  STATUS_FAMILIES,
+} from './color-system.data.js';
 
 const meta = {
   parameters: {
@@ -17,13 +22,13 @@ const colors = [
   ['Primary', 'var(--color-semantic-primary-normal)'],
   ['Primary hover', 'var(--color-semantic-primary-strong)'],
   ['Accent ink', 'var(--color-semantic-primary-normal)'],
-  ['Accent tint', 'var(--lk-accent-tint)'],
-  ['Ink', 'var(--bw-ink)'],
-  ['Slate', 'var(--bw-slate)'],
-  ['Border', 'var(--bw-border)'],
-  ['Green', 'var(--bw-green)'],
-  ['Amber', 'var(--bw-amber)'],
-  ['Red', 'var(--bw-red)'],
+  ['Accent tint', 'var(--color-semantic-primary-surface-normal)'],
+  ['Ink', 'var(--color-semantic-brand-ink)'],
+  ['Slate', 'var(--color-semantic-brand-surface-raised)'],
+  ['Border', 'var(--color-semantic-line-solid-normal)'],
+  ['Green', 'var(--color-semantic-status-positive)'],
+  ['Amber', 'var(--color-semantic-status-cautionary)'],
+  ['Red', 'var(--color-semantic-status-negative)'],
 ];
 
 const spacings = [
@@ -214,11 +219,12 @@ export const Typography = {
   render: () => <TypographySpecimen />,
 };
 
-// Two-tier color system showcase — mirrors the source Color page: the atomic
-// hue ramps and the semantic role tokens. Structure is adopted from the source
-// design system; every value is re-toned to the LK palette (see
-// scripts/generate-lk-color-system.mjs). Reads live var(--color-*) tokens.
-const SEMANTIC_GROUPS = ['primary', 'label', 'background', 'interaction', 'line', 'status', 'accent', 'inverse', 'fill', 'material', 'static'];
+// The showcase is generated from the same source contract as runtime CSS.
+// It is an approval surface for real foundation roles, not an audit dashboard.
+const SEMANTIC_GROUP_ORDER = [
+  'brand', 'primary', 'secondary', 'label', 'background', 'interaction', 'line',
+  'status', 'data-viz', 'accent', 'inverse', 'fill', 'material', 'static',
+];
 
 function Swatch({ varName, caption, sub }) {
   return (
@@ -226,9 +232,41 @@ function Swatch({ varName, caption, sub }) {
       <div style={{ height: 40, borderRadius: 'var(--radius-sm)', background: `var(${varName})`, border: '1px solid var(--color-semantic-line-normal-normal)' }} />
       <div style={{ display: 'grid', gap: 1, minWidth: 0 }}>
         <span style={{ fontSize: 11, color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{caption}</span>
-        {sub && <code style={{ fontSize: 9, color: 'var(--color-semantic-label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub}</code>}
+        {sub && <code style={{ fontSize: 9, color: 'var(--color-semantic-label-neutral)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub}</code>}
       </div>
     </div>
+  );
+}
+
+function StatusFamily({ name, roles }) {
+  const [foregroundRole, surfaceRole, borderRole, textRole] = roles.length === 4
+    ? roles
+    : [roles[2], roles[0], roles[1], roles[2]];
+  return (
+    <article
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'auto minmax(0, 1fr)',
+        gap: 10,
+        alignItems: 'start',
+        minWidth: 0,
+        padding: 14,
+        borderRadius: 'var(--radius-lg)',
+        background: `var(--color-semantic-${surfaceRole})`,
+        border: `1px solid var(--color-semantic-${borderRole})`,
+        color: `var(--color-semantic-${textRole})`,
+      }}
+    >
+      <span
+        aria-hidden="true"
+        style={{ width: 10, height: 10, marginTop: 4, borderRadius: '50%', background: `var(--color-semantic-${foregroundRole})` }}
+      />
+      <div style={{ display: 'grid', gap: 4, minWidth: 0 }}>
+        <strong style={{ fontSize: 13, textTransform: 'capitalize' }}>{name}</strong>
+        <span style={{ fontSize: 12, lineHeight: 1.5 }}>foreground · surface · border · text를 하나의 의미 계약으로 사용합니다.</span>
+        <code style={{ fontSize: 10, overflowWrap: 'anywhere' }}>{roles.join(' · ')}</code>
+      </div>
+    </article>
   );
 }
 
@@ -236,25 +274,38 @@ function ColorSystemSpecimen() {
   return (
     <main style={{ display: 'grid', gap: 40, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <header style={{ display: 'grid', gap: 10 }}>
-        <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>색상 시스템</p>
-        <h1 style={{ margin: 0 }} className="type-title2">원자 팔레트 → 시맨틱 역할, 2단 토큰 구조</h1>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-bold)', textTransform: 'uppercase', letterSpacing: 1.2 }}>Color system</p>
+        <h1 style={{ margin: 0 }} className="type-title2">원자 팔레트에서 역할과 컴포넌트 계약까지</h1>
         <p style={{ margin: 0, maxWidth: 680 }} className="type-body1">
-          {ATOMIC && Object.keys(ATOMIC).length}개 색상 램프({SEMANTIC.length}개 시맨틱 역할)로 이루어진 2단 구조입니다.
-          구조는 원본 디자인 시스템을 따르되, 모든 값은 LK 팔레트로 재보정했습니다(명도 보존, 색상·채도 재조정). 라이트/다크에 반응합니다.
+          {COLOR_SYSTEM_META.atomicTokens}개 원자 토큰과 {COLOR_SYSTEM_META.semanticTokens}개 의미 토큰이
+          하나의 원본에서 생성됩니다. 제품과 컴포넌트는 원자색이 아니라 아래 의미 역할을 사용합니다.
         </p>
+        <code style={{ fontSize: 11, color: 'var(--color-semantic-label-neutral)' }}>{COLOR_SYSTEM_META.source}</code>
       </header>
 
       <section style={{ display: 'grid', gap: 14 }}>
-        <h2 style={{ margin: 0 }} className="type-heading1">시맨틱 역할</h2>
+        <div style={{ display: 'grid', gap: 4 }}>
+          <h2 style={{ margin: 0 }} className="type-heading1">상태 역할 조합</h2>
+          <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)' }} className="type-body2">
+            상태색은 단일 색상값이 아니라 아이콘, 배경, 테두리, 텍스트 역할을 함께 승인합니다.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 10 }}>
+          {Object.entries(STATUS_FAMILIES).map(([name, roles]) => <StatusFamily key={name} name={name} roles={roles} />)}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 14 }}>
+        <h2 style={{ margin: 0 }} className="type-heading1">의미 색상</h2>
         <div style={{ display: 'grid', gap: 18 }}>
-          {SEMANTIC_GROUPS.map((group) => {
-            const names = SEMANTIC.filter((n) => n.split('-')[0] === group);
+          {SEMANTIC_GROUP_ORDER.map((group) => {
+            const names = SEMANTIC_GROUPS[group] || [];
             if (!names.length) return null;
             return (
               <div key={group} style={{ display: 'grid', gap: 8 }}>
                 <strong style={{ fontSize: 13, color: 'var(--color-semantic-label-strong)', textTransform: 'capitalize' }}>{group}</strong>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(96px, 1fr))', gap: 10 }}>
-                  {names.map((n) => <Swatch key={n} varName={`--color-semantic-${n}`} caption={n.slice(group.length + 1) || 'normal'} sub={`semantic-${n}`} />)}
+                  {names.map((name) => <Swatch key={name} varName={`--color-semantic-${name}`} caption={name.startsWith(`${group}-`) ? name.slice(group.length + 1) : name} sub={`semantic-${name}`} />)}
                 </div>
               </div>
             );
@@ -263,7 +314,7 @@ function ColorSystemSpecimen() {
       </section>
 
       <section style={{ display: 'grid', gap: 14 }}>
-        <h2 style={{ margin: 0 }} className="type-heading1">원자 램프</h2>
+        <h2 style={{ margin: 0 }} className="type-heading1">원자 팔레트</h2>
         <div style={{ display: 'grid', gap: 16 }}>
           {Object.entries(ATOMIC).map(([slug, { label, steps }]) => (
             <div key={slug} style={{ display: 'grid', gap: 6, minWidth: 0 }}>
@@ -272,7 +323,7 @@ function ColorSystemSpecimen() {
                 {steps.map((step) => (
                   <div key={step} style={{ flex: '1 0 34px', minWidth: 34 }}>
                     <div style={{ height: 44, background: `var(--color-atomic-${slug}-${step})`, borderRadius: 3, border: '1px solid var(--color-semantic-line-normal-normal)' }} />
-                    <div style={{ fontSize: 9, color: 'var(--color-semantic-label-alternative)', textAlign: 'center', marginTop: 2, fontVariantNumeric: 'tabular-nums' }}>{step}</div>
+                    <div style={{ fontSize: 9, color: 'var(--color-semantic-label-neutral)', textAlign: 'center', marginTop: 2, fontVariantNumeric: 'tabular-nums' }}>{step}</div>
                   </div>
                 ))}
               </div>

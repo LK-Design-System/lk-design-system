@@ -1,5 +1,5 @@
 import React from 'react';
-import { Banner, Button, Callout, Icon } from '../src/index.js';
+import { Banner, Button, Callout } from '../src/index.js';
 import { BannerCard as BannerCardStory } from './SelectionStatus.shared.jsx';
 
 const meta = {
@@ -25,10 +25,10 @@ export const NoticesAndCallouts = {
       <Banner tone="success" title="변경 사항 저장 완료" onClose={() => {}}>
         게시 전 검토할 초안이 저장되었습니다.
       </Banner>
-      <Callout tone="cautionary" title="필수 항목 확인" icon={<Icon name="triangle-exclamation" />}>
+      <Callout tone="cautionary" title="필수 항목 확인">
         저장 전 필수 입력값을 확인합니다.
       </Callout>
-      <Callout tone="negative" title="권한 제한" icon={<Icon name="lock" />}>
+      <Callout tone="negative" title="권한 제한">
         현재 권한에서는 이 작업을 시작할 수 없습니다. 관리자 승인이 필요합니다.
       </Callout>
     </main>

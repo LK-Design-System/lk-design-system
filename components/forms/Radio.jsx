@@ -38,10 +38,10 @@ export function Radio({
   const dot = normalizedSize === 'sm' ? 6 : 8;
   const radioBorder = disabledState
     ? 'var(--color-semantic-line-normal-neutral)'
-    : visualChecked || activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--bw-border)';
+    : visualChecked || activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--color-semantic-line-solid-normal)';
   const radioBg = disabledState
     ? 'var(--color-semantic-fill-normal)'
-    : visualChecked ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-normal)' : 'var(--bw-white)';
+    : visualChecked ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)';
   const radioDot = disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)';
   return (
     <label
@@ -51,7 +51,7 @@ export function Radio({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: tight ? 8 : 12,
         cursor: disabledState ? 'not-allowed' : 'pointer',
-        fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--bw-ink)',
+        fontFamily: 'var(--font-sans)', fontSize: '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-brand-ink)',
         fontWeight: bold ? 'var(--fw-bold)' : undefined,
         ...style,
       }}
@@ -77,7 +77,7 @@ export function Radio({
         width: d, height: d, flexShrink: 0, boxSizing: 'border-box', background: radioBg,
         border: `1.5px solid ${radioBorder}`,
         borderRadius: 'var(--radius-pill)',
-        boxShadow: activeFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
+        boxShadow: activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
         transition: 'border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
       }}>
         {visualChecked && <span style={{ width: dot, height: dot, borderRadius: '50%', background: radioDot }} />}

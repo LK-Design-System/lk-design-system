@@ -707,6 +707,12 @@
         }
       ],
       "stories": [
+        "stories/EditorCommandBar.stories.jsx",
+        "stories/EditorLayerPanel.stories.jsx",
+        "stories/EditorSelectionInspector.stories.jsx",
+        "stories/EditorShell.stories.jsx",
+        "stories/EditorToolbar.stories.jsx",
+        "stories/EditorViewportStatusBar.stories.jsx",
         "stories/RoboticsAndViz.stories.jsx",
         "stories/RoboticsEquipment.stories.jsx",
         "stories/RoboticsJoystick.stories.jsx",
@@ -715,8 +721,7 @@
         "stories/Viewer3D.stories.jsx",
         "stories/ViewerTelemetry.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
-        "stories/ViewerVideo.stories.jsx",
-        "stories/EditorShell.stories.jsx"
+        "stories/ViewerVideo.stories.jsx"
       ],
       "pendingFigmaAudit": [
         "These are not WDS core components; verify that each story remains under LK Robotics Extension and does not silently redefine WDS baseline.",

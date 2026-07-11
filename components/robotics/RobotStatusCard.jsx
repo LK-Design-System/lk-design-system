@@ -13,7 +13,7 @@ export function RobotStatusCard({ name, image, status = 'online', battery, mode,
   return (
     <div onClick={onClick} style={{ display: 'flex', gap: 16, alignItems: 'center', padding: 16, width: '100%', boxSizing: 'border-box',
       background: 'var(--color-semantic-background-elevated-normal)', border: selected ? 'var(--border-thin) solid var(--color-semantic-primary-normal)' : 'var(--component-card-border)',
-      borderRadius: 'var(--component-card-radius)', boxShadow: selected ? '0 0 0 3px var(--focus-ring)' : 'var(--component-card-shadow-sm)',
+      borderRadius: 'var(--component-card-radius)', boxShadow: selected ? '0 0 0 3px var(--color-semantic-focus-ring)' : 'var(--component-card-shadow-sm)',
       cursor: onClick ? 'pointer' : 'default', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       <div style={{ width: 48, height: 48, borderRadius: 'var(--radius-md)', flexShrink: 0, overflow: 'hidden',
         background: 'var(--color-semantic-fill-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -22,7 +22,7 @@ export function RobotStatusCard({ name, image, status = 'online', battery, mode,
       </div>
       <span style={{ flex: 1, minWidth: 0, fontSize: 16, fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 7, flexShrink: 0 }}>
-        {mode != null && <span style={{ fontSize: 11, fontWeight: 'var(--fw-bold)', letterSpacing: 0, padding: '2px 8px', borderRadius: 'var(--radius-pill)', background: 'var(--lk-accent-tint)', color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap' }}>{mode}</span>}
+        {mode != null && <span style={{ fontSize: 11, fontWeight: 'var(--fw-bold)', letterSpacing: 0, padding: '2px 8px', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-primary-surface-normal)', color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap' }}>{mode}</span>}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <ConnectionBadge status={status} showLabel={false} size="sm" />
           {hasBat && <BatteryGauge value={battery} />}

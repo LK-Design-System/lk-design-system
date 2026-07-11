@@ -14,7 +14,6 @@ import {
   Scene3DFrame,
   StatusBadge,
   Switch,
-  TelemetryGauge,
   TopicTree,
   VideoStreamTile,
   ViewerToolbar,
@@ -190,67 +189,6 @@ export const TopicTreeCard = {
   },
 };
 
-export const ViewerAndTelemetry = {
-  name: '뷰어와 텔레메트리',
-  render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 1040, minWidth: 0 }}>
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', alignItems: 'center', minWidth: 0 }}>
-        <TelemetryGauge value={72} unit="%" label="배터리" size={132} thresholds={{ low: 20, high: 50 }} />
-        <VideoStreamTile label="현장 녹화 · AMR-07" status="idle">
-          <FeedPlaceholder>RECORDED · 1280x720</FeedPlaceholder>
-          <PlayerBar progress={0.58} current="12:04" total="42:30" />
-        </VideoStreamTile>
-      </section>
-
-      <section style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>
-        <div>
-          <h3 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>영상 스트림 상태</h3>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>원본 VideoStreamTile의 라이브, 로딩, 연결 끊김 상태와 화면 비율 변형을 함께 확인합니다.</p>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 'var(--space-3)', minWidth: 0 }}>
-          <VideoStreamTile label="RGB" status="live"><FeedPlaceholder>RTSP · 1280x720</FeedPlaceholder></VideoStreamTile>
-          <VideoStreamTile label="IR" status="loading"><FeedPlaceholder /></VideoStreamTile>
-          <VideoStreamTile label="EO-1" status="disconnected"><FeedPlaceholder /></VideoStreamTile>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 'var(--space-3)', minWidth: 0 }}>
-          <VideoStreamTile label="THERMAL" status="live" aspectRatio="4 / 3"><FeedPlaceholder>4:3</FeedPlaceholder></VideoStreamTile>
-          <VideoStreamTile label="PANO" status="live" aspectRatio="21 / 9"><FeedPlaceholder>21:9 · WIDE</FeedPlaceholder></VideoStreamTile>
-        </div>
-      </section>
-
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--space-4)', minWidth: 0 }}>
-        <Map2DCanvas style={{ height: 260 }}>
-          <div style={{ transform: 'translate(-180px, -120px)' }}>
-            <svg width="360" height="240" viewBox="-180 -120 360 240" aria-label="지도 오버레이">
-              <rect x="-150" y="-90" width="300" height="180" rx="12" fill="var(--lk-accent-tint-2)" stroke="var(--color-semantic-primary-normal)" />
-              <path d="M-110 40 C-20 -40 60 70 120 -30" fill="none" stroke="var(--color-semantic-status-positive)" strokeWidth="6" strokeLinecap="round" />
-              <circle cx="120" cy="-30" r="10" fill="var(--color-semantic-status-negative)" />
-            </svg>
-          </div>
-        </Map2DCanvas>
-
-        <Scene3DFrame
-          title="3D 뷰"
-          badges={<StatusBadge tone="online">라이브</StatusBadge>}
-          toolbar={
-            <ViewerToolbar orientation="horizontal">
-              <ViewerToolbarButton label="확대"><Icon name="plus" size={16} /></ViewerToolbarButton>
-              <ViewerToolbarButton label="축소"><Icon name="minus" size={16} /></ViewerToolbarButton>
-              <ViewerToolbarButton label="홈"><Icon name="home" size={16} /></ViewerToolbarButton>
-              <ViewerToolbarButton label="레이어" active><Icon name="filter" size={16} /></ViewerToolbarButton>
-            </ViewerToolbar>
-          }
-          style={{ height: 260 }}
-        >
-          <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: 'var(--inverse-label-alternative)', background: 'linear-gradient(180deg, var(--lk-stage-from), var(--lk-stage-to))' }}>
-            3D 캔버스 슬롯
-          </div>
-        </Scene3DFrame>
-      </section>
-    </main>
-  ),
-};
-
 const monoFont = 'var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace)';
 
 function FeedPlaceholder({ children }) {
@@ -262,74 +200,14 @@ function FeedPlaceholder({ children }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'repeating-linear-gradient(135deg, var(--inverse-fill-normal) 0 10px, var(--inverse-line-normal) 10px 20px)',
+        background: 'repeating-linear-gradient(135deg, var(--component-viewer-surface) 0 10px, var(--component-viewer-surface-elevated) 10px 20px)',
       }}
     >
       {children != null && (
-        <span style={{ fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--inverse-label-assistive)' }}>
+        <span style={{ fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--component-viewer-muted)' }}>
           {children}
         </span>
       )}
-    </div>
-  );
-}
-
-function PlayerButton({ label, children }) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      style={{
-        border: 0,
-        background: 'transparent',
-        color: 'var(--color-semantic-inverse-label)',
-        cursor: 'pointer',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 5,
-        borderRadius: 8,
-        lineHeight: 0,
-      }}
-    >
-      {children}
-    </button>
-  );
-}
-
-function PlayerBar({ progress = 0.62, current = '12:04', total = '42:30' }) {
-  const buffered = 0.8;
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        padding: '38px 14px 12px',
-        background: 'linear-gradient(0deg, var(--material-dimmer), var(--material-control-dimmer) 55%, transparent)',
-      }}
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div style={{ position: 'relative', height: 5, borderRadius: 3, background: 'var(--inverse-fill-strong)' }}>
-          <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: `${buffered * 100}%`, borderRadius: 3, background: 'var(--inverse-line-strong)' }} />
-          <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: `${progress * 100}%`, borderRadius: 3, background: 'var(--color-semantic-primary-normal)' }} />
-          <div style={{ position: 'absolute', top: '50%', left: `${progress * 100}%`, width: 13, height: 13, borderRadius: '50%', background: 'var(--color-semantic-inverse-label)', transform: 'translate(-50%,-50%)', boxShadow: 'var(--shadow-md)' }} />
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <PlayerButton label="일시정지"><Icon name="pause" size={20} /></PlayerButton>
-          <PlayerButton label="음소거"><Icon name="volume-2" size={19} /></PlayerButton>
-          <span style={{ marginLeft: 4, fontFamily: monoFont, fontSize: 12, color: 'var(--inverse-label-strong)', fontVariantNumeric: 'tabular-nums', letterSpacing: '0.2px' }}>
-            {current} <span style={{ color: 'var(--inverse-label-alternative)' }}>/ {total}</span>
-          </span>
-          <div style={{ flex: 1 }} />
-          <span style={{ fontFamily: monoFont, fontSize: 10.5, fontWeight: 'var(--fw-bold)', letterSpacing: '0.5px', color: 'var(--inverse-label-neutral)', border: '1px solid var(--inverse-line-strong)', borderRadius: 4, padding: '2px 6px' }}>
-            1080p
-          </span>
-          <PlayerButton label="설정"><Icon name="setting" size={18} /></PlayerButton>
-          <PlayerButton label="전체화면"><Icon name="maximize" size={18} /></PlayerButton>
-        </div>
-      </div>
     </div>
   );
 }
@@ -338,35 +216,34 @@ export const VideoStreamTileCard = {
   name: 'VideoStreamTile card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 920, height: 800, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
-      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
-        VideoStreamTile — 플레이어 컨트롤 바
-      </div>
-      <div style={{ maxWidth: 620, marginBottom: 28 }}>
-        <VideoStreamTile label="현장 실사 · 2026-06-30" status="idle">
-          <FeedPlaceholder>RECORDED · 1280×720</FeedPlaceholder>
-          <PlayerBar />
-        </VideoStreamTile>
-      </div>
-
-      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
-        카메라 그리드 — live · loading · disconnected
+    <div data-visual-crop-root style={{ width: 920, height: 720, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
+      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
+        마지막 프레임 유지 — degraded · stale · paused
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
-        <VideoStreamTile label="RGB" status="live"><FeedPlaceholder>RTSP · 1280×720</FeedPlaceholder></VideoStreamTile>
-        <VideoStreamTile label="IR" status="loading"><FeedPlaceholder /></VideoStreamTile>
-        <VideoStreamTile label="EO-1" status="disconnected"><FeedPlaceholder /></VideoStreamTile>
+        <VideoStreamTile label="RGB" state="degraded"><FeedPlaceholder>LAST FRAME</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="IR" state="stale"><FeedPlaceholder>LAST FRAME</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="EO-1" state="paused"><FeedPlaceholder>LAST FRAME</FeedPlaceholder></VideoStreamTile>
       </div>
 
-      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
+      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
+        사용 가능/차단 상태 — live · loading · disconnected
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
+        <VideoStreamTile label="RGB" state="live"><FeedPlaceholder>RTSP · 1280×720</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="IR" state="loading"><FeedPlaceholder /></VideoStreamTile>
+        <VideoStreamTile label="EO-1" state="disconnected"><FeedPlaceholder /></VideoStreamTile>
+      </div>
+
+      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
         aspectRatio — 나란히 배치할 때 비율 조정
       </div>
       <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: 200, maxWidth: 300 }}>
-          <VideoStreamTile label="THERMAL" status="live" aspectRatio="4 / 3"><FeedPlaceholder>4∶3</FeedPlaceholder></VideoStreamTile>
+          <VideoStreamTile label="THERMAL" state="live" aspectRatio="4 / 3"><FeedPlaceholder>4∶3</FeedPlaceholder></VideoStreamTile>
         </div>
         <div style={{ flex: '1 1 420px', minWidth: 200 }}>
-          <VideoStreamTile label="PANO" status="live" aspectRatio="21 / 9"><FeedPlaceholder>21∶9 · WIDE</FeedPlaceholder></VideoStreamTile>
+          <VideoStreamTile label="PANO" state="live" aspectRatio="21 / 9"><FeedPlaceholder>21∶9 · WIDE</FeedPlaceholder></VideoStreamTile>
         </div>
       </div>
     </div>
@@ -381,9 +258,9 @@ export const EditorShell = {
       tools={
         <EditorToolbar
           items={[
-            { value: 'select', label: '선택', icon: <Icon name="crosshair" size={18} /> },
-            { value: 'route', label: '경로', icon: <Icon name="route" size={18} /> },
-            { value: 'zone', label: '구역', icon: <Icon name="zone" size={18} /> },
+            { value: 'select', label: '선택', icon: <Icon name="crosshair" size={16} /> },
+            { value: 'route', label: '경로', icon: <Icon name="route" size={16} /> },
+            { value: 'zone', label: '구역', icon: <Icon name="zone" size={16} /> },
           ]}
           defaultValue="route"
         />
@@ -434,7 +311,7 @@ export const EditorShell = {
           <rect width="640" height="300" fill="url(#editor-grid)" />
           <rect x="108" y="58" width="168" height="78" rx="10" fill="var(--color-semantic-background-elevated-normal)" stroke="var(--color-semantic-line-normal-normal)" />
           <rect x="362" y="72" width="156" height="64" rx="10" fill="var(--color-semantic-background-elevated-normal)" stroke="var(--color-semantic-line-normal-normal)" />
-          <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--focus-ring)" strokeWidth="24" strokeLinecap="round" />
+          <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--color-semantic-focus-ring)" strokeWidth="24" strokeLinecap="round" />
           <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="6" strokeLinecap="round" strokeDasharray="12 12" />
           <circle cx="132" cy="220" r="11" fill="var(--color-semantic-status-positive)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="4" />
           <circle cx="344" cy="166" r="11" fill="var(--color-semantic-status-cautionary)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="4" />
@@ -456,15 +333,15 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
     const [tool, setTool] = React.useState('draw');
     const [step, setStep] = React.useState(3);
     const tools = [
-      { value: 'select', icon: <Icon name="search" size={18} />, label: '선택' },
-      { value: 'draw', icon: <Icon name="plus" size={18} />, label: '그리기' },
-      { value: 'zone', icon: <Icon name="square" size={18} />, label: '존' },
-      { value: 'point', icon: <Icon name="location" size={18} />, label: '웨이포인트' },
-      { value: 'erase', icon: <Icon name="trash" size={18} />, label: '지우기' },
+      { value: 'select', icon: <Icon name="search" size={16} />, label: '선택' },
+      { value: 'draw', icon: <Icon name="plus" size={16} />, label: '그리기' },
+      { value: 'zone', icon: <Icon name="square" size={16} />, label: '존' },
+      { value: 'point', icon: <Icon name="location" size={16} />, label: '웨이포인트' },
+      { value: 'erase', icon: <Icon name="trash" size={16} />, label: '지우기' },
     ];
     const panel = (
       <div style={{ padding: 14 }}>
-        <h4 style={{ margin: '0 0 10px', fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: 1, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)' }}>속성</h4>
+        <h4 style={{ margin: '0 0 10px', fontSize: 12, fontWeight: 'var(--fw-extra)', letterSpacing: 1, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)' }}>속성</h4>
         {[
           ['도구', tool],
           ['해상도', '0.05 m/px'],
@@ -495,8 +372,8 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
       <div data-visual-crop-root style={{ width: 900, height: 520, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
         <CanvasEditorShell title="지도 편집 — floor_1.pgm" style={{ height: 440 }} tools={<EditorToolbar value={tool} onChange={setTool} items={tools} />} panel={panel} status={status}>
           <Map2DCanvas style={{ height: '100%', borderRadius: 0, border: 'none' }}>
-            <div style={{ width: 280, height: 200, background: 'repeating-linear-gradient(45deg, var(--color-bg-band), var(--color-bg-band) 8px, var(--color-semantic-fill-normal) 8px, var(--color-semantic-fill-normal) 16px)', border: '2px solid var(--color-semantic-line-solid-normal)', borderRadius: 4, position: 'relative' }}>
-              <div style={{ position: 'absolute', left: 40, top: 40, width: 120, height: 80, border: '2px solid var(--color-semantic-primary-normal)', background: 'var(--lk-accent-tint-2)', borderRadius: 4 }} />
+            <div style={{ width: 280, height: 200, background: 'repeating-linear-gradient(45deg, var(--color-semantic-background-band), var(--color-semantic-background-band) 8px, var(--color-semantic-fill-normal) 8px, var(--color-semantic-fill-normal) 16px)', border: '2px solid var(--color-semantic-line-solid-normal)', borderRadius: 4, position: 'relative' }}>
+              <div style={{ position: 'absolute', left: 40, top: 40, width: 120, height: 80, border: '2px solid var(--color-semantic-primary-normal)', background: 'var(--color-semantic-primary-surface-strong)', borderRadius: 4 }} />
               <span style={{ position: 'absolute', left: 180, top: 130, width: 12, height: 12, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)' }} />
             </div>
           </Map2DCanvas>
@@ -528,7 +405,7 @@ const parityCloudPoints = Array.from({ length: 130 }, () => {
 
 function ParityCloudPlaceholder() {
   return (
-    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 90% at 50% 20%, var(--lk-accent-tint-2), transparent 60%)' }}>
+    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 90% at 50% 20%, var(--color-semantic-primary-surface-strong), transparent 60%)' }}>
       <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
         {parityCloudPoints.map((point, index) => (
           <circle
@@ -536,7 +413,7 @@ function ParityCloudPlaceholder() {
             cx={point.x}
             cy={point.y}
             r={point.r}
-            fill={index % 5 === 0 ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-inverse-label)'}
+            fill={index % 5 === 0 ? 'var(--color-semantic-primary-normal)' : 'var(--viewer-foreground)'}
             opacity={point.opacity}
           />
         ))}
@@ -552,35 +429,13 @@ export const Scene3DFrameCard = {
     <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <Scene3DFrame
         title="POINT CLOUD"
+        state="live"
         badges={<ConnectionBadge status="online" size="sm" />}
-        toolbar={(
-          <ViewerToolbar orientation="horizontal">
-            <ViewerToolbarButton label="핏"><Icon name="home" size={16} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="레이어" active><Icon name="filter" size={16} /></ViewerToolbarButton>
-          </ViewerToolbar>
-        )}
+        status="1.2M points · 38 FPS"
         style={{ height: 300 }}
       >
         <ParityCloudPlaceholder />
       </Scene3DFrame>
-    </div>
-  ),
-};
-
-export const TelemetryGaugeCard = {
-  name: 'TelemetryGauge card parity',
-  tags: ['!dev', 'visual-parity'],
-  render: () => (
-    <div data-visual-crop-root style={{ width: 920, height: 230, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
-      <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
-        TelemetryGauge
-      </div>
-      <div style={{ display: 'flex', gap: 26, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        <TelemetryGauge value={82} unit="%" label="배터리" thresholds={{ low: 20, high: 50 }} />
-        <TelemetryGauge value={14} unit="%" label="배터리" thresholds={{ low: 20, high: 50 }} />
-        <TelemetryGauge value={1.4} max={2} unit="m/s" label="속도" tone="signal" size={104} />
-        <TelemetryGauge value={68} unit="%" label="신호" tone="positive" size={104} />
-      </div>
     </div>
   ),
 };
@@ -595,7 +450,7 @@ function ParityMapPlaceholder() {
       {points.map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="4" fill="var(--color-semantic-primary-normal)" />)}
       <g transform="translate(80,210)">
         <circle r="9" fill="var(--color-semantic-primary-normal)" />
-        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="var(--color-semantic-inverse-label)" transform="rotate(30)" />
+        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="var(--color-semantic-static-white)" transform="rotate(30)" />
       </g>
     </svg>
   );
@@ -604,14 +459,18 @@ function ParityMapPlaceholder() {
 export const Map2DCanvasCard = {
   name: 'Map2DCanvas card parity',
   tags: ['!dev', 'visual-parity'],
-  render: () => <Map2DCanvas style={{ height: 300 }}><ParityMapPlaceholder /></Map2DCanvas>,
+  render: () => (
+    <div data-visual-crop-root style={{ width: 520, height: 360, padding: 24, boxSizing: 'border-box', background: 'var(--color-semantic-background-normal-normal)' }}>
+      <Map2DCanvas style={{ height: 312 }}><ParityMapPlaceholder /></Map2DCanvas>
+    </div>
+  ),
 };
 
 function ViewerToolbarMapPlaceholder({ layers }) {
   return (
     <svg width="320" height="200" viewBox="0 0 320 200" style={{ display: 'block' }}>
-      {layers.map && <rect x="20" y="18" width="280" height="164" fill="none" stroke="var(--inverse-label-alternative)" strokeWidth="2.5" />}
-      {layers.map && <path d="M20 110 H120 M120 18 V110 M190 110 V182 M190 140 H300" fill="none" stroke="var(--inverse-label-disable)" strokeWidth="2.5" />}
+      {layers.map && <rect x="20" y="18" width="280" height="164" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
+      {layers.map && <path d="M20 110 H120 M120 18 V110 M190 110 V182 M190 140 H300" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
       {layers.path && <polyline points="60,150 60,80 150,80 150,50 250,50" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" />}
       {layers.robots && <circle cx="60" cy="150" r="6" fill="var(--color-semantic-primary-normal)" />}
       {layers.robots && <circle cx="250" cy="50" r="6" fill="var(--color-semantic-primary-normal)" />}
@@ -628,26 +487,26 @@ export const ViewerToolbarCard = {
     const anyOff = !layers.map || !layers.path || !layers.robots;
     return (
       <div data-visual-crop-root style={{ width: 700, height: 460, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
-        <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
+        <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
           레이어 버튼 → Popover 패널 (눌러보세요)
         </div>
         <div style={{ position: 'relative', height: 240, marginBottom: 26 }}>
-          <div style={{ position: 'absolute', inset: 0, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--color-semantic-line-normal-normal)' }}>
+          <div style={{ position: 'absolute', inset: 0, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--component-viewer-surface)', border: '1px solid var(--component-viewer-border)' }}>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div style={{ transform: `scale(${zoom / 100})`, transition: 'transform .18s var(--ease-out, ease)' }}>
                 <ViewerToolbarMapPlaceholder layers={layers} />
               </div>
             </div>
-            <div style={{ position: 'absolute', left: 12, bottom: 12, fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '0.4px', color: 'var(--inverse-label-neutral)', background: 'var(--material-control-dimmer)', borderRadius: 6, padding: '4px 9px' }}>
+            <div style={{ position: 'absolute', left: 12, bottom: 12, fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '0.4px', color: 'var(--component-viewer-foreground)', background: 'var(--component-viewer-surface-elevated)', borderRadius: 6, padding: '4px 9px' }}>
               {zoom}%
             </div>
           </div>
-          <ViewerToolbar orientation="horizontal" style={{ position: 'absolute', top: 12, right: 12 }}>
-            <ViewerToolbarButton label="확대"><Icon name="plus" size={18} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="핏"><Icon name="home" size={18} /></ViewerToolbarButton>
-            <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어" active={anyOff}><Icon name="filter" size={18} /></ViewerToolbarButton>}>
-              <div style={{ fontSize: 10.5, fontWeight: 'var(--fw-extra)', letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 8px 2px' }}>
+          <ViewerToolbar orientation="horizontal" appearance="on-dark" style={{ position: 'absolute', top: 12, right: 12 }}>
+            <ViewerToolbarButton label="확대"><Icon name="plus" size={16} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="축소"><Icon name="minus" size={16} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="보기 초기화"><Icon name="reset" size={16} /></ViewerToolbarButton>
+            <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어" kind="toggle" pressed={anyOff}><Icon name="filter" size={16} /></ViewerToolbarButton>}>
+              <div style={{ fontSize: 10.5, fontWeight: 'var(--fw-extra)', letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 8px 2px' }}>
                 레이어
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -659,19 +518,19 @@ export const ViewerToolbarCard = {
           </ViewerToolbar>
         </div>
 
-        <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
+        <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
           orientation — horizontal · vertical
         </div>
         <div style={{ display: 'flex', gap: 26, alignItems: 'flex-start' }}>
           <ViewerToolbar orientation="horizontal">
-            <ViewerToolbarButton label="확대"><Icon name="plus" size={18} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="레이어" active><Icon name="filter" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="확대"><Icon name="plus" size={16} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="축소"><Icon name="minus" size={16} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="레이어" kind="toggle" defaultPressed><Icon name="filter" size={16} /></ViewerToolbarButton>
           </ViewerToolbar>
           <ViewerToolbar orientation="vertical">
-            <ViewerToolbarButton label="확대"><Icon name="plus" size={18} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="축소"><Icon name="minus" size={18} /></ViewerToolbarButton>
-            <ViewerToolbarButton label="가시성" active><Icon name="eye" size={18} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="확대"><Icon name="plus" size={16} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="축소"><Icon name="minus" size={16} /></ViewerToolbarButton>
+            <ViewerToolbarButton label="가시성" kind="toggle" defaultPressed><Icon name="eye" size={16} /></ViewerToolbarButton>
           </ViewerToolbar>
         </div>
       </div>

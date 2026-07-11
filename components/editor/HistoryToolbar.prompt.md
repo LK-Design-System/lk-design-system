@@ -1,8 +1,25 @@
-**HistoryToolbar** — 에디터용 실행 취소 / 다시 실행 / 초기화 컨트롤. 히스토리 상태(`canUndo`/`canRedo`)에 연결하고, `count`로 깊이를 표시합니다.
+**HistoryToolbar** - Undo, redo, and optional document-reset controls for editors.
 
 ```jsx
-<HistoryToolbar canUndo={undo.length > 0} canRedo={redo.length > 0}
-  onUndo={undoFn} onRedo={redoFn} onReset={resetFn} count={undo.length} />
+<HistoryToolbar
+  canUndo={undoStack.length > 0}
+  canRedo={redoStack.length > 0}
+  onUndo={undo}
+  onRedo={redo}
+  onReset={resetDocumentChanges}
+  size="sm"
+/>
 ```
 
-- **canUndo / canRedo**로 버튼 활성화, **onReset** 있으면 초기화 버튼 노출, **count**로 단계 수 표시. `useHistory` 같은 앱 훅과 함께.
+- `canUndo`/`canRedo` express history state, while a real handler guarantees operability. A missing handler always disables the corresponding command.
+- Reset is rendered only when `onReset` is a function and is separated from reversible undo/redo commands.
+- Arrow keys, Home, and End move the single roving tab stop. Set `undoKeyShortcuts`/`redoKeyShortcuts` only when the owning editor really implements those shortcuts globally; the values are then exposed through `aria-keyshortcuts`.
+- `size="sm"` uses the 32px LDS `IconButton`; `size="md"` uses 40px.
+- This component owns edit history only. View reset belongs in a viewport-local viewer toolbar.
+
+## Research basis
+
+- [WAI-ARIA APG: Toolbar Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/) supplies the named-toolbar and roving-focus keyboard contract.
+- [Figma: Navigating UI3](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3) supports keeping global edit history in the stable editor chrome while contextual view and selection controls remain local.
+
+This is an **LK Robotics Extension**. Application-specific history timelines, branching histories, autosave, and conflict recovery stay outside the LDS component contract.

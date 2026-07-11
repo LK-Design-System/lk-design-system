@@ -56,8 +56,8 @@ export function Stepper({
     <div
       style={{
         display: 'inline-flex', alignItems: 'center', height: h, width: 'fit-content',
-        border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)',
-        background: 'var(--bw-white)', opacity: disabled ? 0.5 : 1, ...style,
+        border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)',
+        background: 'var(--color-semantic-background-elevated-normal)', opacity: disabled ? 0.5 : 1, ...style,
       }}
       {...rest}
     >

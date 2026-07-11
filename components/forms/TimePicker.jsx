@@ -1,69 +1,106 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
-function pad(n) { return String(n).padStart(2, '0'); }
+function pad(number) {
+  return String(number).padStart(2, '0');
+}
 
-/** Compact custom dropdown for a numeric field (hour / minute) — no native <select>. */
-function TimeDropdown({ value, options, onChange, height, ariaLabel }) {
-  const [open, setOpen] = React.useState(false);
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    if (!open) return undefined;
-    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
+function TimeSelect({ value, options, onChange, height, ariaLabel, disabled }) {
+  const [focused, setFocused] = React.useState(false);
+
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
-      <button
-        type="button" aria-label={ariaLabel} aria-haspopup="listbox" aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 8, height, padding: '0 12px', boxSizing: 'border-box', background: 'var(--bw-white)', border: `1px solid ${open ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-md)', boxShadow: open ? '0 0 0 4px var(--focus-ring)' : 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
+    <span style={{ position: 'relative', display: 'inline-flex' }}>
+      <select
+        value={value}
+        disabled={disabled}
+        aria-label={ariaLabel}
+        onChange={(event) => onChange(Number(event.target.value))}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style={{
+          appearance: 'none',
+          minWidth: 76,
+          height,
+          padding: '0 34px 0 12px',
+          boxSizing: 'border-box',
+          background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)',
+          border: `1px solid ${focused ? 'var(--component-input-border-color-focus)' : 'var(--component-input-border-color)'}`,
+          borderRadius: 'var(--component-input-radius)',
+          boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none',
+          color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)',
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          outline: 'none',
+          fontFamily: 'var(--font-sans)',
+          fontSize: 'var(--component-input-font-size)',
+          lineHeight: 'var(--component-input-line-height)',
+          fontWeight: 'var(--fw-semibold)',
+          fontVariantNumeric: 'tabular-nums',
+          transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
+        }}
       >
-        {pad(value)}
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}><path d="m6 9 6 6 6-6" /></svg>
-      </button>
-      {open && (
-        <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '100%', zIndex: 40, maxHeight: 220, overflowY: 'auto', background: 'var(--surface-overlay)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {options.map((x) => {
-            const on = x === value;
-            return (
-              <div
-                key={x} role="option" aria-selected={on}
-                onClick={() => { onChange(x); setOpen(false); }}
-                onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = 'var(--color-semantic-fill-normal)'; }}
-                onMouseLeave={(e) => { if (!on) e.currentTarget.style.background = 'transparent'; }}
-                style={{ padding: '7px 12px', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, textAlign: 'center', color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)', background: on ? 'var(--lk-accent-tint-2)' : 'transparent', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
-              >
-                {pad(x)}
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
+        {options.map((option) => <option key={option} value={option}>{pad(option)}</option>)}
+      </select>
+      <span
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '50%',
+          right: 10,
+          display: 'inline-flex',
+          color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-icon-color)',
+          transform: 'translateY(-50%)',
+          pointerEvents: 'none',
+        }}
+      >
+        <Icon name="chevron-down-small" size={16} aria-hidden="true" />
+      </span>
+    </span>
   );
 }
 
-/**
- * LK ROBOTICS — TimePicker
- * Hour + minute custom dropdowns (24h), matching Select's styled trigger + panel
- * (signal focus, highlighted selection) — no native <select>. Value is an
- * "HH:MM" string; `minuteStep` controls the minute options. Controlled or not.
- */
-export function TimePicker({ value, defaultValue = '09:00', onChange, minuteStep = 5, size = 'md', style, ...rest }) {
+/** Accessible 24-hour time input composed from native hour and minute selects. */
+export function TimePicker({
+  value,
+  defaultValue = '09:00',
+  onChange,
+  minuteStep = 5,
+  hourLabel = '시',
+  minuteLabel = '분',
+  size = 'md',
+  disabled = false,
+  style,
+  ...rest
+}) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
-  const v = isControlled ? value : internal;
-  const [h, m] = (v || '00:00').split(':').map(Number);
-  const set = (nh, nm) => { const nv = `${pad(nh)}:${pad(nm)}`; if (!isControlled) setInternal(nv); onChange && onChange(nv); };
+  const renderedValue = isControlled ? value : internal;
+  const [rawHour, rawMinute] = String(renderedValue || '00:00').split(':').map(Number);
+  const hour = Number.isFinite(rawHour) ? Math.max(0, Math.min(23, rawHour)) : 0;
+  const minute = Number.isFinite(rawMinute) ? Math.max(0, Math.min(59, rawMinute)) : 0;
+  const normalizedStep = Number.isFinite(minuteStep)
+    ? Math.max(1, Math.min(60, Math.round(minuteStep)))
+    : 5;
   const height = size === 'sm' ? 40 : 50;
-  const hours = Array.from({ length: 24 }, (_, i) => i);
-  const mins = Array.from({ length: Math.ceil(60 / minuteStep) }, (_, i) => i * minuteStep);
+  const hours = Array.from({ length: 24 }, (_, index) => index);
+  const minutes = Array.from({ length: Math.ceil(60 / normalizedStep) }, (_, index) => index * normalizedStep)
+    .filter((option) => option < 60);
+  if (!minutes.includes(minute)) minutes.push(minute);
+  minutes.sort((a, b) => a - b);
+
+  const commit = (nextHour, nextMinute) => {
+    const nextValue = `${pad(nextHour)}:${pad(nextMinute)}`;
+    if (!isControlled) setInternal(nextValue);
+    onChange?.(nextValue);
+  };
+
   return (
-    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, ...style }} {...rest}>
-      <TimeDropdown value={h} options={hours} onChange={(nh) => set(nh, m)} height={height} ariaLabel="hour" />
-      <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-alternative)' }}>:</span>
-      <TimeDropdown value={m} options={mins} onChange={(nm) => set(h, nm)} height={height} ariaLabel="minute" />
+    <div
+      {...rest}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontFamily: 'var(--font-sans)', ...style }}
+    >
+      <TimeSelect value={hour} options={hours} onChange={(nextHour) => commit(nextHour, minute)} height={height} ariaLabel={hourLabel} disabled={disabled} />
+      <span aria-hidden="true" style={{ fontWeight: 'var(--fw-bold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-alternative)' }}>:</span>
+      <TimeSelect value={minute} options={minutes} onChange={(nextMinute) => commit(hour, nextMinute)} height={height} ariaLabel={minuteLabel} disabled={disabled} />
     </div>
   );
 }

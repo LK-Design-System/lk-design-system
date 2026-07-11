@@ -1,6 +1,13 @@
 import React from 'react';
 
-const PALETTE = ['var(--color-semantic-primary-normal)', 'var(--bw-blue)', 'var(--bw-amber)', 'var(--bw-green)', 'var(--bw-red)', 'var(--bw-gray-300)'];
+const PALETTE = [
+  'var(--color-semantic-data-viz-series-1)',
+  'var(--color-semantic-data-viz-series-2)',
+  'var(--color-semantic-data-viz-series-3)',
+  'var(--color-semantic-data-viz-series-4)',
+  'var(--color-semantic-data-viz-series-5)',
+  'var(--color-semantic-data-viz-series-6)',
+];
 
 /**
  * LK ROBOTICS — DonutChart

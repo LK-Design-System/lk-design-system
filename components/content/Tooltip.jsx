@@ -156,6 +156,7 @@ export function Tooltip({
       {children}
       <span
         role="tooltip"
+        aria-hidden={!visible}
         style={{
           position: "absolute",
           ...pos,
@@ -176,6 +177,7 @@ export function Tooltip({
           borderRadius: compact ? 6 : 8,
           whiteSpace: "nowrap",
           boxShadow: "var(--shadow-md)",
+          visibility: visible ? "visible" : "hidden",
           opacity: visible ? 1 : 0,
           transition: "opacity var(--dur-fast) var(--ease-out)",
         }}
@@ -184,7 +186,7 @@ export function Tooltip({
         {shortcut != null && (
           <span
             style={{
-              color: "var(--inverse-label-alternative)",
+              color: "var(--color-semantic-inverse-label-alternative-soft)",
               fontWeight: "var(--fw-bold)",
             }}
           >

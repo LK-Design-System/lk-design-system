@@ -18,8 +18,8 @@ export function CommandPalette({ open = false, onClose, commands = [], placehold
   const filtered = q ? commands.filter((c) => String(c.label).toLowerCase().includes(q.toLowerCase())) : commands;
   return (
     <div role="presentation" onClick={(e) => { if (e.target === e.currentTarget && onClose) onClose(); }} style={{ position: 'fixed', inset: 0, zIndex: 110, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: '12vh', background: 'var(--scrim-dark)', backdropFilter: 'blur(2px)' }}>
-      <div role="dialog" aria-modal="true" style={{ width: '100%', maxWidth: 560, background: 'var(--bw-white)', borderRadius: 'var(--radius-2xl)', boxShadow: 'var(--shadow-xl)', overflow: 'hidden', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 20px', borderBottom: '1px solid var(--bw-border)' }}>
+      <div role="dialog" aria-modal="true" style={{ width: '100%', maxWidth: 560, background: 'var(--color-semantic-background-elevated-normal)', borderRadius: 'var(--radius-2xl)', boxShadow: 'var(--shadow-xl)', overflow: 'hidden', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 20px', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
           <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder={placeholder} aria-label={typeof placeholder === 'string' ? placeholder : '명령 검색'} style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 17, color: 'var(--color-semantic-label-normal)' }} />
         </div>

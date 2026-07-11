@@ -59,7 +59,12 @@
   --component-button-primary-fg: var(--color-semantic-static-white);
   --component-button-primary-shadow-hover: var(--component-button-shadow-rest);
 
-  --component-button-secondary-bg: var(--color-secondary);
+  /* LDS safety extension: destructive or emergency requests, not WDS parity. */
+  --component-button-danger-bg: var(--color-atomic-red-30);
+  --component-button-danger-bg-hover: var(--color-atomic-red-20);
+  --component-button-danger-fg: var(--color-semantic-static-white);
+
+  --component-button-secondary-bg: var(--color-semantic-secondary-normal);
   --component-button-secondary-bg-hover: var(--component-button-secondary-bg);
   --component-button-secondary-fg: var(--color-semantic-inverse-label);
   --component-button-secondary-shadow-hover: var(--component-button-shadow-rest);
@@ -74,14 +79,14 @@
   --component-button-dark-fg: var(--color-semantic-inverse-label);
   --component-button-dark-shadow-hover: var(--component-button-shadow-rest);
 
-  --component-button-flat-bg: var(--bw-indigo-tint);
+  --component-button-flat-bg: var(--color-semantic-secondary-surface);
   --component-button-flat-bg-hover: var(--component-button-flat-bg);
-  --component-button-flat-fg: var(--bw-ink);
+  --component-button-flat-fg: var(--color-semantic-brand-ink);
 
   --component-button-ghost-bg: transparent;
   --component-button-ghost-bg-hover: var(--component-button-ghost-bg);
-  --component-button-ghost-fg: var(--bw-ink);
-  --component-button-ghost-border: var(--border-thin) solid var(--bw-border);
+  --component-button-ghost-fg: var(--color-semantic-brand-ink);
+  --component-button-ghost-border: var(--border-thin) solid var(--color-semantic-line-solid-normal);
   --component-button-ghost-border-hover: var(--component-button-ghost-border);
 
   --component-button-on-dark-bg: rgba(255, 255, 255, 0.14);
@@ -147,7 +152,7 @@
   --component-chip-radius: var(--component-chip-radius-md);
   --component-chip-bg: var(--color-semantic-background-elevated-normal);
   --component-chip-bg-hover: var(--color-semantic-background-elevated-normal);
-  --component-chip-bg-selected: var(--lk-accent-tint-2);
+  --component-chip-bg-selected: var(--color-semantic-primary-surface-strong);
   --component-chip-fg: var(--color-semantic-label-normal);
   --component-chip-fg-active: var(--color-semantic-primary-normal);
   --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
@@ -171,6 +176,7 @@
   --component-dialog-radius: var(--radius-3xl);
   --component-dialog-scrim: var(--scrim-dark);
   --component-dialog-scrim-blur: 2px;
+  --component-confirm-dialog-max-width: 26.25rem;
 
   /* ---- Divider --------------------------------------------------------- */
   /* Source-model roles: normal = line 0.22 step, thick = fill 0.08 step. */
@@ -197,7 +203,7 @@
   --component-input-border-color: var(--color-semantic-line-normal-normal);
   --component-input-border-color-focus: var(--color-semantic-primary-normal);
   --component-input-border-color-invalid: var(--color-semantic-status-negative);
-  --component-input-focus-shadow: 0 0 0 4px var(--focus-ring);
+  --component-input-focus-shadow: 0 0 0 4px var(--color-semantic-focus-ring);
   --component-input-icon-color: var(--color-semantic-label-alternative);
   --component-input-text-color: var(--color-semantic-label-normal);
   --component-input-font-size: var(--body1-size);
@@ -214,6 +220,21 @@
   /* Source-model material: translucent inverse surface behind a backdrop blur. */
   --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
   --component-transient-feedback-blur: 20px;
+
+  /* ---- Viewer ---------------------------------------------------------- */
+  /* Theme-stable dark and light roles shared by every Viewer preset. */
+  --component-viewer-surface: color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal));
+  --component-viewer-surface-elevated: color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal));
+  --component-viewer-foreground: var(--color-semantic-static-white);
+  --component-viewer-muted: color-mix(in srgb, var(--color-semantic-static-white) 72%, transparent);
+  --component-viewer-subtle: color-mix(in srgb, var(--color-semantic-static-white) 52%, transparent);
+  --component-viewer-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
+  --component-viewer-overlay: color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent);
+  --component-viewer-light-surface: var(--color-semantic-static-white);
+  --component-viewer-light-surface-elevated: color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white));
+  --component-viewer-light-foreground: color-mix(in srgb, var(--color-semantic-static-black) 90%, transparent);
+  --component-viewer-light-muted: color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent);
+  --component-viewer-light-border: color-mix(in srgb, var(--color-semantic-static-black) 16%, transparent);
 
   /* ---- Card ------------------------------------------------------------ */
   --component-card-bg: var(--color-semantic-background-elevated-normal);

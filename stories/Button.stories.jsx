@@ -17,7 +17,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['solid', 'outlined', 'primary', 'secondary', 'signal', 'dark', 'flat', 'ghost', 'on-dark'],
+      options: ['solid', 'outlined', 'primary', 'secondary', 'signal', 'danger', 'dark', 'flat', 'ghost', 'on-dark'],
     },
     color: {
       control: 'inline-radio',
@@ -78,6 +78,7 @@ export const ActionMatrix = {
           <Button variant="solid" color="assistive" size={size}>Assistive</Button>
           <Button variant="outlined" color="primary" size={size}>Primary</Button>
           <Button variant="outlined" color="assistive" size={size}>Assistive</Button>
+          <Button variant="danger" size={size}>Danger</Button>
           <Button variant="solid" color="primary" size={size} iconOnly aria-label={`${size} icon only`}>
             <Icon name="plus" size={size === 'small' ? 16 : 18} />
           </Button>

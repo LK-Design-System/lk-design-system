@@ -10,7 +10,7 @@ import React from 'react';
 export function Overline({ children, as = 'div', tone = 'muted', onDark = false, style, ...rest }) {
   const Comp = as;
   const color = onDark
-    ? (tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'ink' ? 'var(--color-semantic-static-white)' : 'var(--inverse-label-neutral)')
+    ? (tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'ink' ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-inverse-label-neutral-soft)')
     : (tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'ink' ? 'var(--color-semantic-label-strong)' : 'var(--color-semantic-label-alternative)');
   return (
     <Comp

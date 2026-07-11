@@ -7,17 +7,19 @@ export interface TelemetryValueProps extends React.HTMLAttributes<HTMLDivElement
   value: React.ReactNode;
   /** 단위. */
   unit?: React.ReactNode;
-  /** 값의 의미 색. @default "neutral" */
+  /** 값의 의미 상태. 값 자체의 전경색은 바꾸지 않습니다. @default "neutral" */
   tone?: 'neutral' | 'signal' | 'positive' | 'cautionary' | 'negative';
-  /** 갱신 시각. */
+  /** tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. */
+  statusLabel?: React.ReactNode;
+  /** 갱신 시각. helper가 있어도 함께 표시됩니다. */
   timestamp?: React.ReactNode;
   /** stale 상태. @default false */
   stale?: boolean;
   /** stale 상태 badge 라벨. @default "지연" */
   staleLabel?: React.ReactNode;
-  /** stale badge 표시 여부. 테이블에서는 상태 컬럼과 중복되지 않게 끌 수 있습니다. @default true */
+  /** stale badge 표시 여부. 외부에 동등한 텍스트 상태가 있을 때만 끄세요. @default true */
   showStaleBadge?: boolean;
-  /** timestamp 대신 표시할 보조 문구. */
+  /** timestamp와 함께 표시할 보조 문구. */
   helper?: React.ReactNode;
   /** 정렬. @default "start" */
   align?: 'start' | 'end';
@@ -25,5 +27,5 @@ export interface TelemetryValueProps extends React.HTMLAttributes<HTMLDivElement
   size?: 'sm' | 'md';
 }
 
-/** 값, 단위, 임계 톤, freshness/timestamp를 함께 표시하는 compact telemetry readout. */
-export function TelemetryValue(props: TelemetryValueProps): JSX.Element;
+/** 값, 단위, 보이는 상태, freshness/timestamp를 함께 표시하는 compact telemetry readout. */
+export function TelemetryValue(props: TelemetryValueProps): React.JSX.Element;

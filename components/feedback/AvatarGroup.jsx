@@ -40,7 +40,7 @@ export function AvatarGroup({
     width: resolvedSize,
     height: resolvedSize,
     borderRadius: "50%",
-    border: "1.5px solid var(--bw-white)",
+    border: "1.5px solid var(--color-semantic-background-elevated-normal)",
     boxSizing: "border-box",
     display: "inline-flex",
     alignItems: "center",
@@ -102,7 +102,7 @@ export function AvatarGroup({
             interaction={it.interaction}
             pushBadge={it.pushBadge}
             size={resolvedSize}
-            borderColor="var(--bw-white)"
+            borderColor="var(--color-semantic-background-elevated-normal)"
             borderWeight={1.5}
             title={it.name}
             style={{

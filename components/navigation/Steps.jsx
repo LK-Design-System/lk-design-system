@@ -13,8 +13,8 @@ export function Steps({ steps = [], current = 0, style, ...rest }) {
         const label = typeof s === 'string' ? s : s.label;
         const done = i < current;
         const active = i === current;
-        const bg = done ? 'var(--color-semantic-primary-normal)' : 'var(--bw-white)';
-        const bd = done || active ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)';
+        const bg = done ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)';
+        const bd = done || active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)';
         const fg = done ? 'var(--color-semantic-static-white)' : active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-assistive)';
         return (
           <React.Fragment key={i}>
@@ -24,7 +24,7 @@ export function Steps({ steps = [], current = 0, style, ...rest }) {
               </span>
               <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', whiteSpace: 'nowrap' }}>{label}</span>
             </div>
-            {i < steps.length - 1 && <span style={{ flex: 1, height: 2, marginTop: 15, background: i < current ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)', minWidth: 24 }} />}
+            {i < steps.length - 1 && <span style={{ flex: 1, height: 2, marginTop: 15, background: i < current ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)', minWidth: 24 }} />}
           </React.Fragment>
         );
       })}

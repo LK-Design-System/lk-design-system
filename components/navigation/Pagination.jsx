@@ -26,9 +26,9 @@ function buildPages(page, count, siblingCount, variant) {
 const selectStyle = {
   height: 32,
   padding: "0 8px",
-  border: "1px solid var(--bw-border)",
+  border: "1px solid var(--color-semantic-line-solid-normal)",
   borderRadius: "var(--radius-8)",
-  background: "var(--bw-white)",
+  background: "var(--color-semantic-background-elevated-normal)",
   fontFamily: "var(--font-sans)",
   fontSize: 13,
   color: "var(--color-semantic-label-normal)",
@@ -222,7 +222,7 @@ export function Pagination({
                 style={{
                   width: 48,
                   height: 32,
-                  border: "1px solid var(--bw-border)",
+                  border: "1px solid var(--color-semantic-line-solid-normal)",
                   borderRadius: "var(--radius-md)",
                   padding: "0 8px",
                   fontFamily: "var(--font-sans)",

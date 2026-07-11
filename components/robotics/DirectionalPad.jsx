@@ -115,7 +115,7 @@ export function DirectionalPad({ onStep, rate = 8, size = 48, disabled = false, 
       background: isDisabled
         ? 'var(--color-semantic-fill-normal)'
         : isActive
-          ? 'var(--lk-accent-tint-2)'
+          ? 'var(--color-semantic-primary-surface-strong)'
           : isHovered
             ? 'var(--color-semantic-fill-normal)'
             : 'var(--color-semantic-background-elevated-normal)',

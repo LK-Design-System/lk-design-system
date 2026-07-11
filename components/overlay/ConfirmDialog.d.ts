@@ -9,10 +9,20 @@ export interface ConfirmDialogProps extends React.HTMLAttributes<HTMLDivElement>
   children?: React.ReactNode;
   /** 확인 액션 톤. @default "default" */
   tone?: 'default' | 'danger' | 'warning';
+  /** warning/danger 상태의 표시 라벨. */
+  toneLabel?: React.ReactNode;
+  /** 제목 heading level. @default 2 */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
   /** 확인 버튼 라벨. @default "확인" */
   confirmLabel?: React.ReactNode;
   /** 취소 버튼 라벨. @default "취소" */
   cancelLabel?: React.ReactNode;
+  /** 선행 조건이 충족되지 않았을 때 확인 액션을 비활성화합니다. @default false */
+  confirmDisabled?: boolean;
+  /** 확인 요청 중 pending 상태를 표시하고 중복 실행을 막습니다. @default false */
+  confirmLoading?: boolean;
+  /** pending 상태의 접근 가능한 라벨. @default "처리 중" */
+  confirmLoadingLabel?: string;
   /** 확인 클릭 콜백. */
   onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
   /** 취소 클릭 또는 scrim/Escape dismiss 콜백. */

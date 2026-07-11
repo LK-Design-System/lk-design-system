@@ -124,8 +124,7 @@ export function WheelPicker({
   const surfaceColor = inactive
     ? 'var(--color-semantic-fill-normal)'
     : 'var(--color-semantic-background-elevated-normal)';
-  const focusShadow = focused && !inactive ? '0 0 0 4px var(--focus-ring)' : null;
-  const insetShadow = 'inset 0 1px 0 var(--color-semantic-background-elevated-normal), inset 0 -1px 0 var(--color-semantic-line-normal-alternative)';
+  const focusShadow = focused && !inactive ? '0 0 0 4px var(--color-semantic-focus-ring)' : null;
 
   React.useEffect(() => {
     if (controlled || selectedIndex >= 0 || firstEnabledIndex < 0) return;
@@ -192,13 +191,11 @@ export function WheelPicker({
         height: rowHeight * rows,
         overflow: 'hidden',
         borderRadius: 'var(--radius-md)',
-        border: focused && !inactive
-          ? '1px solid var(--color-semantic-primary-normal)'
-          : '1px solid var(--color-semantic-line-normal-normal)',
+        border: '1px solid transparent',
         background: surfaceColor,
         fontFamily: 'var(--font-sans)',
         opacity: inactive ? 0.65 : 1,
-        boxShadow: [focusShadow, insetShadow].filter(Boolean).join(', '),
+        boxShadow: focusShadow ?? 'none',
         transition:
           'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
         boxSizing: 'border-box',
@@ -206,34 +203,6 @@ export function WheelPicker({
       }}
       {...rest}
     >
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: rowHeight * 1.2,
-          zIndex: 3,
-          background: `linear-gradient(to bottom, ${surfaceColor} 0%, transparent 76%)`,
-          pointerEvents: 'none',
-        }}
-      />
-
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: rowHeight * 1.2,
-          zIndex: 3,
-          background: `linear-gradient(to top, ${surfaceColor} 0%, transparent 76%)`,
-          pointerEvents: 'none',
-        }}
-      />
-
       <ul
         ref={listRef}
         role="listbox"
@@ -319,8 +288,8 @@ export function WheelPicker({
                   ? 'var(--color-semantic-label-disable)'
                   : highlighted
                     ? 'var(--color-semantic-label-strong)'
-                    : 'var(--color-semantic-label-alternative)',
-                opacity: optionDisabled ? 0.42 : Math.max(0.42, 1 - visual.distance * 0.18),
+                    : 'var(--color-semantic-label-neutral)',
+                opacity: optionDisabled ? 0.42 : 1,
                 transform: visual.transform,
                 transformOrigin: 'center center',
                 transformStyle: 'preserve-3d',

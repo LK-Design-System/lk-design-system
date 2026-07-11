@@ -44,8 +44,8 @@ export function SocialButton({
   };
   const outline = {
     bg: 'var(--color-semantic-background-elevated-normal, #FFFFFF)', bgHover: 'var(--color-semantic-background-elevated-normal, #FFFFFF)',
-    fg: 'var(--color-semantic-label-normal)', bd: '1px solid var(--bw-border)',
-    bdHover: '1px solid var(--bw-border)', shadow: 'none', mono: false,
+    fg: 'var(--color-semantic-label-normal)', bd: '1px solid var(--color-semantic-line-solid-normal)',
+    bdHover: '1px solid var(--color-semantic-line-solid-normal)', shadow: 'none', mono: false,
   };
   const labels = { google: 'Google로 계속하기', apple: 'Apple로 계속하기', facebook: 'Facebook으로 계속하기' };
   const p = tone === 'brand' ? (brandFills[provider] || brandFills.google) : outline;

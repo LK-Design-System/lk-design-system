@@ -4,9 +4,14 @@ export interface LayerPanelLayer {
   id: string;
   label: React.ReactNode;
   description?: React.ReactNode;
-  color?: string;
+  /** Semantic marker tone; arbitrary color strings are intentionally not accepted. @default "signal" */
+  tone?: 'neutral' | 'signal' | 'positive' | 'warning' | 'danger';
+  /** Visible text paired with `tone` when the color conveys semantic state. */
+  toneLabel?: React.ReactNode;
   visible?: boolean;
   locked?: boolean;
+  /** Initial expansion fallback when no panel-level expansion props are supplied. @default true for groups */
+  expanded?: boolean;
   disabled?: boolean;
   count?: React.ReactNode;
   meta?: React.ReactNode;
@@ -25,6 +30,9 @@ export interface LayerPanelProps extends React.HTMLAttributes<HTMLElement> {
   lockedLayerIds?: string[];
   defaultLockedLayerIds?: string[];
   onLockedLayerIdsChange?: (ids: string[], changedId: string, locked: boolean) => void;
+  expandedLayerIds?: string[];
+  defaultExpandedLayerIds?: string[];
+  onExpandedLayerIdsChange?: (ids: string[], changedId: string, expanded: boolean) => void;
   title?: React.ReactNode;
   label?: string;
   emptyLabel?: React.ReactNode;

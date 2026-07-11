@@ -69,12 +69,12 @@ export function Select({
   const visualOpen = open || interaction === 'open';
   const activeFocus = visualOpen || focus || interaction === 'focused' || interaction === 'active-focused';
   const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
-  const ring = disabledState ? 'var(--color-semantic-line-normal-neutral)' : isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--bw-border)';
+  const ring = disabledState ? 'var(--color-semantic-line-normal-neutral)' : isInvalid ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--color-semantic-line-solid-normal)';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
       {label && (
         <label htmlFor={selId} style={{ fontWeight: 'var(--component-input-label-font-weight)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', letterSpacing: 'var(--component-input-label-letter-spacing)', color: 'var(--component-input-label-color)' }}>
-          {label}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
+          {label}{required && <span style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>}
         </label>
       )}
       <div ref={ref} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: 'relative' }}>
@@ -91,9 +91,9 @@ export function Select({
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, width: '100%',
             height: h, padding: '0 var(--component-input-padding-x)', boxSizing: 'border-box',
-            background: disabledState ? 'var(--color-semantic-fill-normal)' : 'var(--bw-white)', color: disabledState ? 'var(--color-semantic-label-disable)' : curr ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-assistive)',
+            background: disabledState ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)', color: disabledState ? 'var(--color-semantic-label-disable)' : curr ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-assistive)',
             border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
-            boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--focus-ring)' : 'none',
+            boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
             cursor: disabledState ? 'not-allowed' : 'pointer',
             fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', textAlign: 'left',
             transition: 'var(--component-button-transition)',
@@ -102,7 +102,7 @@ export function Select({
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minWidth: 0, overflow: 'hidden' }}>
             {iconLeft && <span style={{ display: 'inline-flex', flex: '0 0 auto', color: 'var(--color-semantic-label-assistive)' }}>{iconLeft}</span>}
             {curr && render === 'chip' ? (
-              <span style={{ display: 'inline-flex', alignItems: 'center', maxWidth: '100%', height: 24, padding: '0 9px', borderRadius: 'var(--radius-pill)', background: 'var(--lk-accent-tint-2)', color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{curr.label}</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', maxWidth: '100%', height: 24, padding: '0 9px', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-primary-normal)', fontSize: 13, fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{curr.label}</span>
             ) : (
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{curr ? curr.label : placeholder}</span>
             )}
@@ -110,7 +110,7 @@ export function Select({
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transform: visualOpen ? 'rotate(180deg)' : 'none', transition: 'var(--component-button-transition)' }}><path d="m6 9 6 6 6-6" /></svg>
         </button>
         {visualOpen && (
-          <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: 'auto', background: 'var(--surface-overlay)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div role="listbox" style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: 'auto', background: 'var(--color-semantic-surface-overlay)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
             {norm.map((o) => {
               const on = o.value === sel;
               return (
@@ -121,7 +121,7 @@ export function Select({
                   onClick={() => pick(o.value)}
                   onMouseEnter={(e) => { if (!on) e.currentTarget.style.background = 'var(--color-semantic-fill-normal)'; }}
                   onMouseLeave={(e) => { if (!on) e.currentTarget.style.background = 'transparent'; }}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '9px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)', background: on ? 'var(--lk-accent-tint-2)' : 'transparent', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '9px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 14.5, color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)', background: on ? 'var(--color-semantic-primary-surface-strong)' : 'transparent', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
                 >
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.label}</span>
                   {on && <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M20 6 9 17l-5-5" /></svg>}
@@ -132,7 +132,7 @@ export function Select({
           )}
       </div>
       {message != null && (
-        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-label-alternative)' }}>
+        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative-text)' : status === 'positive' ? 'var(--color-semantic-status-positive-text)' : 'var(--color-semantic-label-neutral)' }}>
           {message}
         </span>
       )}

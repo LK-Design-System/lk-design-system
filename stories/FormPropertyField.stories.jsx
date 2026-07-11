@@ -3,6 +3,7 @@ import { PropertyField } from '../src/index.js';
 
 const meta = {
   title: 'LDS Product/Selection and Input/Property Field',
+  component: PropertyField,
   parameters: {
     docs: {
       description: {

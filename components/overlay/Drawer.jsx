@@ -29,11 +29,11 @@ export function Drawer({ open = false, side = 'right', width = 380, title, child
     >
       <div
         role="dialog" aria-modal="true" aria-label={typeof title === 'string' ? title : undefined}
-        style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: 'var(--bw-white)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
+        style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
         {...rest}
       >
         {(title != null || onClose) && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 22px', borderBottom: '1px solid var(--bw-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 22px', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <div style={{ flex: 1, minWidth: 0, fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
             {onClose && (
               <button type="button" aria-label="close" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
@@ -43,7 +43,7 @@ export function Drawer({ open = false, side = 'right', width = 380, title, child
           </div>
         )}
         <div style={{ flex: 1, padding: '20px 22px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
-        {footer != null && <div style={{ padding: '16px 22px', borderTop: '1px solid var(--bw-border)', display: 'flex', justifyContent: 'flex-end', gap: 10 }}>{footer}</div>}
+        {footer != null && <div style={{ padding: '16px 22px', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 10 }}>{footer}</div>}
       </div>
     </div>
   );

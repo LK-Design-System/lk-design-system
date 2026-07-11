@@ -73,7 +73,7 @@ export function Input({
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
       {label && (
         <label htmlFor={inputId} style={{ fontWeight: 'var(--component-input-label-font-weight)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', letterSpacing: 'var(--component-input-label-letter-spacing)', color: 'var(--component-input-label-color)' }}>
-          {label}{required && <span style={{ color: 'var(--component-input-required-color)' }}> *</span>}
+          {label}{required && <span style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>}
         </label>
       )}
       <div
@@ -105,7 +105,7 @@ export function Input({
         {endAction && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{endAction}</span>}
       </div>
       {message != null && (
-        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-label-alternative)' }}>
+        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative-text)' : status === 'positive' ? 'var(--color-semantic-status-positive-text)' : 'var(--color-semantic-label-neutral)' }}>
           {message}
         </span>
       )}

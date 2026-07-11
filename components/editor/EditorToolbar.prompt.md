@@ -1,13 +1,34 @@
-**EditorToolbar** — 캔버스 에디터용 단일 선택 툴 그룹(선택 · 그리기 · 지우기 · 폴리곤 · 팬). 활성 툴은 시그널 잉크로 채워집니다.
+**EditorToolbar** — single-select, high-frequency canvas tool group for LK Robotics editors.
+
+Classification: **LK Robotics Extension**. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in `CanvasEditorCommandBar`; viewport navigation and zoom controls belong in `ViewerToolbar` inside the viewport.
 
 ```jsx
-<EditorToolbar value={tool} onChange={setTool} items={[
-  { value: 'select', icon: <Icon name="search" size={18} />, label: '선택' },
-  { value: 'draw', icon: <Icon name="plus" size={18} />, label: '그리기' },
-  { value: 'zone', icon: <Icon name="square" size={18} />, label: '존' },
-  { value: 'erase', icon: <Icon name="trash" size={18} />, label: '지우기', disabled: locked },
-]} />
+<EditorToolbar
+  value={tool}
+  onChange={setTool}
+  items={[
+    { value: 'select', icon: <Icon name="crosshair" size={16} />, label: 'Select', shortcut: 'V' },
+    { value: 'route', icon: <Icon name="route" size={16} />, label: 'Route', shortcut: 'R' },
+    { value: 'region', icon: <Icon name="zone" size={16} />, label: 'Region', disabled: locked },
+  ]}
+/>
 ```
 
-- **items** `{ value, icon, label, disabled }` · 제어(`value`)/비제어(`defaultValue`) · **orientation** `vertical · horizontal` · **label** · **disabled**.
-- `role="toolbar"`와 방향키/Home/End 포커스 이동을 제공하므로 에디터 단축키 scope와 충돌하지 않게 상위 캔버스에서 처리한다.
+## Contract
+
+- `items` accept `{ value, icon, label, shortcut, ariaKeyShortcuts, disabled, disabledReason }`; selection is controlled with `value` or uncontrolled with `defaultValue`.
+- Activating the already selected mode re-emits that value through `onChange`; it never toggles a required editor mode off.
+- The toolbar exposes one roving Tab stop. Orientation-appropriate Arrow keys move focus across its items, Home/End move to the boundaries, and native button activation changes an enabled tool.
+- `ariaKeyShortcuts` is emitted when supplied. A string `shortcut` is also used as the ARIA shortcut value by default; visual-only React nodes are not.
+- Each control composes the shared `ToggleIcon` foundation: 16px glyph, LDS small icon-control dimension (`--component-toggle-icon-size-sm`, currently 32px), shared radius/hover/focus/disabled treatment, and a quiet primary tint for the selected mode. Do not add an Editor-only edge marker; the selected surface and icon color are sufficient.
+- `EditorToolbar` and `ViewerToolbar` share the private roving-focus engine, but not a public API: Editor items are mutually exclusive modes, while Viewer items remain independent commands or toggles.
+- An individually disabled tool remains reachable with Arrow navigation so its `aria-disabled` state and reason can be discovered, but it cannot activate. A globally disabled toolbar leaves no item in the Tab sequence and exposes a string `disabledReason` on the toolbar itself. Do not hide unavailable tools when their presence explains the editor capability model.
+- `CanvasEditorShell.tools` owns the rail surface, divider, and padding. `EditorToolbar` must not add a second card, border, or shadow.
+
+## Research and local adaptation
+
+- [WAI-ARIA APG: Toolbar Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/) established one Tab stop, orientation-aware Arrow navigation, Home/End support, and named controls.
+- [Figma: Navigating UI3](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3) reinforced keeping high-frequency editing controls stable while panels remain secondary and collapsible.
+- [WCAG 2.2: Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum) established the minimum pointer-target floor. The 32px LDS small control exceeds that floor while matching the existing `IconButton` family.
+
+The implementation follows those interaction expectations while using LDS tokens and the existing 32px small control convention. It intentionally omits product-specific command routing, shortcut conflict resolution, and persistent tool preferences.

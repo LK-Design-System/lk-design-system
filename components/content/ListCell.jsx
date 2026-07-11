@@ -157,7 +157,7 @@ export function ListCell({
         borderRadius: "var(--radius-lg)",
         outline:
           activeFocus && !disabledState
-            ? "2px solid var(--focus-ring)"
+            ? "2px solid var(--color-semantic-focus-ring)"
             : "none",
         outlineOffset: -2,
         transition:
@@ -176,7 +176,7 @@ export function ListCell({
             alignItems: "center",
             justifyContent: "center",
             color: "var(--color-semantic-primary-normal)",
-            background: "var(--lk-accent-tint)",
+            background: "var(--color-semantic-primary-surface-normal)",
             borderRadius: "var(--radius-md)",
             ...leadingStyle,
           }}

@@ -51,7 +51,7 @@
         "stories/Foundations.stories.jsx#Color"
       ],
       "fileEvidence": [
-        "tokens/colors.css",
+        "tokens/color-semantic.css",
         "tokens/source.json",
         "docs/references/wds/TOKEN_MAP.json",
         "docs/TOKEN_GOVERNANCE.md"
@@ -333,7 +333,7 @@
         "stories/SelectionThemeToggle.stories.jsx#ThemeTogglePattern"
       ],
       "fileEvidence": [
-        "tokens/colors.css",
+        "tokens/color-semantic.css",
         "tokens/effects.css",
         "tokens/source.json"
       ],
@@ -343,10 +343,10 @@
         "--color-semantic-inverse-background",
         "--color-semantic-inverse-label",
         "--color-semantic-inverse-label",
-        "--inverse-fill-normal",
-        "--inverse-line-normal"
+        "--color-semantic-inverse-fill-normal",
+        "--color-semantic-inverse-line-normal"
       ],
-      "notes": "The local snapshot Color - Semantic page (15625:32983) documents Light/Dark rule columns, dark-pairing guidance, and Static fixed colors; LDS mirrors this structurally with light-default, [data-theme=dark], [data-theme=auto] modes and --static-white/--static-black in tokens/colors.css. LK values override WDS values within the same semantic roles."
+      "notes": "The local snapshot Color - Semantic page (15625:32983) documents Light/Dark rule columns, dark-pairing guidance, and Static fixed colors; LDS mirrors this structurally with light-default, [data-theme=dark], [data-theme=auto] modes and --color-semantic-static-white/--color-semantic-static-black in tokens/color-semantic.css. LK values override WDS values within the same semantic roles."
     }
   ]
 }

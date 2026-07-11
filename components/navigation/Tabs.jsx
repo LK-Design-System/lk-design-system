@@ -30,12 +30,13 @@ export function Tabs({
   style,
   ...rest
 }) {
+  const listRef = React.useRef(null);
   const norm = items.map((o) =>
     typeof o === "string" ? { value: o, label: o } : o,
   );
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(
-    defaultValue != null ? defaultValue : norm[0]?.value,
+    defaultValue != null ? defaultValue : norm.find((item) => !item.disabled)?.value,
   );
   const selected = isControlled ? value : internal;
   const s = SIZE[size] || SIZE.medium;
@@ -47,9 +48,29 @@ export function Tabs({
     onChange?.(item.value, item);
   };
 
+  const move = (event, item) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    const enabledItems = norm.filter((candidate) => !candidate.disabled);
+    const currentIndex = enabledItems.findIndex((candidate) => candidate.value === item.value);
+    if (currentIndex < 0 || enabledItems.length === 0) return;
+    event.preventDefault();
+    let nextIndex = currentIndex;
+    if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + enabledItems.length) % enabledItems.length;
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % enabledItems.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = enabledItems.length - 1;
+    const nextItem = enabledItems[nextIndex];
+    pick(nextItem);
+    Array.from(listRef.current?.querySelectorAll('[role="tab"]') ?? [])
+      .find((tab) => tab.dataset.tabValue === String(nextItem.value))
+      ?.focus();
+  };
+
   return (
     <div
+      ref={listRef}
       role="tablist"
+      aria-orientation="horizontal"
       style={{
         display: "flex",
         alignItems: "stretch",
@@ -57,12 +78,20 @@ export function Tabs({
         maxWidth: "100%",
         overflowX: scroll === "auto" || scroll === true ? "auto" : "visible",
         paddingInline: padding ? 8 : 0,
-        borderBottom: "1px solid var(--bw-border)",
+        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
         scrollbarWidth: "none",
         ...style,
       }}
       {...rest}
     >
+      <style>{`
+        .lk-tabs__tab:focus-visible {
+          outline: none;
+          box-shadow: inset 0 0 0 2px var(--color-semantic-focus-ring);
+          border-radius: var(--radius-sm);
+          z-index: 1;
+        }
+      `}</style>
       {norm.map((item) => {
         const active = item.value === selected || item.active;
         const trailing =
@@ -70,11 +99,15 @@ export function Tabs({
         return (
           <button
             key={item.value}
+            className="lk-tabs__tab"
             type="button"
             role="tab"
             aria-selected={active}
+            tabIndex={!item.disabled && active ? 0 : -1}
+            data-tab-value={item.value}
             disabled={item.disabled}
             onClick={() => pick(item)}
+            onKeyDown={(event) => move(event, item)}
             style={{
               flex: fill ? 1 : "0 0 auto",
               minWidth: 0,
@@ -98,6 +131,7 @@ export function Tabs({
                 : "var(--color-semantic-label-neutral)",
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)",
+              outline: "none",
               ...item.style,
             }}
           >

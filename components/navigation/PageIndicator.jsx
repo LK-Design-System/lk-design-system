@@ -59,10 +59,10 @@ export function PageIndicator({
                 borderRadius: "50%",
                 background: active
                   ? alternative
-                    ? "var(--static-white)"
+                    ? "var(--color-semantic-static-white)"
                     : "var(--color-semantic-label-normal)"
                   : alternative
-                    ? "var(--inverse-label-disable)"
+                    ? "var(--color-semantic-inverse-label-disable-soft)"
                     : "var(--color-semantic-fill-strong)",
                 cursor: onChange ? "pointer" : "default",
               }}

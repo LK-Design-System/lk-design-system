@@ -13,9 +13,9 @@ export function Meter({ value = 0, max = 100, label, thresholds, size = 'md', sh
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
   let c = 'var(--color-semantic-primary-normal)';
   if (thresholds) {
-    if (pct <= thresholds.low) c = 'var(--bw-red)';
-    else if (pct <= thresholds.high) c = 'var(--bw-amber)';
-    else c = 'var(--bw-green)';
+    if (pct <= thresholds.low) c = 'var(--color-semantic-status-negative)';
+    else if (pct <= thresholds.high) c = 'var(--color-semantic-status-cautionary)';
+    else c = 'var(--color-semantic-status-positive)';
   }
   return (
     <div style={{ ...style }} {...rest}>

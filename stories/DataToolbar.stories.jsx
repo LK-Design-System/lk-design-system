@@ -40,7 +40,7 @@ const columns = [
 const surfaceStyle = {
   width: '100%',
   maxWidth: 1040,
-  border: '1px solid var(--bw-border)',
+  border: '1px solid var(--color-semantic-line-solid-normal)',
   borderRadius: 'var(--radius-lg)',
   background: 'var(--color-semantic-background-elevated-normal)',
   boxShadow: 'var(--shadow-xs)',
@@ -49,7 +49,7 @@ const surfaceStyle = {
 
 const toolbarStyle = {
   border: 0,
-  borderBottom: '1px solid var(--bw-border)',
+  borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
   borderRadius: 0,
   background: 'var(--color-semantic-background-elevated-normal)',
 };

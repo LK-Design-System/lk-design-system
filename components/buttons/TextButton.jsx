@@ -38,7 +38,7 @@ export function TextButton({
     ? 'var(--color-semantic-label-alternative)'
     : normalizedColor === 'primary'
       ? 'var(--color-semantic-primary-normal)'
-      : tone === 'neutral' ? 'var(--color-semantic-label-neutral)' : tone === 'danger' ? 'var(--bw-red)' : 'var(--color-semantic-primary-normal)';
+      : tone === 'neutral' ? 'var(--color-semantic-label-neutral)' : tone === 'danger' ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-primary-normal)';
   const fs = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 17 : 'var(--body1-size)';
   const ls = normalizedSize === 'sm' ? 'var(--label1-spacing)' : 'var(--body1-spacing)';
   const h = normalizedSize === 'sm' ? 28 : normalizedSize === 'lg' ? 36 : 32;

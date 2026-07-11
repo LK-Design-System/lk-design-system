@@ -25,14 +25,14 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
   return (
     <div ref={ref} style={{ position: 'relative', ...style }} {...rest}>
       {open && (
-        <div role="menu" style={{ position: 'absolute', bottom: 'calc(100% + 8px)', left: 0, minWidth: collapsed ? 200 : '100%', boxSizing: 'border-box', background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--component-menu-radius)', padding: 'var(--component-menu-padding-y) var(--component-menu-padding-x)', boxShadow: 'var(--shadow-md)', zIndex: 30 }}>
+        <div role="menu" style={{ position: 'absolute', bottom: 'calc(100% + 8px)', left: 0, minWidth: collapsed ? 200 : '100%', boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--component-menu-radius)', padding: 'var(--component-menu-padding-y) var(--component-menu-padding-x)', boxShadow: 'var(--shadow-md)', zIndex: 30 }}>
           {items.map((it, i) => it.divider
-            ? <div key={'d' + i} style={{ height: 1, background: 'var(--bw-border)', margin: '5px 4px' }} />
+            ? <div key={'d' + i} style={{ height: 1, background: 'var(--color-semantic-line-solid-normal)', margin: '5px 4px' }} />
             : (
               <button key={i} type="button" role="menuitem" disabled={it.disabled}
                 onClick={() => { setOpen(false); it.onClick && it.onClick(); }}
                 onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(-1)}
-                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 8, cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--status-danger, var(--color-semantic-status-negative))' : 'var(--color-semantic-label-normal, var(--color-semantic-label-normal))', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 8, cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
                 {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--color-semantic-label-alternative)' }}>{it.icon}</span>}
                 <span style={{ flex: 1, minWidth: 0 }}>{it.label}</span>
               </button>
@@ -41,7 +41,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
       )}
       <button type="button" aria-haspopup="menu" aria-expanded={open} title={collapsed && typeof name === 'string' ? name : undefined}
         onClick={() => setOpen(!open)}
-        style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10, width: '100%', padding: collapsed ? '6px 0' : '6px 8px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)', cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-sans)', background: open ? 'var(--lk-accent-tint)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+        style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10, width: '100%', padding: collapsed ? '6px 0' : '6px 8px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)', cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-sans)', background: open ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}>
         <Avatar name={typeof name === 'string' ? name : undefined} src={src} status={status} size={30} style={{ flexShrink: 0 }} />
         {!collapsed && (
           <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>

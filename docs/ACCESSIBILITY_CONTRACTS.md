@@ -21,12 +21,30 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Checkbox, Switch, Radio | Space로 토글, RadioGroup은 Arrow key로 이동 |
 | Select, Combobox, AutoComplete | Arrow key로 옵션 이동, Enter로 선택, Escape로 닫기 |
 | Tabs, SegmentedControl | Arrow key로 인접 항목 이동, Home/End는 첫/마지막 항목 |
-| Modal, Drawer, Sheet, Alert | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore |
+| Modal, Drawer, Sheet, Alert, ConfirmDialog | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore |
 | Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공 |
 | DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시 |
+| SearchableMultiSelect, DataGrid, FileBrowser | stable item name/ID, listbox 또는 row activation, 선택 상태, bulk action 진입 순서, 빈/loading/error announcement를 명시 |
+| Button, ActionArea, ConfirmDialog | product-owned disabled reason과 blocker를 action보다 먼저 읽을 수 있고 pending 중 중복 실행이 차단되어야 함 |
+| StatusBadge, Timeline, ProgressBar, ConnectionBadge | 상태 이름과 시간/freshness/result를 텍스트로 제공하고 live region이 과도하게 반복되지 않아야 함 |
+| ManualControlSession | keyboard 입력은 focus 범위 안에서만 처리하고 textarea/input 입력과 단축키가 충돌하지 않아야 함 |
+| Tree, ReorderList | treeitem/listitem은 키보드로 탐색 가능하고 expand/collapse 또는 move action에 accessible name이 있어야 함 |
+| ValidationSummary | 오류·주의를 텍스트로 구분하고 native anchor 또는 명시적 activation으로 원래 field/step에 돌아갈 수 있어야 함 |
+| AnnotatedImage, SourceDisclosure | 시각 overlay와 source provenance에는 텍스트 요약, availability, 원본으로 돌아가는 경로가 있어야 함 |
+| Product-owned conversation composition, SourceDisclosure, TreePicker, ConfirmDialog | message role과 streaming/error 상태를 semantic list에서 텍스트로 제공하고 unavailable composer는 이유를 연결하며 scope reset은 확인 가능해야 함 |
 | ContentEditor | 제목 input, 본문 textarea, toolbar button, 상태 live region 순서가 자연스러워야 함 |
-| CanvasEditorShell, CanvasEditorCommandBar, EditorToolbar, LayerPanel, SelectionInspector, ViewerToolbar | viewport와 toolbar/panel/drawer 사이 이동 순서, headerStart 레이어 토글의 accessible name과 pressed state, 방향키 scope, 단축키 충돌, undo/redo 상태 announce, 선택 해제 버튼의 accessible name |
+| CanvasEditorShell, CanvasEditorCommandBar, EditorToolbar, LayerPanel, SelectionInspector, ViewerToolbar | viewport와 toolbar/panel 사이 이동 순서, collapse/restore handle과 keyboard splitter의 accessible name, 방향키 scope, LayerPanel의 단일 roving Tab stop·typeahead·F2 row-action mode, 단축키 충돌, undo/redo 상태, 선택 해제 버튼의 accessible name |
 | Map2DCanvas, Scene3DFrame | viewport region name, keyboard zoom/pan 정책, 앱 캔버스 이벤트와 DS pan interaction 충돌 방지 |
+
+## Viewer accessibility contract
+
+- `ViewerFrame`, `Map2DCanvas`, `Scene3DFrame`, `VideoStreamTile`은 고유한 accessible region name을 가진다.
+- blocking state에서는 가려진 media와 control을 접근성 트리 및 keyboard focus 순서에서 제외하되 source identity는 유지한다. 현재 focus가 가려지면 recovery action 또는 blocking-state group으로 이동하고, 복구 후 원래 control이 남아 있으면 그 정확한 위치로 돌아간다. `degraded`, `stale`, `paused`는 콘텐츠를 가리지 않고 텍스트 상태와 freshness를 함께 제공한다.
+- edge state live region은 상태 전환 문구만 포함한다. FPS, resolution, freshness처럼 자주 바뀌는 passive metadata는 live region 밖에 둔다.
+- `Map2DCanvas`는 toolbar, button, input, slider에서 발생한 방향키를 pan으로 재처리하지 않는다. drag와 wheel만으로 가능한 조작에는 button 및 keyboard 대안이 있어야 한다.
+- `ViewerToolbar`는 한 개의 Tab stop을 사용하고 orientation에 맞는 Arrow key와 Home/End를 지원한다. command에는 `aria-pressed`를 붙이지 않고 toggle은 `true`와 `false`를 모두 노출한다.
+- `TelemetryGauge`는 `meter` name, min, max, current value와 사람이 읽는 `aria-valuetext`를 제공한다. 빠른 telemetry 값 자체는 live region으로 반복 발표하지 않는다.
+- live, loading, stale, no-signal, error는 색이나 motion만으로 구분하지 않는다. pulse/spinner는 `prefers-reduced-motion`에서 정지하며 visible text를 함께 제공한다.
 
 ## Focus policy
 

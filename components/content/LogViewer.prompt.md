@@ -5,6 +5,7 @@
 ```
 
 - **lines** `{time,level,source,text}[]` (level `debug·info·warn·error`) · **filter/search/tools/copyable** · **autoScroll** · **height** · **density** `compact|comfortable` · **wrap** · **virtualized/overscan** · **initialQuery** · **onClear/onCopyLine**.
+- Long-running streams can expose **streamStatus**, **lastUpdatedAt**, **droppedCount**, and **onExport**. These are presentational health/freshness signals; the app still owns reconnection, buffering, retention, and file generation.
 - Compare against common log viewer expectations before changing it: level filters, search, tail pause/resume, latest jump, clear visible logs, per-line copy, empty/search-empty states, fixed-height scrolling, and large-list rendering.
 - Layer: LDS Product extension. Local WDS `.fig` inspection did not find an exact Log Viewer component set; align it with content/code/list conventions without claiming WDS variant parity.
 - Keep it as a presentational stream viewer. Do not open ROS/websocket connections, own log retention policy, or implement command execution here; feed lines and handlers from the product shell.

@@ -29,7 +29,7 @@ const sampleTile = (label, tone = 'normal') => (
       placeItems: 'center',
       border: '1px solid var(--color-semantic-line-normal-normal)',
       borderRadius: 'var(--radius-lg)',
-      background: tone === 'accent' ? 'var(--lk-accent-tint)' : 'var(--color-semantic-background-elevated-normal)',
+      background: tone === 'accent' ? 'var(--color-semantic-primary-surface-normal)' : 'var(--color-semantic-background-elevated-normal)',
       color: tone === 'accent' ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-neutral)',
       fontWeight: 'var(--fw-bold)',
     }}

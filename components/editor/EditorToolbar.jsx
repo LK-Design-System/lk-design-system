@@ -1,86 +1,122 @@
 import React from 'react';
+import { ToggleIcon } from '../buttons/ToggleIcon.jsx';
+import { Tooltip } from '../content/Tooltip.jsx';
+import { useRovingToolbar } from '../internal/useRovingToolbar.js';
 
 /**
  * LK ROBOTICS — EditorToolbar
  * A single-select tool group for canvas editors (select / draw / erase /
  * polygon / pan). `items` are `{ value, icon, label }`; controlled via `value`
- * or uncontrolled via `defaultValue`. The active tool fills with signal ink.
+ * or uncontrolled via `defaultValue`. The active tool uses the shared selected tint.
  */
-export function EditorToolbar({ items = [], value, defaultValue, onChange, orientation = 'vertical', label = '편집 도구', disabled = false, style, ...rest }) {
+export function EditorToolbar({
+  items = [],
+  value,
+  defaultValue,
+  onChange,
+  orientation = 'vertical',
+  label = '편집 도구',
+  disabled = false,
+  disabledReason,
+  tooltipPosition,
+  style,
+  className,
+  onKeyDown,
+  onFocusCapture,
+  ...rest
+}) {
   const controlled = value !== undefined;
   const first = items[0] && (items[0].value != null ? items[0].value : items[0]);
   const [internal, setInternal] = React.useState(defaultValue != null ? defaultValue : first);
-  const buttonRefs = React.useRef([]);
   const cur = controlled ? value : internal;
-  const activeEnabledIndex = items.findIndex((item) => {
+  const activeEnabledItem = items.find((item) => {
     const itemValue = item.value != null ? item.value : item;
     return itemValue === cur && !disabled && !item.disabled;
   });
-  const firstEnabledIndex = items.findIndex((item) => !disabled && !item.disabled);
+  const firstEnabledItem = items.find((item) => !disabled && !item.disabled);
+  const preferredFocusItem = activeEnabledItem ?? firstEnabledItem ?? (!disabled ? items[0] : undefined);
+  const preferredFocusValue = preferredFocusItem != null
+    ? (preferredFocusItem.value != null ? preferredFocusItem.value : preferredFocusItem)
+    : undefined;
+  const { toolbarRef, handleFocusCapture, handleKeyDown } = useRovingToolbar({
+    itemSelector: '[data-lk-editor-toolbar-item]',
+    orientation,
+    preferredKey: preferredFocusValue,
+    includeAriaDisabled: true,
+    onKeyDown,
+    onFocusCapture,
+  });
+
   const pick = (v, itemDisabled) => {
     if (disabled || itemDisabled) return;
     if (!controlled) setInternal(v);
     onChange && onChange(v);
   };
-  const moveFocus = (currentIndex, direction) => {
-    const enabled = items
-      .map((item, index) => ({ item, index }))
-      .filter(({ item }) => !disabled && !item.disabled);
-    if (enabled.length === 0) return;
-    const currentEnabledIndex = enabled.findIndex(({ index }) => index === currentIndex);
-    const startIndex = currentEnabledIndex === -1 ? 0 : currentEnabledIndex;
-    const next = enabled[(startIndex + direction + enabled.length) % enabled.length];
-    buttonRefs.current[next.index]?.focus();
-  };
-  const focusBoundary = (boundary) => {
-    const enabled = items
-      .map((item, index) => ({ item, index }))
-      .filter(({ item }) => !disabled && !item.disabled);
-    const target = boundary === 'start' ? enabled[0] : enabled[enabled.length - 1];
-    if (target) buttonRefs.current[target.index]?.focus();
-  };
+  const resolvedTooltipPosition = tooltipPosition ?? (orientation === 'vertical' ? 'right' : 'bottom');
   return (
-    <div role="toolbar" aria-label={label} aria-orientation={orientation} style={{ display: 'inline-flex', flexDirection: orientation === 'vertical' ? 'column' : 'row', gap: 3, ...style }} {...rest}>
-      {items.map((it, i) => {
+    <div
+      {...rest}
+      ref={toolbarRef}
+      className={['lk-editor-toolbar', className].filter(Boolean).join(' ')}
+      role="toolbar"
+      aria-label={label}
+      aria-orientation={orientation}
+      aria-disabled={disabled || undefined}
+      aria-description={disabled && typeof disabledReason === 'string' ? disabledReason : undefined}
+      data-orientation={orientation}
+      onKeyDown={handleKeyDown}
+      onFocusCapture={handleFocusCapture}
+      style={{ display: 'inline-flex', width: 'fit-content', maxWidth: '100%', boxSizing: 'border-box', flexDirection: orientation === 'vertical' ? 'column' : 'row', gap: 2, ...style }}
+    >
+      <style>{`
+        .lk-editor-toolbar__button {
+          position: relative;
+          z-index: 1;
+        }
+        .lk-editor-toolbar__button[aria-pressed="true"]:not([aria-disabled="true"]) {
+          background: var(--color-semantic-primary-surface-normal) !important;
+          color: var(--color-semantic-primary-normal) !important;
+        }
+      `}</style>
+      {items.map((it) => {
         const v = it.value != null ? it.value : it;
         const on = v === cur;
         const itemDisabled = disabled || !!it.disabled;
+        const itemLabel = it.label || String(v);
+        const itemDisabledReason = it.disabledReason ?? disabledReason;
         return (
-          <button
+          <Tooltip
             key={v}
-            ref={(node) => { buttonRefs.current[i] = node; }}
-            type="button"
-            title={it.label || v}
-            aria-label={it.label || v}
-            aria-pressed={on}
-            tabIndex={(on && !itemDisabled) || (activeEnabledIndex === -1 && i === firstEnabledIndex) ? 0 : -1}
-            disabled={itemDisabled}
-            onClick={() => pick(v, itemDisabled)}
-            onKeyDown={(event) => {
-              const previousKeys = orientation === 'vertical' ? ['ArrowUp'] : ['ArrowLeft'];
-              const nextKeys = orientation === 'vertical' ? ['ArrowDown'] : ['ArrowRight'];
-              if (previousKeys.includes(event.key)) {
-                event.preventDefault();
-                moveFocus(i, -1);
-              }
-              if (nextKeys.includes(event.key)) {
-                event.preventDefault();
-                moveFocus(i, 1);
-              }
-              if (event.key === 'Home') {
-                event.preventDefault();
-                focusBoundary('start');
-              }
-              if (event.key === 'End') {
-                event.preventDefault();
-                focusBoundary('end');
-              }
-            }}
-            style={{ width: 38, height: 38, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 0, borderRadius: 'var(--radius-sm)',
-              background: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)', color: on ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-neutral)',
-              boxShadow: on ? 'none' : 'inset 0 0 0 1px var(--color-semantic-line-normal-normal)', opacity: itemDisabled ? 0.42 : 1, cursor: itemDisabled ? 'not-allowed' : 'pointer', transition: 'background var(--dur-fast) var(--ease-out)' }}>
-            {it.icon || v}
-          </button>
+            content={itemDisabled && itemDisabledReason != null ? <span style={{ display: 'grid', gap: 2 }}><span>{itemLabel}</span><span style={{ color: 'var(--color-semantic-inverse-label-alternative-soft)', fontWeight: 'var(--fw-medium)' }}>{itemDisabledReason}</span></span> : itemLabel}
+            shortcut={it.shortcut}
+            position={resolvedTooltipPosition}
+            size="sm"
+          >
+            <ToggleIcon
+              className="lk-editor-toolbar__button"
+              label={itemLabel}
+              size="sm"
+              variant="plain"
+              pressed={on}
+              aria-disabled={itemDisabled || undefined}
+              aria-keyshortcuts={it.ariaKeyShortcuts ?? (typeof it.shortcut === 'string' ? it.shortcut : undefined)}
+              aria-description={itemDisabled && typeof itemDisabledReason === 'string' ? itemDisabledReason : undefined}
+              data-lk-editor-toolbar-item=""
+              data-lk-toolbar-key={String(v)}
+              tabIndex={!disabled && v === preferredFocusValue ? 0 : -1}
+              disabled={disabled}
+              onChange={() => pick(v, itemDisabled)}
+              style={{
+                flex: '0 0 auto',
+                padding: 0,
+                lineHeight: 0,
+              }}
+            >
+              <span aria-hidden="true" style={{ width: 16, height: 16, display: 'inline-grid', placeItems: 'center', flex: '0 0 auto' }}>
+                {it.icon || v}
+              </span>
+            </ToggleIcon>
+          </Tooltip>
         );
       })}
     </div>

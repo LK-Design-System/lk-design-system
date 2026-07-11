@@ -77,7 +77,7 @@ export const ButtonIconButtonSocialButtonCard = {
   name: 'Button · IconButton · SocialButton card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 700, height: 540, background: 'var(--bw-paper)', padding: 22, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 700, height: 540, background: 'var(--color-semantic-background-normal-normal)', padding: 22, boxSizing: 'border-box' }}>
       <style>
         {`
           [data-visual-crop-root] .lk-btn,

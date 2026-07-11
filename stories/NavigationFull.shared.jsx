@@ -54,7 +54,7 @@ function AccentTintAction({ children }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        background: hover ? 'var(--lk-accent-tint-2)' : 'var(--lk-accent-tint)',
+        background: hover ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-primary-surface-normal)',
         color: 'var(--color-semantic-primary-normal)',
         border: 'none',
         boxShadow: 'none',
@@ -120,7 +120,7 @@ export const SideNavUserMenuCard = {
     const [tab, setTab] = React.useState('docs-overview');
     const [collapsed, setCollapsed] = React.useState(true);
     return (
-      <div data-visual-crop-root style={{ width: 330, height: 650, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div data-visual-crop-root style={{ width: 330, height: 650, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <SideNav
           value={tab}
           onChange={setTab}
@@ -215,9 +215,9 @@ export const BottomNavCard = {
   render: () => {
     const [nav, setNav] = React.useState('home');
     return (
-      <div data-visual-crop-root style={{ width: 360, height: 220, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
-        <div style={{ width: 320, border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-          <div style={{ height: 90, background: 'var(--bw-mist)' }} />
+      <div data-visual-crop-root style={{ width: 360, height: 220, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
+        <div style={{ width: 320, border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ height: 90, background: 'var(--color-semantic-background-normal-alternative)' }} />
           <BottomNav
             value={nav}
             onChange={setNav}
@@ -254,7 +254,7 @@ export const FooterCard = {
   name: 'Footer card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 900, height: 300, background: 'var(--bw-paper)' }}>
+    <div data-visual-crop-root style={{ width: 900, height: 300, background: 'var(--color-semantic-background-normal-normal)' }}>
       <Footer />
       <div style={{ padding: '14px 20px 0' }}>
         <Footer
@@ -273,7 +273,7 @@ export const TabsCard = {
   render: () => {
     const [tab, setTab] = React.useState('all');
     return (
-      <div data-visual-crop-root style={{ width: 520, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div data-visual-crop-root style={{ width: 520, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <Tabs
           value={tab}
           onChange={setTab}
@@ -293,7 +293,7 @@ export const StepsCard = {
   name: 'Steps card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 720, height: 180, background: 'var(--bw-paper)', padding: '28px 24px', boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 720, height: 180, background: 'var(--color-semantic-background-normal-normal)', padding: '28px 24px', boxSizing: 'border-box' }}>
       <div style={{ maxWidth: 560 }}>
         <Steps current={2} steps={['작성', '검토', '승인', '게시']} />
       </div>

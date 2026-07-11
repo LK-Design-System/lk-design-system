@@ -68,17 +68,17 @@ for (const file of storyFiles) {
 assert(titleFailures.length === 0, `Storybook WDS layer alignment failed:\n${titleFailures.join('\n')}`);
 
 const cssSurface = [
-  await read('tokens/colors.css'),
   await read('tokens/color-atomic.css'),
   await read('tokens/color-semantic.css'),
+  await read('tokens/color-components.css'),
   await read('tokens/spacing.css'),
   await read('tokens/components.css'),
 ].join('\n');
 const tokenCssSurface = [
   await read('tokens/fonts.css'),
-  await read('tokens/colors.css'),
   await read('tokens/color-atomic.css'),
   await read('tokens/color-semantic.css'),
+  await read('tokens/color-components.css'),
   await read('tokens/typography.css'),
   await read('tokens/spacing.css'),
   await read('tokens/grid.css'),

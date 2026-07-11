@@ -2,6 +2,7 @@ import { IconPicker, Icon } from '../src/index.js';
 
 const meta = {
   title: 'LDS Product/Selection and Input/Icon Picker',
+  component: IconPicker,
   parameters: {
     docs: {
       description: {

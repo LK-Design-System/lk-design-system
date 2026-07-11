@@ -51,7 +51,7 @@ export const ChoiceCardCard = {
   render: () => {
     const [sel, setSel] = React.useState('field');
     return (
-      <div data-visual-crop-root style={{ width: 700, height: 160, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
+      <div data-visual-crop-root style={{ width: 700, height: 160, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
           <ChoiceCard title="기본 플랜" description="필수 옵션만 포함" selected={sel === 'patrol'} onSelect={() => setSel('patrol')} />
           <ChoiceCard title="검토 플랜" description="승인 절차 포함" selected={sel === 'field'} onSelect={() => setSel('field')} />
@@ -66,7 +66,7 @@ export const FilterChipCard = {
   name: 'FilterChip card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <FilterChip active>문서</FilterChip>
         <FilterChip count={3}>상태</FilterChip>
@@ -80,7 +80,7 @@ export const MultiSelectChipCard = {
   name: 'MultiSelectChip card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <MultiSelectChip defaultSelected>중요</MultiSelectChip>
         <MultiSelectChip>검토</MultiSelectChip>
@@ -96,7 +96,7 @@ export const ThemeToggleCard = {
   render: () => {
     const [theme, setTheme] = React.useState('light');
     return (
-      <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
           <ThemeToggle value={theme} onChange={setTheme} target={null} />
           <ThemeToggle value={theme} onChange={setTheme} target={null} showLabels={false} size="sm" />
@@ -112,7 +112,7 @@ export const SegmentedControlCard = {
   render: () => {
     const [lang, setLang] = React.useState('KR');
     return (
-      <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
           <SegmentedControl options={['KR', 'EN']} value={lang} onChange={setLang} />
           <SegmentedControl options={[{ value: 'list', label: '리스트' }, { value: 'grid', label: '그리드' }, { value: 'preview', label: '미리보기' }]} defaultValue="grid" />
@@ -128,7 +128,7 @@ export const ToggleButtonCard = {
   render: () => {
     const [route, setRoute] = React.useState(true);
     return (
-      <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <ToggleButton pressed={route} onChange={setRoute} icon={<Icon name="eye" size={18} />}>미리보기</ToggleButton>
           <ToggleButton defaultPressed icon={<Icon name="star" size={18} />} />
@@ -172,7 +172,7 @@ export const BannerCard = {
   name: 'Banner card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 460, height: 180, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 460, height: 180, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ width: 420, display: 'flex', flexDirection: 'column', gap: 10 }}>
         <Banner tone="info" title="문서 업데이트" onClose={() => {}}>디자인 시스템 문서가 업데이트되었습니다.</Banner>
         <Banner tone="warning">일부 항목에 검토가 필요합니다.</Banner>
@@ -185,7 +185,7 @@ export const CircularProgressCard = {
   name: 'CircularProgress card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 560, height: 200, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 560, height: 200, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap' }}>
         <CircularProgress value={72} showValue />
         <CircularProgress value={100} tone="positive" size={40} />
@@ -200,7 +200,7 @@ export const SkeletonCard = {
   name: 'Skeleton card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 16, width: 300 }}>
+    <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: 16, width: 300 }}>
       <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
         <Skeleton variant="circle" width={44} />
         <div style={{ flex: 1 }}>
@@ -226,7 +226,7 @@ export const ProgressBarCard = {
   name: 'ProgressBar card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 320, height: 140, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 320, height: 140, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
         <ProgressBar value={68} label="업로드" showValue />
         <ProgressBar indeterminate />
@@ -239,8 +239,8 @@ export const EmptyStateCard = {
   name: 'EmptyState card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 420, height: 260, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
-      <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: 16, width: 360 }}>
+    <div data-visual-crop-root style={{ width: 420, height: 260, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: 16, width: 360 }}>
         <EmptyState
           icon={<Icon name="search" size={26} />}
           title="검색 결과가 없습니다"
@@ -256,7 +256,7 @@ export const SwitchCard = {
   name: 'Switch card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <Switch defaultChecked label="변경 알림" />
         <Switch size="sm" defaultChecked />

@@ -43,7 +43,7 @@ a:hover { opacity: 0.8; }
 
 img { display: block; max-width: 100%; }
 
-::selection { background: var(--lk-accent-tint-2); }
+::selection { background: var(--color-semantic-primary-surface-strong); }
 
 /* Brand utility helpers ----------------------------------------------------- */
 

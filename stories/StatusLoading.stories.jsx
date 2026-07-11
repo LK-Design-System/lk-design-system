@@ -63,7 +63,7 @@ export const LoadingStates = {
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
         <DemoCard title="사각형 스켈레톤 커스터마이징">
-          <Skeleton variant="rect" width="100%" height={116} radius={12} color="var(--lk-accent-tint-2)" opacity={0.95} />
+          <Skeleton variant="rect" width="100%" height={116} radius={12} color="var(--color-semantic-primary-surface-strong)" opacity={0.95} />
           <Skeleton variant="text" lines={2} width="82%" style={{ marginTop: 2 }} />
         </DemoCard>
 

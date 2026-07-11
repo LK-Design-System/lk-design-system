@@ -10,7 +10,7 @@ import React from 'react';
  * (promote the action to a section-level "전 제품 보기" link). Hover: image
  * zoom + deeper shadow only — the card itself stays put.
  */
-const PC_FADE = 'linear-gradient(180deg, var(--static-black) 46%, transparent 96%)';
+const PC_FADE = 'linear-gradient(180deg, var(--color-semantic-static-black) 46%, transparent 96%)';
 
 export function ProductCard({
   id,
@@ -32,7 +32,7 @@ export function ProductCard({
       style={{
         position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
         aspectRatio: '4 / 5',
-        background: 'linear-gradient(180deg, var(--lk-stage-from) 0%, var(--lk-stage-to) 100%)',
+        background: 'linear-gradient(180deg, var(--color-semantic-brand-stage-from) 0%, var(--color-semantic-brand-stage-to) 100%)',
         border: '1px solid var(--border-hairline-dark)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden',
         boxShadow: hover ? 'var(--shadow-xl)' : 'var(--shadow-sm)',
         transition: 'box-shadow var(--dur-base) var(--ease-out)',
@@ -70,7 +70,7 @@ export function ProductCard({
           <span style={{
             alignSelf: 'flex-end', marginTop: 4, whiteSpace: 'nowrap',
             fontSize: 12.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
-            color: hover ? 'var(--color-semantic-inverse-label)' : 'var(--inverse-label-neutral)',
+            color: hover ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-inverse-label-neutral-soft)',
             textDecoration: hover ? 'underline' : 'none', textUnderlineOffset: 3,
             transition: 'color var(--dur-fast) var(--ease-out)',
           }}>{cta}</span>

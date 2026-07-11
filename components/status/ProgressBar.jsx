@@ -12,38 +12,55 @@ function useKeyframes(id, css) {
 
 const TONES = {
   signal: 'var(--color-semantic-primary-normal)',
-  positive: 'var(--bw-green)',
-  cautionary: 'var(--bw-amber)',
-  negative: 'var(--bw-red)',
+  positive: 'var(--color-semantic-status-positive)',
+  cautionary: 'var(--color-semantic-status-cautionary)',
+  negative: 'var(--color-semantic-status-negative)',
 };
 
 /**
  * LDS Core - ProgressBar
  * Linear determinate or indeterminate progress indicator.
  */
-export function ProgressBar({ value = 0, max = 100, indeterminate = false, tone = 'signal', color, size = 'md', label, showValue = false, style, ...rest }) {
+export function ProgressBar({
+  value = 0,
+  max = 100,
+  indeterminate = false,
+  tone = 'signal',
+  color,
+  size = 'md',
+  label,
+  showValue = false,
+  style,
+  'aria-label': ariaLabelProp,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-valuetext': ariaValueText,
+  ...rest
+}) {
   useKeyframes('lk-prog-kf', '@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none}}');
   const c = color || TONES[tone] || TONES.signal;
   const h = size === 'sm' ? 4 : size === 'lg' ? 10 : 6;
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
-  const ariaLabel = typeof label === 'string' ? label : undefined;
+  const ariaLabel = ariaLabelProp ?? (typeof label === 'string' ? label : undefined);
 
   return (
     <div style={{ ...style }} {...rest}>
       {(label != null || showValue) && (
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 8, fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)' }}>
           <span>{label}</span>
-          {showValue && <span style={{ color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{Math.round(pct)}%</span>}
+          {showValue && <span style={{ color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>{Math.round(pct)}%</span>}
         </div>
       )}
       <div
         role="progressbar"
         aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
         aria-busy={indeterminate || undefined}
         aria-valuenow={indeterminate ? undefined : Math.round(pct)}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuetext={indeterminate ? 'loading' : `${Math.round(pct)}%`}
+        aria-valuetext={ariaValueText ?? (indeterminate ? '진행 중' : `${Math.round(pct)}%`)}
         style={{ position: 'relative', height: h, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-strong)', overflow: 'hidden' }}
       >
         {indeterminate ? (

@@ -18,7 +18,7 @@ const meta = {
 export default meta;
 
 function TreeStatusDot({ tone = 'online' }) {
-  const color = tone === 'offline' || tone === 'disabled' ? 'var(--bw-gray-300)' : tone === 'weak' || tone === 'review' ? 'var(--bw-amber)' : 'var(--bw-green)';
+  const color = tone === 'offline' || tone === 'disabled' ? 'var(--color-semantic-interaction-inactive)' : tone === 'weak' || tone === 'review' ? 'var(--color-semantic-status-cautionary)' : 'var(--color-semantic-status-positive)';
   return <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0 }} />;
 }
 

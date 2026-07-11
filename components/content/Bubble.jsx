@@ -9,7 +9,7 @@ export function Bubble({ children, tone = 'navy', tail = 'bottom', style, ...res
   const dark = tone === 'navy';
   const bg = dark ? 'var(--color-semantic-inverse-background)' : 'var(--color-semantic-background-elevated-normal)';
   const fg = dark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-normal)';
-  const bd = dark ? 'none' : '1px solid var(--bw-border)';
+  const bd = dark ? 'none' : '1px solid var(--color-semantic-line-solid-normal)';
   const tailBase = { position: 'absolute', width: 12, height: 12, background: bg, transform: 'rotate(45deg)' };
   const tails = {
     bottom: { ...tailBase, bottom: -6, left: '50%', marginLeft: -6, borderRight: bd, borderBottom: bd },

@@ -11,12 +11,12 @@ export function FormField({ label, required = false, helper, error, htmlFor, chi
       {label != null && (
         <label htmlFor={htmlFor} style={{ fontSize: 14, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>
           {label}
-          {required && <span style={{ color: 'var(--bw-red)', marginLeft: 3 }}>*</span>}
+          {required && <span style={{ color: 'var(--color-semantic-status-negative-text)', marginLeft: 3 }}>*</span>}
         </label>
       )}
       {children}
       {(error != null || helper != null) && (
-        <span style={{ fontSize: 13, lineHeight: 1.5, color: error != null ? 'var(--bw-red)' : 'var(--color-semantic-label-alternative)' }}>{error != null ? error : helper}</span>
+        <span style={{ fontSize: 13, lineHeight: 1.5, color: error != null ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-neutral)' }}>{error != null ? error : helper}</span>
       )}
     </div>
   );

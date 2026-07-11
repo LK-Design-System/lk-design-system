@@ -28,6 +28,11 @@ export interface LogViewerProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Extra rows to render above and below the viewport while virtualized. @default 8 */
   overscan?: number;
   initialQuery?: string;
+  /** Optional transport/freshness state shown above the stream. */
+  streamStatus?: 'connecting' | 'online' | 'reconnecting' | 'weak' | 'stale' | 'error' | 'offline';
+  lastUpdatedAt?: React.ReactNode;
+  droppedCount?: number;
+  onExport?: (visibleLines: LogLine[]) => void;
   onClear?: () => void;
   onCopyLine?: (line: LogLine, text: string) => void;
 }

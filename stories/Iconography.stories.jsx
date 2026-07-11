@@ -193,7 +193,7 @@ export const IconCard = {
       style={{
         width: 780,
         height: 460,
-        background: 'var(--bw-paper)',
+        background: 'var(--color-semantic-background-normal-normal)',
         padding: 24,
         boxSizing: 'border-box',
         fontFamily: 'var(--font-sans)',

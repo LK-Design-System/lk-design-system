@@ -4,7 +4,7 @@ export type PropertyFieldType = 'number' | 'text' | 'toggle';
 export type PropertyFieldValue = string | number | boolean;
 
 export interface PropertyFieldProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
-  label: React.ReactNode;
+  label: string;
   hint?: React.ReactNode;
   /** 커밋된 현재 값. */
   value?: PropertyFieldValue;

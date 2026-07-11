@@ -1,6 +1,6 @@
 # LK ROBOTICS Design System Visual Parity Ledger
 
-Updated: 2026-07-09
+Updated: 2026-07-10
 
 This ledger tracks parity between the WDS source and the current
 React/Storybook implementation. Parity is anchored to the accepted local `.fig`
@@ -13,12 +13,12 @@ parity gates.
 | Area | Source baseline | Current status |
 | --- | ---: | --- |
 | Runtime export gaps | 0 | No public export gap required by the WDS source |
-| React component entry exports | 173 | Public package component entries covered by checks |
-| Named public exports | 177 | Public package surface covered by type checks |
-| Storybook public stories | 171 | Component and pattern surfaces only |
+| React component entry exports | 181 | Public package component entries covered by checks |
+| Named public exports | 187 | Public package surface covered by type checks |
+| Storybook public stories | 226 | Component and pattern surfaces only |
 | Storybook hidden visual parity stories | 82 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 263 | Current implementation stories checked by the accessibility guard |
-| Accessibility checked implementation stories | 263 | Current implementation stories checked by accessibility guard |
+| Visual inventory React stories | 318 | Current implementation stories checked by the accessibility guard |
+| Accessibility checked implementation stories | 318 | Current implementation stories checked by accessibility guard |
 
 ## Parity source of truth
 
@@ -59,8 +59,12 @@ pipeline were retired. Parity is now verified two ways:
 - Button and button-family parity is fixed or watched through dedicated hidden
   parity stories.
 - Navigation, forms, overlays, selection, data, status, cards, content, layout,
-  viz, and robotics surfaces remain under Watch until their interaction states
+  and the remaining robotics surfaces stay under Watch until their interaction
   and responsive surfaces are fully exercised.
+- ViewerFrame, Map2DCanvas, Scene3DFrame, VideoStreamTile, ViewerToolbar, and
+  telemetry now have explicit state/keyboard/dark/narrow stories, Viewer-targeted
+  Axe coverage, and visual-smoke captures. Their shared frame contract is guarded;
+  renderer- and transport-specific product behavior remains intentionally out of scope.
 - `npm run check:storybook-public` keeps visual parity stories out of the public
   sidebar.
 - `npm run check:inventory` keeps README, repository inventory, visual ledger,

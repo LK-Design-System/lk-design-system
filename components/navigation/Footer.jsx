@@ -39,7 +39,7 @@ function BackToTopButton() {
   return (
     <button type="button" onClick={toTop} aria-label="맨 위로"
       style={{ position: 'fixed', right: 28, bottom: 28, zIndex: 60, width: 50, height: 50, borderRadius: 999,
-        border: '1px solid var(--bw-border)', background: 'var(--bw-white)', color: 'var(--bw-ink)', cursor: 'pointer',
+        border: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-brand-ink)', cursor: 'pointer',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-md)',
         opacity: show ? 1 : 0, transform: show ? 'none' : 'translateY(8px)', pointerEvents: show ? 'auto' : 'none',
         transition: 'opacity 180ms var(--ease-out), transform 180ms var(--ease-out)' }}>
@@ -76,7 +76,7 @@ export function Footer({
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px' }}>
       {items.map((it, i) => (
         <span key={i} style={{ whiteSpace: 'nowrap' }}>
-          <span style={{ color: 'var(--inverse-label-neutral)', fontWeight: 700 }}>{it.label}</span>{' '}{it.value}
+          <span style={{ color: 'var(--color-semantic-inverse-label-neutral-soft)', fontWeight: 700 }}>{it.label}</span>{' '}{it.value}
         </span>
       ))}
     </div>
@@ -93,21 +93,21 @@ export function Footer({
               {columns.map((col, ci) => (
                 <nav key={ci} aria-label={typeof col.heading === 'string' ? col.heading : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 11, minWidth: 108 }}>
                   {col.heading != null && <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: 'var(--color-semantic-inverse-label)', marginBottom: 2, wordBreak: 'keep-all' }}>{col.heading}</span>}
-                  {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'var(--inverse-label-alternative)', 'var(--inverse-label-strong)', 13.5))}
+                  {(col.links || []).map((l, li) => linkEl(ci + '-' + li, l, 'var(--color-semantic-inverse-label-alternative-soft)', 'var(--color-semantic-inverse-label-strong-soft)', 13.5))}
                 </nav>
               ))}
             </div>
-            <div style={{ height: 1, background: 'var(--inverse-line-normal)', margin: '32px 0 24px' }} />
+            <div style={{ height: 1, background: 'var(--color-semantic-inverse-line-normal)', margin: '32px 0 24px' }} />
           </React.Fragment>
         )}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: 'var(--inverse-label-assistive)', wordBreak: 'keep-all' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 8, fontSize: 13, lineHeight: 1.6, color: 'var(--color-semantic-inverse-label-assistive-soft)', wordBreak: 'keep-all' }}>
           {contact.length > 0 && entryRow(contact)}
           {locations.length > 0 && entryRow(locations)}
-          <span style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 20px', color: 'var(--inverse-label-disable)' }}>
+          <span style={{ marginTop: 18, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 20px', color: 'var(--color-semantic-inverse-label-disable-soft)' }}>
             {copyright}
             {links.length > 0 && (
               <span style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                {links.map((l, i) => linkEl('p' + i, l, 'var(--inverse-label-alternative)', 'var(--inverse-label-strong)', 12.5))}
+                {links.map((l, i) => linkEl('p' + i, l, 'var(--color-semantic-inverse-label-alternative-soft)', 'var(--color-semantic-inverse-label-strong-soft)', 12.5))}
               </span>
             )}
           </span>

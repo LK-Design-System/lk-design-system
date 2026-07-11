@@ -40,8 +40,8 @@ export function SegmentedControl({
       role="tablist"
       style={{
         display: 'inline-flex', width: fill ? '100%' : undefined, justifySelf: fill ? undefined : 'start', padding: outlined ? 0 : trackPad, gap: outlined ? 0 : 2,
-        background: outlined ? 'var(--bw-white)' : 'var(--color-semantic-fill-normal)',
-        border: outlined ? '1px solid var(--bw-border)' : 'none',
+        background: outlined ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-fill-normal)',
+        border: outlined ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
         borderRadius: trackRadius,
         overflow: 'hidden',
         ...style,
@@ -68,12 +68,12 @@ export function SegmentedControl({
               cursor: disabledState || o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
               fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)', letterSpacing: 0,
               color: disabledState || o.disabled ? 'var(--color-semantic-label-disable)' : active ? 'var(--color-semantic-primary-normal)' : activeFocus ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
-              background: active ? (outlined ? 'var(--lk-accent-tint-2)' : 'var(--bw-white)') : activeHover || activeFocus ? 'var(--color-semantic-fill-normal)' : 'transparent',
+              background: active ? (outlined ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)') : activeHover || activeFocus ? 'var(--color-semantic-fill-normal)' : 'transparent',
               borderRadius: outlined ? 0 : segmentRadius,
-              borderLeft: outlined && index > 0 ? '1px solid var(--bw-border)' : 'none',
+              borderLeft: outlined && index > 0 ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
               boxShadow: [
                 active && !outlined ? 'var(--shadow-xs)' : null,
-                activeFocus ? '0 0 0 3px var(--focus-ring)' : null,
+                activeFocus ? '0 0 0 3px var(--color-semantic-focus-ring)' : null,
               ].filter(Boolean).join(', ') || 'none',
               transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
               whiteSpace: 'nowrap',

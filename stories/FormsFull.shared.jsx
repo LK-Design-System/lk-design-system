@@ -106,7 +106,7 @@ export const AutoCompleteCard = {
   name: 'AutoComplete card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <AutoComplete placeholder="항목 검색" options={['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon']} />
     </div>
   ),
@@ -116,7 +116,7 @@ export const DatePickerCard = {
   name: 'DatePicker card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 320, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 320, height: 120, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <DatePicker placeholder="검토 희망일" />
     </div>
   ),
@@ -126,7 +126,7 @@ export const SearchFieldCard = {
   name: 'SearchField card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <SearchField placeholder="문서·컴포넌트 검색" defaultValue="Button" />
     </div>
   ),
@@ -138,7 +138,7 @@ export const SliderCard = {
   render: () => {
     const [value, setValue] = React.useState(40);
     return (
-      <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div data-visual-crop-root style={{ width: 380, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <Slider value={value} onChange={setValue} showValue />
       </div>
     );

@@ -89,7 +89,7 @@ export const InteractiveAndDark = {
           <h3 style={{ margin: 0, color: 'var(--color-semantic-static-white)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
             인터랙티브 dark card
           </h3>
-          <p style={{ margin: 0, color: 'var(--text-on-dark-muted)' }}>
+          <p style={{ margin: 0, color: 'var(--color-semantic-inverse-label-neutral-soft)' }}>
             inverse card 값은 component token으로 제어합니다.
           </p>
         </div>

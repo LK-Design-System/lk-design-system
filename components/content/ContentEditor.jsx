@@ -30,7 +30,7 @@ function ToolbarButton({ item, active, disabled, onAction }) {
         height: 34,
         border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-sm)',
-        background: active ? 'var(--lk-accent-tint-2)' : hover && !isDisabled ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)',
+        background: active ? 'var(--color-semantic-primary-surface-strong)' : hover && !isDisabled ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)',
         color: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
         cursor: isDisabled ? 'not-allowed' : 'pointer',
         opacity: isDisabled ? 0.45 : 1,
@@ -100,7 +100,7 @@ export function ContentEditor({
   const hasFooter = meta != null || status != null || helper != null || actions != null || footer != null || maxLength != null;
   const bodyLength = String(currentValue ?? '').length;
   const ring = invalid
-    ? 'var(--bw-red)'
+    ? 'var(--color-semantic-status-negative)'
     : (titleFocus || bodyFocus) ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-normal-normal)';
 
   const handleTitleChange = (event) => {
@@ -131,7 +131,7 @@ export function ContentEditor({
         border: `1px solid ${ring}`,
         borderRadius: 'var(--radius-md)',
         background: 'var(--color-semantic-background-elevated-normal)',
-        boxShadow: titleFocus || bodyFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
+        boxShadow: titleFocus || bodyFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
         fontFamily: 'var(--font-sans)',
         color: 'var(--color-semantic-label-normal)',
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
@@ -140,8 +140,8 @@ export function ContentEditor({
       {...rest}
     >
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4) var(--space-4) var(--space-3)' }}>
-        <label htmlFor={resolvedTitleId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--bw-red)' : 'var(--color-semantic-label-alternative)' }}>
-          {titleLabel}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
+        <label htmlFor={resolvedTitleId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-alternative)' }}>
+          {titleLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
         </label>
         <input
           id={resolvedTitleId}
@@ -204,8 +204,8 @@ export function ContentEditor({
         )}
       </div>
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4)' }}>
-        <label htmlFor={resolvedBodyId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--bw-red)' : 'var(--color-semantic-label-alternative)' }}>
-          {bodyLabel}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
+        <label htmlFor={resolvedBodyId} style={{ fontSize: 13, lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-alternative)' }}>
+          {bodyLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
         </label>
         <textarea
           id={resolvedBodyId}

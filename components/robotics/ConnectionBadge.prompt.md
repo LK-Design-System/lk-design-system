@@ -2,8 +2,10 @@
 
 ```jsx
 <ConnectionBadge status="online" />
-<ConnectionBadge status="reconnecting" size="sm" />
-<ConnectionBadge status="offline" label="연결 끊김" />
+<ConnectionBadge status="connecting" size="sm" />
+<ConnectionBadge status="stale" label="마지막 수신 지연" />
+<ConnectionBadge status="error" />
 ```
 
-- **status** `online · reconnecting · weak · offline` · **label**(기본 한국어) · **showLabel** · **size** `sm · md`. reconnecting은 자동으로 깜빡입니다.
+- **status** `connecting · online · reconnecting · weak · stale · error · offline` · **label**(기본 한국어) · **showLabel** · **size** `sm · md`.
+- Badge는 간결한 현재 상태만 표시합니다. 마지막 수신 시각과 지연 설명은 `DescriptionList`, 재연결 액션은 `ActionArea`와 `Button`을 제품에서 조합합니다.

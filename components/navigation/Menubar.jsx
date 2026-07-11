@@ -39,7 +39,7 @@ function MenuItem({ item, variant, close }) {
         fontFamily: "var(--font-sans)",
         fontSize: 14,
         color: item.danger
-          ? "var(--bw-red)"
+          ? "var(--color-semantic-status-negative)"
           : item.disabled
             ? "var(--color-semantic-label-disable)"
             : "var(--color-semantic-label-normal)",
@@ -61,7 +61,7 @@ function MenuItem({ item, variant, close }) {
               width: 14,
               height: 14,
               borderRadius: variant === "radio" ? "50%" : 4,
-              border: `1.5px solid ${checked ? "var(--color-semantic-primary-normal)" : "var(--bw-border)"}`,
+              border: `1.5px solid ${checked ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
               background:
                 checked && variant === "checkbox"
                   ? "var(--color-semantic-primary-normal)"
@@ -137,8 +137,8 @@ export function Menubar({
         alignItems: "center",
         gap: 2,
         padding: 4,
-        background: "var(--bw-white)",
-        border: "1px solid var(--bw-border)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
         borderRadius: "var(--radius-md)",
         ...style,
       }}
@@ -180,8 +180,8 @@ export function Menubar({
                 minWidth: 184,
                 maxHeight: menu.maxHeight || maxHeight,
                 overflowY: menu.maxHeight || maxHeight ? "auto" : undefined,
-                background: "var(--bw-white)",
-                border: "1px solid var(--bw-border)",
+                background: "var(--color-semantic-background-elevated-normal)",
+                border: "1px solid var(--color-semantic-line-solid-normal)",
                 borderRadius: "var(--radius-lg)",
                 boxShadow: "var(--shadow-md)",
                 padding: 6,
@@ -194,7 +194,7 @@ export function Menubar({
                     role="separator"
                     style={{
                       height: 1,
-                      background: "var(--bw-border)",
+                      background: "var(--color-semantic-line-solid-normal)",
                       margin: "6px 4px",
                     }}
                   />
@@ -213,7 +213,7 @@ export function Menubar({
                     display: "flex",
                     justifyContent: "flex-end",
                     padding: "8px 4px 2px",
-                    borderTop: "1px solid var(--bw-border)",
+                    borderTop: "1px solid var(--color-semantic-line-solid-normal)",
                     marginTop: 4,
                   }}
                 >

@@ -9,7 +9,7 @@ import React from 'react';
 export function MetricCard({ label, value, delta, deltaTone = 'auto', caption, icon, style, ...rest }) {
   const tone = deltaTone === 'auto' ? (typeof delta === 'number' ? (delta >= 0 ? 'up' : 'down') : 'flat') : deltaTone;
   const up = tone === 'up';
-  const dc = up ? 'var(--bw-green)' : tone === 'down' ? 'var(--bw-red)' : 'var(--color-semantic-label-alternative)';
+  const dc = up ? 'var(--color-semantic-status-positive)' : tone === 'down' ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-alternative)';
   const deltaText = typeof delta === 'number' ? `${delta > 0 ? '+' : ''}${delta}%` : delta;
   return (
     <div style={{ background: 'var(--component-card-bg)', border: 'var(--component-card-border)', borderRadius: 'var(--component-card-radius)', padding: '22px 24px', boxShadow: 'var(--shadow-xs)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>

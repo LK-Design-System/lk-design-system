@@ -14,7 +14,7 @@ export function ChecklistItem({
   ...rest
 }) {
   const ok = !cross;
-  const color = ok ? (dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)') : 'var(--bw-red)';
+  const color = ok ? (dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)') : 'var(--color-semantic-status-negative)';
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '11px', ...style }} {...rest}>
       <span style={{ display: 'inline-flex', flexShrink: 0, marginTop: 2, color }}>

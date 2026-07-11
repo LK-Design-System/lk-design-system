@@ -2,10 +2,10 @@ import React from 'react';
 
 const DOT = {
   signal: 'var(--color-semantic-primary-normal)',
-  positive: 'var(--bw-green)',
-  cautionary: 'var(--bw-amber)',
-  negative: 'var(--bw-red)',
-  neutral: 'var(--bw-gray-300)',
+  positive: 'var(--color-semantic-status-positive)',
+  cautionary: 'var(--color-semantic-status-cautionary)',
+  negative: 'var(--color-semantic-status-negative)',
+  neutral: 'var(--color-semantic-interaction-inactive)',
 };
 
 /**
@@ -22,8 +22,8 @@ export function Timeline({ items = [], style, ...rest }) {
         return (
           <div key={i} style={{ display: 'flex', gap: 14 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: c, border: '2px solid var(--bw-white)', boxShadow: `0 0 0 1px ${c}`, flexShrink: 0, marginTop: 4 }} />
-              {!last && <span style={{ flex: 1, width: 2, background: 'var(--bw-border)', marginTop: 4 }} />}
+              <span style={{ width: 12, height: 12, borderRadius: '50%', background: c, border: '2px solid var(--color-semantic-background-elevated-normal)', boxShadow: `0 0 0 1px ${c}`, flexShrink: 0, marginTop: 4 }} />
+              {!last && <span style={{ flex: 1, width: 2, background: 'var(--color-semantic-line-solid-normal)', marginTop: 4 }} />}
             </div>
             <div style={{ paddingBottom: last ? 0 : 22 }}>
               {it.time != null && <div style={{ fontSize: 12, fontWeight: 'var(--fw-bold)', letterSpacing: '0.2px', color: 'var(--color-semantic-label-assistive)', marginBottom: 3 }}>{it.time}</div>}

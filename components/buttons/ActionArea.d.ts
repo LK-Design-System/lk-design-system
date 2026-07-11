@@ -11,6 +11,8 @@ export interface ActionAreaProps extends React.HTMLAttributes<HTMLElement> {
   divider?: boolean;
   /** Use denser vertical padding. @default false */
   compact?: boolean;
+  /** Action alignment inside the shared action row. @default "start" */
+  align?: 'start' | 'end' | 'center' | 'between';
   children?: React.ReactNode;
 }
 

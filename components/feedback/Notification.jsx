@@ -2,28 +2,77 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — Notification
- * A notification row: an icon tile, a bold title, description, time and an
- * `unread` state (soft cyan wash + red dot). Set `onClick` for an actionable
- * row.
+ * A compact notification-list row: icon, title, description, timestamp, and a
+ * single primary unread cue. Set `onClick` to render a native button row.
  */
-export function Notification({ icon, title, description, time, unread = false, onClick, style, ...rest }) {
+export function Notification({
+  icon,
+  title,
+  description,
+  time,
+  unread = false,
+  onClick,
+  onFocus,
+  onBlur,
+  onMouseEnter,
+  onMouseLeave,
+  style,
+  ...rest
+}) {
+  const [hovered, setHovered] = React.useState(false);
+  const [focused, setFocused] = React.useState(false);
+  const Root = onClick ? 'button' : 'div';
+  const background = unread
+    ? hovered ? 'var(--color-semantic-primary-surface-strong)' : 'var(--component-notification-unread-surface)'
+    : hovered
+      ? 'var(--color-semantic-fill-alternative)'
+      : 'transparent';
+
   return (
-    <div
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      onClick={onClick}
-      style={{ display: 'flex', gap: 12, padding: '14px 16px', borderRadius: 'var(--radius-lg)', cursor: onClick ? 'pointer' : 'default', background: unread ? 'var(--lk-accent-tint)' : 'transparent', fontFamily: 'var(--font-sans)', ...style }}
+    <Root
       {...rest}
+      {...(onClick ? { type: 'button' } : {})}
+      onClick={onClick}
+      onFocus={(event) => { setFocused(true); onFocus && onFocus(event); }}
+      onBlur={(event) => { setFocused(false); onBlur && onBlur(event); }}
+      onMouseEnter={(event) => { if (onClick) setHovered(true); onMouseEnter && onMouseEnter(event); }}
+      onMouseLeave={(event) => { setHovered(false); onMouseLeave && onMouseLeave(event); }}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: icon != null ? '36px minmax(0, 1fr)' : 'minmax(0, 1fr)',
+        alignItems: 'start',
+        columnGap: 'var(--space-3)',
+        width: '100%',
+        minWidth: 0,
+        padding: 'var(--space-3) var(--space-4)',
+        boxSizing: 'border-box',
+        border: 'none',
+        borderRadius: 'inherit',
+        appearance: 'none',
+        cursor: onClick ? 'pointer' : 'default',
+        textAlign: 'start',
+        background,
+        boxShadow: focused ? 'inset 0 0 0 2px var(--color-semantic-primary-normal)' : 'none',
+        color: 'inherit',
+        fontFamily: 'var(--font-sans)',
+        ...style,
+      }}
     >
-      {icon != null && <span style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 'var(--radius-md)', background: unread ? 'var(--bw-white)' : 'var(--lk-accent-tint)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-semantic-primary-normal)' }}>{icon}</span>}
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 14.5, fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</span>
-          {unread && <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--bw-red)', flexShrink: 0 }} />}
+      {icon != null && (
+        <span style={{ width: 36, height: 36, borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-fill-normal)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-semantic-primary-normal)' }}>
+          {icon}
+        </span>
+      )}
+      <div style={{ minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0 }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0 }}>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-normal)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--label1-spacing)' }}>{title}</span>
+            {unread && <span aria-label="읽지 않음" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)', flexShrink: 0 }} />}
+          </span>
+          {time != null && <time style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', letterSpacing: 'var(--caption1-spacing)' }}>{time}</time>}
         </div>
-        {description != null && <div style={{ marginTop: 2, fontSize: 13, lineHeight: 1.55, color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
-        {time != null && <div style={{ marginTop: 4, fontSize: 12, color: 'var(--color-semantic-label-assistive)' }}>{time}</div>}
+        {description != null && <div style={{ marginTop: 'var(--space-1)', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', letterSpacing: 'var(--label2-spacing)', wordBreak: 'keep-all' }}>{description}</div>}
       </div>
-    </div>
+    </Root>
   );
 }

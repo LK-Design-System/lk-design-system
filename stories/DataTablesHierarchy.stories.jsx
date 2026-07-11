@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   DataGrid,
   StatusBadge,
@@ -27,7 +28,7 @@ const rows = [
 const statusTone = { '진행 중': 'positive', '검토 중': 'cautionary', 중지: 'offline' };
 
 function ProgressCell({ value }) {
-  const tone = value <= 20 ? 'var(--bw-red)' : value <= 50 ? 'var(--bw-amber)' : 'var(--color-semantic-primary-normal)';
+  const tone = value <= 20 ? 'var(--color-semantic-status-negative)' : value <= 50 ? 'var(--color-semantic-status-cautionary)' : 'var(--color-semantic-primary-normal)';
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10, width: '100%', minWidth: 112 }}>
       <span style={{ position: 'relative', width: 64, height: 5, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-strong)', overflow: 'hidden' }}>
@@ -70,6 +71,35 @@ export const TablePatterns = {
 
     </main>
   ),
+};
+
+export const ControlledCollectionStates = {
+  name: 'Controlled collection 상태',
+  render: () => {
+    const [sort, setSort] = React.useState({ key: 'id', dir: 'asc' });
+    const [selectedRows, setSelectedRows] = React.useState(['ITEM-212']);
+    return (
+      <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 1040 }}>
+        <DataGrid
+          columns={columns}
+          rows={rows}
+          getRowId={(row) => row.id}
+          selectable
+          selectedRows={selectedRows}
+          onSelectionChange={setSelectedRows}
+          sort={sort}
+          sortingMode="manual"
+          onSortChange={setSort}
+          onRowActivate={() => {}}
+        />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 'var(--space-3)' }}>
+          <DataGrid columns={columns.slice(0, 2)} rows={[]} loading loadingLabel="프로젝트를 불러오는 중" />
+          <DataGrid columns={columns.slice(0, 2)} rows={[]} emptyLabel="조건에 맞는 프로젝트가 없습니다." />
+          <DataGrid columns={columns.slice(0, 2)} rows={[]} error="목록을 불러오지 못했습니다." />
+        </div>
+      </main>
+    );
+  },
 };
 
 export const TableCard = { ...TableCardStory, name: 'Table card parity', tags: ['!dev', 'visual-parity'] };

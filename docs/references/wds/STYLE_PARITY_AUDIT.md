@@ -100,8 +100,8 @@ The findings below are kept as the audit record; each is now historical.
    while Input.jsx correctly consumes `--component-input-*`. Select and Input
    visibly disagree in the same form. `components/forms/Select.jsx:76,93,98`.
 6. **No `::placeholder` styling anywhere** — WDS placeholder = value color at
-   the 0.28 alpha step; `--label-assistive` is documented for placeholders in
-   `tokens/colors.css:133` but no `::placeholder` rule exists repo-wide.
+   the 0.28 alpha step; `--color-semantic-label-assistive` is the available
+   semantic role, but no `::placeholder` rule exists repo-wide.
 7. **Alert platform radii collapsed** — WDS Web r=12 / Android r=16; LDS 8 for
    both; widths 420/360 vs WDS 335/320; title 17px/800 vs WDS 18-20/600.
    `components/overlay/Alert.jsx` platform tables.

@@ -42,7 +42,7 @@ function AnchorBox({ label = 'target' }) {
         justifyContent: 'center',
         border: '1px solid var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-md)',
-        background: 'var(--bw-white)',
+        background: 'var(--color-semantic-background-elevated-normal)',
         color: 'var(--color-semantic-label-assistive)',
         fontSize: 11,
       }}
@@ -106,7 +106,7 @@ export const TooltipPatterns = {
             gridTemplateRows: '1fr 1fr 1fr',
             placeItems: 'center',
             borderRadius: 'var(--radius-lg)',
-            background: 'var(--bw-mist)',
+            background: 'var(--color-semantic-background-normal-alternative)',
             padding: 24,
           }}
         >

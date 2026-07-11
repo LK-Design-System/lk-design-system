@@ -864,7 +864,12 @@
             "icon choices must come from Icon registry"
           ],
           "localEvidence": [
-            "stories/EditorShell.stories.jsx#MapObjectSelected",
+            "stories/EditorShell.stories.jsx#WorkspaceRegions",
+            "stories/EditorCommandBar.stories.jsx#DocumentCommands",
+            "stories/EditorToolbar.stories.jsx#Vertical",
+            "stories/EditorLayerPanel.stories.jsx#Interactive",
+            "stories/EditorSelectionInspector.stories.jsx#SelectedObject",
+            "stories/EditorViewportStatusBar.stories.jsx#Readouts",
             "stories/EditorShell.stories.jsx#CanvasEditorShellEditorToolbarHistoryToolbarCard"
           ]
         }

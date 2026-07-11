@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-export interface PinInputProps {
+export interface PinInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 박스 수. @default 6 */
   length?: number;
   value?: string;
   defaultValue?: string;
+  /** Incomplete interior cells are serialized as spaces so their positions survive controlled updates. */
   onChange?: (value: string) => void;
   /** 모든 박스가 채워지면 발생. */
   onComplete?: (value: string) => void;

@@ -130,10 +130,10 @@ const templateItems = [
 ];
 
 const tokenGroups = [
-  ['브랜드 네이비', 'var(--bw-ink)', '텍스트와 다크 서피스의 기준'],
+  ['브랜드 네이비', 'var(--color-semantic-brand-ink)', '텍스트와 다크 서피스의 기준'],
   ['프라이머리 애저', 'var(--color-semantic-primary-normal)', '주요 CTA'],
   ['시그널 강조색', 'var(--color-semantic-primary-normal)', '링크, 활성 상태, 감지 신호'],
-  ['쿨 뉴트럴', 'var(--bw-gray)', '보조 텍스트와 미세 구분'],
+  ['쿨 뉴트럴', 'var(--color-semantic-label-alternative)', '보조 텍스트와 미세 구분'],
   ['상태 긍정', 'var(--color-semantic-status-positive)', '성공과 정상 상태'],
   ['상태 주의', 'var(--color-semantic-status-cautionary)', '주의와 점검 상태'],
   ['상태 위험', 'var(--color-semantic-status-negative)', '오류와 위험 상태'],
@@ -190,7 +190,7 @@ function StatusPill({ children }) {
         minHeight: 24,
         padding: '2px 9px',
         borderRadius: 'var(--radius-pill)',
-        background: 'var(--lk-accent-tint)',
+        background: 'var(--color-semantic-primary-surface-normal)',
         color: 'var(--color-semantic-primary-normal)',
         fontSize: 12,
         fontWeight: 800,
@@ -315,7 +315,7 @@ export const SourceInventory = {
         <Metric label="원본 지침" value={guidelineItems.length} caption="guidelines/*.html" />
         <Metric label="원본 요소 카드" value={componentItems.length} caption="components/**/*.card.html" />
         <Metric label="템플릿 카드" value={templateItems.length} caption="templates-cards/*.html" />
-        <Metric label="현재 컴포넌트" value="173" caption="React component entries" />
+        <Metric label="현재 컴포넌트" value="181" caption="React component entries" />
       </section>
 
       <Section

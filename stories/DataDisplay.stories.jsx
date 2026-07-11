@@ -38,9 +38,9 @@ export const ChartPatterns = {
           <DonutChart
             centerLabel="95%"
             segments={[
-              { label: '정상', value: 72, color: 'var(--bw-green)' },
-              { label: '검토', value: 18, color: 'var(--bw-amber)' },
-              { label: '중지', value: 5, color: 'var(--bw-red)' },
+              { label: '정상', value: 72, color: 'var(--color-semantic-status-positive)' },
+              { label: '검토', value: 18, color: 'var(--color-semantic-status-cautionary)' },
+              { label: '중지', value: 5, color: 'var(--color-semantic-status-negative)' },
             ]}
           />
         </div>

@@ -13,7 +13,7 @@ function CheckMark({ variant, checked, disabled }) {
           width: 14,
           height: 14,
           borderRadius: "50%",
-          border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
+          border: `1.5px solid ${checked ? activeColor : "var(--color-semantic-line-solid-normal)"}`,
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
@@ -40,7 +40,7 @@ function CheckMark({ variant, checked, disabled }) {
         width: 14,
         height: 14,
         borderRadius: 4,
-        border: `1.5px solid ${checked ? activeColor : "var(--bw-border)"}`,
+        border: `1.5px solid ${checked ? activeColor : "var(--color-semantic-line-solid-normal)"}`,
         background: checked ? activeColor : "transparent",
         color: disabled ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-inverse-label)",
         display: "inline-flex",
@@ -136,7 +136,7 @@ function MenuItemButton({
         fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
         letterSpacing: 0,
         color: item.danger
-          ? "var(--bw-red)"
+          ? "var(--color-semantic-status-negative)"
           : disabled
             ? "var(--color-semantic-label-disable)"
             : "var(--color-semantic-label-normal)",
@@ -247,8 +247,8 @@ export function DropdownMenu({
             minWidth: width,
             maxHeight,
             overflowY: maxHeight ? "auto" : undefined,
-            background: "var(--bw-white)",
-            border: "1px solid var(--bw-border)",
+            background: "var(--color-semantic-background-elevated-normal)",
+            border: "1px solid var(--color-semantic-line-solid-normal)",
             borderRadius: "var(--component-menu-radius)",
             boxShadow: "var(--shadow-md)",
             padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)",
@@ -265,7 +265,7 @@ export function DropdownMenu({
                 role="separator"
                 style={{
                   height: 1,
-                  background: "var(--bw-border)",
+                  background: "var(--color-semantic-line-solid-normal)",
                   margin: "6px 4px",
                 }}
               />
@@ -286,7 +286,7 @@ export function DropdownMenu({
                 display: "flex",
                 justifyContent: "flex-end",
                 padding: "8px 4px 2px",
-                borderTop: "1px solid var(--bw-border)",
+                borderTop: "1px solid var(--color-semantic-line-solid-normal)",
               }}
             >
               {action || (

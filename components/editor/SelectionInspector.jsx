@@ -1,13 +1,25 @@
 import React from 'react';
-import { Button } from '../buttons/Button.jsx';
+import { ActionArea } from '../buttons/ActionArea.jsx';
+import { IconButton } from '../buttons/IconButton.jsx';
 import { StatusBadge } from '../content/StatusBadge.jsx';
+import { Tag } from '../feedback/Tag.jsx';
 import { Icon } from '../icon/Icon.jsx';
 
+function displayValue(value, mixed) {
+  if (mixed || value == null || value === '') return '—';
+  if (typeof value === 'boolean') return String(value);
+  return value;
+}
+
 function FieldValue({ field }) {
-  const toneColor = 'var(--color-semantic-label-strong)';
+  const toneColor = {
+    warning: 'var(--color-semantic-status-cautionary-text)',
+    danger: 'var(--color-semantic-status-negative-text)',
+  }[field.tone] || (field.mixed ? 'var(--color-semantic-label-neutral)' : 'var(--color-semantic-label-strong)');
+  const align = field.align ?? (typeof field.value === 'number' ? 'right' : 'left');
 
   return (
-    <strong
+    <span
       style={{
         minWidth: 0,
         overflow: 'hidden',
@@ -16,66 +28,97 @@ function FieldValue({ field }) {
         color: toneColor,
         fontSize: 'var(--label2-size)',
         lineHeight: 'var(--label2-line)',
-        fontWeight: 'var(--fw-bold)',
+        fontWeight: field.mixed ? 'var(--fw-medium)' : 'var(--fw-semibold)',
         letterSpacing: 0,
-        textAlign: 'right',
+        textAlign: align,
         fontVariantNumeric: 'tabular-nums',
       }}
     >
-      {field.value}
-      {field.unit != null && (
-        <span style={{ marginLeft: 3, color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-medium)' }}>
+      {displayValue(field.value, field.mixed)}
+      {!field.mixed && field.unit != null && (
+        <span style={{ marginLeft: 'var(--space-1)', color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-medium)' }}>
           {field.unit}
         </span>
       )}
-    </strong>
+    </span>
+  );
+}
+
+function InspectorFields({ fields = [] }) {
+  return (
+    <div>
+      {fields.map((field, index) => (
+        <div
+          key={`${field.label}-${index}`}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(88px, 0.8fr) minmax(0, 1.2fr)',
+            alignItems: 'center',
+            gap: 'var(--space-3)',
+            minHeight: 'var(--control-h-md)',
+            padding: 'var(--space-2) 0',
+            borderBottom: '1px solid var(--color-semantic-line-normal-alternative)',
+            boxSizing: 'border-box',
+          }}
+        >
+          <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-medium)', letterSpacing: 0 }}>
+            {field.label}
+          </span>
+          {field.valueNode != null
+            ? displayValue(field.valueNode, field.mixed)
+            : <FieldValue field={field} />}
+        </div>
+      ))}
+    </div>
   );
 }
 
 function InspectorSection({ section }) {
-  return (
-    <section style={{ display: 'grid', gap: 0, minWidth: 0 }}>
-      {section.title != null && (
-        <h4 style={{ margin: '14px 0 5px', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-extra)', letterSpacing: 1.2, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)' }}>
-          {section.title}
-        </h4>
-      )}
-      <div style={{ borderTop: '1px solid var(--color-semantic-line-normal-normal)' }}>
-        {(section.fields || []).map((field, index) => (
-          <div
-            key={`${field.label}-${index}`}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'minmax(72px, 0.8fr) minmax(0, 1fr)',
-              alignItems: 'center',
-              gap: 10,
-              minHeight: 34,
-              padding: '7px 0',
-              borderBottom: '1px solid var(--color-semantic-line-normal-normal)',
-              boxSizing: 'border-box',
-            }}
-          >
-            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-medium)', letterSpacing: 0 }}>
-              {field.label}
-            </span>
-            {field.valueNode || <FieldValue field={field} />}
-          </div>
-        ))}
-      </div>
+  const collapsible = section.collapsible !== false && section.title != null;
+  const [expanded, setExpanded] = React.useState(section.defaultExpanded !== false);
+  const contentId = React.useId();
+  const content = (
+    <div id={contentId} hidden={collapsible && !expanded}>
+      <InspectorFields fields={section.fields} />
       {section.children}
+    </div>
+  );
+
+  return (
+    <section style={{ minWidth: 0, borderTop: '1px solid var(--color-semantic-line-normal-alternative)' }}>
+      {section.title != null && (
+        collapsible ? (
+          <button
+            type="button"
+            aria-expanded={expanded}
+            aria-controls={contentId}
+            onClick={() => setExpanded((value) => !value)}
+            style={{ width: '100%', minHeight: 40, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', padding: 0, border: 0, background: 'transparent', color: 'var(--color-semantic-label-strong)', fontFamily: 'var(--font-sans)', cursor: 'pointer', textAlign: 'left' }}
+          >
+            <span style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-bold)' }}>{section.title}</span>
+            <Icon name={expanded ? 'chevron-up-small' : 'chevron-down-small'} size={16} aria-hidden="true" />
+          </button>
+        ) : (
+          <h4 style={{ minHeight: 40, display: 'flex', alignItems: 'center', margin: 0, fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)' }}>
+            {section.title}
+          </h4>
+        )
+      )}
+      {content}
     </section>
   );
 }
 
 /**
  * LK ROBOTICS - SelectionInspector
- * Right-side property inspector for a selected map object, point-cloud region,
- * annotation, robot pose, waypoint, lane, or 3D crop volume.
+ * Selection-bound properties region for map, scene, annotation, and robotics
+ * editor objects. The fixed identity header stays visible while sections scroll.
  */
 export function SelectionInspector({
   item,
+  selectionCount,
   title = '선택 객체',
-  emptyLabel = '선택된 객체가 없습니다',
+  emptyLabel = '선택한 객체가 없습니다',
   sections = [],
   actions,
   onClearSelection,
@@ -86,75 +129,79 @@ export function SelectionInspector({
   ...rest
 }) {
   const hasItem = item != null;
+  const count = selectionCount ?? (hasItem ? 1 : 0);
   const canClearSelection = hasItem && typeof onClearSelection === 'function';
+  const selectionName = count > 1 ? `${count}개 객체 선택` : item?.label;
 
   return (
-    <aside
+    <section
+      aria-label={typeof title === 'string' ? title : '선택 객체 속성'}
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'grid',
+        gridTemplateRows: hasItem && actions != null ? 'auto minmax(0, 1fr) auto' : 'auto minmax(0, 1fr)',
         width: '100%',
         minWidth: 0,
         height: '100%',
-        minHeight: '100%',
+        minHeight: 0,
         overflow: 'hidden',
         boxSizing: 'border-box',
+        background: 'var(--color-semantic-background-elevated-normal)',
         fontFamily: 'var(--font-sans)',
         ...style,
       }}
       {...rest}
     >
-      <div style={{ flex: 1, minHeight: 0, overflow: 'auto', display: 'grid', alignContent: 'start', gap: 12, padding: 16, boxSizing: 'border-box' }}>
-        <header style={{ display: 'grid', gap: 4, minWidth: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', minWidth: 0 }}>
-            <span style={{ minWidth: 0, fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-extra)', letterSpacing: 1.2, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)' }}>
-              {title}
-            </span>
-            {canClearSelection && (
-              <Button
-                type="button"
-                size="sm"
-                variant="outlined"
-                color="assistive"
-                aria-label={clearSelectionAriaLabel}
-                onClick={onClearSelection}
-              >
-                <Icon name="close" size={14} aria-hidden="true" />
-                {clearSelectionLabel}
-              </Button>
-            )}
-          </div>
-          {hasItem ? (
-            <div style={{ display: 'grid', gap: 6, minWidth: 0 }}>
-              <div style={{ minWidth: 0 }}>
-                <h3 style={{ minWidth: 0, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', letterSpacing: 0 }}>
-                  {item.label}
-                </h3>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0, flexWrap: 'wrap' }}>
-                {item.kind != null && (
-                  <span style={{ height: 20, display: 'inline-flex', alignItems: 'center', padding: '0 6px', borderRadius: 4, background: 'var(--color-semantic-fill-normal)', color: 'var(--color-semantic-label-neutral)', fontSize: 12, lineHeight: '20px', fontWeight: 'var(--fw-semibold)' }}>
-                    {item.kind}
-                  </span>
-                )}
-                {item.status != null && <StatusBadge tone={item.statusTone || 'signal'}>{item.status}</StatusBadge>}
-              </div>
-            </div>
-          ) : (
-            <div style={{ minHeight: 128, display: 'grid', placeItems: 'center', padding: 16, border: '1px dashed var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-medium)', textAlign: 'center' }}>
-              {emptyLabel}
-            </div>
+      <header style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0, padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--color-semantic-line-normal-normal)', boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', minWidth: 0 }}>
+          <strong style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)' }}>
+            {title}
+          </strong>
+          {canClearSelection && (
+            <IconButton
+              type="button"
+              size="sm"
+              variant="ghost"
+              round={false}
+              label={clearSelectionAriaLabel}
+              title={typeof clearSelectionLabel === 'string' ? clearSelectionLabel : clearSelectionAriaLabel}
+              onClick={onClearSelection}
+            >
+              <Icon name="close" size={16} aria-hidden="true" />
+            </IconButton>
           )}
-        </header>
-
-        {hasItem && sections.map((section, index) => <InspectorSection key={`${section.title || 'section'}-${index}`} section={section} />)}
-        {hasItem && children}
-      </div>
-      {hasItem && actions != null && (
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end', padding: '12px 16px', borderTop: '1px solid var(--color-semantic-line-normal-normal)', background: 'var(--color-semantic-background-elevated-normal)', boxSizing: 'border-box' }}>
-          {actions}
         </div>
+        {hasItem && (
+          <div style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0 }}>
+            <h3 style={{ minWidth: 0, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', letterSpacing: 0 }}>
+              {selectionName}
+            </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0, flexWrap: 'wrap' }}>
+              {item.kind != null && <Tag tone="neutral">{item.kind}</Tag>}
+              {item.status != null && <StatusBadge tone={item.statusTone || 'signal'}>{item.status}</StatusBadge>}
+            </div>
+          </div>
+        )}
+      </header>
+
+      <div style={{ minHeight: 0, overflow: 'auto', padding: hasItem ? '0 var(--space-4) var(--space-4)' : 'var(--space-4)', boxSizing: 'border-box' }}>
+        {hasItem ? (
+          <>
+            {sections.map((section, index) => <InspectorSection key={`${section.title || 'section'}-${index}`} section={section} />)}
+            {children}
+          </>
+        ) : (
+          <div role="status" style={{ minHeight: 180, display: 'grid', placeItems: 'center', alignContent: 'center', gap: 'var(--space-3)', color: 'var(--color-semantic-label-neutral)', textAlign: 'center' }}>
+            <Icon name="crosshair" size={24} aria-hidden="true" />
+            <span style={{ maxWidth: 220, fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-medium)' }}>{emptyLabel}</span>
+          </div>
+        )}
+      </div>
+
+      {hasItem && actions != null && (
+        <ActionArea compact align="end">
+          {actions}
+        </ActionArea>
       )}
-    </aside>
+    </section>
   );
 }

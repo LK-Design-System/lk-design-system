@@ -7,7 +7,7 @@ import React from 'react';
  */
 export function Toolbar({ children, style, ...rest }) {
   return (
-    <div role="toolbar" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: 6, background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-xs)', ...style }} {...rest}>
+    <div role="toolbar" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: 6, background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-xs)', ...style }} {...rest}>
       {children}
     </div>
   );

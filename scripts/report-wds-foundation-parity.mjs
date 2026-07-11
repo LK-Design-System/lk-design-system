@@ -7,7 +7,7 @@
  * Scope — only the layers where value equality is meaningful:
  *   • Typography  — 16 named text styles (size / line / letter-spacing / weight)
  *   • Grid        — columns, gutter, margin, container tiers, content width, breakpoints
- *   • Opacity     — the alpha ladder (structural coverage vs colors.css)
+ *   • Opacity     — the alpha ladder (structural coverage vs generated color CSS)
  *
  * Intentionally NOT value-diffed (reported for context only):
  *   • Color values — LK rebrand (roles compared elsewhere)
@@ -130,7 +130,11 @@ function extractOpacity() {
 // ---- LDS TOKEN parsing -----------------------------------------------------
 const typoCss = readFileSync('tokens/typography.css', 'utf8');
 const gridCss = readFileSync('tokens/grid.css', 'utf8');
-const colorsCss = readFileSync('tokens/colors.css', 'utf8');
+const colorsCss = [
+  readFileSync('tokens/color-atomic.css', 'utf8'),
+  readFileSync('tokens/color-semantic.css', 'utf8'),
+  readFileSync('tokens/color-components.css', 'utf8'),
+].join('\n');
 function tok(css, name) { const m = css.match(new RegExp('--' + name + ':\\s*([^;]+);')); return m ? m[1].trim() : null; }
 function typeClassWeight(cls) { const m = typoCss.match(new RegExp('\\.type-' + cls + '\\s*\\{[^}]*font-weight:\\s*(\\d+)')); return m ? Number(m[1]) : null; }
 
@@ -211,7 +215,7 @@ const colorAlphas = new Set([...colorsCss.matchAll(/rgba\([^)]*?,\s*(0?\.\d+)\)/
 const covered = wdsOpacity.filter((o) => o === 0 || o === 100 || colorAlphas.has(o));
 p(`WDS opacity steps: ${wdsOpacity.join(', ')}`);
 p('');
-p(`Present in colors.css alpha ladder: ${covered.length}/${wdsOpacity.length} — missing: ${wdsOpacity.filter((o) => !covered.includes(o)).join(', ') || 'none'}`);
+p(`Present in generated color CSS alpha ladder: ${covered.length}/${wdsOpacity.length} — missing: ${wdsOpacity.filter((o) => !covered.includes(o)).join(', ') || 'none'}`);
 p('');
 
 // Non-diffable context

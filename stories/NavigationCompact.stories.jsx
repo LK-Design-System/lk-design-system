@@ -38,7 +38,7 @@ export const PaginationPatterns = {
           <PageIndicator page={1} count={10} size="medium" />
           <PageIndicator page={1} count={10} alternative />
           <PageIndicator variant="dot" page={1} count={6} size="small" />
-          <span style={{ display: 'inline-flex', padding: 8, borderRadius: 10, background: 'var(--bw-gray)' }}>
+          <span style={{ display: 'inline-flex', padding: 8, borderRadius: 10, background: 'var(--color-semantic-label-alternative)' }}>
             <PageIndicator variant="dot" page={1} count={6} alternative />
           </span>
         </div>

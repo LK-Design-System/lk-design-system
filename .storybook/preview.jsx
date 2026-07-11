@@ -12,8 +12,8 @@ const canvasShell = {
   minHeight: '100vh',
   boxSizing: 'border-box',
   padding: 'clamp(16px, 5vw, 32px)',
-  background: 'var(--surface-page)',
-  color: 'var(--text-body)',
+  background: 'var(--color-semantic-background-normal-normal)',
+  color: 'var(--color-semantic-label-normal)',
   fontFamily: 'var(--font-sans)',
 };
 

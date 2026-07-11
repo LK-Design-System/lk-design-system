@@ -1,16 +1,27 @@
-**ViewportStatusBar** - Passive bottom readout row for 2D and 3D editor viewports.
-
-Use it for cursor pose, zoom/camera, selected count, snap state, point count, FPS, stale state, and compact status values.
+**ViewportStatusBar** - Passive, viewport-local readouts in one prioritized line.
 
 ```jsx
 <ViewportStatusBar
+  message="선택 영역을 계산했습니다."
   items={[
-    { label: 'mode', value: 'select' },
-    { label: 'cursor', value: 'x 12.4 / y -3.8', mono: true },
-    { label: 'zoom', value: 125, unit: '%' },
+    { label: '모드', value: '선택', priority: 'high' },
+    { label: '선택', value: 2, priority: 'high' },
+    { label: '커서', value: 'x 12.4 / y -3.8', mono: true },
+    { label: 'FPS', value: 60, priority: 'low' },
   ]}
 />
 ```
 
-- Keep this bar passive. Put history, save, reset, and destructive actions in `CanvasEditorShell.toolbar` or an inspector action slot.
-- Use `mono` for coordinates, camera values, and high-frequency numeric telemetry to reduce jitter.
+- `items` are persistent passive readouts. They are deliberately not a live region, so cursor, camera, and FPS updates do not continuously interrupt screen-reader users.
+- `message` is for a short viewport-local outcome or hint and uses a polite, atomic `status` live region. Persistent connection or document state belongs in the owning shell/header instead.
+- `priority="high"` items render first and resist shrinking; `low` items render last and yield first. Source order is preserved within each priority tier.
+- The bar never wraps. It uses spacing instead of independent divider nodes, preventing orphaned separators when space contracts.
+- Use `mono` for coordinates, camera values, and frequently changing numeric telemetry. Toned values always include a visible semantic label; customize it with `toneLabel`/`messageToneLabel`.
+- Keep this bar passive. History, save, reset, viewport controls, and destructive actions belong in their respective command surfaces. `children` remains only as a deprecated passive-status compatibility slot.
+
+## Research basis
+
+- [Blender Manual: Status Bar](https://docs.blender.org/manual/fi/5.0/interface/window_system/status_bar.html) places contextual shortcuts, messages, and scene statistics in a compact bottom region. LDS separates a transient message from persistent telemetry while keeping both local to the viewport.
+- [Unity Manual: Learning the Interface](https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html) establishes a dominant scene viewport with stable surrounding editor chrome. LDS therefore omits document actions from the status surface and keeps view-specific readouts subordinate to the viewport.
+
+This is an **LK Robotics Extension**, not WDS parity. Interactive scrubbers, transport controls, global connection health, and application workflow progress are intentionally outside this primitive.

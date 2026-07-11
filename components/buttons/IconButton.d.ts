@@ -1,8 +1,8 @@
 import * as React from "react";
 
-export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IconButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'aria-label'> {
   /** Visual action variant mapped through LK theme tokens. @default "soft" */
-  variant?: "soft" | "solid" | "signal" | "ghost" | "on-dark";
+  variant?: "soft" | "solid" | "signal" | "ghost" | "plain" | "on-dark";
   /** Square control size in px or size key. @default "medium" */
   size?: number | "custom" | "small" | "sm" | "medium" | "md";
   /** alternative inverse treatment. @default false */
@@ -18,4 +18,4 @@ export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
 }
 
 /** Action/Icon Button primitive for icon-only one-shot actions. */
-export function IconButton(props: IconButtonProps): JSX.Element;
+export function IconButton(props: IconButtonProps): React.JSX.Element;

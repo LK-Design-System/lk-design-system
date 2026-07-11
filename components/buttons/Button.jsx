@@ -10,6 +10,7 @@ import { Spinner } from '../status/Spinner.jsx';
  *
  * variant: primary (LK azure — brand) · secondary (graphite) · signal (LK cyan-ink) ·
  *          dark (navy) · flat (cool-gray) · ghost (hairline) · on-dark (translucent, for navy sections)
+ *          · danger (LDS safety extension; not a WDS parity axis)
  */
 export function Button({
   children,
@@ -112,13 +113,14 @@ export function Button({
     primary: { bg: 'var(--component-button-primary-bg)', bgHover: 'var(--component-button-primary-bg-hover)', fg: 'var(--component-button-primary-fg)', bd: 'none', elevated: true },
     secondary: { bg: 'var(--component-button-secondary-bg)', bgHover: 'var(--component-button-secondary-bg-hover)', fg: 'var(--component-button-secondary-fg)', bd: 'none', elevated: true },
     signal: { bg: 'var(--component-button-signal-bg)', bgHover: 'var(--component-button-signal-bg-hover)', fg: 'var(--component-button-signal-fg)', bd: 'none', elevated: true },
+    danger: { bg: 'var(--component-button-danger-bg)', bgHover: 'var(--component-button-danger-bg-hover)', fg: 'var(--component-button-danger-fg)', bd: 'none', elevated: false },
     dark: { bg: 'var(--component-button-dark-bg)', bgHover: 'var(--component-button-dark-bg-hover)', fg: 'var(--component-button-dark-fg)', bd: 'none', elevated: true },
     flat: { bg: 'var(--component-button-flat-bg)', bgHover: 'var(--component-button-flat-bg-hover)', fg: 'var(--component-button-flat-fg)', bd: 'none', elevated: false },
     ghost: { bg: 'var(--component-button-ghost-bg)', bgHover: 'var(--component-button-ghost-bg-hover)', fg: 'var(--component-button-ghost-fg)', bd: 'var(--component-button-ghost-border)', bdHover: 'var(--component-button-ghost-border-hover)', elevated: false },
     'on-dark': { bg: 'var(--component-button-on-dark-bg)', bgHover: 'var(--component-button-on-dark-bg-hover)', fg: 'var(--component-button-on-dark-fg)', bd: 'var(--component-button-on-dark-border)', elevated: false },
     'solid-primary': { bg: 'var(--component-button-primary-bg)', bgHover: 'var(--component-button-primary-bg-hover)', fg: 'var(--component-button-primary-fg)', bd: 'none', elevated: true },
     'solid-assistive': { bg: 'var(--component-button-flat-bg)', bgHover: 'var(--component-button-flat-bg-hover)', fg: 'var(--component-button-flat-fg)', bd: 'none', elevated: false },
-    'outlined-primary': { bg: 'transparent', bgHover: 'var(--lk-accent-tint)', fg: 'var(--color-semantic-primary-normal)', bd: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', bdHover: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', elevated: false },
+    'outlined-primary': { bg: 'transparent', bgHover: 'var(--color-semantic-primary-surface-normal)', fg: 'var(--color-semantic-primary-normal)', bd: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', bdHover: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', elevated: false },
     'outlined-assistive': { bg: 'transparent', bgHover: 'var(--color-semantic-fill-normal)', fg: 'var(--color-semantic-label-normal)', bd: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', bdHover: 'var(--border-thin) solid var(--color-semantic-line-solid-normal)', elevated: false },
   };
   const p = palettes[wdsVariant] || palettes.primary;

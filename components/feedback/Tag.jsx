@@ -1,14 +1,14 @@
 import React from 'react';
 
 const TONES = {
-  signal:  { fg: 'var(--color-semantic-primary-normal)', bg: 'var(--lk-accent-tint-2)' },  // brand teal chip (default)
+  signal:  { fg: 'var(--color-semantic-primary-normal)', bg: 'var(--color-semantic-primary-surface-strong)' },  // brand teal chip (default)
   neutral: { fg: 'var(--color-semantic-label-strong)', bg: 'var(--color-semantic-fill-strong)', solidBg: 'var(--color-semantic-inverse-background)' }, // ink neutral
-  steel:   { fg: 'var(--bw-steel)', bg: 'var(--bw-indigo-tint)' },
-  amber:   { fg: 'var(--color-semantic-status-cautionary)', bg: 'var(--status-cautionary-tint)' },
-  red:     { fg: 'var(--color-semantic-status-negative)', bg: 'var(--status-danger-tint)' },
+  steel:   { fg: 'var(--color-semantic-accent-foreground-blue)', bg: 'var(--color-semantic-secondary-surface)' },
+  amber:   { fg: 'var(--color-semantic-data-viz-series-5)', bg: 'color-mix(in srgb, var(--color-semantic-data-viz-series-5) 14%, transparent)' },
+  red:     { fg: 'var(--color-semantic-accent-foreground-red)', bg: 'color-mix(in srgb, var(--color-semantic-accent-foreground-red) 14%, transparent)' },
   // back-compat aliases (live site uses tone="indigo")
   indigo:  { fg: 'var(--color-semantic-label-strong)', bg: 'var(--color-semantic-fill-strong)', solidBg: 'var(--color-semantic-inverse-background)' },
-  green:   { fg: 'var(--color-semantic-status-positive)', bg: 'var(--status-positive-tint)' },
+  green:   { fg: 'var(--color-semantic-data-viz-series-4)', bg: 'color-mix(in srgb, var(--color-semantic-data-viz-series-4) 14%, transparent)' },
   ink:     { fg: 'var(--color-semantic-label-strong)', bg: 'var(--color-semantic-fill-strong)', solidBg: 'var(--color-semantic-inverse-background)' },
 };
 

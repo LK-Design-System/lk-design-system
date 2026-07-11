@@ -43,7 +43,7 @@ export function Skeleton({
   /* Light tone: WDS uses white@28%; --inverse-fill-normal (12%) is the closest
      available token — kept rather than hardcoding an rgba literal. */
   const shimmer = customColor ? `linear-gradient(90deg, ${customColor} 25%, color-mix(in srgb, ${customColor} 84%, white) 37%, ${customColor} 63%)` : normalizedTone === 'light'
-    ? 'linear-gradient(90deg, var(--inverse-fill-normal) 25%, var(--inverse-line-strong) 37%, var(--inverse-fill-normal) 63%)'
+    ? 'linear-gradient(90deg, var(--color-semantic-inverse-fill-normal) 25%, var(--color-semantic-inverse-line-strong) 37%, var(--color-semantic-inverse-fill-normal) 63%)'
     : 'linear-gradient(90deg, var(--color-semantic-fill-normal) 25%, var(--color-semantic-fill-strong) 37%, var(--color-semantic-fill-normal) 63%)';
   const base = {
     background: shimmer,

@@ -44,7 +44,7 @@ const platformStyle = {
 const variantColor = {
   normal: "var(--color-semantic-primary-normal)",
   assistive: "var(--color-semantic-label-neutral)",
-  negative: "var(--bw-red)",
+  negative: "var(--color-semantic-status-negative)",
 };
 
 function normalizeVariant(value) {
@@ -139,7 +139,7 @@ export function Alert({
         style={{
           width: "100%",
           maxWidth: p.maxWidth,
-          background: "var(--bw-white)",
+          background: "var(--color-semantic-background-elevated-normal)",
           borderRadius: p.radius,
           boxShadow: "var(--shadow-xl)",
           padding: p.padding,

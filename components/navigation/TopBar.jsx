@@ -19,9 +19,9 @@ export function TopBar({ brand, children, actions, navAlign = 'start', sticky = 
         display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 20px)',
         width: '100%', maxWidth: '100%', minWidth: 0, overflow: 'hidden',
         height, paddingInline: 'clamp(16px, 4vw, 32px)', boxSizing: 'border-box',
-        background: dark ? 'linear-gradient(135deg, var(--lk-navy-from), var(--lk-navy-to))' : (sticky ? 'color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)' : 'var(--color-semantic-background-elevated-normal)'),
+        background: dark ? 'linear-gradient(135deg, var(--color-semantic-brand-canvas-from), var(--color-semantic-brand-canvas-to))' : (sticky ? 'color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)' : 'var(--color-semantic-background-elevated-normal)'),
         color: dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-normal)',
-        borderBottom: bordered ? `1px solid ${dark ? 'var(--inverse-fill-normal)' : 'var(--color-semantic-line-normal-normal)'}` : 'none',
+        borderBottom: bordered ? `1px solid ${dark ? 'var(--color-semantic-inverse-fill-normal)' : 'var(--color-semantic-line-normal-normal)'}` : 'none',
         backdropFilter: sticky ? 'saturate(150%) blur(8px)' : 'none',
         WebkitBackdropFilter: sticky ? 'saturate(150%) blur(8px)' : 'none',
         fontFamily: 'var(--font-sans)', ...style,
@@ -62,7 +62,7 @@ export function TopBarNavItem({ children, active = false, href, menuItems, menuT
     ? (onDark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-primary-normal)')
     : activeOrHover
       ? (onDark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-strong)')
-      : (onDark ? 'var(--inverse-label-neutral)' : 'var(--color-semantic-label-alternative)');
+      : (onDark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)');
 
   return (
     <span
@@ -184,7 +184,7 @@ export function TopBarNavItem({ children, active = false, href, menuItems, menuT
                   textAlign: 'left',
                   textDecoration: 'none',
                 }}
-                onMouseEnter={(event) => { event.currentTarget.style.background = 'var(--bw-mist)'; }}
+                onMouseEnter={(event) => { event.currentTarget.style.background = 'var(--color-semantic-background-normal-alternative)'; }}
                 onMouseLeave={(event) => { event.currentTarget.style.background = 'transparent'; }}
               >
                 {item.label}

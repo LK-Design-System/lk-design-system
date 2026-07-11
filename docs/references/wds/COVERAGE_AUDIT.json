@@ -62,7 +62,7 @@
             "stories/FoundationBasic.stories.jsx",
             "stories/FoundationsTypography.stories.jsx",
             "components/layout/AspectRatio.jsx",
-            "tokens/colors.css",
+            "tokens/color-semantic.css",
             "tokens/typography.css",
             "tokens/spacing.css",
             "tokens/source.json",

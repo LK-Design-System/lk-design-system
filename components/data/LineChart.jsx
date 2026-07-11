@@ -2,11 +2,11 @@ import React from 'react';
 import { Legend } from './Legend.jsx';
 
 const PALETTE = [
-  'var(--color-semantic-primary-normal)',
-  'var(--color-semantic-status-positive)',
-  'var(--color-semantic-status-cautionary)',
-  'var(--color-semantic-status-negative)',
-  'var(--color-semantic-accent-foreground-violet)',
+  'var(--color-semantic-data-viz-series-1)',
+  'var(--color-semantic-data-viz-series-2)',
+  'var(--color-semantic-data-viz-series-3)',
+  'var(--color-semantic-data-viz-series-4)',
+  'var(--color-semantic-data-viz-series-5)',
 ];
 
 function isFiniteNumber(value) {
@@ -238,7 +238,7 @@ export function LineChart({
           .filter((line) => isFiniteNumber(line.y) && Number(line.y) >= yMin && Number(line.y) <= yMax)
           .map((line, index) => {
             const y = sy(Number(line.y));
-            const color = line.color || 'var(--color-semantic-status-cautionary)';
+            const color = line.color || 'var(--color-semantic-data-viz-series-5)';
             return (
               <g key={line.id ?? line.label ?? index}>
                 <line

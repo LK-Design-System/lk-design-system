@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface NumberFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'defaultValue' | 'size'> {
+export interface NumberFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'defaultValue' | 'size' | 'type'> {
   value?: number;
   defaultValue?: number;
   min?: number;

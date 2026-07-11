@@ -7,33 +7,69 @@ import { Calendar } from '../data/Calendar.jsx';
  * component). Controlled (`value`) or uncontrolled (`defaultValue`); closes on
  * outside-click and on selection.
  */
-export function DatePicker({ value, defaultValue, onChange, placeholder = '날짜 선택', size = 'md', style, ...rest }) {
+export function DatePicker({ value, defaultValue, onChange, placeholder = '날짜 선택', size = 'md', disabled = false, style, 'aria-label': ariaLabel, onKeyDown, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue || null);
   const sel = isControlled ? value : internal;
   const [open, setOpen] = React.useState(false);
+  const [focused, setFocused] = React.useState(false);
   const ref = React.useRef(null);
+  const buttonRef = React.useRef(null);
+  const popupId = React.useId();
+  const expanded = open && !disabled;
   React.useEffect(() => {
     if (!open) return undefined;
     const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, [open]);
+  React.useEffect(() => {
+    if (disabled && open) setOpen(false);
+  }, [disabled, open]);
   const fmt = (d) => { if (!d) return ''; const dt = d instanceof Date ? d : new Date(d); return `${dt.getFullYear()}. ${String(dt.getMonth() + 1).padStart(2, '0')}. ${String(dt.getDate()).padStart(2, '0')}`; };
   const h = size === 'sm' ? 40 : 50;
-  const pick = (d) => { if (!isControlled) setInternal(d); onChange && onChange(d); setOpen(false); };
+  const formattedValue = sel ? fmt(sel) : '';
+  const triggerLabel = `${ariaLabel ?? placeholder}${formattedValue ? `, ${formattedValue}` : ''}`;
+  const pick = (d) => {
+    if (!isControlled) setInternal(d);
+    onChange?.(d);
+    setOpen(false);
+    window.requestAnimationFrame(() => buttonRef.current?.focus());
+  };
   return (
-    <div ref={ref} style={{ position: 'relative', display: 'inline-block', ...style }} {...rest}>
+    <div
+      ref={ref}
+      style={{ position: 'relative', display: 'inline-block', ...style }}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (event.defaultPrevented) return;
+        if (event.key === 'Escape' && open) {
+          event.preventDefault();
+          setOpen(false);
+          buttonRef.current?.focus();
+        }
+      }}
+      {...rest}
+    >
       <button
-        type="button" onClick={() => setOpen((o) => !o)}
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: h, padding: '0 14px', minWidth: 200, background: 'var(--bw-white)', border: `1px solid ${open ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, borderRadius: 'var(--radius-input)', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 15, color: sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-assistive)' }}
+        ref={buttonRef}
+        type="button"
+        disabled={disabled}
+        aria-label={triggerLabel}
+        aria-haspopup="dialog"
+        aria-expanded={expanded}
+        aria-controls={expanded ? popupId : undefined}
+        onClick={() => setOpen((current) => !current)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: h, padding: '0 14px', minWidth: 200, background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', border: `1px solid ${focused || open ? 'var(--component-input-border-color-focus)' : 'var(--component-input-border-color)'}`, borderRadius: 'var(--component-input-radius)', boxShadow: focused || open ? 'var(--component-input-focus-shadow)' : 'none', cursor: disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', color: disabled ? 'var(--color-semantic-label-disable)' : sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-assistive)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5" /><path d="M3 9.5h18M8 2.5v4M16 2.5v4" /></svg>
-        <span style={{ flex: 1, textAlign: 'left' }}>{sel ? fmt(sel) : placeholder}</span>
+        <span style={{ flex: 1, textAlign: 'left' }}>{formattedValue || placeholder}</span>
       </button>
-      {open && (
-        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 40 }}>
-          <Calendar value={sel || undefined} onChange={pick} />
+      {expanded && (
+        <div id={popupId} role="dialog" aria-label={ariaLabel ?? placeholder} style={{ position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 40 }}>
+          <Calendar value={sel || undefined} onChange={pick} autoFocus />
         </div>
       )}
     </div>

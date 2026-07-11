@@ -27,11 +27,11 @@ export function Sheet({ open = false, title, children, footer, onClose, closeOnS
     >
       <div
         role="dialog" aria-modal="true" aria-label={typeof title === 'string' ? title : undefined}
-        style={{ position: 'absolute', left: 0, right: 0, bottom: 0, maxHeight: '88vh', height, display: 'flex', flexDirection: 'column', background: 'var(--bw-white)', borderTopLeftRadius: 'var(--radius-3xl)', borderTopRightRadius: 'var(--radius-3xl)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : 'translateY(100%)', transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
+        style={{ position: 'absolute', left: 0, right: 0, bottom: 0, maxHeight: '88vh', height, display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', borderTopLeftRadius: 'var(--radius-3xl)', borderTopRightRadius: 'var(--radius-3xl)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : 'translateY(100%)', transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
         {...rest}
       >
         <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 10 }}>
-          <span style={{ width: 40, height: 4, borderRadius: 'var(--radius-pill)', background: 'var(--bw-gray-300)' }} />
+          <span style={{ width: 40, height: 4, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-interaction-inactive)' }} />
         </div>
         {title != null && <div style={{ padding: '14px 22px 4px', fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</div>}
         <div style={{ flex: 1, padding: '14px 22px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>

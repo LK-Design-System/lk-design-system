@@ -52,7 +52,7 @@ export const AvatarCard = {
   name: 'Avatar card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <Avatar name="LK" size={40} status="online" />
         <Avatar name="Han Kim" size={40} />
@@ -67,7 +67,7 @@ export const AvatarGroupCard = {
   name: 'AvatarGroup card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <AvatarGroup max={4} items={[{ name: '김' }, { name: '이' }, { name: '박' }, { name: '최' }, { name: '정' }, { name: '한' }]} />
     </div>
   ),
@@ -77,15 +77,15 @@ export const BadgeCard = {
   name: 'Badge card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <Badge tone="signal">3</Badge>
         <Badge tone="navy">12</Badge>
         <Badge tone="red">!</Badge>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 14, color: 'var(--bw-gray)' }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 14, color: 'var(--color-semantic-label-alternative)' }}>
           <Badge tone="signal" dot /> 활성
         </span>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 14, color: 'var(--bw-gray)' }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 14, color: 'var(--color-semantic-label-alternative)' }}>
           <Badge tone="red" dot /> 검토 필요
         </span>
       </div>
@@ -97,7 +97,7 @@ export const ChipCard = {
   name: 'Chip card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
         <Chip>문서</Chip>
         <Chip>컴포넌트</Chip>
@@ -113,7 +113,7 @@ export const PushBadgeCard = {
   name: 'PushBadge card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 140, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 140, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 26, flexWrap: 'wrap' }}>
         <PushBadge count={5}><IconButton variant="ghost" label="alerts"><Icon name="bell" /></IconButton></PushBadge>
         <PushBadge count={128} max={99}><IconButton variant="ghost" label="mail"><Icon name="mail" /></IconButton></PushBadge>
@@ -127,7 +127,7 @@ export const RatingCard = {
   name: 'Rating card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 300, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 300, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 26, flexWrap: 'wrap' }}>
         <Rating defaultValue={4} />
         <Rating value={5} readOnly size={16} />
@@ -140,7 +140,7 @@ export const TagCard = {
   name: 'Tag card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 420, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
         <Tag tone="signal">Products</Tag>
         <Tag tone="neutral">Technology</Tag>

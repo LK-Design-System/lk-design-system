@@ -53,6 +53,7 @@ UI 코드를 생성할 때:
 - `--component-button-primary-fg`
 - `--component-button-secondary-bg`
 - `--component-button-signal-bg`
+- `--component-button-danger-bg` (LDS safety extension; not WDS parity)
 - `--component-button-disabled-opacity`
 
 ### Input
@@ -85,6 +86,28 @@ UI 코드를 생성할 때:
 - `--component-card-shadow-md`
 - `--component-card-shadow-lg`
 
+### ActionArea
+
+구현 파일: `components/buttons/ActionArea.jsx`
+
+- `--component-action-area-padding-x`
+- `--component-action-area-padding-y`
+- `--component-action-area-gap`
+- `--component-action-area-border`
+
+일반 persistent CTA는 기본 `Button` medium 높이 40px을 사용하고, row-local action과 toolbar command만 명시적으로 small 32px을 사용합니다.
+
+### ConfirmDialog
+
+구현 파일: `components/overlay/ConfirmDialog.jsx`
+
+- `--component-dialog-radius`
+- `--component-dialog-scrim`
+- `--component-dialog-scrim-blur`
+- `--component-confirm-dialog-max-width`
+
+warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadge` text와 함께 제공합니다.
+
 ## 프롬프트 템플릿
 
 AI 도구에 요청할 때 아래 구조를 사용하세요.
@@ -114,4 +137,4 @@ Output production React code.
 
 ## 현재 범위
 
-첫 번째 구조화된 component-token 적용 범위는 Button, Input, Card입니다. 나머지 컴포넌트 라이브러리는 아직 semantic 토큰과 로컬 값을 함께 사용합니다. 이후 작업에서는 각 컴포넌트 패밀리를 같은 primitive -> semantic -> component 구조로 옮기면 됩니다.
+구조화된 component-token 적용 범위는 Button, ActionArea, ConfirmDialog, Input, Card와 일부 선택/피드백 primitives까지 확장되어 있습니다. 나머지 컴포넌트 라이브러리는 semantic 토큰과 필요한 layout contract를 함께 사용하며, 새 component-specific 시각 값은 같은 primitive -> semantic -> component 구조로 추가합니다.

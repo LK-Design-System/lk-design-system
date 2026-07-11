@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface SwitchProps {
+export interface SwitchProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'onChange'> {
   /** 제어되는 on/off 상태. */
   checked?: boolean;
   /** 비제어 초기 상태. @default false */
@@ -24,6 +24,8 @@ export interface SwitchProps {
   disabled?: boolean;
   /** disabled alias. */
   disable?: boolean;
+  /** Focusable inspection state that prevents value changes. */
+  readOnly?: boolean;
   labelStyle?: React.CSSProperties;
   style?: React.CSSProperties;
   id?: string;

@@ -43,7 +43,7 @@ export function Joystick({ size = 160, onChange, onEnd, sticky = false, disabled
         onKeyDown={key} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
         style={{ position: 'relative', width: size, height: size, borderRadius: '50%', outline: 'none',
           background: 'var(--color-semantic-fill-normal)', border: '1px solid var(--color-semantic-line-normal-normal)',
-          boxShadow: focus ? '0 0 0 4px var(--focus-ring)' : 'inset var(--shadow-sm)', touchAction: 'none',
+          boxShadow: focus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'inset var(--shadow-sm)', touchAction: 'none',
           cursor: disabled ? 'not-allowed' : (active ? 'grabbing' : 'grab'), opacity: disabled ? 0.5 : 1 }}>
         <span style={{ position: 'absolute', left: '50%', top: 10, bottom: 10, width: 1, background: 'var(--color-semantic-line-normal-neutral)', transform: 'translateX(-0.5px)' }} />
         <span style={{ position: 'absolute', top: '50%', left: 10, right: 10, height: 1, background: 'var(--color-semantic-line-normal-neutral)', transform: 'translateY(-0.5px)' }} />

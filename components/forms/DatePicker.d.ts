@@ -1,12 +1,13 @@
 import * as React from 'react';
 
-export interface DatePickerProps {
+export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: Date | string;
   defaultValue?: Date | string;
   onChange?: (date: Date) => void;
   placeholder?: string;
   /** @default "md" */
   size?: 'sm' | 'md';
+  disabled?: boolean;
   style?: React.CSSProperties;
 }
 

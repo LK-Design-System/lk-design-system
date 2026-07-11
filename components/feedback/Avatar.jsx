@@ -100,7 +100,7 @@ function PlaceholderGlyph({ kind, deactivated }) {
       fill="none"
       style={{
         display: "block",
-        color: deactivated ? "var(--bw-white)" : "var(--color-semantic-label-assistive)",
+        color: deactivated ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-label-assistive)",
       }}
     >
       <path
@@ -143,24 +143,24 @@ export function Avatar({
     status === "online"
       ? "var(--color-semantic-primary-normal)"
       : status === "busy"
-        ? "var(--bw-red)"
-        : "var(--bw-gray-300)";
+        ? "var(--color-semantic-status-negative)"
+        : "var(--color-semantic-interaction-inactive)";
   const placeholderKind = resolvePlaceholderKind(
     placeholder,
     normalizedVariant,
   );
   const showInitials = placeholderKind === "initials" && initials;
   const fallbackBg = deactivated
-    ? "var(--bw-gray-300)"
-    : "var(--bw-indigo-tint)";
-  const fallbackFg = deactivated ? "var(--bw-white)" : "var(--bw-ink)";
+    ? "var(--color-semantic-interaction-inactive)"
+    : "var(--color-semantic-secondary-surface)";
+  const fallbackFg = deactivated ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-brand-ink)";
   const interactionStyle = resolveInteractionStyle(interaction);
   const resolvedBorderWeight = borderColor && !borderWeight ? 1 : borderWeight;
   const border = resolvedBorderWeight
     ? `${typeof resolvedBorderWeight === "number" ? `${resolvedBorderWeight}px` : resolvedBorderWeight} solid ${borderColor || "var(--color-semantic-line-normal-normal)"}`
     : "none";
   const ringShadow = ring
-    ? "0 0 0 4px var(--bw-white), 0 0 0 5px var(--bw-border)"
+    ? "0 0 0 4px var(--color-semantic-background-elevated-normal), 0 0 0 5px var(--color-semantic-line-solid-normal)"
     : "";
   const stateShadow = interactionStyle.boxShadow || "";
   const boxShadow =
@@ -256,7 +256,7 @@ export function Avatar({
               height: Math.max(4, Math.round(resolvedSize * 0.12)),
               borderRadius: "var(--radius-pill)",
               background:
-                "color-mix(in srgb, var(--bw-gray-300) 76%, var(--color-semantic-background-elevated-normal))",
+                "color-mix(in srgb, var(--color-semantic-interaction-inactive) 76%, var(--color-semantic-background-elevated-normal))",
               transform: "translateY(-50%) rotate(-45deg)",
               transformOrigin: "center",
             }}
@@ -273,7 +273,7 @@ export function Avatar({
             height: Math.max(10, resolvedSize * 0.24),
             background: statusColor,
             borderRadius: "50%",
-            border: "2px solid var(--bw-white)",
+            border: "2px solid var(--color-semantic-background-elevated-normal)",
           }}
         />
       )}
@@ -288,7 +288,7 @@ export function Avatar({
             height: pushBadgeSize,
             paddingInline: pushBadgeLabel ? 4 : 0,
             borderRadius: "var(--radius-pill)",
-            border: "2px solid var(--bw-white)",
+            border: "2px solid var(--color-semantic-background-elevated-normal)",
             boxSizing: "border-box",
             display: "inline-flex",
             alignItems: "center",

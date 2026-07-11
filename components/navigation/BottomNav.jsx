@@ -13,7 +13,7 @@ export function BottomNav({ items = [], value, defaultValue, onChange, style, ..
   const val = isControlled ? value : internal;
   const pick = (v) => { if (!isControlled) setInternal(v); onChange && onChange(v); };
   return (
-    <nav style={{ display: 'flex', alignItems: 'stretch', background: 'var(--bw-white)', borderTop: '1px solid var(--bw-border)', ...style }} {...rest}>
+    <nav style={{ display: 'flex', alignItems: 'stretch', background: 'var(--color-semantic-background-elevated-normal)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', ...style }} {...rest}>
       {items.map((o) => {
         const active = o.value === val;
         return (

@@ -6,7 +6,7 @@ const ICONS = {
     node: <circle cx="12" cy="12" r="8" />,
   },
   positive: {
-    color: "var(--bw-green)",
+    color: "var(--color-semantic-status-positive)",
     node: (
       <>
         <circle cx="12" cy="12" r="9" />
@@ -15,7 +15,7 @@ const ICONS = {
     ),
   },
   cautionary: {
-    color: "var(--bw-amber)",
+    color: "var(--color-semantic-status-cautionary)",
     node: (
       <>
         <path d="M12 3.8 21 19H3L12 3.8Z" />
@@ -25,7 +25,7 @@ const ICONS = {
     ),
   },
   negative: {
-    color: "var(--bw-red)",
+    color: "var(--color-semantic-status-negative)",
     node: (
       <>
         <circle cx="12" cy="12" r="9" />

@@ -22,7 +22,10 @@ export function IconButton({
   disable = false,
   onMouseEnter,
   onMouseLeave,
+  className,
+  onClick,
   type,
+  'aria-disabled': ariaDisabled,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
@@ -36,20 +39,37 @@ export function IconButton({
         md: 40,
       }[size] || 40);
   const palettes = {
-    soft:    { bg: 'var(--bw-indigo-tint)', bgHover: 'var(--bw-indigo-tint)', fg: 'var(--bw-ink)', bd: 'none' },
-    solid:   { bg: 'var(--bw-indigo)', bgHover: 'var(--bw-indigo)', fg: 'var(--color-semantic-inverse-label)', bd: 'none' },
+    soft:    { bg: 'var(--color-semantic-secondary-surface)', bgHover: 'var(--color-semantic-secondary-surface)', fg: 'var(--color-semantic-brand-ink)', bd: 'none' },
+    solid:   { bg: 'var(--color-semantic-secondary-normal)', bgHover: 'var(--color-semantic-secondary-normal)', fg: 'var(--color-semantic-inverse-label)', bd: 'none' },
     signal:  { bg: 'var(--color-semantic-primary-normal)', bgHover: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)', bd: 'none' },
-    ghost:   { bg: 'var(--bw-white)', bgHover: 'var(--bw-white)', fg: 'var(--bw-ink)', bd: '1px solid var(--bw-border)' },
-    'on-dark': { bg: 'var(--inverse-fill-normal)', bgHover: 'var(--inverse-fill-hover)', fg: 'var(--color-semantic-inverse-label)', bd: '1px solid var(--inverse-line-strong)' },
+    ghost:   { bg: 'var(--color-semantic-background-elevated-normal)', bgHover: 'var(--color-semantic-background-elevated-normal)', fg: 'var(--color-semantic-brand-ink)', bd: '1px solid var(--color-semantic-line-solid-normal)' },
+    plain:   { bg: 'transparent', bgHover: 'color-mix(in srgb, var(--viewer-foreground, var(--color-semantic-label-normal)) 7%, transparent)', fg: 'var(--viewer-foreground, var(--color-semantic-label-normal))', bd: '1px solid transparent' },
+    'on-dark': {
+      bg: 'color-mix(in srgb, var(--color-semantic-static-white) 10%, transparent)',
+      bgHover: 'color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)',
+      fg: 'var(--color-semantic-static-white)',
+      bd: '1px solid color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)',
+    },
   };
   const p = palettes[alternative ? 'on-dark' : variant] || palettes.soft;
   const disabledState = disabled || disable;
+  const ariaBlocked = ariaDisabled === true || ariaDisabled === 'true';
+  const blocked = disabledState || ariaBlocked;
   return (
     <button
+      {...rest}
       type={type ?? 'button'}
       aria-label={label}
-      className={`lk-iconbtn lk-iconbtn--${variant}`}
+      aria-disabled={ariaBlocked || undefined}
+      className={['lk-iconbtn', `lk-iconbtn--${variant}`, className].filter(Boolean).join(' ')}
       disabled={disabledState}
+      onClick={(event) => {
+        if (blocked) {
+          event.preventDefault();
+          return;
+        }
+        onClick?.(event);
+      }}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
       style={{
@@ -58,20 +78,21 @@ export function IconButton({
         justifyContent: 'center',
         width: resolvedSize,
         height: resolvedSize,
-        color: disabledState ? 'var(--color-semantic-label-disable)' : p.fg,
-        background: disabledState
+        color: blocked ? 'var(--color-semantic-label-disable)' : p.fg,
+        background: blocked
           ? 'var(--color-semantic-fill-normal)'
           : hover ? p.bgHover : p.bg,
-        border: p.bd,
+        border: blocked
+          ? 'var(--border-thin) solid var(--color-semantic-line-normal-neutral)'
+          : p.bd,
         borderRadius: round ? 'var(--radius-pill)' : 'var(--radius-md)',
-        cursor: disabledState ? 'not-allowed' : 'pointer',
+        cursor: blocked ? 'not-allowed' : 'pointer',
         opacity: 1,
         boxShadow: 'none',
         transition: 'var(--component-button-transition)',
         WebkitTapHighlightColor: 'transparent',
         ...style,
       }}
-      {...rest}
     >
       {children}
     </button>

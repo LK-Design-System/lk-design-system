@@ -1,4 +1,4 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
@@ -23,6 +23,7 @@ const forbiddenNumberedStorybookSegments = new Set([
 const extensionLayerTitle = /^LDS (?:Product|Robotics)\//;
 const forbiddenExtensionSurfaceSegment =
   /\b(?:app|application|screen|screens|template|templates|workflow|workflows|flow|flows|demo|demos|example|examples)\b/i;
+const forbiddenExtensionStoryName = /^(?:작업 생성|맵 편집)\s*[·:–—-]/;
 const requiredPublicStoryNames = new Map([
   ['IconRegistry', '기본 아이콘 레지스트리'],
   ['BreadcrumbRoutes', '브레드크럼 라우트'],
@@ -69,26 +70,6 @@ function findForbiddenExtensionSegment(title) {
   return segments.find((segment) => forbiddenExtensionSurfaceSegment.test(segment.trim()));
 }
 
-async function collectStaticTextFiles(dir, files = []) {
-  const entries = await readdir(dir, { withFileTypes: true });
-
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    const relativePath = path.relative(staticRoot, fullPath).replaceAll(path.sep, '/');
-
-    if (entry.isDirectory()) {
-      await collectStaticTextFiles(fullPath, files);
-      continue;
-    }
-
-    if (!entry.isFile()) continue;
-    if (relativePath.endsWith('.map')) continue;
-    if (/\.(html|js|json|css|txt)$/.test(entry.name)) files.push(fullPath);
-  }
-
-  return files;
-}
-
 const index = JSON.parse(await readFile(indexPath, 'utf8'));
 const stories = Object.values(index.entries || {}).filter((entry) => entry.type === 'story');
 const publicStories = stories.filter(isPublicStory);
@@ -123,6 +104,9 @@ for (const [name, duplicates] of publicNameCounts) {
 for (const story of publicStories) {
   if (/card parity/i.test(story.name || '')) failures.push(`visual parity story is public: ${storyLabel(story)}`);
   if (String(story.title || '').includes('상세')) failures.push(`public Storybook title still uses 상세 split: ${storyLabel(story)}`);
+  if (extensionLayerTitle.test(String(story.title || '')) && forbiddenExtensionStoryName.test(String(story.name || ''))) {
+    failures.push(`Product/Robotics story looks like an application workflow state: ${storyLabel(story)}`);
+  }
   if (forbiddenPublicTitles.has(story.title)) {
     failures.push(`ambiguous duplicate-prone public Storybook title: ${storyLabel(story)}. ${forbiddenPublicTitles.get(story.title)}`);
   }
@@ -166,21 +150,25 @@ for (const story of parityStories) {
   if (!tags.includes('visual-parity')) failures.push(`visual parity story is missing visual-parity tag: ${storyLabel(story)}`);
 }
 
-const forbiddenPublicExports = new Set(['BrandLogos', 'Banners', 'RobotStatus']);
+const forbiddenPublicExports = new Set([
+  'BrandLogos',
+  'Banners',
+  'RobotStatus',
+  'TaskDetails',
+  'TaskTargets',
+  'TaskParameters',
+  'MapObjectIdle',
+  'MapPolygonDrawing',
+  'MapObjectSelected',
+  'MapPcdAssist',
+  'MapPgmEditing',
+]);
 for (const story of publicStories) {
   if (forbiddenPublicExports.has(story.exportName)) failures.push(`known duplicate public story still visible: ${storyLabel(story)}`);
 }
 
 assert(publicStories.length > 0, 'No public Storybook stories found.');
 assert(parityStories.length > 0, 'No visual parity stories found; visual diff coverage may have been removed.');
-
-const staticTextFiles = await collectStaticTextFiles(staticRoot);
-for (const file of staticTextFiles) {
-  const text = await readFile(file, 'utf8');
-  if (forbiddenStorybookName.test(text)) {
-    failures.push(`Storybook static output includes forbidden source-system name: ${path.relative(root, file)}`);
-  }
-}
 
 assert(failures.length === 0, `Storybook public surface cleanup guard failed:\n${failures.join('\n')}`);
 

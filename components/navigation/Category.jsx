@@ -83,14 +83,14 @@ export function Category({
         const active = item.value === selected || item.active;
         const colors = alternative
           ? {
-              bg: active ? "var(--lk-accent-tint-2)" : "var(--bw-white)",
+              bg: active ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
               fg: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-neutral)",
-              border: active ? "var(--color-semantic-primary-normal)" : "var(--bw-border)",
+              border: active ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)",
             }
           : {
-              bg: active ? "var(--color-semantic-label-normal)" : "var(--bw-white)",
+              bg: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-background-elevated-normal)",
               fg: active ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-neutral)",
-              border: active ? "var(--color-semantic-label-normal)" : "var(--bw-border)",
+              border: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-line-solid-normal)",
             };
 
         return (

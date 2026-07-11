@@ -63,6 +63,8 @@ export function IconPicker({
   const firstEnabledIndex = findEnabledFrom(options, 0);
   const tabStopIndex = selectedEnabledIndex >= 0 ? selectedEnabledIndex : firstEnabledIndex;
   const [focusIndex, setFocusIndex] = React.useState(tabStopIndex);
+  const [focusedIndex, setFocusedIndex] = React.useState(-1);
+  const [hoveredIndex, setHoveredIndex] = React.useState(-1);
 
   React.useEffect(() => {
     setFocusIndex(tabStopIndex);
@@ -87,9 +89,9 @@ export function IconPicker({
 
     const keyMap = {
       ArrowRight: [index + 1, 1],
-      ArrowDown: [index + columnCount, 1],
+      ArrowDown: [index + 1, 1],
       ArrowLeft: [index - 1, -1],
-      ArrowUp: [index - columnCount, -1],
+      ArrowUp: [index - 1, -1],
     };
 
     if (keyMap[event.key]) {
@@ -171,8 +173,14 @@ export function IconPicker({
               data-selected={selected ? '' : undefined}
               onClick={() => pick(option)}
               onFocus={() => {
-                if (!optionDisabled) setFocusIndex(index);
+                if (!optionDisabled) {
+                  setFocusIndex(index);
+                  setFocusedIndex(index);
+                }
               }}
+              onBlur={() => setFocusedIndex(-1)}
+              onMouseEnter={() => { if (!optionDisabled) setHoveredIndex(index); }}
+              onMouseLeave={() => setHoveredIndex(-1)}
               onKeyDown={(event) => handleKeyDown(event, index)}
               style={{
                 width: tile,
@@ -190,18 +198,22 @@ export function IconPicker({
                 background: optionDisabled
                   ? 'var(--color-semantic-fill-normal)'
                   : selected
-                    ? 'var(--lk-accent-tint-2)'
-                    : 'var(--color-semantic-background-elevated-normal)',
+                    ? 'var(--color-semantic-primary-surface-strong)'
+                    : hoveredIndex === index
+                      ? 'var(--color-semantic-fill-normal)'
+                      : 'var(--color-semantic-background-elevated-normal)',
                 color: optionDisabled
                   ? 'var(--color-semantic-label-disable)'
                   : selected
                     ? 'var(--color-semantic-primary-normal)'
                     : 'var(--color-semantic-label-neutral)',
                 cursor: optionDisabled ? 'not-allowed' : 'pointer',
+                outline: 'none',
+                boxShadow: focusedIndex === index && !optionDisabled ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
                 fontFamily: 'var(--font-sans)',
                 boxSizing: 'border-box',
                 transition:
-                  'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
+                  'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
               }}
             >
               <span

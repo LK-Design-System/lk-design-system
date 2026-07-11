@@ -1,10 +1,10 @@
 import React from 'react';
 
 const TONES = {
-  info: { c: 'var(--color-semantic-primary-normal)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
-  success: { c: 'var(--bw-green)', d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
-  warning: { c: 'var(--bw-amber)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
-  error: { c: 'var(--bw-red)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
+  info: { c: 'var(--component-banner-info-icon)', bg: 'var(--component-banner-info-bg)', border: 'var(--component-banner-info-border)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 8h.01"/>' },
+  success: { c: 'var(--component-banner-positive-icon)', bg: 'var(--component-banner-positive-bg)', border: 'var(--component-banner-positive-border)', d: '<circle cx="12" cy="12" r="9"/><path d="m8.4 12 2.6 2.6 4.6-5.2"/>' },
+  warning: { c: 'var(--component-banner-cautionary-icon)', bg: 'var(--component-banner-cautionary-bg)', border: 'var(--component-banner-cautionary-border)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
+  error: { c: 'var(--component-banner-negative-icon)', bg: 'var(--component-banner-negative-bg)', border: 'var(--component-banner-negative-border)', d: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/>' },
 };
 
 /**
@@ -20,8 +20,8 @@ export function Banner({ tone = 'info', title, children, action, onClose, style,
       role="status"
       style={{
         display: 'flex', alignItems: 'flex-start', gap: 12, padding: '14px 16px',
-        background: `color-mix(in srgb, ${t.c} 9%, var(--color-semantic-background-elevated-normal))`,
-        border: `1px solid color-mix(in srgb, ${t.c} 26%, var(--color-semantic-background-elevated-normal))`,
+        background: t.bg,
+        border: `1px solid ${t.border}`,
         borderRadius: 'var(--radius-lg)', fontFamily: 'var(--font-sans)', ...style,
       }}
       {...rest}

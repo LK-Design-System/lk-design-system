@@ -98,7 +98,7 @@ const topBarMenuStyle = {
 
 function TopBarStaticNav({ dark = false }) {
   const activeColor = dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-primary-normal)';
-  const idleColor = dark ? 'var(--inverse-label-neutral)' : 'var(--color-semantic-label-alternative)';
+  const idleColor = dark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)';
   const underline = dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)';
   const itemStyle = {
     padding: '10px 12px',
@@ -130,7 +130,7 @@ export const TopBarCard = {
   name: 'TopBar card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div style={{ background: 'var(--bw-mist)', padding: 20, fontFamily: 'var(--font-sans)' }}>
+    <div style={{ background: 'var(--color-semantic-background-normal-alternative)', padding: 20, fontFamily: 'var(--font-sans)' }}>
       <div data-theme="light" style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', marginBottom: 16 }}>
         <TopBar
           navAlign="center"

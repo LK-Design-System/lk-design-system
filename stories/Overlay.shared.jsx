@@ -68,7 +68,7 @@ export const DropdownMenuCard = {
   name: 'DropdownMenu card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 260, height: 220, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 260, height: 220, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <DropdownMenu
         align="left"
         trigger={<Button variant="ghost">작업</Button>}
@@ -87,7 +87,7 @@ export const ToastCard = {
   name: 'Toast card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>
         <Toast tone="info" onClose={() => {}}>대시보드로 이동했습니다.</Toast>
@@ -135,8 +135,8 @@ export const DrawerCard = {
   name: 'Drawer card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 520, height: 460, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
-      <div style={{ position: 'relative', height: 400, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--color-semantic-line-normal-normal)', transform: 'translateZ(0)', background: 'var(--bw-paper)' }}>
+    <div data-visual-crop-root style={{ width: 520, height: 460, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
+      <div style={{ position: 'relative', height: 400, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--color-semantic-line-normal-normal)', transform: 'translateZ(0)', background: 'var(--color-semantic-background-normal-normal)' }}>
         <div style={{ padding: 20 }}>
           <Button variant="secondary">필터 열기</Button>
         </div>
@@ -234,7 +234,7 @@ export const SheetCard = {
                   textAlign: 'left',
                   padding: '14px 4px',
                   border: 'none',
-                  borderBottom: '1px solid var(--bw-border)',
+                  borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
                   background: 'transparent',
                   fontFamily: 'var(--font-sans)',
                   fontSize: 15,
@@ -256,14 +256,14 @@ export const DimmerCard = {
   name: 'Dimmer card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 260, height: 180, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 260, height: 180, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div
         style={{
           position: 'relative',
           width: 220,
           height: 130,
-          background: 'var(--bw-white)',
-          border: '1px solid var(--bw-border)',
+          background: 'var(--color-semantic-background-elevated-normal)',
+          border: '1px solid var(--color-semantic-line-solid-normal)',
           borderRadius: 'var(--radius-xl)',
           display: 'flex',
           alignItems: 'center',
@@ -313,7 +313,7 @@ export const AlertToastCard = {
   render: () => {
     const [open, setOpen] = React.useState(false);
     return (
-      <div data-visual-crop-root style={{ width: 700, height: 360, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+      <div data-visual-crop-root style={{ width: 700, height: 360, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>

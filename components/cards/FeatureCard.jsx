@@ -1,10 +1,10 @@
 import React from 'react';
 
 const ICON_TONES = {
-  signal: { fg: 'var(--color-semantic-primary-normal)', bg: 'var(--lk-accent-tint)' },     // teal tile (default)
-  steel:  { fg: 'var(--color-semantic-status-positive)', bg: 'var(--status-positive-tint)' },
-  amber:  { fg: 'var(--color-semantic-status-cautionary)', bg: 'var(--status-cautionary-tint)' },
-  navy:   { fg: 'var(--bw-ink)', bg: 'var(--color-semantic-fill-strong)' },
+  signal: { fg: 'var(--color-semantic-primary-normal)', bg: 'var(--color-semantic-primary-surface-normal)' },     // teal tile (default)
+  steel:  { fg: 'var(--color-semantic-accent-foreground-blue)', bg: 'var(--color-semantic-primary-surface-normal)' },
+  amber:  { fg: 'var(--color-semantic-accent-foreground-orange)', bg: 'color-mix(in srgb, var(--color-semantic-accent-foreground-orange) 14%, transparent)' },
+  navy:   { fg: 'var(--color-semantic-brand-ink)', bg: 'var(--color-semantic-fill-strong)' },
 };
 
 /**

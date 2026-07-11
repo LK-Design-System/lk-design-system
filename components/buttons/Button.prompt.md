@@ -5,6 +5,7 @@ LK theme tokens.
 ```jsx
 <Button variant="primary">Request quote</Button>
 <Button variant="signal" size="lg">View product</Button>
+<Button variant="danger">Emergency stop request</Button>
 <Button variant="ghost">Details</Button>
 <Button variant="on-dark">Learn more</Button>
 <Button loading loadingLabel="Saving">Saving</Button>
@@ -12,7 +13,7 @@ LK theme tokens.
 ```
 
 - **variant**: `primary`, `secondary`, `signal`, `dark`, `flat`, `ghost`,
-  `on-dark`.
+  `on-dark`. `danger` is an explicit LDS safety extension, not a WDS parity axis.
 - **size**: `sm`, `md`, `lg`.
 - **full**: fills the container width.
 - **loading**: prevents repeated activation, renders a spinner, and sets

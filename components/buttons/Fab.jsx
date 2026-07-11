@@ -13,8 +13,8 @@ export function Fab({ children, variant = 'signal', size = 'md', label, style, .
     signal: { bg: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-accent)' },
     dark: { bg: 'var(--color-semantic-inverse-background)', fg: 'var(--color-semantic-inverse-label)', sh: 'var(--shadow-md)' },
     primary: { bg: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-accent)' },
-    secondary: { bg: 'var(--bw-indigo)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-indigo)' },
-    white: { bg: 'var(--bw-white)', fg: 'var(--color-semantic-label-normal)', sh: 'var(--shadow-md)' },
+    secondary: { bg: 'var(--color-semantic-secondary-normal)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-indigo)' },
+    white: { bg: 'var(--color-semantic-background-elevated-normal)', fg: 'var(--color-semantic-label-normal)', sh: 'var(--shadow-md)' },
   };
   const p = palettes[variant] || palettes.signal;
   return (
@@ -23,7 +23,7 @@ export function Fab({ children, variant = 'signal', size = 'md', label, style, .
       aria-label={label}
       style={{
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: d, height: d, borderRadius: '50%',
-        border: variant === 'white' ? '1px solid var(--bw-border)' : 'none', background: p.bg, color: p.fg, cursor: 'pointer',
+        border: variant === 'white' ? '1px solid var(--color-semantic-line-solid-normal)' : 'none', background: p.bg, color: p.fg, cursor: 'pointer',
         boxShadow: p.sh || 'var(--shadow-md)', transform: 'none',
         transition: 'var(--component-button-transition)', ...style,
       }}

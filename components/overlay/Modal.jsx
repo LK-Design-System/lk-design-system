@@ -24,11 +24,11 @@ export function Modal({ open = false, title, children, footer, onClose, width = 
         role="dialog"
         aria-modal="true"
         aria-label={typeof title === 'string' ? title : undefined}
-        style={{ width: '100%', maxWidth: width, maxHeight: '86vh', display: 'flex', flexDirection: 'column', background: 'var(--bw-white)', borderRadius: 'var(--component-dialog-radius)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', overflow: 'hidden', ...style }}
+        style={{ width: '100%', maxWidth: width, maxHeight: '86vh', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', borderRadius: 'var(--component-dialog-radius)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', overflow: 'hidden', ...style }}
         {...rest}
       >
         {(title != null || onClose) && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 24px', borderBottom: '1px solid var(--bw-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 24px', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <div style={{ fontSize: 18, fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</div>
             {onClose && (
               <button type="button" aria-label="close" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
@@ -39,7 +39,7 @@ export function Modal({ open = false, title, children, footer, onClose, width = 
         )}
         <div style={{ padding: '20px 24px', overflow: 'auto', fontSize: 15, lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         {footer != null && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, padding: '16px 24px', borderTop: '1px solid var(--bw-border)' }}>{footer}</div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, padding: '16px 24px', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
         )}
       </div>
     </div>

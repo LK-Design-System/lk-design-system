@@ -34,7 +34,7 @@ export function CopyButton({ value, children = '복사', copiedLabel = '복사�
         fontWeight: 'var(--fw-bold)',
         letterSpacing: 0,
         color: copied ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)',
-        ...(copied ? { background: 'var(--lk-accent-tint-2)' } : null),
+        ...(copied ? { background: 'var(--color-semantic-primary-surface-strong)' } : null),
         ...style,
       }}
       {...rest}

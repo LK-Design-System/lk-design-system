@@ -45,14 +45,14 @@ export function Textarea({
   const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
   const isInvalid = invalid || status === 'negative' || error != null;
   usePlaceholderStyle();
-  const ring = disabled ? 'var(--color-semantic-line-normal-neutral)' : isInvalid ? 'var(--bw-red)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--bw-border)';
+  const ring = disabled ? 'var(--color-semantic-line-normal-neutral)' : isInvalid ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : activeFocus ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-line-solid-normal)' : 'var(--color-semantic-line-solid-normal)';
   const minHeight = normalizedSize === 'sm' ? 96 : normalizedSize === 'lg' ? 160 : 120;
   const resizeMode = resize === 'fixed' ? 'none' : resize === 'limit' ? 'vertical' : 'vertical';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', ...style }}>
       {label && (
         <label htmlFor={taId} style={{ fontWeight: 'var(--component-input-label-font-weight)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', letterSpacing: 'var(--component-input-label-letter-spacing)', color: 'var(--component-input-label-color)' }}>
-          {label}{required && <span style={{ color: 'var(--bw-red)' }}> *</span>}
+          {label}{required && <span style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>}
         </label>
       )}
       <textarea
@@ -69,16 +69,16 @@ export function Textarea({
         onMouseLeave={(e) => { setHover(false); rest.onMouseLeave && rest.onMouseLeave(e); }}
         style={{
           width: '100%', resize: resizeMode, minHeight, maxHeight: resize === 'limit' ? minHeight * 2 : undefined, padding: 'var(--space-3)',
-          background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--bw-white)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--bw-ink)',
+          background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-brand-ink)',
           border: `1px solid ${ring}`, borderRadius: 'var(--radius-input)',
-          boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--focus-ring)' : 'none',
+          boxShadow: activeFocus && !isInvalid ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
           fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', letterSpacing: 'var(--component-input-letter-spacing)', lineHeight: 'var(--component-input-line-height)',
           outline: 'none', boxSizing: 'border-box',
         }}
       />
       {message != null && (
-        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative)' : status === 'positive' ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-label-alternative)' }}>
+        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative-text)' : status === 'positive' ? 'var(--color-semantic-status-positive-text)' : 'var(--color-semantic-label-neutral)' }}>
           {message}
         </span>
       )}

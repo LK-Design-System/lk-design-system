@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface ConnectionBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** 연결 상태. @default "online" */
-  status?: 'online' | 'reconnecting' | 'weak' | 'offline';
+  status?: 'connecting' | 'online' | 'reconnecting' | 'weak' | 'stale' | 'error' | 'offline';
   /** 라벨 재정의(기본은 상태별 한국어). */
   label?: React.ReactNode;
   /** 라벨 표시. @default true */

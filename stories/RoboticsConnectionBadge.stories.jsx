@@ -19,8 +19,11 @@ export const ConnectionBadges = {
   render: () => (
     <main style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center', maxWidth: 720 }}>
       <ConnectionBadge status="online" />
+      <ConnectionBadge status="connecting" />
       <ConnectionBadge status="weak" />
       <ConnectionBadge status="reconnecting" />
+      <ConnectionBadge status="stale" />
+      <ConnectionBadge status="error" />
       <ConnectionBadge status="offline" />
     </main>
   ),

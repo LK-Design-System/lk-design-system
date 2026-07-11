@@ -3,7 +3,7 @@
   "source": {
     "name": "LK Design System public exports",
     "entrypoint": "src/index.js",
-    "classifiedAt": "2026-07-07",
+    "classifiedAt": "2026-07-10",
     "purpose": "Ensure every public LDS export is explicitly classified as WDS core, LK theme override, LK product extension, or LK robotics extension."
   },
   "classificationLegend": {
@@ -154,12 +154,14 @@
       "storyEvidence": [
         "stories/ContentEditor.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
-        "stories/ContentReorderList.stories.jsx"
+        "stories/ContentReorderList.stories.jsx",
+        "stories/ContentSourceDisclosure.stories.jsx"
       ],
       "exports": [
         "ContentEditor",
         "LogViewer",
-        "ReorderList"
+        "ReorderList",
+        "SourceDisclosure"
       ]
     },
     {
@@ -169,6 +171,7 @@
       "storyEvidence": [
         "stories/ContentCarousel.stories.jsx",
         "stories/ContentMedia.stories.jsx",
+        "stories/DataAnnotatedImage.stories.jsx",
         "stories/DataCalendar.stories.jsx",
         "stories/DataDescriptionList.stories.jsx",
         "stories/DataDisplay.stories.jsx",
@@ -178,9 +181,10 @@
         "stories/DataTablesHierarchy.stories.jsx",
         "stories/DataToolbar.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreeSelectionPanel.stories.jsx"
+        "stories/DataTreePicker.stories.jsx"
       ],
       "exports": [
+        "AnnotatedImage",
         "BarChart",
         "Calendar",
         "Carousel",
@@ -194,7 +198,7 @@
         "Sparkline",
         "Table",
         "Tree",
-        "TreeSelectionPanel"
+        "TreePicker"
       ]
     },
     {
@@ -234,7 +238,6 @@
       "classification": "direct-wds",
       "wdsFamily": "Textinput/Textfield",
       "storyEvidence": [
-        "stories/FormPropertyField.stories.jsx",
         "stories/FormSearchAutocomplete.stories.jsx",
         "stories/FormSelectionControls.stories.jsx",
         "stories/FormsFull.stories.jsx"
@@ -246,7 +249,6 @@
         "Input",
         "InputGroup",
         "PasswordInput",
-        "PropertyField",
         "SearchField",
         "Select",
         "TagInput",
@@ -260,7 +262,12 @@
       "storyEvidence": [
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFileUploadQueue.stories.jsx",
+        "stories/FormPropertyField.stories.jsx",
+        "stories/FormSearchableMultiSelect.stories.jsx",
+        "stories/FormSecretField.stories.jsx",
         "stories/FormSelectionControls.stories.jsx",
+        "stories/FormValidationSummary.stories.jsx",
         "stories/SelectionIconPicker.stories.jsx",
         "stories/SelectionWheelPicker.stories.jsx"
       ],
@@ -268,10 +275,15 @@
         "ColorSwatch",
         "DatePicker",
         "FileUpload",
+        "FileUploadQueue",
         "IconPicker",
         "NumberField",
         "PinInput",
+        "PropertyField",
+        "SearchableMultiSelect",
+        "SecretField",
         "TimePicker",
+        "ValidationSummary",
         "WheelPicker"
       ]
     },
@@ -477,7 +489,13 @@
       "classification": "robotics-extension",
       "wdsFamily": "Robotics extension",
       "storyEvidence": [
+        "stories/EditorCommandBar.stories.jsx",
+        "stories/EditorLayerPanel.stories.jsx",
+        "stories/EditorSelectionInspector.stories.jsx",
         "stories/EditorShell.stories.jsx",
+        "stories/EditorToolbar.stories.jsx",
+        "stories/EditorViewportStatusBar.stories.jsx",
+        "stories/RoboticsManualControlSession.stories.jsx",
         "stories/RoboticsAndViz.stories.jsx",
         "stories/RoboticsBatteryGauge.stories.jsx",
         "stories/RoboticsConnectionBadge.stories.jsx",
@@ -486,6 +504,7 @@
         "stories/RoboticsJoystick.stories.jsx",
         "stories/RoboticsTopicTree.stories.jsx",
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerTelemetry.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
@@ -502,6 +521,7 @@
         "HistoryToolbar",
         "Joystick",
         "LayerPanel",
+        "ManualControlSession",
         "Map2DCanvas",
         "RobotStatusCard",
         "Scene3DFrame",
@@ -510,9 +530,12 @@
         "TelemetryValue",
         "TopicTree",
         "VideoStreamTile",
-        "ViewportStatusBar",
+        "VIEWER_BLOCKING_STATES",
+        "VIEWER_STATES",
+        "ViewerFrame",
         "ViewerToolbar",
-        "ViewerToolbarButton"
+        "ViewerToolbarButton",
+        "ViewportStatusBar"
       ]
     }
   ]

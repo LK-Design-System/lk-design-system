@@ -155,8 +155,9 @@ export function DockPanel({
     focusHandle();
   };
 
-  const handleLabel = isOpen ? '도킹 패널 접기' : '도킹 패널 펼치기';
-  const resizeLabel = titleText ? `${titleText} 너비 조절` : '도킹 패널 너비 조절';
+  const panelName = titleText || ariaLabel || '도킹 패널';
+  const handleLabel = isOpen ? `${panelName} 접기` : `${panelName} 펼치기`;
+  const resizeLabel = `${panelName} 너비 조절`;
 
   return (
     <div
@@ -188,6 +189,7 @@ export function DockPanel({
           ref={handleRef}
           type="button"
           aria-label={handleLabel}
+          title={handleLabel}
           aria-controls={panelId}
           aria-expanded={isOpen}
           onClick={() => setOpen(nextOpenValue(isOpen))}
@@ -278,7 +280,11 @@ export function DockPanel({
             height: '100%',
             minWidth: 0,
             display: isOpen ? 'grid' : 'none',
-            gridTemplateRows: `${title == null ? '0' : 'auto'} minmax(0, 1fr) ${footer == null ? '0' : 'auto'}`,
+            gridTemplateRows: [
+              title == null ? null : 'auto',
+              'minmax(0, 1fr)',
+              footer == null ? null : 'auto',
+            ].filter(Boolean).join(' '),
             boxSizing: 'border-box',
             overflow: 'hidden',
             background: 'var(--color-semantic-background-elevated-normal)',

@@ -1,154 +1,136 @@
 /**
- * Generate the LK two-tier color system from the WDS color architecture blueprint.
+ * Generate the complete LK color runtime from tokens/source.json.
  *
- * Adopts WDS's structure verbatim (13 atomic hue ramps + 59 semantic role tokens,
- * light/dark, alpha ladder) but re-tones every value into the LK palette:
- *   - Lightness (L) of each WDS step is PRESERVED  → contrast/a11y ratios hold,
- *     ramp progression stays balanced.
- *   - Hue (H) / Saturation (S) shift to the LK aesthetic: cool, muted, engineered,
- *     with the Blue family re-hued to LK steel-azure.
+ * tokens/source.json is the only editable runtime source. WDS exports remain
+ * reference evidence and are never read by this generator.
  *
  * Emits (regenerable, do not hand-edit):
- *   tokens/color-atomic.css     --color-atomic-{hue}-{step}
- *   tokens/color-semantic.css   --color-semantic-{role}  (:root light + dark block)
+ *   tokens/color-atomic.css
+ *   tokens/color-semantic.css
+ *   tokens/color-components.css
+ *   stories/color-system.data.js
  *
- *   node scripts/generate-lk-color-system.mjs
+ * Use --check to fail when committed outputs drift from the source contract.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const BLUEPRINT = 'docs/references/wds/COLOR_ARCHITECTURE.json';
-const bp = JSON.parse(readFileSync(BLUEPRINT, 'utf8'));
+const SOURCE_PATH = 'tokens/source.json';
+const source = JSON.parse(readFileSync(SOURCE_PATH, 'utf8'));
+const checkOnly = process.argv.includes('--check');
 
-// ---- color math ------------------------------------------------------------
-const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
-function hexToRgb(hex) { const h = hex.replace('#', ''); return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)); }
-function rgbToHex(r, g, b) { return '#' + [r, g, b].map((x) => clamp(Math.round(x), 0, 255).toString(16).padStart(2, '0')).join('').toUpperCase(); }
-function rgbToHsl(r, g, b) {
-  r /= 255; g /= 255; b /= 255;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
-  let h = 0; const l = (max + min) / 2;
-  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
-  if (d !== 0) {
-    if (max === r) h = ((g - b) / d) % 6;
-    else if (max === g) h = (b - r) / d + 2;
-    else h = (r - g) / d + 4;
-    h *= 60; if (h < 0) h += 360;
-  }
-  return [h, s, l];
-}
-function hslToRgb(h, s, l) {
-  const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs(((h / 60) % 2) - 1)), m = l - c / 2;
-  let r = 0, g = 0, b = 0;
-  if (h < 60) [r, g, b] = [c, x, 0]; else if (h < 120) [r, g, b] = [x, c, 0]; else if (h < 180) [r, g, b] = [0, c, x];
-  else if (h < 240) [r, g, b] = [0, x, c]; else if (h < 300) [r, g, b] = [x, 0, c]; else [r, g, b] = [c, 0, x];
-  return [(r + m) * 255, (g + m) * 255, (b + m) * 255];
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
 }
 
-// ---- LK tone transform -----------------------------------------------------
-// Preserve each source step's WCAG *relative luminance* (not HSL lightness), then
-// move hue/saturation into the LK palette. Matching luminance keeps every step's
-// contrast ratio identical to the source, so no a11y regression anywhere while
-// the tone shifts (e.g. steel-azure stays as dark as the blue it replaces).
-const STEEL_H = 209; // LK steel-azure hue
-function relLum(r, g, b) {
-  const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
-  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
-}
-function atLuminance(hex, h, s) {
-  const target = relLum(...hexToRgb(hex));
-  let lo = 0, hi = 1;
-  for (let i = 0; i < 26; i++) { const mid = (lo + hi) / 2; (relLum(...hslToRgb(h, s, mid)) < target ? (lo = mid) : (hi = mid)); }
-  return rgbToHex(...hslToRgb(h, s, (lo + hi) / 2));
-}
-function lkTone(hex, hue) {
-  const [h, s] = rgbToHsl(...hexToRgb(hex));
-  let nh = h, ns = s;
-  if (hue === 'Neutral') { nh = 222; ns = s < 0.02 ? 0.045 : Math.min(s, 0.06); } // faint cool cast
-  else if (hue === 'Cool Neutral') { nh = 224; ns = Math.min(s, 0.08); }          // keep cool grey
-  else if (hue === 'Blue') { nh = STEEL_H; ns = clamp(s * 0.6, 0.22, 0.52); }      // steel-azure
-  else if (hue === 'Light Blue') { nh = clamp(h - 4, 190, 205); ns = s * 0.8; }    // pull toward steel
-  else if (hue === 'Cyan') { ns = s * 0.78; }
-  else { ns = s * 0.82; } // Red/Green/Orange/Red Orange/Lime/Violet/Purple/Pink — mute 18%
-  return atLuminance(hex, nh, clamp(ns, 0, 1));
-}
-
-const slug = (s) => s.trim().toLowerCase().replace(/\s+/g, '-').replace(/\//g, '-');
-
-// ---- atomic ----------------------------------------------------------------
-const atomicLines = [];
-for (const [hue, ramp] of Object.entries(bp.atomic)) {
-  atomicLines.push(`  /* ${hue} */`);
-  for (const [step, hex] of Object.entries(ramp)) {
-    atomicLines.push(`  --color-atomic-${slug(hue)}-${step}: ${lkTone(hex, hue)};`);
-  }
-}
-const atomicHues = Object.keys(bp.atomic);
-const atomicCss = `/* ==========================================================================
-   LK ROBOTICS — Atomic color ramps  (GENERATED — do not hand-edit)
+function generatedHeader(title) {
+  return `/* ==========================================================================
+   LK ROBOTICS — ${title} (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
-   Generated by scripts/generate-lk-color-system.mjs from the source color
-   architecture blueprint. Structure = 13 hue ramps, ${bp.counts.atomicTokens} steps.
-   Values = LK tone: each source step's WCAG relative luminance is preserved
-   (contrast ratios hold); hue/saturation re-toned to the LK palette (cool,
-   muted; Blue family = steel-azure).
-   ========================================================================== */
-:root {
-${atomicLines.join('\n')}
-}
-`;
-writeFileSync('tokens/color-atomic.css', atomicCss);
-
-// ---- semantic --------------------------------------------------------------
-// Re-tone a semantic hex: same luminance-preserving transform as the atomic ramps.
-function toneSemantic(hex) {
-  const [h, s] = rgbToHsl(...hexToRgb(hex));
-  if (s < 0.12) return atLuminance(hex, 224, Math.min(s === 0 ? 0.03 : s, 0.08)); // grey → cool cast
-  if (h >= 190 && h <= 245) return atLuminance(hex, STEEL_H, clamp(s * 0.6, 0.22, 0.52)); // blue → steel
-  return atLuminance(hex, h, clamp(s * 0.82, 0, 1)); // chromatic → mute
-}
-function cssColor(v) {
-  if (!v || !v.hex) return 'transparent';
-  const toned = toneSemantic(v.hex);
-  if (v.alpha == null || v.alpha >= 1) return toned;
-  const [r, g, b] = hexToRgb(toned);
-  return `rgba(${r}, ${g}, ${b}, ${v.alpha})`;
-}
-const lightLines = [], darkLines = [];
-for (const [name, def] of Object.entries(bp.semantic)) {
-  const token = `--color-semantic-${slug(name)}`;
-  if (def.light) lightLines.push(`  ${token}: ${cssColor(def.light)};`);
-  if (def.dark) darkLines.push(`  ${token}: ${cssColor(def.dark)};`);
-}
-const semanticCss = `/* ==========================================================================
-   LK ROBOTICS — Semantic color roles  (GENERATED — do not hand-edit)
-   --------------------------------------------------------------------------
-   Generated by scripts/generate-lk-color-system.mjs. Source semantic role
-   structure (${bp.counts.semanticTokens} tokens) with LK-toned values + the source alpha ladder.
-   Light is the default (:root); dark activates via [data-theme="dark"] / .theme-dark.
-   ========================================================================== */
-:root {
-${lightLines.join('\n')}
+   Source of truth: ${SOURCE_PATH}
+   Regenerate: node scripts/generate-lk-color-system.mjs
+   ========================================================================== */`;
 }
 
-[data-theme="dark"], .theme-dark {
-${darkLines.join('\n')}
+function renderBlock(selector, declarations) {
+  return `${selector} {\n${declarations.map(([name, value]) => `  ${name}: ${value};`).join('\n')}\n}`;
 }
-`;
-writeFileSync('tokens/color-semantic.css', semanticCss);
 
-// ---- story data module (keeps the showcase in sync with generated tokens) --
+function writeOrCheck(path, contents) {
+  const normalized = `${contents.trimEnd()}\n`;
+  if (checkOnly) {
+    const current = readFileSync(path, 'utf8').replaceAll('\r\n', '\n');
+    assert(current === normalized, `${path} has drifted from ${SOURCE_PATH}. Run npm run generate:colors.`);
+    return;
+  }
+  writeFileSync(path, normalized);
+}
+
+const colorRamps = source.primitive?.colorRamps;
+assert(colorRamps && typeof colorRamps === 'object', 'tokens/source.json is missing primitive.colorRamps.');
+
+const atomicDeclarations = [];
 const atomicData = {};
-for (const [hue, ramp] of Object.entries(bp.atomic)) {
-  atomicData[slug(hue)] = { label: hue, steps: Object.keys(ramp).map(Number) };
+for (const [family, definition] of Object.entries(colorRamps)) {
+  assert(definition.label && definition.tokens, `primitive.colorRamps.${family} must include label and tokens.`);
+  atomicData[family] = { label: definition.label, steps: [] };
+  for (const [step, token] of Object.entries(definition.tokens)) {
+    assert(token.css && token.$value, `Atomic color ${family}.${step} must include css and $value.`);
+    atomicDeclarations.push([token.css, token.$value]);
+    atomicData[family].steps.push(Number(step));
+  }
 }
-const semanticData = Object.keys(bp.semantic).map((n) => slug(n));
+
+const atomicCss = `${generatedHeader(`Atomic color ramps — ${Object.keys(colorRamps).length} families / ${atomicDeclarations.length} tokens`)}
+${renderBlock(':root', atomicDeclarations)}`;
+writeOrCheck('tokens/color-atomic.css', atomicCss);
+
+const colorRoles = source.semantic?.colorRoles;
+assert(colorRoles && typeof colorRoles === 'object', 'tokens/source.json is missing semantic.colorRoles.');
+
+const lightDeclarations = [];
+const darkDeclarations = [];
+const semanticData = [];
+const semanticGroups = {};
+for (const [name, token] of Object.entries(colorRoles)) {
+  assert(token.css && token.modes?.light && token.modes?.dark, `Semantic color ${name} must include css and light/dark modes.`);
+  lightDeclarations.push([token.css, token.modes.light]);
+  darkDeclarations.push([token.css, token.modes.dark]);
+  semanticData.push(name);
+  const group = token.group || name.split('-')[0];
+  (semanticGroups[group] ||= []).push(name);
+}
+
+const lightSelector = source.modes?.light?.selector || ':root, [data-theme="light"], .theme-light';
+const darkSelector = source.modes?.dark?.selector || '[data-theme="dark"], .theme-dark';
+const autoSelector = source.modes?.auto?.selector || '[data-theme="auto"], .theme-auto';
+const semanticCss = `${generatedHeader(`Semantic color roles — ${semanticData.length} tokens / light and dark`)}
+${renderBlock(lightSelector, lightDeclarations)}
+
+${renderBlock(darkSelector, darkDeclarations)}
+
+@media (prefers-color-scheme: dark) {
+${renderBlock(`  ${autoSelector}`, darkDeclarations).split('\n').map((line, index) => index === 0 ? line : `  ${line}`).join('\n')}
+}`;
+writeOrCheck('tokens/color-semantic.css', semanticCss);
+
+const componentLightDeclarations = [];
+const componentDarkDeclarations = [];
+for (const [componentName, component] of Object.entries(source.component || {})) {
+  for (const [tokenName, token] of Object.entries(component?.tokens || {})) {
+    if (!token?.generated) continue;
+    const lightValue = token.modes?.light || token.$value;
+    const darkValue = token.modes?.dark || token.$value;
+    assert(token.$type === 'color' && token.css && lightValue && darkValue, `Generated component color ${componentName}.${tokenName} is incomplete.`);
+    componentLightDeclarations.push([token.css, lightValue]);
+    componentDarkDeclarations.push([token.css, darkValue]);
+  }
+}
+assert(componentLightDeclarations.length > 0, 'No generated component color tokens were found.');
+const componentCss = `${generatedHeader(`Component color contracts — ${componentLightDeclarations.length} tokens`)}
+${renderBlock(lightSelector, componentLightDeclarations)}
+
+${renderBlock(darkSelector, componentDarkDeclarations)}
+
+@media (prefers-color-scheme: dark) {
+${renderBlock(`  ${autoSelector}`, componentDarkDeclarations).split('\n').map((line, index) => index === 0 ? line : `  ${line}`).join('\n')}
+}`;
+writeOrCheck('tokens/color-components.css', componentCss);
+
+const statusFamilies = {
+  info: ['status-info-foreground', 'status-info-surface', 'status-info-border', 'status-info-text'],
+  positive: ['status-positive-foreground', 'status-positive-surface', 'status-positive-border', 'status-positive-text'],
+  cautionary: ['status-cautionary-foreground', 'status-cautionary-surface', 'status-cautionary-border', 'status-cautionary-text'],
+  negative: ['status-negative-foreground', 'status-negative-surface', 'status-negative-border', 'status-negative-text'],
+  neutral: ['status-neutral-surface', 'status-neutral-border', 'status-neutral-text'],
+};
 const dataModule = `// GENERATED by scripts/generate-lk-color-system.mjs — do not hand-edit.
-// Token-name manifest for the color-system Storybook showcase.
+// Source of truth: tokens/source.json
 export const ATOMIC = ${JSON.stringify(atomicData, null, 2)};
 export const SEMANTIC = ${JSON.stringify(semanticData)};
+export const SEMANTIC_GROUPS = ${JSON.stringify(semanticGroups, null, 2)};
+export const STATUS_FAMILIES = ${JSON.stringify(statusFamilies, null, 2)};
+export const COLOR_SYSTEM_META = ${JSON.stringify({ source: SOURCE_PATH, atomicTokens: atomicDeclarations.length, semanticTokens: semanticData.length, componentTokens: componentLightDeclarations.length }, null, 2)};
 `;
-writeFileSync('stories/color-system.data.js', dataModule);
+writeOrCheck('stories/color-system.data.js', dataModule);
 
-console.log(`Wrote tokens/color-atomic.css (${bp.counts.atomicTokens} atomic tokens)`);
-console.log(`Wrote tokens/color-semantic.css (${bp.counts.semanticTokens} semantic tokens, light+dark)`);
-console.log('Wrote stories/color-system.data.js (showcase manifest)');
+console.log(`${checkOnly ? 'Validated' : 'Generated'} color system from ${SOURCE_PATH}: ${atomicDeclarations.length} atomic, ${semanticData.length} semantic, ${componentLightDeclarations.length} component.`);

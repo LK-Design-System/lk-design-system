@@ -295,7 +295,7 @@ export function ReorderList({
                     zIndex: 1,
                     height: 2,
                     background: 'var(--color-semantic-primary-normal)',
-                    boxShadow: '0 0 0 1px var(--lk-accent-tint)',
+                    boxShadow: '0 0 0 1px var(--color-semantic-primary-surface-normal)',
                     pointerEvents: 'none',
                   }}
                 />
@@ -319,7 +319,7 @@ export function ReorderList({
                       : hovered || dragging
                         ? 'var(--color-semantic-fill-alternative)'
                         : 'transparent',
-                  boxShadow: focused && !itemDisabled ? 'inset 0 0 0 2px var(--lk-focus-ring)' : 'none',
+                  boxShadow: focused && !itemDisabled ? 'inset 0 0 0 2px var(--color-semantic-focus-indicator)' : 'none',
                   cursor: itemDisabled ? 'not-allowed' : dragging ? 'grabbing' : 'grab',
                   transition: 'background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
                 }}

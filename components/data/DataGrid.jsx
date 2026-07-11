@@ -2,10 +2,10 @@ import React from 'react';
 import { thStyle, tdStyle } from './table-cell-styles.js';
 import { Icon } from '../icon/Icon.jsx';
 
-function sortRows(rows, key, dir) {
-  if (!key) return rows;
-  const s = [...rows].sort((a, b) => {
-    const x = a[key]; const y = b[key];
+function sortRowEntries(entries, key, dir) {
+  if (!key) return entries;
+  const s = [...entries].sort((a, b) => {
+    const x = a.row[key]; const y = b.row[key];
     if (x == null) return 1; if (y == null) return -1;
     if (typeof x === 'number' && typeof y === 'number') return x - y;
     return String(x).localeCompare(String(y), 'ko');
@@ -25,7 +25,7 @@ function checkboxStyle(checked, indeterminate = false) {
     height: 16,
     margin: 0,
     borderRadius: 4,
-    border: `1px solid ${filled ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`,
+    border: `1px solid ${filled ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`,
     backgroundColor: filled ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)',
     backgroundImage: indeterminate ? DASH_IMG : checked ? CHECK_IMG : 'none',
     backgroundPosition: 'center',
@@ -38,11 +38,37 @@ function checkboxStyle(checked, indeterminate = false) {
 /**
  * LK ROBOTICS — DataGrid
  * A Table with click-to-sort headers and optional row selection. `columns`
- * mark `sortable`; `render` a cell for custom content. Emits selected row
- * indices via `onSelectionChange`.
+ * mark `sortable`; `render` a cell for custom content. Supports controlled
+ * sort, stable row IDs, manual/server sorting, keyboard row activation, and
+ * loading/error/empty states.
  */
-export function DataGrid({ columns = [], rows = [], selectable = false, selectedRows, defaultSelectedRows = [], onSelectionChange, bulkActions, onClearSelection, size = 'md', style, ...rest }) {
-  const [sort, setSort] = React.useState({ key: null, dir: 'asc' });
+export function DataGrid({
+  columns = [],
+  rows = [],
+  selectable = false,
+  selectedRows,
+  defaultSelectedRows = [],
+  onSelectionChange,
+  getRowId,
+  sort: controlledSort,
+  defaultSort = { key: null, dir: 'asc' },
+  onSortChange,
+  sortingMode = 'client',
+  onRowActivate,
+  bulkActions,
+  onClearSelection,
+  loading = false,
+  loadingLabel = '불러오는 중',
+  error,
+  emptyLabel = '표시할 항목이 없습니다.',
+  stateActions,
+  size = 'md',
+  style,
+  ...rest
+}) {
+  const [internalSort, setInternalSort] = React.useState(defaultSort);
+  const sortControlled = controlledSort !== undefined;
+  const sort = sortControlled ? controlledSort : internalSort;
   // Selection is controlled when `selectedRows` is passed, otherwise internal.
   const isControlled = selectedRows !== undefined;
   const [internalSel, setInternalSel] = React.useState(() => new Set(defaultSelectedRows));
@@ -53,18 +79,32 @@ export function DataGrid({ columns = [], rows = [], selectable = false, selected
   // be >= the header's natural height (else only the band honors it), so it
   // is aligned to the data-row height.
   const headerH = size === 'sm' ? 50 : 58;
-  const sorted = sortRows(rows, sort.key, sort.dir);
-  const toggleSort = (c) => { if (!c.sortable) return; setSort((s) => (s.key === c.key ? { key: c.key, dir: s.dir === 'asc' ? 'desc' : 'asc' } : { key: c.key, dir: 'asc' })); };
+  const entries = rows.map((row, index) => ({ row, id: getRowId ? getRowId(row, index) : index, sourceIndex: index }));
+  const sorted = sortingMode === 'manual' ? entries : sortRowEntries(entries, sort?.key, sort?.dir);
+  const toggleSort = (column) => {
+    if (!column.sortable) return;
+    const next = sort?.key === column.key
+      ? { key: column.key, dir: sort.dir === 'asc' ? 'desc' : 'asc' }
+      : { key: column.key, dir: 'asc' };
+    if (!sortControlled) setInternalSort(next);
+    onSortChange && onSortChange(next);
+  };
   // Compute next selection in the event handler (not inside the setState
   // updater) so the parent callback never fires mid-render.
   const applySel = (n) => { if (!isControlled) setInternalSel(n); onSelectionChange && onSelectionChange([...n]); };
-  const toggleRow = (i) => { const n = new Set(sel); if (n.has(i)) n.delete(i); else n.add(i); applySel(n); };
-  const toggleAll = () => { const n = sel.size === sorted.length ? new Set() : new Set(sorted.map((_, i) => i)); applySel(n); };
-  const allOn = selectable && sorted.length > 0 && sel.size === sorted.length;
+  const toggleRow = (id) => { const n = new Set(sel); if (n.has(id)) n.delete(id); else n.add(id); applySel(n); };
+  const visibleIds = sorted.map((entry) => entry.id);
+  const allOn = selectable && visibleIds.length > 0 && visibleIds.every((id) => sel.has(id));
+  const toggleAll = () => {
+    const n = new Set(sel);
+    if (allOn) visibleIds.forEach((id) => n.delete(id));
+    else visibleIds.forEach((id) => n.add(id));
+    applySel(n);
+  };
   const selecting = selectable && sel.size > 0;
   const colSpan = columns.length + (selectable ? 1 : 0);
   return (
-    <div style={{ overflowX: 'auto', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-lg)', ...style }} {...rest}>
+    <div aria-busy={loading || undefined} style={{ overflowX: 'auto', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', ...style }} {...rest}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-sans)' }}>
         <thead>
           {selecting ? (
@@ -75,11 +115,11 @@ export function DataGrid({ columns = [], rows = [], selectable = false, selected
                it shows an indeterminate dash on a partial selection. */
             <tr style={{ height: headerH }}>
               {selectable && (
-                <th style={{ padding: pad, width: 44, textAlign: 'left', background: 'var(--lk-accent-tint-2)', borderBottom: '1px solid var(--bw-border)' }}>
+                <th style={{ padding: pad, width: 44, textAlign: 'left', background: 'var(--color-semantic-primary-surface-strong)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
                   <input type="checkbox" checked={allOn} onChange={toggleAll} aria-label="전체 선택" style={checkboxStyle(allOn, !allOn)} />
                 </th>
               )}
-              <th colSpan={columns.length} scope="colgroup" style={{ padding: 0, background: 'var(--lk-accent-tint-2)', borderBottom: '1px solid var(--bw-border)' }}>
+              <th colSpan={columns.length} scope="colgroup" style={{ padding: 0, background: 'var(--color-semantic-primary-surface-strong)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
                 <div role="status" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minHeight: headerH, padding: size === 'sm' ? '0 12px' : '0 16px' }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', minWidth: 0 }}>
                     <span style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{sel.size}개 선택됨</span>
@@ -95,7 +135,7 @@ export function DataGrid({ columns = [], rows = [], selectable = false, selected
             </tr>
           ) : (
             <tr style={{ height: headerH }}>
-              {selectable && <th style={{ padding: pad, borderBottom: '1px solid var(--bw-border)', width: 44, textAlign: 'left' }}><input type="checkbox" checked={allOn} onChange={toggleAll} aria-label="전체 선택" style={checkboxStyle(allOn)} /></th>}
+              {selectable && <th style={{ padding: pad, borderBottom: '1px solid var(--color-semantic-line-solid-normal)', width: 44, textAlign: 'left' }}><input type="checkbox" checked={allOn} onChange={toggleAll} aria-label="전체 선택" style={checkboxStyle(allOn)} /></th>}
               {columns.map((c) => (
                 <th
                   key={c.key}
@@ -120,12 +160,43 @@ export function DataGrid({ columns = [], rows = [], selectable = false, selected
           )}
         </thead>
         <tbody>
-          {sorted.map((r, ri) => (
-            <tr key={ri} style={{ background: sel.has(ri) ? 'var(--lk-accent-tint)' : 'transparent' }}>
-              {selectable && <td style={{ padding: pad, borderBottom: '1px solid var(--bw-border)' }}><input type="checkbox" checked={sel.has(ri)} onChange={() => toggleRow(ri)} aria-label={`${ri + 1}행 선택`} style={checkboxStyle(sel.has(ri))} /></td>}
-              {columns.map((c) => <td key={c.key} style={{ ...tdStyle(pad), textAlign: c.align || 'left' }}>{typeof c.render === 'function' ? c.render(r) : r[c.key]}</td>)}
+          {(loading || error != null || sorted.length === 0) && (
+            <tr>
+              <td colSpan={colSpan} style={{ padding: 'var(--space-8) var(--space-4)', textAlign: 'center', borderBottom: 0 }}>
+                <div role={error != null ? 'alert' : 'status'} aria-live="polite" style={{ display: 'inline-grid', justifyItems: 'center', gap: 'var(--space-2)', color: error != null ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-assistive)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
+                  <span>{loading ? loadingLabel : error ?? emptyLabel}</span>
+                  {stateActions}
+                </div>
+              </td>
             </tr>
-          ))}
+          )}
+          {!loading && error == null && sorted.map(({ row, id }, rowIndex) => {
+            const selected = sel.has(id);
+            const activate = (event) => {
+              if (!onRowActivate) return;
+              const target = event.target;
+              if (target?.closest?.('button, a, input, select, textarea')) return;
+              onRowActivate(row, id, event);
+            };
+            return (
+              <tr
+                key={id}
+                aria-selected={selectable ? selected : undefined}
+                tabIndex={onRowActivate ? 0 : undefined}
+                onClick={activate}
+                onKeyDown={onRowActivate ? (event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    onRowActivate(row, id, event);
+                  }
+                } : undefined}
+                style={{ background: selected ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', cursor: onRowActivate ? 'pointer' : undefined }}
+              >
+                {selectable && <td style={{ padding: pad, borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}><input type="checkbox" checked={selected} onChange={() => toggleRow(id)} aria-label={`${rowIndex + 1}행 선택`} style={checkboxStyle(selected)} /></td>}
+                {columns.map((column) => <td key={column.key} style={{ ...tdStyle(pad), textAlign: column.align || 'left' }}>{typeof column.render === 'function' ? column.render(row, id) : row[column.key]}</td>)}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

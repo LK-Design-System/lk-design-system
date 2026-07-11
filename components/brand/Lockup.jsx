@@ -12,7 +12,7 @@ import { LK_D, ROBO_D, ROBO_INLINE, LK_LOGO_VIEWBOX as VIEWBOX } from './lk-logo
  * `height`. Decorative instances get aria-hidden.
  */
 export function Lockup({ variant = 'inline', tone = 'ink', color, height, title = 'LK ROBOTICS', decorative = false, style, ...rest }) {
-  const fill = color || (tone === 'white' ? 'var(--static-white)' : tone === 'brand' ? 'var(--color-semantic-primary-normal)' : tone === 'current' ? 'currentColor' : 'var(--color-semantic-label-normal)');
+  const fill = color || (tone === 'white' ? 'var(--color-semantic-static-white)' : tone === 'brand' ? 'var(--color-semantic-primary-normal)' : tone === 'current' ? 'currentColor' : 'var(--color-semantic-label-normal)');
   const vb = VIEWBOX[variant] || VIEWBOX.inline;
   const h = height != null ? height : (variant === 'mark' ? 32 : variant === 'stacked' ? 64 : 28);
   const a11y = decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': title };

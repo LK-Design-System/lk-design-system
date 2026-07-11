@@ -14,11 +14,11 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], styl
     return next;
   });
   return (
-    <div style={{ borderTop: '1px solid var(--bw-border)', ...style }} {...rest}>
+    <div style={{ borderTop: '1px solid var(--color-semantic-line-solid-normal)', ...style }} {...rest}>
       {items.map((it, i) => {
         const isOpen = open.has(i);
         return (
-          <div key={i} style={{ borderBottom: '1px solid var(--bw-border)' }}>
+          <div key={i} style={{ borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <button
               type="button"
               aria-expanded={isOpen}

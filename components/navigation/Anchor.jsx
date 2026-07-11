@@ -18,7 +18,7 @@ export function Anchor({ items = [], active, onChange, style, ...rest }) {
           <a
             key={it.href} href={it.href}
             onClick={() => { if (!isControlled) setInternal(it.href); onChange && onChange(it.href); }}
-            style={{ display: 'block', padding: '7px 12px', paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--bw-border)'}`, color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)', fontSize: 14, fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)', textDecoration: 'none', transition: 'color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)' }}
+            style={{ display: 'block', padding: '7px 12px', paddingLeft: 12 + (it.level || 0) * 14, borderLeft: `2px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)', fontSize: 14, fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)', textDecoration: 'none', transition: 'color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)' }}
           >
             {it.label}
           </a>

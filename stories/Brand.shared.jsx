@@ -110,7 +110,7 @@ export const LKRoboticsLogo = {
                 <Lockup variant="inline" tone={tone} height={28} />
                 <div style={{ display: 'grid', gap: 4 }}>
                   <strong style={{ color: isDark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-normal)' }}>{label}</strong>
-                  <code style={{ color: isDark ? 'var(--inverse-label-neutral)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
+                  <code style={{ color: isDark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
                     tone="{tone}"
                   </code>
                 </div>
@@ -150,13 +150,13 @@ export const LockupOverlineCard = {
   name: 'Lockup · Overline card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div style={{ background: 'var(--bw-paper)', padding: '22px 24px', fontFamily: 'var(--font-sans)' }}>
+    <div style={{ background: 'var(--color-semantic-background-normal-normal)', padding: '22px 24px', fontFamily: 'var(--font-sans)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', marginBottom: 10 }}>
             Lockup — mark · stacked · inline
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--static-white)', border: '1px solid var(--bw-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-static-white)', border: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <Lockup variant="mark" tone="ink" height={46} />
             <Lockup variant="stacked" tone="ink" height={66} />
             <Lockup variant="inline" tone="ink" height={30} />
@@ -187,7 +187,7 @@ export const BrandLogoCard = {
   name: 'BrandLogo card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 680, height: 460, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
+    <div data-visual-crop-root style={{ width: 680, height: 460, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <div>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', margin: '0 0 12px' }}>
           Full-colour marks · 40px
@@ -217,13 +217,13 @@ export const BrandLogoCard = {
           In a sign-in button
         </div>
         <div style={{ display: 'flex', gap: 20, alignItems: 'center', marginBottom: 22 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--bw-border)', background: 'var(--bw-white)', fontSize: 15, fontWeight: 700, color: 'var(--color-semantic-label-normal)' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)', fontSize: 15, fontWeight: 700, color: 'var(--color-semantic-label-normal)' }}>
             <BrandLogo name="google" size={20} /> Google로 계속하기
           </span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--bw-border)', background: 'var(--bw-white)', fontSize: 15, fontWeight: 700, color: 'var(--color-semantic-label-normal)' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)', fontSize: 15, fontWeight: 700, color: 'var(--color-semantic-label-normal)' }}>
             <BrandLogo name="apple" size={20} /> Apple로 계속하기
           </span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--bw-border)', background: 'var(--bw-white)', fontSize: 15, fontWeight: 700, color: 'var(--color-semantic-label-normal)' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 48, padding: '0 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)', fontSize: 15, fontWeight: 700, color: 'var(--color-semantic-label-normal)' }}>
             <BrandLogo name="github" size={20} /> GitHub로 계속하기
           </span>
         </div>

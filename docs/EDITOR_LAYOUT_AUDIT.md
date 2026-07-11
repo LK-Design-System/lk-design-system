@@ -1,63 +1,62 @@
-# Canvas editor shell audit
+# Canvas editor Storybook boundary audit
 
 ## Scope
 
-`CanvasEditorShell`을 범용 GIS형 완성 화면으로 취급하던 구현을 실제 `lk_web_viz` 워크플로우 기준으로 다시 감사했다. 제품 근거는 `LK-ROBOTICS/lk_web_viz` commit `a984def117c05acd213f494cbb8a42e990595505`와 저장소의 `docs/images/task_edit.png`, `map_edit_randmarks.png`, `map_eit_pgm.png`이다.
+`CanvasEditorShell`과 Editor 하위 컴포넌트의 공개 Storybook 구성이 다른 LDS 페이지와 같은 문법을 따르는지 재검토했다. 제품 근거는 계속 `LK-ROBOTICS/lk_web_viz` commit `a984def117c05acd213f494cbb8a42e990595505`와 제품 캡처를 사용하지만, 그 근거를 완성된 애플리케이션 화면으로 Storybook에 복제하지 않는다.
+
+2026-07-11 재설계 검토는 Editor를 **LK Robotics Extension**으로 분류했다. 이는 WDS parity 감사가 아니다. 구현 구조를 정하기 전에 공식 Figma, Unity, Blender, NVIDIA Omniverse 문서와 WAI-ARIA/WCAG 패턴을 검토했으며, 링크와 적용 결론은 `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`에 기록했다.
+
+## Decision
+
+- 공개 Storybook은 재사용 가능한 컴포넌트, 슬롯, 변형, 상태만 보여준다.
+- 작업 생성, 맵 편집, PGM 편집, PCD 보조 같은 제품 워크플로는 제품 저장소와 이 문서의 소스 매핑에서 관리한다.
+- `CanvasEditorShell`은 헤더, 도구, 레이어, 뷰포트, 속성 패널, 상태 영역의 관계만 소유한다.
+- Editor 하위 컴포넌트는 각각 독립 Storybook 페이지를 소유한다.
+- 제품 화면의 시각 회귀가 필요하면 해당 제품 저장소에서 검증한다. LDS Storybook에 애플리케이션 화면을 숨겨서 보존하지 않는다.
+- 문서 명령은 header, zoom/fit/orbit/reset은 viewport 내부, 선택 객체 action은 Inspector에 둔다.
+- 임의 docking, floating/persisted layout, 제품 workflow는 LDS 셸에서 의도적으로 제외한다.
 
 ## Problems found
 
 | Problem | Why it was wrong | Resolution |
 | --- | --- | --- |
-| 모든 워크스페이스를 route/layer/canvas/inspector로 통일 | 작업 생성과 맵 편집의 핵심 객체와 패널 소유권이 다름 | 셸은 slot 관계만 공유하고, workflow composition은 분리 |
-| 화면 내부에 Step명과 검수 라벨 표시 | Storybook 메타데이터가 제품 UI로 유입됨 | 상태명은 Storybook story name에만 유지 |
-| 작업 생성을 route layer editor로 표현 | 원본은 task form + steps + topology/map picker | 좌측 작업 폼과 우측 맵 선택 화면으로 재구성 |
-| 맵 편집에 layer panel을 기본 추가 | 원본은 objects/pgm tabs + tool rail + right properties | 원본 상태 story에서 `LayerPanel` 제거 |
-| selected-object detail을 항상 drawer로 가정 | 원본은 반복 수정용 고정 right sidebar | 맵 편집은 docked panel, drawer는 optional capability로 한정 |
-| PCD를 독립 crop/classification workspace로 표현 | 원본 `PcdMap3DPanel`은 맵 편집의 보조 split panel | `맵 편집 · PCD 3D 보조` 상태로 통합 |
-| 우측 패널에 임의 `적용` CTA 추가 | 원본은 필드 변경 후 문서 저장, draw complete/cancel은 canvas-local | 문서 저장은 헤더, draw 완료/취소는 transient panel, 삭제/선택 해제는 inspector |
-| status bar에 history action 배치 | command와 readout의 scope가 섞임 | history는 header command bar에만 유지 |
+| `Canvas Shell` 아래에 작업 생성과 맵 편집 상태를 함께 공개 | 컴포넌트 페이지가 제품 화면·워크플로 메뉴처럼 동작 | 8개 제품 워크플로 story 제거 |
+| 작업 생성 화면을 `CanvasEditorShell`로 감쌈 | 작업 생성은 도구 레일·레이어·인스펙터가 없는 폼+지도 제품 화면 | 제품 근거 문서에만 유지 |
+| Editor 하위 컴포넌트가 독립 페이지를 갖지 않음 | 각 컴포넌트의 상태와 접근성 계약을 찾기 어려움 | Command Bar, Editor Toolbar, Layer Panel, Selection Inspector, Viewport Status Bar 페이지 추가 |
+| 고정 1080×640 제품 프레임과 업무 데이터 사용 | 다른 LDS 페이지의 단일 컴포넌트 표본 체계와 불일치 | 중립 캔버스 fixture와 컴포넌트 크기 프레임으로 교체 |
+| 공개 확장 story 이름에 대한 워크플로 가드 부재 | title만 검사해 `작업 생성 · …`, `맵 편집 · …` story가 통과 | 기존 public-surface 가드에 story 이름과 제거된 export 검사 추가 |
+| Command Bar story가 zoom/reset 같은 viewport action을 문서 헤더에 노출 | 문서 범위 명령과 현재 viewport 범위 명령의 소유권이 겹침 | 공개 조합에서는 Command Bar를 history/document action으로 제한하고 view action은 viewport-local controls로 이동 |
+| Editor command control이 34px 독자 규격을 사용 | LDS `IconButton`의 32/40px 축과 충돌하고 형제 컴포넌트와 정렬 불일치 | 밀집 Editor control은 LDS 32px 소형 icon-button 규격으로 통일 |
+| Layer와 Inspector가 접힘/resize 및 좁은 화면 전환 계약 없이 고정 | 중앙 viewport가 비정상적으로 줄고 보조 패널이 항상 우선됨 | 넓은 화면은 resize/collapse/restore, 좁은 화면은 별도 semantic region navigation으로 한 보조 패널만 노출 |
+| Layer tree의 focus/selection/expand가 한 상태처럼 보이고 Inspector가 single selection만 가정 | 공식 Tree keyboard 모델과 실제 다중 선택 편집 상태를 표현하지 못함 | focus와 selection을 분리하고 Tree 방향키/expand를 지원하며 Inspector에 none/single/multi/mixed 및 read-only/invalid 상태 계약 추가 |
 
-## Resulting component contract
+## Resulting component ownership
 
-| Component | Contract |
-| --- | --- |
-| `CanvasEditorShell` | title, description, leading control, toolbar, subheader, tool rail, optional layer panel, viewport, docked/drawer panel, optional passive status |
-| `CanvasEditorCommandBar` | 실제 handler/disabled state가 있는 history와 문서 명령만 렌더 |
-| `EditorToolbar` | roving tab stop, arrow/Home/End focus, pressed state, disabled state |
-| `LayerPanel` | visibility/lock/active layer 전용. 작은 텍스트도 AA 대비 유지 |
-| `SelectionInspector` | selected canvas object 전용. clear-selection, sections, optional action footer, AA text contrast |
-| `Map2DCanvas` | viewport-local zoom/reset/status. 작은 status text AA 대비 유지 |
-
-## Storybook evidence
-
-모든 상태는 하나의 실제 화면만 렌더한다. `Step N` 또는 검수용 heading을 화면 위에 덧붙이지 않는다.
-
-| Story | URL id | Evidence |
+| Component | Storybook owner | Public evidence |
 | --- | --- | --- |
-| 셸 기본 구조 | `lds-robotics-editor-canvas-shell--canvas-editor-shell-contract` | neutral slot capability, real layer model only |
-| 작업 생성 · 기본 정보 | `lds-robotics-editor-canvas-shell--task-details` | form before target creation, disabled save |
-| 작업 생성 · 목표 추가 | `lds-robotics-editor-canvas-shell--task-targets` | task steps + floor/map target picker |
-| 작업 생성 · 파라미터 편집 | `lds-robotics-editor-canvas-shell--task-parameters` | selected step + parameters JSON apply + document save |
-| 맵 편집 · 선택 전 | `lds-robotics-editor-canvas-shell--map-object-idle` | no selection, object counts/settings sidebar |
-| 맵 편집 · 구역 작성 | `lds-robotics-editor-canvas-shell--map-polygon-drawing` | polygon tool + canvas-local completion panel |
-| 맵 편집 · 선택 객체 속성 | `lds-robotics-editor-canvas-shell--map-object-selected` | selected zone, clear selection, properties, delete |
-| 맵 편집 · PCD 3D 보조 | `lds-robotics-editor-canvas-shell--map-pcd-assist` | PCD split inside object editing |
-| 맵 편집 · PGM 픽셀 | `lds-robotics-editor-canvas-shell--map-pgm-editing` | pgm tab, pgm tools/settings/save |
+| `CanvasEditorShell` | `LDS Robotics/Editor/Canvas Shell` | 기본 영역 관계, 보조 패널 resize/collapse/restore, 좁은 화면 region navigation, 컨텍스트 드로어 |
+| `CanvasEditorCommandBar` | `LDS Robotics/Editor/Command Bar` | 32px 문서 명령, 비활성 히스토리; viewport 명령은 제외 |
+| `EditorToolbar` | `LDS Robotics/Editor/Editor Toolbar` | 세로/가로, 전체 비활성, roving focus와 shortcut |
+| `LayerPanel` | `LDS Robotics/Editor/Layer Panel` | selection 공유, 펼침/접힘 Tree, visibility/lock, 빈 상태, 전체 비활성 |
+| `SelectionInspector` | `LDS Robotics/Editor/Selection Inspector` | 선택 없음/단일/다중/mixed, locked/read-only/invalid, 고정 header와 action footer |
+| `ViewportStatusBar` | `LDS Robotics/Editor/Viewport Status Bar` | 우선순위가 있는 passive single-line readout와 상태 tone |
 
-## Validation record
+## Product evidence retained outside Storybook
 
-| Gate | Result |
-| --- | --- |
-| TypeScript | `pnpm run check:types` passed |
-| Storybook build | `pnpm run build:storybook` passed |
-| Story public surface | `pnpm run check:storybook-public` passed |
-| Accessibility structural guard | 263 implementation stories, 0 missing names, 0 implicit button types, 0 console errors |
-| Storybook axe | 9 public shell/workflow states checked, 0 violations in every state |
-| Product-frame metadata | 9 public states checked, 0 `Step N`, `workflow review`, or `워크플로우 검수` labels |
-| Interaction audit | tab switch, clear selection, PCD split open/close, and toolbar Arrow/Home/End roving focus verified |
+| Workflow | Source | Why it is not a public LDS story |
+| --- | --- | --- |
+| 작업 생성/편집 | `frontend/src/screens/TaskCreateScreen.tsx` | 업무 폼, 단계, 건물/층 선택을 포함한 애플리케이션 화면 |
+| 맵 오브젝트/PGM 편집 | `frontend/src/screens/MapEditScreen.tsx` | 제품 명령과 편집 정책을 포함한 애플리케이션 워크플로 |
+| PCD 3D 보조 | `frontend/src/components/editor/PcdMap3DPanel.tsx` | 맵 편집 내부의 제품 전용 split panel |
 
-## Intentional exclusions
+세부 소유권과 제품 소스 우선순위는 `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`에 유지한다.
 
-- PCD conversion/cleanup screens are not CanvasEditorShell states.
-- Site authoring is a separate product editor and requires its own workflow audit.
-- The story graphics are representative viewport content, not the product renderer implementation.
+## Verification
+
+Editor Storybook 변경 후 다음 검사를 실행한다.
+
+```bash
+node scripts/check-story-subject-duplicates.mjs
+pnpm run check:types
+pnpm run check:storybook
+```

@@ -6,6 +6,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     | "primary"
     | "secondary"
     | "signal"
+    | "danger"
     | "dark"
     | "flat"
     | "ghost"

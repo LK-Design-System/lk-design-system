@@ -1,14 +1,14 @@
 import React from 'react';
 
 const DOT = {
-  positive: 'var(--bw-green)',
-  online: 'var(--bw-green)',
-  cautionary: 'var(--bw-amber)',
-  warning: 'var(--bw-amber)',
-  negative: 'var(--bw-red)',
-  offline: 'var(--bw-gray-300)',
-  signal: 'var(--color-semantic-primary-normal)',
-  critical: 'var(--color-semantic-status-negative)',
+  positive: 'var(--component-status-badge-positive-indicator)',
+  online: 'var(--component-status-badge-positive-indicator)',
+  cautionary: 'var(--component-status-badge-cautionary-indicator)',
+  warning: 'var(--component-status-badge-cautionary-indicator)',
+  negative: 'var(--component-status-badge-negative-indicator)',
+  offline: 'var(--component-status-badge-offline-indicator)',
+  signal: 'var(--component-status-badge-signal-indicator)',
+  critical: 'var(--component-status-badge-critical-indicator)',
 };
 
 /**
@@ -33,9 +33,9 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 4, boxSizing: 'border-box',
         height: 20, padding: '0 6px', borderRadius: 4, /* WDS _Badge/Status r4 */
-        background: 'var(--color-semantic-fill-strong)',
+        background: 'var(--component-status-badge-surface)',
         fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-semibold)', letterSpacing: 0,
-        color: 'var(--color-semantic-label-normal)', ...style,
+        color: 'var(--component-status-badge-foreground)', ...style,
       }}
       {...rest}
     >

@@ -27,7 +27,7 @@ export function Carousel({ slides = [], showDots = true, showArrows = true, styl
       {showDots && n > 1 && (
         <div style={{ position: 'absolute', bottom: 14, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 8, zIndex: 2 }}>
           {slides.map((_, idx) => (
-            <button key={idx} type="button" aria-label={`slide ${idx + 1}`} onClick={() => setI(idx)} style={{ width: idx === i ? 22 : 8, height: 8, borderRadius: 'var(--radius-pill)', border: 'none', cursor: 'pointer', padding: 0, background: idx === i ? 'var(--bw-white)' : 'var(--inverse-label-alternative)', transition: 'width var(--dur-base) var(--ease-out)' }} />
+            <button key={idx} type="button" aria-label={`slide ${idx + 1}`} onClick={() => setI(idx)} style={{ width: idx === i ? 22 : 8, height: 8, borderRadius: 'var(--radius-pill)', border: 'none', cursor: 'pointer', padding: 0, background: idx === i ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-inverse-label-alternative-soft)', transition: 'width var(--dur-base) var(--ease-out)' }} />
           ))}
         </div>
       )}

@@ -13,5 +13,5 @@ export interface ComboboxProps {
   style?: React.CSSProperties;
 }
 
-/** 다중 선택 드롭다운 — 트리거 안의 칩, 체크 가능한 옵션. */
+/** 검색이 필요 없는 소규모 목록용 호환 다중 선택. 검색/비동기 목록에는 SearchableMultiSelect를 권장합니다. */
 export function Combobox(props: ComboboxProps): JSX.Element;

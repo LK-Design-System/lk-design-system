@@ -93,7 +93,7 @@ export const SourceTagCard = {
   name: 'SourceTag card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 110, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
         <SourceTag href="#">Design System</SourceTag>
         <SourceTag label="사양" href="#">Component spec v2.4</SourceTag>
@@ -107,7 +107,7 @@ export const ContentBadgeStatusBadgeCard = {
   name: 'ContentBadge · StatusBadge card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 720, height: 150, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 720, height: 150, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <ContentBadge color="accent" variant="solid" leading={<Icon name="android" />}>Android</ContentBadge>
         <ContentBadge color="accent" leading={<Icon name="apple" />}>iOS</ContentBadge>
@@ -176,7 +176,7 @@ export const ThumbnailCard = {
       </span>
     );
     return (
-      <div data-visual-crop-root style={{ width: 700, height: 220, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
+      <div data-visual-crop-root style={{ width: 700, height: 220, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
           <Thumbnail ratio="1/1" overlay={overlay('1:1')} />
           <Thumbnail ratio="16/9" border overlay={overlay('16:9')} overlayAlign="bottom-right" />
@@ -191,7 +191,7 @@ export const TooltipBubbleBookmarkDividerCard = {
   name: 'Tooltip · Bubble · Bookmark · Divider card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 760, height: 150, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 760, height: 150, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <Tooltip content="상세 도움말"><IconButton variant="ghost" label="info"><Icon name="circle-info" size={20} /></IconButton></Tooltip>
         <Bubble tone="navy" tail="left">선택 항목 설명</Bubble>
@@ -209,13 +209,13 @@ export const ListCellAccordionCard = {
   name: 'ListCell · Accordion card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 380, background: 'var(--bw-paper)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 480, height: 380, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: '8px 16px', width: 340 }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: '8px 16px', width: 340 }}>
           <ListCell leading={<Icon name="document" />} title="컴포넌트 검토 기록" description="2026.06.30 · PDF" chevron onClick={() => {}} divider selected />
           <ListCell leading={<Icon name="bell" />} title="실시간 알림" trailing={<Switch defaultChecked size="sm" />} interaction="hovered" />
         </div>
-        <div style={{ background: 'var(--bw-white)', border: '1px solid var(--bw-border)', borderRadius: 'var(--radius-xl)', padding: '0 16px', width: 340 }}>
+        <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: '0 16px', width: 340 }}>
           <Accordion
             defaultOpen={[0]}
             items={[

@@ -98,13 +98,13 @@ export function ChoiceCard({
       ? shadowMap[resolvedShadow]
       : null,
     `inset 0 0 0 ${frameInset}px ${frameBorder}`,
-    activeFocus && !disabled ? "0 0 0 4px var(--focus-ring)" : null,
+    activeFocus && !disabled ? "0 0 0 4px var(--color-semantic-focus-ring)" : null,
   ]
     .filter(Boolean)
     .join(", ");
   const choiceShadow = [
     `inset 0 0 0 ${selected ? 1.5 : 1}px ${choiceBorder}`,
-    activeFocus && !disabled ? "0 0 0 4px var(--focus-ring)" : null,
+    activeFocus && !disabled ? "0 0 0 4px var(--color-semantic-focus-ring)" : null,
   ]
     .filter(Boolean)
     .join(", ");
@@ -149,7 +149,7 @@ export function ChoiceCard({
     background: disabled
       ? "var(--color-semantic-fill-normal)"
       : selected
-        ? "var(--lk-accent-tint-2)"
+        ? "var(--color-semantic-primary-surface-strong)"
         : "var(--color-semantic-background-elevated-normal)",
     boxShadow: frameShadow,
     color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
@@ -170,7 +170,7 @@ export function ChoiceCard({
     background: disabled
       ? "var(--color-semantic-fill-normal)"
       : selected
-        ? "var(--lk-accent-tint)"
+        ? "var(--color-semantic-primary-surface-normal)"
         : "var(--color-semantic-background-elevated-normal)",
     color: disabled ? "var(--color-semantic-label-disable)" : undefined,
     boxShadow: choiceShadow,

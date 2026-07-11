@@ -46,13 +46,13 @@ export function Checkbox({
   const d = isMark ? (normalizedSize === 'sm' ? 20 : 24) : (normalizedSize === 'sm' ? 16 : 18);
   const iconSize = isMark ? d : (normalizedSize === 'sm' ? 14 : 16);
   const markTone = status === 'negative' ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-primary-normal)';
-  const markIdleColor = activeHover || activeFocus ? 'var(--color-semantic-label-neutral)' : 'var(--bw-gray-300)';
+  const markIdleColor = activeHover || activeFocus ? 'var(--color-semantic-label-neutral)' : 'var(--color-semantic-interaction-inactive)';
   const boxBackground = disabledState
     ? (on || mixed ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)')
-    : on || mixed ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-normal)' : 'var(--bw-white)';
+    : on || mixed ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)';
   const boxBorder = disabledState
     ? 'var(--color-semantic-line-normal-neutral)'
-    : on || mixed ? 'var(--color-semantic-primary-normal)' : activeHover || activeFocus ? 'var(--color-semantic-line-solid-normal)' : 'var(--bw-border)';
+    : on || mixed ? 'var(--color-semantic-primary-normal)' : activeHover || activeFocus ? 'var(--color-semantic-line-solid-normal)' : 'var(--color-semantic-line-solid-normal)';
   const checkStroke = disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)';
   const controlStyle = isMark
     ? {
@@ -62,7 +62,7 @@ export function Checkbox({
         background: 'transparent',
         border: '0',
         borderRadius: 'var(--radius-pill)',
-        boxShadow: activeFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
+        boxShadow: activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
         transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
         outline: 'none',
       }
@@ -72,7 +72,7 @@ export function Checkbox({
         background: boxBackground,
         border: `1.5px solid ${boxBorder}`,
         borderRadius: 'var(--radius-5)',
-        boxShadow: activeFocus ? '0 0 0 4px var(--focus-ring)' : 'none',
+        boxShadow: activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
         transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
       };
 
@@ -85,7 +85,7 @@ export function Checkbox({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: tight ? 4 : 8,
         cursor: disabledState ? 'not-allowed' : 'pointer',
-        fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--bw-ink)',
+        fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-brand-ink)',
         fontWeight: bold ? 'var(--fw-bold)' : undefined,
         ...style,
       }}
