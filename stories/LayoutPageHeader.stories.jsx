@@ -1,8 +1,8 @@
 import {
   Breadcrumb,
   Button,
-  FloorSelector,
   PageHeader,
+  SegmentedControl,
   StatusBadge,
 } from '../src/index.js';
 
@@ -31,19 +31,21 @@ export const PageHeaderPattern = {
         meta={<><span>마지막 업데이트 10:42 KST</span><span>관리자</span></>}
         actions={<><Button variant="ghost">변경 이력</Button><Button variant="signal">사용자 추가</Button></>}
       />
-      <PageHeader
-        size="sm"
-        eyebrow="필터 설정"
-        title="목록 조건"
-        description="작은 화면이나 도구 패널에서는 compact 크기로 제목과 설명만 유지합니다."
-        actions={<Button variant="secondary" size="sm">저장</Button>}
-      />
+      <div style={{ maxWidth: 360, border: '1px dashed var(--color-semantic-line-normal-alternative)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
+        <PageHeader
+          size="sm"
+          eyebrow="필터 설정"
+          title="목록 조건"
+          description="작은 화면이나 도구 패널에서는 compact 크기로 제목과 설명만 유지합니다."
+          actions={<Button variant="secondary" size="sm">저장</Button>}
+        />
+      </div>
       <PageHeader
         size="sm"
         eyebrow="시설 모니터링"
         title="층별 현황"
-        description="층 전환처럼 화면 범위를 바꾸는 셀렉터는 헤더 액세서리로 배치합니다."
-        actions={<FloorSelector floors={['B1', '1F', '2F', '3F']} defaultValue="2F" />}
+        description="화면 범위를 바꾸는 전환 컨트롤은 가로형 SegmentedControl을 헤더 액세서리로 배치합니다. 세로형 FloorSelector는 맵·뷰어 옆 오버레이 전용입니다."
+        actions={<SegmentedControl size="sm" options={['B1', '1F', '2F', '3F']} defaultValue="2F" />}
       />
     </main>
   ),
