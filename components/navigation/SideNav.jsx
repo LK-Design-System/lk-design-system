@@ -37,12 +37,36 @@ export function SideNav({
   const navRef = React.useRef(null);
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
   const peekT = React.useRef(null);
-  const peek = (expand) => { clearTimeout(peekT.current); peekT.current = setTimeout(() => { if (!expand && hasPopover()) return; setCol(!expand); }, expand ? 160 : 480); };
+  const collapseAndRestoreFocus = () => {
+    clearTimeout(peekT.current);
+    const activeElement = document.activeElement;
+    const activeButton = navRef.current?.contains(activeElement) ? activeElement?.closest?.('button') : null;
+    const restoreValue = activeButton?.dataset.sidenavParent || activeButton?.dataset.sidenavValue;
+    setCol(true);
+    if (!activeButton) return;
+    requestAnimationFrame(() => {
+      const candidates = Array.from(navRef.current?.querySelectorAll('[data-sidenav-value]') || []);
+      const target = candidates.find((button) => button.dataset.sidenavValue === restoreValue)
+        || navRef.current?.querySelector('.lk-sidenav__scroll button:not(:disabled)');
+      target?.focus();
+    });
+  };
+  const peek = (expand) => {
+    clearTimeout(peekT.current);
+    peekT.current = setTimeout(() => {
+      if (!expand && (hasPopover() || navRef.current?.contains(document.activeElement))) return;
+      setCol(!expand);
+    }, expand ? 160 : 480);
+  };
   React.useEffect(() => () => clearTimeout(peekT.current), []);
   React.useEffect(() => {
     if (!overlay || col) return undefined;
     const down = (e) => { if (hasPopover()) return; if (navRef.current && !navRef.current.contains(e.target)) setCol(true); };
-    const key = (e) => { if (e.key === 'Escape' && !hasPopover()) setCol(true); };
+    const key = (e) => {
+      if (e.key !== 'Escape' || hasPopover()) return;
+      e.preventDefault();
+      collapseAndRestoreFocus();
+    };
     document.addEventListener('mousedown', down);
     document.addEventListener('keydown', key);
     return () => { document.removeEventListener('mousedown', down); document.removeEventListener('keydown', key); };
@@ -82,7 +106,7 @@ export function SideNav({
           {brand}
           {collapsible && (
             <button type="button" onClick={() => setCol(!col)} title={col ? '펼치기' : '접기'} aria-label={col ? '펼치기' : '접기'}
-              style={{ position: col ? 'static' : 'absolute', right: col ? 'auto' : 2, top: col ? 'auto' : 12, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, padding: 0, border: 'none', borderRadius: 'var(--radius-8)', background: 'transparent', color: 'var(--color-semantic-label-assistive)', cursor: 'pointer' }}>
+              style={{ position: col ? 'static' : 'absolute', right: col ? 'auto' : 2, top: col ? 'auto' : 12, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, padding: 0, border: 'none', borderRadius: 'var(--radius-8)', background: 'transparent', color: 'var(--color-semantic-label-neutral)', cursor: 'pointer' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="3" y="4" width="18" height="16" rx="3" />
                 <path d="M9.5 4v16" />
@@ -96,10 +120,11 @@ export function SideNav({
         {items.map((o, i) => {
           if (o.heading) return col
             ? <div key={'h' + i} style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} />
-            : <div key={'h' + i} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-assistive)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div>;
+            : <div key={'h' + i} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div>;
 
           const kids = o.children || [];
           const title = typeof o.label === 'string' ? o.label : undefined;
+          const accessibleLabel = o.ariaLabel || title;
 
           if (kids.length > 0) {
             const isOpen = !!open[o.value];
@@ -107,9 +132,9 @@ export function SideNav({
             const onParent = () => { if (col) { setCol(false); setOpen((s) => ({ ...s, [o.value]: true })); } else { setOpen((s) => ({ ...s, [o.value]: !s[o.value] })); } };
             return (
               <React.Fragment key={o.value}>
-                <button type="button" aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={title} {...hoverProps(o.value)}
+                <button type="button" data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={accessibleLabel} {...hoverProps(o.value)}
                   style={row(false, o.disabled, { color: childActive ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
-                  {o.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
+                  {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
                   {!col && labelSpan(childActive, o.label)}
                   {!col && <Chevron open={isOpen} />}
                   {col && childActive && dot}
@@ -119,7 +144,7 @@ export function SideNav({
                     {kids.map((c) => {
                       const ca = c.value === val;
                       return (
-                        <button key={c.value} type="button" aria-current={ca ? 'page' : undefined} disabled={c.disabled} onClick={() => pick(c.value)} {...hoverProps(c.value)}
+                        <button key={c.value} type="button" data-sidenav-value={c.value} data-sidenav-parent={o.value} aria-label={c.ariaLabel} aria-current={ca ? 'page' : undefined} disabled={c.disabled} onClick={() => pick(c.value)} {...hoverProps(c.value)}
                           style={row(ca, c.disabled, { padding: '8px 12px 8px 42px' }, hovKey === c.value)}>
                           <span style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.label}</span>
                           {c.badge != null && pill(ca, c.badge)}
@@ -134,9 +159,9 @@ export function SideNav({
 
           const active = o.value === val;
           return (
-            <button key={o.value} type="button" aria-current={active ? 'page' : undefined} disabled={o.disabled} onClick={() => pick(o.value)} title={title} {...hoverProps(o.value)}
+            <button key={o.value} type="button" data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-current={active ? 'page' : undefined} disabled={o.disabled} onClick={() => pick(o.value)} title={accessibleLabel} {...hoverProps(o.value)}
               style={row(active, o.disabled, null, hovKey === o.value)}>
-              {o.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
+              {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
               {!col && labelSpan(active, o.label)}
               {!col && o.badge != null && pill(active, o.badge)}
               {col && o.badge != null && dot}
