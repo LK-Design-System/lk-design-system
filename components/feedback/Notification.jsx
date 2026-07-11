@@ -1,15 +1,21 @@
 import React from 'react';
+import { statusToneStyle } from '../status/status-presentation.js';
 
 /**
  * LK ROBOTICS — Notification
  * A compact notification-list row: icon, title, description, timestamp, and a
  * single primary unread cue. Set `onClick` to render a native button row.
+ * `tone` colours the 36px rounded-square leading icon tile (the signed-off
+ * LK icon-tile pattern) with the shared status grammar; without it the tile
+ * stays neutral.
  */
 export function Notification({
   icon,
   title,
   description,
   time,
+  dateTime,
+  tone,
   unread = false,
   onClick,
   onFocus,
@@ -52,14 +58,26 @@ export function Notification({
         cursor: onClick ? 'pointer' : 'default',
         textAlign: 'start',
         background,
-        boxShadow: focused ? 'inset 0 0 0 2px var(--color-semantic-primary-normal)' : 'none',
+        boxShadow: focused ? 'inset 0 0 0 2px var(--color-semantic-focus-indicator)' : 'none',
         color: 'inherit',
         fontFamily: 'var(--font-sans)',
         ...style,
       }}
     >
       {icon != null && (
-        <span style={{ width: 36, height: 36, borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-fill-normal)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-semantic-primary-normal)' }}>
+        <span
+          aria-hidden="true"
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: 'var(--radius-md)',
+            background: tone ? statusToneStyle(tone).surface : 'var(--color-semantic-fill-normal)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: tone ? statusToneStyle(tone).foreground : 'var(--color-semantic-primary-heavy)',
+          }}
+        >
           {icon}
         </span>
       )}
@@ -67,9 +85,9 @@ export function Notification({
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0 }}>
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-normal)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--label1-spacing)' }}>{title}</span>
-            {unread && <span aria-label="읽지 않음" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)', flexShrink: 0 }} />}
+            {unread && <span role="img" aria-label="읽지 않음" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)', flexShrink: 0 }} />}
           </span>
-          {time != null && <time style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', letterSpacing: 'var(--caption1-spacing)' }}>{time}</time>}
+          {time != null && <time dateTime={dateTime} style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', letterSpacing: 'var(--caption1-spacing)' }}>{time}</time>}
         </div>
         {description != null && <div style={{ marginTop: 'var(--space-1)', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', letterSpacing: 'var(--label2-spacing)', wordBreak: 'keep-all' }}>{description}</div>}
       </div>
