@@ -1,5 +1,14 @@
 # Repository Working Rules
 
+## Concurrent Agent Coordination
+
+- Assume that other agents may be inspecting, generating, or editing files in the same worktree at the same time, even when their activity is not visible in the current task.
+- Before editing, inspect the current worktree status and re-read every target file. When delegating parallel work, assign the narrowest practical, non-overlapping file ownership and state those paths explicitly.
+- Treat unexpected or newly appearing changes as another contributor's work. Do not reset, revert, overwrite, mass-format, or regenerate them merely because they were not present at the start of the task.
+- Immediately before applying a patch to a file that may have changed, re-read the relevant section and adapt the patch to the latest contents. Immediately before handoff, inspect the target files and diff/status again; do not make claims from a stale snapshot.
+- If concurrent edits overlap and their intent cannot be preserved with a confident merge, stop editing the overlapping file, coordinate with the active agent when possible, and report the conflict instead of choosing one version silently.
+- Keep verification scoped to the files and contracts owned by the current task while parallel work is active. A failure or diff in an unrelated agent-owned area is not authorization to modify that area.
+
 ## Storybook Scope
 
 - Storybook is reserved for actual design-system components, patterns, variants, states, and visual parity examples.
