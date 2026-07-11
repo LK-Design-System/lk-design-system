@@ -56,6 +56,14 @@
 - For Avatar specifically, use `npm run check:avatar-duplicates` and the Avatar duplicate audit section in `docs/references/wds/README.md`.
 - If a guard is added, wire it into `npm run check` unless it is intentionally experimental.
 
+## Scope Escalation Gate (MANDATORY)
+
+- A request to review or fix a specific component, story, or area authorizes work on that area. It is not blanket approval for whatever larger work is discovered along the way — "전부 수정해줘" approves the findings that were just reported, not a new, larger scope.
+- Stop and ask before any fix whose blast radius exceeds the requested area. This includes at minimum: expanding a repository-wide quality gate (new rules, new coverage, stricter thresholds), changing the value of a shared semantic/component token, mass edits across many components, renaming or restructuring public APIs, and brand-color adjustments.
+- Expanding a binary pass/fail gate silently converts "fix the gate" into "fix everything the gate now covers". When newly exposed violations exceed the requested area, present options before proceeding — for example: fix everything now, freeze existing violations in a baseline and block only regressions, or scope the fix to the requested area and record the rest as follow-up work.
+- Shared token *value* changes shift visuals across the entire design system and are design-owner decisions. Propose the change with the affected surfaces and contrast/measurement evidence, and wait for approval; do not bundle it silently into an unrelated fix.
+- When the user approves an escalation, keep the escalated work in its own commit(s) with the measurement that justified it, so the original scoped fix remains reviewable on its own.
+
 ## Verification Cadence
 
 - During implementation, use the smallest relevant targeted checks for the files and contracts being changed, such as the affected Storybook story/play function, focused accessibility check, component test, type check, or package build.
