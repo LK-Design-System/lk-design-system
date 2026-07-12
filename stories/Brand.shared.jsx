@@ -34,7 +34,7 @@ export const LKRoboticsLogo = {
         </h1>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
           앱 화면, 내비게이션, 다크 배경에서 사용하는 공식 로고 컴포넌트입니다. 비율과 위치를 임의로
-          변형하지 않고 `variant`, `tone`, `height`만 조정합니다.
+          변형하지 않고 제공된 형태, 색상 톤, 높이 옵션 안에서만 조정합니다.
         </p>
       </header>
 
@@ -81,7 +81,7 @@ export const LKRoboticsLogo = {
         <div style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
           {[96, 64, 48, 32, 16].map((size) => (
             <div key={size} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
-              <img src="/assets/brand/lk-favicon.svg" alt="LK ROBOTICS 앱 아이콘" width={size} height={size} style={{ display: 'block' }} />
+              <img src="./assets/brand/lk-favicon.svg" alt="LK ROBOTICS 앱 아이콘" width={size} height={size} style={{ display: 'block' }} />
               <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>{size}px</code>
             </div>
           ))}
@@ -250,8 +250,8 @@ export const PlatformBrandMarks = {
           외부 플랫폼 로고
         </h1>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          `BrandLogo`는 LK ROBOTICS 로고가 아니라 Google, GitHub, YouTube처럼 외부 플랫폼을 표시할 때
-          사용하는 풀컬러 브랜드 마크입니다.
+          BrandLogo 컴포넌트는 LK ROBOTICS 로고가 아니라 Google, GitHub, YouTube처럼 외부 플랫폼을
+          표시할 때 사용하는 풀컬러 브랜드 마크입니다.
         </p>
       </header>
 

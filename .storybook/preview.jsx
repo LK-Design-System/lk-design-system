@@ -1,9 +1,10 @@
 import React from 'react';
+import { StoryGuide } from '../stories/StoryGuide.shared.jsx';
 
 if (typeof document !== 'undefined' && !document.querySelector('link[data-lk-ds-styles]')) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = '/styles.css';
+  link.href = './styles.css';
   link.dataset.lkDsStyles = 'true';
   document.head.appendChild(link);
 }
@@ -52,10 +53,26 @@ function getBackgroundValue(context) {
 export const decorators = [
   (Story, context) => {
     const theme = isDarkBackground(getBackgroundValue(context)) ? 'dark' : 'light';
+    const guide = context.parameters?.storyGuide;
+    const showGuide = guide?.storyId === context.id;
 
     return (
       <div data-theme={theme} className={`theme-${theme}`} style={canvasShell}>
-        <Story />
+        {showGuide ? (
+          <div data-story-guide-layout style={{ display: 'grid', gap: 'var(--space-6)', minWidth: 0 }}>
+            <StoryGuide
+              eyebrow={guide.eyebrow}
+              title={guide.title}
+              description={guide.description}
+              maxWidth={guide.maxWidth}
+            />
+            <div style={{ minWidth: 0 }}>
+              <Story />
+            </div>
+          </div>
+        ) : (
+          <Story />
+        )}
       </div>
     );
   },
@@ -76,31 +93,51 @@ export const parameters = {
     toc: true,
   },
   options: {
-    storySort: {
-      order: [
-        'LDS Core',
-        [
-          'Foundation',
-          ['Basic', 'Color', 'Typography', 'Spacing', 'Decorate', 'Icon'],
-          'Components',
-          [
-            'Layout',
-            'Action',
-            'Selection and Input',
-            'Content',
-            'Navigation',
-            'Status',
-            'Feedback',
-            'Overlay',
-          ],
-        ],
-        'LDS Theme',
-        ['Brand', 'Theme'],
-        'LDS Product',
-        ['Action', 'Content', 'Data', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
-        'LDS Robotics',
-        ['Editor', 'Robotics', 'Viewer'],
-      ],
+    storySort: (a, b) => {
+      const titleA = a.title.trim().split(/\s*\/\s*/);
+      const titleB = b.title.trim().split(/\s*\/\s*/);
+      const groupOrder = {
+        '': ['LDS Core', 'LDS Theme', 'LDS Product', 'LDS Robotics'],
+        'LDS Core': ['Foundation', 'Components'],
+        'LDS Core/Foundation': ['Aspect Ratio', 'Color', 'Typography', 'Spacing', 'Effects', 'Interaction', 'Iconography'],
+        'LDS Core/Components': ['Layout', 'Action', 'Selection and Input', 'Content', 'Navigation', 'Status', 'Overlay'],
+        'LDS Theme': ['Brand', 'Controls', 'Status'],
+        'LDS Product': ['Action', 'Content', 'Data', 'Status', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
+        'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
+        'LDS Robotics': ['Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer'],
+      };
+
+      if (a.title === b.title) {
+        const storyOrder = ['개요', '참조 · ', '사용법 · ', '변형·상태 · ', '상호작용 · ', '반응형 · ', '시나리오 · '];
+        const storyRank = (name) => {
+          const index = storyOrder.findIndex((prefix) => name === prefix.trim() || name.startsWith(prefix));
+          return index === -1 ? storyOrder.length : index;
+        };
+        const rankA = storyRank(a.name);
+        const rankB = storyRank(b.name);
+        return rankA - rankB || a.name.localeCompare(b.name, 'ko', { numeric: true, sensitivity: 'accent' });
+      }
+
+      const depth = Math.max(titleA.length, titleB.length);
+      for (let index = 0; index < depth; index += 1) {
+        const segmentA = titleA[index];
+        const segmentB = titleB[index];
+        if (segmentA === segmentB) continue;
+        if (segmentA == null) return -1;
+        if (segmentB == null) return 1;
+
+        const parent = titleA.slice(0, index).join('/');
+        const order = groupOrder[parent] || [];
+        const orderA = order.indexOf(segmentA);
+        const orderB = order.indexOf(segmentB);
+        if (orderA !== -1 || orderB !== -1) {
+          return (orderA === -1 ? order.length : orderA) - (orderB === -1 ? order.length : orderB);
+        }
+
+        return segmentA.localeCompare(segmentB, 'en', { numeric: true, sensitivity: 'accent' });
+      }
+
+      return 0;
     },
   },
 };
