@@ -18,7 +18,7 @@
 - **options**는 문자열 또는 `{ value, label, icon, disabled }`입니다.
 - **value / defaultValue / onChange**는 단일 선택일 때 문자열, `multiple`일
   때 `string[]`입니다. 기존 `multiple` API는 호환 유지합니다.
-- **size**는 Button family와 같은 `sm/md/lg` = 32/40/48px입니다.
+- **size**는 Button family와 같은 `sm/md/lg` = 32/40/48px이며, 이 값은 자식 버튼이 아니라 그룹 전체 외곽 높이입니다. 단일 모드의 SegmentedControl border와 복수 모드의 연결 border가 높이에 더해지지 않습니다.
 - 그룹의 목적을 설명하는 `aria-label` 또는 `aria-labelledby`를 제공하세요.
   전체 `disabled`와 option별 `disabled`를 지원합니다.
 - 단일 선택의 keyboard/DOM 계약은 `SegmentedControl`이 소유합니다.
@@ -34,5 +34,6 @@
   single/multiple·size·group disabled 계약을 제공합니다.
 - 단일 선택은 기존 WDS 대응 `SegmentedControl`에 수렴하고, 여러 독립 상태를
   동시에 유지하는 multiple toggle만 ButtonGroup의 별도 역할로 남깁니다.
+- 비활성인데 선택된 segment는 선택 정보를 숨기지 않되 primary 색을 사용하지 않습니다. Radio의 비활성 checked 문법과 같이 중립 채움·비활성 전경으로 선택 상태만 낮은 대비로 보존합니다.
 
 - **disable** — 모든 옵션을 끄는 `disabled`의 호환 별칭입니다.

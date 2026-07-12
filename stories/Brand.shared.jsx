@@ -81,7 +81,7 @@ export const LKRoboticsLogo = {
         <div style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
           {[96, 64, 48, 32, 16].map((size) => (
             <div key={size} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
-              <img src="/assets/brand/lk-favicon.svg" alt="LK ROBOTICS 앱 아이콘" width={size} height={size} style={{ display: 'block' }} />
+              <img src="./assets/brand/lk-favicon.svg" alt="LK ROBOTICS 앱 아이콘" width={size} height={size} style={{ display: 'block' }} />
               <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>{size}px</code>
             </div>
           ))}

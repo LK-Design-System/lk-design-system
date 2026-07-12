@@ -54,30 +54,70 @@ export const SegmentedKeyboardContract = {
   name: '로빙 키보드 계약',
   tags: ['!dev'],
   render: () => (
-    <SegmentedControl
-      aria-label="키보드 보기"
-      options={[
-        { value: 'status', label: '상태' },
-        { value: 'list', label: '목록', disabled: true },
-        { value: 'log', label: '로그' },
-      ]}
-      defaultValue="status"
-    />
+    <main style={{ display: 'grid', gap: 'var(--space-3)', width: 320, maxWidth: '100%' }}>
+      <SegmentedControl
+        data-contract="keyboard"
+        aria-label="키보드 보기"
+        options={[
+          { value: 'status', label: '상태' },
+          { value: 'list', label: '목록', interaction: 'inactive' },
+          { value: 'map', label: '지도', disable: true },
+          { value: 'log', label: '로그' },
+        ]}
+        defaultValue="status"
+      />
+      {['sm', 'md', 'lg'].map((size) => (
+        <SegmentedControl
+          key={size}
+          data-contract={`size-${size}`}
+          aria-label={`${size} 보기`}
+          options={['목록', '카드']}
+          size={size}
+        />
+      ))}
+      <SegmentedControl
+        data-contract="disabled-selected"
+        aria-label="비활성 선택 보기"
+        options={['선택됨', '선택 안 됨']}
+        defaultValue="선택됨"
+        disabled
+      />
+    </main>
   ),
   play: async ({ canvasElement }) => {
-    const radios = [...canvasElement.querySelectorAll('[role="radio"]')];
-    if (radios.length !== 3 || radios.filter((radio) => radio.tabIndex === 0).length !== 1) {
+    const keyboardGroup = canvasElement.querySelector('[data-contract="keyboard"]');
+    const radios = [...(keyboardGroup?.querySelectorAll('[role="radio"]') ?? [])];
+    if (radios.length !== 4 || radios.filter((radio) => radio.tabIndex === 0).length !== 1) {
       throw new Error('The radiogroup must expose one roving tab stop.');
+    }
+    if (!radios[1].disabled || radios[1].getAttribute('aria-disabled') !== 'true'
+      || !radios[2].disabled || radios[2].getAttribute('aria-disabled') !== 'true') {
+      throw new Error('interaction inactive and disable aliases must converge on the disabled option contract.');
     }
     radios[0].focus();
     await userEvent.keyboard('{ArrowRight}');
-    if (radios[2].getAttribute('aria-checked') !== 'true' || canvasElement.ownerDocument.activeElement !== radios[2]) {
+    if (radios[3].getAttribute('aria-checked') !== 'true' || canvasElement.ownerDocument.activeElement !== radios[3]) {
       throw new Error('ArrowRight must skip disabled segments, select the next value, and move focus.');
     }
     await userEvent.keyboard('{Home}');
     if (radios[0].getAttribute('aria-checked') !== 'true') throw new Error('Home must select the first enabled segment.');
     await userEvent.keyboard('{End}');
-    if (radios[2].getAttribute('aria-checked') !== 'true') throw new Error('End must select the last enabled segment.');
+    if (radios[3].getAttribute('aria-checked') !== 'true') throw new Error('End must select the last enabled segment.');
+
+    const expectedHeights = { sm: 32, md: 40, lg: 48 };
+    for (const [size, expectedHeight] of Object.entries(expectedHeights)) {
+      const group = canvasElement.querySelector(`[data-contract="size-${size}"]`);
+      if (!group || Math.abs(group.getBoundingClientRect().height - expectedHeight) > 0.5) {
+        throw new Error(`${size} SegmentedControl outer box must be ${expectedHeight}px.`);
+      }
+    }
+
+    const disabledSelected = canvasElement.querySelector('[data-contract="disabled-selected"] [data-selected="true"]');
+    const disabledUnselected = canvasElement.querySelector('[data-contract="disabled-selected"] [data-selected="false"]');
+    if (!disabledSelected?.disabled || !disabledUnselected?.disabled
+      || getComputedStyle(disabledSelected).backgroundColor === getComputedStyle(disabledUnselected).backgroundColor) {
+      throw new Error('Disabled SegmentedControl must preserve selection with a neutral visual cue.');
+    }
   },
 };
 

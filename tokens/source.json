@@ -1828,10 +1828,11 @@
         "$type": "color",
         "css": "--color-semantic-label-disable",
         "modes": {
-          "light": "rgba(55, 56, 60, 0.16)",
-          "dark": "rgba(152, 155, 162, 0.16)"
+          "light": "rgba(55, 56, 60, 0.52)",
+          "dark": "rgba(174, 176, 182, 0.52)"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "note": "Disabled foreground is held at 0.52 alpha so labels and glyphs remain identifiable on light and dark surfaces without resembling enabled controls."
       },
       "background-normal-alternative": {
         "$type": "color",

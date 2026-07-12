@@ -76,16 +76,6 @@
           "publicExport": true
         },
         {
-          "name": "ButtonGroup",
-          "file": "components/buttons/ButtonGroup.jsx",
-          "publicExport": true
-        },
-        {
-          "name": "SplitButton",
-          "file": "components/buttons/SplitButton.jsx",
-          "publicExport": true
-        },
-        {
           "name": "Fab",
           "file": "components/buttons/Fab.jsx",
           "publicExport": true
@@ -99,6 +89,18 @@
         "stories/ActionFab.stories.jsx"
       ],
       "extensionComponents": [
+        {
+          "name": "ButtonGroup",
+          "file": "components/buttons/ButtonGroup.jsx",
+          "publicExport": true,
+          "story": "stories/ActionButtonGroup.stories.jsx"
+        },
+        {
+          "name": "SplitButton",
+          "file": "components/buttons/SplitButton.jsx",
+          "publicExport": true,
+          "story": "stories/ActionSplitButton.stories.jsx"
+        },
         {
           "name": "CopyButton",
           "file": "components/buttons/CopyButton.jsx",

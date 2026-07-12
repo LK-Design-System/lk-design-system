@@ -4,19 +4,19 @@ import { Icon, SplitButton } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Action/Split Button',
+  title: 'LDS Product/Action/Split Button',
   component: SplitButton,
   parameters: {
     storyGuide: {
-      storyId: 'lds-core-components-action-split-button--split-buttons',
-      eyebrow: 'Core / Split Button',
+      storyId: 'lds-product-action-split-button--split-buttons',
+      eyebrow: 'Product / Split Button',
       title: '사용자가 기본 실행은 바로 하고 관련된 대안만 필요할 때 펼칩니다',
       description:
-        '반복해서 쓰는 기본 액션 하나와 같은 결과 계열의 보조 실행을 함께 제공할 때 적합합니다. 서로 무관하거나 우선순위가 같은 작업에는 Split Button 대신 개별 Button이나 Menu를 사용하세요.',
+        'WDS Core의 직접 component set이 아닌 LK Product 확장으로, 반복해서 쓰는 기본 액션 하나와 같은 결과 계열의 보조 실행을 함께 제공할 때 적합합니다. 서로 무관하거나 우선순위가 같은 작업에는 분할 실행 대신 개별 버튼이나 메뉴를 사용하세요.',
     },
     docs: {
       description: {
-        component: '분할 버튼은 기본 액션과 그 액션의 관련 대안을 하나의 연결된 컨트롤로 제공합니다.',
+        component: '이 LK Product 확장은 핵심 버튼 두 영역과 메뉴 계약을 조합해 기본 액션과 관련 대안을 하나의 연결된 컨트롤로 제공합니다.',
       },
     },
   },
@@ -92,7 +92,23 @@ function SplitButtonContractDemo() {
         </SplitButton>
         <SplitButton data-contract="loading" loading loadingLabel="저장 중" items={[]}>저장</SplitButton>
         <SplitButton disabled items={[]}>비활성 저장</SplitButton>
+        <SplitButton
+          data-contract="all-disabled"
+          menuLabel="사용할 수 없는 저장 대안 열기"
+          items={[{ label: '현재 사용할 수 없는 대안', disabled: true }]}
+        >
+          저장
+        </SplitButton>
       </section>
+      <div style={{ position: 'fixed', right: 0, bottom: 0 }}>
+        <SplitButton
+          data-contract="viewport-edge"
+          menuLabel="화면 가장자리 저장 대안 열기"
+          items={[{ label: '긴 이름의 초안으로 저장' }, { label: '긴 이름의 예약 저장' }]}
+        >
+          저장
+        </SplitButton>
+      </div>
     </main>
   );
 }
@@ -136,6 +152,51 @@ export const KeyboardAndStateContract = {
     await waitFor(() => {
       if (split.querySelector('[role="menu"]')) throw new Error('Escape must close the menu.');
       if (canvasElement.ownerDocument.activeElement !== trigger) throw new Error('Escape must restore focus to the menu trigger.');
+    });
+
+    const allDisabled = canvasElement.querySelector('[data-contract="all-disabled"]');
+    const allDisabledTrigger = allDisabled?.querySelector('[aria-haspopup="menu"]');
+    if (!allDisabled || !allDisabledTrigger) throw new Error('All-disabled SplitButton contract target is required.');
+    allDisabledTrigger.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => {
+      if (!allDisabled.querySelector('[role="menu"]')) throw new Error('An all-disabled menu must still open.');
+      if (canvasElement.ownerDocument.activeElement !== allDisabledTrigger) {
+        throw new Error('An all-disabled menu must keep focus on its trigger.');
+      }
+    });
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (allDisabled.querySelector('[role="menu"]')) throw new Error('Trigger Escape must close an all-disabled menu.');
+      if (canvasElement.ownerDocument.activeElement !== allDisabledTrigger) {
+        throw new Error('Trigger Escape must preserve focus for an all-disabled menu.');
+      }
+    });
+
+    const edge = canvasElement.querySelector('[data-contract="viewport-edge"]');
+    const edgeTrigger = edge?.querySelector('[aria-haspopup="menu"]');
+    if (!edge || !edgeTrigger) throw new Error('Viewport-edge SplitButton contract target is required.');
+    edgeTrigger.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    const edgeMenu = await waitFor(() => {
+      const openedMenu = edge.querySelector('[role="menu"]');
+      if (!openedMenu) throw new Error('Viewport-edge menu must open.');
+      if (openedMenu.dataset.placement !== 'top') throw new Error('A bottom-edge SplitButton menu must flip above its trigger.');
+      return openedMenu;
+    });
+    const view = canvasElement.ownerDocument.defaultView;
+    await waitFor(() => {
+      const rect = edgeMenu.getBoundingClientRect();
+      if (rect.left < 15 || rect.right > view.innerWidth - 15) {
+        throw new Error('SplitButton menu must remain within 16px viewport padding.');
+      }
+      if (canvasElement.ownerDocument.documentElement.scrollWidth > view.innerWidth + 1) {
+        throw new Error('SplitButton must not create horizontal viewport scrolling.');
+      }
+    });
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (edge.querySelector('[role="menu"]')) throw new Error('Viewport-edge menu must close with Escape.');
     });
   },
 };

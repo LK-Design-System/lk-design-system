@@ -2,7 +2,7 @@ import { userEvent } from 'storybook/test';
 import { AnnotatedImage } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
-const evidenceImage = '/assets/industry/ind-construction-hazard-patrol.webp';
+const evidenceImage = './assets/industry/ind-construction-hazard-patrol.webp';
 
 const regions = [
   { id: 'worker', label: '작업자', score: 0.96, x: 0.18, y: 0.19, width: 0.18, height: 0.57 },

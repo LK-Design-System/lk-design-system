@@ -71,8 +71,10 @@ export function ChoiceCard({
   const interactive = nativeChoice || customInteractive;
   const Root = nativeChoice ? 'label' : 'div';
 
-  const choiceBorder = selected
-    ? 'var(--color-semantic-primary-normal)'
+  const choiceBorder = disabled
+    ? 'var(--color-semantic-line-normal-neutral)'
+    : selected
+      ? 'var(--color-semantic-primary-normal)'
     : activeHover && !disabled
       ? 'var(--color-semantic-line-solid-normal)'
       : 'var(--color-semantic-line-normal-normal)';
@@ -165,6 +167,7 @@ export function ChoiceCard({
       aria-label={!nativeChoice ? ariaLabel : undefined}
       data-presentation={presentation}
       data-selected={selected ? '' : undefined}
+      data-disabled={disabled ? '' : undefined}
       data-status={isFrame ? status : undefined}
       data-interaction={activeFocus ? 'focused' : activeHover ? 'hovered' : 'normal'}
       tabIndex={nativeChoice ? undefined : disabled ? -1 : (tabIndex ?? (customInteractive || resolvedRole ? 0 : undefined))}
@@ -224,7 +227,11 @@ export function ChoiceCard({
           aria-hidden="true"
           style={{
             flexShrink: 0,
-            color: selected ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-neutral)',
+            color: disabled
+              ? 'var(--color-semantic-label-disable)'
+              : selected
+                ? 'var(--color-semantic-primary-heavy)'
+                : 'var(--color-semantic-label-neutral)',
             display: 'inline-flex',
           }}
         >
@@ -233,12 +240,12 @@ export function ChoiceCard({
       )}
       <div style={isFrame ? undefined : { flex: 1, minWidth: 0 }}>
         {!isFrame && title != null && (
-          <div style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>
+          <div style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>
             {title}
           </div>
         )}
         {!isFrame && description != null && (
-          <div style={{ marginTop: 3, fontSize: 'var(--label2-size)', lineHeight: 1.55, color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>
+          <div style={{ marginTop: 3, fontSize: 'var(--label2-size)', lineHeight: 1.55, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>
             {description}
           </div>
         )}
@@ -247,17 +254,26 @@ export function ChoiceCard({
       {!isFrame && showIndicator && (
         <span
           aria-hidden="true"
+          data-choice-indicator=""
           style={{
             flexShrink: 0,
             width: 20,
             height: 20,
             borderRadius: multiple ? 'var(--radius-sm)' : '50%',
-            background: selected ? 'var(--color-semantic-primary-normal)' : 'transparent',
-            boxShadow: selected ? 'none' : 'inset 0 0 0 1.5px var(--color-semantic-line-solid-normal)',
+            background: disabled
+              ? selected
+                ? 'var(--color-semantic-fill-normal)'
+                : 'transparent'
+              : selected
+                ? 'var(--color-semantic-primary-normal)'
+                : 'transparent',
+            boxShadow: disabled || !selected
+              ? 'inset 0 0 0 1.5px var(--color-semantic-line-normal-neutral)'
+              : 'none',
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--color-semantic-static-white)',
+            color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)',
             transition: 'background var(--dur-fast) var(--ease-out)',
           }}
         >

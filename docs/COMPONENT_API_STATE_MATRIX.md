@@ -77,6 +77,12 @@
 | ViewportStatusBar | mode, cursor/camera, zoom, selected count, snap, FPS, passive trailing readout | Viewport Status Bar의 기본 readout, 상태 tone, 후행 슬롯 stories |
 | ViewerFrame | ready/live, connecting/loading, degraded, stale/frozen, paused, no-source/unavailable/disconnected/no-signal, error; source identity, toolbar, HUD, edge status, blocking overlay | state matrix, stable dark/light surfaces, narrow frame, blocked-content focus restoration stories |
 | Map2DCanvas | top-left/center origin, controlled/uncontrolled viewport, pan/keyboard/wheel toggles, zoom/reset, optional delegated fit, grid/controls off | pointer-focal zoom, fit delegation, nested-control keyboard isolation, disabled control, 320px viewer stories |
+| WaypointMarker | renderer-neutral identity/map/position, composable roles, typed annotations, available/unavailable/unknown, selected/focused/disabled/invalid/stale, screen-space label and 24px target | light/dark, compound roles, pointer/Enter/Space, zoom 0.5–2, semantic-list parity and 320px stories |
+| LaneOverlay | directed points, entry/exit orientation and transition IDs, single/paired relation, speedLimitMps, mutexGroupId; runtime available/closed/unknown and independent conflict; selected/focused/disabled/invalid/stale | direction/relation overview, closed+conflict patterns, activation/disabled, transition-count and 320px stories |
+| RouteOverlay | planned/active/waiting/blocked/rerouting/completed route, per-segment completed/current/upcoming phase and normal/waiting/blocked/conflict condition, active-map filtering, explicit segment progress/selection | light/dark comparison, state matrix, multi-floor filtering without synthetic connector, activation and 320px stories |
+| TrajectoryOverlay | single-map ordered position samples, optional time/heading, currentSampleIndex, route-status lifecycle, selected/focused/disabled/invalid/stale | route-vs-trajectory comparison, lifecycle patterns, current heading/time summary, activation and 320px stories |
+| SpatialRegion | polygon/circle; behavior rule, facility kind, terrain kind/traversability/grade; selected/focused/disabled/invalid/stale/hidden, pattern and label | three-category overview, dark rule/state comparison, renderer map filtering, activation/disabled and 320px stories |
+| FacilityTransition | door/lift/dock endpoint, source availability; independent door/event, lift phase/motion/mode/session/map, dock phase; selected/focused/disabled/invalid/stale/hidden | multi-floor lift compound, unavailable/offline/unknown, map filtering, activation/disabled and 320px stories |
 | Scene3DFrame | ready, loading, empty/no-source, degraded, stale, unavailable, error; HUD and viewport-local toolbar | 3D state matrix, dark and narrow stories |
 | VideoStreamTile | connecting, live, degraded, stale/frozen, paused, no-signal, error; source identity and optional retry action | textual state, reduced motion, blocked-content focus suppression, compact tile stories |
 | ViewerToolbar | command, pressed/unpressed toggle, horizontal/vertical, on-dark/minimal, disabled action, roving focus | arrow/Home/End, remembered focus, explicit aria-pressed stories |
@@ -93,6 +99,10 @@
 | AnnotatedImage | load/error/empty, normalized region/point, annotation toggle, object fit, caption, accessible annotation summary; no provenance/actions/metrics | annotated image renderer stories |
 | ManualControlSession | independent link/authority/UI-arm/dead-man/focus axes, blocked reason, focus/visibility loss, safe-release reason, unmount release, re-arm request, emergency-stop request; no transport guarantee | manual control session stories |
 | ValidationSummary | error/warning issue, label/message, field or step return path, empty, optional announcement | form validation summary stories |
+| ConversationMessage | inbound/outbound/system direction independent of user/assistant/human-agent/system role, single/first/middle/last grouping, static/delivery/response lifecycle, aria-busy only on response pending/streaming/stopping, failed-only retry and pending/streaming-only stop, attachment/source/action slots; identity→body→attachments→sources→status→actions order | role/lifecycle overview, grouping and slots, composition, dark and 320px long-content stories |
+| MessageFeed | role="log" polite additions-only named viewport, controlled following with user-scroll/jump-to-latest reason, prepend scroll-anchor restoration, history load/busy, unread jump with focus retention, separate liveStatus status region, empty | history anchoring, follow/unread, empty/busy and 320px stories |
+| MessageComposer | controlled value, idle/submitting/streaming/stopping, enter/modifier-enter/button-only submit modes, IME-safe Enter, Shift+Enter newline, disabled requires disabledReason, canSubmit/readOnly, attachment/secondary slots, autosize min/max rows; never infers transport completion or clears value | submit-mode, IME, streaming stop, disabled-reason, dark and 320px stories |
+| VirtualKeypad | controlled canonical string value preserving `-`/`0.`/leading zeros, integer/decimal mode, optional sign, canonical `.` with localized display separator, min/max applied to confirmation validity only, maxLength, disabled/confirmDisabled, targetId focus preservation | integer/decimal and sign, range-invalid confirm, target-focus retention, 320px and landscape stories |
 
 ## Disallowed patterns
 
@@ -102,6 +112,9 @@
 - primitive token을 앱 화면에서 직접 쓰지 않는다.
 - toolbar action icon을 새로 그리지 않는다. `Icon` registry에 있는 이름을 우선한다.
 - command eligibility button, conversation message list/composer, single-product terminal frame, approval transition처럼 기존 요소의 단순 조합이거나 제품 policy를 포함하는 wrapper를 public component로 추가하지 않는다.
+- conversation의 독립 message/feed/composer 계약은 위 금지 규칙의 예외로 즉시 승인하지 않는다. 반복 소비 근거와
+  자체 interaction/accessibility 계약이 [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)의
+  Track C gate를 통과할 때만 별도 Product extension으로 재판정한다.
 - disabled control을 설명 없이 주요 flow의 유일한 경로로 두지 않는다.
 
 ## Storybook evidence rules

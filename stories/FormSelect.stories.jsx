@@ -1,4 +1,5 @@
-import { userEvent } from 'storybook/test';
+import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import { Select } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -98,5 +99,102 @@ export const SelectKeyboardContract = {
     if (trigger.getAttribute('aria-expanded') !== 'false' || !trigger.textContent?.includes('게시')) {
       throw new Error('Home, Arrow keys, and Space must navigate then commit the active option.');
     }
+  },
+};
+
+function SelectDisabledOptionsFixture() {
+  const [value, setValue] = React.useState('draft');
+  const [reviewDisabled, setReviewDisabled] = React.useState(false);
+  const [controlDisabled, setControlDisabled] = React.useState(false);
+  return (
+    <main style={{ display: 'grid', gap: 'var(--space-3)', width: 320, maxWidth: '100%' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+        <button type="button" data-contract="toggle-option" onClick={() => setReviewDisabled((current) => !current)}>
+          검토 옵션 전환
+        </button>
+        <button type="button" data-contract="toggle-control" onClick={() => setControlDisabled((current) => !current)}>
+          Select 비활성 전환
+        </button>
+      </div>
+      <Select
+        data-contract="dynamic-select"
+        aria-label="동적 게시 상태"
+        value={value}
+        onChange={setValue}
+        defaultOpen
+        disabled={controlDisabled}
+        options={[
+          { value: 'draft', label: '초안' },
+          { value: 'review', label: '검토', disabled: reviewDisabled },
+          { value: 'publish', label: '게시' },
+        ]}
+      />
+      <output data-contract="selected-value">{value}</output>
+      <Select
+        data-contract="locked-default-open"
+        aria-label="초기 비활성 Select"
+        disabled
+        defaultOpen
+        options={['하나', '둘']}
+      />
+    </main>
+  );
+}
+
+export const SelectDisabledOptionContract = {
+  name: '비활성 옵션과 동적 잠금 계약',
+  tags: ['!dev'],
+  render: () => <SelectDisabledOptionsFixture />,
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector('[data-contract="dynamic-select"]');
+    const locked = canvasElement.querySelector('[data-contract="locked-default-open"]');
+    const toggleOption = canvasElement.querySelector('[data-contract="toggle-option"]');
+    const toggleControl = canvasElement.querySelector('[data-contract="toggle-control"]');
+    const selectedValue = canvasElement.querySelector('[data-contract="selected-value"]');
+    if (!trigger || !locked || !toggleOption || !toggleControl || !selectedValue) {
+      throw new Error('Select disabled-option contract targets are required.');
+    }
+    if (locked.getAttribute('aria-expanded') !== 'false'
+      || canvasElement.ownerDocument.getElementById(locked.getAttribute('aria-controls'))) {
+      throw new Error('A disabled Select must ignore defaultOpen and keep its listbox closed.');
+    }
+
+    await waitFor(() => {
+      if (trigger.getAttribute('aria-expanded') !== 'true' || !trigger.getAttribute('aria-activedescendant')) {
+        throw new Error('An enabled defaultOpen Select must expose an active option.');
+      }
+    });
+    await userEvent.click(toggleOption);
+
+    trigger.focus();
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      const active = canvasElement.ownerDocument.getElementById(trigger.getAttribute('aria-activedescendant'));
+      if (active?.textContent?.trim() !== '초안') throw new Error('The selected enabled option must receive active focus.');
+    });
+    await userEvent.keyboard('{ArrowDown}');
+    const activeAfterDisabled = canvasElement.ownerDocument.getElementById(trigger.getAttribute('aria-activedescendant'));
+    if (activeAfterDisabled?.textContent?.trim() !== '게시') {
+      throw new Error('Arrow navigation must skip an option disabled after initial render.');
+    }
+
+    const listbox = canvasElement.ownerDocument.getElementById(trigger.getAttribute('aria-controls'));
+    const disabledOption = [...(listbox?.querySelectorAll('[role="option"]') ?? [])]
+      .find((option) => option.textContent?.trim() === '검토');
+    if (disabledOption?.getAttribute('aria-disabled') !== 'true') {
+      throw new Error('Disabled Select options must expose aria-disabled.');
+    }
+    await userEvent.click(disabledOption);
+    if (selectedValue.textContent?.trim() !== 'draft' || trigger.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('A disabled option must not commit a value or close the listbox.');
+    }
+
+    toggleControl.click();
+    await waitFor(() => {
+      if (!trigger.disabled || trigger.getAttribute('aria-expanded') !== 'false'
+        || canvasElement.ownerDocument.getElementById(trigger.getAttribute('aria-controls'))) {
+        throw new Error('A Select disabled while open must close immediately and remove the popup.');
+      }
+    });
   },
 };

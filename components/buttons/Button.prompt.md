@@ -22,6 +22,9 @@ LK theme tokens.
   move adjacent controls.
 - Native `disabled` removes a button from focus. `aria-disabled="true"` keeps it
   discoverable, applies the same unavailable treatment, and blocks activation.
+- Disabled foreground, fill, and outlined border resolve semantic roles at the
+  button's rendered theme scope, so nested dark surfaces do not inherit a
+  root-resolved light alias.
 - Hover and pressed feedback use calm tone changes only: no lift, scale, or
   shadow escalation. Focus remains the shared 2px `:focus-visible` outline.
 - **as="a"** renders a link CTA while preserving Button styling.

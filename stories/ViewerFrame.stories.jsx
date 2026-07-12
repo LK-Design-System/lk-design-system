@@ -115,13 +115,16 @@ export const StatePlacement = {
     if (!stale?.querySelector('[data-viewer-edge-state]') || stale.querySelector('[data-viewer-blocking-state]')) {
       throw new Error('Stale must preserve content and use the edge state.');
     }
+    if (!stale.querySelector('[data-viewer-edge-state] [role="status"][aria-live="polite"]') || stale.querySelector('[role="alert"]')) {
+      throw new Error('Retained-content Viewer states must remain polite and noninterrupting.');
+    }
   },
 };
 
 export const LiveAndBlockingStates = {
-  name: '변형·상태 · 실시간·소스 없음·표시 오류',
+  name: '변형·상태 · 실시간·연결 손실·표시 오류',
   parameters: storyDescription(
-    '실시간 영상과 소스 미선택·표시 오류를 한 화면에서 비교하는 상황입니다. live는 콘텐츠를 유지하고 중립 차단 상태와 오류 alert가 서로 다른 긴급도로 전달되는지 확인하세요.',
+    '실시간 영상과 소스 미선택·연결 끊김·신호 없음·표시 오류를 한 화면에서 비교하는 상황입니다. live는 콘텐츠를 유지하고 예상 가능한 설정 상태와 실제 콘텐츠 손실이 서로 다른 긴급도로 전달되는지 확인하세요.',
   ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
@@ -146,13 +149,33 @@ export const LiveAndBlockingStates = {
       >
         <Preview />
       </ViewerFrame>
+      <ViewerFrame
+        label="연결이 끊긴 뷰포트"
+        source="AMR-03 · 전면 카메라"
+        state="disconnected"
+        stateAction={<Button size="sm" onClick={() => {}}>연결 확인</Button>}
+        style={{ height: 220 }}
+      >
+        <Preview />
+      </ViewerFrame>
+      <ViewerFrame
+        label="신호가 없는 뷰포트"
+        source="AMR-05 · 열화상 카메라"
+        state="no-signal"
+        stateAction={<Button size="sm" onClick={() => {}}>다시 연결</Button>}
+        style={{ height: 220 }}
+      >
+        <Preview />
+      </ViewerFrame>
     </main>
   ),
   play: async ({ canvasElement }) => {
     const live = canvasElement.querySelector('[data-viewer-state="live"]');
     const noSource = canvasElement.querySelector('[data-viewer-state="no-source"]');
     const error = canvasElement.querySelector('[data-viewer-state="error"]');
-    if (!live || !noSource || !error) throw new Error('The representative Viewer states are incomplete.');
+    const disconnected = canvasElement.querySelector('[data-viewer-state="disconnected"]');
+    const noSignal = canvasElement.querySelector('[data-viewer-state="no-signal"]');
+    if (!live || !noSource || !error || !disconnected || !noSignal) throw new Error('The representative Viewer states are incomplete.');
 
     const liveCorner = live.querySelector('[data-viewer-topbar] [role="status"]');
     if (live.hasAttribute('data-viewer-blocking') || !liveCorner?.textContent?.includes('라이브')) {
@@ -170,6 +193,12 @@ export const LiveAndBlockingStates = {
     const errorAlert = error.querySelector('[data-viewer-blocking-live][role="alert"]');
     if (!error.hasAttribute('data-viewer-blocking') || !errorAlert?.textContent?.includes('표시 오류')) {
       throw new Error('Error must use the negative assertive blocking state.');
+    }
+    for (const frame of [disconnected, noSignal]) {
+      const alert = frame.querySelector('[data-viewer-blocking-live][role="alert"][aria-live="assertive"]');
+      if (!frame.hasAttribute('data-viewer-blocking') || !alert) {
+        throw new Error('Disconnected and no-signal must use assertive blocking alerts.');
+      }
     }
   },
 };

@@ -141,12 +141,12 @@ export function Button({
   const active = !blocked;
   const outlinedLike = wdsVariant.startsWith('outlined') || wdsVariant === 'ghost';
   const disabledBorder = outlinedLike
-    ? 'var(--component-button-disabled-outlined-border)'
+    ? 'var(--border-thin) solid var(--color-semantic-line-normal-neutral)'
     : p.bd;
-  const disabledFg = outlinedLike
-    ? 'var(--component-button-disabled-fg-outlined)'
-    : 'var(--component-button-disabled-fg)';
-  const disabledBg = outlinedLike ? 'transparent' : 'var(--component-button-disabled-bg)';
+  // Resolve disabled semantic roles at the use site. A component alias declared
+  // on :root would otherwise retain its light value inside a nested dark scope.
+  const disabledFg = 'var(--color-semantic-label-disable)';
+  const disabledBg = outlinedLike ? 'transparent' : 'var(--color-semantic-fill-normal)';
 
   const composed = {
     display: 'inline-flex',

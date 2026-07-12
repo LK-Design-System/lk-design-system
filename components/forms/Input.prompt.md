@@ -1,6 +1,7 @@
 ## Shared field rhythm
 
 - Field anatomy is consistently `label -> control -> helper/error`; labels use the shared input-label tokens and messages use caption typography. Consumer `aria-describedby` ids are merged with the generated helper/error id rather than replaced.
+- Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role.
 - `readOnly` remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.
 - Reference basis: [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/) for visible labels, hints and error association; [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/) for label/helper/error/read-only anatomy.
 

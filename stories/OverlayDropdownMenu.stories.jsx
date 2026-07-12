@@ -1,3 +1,4 @@
+import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import {
   Button,
@@ -45,6 +46,33 @@ function Section({ title, children }) {
   );
 }
 
+function CheckboxActionMenuPreview() {
+  const [result, setResult] = React.useState('선택 변경 전');
+  return (
+    <div style={{ minHeight: 300, display: 'grid', alignContent: 'start', gap: 'var(--space-3)' }}>
+      <DropdownMenu
+        trigger={<Button variant="ghost">Checkbox</Button>}
+        variant="checkbox"
+        verticalPadding="12px"
+        items={[
+          { label: '로봇', checked: true },
+          { label: '설비', checked: true },
+          { label: '배차', captionContent: '캡션 텍스트' },
+          { label: '이벤트' },
+          { label: '저장된 검색' },
+          { label: '비활성', disable: true },
+        ]}
+        menuActionArea
+        onCancel={() => setResult('변경 취소')}
+        onApply={() => setResult('선택 적용')}
+        maxHeight={260}
+        defaultOpen
+      />
+      <p aria-live="polite" style={{ margin: 0 }}>{result}</p>
+    </div>
+  );
+}
+
 export const DropdownMenuPatterns = {
   name: '개요',
   parameters: storyDescription(
@@ -72,38 +100,19 @@ export const DropdownMenuPatterns = {
           <div style={{ minHeight: 300 }}>
             <DropdownMenu trigger={<Button variant="ghost">Radio</Button>} variant="radio" cellPadding="8px" verticalPadding="8px" items={[{ label: '최신순', checked: true }, { label: '오래된순' }, { label: '조회순' }]} open />
           </div>
-          <div style={{ minHeight: 300 }}>
-            <DropdownMenu
-              trigger={<Button variant="ghost">Checkbox</Button>}
-              variant="checkbox"
-              verticalPadding="12px"
-              items={[
-                { label: '로봇', checked: true },
-                { label: '설비', checked: true },
-                { label: '배차', captionContent: '캡션 텍스트' },
-                { label: '이벤트' },
-                { label: '저장된 검색' },
-                { label: '비활성', disable: true },
-              ]}
-              menuActionArea
-              maxHeight={160}
-              open
-            />
-          </div>
+          <CheckboxActionMenuPreview />
         </div>
       </Section>
     </main>
   ),
 };
 
-export const DropdownMenuKeyboardContract = {
-  name: '상호작용 · 키보드 탐색',
-  parameters: storyDescription(
-    '키보드로 trigger에서 메뉴를 열고 disabled 항목을 건너뛰어 처음·마지막 명령으로 이동하는 상황입니다. Arrow·End·Escape가 예상 항목에 focus를 옮기고 닫힌 뒤 trigger로 복귀하는지 확인하세요.',
-  ),
-  render: () => (
-    <main style={{ minHeight: 320, display: 'grid', alignContent: 'start', justifyItems: 'start', padding: 24 }}>
+function DropdownMenuKeyboardDemo() {
+  const [actionResult, setActionResult] = React.useState('작업 전');
+  return (
+    <main style={{ minHeight: 320, display: 'grid', alignContent: 'start', justifyItems: 'start', gap: 'var(--space-4)', padding: 24 }}>
       <DropdownMenu
+        data-contract="keyboard"
         trigger={<Button variant="ghost">명령 메뉴</Button>}
         items={[
           { label: '열기' },
@@ -111,9 +120,26 @@ export const DropdownMenuKeyboardContract = {
           { label: '복제' },
           { label: '삭제', danger: true },
         ]}
+        menuActionArea
+        onCancel={() => setActionResult('취소')}
+        onApply={() => setActionResult('적용')}
       />
+      <DropdownMenu
+        data-contract="all-disabled"
+        trigger={<Button variant="ghost">사용 불가 메뉴</Button>}
+        items={[{ label: '사용할 수 없는 명령', disabled: true }]}
+      />
+      <p data-action-result aria-live="polite" style={{ margin: 0 }}>{actionResult}</p>
     </main>
+  );
+}
+
+export const DropdownMenuKeyboardContract = {
+  name: '상호작용 · 키보드 탐색',
+  parameters: storyDescription(
+    '키보드로 trigger에서 메뉴를 열고 disabled 항목을 건너뛰어 처음·마지막 명령으로 이동하는 상황입니다. Arrow·End·Escape가 예상 항목에 focus를 옮기고 닫힌 뒤 trigger로 복귀하는지 확인하세요.',
   ),
+  render: () => <DropdownMenuKeyboardDemo />,
   play: async ({ canvasElement }) => {
     const ownerDocument = canvasElement.ownerDocument;
     const dropdownTrigger = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === '명령 메뉴');
@@ -131,9 +157,43 @@ export const DropdownMenuKeyboardContract = {
     if (ownerDocument.activeElement?.textContent?.trim() !== '복제') throw new Error('DropdownMenu must skip disabled items.');
     await userEvent.keyboard('{End}');
     if (ownerDocument.activeElement?.textContent?.trim() !== '삭제') throw new Error('DropdownMenu End must focus the last item.');
+    await userEvent.tab();
+    if (ownerDocument.activeElement?.textContent?.trim() !== '취소' || ownerDocument.activeElement.closest('[role="menu"]')) {
+      throw new Error('DropdownMenu action area must be reachable outside menu semantics.');
+    }
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
       if (ownerDocument.activeElement !== dropdownTrigger) throw new Error('DropdownMenu must restore focus to its trigger.');
+    });
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => {
+      if (ownerDocument.activeElement?.textContent?.trim() !== '열기') throw new Error('DropdownMenu must reopen at its first item.');
+    });
+    await userEvent.keyboard('{End}');
+    await userEvent.tab();
+    await userEvent.tab();
+    if (ownerDocument.activeElement?.textContent?.trim() !== '적용') throw new Error('Apply must follow Cancel in the action area.');
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      if (canvasElement.querySelector('[data-action-result]')?.textContent !== '적용') throw new Error('Apply must call onApply.');
+      if (canvasElement.querySelector('[data-contract="keyboard"] [role="menu"]')) throw new Error('Apply must close the menu.');
+      if (ownerDocument.activeElement !== dropdownTrigger) throw new Error('Apply must restore trigger focus.');
+    });
+
+    const allDisabled = canvasElement.querySelector('[data-contract="all-disabled"]');
+    const allDisabledTrigger = allDisabled?.querySelector('[aria-haspopup="menu"]');
+    if (!allDisabled || !allDisabledTrigger) throw new Error('All-disabled DropdownMenu target is required.');
+    allDisabledTrigger.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => {
+      if (!allDisabled.querySelector('[role="menu"]')) throw new Error('All-disabled DropdownMenu must open.');
+      if (ownerDocument.activeElement !== allDisabledTrigger) throw new Error('All-disabled DropdownMenu must retain trigger focus.');
+    });
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (allDisabled.querySelector('[role="menu"]')) throw new Error('Trigger Escape must close an all-disabled DropdownMenu.');
+      if (ownerDocument.activeElement !== allDisabledTrigger) throw new Error('Trigger Escape must preserve focus.');
     });
   },
 };

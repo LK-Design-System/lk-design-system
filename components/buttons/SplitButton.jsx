@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
 import { Spinner } from '../status/Spinner.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useFloatingPosition } from '../overlay/anchored-overlay.js';
 
 const SIZE_STYLES = {
   sm: {
@@ -148,6 +149,7 @@ export function SplitButton({
   const [menuPressed, setMenuPressed] = React.useState(false);
   const rootRef = React.useRef(null);
   const menuTriggerRef = React.useRef(null);
+  const panelRef = React.useRef(null);
   const menuId = React.useId();
   const triggerId = React.useId();
   const normalizedSize = normalizeSize(size);
@@ -160,6 +162,12 @@ export function SplitButton({
     open,
     onClose: () => setOpen(false),
     getTrigger: () => menuTriggerRef.current,
+  });
+  const position = useFloatingPosition({
+    open,
+    anchorRef: rootRef,
+    panelRef,
+    placement: 'bottom',
   });
 
   const openMenu = (position = 'first') => {
@@ -297,22 +305,33 @@ export function SplitButton({
       </button>
       {open && (
         <div
-          ref={menuRef}
+          ref={(node) => {
+            panelRef.current = node;
+            menuRef.current = node;
+          }}
           id={menuId}
           role="menu"
           aria-labelledby={triggerId}
           onKeyDown={handleMenuKeyDown}
+          data-placement={position.placement}
           style={{
             position: 'absolute',
-            top: 'calc(100% + var(--space-2))',
+            top: position.placement === 'bottom' ? 'calc(100% + var(--space-2))' : 'auto',
+            bottom: position.placement === 'top' ? 'calc(100% + var(--space-2))' : 'auto',
             right: 0,
+            translate: `${position.shiftX}px ${position.shiftY}px`,
             zIndex: 40,
-            minWidth: 184,
+            width: 184,
+            minWidth: 0,
+            maxWidth: 'calc(100vw - var(--space-8))',
+            maxHeight: position.maxHeight ?? undefined,
+            overflowY: position.maxHeight != null ? 'auto' : undefined,
             background: 'var(--color-semantic-background-elevated-normal)',
             border: 'var(--border-thin) solid var(--color-semantic-line-solid-normal)',
             borderRadius: 'var(--component-menu-radius)',
             boxShadow: 'var(--shadow-md)',
             padding: 'var(--component-menu-padding-y) var(--component-menu-padding-x)',
+            boxSizing: 'border-box',
           }}
         >
           {items.map((item, index) => (

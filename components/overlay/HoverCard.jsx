@@ -9,7 +9,7 @@ import {
 } from './anchored-overlay.js';
 
 /**
- * LK ROBOTICS — HoverCard
+ * LK Product Extension — HoverCard
  * A popover that opens on hover (with a small delay) and closes on leave. Good
  * for profile/spec previews. Pass a `trigger` and arbitrary body children.
  */
@@ -24,6 +24,7 @@ export function HoverCard({
   openDelay = 120,
   closeDelay = 120,
   style,
+  panelStyle,
   onMouseEnter,
   onMouseLeave,
   onFocus,
@@ -96,7 +97,7 @@ export function HoverCard({
   return (
     <span
       ref={rootRef}
-      style={{ position: 'relative', display: 'inline-flex' }}
+      style={{ position: 'relative', display: 'inline-flex', ...style }}
       {...rest}
       onMouseEnter={show}
       onMouseLeave={hide}
@@ -117,7 +118,7 @@ export function HoverCard({
             maxHeight: position.maxHeight ?? undefined,
             overflowY: 'auto',
             translate: `${position.shiftX}px ${position.shiftY}px`,
-            ...style,
+            ...panelStyle,
           }}
         >
           {children}

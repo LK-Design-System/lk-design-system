@@ -5,15 +5,22 @@ Branch: `main`
 Remote: `origin` (`https://github.com/LK-ROBOTICS/lk-design-system-core.git`)
 Working area: `lk-design-system-core`
 
-Latest focused handoff: [Family-consistency stabilization verification](handoff/2026-07-12-family-stabilization-verification.md)
-(2026-07-12 completion: a prior session aligned the button, input/selection, overlay, and editor/viewer families to shared
-visual/state/behavior contracts but was cut off mid-verification. This session closed every remaining guard failure —
-api-drift, token-hygiene, wds-alignment, inventory, storybook-ia, accessibility play/axe/target-size, and visual-regression —
-fixing real defects along the way, most notably Button dropping a consumer-supplied `aria-busy`. **HEAD `bbe7b29`; `npm run check`
-is fully green; accessibility is 469 stories / 0 violations; the four families were browser-verified at 320px with zero overflow.**
-Nothing is uncommitted except regenerated `dist` chunks. `origin` has NOT been pushed.)
+Latest focused handoff: [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
+(2026-07-12: the robotics navigation (N1–N6), communication (C1–C4), and virtual keypad (K1) expansion is
+**implemented, wired to the public entry, and verified by targeted checks — the accessibility guard (46 new stories,
+0 violations), `check:storybook-ia`, and `check:inventory` are all green**, and representative stories were visually
+reviewed by screenshot (which caught and fixed a map-label overlap in the N6 semantic mirror that axe/geometry checks
+missed). **HEAD `04eb718`; all new work is still uncommitted in a very dirty shared worktree; `origin` has NOT been
+pushed.** Per the user's instruction the repository-wide `npm run check` was NOT run — targeted verification only. The
+completion handoff records the found/fixed defects, the exact resume sequence, and what remains (full check,
+visual-regression baseline, commit). It continues the
+[implementation checkpoint](handoff/2026-07-12-domain-component-expansion-implementation.md).)
 
-The current index is **168 pages / 469 stories / 351 public / 118 hidden**. This continues the
+The prior [Family-consistency stabilization verification](handoff/2026-07-12-family-stabilization-verification.md) remains
+the immediate historical checkpoint for the selection/input, menu/overlay, status, ButtonGroup, and SplitButton work.
+
+The last regenerated Storybook index is **177 pages / 516 stories / 397 public / 119 hidden** (the +9 pages / +46
+stories over the prior 168/470 baseline are the verified domain expansion). This continues the
 [Storybook IA, guidance, and naming normalization](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
 (friendly-entry contract on every page, purpose descriptions on every public story, `개요`-first naming with role prefixes),
 the [Storybook information architecture audit](handoff/2026-07-11-storybook-information-architecture-audit.md),
@@ -22,9 +29,10 @@ the executed [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-
 and the completed [D-track design convention review](references/quality/DESIGN_CONVENTION_REVIEW.json)
 (9 lenses, 53 reviewed findings, 47 confirmed, 6 rejected).
 
-Next work (not started): [QUALITY_AUDIT_PLAN.md](QUALITY_AUDIT_PLAN.md) P3 (packaging, consumption matrix, release contract)
-for product adoption, or the D-track backlog (medium 23 + low 10). The 2026-07-11 gap analysis lists 47 confirmed gaps across
-8 dimensions (phased P0–P3 + D); P0–P2 guards are built and wired into `npm run check`.
+Immediate next work: the domain expansion goal is complete and targeted-verified (a11y, IA, inventory green). Remaining
+are user-judgment items — run the repository-wide `npm run check` if desired (dirty-worktree gates like `check:generated`
+are structurally noisy and unrelated to this work), register the visual-regression baseline (`npm run update:visual-baseline`)
+for the new stories, and commit / push. P3 or the remaining D-track backlog follows after those.
 
 ## Current Direction
 
@@ -273,4 +281,5 @@ This handoff captures the WDS alignment pass and points to the latest 2026-07-11
 Full WDS parity is claimed against the accepted checked-in local `.fig` snapshot; live Figma
 re-verification is optional unless that upstream snapshot changes. The D-track design review is also
 complete and recorded in `docs/references/quality/DESIGN_CONVENTION_REVIEW.json`. The next work is
-the P0 guard wiring, the two known a11y defects, and scoped implementation of confirmed D findings.
+the focused handoff's final checkpoint: static Storybook rebuild, IA regeneration and review promotion,
+`check:storybook-ia`, then one full `npm run check`. P3 or remaining D findings follow only after that passes.

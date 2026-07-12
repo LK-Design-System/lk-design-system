@@ -5,12 +5,12 @@ import { ButtonIconButtonSocialButtonCard as ButtonIconButtonSocialButtonCardSto
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Action/Button Group',
+  title: 'LDS Product/Action/Button Group',
   component: ButtonGroup,
   parameters: {
     storyGuide: {
-      storyId: 'lds-core-components-action-button-group--button-groups',
-      eyebrow: 'Core / Button Group',
+      storyId: 'lds-product-action-button-group--button-groups',
+      eyebrow: 'Product / Button Group',
       title: '사용자가 연결된 선택지에서 현재 보기나 모드를 빠르게 전환합니다',
       description:
         '같은 맥락에서 하나 또는 여러 개의 짧은 토글 옵션을 맞닿은 버튼으로 제공할 때 적합합니다. 페이지 이동이나 긴 폼 선택에는 Button Group 대신 Tabs, Radio Group 또는 Select를 사용하세요.',
@@ -18,7 +18,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '버튼 그룹은 연결된 토글 버튼의 선택 상태와 변경을 소유하는 Core 컴포넌트입니다. 이 페이지에 숨겨 둔 버튼·아이콘 버튼·소셜 버튼 계열의 시각 회귀 자료는 기존 검증을 잃지 않기 위한 보조 증거이며, 해당 컴포넌트의 소유권이나 사용 지침을 뜻하지 않습니다.',
+          '버튼 그룹은 Segmented Control을 조합하거나 여러 독립 toggle을 연결하는 Product 확장입니다. 이 페이지에 숨겨 둔 버튼·아이콘 버튼·소셜 버튼 계열의 시각 회귀 자료는 기존 검증을 잃지 않기 위한 보조 증거이며, 해당 컴포넌트의 소유권이나 사용 지침을 뜻하지 않습니다.',
       },
     },
   },
@@ -42,7 +42,7 @@ function ButtonGroupDemo() {
 export const ButtonGroups = {
   name: '개요',
   parameters: storyDescription(
-    '동일한 데이터의 목록·카드·지도 보기를 즉시 바꾸는 상황입니다. 선택 상태가 aria-pressed와 시각적 강조로 함께 전달되고 변경 결과가 바로 반영되는지 확인하세요.',
+    '동일한 데이터의 목록·카드·지도 보기를 즉시 바꾸는 상황입니다. 단일 선택이 radio의 checked 의미와 시각적 강조로 함께 전달되고 변경 결과가 바로 반영되는지 확인하세요.',
   ),
   render: () => <ButtonGroupDemo />,
 };
@@ -73,16 +73,24 @@ export const SelectionContracts = {
       />
       <section style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
         {['sm', 'md', 'lg'].map((size) => (
-          <ButtonGroup
-            key={size}
-            data-contract={`size-${size}`}
-            aria-label={`${size} 정렬 옵션`}
-            multiple
-            size={size}
-            options={['왼쪽', '가운데']}
-          />
+          <React.Fragment key={size}>
+            <ButtonGroup
+              data-contract={`size-${size}-single`}
+              aria-label={`${size} 단일 정렬 옵션`}
+              size={size}
+              options={['왼쪽', '가운데']}
+            />
+            <ButtonGroup
+              data-contract={`size-${size}-multiple`}
+              aria-label={`${size} 복수 정렬 옵션`}
+              multiple
+              size={size}
+              options={['왼쪽', '가운데']}
+            />
+          </React.Fragment>
         ))}
-        <ButtonGroup aria-label="비활성 보기" options={['목록', '카드']} disabled />
+        <ButtonGroup aria-label="비활성 보기" options={['목록', '카드']} defaultValue="목록" disabled />
+        <ButtonGroup aria-label="비활성 표시 옵션" multiple options={['레이블', '가이드']} defaultValue={['레이블']} disabled />
       </section>
     </main>
   ),
@@ -107,10 +115,21 @@ export const SelectionContracts = {
 
     const expectedHeights = { sm: 32, md: 40, lg: 48 };
     for (const [size, expectedHeight] of Object.entries(expectedHeights)) {
-      const button = canvasElement.querySelector(`[data-contract="size-${size}"] button`);
-      if (!button || Math.abs(button.getBoundingClientRect().height - expectedHeight) > 0.5) {
-        throw new Error(`${size} ButtonGroup must use the ${expectedHeight}px Button scale.`);
+      for (const mode of ['single', 'multiple']) {
+        const group = canvasElement.querySelector(`[data-contract="size-${size}-${mode}"]`);
+        if (!group || Math.abs(group.getBoundingClientRect().height - expectedHeight) > 0.5) {
+          throw new Error(`${size} ${mode} ButtonGroup outer box must use the ${expectedHeight}px Button scale.`);
+        }
       }
+    }
+
+    const disabledSelected = canvasElement.querySelector('[aria-label="비활성 표시 옵션"] [data-selected="true"]');
+    const disabledUnselected = canvasElement.querySelector('[aria-label="비활성 표시 옵션"] [data-selected="false"]');
+    if (!disabledSelected?.disabled || !disabledUnselected?.disabled) {
+      throw new Error('Disabled multiple ButtonGroup options must retain native disabled state.');
+    }
+    if (getComputedStyle(disabledSelected).backgroundColor === getComputedStyle(disabledUnselected).backgroundColor) {
+      throw new Error('A disabled selected option must preserve a neutral selection cue.');
     }
   },
 };

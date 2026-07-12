@@ -100,7 +100,7 @@ npm run check:audit
 npm run check:ops-release
 ```
 
-패키지 진입 파일은 현재 192개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
+패키지 진입 파일은 현재 202개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
 
 ```powershell
 npm run generate:entry
@@ -117,7 +117,7 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product`, `LDS Robotics` 아래의 컴포넌트와 패턴 표면 351개 story를 다룹니다.
+현재 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product`, `LDS Robotics` 아래의 컴포넌트와 패턴 표면 397개 story를 다룹니다.
 WDS 원천 번호 체계(`1 Theme`, `3 Component / 2 Action` 등)는 public sidebar title이 아니라 `docs/references/wds/`의 근거 데이터에만 남깁니다.
 `LDS Product`와 `LDS Robotics`는 재사용 가능한 확장 컴포넌트/패턴만 다루며, 완성된 앱 화면, 템플릿, 워크플로우, 데모 페이지를 Storybook source of truth로 올리지 않습니다.
 보고/감사/보정표 UI와 운영 문서는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
@@ -131,6 +131,7 @@ AI 도구로 LK ROBOTICS UI를 생성할 때는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`
 Figma Variables export/import, 토큰 lifecycle, deprecation은 `docs/TOKEN_GOVERNANCE.md`를 기준으로 삼으세요.
 컴포넌트 API와 접근성 계약은 `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/ACCESSIBILITY_CONTRACTS.md`를 함께 봅니다.
 도메인 컴포넌트 계약은 `docs/ROBOTICS_PATTERNS.md`에 정리합니다.
+채팅·로보틱스 내비게이션·가상 입력의 후속 확장 순서는 `docs/DOMAIN_COMPONENT_EXPANSION_PLAN.md`에서 관리합니다.
 에디터/맵/포인트클라우드 레이아웃 판단 기준은 `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`를 먼저 봅니다.
 현재 CanvasEditorShell 수정 전 감사와 작업 순서는 `docs/EDITOR_LAYOUT_AUDIT.md`를 봅니다.
 

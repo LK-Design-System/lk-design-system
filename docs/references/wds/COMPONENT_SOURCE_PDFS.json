@@ -45,8 +45,6 @@
         "Toggle Icon: active true/false, interaction normal/hovered/focused/pressed"
       ],
       "localEvidence": [
-        "stories/ActionButtonGroup.stories.jsx#ButtonGroups",
-        "stories/ActionSplitButton.stories.jsx#SplitButtons",
         "stories/ActionFab.stories.jsx#FloatingActionButton",
         "stories/ActionIconButton.stories.jsx#IconButtonVariants",
         "stories/ActionTextButton.stories.jsx#TextButtonStates",

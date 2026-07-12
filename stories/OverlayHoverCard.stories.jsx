@@ -47,10 +47,13 @@ export const HoverCardInteractionContract = {
   render: () => (
     <main style={{ position: 'fixed', right: 4, bottom: 4 }}>
       <HoverCard
+        data-testid="hover-card-root"
         trigger={<Button variant="outlined" color="assistive">장치 A 미리보기</Button>}
         width={300}
         openDelay={0}
         closeDelay={0}
+        style={{ alignItems: 'center' }}
+        panelStyle={{ overflowWrap: 'anywhere' }}
       >
         <strong>장치 A</strong>
         <p style={{ margin: '6px 0 0' }}>온라인 · 마지막 점검 2분 전 · 배터리 86%</p>
@@ -59,8 +62,9 @@ export const HoverCardInteractionContract = {
   ),
   play: async ({ canvasElement }) => {
     const ownerDocument = canvasElement.ownerDocument;
+    const root = canvasElement.querySelector('[data-testid="hover-card-root"]');
     const trigger = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.includes('장치 A'));
-    if (!trigger) throw new Error('HoverCard contract story requires its trigger.');
+    if (!root || !trigger) throw new Error('HoverCard contract story requires its root and trigger.');
     trigger.focus();
     const card = await waitFor(() => {
       const current = canvasElement.querySelector('[role="tooltip"]');
@@ -69,6 +73,9 @@ export const HoverCardInteractionContract = {
     });
     if (!trigger.getAttribute('aria-describedby')?.split(/\s+/).includes(card.id)) {
       throw new Error('HoverCard trigger must reference its preview.');
+    }
+    if (root.style.alignItems !== 'center' || card.style.overflowWrap !== 'anywhere') {
+      throw new Error('HoverCard must apply style to the root and panelStyle to the floating panel.');
     }
     await waitFor(() => {
       const rect = card.getBoundingClientRect();

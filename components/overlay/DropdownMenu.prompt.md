@@ -2,7 +2,13 @@
 
 ```jsx
 <DropdownMenu trigger={<Button>Open</Button>} items={[{ label: 'Copy' }, { divider: true }, { label: 'Delete', danger: true }]} />
-<DropdownMenu variant="checkbox" menuActionArea items={[{ label: 'Option', checked: true }]} />
+<DropdownMenu
+  variant="checkbox"
+  menuActionArea
+  items={[{ label: 'Option', checked: true }]}
+  onCancel={discardDraft}
+  onApply={applySelection}
+/>
 ```
 
 - Use for trigger-bound command menus. Use `Menubar` for a horizontal application menu.
@@ -13,6 +19,12 @@
   정상 문서 순서로 이동합니다.
 - 선호 `width`는 viewport 안에서 clamp되고 아래 공간이 부족하면 위로 flip합니다. WDS Menu의
   r16·8px/20px shell과 shadow-md는 유지하며, r12·16px padding인 Popover와 시각 역할을 합치지 않습니다.
+- `menuActionArea`는 `onCancel`·`onApply` 중 제공된 실제 동작만 Cancel/Apply 버튼으로 만듭니다.
+  기본 문구는 `cancelLabel="취소"`, `applyLabel="적용"`이며 제품 문맥에 맞게 바꿀 수 있습니다.
+  콜백이나 custom `action`이 없으면 무동작 버튼을 만들지 않습니다. 마지막 menu item에서 Tab하면
+  menu role 밖의 action group으로 이동하고, Shift+Tab은 마지막 사용 가능 item으로 돌아가며,
+  action group의 Escape·클릭 완료는 닫은 뒤 trigger focus를 복원합니다. 긴 목록만 scroll되고 action
+  group은 panel 아래에 고정됩니다.
 
 ### 외부 기준과 적용 결론
 
@@ -20,5 +32,15 @@
   trigger 상태와 열림 시 첫/마지막 항목 focus 이동을 적용했습니다.
 - [React Aria Menu](https://react-aria.adobe.com/Menu) — 복합 menu의 방향키 이동, 명령/선택 item
   역할, disabled item 제외를 따릅니다. WDS의 normal/radio/checkbox 시각 축은 변경하지 않습니다.
+- [Floating UI `flip`](https://floating-ui.com/docs/flip),
+  [`shift`](https://floating-ui.com/docs/shift), [`size`](https://floating-ui.com/docs/size) — preferred
+  bottom을 우선하고 공간이 없으면 top으로 flip한 뒤 viewport 16px 안으로 shift하고, 남은 높이는
+  scrollable menu region의 max-height로 사용합니다.
 - [WDS component style parity](../../docs/references/wds/COMPONENT_STYLE_PARITY.md) — Menu r16과
   Popover r12가 각각 원본 component-set 값임을 확인하므로 이 shape 차이를 유지합니다.
+
+### LDS sibling delta inventory
+
+- Menubar submenu와 check/radio glyph, elevated surface, keyboard engine, action button 순서를 공유합니다.
+- Menubar의 persistent horizontal top-level chrome은 포함하지 않고 단일 trigger 관계만 유지합니다.
+- Popover보다 작은 menu padding/radius는 WDS Menu component-set의 역할 차이이므로 유지합니다.

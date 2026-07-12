@@ -23,7 +23,7 @@ export function useFieldMetadata({ prefix, id, label, helper, error, describedBy
   };
 }
 
-export function FieldLabel({ htmlFor, id, label, required = false }) {
+export function FieldLabel({ htmlFor, id, label, required = false, disabled = false }) {
   if (label == null) return null;
   return React.createElement(
     'label',
@@ -31,7 +31,9 @@ export function FieldLabel({ htmlFor, id, label, required = false }) {
       id,
       htmlFor,
       style: {
-        color: 'var(--component-input-label-color)',
+        color: disabled
+          ? 'var(--color-semantic-label-disable)'
+          : 'var(--color-semantic-label-normal)',
         fontSize: 'var(--component-input-label-font-size)',
         lineHeight: 'var(--component-input-label-line-height)',
         letterSpacing: 'var(--component-input-label-letter-spacing)',
@@ -39,7 +41,7 @@ export function FieldLabel({ htmlFor, id, label, required = false }) {
       },
     },
     label,
-    required && React.createElement('span', { style: { color: 'var(--component-input-required-color)' } }, ' *'),
+    required && React.createElement('span', { style: { color: 'var(--color-semantic-status-negative)' } }, ' *'),
   );
 }
 
@@ -98,5 +100,5 @@ export function fieldBorderColor({ disabled = false, readOnly = false, invalid =
 export function fieldBackground({ disabled = false, readOnly = false }) {
   if (disabled) return 'var(--color-semantic-fill-normal)';
   if (readOnly) return 'var(--color-semantic-fill-alternative)';
-  return 'var(--component-input-bg)';
+  return 'var(--color-semantic-background-elevated-normal)';
 }

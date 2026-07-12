@@ -70,7 +70,7 @@ export function Input({
   const endAction = trailingButton ?? actionRight;
   return (
     <div data-readonly={readOnly ? 'true' : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
-      <FieldLabel htmlFor={inputId} label={label} required={required} />
+      <FieldLabel htmlFor={inputId} label={label} required={required} disabled={disabled} />
       <div
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -83,7 +83,7 @@ export function Input({
         boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
       }}>
-        {startIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{startIcon}</span>}
+        {startIcon && <span style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto' }}>{startIcon}</span>}
         <input
           id={inputId}
           data-lds-field=""
@@ -96,9 +96,9 @@ export function Input({
           aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
-          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined, fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)' }}
+          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined, fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
         />
-        {endIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
+        {endIcon && <span style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
         {!endIcon && <FieldStatusIcon invalid={isInvalid} status={status} />}
         {endAction && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{endAction}</span>}
       </div>

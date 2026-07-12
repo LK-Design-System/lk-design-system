@@ -3,6 +3,7 @@
 ## Group and visual contract
 
 - Related radios share `name`; uncontrolled radios synchronize their custom indicator with the browser's native group state. The label gap is 8px and the default selected dot is 12px.
+- Disabled and checked are independent states: a disabled checked radio keeps its neutral center dot so the current value remains visible, while primary fill/border is removed and label, ring, and dot use disabled-neutral roles. SegmentedControl, ButtonGroup, and ChoiceCard use this same “preserve selection, remove primary emphasis” rule.
 - Arrow-key behavior and single-selection semantics come from the native radio input. Do not replace it with independent custom tab stops.
 - Reference basis: [WAI-ARIA Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) and [GOV.UK Radios](https://design-system.service.gov.uk/components/radios/).
 

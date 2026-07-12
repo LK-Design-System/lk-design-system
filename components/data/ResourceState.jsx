@@ -58,6 +58,7 @@ const STATE_PRESENTATION = {
 
 const PRESERVED_DATA_STATES = new Set(['refreshing', 'error', 'stale', 'offline']);
 const BLOCKING_STATES = new Set(['empty', 'restricted']);
+const ASSERTIVE_BLOCKING_STATES = new Set(['error', 'offline']);
 
 function DefaultLoadingContent() {
   return (
@@ -105,12 +106,14 @@ export function ResourceState({
   const isBlocking = BLOCKING_STATES.has(resolvedState)
     || (!hasContent && !isLoading && resolvedState !== 'ready');
   const preservesContent = hasContent && PRESERVED_DATA_STATES.has(resolvedState);
-  const statusRole = resolvedState === 'error' || resolvedState === 'offline' ? 'alert' : 'status';
+  const assertive = isBlocking && ASSERTIVE_BLOCKING_STATES.has(resolvedState);
+  const statusRole = assertive ? 'alert' : 'status';
   const statusLive = statusRole === 'alert' ? 'assertive' : 'polite';
 
   return (
     <section
       data-resource-state={resolvedState}
+      data-resource-state-blocking={isBlocking ? 'true' : 'false'}
       data-preserves-content={preservesContent ? 'true' : 'false'}
       aria-busy={isLoading || resolvedState === 'refreshing' ? 'true' : undefined}
       style={{

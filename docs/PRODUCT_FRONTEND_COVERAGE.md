@@ -449,6 +449,10 @@
 - 전체 `ScopedConversation`을 한 컴포넌트로 유지하지 않고 message, source disclosure, composer state, reset guard로 분해한다.
 - retrieval, citation truth, persistence, provider bridge는 앱 소유다.
 
+Message·feed·composer의 독립 시각·접근성 계약을 Product extension으로 다시 검토하는 후속 gate는
+[`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)의 Track C에 기록한다. 해당 gate가
+통과하기 전까지 이 문서의 product-owned workflow 판정은 유지한다.
+
 ### WF-11 Sensitive credential handling
 
 핵심은 secret을 보여주는 것이 아니라 가능한 한 secret을 보여주지 않고 목적을 달성하는 것이다.

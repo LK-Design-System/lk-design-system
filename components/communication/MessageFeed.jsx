@@ -1,0 +1,317 @@
+import React from 'react';
+import { Button } from '../buttons/Button.jsx';
+import { VisuallyHidden } from '../layout/VisuallyHidden.jsx';
+
+const useIsomorphicLayoutEffect = typeof window === 'undefined'
+  ? React.useEffect
+  : React.useLayoutEffect;
+const BOTTOM_THRESHOLD = 8;
+
+function isAtBottom(viewport) {
+  return viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= BOTTOM_THRESHOLD;
+}
+
+function requestFrame(callback) {
+  if (typeof window === 'undefined' || typeof window.requestAnimationFrame !== 'function') {
+    callback();
+    return null;
+  }
+  return window.requestAnimationFrame(callback);
+}
+
+function cancelFrame(frame) {
+  if (
+    frame != null
+    && typeof window !== 'undefined'
+    && typeof window.cancelAnimationFrame === 'function'
+  ) {
+    window.cancelAnimationFrame(frame);
+  }
+}
+
+/**
+ * LK Product Extension — MessageFeed
+ *
+ * Owns the accessible conversation log and its reading-position behavior.
+ * Message rendering, transport, persistence, and streaming content stay with
+ * the product and are supplied through `children`.
+ */
+export function MessageFeed({
+  ariaLabel = '메시지 내역',
+  children,
+  empty,
+  maxHeight = 400,
+  busy = false,
+  hasPrevious = false,
+  loadingPrevious = false,
+  onLoadPrevious,
+  loadPreviousLabel = '이전 메시지 불러오기',
+  following = true,
+  onFollowingChange,
+  unreadCount = 0,
+  jumpToLatestLabel = '최신 메시지로 이동',
+  onJumpToLatest,
+  liveStatus,
+  style,
+  ...rest
+}) {
+  const generatedId = React.useId();
+  const viewportId = `lk-message-feed-${String(generatedId).replace(/[^a-zA-Z0-9_-]/g, '')}`;
+  const viewportRef = React.useRef(null);
+  const contentRef = React.useRef(null);
+  const historyAnchorRef = React.useRef(null);
+  const historySettlingRef = React.useRef(false);
+  const programmaticScrollRef = React.useRef(false);
+  const programmaticFrameRef = React.useRef(null);
+  const settlingFrameRef = React.useRef(null);
+  const followingRef = React.useRef(following);
+  const lastRequestedFollowingRef = React.useRef(following);
+  const [retainJumpFocus, setRetainJumpFocus] = React.useState(false);
+
+  if (followingRef.current !== following) {
+    followingRef.current = following;
+    lastRequestedFollowingRef.current = following;
+  }
+
+  const releaseProgrammaticScroll = React.useCallback(() => {
+    cancelFrame(programmaticFrameRef.current);
+    programmaticFrameRef.current = requestFrame(() => {
+      programmaticFrameRef.current = requestFrame(() => {
+        programmaticScrollRef.current = false;
+        programmaticFrameRef.current = null;
+      });
+    });
+  }, []);
+
+  const markHistorySettled = React.useCallback(() => {
+    historySettlingRef.current = true;
+    cancelFrame(settlingFrameRef.current);
+    settlingFrameRef.current = requestFrame(() => {
+      settlingFrameRef.current = requestFrame(() => {
+        historySettlingRef.current = false;
+        settlingFrameRef.current = null;
+      });
+    });
+  }, []);
+
+  const scrollToBottom = React.useCallback(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    programmaticScrollRef.current = true;
+    viewport.scrollTop = viewport.scrollHeight;
+    releaseProgrammaticScroll();
+  }, [releaseProgrammaticScroll]);
+
+  React.useEffect(() => () => {
+    cancelFrame(programmaticFrameRef.current);
+    cancelFrame(settlingFrameRef.current);
+  }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const anchor = historyAnchorRef.current;
+    if (anchor) {
+      if (loadingPrevious) anchor.sawLoading = true;
+      const heightDelta = viewport.scrollHeight - anchor.scrollHeight;
+      const childrenChanged = anchor.children !== children;
+      const loadingFinished = anchor.sawLoading && !loadingPrevious;
+
+      if (heightDelta !== 0 || loadingFinished || (childrenChanged && !loadingPrevious)) {
+        programmaticScrollRef.current = true;
+        viewport.scrollTop = Math.max(0, anchor.scrollTop + heightDelta);
+        historyAnchorRef.current = null;
+        releaseProgrammaticScroll();
+        markHistorySettled();
+      }
+      return;
+    }
+
+    if (following) scrollToBottom();
+  }, [children, following, loadingPrevious, markHistorySettled, maxHeight, releaseProgrammaticScroll, scrollToBottom]);
+
+  React.useEffect(() => {
+    const content = contentRef.current;
+    const Observer = typeof globalThis === 'undefined' ? undefined : globalThis.ResizeObserver;
+    if (!content || typeof Observer !== 'function') return undefined;
+
+    const observer = new Observer(() => {
+      if (historyAnchorRef.current || historySettlingRef.current) return;
+      if (followingRef.current) scrollToBottom();
+    });
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, [scrollToBottom]);
+
+  const handleScroll = (event) => {
+    if (programmaticScrollRef.current) return;
+    const nextFollowing = isAtBottom(event.currentTarget);
+    if (nextFollowing === followingRef.current) {
+      lastRequestedFollowingRef.current = nextFollowing;
+      return;
+    }
+    if (nextFollowing === lastRequestedFollowingRef.current) return;
+    lastRequestedFollowingRef.current = nextFollowing;
+    onFollowingChange?.(nextFollowing, 'user-scroll');
+  };
+
+  const handleLoadPrevious = () => {
+    const viewport = viewportRef.current;
+    if (!viewport || !onLoadPrevious || loadingPrevious) return;
+    historyAnchorRef.current = {
+      scrollHeight: viewport.scrollHeight,
+      scrollTop: viewport.scrollTop,
+      children,
+      sawLoading: false,
+    };
+    onLoadPrevious();
+  };
+
+  const handleJumpToLatest = (event) => {
+    const button = event.currentTarget;
+    setRetainJumpFocus(true);
+    scrollToBottom();
+    button.focus({ preventScroll: true });
+    onFollowingChange?.(true, 'jump-to-latest');
+    onJumpToLatest?.();
+  };
+
+  const messageCount = React.Children.count(children);
+  const emptyContent = empty === undefined ? '메시지가 없습니다.' : empty;
+  const normalizedUnreadCount = Math.max(0, Math.floor(Number(unreadCount) || 0));
+  const showJump = !following || normalizedUnreadCount > 0 || retainJumpFocus;
+  const jumpAccessibleLabel = normalizedUnreadCount > 0
+    ? `${jumpToLatestLabel}, 읽지 않은 메시지 ${normalizedUnreadCount}개`
+    : jumpToLatestLabel;
+  const isBusy = busy || loadingPrevious;
+
+  return (
+    <section
+      {...rest}
+      data-message-feed
+      data-following={following ? 'true' : 'false'}
+      style={{
+        display: 'grid',
+        gap: 'var(--space-2)',
+        width: '100%',
+        maxWidth: '100%',
+        minWidth: 0,
+        fontFamily: 'var(--font-sans)',
+        ...style,
+      }}
+    >
+      {hasPrevious && (
+        <div
+          data-message-feed-history-control
+          style={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}
+        >
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            aria-controls={viewportId}
+            disabled={!onLoadPrevious}
+            loading={loadingPrevious}
+            loadingLabel={`${loadPreviousLabel} 중`}
+            onClick={handleLoadPrevious}
+          >
+            {loadPreviousLabel}
+          </Button>
+        </div>
+      )}
+
+      <div
+        id={viewportId}
+        ref={viewportRef}
+        data-message-feed-viewport
+        role="log"
+        aria-label={ariaLabel}
+        aria-live="polite"
+        aria-relevant="additions"
+        aria-atomic="false"
+        aria-busy={isBusy ? 'true' : undefined}
+        tabIndex={0}
+        onScroll={handleScroll}
+        style={{
+          boxSizing: 'border-box',
+          width: '100%',
+          maxWidth: '100%',
+          minWidth: 0,
+          maxHeight,
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          overscrollBehavior: 'contain',
+          scrollbarGutter: 'stable',
+          padding: 'var(--space-4)',
+          border: 'var(--component-card-border)',
+          borderRadius: 'var(--component-card-radius)',
+          background: 'var(--color-semantic-background-elevated-normal)',
+          boxShadow: 'var(--component-card-shadow-sm)',
+          color: 'var(--color-semantic-label-normal)',
+          outlineOffset: 2,
+        }}
+      >
+        <div
+          ref={contentRef}
+          data-message-feed-content
+          style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}
+        >
+          {messageCount > 0 ? children : (
+            <div
+              data-message-feed-empty
+              style={{
+                display: 'grid',
+                minHeight: 120,
+                placeItems: 'center',
+                minWidth: 0,
+                padding: 'var(--space-4)',
+                color: 'var(--color-semantic-label-alternative)',
+                fontSize: 'var(--body2-size)',
+                lineHeight: 'var(--body2-line)',
+                textAlign: 'center',
+                overflowWrap: 'anywhere',
+              }}
+            >
+              {emptyContent}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {showJump && (
+        <div
+          data-message-feed-jump-control
+          style={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}
+        >
+          <Button
+            type="button"
+            size="sm"
+            variant="secondary"
+            aria-controls={viewportId}
+            aria-label={jumpAccessibleLabel}
+            data-message-feed-jump
+            onClick={handleJumpToLatest}
+            onBlur={() => setRetainJumpFocus(false)}
+          >
+            {normalizedUnreadCount > 0
+              ? `${jumpToLatestLabel} · ${normalizedUnreadCount}`
+              : jumpToLatestLabel}
+          </Button>
+        </div>
+      )}
+
+      {liveStatus != null && liveStatus !== '' && (
+        <VisuallyHidden
+          as="div"
+          data-message-feed-live-status
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {liveStatus}
+        </VisuallyHidden>
+      )}
+    </section>
+  );
+}

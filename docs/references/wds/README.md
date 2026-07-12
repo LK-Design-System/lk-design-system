@@ -31,6 +31,9 @@ contract separate so action styling stays consistent across stories:
   (ButtonGroup, SplitButton, Fab) are demonstrated in
   `stories/Button.stories.jsx`, `stories/ActionButtonGroup.stories.jsx`,
   `stories/ActionSplitButton.stories.jsx`, and `stories/ActionFab.stories.jsx`.
+- ButtonGroup and SplitButton reuse those primitives but have no direct WDS
+  component set; their public stories and exports are classified as LK Product
+  Extension evidence, not WDS Core parity.
 - Action Area (bottom placement, divider, caption, sticky, safe-area padding)
   is demonstrated in `stories/ActionArea.stories.jsx`.
 - Chip variants live in the Selection and Input Chip page and the content

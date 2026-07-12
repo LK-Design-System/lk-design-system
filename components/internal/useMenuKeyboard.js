@@ -6,6 +6,8 @@ const MENU_ITEM_SELECTOR = [
   '[role="menuitemcheckbox"]',
 ].join(',');
 
+const menuKeyboardStack = [];
+
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
 function availableItems(menu) {
@@ -50,6 +52,31 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
       });
     }
   }, []);
+
+  React.useEffect(() => {
+    if (!open) return undefined;
+    const trigger = optionsRef.current.getTrigger?.();
+    const ownerDocument = trigger?.ownerDocument ?? menuRef.current?.ownerDocument ?? document;
+    const entry = {};
+    menuKeyboardStack.push(entry);
+
+    const handleDocumentKeyDown = (event) => {
+      if (
+        menuKeyboardStack.at(-1) !== entry
+        || event.defaultPrevented
+        || event.key !== 'Escape'
+      ) return;
+      event.preventDefault();
+      closeMenu({ restoreFocus: true });
+    };
+
+    ownerDocument.addEventListener('keydown', handleDocumentKeyDown);
+    return () => {
+      ownerDocument.removeEventListener('keydown', handleDocumentKeyDown);
+      const index = menuKeyboardStack.indexOf(entry);
+      if (index >= 0) menuKeyboardStack.splice(index, 1);
+    };
+  }, [closeMenu, open]);
 
   const handleMenuKeyDown = React.useCallback((event) => {
     if (event.defaultPrevented) return;

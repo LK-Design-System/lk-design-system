@@ -62,9 +62,24 @@ export const ChoiceCardStates = {
       <ChoiceCard selected title="선택됨" description="단일 선택 표시" />
       <ChoiceCard multiple selected title="다중 선택됨" description="checkbox 표시" />
       <ChoiceCard disabled title="비활성" description="선택할 수 없음" />
+      <ChoiceCard data-contract="disabled-selected-radio" selected disabled onSelect={() => {}} title="선택 후 비활성" description="현재 값은 유지하지만 변경할 수 없음" />
+      <ChoiceCard data-contract="disabled-selected-checkbox" multiple selected disabled onSelect={() => {}} title="선택된 다중 옵션 비활성" description="선택 여부와 사용 불가 상태를 함께 표시" />
       <ChoiceCard title="긴 설명이 있는 선택지" description="좁은 화면에서도 제목, 설명, 선택 표시가 서로 겹치지 않아야 합니다." />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const disabledRadio = canvasElement.querySelector('[data-contract="disabled-selected-radio"]');
+    const disabledCheckbox = canvasElement.querySelector('[data-contract="disabled-selected-checkbox"]');
+    const radioInput = disabledRadio?.querySelector('input[type="radio"]');
+    const checkboxInput = disabledCheckbox?.querySelector('input[type="checkbox"]');
+    const radioIndicator = disabledRadio?.querySelector('[data-choice-indicator]');
+    if (!radioInput?.checked || !radioInput.disabled || !checkboxInput?.checked || !checkboxInput.disabled) {
+      throw new Error('Disabled selected cards must preserve native checked state while blocking interaction.');
+    }
+    if (!radioIndicator?.firstElementChild || getComputedStyle(radioIndicator).color !== getComputedStyle(disabledRadio).color) {
+      throw new Error('Disabled selected ChoiceCard must use a neutral disabled selection marker.');
+    }
+  },
 };
 
 export const ChoiceCardInputContract = {

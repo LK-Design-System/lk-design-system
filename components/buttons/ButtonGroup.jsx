@@ -49,6 +49,8 @@ function MultiToggleSegment({ option, active, first, last, sizeStyle, disabled, 
     <button
       type="button"
       aria-pressed={active}
+      data-selected={active ? 'true' : 'false'}
+      data-disabled={blocked ? 'true' : 'false'}
       disabled={blocked}
       onClick={() => onPick(option.value)}
       onMouseEnter={() => setHover(true)}
@@ -63,7 +65,9 @@ function MultiToggleSegment({ option, active, first, last, sizeStyle, disabled, 
       }}
       onBlur={() => setPressed(false)}
       style={{
-        height: sizeStyle.height,
+        height: '100%',
+        minHeight: 0,
+        boxSizing: 'border-box',
         padding: sizeStyle.padding,
         cursor: blocked ? 'not-allowed' : 'pointer',
         fontFamily: 'var(--font-sans)',
@@ -76,7 +80,11 @@ function MultiToggleSegment({ option, active, first, last, sizeStyle, disabled, 
           : active
             ? 'var(--color-semantic-primary-heavy)'
             : 'var(--color-semantic-label-neutral)',
-        background: blocked ? 'var(--component-button-disabled-bg)' : interactiveBackground,
+        background: blocked
+          ? active
+            ? 'var(--color-semantic-fill-strong)'
+            : 'var(--component-button-disabled-bg)'
+          : interactiveBackground,
         border: `var(--border-thin) solid ${
           blocked
             ? 'var(--color-semantic-line-normal-neutral)'
@@ -171,7 +179,7 @@ export function ButtonGroup({
       aria-label={ariaLabel}
       aria-disabled={disabledState || undefined}
       className={['lk-button-group', className].filter(Boolean).join(' ')}
-      style={{ display: 'inline-flex', ...style }}
+      style={{ display: 'inline-flex', alignItems: 'stretch', height: sizeStyle.height, boxSizing: 'border-box', ...style }}
     >
       {norm.map((option, index) => (
         <MultiToggleSegment

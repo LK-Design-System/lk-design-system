@@ -35,6 +35,9 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | ContentEditor | 제목 input, 본문 textarea, toolbar button, 상태 live region 순서가 자연스러워야 함 |
 | CanvasEditorShell, CanvasEditorCommandBar, EditorToolbar, LayerPanel, SelectionInspector, ViewerToolbar | viewport와 toolbar/panel 사이 이동 순서, collapse/restore handle과 keyboard splitter의 accessible name, 방향키 scope, LayerPanel의 단일 roving Tab stop·typeahead·F2 row-action mode, 단축키 충돌, undo/redo 상태, 선택 해제 버튼의 accessible name |
 | Map2DCanvas, Scene3DFrame | viewport region name, keyboard zoom/pan 정책, 앱 캔버스 이벤트와 DS pan interaction 충돌 방지 |
+| WaypointMarker, LaneOverlay, RouteOverlay, TrajectoryOverlay, SpatialRegion, FacilityTransition | SVG fragment의 이름, pointer와 Enter/Space activation parity, disabled Tab 제외, selected/invalid state, zoom과 무관한 hit/stroke, 색 외 pattern·glyph·visible state text, 이름 있는 semantic mirror 목록 |
+| ConversationMessage, MessageFeed, MessageComposer | feed만 role="log" polite live-region을 소유하고 개별 message는 live region이 없음, message는 identity→body→attachments→sources→status→actions DOM 순서와 response pending/streaming/stopping만 aria-busy, composer는 IME 조합 중 Enter 오발송 방지·Shift+Enter 줄바꿈·disabled 시 disabledReason을 control 앞에 두고 aria-describedby로 연결·submit/stop 후 상태 미추론 |
+| VirtualKeypad | role="group"과 접근 가능한 이름, 각 키의 이름 있는 label과 48px touch target, aria-controls로 대상 input 연결, targetId input이 이미 focus된 경우에만 pointer preventDefault로 focus 보존, min/max는 confirm 유효성에만 적용, document/global keydown·long-press·VirtualKeyboard API 의존 없음 |
 
 ## Viewer accessibility contract
 
@@ -42,6 +45,10 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 - blocking state에서는 가려진 media와 control을 접근성 트리 및 keyboard focus 순서에서 제외하되 source identity는 유지한다. 현재 focus가 가려지면 recovery action 또는 blocking-state group으로 이동하고, 복구 후 원래 control이 남아 있으면 그 정확한 위치로 돌아간다. `degraded`, `stale`, `paused`는 콘텐츠를 가리지 않고 텍스트 상태와 freshness를 함께 제공한다.
 - edge state live region은 상태 전환 문구만 포함한다. FPS, resolution, freshness처럼 자주 바뀌는 passive metadata는 live region 밖에 둔다.
 - `Map2DCanvas`는 toolbar, button, input, slider에서 발생한 방향키를 pan으로 재처리하지 않는다. drag와 wheel만으로 가능한 조작에는 button 및 keyboard 대안이 있어야 한다.
+- Navigation SVG fragment는 `onActivate`가 있을 때만 interactive button semantics를 갖고 pointer와 Enter/Space가 같은 identity callback을 호출한다. disabled feature는 activation과 Tab 순서에서 제외하되 ordinary text mirror에서 상태와 identity를 계속 읽을 수 있어야 한다.
+- waypoint marker의 투명 hit area와 lane/route/trajectory hit stroke는 zoom과 무관하게 최소 24 CSS px를 유지한다. 겹치거나 조밀해져 SVG 자체 keyboard traversal이 불안정한 지도는 모든 feature를 Tab stop으로 만들지 않고 동일 순서·이름·상태의 목록 선택 경로를 제공한다.
+- Navigation paint order는 screen-reader와 keyboard order가 아니다. `LayerPanel`은 layer 표시/잠금, 이름 있는 semantic mirror는 feature 선택, `SelectionInspector`는 선택 객체 세부 정보를 맡으며 세 표면은 같은 stable ID를 공유한다.
+- closed/conflict/waiting/blocked/rerouting, unavailable/unknown/stale/invalid, region rule/traversability는 색 외 dash, slash, glyph, pattern, label을 함께 사용한다. SVG fragment는 live region을 만들지 않으며 source/runtime 상태 announcement는 제품이 소유한다.
 - `ViewerToolbar`는 한 개의 Tab stop을 사용하고 orientation에 맞는 Arrow key와 Home/End를 지원한다. command에는 `aria-pressed`를 붙이지 않고 toggle은 `true`와 `false`를 모두 노출한다.
 - `TelemetryGauge`는 `meter` name, min, max, current value와 사람이 읽는 `aria-valuetext`를 제공한다. 빠른 telemetry 값 자체는 live region으로 반복 발표하지 않는다.
 - live, loading, stale, no-signal, error는 색이나 motion만으로 구분하지 않는다. pulse/spinner는 `prefers-reduced-motion`에서 정지하며 visible text를 함께 제공한다.

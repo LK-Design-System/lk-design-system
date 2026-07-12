@@ -106,13 +106,19 @@ export const PreservedDataStates = {
           <ResourceRows />
         </ResourceState>
       </ResourceSurface>
+      <ResourceSurface label="현장 연결 현황">
+        <ResourceState state="offline" lastUpdated="오늘 13:57">
+          <ResourceRows />
+        </ResourceState>
+      </ResourceSurface>
     </main>
   ),
   play: async ({ canvasElement }) => {
     const grid = canvasElement.querySelector('[data-testid="resource-state-grid"]');
     const stale = canvasElement.querySelector('[data-resource-state="stale"]');
     const error = canvasElement.querySelector('[data-resource-state="error"]');
-    for (const resource of [stale, error]) {
+    const offline = canvasElement.querySelector('[data-resource-state="offline"]');
+    for (const resource of [stale, error, offline]) {
       if (!resource || resource.dataset.preservesContent !== 'true' || !resource.querySelector('[data-testid="preserved-resource-content"]')) {
         throw new Error('Stale and error states must preserve the last successful resource content.');
       }
@@ -123,8 +129,14 @@ export const PreservedDataStates = {
         throw new Error('ResourceState reading order must be message, preserved content, then freshness.');
       }
     }
-    if (!grid || grid.scrollWidth > grid.clientWidth + 1 || error.querySelector('[role="alert"]') == null) {
-      throw new Error('Resource states must fit their container and errors must expose alert semantics.');
+    for (const resource of [error, offline]) {
+      const status = resource?.querySelector('[role="status"][aria-live="polite"]');
+      if (resource?.dataset.resourceStateBlocking !== 'false' || !status || resource.querySelector('[role="alert"]')) {
+        throw new Error('Preserved error and offline resources must remain nonblocking polite statuses.');
+      }
+    }
+    if (!grid || grid.scrollWidth > grid.clientWidth + 1) {
+      throw new Error('Resource states must fit their container.');
     }
   },
 };
@@ -148,6 +160,9 @@ export const NarrowBlockingStates = {
       <ResourceSurface label="비용 분석">
         <ResourceState state="restricted" />
       </ResourceSurface>
+      <ResourceSurface label="현장 운영 현황">
+        <ResourceState state="offline" />
+      </ResourceSurface>
     </main>
   ),
   play: async ({ canvasElement }) => {
@@ -155,11 +170,15 @@ export const NarrowBlockingStates = {
     const loading = canvasElement.querySelector('[data-resource-state="loading"]');
     const empty = canvasElement.querySelector('[data-resource-state="empty"]');
     const restricted = canvasElement.querySelector('[data-resource-state="restricted"]');
+    const offline = canvasElement.querySelector('[data-resource-state="offline"]');
     if (!loading || loading.getAttribute('aria-busy') !== 'true' || !loading.querySelector('[data-resource-state-skeleton]')) {
       throw new Error('Loading resources must expose busy semantics and a progressive Skeleton.');
     }
     if (!empty?.querySelector('[role="status"]') || !restricted?.querySelector('[role="status"]')) {
       throw new Error('Blocking resource states must expose their text and icon through status semantics.');
+    }
+    if (offline?.dataset.resourceStateBlocking !== 'true' || !offline.querySelector('[role="alert"][aria-live="assertive"]')) {
+      throw new Error('Offline without preserved content must use an assertive blocking alert.');
     }
     if (!wrapper || wrapper.scrollWidth > wrapper.clientWidth + 1) {
       throw new Error('ResourceState must not create horizontal overflow at 320px.');

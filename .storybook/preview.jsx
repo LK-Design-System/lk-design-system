@@ -4,7 +4,7 @@ import { StoryGuide } from '../stories/StoryGuide.shared.jsx';
 if (typeof document !== 'undefined' && !document.querySelector('link[data-lk-ds-styles]')) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = '/styles.css';
+  link.href = './styles.css';
   link.dataset.lkDsStyles = 'true';
   document.head.appendChild(link);
 }

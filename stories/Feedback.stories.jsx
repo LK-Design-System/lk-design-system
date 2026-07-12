@@ -48,27 +48,27 @@ const groupItems = [
 const avatarResourceRows = [
   {
     label: 'Placeholder / content',
-    src: '/assets/source/avatar/resource/avatar-placeholder-content.png',
+    src: './assets/source/avatar/resource/avatar-placeholder-content.png',
     avatar: <Avatar variant="person" placeholder size={44} aria-label="콘텐츠 플레이스홀더" />,
   },
   {
     label: 'Placeholder / person',
-    src: '/assets/source/avatar/resource/avatar-null.svg',
+    src: './assets/source/avatar/resource/avatar-null.svg',
     avatar: <Avatar variant="person" placeholder size={44} aria-label="인물 플레이스홀더" />,
   },
   {
     label: 'Placeholder / company',
-    src: '/assets/source/avatar/resource/avatar-null-company.svg',
+    src: './assets/source/avatar/resource/avatar-null-company.svg',
     avatar: <Avatar variant="company" placeholder size={44} aria-label="기업 플레이스홀더" />,
   },
   {
     label: 'Placeholder / academy',
-    src: '/assets/source/avatar/resource/avatar-null-academy.svg',
+    src: './assets/source/avatar/resource/avatar-null-academy.svg',
     avatar: <Avatar variant="academy" placeholder size={44} aria-label="아카데미 플레이스홀더" />,
   },
   {
     label: 'Deactivate',
-    src: '/assets/source/avatar/resource/avatar-deactivate.png',
+    src: './assets/source/avatar/resource/avatar-deactivate.png',
     avatar: <Avatar variant="person" placeholder size={44} deactivated aria-label="비활성화 플레이스홀더" />,
   },
 ];

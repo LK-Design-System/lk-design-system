@@ -1,5 +1,14 @@
 import React from 'react';
 
+function normalizeSegmentOption(option) {
+  return typeof option === 'string'
+    ? { value: option, label: option, disabled: false }
+    : {
+        ...option,
+        disabled: Boolean(option.disabled || option.disable || option.interaction === 'inactive'),
+      };
+}
+
 /** Compact, mutually exclusive view or mode selection. */
 export function SegmentedControl({
   options = [],
@@ -17,9 +26,7 @@ export function SegmentedControl({
   'aria-label': ariaLabel = '보기 선택',
   ...groupProps
 }) {
-  const normalizedOptions = options.map((option) => (
-    typeof option === 'string' ? { value: option, label: option } : option
-  ));
+  const normalizedOptions = options.map(normalizeSegmentOption);
   const enabledIndices = normalizedOptions
     .map((option, index) => (option.disabled ? -1 : index))
     .filter((index) => index >= 0);
@@ -67,6 +74,8 @@ export function SegmentedControl({
       style={{
         display: 'inline-flex',
         width: fill ? '100%' : undefined,
+        height,
+        boxSizing: 'border-box',
         justifySelf: fill ? undefined : 'start',
         padding: outlined ? 0 : trackPadding,
         gap: outlined ? 0 : 2,
@@ -80,10 +89,10 @@ export function SegmentedControl({
       {normalizedOptions.map((option, index) => {
         const optionInteraction = option.interaction || interaction;
         const selected = option.value === currentValue;
-        const active = selected || optionInteraction === 'active' || optionInteraction === 'active-focused';
-        const activeHover = optionInteraction === 'hovered';
-        const activeFocus = optionInteraction === 'focused' || optionInteraction === 'active-focused';
         const optionDisabled = disabledState || option.disabled;
+        const active = selected || optionInteraction === 'active' || optionInteraction === 'active-focused';
+        const activeHover = !optionDisabled && optionInteraction === 'hovered';
+        const activeFocus = !optionDisabled && (optionInteraction === 'focused' || optionInteraction === 'active-focused');
         return (
           <button
             key={option.value}
@@ -92,6 +101,8 @@ export function SegmentedControl({
             role="radio"
             aria-checked={selected}
             aria-disabled={optionDisabled || undefined}
+            data-selected={selected ? 'true' : 'false'}
+            data-disabled={optionDisabled ? 'true' : 'false'}
             tabIndex={!optionDisabled && index === rovingIndex ? 0 : -1}
             disabled={optionDisabled}
             onClick={() => pick(index)}
@@ -113,7 +124,9 @@ export function SegmentedControl({
             }}
             style={{
               flex: fill ? 1 : undefined,
-              height,
+              height: '100%',
+              minHeight: 0,
+              boxSizing: 'border-box',
               padding: '0 9px',
               border: 'none',
               display: 'inline-flex',
@@ -132,15 +145,19 @@ export function SegmentedControl({
                   : activeFocus
                     ? 'var(--color-semantic-label-normal)'
                     : 'var(--color-semantic-label-neutral)',
-              background: active
-                ? (outlined ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)')
-                : activeHover || activeFocus
-                  ? 'var(--color-semantic-fill-normal)'
-                  : 'transparent',
+              background: optionDisabled
+                ? active
+                  ? 'var(--color-semantic-fill-strong)'
+                  : 'transparent'
+                : active
+                  ? (outlined ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)')
+                  : activeHover || activeFocus
+                    ? 'var(--color-semantic-fill-normal)'
+                    : 'transparent',
               borderRadius: outlined ? 0 : segmentRadius,
               borderLeft: outlined && index > 0 ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
               boxShadow: [
-                active && !outlined ? 'var(--shadow-xs)' : null,
+                active && !outlined && !optionDisabled ? 'var(--shadow-xs)' : null,
                 activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : null,
               ].filter(Boolean).join(', ') || 'none',
               transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',

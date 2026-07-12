@@ -13,6 +13,30 @@
 
 상세 구현 증거는 `references/quality/QUALITY_GAP_AUDIT.json`의 `source.implementation`, D 트랙 해결 상태는 `references/quality/DESIGN_CONVENTION_REVIEW.json`의 finding별 `remediation`에 기록했다. medium 23건과 low 10건은 삭제하지 않고 후속 개선 원장으로 유지한다.
 
+### 추가 하드닝 상태 — 2026-07-12
+
+완료로 기록됐던 패밀리 안정화를 독립 재감사한 결과, 기존 전체 검증이 놓친 P1·P2 잔여 계약을
+추가로 닫았다.
+
+- 선택·입력: Select 비활성 옵션 탐색·선택 차단과 잠금 전환, SegmentedControl·ButtonGroup의
+  32/40/48px 외곽 치수, 비활성 선택 상태의 중립 표현을 통일했다.
+- 메뉴·오버레이: 빈 메뉴와 전체 비활성 메뉴의 Escape/초점 복원, SplitButton·Menubar의 협폭
+  flip/clamp, DropdownMenu의 실제 action footer 및 Tab 순환, HoverCard의 `style`/`panelStyle`
+  경계를 보강했다.
+- 상태: ResourceState와 ViewerFrame에서 콘텐츠가 차단되는 오류·연결 끊김만
+  `alert`/`assertive`, 보존 데이터가 있는 상태는 `status`/`polite`로 통일했다.
+- 계층·증거: ButtonGroup과 SplitButton을 `LDS Product/Action` 확장으로 재분류하고 WDS 직접
+  증거·커버리지·variant 원장을 새 공개 경로에 맞췄다.
+
+관련 타입·API·prompt·계약·공개 Storybook·스토리 커버리지·WDS 정합성 표적 검사는 통과했다.
+대표 Storybook 화면에서도 320px overflow, 메뉴 키보드/초점, live-region 긴급도를 확인했다.
+단, 사용자 요청에 따라 이 턴에는 static Storybook 재빌드, IA 원장 재생성·검토 승격,
+`npm run check` 전체 실행을 하지 않았다. 이 세 항목은 다음 턴의 단일 최종 체크포인트이며,
+완료 전에는 이번 하드닝을 전체 검증 완료로 간주하지 않는다.
+
+아래 P0–P3 서술은 2026-07-11 원 감사 시점의 문제 정의이며, 위 구현 상태와 추가 하드닝 기록이
+현재 진행 상태다.
+
 작성: 2026-07-11. 근거: 8개 차원 병렬 갭 분석(가드 인벤토리 / API 문법 / 스토리·상태 커버리지 /
 토큰 위생 / 접근성 심도 / 문서 완성도 / 시각 일관성 / 소비자 DX), 갭별 반박 검증을 통과한
 확정 갭 47건. **갭별 상세 증거·검증 판정 전문은
@@ -112,6 +136,10 @@ AGENTS.md의 외부 레퍼런스 의무·Composed UI Visual Hierarchy Gate를 �
   확정하지 않았다.
 - 이 원장은 수정 승인 목록이 아니다. 47건을 실제로 고칠 때는 Scope Escalation Gate에 따라
   관련 컴포넌트군, 공유 토큰, 공개 API, 대량 카피 변경의 범위를 나눠 승인·구현한다.
+- 2026-07-12 도메인 확장(Navigation · Communication · Virtual Keypad)의 별도 실화면 감사는
+  [`references/quality/DOMAIN_EXPANSION_VISUAL_AUDIT.md`](references/quality/DOMAIN_EXPANSION_VISUAL_AUDIT.md)에
+  기록했다. 신규 9페이지 46스토리를 LDS 형제와 권위 동종 UI에 대조해 high 3 · medium 5건을 확정했으며,
+  이 결과 역시 수정 승인과 분리한다.
 
 - **D1. 액션 배치 컨벤션** — CTA(primary 액션)의 위치·정렬·순서가 표면 유형별로 일관적인가:
   다이얼로그 footer(확인 우측? 좌측?), ActionArea, 폼 제출부, 카드 액션, 토큰바 actions 슬롯,

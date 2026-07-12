@@ -187,8 +187,9 @@
           "id": "grouped-action-behavior",
           "label": "Grouped action behavior",
           "wdsChecks": [
-            "ButtonGroup uses the 32/40/48 Button scale",
+            "single and multiple ButtonGroup outer boxes use the 32/40/48 Button scale",
             "multiple ButtonGroup options expose aria-pressed and option/group disabled states",
+            "disabled selected segments preserve selection with neutral roles instead of primary emphasis",
             "SplitButton exposes menu ARIA and Arrow/Home/End/Escape focus behavior",
             "SplitButton exposes loading, control disabled, and item disabled states"
           ],
@@ -311,7 +312,8 @@
           "localEvidence": [
             "stories/FormInput.stories.jsx#InputInteractionMatrix",
             "stories/FormTextarea.stories.jsx#TextareaInteractionMatrix",
-            "stories/SelectionStatus.stories.jsx#ChoiceCards"
+            "stories/SelectionStatus.stories.jsx#ChoiceCards",
+            "stories/SelectionStatus.stories.jsx#ChoiceCardStates"
           ]
         }
       ],
@@ -333,27 +335,24 @@
             "chevron treatment"
           ],
           "localEvidence": [
-            "stories/FormInput.stories.jsx#InputOverview",
-            "stories/FormTextarea.stories.jsx#TextareaOverview",
-            "stories/FormPasswordInput.stories.jsx#PasswordInputOverview",
-            "stories/FormInputGroup.stories.jsx#InputGroupOverview",
-            "stories/FormInput.stories.jsx#InputInteractionMatrix",
-            "stories/FormTextarea.stories.jsx#TextareaInteractionMatrix"
+            "stories/FormSelect.stories.jsx#Selects",
+            "stories/FormSelect.stories.jsx#SelectStateContract",
+            "stories/FormSelect.stories.jsx#SelectKeyboardContract",
+            "stories/FormSelect.stories.jsx#SelectDisabledOptionContract"
           ]
         },
         {
-          "id": "select-menu",
-          "label": "Option list",
+          "id": "select-option-list-lds-extension",
+          "label": "LDS option-list composition and accessibility extension (not a WDS Select axis)",
           "wdsChecks": [
-            "option row",
-            "selected option",
-            "hovered option",
-            "disabled option",
-            "group label if present"
+            "LDS composition: named listbox and option rows",
+            "LDS semantics: confirmed value uses aria-selected",
+            "LDS interaction: hovered/active option remains distinct from the confirmed value",
+            "LDS accessibility: aria-disabled option is skipped and cannot be committed"
           ],
           "localEvidence": [
-            "stories/FormSearchAutocomplete.stories.jsx#SearchAndAutocomplete",
-            "stories/FormSearchAutocomplete.stories.jsx#AutoCompleteCard"
+            "stories/FormSelect.stories.jsx#SelectKeyboardContract",
+            "stories/FormSelect.stories.jsx#SelectDisabledOptionContract"
           ]
         },
         {
@@ -371,7 +370,7 @@
           ]
         }
       ],
-      "notes": "Verified against local node 16215:32967: render chip/text, negative/status, open/focus/disable, overflow, leading icon covered. Option-row states exceed the WDS Select section (WDS Menu is a separate family)."
+      "notes": "Verified against the direct children of local component set 16215:33116: render chip/text, negative, active, focus, disable, and overflow are the authoritative WDS axes. Leading icon is composition evidence rather than a component-set axis. Option-row disabled semantics, dynamic disabled updates, and Arrow/Home/End skipping are explicit LDS APG behavior extensions; they do not add WDS axes."
     },
     {
       "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
@@ -389,11 +388,12 @@
             "disabled"
           ],
           "localEvidence": [
-            "stories/FormSelect.stories.jsx#Selects",
             "stories/FormCheckbox.stories.jsx#Checkboxes",
             "stories/FormRadio.stories.jsx#Radios",
             "stories/FormCheckbox.stories.jsx#CheckboxInteractionContract",
             "stories/FormRadio.stories.jsx#RadioInteractionContract",
+            "stories/FormRadio.stories.jsx#RadioStateContract",
+            "stories/SelectionStatus.stories.jsx#ChoiceCardStates",
             "stories/SelectionSwitch.stories.jsx#SwitchInteractionMatrix"
           ]
         },
@@ -444,6 +444,7 @@
             "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlOverview",
             "stories/SelectionToggleButton.stories.jsx#ToggleButtonOverview",
             "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlStates",
+            "stories/SelectionSegmentedControl.stories.jsx#SegmentedKeyboardContract",
             "stories/SelectionChips.stories.jsx#ChipSelection"
           ]
         },
@@ -464,7 +465,7 @@
           ]
         }
       ],
-      "notes": "Verified against local node 16215:33806: checked/indeterminate/unchecked, size, bold, tight, mark treatment incl. negative, and iOS switch platform covered. WDS \"Normal\" resource glyph tier intentionally unmapped; stepper/slider/range remain product extensions."
+      "notes": "Direct component-set reads confirm Checkbox 16215:33897 (state, size, bold, tight, disable), Radio 16215:34160 (state, size, tight, disable), and Segmented Control 16215:35115 (variant, size, icon). Segmented interaction/inactive aliases and roving disabled-skip behavior are LDS evidence/accessibility contracts, not WDS axes. Disabled+selected visuals preserve selection with neutral roles across Radio, ChoiceCard, SegmentedControl, and ButtonGroup. WDS \"Normal\" resource glyph tier intentionally remains unmapped; stepper/slider/range remain product extensions."
     },
     {
       "wdsFamily": "Card/Card, Card/List Card",

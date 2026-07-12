@@ -9,6 +9,31 @@ import {
   mergeIds,
 } from './field-shared.js';
 
+function normalizeOption(option) {
+  return typeof option === 'string'
+    ? { value: option, label: option, disabled: false }
+    : { ...option, disabled: Boolean(option.disabled) };
+}
+
+function enabledIndices(options) {
+  return options.flatMap((option, index) => option.disabled ? [] : [index]);
+}
+
+function moveEnabled(options, currentIndex, direction) {
+  const enabled = enabledIndices(options);
+  if (!enabled.length) return -1;
+  if (currentIndex < 0) return direction > 0 ? enabled[0] : enabled[enabled.length - 1];
+  if (direction > 0) return enabled.find((index) => index > currentIndex) ?? currentIndex;
+  return [...enabled].reverse().find((index) => index < currentIndex) ?? currentIndex;
+}
+
+function nearestEnabled(options, preferredIndex) {
+  if (options[preferredIndex] && !options[preferredIndex].disabled) return preferredIndex;
+  const after = enabledIndices(options).find((index) => index > preferredIndex);
+  if (after != null) return after;
+  return [...enabledIndices(options)].reverse().find((index) => index < preferredIndex) ?? -1;
+}
+
 /**
  * LK ROBOTICS — Select
  * A custom single-select dropdown (NOT a native <select>): a styled trigger with
@@ -49,15 +74,21 @@ export function Select({
   ...rest
 }) {
   const norm = React.useMemo(() => {
-    if (options && options.length) return options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
+    if (options && options.length) return options.map(normalizeOption);
     return React.Children.toArray(children)
       .filter((c) => c && c.type === 'option')
-      .map((c) => ({ value: c.props.value != null ? c.props.value : String(c.props.children), label: c.props.children }));
+      .map((c) => ({
+        value: c.props.value != null ? c.props.value : String(c.props.children),
+        label: c.props.children,
+        disabled: Boolean(c.props.disabled),
+      }));
   }, [options, children]);
+  const disabledState = disabled || disable || interaction === 'inactive';
+  const locked = disabledState || readOnly;
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
   const sel = isControlled ? value : internal;
-  const [open, setOpen] = React.useState(defaultOpen);
+  const [open, setOpen] = React.useState(() => Boolean(defaultOpen && !locked));
   const [activeIndex, setActiveIndex] = React.useState(-1);
   const [hover, setHover] = React.useState(false);
   const ref = React.useRef(null);
@@ -79,18 +110,17 @@ export function Select({
   } = rest;
   const describedBy = mergeIds(ariaDescribedBy, messageId);
   React.useEffect(() => {
-    if (!open) return undefined;
+    if (!open || locked) return undefined;
     const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
+  }, [locked, open]);
   const curr = norm.find((x) => x.value === sel);
   const selectedIndex = norm.findIndex((x) => x.value === sel);
   const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
   const h = normalizedSize === 'sm' ? 'var(--control-h-sm)' : normalizedSize === 'lg' ? 'var(--control-h-lg)' : 'var(--control-h-md)';
-  const disabledState = disabled || disable || interaction === 'inactive';
   const isInvalid = invalid || negative || status === 'negative' || error != null;
-  const visualOpen = open || interaction === 'open';
+  const visualOpen = !locked && (open || interaction === 'open');
   const activeFocus = visualOpen || focus || interaction === 'focused' || interaction === 'active-focused';
   const activeHover = !readOnly && (hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused');
   const ring = fieldBorderColor({ disabled: disabledState, readOnly, invalid: isInvalid, status, focused: activeFocus, hovered: activeHover });
@@ -98,11 +128,18 @@ export function Select({
   React.useEffect(() => {
     if (!visualOpen) return;
     setActiveIndex((current) => {
-      if (current >= 0 && current < norm.length) return current;
-      if (selectedIndex >= 0) return selectedIndex;
-      return norm.length ? 0 : -1;
+      if (norm[current] && !norm[current].disabled) return current;
+      const selectedEnabled = nearestEnabled(norm, selectedIndex);
+      if (selectedEnabled >= 0) return selectedEnabled;
+      return enabledIndices(norm)[0] ?? -1;
     });
-  }, [norm.length, selectedIndex, visualOpen]);
+  }, [norm, selectedIndex, visualOpen]);
+
+  React.useEffect(() => {
+    if (!locked) return;
+    setOpen(false);
+    setActiveIndex(-1);
+  }, [locked]);
 
   React.useEffect(() => {
     if (!visualOpen || activeIndex < 0) return;
@@ -110,9 +147,8 @@ export function Select({
   }, [activeIndex, visualOpen]);
 
   const openList = (preferredIndex = selectedIndex >= 0 ? selectedIndex : 0) => {
-    if (readOnly) return;
-    const lastIndex = norm.length - 1;
-    setActiveIndex(lastIndex < 0 ? -1 : Math.min(Math.max(preferredIndex, 0), lastIndex));
+    if (locked) return;
+    setActiveIndex(nearestEnabled(norm, preferredIndex));
     setOpen(true);
   };
 
@@ -122,9 +158,9 @@ export function Select({
   };
 
   const pick = (index) => {
-    if (readOnly) return;
+    if (locked) return;
     const option = norm[index];
-    if (!option) return;
+    if (!option || option.disabled) return;
     if (!isControlled) setInternal(option.value);
     onChange?.(option.value);
     setActiveIndex(index);
@@ -142,27 +178,28 @@ export function Select({
     onTriggerKeyDown?.(event);
     if (event.defaultPrevented || disabledState || readOnly) return;
 
-    const lastIndex = norm.length - 1;
+    const firstEnabled = enabledIndices(norm)[0] ?? -1;
+    const lastEnabled = enabledIndices(norm).at(-1) ?? -1;
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
         if (!visualOpen) openList();
-        else setActiveIndex((current) => (current < 0 ? (selectedIndex >= 0 ? selectedIndex : 0) : Math.min(current + 1, lastIndex)));
+        else setActiveIndex((current) => moveEnabled(norm, current, 1));
         break;
       case 'ArrowUp':
         event.preventDefault();
-        if (!visualOpen) openList(selectedIndex >= 0 ? selectedIndex : lastIndex);
-        else setActiveIndex((current) => (current < 0 ? (selectedIndex >= 0 ? selectedIndex : lastIndex) : Math.max(current - 1, 0)));
+        if (!visualOpen) openList(selectedIndex >= 0 ? selectedIndex : lastEnabled);
+        else setActiveIndex((current) => moveEnabled(norm, current, -1));
         break;
       case 'Home':
         event.preventDefault();
-        if (!visualOpen) openList(0);
-        else setActiveIndex(lastIndex >= 0 ? 0 : -1);
+        if (!visualOpen) openList(firstEnabled);
+        else setActiveIndex(firstEnabled);
         break;
       case 'End':
         event.preventDefault();
-        if (!visualOpen) openList(lastIndex);
-        else setActiveIndex(lastIndex);
+        if (!visualOpen) openList(lastEnabled);
+        else setActiveIndex(lastEnabled);
         break;
       case 'Enter':
       case ' ':
@@ -199,7 +236,7 @@ export function Select({
           aria-haspopup="listbox"
           aria-expanded={visualOpen}
           aria-controls={listboxId}
-          aria-activedescendant={visualOpen && activeIndex >= 0 ? `${selId}-option-${activeIndex}` : undefined}
+          aria-activedescendant={visualOpen && activeIndex >= 0 && !norm[activeIndex]?.disabled ? `${selId}-option-${activeIndex}` : undefined}
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy ?? (!ariaLabel && label ? labelId : undefined)}
           aria-describedby={describedBy}
@@ -233,7 +270,7 @@ export function Select({
           </span>
         </button>
         {visualOpen && (
-          <div id={listboxId} role="listbox" aria-labelledby={!ariaLabel && label ? labelId : undefined} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: 'auto', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div id={listboxId} role="listbox" aria-label={ariaLabel} aria-labelledby={!ariaLabel && label ? labelId : undefined} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 40, maxHeight: 260, overflowY: 'auto', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-md)', padding: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
             {norm.map((o, index) => {
               const on = o.value === sel;
               const isActive = index === activeIndex;
@@ -244,13 +281,14 @@ export function Select({
                   ref={(node) => { optionRefs.current[index] = node; }}
                   role="option"
                   aria-selected={on}
+                  aria-disabled={o.disabled || undefined}
                   onMouseDown={(event) => event.preventDefault()}
                   onClick={() => pick(index)}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '9px 12px', borderRadius: 'var(--radius-md)', cursor: readOnly ? 'default' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', color: on ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-normal)', background: on ? 'var(--color-semantic-primary-surface-strong)' : isActive ? 'var(--color-semantic-fill-normal)' : 'transparent', boxShadow: isActive ? 'inset 0 0 0 2px var(--color-semantic-primary-normal)' : 'none', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
+                  onMouseEnter={() => { if (!o.disabled) setActiveIndex(index); }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, padding: '9px 12px', borderRadius: 'var(--radius-md)', cursor: o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', color: o.disabled ? 'var(--color-semantic-label-disable)' : on ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-normal)', background: o.disabled && on ? 'var(--color-semantic-fill-strong)' : on ? 'var(--color-semantic-primary-surface-strong)' : isActive ? 'var(--color-semantic-fill-normal)' : 'transparent', boxShadow: isActive && !o.disabled ? 'inset 0 0 0 2px var(--color-semantic-primary-normal)' : 'none', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
                 >
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.label}</span>
-                  {on && <Icon name="check" size={15} aria-hidden="true" style={{ flexShrink: 0 }} />}
+                  {on && <Icon name="check" size={15} color={o.disabled ? 'var(--color-semantic-label-disable)' : undefined} aria-hidden="true" style={{ flexShrink: 0 }} />}
                 </div>
               );
             })}

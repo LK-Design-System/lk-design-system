@@ -127,6 +127,8 @@ export const VIEWER_BLOCKING_STATES = Object.freeze(
   VIEWER_STATES.filter((state) => STATE_PRESENTATION[state].blocking),
 );
 
+const ASSERTIVE_BLOCKING_STATES = new Set(['disconnected', 'no-signal', 'error']);
+
 const TONE_COLOR = {
   primary: 'var(--color-semantic-primary-normal)',
   positive: 'var(--color-semantic-status-positive)',
@@ -201,6 +203,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
   const presentation = STATE_PRESENTATION[resolvedState];
   const blocking = presentation.blocking;
   const busy = Boolean(presentation.busy);
+  const blockingStatusRole = ASSERTIVE_BLOCKING_STATES.has(resolvedState) ? 'alert' : 'status';
   const labelContent = stateLabel ?? presentation.label;
   const descriptionContent = stateDescription === undefined
     ? presentation.description
@@ -627,8 +630,8 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
           >
             <div
               data-viewer-blocking-live=""
-              role={resolvedState === 'error' ? 'alert' : 'status'}
-              aria-live={resolvedState === 'error' ? 'assertive' : 'polite'}
+              role={blockingStatusRole}
+              aria-live={blockingStatusRole === 'alert' ? 'assertive' : 'polite'}
               aria-atomic="true"
               style={{ display: 'grid', justifyItems: 'center', gap: 10 }}
             >

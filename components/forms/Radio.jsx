@@ -68,7 +68,9 @@ export function Radio({
     : visualChecked ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-background-elevated-normal)';
   const radioDot = disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)';
   return (
-    <label data-disabled={disabledState ? "" : undefined}
+    <label
+      data-disabled={disabledState ? "" : undefined}
+      data-selected={visualChecked ? "" : undefined}
       htmlFor={id}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

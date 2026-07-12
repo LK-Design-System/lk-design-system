@@ -1,9 +1,101 @@
 import React from "react";
+import { Button } from '../buttons/Button.jsx';
+import { Icon } from '../icon/Icon.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useFloatingPosition } from '../overlay/anchored-overlay.js';
+
+const ACTION_CONTROL_SELECTOR = [
+  'button:not(:disabled)',
+  'a[href]',
+  'input:not(:disabled)',
+  'select:not(:disabled)',
+  'textarea:not(:disabled)',
+  '[tabindex]:not([tabindex="-1"]):not([aria-disabled="true"])',
+].join(',');
+
+const MENU_ITEM_SELECTOR = [
+  '[role="menuitem"]',
+  '[role="menuitemradio"]',
+  '[role="menuitemcheckbox"]',
+].join(',');
+const MENU_MARK_SIZE = 14;
+const MENU_RADIO_DOT_SIZE = 6;
+
+function focusableActionControls(region) {
+  return Array.from(region?.querySelectorAll(ACTION_CONTROL_SELECTOR) ?? []);
+}
+
+function availableMenuItems(menu) {
+  return Array.from(menu?.querySelectorAll(MENU_ITEM_SELECTOR) ?? []).filter(
+    (item) => !item.disabled && item.getAttribute('aria-disabled') !== 'true',
+  );
+}
+
+function constrainedMaxHeight(requested, available) {
+  if (available == null) return requested;
+  if (requested == null) return available;
+  if (typeof requested === 'number') return Math.min(requested, available);
+  return `min(${requested}, ${available}px)`;
+}
+
+function MenuItemMark({ variant, checked, disabled }) {
+  if (!variant || variant === 'normal') return null;
+  const activeColor = disabled
+    ? 'var(--color-semantic-label-disable)'
+    : 'var(--color-semantic-primary-normal)';
+  if (variant === 'radio') {
+    return (
+      <span
+        aria-hidden="true"
+        style={{
+          width: MENU_MARK_SIZE,
+          height: MENU_MARK_SIZE,
+          borderRadius: '50%',
+          border: `1.5px solid ${checked ? activeColor : 'var(--color-semantic-line-solid-normal)'}`,
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+        }}
+      >
+        {checked && (
+          <span
+            style={{
+              width: MENU_RADIO_DOT_SIZE,
+              height: MENU_RADIO_DOT_SIZE,
+              borderRadius: '50%',
+              background: activeColor,
+            }}
+          />
+        )}
+      </span>
+    );
+  }
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        width: MENU_MARK_SIZE,
+        height: MENU_MARK_SIZE,
+        borderRadius: 'var(--radius-5)',
+        border: `1.5px solid ${checked ? activeColor : 'var(--color-semantic-line-solid-normal)'}`,
+        background: checked ? activeColor : 'transparent',
+        color: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-inverse-label)',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+      }}
+    >
+      {checked && <Icon name="check" size={11} aria-hidden="true" />}
+    </span>
+  );
+}
 
 function MenuItem({ item, variant, close }) {
   const [hover, setHover] = React.useState(false);
   const checked = Boolean(item.checked);
+  const disabled = Boolean(item.disabled || item.disable);
   return (
     <button
       type="button"
@@ -16,9 +108,9 @@ function MenuItem({ item, variant, close }) {
       }
       aria-checked={variant === "normal" ? undefined : checked}
       tabIndex={-1}
-      disabled={item.disabled}
+      disabled={disabled}
       onClick={() => {
-        if (item.disabled) return;
+        if (disabled) return;
         item.onClick?.();
         close();
       }}
@@ -34,18 +126,18 @@ function MenuItem({ item, variant, close }) {
         padding: "7px 10px",
         border: "none",
         background:
-          hover && !item.disabled ? "var(--color-semantic-fill-normal)" : "transparent",
-        cursor: item.disabled ? "not-allowed" : "pointer",
+          hover && !disabled ? "var(--color-semantic-fill-normal)" : "transparent",
+        cursor: disabled ? "not-allowed" : "pointer",
         borderRadius: "var(--radius-md)",
         textAlign: "left",
         fontFamily: "var(--font-sans)",
         fontSize: "var(--label1-size)",
         color: item.danger
           ? "var(--color-semantic-status-negative-text)"
-          : item.disabled
+          : disabled
             ? "var(--color-semantic-label-disable)"
             : "var(--color-semantic-label-normal)",
-        opacity: item.disabled ? 0.45 : 1,
+        opacity: disabled ? 0.45 : 1,
       }}
     >
       <span
@@ -56,22 +148,10 @@ function MenuItem({ item, variant, close }) {
           minWidth: 0,
         }}
       >
-        {variant !== "normal" && (
-          <span
-            aria-hidden="true"
-            style={{
-              width: 14,
-              height: 14,
-              borderRadius: variant === "radio" ? "50%" : 4,
-              border: `1.5px solid ${checked ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`,
-              background:
-                checked && variant === "checkbox"
-                  ? "var(--color-semantic-primary-normal)"
-                  : "transparent",
-              flexShrink: 0,
-              marginTop: item.description ? 2 : 0,
-            }}
-          />
+        {variant !== 'normal' && (
+          <span style={{ display: 'inline-flex', marginTop: item.description ? 2 : 0 }}>
+            <MenuItemMark variant={variant} checked={checked} disabled={disabled} />
+          </span>
         )}
         {item.icon}
         <span style={{ display: "grid", gap: 2, minWidth: 0 }}>
@@ -115,6 +195,10 @@ export function Menubar({
   menus = [],
   variant = "normal",
   menuActionArea = false,
+  onApply,
+  onCancel,
+  applyLabel = '적용',
+  cancelLabel = '취소',
   maxHeight,
   ariaLabel = '명령 메뉴',
   style,
@@ -124,6 +208,8 @@ export function Menubar({
   const [activeTop, setActiveTop] = React.useState(0);
   const ref = React.useRef(null);
   const triggerRefs = React.useRef([]);
+  const floatingAnchorRef = React.useRef(null);
+  const panelRef = React.useRef(null);
   const actionAreaRef = React.useRef(null);
   const menuIdBase = React.useId();
   const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
@@ -131,6 +217,13 @@ export function Menubar({
     onClose: () => setOpen(-1),
     getTrigger: () => triggerRefs.current[open],
     menuKey: open,
+  });
+  const position = useFloatingPosition({
+    open: open >= 0,
+    anchorRef: floatingAnchorRef,
+    panelRef,
+    placement: 'bottom',
+    offset: 6,
   });
   React.useEffect(() => {
     if (open < 0) return undefined;
@@ -148,6 +241,7 @@ export function Menubar({
     triggerRefs.current[nextIndex]?.focus({ preventScroll: true });
   };
   const openMenu = (index, position = 'first') => {
+    floatingAnchorRef.current = triggerRefs.current[index];
     setActiveTop(index);
     requestItemFocus(position);
     setOpen(index);
@@ -198,16 +292,28 @@ export function Menubar({
     if (event.key === 'Escape') {
       event.preventDefault();
       closeMenu({ restoreFocus: true });
-    } else if ((event.key === 'ArrowUp') || (event.key === 'Tab' && event.shiftKey)) {
-      const items = menuRef.current?.querySelectorAll('[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]');
-      const lastItem = items?.item(items.length - 1);
-      if (lastItem) {
+    } else {
+      const controls = focusableActionControls(actionAreaRef.current);
+      const currentControl = event.target.closest?.(ACTION_CONTROL_SELECTOR);
+      const currentIndex = controls.indexOf(currentControl);
+      const returnToMenu = event.key === 'ArrowUp'
+        || (event.key === 'Tab' && event.shiftKey && currentIndex === 0);
+      const lastItem = availableMenuItems(menuRef.current).at(-1);
+      if (returnToMenu && lastItem) {
         event.preventDefault();
         lastItem.focus({ preventScroll: true });
+        return;
       }
-    } else if (event.key === 'Tab') {
-      closeMenu();
+      if (event.key === 'Tab' && !event.shiftKey && currentIndex === controls.length - 1) {
+        const view = event.currentTarget.ownerDocument.defaultView ?? window;
+        view.setTimeout(() => setOpen(-1), 0);
+      }
     }
+  };
+
+  const finishAction = (callback) => {
+    callback?.();
+    closeMenu({ restoreFocus: true });
   };
 
   return (
@@ -227,7 +333,21 @@ export function Menubar({
       }}
       {...rest}
     >
-      {menus.map((menu, index) => (
+      {menus.map((menu, index) => {
+        const applyAction = menu.onApply
+          ? () => menu.onApply()
+          : onApply
+            ? () => onApply(menu, index)
+            : null;
+        const cancelAction = menu.onCancel
+          ? () => menu.onCancel()
+          : onCancel
+            ? () => onCancel(menu, index)
+            : null;
+        const actionAreaRequested = menu.menuActionArea || menuActionArea;
+        const showActionArea = Boolean(menu.action || (actionAreaRequested && (applyAction || cancelAction)));
+        const panelMaxHeight = constrainedMaxHeight(menu.maxHeight || maxHeight, position.maxHeight);
+        return (
         <div key={index} role="none" style={{ position: "relative" }}>
           <button
             ref={(node) => { triggerRefs.current[index] = node; }}
@@ -261,19 +381,28 @@ export function Menubar({
           </button>
           {open === index && (
             <div
+              ref={panelRef}
+              data-placement={position.placement}
               style={{
                 position: "absolute",
-                top: "calc(100% + 6px)",
+                top: position.placement === 'bottom' ? "calc(100% + 6px)" : 'auto',
+                bottom: position.placement === 'top' ? "calc(100% + 6px)" : 'auto',
                 left: 0,
+                translate: `${position.shiftX}px ${position.shiftY}px`,
                 zIndex: 40,
-                minWidth: 184,
-                maxHeight: menu.maxHeight || maxHeight,
-                overflowY: menu.maxHeight || maxHeight ? "auto" : undefined,
+                width: 'max-content',
+                minWidth: 'min(184px, calc(100vw - var(--space-8)))',
+                maxWidth: 'calc(100vw - var(--space-8))',
+                maxHeight: panelMaxHeight ?? undefined,
+                overflow: panelMaxHeight != null ? 'hidden' : undefined,
                 background: "var(--color-semantic-background-elevated-normal)",
                 border: "1px solid var(--color-semantic-line-solid-normal)",
                 borderRadius: "var(--radius-lg)",
                 boxShadow: "var(--shadow-md)",
                 padding: 6,
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
               <div
@@ -282,6 +411,7 @@ export function Menubar({
                 role="menu"
                 aria-labelledby={`${menuIdBase}-trigger-${index}`}
                 onKeyDown={handleSubmenuKeyDown}
+                style={{ minHeight: 0, overflowY: panelMaxHeight != null ? 'auto' : undefined }}
               >
                 {(menu.items || []).map((item, itemIndex) =>
                   item.divider ? (
@@ -304,42 +434,43 @@ export function Menubar({
                   ),
                 )}
               </div>
-              {(menu.menuActionArea || menuActionArea || menu.action) && (
+              {showActionArea && (
                 <div
                   ref={actionAreaRef}
+                  role="group"
+                  aria-label="메뉴 작업"
                   onKeyDown={handleActionAreaKeyDown}
                   style={{
                     display: "flex",
                     justifyContent: "flex-end",
+                    gap: 'var(--space-2)',
                     padding: "8px 4px 2px",
                     borderTop: "1px solid var(--color-semantic-line-solid-normal)",
                     marginTop: 4,
+                    flexShrink: 0,
                   }}
                 >
                   {menu.action || (
-                    <button
-                      type="button"
-                      style={{
-                        height: 28,
-                        padding: "0 10px",
-                        border: "none",
-                        borderRadius: "var(--radius-8)",
-                        background: "var(--color-semantic-primary-normal)",
-                        color: "var(--color-semantic-inverse-label)",
-                        fontFamily: "var(--font-sans)",
-                        fontSize: "var(--caption1-size)",
-                        fontWeight: "var(--fw-bold)",
-                      }}
-                    >
-                      Apply
-                    </button>
+                    <>
+                      {cancelAction && (
+                        <Button variant="outlined" color="assistive" size="sm" onClick={() => finishAction(cancelAction)}>
+                          {menu.cancelLabel ?? cancelLabel}
+                        </Button>
+                      )}
+                      {applyAction && (
+                        <Button size="sm" onClick={() => finishAction(applyAction)}>
+                          {menu.applyLabel ?? applyLabel}
+                        </Button>
+                      )}
+                    </>
                   )}
                 </div>
               )}
             </div>
           )}
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

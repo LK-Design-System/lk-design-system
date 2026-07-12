@@ -313,6 +313,7 @@
         "stories/SelectionColorSwatch.stories.jsx",
         "stories/SelectionIconPicker.stories.jsx",
         "stories/SelectionToggleButton.stories.jsx",
+        "stories/SelectionVirtualKeypad.stories.jsx",
         "stories/SelectionWheelPicker.stories.jsx"
       ],
       "exports": [
@@ -330,6 +331,7 @@
         "TimePicker",
         "ToggleButton",
         "ValidationSummary",
+        "VirtualKeypad",
         "WheelPicker"
       ]
     },
@@ -544,6 +546,42 @@
         "ProgressBar",
         "Skeleton",
         "Spinner"
+      ]
+    },
+    {
+      "name": "Communication product extension",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": [
+        "stories/CommunicationMessage.stories.jsx",
+        "stories/CommunicationMessageComposer.stories.jsx",
+        "stories/CommunicationMessageFeed.stories.jsx"
+      ],
+      "exports": [
+        "ConversationMessage",
+        "MessageComposer",
+        "MessageFeed"
+      ]
+    },
+    {
+      "name": "Robotics navigation semantics",
+      "layer": "lk-robotics-extension",
+      "classification": "robotics-extension",
+      "wdsFamily": "Robotics navigation extension",
+      "storyEvidence": [
+        "stories/RoboticsNavigationFacilities.stories.jsx",
+        "stories/RoboticsNavigationLane.stories.jsx",
+        "stories/RoboticsNavigationRegions.stories.jsx",
+        "stories/RoboticsNavigationRouteTrajectory.stories.jsx",
+        "stories/RoboticsNavigationWaypoint.stories.jsx"
+      ],
+      "exports": [
+        "FacilityTransition",
+        "LaneOverlay",
+        "RouteOverlay",
+        "SpatialRegion",
+        "TrajectoryOverlay",
+        "WaypointMarker"
       ]
     },
     {
