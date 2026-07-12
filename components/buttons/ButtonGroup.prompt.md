@@ -34,3 +34,5 @@
   single/multiple·size·group disabled 계약을 제공합니다.
 - 단일 선택은 기존 WDS 대응 `SegmentedControl`에 수렴하고, 여러 독립 상태를
   동시에 유지하는 multiple toggle만 ButtonGroup의 별도 역할로 남깁니다.
+
+- **disable** — 모든 옵션을 끄는 `disabled`의 호환 별칭입니다.

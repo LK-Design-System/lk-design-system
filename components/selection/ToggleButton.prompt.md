@@ -25,3 +25,5 @@ Extension입니다. 선택 상태는 surface와 `aria-pressed`로 함께 전달�
 - [Fluent 2 Button](https://fluent2.microsoft.design/components/web/react/core/button/usage)은
   toggle button을 toolbar 같은 독립 상태 액션에 사용하고 설정 패널에서는
   Switch를 사용하도록 구분합니다.
+
+- **disable** — `disabled`의 호환 별칭입니다.

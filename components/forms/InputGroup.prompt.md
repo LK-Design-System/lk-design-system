@@ -12,3 +12,5 @@
 ```
 
 - **prefix / suffix** — 애드온 노드. **value / defaultValue / onChange** — 텍스트. **inputProps** — 패스스루.
+
+- 필드·상태 prop: **status**(`normal`/`positive`/`negative`) · **invalid**(오류 강조 토글) · **fieldStyle**(label·helper·error를 포함한 전체 필드 컨테이너 스타일).

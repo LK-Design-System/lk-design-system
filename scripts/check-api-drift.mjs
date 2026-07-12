@@ -5,7 +5,27 @@ import ts from 'typescript';
 const root = process.cwd();
 const baselinePath = path.join(root, 'docs', 'references', 'quality', 'API_DRIFT_BASELINE.json');
 const updateBaseline = process.argv.includes('--update-baseline');
-const inheritedProps = new Set(['children', 'className', 'style', 'id', 'role', 'tabIndex']);
+// Props a component inherits from React.*HTMLAttributes when its props type
+// `extends` a DOM attribute interface. The .d.ts surfaces these through the
+// extends clause, which this AST comparison does not resolve, so treat the
+// standard DOM/ARIA/HTML attribute names (and every `aria-*` attribute) as
+// inherited. Custom handlers with bespoke signatures (onChange, onSelect, …)
+// are deliberately NOT listed so genuine contract drift is still caught.
+const inheritedProps = new Set([
+  'children', 'className', 'style', 'id', 'role', 'tabIndex',
+  // Standard DOM event handlers (React.DOMAttributes).
+  'onClick', 'onKeyDown', 'onKeyUp', 'onKeyPress',
+  'onFocus', 'onBlur', 'onFocusCapture', 'onBlurCapture',
+  'onMouseDown', 'onMouseUp', 'onMouseEnter', 'onMouseLeave',
+  'onMouseMove', 'onMouseOver', 'onMouseOut',
+  'onPointerDown', 'onPointerUp', 'onPointerEnter', 'onPointerLeave',
+  // Standard interactive HTML attributes (React.*HTMLAttributes).
+  'disabled', 'required', 'readOnly', 'placeholder', 'autoFocus',
+]);
+
+function isInherited(name) {
+  return inheritedProps.has(name) || name.startsWith('aria-');
+}
 
 async function collect(dir, suffix, out = []) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -121,8 +141,8 @@ for (const jsxPath of jsxFiles) {
     if (!declared) continue;
     analyzableExports += 1;
 
-    const implementationProps = props.filter((name) => !inheritedProps.has(name));
-    const declaredProps = declared.filter((name) => !inheritedProps.has(name));
+    const implementationProps = props.filter((name) => !isInherited(name));
+    const declaredProps = declared.filter((name) => !isInherited(name));
     const key = `${rel}#${exportName}`;
     findings[key] = normalize({
       missingInTypes: implementationProps.filter((name) => !declaredProps.includes(name)),

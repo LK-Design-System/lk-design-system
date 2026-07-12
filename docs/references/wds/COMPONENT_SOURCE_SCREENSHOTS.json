@@ -42,7 +42,7 @@
         "stories/SelectionChips.stories.jsx#ChipSelection",
         "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlOverview",
         "stories/SelectionToggleButton.stories.jsx#ToggleButtonOverview",
-        "stories/SelectionSegmentedControl.stories.jsx#SegmentedInteractionMatrix",
+        "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlStates",
         "stories/SelectionSwitch.stories.jsx#SwitchControl",
         "components/forms/Checkbox.jsx",
         "components/selection/ChoiceCard.jsx",

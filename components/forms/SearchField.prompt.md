@@ -12,3 +12,5 @@
 ```
 
 - **value / defaultValue / onChange** — 제어/비제어. **onSearch** — Enter. **size** `sm · md`. 시그널 잉크 포커스 링.
+
+- 필드·상태 prop: **status**(`normal`/`positive`/`negative`) · **invalid**(오류 강조 토글) · **helper**(보조 설명) · **error**(오류 메시지) · **fieldStyle**(전체 필드 컨테이너 스타일) · **clearLabel**(지우기 버튼의 스크린리더 레이블).

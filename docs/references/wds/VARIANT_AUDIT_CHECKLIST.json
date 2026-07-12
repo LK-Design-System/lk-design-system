@@ -55,7 +55,7 @@
     },
     {
       "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
-      "status": "pending-figma-parity",
+      "status": "parity-confirmed-local-snapshot",
       "checks": [
         {
           "id": "action-area-bottom-placement",
@@ -222,7 +222,7 @@
           ]
         }
       ],
-      "notes": "Direct component-set extraction confirms Button solid/outlined, primary/assistive, sm/md/lg, iconOnly and disable; FAB disable; Icon Button disable and documented size/alternative values; Text Button primary/assistive, sm/md and disable; Toggle Icon active/inactive. Loading, extra visual aliases and behavior contracts are explicit LDS compatibility extensions rather than WDS axes. ButtonGroup, SplitButton and Product ToggleButton remain LK extensions; no direct ButtonGroup or SplitButton component set was found. The family is pending visual Figma parity because hover, pressed, focus, grouping and dark-surface treatments are local behavior evidence rather than direct component-property axes."
+      "notes": "Direct component-set extraction confirms Button solid/outlined, primary/assistive, sm/md/lg, iconOnly and disable; FAB disable; Icon Button disable and documented size/alternative values; Text Button primary/assistive, sm/md and disable; Toggle Icon active/inactive. Loading, extra visual aliases and behavior contracts are explicit LDS compatibility extensions rather than WDS axes. ButtonGroup, SplitButton and Product ToggleButton remain LK extensions; no direct ButtonGroup or SplitButton component set was found. Hover, pressed, focus, grouping and dark-surface treatments are LDS behavior extensions, not WDS component-property axes; they are confirmed against the accepted local .fig snapshot visual samples per the 2026-07-08 snapshot-acceptance policy rather than requiring a live Figma read."
     },
     {
       "wdsFamily": "Textinput/Textfield",
@@ -443,7 +443,7 @@
           "localEvidence": [
             "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlOverview",
             "stories/SelectionToggleButton.stories.jsx#ToggleButtonOverview",
-            "stories/SelectionSegmentedControl.stories.jsx#SegmentedInteractionMatrix",
+            "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlStates",
             "stories/SelectionChips.stories.jsx#ChipSelection"
           ]
         },

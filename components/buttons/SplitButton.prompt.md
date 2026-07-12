@@ -40,3 +40,5 @@ LK Product Extension입니다.
   일반 Button과 동일한 32/40/48 높이·상태 문법을 적용하고,
   [Fluent 2 Button](https://fluent2.microsoft.design/components/web/react/core/button/usage)의
   dominant action + related alternatives 구분을 따릅니다.
+
+- **disable** — `disabled`의 호환 별칭입니다.

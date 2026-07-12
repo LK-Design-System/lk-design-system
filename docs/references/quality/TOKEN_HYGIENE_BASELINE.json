@@ -10,7 +10,6 @@
       "--component-button-dark-fg",
       "--component-button-dark-shadow-hover",
       "--component-button-disabled-bg",
-      "--component-button-disabled-border",
       "--component-button-disabled-fg",
       "--component-button-disabled-fg-outlined",
       "--component-button-disabled-outlined-border",

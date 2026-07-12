@@ -15,3 +15,5 @@
 - [WAI-ARIA Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)처럼
   label을 상태에 따라 바꾸지 않고 `aria-pressed`만 갱신합니다. WDS의
   Active/Inactive 역할은 유지하며 boxed surface와 plain/on-dark는 승인된 LK 변형입니다.
+
+- **disable** — `disabled`의 호환 별칭입니다.

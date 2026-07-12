@@ -13,3 +13,5 @@
 ```
 
 - **title**/**description**/**icon**은 표준 레이아웃; 완전히 커스텀하려면 그 대신 **children**을 전달. **multiple**이면 인디케이터가 체크박스 사각형으로 바뀜(기본은 원형 라디오). 옵션 그리드/설정 선택에.
+
+- **inputValue** — 내부 input의 `value`. **inputProps** — 내부 input에 전달할 표준 속성(type·checked·name·value 등 예약 속성 제외).

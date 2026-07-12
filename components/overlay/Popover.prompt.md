@@ -33,3 +33,5 @@
   사용하지 않습니다.
 
 Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
+
+- **ariaLabel** — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다.
