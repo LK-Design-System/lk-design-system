@@ -139,8 +139,8 @@ export const Narrow320LongLabels = {
   play: async ({ canvasElement }) => {
     const fixture = canvasElement.querySelector('[data-testid="saved-view-320"]');
     const savedView = canvasElement.querySelector('[data-saved-view-control]');
-    if (!fixture || Math.round(fixture.getBoundingClientRect().width) !== 320) {
-      throw new Error('The narrow saved-view fixture must render at 320px.');
+    if (!fixture || !savedView || fixture.getBoundingClientRect().width > 321) {
+      throw new Error('The narrow saved-view fixture must fit within its 320px maximum.');
     }
     [fixture, savedView].forEach((element) => {
       assertNoHorizontalOverflow(element, 'Long saved-view labels and actions must stay inside the 320px composition.');

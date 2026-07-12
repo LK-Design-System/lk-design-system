@@ -86,7 +86,7 @@ export function FilterBar({
       {hasSummary && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minWidth: 0 }}>
           {filters.length > 0 && (
-            <div aria-label={summaryLabel} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flex: '1 1 360px', flexWrap: 'wrap', minWidth: 0 }}>
+            <div role="group" aria-label={summaryLabel} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flex: '1 1 360px', flexWrap: 'wrap', minWidth: 0 }}>
               <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', whiteSpace: 'nowrap' }}>
                 {summaryLabel}
               </span>
@@ -105,7 +105,7 @@ export function FilterBar({
                     aria-label={removable ? removeLabel : undefined}
                     onClick={removable ? () => onRemoveFilter(filter.id) : undefined}
                     data-removable={removable ? 'true' : 'false'}
-                    style={{ maxWidth: '100%' }}
+                    style={{ maxWidth: '100%', color: 'var(--color-semantic-label-normal)' }}
                   >
                     <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {filter.label}{filter.value != null ? ': ' : ''}{filter.value}

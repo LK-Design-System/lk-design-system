@@ -237,16 +237,27 @@ export function TrajectoryOverlay({
         />
       )}
       {pathData && interactive && (
-        <path
-          data-trajectory-hit-target=""
-          data-screen-target-size="24"
-          d={pathData}
-          fill="none"
-          stroke="transparent"
-          strokeWidth="24"
-          vectorEffect="non-scaling-stroke"
-          pointerEvents="stroke"
-        />
+        <>
+          <path
+            data-trajectory-hit-target=""
+            data-screen-target-size="24"
+            d={pathData}
+            fill="none"
+            stroke="transparent"
+            strokeWidth="24"
+            vectorEffect="non-scaling-stroke"
+            pointerEvents="stroke"
+          />
+          <circle
+            data-trajectory-hit-target-core=""
+            data-screen-target-size="24"
+            cx={statePoint.x}
+            cy={statePoint.y}
+            r={17 * inverseScale}
+            fill="transparent"
+            pointerEvents="all"
+          />
+        </>
       )}
       {pathData && currentSample && (
         <g
@@ -298,6 +309,33 @@ export function TrajectoryOverlay({
           </text>
         </g>
       )}
+      {pathData && [
+        invalid ? { state: 'invalid', glyph: '!', ratio: 0.8, tone: 'var(--color-semantic-status-negative-foreground)' } : null,
+        stale ? { state: 'stale', glyph: '~', ratio: invalid ? 0.9 : 0.8, tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))' } : null,
+      ].filter(Boolean).map((item) => {
+        const point = pointAlong(points, item.ratio);
+        return (
+          <g
+            key={item.state}
+            data-trajectory-overlay-state={item.state}
+            transform={`translate(${point.x} ${point.y}) scale(${inverseScale})`}
+            aria-hidden="true"
+            pointerEvents="none"
+          >
+            <circle
+              r="7"
+              fill={surface}
+              stroke={item.tone}
+              strokeWidth="1.5"
+              strokeDasharray={item.state === 'stale' ? '2 2' : undefined}
+              vectorEffect="non-scaling-stroke"
+            />
+            <text x="0" y="3" textAnchor="middle" fill={item.tone} fontFamily="var(--font-sans)" fontSize="10" fontWeight="var(--fw-bold)">
+              {item.glyph}
+            </text>
+          </g>
+        );
+      })}
       {showLabel && trajectory?.label && pathData && (
         <text
           data-trajectory-label=""

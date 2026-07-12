@@ -113,6 +113,10 @@ function assertShellContract(canvasElement, layout) {
   if (skip.getAttribute('href') !== `#${main.id}` || main.tabIndex !== -1) {
     throw new Error('The skip link must target the focusable main landmark.');
   }
+  const shellCss = shell.querySelector('style')?.textContent || '';
+  if (!shellCss.includes('color:var(--color-semantic-label-normal)')) {
+    throw new Error('The skip link must keep a theme-safe semantic label foreground.');
+  }
   const wideVisible = getComputedStyle(wideRegion).display !== 'none';
   const narrowVisible = getComputedStyle(narrowRegion).display !== 'none';
   if ((layout === 'wide' && (!wideVisible || narrowVisible)) || (layout === 'narrow' && (wideVisible || !narrowVisible))) {

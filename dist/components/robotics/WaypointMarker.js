@@ -1,7 +1,7 @@
 "use client";
 import {
   WaypointMarker
-} from "../../chunk-UYJ2NBWV.js";
+} from "../../chunk-53FVRVOM.js";
 export {
   WaypointMarker
 };

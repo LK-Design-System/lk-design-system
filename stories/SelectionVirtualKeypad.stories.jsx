@@ -470,3 +470,9 @@ export const LandscapeKiosk = {
     }
   },
 };
+
+export const VirtualKeypadVisualParity = {
+  ...RangeAndDisabledStates,
+  name: 'Virtual keypad visual parity',
+  tags: ['!dev', 'visual-parity'],
+};

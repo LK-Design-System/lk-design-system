@@ -200,8 +200,11 @@ function WaypointGraphic({
           waypoint={waypoint}
           viewportScale={viewportScale}
           selected={selectedId === waypoint.id || markerStates[waypoint.id]?.selected}
+          focused={markerStates[waypoint.id]?.focused}
+          disabled={markerStates[waypoint.id]?.disabled}
+          invalid={markerStates[waypoint.id]?.invalid}
+          stale={markerStates[waypoint.id]?.stale}
           onActivate={onActivate}
-          {...markerStates[waypoint.id]}
         />
       ))}
     </svg>
@@ -461,7 +464,7 @@ const zoomWaypoint = {
 export const ZoomAndHitArea = {
   name: '상호작용 · 확대·축소와 입력 면적',
   parameters: storyDescription(
-    '50%·100%·200% 세계 배율에서 같은 waypoint를 비교합니다. 위치는 world transform을 따르되 marker와 24px 투명 입력 면적은 화면 크기를 유지하고 stroke가 배율에 따라 두꺼워지지 않는지 확인하세요.',
+    '50%·100%·200% 세계 배율에서 같은 waypoint를 비교합니다. 위치는 world transform을 따르되 marker와 24×24 정사각형을 포함하는 35px 원형 입력 면적은 화면 크기를 유지하고 stroke가 배율에 따라 두꺼워지지 않는지 확인하세요.',
   ),
   render: () => (
     <main style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)', width: '100%', maxWidth: 720 }}>
@@ -501,7 +504,8 @@ export const ZoomAndHitArea = {
       if (screenSpace.getAttribute('transform') !== expectedTransform) {
         throw new Error(`Zoom ${zoom} did not apply inverse screen scaling.`);
       }
-      if (hitArea.getAttribute('data-screen-target-size') !== '24' || Number(hitArea.getAttribute('r')) * 2 < 24) {
+      const hitRadius = Number(hitArea.getAttribute('r'));
+      if (hitArea.getAttribute('data-screen-target-size') !== '24' || hitRadius * Math.SQRT2 < 24) {
         throw new Error(`Zoom ${zoom} lost the 24px activation target.`);
       }
       if (point.getAttribute('vector-effect') !== 'non-scaling-stroke') {
@@ -509,8 +513,9 @@ export const ZoomAndHitArea = {
       }
 
       const bounds = hitArea.getBoundingClientRect();
-      if (bounds.width < 23.5 || bounds.height < 23.5) {
-        throw new Error(`Zoom ${zoom} rendered hit area below 24 CSS px: ${bounds.width}×${bounds.height}.`);
+      const minimumCircularBounds = 24 * Math.SQRT2;
+      if (bounds.width < minimumCircularBounds || bounds.height < minimumCircularBounds) {
+        throw new Error(`Zoom ${zoom} rendered circular hit area too small to contain 24×24 CSS px: ${bounds.width}×${bounds.height}.`);
       }
     });
   },
@@ -558,4 +563,10 @@ export const NarrowWidth = {
       if (marker?.getAttribute('aria-pressed') !== 'true') throw new Error('Narrow semantic selection did not reach the map marker.');
     });
   },
+};
+
+export const WaypointVisualParity = {
+  ...CompoundRolesAndStates,
+  name: 'Waypoint visual parity',
+  tags: ['!dev', 'visual-parity'],
 };

@@ -1,7 +1,7 @@
 "use client";
 import {
   DashboardShell
-} from "../../chunk-QQPLIE6A.js";
+} from "../../chunk-K6GPFWL4.js";
 export {
   DashboardShell
 };

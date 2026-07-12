@@ -27,14 +27,15 @@ Classification: **LK Robotics Extension**. `RouteOverlay`는 graph에서 선택�
 - `laneIds`는 planned segment가 따르는 static graph lane identity를 보존합니다. `entryTransitionId`와 `exitTransitionId`는 경계의 `FacilityTransition` 중립 참조이며 ID에서 시설 종류나 상태를 추론하지 않습니다.
 - `progress`는 source가 명시한 `{ segmentId, fraction, position? }`입니다. component는 phase, status, segment 개수로 전체 진행률을 계산하지 않습니다. `fraction` label도 **현재 구간 진행**만 뜻합니다. `position`이 있으면 그 좌표를 그대로 쓰고, 없을 때만 해당 segment geometry에서 fraction 위치를 구합니다.
 - `activeMapId`와 일치하는 segment만 렌더합니다. 다른 층 segment를 필터한 뒤 양 끝을 잇지 않으므로 층간 가상 직선을 만들지 않습니다. lift/door 연결은 `FacilityTransition`에서 설명합니다.
+- `selectedSegmentId`는 route 전체 `selected`와 별개인 segment-level selection identity입니다. 이 prop은 선택 halo와 `aria-pressed`만 바꾸며 route/segment lifecycle이나 progress를 추론하지 않습니다.
 - 색만으로 상태를 전달하지 않습니다. phase와 condition마다 다른 dash pattern을 쓰고 waiting `Ⅱ`, blocked `×`, conflict `!`, route status glyph를 함께 표시합니다.
 - `onActivate`가 있으면 segment별 pointer와 `Enter`/`Space`가 `{ routeId, segmentId }`를 전달합니다. `disabled`는 callback을 막고 Tab 순서에서 빼며 consumer `tabIndex`는 enabled segment에서 보존합니다.
-- path stroke는 `vector-effect="non-scaling-stroke"`, hit path는 `viewportScale`과 무관한 24 CSS px입니다. 각 interactive segment에는 보이지 않는 최소 24px bounds도 포함해 가로·세로로 거의 평평한 SVG 경로의 role target box가 stroke를 제외하고 8px처럼 축소되지 않게 합니다. glyph와 label은 inverse scale을 적용합니다.
+- path stroke는 `vector-effect="non-scaling-stroke"`, hit path는 `viewportScale`과 무관한 24 CSS px입니다. 각 interactive segment에는 midpoint의 34px 원형 core도 포함해 짧거나 굽은 구간에서도 24×24 CSS px 정사각형이 target 안에 들어갑니다. glyph와 label은 inverse scale을 적용합니다.
 - native `aria-label`은 계산된 route 이름의 base를 덮어씁니다. 계산 이름은 route label → status → 명시적 current-segment fraction → selection/validation/freshness 순입니다. component는 live region을 만들지 않습니다.
 
 ## Reading order and state evidence
 
-route group 이름 다음에 각 interactive segment가 segment label → phase → condition 순으로 읽힙니다. 시각 paint order는 selection/focus halo → segment path/pattern → direction → condition glyph → explicit progress/status marker입니다.
+route group 이름 다음에 각 interactive segment가 segment label → phase → condition 순으로 읽힙니다. 시각 paint order는 selection/focus halo → segment path/pattern → direction → condition glyph → explicit progress/status marker입니다. segment label은 path 위, explicit current-segment fraction은 marker 아래에 두어 같은 위치에서 겹치지 않게 합니다.
 
 - completed: long dash + positive support color
 - current: solid, thicker path
@@ -43,6 +44,7 @@ route group 이름 다음에 각 interactive segment가 segment label → phase 
 - blocked: short-dot pattern + `×`
 - conflict: mixed pattern + `!`
 - selected/focused: 별도 solid halo와 shared focus indicator
+- invalid/stale: route-level `!`/`~` glyph와 각각 solid/dashed outline. segment phase·condition pattern은 그대로 보존
 
 N6 semantic mirror가 같은 route/segment identity, status, phase, condition을 ordinary list/button으로 제공해야 합니다. SVG segment만을 유일한 키보드 탐색 경로로 사용하지 않습니다.
 
@@ -63,6 +65,8 @@ N6 semantic mirror가 같은 route/segment identity, status, phase, condition을
 - [Open-RMF `Graph.hpp` at `39f09e7971c8e666e12c8e9b12199014f631c0bb`](https://github.com/open-rmf/rmf_traffic/blob/39f09e7971c8e666e12c8e9b12199014f631c0bb/rmf_traffic/include/rmf_traffic/agv/Graph.hpp): lane과 event는 graph topology이고 lift 이동은 여러 event의 결합입니다. route renderer는 cross-floor facility 상태를 하나의 선으로 축약하지 않습니다.
 - [Nav2 Route Server at `4a40bb9357f3bd11414be6573522ef1613f1cdd3`](https://github.com/ros-navigation/navigation2/tree/4a40bb9357f3bd11414be6573522ef1613f1cdd3/nav2_route): predefined node/edge route와 upsampled `nav_msgs/Path`는 다른 출력이며 route tracking은 edge 진행을 따릅니다. LDS는 Route와 Trajectory를 독립 계약으로 둡니다.
 - [Nav2 Route Server configuration](https://docs.nav2.org/configuration/packages/configuring-route-server.html): speed operations, collision-blocked edges, rerouting은 서로 다른 runtime 정보입니다. LDS도 route status와 segment condition을 한 enum으로 합치지 않습니다.
+- [MapLibre Style Spec — line and symbol layers](https://maplibre.org/maplibre-style-spec/layers/)는 line paint와 symbol placement·collision priority를 분리합니다. LDS는 route path와 compact state glyph만 제공하고 label 충돌·paint order는 owning renderer가 실제 layer density에서 결정하게 합니다.
+- [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)은 target 내부 24×24 CSS px 정사각형과 dense map의 equivalent path를 함께 설명합니다. 각 segment의 midpoint core와 N6 semantic mirror가 이 두 경로를 제공합니다.
 
 ## Intentional exclusions
 

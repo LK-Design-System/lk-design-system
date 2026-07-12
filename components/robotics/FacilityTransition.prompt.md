@@ -36,7 +36,7 @@
 - lift phase는 operator reading order인 `approach | waiting | boarding | moving | arrival | exiting`만 표현합니다. `doorState`는 필수이고, `motionState`, `operatingMode`, `sessionState`(`none | requested | owned | other | unknown`)는 source가 제공할 때만 쓰는 선택적 독립 축입니다. phase로 합치거나 누락을 unknown으로 추론하지 않습니다. current/destination도 선택적 floor 표시 문자열이 아니라 명시적 `currentMapId`/`destinationMapId`로 유지합니다.
 - dock phase는 `approach | docking | docked | undocking | complete`입니다. offline/unknown을 phase로 만들지 않고 source adapter가 availability로 전달합니다.
 - availability는 solid/dashed/dotted ring, slash/question mark, 텍스트를 함께 사용합니다. 지도 라벨은 `출발/도착/연결 → identity → phase·availability → 장치 상태` 순서로 읽히며, 세션과 map identity를 포함한 전체 독립 상태 축은 `data-*`, 접근성 이름, semantic mirror/inspector에 남습니다.
-- marker와 label은 `viewportScale`의 역수를 적용하고 stroke는 `vector-effect="non-scaling-stroke"`를 사용합니다. 투명 32 CSS px hit circle을 유지합니다.
+- marker와 label은 `viewportScale`의 역수를 적용하고 stroke는 `vector-effect="non-scaling-stroke"`를 사용합니다. 투명 hit circle은 34 CSS px로, 원 안에 24×24 CSS px 정사각형이 들어가도록 유지합니다.
 - `onActivate`는 pointer, Enter, Space로 같은 `onActivate(id, event)`를 호출하는 선택/검사 callback입니다. lift call, door open, dock 시작, session request/end 같은 command API는 의도적으로 없습니다.
 - interactive marker의 `disabled`는 활성화를 막고 `aria-disabled`를 노출하며 소비자가 넘긴 `tabIndex`도 `-1`로 덮어씁니다. passive marker에는 불필요한 disabled ARIA를 붙이지 않습니다. `hidden`은 DOM과 접근성 트리에서 제거하고, native `aria-label`은 자동 생성된 전체 상태 이름을 덮어쓸 수 있습니다.
 
@@ -54,6 +54,7 @@
 - [Open-RMF `LiftState.msg`, pinned `26a7f2`](https://github.com/open-rmf/rmf_internal_msgs/blob/26a7f25740ad28c7a838ef7407dba38304a564f5/rmf_lift_msgs/msg/LiftState.msg): current/destination floor, door state, motion state, operating mode, session id가 서로 다른 필드입니다. LDS는 backend floor name을 map identity로 번역하되 상태 축은 독립으로 유지하고 위치·색·phase에서 다른 축을 유추하지 않습니다.
 - [Open-RMF `DoorMode.msg`, pinned `26a7f2`](https://github.com/open-rmf/rmf_internal_msgs/blob/26a7f25740ad28c7a838ef7407dba38304a564f5/rmf_door_msgs/msg/DoorMode.msg): closed, moving, open, offline, unknown을 door controller의 별도 mode로 정의합니다. door state를 transition availability와 합치지 않았습니다.
 - [Nav2 Route Server](https://docs.nav2.org/configuration/packages/configuring-route-server.html): route graph의 node/edge와 조밀한 `nav_msgs/Path`, route operation은 다른 층입니다. 이 컴포넌트는 설비 event 상태만 표현하고 route/path geometry와 command 실행을 포함하지 않습니다.
+- [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)은 원형 target의 bounding box가 아니라 실제 shape 안에 24×24 CSS px 정사각형이 들어가야 함을 설명합니다. 따라서 marker보다 넓은 34px 투명 원과 동일 identity의 semantic mirror를 사용합니다.
 
 ## Intentional exclusions
 

@@ -567,7 +567,7 @@
       "name": "Robotics navigation semantics",
       "layer": "lk-robotics-extension",
       "classification": "robotics-extension",
-      "wdsFamily": "Robotics navigation extension",
+      "wdsFamily": "Robotics extension",
       "storyEvidence": [
         "stories/RoboticsNavigationFacilities.stories.jsx",
         "stories/RoboticsNavigationLane.stories.jsx",

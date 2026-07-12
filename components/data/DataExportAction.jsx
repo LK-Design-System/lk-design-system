@@ -49,8 +49,11 @@ export function DataExportAction({
   const scopeControlled = scopeValue !== undefined;
   const [internalFormat, setInternalFormat] = React.useState(defaultFormatValue ?? formats[0]?.value ?? 'csv');
   const [internalScope, setInternalScope] = React.useState(defaultScopeValue);
-  const format = formatControlled ? formatValue : internalFormat;
+  const requestedFormat = formatControlled ? formatValue : internalFormat;
   const requestedScope = scopeControlled ? scopeValue : internalScope;
+  const format = formats.some((option) => option.value === requestedFormat)
+    ? requestedFormat
+    : (formats[0]?.value ?? '');
   const scopes = Array.isArray(scopeOptions) && scopeOptions.length > 0
     ? scopeOptions
     : defaultScopes(selectedCount, totalCount);
@@ -60,6 +63,11 @@ export function DataExportAction({
   const reasonId = React.useId();
   const statusId = React.useId();
   const processing = state === 'processing';
+  const exportUnavailable = !allowed || processing || !format || !scope || typeof onExport !== 'function';
+
+  React.useEffect(() => {
+    if (!formatControlled && internalFormat !== format) setInternalFormat(format);
+  }, [format, formatControlled, internalFormat]);
 
   React.useEffect(() => {
     if (!scopeControlled && internalScope !== scope) setInternalScope(scope);
@@ -107,11 +115,12 @@ export function DataExportAction({
           type="button"
           size={size}
           variant="ghost"
-          disabled={!allowed}
+          disabled={!allowed || typeof onExport !== 'function' || !format || !scope}
           loading={processing}
           loadingLabel={`${exportLabel} 처리 중`}
           aria-describedby={!allowed ? reasonId : undefined}
-          onClick={() => allowed && !processing && onExport?.({ format, scope })}
+          style={{ color: exportUnavailable ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
+          onClick={() => !exportUnavailable && onExport({ format, scope })}
         >
           {!processing && <Icon name="download" size={16} aria-hidden="true" />}
           {exportLabel}

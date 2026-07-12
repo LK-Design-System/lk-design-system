@@ -232,10 +232,25 @@ export const RouteAndTrajectoryStates = {
       description="전체 경로가 rerouting이어도 특정 segment는 conflict이고, 현재 segment가 waiting이어도 route identity와 명시적 진행 위치는 보존됩니다. 상태를 하나의 색 enum으로 압축하지 않습니다."
       maxWidth={820}
     >
-      <PathMap label="route 상태와 조건 지도" height={430} svgHeight={410}>
+      <PathMap label="route 상태와 조건 지도" height={500} svgHeight={480}>
         {ROUTE_STATE_ROWS.map(([status, phase, condition, y]) => (
           <RouteOverlay key={status} route={routeForState(status, phase, condition, y)} activeMapId="L1" />
         ))}
+        <RouteOverlay
+          route={{
+            ...routeForState('active', 'current', 'normal', 426),
+            id: 'route-invalid-stale',
+            label: 'invalid · stale',
+            segments: [{
+              ...routeForState('active', 'current', 'normal', 426).segments[0],
+              id: 'segment-invalid-stale',
+              label: 'invalid · stale',
+            }],
+          }}
+          activeMapId="L1"
+          invalid
+          stale
+        />
       </PathMap>
       <PathMap appearance="dark" label="rerouting trajectory 지도" height={220} svgHeight={200}>
         <TrajectoryOverlay
@@ -246,6 +261,8 @@ export const RouteAndTrajectoryStates = {
             status: 'rerouting',
             samples: ACTIVE_TRAJECTORY.samples.map((sample) => ({ ...sample, position: { x: sample.position.x, y: sample.position.y - 52 } })),
           }}
+          invalid
+          stale
         />
       </PathMap>
     </StoryPage>
@@ -262,6 +279,13 @@ export const RouteAndTrajectoryStates = {
     const trajectory = canvasElement.querySelector('[data-trajectory-status="rerouting"]');
     if (!trajectory?.querySelector('[data-trajectory-path]')?.getAttribute('stroke-dasharray')) {
       throw new Error('Rerouting trajectory needs a non-color dash pattern.');
+    }
+    const compoundRoute = canvasElement.querySelector('[data-route-id="route-invalid-stale"]');
+    if (!compoundRoute?.querySelector('[data-route-overlay-state="invalid"]') || !compoundRoute.querySelector('[data-route-overlay-state="stale"]')) {
+      throw new Error('Route invalid + stale needs independent ! and ~ visual evidence.');
+    }
+    if (!trajectory.querySelector('[data-trajectory-overlay-state="invalid"]') || !trajectory.querySelector('[data-trajectory-overlay-state="stale"]')) {
+      throw new Error('Trajectory invalid + stale needs independent ! and ~ visual evidence.');
     }
   },
 };
@@ -393,6 +417,14 @@ export const PathSelectionAndActivation = {
     const view = canvasElement.ownerDocument.defaultView;
     if (!routeSegment?.getAttribute('aria-label')?.includes('현재 구간') || !trajectory?.getAttribute('aria-label')?.includes('sample')) {
       throw new Error('Route segment and trajectory need meaningful accessible names.');
+    }
+    const routeHitCore = routeSegment.querySelector('[data-route-hit-target-core]');
+    const trajectoryHitCore = trajectory.querySelector('[data-trajectory-hit-target-core]');
+    if (!routeHitCore || Number(routeHitCore.getAttribute('r')) * Math.SQRT2 < 24) {
+      throw new Error('Interactive route segment needs a target core containing 24×24 CSS px.');
+    }
+    if (!trajectoryHitCore || Number(trajectoryHitCore.getAttribute('r')) * Math.SQRT2 < 24) {
+      throw new Error('Interactive trajectory needs a target core containing 24×24 CSS px.');
     }
     routeSegment.dispatchEvent(new view.MouseEvent('click', { bubbles: true, cancelable: true }));
     await nextRender();
@@ -987,4 +1019,10 @@ export const RouteAndTrajectoryNarrow320 = {
       throw new Error('Hiding visual labels removed current trajectory sample from the accessible name.');
     }
   },
+};
+
+export const RouteTrajectoryVisualParity = {
+  ...RouteAndTrajectoryStates,
+  name: 'Route and trajectory visual parity',
+  tags: ['!dev', 'visual-parity'],
 };

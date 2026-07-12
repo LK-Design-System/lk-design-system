@@ -12,36 +12,36 @@
 
 ## 현재 기준선
 
-2026-07-12 현재 소스에서 재생성한 정적 빌드 기준으로 177개 페이지와 516개 스토리가 있다.
+2026-07-12 현재 소스에서 재생성한 정적 빌드 기준으로 177개 페이지와 524개 스토리가 있다.
 
-- 공개 스토리: 397개
-- 숨김 스토리: 119개
-- 숨김 visual parity: 82개
+- 공개 스토리: 398개
+- 숨김 스토리: 126개
+- 숨김 visual parity: 89개
 - 숨김 internal contract: 37개
 - 컴포넌트 설명이 있는 페이지: 173개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 177개
 - 사용/비사용 판단 기준이 확인되는 페이지: 172개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 397개
+- 목적 설명이 있는 공개 스토리: 398개
 - Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
 - Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 81/81개
-- Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 202/202개
+- Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 203/203개
 - Robotics 진입 가이드: 29/29페이지, 공개 스토리 설명: 100/100개
 - Theme 진입 가이드: 3/3페이지, 공개 스토리 설명: 3/3개
-- 공개 스토리 표시명 계약: 397/397개(`개요` 또는 역할 접두어)
+- 공개 스토리 표시명 계약: 398/398개(`개요` 또는 역할 접두어)
 - 이름을 바꾼 페이지의 기존 story id 보존: 5/5페이지
 
 모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 공개 스토리의 Docs 설명에서 상황과 확인 지점을 이어서 볼 수 있다.
 
 ## 전수 감사 판정
 
-177개 페이지와 516개 스토리를 소스 AST와 현재 빌드 인덱스에 대조해 모두 검토했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion 페이지도 같은 role·visibility·description 계약으로 검토했다.
+177개 페이지와 524개 스토리를 소스 AST와 현재 빌드 인덱스에 대조해 모두 검토했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion 페이지도 같은 role·visibility·description 계약으로 검토했다.
 
 - 13개 구조 분리 실행: `Effects and Interaction`, `Action Controls`, `Annotations`, `Anchored Overlay`, `Menu`, `Segmented and Toggle`, `Selection Groups`, `Text Input`, `Loading State`, `Progress`, `Utility Actions`, `File Upload Queue`, `Telemetry`
 - 5개 분리 기각·keep 정정: `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`, `Toast`, `Manual Control Session`
 - 1개 병합 기각·keep 정정: `History Toolbar`
-- 공개 내부 계약 10개를 `!dev`로 전환하고 visual parity 82개를 그대로 유지
+- 공개 내부 계약 10개를 `!dev`로 전환하고 신규 Communication·VirtualKeypad·Robotics Navigation 실컴포넌트 회귀 표면 7개를 더해 visual parity 89개를 유지
 
-최종 구조에서는 분리된 각 페이지가 독립 소유자를 가지므로 판정은 `keep` 177개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 페이지 177/177개, 스토리 516/516개, 변경 후 stale 검토 0개, 공개·숨김 권고 불일치 0개다.
+최종 구조에서는 분리된 각 페이지가 독립 소유자를 가지므로 판정은 `keep` 177개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 페이지 177/177개, 스토리 524/524개, 변경 후 stale 검토 0개, 공개·숨김 권고 불일치 0개다.
 
 정정 근거는 다음과 같다.
 

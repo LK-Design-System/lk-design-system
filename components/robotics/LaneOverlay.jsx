@@ -317,16 +317,27 @@ export function LaneOverlay({
         />
       )}
       {pathData && interactive && (
-        <path
-          data-lane-hit-target=""
-          data-screen-target-size="24"
-          d={pathData}
-          fill="none"
-          stroke="transparent"
-          strokeWidth="24"
-          vectorEffect="non-scaling-stroke"
-          pointerEvents="stroke"
-        />
+        <>
+          <path
+            data-lane-hit-target=""
+            data-screen-target-size="24"
+            d={pathData}
+            fill="none"
+            stroke="transparent"
+            strokeWidth="24"
+            vectorEffect="non-scaling-stroke"
+            pointerEvents="stroke"
+          />
+          <circle
+            data-lane-hit-target-core=""
+            data-screen-target-size="24"
+            cx={midpoint.x}
+            cy={midpoint.y}
+            r={17 * inverseScale}
+            fill="transparent"
+            pointerEvents="all"
+          />
+        </>
       )}
       {pathData && (
         <path

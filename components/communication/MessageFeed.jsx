@@ -67,6 +67,7 @@ export function MessageFeed({
   const followingRef = React.useRef(following);
   const lastRequestedFollowingRef = React.useRef(following);
   const [retainJumpFocus, setRetainJumpFocus] = React.useState(false);
+  const [historyLiveSuppressed, setHistoryLiveSuppressed] = React.useState(false);
 
   if (followingRef.current !== following) {
     followingRef.current = following;
@@ -90,6 +91,11 @@ export function MessageFeed({
       settlingFrameRef.current = requestFrame(() => {
         historySettlingRef.current = false;
         settlingFrameRef.current = null;
+        // Older history is prepended into the same DOM log, but it is not a new
+        // live update. Re-enable announcements only after the prepend and scroll
+        // restoration have both settled so assistive technology does not read a
+        // batch of old messages as newly arrived content.
+        setHistoryLiveSuppressed(false);
       });
     });
   }, []);
@@ -159,6 +165,7 @@ export function MessageFeed({
   const handleLoadPrevious = () => {
     const viewport = viewportRef.current;
     if (!viewport || !onLoadPrevious || loadingPrevious) return;
+    setHistoryLiveSuppressed(true);
     historyAnchorRef.current = {
       scrollHeight: viewport.scrollHeight,
       scrollTop: viewport.scrollTop,
@@ -225,9 +232,10 @@ export function MessageFeed({
         id={viewportId}
         ref={viewportRef}
         data-message-feed-viewport
+        data-history-live-suppressed={historyLiveSuppressed ? 'true' : undefined}
         role="log"
         aria-label={ariaLabel}
-        aria-live="polite"
+        aria-live={historyLiveSuppressed ? 'off' : 'polite'}
         aria-relevant="additions"
         aria-atomic="false"
         aria-busy={isBusy ? 'true' : undefined}

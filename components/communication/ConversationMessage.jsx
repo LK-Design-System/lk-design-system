@@ -323,8 +323,10 @@ export function ConversationMessage({
           <span
             aria-hidden="true"
             style={{
-              width: 6,
-              height: 6,
+              // Match the established StatusBadge indicator while expressing
+              // the optical 6px glyph as token-relative component geometry.
+              width: 'calc(var(--space-2) - 2px)',
+              height: 'calc(var(--space-2) - 2px)',
               flexShrink: 0,
               borderRadius: 'var(--radius-pill)',
               background: lifecycleColor,

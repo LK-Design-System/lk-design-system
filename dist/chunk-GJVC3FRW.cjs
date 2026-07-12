@@ -1,0 +1,439 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+// components/robotics/LaneOverlay.jsx
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
+var AVAILABILITY_LABEL = {
+  available: "\uD1B5\uD589 \uAC00\uB2A5",
+  closed: "\uD3D0\uC1C4",
+  unknown: "\uC0C1\uD0DC \uBBF8\uD655\uC778"
+};
+function finitePoint(point) {
+  return point && Number.isFinite(point.x) && Number.isFinite(point.y);
+}
+function pathFromPoints(points) {
+  if (points.length < 2) return "";
+  return points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
+}
+function pointAlong(points, ratio) {
+  if (points.length === 0) return { x: 0, y: 0, angle: 0 };
+  if (points.length === 1) return { ...points[0], angle: 0 };
+  const lengths = [];
+  let total = 0;
+  for (let index = 1; index < points.length; index += 1) {
+    const start = points[index - 1];
+    const end = points[index];
+    const length = Math.hypot(end.x - start.x, end.y - start.y);
+    lengths.push(length);
+    total += length;
+  }
+  if (total === 0) return { ...points[0], angle: 0 };
+  let remaining = total * Math.max(0, Math.min(1, ratio));
+  for (let index = 0; index < lengths.length; index += 1) {
+    const length = lengths[index];
+    const start = points[index];
+    const end = points[index + 1];
+    if (remaining <= length || index === lengths.length - 1) {
+      const localRatio = length === 0 ? 0 : remaining / length;
+      return {
+        x: start.x + (end.x - start.x) * localRatio,
+        y: start.y + (end.y - start.y) * localRatio,
+        angle: Math.atan2(end.y - start.y, end.x - start.x) * 180 / Math.PI
+      };
+    }
+    remaining -= length;
+  }
+  return { ...points[points.length - 1], angle: 0 };
+}
+function orientationAngle(orientation, fallbackAngle) {
+  if (!orientation || orientation === "unconstrained") return void 0;
+  if (orientation === "backward") return fallbackAngle + 180;
+  return fallbackAngle;
+}
+function laneAccessibleName(lane, availability, conflict, selected, invalid, stale) {
+  const entryName = _nullishCoalesce(_optionalChain([lane, 'access', _ => _.entry, 'optionalAccess', _2 => _2.waypointId]), () => ( "\uC9C4\uC785\uC810"));
+  const exitName = _nullishCoalesce(_optionalChain([lane, 'access', _3 => _3.exit, 'optionalAccess', _4 => _4.waypointId]), () => ( "\uC774\uD0C8\uC810"));
+  const parts = [
+    _nullishCoalesce(lane.label, () => ( `\uB808\uC778 ${lane.id}`)),
+    `${entryName}\uC5D0\uC11C ${exitName} \uBC29\uD5A5`,
+    AVAILABILITY_LABEL[availability]
+  ];
+  if (_optionalChain([lane, 'access', _5 => _5.relation, 'optionalAccess', _6 => _6.kind]) === "paired") parts.push(`\uBC18\uB300 \uBC29\uD5A5 \uB808\uC778 ${lane.relation.pairedLaneId}\uC640 \uC30D`);
+  if (lane.speedLimitMps != null) parts.push(`\uC18D\uB3C4 \uC81C\uD55C ${lane.speedLimitMps} m/s`);
+  if (lane.mutexGroupId) parts.push(`\uC0C1\uD638 \uBC30\uC81C \uADF8\uB8F9 ${lane.mutexGroupId}`);
+  if (_optionalChain([lane, 'access', _7 => _7.entry, 'optionalAccess', _8 => _8.transitionIds, 'optionalAccess', _9 => _9.length])) parts.push(`\uC9C4\uC785 \uC804\uD658 ${lane.entry.transitionIds.join(", ")}`);
+  if (_optionalChain([lane, 'access', _10 => _10.exit, 'optionalAccess', _11 => _11.transitionIds, 'optionalAccess', _12 => _12.length])) parts.push(`\uC774\uD0C8 \uC804\uD658 ${lane.exit.transitionIds.join(", ")}`);
+  if (conflict) parts.push("\uCDA9\uB3CC \uC788\uC74C");
+  if (selected) parts.push("\uC120\uD0DD\uB428");
+  if (invalid) parts.push("\uB370\uC774\uD130 \uC624\uB958");
+  if (stale) parts.push("\uC624\uB798\uB41C \uB370\uC774\uD130");
+  return parts.join(", ");
+}
+function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
+  if (!point || !endpoint) return null;
+  const orientation = orientationAngle(endpoint.orientation, fallbackAngle);
+  const transitionCount = _nullishCoalesce(_optionalChain([endpoint, 'access', _13 => _13.transitionIds, 'optionalAccess', _14 => _14.length]), () => ( 0));
+  const markerLabel = kind === "entry" ? "\uC9C4\uC785" : "\uC774\uD0C8";
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    "g",
+    {
+      "data-lane-endpoint": kind,
+      "data-waypoint-id": _nullishCoalesce(endpoint.waypointId, () => ( void 0)),
+      transform: `translate(${point.x} ${point.y}) scale(${inverseScale})`,
+      "aria-hidden": "true",
+      pointerEvents: "none",
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "circle",
+          {
+            r: "4",
+            fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
+            stroke: "var(--viewer-muted, var(--color-semantic-label-neutral))",
+            strokeWidth: "1.5",
+            vectorEffect: "non-scaling-stroke"
+          }
+        ),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "text",
+          {
+            x: "0",
+            y: "-7",
+            textAnchor: "middle",
+            fill: "var(--viewer-muted, var(--color-semantic-label-neutral))",
+            fontFamily: "var(--font-sans)",
+            fontSize: "7",
+            fontWeight: "var(--fw-bold)",
+            children: markerLabel
+          }
+        ),
+        transitionCount > 0 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { "data-lane-transition-count": transitionCount, transform: "translate(0 11)", children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            "circle",
+            {
+              r: "6",
+              fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
+              stroke: "var(--viewer-muted, var(--color-semantic-label-neutral))",
+              strokeWidth: "1.5",
+              vectorEffect: "non-scaling-stroke"
+            }
+          ),
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            "text",
+            {
+              x: "0",
+              y: "2.5",
+              textAnchor: "middle",
+              fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
+              fontFamily: "var(--font-sans)",
+              fontSize: "7",
+              fontWeight: "var(--fw-bold)",
+              children: [
+                "T",
+                transitionCount
+              ]
+            }
+          )
+        ] }),
+        orientation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "path",
+          {
+            "data-lane-orientation": endpoint.orientation,
+            d: "M -5 0 H 5 M 2 -3 L 5 0 L 2 3",
+            transform: `rotate(${orientation}) translate(10 0)`,
+            fill: "none",
+            stroke: "var(--viewer-foreground, var(--color-semantic-label-strong))",
+            strokeWidth: "1.5",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            vectorEffect: "non-scaling-stroke"
+          }
+        )
+      ]
+    },
+    kind
+  );
+}
+function LaneOverlay({
+  lane,
+  availability = "available",
+  conflict = false,
+  viewportScale = 1,
+  selected = false,
+  focused = false,
+  disabled = false,
+  invalid = false,
+  stale = false,
+  showLabel = true,
+  onActivate,
+  "aria-label": ariaLabel,
+  tabIndex,
+  onFocus,
+  onBlur,
+  style,
+  ...rest
+}) {
+  const [hasFocus, setHasFocus] = _react2.default.useState(false);
+  const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
+  const inverseScale = 1 / scale;
+  const resolvedAvailability = ["available", "closed", "unknown"].includes(availability) ? availability : "available";
+  const hasConflict = Boolean(conflict);
+  const points = (_nullishCoalesce(_optionalChain([lane, 'optionalAccess', _15 => _15.points]), () => ( []))).filter(finitePoint);
+  const pathData = pathFromPoints(points);
+  const midpoint = pointAlong(points, 0.5);
+  const directionPoint = pointAlong(points, 0.64);
+  const entryDirection = pointAlong(points.slice(0, 2), 0.5).angle;
+  const exitDirection = pointAlong(points.slice(-2), 0.5).angle;
+  const interactive = typeof onActivate === "function";
+  const visibleFocus = focused || hasFocus;
+  const relation = _optionalChain([lane, 'optionalAccess', _16 => _16.relation, 'optionalAccess', _17 => _17.kind]) === "paired" ? "paired" : "single";
+  const availabilityDash = resolvedAvailability === "closed" ? "8 5" : resolvedAvailability === "unknown" ? "2 5" : void 0;
+  const baseColor = invalid ? "var(--color-semantic-status-negative-foreground)" : resolvedAvailability === "available" ? "var(--color-semantic-primary-normal)" : "var(--viewer-muted, var(--color-semantic-label-alternative))";
+  const stateGlyphs = [
+    resolvedAvailability === "closed" ? { glyph: "\xD7", ratio: hasConflict ? 0.43 : 0.5, tone: "var(--viewer-foreground, var(--color-semantic-label-strong))" } : null,
+    resolvedAvailability === "unknown" ? { glyph: "?", ratio: hasConflict ? 0.43 : 0.5, tone: "var(--viewer-foreground, var(--color-semantic-label-strong))" } : null,
+    hasConflict ? { glyph: "!", ratio: resolvedAvailability === "available" ? 0.5 : 0.57, tone: "var(--color-semantic-status-negative-text)" } : null,
+    invalid ? { glyph: "!", ratio: 0.33, tone: "var(--color-semantic-status-negative-text)" } : null,
+    stale ? { glyph: "~", ratio: 0.72, tone: "var(--viewer-muted, var(--color-semantic-label-alternative))" } : null
+  ].filter(Boolean);
+  const metadata = [
+    _optionalChain([lane, 'optionalAccess', _18 => _18.speedLimitMps]) != null ? `\u2264 ${lane.speedLimitMps} m/s` : null,
+    _optionalChain([lane, 'optionalAccess', _19 => _19.mutexGroupId]) ? `mutex ${lane.mutexGroupId}` : null
+  ].filter(Boolean).join(" \xB7 ");
+  const activate = (event) => {
+    if (disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    _optionalChain([onActivate, 'optionalCall', _20 => _20(lane.id, event)]);
+  };
+  const handleKeyDown = (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    activate(event);
+  };
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    "g",
+    {
+      ...rest,
+      "data-lk-lane-overlay": "",
+      "data-lane-id": _optionalChain([lane, 'optionalAccess', _21 => _21.id]),
+      "data-map-id": _optionalChain([lane, 'optionalAccess', _22 => _22.mapId]),
+      "data-availability": resolvedAvailability,
+      "data-conflict": hasConflict ? "true" : "false",
+      "data-relation": relation,
+      "data-paired-lane-id": _optionalChain([lane, 'optionalAccess', _23 => _23.relation, 'optionalAccess', _24 => _24.kind]) === "paired" ? lane.relation.pairedLaneId : void 0,
+      "data-selected": selected ? "true" : "false",
+      "data-focused": visibleFocus ? "true" : "false",
+      "data-disabled": disabled ? "true" : "false",
+      "data-invalid": invalid ? "true" : "false",
+      "data-stale": stale ? "true" : "false",
+      role: interactive ? "button" : "img",
+      tabIndex: interactive ? disabled ? -1 : _nullishCoalesce(tabIndex, () => ( 0)) : tabIndex,
+      focusable: interactive ? "true" : void 0,
+      "aria-label": _nullishCoalesce(ariaLabel, () => ( laneAccessibleName(lane, resolvedAvailability, hasConflict, selected, invalid, stale))),
+      "aria-pressed": interactive ? selected : void 0,
+      "aria-disabled": interactive && disabled ? true : void 0,
+      "aria-invalid": invalid || void 0,
+      onClick: interactive ? activate : void 0,
+      onKeyDown: interactive ? handleKeyDown : void 0,
+      onFocus: (event) => {
+        setHasFocus(true);
+        _optionalChain([onFocus, 'optionalCall', _25 => _25(event)]);
+      },
+      onBlur: (event) => {
+        setHasFocus(false);
+        _optionalChain([onBlur, 'optionalCall', _26 => _26(event)]);
+      },
+      style: {
+        cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
+        opacity: disabled ? 0.42 : stale ? 0.7 : 1,
+        outline: "none",
+        ...style
+      },
+      children: [
+        visibleFocus && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "path",
+          {
+            "data-lane-focus-ring": "",
+            d: pathData,
+            fill: "none",
+            stroke: "var(--color-semantic-focus-indicator)",
+            strokeWidth: "10",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            vectorEffect: "non-scaling-stroke",
+            pointerEvents: "none"
+          }
+        ),
+        selected && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "path",
+          {
+            "data-lane-selection-halo": "",
+            d: pathData,
+            fill: "none",
+            stroke: "var(--color-semantic-primary-normal)",
+            strokeWidth: "7",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            opacity: "0.24",
+            vectorEffect: "non-scaling-stroke",
+            pointerEvents: "none"
+          }
+        ),
+        pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "path",
+          {
+            "data-lane-path": "",
+            d: pathData,
+            fill: "none",
+            stroke: baseColor,
+            strokeWidth: selected ? 3.5 : 2.5,
+            strokeDasharray: availabilityDash,
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            vectorEffect: "non-scaling-stroke",
+            pointerEvents: "none"
+          }
+        ),
+        hasConflict && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "path",
+          {
+            "data-lane-conflict-pattern": "",
+            d: pathData,
+            fill: "none",
+            stroke: "var(--color-semantic-status-negative-foreground)",
+            strokeWidth: "2",
+            strokeDasharray: "2 7",
+            strokeLinecap: "round",
+            vectorEffect: "non-scaling-stroke",
+            pointerEvents: "none"
+          }
+        ),
+        pathData && interactive && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            "path",
+            {
+              "data-lane-hit-target": "",
+              "data-screen-target-size": "24",
+              d: pathData,
+              fill: "none",
+              stroke: "transparent",
+              strokeWidth: "24",
+              vectorEffect: "non-scaling-stroke",
+              pointerEvents: "stroke"
+            }
+          ),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            "circle",
+            {
+              "data-lane-hit-target-core": "",
+              "data-screen-target-size": "24",
+              cx: midpoint.x,
+              cy: midpoint.y,
+              r: 17 * inverseScale,
+              fill: "transparent",
+              pointerEvents: "all"
+            }
+          )
+        ] }),
+        pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "path",
+          {
+            "data-lane-direction": "entry-to-exit",
+            d: "M -5 -4 L 5 0 L -5 4 Z",
+            transform: `translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`,
+            fill: baseColor,
+            stroke: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
+            strokeWidth: "1",
+            strokeLinejoin: "round",
+            vectorEffect: "non-scaling-stroke",
+            pointerEvents: "none"
+          }
+        ),
+        endpointMarker(points[0], _optionalChain([lane, 'optionalAccess', _27 => _27.entry]), "entry", entryDirection, inverseScale),
+        endpointMarker(points[points.length - 1], _optionalChain([lane, 'optionalAccess', _28 => _28.exit]), "exit", exitDirection, inverseScale),
+        stateGlyphs.map((state, index) => {
+          const point = pointAlong(points, state.ratio);
+          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            "g",
+            {
+              "data-lane-state-glyph": state.glyph,
+              transform: `translate(${point.x} ${point.y}) scale(${inverseScale})`,
+              "aria-hidden": "true",
+              pointerEvents: "none",
+              children: [
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  "circle",
+                  {
+                    r: "7",
+                    fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
+                    stroke: state.tone,
+                    strokeWidth: "1.5",
+                    vectorEffect: "non-scaling-stroke"
+                  }
+                ),
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  "text",
+                  {
+                    x: "0",
+                    y: "3",
+                    textAnchor: "middle",
+                    fill: state.tone,
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "10",
+                    fontWeight: "var(--fw-bold)",
+                    children: state.glyph
+                  }
+                )
+              ]
+            },
+            `${state.glyph}-${index}`
+          );
+        }),
+        showLabel && (_optionalChain([lane, 'optionalAccess', _29 => _29.label]) || metadata) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          "g",
+          {
+            "data-lane-label": "",
+            transform: `translate(${midpoint.x} ${midpoint.y}) scale(${inverseScale})`,
+            "aria-hidden": "true",
+            pointerEvents: "none",
+            children: [
+              _optionalChain([lane, 'optionalAccess', _30 => _30.label]) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                "text",
+                {
+                  x: "0",
+                  y: "-12",
+                  textAnchor: "middle",
+                  fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "10",
+                  fontWeight: "var(--fw-bold)",
+                  children: lane.label
+                }
+              ),
+              metadata && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                "text",
+                {
+                  x: "0",
+                  y: _optionalChain([lane, 'optionalAccess', _31 => _31.label]) ? 16 : -10,
+                  textAnchor: "middle",
+                  fill: "var(--viewer-muted, var(--color-semantic-label-neutral))",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "8",
+                  fontWeight: "var(--fw-semibold)",
+                  children: metadata
+                }
+              )
+            ]
+          }
+        )
+      ]
+    }
+  );
+}
+
+
+
+exports.LaneOverlay = LaneOverlay;
+//# sourceMappingURL=chunk-GJVC3FRW.cjs.map

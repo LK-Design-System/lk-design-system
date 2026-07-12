@@ -16,6 +16,7 @@
 - `activeFilters`는 제품 query state의 표시 모델입니다. 컴포넌트는 URL 직렬화, facet fetch, 검색 ranking을 수행하지 않습니다.
 - `onRemoveFilter`가 있으면 적용된 조건은 한 번에 하나씩 제거할 수 있는 실제 button이며, 둘 이상이고 `onClearFilters`도 있으면 전체 초기화 action을 함께 제공합니다.
 - `onRemoveFilter`가 없으면 close 아이콘이나 동작 없는 button을 만들지 않고 읽기 전용 chip으로 표시합니다.
+- 적용 필터 묶음은 이름 있는 `role="group"`으로 노출합니다. generic `div`에 이름만 붙이지 않으며, selected chip foreground는 active light/dark scope의 semantic label color를 직접 사용해 두 테마 모두에서 4.5:1 이상을 유지합니다.
 - 결과 수는 polite live status로 갱신됩니다. 오류나 로딩은 `ResourceState`가 소유합니다.
 - `viewControl`은 saved-view 선택, `actions`는 보기 저장·고급 필터 같은 제품 action 슬롯입니다. 저장과 persistence는 제품 책임입니다.
 - `variant="embedded"`는 부모 데이터 surface 안에서 좌우 외곽선을 중복하지 않습니다.

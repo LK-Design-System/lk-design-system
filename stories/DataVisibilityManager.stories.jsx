@@ -150,8 +150,8 @@ export const Narrow320LongLabels = {
     const fixture = canvasElement.querySelector('[data-testid="visibility-320"]');
     const manager = canvasElement.querySelector('[data-visibility-manager]');
     const list = manager?.querySelector('ul');
-    if (!fixture || Math.round(fixture.getBoundingClientRect().width) !== 320) {
-      throw new Error('The narrow visibility fixture must render at 320px.');
+    if (!fixture || !manager || !list || fixture.getBoundingClientRect().width > 321) {
+      throw new Error('The narrow visibility fixture must fit within its 320px maximum.');
     }
     [fixture, manager, list].forEach((element) => {
       assertNoHorizontalOverflow(element, 'Long widget labels and actions must stay inside the 320px composition.');

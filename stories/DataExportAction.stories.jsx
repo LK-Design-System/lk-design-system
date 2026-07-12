@@ -79,11 +79,20 @@ export const NarrowProgressAndPermission = {
 
 function SelectionScopeFallbackDemo() {
   const [selectedCount, setSelectedCount] = React.useState(3);
+  const [formats, setFormats] = React.useState([
+    { value: 'csv', label: 'CSV' },
+    { value: 'xlsx', label: 'Excel' },
+  ]);
   const [event, setEvent] = React.useState('요청 없음');
   return (
     <main style={{ display: 'grid', gap: 'var(--space-3)', width: 'min(100%, 520px)' }}>
-      <button type="button" onClick={() => setSelectedCount(0)}>선택 해제</button>
+      <span style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+        <button type="button" onClick={() => setSelectedCount(0)}>선택 해제</button>
+        <button type="button" onClick={() => setFormats((current) => current.filter((option) => option.value !== 'csv'))}>CSV 제거</button>
+      </span>
       <DataExportAction
+        formats={formats}
+        defaultFormatValue="csv"
         defaultScopeValue="selected"
         selectedCount={selectedCount}
         totalCount={128}
@@ -95,16 +104,17 @@ function SelectionScopeFallbackDemo() {
 }
 
 export const SelectionScopeFallback = {
-  name: '사용법 · 사라진 선택 범위 복구',
+  name: '사용법 · 사라진 옵션 복구',
   parameters: storyDescription(
-    '선택된 행이 없어져 더 이상 selection scope를 사용할 수 없는 상황입니다. control이 유효한 전체 범위로 복구되고 잘못된 선택 상태로 내보내지 않는지 확인하세요.',
+    '선택된 행이나 format이 사라져 기존 선택을 더 이상 사용할 수 없는 상황입니다. control이 각각 첫 유효 옵션으로 복구되고 제거된 값으로 내보내지 않는지 확인하세요.',
   ),
   render: () => <SelectionScopeFallbackDemo />,
   play: async ({ canvasElement }) => {
     await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === '선택 해제'));
+    await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === 'CSV 제거'));
     await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.includes('내보내기')));
-    if (canvasElement.querySelector('[data-testid="scope-fallback-event"]')?.textContent?.trim() !== 'csv · currentPage') {
-      throw new Error('When selected rows disappear, export must fall back to the first valid scope.');
+    if (canvasElement.querySelector('[data-testid="scope-fallback-event"]')?.textContent?.trim() !== 'xlsx · currentPage') {
+      throw new Error('When selected rows or formats disappear, export must fall back to the first valid options.');
     }
   },
 };

@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk5Q5JDSZEcjs = require('../../chunk-5Q5JDSZE.cjs');
+var _chunkAHHYBLBLcjs = require('../../chunk-AHHYBLBL.cjs');
 
 
-exports.FacilityTransition = _chunk5Q5JDSZEcjs.FacilityTransition;
+exports.FacilityTransition = _chunkAHHYBLBLcjs.FacilityTransition;
 //# sourceMappingURL=FacilityTransition.cjs.map

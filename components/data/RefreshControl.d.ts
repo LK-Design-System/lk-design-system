@@ -14,6 +14,7 @@ export interface RefreshControlProps extends React.HTMLAttributes<HTMLDivElement
   /** 제품이 제어하는 polling interval 값. */
   autoRefreshValue?: string;
   autoRefreshOptions?: RefreshControlOption[];
+  /** 제품 polling interval 변경 callback. 생략하면 interval control은 read-only 의미로 비활성화됩니다. */
   onAutoRefreshChange?: (value: string) => void;
   autoRefreshLabel?: string;
   disabled?: boolean;

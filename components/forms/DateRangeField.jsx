@@ -1,6 +1,14 @@
 import React from 'react';
 import { DatePicker } from './DatePicker.jsx';
 
+const ORDER_ERROR_MESSAGE = '종료일은 시작일보다 빠를 수 없습니다.';
+const GENERIC_ERROR_MESSAGE = '기간 값을 확인해 주세요.';
+const DATE_PICKER_THEME_STYLE = {
+  // Resolve the surface inside the active light/dark scope. The component
+  // alias is declared at :root and otherwise retains its light value.
+  '--component-input-bg': 'var(--color-semantic-background-elevated-normal)',
+};
+
 function dateTime(value) {
   if (!value) return null;
   const parsed = value instanceof Date ? value : new Date(value);
@@ -31,7 +39,7 @@ export function DateRangeField({
   showFieldLabels = true,
   presets,
   invalid = false,
-  errorMessage = '종료일은 시작일보다 빠를 수 없습니다.',
+  errorMessage,
   size = 'sm',
   disabled = false,
   style,
@@ -48,6 +56,8 @@ export function DateRangeField({
   const endTime = dateTime(range.end);
   const orderInvalid = startTime != null && endTime != null && startTime > endTime;
   const resolvedInvalid = invalid || orderInvalid;
+  const resolvedErrorMessage = errorMessage
+    ?? (orderInvalid ? ORDER_ERROR_MESSAGE : GENERIC_ERROR_MESSAGE);
   const messageId = React.useId();
   const resolvedStartAccessibleLabel = accessibleFieldLabel(startLabel, startAccessibleLabel, '시작일');
   const resolvedEndAccessibleLabel = accessibleFieldLabel(endLabel, endAccessibleLabel, '종료일');
@@ -76,7 +86,7 @@ export function DateRangeField({
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: 'var(--space-2)', minWidth: 0 }}>
         <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
           {showFieldLabels && (
-            <span style={{ color: 'var(--component-input-label-color)', fontSize: 'var(--component-input-label-font-size)', fontWeight: 'var(--component-input-label-font-weight)', lineHeight: 'var(--component-input-label-line-height)' }}>
+            <span style={{ color: 'var(--color-semantic-label-normal)', fontSize: 'var(--component-input-label-font-size)', fontWeight: 'var(--component-input-label-font-weight)', lineHeight: 'var(--component-input-label-line-height)' }}>
               {startLabel}
             </span>
           )}
@@ -88,11 +98,12 @@ export function DateRangeField({
             size={size}
             disabled={disabled}
             full
+            style={DATE_PICKER_THEME_STYLE}
           />
         </div>
         <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
           {showFieldLabels && (
-            <span style={{ color: 'var(--component-input-label-color)', fontSize: 'var(--component-input-label-font-size)', fontWeight: 'var(--component-input-label-font-weight)', lineHeight: 'var(--component-input-label-line-height)' }}>
+            <span style={{ color: 'var(--color-semantic-label-normal)', fontSize: 'var(--component-input-label-font-size)', fontWeight: 'var(--component-input-label-font-weight)', lineHeight: 'var(--component-input-label-line-height)' }}>
               {endLabel}
             </span>
           )}
@@ -104,12 +115,13 @@ export function DateRangeField({
             size={size}
             disabled={disabled}
             full
+            style={DATE_PICKER_THEME_STYLE}
           />
         </div>
       </div>
       {resolvedInvalid && (
         <span id={messageId} role="alert" style={{ color: 'var(--color-semantic-status-negative-text)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
-          {errorMessage}
+          {resolvedErrorMessage}
         </span>
       )}
     </div>

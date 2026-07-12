@@ -628,3 +628,9 @@ export const DarkTheme = {
 // LifecycleStates and NarrowLongContent are exported inline above (near their
 // definitions) so their storyDescription() is detected by the Storybook IA
 // description audit; sidebar order is driven by the name-based storySort.
+
+export const MessageFamilyVisualParity = {
+  ...DarkTheme,
+  name: 'Conversation message family visual parity',
+  tags: ['!dev', 'visual-parity'],
+};

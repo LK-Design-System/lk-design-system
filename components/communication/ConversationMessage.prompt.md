@@ -23,6 +23,8 @@
 - 개별 메시지는 `role="log"`, `aria-live`, `role="status"`를 만들지 않습니다. 순서대로 추가되는 대화의 polite announcement는 상위 `MessageFeed`가 한 번만 소유합니다.
 - response `pending`·`streaming`·`stopping`만 article에 `aria-busy="true"`를 둡니다. `delivery: sending`을 response generation과 같은 busy 의미로 바꾸지 않습니다.
 - retry는 delivery/response `failed`에서만, stop은 response `pending`/`streaming`에서만 나타납니다. `stopping`은 busy를 유지하지만 중복 stop control을 제거합니다. callback 실행만으로 완료·취소를 추론하지 않으며 제품이 새 lifecycle prop을 전달해야 UI가 바뀝니다.
+- `groupPosition`은 연속 메시지의 radius·identity 반복만 조정합니다. `authorLabel`은 비텍스트 author의 접근 가능한 이름, `dateTime`은 machine-readable time 값이며 visible identity를 대체하지 않습니다.
+- `statusLabel`은 lifecycle 문구만 재정의합니다. `retryLabel`/`stopLabel`은 각각 `onRetry`/`onStop` 버튼의 이름이고, callback 유무나 lifecycle eligibility를 바꾸지 않습니다.
 - `complete`는 성공을 뜻하지 않으므로 녹색 success treatment를 사용하지 않고 neutral caption으로 표시합니다.
 - source data는 body 아래 같은 content column의 `SourceDisclosure`로 렌더링합니다. attachments와 추가 actions는 앱이 소유한 slot이며 ConversationMessage가 파일 모델이나 action 의미를 추론하지 않습니다.
 

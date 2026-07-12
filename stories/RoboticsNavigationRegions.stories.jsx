@@ -331,3 +331,9 @@ export const NarrowWidth = {
     if (shell.getBoundingClientRect().width > 320.5) throw new Error('Narrow region shell exceeds 320px.');
   },
 };
+
+export const SpatialRegionVisualParity = {
+  ...DarkPatternsAndStates,
+  name: 'Spatial region visual parity',
+  tags: ['!dev', 'visual-parity'],
+};

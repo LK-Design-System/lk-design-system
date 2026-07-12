@@ -18,7 +18,7 @@ const DASHBOARD_SHELL_STYLES = `
   border:2px solid var(--color-semantic-primary-normal);
   border-radius:var(--radius-md);
   background:var(--color-semantic-background-elevated-normal);
-  color:var(--color-semantic-primary-heavy);
+  color:var(--color-semantic-label-normal);
   box-shadow:var(--shadow-md);
   font-family:var(--font-sans);
   font-size:var(--label1-size);

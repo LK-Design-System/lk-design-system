@@ -24,6 +24,7 @@ Classification: **LK Product Extension**. WDS Core 축이 아니며 제품 셸 �
 
 - `TopBar`, `SideNav`, `NavRail`, `BottomNav`의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다.
 - 셸 자체는 카드, edge line, inset border, radius, shadow를 추가하지 않습니다. 배경은 기존 페이지 canvas 토큰만 사용합니다.
+- 건너뛰기 링크의 테두리는 primary 색으로 focus 위치를 알리고, 문구는 semantic label 색을 사용해 밝은·어두운 셸 배경 모두에서 본문 텍스트 대비를 유지합니다.
 - 넓은 구성은 `auto + minmax(0, 1fr)`, 좁은 구성은 단일 본문 열과 하단 탐색 행입니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다.
 - `Container`의 page margin과 최대 폭, `PageHeader`의 본문 위계, `DashboardGrid`의 카드 간격은 각각 해당 컴포넌트가 소유합니다.
 

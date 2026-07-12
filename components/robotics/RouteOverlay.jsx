@@ -79,25 +79,6 @@ function pointAlong(points, ratio) {
   return { ...points[points.length - 1], angle: 0 };
 }
 
-function interactiveBounds(points, inverseScale) {
-  if (points.length === 0) return null;
-  const xs = points.map((point) => point.x);
-  const ys = points.map((point) => point.y);
-  const minX = Math.min(...xs);
-  const maxX = Math.max(...xs);
-  const minY = Math.min(...ys);
-  const maxY = Math.max(...ys);
-  const minimum = 24 * inverseScale;
-  const width = Math.max(maxX - minX, minimum);
-  const height = Math.max(maxY - minY, minimum);
-  return {
-    x: (minX + maxX - width) / 2,
-    y: (minY + maxY - height) / 2,
-    width,
-    height,
-  };
-}
-
 function normalizedProgress(route) {
   if (!route?.progress) return undefined;
   return {
@@ -236,7 +217,6 @@ export function RouteOverlay({
         const pathData = pathFromPoints(points);
         const midpoint = pointAlong(points, 0.5);
         const directionPoint = pointAlong(points, 0.7);
-        const targetBounds = interactive ? interactiveBounds(points, inverseScale) : null;
         const segmentSelected = selected || segment.id === selectedSegmentId;
         const segmentFocused = focused || hasRootFocus || focusedSegment === segment.id;
         const condition = ['normal', 'waiting', 'blocked', 'conflict'].includes(segment.condition)
@@ -290,17 +270,6 @@ export function RouteOverlay({
             }}
             style={{ cursor: interactive && !disabled ? 'pointer' : 'default' }}
           >
-            {targetBounds && (
-              <rect
-                data-route-interactive-bounds=""
-                x={targetBounds.x}
-                y={targetBounds.y}
-                width={targetBounds.width}
-                height={targetBounds.height}
-                fill="transparent"
-                pointerEvents="none"
-              />
-            )}
             {segmentFocused && pathData && (
               <path
                 data-route-focus-ring=""
@@ -343,16 +312,27 @@ export function RouteOverlay({
               />
             )}
             {pathData && interactive && (
-              <path
-                data-route-hit-target=""
-                data-screen-target-size="24"
-                d={pathData}
-                fill="none"
-                stroke="transparent"
-                strokeWidth="24"
-                vectorEffect="non-scaling-stroke"
-                pointerEvents="stroke"
-              />
+              <>
+                <path
+                  data-route-hit-target=""
+                  data-screen-target-size="24"
+                  d={pathData}
+                  fill="none"
+                  stroke="transparent"
+                  strokeWidth="24"
+                  vectorEffect="non-scaling-stroke"
+                  pointerEvents="stroke"
+                />
+                <circle
+                  data-route-hit-target-core=""
+                  data-screen-target-size="24"
+                  cx={midpoint.x}
+                  cy={midpoint.y}
+                  r={17 * inverseScale}
+                  fill="transparent"
+                  pointerEvents="all"
+                />
+              </>
             )}
             {pathData && (
               <path
@@ -430,6 +410,33 @@ export function RouteOverlay({
           </g>
         );
       })}
+      {statusPoints.length >= 2 && [
+        invalid ? { state: 'invalid', glyph: '!', ratio: 0.82, tone: 'var(--color-semantic-status-negative-foreground)' } : null,
+        stale ? { state: 'stale', glyph: '~', ratio: invalid ? 0.9 : 0.82, tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))' } : null,
+      ].filter(Boolean).map((item) => {
+        const point = pointAlong(statusPoints, item.ratio);
+        return (
+          <g
+            key={item.state}
+            data-route-overlay-state={item.state}
+            transform={`translate(${point.x} ${point.y}) scale(${inverseScale})`}
+            aria-hidden="true"
+            pointerEvents="none"
+          >
+            <circle
+              r="7"
+              fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
+              stroke={item.tone}
+              strokeWidth="1.5"
+              strokeDasharray={item.state === 'stale' ? '2 2' : undefined}
+              vectorEffect="non-scaling-stroke"
+            />
+            <text x="0" y="3" textAnchor="middle" fill={item.tone} fontFamily="var(--font-sans)" fontSize="10" fontWeight="var(--fw-bold)">
+              {item.glyph}
+            </text>
+          </g>
+        );
+      })}
       {progressSegment && statusPoints.length >= 2 && (
         <g
           data-route-progress-marker=""
@@ -459,7 +466,7 @@ export function RouteOverlay({
           {showLabel && (
             <text
               x="0"
-              y="-13"
+              y="19"
               textAnchor="middle"
               fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
               fontFamily="var(--font-sans)"

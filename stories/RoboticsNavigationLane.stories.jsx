@@ -245,6 +245,10 @@ export const LaneSelectionAndActivation = {
     if (!enabled || enabled.getAttribute('role') !== 'button' || !enabled.getAttribute('aria-label')?.includes('검사할 레인')) {
       throw new Error('Interactive lane needs a button role and useful accessible name.');
     }
+    const hitCore = enabled.querySelector('[data-lane-hit-target-core]');
+    if (!hitCore || Number(hitCore.getAttribute('r')) * Math.SQRT2 < 24) {
+      throw new Error('Interactive lane needs a midpoint target that contains 24×24 CSS px.');
+    }
     enabled.dispatchEvent(new view.MouseEvent('click', { bubbles: true, cancelable: true }));
     await nextRender();
     enabled.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
@@ -292,4 +296,10 @@ export const LaneNarrow320 = {
       throw new Error('Narrow visual clipping must not remove lane state from the accessible name.');
     }
   },
+};
+
+export const LaneVisualParity = {
+  ...LaneStatesAndConstraints,
+  name: 'Lane overlay visual parity',
+  tags: ['!dev', 'visual-parity'],
 };

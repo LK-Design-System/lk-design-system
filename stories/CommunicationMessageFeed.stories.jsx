@@ -162,6 +162,9 @@ export const HistoryAnchoring = {
     await userEvent.click(loadButton);
     await waitFor(() => {
       if (log.getAttribute('aria-busy') !== 'true') throw new Error('History loading must mark the log busy.');
+      if (log.getAttribute('aria-live') !== 'off' || log.dataset.historyLiveSuppressed !== 'true') {
+        throw new Error('Prepending old history must temporarily suppress new-message announcements.');
+      }
     });
     await waitFor(() => {
       if (!canvasElement.querySelector('[data-message-key="older-13"]')) throw new Error('Older messages have not been prepended.');
@@ -181,6 +184,11 @@ export const HistoryAnchoring = {
         : null;
       if (afterTop === null || Math.abs(afterTop - beforeTop) > 2) {
         throw new Error('The previously visible message must stay at the same visual position.');
+      }
+    });
+    await waitFor(() => {
+      if (log.getAttribute('aria-live') !== 'polite' || log.dataset.historyLiveSuppressed) {
+        throw new Error('The log must restore polite announcements after history anchoring settles.');
       }
     });
   },
@@ -334,6 +342,36 @@ export const EmptyAndBusy = {
     }
     if (!phaseStatus || phaseStatus.getAttribute('role') !== 'status' || busyLog.contains(phaseStatus)) {
       throw new Error('Phase announcements must use a separate status region outside the log.');
+    }
+  },
+};
+
+export const DarkTheme = {
+  name: '변형·상태 · 다크 테마',
+  parameters: storyDescription(
+    '같은 named log, 시간순 행, divider와 scroll surface를 dark semantic theme에서 확인합니다. 별도 inverse prop이나 console형 surface를 만들지 않습니다.',
+  ),
+  render: () => (
+    <main
+      data-theme="dark"
+      data-dark-feed
+      style={{ width: '100%', maxWidth: 720, padding: 'var(--space-5)', boxSizing: 'border-box', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-normal-normal)' }}
+    >
+      <MessageFeed ariaLabel="다크 운영 지원 대화" following maxHeight={280}>
+        <MessageRows messages={messageData('dark', 5)} />
+      </MessageFeed>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const theme = canvasElement.querySelector('[data-dark-feed]');
+    const log = theme?.querySelector('[role="log"]');
+    const rows = log ? Array.from(log.querySelectorAll('article')) : [];
+    if (!theme || !log || rows.length !== 5) throw new Error('The dark MessageFeed comparison is incomplete.');
+    if (theme.scrollWidth > theme.clientWidth + 1 || log.scrollWidth > log.clientWidth + 1) {
+      throw new Error('The dark MessageFeed must not create horizontal overflow.');
+    }
+    if (getComputedStyle(log).backgroundColor === getComputedStyle(theme).backgroundColor) {
+      throw new Error('The elevated log surface must remain distinct from the dark page background.');
     }
   },
 };

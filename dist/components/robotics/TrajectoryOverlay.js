@@ -1,7 +1,7 @@
 "use client";
 import {
   TrajectoryOverlay
-} from "../../chunk-BCKOUSVG.js";
+} from "../../chunk-IC6I45CT.js";
 export {
   TrajectoryOverlay
 };

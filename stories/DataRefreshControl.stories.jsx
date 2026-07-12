@@ -76,5 +76,7 @@ export const RefreshingNarrow = {
   play: async ({ canvasElement }) => {
     const wrapper = canvasElement.querySelector('[data-testid="narrow-refresh"]');
     if (!wrapper || wrapper.scrollWidth > wrapper.clientWidth + 1) throw new Error('RefreshControl must wrap without horizontal overflow at 320px.');
+    const interval = [...canvasElement.querySelectorAll('button')].find((button) => button.getAttribute('aria-label') === '자동 새로고침 간격');
+    if (!interval?.disabled) throw new Error('An auto-refresh control without a change callback must not remain interactive.');
   },
 };

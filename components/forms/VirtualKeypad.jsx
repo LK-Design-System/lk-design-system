@@ -112,6 +112,16 @@ export function VirtualKeypad({
     },
   };
 
+  const editButtonStyle = (buttonDisabled) => ({
+    ...commonButtonProps.style,
+    // Button's ghost foreground alias is resolved at :root. Resolve the
+    // semantic foreground locally so edit keys remain legible in dark scopes,
+    // while preserving the disabled foreground contract.
+    color: buttonDisabled
+      ? 'var(--color-semantic-label-disable)'
+      : 'var(--color-semantic-label-normal)',
+  });
+
   const renderDigit = (digit) => (
     <Button
       {...commonButtonProps}
@@ -180,6 +190,7 @@ export function VirtualKeypad({
           variant="ghost"
           aria-label={signLabel}
           disabled={changeUnavailable || (!currentValue.startsWith('-') && !canGrow)}
+          style={editButtonStyle(changeUnavailable || (!currentValue.startsWith('-') && !canGrow))}
           data-keypad-action="sign"
           data-keypad-key="-"
           onClick={toggleSign}
@@ -195,6 +206,7 @@ export function VirtualKeypad({
           {...commonButtonProps}
           variant="ghost"
           disabled={changeUnavailable || currentValue.includes('.') || !canGrow}
+          style={editButtonStyle(changeUnavailable || currentValue.includes('.') || !canGrow)}
           data-keypad-action="decimal"
           data-keypad-key="."
           onClick={insertDecimal}
@@ -208,6 +220,7 @@ export function VirtualKeypad({
         variant="ghost"
         aria-label={clearLabel}
         disabled={changeUnavailable || currentValue.length === 0}
+        style={editButtonStyle(changeUnavailable || currentValue.length === 0)}
         data-keypad-action="clear"
         data-keypad-key="Clear"
         onClick={() => commit('', { action: 'clear', key: 'Clear' })}
@@ -220,6 +233,7 @@ export function VirtualKeypad({
         variant="ghost"
         aria-label={backspaceLabel}
         disabled={changeUnavailable || currentValue.length === 0}
+        style={editButtonStyle(changeUnavailable || currentValue.length === 0)}
         data-keypad-action="backspace"
         data-keypad-key="Backspace"
         onClick={() => commit(currentValue.slice(0, -1), { action: 'backspace', key: 'Backspace' })}

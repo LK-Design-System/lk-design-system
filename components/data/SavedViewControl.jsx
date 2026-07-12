@@ -82,7 +82,7 @@ export function SavedViewControl({
           id={labelId}
           htmlFor={controlId}
           style={{
-            color: 'var(--component-input-label-color)',
+            color: 'var(--color-semantic-label-normal)',
             fontSize: 'var(--component-input-label-font-size)',
             lineHeight: 'var(--component-input-label-line-height)',
             fontWeight: 'var(--component-input-label-font-weight)',

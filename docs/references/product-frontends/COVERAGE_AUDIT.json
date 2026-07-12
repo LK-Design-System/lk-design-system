@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-07-10",
+  "auditedAt": "2026-07-12",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -16,8 +16,8 @@
     "verified": "Source requirements, wireframe, implementation stories, and interaction verification are traceably connected."
   },
   "summary": {
-    "discovered": 1,
-    "wireframed": 0,
+    "discovered": 0,
+    "wireframed": 1,
     "implemented": 0,
     "verified": 14
   },
@@ -1686,11 +1686,30 @@
           "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
         }
       ],
-      "stage": "discovered",
-      "wireframeEvidence": [],
-      "implementationEvidence": [],
-      "storyEvidence": [],
-      "verificationEvidence": []
+      "stage": "wireframed",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-15-map-navigation-and-facility-authoring"
+      ],
+      "implementationEvidence": [
+        "components/robotics/WaypointMarker.jsx",
+        "components/robotics/LaneOverlay.jsx",
+        "components/robotics/RouteOverlay.jsx",
+        "components/robotics/TrajectoryOverlay.jsx",
+        "components/robotics/SpatialRegion.jsx",
+        "components/robotics/FacilityTransition.jsx"
+      ],
+      "storyEvidence": [
+        "stories/RoboticsNavigationWaypoint.stories.jsx",
+        "stories/RoboticsNavigationLane.stories.jsx",
+        "stories/RoboticsNavigationRouteTrajectory.stories.jsx",
+        "stories/RoboticsNavigationRegions.stories.jsx",
+        "stories/RoboticsNavigationFacilities.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "scripts/check-api-drift.mjs",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
     }
   ]
 }

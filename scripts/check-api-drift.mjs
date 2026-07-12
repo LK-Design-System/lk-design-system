@@ -78,23 +78,39 @@ function implementationExports(source, rel) {
   return exports;
 }
 
-function typeContracts(source, rel) {
+function typeContracts(source, rel, absolutePath) {
   const file = ts.createSourceFile(rel, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const interfaces = new Map();
   const aliases = new Map();
   const functions = new Map();
+  const imports = new Map();
 
   for (const node of file.statements) {
     if (ts.isInterfaceDeclaration(node)) {
-      interfaces.set(node.name.text, node.members
-        .filter(ts.isPropertySignature)
-        .map((member) => member.name?.text)
-        .filter(Boolean));
-    } else if (ts.isTypeAliasDeclaration(node) && ts.isTypeLiteralNode(node.type)) {
-      aliases.set(node.name.text, node.type.members
-        .filter(ts.isPropertySignature)
-        .map((member) => member.name?.text)
-        .filter(Boolean));
+      interfaces.set(node.name.text, {
+        props: node.members
+          .filter(ts.isPropertySignature)
+          .map((member) => member.name?.text)
+          .filter(Boolean),
+        extends: (node.heritageClauses || [])
+          .flatMap((clause) => clause.types)
+          .map((type) => ts.isIdentifier(type.expression) ? type.expression.text : null)
+          .filter(Boolean),
+      });
+    } else if (ts.isTypeAliasDeclaration(node)) {
+      aliases.set(node.name.text, node.type);
+    } else if (
+      ts.isImportDeclaration(node)
+      && ts.isStringLiteral(node.moduleSpecifier)
+      && node.importClause?.namedBindings
+      && ts.isNamedImports(node.importClause.namedBindings)
+    ) {
+      for (const specifier of node.importClause.namedBindings.elements) {
+        imports.set(specifier.name.text, {
+          importedName: specifier.propertyName?.text || specifier.name.text,
+          moduleSpecifier: node.moduleSpecifier.text,
+        });
+      }
     } else if (ts.isFunctionDeclaration(node) && node.name && node.parameters[0]?.type) {
       const type = node.parameters[0].type;
       if (ts.isTypeReferenceNode(type) && ts.isIdentifier(type.typeName)) {
@@ -102,7 +118,66 @@ function typeContracts(source, rel) {
       }
     }
   }
-  return { interfaces, aliases, functions };
+  return { absolutePath, interfaces, aliases, functions, imports };
+}
+
+function resolveDtsImport(fromPath, moduleSpecifier) {
+  if (!moduleSpecifier.startsWith('.')) return null;
+  const absolute = path.resolve(path.dirname(fromPath), moduleSpecifier);
+  const withoutJs = absolute.replace(/\.js$/, '');
+  return path.normalize(withoutJs.endsWith('.d.ts') ? withoutJs : `${withoutJs}.d.ts`);
+}
+
+function resolveTypeNodeProps(registry, filePath, typeNode, seen) {
+  if (ts.isTypeLiteralNode(typeNode)) {
+    return typeNode.members
+      .filter(ts.isPropertySignature)
+      .map((member) => member.name?.text)
+      .filter(Boolean);
+  }
+  if (ts.isParenthesizedTypeNode(typeNode)) {
+    return resolveTypeNodeProps(registry, filePath, typeNode.type, seen);
+  }
+  if (ts.isIntersectionTypeNode(typeNode) || ts.isUnionTypeNode(typeNode)) {
+    return typeNode.types.flatMap((type) => resolveTypeNodeProps(registry, filePath, type, seen));
+  }
+  if (ts.isTypeReferenceNode(typeNode) && ts.isIdentifier(typeNode.typeName)) {
+    return resolveContractProps(registry, filePath, typeNode.typeName.text, seen);
+  }
+  return [];
+}
+
+function resolveContractProps(registry, filePath, contractName, seen = new Set()) {
+  const normalizedPath = path.normalize(filePath);
+  const key = `${normalizedPath}#${contractName}`;
+  if (seen.has(key)) return [];
+  seen.add(key);
+
+  const contract = registry.get(normalizedPath);
+  if (!contract) return [];
+  if (contract.aliases.has(contractName)) {
+    return [...new Set(resolveTypeNodeProps(
+      registry,
+      normalizedPath,
+      contract.aliases.get(contractName),
+      seen,
+    ))];
+  }
+
+  const declaration = contract.interfaces.get(contractName);
+  if (!declaration) return [];
+  const inherited = declaration.extends.flatMap((parentName) => {
+    if (contract.interfaces.has(parentName)) {
+      return resolveContractProps(registry, normalizedPath, parentName, seen);
+    }
+    const imported = contract.imports.get(parentName);
+    if (!imported) return [];
+    const importedPath = resolveDtsImport(normalizedPath, imported.moduleSpecifier);
+    return importedPath
+      ? resolveContractProps(registry, importedPath, imported.importedName, seen)
+      : [];
+  });
+  return [...new Set([...declaration.props, ...inherited])];
 }
 
 function wordsMentioned(text, names) {
@@ -117,6 +192,14 @@ function normalize(record) {
 }
 
 const jsxFiles = await collect(path.join(root, 'components'), '.jsx');
+const dtsFiles = await collect(path.join(root, 'components'), '.d.ts');
+const typeRegistry = new Map();
+for (const dtsPath of dtsFiles) {
+  const normalizedPath = path.normalize(dtsPath);
+  const rel = path.relative(root, dtsPath).replaceAll('\\', '/');
+  const source = await readFile(dtsPath, 'utf8');
+  typeRegistry.set(normalizedPath, typeContracts(source, rel, normalizedPath));
+}
 const findings = {};
 let analyzableExports = 0;
 
@@ -125,29 +208,30 @@ for (const jsxPath of jsxFiles) {
   const base = jsxPath.slice(0, -4);
   const dtsPath = `${base}.d.ts`;
   const promptPath = `${base}.prompt.md`;
-  const [jsx, dts, prompt] = await Promise.all([
+  const [jsx, prompt] = await Promise.all([
     readFile(jsxPath, 'utf8'),
-    readFile(dtsPath, 'utf8'),
     readFile(promptPath, 'utf8').catch(() => ''),
   ]);
   const implementations = implementationExports(jsx, rel);
-  const contracts = typeContracts(dts, rel.replace(/\.jsx$/, '.d.ts'));
+  const contracts = typeRegistry.get(path.normalize(dtsPath));
 
   for (const [exportName, props] of implementations) {
     if (!props) continue;
     const contractName = contracts.functions.get(exportName);
     if (!contractName) continue;
-    const declared = contracts.interfaces.get(contractName) || contracts.aliases.get(contractName);
+    const declared = resolveContractProps(typeRegistry, dtsPath, contractName);
     if (!declared) continue;
     analyzableExports += 1;
 
     const implementationProps = props.filter((name) => !isInherited(name));
     const declaredProps = declared.filter((name) => !isInherited(name));
+    const directDeclaration = contracts.interfaces.get(contractName);
+    const documentedProps = (directDeclaration?.props || declaredProps).filter((name) => !isInherited(name));
     const key = `${rel}#${exportName}`;
     findings[key] = normalize({
       missingInTypes: implementationProps.filter((name) => !declaredProps.includes(name)),
       missingInImplementation: declaredProps.filter((name) => !implementationProps.includes(name)),
-      undocumentedProps: wordsMentioned(prompt, declaredProps),
+      undocumentedProps: wordsMentioned(prompt, documentedProps),
     });
     if (Object.keys(findings[key]).length === 0) delete findings[key];
   }

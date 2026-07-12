@@ -176,14 +176,14 @@ export function WaypointMarker({
         {/*
           WCAG 2.2 sets the minimum interactive target at 24 screen px. This
           transparent hit circle lives inside the inverse-scaled screen-space
-          group, so its radius is already measured in screen px. Render it at
-          26 px (r=13) rather than exactly 24 so sub-pixel rounding never drops
-          the measured target below 24 at any world scale (0.5 / 1 / 2).
+          group, so its radius is already measured in screen px. A circle must
+          be at least 24*sqrt(2) across to contain a 24 by 24 CSS px square, so
+          r=17.5 leaves enough rendering tolerance for the required square.
         */}
         <circle
           data-waypoint-hit-area=""
           data-screen-target-size="24"
-          r="13"
+          r="17.5"
           fill="transparent"
           pointerEvents={interactive ? 'all' : 'none'}
         />

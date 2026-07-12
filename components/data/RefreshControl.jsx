@@ -26,6 +26,8 @@ export function RefreshControl({
 }) {
   const reasonId = React.useId();
   const unavailable = disabled || refreshing;
+  const refreshDisabled = disabled || typeof onRefresh !== 'function';
+  const autoRefreshDisabled = disabled || typeof onAutoRefreshChange !== 'function';
 
   return (
     <div
@@ -41,7 +43,8 @@ export function RefreshControl({
         variant="ghost"
         loading={refreshing}
         loadingLabel={`${refreshLabel} 중`}
-        disabled={disabled}
+        disabled={refreshDisabled}
+        style={{ color: refreshDisabled || refreshing ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
         onClick={unavailable ? undefined : onRefresh}
         aria-describedby={disabled && unavailableReason ? reasonId : undefined}
       >
@@ -55,7 +58,7 @@ export function RefreshControl({
           onChange={onAutoRefreshChange}
           options={autoRefreshOptions}
           size={size}
-          disabled={disabled}
+          disabled={autoRefreshDisabled}
           aria-label={autoRefreshLabel}
           style={{ width: 150 }}
         />

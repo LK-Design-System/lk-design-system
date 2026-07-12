@@ -303,6 +303,10 @@ export const InteractionAndMapFiltering = {
     if (disabled.tabIndex !== -1 || disabled.getAttribute('aria-disabled') !== 'true') {
       throw new Error('Disabled transition must override consumer tabIndex and expose aria-disabled.');
     }
+    const hitArea = active.querySelector('[data-transition-hit-area]');
+    if (!hitArea || Number(hitArea.getAttribute('r')) * Math.SQRT2 < 24) {
+      throw new Error('Interactive facility transition needs a circular target containing 24×24 CSS px.');
+    }
 
     const view = canvasElement.ownerDocument.defaultView;
     active.dispatchEvent(new view.MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -363,4 +367,10 @@ export const NarrowWidth = {
     }
     if (shell.getBoundingClientRect().width > 320.5) throw new Error('Narrow facility shell exceeds 320px.');
   },
+};
+
+export const FacilityTransitionVisualParity = {
+  ...AvailabilityAndSourceStates,
+  name: 'Facility transition visual parity',
+  tags: ['!dev', 'visual-parity'],
 };

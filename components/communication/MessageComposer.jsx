@@ -348,7 +348,8 @@ export function MessageComposer({
             minHeight: minimumHeight,
             maxHeight: maximumHeight,
             height: minimumHeight,
-            padding: '11px var(--space-2)',
+            // A 1px optical inset centers the 22px line box in the 44px field.
+            padding: 'calc(var(--space-3) - 1px) var(--space-2)',
             boxSizing: 'border-box',
             resize: 'none',
             overflowX: 'hidden',

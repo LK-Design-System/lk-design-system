@@ -20,6 +20,8 @@
 - `canSubmit`이 생략되면 공백을 제외한 값이 있을 때만 제출합니다. `readOnly`는 focus와 복사를 유지하지만 편집·제출을 막습니다.
 - `disabled: true`에는 `disabledReason`이 타입과 런타임 모두에서 필수입니다. 이유는 attachment와 control보다 먼저 렌더되고 textarea의 `aria-describedby`에 연결됩니다.
 - attachment preview는 control row 앞의 `attachments` slot에 둡니다. `attachmentAction`과 `secondaryActions`는 32px `IconButton` 계열을 사용하는 utility slot입니다.
+- `formLabel`과 `inputLabel`은 form/textarea의 접근 가능한 이름이며 visible description을 대신하지 않습니다. `statusLabel`은 non-idle phase 문구만 재정의합니다.
+- `submitLabel`과 `stopLabel`은 동일 trailing control 위치에서 현재 action을 이름 붙입니다. `maxLength`는 native limit와 visible counter를 함께 제공하고, `textareaProps`는 controlled 계약이 소유하지 않는 native textarea 속성만 전달합니다.
 
 ## Keyboard와 IME
 

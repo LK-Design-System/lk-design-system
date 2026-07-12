@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-12",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "98ef027cb79cf056606245042287e772aa125d56f7af8a4f22bb89d6a2b16c02",
+    "storybookIndexSha256": "56bc4533574a5d75f0145f0c86bb0888773d02b4f3e639bc3aa08461808ecb3b",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -60,26 +60,26 @@
   },
   "summary": {
     "pages": 177,
-    "stories": 516,
-    "publicStories": 397,
-    "hiddenStories": 119,
+    "stories": 524,
+    "publicStories": 398,
+    "hiddenStories": 126,
     "componentDescriptions": 173,
     "pagesWithVisibleCanvasIntroduction": 177,
     "pagesWithDecisionGuidance": 172,
-    "describedPublicStories": 397,
+    "describedPublicStories": 398,
     "reviewedPages": 177,
-    "reviewedStories": 516,
+    "reviewedStories": 524,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 170,
       "usage": 21,
-      "variants-states": 74,
+      "variants-states": 75,
       "interaction": 46,
       "responsive": 51,
       "scenario": 25,
-      "visual-parity": 82,
+      "visual-parity": 89,
       "internal-contract": 37
     },
     "dispositions": {
@@ -105,16 +105,16 @@
       },
       "Product": {
         "pages": 86,
-        "stories": 234,
-        "public": 202,
-        "hidden": 32,
+        "stories": 237,
+        "public": 203,
+        "hidden": 34,
         "guideReadyPages": 86
       },
       "Robotics": {
         "pages": 29,
-        "stories": 119,
+        "stories": 124,
         "public": 100,
-        "hidden": 19,
+        "hidden": 24,
         "guideReadyPages": 29
       },
       "Theme": {
@@ -6321,7 +6321,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "9fa1300edadab99f555331a30c3c5891a1a7582114359ceddbcba4dcaa3428c9",
+      "sourceSha256": "4749944f1d925d9b8666618f58fb7062d476eb168a540ac4a5ce6b33cc3f14eb",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -6334,7 +6334,7 @@
       ],
       "visibility": {
         "public": 6,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -6350,7 +6350,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "9fa1300edadab99f555331a30c3c5891a1a7582114359ceddbcba4dcaa3428c9",
+      "reviewedSourceSha256": "4749944f1d925d9b8666618f58fb7062d476eb168a540ac4a5ce6b33cc3f14eb",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6496,6 +6496,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-communication-message--message-family-visual-parity",
+          "name": "Conversation message family visual parity",
+          "exportName": "MessageFamilyVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 normal, narrow, and dark rendered states reviewed; hidden regression evidence confirmed."
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
@@ -6690,7 +6712,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageFeed.stories.jsx",
-      "sourceSha256": "27aa5dc3fecec534348468016e763abad44a9cdc238ff5c60b0f141f4868c8a0",
+      "sourceSha256": "e1006de6e871f02057c92ad00c7fd09d7e55b0e88f0b507404c9bf1800723625",
       "primaryOwner": "MessageFeed",
       "ownerComponents": [
         "MessageFeed"
@@ -6700,13 +6722,13 @@
         "Spinner"
       ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message-feed--overview",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -6717,7 +6739,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "27aa5dc3fecec534348468016e763abad44a9cdc238ff5c60b0f141f4868c8a0",
+      "reviewedSourceSha256": "e1006de6e871f02057c92ad00c7fd09d7e55b0e88f0b507404c9bf1800723625",
       "stories": [
         {
           "id": "lds-product-communication-message-feed--overview",
@@ -6741,6 +6763,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-communication-message-feed--dark-theme",
+          "name": "변형·상태 · 다크 테마",
+          "exportName": "DarkTheme",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MessageFeed"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 reviewed against WAI-ARIA log/feed guidance and Carbon AI Chat lifecycle evidence; history live-announcement suppression plus normal, 320px, and dark rendered states were verified."
         },
         {
           "id": "lds-product-communication-message-feed--empty-and-busy",
@@ -8588,7 +8633,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataExportAction.stories.jsx",
-      "sourceSha256": "2816138c6d12c8bf55d229cc786d28acbf1250a8376cd207cce93ddde7549518",
+      "sourceSha256": "d2c9090738e7a770f1dcffe2baad179373e50f4066bb8fed047d26085bf706c3",
       "primaryOwner": "DataExportAction",
       "ownerComponents": [
         "DataExportAction"
@@ -8612,7 +8657,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "2816138c6d12c8bf55d229cc786d28acbf1250a8376cd207cce93ddde7549518",
+      "reviewedSourceSha256": "d2c9090738e7a770f1dcffe2baad179373e50f4066bb8fed047d26085bf706c3",
       "stories": [
         {
           "id": "lds-product-data-operations-export-action--controlled-export",
@@ -8639,7 +8684,7 @@
         },
         {
           "id": "lds-product-data-operations-export-action--selection-scope-fallback",
-          "name": "사용법 · 사라진 선택 범위 복구",
+          "name": "사용법 · 사라진 옵션 복구",
           "exportName": "SelectionScopeFallback",
           "visibility": "public",
           "tags": [
@@ -8691,7 +8736,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataFilterBar.stories.jsx",
-      "sourceSha256": "3bc6d1a011fd7331c98751e57d23bf29798441c9ff478cbb866d88ebd6069945",
+      "sourceSha256": "00c34bda22483890e9e86ebd086c838af3666877ee155f9f6d224e8d5c54aaf2",
       "primaryOwner": "FilterBar",
       "ownerComponents": [
         "FilterBar"
@@ -8720,7 +8765,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "3bc6d1a011fd7331c98751e57d23bf29798441c9ff478cbb866d88ebd6069945",
+      "reviewedSourceSha256": "00c34bda22483890e9e86ebd086c838af3666877ee155f9f6d224e8d5c54aaf2",
       "stories": [
         {
           "id": "lds-product-data-operations-filter-bar--applied-filters-and-saved-view",
@@ -8809,7 +8854,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataRefreshControl.stories.jsx",
-      "sourceSha256": "c8e0e75df163faa1b55200d737235d7547f1aec5d9bafe0965da6570b5bbc787",
+      "sourceSha256": "1413384891c6dfed8a8d28c4ce2179d36ff0b4eb656b8c57d2a6dc1de1c42e40",
       "primaryOwner": "RefreshControl",
       "ownerComponents": [
         "RefreshControl"
@@ -8833,7 +8878,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "c8e0e75df163faa1b55200d737235d7547f1aec5d9bafe0965da6570b5bbc787",
+      "reviewedSourceSha256": "1413384891c6dfed8a8d28c4ce2179d36ff0b4eb656b8c57d2a6dc1de1c42e40",
       "stories": [
         {
           "id": "lds-product-data-operations-refresh-control--controlled-refresh",
@@ -8889,7 +8934,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataSavedView.stories.jsx",
-      "sourceSha256": "c8c531561b792415acf320e81a73d09dc1b0eed8812d8abf58f40299d3b9225b",
+      "sourceSha256": "b5e90bb051c482a6d73a8302917abfd2a68c01eff9ba39a87549601054469251",
       "primaryOwner": "SavedViewControl",
       "ownerComponents": [
         "SavedViewControl"
@@ -8913,7 +8958,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "c8c531561b792415acf320e81a73d09dc1b0eed8812d8abf58f40299d3b9225b",
+      "reviewedSourceSha256": "b5e90bb051c482a6d73a8302917abfd2a68c01eff9ba39a87549601054469251",
       "stories": [
         {
           "id": "lds-product-data-operations-saved-view--saved-view-actions",
@@ -8992,7 +9037,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataVisibilityManager.stories.jsx",
-      "sourceSha256": "b9b7b4d77f33761a73efa44a52663cdadba897600f4e2b8dbb0778f673dd2c43",
+      "sourceSha256": "4ea642f8ffcc954333a5060aa047b464203bb374dfc5acf9a9329b368cd67a25",
       "primaryOwner": "VisibilityManager",
       "ownerComponents": [
         "VisibilityManager"
@@ -9016,7 +9061,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "b9b7b4d77f33761a73efa44a52663cdadba897600f4e2b8dbb0778f673dd2c43",
+      "reviewedSourceSha256": "4ea642f8ffcc954333a5060aa047b464203bb374dfc5acf9a9329b368cd67a25",
       "stories": [
         {
           "id": "lds-product-data-operations-visibility-manager--visibility-and-order",
@@ -10072,7 +10117,7 @@
       "layer": "Product",
       "family": "Layout",
       "importPath": "./stories/LayoutDashboardShell.stories.jsx",
-      "sourceSha256": "55c1003c14f584184bd5c6ce51bcbf002be3bd46252a3883a6568ca2170185b9",
+      "sourceSha256": "41ebafc64dfd4d5d29e3ed038f997ad3ba060bf7b76d72c76d50b1c5c2d26852",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"
@@ -10103,7 +10148,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "55c1003c14f584184bd5c6ce51bcbf002be3bd46252a3883a6568ca2170185b9",
+      "reviewedSourceSha256": "41ebafc64dfd4d5d29e3ed038f997ad3ba060bf7b76d72c76d50b1c5c2d26852",
       "stories": [
         {
           "id": "lds-product-layout-dashboard-shell--normal-width",
@@ -13898,7 +13943,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionVirtualKeypad.stories.jsx",
-      "sourceSha256": "fa36bd62cbe4ea3c63fb70bafea00218a2669a6d9fb6c59f09e76acfc9e93a90",
+      "sourceSha256": "abe07647f72a4dac6bac6a4a2fd78b8b4bfb65ed84e9e2778b8ee2484422532c",
       "primaryOwner": "VirtualKeypad",
       "ownerComponents": [
         "VirtualKeypad"
@@ -13908,7 +13953,7 @@
       ],
       "visibility": {
         "public": 6,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -13924,7 +13969,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "fa36bd62cbe4ea3c63fb70bafea00218a2669a6d9fb6c59f09e76acfc9e93a90",
+      "reviewedSourceSha256": "abe07647f72a4dac6bac6a4a2fd78b8b4bfb65ed84e9e2778b8ee2484422532c",
       "stories": [
         {
           "id": "lds-product-selection-and-input-virtual-keypad--virtual-keypad-overview",
@@ -14075,6 +14120,28 @@
             "Input"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-selection-and-input-virtual-keypad--virtual-keypad-visual-parity",
+          "name": "Virtual keypad visual parity",
+          "exportName": "VirtualKeypadVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VirtualKeypad"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 normal, narrow, landscape, disabled, and dark rendered states reviewed; hidden regression evidence confirmed."
         }
       ],
       "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
@@ -16006,7 +16073,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationFacilities.stories.jsx",
-      "sourceSha256": "bc928b4a6dc58f3b8e19c53508f10f0c20c4c09fe6126ad48a4d5ad12cb6c597",
+      "sourceSha256": "e0903703aa44528a98147f26f9a422bcba53597407766f16aae008dfe25af7c7",
       "primaryOwner": "FacilityTransition",
       "ownerComponents": [
         "FacilityTransition"
@@ -16017,7 +16084,7 @@
       ],
       "visibility": {
         "public": 4,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -16033,7 +16100,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "bc928b4a6dc58f3b8e19c53508f10f0c20c4c09fe6126ad48a4d5ad12cb6c597",
+      "reviewedSourceSha256": "e0903703aa44528a98147f26f9a422bcba53597407766f16aae008dfe25af7c7",
       "stories": [
         {
           "id": "lds-robotics-navigation-facility-transition--facility-transition-overview",
@@ -16135,6 +16202,28 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-facility-transition--facility-transition-visual-parity",
+          "name": "Facility transition visual parity",
+          "exportName": "FacilityTransitionVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FacilityTransition"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 normal, narrow, source, and availability states reviewed; hidden regression evidence confirmed."
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
@@ -16144,7 +16233,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationLane.stories.jsx",
-      "sourceSha256": "36ce21c7a63f2a0cf10af107785cc864bb3f3cc04d06786461c608254b547f0d",
+      "sourceSha256": "1297e98429debead89e184169f36e2d7f1630396469f6394af621d58da3da207",
       "primaryOwner": "LaneOverlay",
       "ownerComponents": [
         "LaneOverlay"
@@ -16155,7 +16244,7 @@
       ],
       "visibility": {
         "public": 4,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -16171,7 +16260,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "36ce21c7a63f2a0cf10af107785cc864bb3f3cc04d06786461c608254b547f0d",
+      "reviewedSourceSha256": "1297e98429debead89e184169f36e2d7f1630396469f6394af621d58da3da207",
       "stories": [
         {
           "id": "lds-robotics-navigation-lane--lane-overview",
@@ -16273,6 +16362,28 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-lane--lane-visual-parity",
+          "name": "Lane overlay visual parity",
+          "exportName": "LaneVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LaneOverlay"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 normal, narrow, selection, disabled, and constraint states reviewed; hidden regression evidence confirmed."
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
@@ -16282,7 +16393,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRegions.stories.jsx",
-      "sourceSha256": "b9412eb1931afb64cb7d6e01723a4bdd706a2b831379c11b5ccbb05767b433eb",
+      "sourceSha256": "e3ae46e15a68ebf21ccac0b681845e7dba81d4abe094133a99305a622f977e9a",
       "primaryOwner": "SpatialRegion",
       "ownerComponents": [
         "SpatialRegion"
@@ -16292,7 +16403,7 @@
       ],
       "visibility": {
         "public": 4,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -16308,7 +16419,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "b9412eb1931afb64cb7d6e01723a4bdd706a2b831379c11b5ccbb05767b433eb",
+      "reviewedSourceSha256": "e3ae46e15a68ebf21ccac0b681845e7dba81d4abe094133a99305a622f977e9a",
       "stories": [
         {
           "id": "lds-robotics-navigation-regions--spatial-region-overview",
@@ -16408,6 +16519,28 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-regions--spatial-region-visual-parity",
+          "name": "Spatial region visual parity",
+          "exportName": "SpatialRegionVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SpatialRegion"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 normal, narrow, dark, and pattern states reviewed; hidden regression evidence confirmed."
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
@@ -16417,7 +16550,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRouteTrajectory.stories.jsx",
-      "sourceSha256": "787fd2490c02b5325b7feb5785caf7ab2cd68757659df7df426a20e678216d09",
+      "sourceSha256": "12dba9e198cbe8399c1a63864489e80adc08c9147b3cd78a33c0084a4555d81e",
       "primaryOwner": "RouteOverlay",
       "ownerComponents": [
         "RouteOverlay"
@@ -16436,7 +16569,7 @@
       ],
       "visibility": {
         "public": 6,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -16452,7 +16585,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "787fd2490c02b5325b7feb5785caf7ab2cd68757659df7df426a20e678216d09",
+      "reviewedSourceSha256": "12dba9e198cbe8399c1a63864489e80adc08c9147b3cd78a33c0084a4555d81e",
       "stories": [
         {
           "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-overview",
@@ -16617,6 +16750,28 @@
             "TrajectoryOverlay"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-route-and-trajectory--route-trajectory-visual-parity",
+          "name": "Route and trajectory visual parity",
+          "exportName": "RouteTrajectoryVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "RouteOverlay"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 normal, narrow, progress, invalid, stale, and selection states reviewed; hidden regression evidence confirmed."
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after audience naming/description normalization; verified via targeted Storybook play/axe."
@@ -16626,7 +16781,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationWaypoint.stories.jsx",
-      "sourceSha256": "27c79c4e3a1f346554d394c8fe49f4be7f19e783224933e2328976456e26f2d5",
+      "sourceSha256": "d46083b20217da8ddd2f08886a6cb96011807dfa8b0cd5b816b435c6aa677d5a",
       "primaryOwner": "WaypointMarker",
       "ownerComponents": [
         "WaypointMarker"
@@ -16637,7 +16792,7 @@
       ],
       "visibility": {
         "public": 5,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -16653,7 +16808,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "27c79c4e3a1f346554d394c8fe49f4be7f19e783224933e2328976456e26f2d5",
+      "reviewedSourceSha256": "d46083b20217da8ddd2f08886a6cb96011807dfa8b0cd5b816b435c6aa677d5a",
       "stories": [
         {
           "id": "lds-robotics-navigation-waypoint--overview",
@@ -16778,6 +16933,28 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-waypoint--waypoint-visual-parity",
+          "name": "Waypoint visual parity",
+          "exportName": "WaypointVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "WaypointMarker"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 normal, narrow, light/dark, compound, disabled, and hit-area states reviewed; hidden regression evidence confirmed."
         }
       ],
       "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."

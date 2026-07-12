@@ -55,7 +55,9 @@ for (const absolute of await collect(path.join(root, 'components'))) {
     const hasValue = props.has('value');
     const hasDefault = props.has('defaultValue');
     const hasOnChange = props.has('onChange');
-    if ((hasDefault && (!hasValue || !hasOnChange)) || (hasValue && !hasOnChange)) {
+    const hasOnValueChange = props.has('onValueChange');
+    const hasControlledChange = hasOnChange || hasOnValueChange;
+    if ((hasDefault && (!hasValue || !hasControlledChange)) || (hasValue && !hasControlledChange)) {
       findings.incompleteControlledTriads.push(`${key}:value=${hasValue},defaultValue=${hasDefault},onChange=${hasOnChange}`);
     }
     const onChange = props.get('onChange');

@@ -326,7 +326,14 @@ export function FacilityTransition({
         {selected && (
           <circle r="14" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="3" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-selection-ring="" />
         )}
-        <circle r="16" fill="transparent" stroke="none" data-transition-hit-area="" />
+        <circle
+          r="17"
+          fill="transparent"
+          stroke="none"
+          pointerEvents={interactive ? 'all' : 'none'}
+          data-transition-hit-area=""
+          data-screen-target-size="24"
+        />
         <circle
           r="11"
           fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"

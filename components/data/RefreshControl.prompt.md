@@ -13,11 +13,12 @@
 />
 ```
 
-- `refreshing`은 중복 실행을 막고 loading label을 제공합니다.
+- `refreshing`은 중복 실행을 막고 loading label을 제공합니다. `onRefresh`가 없으면 no-op action을 남기지 않고 수동 control을 비활성화합니다.
 - `lastUpdated`는 마지막 정상 데이터 시각입니다. stale 판단은 제품이 수행하고 `ResourceState state="stale"`에 전달합니다.
-- 자동 간격은 controlled `Select`일 뿐 timer를 만들지 않습니다.
+- 자동 간격은 controlled `Select`일 뿐 timer를 만들지 않습니다. `onAutoRefreshChange`가 없으면 선택 가능한 것처럼 보이는 no-op select 대신 read-only 의미로 비활성화합니다.
 - `disabled`에는 `unavailableReason`을 함께 제공해 권한·offline 같은 원인을 보이게 설명할 수 있습니다.
 - 툴바 action 슬롯이나 위젯 footer에 들어갈 수 있도록 별도 카드 표면을 만들지 않습니다.
+- 내부 ghost refresh action은 active light/dark scope의 semantic foreground를 직접 사용합니다.
 
 ## 비교와 결정 근거
 

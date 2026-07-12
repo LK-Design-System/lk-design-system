@@ -30,12 +30,13 @@ const findings = {
 for (const jsxPath of await collect(path.join(root, 'components'), '.jsx')) {
   const rel = path.relative(root, jsxPath).replaceAll('\\', '/');
   const source = await readFile(jsxPath, 'utf8');
+  const declarationSource = await readFile(jsxPath.replace(/\.jsx$/, '.d.ts'), 'utf8').catch(() => source);
   const exports = [...source.matchAll(/^export\s+(?:function|const)\s+([A-Za-z_$][\w$]*)/gm)].map((match) => match[1]);
   for (const name of exports) {
     const stateEvidence = (prop) => new RegExp(`<${name}\\b[\\s\\S]{0,500}\\b${prop}\\b`).test(storyCorpus);
-    if (/\bdisabled\b/.test(source) && !stateEvidence('disabled')) findings.disabledStateGaps.push(`${rel}#${name}`);
-    if (/\bloading\b/.test(source) && !stateEvidence('loading')) findings.loadingStateGaps.push(`${rel}#${name}`);
-    if (/\bempty(?:Label|Message)?\b/.test(source) && !stateEvidence('empty(?:Label|Message)?')) findings.emptyStateGaps.push(`${rel}#${name}`);
+    if (/\bdisabled\??\s*:/.test(declarationSource) && !stateEvidence('disabled')) findings.disabledStateGaps.push(`${rel}#${name}`);
+    if (/\bloading\w*\??\s*:/.test(declarationSource) && !stateEvidence('loading')) findings.loadingStateGaps.push(`${rel}#${name}`);
+    if (/\bempty(?:Label|Message)?\??\s*:/.test(declarationSource) && !stateEvidence('empty(?:Label|Message)?')) findings.emptyStateGaps.push(`${rel}#${name}`);
     if (!new RegExp(`<${name}\\b`).test(parityCorpus)) findings.visualParityGaps.push(`${rel}#${name}`);
   }
 }

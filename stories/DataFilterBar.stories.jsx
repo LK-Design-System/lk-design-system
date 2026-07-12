@@ -89,7 +89,7 @@ export const AppliedFiltersAndSavedView = {
     const clear = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === '모든 필터 지우기');
     if (!clear) throw new Error('Multiple filters must expose a clear-all action.');
     const result = canvasElement.querySelector('[role="status"]');
-    if (!canvasElement.querySelector('[aria-label="적용된 필터"]') || result?.textContent?.trim() !== '128개 결과') {
+    if (!canvasElement.querySelector('[role="group"][aria-label="적용된 필터"]') || result?.textContent?.trim() !== '128개 결과') {
       throw new Error('Removing one filter must retain the remaining summary, clear-all action and result status.');
     }
   },
@@ -120,7 +120,7 @@ export const ReadOnlyAppliedFilters = {
   ),
   render: () => <FilterBar activeFilters={INITIAL_FILTERS.slice(0, 2)} resultCount={128} />,
   play: async ({ canvasElement }) => {
-    const summary = canvasElement.querySelector('[aria-label="적용된 필터"]');
+    const summary = canvasElement.querySelector('[role="group"][aria-label="적용된 필터"]');
     const chips = summary?.querySelectorAll('[data-removable="false"]');
     if (!summary || chips?.length !== 2 || summary.querySelector('button') || summary.querySelector('svg')) {
       throw new Error('Filters without a removal callback must render as non-operable summaries without close icons.');

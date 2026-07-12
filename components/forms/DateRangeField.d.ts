@@ -25,6 +25,7 @@ export interface DateRangeFieldProps extends Omit<React.HTMLAttributes<HTMLDivEl
   /** 오늘/최근 7일처럼 제품이 날짜 계산을 소유하는 preset control 슬롯. */
   presets?: React.ReactNode;
   invalid?: boolean;
+  /** Product validation message. Order errors use a specific default; other invalid states use a neutral range prompt. */
   errorMessage?: React.ReactNode;
   /** 내부 DatePicker 크기. @default "sm" */
   size?: 'sm' | 'md';

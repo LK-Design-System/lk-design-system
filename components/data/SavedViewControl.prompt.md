@@ -26,7 +26,7 @@ Classification: **LK Product Extension**. WDS Core variant parity를 주장하�
 
 ## 내부 LDS 비교와 시각 차이
 
-- `Select`: 높이, 입력 border, `--radius-input`, label typography와 focus ring을 맞췄습니다. 저장된 보기는 단일 문자열 선택이므로 옵션 패널을 새로 만들지 않고 네이티브 `<select>`를 사용합니다. 이 차이는 모바일 선택 UX와 기본 키보드 semantics를 보존하기 위한 것입니다.
+- `Select`: 높이, 입력 border, `--radius-input`, label typography와 focus ring을 맞췄습니다. label foreground는 `:root` component alias 대신 active light/dark scope의 semantic label을 직접 해석합니다. 저장된 보기는 단일 문자열 선택이므로 옵션 패널을 새로 만들지 않고 네이티브 `<select>`를 사용합니다. 이 차이는 모바일 선택 UX와 기본 키보드 semantics를 보존하기 위한 것입니다.
 - `Button` / `DropdownMenu`: 액션의 크기·강조·오버플로 방식은 호출자가 기존 컴포넌트로 조합합니다. SavedViewControl 내부에는 별도 버튼 스타일이나 메뉴 상태를 복제하지 않습니다.
 - `FilterBar`: `viewControl`/`actions` 슬롯 안에 놓일 수 있으며, 필터 자체의 적용·초기화 계약을 가져오지 않습니다.
 - `DataGrid`의 `visibleColumnKeys`/`columnOrder`와 `DashboardGrid`의 자식 순서는 제품 상태입니다. 저장 보기는 그 상태의 이름과 선택 진입점만 제공하며 내부 값을 해석하지 않습니다.

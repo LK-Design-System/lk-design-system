@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Product workflow coverage contract and audit summary |
-| Status | Current · LK Web Viz review in discovery |
+| Status | Current · LK Web Viz WF-15 wireframe and LDS mapping reviewed |
 | Owner | Product design/engineering · Design system owner |
 | Last reviewed | 2026-07-12 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
@@ -16,7 +16,7 @@
 
 | 제품 자산 | 기준 소스 | 현재 증거 상태 |
 | --- | --- | --- |
-| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend` | source pin 완료, WF-15 discovery 진행 중 |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend` | source pin, WF-15 독립 wireframe, LDS mapping 완료 · renderer gap 추적 중 |
 | LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` | `docs/references/product-frontends/COVERAGE_AUDIT.json`의 pinned revision 재사용 또는 최신화 |
 | LK Context Hub | `LK-ROBOTICS/lk_context_hub` | `docs/references/product-frontends/COVERAGE_AUDIT.json`의 pinned revision 재사용 또는 최신화 |
 
@@ -39,8 +39,8 @@
 
 | 단계 | 수 | 의미 |
 | --- | ---: | --- |
-| discovered | 1 | source만 확보하고 독립 wireframe을 만들지 않은 항목이다. |
-| wireframed | 0 | 독립 low-fi까지만 있고 구현 근거가 없는 항목이다. |
+| discovered | 0 | source만 확보하고 독립 wireframe을 만들지 않은 항목이다. |
+| wireframed | 1 | 독립 low-fi와 source mapping은 닫혔지만 LDS renderer gap 때문에 구현 단계로 승격하지 않은 항목이다. |
 | implemented | 0 | 컴포넌트와 state story는 있으나 전체 trace가 닫히지 않은 항목이다. |
 | verified | 14 | source requirement, 독립 wireframe, 작은 LDS 책임, state story, 검증 근거가 연결됐다. |
 
@@ -148,7 +148,7 @@
 | WF-12 | External publish | validation-only와 실제 외부 write, publish evidence를 구분하는가? | wireframed |
 | WF-13 | Schedule automation | recurrence·timezone·conflict와 개별 run 상태를 구분하는가? | wireframed |
 | WF-14 | Approval transition | review completion, approval, external release를 서로 다른 truth로 다루는가? | wireframed |
-| WF-15 | Map navigation and facility authoring | point·line·region·facility와 층 identity가 일반 관례와 실제 LK workflow에서 구분되는가? | discovered |
+| WF-15 | Map navigation and facility authoring | point·line·region·facility와 층 identity가 일반 관례와 실제 LK workflow에서 구분되는가? | wireframed |
 
 ## 독립 설계 원칙
 
@@ -609,17 +609,43 @@ Message·feed·composer의 독립 시각·접근성 계약을 Product extension�
 
 ### WF-15 Map navigation and facility authoring
 
-현재 단계는 `discovered`다. `LK-ROBOTICS/lk_web_viz`의 `MapEditScreen`, `ZoneEditor`, `TaskCreateScreen`을 pin했고, point·line·region·landmark·층별 task target의 실제 workflow를 확인했다.
+현재 단계는 `wireframed`다. `LK-ROBOTICS/lk_web_viz`의 `MapEditScreen`, `ZoneEditor`, `TaskCreateScreen`을 pin해 point·line·region·landmark·층별 task target을 다시 읽었고, 현재 화면 배치를 복제하지 않은 독립 구조와 LDS mapping을 검토했다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
 
-검토에서 답해야 할 질문:
+독립 low-fi의 읽기·키보드 순서는 다음과 같다.
 
-- elevator entry/interior, door, stair, charger, waypoint와 generic POI가 형태·label·상태에서 충분히 구분되는가?
-- point, lane/line, route/trajectory, facility region이 한 지도에서 올바른 paint order와 zoom-stable hierarchy를 갖는가?
-- 현재 제품의 Material icon 이름을 그대로 복제하지 않고 LK `Icon` registry와 지도 symbol grammar로 일관되게 번역할 수 있는가?
-- selection, focus, invalid, unavailable, stale이 색상만이 아니라 shape·pattern·text로도 전달되는가?
-- 제품 편집·저장·task schema는 product-owned로 남기면서 LDS renderer를 실제 화면에 조합할 수 있는가?
+```text
+┌ Floor / map identity · load / stale / save feedback ───────────────┐
+├ Product-owned authoring tools · active tool · unsaved indicator ──┤
+│ Map viewport                                                       │
+│   regions → graph/reference lines → route → trajectory             │
+│   → point/facility symbols → selection/focus                       │
+├ Named feature list ───────────────┬ Selection inspector ───────────┤
+│ same identity/state as the map    │ type · floor · state · details │
+└ Product-owned validation · save/retry actions ─────────────────────┘
+```
 
-이 workflow는 아직 independent wireframe, LDS mapping, Storybook visual review가 닫히지 않았으므로 `verified`로 승격하지 않는다.
+지도 geometry는 pointer 탐색을 제공하되 dense SVG를 Tab 순서로 만들지 않는다. 키보드는 같은 identity와 상태를 가진 named list를 따라가고, DOM·keyboard 순서는 floor/map context → authoring tool → map → named list → inspector → save/recovery 순서를 유지한다. 좁은 폭에서는 지도 아래에 list와 inspector가 이어지며, 지도 내부 label을 여러 card로 분해하지 않는다.
+
+제품 source와 LDS 책임을 대조한 결과는 다음과 같다.
+
+| 제품 요구 | 판정 | LDS / 제품 경계 |
+| --- | --- | --- |
+| floor와 map identity, 층별 task target | supported by composition | `Map2DCanvas`를 소유하는 제품 renderer와 ordinary-text list/inspector가 identity를 공유한다. floor topology와 task schema는 제품 소유다. |
+| generic waypoint, goal, charger, POI | supported | `WaypointMarker`가 role·annotation·availability·invalid/stale을 zoom-stable symbol과 accessible name으로 제공한다. 제품 landmark type을 그대로 public enum으로 복제하지 않는다. |
+| navigation graph lane | supported | `LaneOverlay`는 방향·통행 제약·폐쇄·충돌을 가진 graph edge다. facility 실시간 상태는 `FacilityTransition`에 남긴다. |
+| 제품의 `forbidden` line | gap | 현재 제품 line은 금지 경계이고 `LaneOverlay`와 의미가 다르다. 이를 graph lane으로 매핑하지 않으며, 별도 renderer 계약은 후속 Robotics audit에서 판단한다. |
+| route와 observed/predicted trajectory | supported | `RouteOverlay`와 `TrajectoryOverlay`를 분리하고 current segment/sample, invalid, stale을 색상 외 glyph와 text mirror로 전달한다. |
+| forbidden/work/speed-limit region | supported by composition | `SpatialRegion`의 behavior-region geometry와 제품 label/value를 조합한다. 속도 값과 편집 정책은 제품 소유다. |
+| stair와 stair-slope region | gap | 현재 public `SpatialRegion` kind가 이 terrain 의미를 소유하지 않는다. generic behavior region으로 위장하지 않고 후속 semantic-kind 검토 대상으로 남긴다. |
+| elevator entry/interior, door, dock | supported by composition | `FacilityTransition` endpoint/state와 `SpatialRegion`의 lift lobby/cabin grammar를 조합한다. 현재 제품의 동일 Material elevator glyph를 복제하지 않고 entry/interior를 관계·label·region으로 구분한다. |
+| selection, focus, unavailable, invalid, stale | supported by composition | map symbol의 shape/pattern/glyph와 named list/`SelectionInspector` text를 함께 사용한다. circular pointer target은 24×24 CSS square를 포함하도록 최소 약 34px 지름을 확보한다. |
+| edit handles, commands, save/unsaved/error, persistence | not applicable | LDS renderer 상태가 아니라 `ZoneEditor`와 화면 state machine이 소유한다. 실패 시 draft와 선택을 유지하고 save/retry evidence를 같은 product workflow에 남긴다. |
+
+근거가 된 외부 category reference는 Open-RMF의 waypoint/lane/facility event 분리, Nav2 Route Server의 sparse route graph와 dense path 분리, MapLibre의 line/symbol layer 및 placement 분리, WCAG 2.2의 target-size 요구다. 구체 링크와 각 결론은 여섯 Navigation component의 `.prompt.md`에 기록했다.
+
+Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTransition의 compound state를 1280px에서, 각 narrow story를 320–360px에서 확인했다. Route의 current-segment label과 progress text 충돌은 분리했고, 모든 narrow surface에서 수평 overflow가 없음을 확인했다. invalid/stale route·trajectory는 `!`/`~` glyph가 남고, point-like interactive geometry는 24×24 CSS square를 포함하는 hit core를 갖는다.
+
+독립 wireframe과 mapping은 닫혔지만 제품 `forbidden` line과 stair/stair-slope semantic renderer가 아직 gap이므로 `implemented`나 `verified`로 승격하지 않는다. 새 public component나 semantic kind 추가는 별도 Robotics source-first audit와 scope 승인을 거친다.
 
 ## 현재 신규 컴포넌트 disposition
 
@@ -723,7 +749,7 @@ Message·feed·composer의 독립 시각·접근성 계약을 Product extension�
 | WF-13 | `DatePicker`, `TimePicker`, `CheckboxGroup`, `ValidationSummary`, `SearchableMultiSelect`, `Button`/`ActionArea` 조합 | recurrence schema, eligibility, conflict calculation, task lookup, persistence, occurrence execution |
 | WF-14 | `DataGrid`, `SourceDisclosure`, `ValidationSummary`, `DescriptionList`, `Textarea`, `ActionArea` 조합으로 eligibility/approval/release를 구분 | metric verdict policy, authorization, persistence, external release evidence |
 
-WF-15는 source discovery만 완료됐으므로 위 verified closure matrix에 포함하지 않는다. navigation component·symbol review와 실제 product-density 검증이 끝난 뒤 LDS 책임과 제품 seam을 확정한다.
+WF-15는 독립 wireframe, navigation component review, normal/narrow visual review까지 완료했지만 제품 `forbidden` line과 stair/stair-slope renderer gap이 남아 위 verified closure matrix에 포함하지 않는다. 기존 `LaneOverlay`나 generic behavior region으로 의미를 덮지 않으며, 후속 Robotics audit에서 LDS 책임 여부를 먼저 결정한다.
 
 검증은 2026-07-10 기준 다음 범위로 수행했다.
 
