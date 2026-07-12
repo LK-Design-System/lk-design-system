@@ -13,4 +13,4 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 반응형 세로 리듬 + 선택적 서피스가 있는 전체 폭 페이지 밴드. */
-export function Section(props: SectionProps): JSX.Element;
+export function Section(props: SectionProps): React.JSX.Element;

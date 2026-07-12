@@ -11,4 +11,4 @@ export interface FabProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 }
 
 /** 둥글고 떠 있는 플로팅 액션 버튼. */
-export function Fab(props: FabProps): JSX.Element;
+export function Fab(props: FabProps): React.JSX.Element;

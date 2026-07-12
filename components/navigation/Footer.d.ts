@@ -39,4 +39,4 @@ export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 사이트 푸터 — 실사이트(lkrobotics-homepage) LKFooter 미러: 네이비 밴드 + 연락·거점·저작권 정보 블록. 기본값이 실데이터라 `<Footer />`만으로 프로덕션 푸터를 재현. `compact`는 대시보드용 한 줄 버전. */
-export function Footer(props: FooterProps): JSX.Element;
+export function Footer(props: FooterProps): React.JSX.Element;

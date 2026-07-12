@@ -20,4 +20,4 @@ export interface HistoryToolbarProps extends React.HTMLAttributes<HTMLDivElement
 }
 
 /** 에디터용 실행 취소 / 다시 실행 / 초기화 툴바. Arrow/Home/End roving focus를 제공합니다. */
-export function HistoryToolbar(props: HistoryToolbarProps): JSX.Element;
+export function HistoryToolbar(props: HistoryToolbarProps): React.JSX.Element;

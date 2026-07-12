@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
-import { ConnectionBadge } from '../robotics/ConnectionBadge.jsx';
+import { StatusBadge } from './StatusBadge.jsx';
 
 /**
  * LDS Product Content — LogViewer
@@ -15,6 +15,16 @@ const LEVELS = {
   error: { c: 'var(--color-semantic-status-negative)', log: 'var(--color-semantic-status-negative)', label: 'ERROR' },
 };
 const ORDER = ['debug', 'info', 'warn', 'error'];
+
+const STREAM_STATUS = {
+  connecting: { tone: 'cautionary', pulse: true, label: '연결 중' },
+  online: { tone: 'online', pulse: false, label: '온라인' },
+  reconnecting: { tone: 'cautionary', pulse: true, label: '재연결 중' },
+  weak: { tone: 'cautionary', pulse: false, label: '신호 약함' },
+  stale: { tone: 'cautionary', pulse: true, label: '데이터 지연' },
+  error: { tone: 'negative', pulse: false, label: '연결 오류' },
+  offline: { tone: 'offline', pulse: false, label: '오프라인' },
+};
 
 const DENSITY = {
   compact: { fontSize: 'var(--caption2-size)', lineHeight: 'var(--caption2-line)', rowMinHeight: 18, panelPadding: '8px 10px', time: '60px', level: '48px', source: 'minmax(44px, 80px)', copy: '24px' },
@@ -212,7 +222,10 @@ export function LogViewer({
       {(streamStatus != null || lastUpdatedAt != null || droppedCount > 0) && (
         <div role="status" aria-live="polite" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-            {streamStatus != null && <ConnectionBadge status={streamStatus} size="sm" />}
+            {streamStatus != null && (() => {
+              const cfg = STREAM_STATUS[streamStatus] || STREAM_STATUS.online;
+              return <StatusBadge tone={cfg.tone} pulse={cfg.pulse} data-status={streamStatus}>{cfg.label}</StatusBadge>;
+            })()}
             {lastUpdatedAt != null && <span>마지막 수신 <strong>{lastUpdatedAt}</strong></span>}
           </div>
           {droppedCount > 0 && <span style={{ color: 'var(--color-semantic-status-cautionary)', fontWeight: 'var(--fw-semibold)' }}>누락 {droppedCount}줄</span>}

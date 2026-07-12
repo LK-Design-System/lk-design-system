@@ -7,7 +7,6 @@ import {
   IconButton,
   SocialButton,
   SplitButton,
-  TextButton,
 } from '../src/index.js';
 
 export const ActionControls = {
@@ -24,20 +23,6 @@ export const ActionControls = {
         >
           적용
         </SplitButton>
-      </section>
-
-      <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-        <IconButton label="검색">
-          <Icon name="search" size={19} />
-        </IconButton>
-        <IconButton label="설정" variant="solid">
-          <Icon name="setting" size={19} />
-        </IconButton>
-        <IconButton label="알림" variant="signal" round>
-          <Icon name="bell" size={19} />
-        </IconButton>
-        <TextButton>텍스트 액션</TextButton>
-        <TextButton tone="danger">삭제</TextButton>
       </section>
 
       <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>

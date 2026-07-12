@@ -1,20 +1,27 @@
 import * as React from 'react';
 
-export interface InputGroupProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** 리딩 애드온(단위 / 프로토콜 / 아이콘). */
+export interface InputGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'prefix' | 'onChange' | 'style'> {
   prefix?: React.ReactNode;
-  /** 트레일링 애드온. */
   suffix?: React.ReactNode;
   value?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;
+  label?: React.ReactNode;
+  helper?: React.ReactNode;
+  error?: React.ReactNode;
+  invalid?: boolean;
+  status?: 'normal' | 'positive' | 'negative';
+  required?: boolean;
   placeholder?: string;
-  /** @default "md" */
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'small' | 'medium';
   disabled?: boolean;
-  /** 내부 입력에 스프레드되는 추가 props. */
+  readOnly?: boolean;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  /** Styles for the label/control/message stack. */
+  fieldStyle?: React.CSSProperties;
+  /** Styles for the grouped control shell. */
+  style?: React.CSSProperties;
 }
 
-/** 접두 / 접미 애드온이 양옆에 붙는 입력. */
-export function InputGroup(props: InputGroupProps): JSX.Element;
+/** Text input with visually connected prefix and suffix addons. */
+export function InputGroup(props: InputGroupProps): React.JSX.Element;

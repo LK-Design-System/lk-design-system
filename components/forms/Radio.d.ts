@@ -33,4 +33,4 @@ export interface RadioProps {
 }
 
 /** 라디오 컨트롤 — 선택되면 LK 시그널 잉크 점으로 채워지는 헤어라인 링. */
-export function Radio(props: RadioProps): JSX.Element;
+export function Radio(props: RadioProps): React.JSX.Element;

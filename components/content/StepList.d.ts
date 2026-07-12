@@ -22,4 +22,4 @@ export interface StepListProps extends Omit<React.HTMLAttributes<HTMLDivElement>
 }
 
 /** 편집형 순서 시퀀스 — 태스크 저작(웨이포인트·액션). 번호 · 재정렬(↑/↓) · 삭제 · 추가. */
-export function StepList(props: StepListProps): JSX.Element;
+export function StepList(props: StepListProps): React.JSX.Element;

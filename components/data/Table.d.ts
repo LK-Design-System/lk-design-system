@@ -20,4 +20,4 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
 }
 
 /** 차분한 데이터 표 — 캡션 헤더, tabular 행, 호버 워시, 커스텀 셀. */
-export function Table<Row extends Record<string, unknown> = Record<string, unknown>>(props: TableProps<Row>): JSX.Element;
+export function Table<Row extends Record<string, unknown> = Record<string, unknown>>(props: TableProps<Row>): React.JSX.Element;

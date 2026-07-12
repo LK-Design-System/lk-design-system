@@ -22,4 +22,4 @@ export interface DirectionalPadProps extends React.HTMLAttributes<HTMLDivElement
 }
 
 /** PTZ·짐벌·조그용 D-pad. 누르고 있으면 반복 스텝, 탭은 1회. 아날로그는 Joystick. */
-export function DirectionalPad(props: DirectionalPadProps): JSX.Element;
+export function DirectionalPad(props: DirectionalPadProps): React.JSX.Element;

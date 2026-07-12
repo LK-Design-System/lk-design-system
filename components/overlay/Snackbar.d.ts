@@ -19,4 +19,4 @@ export interface SnackbarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** snackbar with heading, description, icon, action, and close button slots. */
-export function Snackbar(props: SnackbarProps): JSX.Element;
+export function Snackbar(props: SnackbarProps): React.JSX.Element;

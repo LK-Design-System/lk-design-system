@@ -24,6 +24,8 @@ export interface SelectProps {
   invalid?: boolean;
   status?: "normal" | "positive" | "negative";
   disabled?: boolean;
+  /** Keeps the current selection focusable and legible while preventing changes. */
+  readOnly?: boolean;
   /** disabled alias. */
   disable?: boolean;
   /** negative status alias. */
@@ -53,10 +55,20 @@ export interface SelectProps {
   render?: "text" | "chip";
   iconLeft?: React.ReactNode;
   id?: string;
+  /** 접근 가능한 이름. 보이는 `label`이 없을 때 지정합니다. */
+  "aria-label"?: string;
+  /** 외부 라벨 요소의 id. */
+  "aria-labelledby"?: string;
+  /** 외부 설명 id. 내부 helper/error id와 함께 연결됩니다. */
+  "aria-describedby"?: string;
+  /** 트리거 키보드 이벤트. preventDefault하면 기본 Select 키보드 동작을 건너뜁니다. */
+  onKeyDown?: React.KeyboardEventHandler<HTMLButtonElement>;
+  /** 트리거 클릭 이벤트. preventDefault하면 기본 열기/닫기를 건너뜁니다. */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   /** `<option>` 자식(하위 호환) — `options`가 없을 때 사용. */
   children?: React.ReactNode;
   style?: React.CSSProperties;
 }
 
 /** 커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스). 네이티브 `<select>`가 아님. */
-export function Select(props: SelectProps): JSX.Element;
+export function Select(props: SelectProps): React.JSX.Element;

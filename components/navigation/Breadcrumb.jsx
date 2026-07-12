@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — Breadcrumb
@@ -18,7 +19,7 @@ export function Breadcrumb({ items = [], style, ...rest }) {
               <a href={it.href} style={{ color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, textDecoration: 'none' }}>{it.label}</a>
             )}
             {!last && (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+              <Icon name="chevron-right-small" size={14} color="var(--color-semantic-label-assistive)" aria-hidden="true" />
             )}
           </React.Fragment>
         );

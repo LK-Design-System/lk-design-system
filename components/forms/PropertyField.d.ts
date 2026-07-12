@@ -26,4 +26,4 @@ export interface PropertyFieldProps extends Omit<React.HTMLAttributes<HTMLDivEle
 }
 
 /** 파라미터 행: 라벨 + 컨트롤 + dirty일 때만 활성화되는 개별 Apply. */
-export function PropertyField(props: PropertyFieldProps): JSX.Element;
+export function PropertyField(props: PropertyFieldProps): React.JSX.Element;

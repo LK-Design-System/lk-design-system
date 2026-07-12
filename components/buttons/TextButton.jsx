@@ -20,14 +20,23 @@ export function TextButton({
   loading = false,
   loadingLabel = 'Loading',
   as = 'button',
+  className,
   style,
   onMouseEnter,
   onMouseLeave,
+  onMouseDown,
+  onMouseUp,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
   onClick,
   type,
+  'aria-label': ariaLabel,
+  'aria-disabled': ariaDisabled,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
   const normalizedSize = {
     small: 'sm',
     medium: 'md',
@@ -43,43 +52,59 @@ export function TextButton({
   const ls = normalizedSize === 'sm' ? 'var(--label1-spacing)' : 'var(--body1-spacing)';
   const h = normalizedSize === 'sm' ? 28 : normalizedSize === 'lg' ? 36 : 32;
   const disabledState = disabled || disable || loading;
+  const ariaBlocked = ariaDisabled === true || ariaDisabled === 'true';
+  const blocked = disabledState || ariaBlocked;
   const Comp = as;
   return (
     <Comp
-      className="lk-textbtn"
+      {...rest}
+      className={['lk-textbtn', className].filter(Boolean).join(' ')}
       disabled={as === 'button' ? disabledState : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
+      aria-label={loading ? loadingLabel : ariaLabel}
       aria-busy={loading || undefined}
-      aria-disabled={as !== 'button' && disabledState ? true : undefined}
+      aria-disabled={ariaBlocked || (as !== 'button' && disabledState) || undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
-      onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
+      onMouseLeave={(e) => { setHover(false); setPressed(false); onMouseLeave && onMouseLeave(e); }}
+      onMouseDown={(e) => { if (!blocked) setPressed(true); onMouseDown?.(e); }}
+      onMouseUp={(e) => { setPressed(false); onMouseUp?.(e); }}
+      onKeyDown={(e) => {
+        if (!blocked && (e.key === 'Enter' || e.key === ' ')) setPressed(true);
+        onKeyDown?.(e);
+      }}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') setPressed(false);
+        onKeyUp?.(e);
+      }}
+      onBlur={(e) => { setPressed(false); onBlur?.(e); }}
       onClick={(e) => {
-        if (disabledState) {
+        if (blocked) {
           e.preventDefault();
           return;
         }
         onClick && onClick(e);
       }}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 4, minHeight: h, padding: 0, border: 'none', background: 'transparent',
+        position: 'relative', display: 'inline-flex', alignItems: 'center', gap: 4, minHeight: h, padding: 0, border: 'none', background: 'transparent',
         fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-semibold)', letterSpacing: ls,
-        color: disabledState ? 'var(--color-semantic-label-disable)' : textColor,
-        opacity: !disabledState && hover ? 'var(--component-button-text-hover-opacity)' : 1,
-        cursor: disabledState ? 'not-allowed' : 'pointer',
+        color: blocked ? 'var(--color-semantic-label-disable)' : textColor,
+        opacity: blocked ? 1 : pressed ? 0.76 : hover ? 'var(--component-button-text-hover-opacity)' : 1,
+        cursor: blocked ? 'not-allowed' : 'pointer',
         textDecoration: underline ? 'underline' : 'none', textUnderlineOffset: '3px',
         transition: 'var(--component-button-transition)', ...style,
       }}
-      {...rest}
     >
       {loading && (
         <>
-          <Spinner size={14} color="currentColor" aria-hidden="true" />
+          <span aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Spinner size={14} color="currentColor" />
+          </span>
           <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
             {loadingLabel}
           </span>
         </>
       )}
-      <span>{children}</span>
+      <span aria-hidden={loading || undefined} style={{ visibility: loading ? 'hidden' : undefined }}>{children}</span>
     </Comp>
   );
 }

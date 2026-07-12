@@ -17,7 +17,7 @@ export interface ReorderMeta {
 
 export interface ReorderListProps extends React.HTMLAttributes<HTMLUListElement> {
   items?: ReorderItem[];
-  /** 새 id 순서와 이동 메타 정보를 전달합니다. */
+  /** 새 id 순서와 이동 메타 정보를 전달합니다. 생략하면 목록은 읽기 전용이며 drag/keyboard/button 이동이 비활성화됩니다. */
   onReorder?: (nextIds: string[], meta: ReorderMeta) => void;
   /** 행 밀도. @default "comfortable" */
   density?: 'comfortable' | 'compact';
@@ -34,4 +34,4 @@ export interface ReorderListProps extends React.HTMLAttributes<HTMLUListElement>
 }
 
 /** 범용 sortable list primitive. 작업 단계 저작은 StepList를 사용합니다. */
-export function ReorderList(props: ReorderListProps): JSX.Element;
+export function ReorderList(props: ReorderListProps): React.JSX.Element;

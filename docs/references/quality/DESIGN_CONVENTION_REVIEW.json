@@ -1,0 +1,1223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "LK Design System design convention review",
+    "auditedAt": "2026-07-11",
+    "method": "9-lens rendered-design convention review followed by finding-level adversarial verification. The original workflow produced all 53 findings and completed 28 verdicts before termination; the remaining 25 verdicts were recovered by re-reading the current worktree and applying the same evidence/convention/WDS-inheritance rules.",
+    "scope": "action placement, forms, navigation, overlays, status/feedback, color/typography/density aesthetics, Korean UX writing, icon metaphor, and data display",
+    "workflow": {
+      "originalRunId": "wf_9e07ae47-b14",
+      "originalStatus": "killed",
+      "reviewResults": 9,
+      "findingCount": 53,
+      "workflowVerdicts": 28,
+      "recoveredVerdicts": 25,
+      "sourceHandoff": "docs/handoff/2026-07-11-quality-audit-and-design-review.md"
+    },
+    "dispositionRules": [
+      "A WDS snapshot pattern inherited faithfully is not a finding.",
+      "Taste differences and choices on which authoritative systems legitimately disagree are rejected.",
+      "A current internal inconsistency between equivalent LDS surfaces is the strongest finding type.",
+      "Current rendered behavior is in scope; future-only drift risk without a current visual difference is not a D-track finding."
+    ],
+    "relatedEngineeringAudit": "docs/references/quality/QUALITY_GAP_AUDIT.json",
+    "plan": "docs/QUALITY_AUDIT_PLAN.md",
+    "remediation": {
+      "implementedAt": "2026-07-11",
+      "scope": "All 14 confirmed high-severity design findings in the approved roadmap",
+      "remaining": "Medium and low findings remain recorded as ratcheted follow-up; no finding was silently deleted.",
+      "visualEvidence": "visual-baselines/smoke (37 targets; normal, dark, and narrow representative states)"
+    }
+  },
+  "summary": {
+    "lenses": 9,
+    "reviewedFindings": 53,
+    "confirmedFindings": 47,
+    "rejectedClaims": 6,
+    "workflowVerdicts": 28,
+    "recoveredVerdicts": 25,
+    "severity": {
+      "high": 14,
+      "medium": 23,
+      "low": 10
+    },
+    "remediation": {
+      "resolvedHigh": 14,
+      "trackedMedium": 23,
+      "trackedLow": 10
+    }
+  },
+  "lenses": [
+    {
+      "key": "action-placement",
+      "lens": "액션·버튼 배치 컨벤션 — primary 위치/순서, 취소·보조·파괴적 액션 variant, full-width 사용 기준",
+      "reviewed": "컴포넌트 구현: components/overlay/{ConfirmDialog,Alert,Modal,Drawer,Sheet}.jsx, components/buttons/{ActionArea,Button}.jsx, components/navigation/Wizard.jsx, components/data/{DataToolbar,SavedViewControl}.jsx, components/editor/SelectionInspector.jsx, components/robotics/ManualControlSession.jsx. 스토리(렌더 결과 기준): ActionArea, OverlayConfirmDialog, OverlayModal, OverlayDrawer, OverlaySheet, Overlay.shared, NavigationWizard, DataToolbar, DataSavedView, EditorSelectionInspector, LayoutPageHeader, FormValidationSummary, FormsFull(+shared), Card/CardsExtended, RoboticsManualControlSession. 토큰 실값: tokens/components.css(버튼 팔레트), tokens/color-semantic.css(hex). WDS 증거: docs/references/wds/source-pdfs/2action.pdf에서 pypdf로 텍스트+좌표 추출(Action Area 가로 배치 보조→대체→메인, 세로 스택 메인 최상단 확인), COMPONENT_SOURCE_PDFS.json(action-taxonomy 매핑), FIGMA_LOCAL_CONTENT_AUDIT.json(2 Action 섹션 구조). 전 스토리 대상 인접 버튼 쌍 스캔(스크립트)으로 primary-선행 쌍과 이중 primary 표면을 전수 확인 — 이중 primary 실사용 표면은 없음(변형 매트릭스 데모 제외). Wizard(이전-좌/다음-우), Alert(웹/안드로이드 flex-end, iOS center — WDS 플랫폼 스펙 문서화됨), PageHeader·DataToolbar(우측 end 정렬)는 컨벤션 부합으로 판정.",
+      "confirmedFindings": [
+        {
+          "title": "ActionArea 스토리 4건 중 3건이 primary를 왼쪽에 배치 — WDS Action Area와 같은 저장소의 모든 다이얼로그 푸터에 역행",
+          "surfaces": "stories/ActionArea.stories.jsx (라인 58-59, 120-121, 135-136 vs 92-95)",
+          "currentPattern": "가로 배치 버튼 쌍에서 primary가 첫 번째(왼쪽): 58-59행 [배차 시작(solid primary)]→[나중에(outlined assistive)], 120-121행 [예약(primary)]→[지금 발송(outlined)], 135-136행 sticky [배차 시작(primary)]→[나중에(outlined)]. 같은 파일 92-95행만 [취소]→[저장]으로 primary가 오른쪽. 컨테이너는 flex row + 각 버튼 flex:1이므로 렌더 결과는 primary-왼쪽/보조-오른쪽.",
+          "conventionSource": "WDS: docs/references/wds/source-pdfs/2action.pdf 좌표 추출 결과 Action Area 가로 배치는 항상 보조(x≈727)→대체(x≈838)→메인(x≈963), compact도 대체(x≈531)→메인(x≈627)로 메인이 최우측, 세로 스택은 메인이 최상단(y=4170>4114>4061). 저장소 내부: ConfirmDialog.jsx:82-95, Modal/Drawer/Sheet 전 스토리가 취소-좌/primary-우. 일반 컨벤션: Material·Apple HIG·Polaris·Atlassian 모두 확정 액션 최우측. 참고로 docs/references/wds/COMPONENT_SOURCE_PDFS.json은 이 스토리(#BottomActionArea)를 WDS action-taxonomy PDF의 로컬 증거로 지목하고 있어 패리티 주장 자체와 모순됩니다.",
+          "deviation": "WDS가 명시한 가로 순서(보조→대체→메인)를 뒤집었고, 같은 저장소의 다이얼로그·시트·위저드 푸터 전부(primary 우측)와도 어긋남. 같은 스토리 파일 안에서도 92-95행과 상충하는 내부 비일관.",
+          "severity": "high",
+          "recommendation": "세 데모의 버튼 순서를 보조-좌/primary-우로 교체(세로 스택 전환 시엔 primary 최상단). ActionArea.prompt.md에 '가로 쌍은 보조→메인 순, primary는 항상 마지막' 규칙을 명문화.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "ActionArea horizontal actions now follow secondary-to-primary order, documented and covered at normal and 320px widths.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "인라인 파괴적 액션의 표현이 표면마다 다름 — 삭제가 한쪽은 danger solid, 다른 쪽은 중립 outlined로 primary 바로 옆",
+          "surfaces": "stories/EditorSelectionInspector.stories.jsx:64-68, components/editor/SelectionInspector.jsx:201, stories/DataSavedView.stories.jsx:73, components/buttons/ActionArea.prompt.md:13",
+          "currentPattern": "SelectionInspector 푸터: [삭제(variant=outlined color=assistive)]가 align=end 클러스터에서 [적용(primary)] 바로 왼쪽에 인접 — 파괴적 액션이 중립 보조 버튼과 동일한 외형. 반면 SavedViewControl 스토리의 [보기 삭제]는 variant=danger(solid, --color-atomic-red-30). 저장소 자체 문서 ActionArea.prompt.md:13은 'destructive confirmation uses danger'라고 명시.",
+          "conventionSource": "저장소 내부 규칙(ActionArea.prompt.md:13 + DataSavedView 스토리 + ManualControlSession.jsx:218의 danger 사용)과의 비일관이 1차 근거. 일반 컨벤션 합의: Polaris(tone=critical), GOV.UK(warning button), Material(error emphasis) 모두 파괴적 액션에 구분되는 시각 처리를 요구하고, HIG·Fiori는 파괴적 액션을 확정(commit) 액션과 인접 배치하지 않도록 분리 권장.",
+          "deviation": "동일 역할(패널 내 객체 삭제)이 표면에 따라 danger solid ↔ 중립 outlined로 갈리고, SelectionInspector에서는 파괴적 액션이 primary 커밋 버튼과 같은 end 클러스터에 인접해 오클릭 위험.",
+          "severity": "medium",
+          "recommendation": "인라인 파괴적 액션의 단일 문법 결정: danger 계열(solid 또는 danger-outlined)로 통일하고, end 클러스터에서 primary와 분리(반대편 배치 또는 간격 분리) + 실행 전 ConfirmDialog 연결을 참조 패턴으로 스토리에 시연.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "Sheet footer 슬롯만 정렬 기본값이 없음(flex-start) — Modal/Drawer/ConfirmDialog는 모두 end 정렬",
+          "surfaces": "components/overlay/Sheet.jsx:60, components/overlay/Modal.jsx:62, components/overlay/Drawer.jsx:70, components/overlay/ConfirmDialog.jsx:82",
+          "currentPattern": "Sheet.jsx:60 footer는 display:flex + gap만 있고 justifyContent 미지정(기본 flex-start). Modal.jsx:62와 Drawer.jsx:70은 justifyContent:'flex-end', ConfirmDialog는 ActionArea align=\"end\". 현재 스토리는 Sheet footer에 항상 full 버튼만 넣어 차이가 가려져 있음.",
+          "conventionSource": "동일 저장소 내 같은 이름의 슬롯(footer) 계약 비일관 — 규칙 4(내부 비일관은 출처 불요). 보조 근거: 모바일 바텀 시트의 full-width 버튼 관행(Material bottom sheet)이라면 그 계약을 명시해야 함.",
+          "deviation": "full이 아닌 버튼을 Sheet footer에 넣는 순간 이 표면만 좌측 정렬로 렌더되어 다이얼로그 계열 푸터 규칙이 깨짐.",
+          "severity": "medium",
+          "recommendation": "Sheet footer도 flex-end로 통일하거나, 'Sheet footer는 full-width 버튼 전용' 계약을 Sheet.prompt.md에 명시하고 스토리로 고정.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "Drawer footer의 full-width 사용 기준이 스토리마다 다름 — 단독 CTA는 full, 쌍이면 인라인 우측 정렬",
+          "surfaces": "stories/Overlay.shared.jsx:127,148, stories/OverlayDrawer.stories.jsx:43 vs 66-70, stories/OverlaySheet.stories.jsx:31,48-52",
+          "currentPattern": "데스크톱 사이드 Drawer에서 단독 [적용]은 full-width(Overlay.shared.jsx:127 size=sm full, :148 variant=signal full, OverlayDrawer.stories.jsx:43), 두 버튼이면 full 없이 flex-end 인라인(OverlayDrawer.stories.jsx:66-70). Sheet는 항상 full, Modal은 전혀 full을 쓰지 않음.",
+          "conventionSource": "일반 컨벤션 합의: full-width 액션은 모바일/좁은 표면(바텀 시트, 모바일 뷰) 전용이고 데스크톱 drawer·modal 푸터는 인라인 end 정렬 — Ant Design Drawer, Polaris, Atlassian Design System이 일치. WDS Action Area의 full-bleed 버튼은 모바일 Bottom 배치 전제(2action.pdf Bottom 섹션).",
+          "deviation": "같은 Drawer 표면에서 버튼 개수에 따라 full ↔ 인라인이 갈리는 기준이 문서화돼 있지 않고, 데스크톱 drawer의 full-width 단독 CTA는 복수 시스템 합의와 다름.",
+          "severity": "low",
+          "recommendation": "기준을 한 줄로 결정·문서화: 'full-width는 Sheet(모바일)와 ActionArea safeArea 컨텍스트 전용, Drawer/Modal footer는 항상 인라인 end 정렬'. Overlay.shared.jsx의 Drawer full 데모 2건을 인라인으로 교체.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "푸터 보조/취소 버튼의 variant 이중 문법 — 다이얼로그는 ghost, ActionArea·인스펙터는 outlined assistive",
+          "surfaces": "stories/OverlayModal.stories.jsx:61,103, stories/OverlayDrawer.stories.jsx:68,88, components/overlay/ConfirmDialog.jsx:83 vs stories/ActionArea.stories.jsx:59,93,121,136, stories/EditorSelectionInspector.stories.jsx:66",
+          "currentPattern": "같은 역할(푸터의 취소/보조)이 두 문법으로 갈림: 다이얼로그 계열은 variant=\"ghost\"(fg=brand-ink #0E1329, border #E1E2E4 — tokens/components.css:86-90, color-semantic.css:44,67), ActionArea·SelectionInspector 계열은 variant=\"outlined\" color=\"assistive\"(fg=label-normal #171718, border rgba(112,115,124,0.22) — Button.jsx:124). 렌더 결과는 거의 동일한 중립 아웃라인 버튼 두 종.",
+          "conventionSource": "내부 비일관(규칙 4): 동일 역할에 두 변형이 병존하며 어느 쪽이 규범인지 문서가 없음. WDS 문법상 보조는 outlined/assistive(2action.pdf Button color=assistive 축)이고 ghost는 LDS 확장 변형(Button.jsx:11-13 주석).",
+          "deviation": "표면 유형에 따라 취소 버튼의 텍스트 색·보더 토큰이 미세하게 달라져 시각 회귀 기준이 둘로 갈라지고, 신규 화면 작성 시 어느 변형을 쓸지 결정 근거가 없음.",
+          "severity": "low",
+          "recommendation": "푸터 보조 액션의 규범 변형을 하나로 지정(WDS 기준이면 outlined-assistive, LDS 관례 유지면 ghost)하고 나머지를 별칭 처리하거나 사용처를 정리. Button.prompt.md에 역할→변형 매핑 표 추가.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        }
+      ],
+      "rejectedClaims": [
+        {
+          "title": "같은 표면·같은 라벨의 primary CTA가 primary와 signal 두 변형으로 병존 (현재 토큰값은 동일)",
+          "surfaces": "stories/OverlayModal.stories.jsx:62 vs stories/Overlay.shared.jsx:390, stories/OverlayDrawer.stories.jsx:69 vs stories/Overlay.shared.jsx:148, tokens/components.css:57,72",
+          "currentPattern": "Modal의 [저장]이 한 스토리는 기본 primary(OverlayModal.stories.jsx:62), 다른 스토리는 variant=\"signal\"(Overlay.shared.jsx:390). Drawer의 [적용]도 primary(OverlayDrawer.stories.jsx:69) ↔ signal(Overlay.shared.jsx:148). 토큰 실값은 현재 동일: --component-button-primary-bg와 --component-button-signal-bg 모두 var(--color-semantic-primary-normal)=#3878B3 (tokens/components.css:57,72, color-semantic.css:9).",
+          "conventionSource": "내부 비일관(규칙 4): 동일 표면·동일 라벨의 확정 액션에 두 변형이 사용됨. 렌더는 현재 동일하므로 시각 편차는 없으나, signal 토큰이 독립 정의라 한쪽만 변경되면 같은 '저장' 버튼이 화면마다 다른 색이 되는 드리프트 구조.",
+          "deviation": "primary CTA 역할의 변형 선택 기준이 없어 스토리 작성자마다 다른 이름을 사용 — 이후 signal 토큰이 분기되는 순간 확정 액션 색이 표면별로 갈라짐.",
+          "severity": "low",
+          "recommendation": "다이얼로그·드로어 푸터의 확정 액션은 기본 primary로 통일하고 signal의 사용 범위(마케팅 CTA·PageHeader 강조 등)를 문서로 한정. 최소한 Overlay.shared.jsx의 signal 2건을 primary로 정리.",
+          "resolutionType": "documentation-only",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": false,
+            "wdsInherited": false,
+            "keep": false,
+            "note": "현재 primary와 signal은 동일 토큰값으로 렌더되어 시각적 편차가 없다. 미래 드리프트 가능성은 API/토큰 위생 이슈이지 현재 렌더 결과를 대상으로 하는 D 트랙 디자인 finding은 아니므로 기각한다."
+          }
+        }
+      ]
+    },
+    {
+      "key": "forms",
+      "lens": "폼 컨벤션 (label 위치·required 표시·helper/error 처리·placeholder 안티패턴·입력 높이/radius 리듬·에러 상태 일관성·Checkbox/Radio/Switch 사용 구분)",
+      "reviewed": "components/forms/ 전체 구현 파일 중 FormField, Input, Textarea, Select, Checkbox, Radio, RadioGroup, CheckboxGroup, PasswordInput, SearchField, AutoComplete, NumberField, DatePicker, InputGroup, PinInput, Combobox, TimePicker(높이 grep 포함) + components/selection/Switch.jsx를 정독. 토큰 실값은 tokens/components.css(196-217), color-semantic.css, typography.css, spacing.css에서 확인. 스토리는 FormsFull.stories.jsx, FormsFull.shared.jsx, FormSelectionControls.stories.jsx, FormDateTime.stories.jsx 정독 + Switch 사용처 전수 grep(모두 즉시 적용 맥락으로 Switch/Checkbox 사용 구분은 컨벤션 준수 확인 — finding 아님). WDS 기준은 docs/references/wds/COMPONENT_STYLES.json(Textinput/Textfield 48px·16px), COMPONENT_CENSUS.json(Control/Checkbox·Radio 매핑, RadioGroup·CheckboxGroup·FormField는 LDS 확장), source-screenshots/3selectionandinput.png(Textfield 상태 아이콘·requiredBadge 빨간 별표·heading 기본 true, Radio/Checkbox 선택 시 채운 형태)를 크롭 확대해 확인. required 별표 방식 자체는 WDS requiredBadge(빨간 *)와 일치해 finding에서 제외.",
+      "confirmedFindings": [
+        {
+          "title": "텍스트 입력 계열의 높이·글자 크기·패딩 리듬 분열 (48px 토큰 vs 50px 하드코딩)",
+          "surfaces": "components/forms/Input.jsx, Select.jsx, AutoComplete.jsx (48px 계열) vs PasswordInput.jsx:15, SearchField.jsx:15, InputGroup.jsx:13, NumberField.jsx:15, Combobox.jsx:24, TimePicker.jsx:83, DatePicker.jsx:31 (50px 계열); tokens/spacing.css:94-95; tokens/components.css:196-217",
+          "currentPattern": "Input/Select은 --control-h-md(48px, spacing.css에 'kit-exact' 주석)와 --component-input-* 토큰을 쓰지만, PasswordInput·SearchField·InputGroup·NumberField·Combobox·TimePicker·DatePicker는 md=50px/sm=40px를 하드코딩(토큰 sm은 32px). 글자도 Input/Textarea/Select/AutoComplete는 body1 16px인데 PasswordInput·SearchField·NumberField는 body2 15px, 패딩도 12px(토큰)/14px(SearchField·DatePicker·PasswordInput)/16px(AutoComplete)로 제각각.",
+          "conventionSource": "WDS: docs/references/wds/COMPONENT_STYLES.json 'Textinput/Textfield' height 48, fontSize 16 — 저장소 스스로도 tokens/spacing.css --control-h-md: 48px를 'kit-exact'로 선언하고 components.css에 --component-input-height/-padding-x/-font-size 토큰 계층을 마련해 둠.",
+          "deviation": "같은 폼 그리드(stories/FormsFull.shared.jsx InputsAndPickers)에 48px 필드와 50px 필드, 16px 글자와 15px 글자가 나란히 렌더되어 베이스라인이 어긋난다. WDS 기준(48/16)을 절반의 컴포넌트만 따르고 나머지는 근거 없는 50/15.",
+          "severity": "high",
+          "recommendation": "50px 계열 7개 컴포넌트를 var(--control-h-md/-sm), var(--component-input-font-size), var(--component-input-padding-x)로 이관해 Input과 동일한 리듬으로 통일.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 핵심 증거 실재 확인: 7개 컴포넌트(PasswordInput:15, SearchField:15, InputGroup:13, NumberField:15, Combobox:24, TimePicker:83, DatePicker:31)가 md=50/sm=40 하드코딩, Input/Select은 --control-h-md=48px('kit-exact', spacing.css:95) 토큰 사용. 글자(body1 16px vs body2 15px)·패딩(12/14/16px) 분열도 사실. WDS 스냅샷(COMPONENT_STYLES.json:1548 Textinput/Textfield height 48, padX 12, fontSize 16)이 48/16을 명시하고, WDS에 50px 텍스트 필드는 없음(height:50은 Status Bar Pill과 _Theme Primary Button뿐). 50px 계열 컴포넌트는 COMPONENT_CENSUS.json에서 lds-only이거나 무관한 WDS 세트(휠 피커 h204, 라벨 h18)에 매칭 — WDS 계승 아님. 같은 스토리 그리드(FormsFull.shared.jsx:34-40)에서 48px과 50px 필드가 나란히 렌더되는 내부 비일관 + WDS 위반이므로 유지. 참고: AutoComplete는 md=48이지만 하드코딩(AutoComplete.jsx:18, sm=40)이라 토큰 계열이 아닌 값 일치이며, Input.jsx:16 주석('50px tall')이 실제 48px와 어긋나 드리프트 정황을 보강함."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Seven field families now share the 32/48 height, input typography, and padding tokens.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "RadioGroup·CheckboxGroup이 WDS 기반 Radio·Checkbox와 전혀 다른 컨트롤 시각 문법을 그림 (포커스 표시도 없음)",
+          "surfaces": "components/forms/RadioGroup.jsx:22-25 vs Radio.jsx:39-84; components/forms/CheckboxGroup.jsx:25-28 vs Checkbox.jsx:50-77; 증거: docs/references/wds/source-screenshots/3selectionandinput.png, docs/references/wds/COMPONENT_CENSUS.json:385-399",
+          "currentPattern": "Radio(WDS Control/Radio 매핑)는 선택 시 프라이머리로 채운 원판+흰 점(1.5px 테두리, 20px)인데, RadioGroup은 2px 아웃라인 링+내부 프라이머리 점(미선택 테두리는 interaction-inactive)이라는 별개 스타일을 자체 렌더. CheckboxGroup도 Checkbox(18px, radius-5, 1.5px, 16px 체크)와 다른 20px/radius-sm(6px)/1px/12px 체크를 자체 렌더. 두 그룹 모두 input을 opacity:0으로 숨기고 포커스 링을 전혀 그리지 않으며(단독 컨트롤은 4px focus-ring), disabled도 opacity 0.45로 처리(단독 컨트롤은 토큰 색).",
+          "conventionSource": "WDS: 3selectionandinput.png의 Control/Radio checked = 채운 파란 원판+흰 점, Control/Checkbox = 채운 파란 사각+흰 체크 — LDS 단독 Radio/Checkbox가 이를 따름. RadioGroup/CheckboxGroup은 WDS 미정의 확장(COMPONENT_CENSUS.json LDS 확장 목록)이므로 내부 프리미티브와 복수 시스템 합의(Material/Polaris/Primer: 그룹은 단일 컨트롤을 합성, 키보드 포커스 표시 필수 — WCAG 2.4.7)가 기준.",
+          "deviation": "같은 화면(stories/FormsFull.shared.jsx SelectorsAndGroups: 단독 Checkbox·Radio가 그룹 바로 아래 렌더)에서 라디오 두 종, 체크박스 두 종이 공존하고, 그룹 항목은 키보드 포커스가 시각적으로 보이지 않는다.",
+          "severity": "high",
+          "recommendation": "RadioGroup/CheckboxGroup이 자체 SVG/스팬 대신 Radio/Checkbox 프리미티브를 합성하도록 교체(포커스 링·disabled 토큰 처리도 자동 상속).",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 증거 실재 확인. RadioGroup.jsx:22-25는 2px 아웃라인 링+10px 내부 점, 포커스 링 없음(input opacity:0), disabled opacity 0.45 — Radio.jsx는 WDS대로 채운 원판+흰 점(COMPONENT_STYLES_DEEP.json Radio/box@md: fill/stroke #0066FF, 20px, 1.5px)+4px focus-ring. CheckboxGroup.jsx:24-27도 20px/6px(radius-sm)/1px/12px로 Checkbox(18px/5px/1.5px/16px)와 상이. 두 그룹은 COMPONENT_CENSUS.json:947,994 ldsOnly(WDS 미정의 확장)라 WDS 계승 아님. stories/FormsFull.shared.jsx:52-91에서 같은 스토리에 그룹과 단독 컨트롤이 공존해 내부 비일관(규칙 4) 성립. 그룹의 링+점 스타일 자체는 Material 라디오 관용구지만 WDS 1차 기준(규칙 1)과 같은 화면 비일관을 이기지 못하며, 키보드 포커스 비가시(WCAG 2.4.7)는 독립적으로 명백한 위반. 권고 타당: 그룹이 내부 Radio/Checkbox 프리미티브를 합성하도록 재작성."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "RadioGroup and CheckboxGroup now compose the shared Radio and Checkbox primitives.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "FormField의 라벨·메시지 타이포가 필드 내장 라벨·메시지와 어긋남",
+          "surfaces": "components/forms/FormField.jsx:12-19 vs Input.jsx:75,108 / Textarea.jsx:54,81 / Select.jsx:179,249; tokens/components.css:212-216; 나란히 렌더: stories/FormsFull.shared.jsx:57-83",
+          "currentPattern": "FormField 라벨: label1+fw-bold(700)+letterSpacing:0, 메시지: label2 13px/1.5. Input·Textarea·Select 내장 라벨: --component-input-label-*(label1+fw-semibold(600)+label1-spacing), 메시지: caption1 12px/16px. FormsFull.shared.jsx SelectorsAndGroups에서 Select label=\"작업 유형\"과 FormField label=\"알림 옵션\"이 같은 그리드 행에 나란히 렌더됨.",
+          "conventionSource": "내부 컨벤션: tokens/components.css:212-216이 폼 라벨의 정본 토큰(--component-input-label-*)을 정의하고 Input/Textarea/Select가 공유. WDS Textfield도 라벨(주제)-필드-메시지 단일 위계 하나만 정의(3selectionandinput.png).",
+          "deviation": "같은 폼 안에서 라벨 굵기(700 vs 600)·자간, 헬퍼 크기(13px vs 12px)가 두 계열로 갈라진다. 범용 래퍼인 FormField가 정본 토큰 계층을 우회.",
+          "severity": "medium",
+          "recommendation": "FormField가 --component-input-label-*와 caption1 메시지 스타일(및 --component-input-stack-gap)을 사용하도록 수정해 내장 라벨과 픽셀 동일하게 통일.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 핵심 주장 검증됨. FormField.jsx:12,19는 label1+fw-bold(700)+letterSpacing:0 라벨과 label2(13px)/1.5 메시지를 하드코딩하고, Input.jsx:75/Textarea.jsx:54/Select.jsx:179는 tokens/components.css:212-216의 --component-input-label-*(label1+fw-semibold(600)+0.0145em)를, 메시지는 caption1(12px/16px)를 공유함(typography.css:17-18,81,83,85로 실값 확인). 반박 시도 결과: (1) 'FormField는 그룹 레전드라 굵어도 된다'는 방어는 FormField.prompt.md가 단일 Input 래핑을 정본 예시로 쓰고 FormPinInput/FormDateTime 스토리도 단일 필드에 사용하므로 성립 안 함. (2) WDS 계승 아님 — 오히려 저장소 자체 감사(TOKEN_MAP.json:208, COVERAGE_DETAIL_AUDIT.json:150)가 FormField를 WDS Textinput/Textfield 패밀리(wds-core)로 분류하며, WDS 스냅샷(COMPONENT_STYLES.json:1548)에는 Textfield 필드 텍스트(16px Regular)만 있고 bold-700 라벨 스펙은 없음. 한 가지 수정 필요: FormsFull.shared.jsx에서 Select(:57)와 FormField(:64)는 '같은 그리드 행'이 아니라 같은 스토리의 인접한 두 섹션임 — 같은 폼 화면에서 수직으로 나란히 보이는 사실은 유효하나 문구는 정정할 것."
+          }
+        },
+        {
+          "title": "resting 테두리 토큰 이원화 + hover/focus 상호작용 문법 불일치",
+          "surfaces": "components/forms/Input.jsx:57-67 (component-input-border-color=line-normal-normal) vs Textarea.jsx:48, Select.jsx:86, AutoComplete.jsx:27, InputGroup.jsx:18, PasswordInput.jsx:17, SearchField.jsx:19 (line-solid-normal); tokens/components.css:203, tokens/color-semantic.css:16,44",
+          "currentPattern": "Input의 기본 테두리는 --component-input-border-color(rgba(112,115,124,0.22))이고 hover 시 line-solid-normal(#E1E2E4)로 변화. 나머지 필드는 기본이 곧바로 line-solid-normal이라 resting 헤어라인이 두 종류로 갈리고, Textarea·Select는 hover 분기값이 기본값과 동일해(line-solid-normal→line-solid-normal) hover 반응이 없다. AutoComplete는 focus 시 테두리·링 변화가 아예 없음(outline:none만, AutoComplete.jsx:27).",
+          "conventionSource": "내부 컨벤션: tokens/components.css:203-206이 입력 테두리의 정본 토큰(-border-color/-focus/-invalid/-focus-shadow)을 정의. 복수 시스템 합의(Material·Polaris·Primer·HIG): 동일 계열 입력은 rest/hover/focus 상태 문법을 공유하고 focus는 반드시 시각 표시(WCAG 2.4.7).",
+          "deviation": "같은 폼에서 입력마다 기본 테두리 색이 다르고, hover 반응 여부·focus 링 유무가 컴포넌트별 복불복. 에러 테두리도 Input만 -border-color-invalid 토큰, Textarea/Select는 원시 status-negative를 직접 참조해 컴포넌트 토큰 계층을 우회.",
+          "severity": "medium",
+          "recommendation": "전 입력 계열이 --component-input-border-color(-focus/-invalid)와 --component-input-focus-shadow를 사용하도록 통일하고, Textarea·Select의 hover 분기에 실제 델타를 주거나 Input과 동일 규칙 적용. AutoComplete에 focus 스타일 추가.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 인용 파일·라인 확인됨(코드 서술 정확). TOKEN_MAP.json:207-209가 Input/SearchField/PasswordInput/Textarea/InputGroup을 전부 단일 WDS Textinput/Textfield(wds-core)에 매핑하므로 상태 문법 공유는 시스템 자체 규약이며, 컴포넌트별 복불복은 규칙4의 내부 비일관에 해당. WDS 스냅샷은 Textfield resting 테두리 색을 증명하지 못해(입력 계열 PDF 부재, 노드 덤프에 내부 stroke 없음) 어느 쪽도 계승으로 볼 수 없고, WDS가 Focus/Active Focus 상태를 명시하므로(FIGMA_LOCAL_CONTENT_AUDIT.json:111218-111221) AutoComplete·InputGroup의 포커스 표시 전무(outline:none)는 WDS 위반+WCAG 2.4.7 위반+내부 비일관으로 확정. 단 finding 강도 조정 필요: (1) 두 resting 토큰은 표준 배경에서 사실상 동일 렌더(라이트 #E0E0E2 vs #E1E2E4, 다크 #36383C vs #37383C)라 '헤어라인 이원화'와 Input hover 변화는 시각적으로 지각 불가한 토큰 위생 문제이고, (2) 에러 테두리도 -border-color-invalid가 status-negative로 해석돼 렌더는 동일하며, (3) WDS Textfield에 Hover 축이 없어 Textarea/Select의 무-hover는 결함이라 단정 불가. 권고를 '포커스 표시 부재(AutoComplete·InputGroup)'를 핵심으로, 토큰 단일화를 부차 정리로 재구성할 것."
+          }
+        },
+        {
+          "title": "라벨을 지원하지 않는 입력 컴포넌트군 — placeholder가 라벨을 대신함",
+          "surfaces": "components/forms/PasswordInput.jsx:8,18, DatePicker.jsx:11, TimePicker.jsx, NumberField.jsx:8,13, PinInput.jsx, AutoComplete.jsx:9,23, Combobox.jsx, TagInput.jsx, InputGroup.jsx; 스토리 증거: stories/FormsFull.shared.jsx:34-41 (라벨 있는 Input 옆에 라벨 없는 필드 7개)",
+          "currentPattern": "Input·Textarea·Select만 label/helper/error prop이 있고, PasswordInput·DatePicker·TimePicker·NumberField·PinInput·AutoComplete·Combobox·TagInput·InputGroup은 라벨·헬퍼·에러를 렌더할 방법이 없어 aria-label 기본값을 placeholder에서 끌어옴(PasswordInput.jsx:18). 대표 폼 스토리(FormsFull.shared InputsAndPickers)는 이들을 placeholder만으로 렌더해 라벨 있는 필드와 한 그리드에 섞음. FormDateTime.stories.jsx:25처럼 FormField로 감싸는 화면도 있어 표면마다 제각각.",
+          "conventionSource": "WDS: Textfield 아나토미가 heading(라벨, 기본값 true)+description을 포함(3selectionandinput.png의 'heading = false, true(default)' 축) — PasswordInput류는 WDS상 Textfield의 trailing 변형이므로 같은 아나토미가 기대됨. 일반 합의: Material·GOV.UK·Polaris·NN/g 모두 '보이는 라벨 필수, placeholder는 라벨 대용 금지'.",
+          "deviation": "값을 입력하는 순간 필드의 의미가 화면에서 사라지는 placeholder-as-label 안티패턴이 컴포넌트 API 차원에서 강제되고, 스토리가 이를 권장 사용법으로 인코딩. 이 그룹은 error 상태 축도 없어 WDS status=negative 축 미지원.",
+          "severity": "medium",
+          "recommendation": "이 계열에 label/helper/error prop을 추가(내부적으로 Input과 동일한 라벨 토큰 사용)하거나, 'FormField 합성이 유일한 표준'임을 prompt.md에 명시하고 모든 폼 스토리를 라벨 포함 형태로 수정. 단 SearchField는 검색 관례상 예외 허용 가능.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "유지하되 한 곳 수정 필요. 검증 결과: (1) 증거 실재 — Input/Textarea/Select만 label/helper/error/status 보유(Input.jsx:18-44, Select.jsx:11-40), 지목된 9개 컴포넌트는 전부 미보유이며 placeholder→aria-label 기본값도 확인(PasswordInput.jsx:18, NumberField.jsx:13, AutoComplete.jsx:23). 대표 스토리 FormsFull.shared.jsx:34-41이 라벨 있는 Input 옆에 라벨 없는 필드 7개를 한 그리드에 렌더하는 것도 사실. 단, '라벨·헬퍼·에러를 렌더할 방법이 없다'는 과장 — components/forms/FormField.jsx가 label/required/helper/error를 제공하고 FormDateTime.stories.jsx:25 등 4개 스토리가 실제 사용(Ant/Chakra식 래퍼 합성은 그 자체로 컨벤션 위반이 아님). 다만 FormField는 메시지만 렌더하고 컨트롤 테두리를 물들이지 못하므로, invalid/status prop이 없는 이 9개는 negative 상태 외관이 실제로 불가능 — 이 부분은 정확. (2) 컨벤션 정당 — '보이는 라벨 필수, placeholder 대용 금지'는 Material·GOV.UK·Polaris·NN/g·WCAG 3.3.2의 실질 합의. 단 '컴포넌트마다 내장 label prop 필수'는 합의가 아님. (3) WDS 계승 아님 — COMPONENT_AXIS_GAPS.md:28에 Textfield 공인 축(Status·Trailing Button), FIGMA_LOCAL_CONTENT_AUDIT.json(~98050, 102019-102097, 111238-111240)에 heading=/requiredBadge=/description= 축 확인. COMPONENT_CENSUS.json 기준 PasswordInput·NumberField·PinInput·Combobox·TagInput·InputGroup은 ldsOnly라 일반 컨벤션이 기준이고, WDS Textfield 선례는 오히려 라벨 쪽을 가리킴. 권고: finding을 'API에 라벨 방법 부재'가 아니라 '같은 폼 디렉터리 안 이중 라벨링 체계(내장 prop vs FormField) + 대표 스토리의 placeholder-as-label 인코딩(규칙 4 내부 비일관) + error/status 축 부재로 negative 상태 표현 불가'로 재서술할 것."
+          }
+        },
+        {
+          "title": "WDS Textfield의 상태 아이콘(negative/positive trailing 아이콘) 미구현 — 색상 단독 의존",
+          "surfaces": "components/forms/Input.jsx:104-111 (status prop은 있으나 테두리·메시지 색만 변경); 기준 증거: docs/references/wds/source-screenshots/3selectionandinput.png Textfield status 행",
+          "currentPattern": "LDS Input은 status='negative'/'positive'에서 테두리 색과 메시지 색만 바꾸고 필드 내부에 상태 아이콘을 그리지 않는다(iconRight는 사용자가 수동 전달해야 함). 스토리(FormsFull.stories.jsx:70-71,133-134)도 아이콘 없는 상태로 렌더.",
+          "conventionSource": "WDS: 3selectionandinput.png Textfield의 status=negative는 필드 trailing에 빨간 느낌표 아이콘, positive는 파란 체크 배지를 필드 안에 렌더(값 있는 행·placeholder 행 모두). 보조 합의: Material·Carbon 등이 에러 아이콘을 표준 아나토미로 두며, 색상 단독 구분은 WCAG 1.4.1 관점에서도 취약.",
+          "deviation": "WDS가 명시한 상태 아나토미의 아이콘 요소를 근거 없이 생략해, 상태 구분이 테두리·텍스트 색에만 의존한다.",
+          "severity": "low",
+          "recommendation": "Input(및 Textarea·Select의 메시지 영역)에서 status=negative/positive일 때 trailing 상태 아이콘을 기본 렌더하고, iconRight 전달 시 대체되도록 설계.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "확정. Input.jsx:55-67/104/108은 status에서 테두리·메시지 색만 변경하고 아이콘을 자동 렌더하지 않음(iconRight는 수동 슬롯, 중립색 처리). WDS 증거는 스크린샷 고해상 크롭으로 확정: Textfield 'status=' 블록에서 negative는 placeholder·focus·value 행 모두 trailing 빨간 원형 느낌표를, positive는 값 있는 행에서 파란 체크 배지를 컴포넌트가 직접 렌더(단, positive placeholder 행에는 배지 없음 — finding의 '모두' 표현은 과장, 정정 필요). COMPONENT_AXIS_GAPS.md:28이 Status를 .fig 추출 기반 정식 variant 축으로 확인. 문서화된 예외 없음 + VARIANT_AUDIT_CHECKLIST.json이 textfield-validation-states를 'parity-confirmed'로 주장하고 있어 미인지 갭임이 강화됨. 주의: 일반 컨벤션 주장은 과장(Material·Carbon은 아이콘 사용, Polaris·GOV.UK·Primer는 미사용으로 갈림 / WCAG 1.4.1은 에러 텍스트가 비색상 단서라 근거 약함) — finding은 WDS 근거로만 유지하고 보조 합의·접근성 문구는 축소 권고."
+          }
+        }
+      ],
+      "rejectedClaims": []
+    },
+    {
+      "key": "navigation",
+      "lens": "내비게이션 컨벤션 (선택 상태 표시 일관성, breadcrumb 처리, 항목 수 한계, 계층 표현, disabled 처리)",
+      "reviewed": "구현 전수 판독: components/navigation/{TopBar,SideNav,NavRail,BottomNav,Breadcrumb,Tabs,Category,Pagination,Anchor}.jsx + 각 .prompt.md의 문서화된 계약. 스토리: stories/{Navigation,NavigationAdaptive,NavigationSideNav,NavigationBreadcrumb,NavigationTabs,NavigationCategory,NavigationCompact,NavigationAnchor}.stories.jsx, NavigationFull.shared.jsx(BreadcrumbCard). 토큰 실값: tokens/color-semantic.css(primary-normal #3878B3, primary-heavy #2D6090, label-disable 0.16 등), tokens/spacing.css(safe-area, bottom-bar 64px). WDS 증거: docs/references/wds/{COMPONENT_CENSUS.json(내비 매핑: Tab/Category/Pagination/Bottom·Top Navigation은 WDS 매핑, Anchor/Breadcrumb/SideNav/Menubar/Steps는 LDS 전용), COMPONENT_STYLES.json, COMPONENT_STYLES_DEEP.json, STYLE_PARITY_AUDIT.md(오버라이드 대장 포함), TOKEN_MAP.json(Primary 역할 매핑), FIGMA_LOCAL_CONTENT_AUDIT.json '6 Navigation' 섹션 텍스트 노드 실색상}. 확인 결과 준수 사례도 기록: Tabs·Pagination·Category의 WDS 축(높이 58 BottomNav, 텍스트 강조형 현재 페이지, 흑색 인디케이터)은 WDS 증거와 일치하고, BottomNav 항목 수 3–5 한계는 스토리·문서 수준에서 준수되며, 안전영역은 DashboardShell이 처리, 계층 들여쓰기(SideNav 42px, Anchor 16px/level)와 breadcrumb 구분자·현재 페이지(비링크+aria-current+bold)는 일반 컨벤션에 부합.",
+      "confirmedFindings": [
+        {
+          "title": "TopBarNavItem이 hover/focus에서 '선택됨' 인디케이터와 동일한 언더라인을 그림",
+          "surfaces": "components/navigation/TopBar.jsx (58행 activeOrHover, 121-135행 언더라인), 비교: components/navigation/Tabs.jsx (184-196행)",
+          "currentPattern": "TopBar.jsx:58 `activeOrHover = active || hover || focusWithin || clickOpen`이 그대로 인디케이터에 연결되어(131행 `transform: activeOrHover ? 'scaleX(1)' : 'scaleX(0)'`), 비활성 항목도 hover만 하면 active와 동일한 2.5px primary-normal 언더라인이 풀 스케일로 나타난다. 이때 화면에는 언더라인이 2개(활성 항목 + hover 항목) 동시에 존재하고, 구분 수단은 텍스트 색(primary-normal #3878B3 vs label-strong #000000)뿐이다.",
+          "conventionSource": "내부: 같은 언더라인 문법의 Tabs.jsx:184-196은 인디케이터를 active에만 렌더하고, docs/references/wds/STYLE_PARITY_AUDIT.md:172-173은 'Calm hover(잉크 오버레이 없음)'를 LK 전역 hover 보이스로 등록. 일반: Material 3 Tabs(hover=state layer, indicator는 선택 전용), Primer UnderlineNav(hover는 중립 보더, 선택은 액센트 보더), Apple HIG(선택 상태는 다른 상태와 구별되는 고유 표현) — 복수 시스템이 '선택 인디케이터는 선택 항목 전용'에 합의.",
+          "deviation": "선택 전용이어야 할 인디케이터가 hover 피드백으로 재사용되어 '현재 페이지' 단서가 마우스 이동 중 모호해지고, 같은 저장소의 Tabs 문법 및 문서화된 calm-hover 보이스와도 어긋난다.",
+          "severity": "high",
+          "recommendation": "hover/focus는 텍스트 색 전환(현행 label-strong 전환 유지)이나 중립 헤어라인 등 시각적으로 구분되는 처리로 낮추고, 2.5px primary 언더라인은 `active`에만 렌더한다(Tabs와 동일한 문법).",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "TopBar underline is active-only; hover and focus no longer impersonate selection.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "활성 잉크가 primary-normal/primary-heavy 두 단계로 갈라짐 — WDS 역할 모델상 heavy는 pressed 단계",
+          "surfaces": "components/navigation/TopBar.jsx:62(normal), SideNav.jsx:92, NavRail.jsx:31, BottomNav.jsx:31, Anchor.jsx:27(모두 heavy), Category.jsx:86-87(alternative active=heavy)",
+          "currentPattern": "같은 '선택된 목적지' 의미에 TopBar는 `--color-semantic-primary-normal`(#3878B3), SideNav/NavRail/BottomNav/Anchor는 `--color-semantic-primary-heavy`(#2D6090)를 쓴다. Anchor는 룰은 normal, 잉크는 heavy로 한 컴포넌트 안에서도 섞인다. WDS 매핑 컴포넌트인 Category alternative의 활성 라벨도 heavy인데, WDS 스냅샷(docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json '6 Navigation' 섹션 텍스트 노드: Category 활성 라벨 4개 사이즈 모두 #0066FF)은 WDS Primary/Normal이다.",
+          "conventionSource": "WDS 증거: docs/references/wds/TOKEN_MAP.json theme — 'Primary/Normal→--color-semantic-primary-normal', 'Primary/Heavy'는 'Pressed/heavy' 역할로 명시. 즉 WDS 역할 모델에서 resting 활성 잉크는 Normal 단계다. 내부 비일관(규칙 4): 동일 계층의 Product 내비 표면끼리 잉크 단계가 다름. STYLE_PARITY_AUDIT.md의 Category 파일 감사('Category heights/roles' faithful 판정)에는 이 잉크 단계 이동이 기록되어 있지 않다.",
+          "deviation": "pressed 역할 토큰(heavy)을 4개 표면의 resting 활성 잉크로 쓰고, 1개 표면(TopBar)만 normal을 써서 선택 상태 색이 표면마다 다르다. WDS 매핑 컴포넌트(Category)는 WDS 증거와 다른 단계를 쓰는데 오버라이드 대장에 기록이 없다.",
+          "severity": "medium",
+          "recommendation": "선택 잉크를 한 단계로 결정: WDS 역할 모델대로 primary-normal로 통일하거나, 워시 위 대비 확보를 위해 heavy를 쓰기로 한다면 TopBar까지 포함해 전 표면에 적용하고 Category의 WDS 편차를 STYLE_PARITY_AUDIT.md 오버라이드 대장에 기록한다.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "NavRail·Breadcrumb에 hover 피드백이 전무 — 같은 계약을 공유한다고 문서화된 SideNav는 hover 워시 보유",
+          "surfaces": "components/navigation/NavRail.jsx:26-33(hover 처리 없음), Breadcrumb.jsx:15-22(정적 anchor), 비교: SideNav.jsx:86-93(hover 시 primary-surface-normal 워시), Anchor.jsx:24-27(hover 잉크 전환), TopBar.jsx",
+          "currentPattern": "NavRail 항목 스타일에는 hover 상태가 전혀 없고(마우스 핸들러·전환 대상 없음), Breadcrumb 조상 링크는 색·밑줄·hover 변화가 없는 정적 텍스트다(label-neutral, textDecoration none). 반면 SideNav.prompt.md:34는 'NavRail/BottomNav와 같은 primary surface/ink'를 공유 문법으로 문서화했고, SideNav 행은 hover 시 primary-surface-normal 워시를 받는다. Anchor·TopBar도 hover 잉크 전환이 있다.",
+          "conventionSource": "내부(규칙 4): 같은 데스크톱 포인터 표면인 SideNav↔NavRail, Anchor↔Breadcrumb 사이의 비일관. 일반: Fluent 2 Nav·Material 3 Navigation rail(hover state layer)·Polaris Navigation(hover 배경) — 포인터 내비 타깃의 hover 피드백은 복수 시스템 합의. LK calm-hover 오버라이드(STYLE_PARITY_AUDIT.md:172)도 '잉크 오버레이 생략'이지 피드백 전면 생략이 아니며, SideNav가 그 증거다.",
+          "deviation": "데스크톱 내비 4개 표면 중 2개만 hover 피드백을 제공해 같은 시스템 안에서 인터랙션 가능 여부의 단서가 표면마다 다르다. Breadcrumb는 링크(조상)와 비링크(현재)가 hover로도 구별되지 않는다.",
+          "severity": "medium",
+          "recommendation": "NavRail 항목에 SideNav와 동일한 primary-surface-normal hover 워시를, Breadcrumb 조상 링크에 Anchor와 동일한 잉크 전환(label-neutral→label-normal)을 추가한다.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "SideNav 접힘 레일의 동일한 점(dot)이 '배지 있음'과 '현재 페이지 포함' 두 의미로 중복 사용",
+          "surfaces": "components/navigation/SideNav.jsx:101(dot 정의), 182(자식 활성 표시), 226(배지 축약 표시)",
+          "currentPattern": "접힘 상태에서 완전히 동일한 7px primary-normal 점(top:7, right:7)이 (a) 배지 카운트의 축약(226행, JSDoc '배지는 점이 된다')과 (b) '이 그룹 안에 현재 페이지가 있음'(182행)을 모두 표현한다. 레일에 점이 2개 보이면 하나는 미확인 수, 하나는 현재 위치라는 다른 의미인데 시각적으로 구별 불가하다. 활성 그룹 아이콘은 이미 primary-heavy 잉크(178행)를 받으므로 점은 중복 신호이기도 하다.",
+          "conventionSource": "내부: 컴포넌트 자신의 JSDoc(SideNav.jsx:14-16)이 점을 '배지 축약'으로 정의해 놓고 같은 글리프를 다른 의미로 재사용. 일반: Material(navigation rail/drawer)·Fluent Nav 모두 접힘 상태의 현재 위치는 항목 자체의 강조(잉크/필/인디케이터 바)로, 배지 점은 알림 전용으로 분리 — 하나의 상태 글리프에 두 의미를 싣지 않는 것이 합의.",
+          "deviation": "같은 위치·크기·색의 점이 두 가지 의미를 가져 접힘 레일에서 배지와 현재 위치를 오독할 수 있다.",
+          "severity": "low",
+          "recommendation": "자식 활성 점을 제거하고 아이콘 잉크(이미 구현됨)로만 전달하거나, 활성 표시를 배지 점과 다른 형태(예: 좌측 엣지 마커)로 분리한다.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "disabled 표현이 wrapper opacity 0.45와 label-disable 토큰으로 이원화",
+          "surfaces": "components/navigation/Pagination.jsx:88(label-disable 색), 비교: Tabs.jsx:119-120, Category.jsx:118-119, NavRail.jsx:29, BottomNav.jsx:30, SideNav.jsx:91(모두 opacity 0.45)",
+          "currentPattern": "내비 표면 5곳은 disabled를 wrapper opacity 0.45 + cursor not-allowed로 처리하는데, Pagination 화살표만 `--color-semantic-label-disable`(rgba(55,56,60,0.16), tokens/color-semantic.css:25) 색 교체로 처리한다. 결과적으로 인접 표면 간 흐림 정도가 다르다(0.45×0.74≈33% 잉크 vs 16% 잉크).",
+          "conventionSource": "내부(규칙 4) + 저장소 자체 기록: docs/references/wds/STYLE_PARITY_AUDIT.md 드리프트 12번('disabled 패턴 이중화·비일관')과 오버라이드 대장 174-175행('wrapper-opacity 컨벤션을 유지한다면 값을 통일하라')이 이미 단일화를 요구. WDS 자체는 불투명 discrete disable 토큰 방식.",
+          "deviation": "같은 렌즈(내비) 안에서 두 가지 disabled 메커니즘이 공존하고, 저장소가 스스로 등록한 '통일' 결정이 Pagination에는 적용되지 않았다.",
+          "severity": "low",
+          "recommendation": "내비 계열의 disabled 메커니즘을 하나로 결정(WDS식 토큰 교체 또는 LK식 0.45 wrapper)하고 Pagination 화살표 또는 나머지 표면을 그에 맞춘다.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        }
+      ],
+      "rejectedClaims": [
+        {
+          "title": "Category만 단일 선택 내비를 aria-pressed(독립 토글 의미)로 전달",
+          "surfaces": "components/navigation/Category.jsx:99, 비교: NavRail.jsx:49,65, BottomNav.jsx:49,65, SideNav.jsx:117, Pagination.jsx:164, Anchor.jsx:22(aria-current), Tabs.jsx:105(role=tab/aria-selected)",
+          "currentPattern": "Category는 한 번에 하나만 선택되는 주제 내비게이션 칩(단일 selected 상태, pick으로 교체)인데 각 칩에 `aria-pressed`를 부여한다. 저장소의 다른 모든 내비 표면은 aria-current=\"page\"(목적지) 또는 role=tab/aria-selected(탭)로 선택을 전달한다.",
+          "conventionSource": "일반: WAI-ARIA APG — aria-pressed는 서로 독립적인 토글 버튼용이고, 집합 중 '현재 항목'은 aria-current 또는 단일 선택 role(tab/radio)로 전달하는 것이 합의(APG Button/ Tabs 패턴). 내부(규칙 4): 동일한 '하나 선택' 시각 문법이 표면마다 세 가지 다른 의미론으로 노출.",
+          "deviation": "보조기술 사용자에게 같은 선택 패턴이 Category에서만 '눌린 토글 여러 개 가능'으로 읽혀, 시각(단일 활성 칩)과 의미론이 불일치한다.",
+          "severity": "low",
+          "recommendation": "시각은 그대로 두고 의미론만 aria-current(내비 용도) 또는 radiogroup(필터 용도)으로 교체한다. WDS 스냅샷은 ARIA를 정의하지 않으므로 WDS 위반 소지는 없다.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": false,
+            "wdsInherited": false,
+            "keep": false,
+            "note": "Category는 링크 목적지나 tab이 아니라 현재 값을 바꾸는 버튼형 category chip 집합이다. aria-pressed는 toggle button의 현재 상태를 전달하는 유효한 의미론이며, 다른 내비 표면과 역할이 다르므로 aria-current나 tab semantics를 강제할 근거가 부족하다."
+          }
+        }
+      ]
+    },
+    {
+      "key": "overlays",
+      "lens": "오버레이 컨벤션 (닫기 어포던스 정책, 스크림/딤 일관성, Toast·Snackbar 위치·지속시간, 모달 계약, 표면 역할 구분)",
+      "reviewed": "components/overlay/ 전체 구현 13종(Modal, ConfirmDialog, Alert, Drawer, Sheet, Toast, Snackbar, ToastStack, DropdownMenu, Popover, HoverCard, CommandPalette, Lightbox, Dimmer)과 dialog-focus.js, components/content/Tooltip.jsx를 정독. 대응 .prompt.md 문서 11종, stories/Overlay.shared.jsx·OverlayModal·OverlayConfirmDialog·OverlayToast·OverlaySnackbar 스토리, 토큰 실값(tokens/effects.css, tokens/components.css, tokens/color-semantic.css)을 확인. WDS 기준은 docs/references/wds/COLOR_ARCHITECTURE.json(Material/Dimmer 실값), COMPONENT_STYLES.json(Dimmer 컴포넌트), FIGMA_LOCAL_CONTENT_AUDIT.json(Toast/Snackbar/Alert 역할 정의 원문, 157380–157560행)으로 검증. 검수는 읽기 전용이며 수정하지 않음.",
+      "confirmedFindings": [
+        {
+          "title": "스크림(딤) 값이 표면마다 4갈래로 갈라져 있고, WDS Material/Dimmer 패리티 토큰은 어느 컴포넌트도 쓰지 않음",
+          "surfaces": "components/overlay/Modal.jsx:38, ConfirmDialog.jsx:63, Drawer.jsx:47, Sheet.jsx:43, CommandPalette.jsx:20, Alert.jsx:131, Lightbox.jsx:38, Dimmer.jsx:16; tokens/effects.css:31-33, tokens/components.css:177-178, tokens/color-semantic.css:42·158",
+          "currentPattern": "Modal·ConfirmDialog는 --component-dialog-scrim→--scrim-dark(rgba(14,19,41,0.86))+blur 2px, Drawer·Sheet·CommandPalette·Dimmer는 --scrim-dark를 직접 참조(컴포넌트 토큰 우회, Dimmer는 blur 3px), Alert는 --material-control-dimmer(rgba(0,0,0,0.42))+blur 1px, Lightbox는 --material-dimmer(rgba(8,11,28,0.92))+blur 없음. 한편 WDS 실값과 정확히 일치하는 --color-semantic-material-dimmer(rgba(23,23,25,0.52)/0.74)는 tokens/color-semantic.css에 정의만 되어 있고 사용처가 0곳(grep으로 확인).",
+          "conventionSource": "WDS: docs/references/wds/COLOR_ARCHITECTURE.json:611-620 'Material/Dimmer' #171719 alpha 0.52(light)/0.74(dark) — WDS의 유일한 오버레이 딤 정의. COMPONENT_STYLES.json:640-648 Dimmer 컴포넌트 fill #171719도 동일. 일반 컨벤션 보강: Material(스크림 32%), Apple HIG·Polaris·Fluent 모두 시스템당 단일 스크림 값을 쓰며 40-60%대가 합의 범위.",
+          "deviation": "① WDS가 명시 정의한 dimmer 값(#171719@0.52)을 LDS가 토큰으로 이식까지 해놓고 렌더 경로에서는 전혀 쓰지 않음. ② 같은 중앙 다이얼로그 계층인 Alert(검정 0.42)와 Modal(네이비 0.86)의 딤 무게가 2배 이상 차이 — 내부 비일관. ③ blur가 1px/2px/3px/없음으로 표면마다 임의. ④ effects.css의 --material-dimmer(0.92 네이비)와 색-시맨틱의 --color-semantic-material-dimmer(WDS 값)가 거의 같은 이름으로 다른 값을 가져 혼동 유발. 네이비 틴트 자체는 effects.css:4의 'NAVY-TINTED (LK identity)' 주석으로 그림자에 한해 브랜드 근거가 있지만, 스크림 값 분기 자체는 어디에도 근거 문서가 없음(VISUAL_TOKEN_EXCEPTIONS.json에 scrim/dimmer 항목 없음 확인).",
+          "severity": "high",
+          "recommendation": "스크림 축을 1개(필요시 dialog/fullscreen-viewer 2단계)로 수렴하는 결정을 먼저 내릴 것: (a) WDS 패리티를 따른다면 --component-dialog-scrim을 --color-semantic-material-dimmer로 재지정, (b) LK 네이비 브랜드 스크림을 유지한다면 그 결정을 VISUAL_TOKEN_EXCEPTIONS.json에 WDS 편차로 기록하고 Alert·Lightbox도 같은 토큰으로 통일. 어느 쪽이든 Drawer/Sheet/CommandPalette의 --scrim-dark 직접 참조는 --component-dialog-scrim 경유로 고치고, blur도 --component-dialog-scrim-blur 단일 토큰으로 통일. 이름 충돌(--material-dimmer vs --color-semantic-material-dimmer)은 한쪽 개명 권고.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 증거 실재 확인: 8개 표면의 스크림 값·blur가 주장대로이며(Modal/ConfirmDialog=--component-dialog-scrim→--scrim-dark 0.86+2px, Drawer/Sheet/CommandPalette/Dimmer=--scrim-dark 직접 참조, Alert=0.42 검정+1px, Lightbox=0.92+무blur), WDS 패리티 토큰 --color-semantic-material-dimmer(rgba(23,23,25,0.52/0.74)=#171719, COLOR_ARCHITECTURE.json:611-620 및 COMPONENT_STYLES.json:640-648과 정확 일치)는 사용처 0곳. TOKEN_MAP.json/CONFLICT_AUDIT.md/VISUAL_TOKEN_EXCEPTIONS.json 등 어디에도 scrim 분기 근거 문서 없음 — WDS 계승이 아니라 WDS가 정의한 단일 dimmer의 정반대. effects.css:31 주석상 --scrim-dark는 'solid nav over hero' 용도였는데 오버레이가 전용(轉用)한 것이라 finding이 오히려 강화됨. 단 2가지 완화 필요: (1) STYLE_PARITY_AUDIT.md:182-183이 'blur-material surfaces replaced by shadows (Tooltip/Toast/Snackbar/Alert scrim)'를 LK override 후보로 부분 기록(단 값 분기가 아닌 blur-material 대체 건이고 'needing explicit sign-off' 상태), (2) Lightbox의 진한 배경(0.92)은 미디어 뷰어 관례상 독립 근거가 있어 '4갈래' 프레임의 가장 약한 다리 — 권고에서 Lightbox는 단일 스크림 강제 대상에서 제외하거나 별도 토큰으로 인정 권장. Dimmer blur 3px는 opt-in(기본 none)으로 표현 미세 조정 필요. 핵심(패리티 토큰 미사용 + 동일 다이얼로그 계층 Alert 0.42 vs Modal 0.86 내부 비일관 + 무근거 분기)은 그대로 성립."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "All modal scrims now use the shared component-dialog-scrim and blur contract.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "Alert·CommandPalette·Lightbox가 aria-modal 표면인데 공용 다이얼로그 계약(포커스 트랩·z-index 스택) 밖에 있음",
+          "surfaces": "components/overlay/Alert.jsx:82-137, CommandPalette.jsx:10-21, Lightbox.jsx:17-38; 기준 구현 components/overlay/dialog-focus.js:62-166, Modal.jsx:26, ConfirmDialog.jsx:47, Drawer.jsx:29, Sheet.jsx:27",
+          "currentPattern": "Modal·ConfirmDialog·Drawer·Sheet는 useDialogFocus를 공유해 초기 초점, Tab 순환, 외부 focus 회수, Escape 소유권, 동적 z-index(100+n), trigger 복원을 보장. 반면 Alert(zIndex 100 하드코딩)·CommandPalette(110)·Lightbox(130)는 role=\"dialog\" aria-modal=\"true\"를 선언하면서 자체 keydown 리스너만 달았고 포커스 트랩·복원·스택 등록이 전혀 없음. Modal.prompt.md:24는 Alert를 공용 controller의 sibling으로 명시하지만 실제 마이그레이션에서 누락됨.",
+          "conventionSource": "WAI-ARIA APG Modal Dialog Pattern — LDS 스스로 Modal.prompt.md:39, ConfirmDialog.prompt.md:31에서 '계약으로 채택'했다고 선언한 출처. 복수 시스템 합의: Material, Fluent 2 Dialog, Polaris, Primer 모두 modal 표면에 포커스 트랩과 복원을 필수로 규정.",
+          "deviation": "같은 저장소 안에서 modal 계약이 표면별로 어긋나는 내부 비일관. 구체적 실패: Modal이 열린 상태에서 Alert/Lightbox를 띄우면 dialog-focus.js:130-135의 onFocusIn이 스택 최상위(Modal)로 초점을 계속 회수해 키보드 사용자가 Alert 버튼에 도달 불가. Alert의 zIndex 100은 스택 2겹(100,101) 위에서 겹침 순서도 깨짐. Lightbox·CommandPalette는 닫힌 뒤 trigger 복원도 없음. 하드코딩 층위(Alert 100 < CommandPalette 110 < ToastStack 120 < Lightbox 130)는 동적 스택(100+n)과 아무 조율이 없음.",
+          "severity": "high",
+          "recommendation": "세 표면 모두 useDialogFocus로 이관(Alert는 확인 버튼 초기 초점, CommandPalette는 검색 입력 초기 초점, Lightbox는 닫기 버튼). Modal.prompt.md가 이미 계약을 문서화했으므로 문서 변경 없이 구현 정렬만 필요. ToastStack의 z-index는 오버레이 스택 상한과의 관계를 tokens 층에 명시.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 주장 검증됨. Alert.jsx(zIndex 100 하드코딩, Escape 전용 리스너 82-89행, aria-modal 136-137행), CommandPalette.jsx(zIndex 110, autoFocus만 있고 트랩·복원 없음), Lightbox.jsx(zIndex 130, 트랩·복원 없음) 모두 overlayStack 미등록 상태로 확인. dialog-focus.js:130-135의 onFocusIn이 미등록 표면의 초점을 등록된 최상위 오버레이로 회수하므로 'Modal 위 Alert 키보드 도달 불가' 시나리오는 기계적으로 정확. Modal.prompt.md:24가 Alert를 공용 controller sibling으로 명시하고 :35가 최후 표면의 Escape/trap 소유를 규정하므로 내부 비일관이 문서로도 입증됨. 컨벤션은 LDS 스스로 채택 선언한 WAI-ARIA APG(Modal.prompt.md:39, ConfirmDialog.prompt.md:31)이고 aria-modal 자기선언이 계약을 발동시키므로 취향 아님. WDS 계승 아님: FIGMA_NODE_AUDIT_QUEUE.json:396,399와 COVERAGE_GAPS.md:57이 Lightbox·CommandPalette를 product extension으로 명시, Alert는 WDS에 존재하나 스냅샷은 시각 변형만 정의하고 포커스/레이어링 동작은 어디에도 없음."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Alert, CommandPalette, and Lightbox now use the shared dialog focus controller with play coverage.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "DropdownMenu·Popover·Tooltip·HoverCard가 Escape로 닫히지 않음 — 닫기 어포던스 정책이 modal 표면과 정반대",
+          "surfaces": "components/overlay/DropdownMenu.jsx:217-224 (mousedown 외부클릭만), Popover.jsx:12-17 (동일), HoverCard.jsx (keydown 없음, grep 확인), components/content/Tooltip.jsx:146-153 (hover/focus 토글만)",
+          "currentPattern": "모든 modal 오버레이는 Escape dismiss를 보장하는 반면, 앵커드 오버레이 4종은 Escape 처리가 전무함. DropdownMenu는 role=\"menu\"/menuitem을 선언하고도 화살표 키 탐색·Escape·trigger 복원이 없고 마우스 외부클릭만 지원. Tooltip은 hover/focus로 열리지만 포인터를 움직이지 않고는 해제 불가.",
+          "conventionSource": "WAI-ARIA APG Menu Button Pattern(Escape는 메뉴를 닫고 trigger로 초점 복귀, 화살표 키로 항목 탐색) — Material Menus, Polaris ActionList/Popover, Primer ActionMenu, Fluent Menu 전부 동일하게 구현하는 합의. Tooltip은 WCAG 1.4.13 Content on Hover or Focus(Dismissable: 포인터 이동 없이 Escape로 해제)가 규범 출처. 내부 기준으로도 Modal.prompt.md:33이 'Escape·scrim·닫기 버튼' 정책을 명문화.",
+          "deviation": "닫기 어포던스 정책이 표면 등급에 따라 일관되게 좁아지는 게 아니라(modal: Esc+scrim+X → anchored: 외부클릭+Esc가 일반 합의) Esc가 통째로 빠짐. role=\"menu\" 시맨틱을 쓰면서 APG 키보드 계약을 이행하지 않아 스크린리더 사용자에게는 메뉴라고 안내되지만 메뉴처럼 동작하지 않음.",
+          "severity": "medium",
+          "recommendation": "앵커드 4종에 공통 light-dismiss 규약(Escape로 닫고 trigger 복원, 외부클릭 유지)을 추가. DropdownMenu는 최소한 ArrowUp/Down·Home/End·Enter 탐색을 붙이거나, 당장 어렵다면 role=\"menu\"를 내려 시맨틱 과장을 없앨 것. Tooltip은 Escape keydown 한 줄로 WCAG 1.4.13 충족 가능.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 증거 실재 확인. (1) DropdownMenu.jsx:217-224는 mousedown 외부클릭 리스너뿐이며 role=\"menu\"(260행)·menuitem/menuitemradio/menuitemcheckbox(100-108행)를 선언하고도 keydown·화살표 탐색·초점 복원이 전무. Popover.jsx:12-17 동일 패턴에 role=\"dialog\"(22행)까지 선언. HoverCard.jsx는 mouseenter/leave만 있고 키보드 핸들링 0(포커스로 열 수도 없음). Tooltip.jsx:146-153은 hover/focus 토글만 있고 Escape 없음 — WCAG 1.4.13 Dismissable 위반 서술 정확. (2) 대조군도 정확: dialog-focus.js:96-142가 Modal/ConfirmDialog/Drawer/Sheet에 Escape를 부여하고 Alert.jsx:85, CommandPalette.jsx:13, Lightbox.jsx:19가 각자 Escape 처리. Modal.prompt.md:33 인용 정확. (3) 컨벤션 정당: APG Menu Button 패턴은 Material/Polaris/Primer/Fluent가 실제로 갈리지 않는 합의이고 WCAG 1.4.13은 규범 기준이며, 저장소 스스로 Modal.prompt.md:39·ConfirmDialog.prompt.md:31에서 APG를 자기 계약으로 채택함. (4) WDS 계승 아님 — 오히려 반대: FIGMA_NODE_AUDIT_QUEUE.json:399가 \"Presentation 노드에는 Tooltip과 Menu만 있고 Popover/HoverCard는 product extension\"으로 분류(→ 일반 컨벤션이 기준)하며, WDS 스냅샷은 Tooltip/Menu의 시각 variant 축만 정의하고 키보드 동작은 정의하지 않음. 결정적 추가 증거: VARIANT_AUDIT_CHECKLIST.json:745-759의 \"anchored-overlay-behavior\" 체크리스트가 \"keyboard escape\"를 검증 항목으로 명시하고 localEvidence로 stories/OverlayAnchored.stories.jsx를 지목하는데, 해당 스토리와 4개 컴포넌트 어디에도 Escape가 없음(grep 무일치) — 저장소 자체 감사 문서가 주장하는 동작을 코드가 이행하지 않는 이중 내부 비일관. finding 유지, 오히려 이 체크리스트 증거를 finding에 추가할 것을 권고."
+          }
+        },
+        {
+          "title": "CommandPalette가 키보드 우선 표면인데 화살표 키 탐색·Enter 실행이 없음",
+          "surfaces": "components/overlay/CommandPalette.jsx:24-36 (input에 onKeyDown 없음, 항목은 onClick 전용 — grep으로 ArrowDown/Enter 부재 확인), CommandPalette.prompt.md:10",
+          "currentPattern": "⌘K 스타일 모달이라고 자체 문서(prompt.md:1)에 명시하면서, 검색 입력에서 ArrowDown/ArrowUp으로 결과를 이동하거나 Enter로 실행하는 경로가 없음. 항목 하이라이트는 onMouseEnter 인라인 스타일 변경뿐이라 활성 항목 개념 자체가 없고, 실행은 마우스 클릭으로만 가능. listbox/option 또는 combobox ARIA 시맨틱도 없음.",
+          "conventionSource": "WAI-ARIA APG Combobox(listbox popup) 패턴 + 사실상 표준인 command palette 관용(VS Code, GitHub, Slack, Linear, Raycast 모두 입력 유지 상태에서 ↑↓ 탐색·Enter 실행). 복수 제품·시스템의 강한 합의로, ⌘K 표면의 존재 이유가 키보드 조작임.",
+          "deviation": "키보드 단축키로 여는 표면이 정작 키보드로 조작 불가 — 컨벤션의 핵심 계약 위반. 같은 저장소의 modal 표면들이 Tab 순환까지 계약으로 검증(OverlayModal.stories.jsx play 테스트)하는 수준과도 어긋나는 내부 격차.",
+          "severity": "medium",
+          "recommendation": "aria-activedescendant 기반 combobox/listbox 시맨틱으로 활성 인덱스 상태를 추가하고 ArrowUp/Down·Enter·Home/End를 input keydown에서 처리. 실행 후 onClose 호출은 기존 onClick 경로와 동일하게 유지. finding 2의 useDialogFocus 이관과 같은 PR에서 처리하면 자연스러움.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "확정. CommandPalette.jsx는 input onKeyDown 없음·document Escape만 처리(13행)·항목 onClick/onMouseEnter 전용(30행)·listbox/combobox ARIA 및 activeIndex 부재가 실제로 확인됨. WDS 스냅샷(COVERAGE_AUDIT.json:273, FIGMA_NODE_AUDIT_QUEUE.json:399, PUBLIC_EXPORT_CLASSIFICATION.json:493-502)이 CommandPalette를 명시적 product extension으로 분류하므로 WDS 계승 아님 — 일반 컨벤션(WAI-ARIA APG combobox + VS Code/GitHub/Slack/Linear/Raycast 만장일치 관용)이 기준이고 이는 정당한 합의. 내부 비일관도 실재: 같은 저장소 Select.jsx:135-155가 ArrowDown/ArrowUp/Enter+activeIndex를 구현하고 OverlayModal.stories.jsx:157-165가 Tab 순환을 play 테스트로 계약 검증. 유일한 미세 수정: 항목이 button이라 Tab+Enter 실행은 기술적으로 가능하므로 \"마우스 클릭으로만 실행 가능\"은 \"입력 포커스를 유지한 채 탐색·실행 불가\"로 완화해 서술할 것."
+          }
+        },
+        {
+          "title": "Alert vs ConfirmDialog 역할 구분이 문서와 스토리에서 서로 모순됨",
+          "surfaces": "components/overlay/ConfirmDialog.prompt.md:19, stories/OverlayConfirmDialog.stories.jsx:32-34 vs components/overlay/Alert.prompt.md:4-7, stories/Overlay.shared.jsx:293-333 (AlertCard·AlertToastCard)",
+          "currentPattern": "문서 가이드는 'generic content modal에는 Modal, 단순 알림에는 Alert, 명시적 확인에는 ConfirmDialog'(ConfirmDialog.prompt.md:19), 스토리 본문도 '파괴적 작업은 범용 모달이 아니라 ConfirmDialog로 확인합니다'(OverlayConfirmDialog.stories.jsx:33)라고 안내. 그런데 Alert.prompt.md의 대표 예제가 'Delete item?' + Delete/Cancel(파괴적 확인)이고, Overlay.shared.jsx의 AlertCard/AlertToastCard 스토리도 tone=\"danger\"의 '작업을 중단할까요?' 중단/취소 확인 플로우를 Alert로 시연 — 같은 역할을 두 표면이 나눠 갖는 모습으로 렌더됨.",
+          "conventionSource": "WDS 원문: FIGMA_LOCAL_CONTENT_AUDIT.json:157542 — Alert는 '중요한 정보나 경고 메시지를 사용자에게 전달하는 UI 요소. 액션 내용 커스터마이징이 불가능한 웹에서 사용'(전달·고지용, 커스텀 액션 확인용 아님). 내부 기준: ConfirmDialog.prompt.md의 역할 3분법. 일반 합의 보강: Material·Polaris·Fluent 모두 파괴적 확인은 단일 전용 confirm 패턴으로 안내.",
+          "deviation": "표면별 역할 구분이 문서에는 컨벤션대로 서 있으나 데모(스토리·prompt 예제)가 이를 위반해, 시스템 소비자가 보는 렌더 결과는 '파괴적 확인 = Alert도 됨'을 가르침. LDS가 ConfirmDialog를 확장으로 추가한 이상 WDS Alert의 고지용 정의(rule 1)와도 어긋나는 방향의 시연.",
+          "severity": "medium",
+          "recommendation": "AlertCard/AlertToastCard 스토리와 Alert.prompt.md 예제를 고지형 시나리오(예: '세션이 만료되었습니다 → 확인')로 교체하고, Alert.prompt.md에 ConfirmDialog로 보내는 교차 안내 한 줄을 추가. visual-parity 태그 스토리 교체는 스냅샷 갱신을 동반하므로 그 범위만 확인 후 진행.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 증거 실재 확인: ConfirmDialog.prompt.md:19 '단순 알림에는 Alert, 명시적 확인에는 ConfirmDialog', OverlayConfirmDialog.stories.jsx:33 '파괴적 작업은 ... ConfirmDialog로 확인합니다', Alert.prompt.md:1,4-7 'for urgent or important decisions' + 'Delete item?' Delete/Cancel(variant=negative), Overlay.shared.jsx:293-333 AlertCard/AlertToastCard tone=danger '작업을 중단할까요?' 중단/취소. 추가 보강 증거: stories/OverlayConfirmAlert.stories.jsx:26-31 — Alert 자체 스토리의 기본 데모도 '리포트를 삭제할까요?' + 삭제(파괴적 확인)이며, Alert.prompt.md:1의 'urgent or important decisions' 정의는 ConfirmDialog.prompt.md:19의 '단순 알림' 역할 규정과 문서 대 문서로 정면 충돌 — rule 4 내부 비일관이 명백함. WDS 계승 아님: FIGMA_LOCAL_CONTENT_AUDIT.json 노드 16215:20040(=line 157542)의 Alert 정의는 '중요한 정보나 경고 메시지를 사용자에게 전달... 액션 내용 커스터마이징이 불가능한 웹에서 사용'으로 전달·고지 지향이고, 해당 블록의 데모 텍스트는 '간략한 제목/목적을 명확하고 간단히 안내합니다'뿐(파괴적 확인 데모 없음). WDS에는 ConfirmDialog가 없어 3분법 자체가 LDS 창작이므로 모순의 계승은 불가능. 단, 두 가지 수정 필요: (1) '일반 합의 보강' 레그는 사실과 다르므로 삭제할 것 — Apple HIG는 파괴적 확인을 정확히 alert로 처리하고(Cancel/Delete), Material의 AlertDialog·Fluent Dialog modalType=alert·Polaris Modal(destructive primaryAction)도 alert형 다이얼로그가 곧 확인 표면이라 'alert는 확인용이 아니다'는 합의가 아님. finding은 내부 비일관(rule 4) + WDS 스냅샷 정의(rule 1)에만 근거해야 함. (2) 권고 방향은 열어둘 것 — WDS Alert가 platform=iOS/Android/web 모방(OS alert는 관례상 파괴적 확인 수행)이고 negative variant를 가지므로, 데모를 ConfirmDialog로 옮기는 대신 ConfirmDialog.prompt.md:19의 역할 문구('단순 알림')를 'WDS 플랫폼형 고정 액션 alert vs LDS 제품 확인 표면'으로 재규정하는 쪽이 WDS 충실 해법일 수 있음. 모순 해소 자체가 finding이며 어느 쪽을 고칠지는 설계 결정."
+          }
+        },
+        {
+          "title": "Toast 지속시간(auto-dismiss) 컨벤션이 시스템 어디에도 정의·안내되지 않음",
+          "surfaces": "components/overlay/Toast.jsx, ToastStack.jsx (duration 관련 코드 없음 — grep 확인), Toast.prompt.md:8-12, ToastStack.prompt.md, Snackbar.prompt.md:12",
+          "currentPattern": "Toast/ToastStack은 duration prop도, 권장 지속시간 문서도 없음(grep '지속|auto-dismiss|duration' 결과 오버레이 폴더에서 0건). ToastStack 문서는 'Pair with your own queue state'로 큐·타이머를 전부 제품에 위임하며 위치 5종만 안내. 지속시간·최대 동시 개수·해제 규칙에 대한 기준이 부재. 부수적으로 Toast는 negative(오류) 톤에도 role=\"status\"/aria-live=\"polite\" 고정(Toast.jsx:57-58).",
+          "conventionSource": "WDS 원문: FIGMA_LOCAL_CONTENT_AUDIT.json:157434 — Toast는 '화면에 잠시 나타났다 사라지는 짧은 알림'(자동 소멸이 정의의 일부). 일반 합의: Material(스낵바 4–10초), Polaris Toast(기본 5초), Carbon(5초), iOS 배너 등 주요 시스템 전부 기본 지속시간을 시스템 차원에서 규정.",
+          "deviation": "WDS가 '잠시 나타났다 사라지는' 것으로 정의한 표면을 LDS는 무기한 표시가 기본이 되도록 제공하면서 지속시간 기준을 제품마다 재발명하게 남겨둠. 헤드리스(큐 미소유) 설계 자체는 유효한 선택이지만, 그 경우에도 권장 지속시간·액션 있는 토스트의 연장 규칙(WCAG 2.2.1 고려)·오류 톤의 live-region 등급은 시스템이 문서로 소유해야 함.",
+          "severity": "low",
+          "recommendation": "Toast.prompt.md/ToastStack.prompt.md에 지속시간 컨벤션(예: 기본 5초, 액션 포함 시 8초 또는 수동 해제, hover 시 타이머 일시정지, 동시 표시 상한)을 명문화하고 스토리에 자동 해제 데모 1건 추가. 코드 변경 없이 문서만으로 1차 해결 가능. negative 톤의 role=\"alert\" 승격은 별도 검토.",
+          "resolutionType": "documentation-only",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "검증 통과. Toast.jsx/ToastStack.jsx/Toast.d.ts에 duration·타이머·최대개수 부재, 프롬프트 문서 3종에 지속시간 안내 0건 — 전부 실파일로 확인. WDS 인용문은 feedback-toast.pdf 1면과 FIGMA_LOCAL_CONTENT_AUDIT.json에서 원문 그대로 확인(단 ':157434' 위치 표기는 부정확 — 파일 내 다수 위치에 존재). WDS 계승 아님: WDS PDF는 시각 축(variant/leadingIcon/customize=icon)만 정의하고 Figma는 타이밍을 인코딩할 수 없으므로 duration 부재는 WDS의 결정이 아니며, WDS 설명문 자체가 '잠시 나타났다 사라지는'으로 일시성을 정의에 포함. 결정타: LDS는 WDS PDF에 없는 action/onAction/onClose/closeLabel을 이미 추가해 해제 '수단'은 소유하면서 해제 '시점'만 제품에 위임 — 'WDS 축만 구현' 방어 불가, 내부 스코프 비일관. 컨벤션은 메타 수준에서 정당: Material 4s/Polaris 5s/Carbon 5s 권고/Spectrum 5-10s에 더해 헤드리스 프리미티브인 Radix Toast조차 duration 기본 5000ms를 소유. 단 aria-live 부분은 약함 — Material web도 전 톤 role=\"status\" 사용, APG도 갈리는 사안이므로 '오류 톤 assertive'를 위반으로 격상하지 말고 부수 노트로 유지 권장. 권고도 비례적(타이머 강제 아닌 문서 소유 + WCAG 2.2.1 연장 규칙)."
+          }
+        }
+      ],
+      "rejectedClaims": []
+    },
+    {
+      "key": "status-feedback",
+      "lens": "상태·피드백 컨벤션 (심각도-색 매핑, 색·아이콘 이중 부호화, empty state 해부학, 스켈레톤/스피너 구분, 라이브 리전·소멸 정책)",
+      "reviewed": "루트 C:/Users/seoul/OneDrive/사진/문서/LK Design System. 구현 정독: components/status/(Banner, Callout, EmptyState, Spinner, Skeleton, status-presentation.js), components/overlay/(Toast, Snackbar, ToastStack), components/feedback/(Badge, Notification), components/content/(StatusBadge, ContentBadge), components/robotics/ConnectionBadge, components/data/ResourceState·FileBrowser. 토큰 실값: tokens/color-semantic.css(status hex·color-mix), tokens/color-components.css(badge/notification/transient 토큰). 스토리: StatusFeedback, OverlayToast, StatusEmpty, StatusLoading, FeedbackNotifications. WDS 근거: docs/references/wds/COMPONENT_CENSUS.json(matched/ldsOnly 판정 — Banner·Callout·EmptyState·Notification·Snackbar·Spinner는 LDS-only), VARIANT_AUDIT_CHECKLIST.json(Toast 변형 normal/positive/cautionary/negative, Skeleton 축), COMPONENT_STYLES.json(_Badge/Status·_Badge/Value·Content Badge 스타일), FIGMA_LOCAL_CONTENT_AUDIT.json. 프롬프트 문서: Banner/Toast/Badge/StatusBadge/Spinner/Skeleton .prompt.md. 검증 결과 준수 확인(비-finding): 기본 심각도-색 hex 매핑(빨강/주황/초록/파랑), statusToneStyle의 색·글리프 쌍(4종 구분 형상), EmptyState 해부학(아이콘+제목+설명+액션), 스켈레톤(콘텐츠 자리)/스피너(버튼·오버레이) 사용 구분, Toast 다크 표면·변형 축의 WDS 파리티. 자동 소멸 타이머는 시스템에 부재(제품 위임)라 success/error 소멸 정책 위반은 렌더 증거 없음.",
+      "confirmedFindings": [
+        {
+          "title": "레거시 심각도 별칭(info/success/warning/error)이 표면마다 다른 심각도로 렌더됨 — error가 초록/회색/파랑으로 뒤집힘",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/ — components/status/Banner.jsx:9-18, components/overlay/Toast.jsx:27-33, components/status/Callout.jsx:7-13·33-34, components/feedback/Notification.jsx:74·78, components/status/status-presentation.js:34-36, components/content/StatusBadge.jsx:3-12·30, components/robotics/ConnectionBadge.jsx:28",
+          "currentPattern": "같은 `tone` prop·같은 별칭 어휘가 표면마다 다르게 해석된다. Banner는 CANONICAL_TONE으로 info→signal(파랑), error→negative(빨강)로 정규화하고 Toast도 normalizeTone으로 정규화한다. 그러나 Callout은 미등록 톤을 전부 'signal'로 강제해 tone=\"error\"가 파란 info 서피스+info 아이콘으로 렌더되고(Callout.jsx:33 `STATUS_TONE_BY_CALLOUT_TONE[tone] ? tone : 'signal'`), Notification은 statusToneStyle의 'offline' 폴백을 타서 tone=\"error\"가 중립 회색 타일로 렌더되며(status-presentation.js:34 `?? STATUS_TONE_STYLE['offline']`), StatusBadge는 `DOT[tone] || DOT.positive`(StatusBadge.jsx:30)라서 tone=\"error\"가 초록(positive) 점으로 렌더된다. ConnectionBadge도 미지 상태를 `|| CFG.online`(초록)으로 폴백한다. 알 수 없는 심각도의 폴백 철학도 중립(statusToneStyle)/info(Callout)/성공(StatusBadge·ConnectionBadge) 3가지로 갈린다.",
+          "conventionSource": "판정규칙 4(내부 비일관 — 최강 근거): 같은 저장소의 Banner·Toast는 별칭을 정규화하는데 Callout·Notification·StatusBadge는 침묵 오렌더링한다. 보편 심각도-색 매핑(빨강=오류)은 Apple HIG·Material·Polaris·Primer·GOV.UK 공통 합의이며, 오류가 초록/파랑으로 표시되는 것은 이를 정면 위반. 안전 시스템의 fail-safe 관행상 미지 상태는 중립으로 떨어져야 하며 '성공'으로 승격되어선 안 된다(로보틱스 운영 맥락에서 특히 위험).",
+          "deviation": "동일한 `tone=\"error\"` 값이 Banner/Toast에서는 빨강, Callout에서는 파랑(info), Notification에서는 회색(중립), StatusBadge에서는 초록(positive)으로 렌더된다. 심각도 의미가 표면 간에 보존되지 않고, 두 표면에서는 심각도가 반전(오류→성공/정보)된다.",
+          "severity": "high",
+          "recommendation": "Banner의 CANONICAL_TONE 정규화 맵을 status-presentation.js로 승격해 Callout·Notification·StatusBadge가 공유하게 하라. 미지 톤 폴백은 전 표면에서 중립(offline)으로 통일하고, StatusBadge·ConnectionBadge의 positive/online 폴백을 제거하라(개발 모드 경고 권장).",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 인용 라인 실재·정확: Banner/Toast는 별칭 정규화(error→negative 빨강), Callout은 미등록 톤을 'signal'로 강제(error→파랑 info 서피스+아이콘), Notification은 statusToneStyle 'offline' 폴백(error→중립 회색 타일), StatusBadge는 DOT.positive 폴백(error→초록 점 #13BE4C), ConnectionBadge는 미지 status→CFG.online(초록). 토큰 실값으로 색 확인(tokens/color-semantic.css:34,85). 컨벤션 정당: 빨강=오류는 HIG/Material/Polaris/Primer/GOV.UK 공통이고, 판정규칙 4의 내부 비일관(정규화 vs 침묵 오렌더, 폴백 철학 signal/중립/positive 3분열)이 독립적으로 성립. WDS 계승 아님: COMPONENT_CENSUS.json에서 Banner·Callout·Notification은 ldsOnly, WDS _Badge/Status는 Available=True/False 이진 축뿐이며 코드 폴백 동작은 Figma 스냅샷이 정의할 수 없음. 유일한 유효 반론(치명적이지 않음): Callout/Notification/StatusBadge의 .d.ts 계약에는 'error'가 없어 반전은 계약 외 입력에서만 발생하고, 저장소 스토리 중 tone=\"error\"를 해당 표면에 렌더하는 곳은 없음(잠재적 결함). 다만 Toast.d.ts:4가 별칭을 \"Legacy ... aliases are supported\"로 시스템 어휘로 공표하고 스토리가 활발히 사용하며(Overlay.shared.jsx:59,92-93; StatusFeedback.stories.jsx:26,45), StatusBadge는 'warning'/'online'만 반쪽 지원해(StatusBadge.d.ts:5, Content.shared.jsx:118) 'error'만 침묵으로 초록 반전됨 — finding 유지. 권고 시 \"별칭 어휘 통일 + 미지 톤 중립 폴백\"으로 표현하되, ConnectionBadge의 'error' 키 자체는 빨강으로 올바르다는 점과 .d.ts 계약 차이를 finding 본문에 명시하면 더 정확해짐."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Status aliases now pass through normalizeStatusTone with a stable unknown fallback.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "오류 피드백의 라이브 리전 등급이 표면마다 어긋남 — Toast/Banner는 negative에서도 항상 role=\"status\"(polite)",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/ — components/overlay/Toast.jsx:57-58, components/status/Banner.jsx:44, 대비: components/forms/ValidationSummary.jsx:166-167, components/data/ResourceState.jsx:108-109, components/cards/MetricCard.jsx:95, components/forms/DateRangeField.jsx:111, components/data/FileBrowser.jsx:80",
+          "currentPattern": "Toast는 tone과 무관하게 `role=\"status\" aria-live=\"polite\"`를 하드코딩하고(negative 스토리 stories/OverlayToast.stories.jsx:38 포함), Banner도 tone=error에서 기본 `role=\"status\"`다. 반면 같은 저장소의 ValidationSummary(`role={errorCount > 0 ? 'alert' : 'status'}`), ResourceState(error/offline→alert+assertive), MetricCard(error→role=\"alert\"), DateRangeField, FileBrowser는 모두 오류를 assertive로 승격한다. 즉 저장소 자체 규범은 '오류=alert'인데 정작 핵심 피드백 표면 2곳만 이를 따르지 않는다.",
+          "conventionSource": "내부 합의(5개 표면이 오류→role=\"alert\") + WAI-ARIA APG alert 패턴('시간에 민감한 중요 메시지는 role=alert'), MDN, 그리고 주요 구현 합의(MUI Alert 기본 role=\"alert\", Chakra UI toast status=error→alert, GOV.UK Error Summary role=\"alert\").",
+          "deviation": "동적으로 삽입되는 negative Toast/Banner가 polite로만 안내되어 스크린리더 사용자는 진행 중 발화가 끝난 뒤에야 오류를 듣는다. 같은 심각도가 표면에 따라 polite/assertive로 갈리는 내부 비일관.",
+          "severity": "high",
+          "recommendation": "Toast·Banner에서 tone이 negative(error)일 때 기본 role=\"alert\"(aria-live=\"assertive\")로 승격하는 tone 연동 기본값을 넣어라(현행 ...rest 오버라이드는 유지). ResourceState가 이미 Banner에 role=\"alert\"를 주입하는 패턴이 참조 구현이다.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "전 항목 실물 확인. (1) 증거: Toast.jsx 57-58행 role=\"status\" aria-live=\"polite\" 하드코딩(normalizeTone 30행이 error→negative 매핑, negative 스토리 stories/OverlayToast.stories.jsx:38 존재), Banner.jsx 44행 tone 무관 role=\"status\". 대비 표면 5곳 모두 정확 — ValidationSummary.jsx:166-167(errorCount>0→alert), ResourceState.jsx:108-109(error/offline→alert+assertive), MetricCard.jsx:95(error→alert), DateRangeField.jsx:111(alert), FileBrowser.jsx:80(error→alert). 추가로 DataGrid.jsx:643(error→alert), ViewerFrame.jsx:631(error→assertive)까지 내부 규범은 최소 7개 표면. (2) 저장소 스스로도 이 갭을 인정: docs/references/quality/QUALITY_GAP_AUDIT.json의 \"상태 심각도와 live-region 정책의 불일치\" 항목이 동일 증거로 medium 판정, docs/QUALITY_AUDIT_PLAN.md:57도 명시 — 의도된 설계가 아니라 알려진 결함. Toast.prompt.md/Banner.prompt.md/ACCESSIBILITY_CONTRACTS.md 어디에도 'error 토스트는 polite' 같은 의도적 결정 문서 없음(계약 문서는 정책 명시를 요구만 하고 매핑 미정의). (3) WDS 계승 아님: docs/references/wds/ 전체에서 aria-live/role/polite/assertive 무일치, \"alert\" 매치는 전부 Alert 모달 컴포넌트 명칭 — WDS는 Figma 시각 스냅샷이라 발화 시맨틱을 정의하지 않음. (4) 컨벤션: APG alert 패턴·MDN·MUI Alert·GOV.UK Error Summary는 실재하는 합의이며, 특히 인라인 Banner(error)는 외부 합의가 강함. 단 유일한 약점: '토스트'에 한해서는 생태계가 실제로 갈림(Carbon ToastNotification 기본 role=\"status\", Spectrum도 polite 성향 — Roselli/Higley 등 alert 남용 경계 가이드 존재)이므로 외부 컨벤션만으로는 Toast 부분이 논쟁 여지 있음. 그러나 판정규칙 4(내부 비일관은 출처 없이도 finding)에 의해 같은 저장소 7개 표면의 error→alert 규범과의 어긋남만으로 성립. 부차적 사실: 두 컴포넌트 모두 {...rest}가 role 뒤에 전개되어 소비자가 role=\"alert\"로 덮어쓸 수는 있으나 기본값이 시스템 규범이므로 finding 유효."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Negative Banner and Toast feedback now uses alert/assertive live-region semantics.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "ResourceState error가 EmptyState의 고정 primary-blue 타일에 negative 글리프를 넣어 색·아이콘 쌍 규칙을 깨뜨림",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/ — components/status/EmptyState.jsx:20, components/data/ResourceState.jsx:33-38·148-157, 쌍 규칙 출처: components/status/status-presentation.js:14-19, components/status/Banner.prompt.md:12",
+          "currentPattern": "EmptyState는 아이콘 타일 색을 `--color-semantic-primary-surface-normal`+`--color-semantic-primary-normal`(브랜드 블루 #3878B3)로 하드코딩하고 tone axis가 없다. ResourceState의 error 상태는 이 타일에 `circle-close-fill`(시스템의 negative 전용 글리프, status-presentation.js:15)을 넣어 렌더한다 — 결과: 오류 글리프가 info/브랜드 파랑으로 칠해진 채 표시된다. stale/offline/restricted(tone: warning)도 동일하게 파란 타일이다.",
+          "conventionSource": "내부 — statusToneStyle이 확립한 색·글리프 쌍(negative=circle-close-fill+빨강)과 Banner.prompt.md의 '같은 상태는 같은 모양으로 표시' 규칙. 일반 — 심각도-색 보편 매핑(빨강=오류; Material/HIG/Polaris/Primer 합의). EmptyState는 WDS 미정의(COMPONENT_CENSUS.json ldsOnly)라 일반 컨벤션이 기준. 색맹 대비 이중 부호화 관점에서도 색(정보)과 형태(오류)가 서로 모순되는 신호를 보낸다.",
+          "deviation": "오류·경고 상태의 EmptyState가 심각도 색 대신 브랜드 파랑으로 렌더되어, 같은 negative 심각도가 Banner/Callout/Toast(빨강)와 EmptyState(파랑)에서 다르게 보인다. 색과 글리프가 서로 다른 심각도를 말한다.",
+          "severity": "medium",
+          "recommendation": "EmptyState에 tone prop을 추가해 타일 surface/foreground를 statusToneStyle에서 끌어오게 하고(기본은 현행 primary 유지), ResourceState가 STATE_PRESENTATION의 tone을 EmptyState로 전달하게 하라.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 증거 실재 확인. EmptyState.jsx:20은 tone 축 없이 primary-surface/primary-normal(#3878B3, 광의 status-info와 동일 값)을 하드코딩하고, ResourceState.jsx:148-157의 blocking 분기는 presentation.tone을 완전히 버린 채 negative 전용 글리프 circle-close-fill(status-presentation.js:14-19에서 #A82727 negative-text와 쌍)을 파란 타일에 넣는다. finding보다 더 강한 내부 비일관도 확인: 같은 state=\"error\"가 콘텐츠 보존 시 빨간 Banner(Banner.jsx의 error→negative 매핑, ResourceState.jsx:125-137), 콘텐츠 부재 시 파란 EmptyState로 — 동일 컴포넌트 내 동일 상태가 두 색으로 렌더된다. WDS 계승 아님: COMPONENT_CENSUS.json에서 EmptyState는 ldsOnly 배열 소속(구조적으로 검증), WDS Feedback 노드는 Toast/Snackbar/Alert만 포함(FIGMA_NODE_AUDIT_QUEUE.json closureNote), ResourceState는 LDS Product extension(LAYER_CLASSIFICATION.json:86). 소폭 정정 2건: (1) Banner.prompt.md:12는 글리프 동일성 규칙이지 타일 색 규칙은 아니므로 색 쌍 근거는 statusToneStyle 구조와 line 15에 두는 것이 정확. (2) warning tone 상태 중 offline(circle-block)·restricted(lock)는 severity 글리프가 아니어서 색·글리프 모순은 error(circle-close-fill)와 stale에서 가장 명확 — 권고 시 error 케이스를 주 근거로 삼을 것. EmptyState 기본 용도(empty/no-results)의 파란 타일 자체는 문제 아님; 결함은 severity 상태를 tone 없는 컴포넌트로 라우팅한 ResourceState 조합부다."
+          }
+        },
+        {
+          "title": "StatusBadge pulse·ConnectionBadge blink만 prefers-reduced-motion 가드가 없고, critical은 모션 단일 부호화",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/ — components/content/StatusBadge.jsx:27·43-44, components/robotics/ConnectionBadge.jsx:25·29, 대비: components/status/Spinner.jsx:24·27, components/status/Skeleton.jsx:38, components/status/ProgressBar.jsx:40, components/status/CircularProgress.jsx:36, tokens/color-components.css:15",
+          "currentPattern": "StatusBadge의 `lk-status-pulse`(무한 반복)와 ConnectionBadge의 `lk-conn-blink`(무한 blink)는 reduced-motion 가드 없이 주입된다. 같은 저장소의 다른 모든 무한 상태 애니메이션(Spinner spin·brand-wave, Skeleton shimmer, ProgressBar indeterminate, CircularProgress spin)은 전부 `@media (prefers-reduced-motion: reduce)` 가드를 넣고 prompt.md에 'Motion respects prefers-reduced-motion'을 명시한다. 또한 `--component-status-badge-critical-indicator`는 negative와 동일 토큰(`--color-semantic-status-negative-foreground`)이라, critical과 negative를 구분하는 유일한 채널이 pulse 모션이다.",
+          "conventionSource": "내부 — 로딩·상태 계열 5개 컴포넌트의 일관된 reduced-motion 가드(판정규칙 4). 일반 — WCAG 2.2.2(움직이는 콘텐츠) 및 prefers-reduced-motion 존중 관행(Material, Polaris, HIG 모션 지침 합의), 색맹 대비 이중 부호화 원칙(모션·색 어느 하나에만 의존 금지 — WCAG 1.4.1 확장 해석).",
+          "deviation": "reduced-motion 사용자에게 pulse/blink가 계속 재생되는 내부 비일관이며, 가드를 단순 추가하면 이번엔 critical(e-stop/충돌)과 negative가 시각적으로 완전히 동일해진다 — 안전 최상위 심각도가 모션 하나에만 부호화되어 있다.",
+          "severity": "medium",
+          "recommendation": "두 keyframes에 reduced-motion 가드를 추가하되, critical에는 모션 외 정적 채널(예: 이중 링/전용 글리프 또는 별도 critical 색 토큰 분리)을 부여해 reduced-motion·색각 이상 환경에서도 negative와 구분되게 하라.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "확인됨. StatusBadge.jsx:27,43-44와 ConnectionBadge.jsx:25,36의 무한 pulse/blink는 가드 없음이 실재하고, Spinner(:24,27)·Skeleton(:38)·ProgressBar(:40)·CircularProgress(:36)는 전부 @media (prefers-reduced-motion: reduce) 가드 + prompt.md 명시로 내부 비일관(판정규칙 4) 성립. critical-indicator = negative-indicator = --color-semantic-status-negative-foreground도 color-components.css:15/39/64에서 3개 테마 블록 모두 확인 — JSDoc의 'vivid safety exception' 주장과 토큰 실값이 모순. WDS 계승 아님: 스냅샷의 _Badge/Status는 Available=True/False 축뿐인 정적 컴포넌트(COMPONENT_STYLES.json:1635)이고 pulse/critical은 LDS 추가 API(COMPONENT_STYLE_PARITY.md:141 'Tone/pulse API preserved'); 오히려 WDS 커버리지 감사가 Animate=False를 reduced-motion 처리로 매핑하며 '상태 컴포넌트 전반에 reduced motion 구현'을 기록(VARIANT_AUDIT_CHECKLIST.json:820)해 가드가 시스템의 공약된 패턴임을 뒷받침. 두 가지 보정 필요: (1) '만'은 부정확 — robotics/EquipmentStatusCard.jsx:19,74의 lk-equip-dim도 가드 없는 세 번째 무한 애니메이션이므로 finding 범위에 포함할 것. (2) '모션 단일 부호화'는 과장 — 배지에 소비자 제공 텍스트 라벨이 항상 있어 문자 채널은 존재; 정확한 표현은 'tone 수준 스타일링(점 색+모션)에서 critical과 negative의 유일한 구분이 모션'이며, 단순 animation:none 가드 추가 시 두 tone이 스타일상 동일해지므로 critical 전용 토큰 값 분리(또는 정적 링 등 비모션 부호) 병행 권고는 타당."
+          }
+        },
+        {
+          "title": "Badge만 색상명 톤 축(amber/red/navy/steel)을 사용 — 저장소·업계의 의미 기반 명명과 어긋남",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/ — components/feedback/Badge.jsx:3-13, components/feedback/Badge.prompt.md:8, 대비: components/content/ContentBadge.jsx:3-12, components/content/StatusBadge.jsx:3-12, components/status/status-presentation.js:1-32",
+          "currentPattern": "Badge의 톤 축은 `signal·navy·steel·amber·red`(+별칭 indigo/green/ink)로 색상명이다. amber는 cautionary-surface/text 토큰을, red는 negative 토큰을, green은 positive 토큰을 소비하므로 실질 의미는 심각도인데 이름만 색상이다. 같은 저장소의 ContentBadge(neutral/accent/positive/cautionary/negative), StatusBadge(positive/cautionary/negative/offline/…), statusToneStyle 정규 문법은 모두 의미 기반이다. 최근 커밋 'Unify cross-component grammars' 이후에도 Badge만 남았다.",
+          "conventionSource": "WDS 증거 — 로컬 스냅샷에 hue-명명 톤 축 없음(docs/references/wds/COMPONENT_CENSUS.json `_Badge/Value` Variant=Normal 단일, Color axis 값은 Neutral/Primary/Normal/Light뿐 → hue 명명은 LDS 자체 선택). 일반 합의 — Polaris Badge `tone=critical/warning/success/info`, Primer Label `variant=danger/attention/success`, Atlassian Lozenge `appearance`, MUI `severity` 등 주요 시스템이 상태 배지를 의도 기반으로 명명. 내부 비일관(판정규칙 4)이 1차 근거.",
+          "deviation": "같은 심각도를 표현하는 데 `<StatusBadge tone=\"cautionary\">` vs `<Badge tone=\"amber\">`처럼 표면마다 다른 어휘가 필요하다. 색상명 API는 테마/리브랜딩 시 이름-값 괴리를 만들고(이미 green이 '별칭'으로 강등된 상태), 심각도 의미 전달을 소비자 추론에 맡긴다.",
+          "severity": "medium",
+          "recommendation": "Badge에 canonical `positive/cautionary/negative` 톤을 1급으로 추가하고 amber/red/green을 하위 호환 별칭으로 강등하라(Banner의 CANONICAL_TONE 방식과 동형). navy/steel처럼 진짜 장식용 hue는 유지해도 무방하다.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "확인됨. Badge.jsx:3-13의 톤 축(signal/navy/steel/amber/red + indigo/green/ink 별칭)과 prompt.md:8 문서화 정확. amber→--component-badge-cautionary-bg, red→--component-badge-negative-bg, green→--component-badge-positive-bg로 토큰명은 의미 기반인데 API만 색상명(파일 내부에서도 이름-값 괴리). ContentBadge/StatusBadge/status-presentation.js는 동일 심각도 토큰을 cautionary/negative/positive로 명명 — 내부 비일관(규칙 4) 성립. WDS 계승 아님: docs/references/wds 전체에서 Navy/Steel/Signal/Ink/Amber 문자열 부재, 모든 Color= 변형 값은 Normal/White/Black/Primary/Assistive/Neutral/Accent뿐, COMPONENT_CENSUS.json:883의 _Badge/Value는 Variant=Normal 단일(중립 회색 #70737C, COMPONENT_STYLES.json:1649) — WDS 배지에는 다색 톤 축 자체가 없어 hue 명명은 LDS 자체 선택. 외부 합의도 심각도 배지에 한해 유효(Polaris tone/Primer variant/Atlassian appearance/MUI severity; Carbon Tag·Chakra의 hue 명명은 범주형 태그 API라 반례 아님). 사소한 과장 하나: navy는 ContentBadge TONES(line 6)에도 존재하므로 'Badge만'은 amber/red/green 심각도 hue에 한정해 정확 — finding 문구에서 navy/steel은 브랜드-중립명, amber/red/green을 핵심 근거로 다듬을 것."
+          }
+        },
+        {
+          "title": "ContentBadge solid 상태 톤이 흰 글자를 강제 — 흰색-on-amber는 자체 AA 텍스트 토큰 정책·업계 합의 위반",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/ — components/content/ContentBadge.jsx:14-15·112-116, tokens/color-semantic.css:35-36",
+          "currentPattern": "ContentBadge는 soft/outlined에서 AA 보정 status *text* 토큰(#7A4A00 등)을 쓴다고 자체 주석(14-15행)으로 명시하지만, `variant=\"solid\"`는 neutral 외 모든 톤에서 `solidFg`를 static-white로 고정한다(114-116행). 레거시 `tone=\"cautionary\"`+solid 조합이 API로 열려 있어 amber #EB9C33 위 흰 글자(대비 약 2.2:1), negative #EE5656 위 흰 글자(약 3.4:1)가 caption/label 크기(12-14px)로 렌더될 수 있다.",
+          "conventionSource": "WDS 증거 — Content Badge의 status hue solid는 WDS 스냅샷에 없음(COMPONENT_CENSUS.json Color=Neutral/Primary 계열만 → LDS 확장 영역, 일반 컨벤션 적용). 일반 합의 — 노랑/amber 표면엔 어두운 텍스트: GOV.UK yellow tag(검정 텍스트), Bootstrap warning(dark text), Material amber(onColor=black), Polaris attention 계열. WCAG 1.4.3(AA 4.5:1). 내부 — 같은 컴포넌트의 soft/outlined AA 정책과 모순.",
+          "deviation": "solid 변형에서만 자체 AA 텍스트 토큰 정책이 깨지고, 특히 cautionary solid는 모든 주요 시스템이 피하는 흰색-on-amber 조합을 렌더한다.",
+          "severity": "low",
+          "recommendation": "solid의 cautionary(및 필요시 positive/negative)는 어두운 전경(status-*-text 계열) 또는 더 짙은 solid 배경 토큰으로 교체하라. 스토리에 없는 조합이므로 solid를 neutral/accent 전용으로 좁히는 선택지도 있다 — 어느 쪽이든 결정 필요.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        }
+      ],
+      "rejectedClaims": []
+    },
+    {
+      "key": "aesthetics",
+      "lens": "색·타이포·밀도의 미적 균형 (상태색 팔레트 응집도, 다크 모드 명도 관계, 타이포 스케일 리듬, 브랜드-primary 관계, 대시보드 카드 밀도)",
+      "reviewed": "저장소 루트 C:/Users/seoul/OneDrive/사진/문서/LK Design System. 토큰 실값 전수 판독: tokens/color-semantic.css(113토큰×라이트/다크, 상태 4종·surface·brand 전부 HSL 환산), tokens/color-atomic.css(13패밀리 176토큰, 50단계 채도 비교), tokens/color-components.css, tokens/typography.css(fs-* 11단계와 7-tier 16스타일 비율 계산), tokens/spacing.css, tokens/components.css(카드 계약). WDS 기준 대조: docs/references/wds/COLOR_ARCHITECTURE.json(시맨틱 59종·아토믹 176종 원값), FOUNDATION_PARITY_REPORT.md(타이포 16/16 파리티 확인), FIGMA_LOCAL_CONTENT_AUDIT.json(타입 스케일 라인박스), CONFLICT_AUDIT.md, VISUAL_TOKEN_EXCEPTIONS.json. 렌더 표면: components/cards(Card·MetricCard·NewsCard·ProductCard·SpecRow·Stat), forms/Select·SearchableMultiSelect, overlay(anchored-panel-style·DropdownMenu·CommandPalette 등), navigation/SideNav, content/Overline, feedback/Tag, data/VisibilityManager, stories/LayoutDashboardGrid·LayoutDashboardShell. 검증 결과 문제 없음으로 확인한 항목: 다크 표면 사다리(5/7/15/17)는 WDS와 일치·명도 역전 없음, 다크 상태색 60단계 매핑은 WDS 구조 그대로(green-60 채도 하락은 WDS 상속), label-alternative 0.61→0.74는 AA 근거로 문서화된 의도적 오버라이드(docs/AI_DESIGN_SYSTEM_GUIDE.md:27), 7-tier 타이포는 WDS .fig와 완전 파리티, cautionary 표면 믹스 18%(vs 14%)는 옐로 명도 보정으로 판단.",
+      "confirmedFindings": [
+        {
+          "title": "다크 모드에서 같은 '떠 있는 패널' 패턴이 두 가지 표면색으로 갈라짐 (surface-overlay vs background-elevated-normal)",
+          "surfaces": "components/forms/Select.jsx:224, components/forms/SearchableMultiSelect.jsx:210 vs components/overlay/anchored-panel-style.js:9, components/overlay/DropdownMenu.jsx:249, components/overlay/CommandPalette.jsx:21, components/overlay/Modal.jsx 등; 토큰: tokens/color-semantic.css:76,192, tokens/source.json(surface-overlay, origin: lds-extension)",
+          "currentPattern": "Select·SearchableMultiSelect의 리스트박스 팝오버만 --color-semantic-surface-overlay(다크 #1A2036 = HSL 227°/35%/16%, 네이비 틴트)를 쓰고, DropdownMenu·CommandPalette·Modal·Drawer 등 다른 모든 플로팅 패널은 --color-semantic-background-elevated-normal(다크 #212225 = HSL 225°/6%/14%, 뉴트럴)을 쓴다. 라이트 모드에서는 두 토큰이 모두 #FFFFFF라 이 분기가 보이지 않고 다크에서만 채도 35% vs 6%의 확연히 다른 패널이 나란히 렌더된다. 유사하게 background-band도 라이트는 뉴트럴 #F4F4F5인데 다크는 네이비 #0E121F(HSL 226°/38%/9%)로 색상 성격이 바뀐다.",
+          "conventionSource": "내부 비일관(같은 저장소의 동일 패턴 분기 — components/overlay/anchored-panel-style.js가 이미 공용 패널 스타일로 elevated-normal을 규정) + Material Design 다크 테마 elevation 관례와 Apple HIG 다크 모드(상승 표면은 동일 뉴트럴 표면의 밝은 톤; 채도 있는 별도 표면 금지)의 복수 시스템 합의. surface-overlay는 WDS에 없는 lds-extension이므로 일반 컨벤션이 기준.",
+          "deviation": "동일한 위계(팝오버)의 표면이 컴포넌트에 따라 채도 6%와 35%로 갈라져, 다크 모드에서 Select 드롭다운만 브랜드 네이비 패널로 보인다. WDS의 Cool Neutral 표면 사다리(5/7/15/17)를 따르는 나머지 오버레이와 어긋난다.",
+          "severity": "high",
+          "recommendation": "Select·SearchableMultiSelect의 팝오버 배경을 anchored-panel-style과 동일한 background-elevated-normal로 통일하는 것이 기본안. 네이비 오버레이가 의도된 LK 브랜드 표현이라면 반대로 anchored-panel-style에 surface-overlay를 적용해 모든 팝오버가 공유하게 하고 그 결정을 docs에 기록할 것 — 어느 쪽이든 한 패턴 한 표면.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 주장 파일·토큰 값이 실측과 일치 (Select.jsx:224, SearchableMultiSelect.jsx:210 = surface-overlay 다크 #1A2036 S35%; anchored-panel-style.js:9, DropdownMenu.jsx:249, CommandPalette.jsx:21, Modal.jsx:47 = elevated-normal 다크 #212225 S6%; 라이트는 둘 다 #FFFFFF). finding보다 실제가 더 강함: 같은 forms 계열의 Combobox.jsx:30·AutoComplete.jsx:30(동일 role=\"listbox\" 팝오버)도 elevated-normal이라 분기는 forms-vs-overlay 정책조차 아니고 두 컴포넌트만의 고립 패턴. scripts/check-color-layering.mjs:6이 레거시 별칭 --surface-overlay를 금지 목록에 둔 점은 이것이 마이그레이션 잔재임을 시사. WDS 계승 아님: tokens/source.json:2295-2303 origin=lds-extension, docs/references/wds/ 전체에 surface-overlay·#1A2036 0건, WDS는 Background/Elevated/Normal(FIGMA_LOCAL_CONTENT_AUDIT.json:5568)을 정의하며 다수 패턴이 그 계승. 내부 비일관(규칙 4)만으로 성립하고 Material/HIG 다크 상승면 단일 사다리 합의도 실재. 단 하나 과장: 'HIG가 채도 있는 표면 금지'는 명문 규정이 아니고 M3 뉴트럴도 미세한 primary 틴트를 허용하므로 근거 서술은 '동일 위계 패널은 단일 표면 토큰'으로 다듬을 것."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Select and SearchableMultiSelect now share elevated-normal; the obsolete overlay surface token was removed.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "두 타이포 스케일(fs-* 레거시 vs WDS 7-tier)이 제품 컴포넌트에서 여전히 경쟁 — 같은 행 안에서 혼용되는 곳도 있음",
+          "surfaces": "tokens/typography.css:22-57(fs/lh/ls) vs 62-87(7-tier), components/cards/SpecRow.jsx:24-25, components/cards/NewsCard.jsx:35, components/cards/ProductCard.jsx:65-66, components/content/Overline.jsx:18-19, components/feedback/Tag.jsx:27-28, components/cards/MetricCard.jsx:157, components/navigation/SideNav.jsx:165, docs/references/wds/CONFLICT_AUDIT.md §6",
+          "currentPattern": "7-tier 스케일은 WDS .fig와 16/16 스타일 완전 일치가 검증됐고(FOUNDATION_PARITY_REPORT.md) 134개 컴포넌트가 사용한다. 그러나 5개 컴포넌트(NewsCard, ProductCard, SpecRow, Overline, Tag)는 비율 리듬이 불규칙한 레거시 fs-* 스케일(60/48/36/32/24/21/19/17/15/13/12 — 인접비 1.25/1.33/1.125/1.33/1.14…)을 쓴다. SpecRow는 한 행 안에서 라벨은 --label1-size(14px, 7-tier), 값은 --fs-small(15px, 레거시)로 두 시스템을 혼용한다. UPPERCASE 오버라인 패턴도 크기 11/12/13px에 자간 1px(SideNav 하드코드)/1.4px(MetricCard 하드코드)/1.6px(--ls-caption)/1.8px(--ls-overline) 4종으로 흩어져 있다.",
+          "conventionSource": "WDS 증거: docs/references/wds/FOUNDATION_PARITY_REPORT.md(7-tier 16스타일 ✅ 파리티) — 7-tier가 검증된 1차 기준. 저장소 자체 감사 docs/references/wds/CONFLICT_AUDIT.md §6이 '컴포넌트는 WDS형 스케일을 우선하라'고 이미 규정. 단일 타입 스케일은 Material·Apple HIG·Polaris 공통 관례.",
+          "deviation": "자체 감사가 규정한 스케일 우선순위를 5개 제품 컴포넌트가 위반하고, 특히 SpecRow는 짝을 이뤄야 할 라벨-값이 14px/15px + px자간/em자간 혼합으로 미세하게 어긋난다. 동일한 오버라인 패턴이 4가지 자간으로 렌더되어 타이포 리듬이 표면마다 다르다.",
+          "severity": "medium",
+          "recommendation": "SpecRow의 값 텍스트를 --body2-size(15px, 7-tier)로 교체해 행 내 혼용부터 제거. NewsCard·ProductCard·Tag·Overline의 fs-caption류를 label2/caption1 계열로 이관하고, 오버라인 패턴은 크기+자간 한 쌍(예: caption1 + --ls-overline)으로 토큰화해 MetricCard '1.4px', SideNav '1px' 하드코드를 대체. fs-* 스케일은 마케팅/브랜드 페이지 전용임을 typography.css 주석 수준이 아니라 사용 규칙으로 명문화.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "카드 패딩 밀도가 16→32px로 2배 분산되고 22/18/14/9px 등 자체 8pt 그리드 밖 값이 하드코드됨",
+          "surfaces": "tokens/components.css:247(--component-card-padding: var(--space-8)=32px), components/cards/MetricCard.jsx:149,162('22px 24px', marginTop 14/paddingTop 12), components/cards/NewsCard.jsx:34('18px 20px 20px', gap 9), components/cards/ProductCard.jsx:63(동일), components/cards/SpecRow.jsx:19('14px 0'), stories/LayoutDashboardGrid.stories.jsx:25 및 stories/LayoutDashboardShell.stories.jsx:49(대시보드 카드 --space-4=16px)",
+          "currentPattern": "spacing.css 헤더가 '8-pt soft grid'를 선언하고 스케일은 4/8/12/16/20/24/32…인데, 카드 계열 표면 패딩이 Card 32px(토큰), MetricCard 22px/24px(하드코드), NewsCard·ProductCard 18px/20px + 내부 gap 9px(하드코드), 대시보드 조합 스토리의 카드 16px로 네 갈래다. 22·18·14·9는 선언된 스케일에 존재하지 않는 값이다. 한 대시보드에 MetricCard(22px)와 기본 Card(32px), 스토리 GridCard(16px)가 공존하면 카드 간 여백 리듬이 2:1로 벌어진다.",
+          "conventionSource": "내부 비일관(tokens/spacing.css:4-5의 자체 8pt 그리드 선언 및 --space-* 스케일과 충돌; Card만 토큰 계약 --component-card-padding을 쓰고 나머지는 하드코드) + 8pt 스페이싱 그리드는 Material·Apple 레이아웃 가이드의 복수 시스템 합의.",
+          "deviation": "카드 밀도의 단일 리듬이 없고, 카드마다 임의 픽셀값으로 이탈해 시스템이 선언한 그리드가 실질적으로 카드 계열에서 지켜지지 않는다.",
+          "severity": "medium",
+          "recommendation": "카드 패딩 밀도 티어를 토큰으로 확정(예: --component-card-padding-compact 16 / -normal 24 / -spacious 32, 모두 8pt 스케일 위)하고 MetricCard 22→24, NewsCard·ProductCard 18→16 또는 20, gap 9→8, footer 14/12→12/12로 치환. 어느 카드가 어느 티어인지의 배정은 디자인 결정이므로 일괄 수정 전에 티어 매핑안을 먼저 합의할 것.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "정의되지 않은 --label2-reading-line을 3개 표면이 소비 — line-height가 조용히 normal로 무너져 라벨 리듬 이탈",
+          "surfaces": "tokens/typography.css:77,79,82(reading-line은 body1·body2·label1만 정의), components/data/VisibilityManager.jsx:163, stories/LayoutDashboardGrid.stories.jsx:33, stories/LayoutDashboardShell.stories.jsx:57",
+          "currentPattern": "typography.css는 --body1-reading-line: 26px, --body2-reading-line: 24px, --label1-reading-line: 22px까지만 발행하는데, VisibilityManager와 대시보드 조합 스토리 2곳이 존재하지 않는 var(--label2-reading-line)을 line-height로 참조한다. 변수 미정의 + 폴백 없음이므로 계산값이 line-height: normal(13px 기준 약 18px)로 떨어져, 의도된 reading 리듬(label1 패턴 유추 시 20px)이 아니라 브라우저 기본값으로 렌더된다.",
+          "conventionSource": "내부 비일관 — 같은 파일의 reading-line 시리즈(26/24/22)가 확립한 토큰 패턴을 소비처가 가정했지만 토큰 세트가 label2 단계를 누락. 출처 불필요(rule 4).",
+          "deviation": "토큰 계약과 소비처가 어긋나 대시보드 카드 설명 텍스트의 세로 리듬이 정의값이 아닌 우연값으로 결정된다. CSS 변수 특성상 에러 없이 조용히 실패해 발견이 어렵다.",
+          "severity": "medium",
+          "recommendation": "typography.css에 --label2-reading-line: 20px를 추가(시리즈 규칙: line +2px)하거나, 세 소비처를 기존 --label2-line(18px)으로 교체. reading-line을 쓰는 것이 의도라면 토큰 추가가 맞다.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        }
+      ],
+      "rejectedClaims": [
+        {
+          "title": "상태색 4종과 데이터비주얼 팔레트에서 blue(=primary) 계열만 채도가 30pt 낮아 한 팔레트로 읽히지 않음",
+          "surfaces": "tokens/color-semantic.css:34-36,81-85,113-120, tokens/color-atomic.css(blue-50 #3775AF 등), docs/references/wds/COLOR_ARCHITECTURE.json(semantic: Status/Positive·Cautionary·Negative만 존재, Status/Info 없음)",
+          "currentPattern": "라이트 상태색 HSL: positive #13BE4C=hsl(140,82%,41%), cautionary #EB9C33=hsl(34,82%,56%), negative #EE5656=hsl(0,82%,64%) — 3종의 채도 표준편차 0.3pt 미만으로 정밀하게 S≈82%로 리톤됨. 그런데 status-info는 primary-normal #3878B3=hsl(209,52%,46%) 별칭이라 채도가 30pt 낮다(다크도 동일: 82/82/62 vs info 52%). 아토믹 램프 50단계 채도: green 82/red 82/orange 82/light-blue 80/lime 79/cyan 78/pink 73/violet 72/purple 82% (평균 79%) 대비 blue만 52% — 13개 패밀리 중 blue 하나만 ~27pt(비-blue 분산의 약 7σ) 벗어난다. data-viz-series-1도 이 muted primary라 series-2(cyan #1198AF, S 82%) 이후의 선명한 시리즈 옆에서 혼자 바랜 색으로 보인다.",
+          "conventionSource": "내부 비일관(LDS 스스로 status 3종을 균일 채도 S≈82%로 리톤한 규칙을 4번째 멤버 info가 깸) + WDS 증거(COLOR_ARCHITECTURE.json에 Status/Info가 없어 이 영역은 LK 확장 → 일반 컨벤션 적용) + 카테고리컬/상태 팔레트는 비교 가능한 채도·명도로 맞춘다는 복수 시스템 합의(IBM Carbon data-viz 팔레트, Material 차트 가이드).",
+          "deviation": "브랜드 blue를 저채도로 리톤하면서 상태 quartet과 차트 시리즈에 그대로 별칭 연결해, 의미상 대등해야 할 색들(4개 상태, 8개 시리즈)의 채도 균형이 깨졌다. info 상태 표면·배지가 상태색이 아니라 '흐린 브랜드색'으로 읽힌다.",
+          "severity": "medium",
+          "recommendation": "결정 필요: (a) status-info와 data-viz-series-1에 primary 별칭 대신 상태·차트 전용의 고채도 블루(S 70~80%, 예: HSL 209° 기준 채도만 올린 값)를 별도 hex로 발행하거나, (b) muted blue가 LK 브랜드 정체성이라면 그 결정을 문서화하고 quartet 채도 불일치를 수용. (a)를 택하면 primary(인터랙션)와 info(상태)의 시각 구분도 얻는다.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": false,
+            "wdsInherited": false,
+            "keep": false,
+            "note": "실측 채도 차이는 존재하지만, info가 브랜드 primary를 공유하는 선택은 널리 쓰이는 정당한 팔레트 전략이다. 네 상태색의 채도를 동일하게 맞춰야 한다는 합의는 없고 브랜드 색상값 변경으로 이어지는 취향 판정이므로 기각한다."
+          }
+        },
+        {
+          "title": "브랜드 네이비(H≈228)·secondary(H220)·primary(H209)·focus-indicator 등 블루 4계열의 관계가 문서화되지 않음",
+          "surfaces": "tokens/color-semantic.css:9,67-73,80(primary #3878B3, brand-ink #0E1329, brand-canvas-from #141C3C, secondary-normal #2C3547, focus-indicator #2F6FB0), tokens/source.json(brand-* origin: lds-extension)",
+          "currentPattern": "시맨틱 primary #3878B3=hsl(209,52%,46%), secondary-normal #2C3547=hsl(220,23%,23%), brand-ink #0E1329=hsl(229,49%,11%), brand-canvas-from #141C3C=hsl(228,50%,16%) — 색상환에서 209/220/228~229°로 최대 20° 벌어진 세 블루 계열이 공존한다. focus-indicator #2F6FB0=hsl(210,58%,44%)는 primary와 ΔH 1°/ΔS 6pt/ΔL 2pt의 근사 중복 하드코드다.",
+          "conventionSource": "위반 단정 불가 — 브랜드 캔버스색과 액션 primary를 분리하는 것은 복수 시스템(Polaris, GOV.UK 등)에서 정당한 선택지라 rule 3상 단일 컨벤션이 없다. 다만 브랜드 토큰은 전부 lds-extension(WDS 근거 없음)이고 계열 간 관계·파생 규칙이 어디에도 기록돼 있지 않다.",
+          "deviation": "세 블루의 색상 간격(19~20°)이 의도된 대비인지 드리프트인지 판별할 근거가 저장소에 없고, focus-indicator처럼 primary에서 파생 가능해 보이는 값이 독립 hex로 존재한다.",
+          "severity": "low",
+          "recommendation": "docs/AI_DESIGN_SYSTEM_GUIDE.md에 블루 4계열의 역할과 색상값 관계(브랜드 캔버스 H228 고정, 액션 primary H209, focus-indicator는 WCAG 3:1용 primary 파생 등)를 명문화. 수정보다 기록이 목적 — 값 변경은 불필요.",
+          "resolutionType": "documentation-only",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": false,
+            "wdsInherited": false,
+            "keep": false,
+            "note": "값과 문서 부재는 확인되지만 발견 자체가 디자인 위반을 주장하지 못하고 documentation-only에 머문다. 서로 다른 역할의 블루 계열 분리는 정당한 선택이며 D 트랙의 디자인 컨벤션 위반으로는 기각한다."
+          }
+        }
+      ]
+    },
+    {
+      "key": "ux-writing",
+      "lens": "UX 라이팅 — 한국어 UI 문구의 경어체·버튼 문법·마침표 정책·오류 구조·외래어 표기",
+      "reviewed": "WDS 기준선: docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json(18MB)에서 한국어 텍스트 노드 약 500종 전수 추출 — 라이팅 정책 라벨(44441행 '메시지에 마침표를 찍어요.'), 어조 원칙('원칙에는 -합니다', '예시에는 -해요'), Textfield/Select placeholder 실측(495154·505199행), 오류문 사례(227102행), '-해 주세요' 56회 vs '-하세요' 2회 분포 확인. LDS 측: stories/ 전체(150개)와 components/ 전체(192개)의 한국어 문자열을 전수 grep — 종결어미 분포(스토리 설명 합니다체 131건 vs 요체 3건), placeholder·label·error·helper·empty/loading 문구 전수, 버튼 children 텍스트 전수, 외래어 로마자 혼용 검사. 정밀 대조 파일: Overlay.shared.jsx, OverlayToast/OverlaySnackbar/OverlayConfirmAlert.stories.jsx, FormsFull.stories.jsx, ResourceState.jsx, ViewerFrame(jsx+스토리), LayerPanel(jsx+스토리), DataGrid/BarChart/DonutChart/LineChart/Sparkline.jsx, Select/DatePicker/Combobox/AutoComplete.jsx, AnnotatedImage.jsx, MetricCard.jsx, Select.prompt.md. 미검수: prompt.md 문서 본문 전수와 storybook-static 산출물, 영어 문구.",
+      "confirmedFindings": [
+        {
+          "title": "메시지 마침표 정책 붕괴 — 같은 표면·같은 prop·심지어 인접한 두 줄에서 마침표 유무가 갈림",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/stories/Overlay.shared.jsx (92-93행), components/data/DataGrid.jsx (300행), components/data/BarChart.jsx (28행), components/data/DonutChart.jsx (43행), components/data/LineChart.jsx (113행), components/data/Sparkline.jsx (12행), components/content/ReorderList.jsx (102행), components/editor/LayerPanel.jsx (345행), stories/EditorLayerPanel.stories.jsx (97행), components/data/TreePicker.jsx (258-259행), components/forms/FileUploadQueue.jsx (30행)",
+          "currentPattern": "완결문 메시지의 마침표가 무작위로 갈린다. 인접 사례: Overlay.shared.jsx 92행 <Toast>현장 실사 요청이 접수되었습니다</Toast>(마침표 없음) 바로 다음 93행 <Toast>대시보드로 이동했습니다.</Toast>(마침표 있음). 같은 이름의 emptyLabel prop 기본값도 DataGrid '표시할 항목이 없습니다.'(있음) vs BarChart/DonutChart/LineChart/Sparkline '데이터가 없습니다'(없음) vs ReorderList '정렬할 항목이 없습니다'(없음) vs TreePicker '선택할 항목이 없습니다.'(있음)로 갈리고, LayerPanel은 컴포넌트 기본값 '레이어가 없습니다'(345행, 없음)와 스토리 오버라이드 \"표시할 레이어가 없습니다.\"(스토리 97행, 있음)가 서로 모순된다.",
+          "conventionSource": "WDS 명시 정책: docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json 44441행 Popover 라이팅 가이드 라벨 \"메시지에 마침표를 찍어요.\" WDS 실제 문구도 전부 준수(같은 파일 227102행 오류 메시지 \"5회 이상 로그인에 실패했습니다. 비밀번호 초기화/변경을 진행해주세요.\", 495154행 placeholder \"텍스트를 입력해 주세요.\").",
+          "deviation": "LDS의 완결문 메시지(토스트 본문, empty/loading/error 본문)가 WDS의 '메시지에 마침표' 정책을 절반만 따른다. OverlayToast.stories.jsx의 토스트 5종은 전부 마침표를 찍는데 Overlay.shared.jsx의 parity 카드용 토스트는 한 줄만 찍는 등, 표면 유형이 아니라 파일·행 단위로 우연히 갈리는 상태라 어떤 근거 있는 편차로도 설명되지 않는다.",
+          "severity": "high",
+          "recommendation": "WDS 규칙을 그대로 채택: 서술형 완결문('-습니다/-세요'로 끝나는 메시지)은 항상 마침표, 명사형 라벨('복사됨', '파일 없음', '불러오는 중', 제목 슬롯)은 마침표 없음으로 이원화해 문서화하고, emptyLabel/errorMessage/loadingLabel 기본값 전수를 이 규칙으로 정규화한다. 최소 수정: BarChart·DonutChart·LineChart·Sparkline·ReorderList·SavedViewControl·VisibilityManager·LayerPanel·SelectionInspector의 '…없습니다' 기본값에 마침표 추가, Overlay.shared.jsx 92행에 마침표 추가.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Complete Korean messages now follow one punctuation policy documented in the authoring guide.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "입력 placeholder 문형이 4갈래로 혼재 — WDS Core로 선언한 Select/TextField 계열이 WDS placeholder 문형을 무근거 이탈",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/forms/Select.jsx (18행), components/forms/Select.prompt.md, components/forms/DatePicker.jsx (11행), components/forms/Combobox.jsx (9행), components/forms/AutoComplete.jsx (9행), components/forms/SearchableMultiSelect.jsx (40행), components/content/ContentEditor.jsx (59행), stories/FormsFull.stories.jsx (68행), stories/ContentEditor.stories.jsx (72-73행), stories/FormPinInput.stories.jsx (24행)",
+          "currentPattern": "placeholder 기본값이 4가지 문형으로 갈린다: (a) WDS형 완결문 \"텍스트를 입력해 주세요.\"(FormsFull.stories.jsx 68행 — WDS 문자열과 완전 동일), (b) 무마침표 하세요형 '내용을 입력하세요'(ContentEditor.jsx 59행)·\"제목을 입력하세요\"(스토리 72행)·'입력하세요'(AutoComplete.jsx 9행), (c) 마침표 있는 하세요형 \"6자리 코드를 입력하세요.\"(FormPinInput 24행), (d) 명사형 '선택'(Select.jsx 18행)·'날짜 선택'(DatePicker.jsx 11행)·'검색해서 선택'(SearchableMultiSelect.jsx 40행).",
+          "conventionSource": "WDS 스냅샷의 컴포넌트 실측값: Textfield placeholder \"텍스트를 입력해 주세요.\"(docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json 495154행), Select placeholder \"선택해주세요.\"(505199행, 111282행). WDS 전체에서 '입력해 주세요/해주세요' 56회 vs '입력하세요' 2회(그중 1회는 주석 스티커)로 '-해 주세요.' 문형이 압도적. Select.prompt.md 스스로 '분류: WDS Core'로 선언.",
+          "deviation": "판정 규칙 1에 따라 WDS Core로 선언된 Select·Textfield 계열의 1차 기준은 WDS인데, Select 기본 placeholder '선택'은 WDS의 \"선택해주세요.\"와 문형·마침표 모두 다르고, 그 편차의 근거가 prompt.md 어디에도 없다. 동시에 TextField 스토리는 WDS 문자열을 그대로 쓰고 있어 저장소 안에서조차 한 시스템의 입력 표면이 4개 문형으로 조각나 있다.",
+          "severity": "high",
+          "recommendation": "결정이 필요하다: (1) WDS 준수 — WDS Core 입력류 placeholder를 '…을 입력해 주세요.' / '선택해 주세요.' 완결문으로 통일(권장, 이미 FormsFull 스토리가 이 형태), 또는 (2) Product/Robotics의 고밀도 UI를 근거로 명사형 placeholder를 채택하되 그 결정을 prompt.md에 시각 델타처럼 명시하고 전 컴포넌트에 일괄 적용. 어느 쪽이든 (b)와 (c)의 하세요형 혼용은 제거 대상.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Placeholder copy now follows the WDS request form consistently.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "요청·지시 어미 3종 혼재('-하세요' / '-해 주세요' / '-해 보세요') — 같은 컴포넌트의 같은 슬롯 안에서도 갈림",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/data/ResourceState.jsx (29, 35, 53행), components/viz/ViewerFrame.jsx (105행), stories/ViewerFrame.stories.jsx (170행), stories/FormsFull.stories.jsx (71행), stories/FormValidationSummary.stories.jsx (142행), components/data/TreePicker.jsx, stories/StatusEmpty.stories.jsx (26행)",
+          "currentPattern": "복구 안내 description 슬롯에서 어미가 갈린다. ResourceState.jsx 한 컴포넌트 안에서만 3종: 29행 '조건을 변경하거나 새 항목을 추가해 보세요.', 35행 '잠시 후 다시 시도해 주세요.', 53행 '접근 권한을 확인하거나 관리자에게 문의하세요.'. ViewerFrame도 컴포넌트 기본값은 '소스 연결을 확인해 주세요.'(ViewerFrame.jsx 105행)인데 스토리는 \"연결을 확인한 뒤 다시 시도하세요.\"(스토리 170행). 저장소 전체로는 '-하세요'형 약 25종 vs '-해 주세요/보세요'형 약 9종.",
+          "conventionSource": "WDS 스냅샷 전수: 사용자 대상 요청문은 '-해 주세요' 계열로 통일(\"비밀번호 초기화/변경을 진행해주세요\" 227102행, \"작성해 주세요\"·\"설정해 주세요\"(포인트 안내), \"입력해 주세요\" 계열 56회). '-하세요'는 디자이너 대상 제작 가이드 문서에만 등장. 국내 주요 서비스 라이팅 가이드(토스·카카오 등)도 사용자 요청문에서 단일 어미 유지가 합의된 관행.",
+          "deviation": "동일 표면 유형(오류·빈 상태의 복구 안내문)에서 어미가 파일 단위로 무작위 선택되고 있으며, WDS가 사용자 문구에 쓰는 '-해 주세요' 기준에서 다수가 이탈. 판정 규칙 4(내부 비일관)에 해당하는 가장 명확한 사례는 ResourceState.jsx 단일 파일 내 3종 혼용.",
+          "severity": "medium",
+          "recommendation": "사용자 대상 요청·복구 안내문의 어미를 WDS와 같이 '-해 주세요.'로 단일화(가벼운 제안 뉘앙스가 필요한 빈 상태는 '-해 보세요.' 1종만 예외 허용으로 문서화). 우선 ResourceState.jsx 53행 '문의하세요'→'문의해 주세요', ViewerFrame 스토리 170행 '시도하세요'→'시도해 주세요'로 컴포넌트 기본값과 정합시킨다.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "외래어 로마자/한글 표기 혼용 — 같은 파일 안에서 '프레임'과 'frame', '컬렉션'과 'collection'이 공존",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/stories/DataAnnotatedImage.stories.jsx (17-18, 101, 133행 vs 150행), stories/DataGrid.stories.jsx (16행 vs 318행), stories/FormValidationSummary.stories.jsx (142, 283, 318행), stories/FormSecretField.stories.jsx (65, 70, 75-79행), stories/DataAndStatus.stories.jsx (40행)",
+          "currentPattern": "DataAnnotatedImage.stories.jsx는 17·18·101·133행에서 '프레임'(카메라 프레임, 프레임 00318, 프레임 가장자리)을 쓰다가 150행 오류 문구에서만 '감지 frame을 불러오지 못했습니다.'로 로마자 전환. DataGrid.stories.jsx는 16행 문서 설명에 '행 기반 컬렉션', 318행 스토리 설명에 'collection 패턴'. FormValidationSummary 283행은 사용자 노출 오류문에 '선택한 collection에 업로드 권한이 없습니다. 쓰기 권한이 있는 collection을 선택하세요.'. FormSecretField는 '이 key는 만료되었습니다.'(65행) 등 일반명사 key를 로마자로 노출(같은 저장소의 다른 문구는 '단축키'·'키보드'·'선택된 키워드'로 한글).",
+          "conventionSource": "1차: 내부 비일관(판정 규칙 4 — 같은 파일 내 혼용이라 출처 불요). 2차: WDS 스냅샷 본문도 일반명사는 한글 표기('컬러', '컴포넌트', '아이콘', '그라디언트')하고 로마자는 고유명사·컴포넌트명(Figma, Snackbar 등)에 한정. 국립국어원 외래어 표기 원칙 및 국내 서비스 라이팅 관행과도 합의 방향 일치.",
+          "deviation": "사용자 노출 문구에서 동일 개념의 표기가 파일 내·파일 간 무작위로 갈린다. 특히 오류 메시지(가장 스트레스 높은 순간의 문구)에 'frame', 'collection', 'key' 같은 로마자 일반명사가 노출되는 것은 WDS 관행에도, 일반 표기 관행에도 근거가 없다.",
+          "severity": "medium",
+          "recommendation": "표기 사전 1페이지를 두고 통일: 프레임/컬렉션/키(또는 'API 키')는 한글 표기, 로마자는 고유명사·코드 식별자·컴포넌트명에 한정. 최소 수정: DataAnnotatedImage.stories.jsx 150행 '감지 frame'→'감지 프레임', FormValidationSummary의 collection 3건→'컬렉션', FormSecretField의 'key'→'키'.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "오류 문구의 원인+해결 구조가 컴포넌트마다 불균일 — 자체 패턴 컴포넌트(ResourceState)는 지키고 형제 컴포넌트는 막다른 문구",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/data/AnnotatedImage.jsx (68, 162행), components/cards/MetricCard.jsx (80행), stories/FormSecretField.stories.jsx (65행), stories/FormsFull.stories.jsx (71행), 대조군: components/data/ResourceState.jsx (34-35행), components/viz/ViewerFrame.jsx (100-124행)",
+          "currentPattern": "시스템의 범용 상태 패턴인 ResourceState는 오류 시 원인('데이터를 불러오지 못했습니다')+해결('잠시 후 다시 시도해 주세요.')을 기본 제공하고 ViewerFrame도 상태 라벨+해결 description 쌍을 갖는데, AnnotatedImage의 errorMessage 기본값 '이미지를 불러오지 못했습니다.'는 재시도 액션 슬롯 없이 메시지만 렌더(162행)하는 막다른 문구고, MetricCard error=true 기본값 '지표를 불러오지 못했습니다.'(80행)도 동일. FormSecretField 스토리의 '이 key는 만료되었습니다.'는 원인만, FormsFull의 error=\"메시지를 확인해 주세요.\"는 원인 없는 해결 지시만 있는 순환 문구다.",
+          "conventionSource": "WDS 실측 사례: 오류문이 원인+다음 행동 2문장 구조(docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json 227102행 \"5회 이상 로그인에 실패했습니다. 비밀번호 초기화/변경을 진행해주세요.\"). 복수 시스템 합의: GOV.UK error message 가이드(무엇이 잘못됐고 어떻게 고치는지), Material Design 에러 텍스트, Shopify Polaris 오류 메시지 원칙, Apple HIG 알림 가이드 모두 원인+복구 행동을 요구.",
+          "deviation": "같은 '불러오기 실패' 상황에서 어떤 컴포넌트는 복구 경로를 제공하고 어떤 컴포넌트는 사실 통보로 끝난다. LDS가 이미 ResourceState로 올바른 구조를 자체 표준화해 놓고도 형제 데이터 컴포넌트의 기본 오류 문구에는 적용하지 않아, WDS 사례·일반 합의·자체 패턴 세 기준 모두에서 이탈한다.",
+          "severity": "medium",
+          "recommendation": "오류 기본 문구 규칙을 '원인 1문장 + 다음 행동 1문장(또는 재시도 액션 슬롯 제공)'으로 문서화하고, 액션 슬롯이 없는 AnnotatedImage·MetricCard의 errorMessage 기본값에 해결 문장을 추가하거나 retry 액션 슬롯을 도입. 데모 카피도 'FormsFull의 error' 같은 순환 문구 대신 원인형 예시('사용할 수 없는 값입니다. 형식을 확인해 주세요.')로 교체.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        }
+      ],
+      "rejectedClaims": [
+        {
+          "title": "다이얼로그 확인 버튼 레이블 혼용 — 동일한 인지(acknowledge) 표면에서 '확인' vs '알겠어요'",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/overlay/ConfirmDialog.jsx (25행), stories/OverlayConfirmAlert.stories.jsx (31행), stories/Overlay.shared.jsx (92행)",
+          "currentPattern": "ConfirmDialog 기본 confirmLabel은 '확인'(ConfirmDialog.jsx 25행)이고 Toast 액션도 \"확인\"(Overlay.shared.jsx 92행)인데, Alert 스토리의 assistive 변형만 primaryLabel '알겠어요'(OverlayConfirmAlert.stories.jsx 31행)로 해요체 문장형을 쓴다. 나머지 버튼 레이블 전수는 명사형('저장', '취소', '삭제', '적용', '다시 시도')으로 일관.",
+          "conventionSource": "내부 비일관(판정 규칙 4): 같은 인지용 주 버튼 표면에서 두 문법이 공존. WDS 스냅샷의 해당 레이블 실측값은 '확인'(단일)이며 '알겠어요'는 WDS 스냅샷에 존재하지 않음. Apple HIG·Material 모두 인지용 버튼 레이블의 시스템 내 일관성을 요구.",
+          "deviation": "'알겠어요'는 토스류의 친근한 보이스 선택지로는 성립하지만, LDS의 버튼 레이블 문법(명사형)과 WDS 실측값('확인') 어느 쪽에도 근거가 없고 단 한 곳에서만 등장해 보이스 정책이 아닌 우발적 편차로 판단된다.",
+          "severity": "low",
+          "recommendation": "버튼 레이블 문법을 '명사형(동작 명사) 단일'로 문서화하고 assistive Alert의 '알겠어요'를 '확인'으로 통일하거나, 반대로 '인지 전용 버튼은 해요체' 정책을 채택한다면 ConfirmDialog 기본값까지 포함해 전면 적용을 결정해야 한다. 현재처럼 한 스토리에서만 다른 것이 최악의 상태.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": false,
+            "wdsInherited": false,
+            "keep": false,
+            "note": "Alert의 단순 인지(acknowledgement)와 ConfirmDialog의 작업 확정은 역할이 다르며, 해당 Alert 스토리는 플랫폼별 표현 차이를 보여 주는 표면이다. 같은 역할의 우발적 혼용이라는 전제가 성립하지 않아 기각한다."
+          }
+        }
+      ]
+    },
+    {
+      "key": "iconography",
+      "lens": "아이콘 은유 일관성 (icon metaphor consistency)",
+      "reviewed": "components/ 192개 컴포넌트와 stories/ 166개 파일에서 Icon name=/icon: 문자열 사용을 전수 수집(레지스트리 357개 대비 실사용 72개 매핑, 파일 단위 증거 확보). 인라인 SVG 아이콘(24x24 stroke 계열) 사용 파일 43개를 별도 전수 식별. 표준 상태 맵(status-presentation.js)과 소비자 6개(Toast/Banner/Callout/Notification/ValidationSummary/FileUploadQueue), 이탈 표면(ViewerFrame/ResourceState/Feedback 스토리)을 원문 확인. WDS 근거는 docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json(Icon variantSymbols의 Fill=True/False 축)과 assets/icons/manifest.json(기반 소스 선언, lds-legacy 18개)으로 검증. 방향 아이콘 문법은 위반 없음 확인: arrow=이동(LogViewer 최신 이동, FileBrowser 상위 이동, ViewerToolbar 위/아래 이동, DirectionalPad), chevron=전개/드릴인(Select·Accordion·Tree·DataGrid 확장, ListCell·TreePicker·TopicTree 드릴인)으로 일관 — 단 글리프 소싱만 이원화(finding 1). 설정(setting 단수형)·알림(bell)·삭제(trash)·새로고침(refresh)/이력(history) 은유는 일관. Brand.shared.jsx의 google/github는 별도 BrandLogo 컴포넌트로 Icon 레지스트리와 무관(오탐 제외). 스토리 name= 오탐(폼 필드명·차트 시리즈명)은 레지스트리 대조로 걸러냄.",
+      "confirmedFindings": [
+        {
+          "title": "아이콘 소싱 이원화 — 43개 컴포넌트가 WDS 레지스트리 대신 Lucide 계열 stroke 아이콘을 인라인으로 그려, 같은 은유가 두 가지 글리프로 렌더됨",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/overlay/Modal.jsx, components/overlay/Toast.jsx, components/status/Banner.jsx, components/forms/Select.jsx, components/forms/TimePicker.jsx, components/data/Tree.jsx, components/data/TreePicker.jsx, components/data/DataGrid.jsx, components/forms/SearchField.jsx, components/content/LogViewer.jsx, components/buttons/CopyButton.jsx, components/content/ListCell.jsx, components/forms/PasswordInput.jsx, components/navigation/Breadcrumb.jsx",
+          "currentPattern": "레지스트리 Icon(WDS 유래, filled path)을 쓰는 파일 40개와 24x24 stroke 인라인 SVG(strokeWidth 2~3, round cap, Lucide 경로 시그니처)를 쓰는 파일 43개가 공존. 같은 은유가 표면마다 다른 글리프로 렌더: 닫기 X — Modal.jsx:55·Toast.jsx는 인라인 'M18 6 6 18M6 6l12 12' vs Banner.jsx:64 <Icon name=\"close\">; 전개 chevron — Select.jsx('m6 9 6 6 6-6' stroke) vs TimePicker.jsx <Icon name=\"chevron-down-small\">; 드릴인 — Tree.jsx 인라인 'm9 18 6-6-6-6' vs 형제 컴포넌트 TreePicker.jsx <Icon name=\"chevron-right\">; 검색 — SearchField.jsx 인라인 돋보기 vs LogViewer.jsx:252 <Icon name=\"search\">; 체크 — CopyButton.jsx 인라인 'M20 6 9 17l-5-5' vs ListCell.jsx <Icon name=\"check\">; 눈 — PasswordInput.jsx 인라인 vs ContentEditor.jsx <Icon name=\"eye\">. DataGrid.jsx는 한 파일 안에서 정렬 표시(627행, 인라인 stroke chevron)와 행 전개(699행, <Icon name=\"chevron-up-small\">)가 서로 다른 시스템을 씀. 레지스트리 원본(assets/icons/chevron-right.svg)은 fill=currentColor 베지어 패스로 stroke 계열과 굵기·곡률·단면이 다름",
+          "conventionSource": "WDS가 LDS의 선언된 아이콘 기반 — assets/icons/manifest.json \"source\": \"Base icon source / Icon\"(339개 임포트), docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json의 Icon variantSymbols. 보조로 단일 아이콘 시스템 원칙은 Material/Polaris/Primer/Carbon 공통(아이콘 라이브러리 혼용 금지)",
+          "deviation": "동일 의미(닫기·전개·드릴인·검색·체크·표시전환)가 인접 표면에서 굵기와 기하가 다른 두 벌의 글리프로 렌더되어, 렌즈 항목 (1) '같은 의미에 다른 아이콘'의 최대 규모 사례. WDS 스냅샷 어디에도 stroke 계열 대체 아이콘 세트 근거 없음",
+          "severity": "high",
+          "recommendation": "인라인 Lucide SVG를 레지스트리 Icon 호출로 이관(close, chevron-down-small, chevron-right(-small), search, check, eye/eye-slash 모두 레지스트리에 이미 존재). 레지스트리에 없는 글리프(체크박스 체크 등)만 assets/icons에 WDS 스타일로 추가 후 manifest 갱신. 마이그레이션 범위가 43개 파일로 크므로 착수 전 확인 필요",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 표면 주장 실증 확인 (Modal.jsx:56 vs Banner.jsx:64, Select.jsx:221 vs TimePicker.jsx:55, Tree.jsx:48 vs TreePicker.jsx:180, SearchField.jsx:23 vs LogViewer.jsx:252, CopyButton.jsx:43 vs ListCell.jsx:258, PasswordInput.jsx:22-23 vs ContentEditor.jsx:8, DataGrid.jsx 627/699 단일 파일 내 혼용, Toast.jsx도 82행 registry vs 160행 인라인으로 단일 파일 혼용). 파일 수 43(인라인 stroke) vs 41(registry) 실측 일치. 결정적으로 finding이 인용하지 않은 더 강한 근거 발견: docs/AI_DESIGN_SYSTEM_GUIDE.md:130이 저장소 자체 정책으로 '체브런·체크·닫기 같은 기능성 마이크로 글리프도 registry에 대응 아이콘이 있으면 반드시 사용, 예외는 prompt에 기록'을 명시하는데, 해당 은유 전부 registry에 존재(close/check/search/eye/chevron-* svg 확인)하고 어느 prompt.md에도 예외 기록 없음 — 즉 자기 정책 위반. WDS 스냅샷에는 stroke 계열 아이콘 근거 전무(manifest.json은 fill 기반 'Base icon source / Icon' 339개가 유일 출처). 단 한 가지 인용 약점: FIGMA_LOCAL_CONTENT_AUDIT.json의 'Icon variantSymbols'는 실제로 빈 배열이라 그 증거 포인터는 공허함 — finding 본문에서 이 인용은 manifest.json + AI_DESIGN_SYSTEM_GUIDE.md:130으로 교체 권고."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Common inline UI SVGs moved to the Icon registry; only eight custom renderers remain as explicit exceptions.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "ViewerFrame이 경고/오류 글리프를 시스템 표준과 정반대로 사용 — triangle이 '오류', circle이 '경고'",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/viz/ViewerFrame.jsx, components/status/status-presentation.js, components/overlay/Toast.jsx, components/status/Banner.jsx, components/status/Callout.jsx",
+          "currentPattern": "표준 상태 문법(status-presentation.js:8-19): cautionary → 'triangle-exclamation-fill', negative → 'circle-close-fill'. Toast·Banner·Callout·ValidationSummary·FileUploadQueue·Notification이 이 맵을 소비. 그런데 ViewerFrame.jsx는 error(tone: 'negative') → 'triangle-exclamation'(117-123행), degraded(tone: 'cautionary') → 'circle-exclamation'(64-71행)으로 글리프-톤 결합이 정확히 뒤집혀 있음",
+          "conventionSource": "1차: 같은 저장소의 표준 맵(components/status/status-presentation.js)과 그 소비자 6개 컴포넌트. 2차: 복수 시스템 합의 — Material, Carbon, Bootstrap, GOV.UK 모두 triangle=warning, circle(X/느낌표)=error로 구분",
+          "deviation": "같은 화면에서 Toast의 triangle은 '주의', Viewer 오버레이의 triangle은 '오류'를 의미하게 되어 렌즈 항목 (2) '같은 아이콘의 의미 충돌'에 해당. 오류의 대표 글리프도 circle-close(피드백 계열) vs triangle(뷰어)로 갈라짐",
+          "severity": "high",
+          "recommendation": "ViewerFrame error를 'circle-close'(또는 fill 정책 확정 시 'circle-close-fill')로, degraded를 'triangle-exclamation'으로 교체해 표준 맵의 글리프-톤 결합에 정렬",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "확인됨. status-presentation.js:8-19(cautionary→triangle-exclamation-fill, negative→circle-close-fill)와 ViewerFrame.jsx:64-71(degraded/cautionary→circle-exclamation)·117-123(error/negative→triangle-exclamation)이 정확히 뒤집힌 결합임을 실파일로 검증. 글리프 소비자는 Toast·Banner·Callout·ValidationSummary·FileUploadQueue 5개(Notification은 색만 소비 — 6개 주장은 경미한 과장). WDS 계승 아님: ViewerFrame은 LDS Robotics 확장(LAYER_CLASSIFICATION.json:188)이고, WDS 자체가 feedback-toast.pdf에서 cautionary=주황 삼각형, negative=빨강 원형 글리프로 공유 맵과 동일하게 결합 — ViewerFrame의 역전은 WDS와도 모순. 외부 출처는 일부 보정 필요(GOV.UK warning text는 원형 '!', Carbon/Polaris의 error 글리프 형태는 다양) — Material·Bootstrap·ISO 3864 계열이 더 정확한 인용이며, 어떤 주요 시스템도 triangle=error/circle=warning으로 역전하지 않음. 핵심 근거는 규칙 4의 내부 비일관(같은 화면에서 triangle의 의미 충돌)으로 자체 성립. 권고 시 참고: ViewerFrame은 outline 변형(-fill 아님)을 쓰는 점도 부수적 편차."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "ViewerFrame degraded and error glyphs now follow the system status metaphor.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "상태 아이콘 fill/outline 정책이 표면마다 갈림 — 표준 맵은 fill, ViewerFrame·ResourceState·Notification 스토리는 outline 혼용",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/status/status-presentation.js, components/viz/ViewerFrame.jsx, components/data/ResourceState.jsx, stories/FeedbackNotifications.stories.jsx, stories/Feedback.shared.jsx",
+          "currentPattern": "표준 맵은 4개 톤 모두 fill 변형(circle-check-fill 등, status-presentation.js). 반면 ViewerFrame ready(positive) → 'circle-check' outline(53행); ResourceState는 한 맵 안에서 error만 'circle-close-fill'이고 stale·offline·restricted는 outline(clock/circle-block/lock, ResourceState.jsx:8-57); Notification 스토리는 tone=\"cautionary\"/\"positive\"로 톤 타일을 칠하면서 아이콘은 outline 'triangle-exclamation'/'circle-check'를 주입(FeedbackNotifications.stories.jsx:27-40, Feedback.shared.jsx:160-170) — 같은 톤이 Toast에서는 fill, Notification에서는 outline으로 렌더됨",
+          "conventionSource": "WDS 아이콘 세트가 Fill=True/False를 명시적 변형 축으로 모델링(docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json variantSymbols: Name=circleCheckFill, Fill=True 등)하고, LDS 표준 맵이 상태 전달용으로 fill을 채택함. 표면별 이탈에 대한 WDS 근거 없음",
+          "deviation": "렌즈 항목 (3): 상태(톤) 전달 아이콘의 fill/outline 구분이 컴포넌트·스토리별로 다르게 적용되어, 같은 의미(성공/경고)의 시각적 무게가 표면마다 달라짐",
+          "severity": "medium",
+          "recommendation": "규칙 명문화: '톤을 전달하는 상태 아이콘은 fill 변형, 중립·부가 정보는 outline'. ViewerFrame ready, ResourceState의 warning 계열, Notification 스토리 주입 아이콘을 규칙에 맞게 정리",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "manual-recovery-verification",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          }
+        },
+        {
+          "title": "circle-block(금지 기호)이 세 가지 의미로 과적 — 비상 정지 액션, 오프라인 상태, 사용 불가 상태",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/components/robotics/ManualControlSession.jsx, components/data/ResourceState.jsx, components/viz/ViewerFrame.jsx, components/status/status-presentation.js",
+          "currentPattern": "ManualControlSession.jsx:223 — '비상 정지 요청' 버튼 아이콘이 circle-block(액션); ResourceState.jsx:45-50 — offline 상태 → circle-block; ViewerFrame.jsx:96-102 — unavailable 상태 → circle-block. 한편 '오프라인' 의미 자체도 갈라짐: status-presentation.js:26-31의 offline 톤은 circle-info를 씀",
+          "conventionSource": "로보틱스 확장 영역이라 WDS 미정의 → 일반 컨벤션 적용: Apple HIG(SF Symbols) '심볼은 일관된 의미로 사용', Material 아이콘 가이드라인의 의미당 하나의 아이콘 원칙, 그리고 국제적으로 금지(no-entry) 글리프는 '차단/허용 안 됨'을 의미(오프라인 아님). 복수 시스템에서 오프라인은 신호/클라우드-slash 계열",
+          "deviation": "렌즈 항목 (1)+(2) 복합: 같은 아이콘이 안전 액션(E-stop)과 두 종류의 상태에 재사용되고, '오프라인' 의미는 circle-block과 circle-info 두 아이콘으로 갈라짐. 특히 안전 관련 E-stop이 일반 상태 아이콘과 글리프를 공유하면 비상 컨트롤의 식별성이 희석됨",
+          "severity": "medium",
+          "recommendation": "circle-block은 '차단/사용 불가'로 한정. E-stop에는 전용 글리프(팔각형/정지 계열) 도입을 결정하고, offline은 기존 문법(circle-info 또는 signal 계열)으로 통일. 어느 글리프를 E-stop 표준으로 삼을지는 디자인 결정 필요",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "네 증거 모두 실제 파일에서 확인됨(ManualControlSession.jsx:223, ResourceState.jsx:49, ViewerFrame.jsx:99, status-presentation.js:27). WDS 스냅샷의 circleBlock은 아이콘 카탈로그 항목(Icon/Normal/Circle Block, FIGMA_LOCAL_CONTENT_AUDIT.json 54262/60748 등)일 뿐 의미 매핑이 없고, 'offline' 개념 자체가 WDS 스냅샷에 부재 — 세 표면 모두 Product/Robotics 확장이라 일반 컨벤션 적용 대상. 한 아이콘=한 의미(Apple HIG SF Symbols, Material 아이콘 가이드)와 오프라인=slash 계열(Material cloud_off/wifi_off, SF wifi.slash, Fluent WifiOff, Carbon cloud--offline)은 실제 복수 시스템 합의. 추가 확증: ConnectionBadge.jsx:10은 오프라인을 0-bar 신호 글리프로 렌더 — 저장소 내 '오프라인' 표현이 circle-block/circle-info/신호바 3종으로 갈라진 내부 비일관. 단 두 가지 완화 사항을 finding에 반영 권장: (1) ViewerFrame의 unavailable→circle-block 단독으로는 정당한 사용(Material block=차단/사용불가)이며 문제는 과적임, (2) status-presentation.js의 'offline'은 실제로는 중립 톤 버킷 이름(queued/unknown/navy에 재사용)이라 아이콘 갈림이라기보다 네이밍 충돌 성격, (3) E-stop 버튼은 텍스트 라벨이 있어 식별성 희석은 중간 심각도."
+          }
+        }
+      ],
+      "rejectedClaims": [
+        {
+          "title": "아이콘 레지스트리 위생 — 357개 중 285개(80%) 미사용, 레거시 중복(apple vs logo-apple) 잔존",
+          "surfaces": "C:/Users/seoul/OneDrive/사진/문서/LK Design System/assets/icons/manifest.json, components/icon/Icon.jsx, stories/Content.shared.jsx, stories/ViewerVideo.stories.jsx",
+          "currentPattern": "레지스트리(Icon.jsx ICON_NAMES) 357개 중 components/+stories/ 전수 수집 결과 72개만 실사용(미사용 285개, 79.8%). manifest는 lds-legacy 폴백 18개를 별도 표기하는데 그중 apple은 WDS 기반 logo-apple과 같은 의미로 중복이며, 스토리는 레거시 쪽을 사용(stories/Content.shared.jsx의 name=\"apple\"). maximize(레거시, ViewerVideo 전체화면)와 full(WDS, '화면에 맞추기')은 의미가 달라 충돌은 아님",
+          "conventionSource": "레지스트리 자체 기록(assets/icons/manifest.json counts: svgImported 339 + ldsLegacyFallbacks 18). 라이브러리가 전체 아이콘 세트를 공개 API로 배포하는 것 자체는 Material Icons 등 관례상 정상",
+          "deviation": "미사용 자체는 위반이 아니나(공개 라이브러리 관례), 같은 의미를 가진 레거시-신규 쌍이 정리 기준 없이 공존하고 실사용이 레거시 쪽으로 남아 있어 은유 드리프트의 씨앗이 됨. 렌즈 항목 (5)의 정량 답변: 285/357 미사용",
+          "severity": "low",
+          "recommendation": "manifest에 의미별 canonical 이름을 문서화하고 레거시 폴백 18개에 deprecated 표시 및 대체 이름 매핑을 기록. 사용처(스토리)의 apple → logo-apple 전환은 글리프 차이 확인 후 결정",
+          "resolutionType": "documentation-only",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": false,
+            "wdsInherited": false,
+            "keep": false,
+            "note": "사실관계는 대부분 정확하다: ICON_NAMES 357개 확인, 독립 재집계로 사용 70/미사용 287(주장 72/285와 오차 범위 내), apple(Icon.jsx:1789, lds-legacy)과 logo-apple(Icon.jsx:1169, WDS logoApple 임포트)은 동일 실루엣의 중복이며 스토리(stories/Content.shared.jsx:113, ContentBadgesAnnotations.stories.jsx:26)는 레거시 쪽만 사용, logo-apple은 미사용. maximize/full 비충돌 판단도 맞다. WDS 스냅샷(FIGMA_LOCAL_CONTENT_AUDIT.json)에는 logoApple/full만 있고 bare apple/maximize는 없어 WDS 계승이 아니다. 그러나 기각 사유: (1) 80% 미사용은 finding 스스로 위반이 아니라고 인정하며, stories/Iconography.stories.jsx가 ICON_NAMES 전체를 갤러리로 렌더하므로 '미사용'은 라이브러리 카탈로그의 정상 상태다. (2) '정리 기준 없이 공존' 주장은 과장 — manifest가 source:\"lds-legacy\"로, Iconography 스토리가 'LDS 확장' 섹션으로 이미 분류를 문서화하고 있다. (3) 레거시 별칭 공존을 금지하는 외부 컨벤션 출처가 없고(Material도 개명 별칭 유지), 남는 실질(스토리가 apple 선호)은 두 글리프가 사실상 동일해 렌더 결과 편차가 0이며, 사용 표면끼리는 서로 일관되므로 규칙 4의 표면 간 비일관에도 해당하지 않는다. 렌더 결과를 대상으로 하는 이 검수에서 6개 한도를 차지할 finding이 아니라 레지스트리 정리 백로그 항목이다. apple→logo-apple 별칭 정리는 별도 하우스키핑으로 권고할 수는 있다."
+          }
+        }
+      ]
+    },
+    {
+      "key": "data-display",
+      "lens": "데이터 표시 컨벤션 (숫자 정렬·tabular-nums, 단위 표기, 날짜/시간 형식, 천 단위·소수 정책, 빈 셀, 표 헤더·정렬 어포던스)",
+      "reviewed": "구현 전체 판독: components/data/Table.jsx, table-cell-styles.js, DataGrid.jsx, DescriptionList.jsx, BarChart.jsx, LineChart.jsx, DonutChart.jsx, RefreshControl.jsx, DataToolbar.jsx(부분), components/cards/MetricCard.jsx, Stat.jsx, components/viz/TelemetryValue.jsx, TelemetryGauge.jsx. 스토리 판독: DataTable, DataGrid, DataToolbar, DataDescriptionList, DataAndStatus(MetricCard), ViewerTelemetry, DataBarChart, DataSparkline, DataLineChart, DataDisplay.shared, CardsExtended.shared(발췌). 저장소 전역 grep: tabular-nums 사용처(60파일), 날짜/시각 리터럴 패턴, toLocaleString/Intl.NumberFormat(0건), align:'right' 사용처, 빈 셀 placeholder. WDS 기준 확인: docs/references/wds/COMPONENT_CENSUS.json에서 검수 대상 전 컴포넌트가 ldsOnly(WDS 미정의)임을 확인 → 판정 기준은 일반 컨벤션+내부 일관성. docs/ROBOTICS_PATTERNS.md의 단위·freshness 계약 절 대조. 헤더 스타일(대문자 캡션)과 정렬 어포던스(상시 저투명 chevron)는 복수 시스템이 허용하는 선택지 범위라 finding에서 제외.",
+      "confirmedFindings": [
+        {
+          "title": "Table/DataGrid 본문 셀에 tabular-nums가 없어 숫자 표기가 스토리별 수작업으로 재구현됨",
+          "surfaces": "components/data/table-cell-styles.js, components/data/Table.jsx, components/data/DataGrid.jsx, stories/DataTable.stories.jsx, stories/DataGrid.stories.jsx, stories/DataToolbar.stories.jsx",
+          "currentPattern": "공유 셀 스타일 tdStyle(components/data/table-cell-styles.js:10-12)에는 fontVariantNumeric이 없고 기본 정렬은 좌측(Table.jsx:13, DataGrid.jsx:740 — column.align 미지정 시 'left'). 그래서 숫자 열은 스토리마다 커스텀 render로 tabular-nums를 인라인 재적용한다(DataTable.stories.jsx:33, DataGrid.stories.jsx:39·291, DataToolbar.stories.jsx:36 — 같은 스타일 해킹이 4회 복제). render 없이 row[key]로 흘러가는 숫자 셀은 비례 숫자로 렌더된다. 정작 DataGrid 자체 크롬은 tabular-nums를 내장한다(선택 카운트 DataGrid.jsx:553, 다중 정렬 우선순위 배지 :628).",
+          "conventionSource": "복수 시스템 합의: IBM Carbon(데이터 테이블 숫자에 tabular figures), Shopify Polaris(IndexTable/DataTable 숫자 열 우측 정렬), Material Design 데이터 테이블(숫자 우측 정렬), Primer. 내부 일관성 근거: 이 저장소의 다른 모든 숫자 표면이 tabular-nums를 컴포넌트에 내장함 — MetricCard.jsx:109, TelemetryValue.jsx:67, DonutChart.jsx:130, BarChart.jsx:103, Stat.jsx:31. WDS 무관 영역(COMPONENT_CENSUS.json ldsOnly에 Table·DataGrid 포함).",
+          "deviation": "시스템에서 가장 데이터 밀도가 높은 표면(표)만 숫자 정렬 안정성이 컴포넌트 보장이 아니라 호출자 재량이다. 열 재정렬·다중 행 비교 시 자릿수 흔들림이 발생할 수 있고, 같은 숫자가 MetricCard에서는 tabular, 표에서는 비례로 그려져 표면 간 렌더 결과가 어긋난다.",
+          "severity": "high",
+          "recommendation": "tdStyle(및 thStyle)에 fontVariantNumeric:'tabular-nums'를 기본 포함하거나, column에 type:'numeric'(align:right + tabular-nums 자동) 축을 추가하고 Table.prompt.md/DataGrid.prompt.md에 '숫자 열은 우측 정렬 + tabular' 규칙을 명문화. 스토리의 인라인 재구현 4곳은 그 후 제거.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 증거 실재 확인: tdStyle(table-cell-styles.js:10-12)에 fontVariantNumeric 없음, Table.jsx:13·DataGrid.jsx:740 기본 좌측 정렬, DataGrid 크롬(553·628)은 tabular-nums 내장, 스토리 4곳(DataTable.stories.jsx:33, DataGrid.stories.jsx:39·291, DataToolbar.stories.jsx:36)에서 동일 인라인 해킹 복제. 내부 비일관은 주장보다 더 강함 — MetricCard·Stat·TelemetryValue·DonutChart·BarChart 외에 Calendar·Legend·LineChart·FilterBar·TreePicker·AnnotatedImage·DataToolbar 크롬까지 전부 컴포넌트 내장인데 표 본문 셀만 호출자 재량. WDS 계승 아님: COMPONENT_CENSUS.json ldsOnly에 DataGrid(960행)·Table(1018행) 포함, FIGMA_LOCAL_CONTENT_AUDIT.json의 'Table' 노드(219229·353514행)는 문서 페이지 레이아웃 프레임이지 컴포넌트 셋이 아니며, VARIANT_AUDIT_CHECKLIST.json:551이 LDS 확장임을 명시. 유지하되 두 가지 표현 보정 권고: (1) 'align 기본 좌측'은 자체로는 편차 아님 — Carbon/Polaris도 기본 좌측이고 numeric 열은 호출자 표시가 관행이며 스토리도 align:'right'를 씀. 핵심 편차는 공유 tdStyle의 tabular-nums 부재로 좁혀야 함. (2) '비례 숫자로 렌더된다'는 Pretendard 기본 숫자폭에 의존하므로 'tabular 보장이 없다'로 완화하는 것이 안전(다만 저장소 전체가 이 선언을 필수로 취급하는 점이 방증)."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-11",
+            "note": "Shared table-cell styles now use tabular numbers and document right alignment for comparable numeric columns.",
+            "verification": [
+              "targeted Storybook play/Axe checks",
+              "37-target pixel regression baseline",
+              "npm run check:fast through check:types"
+            ]
+          }
+        },
+        {
+          "title": "값-단위 공백 규칙 부재: %는 관례와 반대로 띄우고, SI 단위는 같은 카드 안에서 붙였다 띄웠다 함",
+          "surfaces": "components/viz/TelemetryValue.jsx, components/viz/TelemetryGauge.jsx, components/cards/MetricCard.jsx, stories/ViewerTelemetry.stories.jsx, stories/DataAndStatus.stories.jsx, components/data/DonutChart.jsx",
+          "currentPattern": "TelemetryValue는 값과 unit 사이에 4px gap을 강제(TelemetryValue.jsx:66 gap:'var(--space-1)'), MetricCard는 8px gap(MetricCard.jsx:108 gap:'var(--space-2)') — unit=\"%\"이면 '18 %'/'68 %'로 렌더됨(ViewerTelemetry.stories.jsx:8, DataAndStatus.stories.jsx:142-144). TelemetryGauge의 aria-valuetext도 '84.67 %'로 공백 포함(TelemetryGauge.jsx:96, 스토리 검증 ViewerTelemetry.stories.jsx:195). 반면 같은 저장소의 다른 곳은 전부 붙임: DonutChart 범례 '{percentage}%'(DonutChart.jsx:145), MetricCard delta '+4.3%'(MetricCard.jsx:71), 표 셀 '{value}%'(DataTable.stories.jsx:33), 심지어 같은 타일의 helper 문구 '임계값 20% 이하'(ViewerTelemetry.stories.jsx:8). SI 단위 방향도 어긋남: 같은 카드 안에서 value=\"41\" unit=\"ms\"(띄움)와 baseline=\"지난 7일 평균 47ms\"(붙임)가 공존(DataAndStatus.stories.jsx:101-107).",
+          "conventionSource": "UI 표기 합의: %는 숫자에 붙임 — 국립국어원 표기 관행, GOV.UK style guide(no space before %), AP/주요 디자인 시스템 카피 관례(Material·Apple 예시 모두 '50%'). SI 문자 단위(ms, m/s, dBm)는 공백 — BIPM/NIST SI 규정이며 저장소 자체 문구('1.5 m/s', '18.4 MB')도 이 방향. WDS 무관 영역(모두 ldsOnly).",
+          "deviation": "%는 일반 관례(붙임)와 반대로 컴포넌트 gap 때문에 띄워지고, SI 단위는 관례(띄움)와 어긋나는 '47ms'식 표기가 같은 카드에 공존한다. 동일 정보('배터리 18%')가 타일 값에서는 '18 %', helper에서는 '20% 이하'로 그려진다.",
+          "severity": "medium",
+          "recommendation": "규칙을 하나로 정의: %·°처럼 기호 단위는 값에 붙이고(unit이 '%'일 때 gap 제거 특례 또는 % 전달 금지 후 값에 포함), 문자 단위는 공백 1개. TelemetryGauge baseValueText의 공백 로직도 동일 규칙 적용. 문구(baseline, helper)의 '47ms'류는 '47 ms'로 정리하고 ROBOTICS_PATTERNS.md 단위 표기 절에 명시.",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 인용 검증됨: TelemetryValue.jsx:66 gap 4px(spacing.css:11), MetricCard.jsx:108 gap 8px + :71 delta '${delta}%' 붙임, TelemetryGauge.jsx:96 aria-valuetext 공백(스토리 :195 단언), DonutChart.jsx:145·DataTable.stories.jsx:33 붙임, DataAndStatus.stories.jsx:101-107 '41 ms' vs '47ms' 동일 카드 공존. 가장 강한 반박(Ant Design Statistic처럼 stat-tile suffix gap은 의도적 패턴이라는 방어)은 내부 증거로 무너짐: 같은 파일 DataAndStatus.stories.jsx:57이 value=\"99.7%\"로 동일한 큰 값 타이포그래피에 %를 붙여 렌더하고, DataDonutChart.stories.jsx:26 centerLabel=\"95%\"도 붙임 — 즉 gap이 의도된 lockup 컨벤션이 아니라 우발적. WDS 계승 아님: COMPONENT_CENSUS.json에서 세 컴포넌트 모두 /ldsOnly, WDS 스냅샷 카피 자체가 '10%' 붙임(FIGMA_LOCAL_CONTENT_AUDIT.json:227156). 컨벤션 출처도 정당(UI 카피에서 % 붙임: AP/GOV.UK/MS·Apple 스타일 가이드/국립국어원 기호 관행; SI 문자 단위 띄움: BIPM/NIST + 한글 맞춤법), 단 BIPM은 %도 띄우라 하므로 % prong은 외부 출처보다 내부 비일관(규칙 4)으로 세우는 것이 안전. 주의 1: TelemetryGauge 가시 렌더는 단위가 아랫줄 스택(:166-174)이라 공백 주장은 aria-valuetext에만 해당 — finding 원문은 정확하나 재서술 시 왜곡 금지. 주의 2: 권고는 'gap 자체가 틀렸다'보다 단위 유형별 결합 규칙(%·°C는 붙임, 문자 단위는 공백)으로 내부 통일하는 방향이 방어력 높음."
+          }
+        },
+        {
+          "title": "표시용 날짜·freshness 형식이 표면마다 3~4종 혼용(ISO 하이픈 vs 점 표기 vs 상대시각)이며 정책이 없음",
+          "surfaces": "stories/DataDescriptionList.stories.jsx, stories/DataGrid.stories.jsx, stories/Card.stories.jsx, stories/CardNews.stories.jsx, stories/CardsExtended.shared.jsx, stories/ContentEditor.stories.jsx, stories/ContentSourceDisclosure.stories.jsx, stories/DataRefreshControl.stories.jsx, stories/DataAndStatus.stories.jsx, stories/LayoutPageHeader.stories.jsx",
+          "currentPattern": "절대 날짜가 두 문법으로 공존: ISO 하이픈 '2026-07-02'(DataDescriptionList.stories.jsx:36), '마지막 점검 2026-07-10'(DataGrid.stories.jsx:251), '업데이트 2026-07-09'(Card.stories.jsx:165), '2026-07-10 09:14'(ContentSourceDisclosure.stories.jsx:30) vs 점 표기 '2026.02.11'(CardNews.stories.jsx:26), '2026.07.05'(CardsExtended.shared.jsx:28), '게시 2026.07.07 10:42'(ContentEditor.stories.jsx:64), '2026.06.30 · PDF'(Content.shared.jsx:215). 카드 계열 안에서도 Card는 ISO, NewsCard는 점 표기라 표면 유형으로도 규칙이 성립하지 않음. 같은 의미의 lastUpdated도 '2분 전'/'방금'(DataAndStatus.stories.jsx:41·52), '오늘 14:32'(DataRefreshControl.stories.jsx:32, DataResourceState.stories.jsx:76), '10:42 KST'(LayoutPageHeader.stories.jsx:31), '2026-07-10 09:14'(ContentSourceDisclosure)로 4종.",
+          "conventionSource": "내부 비일관(판정 규칙 4) + 복수 시스템 합의: 디자인 시스템은 날짜·시간 표기 문법을 단일 정의함 — GOV.UK date style, Polaris content guidelines(dates), Apple HIG date formatting, Atlassian content design. 한국어 표준 선택지는 KS X ISO 8601('2026-07-02') 또는 국어원 '2026. 7. 2.' 두 계열. docs/ 전체에 날짜 형식 정책 문서 없음(grep 확인). WDS 스냅샷에도 해당 정의 없음.",
+          "deviation": "동일 제품군 렌더 결과에서 같은 종류의 메타데이터(게시일·점검일·마지막 업데이트)가 스토리 작성자 취향대로 갈린다. 절대/상대 시각 전환 기준(몇 분까지 상대, 언제부터 절대)도 정의돼 있지 않다.",
+          "severity": "medium",
+          "recommendation": "표기 정책 결정이 선행: (a) 절대 날짜는 데이터 표면 ISO 'YYYY-MM-DD' 단일화 또는 편집형 표면만 점 표기 허용 등 표면별 규칙을 명시, (b) freshness는 티어 규칙(예: 1시간 미만 'N분 전' → 당일 '오늘 HH:MM' → 그 외 'YYYY-MM-DD HH:MM')을 문서화한 뒤 스토리를 일괄 정렬. 어느 계열로 갈지는 결정 사안이므로 옵션 제시 후 확정 권장.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "전 인용 라인 원문 일치 확인(스토리 10곳 + Content.shared.jsx:215, DataResourceState.stories.jsx:76). 반박 시도 결과 오히려 finding이 강화됨: components/forms/DatePicker.jsx:30이 '2026. 07. 02'(국어원식 공백+제로패딩) 제3의 절대날짜 문법을 컴포넌트 수준에서 하드코딩 — ISO 하이픈·점 표기·국어원식 3계열이 렌더 결과에 공존하며, 스토리 샘플 데이터 차원을 넘어 컴포넌트가 직접 상충함. WDS 계승 아님: 스냅샷의 ISO 날짜(2025-04-09 등)는 Figma 파일 자체의 'Updates' 체인지로그 캔버스(16486:130929) 텍스트이고, 점 표기(2023.11.23)는 포인트 미션 툴팁 산문 속 1건(12회 인스턴스 반복)이며, WDS의 유일한 날짜 컴포넌트는 휠 피커(Presentation/Picker/Wheels, Type=Time)로 표시 형식 스펙이 없음. docs/ 전체에 날짜 표기 정책 부재 확인(grep 0건). 기준 컨벤션도 정당: '단일 문법을 정의한다'는 GOV.UK·Polaris·Atlassian·Carbon 공통이고, 핵심 근거는 어차피 판정 규칙 4(내부 비일관). 권고 시 DatePicker.jsx:30을 증거에 추가할 것."
+          }
+        },
+        {
+          "title": "동일 표면에서 단위를 value에 내장한 카드와 unit prop을 쓴 카드가 섞여 KPI 위계가 달라짐",
+          "surfaces": "stories/DataAndStatus.stories.jsx, stories/CardsExtended.shared.jsx, components/cards/MetricCard.jsx, components/cards/Stat.jsx",
+          "currentPattern": "MetricCard는 unit을 값보다 작은 보조 서체로 분리 렌더한다(MetricCard.jsx:109-110 — 값 title1/extra, 단위 body2/semibold). 그런데 같은 스토리 파일에서 '검증 통과율'은 value=\"99.7%\"로 %를 값 문자열에 내장해 대형 extrabold로 그리고(DataAndStatus.stories.jsx:57), '평균 배터리'는 value=\"68\" unit=\"%\"로 소형 보조 서체 %를 그린다(:142-144). Stat도 value=\"99.7%\"로 내장(CardsExtended.shared.jsx:142). 결과적으로 같은 %-KPI 카드 두 장의 단위 크기·위치·색이 다르다.",
+          "conventionSource": "내부 비일관(판정 규칙 4): 컴포넌트가 단위 슬롯을 제공하는데 사용처 절반이 우회. KPI 단위를 값과 구분된 보조 위계로 두는 것은 복수 시스템의 stat 패턴 합의(Carbon·Atlassian 통계 카드, 대시보드 KPI 관례)이며 MetricCard 구현 자체가 그 규칙을 채택하고 있음. WDS 무관 영역(MetricCard·Stat 모두 ldsOnly).",
+          "deviation": "단위 전달 경로가 사용처마다 갈려, 나란히 놓이는 지표 카드들 사이에서 단위 타이포그래피 위계가 무작위로 달라진다.",
+          "severity": "low",
+          "recommendation": "'단위는 항상 unit prop으로 전달한다(값 문자열 내장 금지)'를 MetricCard.prompt.md·Stat.prompt.md에 규칙으로 명시하고, DataAndStatus.stories.jsx:57과 CardsExtended.shared.jsx:142를 value+unit 분리형으로 수정. Stat에는 unit prop이 없으므로 추가 여부를 함께 결정(%처럼 기호 단위는 finding 2의 붙임 규칙과 연동).",
+          "resolutionType": "internal-inconsistency-fix",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "증거 실재: MetricCard.jsx:109-110(값 title1/extra, unit body2/semibold 분리 렌더), DataAndStatus.stories.jsx:57(검증 통과율 value=\"99.7%\" 내장) vs :142-143(평균 배터리 value=\"68\" unit=\"%\"), CardsExtended.shared.jsx:142 모두 확인. 같은 파일·같은 컴포넌트에서 동일 단위 %가 두 경로로 전달되어 타이포 위계가 갈리는 내부 비일관은 실재하며, unit=\"ms\"(:102) 사용이 '기호는 내장, 조수사만 분리'라는 관용적 해석도 배제함. WDS 계승 아님: MetricCard·Stat은 COVERAGE_DETAIL_AUDIT.json:365,389 extensionComponents, PUBLIC_EXPORT_CLASSIFICATION.json:121,125, TOKEN_MAP.json:223, VARIANT_AUDIT_CHECKLIST.json:489에서 LK 제품 확장으로 명시(WDS에 KPI 카드 패턴 없음). 정밀도 보정 2건: (1) 두 %-카드는 같은 파일이지만 서로 다른 story(Metrics vs ResourceStates)라 한 캔버스에 나란하지 않음 — 다만 Metrics 그리드 안에서 99.7%(내장)와 156+개/14+건(분리)이 실제로 나란히 렌더되므로 비일관은 단일 렌더에서도 관찰됨. (2) Stat은 unit prop 자체가 없어(value/label/accent/dark/stacked) '슬롯 우회' 사례가 아니며 근거로는 약함 — 권고 시 Stat 언급은 완화 필요. 외부 컨벤션 인용(Carbon·Atlassian 합의)은 약한 다리이나, 판정 규칙 4의 내부 비일관 + 컴포넌트 자체 API가 채택한 규범 우회만으로 finding 성립."
+          }
+        },
+        {
+          "title": "표 빈 셀 표기 정책 부재 — null 값이 완전 공백으로 렌더됨",
+          "surfaces": "components/data/DataGrid.jsx, components/data/Table.jsx, components/data/DataGrid.prompt.md, components/data/Table.prompt.md",
+          "currentPattern": "DataGrid는 정렬에서 null을 명시적으로 뒤로 보내며 결측을 예상하지만(DataGrid.jsx:6-14 compareValues), 표시 경로는 row[column.key]를 그대로 출력해 null/undefined 셀이 완전 공백이 된다(DataGrid.jsx:726-730, Table.jsx:14). 두 prompt.md 어디에도 빈 값 표기 지침이 없고, 스토리에도 결측 셀 예시가 없다.",
+          "conventionSource": "복수 시스템 합의: IBM Carbon(빈 셀에 en/em dash '–'), Shopify Polaris(값 없음은 em dash), Atlassian·Ant Design 테이블 관례 모두 '빈칸 방치 금지, 명시적 placeholder'. WDS 무관 영역(Table·DataGrid ldsOnly).",
+          "deviation": "결측이 '데이터 없음'인지 '로딩 실패'인지 '0'인지 시각적으로 구분되지 않는 공백 셀이 가능하며, 시스템 차원의 규칙이 없어 제품별로 제각각 처리될 수밖에 없다.",
+          "severity": "low",
+          "recommendation": "정책 문서화가 1차: '결측 값은 – (또는 —) 로 표기하고 스크린리더용 대체 텍스트(예: 값 없음)를 제공한다'를 Table/DataGrid prompt.md에 추가하고 결측 셀 스토리를 하나 마련. 컴포넌트에 placeholder 기본값을 넣을지는 blast radius가 있으므로 별도 결정.",
+          "resolutionType": "documentation-only",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "모든 증거 실재 확인: DataGrid.jsx:6-14 compareValues는 null을 방향 무관하게 항상 뒤로 보내 결측을 명시적으로 예상하는 반면, 표시 경로(DataGrid.jsx:726-744, Table.jsx:14)는 row[key]를 그대로 출력해 null/undefined가 완전 공백 셀이 된다. 두 prompt.md 모두 셀 단위 빈 값 지침 없음(DataGrid의 emptyLabel은 prompt.md:98·DataGrid.d.ts:132이 명시하듯 표 전체 empty surface). 스토리에도 결측 셀 예시 없음. WDS 계승 아님: FIGMA_LOCAL_CONTENT_AUDIT.json의 'Table'(219229, 353514)은 문서 페이지 레이아웃 FRAME(제목/Heading/목차 형제)일 뿐이며, LAYER_CLASSIFICATION.json:82와 COVERAGE_DETAIL_AUDIT.json:453, DataGrid.prompt.md:3 모두 LDS Product Extension으로 분류. 컨벤션 정당: Carbon(en dash)·Polaris(em dash)·Ant Design('--') 복수 시스템이 빈 셀 명시적 placeholder를 문서화. 내부 비일관 보강 증거: SelectionInspector.jsx:9는 이미 null/빈 값에 '—'를 사용 — 시스템 내에 패턴이 있으나 표에는 정책 부재이고, DataGrid 자체가 정렬은 null-aware, 표시는 null-blind로 어긋난다. 단 프레이밍 주의: 동료 시스템들도 컴포넌트 코드 레벨에선 null을 공백으로 통과시키며 이 컨벤션은 문서화된 콘텐츠 정책 층위다. 따라서 권고는 렌더 경로 자체를 위반으로 모는 것이 아니라 정책 층위(prompt.md 지침 + 스토리 예시 + 선택적 기본 placeholder)를 겨냥해야 한다."
+          }
+        },
+        {
+          "title": "차트가 스스로 그리는 숫자(합계·눈금)에 로케일 그룹핑·nice tick 정책이 없음",
+          "surfaces": "components/data/DonutChart.jsx, components/data/BarChart.jsx, components/data/LineChart.jsx",
+          "currentPattern": "저장소 전체에 Intl.NumberFormat/toLocaleString 사용이 0건(grep 확인). DonutChart는 중앙 합계를 raw 숫자로 직접 렌더하고(DonutChart.jsx:61-73 — total이 4300이면 '4,300'이 아닌 '4300'), BarChart도 datum.value를 그대로 출력(BarChart.jsx:102-105). LineChart 기본 y 눈금은 min→max 균등 분할이라(LineChart.jsx:50-54 buildTicks) 도메인 [0,0.9]에서 0.23·0.45·0.68 같은 비반올림 라벨이 생기고, defaultFormatY(:70-72)는 표시만 반올림한다. 소수 자릿수·천 단위 정책 문서도 없다.",
+          "conventionSource": "복수 시스템 합의: 축 눈금은 round/nice 값이 기본 — d3(ticks/nice), Highcharts, ECharts, Carbon Charts, Vega 모두 기본 동작. 천 단위 그룹핑은 Material·Apple HIG·GOV.UK 콘텐츠 스타일의 공통 지침(ko-KR '1,234'). WDS 무관 영역(차트 전부 ldsOnly). 현재 스토리 데이터가 모두 3자리 이하라 화면에는 아직 드러나지 않는 잠재 편차.",
+          "deviation": "호스트가 formatY/summary를 안 주면 컴포넌트 소유 렌더 경로(도넛 합계, 막대 값 라벨, 축 눈금, 자동 summary)가 그룹핑 없는 원시 숫자와 비반올림 눈금을 노출한다.",
+          "severity": "low",
+          "recommendation": "결정 필요: (a) 기본 포매터를 Intl.NumberFormat('ko-KR')로 교체하고 소수 자릿수 규칙(예: |v|<1 → 2자리, 그 외 정수)을 문서화, (b) LineChart에 nice-tick 알고리즘을 넣거나 '실데이터에서는 yDomain/yTicks/formatY 전달 필수'를 prompt.md에 명시. 컴포넌트 기본 동작 변경이므로 옵션 제시 후 진행 권장.",
+          "resolutionType": "convention-decision-needed",
+          "verification": {
+            "source": "workflow-verifier",
+            "evidenceReal": true,
+            "conventionLegit": true,
+            "wdsInherited": false,
+            "keep": true,
+            "note": "유지. 코드 증거 전부 실재 확인: DonutChart.jsx:61,72(합계 raw 렌더, 포맷 prop 없음), BarChart.jsx:104(datum.value raw; :37-40의 Number() 강제 때문에 호스트가 포맷된 문자열로 우회하는 것조차 불가), LineChart.jsx:50-54(min→max 균등분할), :70-72(표시만 반올림). 주장보다 강한 부분: 눈금 편차는 잠재가 아니라 현재 가시적 — stories/DataLineChart.stories.jsx '학습 손실' 스토리가 자동 도메인(0→~0.89)+기본 formatY로 0/0.22/0.45/0.67/0.89 눈금을 실제 렌더한다. 소소한 정정: 'Intl 사용 0건'은 부정확 — Calendar.jsx:28이 Intl.DateTimeFormat('ko-KR')을 사용(단 숫자 포맷팅인 NumberFormat/toLocaleString은 실제 0건이며, 날짜는 로케일 인식·숫자는 미인식이라는 경미한 내부 비일관을 오히려 추가). 컨벤션 정당: nice tick 기본값은 d3/Chart.js/Highcharts/ECharts/Vega/Carbon Charts의 보편 합의, 천 단위 그룹핑은 GOV.UK/Apple/Material 콘텐츠 스타일 공통 지침. WDS 비계승 확정: COMPONENT_CENSUS.json에서 BarChart/DonutChart/Sparkline은 ldsOnly, LineChart는 census 부재 + PUBLIC_EXPORT_CLASSIFICATION.json group 9 'product-extension'(lk-product-extension 레이어). 약점 캐비앳 2개: (1) 그룹핑 절반은 잠재적(모든 스토리 값 <100, ≥1000 표시 사례 전무), (2) LineChart.jsx:95-96 주석이 '호스트가 포매터 소유'를 명시하므로 권고는 기본 경로(기본 눈금 nice화, 기본 포매터 그룹핑)로 한정하는 것이 적절 — 위임 계약 자체를 뒤집는 권고는 과잉."
+          }
+        }
+      ],
+      "rejectedClaims": []
+    }
+  ]
+}

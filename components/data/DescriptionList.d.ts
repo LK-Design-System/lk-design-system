@@ -12,4 +12,4 @@ export interface DescriptionListProps extends React.HTMLAttributes<HTMLDListElem
 }
 
 /** 키/값 쌍(사양) — 뮤트 용어, 굵은 설명, 헤어라인 행. */
-export function DescriptionList(props: DescriptionListProps): JSX.Element;
+export function DescriptionList(props: DescriptionListProps): React.JSX.Element;

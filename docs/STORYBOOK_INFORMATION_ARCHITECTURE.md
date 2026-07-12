@@ -4,49 +4,46 @@
 
 ## 현재 기준선
 
-2026-07-11 빌드 기준으로 150개 페이지와 422개 스토리가 있다.
+2026-07-12 빌드 기준으로 168개 페이지와 443개 스토리가 있다.
 
-- 공개 스토리: 329개
-- 숨김 스토리: 93개
+- 공개 스토리: 336개
+- 숨김 스토리: 107개
 - 숨김 visual parity: 82개
-- 숨김 interaction/state contract: 11개
-- 컴포넌트 설명이 있는 페이지: 150개
-- Canvas에서 안내 서문을 직접 보여 주는 페이지: 6개
-- 사용/비사용 판단 기준이 확인되는 페이지: 1개
-- 개별 공개 스토리의 목적 설명이 확인되는 사례: 2개
+- 숨김 internal contract: 25개
+- 컴포넌트 설명이 있는 페이지: 168개
+- Canvas에서 안내 서문을 직접 보여 주는 페이지: 168개
+- 사용/비사용 판단 기준이 확인되는 페이지: 163개(Foundation 7페이지는 사용 판단 대신 원리·제약 계약을 적용)
+- 목적 설명이 있는 공개 스토리: 336개
+- Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
+- Core 진입 가이드: 54/54페이지, 공개 스토리 설명: 76/76개
+- Product 진입 가이드: 80/80페이지, 공개 스토리 설명: 172/172개
+- Robotics 진입 가이드: 24/24페이지, 공개 스토리 설명: 74/74개
+- Theme 진입 가이드: 3/3페이지, 공개 스토리 설명: 3/3개
+- 공개 스토리 표시명 계약: 336/336개(`개요` 또는 역할 접두어)
+- 이름을 바꾼 페이지의 기존 story id 보존: 5/5페이지
 
-즉, 메타데이터의 존재보다 설명의 위치와 학습 순서가 문제다. 설명은 Docs 탭에만 묻히지 않고 사용자가 처음 보는 Canvas에서도 목적과 관찰 지점을 알 수 있어야 한다.
+모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 공개 스토리의 Docs 설명에서 상황과 확인 지점을 이어서 볼 수 있다.
 
 ## 전수 감사 판정
 
-150개 페이지와 422개 스토리를 소스와 빌드 인덱스에 대조해 모두 검토했다. 현재 구조에 대한 페이지 판정은 `keep` 131개, `split` 18개, `merge` 1개, `hide` 0개다. 모든 페이지에 실제 디자인 시스템 표면이 하나 이상 있어 페이지 전체를 숨길 대상은 없지만, 공개 스토리 10개는 사용자 가이드가 아닌 내부 회귀 계약으로 판단해 숨김 전환을 권장한다.
+168개 페이지와 443개 스토리를 소스 AST와 빌드 인덱스에 대조해 모두 검토했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했다.
 
-분리·병합 대상은 다음과 같다. 이 판정은 컴포넌트 API를 없애는 결정이 아니라 Storybook의 공개 학습 홈과 설명 소유권을 바로잡는 결정이다.
+- 13개 구조 분리 실행: `Effects and Interaction`, `Action Controls`, `Annotations`, `Anchored Overlay`, `Menu`, `Segmented and Toggle`, `Selection Groups`, `Text Input`, `Loading State`, `Progress`, `Utility Actions`, `File Upload Queue`, `Telemetry`
+- 5개 분리 기각·keep 정정: `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`, `Toast`, `Manual Control Session`
+- 1개 병합 기각·keep 정정: `History Toolbar`
+- 공개 내부 계약 10개를 `!dev`로 전환하고 visual parity 82개를 그대로 유지
 
-- Foundation: `Effects and Interaction`을 `Effects`와 `Interaction`으로 분리
-- Core Action/Content/Layout: `Action Controls`, `Annotations`, `Disclosure`, `Scroll and Accessibility` 분리
-- Core Overlay: `Anchored Overlay`, `Menu`, `Toast` 분리
-- Core Selection and Input: `Search and Autocomplete`, `Segmented and Toggle`, `Selection Groups`, `Text Input` 분리
-- Core Status: `Loading State`를 `Skeleton`과 `Spinner`로, `Progress`를 작업 진행과 `Meter` 측정값으로 분리
-- Product: `Utility Actions`를 `Copy Button`과 `Link`로, `File Upload Queue`를 `File Upload`와 queue 계약으로 분리
-- Robotics: `Manual Control Session`의 준비·권한과 stop/recovery 계약을 분리하고, `Telemetry`를 `Telemetry Gauge`와 `Telemetry Value`로 분리
-- Robotics: `History Toolbar` 페이지를 `Command Bar`에 병합하되 독립 public API는 유지
+최종 구조에서는 분리된 각 페이지가 독립 소유자를 가지므로 판정은 `keep` 168개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 페이지 168/168개, 스토리 443/443개, 변경 후 stale 검토 0개, 공개·숨김 권고 불일치 0개다.
 
-공개에서 숨김으로 옮길 10개 스토리는 다음 부류다.
+정정 근거는 다음과 같다.
 
-- Core: 공통 overlay stack 회귀 계약 1개
-- Product: adaptive navigation의 router renderer 통합 훅 1개
-- Robotics: joystick chord 재계산, stop 요청 unmount·legacy callback, primitive 값 보존, 3D·Video 공통 상태 중복, 문자열 floor shorthand, threshold 방향 호환 등 8개
+- `ToastStack`은 별도 사용자 선택이 아니라 Toast의 배치·집계 wrapper이므로 공개 `Stack and placement` 예제를 Toast 페이지가 소유한다.
+- `Manual Control Session`은 준비, 권한, 입력, stop, recovery가 하나의 안전 상태 머신이므로 stop 전용 페이지로 끊지 않는다.
+- `HistoryToolbar`는 Command Bar가 합성하더라도 독립 public API, prompt, keyboard contract를 가지므로 병합하지 않는다.
+- `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`는 수락된 `.fig` 내부 component-set에서 독립 WDS 축을 확인할 수 없어 WDS 분리 근거로 승격하지 않는다.
+- `Meter`는 Progress와 학습 소유권을 분리했지만 현재 `ProgressBar` 합성으로 `role="progressbar"`가 노출되는 호환성 한계를 스토리에 명시하며, 엄격한 meter semantics가 필요한 제품에는 해소 전 권장하지 않는다.
 
-기존 숨김 visual parity 82개와 내부 contract 11개는 현재 위치가 적절하다. 따라서 구조 적용 후 권장 공개 수는 319개, 권장 숨김 수는 103개다. 상세한 페이지별 대상, 스토리 역할, 소유 컴포넌트, 공개 권장은 감사 원장을 기준으로 한다.
-
-설명 확장은 다음 순서로 진행한다.
-
-1. 18개 분리와 1개 병합을 먼저 적용해 공개 홈을 확정한다.
-2. 공개→숨김 10개와 중복·교차 소유 스토리를 이동한다.
-3. 각 페이지의 첫 `overview` 또는 Foundation reference 진입점을 정한다.
-4. Canvas 안내와 `docs.description.story`를 영역별 계약에 맞춰 작성한다.
-5. 정상 폭과 좁은 폭에서 실제 읽기 순서와 상태 설명을 확인한다.
+상세한 페이지별 소유자, 스토리 역할, 공개 여부와 검토 해시는 감사 원장을 기준으로 한다. `npm run check:storybook-ia`는 전 레이어의 첫 진입 가이드, 사용·비사용 기준(Foundation은 원리·제약), 모든 공개 스토리 설명, 공개 이름·역할 순서, 공개·숨김 권고 일치를 회귀 방지한다.
 
 ## 페이지 소유권
 
@@ -74,7 +71,18 @@
 | `visual-parity` | 실제 컴포넌트 표면의 시각 회귀 | `!dev` 숨김 |
 | `internal-contract` | 사용자 탐색보다 자동 검증이 주목적인 상태·상호작용 계약 | `!dev` 숨김 |
 
-페이지의 권장 공개 순서는 `overview/reference → usage → variants-states → interaction → responsive → scenario`다. 숨김 역할은 순서와 무관하게 sidebar에 노출하지 않는다.
+페이지의 공개 순서는 `overview → foundation-reference → usage → variants-states → interaction → responsive → scenario`다. 첫 공개 스토리는 페이지 진입점인 `개요`이고, 같은 Foundation 페이지의 추가 참조만 그 뒤에 온다. 숨김 역할은 순서와 무관하게 sidebar에 노출하지 않는다.
+
+## 사이드바 네이밍과 정렬 계약
+
+- 레이어와 그룹은 `LDS Core`, `LDS Theme`, `LDS Product`, `LDS Robotics`처럼 영문 소유권 어휘를 사용한다.
+- 단일 컴포넌트 페이지는 공식 영문 API 명칭을 쓴다. 여러 컴포넌트를 함께 소유하는 공개 페이지는 `Primitives` 또는 `Patterns`처럼 묶음임을 이름에서 밝힌다.
+- 페이지를 더 명확한 이름으로 바꾸더라도 기존 meta `id`를 명시해 공개 story id와 저장된 링크를 유지한다.
+- 모든 페이지의 첫 공개 스토리 표시명은 `개요`다. 이후 표시명은 역할에 맞춰 `참조 · …`, `사용법 · …`, `변형·상태 · …`, `상호작용 · …`, `반응형 · …`, `시나리오 · …` 문법을 사용한다.
+- 공개 스토리명은 사용자에게 관찰되는 한국어 상황과 결과를 적는다. 브랜드, 표준, 키 이름, `2D`·`3D`·`320px` 같은 단위 외에는 일반 영문이나 `계약`·`검증`·`핸들러` 같은 내부 작성 용어를 노출하지 않는다.
+- 병렬 절은 ` · `로 구분하고, `라이트·다크`처럼 하나의 짝을 이루는 낱말은 붙여 쓸 수 있다.
+- 그룹 순서는 명시적으로 유지하고, 그룹 안 페이지는 Foundation의 학습 순서 예외를 제외하면 숫자를 인식하는 자연 알파벳순으로 정렬한다. 공개 스토리는 위 역할 순서로 정렬한다.
+- `visual-parity`와 `internal-contract` 숨김 스토리는 사용자 탐색 대상이 아니므로 공개 표시명 문법의 적용 대상에서 제외한다.
 
 ## 공개 페이지 최소 계약
 

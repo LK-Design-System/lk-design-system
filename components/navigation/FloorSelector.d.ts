@@ -13,4 +13,4 @@ export interface FloorSelectorProps extends Omit<React.HTMLAttributes<HTMLDivEle
 }
 
 /** 층/레벨 선택기(빌딩 내비) — 단일 선택, 활성 층은 시그널 잉크. */
-export function FloorSelector(props: FloorSelectorProps): JSX.Element;
+export function FloorSelector(props: FloorSelectorProps): React.JSX.Element;

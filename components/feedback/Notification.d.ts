@@ -16,4 +16,4 @@ export interface NotificationProps extends Omit<React.HTMLAttributes<HTMLElement
 }
 
 /** 알림 행 — 아이콘 타일 · 제목 · 설명 · 시간 · 안읽음 상태. */
-export function Notification(props: NotificationProps): JSX.Element;
+export function Notification(props: NotificationProps): React.JSX.Element;

@@ -7,7 +7,7 @@ export interface AnchorItem {
   level?: number;
 }
 
-export interface AnchorProps extends React.HTMLAttributes<HTMLElement> {
+export interface AnchorProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
   items: AnchorItem[];
   /** 제어되는 활성 href. */
   active?: string;
@@ -15,4 +15,4 @@ export interface AnchorProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 시그널 잉크 활성 룰이 있는 페이지 내 목차 내비게이션. */
-export function Anchor(props: AnchorProps): JSX.Element;
+export function Anchor(props: AnchorProps): React.JSX.Element;

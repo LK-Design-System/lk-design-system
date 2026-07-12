@@ -28,4 +28,4 @@ export interface FileBrowserProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** File and directory navigation with selection kept as an explicit separate action. */
-export function FileBrowser(props: FileBrowserProps): JSX.Element;
+export function FileBrowser(props: FileBrowserProps): React.JSX.Element;

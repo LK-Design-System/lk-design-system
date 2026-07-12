@@ -42,4 +42,4 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> 
 }
 
 /** dropdown menu with normal, radio, checkbox, scroll, and action-area support. */
-export function DropdownMenu(props: DropdownMenuProps): JSX.Element;
+export function DropdownMenu(props: DropdownMenuProps): React.JSX.Element;

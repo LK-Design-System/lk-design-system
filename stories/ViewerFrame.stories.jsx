@@ -1,10 +1,19 @@
 import React from 'react';
 import { Button, Icon, ViewerFrame, ViewerToolbar, ViewerToolbarButton } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Robotics/Viewer/Frame',
+  title: 'LDS Robotics/Viewer/Viewer Frame',
+  id: 'lds-robotics-viewer-shared-viewer-frame',
   component: ViewerFrame,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-robotics-viewer-shared-viewer-frame--state-placement',
+      eyebrow: 'Robotics / Viewer Frame',
+      title: '공통 뷰어 프레임은 콘텐츠 상태와 복구 동작을 같은 위치에서 전달합니다',
+      description:
+        '지도·3D·영상 뷰어가 로딩·신호 없음·오류·지연 상태를 일관된 읽기 순서로 보여줘야 할 때 적합합니다. 정적인 이미지나 상태 전환이 없는 단순 컨테이너에는 Viewer Frame 대신 기본 Surface를 사용하세요.',
+    },
     docs: {
       description: {
         component: '지도·3D·영상이 공유하는 LK Robotics 뷰포트 프레임입니다. 콘텐츠 가용성에 따라 중앙 차단 상태와 콘텐츠를 유지하는 가장자리 상태를 구분합니다.',
@@ -76,7 +85,10 @@ function BlockingFocusFixture() {
 }
 
 export const StatePlacement = {
-  name: '차단 · 가장자리 · 준비 상태',
+  name: '개요',
+  parameters: storyDescription(
+    'ready·stale·loading 상태를 나란히 두어 상태 배치 원칙을 비교합니다. 로딩은 중앙에서 콘텐츠를 차단하고 stale은 장면을 유지한 채 가장자리에서 알려 운영 맥락이 보존되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
       <ViewerFrame label="준비된 뷰포트" source="AMR-07" state="ready" status="38 FPS" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
@@ -107,7 +119,10 @@ export const StatePlacement = {
 };
 
 export const LiveAndBlockingStates = {
-  name: '라이브 · 소스 없음 · 표시 오류',
+  name: '변형·상태 · 실시간·소스 없음·표시 오류',
+  parameters: storyDescription(
+    '실시간 영상과 소스 미선택·표시 오류를 한 화면에서 비교하는 상황입니다. live는 콘텐츠를 유지하고 중립 차단 상태와 오류 alert가 서로 다른 긴급도로 전달되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
       <ViewerFrame label="라이브 카메라 뷰포트" source="AMR-07 · 전면 카메라" state="live" status="30 FPS" style={{ height: 220 }}>
@@ -160,14 +175,17 @@ export const LiveAndBlockingStates = {
 };
 
 export const NarrowBlockingState = {
-  name: '좁은 폭 · 차단 정보와 복구 동작',
+  name: '반응형 · 좁은 폭 · 차단 정보와 복구',
+  parameters: storyDescription(
+    '232px 폭의 오류 뷰어에 긴 소스 이름과 복구 버튼을 표시합니다. 보조 설명과 아이콘은 단계적으로 줄어들되 소스 정체·오류 의미·다시 시도 동작은 프레임 안에 남는지 확인하세요.',
+  ),
   render: () => (
     <div style={{ width: 232, maxWidth: '100%' }}>
       <ViewerFrame
         label="좁은 오류 뷰포트"
         source="AMR-11 · 매우 긴 후면 카메라 소스 이름"
         state="error"
-        stateDescription="카메라 콘텐츠를 불러오지 못했습니다. 연결을 확인한 뒤 다시 시도하세요."
+        stateDescription="카메라 콘텐츠를 불러오지 못했습니다. 연결을 확인한 뒤 다시 시도해 주세요."
         stateAction={<Button size="sm" onClick={() => {}}>다시 시도</Button>}
         style={{ aspectRatio: '16 / 9' }}
       >
@@ -203,7 +221,10 @@ export const NarrowBlockingState = {
 };
 
 export const LightMapFrame = {
-  name: '밝은 지도 외형',
+  name: '변형·상태 · 밝은 지도 외형',
+  parameters: storyDescription(
+    '밝은 2D 지도 콘텐츠에 하단 로컬 툴바와 줌 상태를 배치한 상황입니다. light appearance에서 프레임 경계와 도구 대비가 유지되고 상태가 지도보다 앞서지 않는지 확인하세요.',
+  ),
   render: () => (
     <div style={{ width: '100%', maxWidth: 640 }}>
       <ViewerFrame
@@ -222,7 +243,10 @@ export const LightMapFrame = {
 };
 
 export const BlockingFocusTransition = {
-  name: '차단 전환 포커스 복구',
+  name: '상호작용 · 차단 전환 · 포커스 복구',
+  parameters: storyDescription(
+    '사용 중인 뷰어가 로딩 차단 상태로 전환됐다가 복구되는 상황입니다. 차단 시 포커스가 복구 동작으로 이동하고 준비 상태가 돌아오면 원래 툴바 제어로 복귀하는지 확인하세요.',
+  ),
   render: () => <div style={{ width: '100%', maxWidth: 520 }}><BlockingFocusFixture /></div>,
   play: async ({ canvasElement }) => {
     const load = canvasElement.querySelector('[data-testid="viewer-load"]');

@@ -1,0 +1,1137 @@
+{
+  "schemaVersion": 1,
+  "description": "Known JSX/.d.ts/.prompt.md API mismatches. The guard rejects only newly introduced drift.",
+  "analyzableExports": 192,
+  "findings": {
+    "components/brand/BrandLogo.jsx#BrandLogo": {
+      "undocumentedProps": [
+        "decorative",
+        "title"
+      ]
+    },
+    "components/brand/Lockup.jsx#Lockup": {
+      "undocumentedProps": [
+        "color",
+        "decorative",
+        "title"
+      ]
+    },
+    "components/buttons/ActionArea.jsx#ActionArea": {
+      "undocumentedProps": [
+        "compact",
+        "summary"
+      ]
+    },
+    "components/buttons/Button.jsx#Button": {
+      "missingInTypes": [
+        "onClick",
+        "onMouseDown",
+        "onMouseEnter",
+        "onMouseLeave",
+        "onMouseUp",
+        "type"
+      ],
+      "undocumentedProps": [
+        "color",
+        "disable",
+        "disabled",
+        "iconOnly"
+      ]
+    },
+    "components/buttons/ButtonGroup.jsx#ButtonGroup": {
+      "undocumentedProps": [
+        "size"
+      ]
+    },
+    "components/buttons/IconButton.jsx#IconButton": {
+      "missingInTypes": [
+        "aria-disabled",
+        "disabled",
+        "onClick",
+        "onMouseEnter",
+        "onMouseLeave",
+        "type"
+      ],
+      "undocumentedProps": [
+        "alternative",
+        "disable"
+      ]
+    },
+    "components/buttons/Link.jsx#Link": {
+      "missingInTypes": [
+        "href",
+        "onMouseEnter",
+        "onMouseLeave"
+      ]
+    },
+    "components/buttons/SocialButton.jsx#SocialButton": {
+      "missingInTypes": [
+        "onMouseDown",
+        "onMouseEnter",
+        "onMouseLeave",
+        "onMouseUp",
+        "type"
+      ],
+      "undocumentedProps": [
+        "as",
+        "disabled",
+        "iconOnly"
+      ]
+    },
+    "components/buttons/SplitButton.jsx#SplitButton": {
+      "undocumentedProps": [
+        "size"
+      ]
+    },
+    "components/buttons/TextButton.jsx#TextButton": {
+      "missingInTypes": [
+        "onClick",
+        "onMouseEnter",
+        "onMouseLeave",
+        "type"
+      ],
+      "undocumentedProps": [
+        "color",
+        "disable",
+        "disabled"
+      ]
+    },
+    "components/buttons/ToggleIcon.jsx#ToggleIcon": {
+      "missingInTypes": [
+        "aria-disabled",
+        "disabled",
+        "onClick",
+        "onMouseEnter",
+        "onMouseLeave",
+        "type"
+      ],
+      "undocumentedProps": [
+        "onChange"
+      ]
+    },
+    "components/cards/Card.jsx#Card": {
+      "missingInTypes": [
+        "onMouseEnter",
+        "onMouseLeave"
+      ],
+      "undocumentedProps": [
+        "onSave",
+        "saved"
+      ]
+    },
+    "components/cards/MetricCard.jsx#MetricCard": {
+      "missingInTypes": [
+        "aria-label",
+        "aria-labelledby"
+      ]
+    },
+    "components/cards/ProductCard.jsx#ProductCard": {
+      "undocumentedProps": [
+        "image"
+      ]
+    },
+    "components/cards/SpecRow.jsx#SpecRow": {
+      "missingInTypes": [
+        "divider"
+      ],
+      "undocumentedProps": [
+        "labelWidth"
+      ]
+    },
+    "components/cards/Stat.jsx#Stat": {
+      "undocumentedProps": [
+        "dark"
+      ]
+    },
+    "components/content/Bookmark.jsx#Bookmark": {
+      "undocumentedProps": [
+        "disabled"
+      ]
+    },
+    "components/content/ContentBadge.jsx#ContentBadge": {
+      "undocumentedProps": [
+        "iconPosition"
+      ]
+    },
+    "components/content/ContentEditor.jsx#ContentEditor": {
+      "undocumentedProps": [
+        "activeToolbarItems",
+        "aria-label",
+        "bodyId",
+        "bodyLabel",
+        "busy",
+        "defaultTitleValue",
+        "defaultValue",
+        "disabled",
+        "footer",
+        "helper",
+        "invalid",
+        "maxLength",
+        "onToolbarAction",
+        "placeholder",
+        "readOnly",
+        "required",
+        "rows",
+        "textareaProps",
+        "titleId",
+        "titleInputProps",
+        "titleLabel",
+        "titlePlaceholder",
+        "toolbarItems"
+      ]
+    },
+    "components/content/Divider.jsx#Divider": {
+      "undocumentedProps": [
+        "inset"
+      ]
+    },
+    "components/content/ListCell.jsx#ListCell": {
+      "missingInTypes": [
+        "onBlur",
+        "onFocus",
+        "onKeyDown",
+        "onMouseEnter",
+        "onMouseLeave"
+      ],
+      "undocumentedProps": [
+        "contentStyle",
+        "descriptionStyle",
+        "leadingStyle",
+        "paddingX",
+        "paddingY",
+        "titleStyle",
+        "trailingStyle"
+      ]
+    },
+    "components/content/ReorderList.jsx#ReorderList": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "density",
+        "emptyLabel",
+        "getItemLabel",
+        "showIndex",
+        "showMoveButtons"
+      ]
+    },
+    "components/content/SourceDisclosure.jsx#SourceDisclosure": {
+      "undocumentedProps": [
+        "emptyMessage",
+        "headingLevel",
+        "onSourceActivate",
+        "openLabel"
+      ]
+    },
+    "components/content/Thumbnail.jsx#Thumbnail": {
+      "undocumentedProps": [
+        "fit",
+        "placeholder",
+        "placeholderIcon"
+      ]
+    },
+    "components/content/Tooltip.jsx#Tooltip": {
+      "undocumentedProps": [
+        "defaultOpen",
+        "open",
+        "placement"
+      ]
+    },
+    "components/data/AnnotatedImage.jsx#AnnotatedImage": {
+      "undocumentedProps": [
+        "annotationsVisible",
+        "aspectRatio",
+        "caption",
+        "defaultAnnotationsVisible",
+        "emptyMessage",
+        "errorMessage",
+        "loadingMessage",
+        "onAnnotationsVisibleChange",
+        "summaryLabel"
+      ]
+    },
+    "components/data/BarChart.jsx#BarChart": {
+      "missingInTypes": [
+        "aria-describedby",
+        "aria-label"
+      ]
+    },
+    "components/data/ChartFrame.jsx#ChartFrame": {
+      "undocumentedProps": [
+        "bodyStyle",
+        "loadingContent",
+        "stateAction",
+        "stateDescription",
+        "stateTitle"
+      ]
+    },
+    "components/data/DataExportAction.jsx#DataExportAction": {
+      "undocumentedProps": [
+        "defaultFormatValue",
+        "defaultScopeValue",
+        "errorMessage",
+        "exportLabel",
+        "formatValue",
+        "formats",
+        "onFormatChange",
+        "onScopeChange",
+        "scopeValue",
+        "size",
+        "successMessage"
+      ]
+    },
+    "components/data/DataGrid.jsx#DataGrid": {
+      "undocumentedProps": [
+        "defaultSelectionModel",
+        "defaultSortModel",
+        "loadingLabel",
+        "onClearSelection",
+        "size"
+      ]
+    },
+    "components/data/DataToolbar.jsx#DataToolbar": {
+      "undocumentedProps": [
+        "defaultSearchValue"
+      ]
+    },
+    "components/data/DonutChart.jsx#DonutChart": {
+      "missingInTypes": [
+        "aria-describedby",
+        "aria-label"
+      ]
+    },
+    "components/data/FileBrowser.jsx#FileBrowser": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled",
+        "emptyMessage",
+        "error",
+        "loading",
+        "loadingMessage",
+        "maxHeight",
+        "navigationDisabled"
+      ]
+    },
+    "components/data/FilterBar.jsx#FilterBar": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "clearLabel",
+        "resultCountLabel",
+        "size",
+        "summaryLabel"
+      ]
+    },
+    "components/data/Legend.jsx#Legend": {
+      "missingInTypes": [
+        "aria-label"
+      ]
+    },
+    "components/data/LineChart.jsx#LineChart": {
+      "missingInTypes": [
+        "aria-describedby",
+        "aria-label"
+      ]
+    },
+    "components/data/RefreshControl.jsx#RefreshControl": {
+      "undocumentedProps": [
+        "autoRefreshLabel",
+        "lastUpdatedLabel",
+        "refreshLabel",
+        "size"
+      ]
+    },
+    "components/data/ResourceState.jsx#ResourceState": {
+      "undocumentedProps": [
+        "description",
+        "lastUpdatedLabel",
+        "loadingContent",
+        "title"
+      ]
+    },
+    "components/data/SavedViewControl.jsx#SavedViewControl": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "dirtyLabel",
+        "name",
+        "placeholder",
+        "savingLabel",
+        "selectId",
+        "size"
+      ]
+    },
+    "components/data/Sparkline.jsx#Sparkline": {
+      "missingInImplementation": [
+        "description",
+        "emptyLabel",
+        "formatValue",
+        "summary"
+      ]
+    },
+    "components/data/TreePicker.jsx#TreePicker": {
+      "undocumentedProps": [
+        "defaultExpandedIds",
+        "defaultQuery",
+        "defaultSelectedIds",
+        "emptyMessage",
+        "maxHeight",
+        "noResultsMessage",
+        "onQueryChange",
+        "query",
+        "searchLabel",
+        "searchPlaceholder"
+      ]
+    },
+    "components/data/VisibilityManager.jsx#VisibilityManager": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "density",
+        "description",
+        "emptyLabel",
+        "listLabel",
+        "title"
+      ]
+    },
+    "components/editor/CanvasEditorCommandBar.jsx#CanvasEditorCommandBar": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "documentLabel",
+        "extraLabel",
+        "historyLabel",
+        "onReset",
+        "showHistory"
+      ]
+    },
+    "components/editor/CanvasEditorShell.jsx#CanvasEditorShell": {
+      "undocumentedProps": [
+        "canvasLabel",
+        "layerPanelMaxWidth",
+        "layerPanelMinWidth",
+        "layerPanelWidth",
+        "layersLabel",
+        "onLayerPanelWidthChange",
+        "onLayersOpenChange",
+        "onPanelOpenChange",
+        "onPanelWidthChange",
+        "panelLabel",
+        "panelMaxWidth",
+        "panelMinWidth",
+        "panelWidth",
+        "statusLabel",
+        "toolsLabel"
+      ]
+    },
+    "components/editor/EditorToolbar.jsx#EditorToolbar": {
+      "missingInTypes": [
+        "onFocusCapture",
+        "onKeyDown"
+      ],
+      "undocumentedProps": [
+        "tooltipPosition"
+      ]
+    },
+    "components/editor/HistoryToolbar.jsx#HistoryToolbar": {
+      "missingInTypes": [
+        "aria-label",
+        "onKeyDown"
+      ],
+      "undocumentedProps": [
+        "label"
+      ]
+    },
+    "components/editor/LayerPanel.jsx#LayerPanel": {
+      "undocumentedProps": [
+        "defaultActiveLayerId",
+        "defaultLockedLayerIds",
+        "defaultVisibleLayerIds",
+        "disabled",
+        "emptyLabel",
+        "lockedLayerIds",
+        "onLockedLayerIdsChange",
+        "onVisibleLayerIdsChange",
+        "title",
+        "visibleLayerIds"
+      ]
+    },
+    "components/editor/SelectionInspector.jsx#SelectionInspector": {
+      "undocumentedProps": [
+        "clearSelectionAriaLabel",
+        "clearSelectionLabel",
+        "emptyLabel"
+      ]
+    },
+    "components/editor/ViewportStatusBar.jsx#ViewportStatusBar": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "messageTone"
+      ]
+    },
+    "components/feedback/Avatar.jsx#Avatar": {
+      "undocumentedProps": [
+        "alt",
+        "borderColor",
+        "borderWeight",
+        "deactivated",
+        "interaction",
+        "placeholder",
+        "pushBadge",
+        "ring",
+        "variant"
+      ]
+    },
+    "components/feedback/Chip.jsx#Chip": {
+      "missingInImplementation": [
+        "href"
+      ],
+      "missingInTypes": [
+        "onClick",
+        "onMouseEnter",
+        "onMouseLeave"
+      ],
+      "undocumentedProps": [
+        "active",
+        "disable"
+      ]
+    },
+    "components/feedback/Notification.jsx#Notification": {
+      "missingInTypes": [
+        "onBlur",
+        "onFocus",
+        "onMouseEnter",
+        "onMouseLeave"
+      ]
+    },
+    "components/forms/AutoComplete.jsx#AutoComplete": {
+      "missingInTypes": [
+        "aria-label"
+      ]
+    },
+    "components/forms/Checkbox.jsx#Checkbox": {
+      "undocumentedProps": [
+        "aria-label",
+        "bold",
+        "disable",
+        "disabled",
+        "indeterminate",
+        "interaction",
+        "labelStyle",
+        "size",
+        "state",
+        "status",
+        "tight",
+        "variant"
+      ]
+    },
+    "components/forms/Combobox.jsx#Combobox": {
+      "undocumentedProps": [
+        "placeholder"
+      ]
+    },
+    "components/forms/DatePicker.jsx#DatePicker": {
+      "missingInTypes": [
+        "aria-label",
+        "onKeyDown"
+      ],
+      "undocumentedProps": [
+        "size"
+      ]
+    },
+    "components/forms/DateRangeField.jsx#DateRangeField": {
+      "undocumentedProps": [
+        "disabled",
+        "groupLabel",
+        "size"
+      ]
+    },
+    "components/forms/FileUpload.jsx#FileUpload": {
+      "missingInTypes": [
+        "onDragEnter",
+        "onDragLeave",
+        "onDragOver",
+        "onDrop"
+      ],
+      "undocumentedProps": [
+        "disabled",
+        "inputAriaLabel"
+      ]
+    },
+    "components/forms/FileUploadQueue.jsx#FileUploadQueue": {
+      "undocumentedProps": [
+        "emptyLabel",
+        "title"
+      ]
+    },
+    "components/forms/FormField.jsx#FormField": {
+      "undocumentedProps": [
+        "htmlFor"
+      ]
+    },
+    "components/forms/Input.jsx#Input": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "actionRight",
+        "active",
+        "disable",
+        "error",
+        "focus",
+        "interaction",
+        "leadingIcon",
+        "platform",
+        "resize",
+        "status",
+        "trailingButton",
+        "trailingIcon",
+        "variant"
+      ]
+    },
+    "components/forms/InputGroup.jsx#InputGroup": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled",
+        "size"
+      ]
+    },
+    "components/forms/NumberField.jsx#NumberField": {
+      "missingInTypes": [
+        "aria-label",
+        "onBlur",
+        "onFocus",
+        "placeholder",
+        "readOnly"
+      ],
+      "undocumentedProps": [
+        "size"
+      ]
+    },
+    "components/forms/PasswordInput.jsx#PasswordInput": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled",
+        "placeholder"
+      ]
+    },
+    "components/forms/PinInput.jsx#PinInput": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled",
+        "size"
+      ]
+    },
+    "components/forms/Radio.jsx#Radio": {
+      "undocumentedProps": [
+        "aria-label",
+        "bold",
+        "defaultChecked",
+        "disable",
+        "disabled",
+        "interaction",
+        "labelStyle",
+        "size",
+        "state",
+        "tight"
+      ]
+    },
+    "components/forms/SearchField.jsx#SearchField": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled"
+      ]
+    },
+    "components/forms/SearchableMultiSelect.jsx#SearchableMultiSelect": {
+      "missingInTypes": [
+        "onBlur"
+      ],
+      "undocumentedProps": [
+        "defaultSearchValue",
+        "defaultValue",
+        "emptyLabel",
+        "filterOption",
+        "loadingLabel",
+        "maxSelectionLabel",
+        "maxSelections",
+        "placeholder"
+      ]
+    },
+    "components/forms/SecretField.jsx#SecretField": {
+      "undocumentedProps": [
+        "copyable",
+        "defaultRevealed",
+        "hideLabel",
+        "revealLabel"
+      ]
+    },
+    "components/forms/Select.jsx#Select": {
+      "missingInImplementation": [
+        "aria-describedby",
+        "aria-label",
+        "aria-labelledby",
+        "onClick",
+        "onKeyDown"
+      ],
+      "undocumentedProps": [
+        "active",
+        "aria-describedby",
+        "aria-label",
+        "aria-labelledby",
+        "defaultOpen",
+        "disable",
+        "disabled",
+        "error",
+        "focus",
+        "helper",
+        "iconLeft",
+        "interaction",
+        "invalid",
+        "negative",
+        "onClick",
+        "onKeyDown",
+        "overflow",
+        "placeholder",
+        "platform",
+        "render",
+        "required",
+        "status",
+        "variant"
+      ]
+    },
+    "components/forms/Slider.jsx#Slider": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled"
+      ]
+    },
+    "components/forms/TagInput.jsx#TagInput": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled"
+      ]
+    },
+    "components/forms/Textarea.jsx#Textarea": {
+      "undocumentedProps": [
+        "active",
+        "disable",
+        "error",
+        "focus",
+        "helper",
+        "interaction",
+        "invalid",
+        "resize",
+        "size",
+        "status"
+      ]
+    },
+    "components/forms/TimePicker.jsx#TimePicker": {
+      "undocumentedProps": [
+        "disabled"
+      ]
+    },
+    "components/icon/Icon.jsx#Icon": {
+      "undocumentedProps": [
+        "title"
+      ]
+    },
+    "components/layout/DashboardShell.jsx#DashboardShell": {
+      "undocumentedProps": [
+        "mainClassName",
+        "mainId",
+        "mainStyle",
+        "narrowNavigationLabel",
+        "navigationLabel",
+        "skipLabel"
+      ]
+    },
+    "components/layout/DockPanel.jsx#DockPanel": {
+      "missingInTypes": [
+        "aria-label"
+      ]
+    },
+    "components/layout/MobileSystemBars.jsx#MobileSystemBars": {
+      "undocumentedProps": [
+        "showStatus",
+        "time"
+      ]
+    },
+    "components/layout/PageHeader.jsx#PageHeader": {
+      "undocumentedProps": [
+        "align",
+        "size"
+      ]
+    },
+    "components/layout/PrimaryDetail.jsx#PrimaryDetail": {
+      "undocumentedProps": [
+        "detailBodyStyle",
+        "detailFooter",
+        "detailLabel",
+        "detailStyle",
+        "detailWidth",
+        "initialFocusRef",
+        "primaryLabel",
+        "primaryStyle",
+        "restoreFocus"
+      ]
+    },
+    "components/layout/Section.jsx#Section": {
+      "undocumentedProps": [
+        "innerStyle"
+      ]
+    },
+    "components/navigation/Category.jsx#Category": {
+      "undocumentedProps": [
+        "itemStyle",
+        "onChange",
+        "value"
+      ]
+    },
+    "components/navigation/Footer.jsx#Footer": {
+      "undocumentedProps": [
+        "maxWidth"
+      ]
+    },
+    "components/navigation/Menubar.jsx#Menubar": {
+      "undocumentedProps": [
+        "ariaLabel"
+      ]
+    },
+    "components/navigation/PageIndicator.jsx#PageIndicator": {
+      "undocumentedProps": [
+        "alternative",
+        "onChange",
+        "size"
+      ]
+    },
+    "components/navigation/Pagination.jsx#Pagination": {
+      "undocumentedProps": [
+        "leadingContent",
+        "onPageSizeChange",
+        "pageSizeOptions",
+        "siblingCount",
+        "trailingContent"
+      ]
+    },
+    "components/navigation/SideNav.jsx#SideNav": {
+      "missingInTypes": [
+        "onBlur"
+      ],
+      "undocumentedProps": [
+        "defaultCollapsed"
+      ]
+    },
+    "components/navigation/Tabs.jsx#Tabs": {
+      "undocumentedProps": [
+        "full",
+        "onChange"
+      ]
+    },
+    "components/navigation/TopBar.jsx#TopBarNavItem": {
+      "undocumentedProps": [
+        "href",
+        "menuTheme",
+        "onClick"
+      ]
+    },
+    "components/navigation/UserMenu.jsx#UserMenu": {
+      "undocumentedProps": [
+        "src"
+      ]
+    },
+    "components/overlay/Alert.jsx#Alert": {
+      "undocumentedProps": [
+        "ariaLabel",
+        "cancelLabel",
+        "closeOnScrim",
+        "confirmLabel",
+        "description",
+        "onCancel",
+        "onClose",
+        "onConfirm",
+        "restoreFocus"
+      ]
+    },
+    "components/overlay/CommandPalette.jsx#CommandPalette": {
+      "undocumentedProps": [
+        "ariaLabel",
+        "initialFocusRef",
+        "placeholder",
+        "restoreFocus",
+        "returnFocusRef"
+      ]
+    },
+    "components/overlay/ConfirmDialog.jsx#ConfirmDialog": {
+      "undocumentedProps": [
+        "ariaLabel",
+        "closeOnScrim",
+        "confirmLoadingLabel",
+        "headingLevel",
+        "onClose"
+      ]
+    },
+    "components/overlay/Drawer.jsx#Drawer": {
+      "undocumentedProps": [
+        "width"
+      ]
+    },
+    "components/overlay/DropdownMenu.jsx#DropdownMenu": {
+      "undocumentedProps": [
+        "action",
+        "align",
+        "cellPadding",
+        "defaultOpen",
+        "onOpenChange",
+        "open",
+        "verticalPadding",
+        "width"
+      ]
+    },
+    "components/overlay/Lightbox.jsx#Lightbox": {
+      "undocumentedProps": [
+        "ariaLabel",
+        "restoreFocus"
+      ]
+    },
+    "components/overlay/Modal.jsx#Modal": {
+      "undocumentedProps": [
+        "closeOnScrim",
+        "width"
+      ]
+    },
+    "components/overlay/Sheet.jsx#Sheet": {
+      "undocumentedProps": [
+        "closeOnScrim",
+        "height"
+      ]
+    },
+    "components/overlay/Snackbar.jsx#Snackbar": {
+      "undocumentedProps": [
+        "onAction",
+        "onClose",
+        "width"
+      ]
+    },
+    "components/overlay/Toast.jsx#Toast": {
+      "undocumentedProps": [
+        "icon",
+        "onAction",
+        "onClose"
+      ]
+    },
+    "components/robotics/ManualControlSession.jsx#ManualControlSession": {
+      "missingInTypes": [
+        "onBlur",
+        "onFocus"
+      ],
+      "undocumentedProps": [
+        "controlMode",
+        "deadmanControl",
+        "deadmanRequired",
+        "focusRequired",
+        "onFocusChange",
+        "sessionMeta",
+        "title"
+      ]
+    },
+    "components/selection/ChoiceCard.jsx#ChoiceCard": {
+      "missingInTypes": [
+        "onBlur",
+        "onClick",
+        "onFocus",
+        "onKeyDown",
+        "onMouseEnter",
+        "onMouseLeave"
+      ],
+      "undocumentedProps": [
+        "disabled",
+        "interaction",
+        "padding",
+        "presentation",
+        "radius",
+        "shadow",
+        "showIndicator",
+        "status"
+      ]
+    },
+    "components/selection/FilterChip.jsx#FilterChip": {
+      "undocumentedProps": [
+        "disabled",
+        "onClick",
+        "size"
+      ]
+    },
+    "components/selection/MultiSelectChip.jsx#MultiSelectChip": {
+      "undocumentedProps": [
+        "disabled",
+        "size"
+      ]
+    },
+    "components/selection/SegmentedControl.jsx#SegmentedControl": {
+      "undocumentedProps": [
+        "disable",
+        "disabled",
+        "interaction",
+        "resize",
+        "variant"
+      ]
+    },
+    "components/selection/Stepper.jsx#Stepper": {
+      "undocumentedProps": [
+        "disabled"
+      ]
+    },
+    "components/selection/Switch.jsx#Switch": {
+      "missingInTypes": [
+        "aria-label",
+        "onBlur",
+        "onFocus",
+        "onKeyDown"
+      ],
+      "undocumentedProps": [
+        "active",
+        "disable",
+        "focus",
+        "interaction",
+        "labelStyle",
+        "platform",
+        "readOnly",
+        "state"
+      ]
+    },
+    "components/selection/ThemeToggle.jsx#ThemeToggle": {
+      "undocumentedProps": [
+        "options",
+        "persist",
+        "storageKey"
+      ]
+    },
+    "components/selection/ToggleButton.jsx#ToggleButton": {
+      "missingInTypes": [
+        "aria-label"
+      ],
+      "undocumentedProps": [
+        "disabled"
+      ]
+    },
+    "components/selection/WheelPicker.jsx#WheelPicker": {
+      "undocumentedProps": [
+        "disable"
+      ]
+    },
+    "components/status/Meter.jsx#Meter": {
+      "undocumentedProps": [
+        "size"
+      ]
+    },
+    "components/status/ProgressBar.jsx#ProgressBar": {
+      "missingInTypes": [
+        "aria-describedby",
+        "aria-label",
+        "aria-labelledby",
+        "aria-valuetext"
+      ],
+      "undocumentedProps": [
+        "color"
+      ]
+    },
+    "components/status/Skeleton.jsx#Skeleton": {
+      "undocumentedProps": [
+        "animate",
+        "tone"
+      ]
+    },
+    "components/viz/Map2DCanvas.jsx#Map2DCanvas": {
+      "missingInTypes": [
+        "onKeyDown",
+        "onPointerCancel",
+        "onPointerDown",
+        "onPointerMove",
+        "onPointerUp"
+      ],
+      "undocumentedProps": [
+        "badges",
+        "hud",
+        "keyboard",
+        "label",
+        "maxZoom",
+        "minZoom",
+        "stateAction",
+        "stateDescription",
+        "stateIcon",
+        "stateLabel"
+      ]
+    },
+    "components/viz/Scene3DFrame.jsx#Scene3DFrame": {
+      "undocumentedProps": [
+        "badges",
+        "hud",
+        "overlay",
+        "stateAction",
+        "stateDescription",
+        "stateIcon",
+        "stateLabel"
+      ]
+    },
+    "components/viz/TelemetryGauge.jsx#TelemetryGauge": {
+      "undocumentedProps": [
+        "size",
+        "thickness"
+      ]
+    },
+    "components/viz/TelemetryValue.jsx#TelemetryValue": {
+      "undocumentedProps": [
+        "align",
+        "staleLabel"
+      ]
+    },
+    "components/viz/VideoStreamTile.jsx#VideoStreamTile": {
+      "undocumentedProps": [
+        "ariaLabel",
+        "aspectRatio",
+        "badges",
+        "hud",
+        "overlay",
+        "stateDescription",
+        "stateIcon",
+        "stateLabel",
+        "status"
+      ]
+    },
+    "components/viz/ViewerToolbar.jsx#ViewerToolbar": {
+      "missingInTypes": [
+        "onFocusCapture",
+        "onKeyDown"
+      ]
+    },
+    "components/viz/ViewerToolbar.jsx#ViewerToolbarButton": {
+      "missingInTypes": [
+        "disabled",
+        "onClick",
+        "onMouseEnter",
+        "onMouseLeave",
+        "type"
+      ]
+    }
+  }
+}

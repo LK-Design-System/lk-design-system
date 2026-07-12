@@ -39,7 +39,7 @@ export function Switch({
   const disabledState = disabled || disable || interaction === 'inactive';
   const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size;
   const activeFocus = focus || forcedFocus || interaction === 'focused';
-  const activeHover = hover || active || interaction === 'hovered';
+  const activeHover = !readOnly && (hover || active || interaction === 'hovered');
   const toggle = () => {
     if (disabledState || readOnly) return;
     if (!isControlled) setInternal(!on);
@@ -55,7 +55,7 @@ export function Switch({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: 12,
+        display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)',
         cursor: disabledState ? 'not-allowed' : readOnly ? 'default' : 'pointer',
         fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)',
         ...style,

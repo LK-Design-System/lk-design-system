@@ -38,4 +38,4 @@ export interface TreePickerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Hierarchical multi-select input with explicit controlled selection and expansion state. */
-export function TreePicker(props: TreePickerProps): JSX.Element;
+export function TreePicker(props: TreePickerProps): React.JSX.Element;

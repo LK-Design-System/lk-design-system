@@ -13,4 +13,4 @@ export interface StackProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 플렉스박스 레이아웃 프리미티브 — direction · gap · align · justify · wrap. */
-export function Stack(props: StackProps): JSX.Element;
+export function Stack(props: StackProps): React.JSX.Element;

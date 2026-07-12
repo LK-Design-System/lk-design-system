@@ -10,4 +10,4 @@ export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 점 + 화살표가 있는 가로 슬라이드 뷰포트; 양 끝에서 순환. */
-export function Carousel(props: CarouselProps): JSX.Element;
+export function Carousel(props: CarouselProps): React.JSX.Element;

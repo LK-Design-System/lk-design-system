@@ -13,4 +13,4 @@ export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** `Columns`의 스팬 자식. */
-export function Col(props: ColProps): JSX.Element;
+export function Col(props: ColProps): React.JSX.Element;

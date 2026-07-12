@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface DataToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 테이블/그리드 제목. */
   title?: React.ReactNode;
   /** 제목 아래 설명. */
@@ -24,4 +24,4 @@ export interface DataToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** DataGrid/Table 상단의 검색, 필터, 결과 수, 액션을 정렬하는 툴바. 선택 bulk action은 DataGrid가 담당합니다. */
-export function DataToolbar(props: DataToolbarProps): JSX.Element;
+export function DataToolbar(props: DataToolbarProps): React.JSX.Element;

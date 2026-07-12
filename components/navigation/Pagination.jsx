@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "../icon/Icon.jsx";
 
 function range(a, b) {
   const r = [];
@@ -53,11 +54,17 @@ export function Pagination({
   showPageJump = false,
   pageJumpLabel = "Page",
   showCounter = false,
+  navigationLabel = "pagination",
+  previousPageLabel = "previous page",
+  nextPageLabel = "next page",
+  pageSizeLabel = "items per page",
   style,
   ...rest
 }) {
   const total = Math.max(1, count);
   const current = Math.min(total, Math.max(1, page));
+  const [jumpValue, setJumpValue] = React.useState(String(current));
+  React.useEffect(() => setJumpValue(String(current)), [current]);
   const pages = buildPages(current, total, siblingCount, variant);
   const go = (p) => {
     if (p >= 1 && p <= total && p !== current) onChange?.(p);
@@ -66,7 +73,7 @@ export function Pagination({
   const Arrow = ({ dir, disabled }) => (
     <button
       type="button"
-      aria-label={dir === "prev" ? "previous page" : "next page"}
+      aria-label={dir === "prev" ? previousPageLabel : nextPageLabel}
       disabled={disabled}
       onClick={() => go(dir === "prev" ? current - 1 : current + 1)}
       style={{
@@ -82,25 +89,13 @@ export function Pagination({
         color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)",
       }}
     >
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d={dir === "prev" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"} />
-      </svg>
+      <Icon name={dir === "prev" ? "chevron-left-small" : "chevron-right-small"} size={18} aria-hidden="true" />
     </button>
   );
 
   return (
     <nav
-      aria-label="pagination"
+      aria-label={navigationLabel}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -118,7 +113,7 @@ export function Pagination({
             value={pageSize}
             onChange={(event) => onPageSizeChange?.(Number(event.target.value))}
             style={selectStyle}
-            aria-label="items per page"
+            aria-label={pageSizeLabel}
           >
             {pageSizeOptions.map((option) => (
               <option key={option} value={option}>
@@ -214,10 +209,15 @@ export function Pagination({
                 type="number"
                 min={1}
                 max={total}
-                defaultValue={current}
+                value={jumpValue}
+                onChange={(event) => setJumpValue(event.currentTarget.value)}
+                onBlur={() => setJumpValue(String(current))}
                 onKeyDown={(event) => {
-                  if (event.key === "Enter")
-                    go(Number(event.currentTarget.value));
+                  if (event.key === "Enter") {
+                    const next = Number(event.currentTarget.value);
+                    if (Number.isInteger(next) && next >= 1 && next <= total) go(next);
+                    else setJumpValue(String(current));
+                  }
                 }}
                 style={{
                   width: 48,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ICON_NAMES, Icon } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const LDS_EXTENSION_NAMES = [
   'robot',
@@ -42,8 +43,15 @@ const sourceLabel = {
 };
 
 const meta = {
-  title: 'LDS Core/Foundation/Icon',
+  title: 'LDS Core/Foundation/Iconography',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-foundation-iconography--icon-sizing-and-color',
+      eyebrow: 'Foundation / Iconography',
+      title: '아이콘은 익숙한 의미를 짧게 보조하고 텍스트를 임의로 대신하지 않습니다',
+      description:
+        '행동이나 상태를 빠르게 식별할 때 LDS registry의 정해진 이름과 크기를 사용하세요. 의미가 모호한 단독 아이콘에는 접근 가능한 이름이나 보이는 라벨이 필요하며, 임의 SVG와 장식용 색상으로 새 의미를 만들지 않습니다.',
+    },
     docs: {
       description: {
         component:
@@ -92,7 +100,10 @@ function IconTile({ name, compact = false }) {
 }
 
 export const IconSizingAndColor = {
-  name: '아이콘 크기와 색상',
+  name: '개요',
+  parameters: storyDescription(
+    '기본 아이콘 크기와 semantic 색상 적용 방식을 비교합니다. 주변 텍스트·컨트롤의 크기에 맞춰 아이콘을 선택하고, 상태 색상은 같은 의미의 semantic token으로만 전달하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: 'min(760px, 100%)' }}>
       <section style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap', color: 'var(--color-semantic-label-normal)' }}>
@@ -114,7 +125,10 @@ export const IconSizingAndColor = {
 };
 
 export const IconRegistry = {
-  name: '기본 아이콘 레지스트리',
+  name: '참조 · 기본 아이콘 목록',
+  parameters: storyDescription(
+    'LDS가 제공하는 기본 아이콘 이름과 출처를 확인하는 목록입니다. 새 그래픽을 추가하기 전에 같은 의미의 기존 glyph가 있는지 검색하고, 표시 이름과 실제 Icon name이 일치하는지 확인하세요.',
+  ),
   render: () => {
     return (
       <main style={{ width: 'min(1040px, 100%)', display: 'grid', gap: 18 }}>
@@ -155,27 +169,15 @@ export const IconRegistry = {
 };
 
 export const ColorBrandIcons = {
-  name: '컬러 브랜드 아이콘',
+  name: '변형·상태 · 브랜드 색상 아이콘',
+  parameters: storyDescription(
+    '고유 색상이 식별의 일부인 승인된 브랜드 아이콘 모음입니다. 외부 서비스나 브랜드를 실제로 가리킬 때만 사용하고, 일반 기능·상태 아이콘을 꾸미는 용도로 사용하지 마세요.',
+  ),
   render: () => {
     return (
       <main style={{ width: 'min(920px, 100%)', display: 'grid', gap: 16 }}>
         <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(144px, 1fr))', gap: 10 }}>
           {colorIconNames.map((name) => (
-            <IconTile key={name} name={name} />
-          ))}
-        </section>
-      </main>
-    );
-  },
-};
-
-export const RoboticsExtensionIcons = {
-  name: '로보틱스 확장 아이콘',
-  render: () => {
-    return (
-      <main style={{ width: 'min(920px, 100%)', display: 'grid', gap: 16 }}>
-        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(144px, 1fr))', gap: 10 }}>
-          {roboticsExtensionIconNames.map((name) => (
             <IconTile key={name} name={name} />
           ))}
         </section>

@@ -24,4 +24,4 @@ export interface ChipProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** Action/Chip primitive for compact labels, links, selected tags, and content chips. */
-export function Chip(props: ChipProps): JSX.Element;
+export function Chip(props: ChipProps): React.JSX.Element;

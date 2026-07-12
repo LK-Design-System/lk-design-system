@@ -49,4 +49,4 @@ export interface CanvasEditorCommandBarProps extends React.HTMLAttributes<HTMLDi
 }
 
 /** CanvasEditorShell 상단의 document/history 명령 바. Viewport controls are intentionally excluded. */
-export function CanvasEditorCommandBar(props: CanvasEditorCommandBarProps): JSX.Element;
+export function CanvasEditorCommandBar(props: CanvasEditorCommandBarProps): React.JSX.Element;

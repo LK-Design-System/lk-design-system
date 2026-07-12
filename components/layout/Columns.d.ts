@@ -16,4 +16,4 @@ export interface ColumnsProps extends React.HTMLAttributes<HTMLDivElement> {
  * 레이아웃을 나누는 반응형 컬럼 그리드(12컬럼 그리드). 브레이크포인트별로
  * 트랙을 차지하는 `Col` 자식과 함께 쓰세요.
  */
-export function Columns(props: ColumnsProps): JSX.Element;
+export function Columns(props: ColumnsProps): React.JSX.Element;

@@ -1,118 +1,366 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Button, Joystick, ManualControlSession } from '../src/index.js';
+import { Button, DirectionalPad, Joystick, ManualControlSession } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
+
+const RELEASE_LABEL_STYLE = {
+  color: 'var(--color-semantic-label-neutral)',
+  fontSize: 'var(--label1-size)',
+  lineHeight: 'var(--label1-line)',
+};
+
+function ControlSurface({ interactionEnabled, joystickLabel = '이동', joystickSize = 144, padSize = 44 }) {
+  const [lastJog, setLastJog] = React.useState('없음');
+  const jogLabels = { up: '앞으로', down: '뒤로', left: '왼쪽으로', right: '오른쪽으로' };
+
+  return (
+    <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 'var(--space-6)' }}>
+      <Joystick size={joystickSize} disabled={!interactionEnabled} label={joystickLabel} />
+      <section aria-label="비드래그 정밀 이동" style={{ display: 'grid', justifyItems: 'center', gap: 'var(--space-2)', minWidth: 0 }}>
+        <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>정밀 이동</strong>
+        <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', textAlign: 'center' }}>한 번 누를 때 한 단계 이동</span>
+        <DirectionalPad
+          size={padSize}
+          disabled={!interactionEnabled}
+          label="정밀 이동 방향"
+          onStep={(direction) => setLastJog(jogLabels[direction] || direction)}
+        />
+        <output style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>최근 단계: {lastJog}</output>
+      </section>
+    </div>
+  );
+}
 
 export default {
   title: 'LDS Robotics/Control/Manual Control Session',
   component: ManualControlSession,
   parameters: {
     layout: 'centered',
+    storyGuide: {
+      storyId: 'lds-robotics-control-manual-control-session--authorized-session',
+      eyebrow: 'Robotics / Manual Control Session',
+      title: '수동 제어 세션은 권한 확인부터 안전 해제까지 한 경계에서 관리합니다',
+      description:
+        '운영자가 로봇을 직접 움직이기 전에 연결·권한·활성화 조건을 확인하고 모든 종료 경로에서 정지를 보장해야 할 때 적합합니다. 단순 방향 입력만 필요하거나 제품이 세션 안전 수명주기를 이미 소유한다면 Joystick 또는 Directional Pad를 직접 사용하세요.',
+    },
     docs: {
       description: {
-        component: 'Transport link, control authority, UI armed, dead-man, focus를 분리하고 safe-release 요청을 계약하는 session boundary입니다.',
+        component: '연결·권한·UI arm·외부 활성화 입력·focus와 운행 정지 요청 lifecycle을 분리하고 safe-release를 계약하는 LK Robotics session boundary입니다.',
       },
     },
   },
 };
 
 export const AuthorizedSession = {
-  name: '권한과 UI 활성화 분리',
+  name: '개요',
+  parameters: storyDescription(
+    '연결과 제어 권한이 준비된 뒤 운영자가 수동 제어를 활성화하는 기본 세션입니다. 권한 보유와 UI arm 상태가 분리되어 보이고 활성화 전에는 이동 입력이 차단되는지 확인하세요.',
+  ),
   render: function Example() {
     const [armed, setArmed] = React.useState(false);
-    const [holding, setHolding] = React.useState(false);
+    const [stopRequestState, setStopRequestState] = React.useState('idle');
     const [lastRelease, setLastRelease] = React.useState('없음');
+
+    const reset = () => {
+      setArmed(false);
+      setStopRequestState('idle');
+      setLastRelease('없음');
+    };
 
     return (
       <div style={{ display: 'grid', gap: 'var(--space-3)', width: 620, maxWidth: 'calc(100vw - 48px)' }}>
         <ManualControlSession
+          data-testid="authorized-session"
           title="AMR 수동 주행"
           linkState="ready"
           authority="granted"
           armed={armed}
-          deadmanActive={holding}
+          deadmanRequired={false}
           controlMode="hybrid"
-          focusRequired
-          sessionMeta="최대 속도 0.4 m/s"
+          sessionMeta="설정된 제어 한도 0.4 m/s"
+          stopRequestState={stopRequestState}
           onArmedChange={setArmed}
           onSafetyReleaseRequest={setLastRelease}
-          onEmergencyStopRequest={() => setLastRelease('emergency-stop-requested')}
-          deadmanControl={(
-            <Button
-              variant={holding ? 'dark' : 'outlined'}
-              color="assistive"
-              onPointerDown={() => setHolding(true)}
-              onPointerUp={() => setHolding(false)}
-              onPointerCancel={() => setHolding(false)}
-              onPointerLeave={() => setHolding(false)}
-            >
-              {holding ? 'Dead-man 유지 중' : 'Dead-man 누르기'}
-            </Button>
-          )}
+          onStopRequest={() => setStopRequestState('requesting')}
         >
-          {({ interactionEnabled }) => <Joystick disabled={!interactionEnabled} label="이동" />}
+          {({ interactionEnabled }) => <ControlSurface interactionEnabled={interactionEnabled} />}
         </ManualControlSession>
-        <output style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>최근 release 요청: {lastRelease}</output>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
+          <output data-testid="authorized-release-output" style={RELEASE_LABEL_STYLE}>최근 release 요청: {lastRelease}</output>
+          <Button data-testid="reset-session" size="sm" variant="ghost" onClick={reset}>예제 초기화</Button>
+        </div>
       </div>
     );
   },
   play: async ({ canvasElement }) => {
-    const session = canvasElement.querySelector('section[aria-label="AMR 수동 주행"]');
+    const session = canvasElement.querySelector('[data-testid="authorized-session"]');
     if (!session) throw new Error('ManualControlSession root is missing.');
 
-    const connection = session.querySelector('[role="img"][data-status="online"]');
+    const heading = session.querySelector('h2');
+    if (!heading?.id || session.getAttribute('aria-labelledby') !== heading.id || heading.textContent?.trim() !== 'AMR 수동 주행') {
+      throw new Error('ManualControlSession must expose its title as the section heading.');
+    }
+
+    const connection = session.querySelector('[role="img"][data-status="ready"]');
     if (connection?.getAttribute('aria-label') !== '연결 준비됨') {
-      throw new Error('ManualControlSession must expose the ready transport state.');
+      throw new Error('A ready transport prerequisite must use the non-green ready state.');
     }
     const authorityGranted = Array.from(session.querySelectorAll('span'))
       .some((element) => element.textContent?.trim() === '권한 부여됨');
-    if (!authorityGranted) {
-      throw new Error('ManualControlSession must expose the granted authority state.');
+    if (!authorityGranted) throw new Error('The granted authority prerequisite must remain text-labelled.');
+
+    const stopButton = Array.from(session.querySelectorAll('button'))
+      .find((button) => button.textContent?.includes('운행 정지 요청'));
+    const stopZone = stopButton?.parentElement;
+    if (!stopButton || stopButton.disabled || stopButton.getBoundingClientRect().height < 40 || parseFloat(getComputedStyle(stopZone).borderLeftWidth) === 0) {
+      throw new Error('The stop request must be a 40px-or-larger action separated from passive prerequisites.');
+    }
+    const header = session.querySelector('header');
+    const identity = header?.firstElementChild;
+    const trailing = header?.lastElementChild;
+    const centerY = (element) => element.getBoundingClientRect().top + element.getBoundingClientRect().height / 2;
+    if (!header || !identity || !trailing || header.getBoundingClientRect().height > 88 || Math.abs(centerY(identity) - centerY(trailing)) > 4) {
+      throw new Error('At the 620px target width, identity, prerequisites, and stop action must share one visual header row.');
     }
 
-    const armButton = session.querySelector('button[aria-pressed]');
-    if (!armButton || armButton.getAttribute('aria-pressed') !== 'false' || armButton.disabled) {
-      throw new Error('An authorized session must expose an enabled, unarmed UI-control action.');
+    const guardBanner = session.querySelector('[data-banner-variant="embedded"]');
+    if (guardBanner?.getAttribute('role') !== 'status' || !guardBanner.textContent?.includes('수동 제어 잠김')) {
+      throw new Error('A safe unarmed session must use the compact embedded status Banner.');
     }
+    const armButton = session.querySelector('button[aria-pressed="false"]');
     const blockedControls = session.querySelector('[data-interaction-enabled="false"]');
-    if (!blockedControls?.hasAttribute('inert') || blockedControls.getAttribute('aria-disabled') !== 'true') {
-      throw new Error('Unarmed manual controls must be inert and aria-disabled.');
+    if (!armButton || armButton.textContent?.trim() !== '수동 제어 준비' || armButton.disabled) {
+      throw new Error('An authorized session must expose an enabled prepare-control action.');
     }
-    const joystick = session.querySelector('[role="application"][aria-label="이동"]');
-    if (joystick?.getAttribute('tabindex') !== '-1') {
-      throw new Error('The blocked joystick must be removed from keyboard navigation.');
+    if (!blockedControls?.hasAttribute('inert') || blockedControls.getAttribute('aria-disabled') !== 'true' || getComputedStyle(blockedControls).opacity !== '1') {
+      throw new Error('Blocked controls must be inert without compounding child disabled opacity.');
     }
 
     await userEvent.click(armButton);
     await waitFor(() => {
       const armedButton = session.querySelector('button[aria-pressed="true"]');
-      if (!armedButton || armedButton.textContent?.trim() !== 'UI 제어 해제') {
-        throw new Error('Arming must update the public pressed state and action label.');
+      const activeControls = session.querySelector('[data-interaction-enabled="true"]');
+      const joystick = session.querySelector('[role="application"]');
+      const padButton = session.querySelector('[aria-label="정밀 이동 방향"] button');
+      if (!armedButton || armedButton.textContent?.trim() !== '수동 제어 해제' || !activeControls || joystick?.getAttribute('tabindex') !== '0' || padButton?.disabled) {
+        throw new Error('Arming must enable both hold-to-run and non-drag control alternatives.');
       }
-      const deadman = Array.from(session.querySelectorAll('button'))
-        .find((button) => button.textContent?.trim() === 'Dead-man 누르기');
-      if (!deadman) {
-        throw new Error('An armed session that requires dead-man input must expose that control.');
-      }
-      const waitingControls = session.querySelector('[data-interaction-enabled="false"]');
-      if (!waitingControls?.hasAttribute('inert')) {
-        throw new Error('Controls must remain blocked until dead-man input becomes active.');
-      }
-      const status = session.querySelector('[role="status"]');
-      if (!status?.textContent?.includes('Dead-man 입력 대기')) {
-        throw new Error('The guard status must explain why armed controls remain blocked.');
+      if (!session.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('수동 제어 가능')) {
+        throw new Error('Only the aggregate ready state may use the positive ready Banner.');
       }
     });
-    await userEvent.click(session.querySelector('button[aria-pressed="true"]'));
+
+    await userEvent.click(stopButton);
     await waitFor(() => {
-      if (!session.querySelector('button[aria-pressed="false"]')) {
-        throw new Error('The authorized baseline must return to the unarmed state after the interaction check.');
+      const output = canvasElement.querySelector('[data-testid="authorized-release-output"]');
+      const requestingButton = Array.from(session.querySelectorAll('button'))
+        .find((button) => button.textContent?.includes('정지 요청 전송 중'));
+      const stoppedControls = session.querySelector('[data-interaction-enabled="false"]');
+      if (!requestingButton?.disabled || requestingButton.getAttribute('aria-busy') !== 'true') {
+        throw new Error('A pending stop request must expose progress and prevent duplicate requests.');
+      }
+      if (!session.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('운행 정지 요청 전송 중')) {
+        throw new Error('A stop request must not be presented as an already confirmed stop.');
+      }
+      if (!stoppedControls?.hasAttribute('inert') || !output?.textContent?.includes('stop-requested') || !session.querySelector('button[aria-pressed="false"]')) {
+        throw new Error('A stop request must immediately release, disarm, and block local controls.');
+      }
+    });
+
+    await userEvent.click(canvasElement.querySelector('[data-testid="reset-session"]'));
+    await waitFor(() => {
+      if (!session.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('수동 제어 잠김')) {
+        throw new Error('The fixture must return to its unarmed baseline.');
+      }
+    });
+  },
+};
+
+export const StopRequestLifecycle = {
+  name: '상호작용 · 운행 정지 요청과 완료',
+  parameters: storyDescription(
+    '운영자가 운행 정지를 요청하고 요청 중·완료·실패 응답을 받는 상황입니다. 중복 요청이 막히고 각 단계의 상태와 다음 가능한 동작이 명확히 전달되는지 확인하세요.',
+  ),
+  render: function Example() {
+    const [state, setState] = React.useState('idle');
+    const [armed, setArmed] = React.useState(true);
+    return (
+      <div style={{ display: 'grid', gap: 'var(--space-3)', width: 620, maxWidth: 'calc(100vw - 48px)' }}>
+        <div aria-label="정지 요청 상태 시뮬레이션" style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+          <Button size="sm" variant="ghost" onClick={() => setState('acknowledged')}>ACK 표시</Button>
+          <Button size="sm" variant="ghost" onClick={() => setState('stopped')}>실제 정지 확인</Button>
+          <Button size="sm" variant="ghost" onClick={() => setState('failed')}>실패 표시</Button>
+          <Button size="sm" variant="ghost" onClick={() => setState('idle')}>초기화</Button>
+          <Button size="sm" variant="ghost" onClick={() => setArmed(false)}>요청된 disarm 반영</Button>
+        </div>
+        <ManualControlSession
+          data-testid="stop-lifecycle-session"
+          title="AMR 수동 주행"
+          linkState="ready"
+          authority="granted"
+          armed={armed}
+          deadmanRequired={false}
+          stopRequestState={state}
+          onArmedChange={(next) => { if (next) setArmed(true); }}
+          onStopRequest={() => setState('requesting')}
+        >
+          {({ interactionEnabled }) => <Joystick disabled={!interactionEnabled} label="이동" />}
+        </ManualControlSession>
+      </div>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const session = canvasElement.querySelector('[data-testid="stop-lifecycle-session"]');
+    const stateButtons = Array.from(canvasElement.querySelectorAll('[aria-label="정지 요청 상태 시뮬레이션"] button'));
+    const byText = (text) => stateButtons.find((button) => button.textContent?.trim() === text);
+    if (!session || !byText('실패 표시')) throw new Error('Stop lifecycle fixture is incomplete.');
+
+    await userEvent.click(byText('실패 표시'));
+    await waitFor(() => {
+      const banner = session.querySelector('[data-banner-variant="embedded"]');
+      const retry = Array.from(session.querySelectorAll('button')).find((button) => button.textContent?.includes('다시 요청'));
+      if (banner?.getAttribute('role') !== 'alert' || !banner.textContent?.includes('요청 실패') || !retry || retry.disabled) {
+        throw new Error('A failed request must be an assertive, retryable state without claiming a stop.');
+      }
+    });
+
+    const retry = Array.from(session.querySelectorAll('button')).find((button) => button.textContent?.includes('다시 요청'));
+    await userEvent.click(retry);
+    await waitFor(() => {
+      const banner = session.querySelector('[data-banner-variant="embedded"]');
+      if (banner?.getAttribute('role') !== 'status' || !banner.textContent?.includes('전송 중')) {
+        throw new Error('Retry must return to a polite pending state.');
+      }
+    });
+
+    await userEvent.click(byText('ACK 표시'));
+    await waitFor(() => {
+      if (!session.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('실제 정지는 아직 확인되지 않았습니다')) {
+        throw new Error('ACK must remain distinct from actual stopped confirmation.');
+      }
+    });
+    await userEvent.click(byText('실제 정지 확인'));
+    await waitFor(() => {
+      if (!session.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('운행 정지 확인됨')) {
+        throw new Error('Stopped confirmation must be explicit.');
+      }
+    });
+    await userEvent.click(byText('초기화'));
+    await waitFor(() => {
+      const banner = session.querySelector('[data-banner-variant="embedded"]');
+      if (!banner?.textContent?.includes('수동 제어 재활성화 필요') || !session.querySelector('[data-interaction-enabled="false"]')?.hasAttribute('inert')) {
+        throw new Error('Returning lifecycle state to idle must not resume controls until disarm is observed.');
+      }
+    });
+    await userEvent.click(byText('요청된 disarm 반영'));
+    await waitFor(() => {
+      if (!session.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('수동 제어 잠김') || !session.querySelector('button[aria-pressed="false"]')) {
+        throw new Error('After disarm is observed, the session must require an explicit new prepare action.');
+      }
+    });
+  },
+};
+
+export const StopRequestUnmount = {
+  name: '정지 요청 직후 세션 제거',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '정지 요청 직후 수동 제어 세션이 화면에서 제거되는 경계 상황입니다. 컴포넌트가 사라져도 안전 해제와 정지 요청이 누락되거나 중복 실행되지 않는지 확인하세요.',
+  ),
+  render: function Example() {
+    const [mounted, setMounted] = React.useState(true);
+    const [releaseReasons, setReleaseReasons] = React.useState([]);
+    const [stopCount, setStopCount] = React.useState(0);
+    return (
+      <div style={{ display: 'grid', gap: 'var(--space-3)', width: 620, maxWidth: 'calc(100vw - 48px)' }}>
+        {mounted && (
+          <ManualControlSession
+            data-testid="stop-unmount-session"
+            title="AMR 수동 주행"
+            linkState="ready"
+            authority="granted"
+            armed
+            deadmanRequired={false}
+            onArmedChange={() => {}}
+            onSafetyReleaseRequest={(reason) => setReleaseReasons((current) => [...current, reason])}
+            onStopRequest={() => {
+              setStopCount((count) => count + 1);
+              setMounted(false);
+            }}
+          >
+            <Joystick label="이동" />
+          </ManualControlSession>
+        )}
+        <output data-testid="stop-unmount-output" style={RELEASE_LABEL_STYLE}>release: {releaseReasons.join(',') || '없음'} · stop callback: {stopCount}</output>
+      </div>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const session = canvasElement.querySelector('[data-testid="stop-unmount-session"]');
+    const stopButton = session && Array.from(session.querySelectorAll('button')).find((button) => button.textContent?.includes('운행 정지 요청'));
+    if (!session || !stopButton) throw new Error('Stop-and-unmount fixture did not render.');
+    await userEvent.click(stopButton);
+    await waitFor(() => {
+      const output = canvasElement.querySelector('[data-testid="stop-unmount-output"]');
+      if (canvasElement.querySelector('[data-testid="stop-unmount-session"]') || output?.textContent?.trim() !== 'release: stop-requested · stop callback: 1') {
+        throw new Error('A stop-triggered unmount must publish exactly one stop-requested release without a duplicate unmount release.');
+      }
+    });
+  },
+};
+
+export const LegacyStopRequestAlias = {
+  name: '기존 정지 요청 callback 호환',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '기존 onRequestStop 별칭을 사용하는 제품을 새 세션 계약과 함께 운용하는 호환 상황입니다. 레거시 callback도 한 번만 호출되고 안전 해제 이유가 동일하게 보고되는지 확인하세요.',
+  ),
+  render: function Example() {
+    const [armed, setArmed] = React.useState(true);
+    const [releaseReason, setReleaseReason] = React.useState('없음');
+    const [requestCount, setRequestCount] = React.useState(0);
+    return (
+      <div style={{ display: 'grid', gap: 'var(--space-3)', width: 620, maxWidth: 'calc(100vw - 48px)' }}>
+        <ManualControlSession
+          data-testid="legacy-stop-session"
+          title="AMR 수동 주행"
+          linkState="ready"
+          authority="granted"
+          armed={armed}
+          deadmanRequired={false}
+          onArmedChange={setArmed}
+          onSafetyReleaseRequest={setReleaseReason}
+          onEmergencyStopRequest={() => setRequestCount((count) => count + 1)}
+        >
+          {({ interactionEnabled }) => <Joystick disabled={!interactionEnabled} label="이동" />}
+        </ManualControlSession>
+        <output data-testid="legacy-stop-output" style={RELEASE_LABEL_STYLE}>release: {releaseReason} · callback: {requestCount}</output>
+      </div>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const session = canvasElement.querySelector('[data-testid="legacy-stop-session"]');
+    const stopButton = session && Array.from(session.querySelectorAll('button')).find((button) => button.textContent?.includes('운행 정지 요청'));
+    if (!session || !stopButton) throw new Error('Legacy stop callback fixture did not render.');
+    await userEvent.click(stopButton);
+    await waitFor(() => {
+      const banner = session.querySelector('[data-banner-variant="embedded"]');
+      const output = canvasElement.querySelector('[data-testid="legacy-stop-output"]');
+      if (!session.querySelector('button[aria-pressed="false"]') || !banner?.textContent?.includes('수동 제어 잠김') || banner.textContent.includes('전송 중')) {
+        throw new Error('A callback-only legacy consumer that honors disarm must return to the safe unarmed state.');
+      }
+      if (output?.textContent?.trim() !== 'release: stop-requested · callback: 1') {
+        throw new Error('The deprecated callback alias must fire once with one release request.');
       }
     });
   },
 };
 
 export const AuthorityRevoked = {
-  name: '권한 회수',
+  name: '변형·상태 · 권한 회수',
+  parameters: storyDescription(
+    '연결은 유지되지만 원격 제어 권한이 회수된 세션입니다. 회수 사유가 읽히고 모든 제어 입력과 활성화 동작이 즉시 차단되는지 확인하세요.',
+  ),
   args: {
     style: { width: 620, maxWidth: 'calc(100vw - 48px)' },
     title: 'AMR 수동 주행',
@@ -120,13 +368,16 @@ export const AuthorityRevoked = {
     authority: 'revoked',
     armed: false,
     onArmedChange: () => {},
-    onEmergencyStopRequest: () => {},
+    onStopRequest: () => {},
     children: <Joystick disabled label="이동" />,
   },
 };
 
 export const LinkLossRelease = {
-  name: '연결 끊김 해제 요청과 재활성화',
+  name: '상호작용 · 연결 끊김과 재활성화',
+  parameters: storyDescription(
+    '활성 제어 중 링크가 끊겼다가 복구되는 상황입니다. 연결 손실 시 안전 해제가 즉시 요청되고 복구 후 운영자가 명시적으로 다시 활성화하기 전에는 입력이 재개되지 않는지 확인하세요.',
+  ),
   render: function Example() {
     const [linkState, setLinkState] = React.useState('ready');
     const [armed, setArmed] = React.useState(false);
@@ -136,6 +387,7 @@ export const LinkLossRelease = {
       <div style={{ display: 'grid', gap: 'var(--space-3)', width: 620, maxWidth: 'calc(100vw - 48px)' }}>
         <Button variant="flat" disabled={linkState !== 'ready'} onClick={() => setLinkState('lost')}>연결 끊김 시뮬레이션</Button>
         <ManualControlSession
+          data-testid="link-loss-session"
           title="AMR 수동 주행"
           linkState={linkState}
           authority="granted"
@@ -143,85 +395,69 @@ export const LinkLossRelease = {
           deadmanRequired={false}
           onArmedChange={setArmed}
           onSafetyReleaseRequest={setLastRelease}
-          onEmergencyStopRequest={() => {}}
+          onStopRequest={() => {}}
         >
           {({ interactionEnabled }) => <Joystick disabled={!interactionEnabled} label="이동" />}
         </ManualControlSession>
-        <output style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>armed: {String(armed)} · 최근 release 요청: {lastRelease}</output>
+        <output data-testid="link-loss-release-output" style={RELEASE_LABEL_STYLE}>armed: {String(armed)} · 최근 release 요청: {lastRelease}</output>
       </div>
     );
   },
   play: async ({ canvasElement }) => {
-    const session = canvasElement.querySelector('section[aria-label="AMR 수동 주행"]');
+    const session = canvasElement.querySelector('[data-testid="link-loss-session"]');
     const linkLossButton = Array.from(canvasElement.querySelectorAll('button'))
       .find((button) => button.textContent?.trim() === '연결 끊김 시뮬레이션');
     const armButton = session?.querySelector('button[aria-pressed="false"]');
-    if (!session || !linkLossButton || !armButton) {
-      throw new Error('Link-loss fixture must expose its session and transition controls.');
-    }
+    if (!session || !linkLossButton || !armButton) throw new Error('Link-loss fixture must expose its transition controls.');
 
     await userEvent.click(armButton);
     await waitFor(() => {
-      const activeControls = session.querySelector('[data-interaction-enabled="true"]');
-      if (!activeControls || activeControls.hasAttribute('inert') || activeControls.getAttribute('aria-disabled') !== 'false') {
-        throw new Error('Arming an authorized pointer session must enable its control region.');
-      }
-      const joystick = session.querySelector('[role="application"][aria-label="이동"]');
-      if (joystick?.getAttribute('tabindex') !== '0') {
-        throw new Error('An enabled joystick must return to keyboard navigation.');
-      }
-      if (!session.querySelector('button[aria-pressed="true"]')) {
-        throw new Error('The armed state must be exposed through aria-pressed.');
+      if (!session.querySelector('[data-interaction-enabled="true"]') || !session.querySelector('button[aria-pressed="true"]')) {
+        throw new Error('Arming an authorized session must enable its control region.');
       }
     });
-
     await userEvent.click(linkLossButton);
     await waitFor(() => {
-      const output = canvasElement.querySelector('output');
-      if (!output?.textContent?.includes('armed: false') || !output.textContent.includes('link-unavailable')) {
-        throw new Error('Link loss must disarm the session and publish its safety-release reason.');
-      }
+      const output = canvasElement.querySelector('[data-testid="link-loss-release-output"]');
       const disconnected = session.querySelector('[role="img"][data-status="offline"]');
-      if (disconnected?.getAttribute('aria-label') !== '연결 끊김') {
-        throw new Error('Link loss must update the public connection state.');
+      if (!output?.textContent?.includes('armed: false') || !output.textContent.includes('link-unavailable')) {
+        throw new Error('Link loss must disarm and publish its release reason.');
       }
-      const blockedControls = session.querySelector('[data-interaction-enabled="false"]');
-      if (!blockedControls?.hasAttribute('inert') || blockedControls.getAttribute('aria-disabled') !== 'true') {
-        throw new Error('Link loss must immediately block the manual control region.');
+      if (disconnected?.getAttribute('aria-label') !== '연결 끊김' || !session.querySelector('[data-interaction-enabled="false"]')?.hasAttribute('inert')) {
+        throw new Error('Link loss must update connection state and block controls.');
       }
-      const disarmedButton = session.querySelector('button[aria-pressed="false"]');
-      if (!disarmedButton?.disabled) {
-        throw new Error('UI control cannot be re-armed while the transport link is unavailable.');
+      if (!session.querySelector('button[aria-pressed="false"]')?.disabled) {
+        throw new Error('The session cannot be re-armed while the link is unavailable.');
       }
     });
   },
 };
 
-export const BlockedOrdinaryChildren = {
-  name: '일반 자식 요소 키보드·포인터 차단',
-  render: function Example() {
-    const [activations, setActivations] = React.useState(0);
-    return (
-      <div style={{ display: 'grid', gap: 'var(--space-3)', width: 620, maxWidth: 'calc(100vw - 48px)' }}>
-        <ManualControlSession
-          title="Authority 없는 수동 주행"
-          linkState="ready"
-          authority="revoked"
-          armed
-          deadmanRequired={false}
-          onArmedChange={() => {}}
-          onEmergencyStopRequest={() => {}}
-        >
-          <Button onClick={() => setActivations((count) => count + 1)}>차단되어야 하는 일반 버튼</Button>
-        </ManualControlSession>
-        <output>activation count: {activations}</output>
-      </div>
-    );
+export const ExternalEnablingDevice = {
+  name: '시나리오 · 외부 활성화 장치 대기',
+  parameters: storyDescription(
+    '펜던트나 데드맨 스위치 같은 외부 활성화 장치가 아직 준비되지 않은 세션입니다. 외부 조건의 대기 상태와 필요한 조치가 보이며 UI만으로 제어를 우회할 수 없는지 확인하세요.',
+  ),
+  args: {
+    style: { width: 620, maxWidth: 'calc(100vw - 48px)' },
+    title: 'Pendant 연동 수동 주행',
+    linkState: 'ready',
+    authority: 'granted',
+    armed: true,
+    deadmanRequired: true,
+    deadmanActive: false,
+    deadmanControl: <span style={RELEASE_LABEL_STYLE}>물리 활성화 장치 해제됨</span>,
+    onArmedChange: () => {},
+    onStopRequest: () => {},
+    children: <Joystick disabled label="이동" />,
   },
 };
 
 export const FocusAndUnmountRelease = {
-  name: '포커스 상실·컴포넌트 제거 시 해제 요청',
+  name: '상호작용 · 포커스 상실과 화면 제거',
+  parameters: storyDescription(
+    '활성 세션이 창 포커스를 잃거나 컴포넌트가 제거되는 비정상 종료 상황입니다. 두 종료 경로 모두 안전 해제를 요청하고 같은 경로에서 요청이 중복되지 않는지 확인하세요.',
+  ),
   render: function Example() {
     const [mounted, setMounted] = React.useState(true);
     const [lastRelease, setLastRelease] = React.useState('없음');
@@ -239,20 +475,23 @@ export const FocusAndUnmountRelease = {
             focusRequired
             onArmedChange={() => {}}
             onSafetyReleaseRequest={setLastRelease}
-            onEmergencyStopRequest={() => {}}
+            onStopRequest={() => {}}
           >
             {({ interactionEnabled }) => <Button disabled={!interactionEnabled}>방향 입력</Button>}
           </ManualControlSession>
         )}
         <Button variant="outlined" color="assistive">세션 밖으로 focus 이동</Button>
-        <output style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>최근 release 요청: {lastRelease}</output>
+        <output style={RELEASE_LABEL_STYLE}>최근 release 요청: {lastRelease}</output>
       </div>
     );
   },
 };
 
 export const NarrowCompoundStates = {
-  name: '좁은 폭 · 점검과 제어 가능 상태',
+  name: '반응형 · 좁은 폭 · 점검·제어·정지 실패',
+  parameters: storyDescription(
+    '320px 폭에서 점검 대기·제어 가능·정지 실패의 복합 상태를 세로로 비교합니다. 긴 안전 문구와 복구 동작이 잘리지 않고 제어 영역보다 상태 판단이 먼저 읽히는지 확인하세요.',
+  ),
   render: () => (
     <main data-testid="narrow-manual-control-states" style={{ display: 'grid', gap: 'var(--space-5)', width: 320, maxWidth: '100%' }}>
       <ManualControlSession
@@ -261,31 +500,43 @@ export const NarrowCompoundStates = {
         linkState="stale"
         authority="checking"
         armed={false}
-        deadmanRequired
-        deadmanActive={false}
+        deadmanRequired={false}
         controlMode="pointer"
         sessionMeta="마지막 연결 확인 18초 전 · 명령 전송 일시 중지"
         onArmedChange={() => {}}
-        onEmergencyStopRequest={() => {}}
+        onStopRequest={() => {}}
       >
         {({ interactionEnabled }) => <Joystick size={112} disabled={!interactionEnabled} label="점검 중 이동" />}
       </ManualControlSession>
 
       <ManualControlSession
         data-testid="enabled-session"
-        title="피킹 구역 AMR 수동 주행"
+        title="피킹 구역의 긴 이름을 가진 AMR 수동 주행"
         linkState="ready"
         authority="granted"
         armed
-        deadmanRequired
-        deadmanActive
+        deadmanRequired={false}
         controlMode="pointer"
-        sessionMeta="최대 속도 0.25 m/s · 근거리 점검 모드"
+        sessionMeta="설정된 제어 한도 0.25 m/s · 근거리 점검 모드"
         onArmedChange={() => {}}
-        onEmergencyStopRequest={() => {}}
-        deadmanControl={<Button variant="dark" color="assistive">Dead-man 유지 중</Button>}
+        onStopRequest={() => {}}
       >
-        {({ interactionEnabled }) => <Joystick size={112} disabled={!interactionEnabled} label="활성 이동" />}
+        {({ interactionEnabled }) => <ControlSurface interactionEnabled={interactionEnabled} joystickLabel="활성 이동" joystickSize={112} padSize={40} />}
+      </ManualControlSession>
+
+      <ManualControlSession
+        data-testid="failed-stop-session"
+        title="출고 구역 AMR 수동 주행"
+        linkState="ready"
+        authority="granted"
+        armed={false}
+        deadmanRequired={false}
+        stopRequestState="failed"
+        stopRequestMessage="요청 시간이 초과되었습니다. 로봇 상태를 직접 확인한 뒤 다시 요청하세요."
+        onArmedChange={() => {}}
+        onStopRequest={() => {}}
+      >
+        {({ interactionEnabled }) => <Joystick size={112} disabled={!interactionEnabled} label="정지 실패 후 이동" />}
       </ManualControlSession>
     </main>
   ),
@@ -293,37 +544,29 @@ export const NarrowCompoundStates = {
     const fixture = canvasElement.querySelector('[data-testid="narrow-manual-control-states"]');
     const cautionary = canvasElement.querySelector('[data-testid="cautionary-session"]');
     const enabled = canvasElement.querySelector('[data-testid="enabled-session"]');
-    if (!fixture || !cautionary || !enabled || Math.round(fixture.getBoundingClientRect().width) !== 320) {
-      throw new Error('The compound manual-control fixture must preserve both states at the 320px target width.');
+    const failed = canvasElement.querySelector('[data-testid="failed-stop-session"]');
+    if (!fixture || !cautionary || !enabled || !failed || Math.round(fixture.getBoundingClientRect().width) !== 320) {
+      throw new Error('The compound fixture must preserve all states at the 320px target width.');
     }
 
     const stale = cautionary.querySelector('[role="img"][data-status="stale"]');
-    const checking = Array.from(cautionary.querySelectorAll('span'))
-      .find((element) => element.textContent?.trim() === '권한 확인 중');
-    const cautionIndicatorStyle = checking?.firstElementChild?.getAttribute('style') ?? '';
-    if (stale?.getAttribute('aria-label') !== '연결 정보 오래됨' || !checking || !cautionIndicatorStyle.includes('--component-status-badge-cautionary-indicator')) {
-      throw new Error('The cautionary fixture must expose stale link and checking-authority states with the cautionary treatment.');
+    if (stale?.getAttribute('aria-label') !== '연결 정보 오래됨' || !cautionary.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('연결 상태 점검 필요')) {
+      throw new Error('The cautionary fixture must expose stale link and blocking guidance.');
     }
-    const cautionaryControls = cautionary.querySelector('[data-interaction-enabled="false"]');
-    const cautionaryArm = cautionary.querySelector('button[aria-pressed="false"]');
-    if (!cautionaryControls?.hasAttribute('inert') || cautionaryControls.getAttribute('aria-disabled') !== 'true' || !cautionaryArm?.disabled) {
-      throw new Error('Stale/checking state must keep the control region inert and prevent UI activation.');
+    if (!cautionary.querySelector('[data-interaction-enabled="false"]')?.hasAttribute('inert') || !cautionary.querySelector('button[aria-pressed="false"]')?.disabled) {
+      throw new Error('Stale/checking state must block controls and activation.');
     }
 
     const enabledControls = enabled.querySelector('[data-interaction-enabled="true"]');
-    const enabledJoystick = enabled.querySelector('[role="application"][aria-label="활성 이동"]');
-    const enabledStatus = enabled.querySelector('[role="status"]');
-    const activeArm = enabled.querySelector('button[aria-pressed="true"]');
-    const deadman = Array.from(enabled.querySelectorAll('button'))
-      .find((button) => button.textContent?.trim() === 'Dead-man 유지 중');
-    if (!enabledControls || enabledControls.hasAttribute('inert') || enabledControls.getAttribute('aria-disabled') !== 'false') {
-      throw new Error('Ready, granted, armed, and active dead-man state must enable the control region.');
+    if (!enabledControls || enabled.querySelector('[role="application"]')?.getAttribute('tabindex') !== '0' || !enabled.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('수동 제어 가능')) {
+      throw new Error('The enabled fixture must expose both active controls and aggregate readiness.');
     }
-    if (enabledJoystick?.getAttribute('tabindex') !== '0' || !enabledStatus?.textContent?.includes('제어 입력 가능') || !activeArm || !deadman) {
-      throw new Error('The enabled fixture must expose its active joystick, guard status, arm state, and held dead-man action.');
+    const failedBanner = failed.querySelector('[data-banner-variant="embedded"]');
+    if (failedBanner?.getAttribute('role') !== 'alert' || !failedBanner.textContent?.includes('시간이 초과')) {
+      throw new Error('The narrow failure fixture must preserve assertive failure details.');
     }
 
-    const surfaces = [fixture, cautionary, enabled, ...fixture.querySelectorAll('header, footer')];
+    const surfaces = [fixture, cautionary, enabled, failed, ...fixture.querySelectorAll('header, footer, [data-interaction-enabled]')];
     if (surfaces.some((surface) => surface.scrollWidth > surface.clientWidth + 1)) {
       throw new Error('ManualControlSession must not introduce horizontal overflow at 320px.');
     }

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface PageIndicatorProps extends React.HTMLAttributes<HTMLElement> {
+export interface PageIndicatorProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
   /** Current page, 1-based. @default 1 */
   page?: number;
   /** Total pages. @default 1 */
@@ -16,4 +16,4 @@ export interface PageIndicatorProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** compact page indicator counter or dot group. */
-export function PageIndicator(props: PageIndicatorProps): JSX.Element;
+export function PageIndicator(props: PageIndicatorProps): React.JSX.Element;

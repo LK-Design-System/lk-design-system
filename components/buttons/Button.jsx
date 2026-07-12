@@ -1,6 +1,9 @@
 import React from 'react';
 import { Spinner } from '../status/Spinner.jsx';
 
+const pressedTone = (background) =>
+  `color-mix(in srgb, ${background} 88%, var(--color-semantic-label-normal))`;
+
 /**
  * LK ROBOTICS — Button
  * Solid, rounded-rect CTAs driven entirely by design-system tokens.
@@ -25,16 +28,23 @@ export function Button({
   loading = false,
   loadingLabel = 'Loading',
   as = 'button',
+  className,
   style,
   onMouseEnter,
   onMouseLeave,
   onMouseDown,
   onMouseUp,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
   onClick,
   type,
+  'aria-label': ariaLabel,
+  'aria-disabled': ariaDisabled,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
 
   const heights = {
     sm: 'var(--component-button-height-sm)',
@@ -125,11 +135,13 @@ export function Button({
   };
   const p = palettes[wdsVariant] || palettes.primary;
   const disabledState = disabled || disable || loading;
-  const active = !disabledState;
+  const ariaBlocked = ariaDisabled === true || ariaDisabled === 'true';
+  const blocked = disabledState || ariaBlocked;
+  const active = !blocked;
   const outlinedLike = wdsVariant.startsWith('outlined') || wdsVariant === 'ghost';
   const disabledBorder = outlinedLike
     ? 'var(--component-button-disabled-outlined-border)'
-    : 'var(--component-button-disabled-border)';
+    : p.bd;
   const disabledFg = outlinedLike
     ? 'var(--component-button-disabled-fg-outlined)'
     : 'var(--component-button-disabled-fg)';
@@ -151,13 +163,20 @@ export function Button({
       ? 'var(--component-button-font-weight-assistive)'
       : 'var(--component-button-font-weight)',
     letterSpacing: letterSpacings[normalizedSize] || letterSpacings.md,
-    color: disabledState ? disabledFg : p.fg,
-    background: disabledState ? disabledBg : active && hover ? p.bgHover : p.bg,
-    border: disabledState ? disabledBorder : (active && hover && p.bdHover) ? p.bdHover : p.bd,
+    position: 'relative',
+    color: blocked ? disabledFg : p.fg,
+    background: blocked
+      ? disabledBg
+      : pressed
+        ? pressedTone(p.bgHover || p.bg)
+        : hover
+          ? `color-mix(in srgb, ${p.bgHover || p.bg} 96%, var(--color-semantic-label-normal))`
+          : p.bg,
+    border: blocked ? disabledBorder : (active && hover && p.bdHover) ? p.bdHover : p.bd,
     borderRadius: radii[normalizedSize] || radii.md,
     boxShadow: active && p.elevated ? 'var(--component-button-shadow-rest)' : 'none',
     transform: 'none',
-    cursor: disabledState ? 'not-allowed' : 'pointer',
+    cursor: blocked ? 'not-allowed' : 'pointer',
     opacity: 1,
     transition: 'var(--component-button-transition)',
     whiteSpace: 'nowrap',
@@ -169,34 +188,57 @@ export function Button({
   const Comp = as;
   return (
     <Comp
-      className={`lk-btn lk-btn--${wdsVariant}`}
+      {...rest}
+      className={['lk-btn', `lk-btn--${wdsVariant}`, className].filter(Boolean).join(' ')}
       style={composed}
       disabled={as === 'button' ? disabledState : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
+      aria-label={loading ? loadingLabel : ariaLabel}
       aria-busy={loading || undefined}
-      aria-disabled={as !== 'button' && disabledState ? true : undefined}
+      aria-disabled={ariaBlocked || (as !== 'button' && disabledState) || undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
-      onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
-      onMouseDown={(e) => { onMouseDown && onMouseDown(e); }}
-      onMouseUp={(e) => { onMouseUp && onMouseUp(e); }}
+      onMouseLeave={(e) => { setHover(false); setPressed(false); onMouseLeave && onMouseLeave(e); }}
+      onMouseDown={(e) => { if (!blocked) setPressed(true); onMouseDown && onMouseDown(e); }}
+      onMouseUp={(e) => { setPressed(false); onMouseUp && onMouseUp(e); }}
+      onKeyDown={(e) => {
+        if (!blocked && (e.key === 'Enter' || e.key === ' ')) setPressed(true);
+        onKeyDown?.(e);
+      }}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') setPressed(false);
+        onKeyUp?.(e);
+      }}
+      onBlur={(e) => { setPressed(false); onBlur?.(e); }}
       onClick={(e) => {
-        if (disabledState) {
+        if (blocked) {
           e.preventDefault();
           return;
         }
         onClick && onClick(e);
       }}
-      {...rest}
     >
       {loading && (
         <>
-          <Spinner size={16} color="currentColor" aria-hidden="true" />
+          <span aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Spinner size={16} color="currentColor" />
+          </span>
           <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
             {loadingLabel}
           </span>
         </>
       )}
-      {content}
+      <span
+        aria-hidden={loading || undefined}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: gaps[normalizedSize] || gaps.md,
+          visibility: loading ? 'hidden' : undefined,
+        }}
+      >
+        {content}
+      </span>
     </Comp>
   );
 }

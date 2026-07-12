@@ -14,4 +14,4 @@ export interface StatProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 큰 ExtraBold 숫자 + 캡션 — 마일스톤, KPI. */
-export function Stat(props: StatProps): JSX.Element;
+export function Stat(props: StatProps): React.JSX.Element;

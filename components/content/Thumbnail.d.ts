@@ -45,4 +45,4 @@ export interface ThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Thumbnail media tile with ratio, radius, border, placeholder, and overlay slot. */
-export function Thumbnail(props: ThumbnailProps): JSX.Element;
+export function Thumbnail(props: ThumbnailProps): React.JSX.Element;

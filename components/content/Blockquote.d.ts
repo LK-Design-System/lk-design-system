@@ -7,4 +7,4 @@ export interface BlockquoteProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 시그널 잉크 좌측 룰 + 선택적 출처가 있는 인용. */
-export function Blockquote(props: BlockquoteProps): JSX.Element;
+export function Blockquote(props: BlockquoteProps): React.JSX.Element;

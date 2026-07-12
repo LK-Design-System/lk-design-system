@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface ConfirmDialogProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ConfirmDialogProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 열림 상태. @default false */
   open?: boolean;
   /** 다이얼로그 제목. */
@@ -31,7 +31,15 @@ export interface ConfirmDialogProps extends React.HTMLAttributes<HTMLDivElement>
   onClose?: () => void;
   /** scrim 클릭으로 닫기. @default true */
   closeOnScrim?: boolean;
+  /** 열릴 때 우선 초점을 받을 ConfirmDialog 내부 요소. 기본값은 취소 액션입니다. */
+  initialFocusRef?: React.RefObject<HTMLElement | null>;
+  /** 닫힌 뒤 자동으로 캡처한 trigger 대신 초점을 돌려보낼 요소. */
+  returnFocusRef?: React.RefObject<HTMLElement | null>;
+  /** 닫힌 뒤 trigger 또는 `returnFocusRef`로 초점을 복원합니다. @default true */
+  restoreFocus?: boolean;
+  /** `title`이 없을 때 사용할 접근 가능한 이름. @default "확인 다이얼로그" */
+  ariaLabel?: string;
 }
 
 /** 파괴적/안전 관련 액션을 명시적으로 확인하는 전용 다이얼로그. */
-export function ConfirmDialog(props: ConfirmDialogProps): JSX.Element | null;
+export function ConfirmDialog(props: ConfirmDialogProps): React.JSX.Element | null;

@@ -29,7 +29,9 @@ export interface MenubarProps extends React.HTMLAttributes<HTMLDivElement> {
   /** menuActionArea axis. @default false */
   menuActionArea?: boolean;
   maxHeight?: number | string;
+  /** menubar의 접근 가능한 이름. @default "명령 메뉴" */
+  ariaLabel?: string;
 }
 
 /** horizontal menu bar with normal, radio, checkbox, scroll, and action-area support. */
-export function Menubar(props: MenubarProps): JSX.Element;
+export function Menubar(props: MenubarProps): React.JSX.Element;

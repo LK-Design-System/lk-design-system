@@ -11,4 +11,4 @@ export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 셰브론 구분자가 있는 경로 트레일. */
-export function Breadcrumb(props: BreadcrumbProps): JSX.Element;
+export function Breadcrumb(props: BreadcrumbProps): React.JSX.Element;

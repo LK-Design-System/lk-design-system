@@ -6,7 +6,7 @@ export interface EquipmentStatusCardChip {
   tone?: 'positive' | 'cautionary' | 'negative' | 'signal' | 'neutral';
 }
 
-export interface EquipmentStatusCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface EquipmentStatusCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 헤더 아이콘(문·엘리베이터·계단리프트 등 — 앱이 주입). */
   icon?: React.ReactNode;
   /** 설비 이름/위치(예: "정문", "화물 엘리베이터 2호기"). */
@@ -26,4 +26,4 @@ export interface EquipmentStatusCardProps extends React.HTMLAttributes<HTMLDivEl
 }
 
 /** 설비 상태 카드(문·엘리베이터·계단리프트) — 아이콘+타이틀 헤더, 우측 톤 점+잉크 상태 라벨, 이동 시 dim 방향 화살표, 통신 상태 시 ConnectionBadge 시그널 바, 하단 상태 칩. */
-export function EquipmentStatusCard(props: EquipmentStatusCardProps): JSX.Element;
+export function EquipmentStatusCard(props: EquipmentStatusCardProps): React.JSX.Element;

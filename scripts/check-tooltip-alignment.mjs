@@ -72,7 +72,7 @@ async function getTooltipStoryId() {
   const story = Object.values(index.entries).find(
     (entry) =>
       entry.type === 'story' &&
-      entry.importPath === './stories/ContentAnnotations.stories.jsx' &&
+      entry.importPath === './stories/ContentTooltip.stories.jsx' &&
       entry.exportName === 'TooltipPatterns'
   );
   if (!story) throw new Error('Unable to find TooltipPatterns in Storybook index. Run npm run build:storybook first.');
@@ -87,7 +87,7 @@ async function main() {
   try {
     const page = await browser.newPage({ viewport: { width: 1180, height: 960 }, deviceScaleFactor: 1 });
     await page.goto(`${origin}/iframe.html?id=${id}&viewMode=story`, { waitUntil: 'load' });
-    await page.waitForSelector('[role="tooltip"]');
+    await page.waitForSelector('[role="tooltip"][aria-hidden="false"]');
     await page.evaluate(async () => {
       if (document.fonts?.ready) await document.fonts.ready;
     });

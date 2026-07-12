@@ -19,4 +19,4 @@ export interface StepperProps {
 }
 
 /** tabular 값의 숫자 +/− 스테퍼; [min, max]로 클램프. */
-export function Stepper(props: StepperProps): JSX.Element;
+export function Stepper(props: StepperProps): React.JSX.Element;

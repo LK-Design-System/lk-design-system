@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — Link
@@ -24,7 +25,7 @@ export function Link({ children, href, tone = 'signal', underline = 'hover', ext
       {...rest}
     >
       {children}
-      {external && <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>}
+      {external && <Icon name="external-link" size={13} aria-hidden="true" />}
     </a>
   );
 }

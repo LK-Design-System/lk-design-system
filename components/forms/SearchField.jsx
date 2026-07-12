@@ -1,40 +1,169 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
+import { IconButton } from '../buttons/IconButton.jsx';
+import {
+  FieldStack,
+  FieldStatusIcon,
+  fieldBackground,
+  fieldBorderColor,
+  useFieldMetadata,
+} from './field-shared.js';
 
-/**
- * LK ROBOTICS — SearchField
- * A search input with a leading magnifier and a clear affordance. Signal-ink
- * focus ring. Controlled (`value`) or uncontrolled (`defaultValue`); `onSearch`
- * fires on Enter.
- */
-export function SearchField({ value, defaultValue, onChange, onSearch, placeholder = '검색', size = 'md', disabled = false, style, 'aria-label': ariaLabel, ...rest }) {
+/** Search input with a leading search glyph and an optional clear action. */
+export function SearchField({
+  value,
+  defaultValue,
+  onChange,
+  onSearch,
+  label,
+  helper,
+  error,
+  invalid = false,
+  status = 'normal',
+  required = false,
+  placeholder = '검색',
+  size = 'md',
+  disabled = false,
+  readOnly = false,
+  clearLabel,
+  id,
+  fieldStyle,
+  style,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  onFocus,
+  onBlur,
+  onKeyDown,
+  ...inputProps
+}) {
   const isControlled = value !== undefined;
-  const [internal, setInternal] = React.useState(defaultValue || '');
-  const [focus, setFocus] = React.useState(false);
-  const val = isControlled ? value : internal;
-  const set = (v) => { if (!isControlled) setInternal(v); onChange && onChange(v); };
-  const h = size === 'sm' ? 40 : 50;
+  const [internal, setInternal] = React.useState(defaultValue ?? '');
+  const [focused, setFocused] = React.useState(false);
+  const [hovered, setHovered] = React.useState(false);
+  const currentValue = isControlled ? value : internal;
+  const isInvalid = invalid || status === 'negative' || error != null;
+  const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size;
+  const height = normalizedSize === 'sm' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
+  const metadata = useFieldMetadata({
+    prefix: 'search-field',
+    id,
+    label,
+    helper,
+    error,
+    describedBy: ariaDescribedBy,
+  });
+  const labelId = label != null ? `${metadata.fieldId}-label` : undefined;
+  const contextName = typeof label === 'string'
+    ? label
+    : (ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '검색어'));
+  const resolvedClearLabel = clearLabel ?? `${contextName} 지우기`;
+
+  const commitValue = (nextValue) => {
+    if (!isControlled) setInternal(nextValue);
+    onChange?.(nextValue);
+  };
+
+  const borderColor = fieldBorderColor({
+    disabled,
+    readOnly,
+    invalid: isInvalid,
+    status,
+    focused,
+    hovered,
+  });
+
   return (
-    <div style={{
-      display: 'inline-flex', alignItems: 'center', gap: 10, height: h, width: '100%', padding: '0 14px', boxSizing: 'border-box',
-      background: 'var(--color-semantic-background-elevated-normal)', border: `1px solid ${focus ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, borderRadius: 'var(--radius-input)',
-      boxShadow: focus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none', opacity: disabled ? 0.45 : 1,
-      transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)', ...style,
-    }}>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
-      <input
-        value={val} disabled={disabled} placeholder={placeholder}
-        aria-label={ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '검색')}
-        onChange={(e) => set(e.target.value)}
-        onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
-        onKeyDown={(e) => { if (e.key === 'Enter' && onSearch) onSearch(val); }}
-        style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', color: 'var(--color-semantic-label-normal)' }}
-        {...rest}
-      />
-      {val && (
-        <button type="button" aria-label="지우기" onClick={() => set('')} style={{ display: 'inline-flex', padding: 2, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10" /><path d="M15 9l-6 6M9 9l6 6" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="2" strokeLinecap="round" /></svg>
-        </button>
-      )}
-    </div>
+    <FieldStack
+      fieldId={metadata.fieldId}
+      labelId={labelId}
+      label={label}
+      required={required}
+      messageId={metadata.messageId}
+      message={metadata.message}
+      error={error}
+      status={status}
+      fieldStyle={fieldStyle}
+    >
+      <div
+        data-readonly={readOnly ? 'true' : undefined}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 'var(--component-input-gap)',
+          width: '100%',
+          height,
+          padding: '0 var(--component-input-padding-x)',
+          boxSizing: 'border-box',
+          background: fieldBackground({ disabled, readOnly }),
+          border: `var(--component-input-border-width) solid ${borderColor}`,
+          borderRadius: 'var(--component-input-radius)',
+          boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none',
+          transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
+          ...style,
+        }}
+      >
+        <Icon name="search" size={18} color="var(--component-input-icon-color)" aria-hidden="true" style={{ flex: '0 0 auto' }} />
+        <input
+          {...inputProps}
+          id={metadata.fieldId}
+          type="search"
+          value={currentValue}
+          disabled={disabled}
+          readOnly={readOnly}
+          required={required}
+          placeholder={placeholder}
+          aria-label={ariaLabel ?? (!label && typeof placeholder === 'string' ? placeholder : undefined)}
+          aria-labelledby={ariaLabelledBy ?? (!ariaLabel && label ? labelId : undefined)}
+          aria-describedby={metadata.describedBy}
+          aria-invalid={isInvalid || undefined}
+          onChange={(event) => commitValue(event.target.value)}
+          onFocus={(event) => {
+            setFocused(true);
+            onFocus?.(event);
+          }}
+          onBlur={(event) => {
+            setFocused(false);
+            onBlur?.(event);
+          }}
+          onKeyDown={(event) => {
+            onKeyDown?.(event);
+            if (event.defaultPrevented || disabled || readOnly) return;
+            if (event.key === 'Enter') onSearch?.(currentValue);
+            if (event.key === 'Escape' && currentValue) {
+              event.preventDefault();
+              commitValue('');
+            }
+          }}
+          style={{
+            flex: 1,
+            minWidth: 0,
+            border: 'none',
+            outline: 'none',
+            background: 'transparent',
+            fontFamily: 'var(--font-sans)',
+            fontSize: 'var(--component-input-font-size)',
+            lineHeight: 'var(--component-input-line-height)',
+            letterSpacing: 'var(--component-input-letter-spacing)',
+            color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)',
+          }}
+        />
+        <FieldStatusIcon invalid={isInvalid} status={status} />
+        {currentValue && !readOnly && (
+          <IconButton
+            variant="plain"
+            size="small"
+            label={resolvedClearLabel}
+            disabled={disabled}
+            onClick={() => commitValue('')}
+            style={{ flex: '0 0 auto', marginInline: -8 }}
+          >
+            <Icon name="circle-close-fill" size={16} aria-hidden="true" />
+          </IconButton>
+        )}
+      </div>
+    </FieldStack>
   );
 }

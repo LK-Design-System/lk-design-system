@@ -2,7 +2,7 @@ import React from 'react';
 import { DirectionalPad } from '../src/index.js';
 
 const meta = {
-  title: 'LDS Robotics/Robotics/Directional Pad',
+  title: 'LDS Robotics/Control/Directional Pad',
   parameters: {
     docs: {
       description: {
@@ -45,11 +45,31 @@ function PadSample({ title, children }) {
 }
 
 export const DirectionalPads = {
-  name: '방향 패드',
+  name: '개요',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '실제 스텝·home 이벤트가 하단 로그에 찍힙니다. 탭과 홀드의 반응이 구분되는지, 손을 떼면 반복이 멈추는지 확인하세요.',
+      },
+    },
+  },
   render: () => {
     const [log, setLog] = React.useState('대기');
     return (
-      <main style={stageStyle}>
+      <main style={{ ...stageStyle, gap: 'var(--space-6)' }}>
+        <header style={{ display: 'grid', gap: 'var(--space-2)', justifyItems: 'start' }}>
+          <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
+            Robotics / Directional Pad
+          </p>
+          <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
+            방향 패드는 누르는 만큼만 이동하는 momentary 제어입니다
+          </h1>
+          <p style={{ margin: 0, maxWidth: 640, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+            PTZ·짐벌·조그처럼 단계적 이동이 필요할 때 적합합니다. 탭은 1스텝, 홀드는 rate(Hz)로 반복하며, 손을
+            떼면 멈춥니다. 연속 아날로그 주행에는 이 패드 대신 Joystick을 쓰세요.
+          </p>
+        </header>
         <DirectionalPad
           onStep={(direction) => setLog(`step: ${direction}`)}
           onCenter={() => setLog('home')}
@@ -62,7 +82,15 @@ export const DirectionalPads = {
 };
 
 export const States = {
-  name: '패드 상태',
+  name: '변형·상태 · 작동과 비활성',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '기본·비활성·핸들러 없음 상태를 비교합니다. 비활성 시 입력이 차단되는지, 핸들러가 없어도 레이아웃이 깨지지 않는지 확인하세요.',
+      },
+    },
+  },
   render: () => (
     <main style={{ ...stageStyle, display: 'flex', alignItems: 'start', flexWrap: 'wrap', gap: 'var(--space-6)' }}>
       <PadSample title="기본">
@@ -79,7 +107,15 @@ export const States = {
 };
 
 export const Sizes = {
-  name: '패드 크기',
+  name: '변형·상태 · 크기',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '40·기본·60px 크기를 비교합니다. 작은 크기에서도 터치 타깃과 방향 구분이 유지되는지 확인하세요.',
+      },
+    },
+  },
   render: () => (
     <main style={{ ...stageStyle, display: 'flex', alignItems: 'start', flexWrap: 'wrap', gap: 'var(--space-6)' }}>
       <PadSample title="작게">

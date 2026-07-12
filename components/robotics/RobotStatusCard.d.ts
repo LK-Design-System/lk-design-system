@@ -17,4 +17,4 @@ export interface RobotStatusCardProps extends React.HTMLAttributes<HTMLDivElemen
 }
 
 /** 로봇 라이브 상태 카드 — 썸네일 · 이름(좌) + 우상단 상태 클러스터(모드 칩 · 연결 막대 · 배터리 게이지). */
-export function RobotStatusCard(props: RobotStatusCardProps): JSX.Element;
+export function RobotStatusCard(props: RobotStatusCardProps): React.JSX.Element;

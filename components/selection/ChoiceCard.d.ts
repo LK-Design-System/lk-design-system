@@ -1,39 +1,29 @@
-import * as React from "react";
+import * as React from 'react';
 
-export interface ChoiceCardProps extends Omit<
-  React.HTMLAttributes<HTMLDivElement>,
-  "onSelect"
-> {
-  /** Selected state. @default false */
+export interface ChoiceCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect' | 'title' | 'defaultValue'> {
   selected?: boolean;
-  /** Blocks pointer and keyboard interaction. @default false */
   disabled?: boolean;
-  /** Uses checkbox semantics for multi-select choices. @default false */
+  /** Uses native checkbox semantics instead of radio semantics. */
   multiple?: boolean;
-  /** Called with the next selected state. */
+  /** Called with true for a radio choice, or the next checked state for a checkbox choice. */
   onSelect?: (next: boolean) => void;
-  /** Standard choice-card title. */
+  /** Shared native radio-group name. Required for related single-select cards. */
+  name?: string;
+  /** Native form value associated with this option. */
+  inputValue?: string;
+  inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'checked' | 'disabled' | 'name' | 'value'>;
   title?: React.ReactNode;
-  /** Standard choice-card description. */
   description?: React.ReactNode;
-  /** Leading icon for the standard choice-card layout. */
   icon?: React.ReactNode;
-  /** `frame` renders the framed selection treatment. @default "choice" */
-  presentation?: "choice" | "frame";
-  /** Semantic status tone for frame presentation. @default "normal" */
-  status?: "normal" | "negative";
-  /** Forces visual interaction state for documentation matrices. */
-  interaction?: "normal" | "hovered" | "focused";
-  /** Frame presentation radius. @default "md" */
-  radius?: "sm" | "md" | "lg" | "xl";
-  /** Frame presentation padding. @default "md" */
-  padding?: "sm" | "md" | "lg" | "xl";
-  /** Frame presentation shadow. Defaults to "xs" for frame presentation, "none" otherwise. */
-  shadow?: "none" | "xs" | "sm" | "md" | "lg";
-  /** Shows the trailing selected indicator in choice presentation. @default true */
+  presentation?: 'choice' | 'frame';
+  status?: 'normal' | 'negative';
+  interaction?: 'normal' | 'hovered' | 'focused';
+  radius?: 'sm' | 'md' | 'lg' | 'xl';
+  padding?: 'sm' | 'md' | 'lg' | 'xl';
+  shadow?: 'none' | 'xs' | 'sm' | 'md' | 'lg';
   showIndicator?: boolean;
   children?: React.ReactNode;
 }
 
-/** Selectable LDS option card, with framed treatment via `presentation="frame"`. */
-export function ChoiceCard(props: ChoiceCardProps): JSX.Element;
+/** Selectable option card backed by native radio or checkbox behavior when `onSelect` is provided. */
+export function ChoiceCard(props: ChoiceCardProps): React.JSX.Element;

@@ -3,18 +3,32 @@ import * as React from 'react';
 export interface SideNavChildItem {
   value: string;
   label: React.ReactNode;
+  /** 복합 label의 명시적 접근 가능한 이름. */
+  ariaLabel?: string;
   /** 우측 카운트/상태 배지. */
   badge?: React.ReactNode;
+  /** 제공하면 실제 anchor로 렌더링합니다. */
+  href?: string;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 export interface SideNavItem {
   value: string;
   label: React.ReactNode;
+  /** 복합 label 또는 접힌 레일에서 사용할 접근 가능한 이름. */
+  ariaLabel?: string;
   icon?: React.ReactNode;
   /** 우측 카운트/상태 배지(접힌 상태에선 도트로 표시). */
   badge?: React.ReactNode;
+  /** 자식이 없는 leaf 항목에 제공하면 실제 anchor로 렌더링합니다. */
+  href?: string;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLElement>;
   /** 서브메뉴 — 항목이 펼침/접힘 디스클로저 그룹이 됩니다(자체 선택값 없음). */
   children?: SideNavChildItem[];
 }
@@ -51,7 +65,9 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   /** 비제어 시 초기 활성 값. */
   defaultValue?: string;
   onChange?: (value: string) => void;
+  /** href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다. */
+  renderLink?: (item: SideNavItem | SideNavChildItem, props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => React.ReactElement;
 }
 
 /** 넓은 라벨형 대시보드 사이드바 — 브랜드 헤더 + 그룹 내비(서브메뉴·배지) + 접힘 레일 + 고정 푸터. 고정 아이콘 레일은 `NavRail`. */
-export function SideNav(props: SideNavProps): JSX.Element;
+export function SideNav(props: SideNavProps): React.JSX.Element;

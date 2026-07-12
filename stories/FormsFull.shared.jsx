@@ -3,7 +3,6 @@ import {
   AutoComplete,
   Checkbox,
   CheckboxGroup,
-  ColorSwatch,
   Combobox,
   DatePicker,
   FileUpload,
@@ -26,13 +25,6 @@ import {
 } from '../src/index.js';
 
 const options = ['물류 로봇', '용접 로봇', '순찰 로봇', '방역 로봇'];
-const semanticSwatchColors = [
-  'var(--color-semantic-primary-normal)',
-  'var(--color-semantic-status-positive)',
-  'var(--color-semantic-status-cautionary)',
-  'var(--color-semantic-status-negative)',
-  'var(--color-semantic-inverse-background)',
-];
 
 export const InputsAndPickers = {
   name: '입력과 피커',
@@ -94,7 +86,6 @@ export const SelectorsAndGroups = {
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <Checkbox label="완료 후 요약 생성" defaultChecked />
         <Radio label="대표 항목" name="single-radio" value="primary" checked onChange={() => {}} />
-        <ColorSwatch colors={semanticSwatchColors} defaultValue={semanticSwatchColors[0]} />
         <Slider defaultValue={72} showValue />
         <RangeSlider defaultValue={[20, 80]} showValue />
       </section>

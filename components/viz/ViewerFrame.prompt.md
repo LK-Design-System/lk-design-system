@@ -24,6 +24,8 @@ Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFr
 - Very narrow blocking tiles keep source + state label + recovery action in normal grid flow. Below 240px, the icon and secondary description collapse visually (the description remains available to assistive technology) so 16:9 tiles do not overlap.
 - The edge strip announces only the state transition. Rapid FPS, resolution, and freshness metadata remains visually adjacent but outside the live region.
 - `ready` leaves chrome quiet. `live` adds a text-and-icon state badge; it never relies on color or motion alone.
+- Tone을 직접 전달하는 positive/cautionary/negative 상태 글리프는 공용 상태 문법과 같은 fill 변형을 사용합니다. `clock`, `pause`, `signal`, `circle-block`처럼 상태의 원인이나 기능을 설명하는 글리프는 outline을 유지합니다.
+- 오류·신호 없음·사용 불가 기본 문구는 원인만 알리는 막다른 문장이 아니라 다음 확인 행동까지 안내합니다. 제품이 더 구체적인 복구 경로를 알면 `stateDescription`과 `stateAction`으로 대체합니다.
 - Default HUD content should be limited to a few values needed to interpret the viewport. Detailed renderer diagnostics belong in an optional product surface.
 - Toolbar actions must affect only this viewport. Document commands, scene hierarchy, properties, robot control, and emergency actions do not belong in the frame.
 - Use `toolbarPlacement="top-right"` for 3D/video camera controls and `bottom-right` when a map's scale/status occupies the opposite edge.

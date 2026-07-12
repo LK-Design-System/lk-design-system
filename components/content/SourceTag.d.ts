@@ -12,4 +12,4 @@ export interface SourceTagProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 출처 칩 — 모노 키커 · 출처 이름 · ↗. 콘텐츠를 출처에 연결. */
-export function SourceTag(props: SourceTagProps): JSX.Element;
+export function SourceTag(props: SourceTagProps): React.JSX.Element;

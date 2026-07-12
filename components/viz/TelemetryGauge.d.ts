@@ -21,7 +21,7 @@ export interface TelemetryGaugeProps extends React.HTMLAttributes<HTMLDivElement
   value?: number;
   min?: number;
   max?: number;
-  /** 중앙 숫자 아래 단위(예: "%", "km/h"). */
+  /** 중앙 값 lockup의 문자열 단위. 주변 공백을 제거한 뒤 공용 결합 규칙을 적용합니다. */
   unit?: string;
   /** 보이는 라벨. 없으면 `aria-label`을 제공하세요. */
   label?: React.ReactNode;

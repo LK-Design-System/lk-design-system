@@ -27,4 +27,4 @@ export interface UserMenuProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 사이드바 푸터용 계정 행 — 아바타 + 이름/역할 + 위로 열리는 계정 메뉴. SideNav `footer` 슬롯에 배치. */
-export function UserMenu(props: UserMenuProps): JSX.Element;
+export function UserMenu(props: UserMenuProps): React.JSX.Element;

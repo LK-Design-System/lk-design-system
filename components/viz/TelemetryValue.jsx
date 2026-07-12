@@ -1,5 +1,11 @@
 import React from 'react';
 import { StatusBadge } from '../content/StatusBadge.jsx';
+import {
+  getUnitSeparator,
+  isAttachedUnit,
+  normalizeUnit,
+  normalizeValueText,
+} from '../internal/unit-format.js';
 
 const STATUS_LABEL = {
   signal: '정보',
@@ -39,6 +45,10 @@ export function TelemetryValue({
   const showStatus = resolvedStatusLabel != null && (!stale || showStaleBadge);
   const valueSize = size === 'sm' ? 'var(--headline1-size)' : 'var(--heading2-size)';
   const justifyContent = align === 'end' ? 'flex-end' : 'flex-start';
+  const normalizedValue = normalizeValueText(value);
+  const normalizedUnit = normalizeUnit(unit);
+  const unitSeparator = getUnitSeparator(normalizedUnit);
+  const attachedUnit = isAttachedUnit(normalizedUnit);
 
   return (
     <div
@@ -63,16 +73,18 @@ export function TelemetryValue({
       )}
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent, columnGap: 'var(--space-2)', rowGap: 'var(--space-1)', maxWidth: '100%', minWidth: 0, flexWrap: 'wrap' }}>
-        <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-1)', maxWidth: '100%', minWidth: 0 }}>
-          <strong style={{ maxWidth: '100%', color: stale ? 'var(--color-semantic-label-neutral)' : 'var(--color-semantic-label-strong)', fontSize: valueSize, lineHeight: 1.12, fontWeight: 'var(--fw-extra)', fontVariantNumeric: 'tabular-nums', overflowWrap: 'anywhere' }}>
-            {value}
-          </strong>
-          {unit != null && (
-            <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: size === 'sm' ? 12 : 13, lineHeight: 1.25, fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere' }}>
-              {unit}
+        <strong
+          data-telemetry-value-lockup=""
+          data-unit-attachment={normalizedUnit === '' ? 'none' : attachedUnit ? 'attached' : 'spaced'}
+          style={{ display: 'inline-block', maxWidth: '100%', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: stale ? 'var(--color-semantic-label-neutral)' : 'var(--color-semantic-label-strong)', fontSize: valueSize, lineHeight: 1.12, fontWeight: 'var(--fw-extra)', fontVariantNumeric: 'tabular-nums' }}
+        >
+          <span>{normalizedValue}</span>
+          {normalizedUnit !== '' && (
+            <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: size === 'sm' ? 12 : 13, lineHeight: 1.25, fontWeight: 'var(--fw-bold)' }}>
+              {unitSeparator}{normalizedUnit}
             </span>
           )}
-        </span>
+        </strong>
         {showStatus && <StatusBadge tone={resolvedTone}>{resolvedStatusLabel}</StatusBadge>}
       </div>
 

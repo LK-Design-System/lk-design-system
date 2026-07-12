@@ -13,4 +13,4 @@ export interface PushBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /** 자식의 우상단에 붙는 알림 점 / 카운트. */
-export function PushBadge(props: PushBadgeProps): JSX.Element;
+export function PushBadge(props: PushBadgeProps): React.JSX.Element;

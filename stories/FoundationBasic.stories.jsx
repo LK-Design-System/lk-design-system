@@ -1,7 +1,8 @@
 import { AspectRatio } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Foundation/Basic',
+  title: 'LDS Core/Foundation/Aspect Ratio',
   parameters: {
     docs: {
       description: {
@@ -84,7 +85,10 @@ function RatioTile({ label, token, vertical = false }) {
 }
 
 export const RatioTokens = {
-  name: '비율 토큰',
+  name: '개요',
+  parameters: storyDescription(
+    '가로형과 세로형 AspectRatio token을 한 화면에서 비교합니다. 콘텐츠 종류와 컨테이너 방향에 맞는 비율을 선택하고, 임의 높이로 비율을 깨거나 중요한 콘텐츠를 잘라내지 마세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1180 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { ActionArea } from '../buttons/ActionArea.jsx';
 import { Button } from '../buttons/Button.jsx';
 import { StatusBadge } from '../content/StatusBadge.jsx';
+import { useDialogFocus } from './dialog-focus.js';
 
 const TONE_META = {
   danger: { badge: 'negative', label: '위험' },
@@ -30,75 +31,43 @@ export function ConfirmDialog({
   onCancel,
   onClose,
   closeOnScrim = true,
+  initialFocusRef,
+  returnFocusRef,
+  restoreFocus = true,
+  ariaLabel = '확인 다이얼로그',
   style,
   ...rest
 }) {
   const titleId = React.useId();
   const descriptionId = React.useId();
-  const dialogRef = React.useRef(null);
-  const restoreFocusRef = React.useRef(null);
+  const cancelFocusRef = React.useRef(null);
   const dismiss = onCancel || onClose;
-  const dismissRef = React.useRef(dismiss);
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
   const toneMeta = TONE_META[tone];
-
-  React.useEffect(() => {
-    dismissRef.current = dismiss;
+  const { dialogRef, zIndex } = useDialogFocus({
+    open,
+    onDismiss: dismiss,
+    initialFocusRef: initialFocusRef ?? cancelFocusRef,
+    returnFocusRef,
+    restoreFocus,
   });
-
-  React.useEffect(() => {
-    if (!open) return undefined;
-    restoreFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const focusableSelector = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    const focusInitial = window.requestAnimationFrame(() => {
-      const focusables = Array.from(dialogRef.current?.querySelectorAll(focusableSelector) ?? []);
-      const cancel = dialogRef.current?.querySelector('[data-confirm-dialog-cancel]');
-      (cancel ?? focusables[0] ?? dialogRef.current)?.focus();
-    });
-    const onKey = (event) => {
-      if (event.key === 'Escape' && dismissRef.current) {
-        event.preventDefault();
-        dismissRef.current();
-      }
-      if (event.key === 'Tab') {
-        const focusables = Array.from(dialogRef.current?.querySelectorAll(focusableSelector) ?? []);
-        if (focusables.length === 0) {
-          event.preventDefault();
-          dialogRef.current?.focus();
-          return;
-        }
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        const active = document.activeElement;
-        if (event.shiftKey && (active === first || !dialogRef.current?.contains(active))) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && (active === last || !dialogRef.current?.contains(active))) {
-          event.preventDefault();
-          first.focus();
-        }
-      }
-    };
-    document.addEventListener('keydown', onKey);
-    return () => {
-      window.cancelAnimationFrame(focusInitial);
-      document.removeEventListener('keydown', onKey);
-      restoreFocusRef.current?.focus?.();
-    };
-  }, [open]);
+  const setDialogRef = React.useCallback((node) => {
+    dialogRef.current = node;
+    cancelFocusRef.current = node?.querySelector('[data-confirm-dialog-cancel]') ?? null;
+  }, [dialogRef]);
   if (!open) return null;
   return (
     <div
       role="presentation"
       onClick={closeOnScrim ? (event) => { if (event.target === event.currentTarget && dismiss) dismiss(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-6)', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))' }}
+      style={{ position: 'fixed', inset: 0, zIndex, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-6)', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))' }}
     >
       <div
-        ref={dialogRef}
+        ref={setDialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title != null ? titleId : undefined}
-        aria-label={title == null ? '확인 다이얼로그' : undefined}
+        aria-label={title == null ? ariaLabel : undefined}
         aria-describedby={children != null ? descriptionId : undefined}
         data-tone={tone}
         tabIndex={-1}
@@ -111,7 +80,7 @@ export function ConfirmDialog({
           {children != null && <div id={descriptionId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', wordBreak: 'keep-all' }}>{children}</div>}
         </div>
         <ActionArea compact divider={false} align="end" style={{ padding: 0, background: 'transparent' }}>
-          <Button data-confirm-dialog-cancel variant="ghost" onClick={() => dismissRef.current?.()}>
+          <Button data-confirm-dialog-cancel variant="outlined" color="assistive" onClick={() => dismiss?.()}>
             {cancelLabel}
           </Button>
           <Button

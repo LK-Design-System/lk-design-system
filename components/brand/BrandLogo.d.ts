@@ -18,5 +18,5 @@ export interface BrandLogoProps extends React.SVGProps<SVGSVGElement> {
 export const BRAND_LOGO_NAMES: BrandLogoName[];
 
 /** 풀컬러 플랫폼 브랜드 로고(Apple / Facebook / Google / GitHub / Hugging Face / LinkedIn / X / YouTube). GitHub·X·Apple은 currentColor로 테마에 맞게 반전되고, `mono`로 어떤 마크든 단색 실루엣으로 렌더할 수 있습니다. */
-export function BrandLogo(props: BrandLogoProps): JSX.Element;
+export function BrandLogo(props: BrandLogoProps): React.JSX.Element;
 export default BrandLogo;

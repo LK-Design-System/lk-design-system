@@ -9,10 +9,13 @@ export interface SelectionInspectorItem {
 
 export interface SelectionInspectorField {
   label: React.ReactNode;
-  value?: React.ReactNode;
+  /** Standard scalar value normalized through the shared unit contract. */
+  value?: string | number | boolean;
+  /** Explicit custom-node escape. When supplied, unit formatting is bypassed. */
   valueNode?: React.ReactNode;
-  unit?: React.ReactNode;
-  tone?: 'default' | 'warning' | 'danger';
+  /** String unit for scalar values only. */
+  unit?: string;
+  tone?: 'default' | 'cautionary' | 'negative' | 'warning' | 'danger';
   /** 여러 선택 항목의 값이 서로 다름을 `—`로 표시합니다. */
   mixed?: boolean;
   align?: 'left' | 'right';
@@ -28,7 +31,7 @@ export interface SelectionInspectorSection {
   defaultExpanded?: boolean;
 }
 
-export interface SelectionInspectorProps extends React.HTMLAttributes<HTMLElement> {
+export interface SelectionInspectorProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   item?: SelectionInspectorItem | null;
   /** 다중 선택 개수. 2 이상이면 공통 속성 inspector 제목으로 표시합니다. */
   selectionCount?: number;
@@ -43,4 +46,4 @@ export interface SelectionInspectorProps extends React.HTMLAttributes<HTMLElemen
 }
 
 /** 선택 객체 속성 인스펙터 - 맵 객체, 포인트클라우드 영역, 웨이포인트, 레인, 3D crop volume용. */
-export function SelectionInspector(props: SelectionInspectorProps): JSX.Element;
+export function SelectionInspector(props: SelectionInspectorProps): React.JSX.Element;

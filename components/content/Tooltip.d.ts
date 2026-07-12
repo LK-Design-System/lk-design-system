@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface TooltipProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'content'> {
   content: React.ReactNode;
   /** position axis. @default "top" */
   position?: "top" | "bottom" | "left" | "right";
@@ -15,11 +15,14 @@ export interface TooltipProps extends React.HTMLAttributes<HTMLSpanElement> {
   shortcut?: React.ReactNode;
   /** Show arrow. @default true */
   arrow?: boolean;
-  /** Force open state for controlled demos. */
+  /** 제어된 열림 상태. */
   open?: boolean;
+  /** 비제어 초기 열림 상태. @default false */
   defaultOpen?: boolean;
+  /** 열림 상태 변경 알림. */
+  onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
 }
 
 /** tooltip with position, size, arrow alignment, and shortcut support. */
-export function Tooltip(props: TooltipProps): JSX.Element;
+export function Tooltip(props: TooltipProps): React.JSX.Element;

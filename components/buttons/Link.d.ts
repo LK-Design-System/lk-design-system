@@ -11,4 +11,4 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
 }
 
 /** 스타일된 인라인 앵커 — 시그널 잉크, 호버 밑줄, 선택적 외부 화살표. */
-export function Link(props: LinkProps): JSX.Element;
+export function Link(props: LinkProps): React.JSX.Element;

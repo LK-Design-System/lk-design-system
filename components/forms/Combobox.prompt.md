@@ -1,5 +1,11 @@
 **Combobox** — 다중 선택 드롭다운(트리거 안의 칩, 체크 가능한 옵션).
 
+## Interaction and reference basis
+
+- This is a select-only multi-value combobox. The trigger exposes expanded, controls, and active-descendant state; the popup is an `aria-multiselectable` listbox and keeps focus on the trigger while Arrow/Home/End navigate and Enter/Space toggle values.
+- The small field is 32px, the default field follows `--component-input-height`, and options use the common 16px input typography.
+- Reference basis: [WAI-ARIA Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) and [WAI-ARIA Listbox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/).
+
 ```jsx
 <Combobox options={['시설관리','건설','발전소','국방','공항']} defaultValue={['국방']} onChange={setInd} />
 ```

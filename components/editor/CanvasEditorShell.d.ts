@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface CanvasEditorShellProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CanvasEditorShellProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 문서/워크스페이스 제목. */
   title?: React.ReactNode;
   /** 제목 아래의 짧은 상태 또는 문서 메타데이터. */
@@ -63,4 +63,4 @@ export interface CanvasEditorShellProps extends React.HTMLAttributes<HTMLDivElem
 }
 
 /** 캔버스 에디터의 공통 프레임. 도메인별 워크플로우와 패널 내용은 각 슬롯의 소유자가 구성합니다. */
-export function CanvasEditorShell(props: CanvasEditorShellProps): JSX.Element;
+export function CanvasEditorShell(props: CanvasEditorShellProps): React.JSX.Element;

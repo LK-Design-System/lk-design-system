@@ -9,4 +9,4 @@ export interface StepsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 가로 진행 단계 표시 — 완료(체크) · 현재(링) · 예정. */
-export function Steps(props: StepsProps): JSX.Element;
+export function Steps(props: StepsProps): React.JSX.Element;

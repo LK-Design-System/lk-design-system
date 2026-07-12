@@ -25,4 +25,4 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** transient dark-surface feedback toast with tone icon and optional action/close. */
-export function Toast(props: ToastProps): JSX.Element;
+export function Toast(props: ToastProps): React.JSX.Element;

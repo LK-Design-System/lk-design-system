@@ -16,4 +16,4 @@ export interface ActionAreaProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
 }
 
-export function ActionArea(props: ActionAreaProps): JSX.Element;
+export function ActionArea(props: ActionAreaProps): React.JSX.Element;

@@ -8,4 +8,4 @@ export interface ToastStackProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Toast 자식을 쌓는 고정 뷰포트. */
-export function ToastStack(props: ToastStackProps): JSX.Element;
+export function ToastStack(props: ToastStackProps): React.JSX.Element;

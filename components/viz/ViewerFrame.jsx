@@ -29,7 +29,7 @@ const STATE_PRESENTATION = {
   },
   'no-source': {
     label: '소스 없음',
-    description: '표시할 콘텐츠가 없습니다.',
+    description: '표시할 소스를 선택해 주세요.',
     icon: 'video',
     tone: 'neutral',
     blocking: true,
@@ -50,7 +50,7 @@ const STATE_PRESENTATION = {
   },
   ready: {
     label: '준비됨',
-    icon: 'circle-check',
+    icon: 'circle-check-fill',
     tone: 'positive',
     blocking: false,
   },
@@ -64,7 +64,7 @@ const STATE_PRESENTATION = {
   degraded: {
     label: '품질 저하',
     description: '마지막 콘텐츠를 유지하며 수신 상태를 확인합니다.',
-    icon: 'circle-exclamation',
+    icon: 'triangle-exclamation-fill',
     tone: 'cautionary',
     blocking: false,
     edge: true,
@@ -95,7 +95,7 @@ const STATE_PRESENTATION = {
   },
   unavailable: {
     label: '사용할 수 없음',
-    description: '이 콘텐츠 소스를 사용할 수 없습니다.',
+    description: '소스 상태와 접근 권한을 확인해 주세요.',
     icon: 'circle-block',
     tone: 'neutral',
     blocking: true,
@@ -109,15 +109,15 @@ const STATE_PRESENTATION = {
   },
   'no-signal': {
     label: '신호 없음',
-    description: '소스 신호가 감지되지 않습니다.',
+    description: '소스 연결과 전송 상태를 확인해 주세요.',
     icon: 'signal',
     tone: 'negative',
     blocking: true,
   },
   error: {
     label: '표시 오류',
-    description: '콘텐츠를 불러오지 못했습니다.',
-    icon: 'triangle-exclamation',
+    description: '콘텐츠를 불러오지 못했습니다. 연결을 확인한 뒤 다시 시도해 주세요.',
+    icon: 'circle-close-fill',
     tone: 'negative',
     blocking: true,
   },

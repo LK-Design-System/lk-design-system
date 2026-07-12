@@ -33,4 +33,4 @@ export interface ContentBadgeProps extends React.HTMLAttributes<HTMLSpanElement>
 }
 
 /** Content Badge for short content state or attribute labels. */
-export function ContentBadge(props: ContentBadgeProps): JSX.Element;
+export function ContentBadge(props: ContentBadgeProps): React.JSX.Element;

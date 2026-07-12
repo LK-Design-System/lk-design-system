@@ -15,4 +15,4 @@ export interface WizardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
 }
 
 /** 다단계 플로우 — Steps 인디케이터 + 콘텐츠 + 뒤로/다음. */
-export function Wizard(props: WizardProps): JSX.Element;
+export function Wizard(props: WizardProps): React.JSX.Element;

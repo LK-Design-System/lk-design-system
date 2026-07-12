@@ -16,7 +16,8 @@
         "Divider: variant = normal thick, vertical = false true"
       ],
       "localEvidence": [
-        "stories/LayoutEssentials.stories.jsx#EssentialAndDivider",
+        "stories/LayoutEssentials.stories.jsx#MobileSystemBarsByPlatform",
+        "stories/LayoutDivider.stories.jsx#DividerVariants",
         "components/layout/MobileSystemBars.jsx",
         "components/content/Divider.jsx",
         "tokens/components.css",
@@ -44,7 +45,12 @@
         "Toggle Icon: active true/false, interaction normal/hovered/focused/pressed"
       ],
       "localEvidence": [
-        "stories/ActionArea.stories.jsx#ActionTaxonomy",
+        "stories/ActionButtonGroup.stories.jsx#ButtonGroups",
+        "stories/ActionSplitButton.stories.jsx#SplitButtons",
+        "stories/ActionFab.stories.jsx#FloatingActionButton",
+        "stories/ActionIconButton.stories.jsx#IconButtonVariants",
+        "stories/ActionTextButton.stories.jsx#TextButtonStates",
+        "stories/ActionToggleIcon.stories.jsx#ToggleStates",
         "stories/ActionArea.stories.jsx#BottomActionArea",
         "components/buttons/ActionArea.jsx",
         "components/buttons/Button.jsx",
@@ -224,7 +230,7 @@
         "Resource: active false/default and true category chips"
       ],
       "localEvidence": [
-        "stories/NavigationTabs.stories.jsx#TabAndCategoryPatterns",
+        "stories/NavigationCategory.stories.jsx#CategoryPatterns",
         "components/navigation/Category.jsx",
         "components/navigation/Category.d.ts",
         "components/navigation/Category.prompt.md",
@@ -246,7 +252,7 @@
         "scroll = auto"
       ],
       "localEvidence": [
-        "stories/NavigationTabs.stories.jsx#TabAndCategoryPatterns",
+        "stories/NavigationTabs.stories.jsx#TabPatterns",
         "components/navigation/Tabs.jsx",
         "components/navigation/Tabs.d.ts",
         "components/navigation/Tabs.prompt.md",
@@ -267,7 +273,7 @@
         "dot resource treatment"
       ],
       "localEvidence": [
-        "stories/NavigationCompact.stories.jsx#PaginationPatterns",
+        "stories/NavigationPageIndicator.stories.jsx#CounterAndDots",
         "components/navigation/PageIndicator.jsx",
         "components/navigation/PageIndicator.d.ts",
         "components/navigation/PageIndicator.prompt.md",
@@ -362,7 +368,7 @@
         "tokens/components.css",
         "tokens/source.json"
       ],
-      "coverageImpact": "Adds PDF-confirmed Alert platform and heading axes to the existing Alert component and Confirm Alert story."
+      "coverageImpact": "Adds PDF-confirmed Alert platform and heading axes to the existing Alert component and its Overlay/Alert story."
     },
     {
       "id": "presentation-tooltip",
@@ -377,7 +383,7 @@
         "shortcut = false/default, true"
       ],
       "localEvidence": [
-        "stories/ContentAnnotations.stories.jsx#TooltipPatterns",
+        "stories/ContentTooltip.stories.jsx#TooltipPatterns",
         "scripts/check-tooltip-alignment.mjs",
         "components/content/Tooltip.jsx",
         "components/content/Tooltip.d.ts",
@@ -399,7 +405,8 @@
         "menu item resource includes active, disabled, checked, description/caption, action area, and shortcut"
       ],
       "localEvidence": [
-        "stories/OverlayMenu.stories.jsx#MenuPatterns",
+        "stories/OverlayDropdownMenu.stories.jsx#DropdownMenuPatterns",
+        "stories/NavigationMenubar.stories.jsx#MenubarPatterns",
         "components/overlay/DropdownMenu.jsx",
         "components/navigation/Menubar.jsx",
         "components/overlay/DropdownMenu.d.ts",
@@ -423,7 +430,8 @@
         "Skeleton Circle customize = width, height, color, opacity"
       ],
       "localEvidence": [
-        "stories/StatusLoading.stories.jsx#LoadingStates",
+        "stories/StatusSkeleton.stories.jsx#SkeletonOverview",
+        "stories/StatusSpinner.stories.jsx#SpinnerOverview",
         "components/status/Spinner.jsx",
         "components/status/Skeleton.jsx",
         "components/status/Spinner.d.ts",

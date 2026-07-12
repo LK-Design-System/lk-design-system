@@ -1,9 +1,17 @@
 import React from 'react';
 import { ReorderList } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Content/Reorder List',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-content-reorder-list--reorder-lists',
+      eyebrow: 'Product / Reorder List',
+      title: '사용자가 같은 수준의 항목을 원하는 우선순서로 다시 배열합니다',
+      description:
+        '대시보드 패널이나 표시 항목처럼 동등한 목록의 순서를 직접 바꿀 때 적합합니다. 단계형 절차나 부모·자식 구조에는 ReorderList 대신 Steps 또는 Tree를 사용하세요.',
+    },
     docs: {
       description: {
         component: '같은 레벨의 리스트 항목 순서를 바꾸는 ReorderList 패턴입니다. 작업 단계 저작은 단계형 목록 패턴을 사용합니다.',
@@ -50,7 +58,10 @@ function reorder(current, ids) {
 }
 
 export const ReorderLists = {
-  name: '기본',
+  name: '개요',
+  parameters: storyDescription(
+    '대시보드 패널의 표시 순서를 사용자가 다시 정하는 기본 상황입니다. 드래그와 키보드 조작 모두에서 이동 대상, 새 위치, 보조 상태가 분명한지 확인하세요.',
+  ),
   render: () => {
     const [items, setItems] = React.useState(panels);
 
@@ -66,7 +77,10 @@ export const ReorderLists = {
 };
 
 export const WithIndex = {
-  name: 'Compact 밀도 · 순번 표시',
+  name: '반응형 · 조밀한 밀도와 순번',
+  parameters: storyDescription(
+    '제한된 공간에서 순번을 함께 보여 주며 항목을 재정렬하는 상황입니다. compact 밀도에서도 핸들·순번·라벨·후행 정보가 겹치지 않고 조작 가능 영역을 유지하는지 확인하세요.',
+  ),
   render: () => {
     const [items, setItems] = React.useState(panels);
 
@@ -84,7 +98,10 @@ export const WithIndex = {
 };
 
 export const Empty = {
-  name: '항목 없음',
+  name: '변형·상태 · 항목 없음',
+  parameters: storyDescription(
+    '아직 재정렬할 항목이 없는 초기 상태입니다. 빈 목록이 고장 난 화면처럼 보이지 않고 다음에 항목이 생길 수 있다는 맥락을 방해 없이 전달하는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ width: 'min(640px, 100%)', minWidth: 0 }}>
       <ReorderList items={[]} />

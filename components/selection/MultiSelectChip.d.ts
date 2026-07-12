@@ -14,4 +14,4 @@ export interface MultiSelectChipProps {
 }
 
 /** 다중 선택 토글 칩 — 선택 시 리딩 체크 + 시안 워시. */
-export function MultiSelectChip(props: MultiSelectChipProps): JSX.Element;
+export function MultiSelectChip(props: MultiSelectChipProps): React.JSX.Element;

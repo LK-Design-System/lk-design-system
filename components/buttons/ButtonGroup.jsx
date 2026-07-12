@@ -1,55 +1,190 @@
 import React from 'react';
+import { SegmentedControl } from '../selection/SegmentedControl.jsx';
+
+const SIZE_STYLES = {
+  sm: {
+    height: 'var(--component-button-height-sm)',
+    padding: 'var(--component-button-padding-sm)',
+    fontSize: 'var(--component-button-font-size-sm)',
+    lineHeight: 'var(--component-button-line-height-sm)',
+    letterSpacing: 'var(--component-button-letter-spacing-sm)',
+    radius: 'var(--component-button-radius-sm)',
+  },
+  md: {
+    height: 'var(--component-button-height-md)',
+    padding: 'var(--component-button-padding-md)',
+    fontSize: 'var(--component-button-font-size-md)',
+    lineHeight: 'var(--component-button-line-height-md)',
+    letterSpacing: 'var(--component-button-letter-spacing-md)',
+    radius: 'var(--component-button-radius-md)',
+  },
+  lg: {
+    height: 'var(--component-button-height-lg)',
+    padding: 'var(--component-button-padding-lg)',
+    fontSize: 'var(--component-button-font-size-lg)',
+    lineHeight: 'var(--component-button-line-height-lg)',
+    letterSpacing: 'var(--component-button-letter-spacing-lg)',
+    radius: 'var(--component-button-radius-lg)',
+  },
+};
+
+function normalizeSize(size) {
+  return { small: 'sm', medium: 'md', large: 'lg' }[size] || size;
+}
+
+function MultiToggleSegment({ option, active, first, last, sizeStyle, disabled, onPick }) {
+  const [hover, setHover] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
+  const blocked = disabled || option.disabled || option.disable;
+  const restingBackground = active
+    ? 'var(--color-semantic-primary-surface-strong)'
+    : 'var(--color-semantic-background-elevated-normal)';
+  const interactiveBackground = pressed
+    ? `color-mix(in srgb, ${restingBackground} 88%, var(--color-semantic-label-normal))`
+    : hover && !active
+      ? 'var(--color-semantic-fill-alternative)'
+      : restingBackground;
+
+  return (
+    <button
+      type="button"
+      aria-pressed={active}
+      disabled={blocked}
+      onClick={() => onPick(option.value)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => { setHover(false); setPressed(false); }}
+      onMouseDown={() => { if (!blocked) setPressed(true); }}
+      onMouseUp={() => setPressed(false)}
+      onKeyDown={(event) => {
+        if (!blocked && (event.key === 'Enter' || event.key === ' ')) setPressed(true);
+      }}
+      onKeyUp={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') setPressed(false);
+      }}
+      onBlur={() => setPressed(false)}
+      style={{
+        height: sizeStyle.height,
+        padding: sizeStyle.padding,
+        cursor: blocked ? 'not-allowed' : 'pointer',
+        fontFamily: 'var(--font-sans)',
+        fontSize: sizeStyle.fontSize,
+        lineHeight: sizeStyle.lineHeight,
+        fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)',
+        letterSpacing: sizeStyle.letterSpacing,
+        color: blocked
+          ? 'var(--color-semantic-label-disable)'
+          : active
+            ? 'var(--color-semantic-primary-heavy)'
+            : 'var(--color-semantic-label-neutral)',
+        background: blocked ? 'var(--component-button-disabled-bg)' : interactiveBackground,
+        border: `var(--border-thin) solid ${
+          blocked
+            ? 'var(--color-semantic-line-normal-neutral)'
+            : active
+              ? 'var(--color-semantic-primary-normal)'
+              : 'var(--color-semantic-line-solid-normal)'
+        }`,
+        marginLeft: first ? 0 : -1,
+        zIndex: active ? 1 : 0,
+        borderTopLeftRadius: first ? sizeStyle.radius : 0,
+        borderBottomLeftRadius: first ? sizeStyle.radius : 0,
+        borderTopRightRadius: last ? sizeStyle.radius : 0,
+        borderBottomRightRadius: last ? sizeStyle.radius : 0,
+        transition: 'var(--component-button-transition)',
+        whiteSpace: 'nowrap',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 'var(--component-button-gap-sm)',
+      }}
+    >
+      {option.icon}
+      {option.label}
+    </button>
+  );
+}
 
 /**
- * LK ROBOTICS — ButtonGroup
- * A connected, bordered toggle group (view/mode switches). Single-select by
- * default; `multiple` allows several. Active segments take the cyan wash +
- * signal ink. Distinct from SegmentedControl's filled-track look.
+ * Single selection converges on SegmentedControl. `multiple` remains a connected
+ * group of independent toggle buttons with aria-pressed semantics.
  */
-export function ButtonGroup({ options = [], value, defaultValue, onChange, size = 'md', multiple = false, style, ...rest }) {
-  const norm = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
+export function ButtonGroup({
+  options = [],
+  value,
+  defaultValue,
+  onChange,
+  size = 'md',
+  multiple = false,
+  disabled = false,
+  disable = false,
+  style,
+  className,
+  'aria-label': ariaLabel = '보기 또는 모드 선택',
+  ...rest
+}) {
+  const norm = options.map((option) => (
+    typeof option === 'string'
+      ? { value: option, label: option }
+      : { ...option, disabled: Boolean(option.disabled || option.disable) }
+  ));
+  const normalizedSize = normalizeSize(size);
+  const disabledState = disabled || disable;
   const isControlled = value !== undefined;
-  const [internal, setInternal] = React.useState(defaultValue != null ? defaultValue : (multiple ? [] : (norm[0] && norm[0].value)));
-  const val = isControlled ? value : internal;
-  const isActive = (v) => (multiple ? Array.isArray(val) && val.includes(v) : val === v);
-  const pick = (v) => {
-    let next;
-    if (multiple) { const arr = Array.isArray(val) ? val : []; next = arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]; }
-    else next = v;
+  const [internal, setInternal] = React.useState(
+    defaultValue != null ? defaultValue : multiple ? [] : norm[0]?.value,
+  );
+  const currentValue = isControlled ? value : internal;
+
+  if (!multiple) {
+    return (
+      <SegmentedControl
+        options={norm}
+        value={Array.isArray(value) ? value[0] : value}
+        defaultValue={Array.isArray(defaultValue) ? defaultValue[0] : defaultValue}
+        onChange={onChange}
+        variant="outlined"
+        size={normalizedSize}
+        disabled={disabledState}
+        aria-label={ariaLabel}
+        className={className}
+        style={style}
+        {...rest}
+      />
+    );
+  }
+
+  const selectedValues = Array.isArray(currentValue) ? currentValue : [];
+  const pick = (nextValue) => {
+    if (disabledState) return;
+    const next = selectedValues.includes(nextValue)
+      ? selectedValues.filter((item) => item !== nextValue)
+      : [...selectedValues, nextValue];
     if (!isControlled) setInternal(next);
-    onChange && onChange(next);
+    onChange?.(next);
   };
-  const h = size === 'sm' ? 36 : 44;
-  const fs = size === 'sm' ? 14 : 15;
+  const sizeStyle = SIZE_STYLES[normalizedSize] || SIZE_STYLES.md;
+
   return (
-    <div role="group" style={{ display: 'inline-flex', ...style }} {...rest}>
-      {norm.map((o, i) => {
-        const active = isActive(o.value);
-        const first = i === 0;
-        const last = i === norm.length - 1;
-        return (
-          <button
-            key={o.value}
-            type="button"
-            aria-pressed={active}
-            onClick={() => pick(o.value)}
-            style={{
-              height: h, padding: '0 16px', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
-              fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-semibold)', letterSpacing: 0,
-              color: active ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-neutral)',
-              background: active ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)',
-              border: `1px solid ${active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`,
-              marginLeft: first ? 0 : -1, zIndex: active ? 1 : 0,
-              borderTopLeftRadius: first ? 'var(--radius-md)' : 0, borderBottomLeftRadius: first ? 'var(--radius-md)' : 0,
-              borderTopRightRadius: last ? 'var(--radius-md)' : 0, borderBottomRightRadius: last ? 'var(--radius-md)' : 0,
-              transition: 'var(--component-button-transition)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {o.label}
-          </button>
-        );
-      })}
+    <div
+      {...rest}
+      role="group"
+      aria-label={ariaLabel}
+      aria-disabled={disabledState || undefined}
+      className={['lk-button-group', className].filter(Boolean).join(' ')}
+      style={{ display: 'inline-flex', ...style }}
+    >
+      {norm.map((option, index) => (
+        <MultiToggleSegment
+          key={option.value}
+          option={option}
+          active={selectedValues.includes(option.value)}
+          first={index === 0}
+          last={index === norm.length - 1}
+          sizeStyle={sizeStyle}
+          disabled={disabledState}
+          onPick={pick}
+        />
+      ))}
     </div>
   );
 }

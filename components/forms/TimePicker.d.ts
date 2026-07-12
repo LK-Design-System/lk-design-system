@@ -17,4 +17,4 @@ export interface TimePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
 }
 
 /** Native 시 + 분 select(24시간) → "HH:MM". */
-export function TimePicker(props: TimePickerProps): JSX.Element;
+export function TimePicker(props: TimePickerProps): React.JSX.Element;

@@ -26,4 +26,4 @@ export interface ProductCardProps extends React.AnchorHTMLAttributes<HTMLAnchorE
  * 페이드아웃하고, 이브로우·제품 코드·설명은 항상 순수 네이비 위에 앉는다.
  * 기본 CTA 없음. 호버는 이미지 줌 + 섀도 심화만(리프트 없음).
  */
-export function ProductCard(props: ProductCardProps): JSX.Element;
+export function ProductCard(props: ProductCardProps): React.JSX.Element;

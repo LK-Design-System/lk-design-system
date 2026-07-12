@@ -1,5 +1,7 @@
 **Breadcrumb** — 셰브론 구분자가 있는 경로 트레일. 상위는 뮤트 링크, 마지막 항목은 굵은 현재 페이지.
 
+Classification: **LK Product Extension**. 현재 페이지의 상위 경로를 보여주는 로컬 웨이파인딩이며, TopBar·SideNav·NavRail·BottomNav 같은 주 탐색을 대신하지 않습니다.
+
 ```jsx
 <Breadcrumb items={[
   { label: '홈', href: '/' },

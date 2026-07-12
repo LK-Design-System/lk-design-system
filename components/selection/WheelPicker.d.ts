@@ -28,4 +28,4 @@ export interface WheelPickerProps extends Omit<React.HTMLAttributes<HTMLDivEleme
 }
 
 /** iOS식 드럼/휠 선택기(스크롤-스냅 컬럼, 중앙 하이라이트). */
-export function WheelPicker(props: WheelPickerProps): JSX.Element;
+export function WheelPicker(props: WheelPickerProps): React.JSX.Element;

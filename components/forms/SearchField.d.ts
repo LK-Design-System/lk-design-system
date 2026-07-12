@@ -1,16 +1,24 @@
 import * as React from 'react';
 
-export interface SearchFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'size'> {
+export interface SearchFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'defaultValue' | 'size' | 'style'> {
   value?: string;
   defaultValue?: string;
   onChange?: (value: string) => void;
-  /** Enter 시 현재 값과 함께 발생. */
+  /** Called with the current query when Enter is pressed. */
   onSearch?: (value: string) => void;
-  placeholder?: string;
-  /** @default "md" */
-  size?: 'sm' | 'md';
-  disabled?: boolean;
+  label?: React.ReactNode;
+  helper?: React.ReactNode;
+  error?: React.ReactNode;
+  invalid?: boolean;
+  status?: 'normal' | 'positive' | 'negative';
+  size?: 'sm' | 'md' | 'small' | 'medium';
+  /** Accessible clear-action name. Defaults to a contextual `<field> 지우기`. */
+  clearLabel?: string;
+  /** Styles for the label/control/message stack. */
+  fieldStyle?: React.CSSProperties;
+  /** Styles for the input control shell. */
+  style?: React.CSSProperties;
 }
 
-/** 앞에 돋보기 + 지우기 어포던스가 있는 검색 입력. */
-export function SearchField(props: SearchFieldProps): JSX.Element;
+/** Search input with Enter-to-search and an accessible clear action. */
+export function SearchField(props: SearchFieldProps): React.JSX.Element;

@@ -37,4 +37,4 @@ export interface SourceDisclosureProps extends Omit<React.HTMLAttributes<HTMLEle
 }
 
 /** Product-provided provenance and availability without fetching or interpreting source content. */
-export function SourceDisclosure(props: SourceDisclosureProps): JSX.Element;
+export function SourceDisclosure(props: SourceDisclosureProps): React.JSX.Element;

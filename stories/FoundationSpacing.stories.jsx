@@ -1,9 +1,17 @@
 import { Button } from '../src/index.js';
 import { SpacingScale as SpacingScaleStory } from './Foundations.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Foundation/Spacing',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-foundation-spacing--spacing-scale',
+      eyebrow: 'Foundation / Spacing',
+      title: '간격 토큰은 요소 사이의 관계와 화면 전체의 리듬을 일관되게 만듭니다',
+      description:
+        '콘텐츠의 포함·분리·위계에 맞는 공통 스케일을 선택하고 같은 관계에는 같은 토큰을 반복합니다. 임의 픽셀값으로 비슷한 간격을 계속 만들지 말고, 기기 인셋은 safe-area 토큰으로 레이아웃 계층에서 처리하세요.',
+    },
     docs: {
       description: {
         component:
@@ -15,7 +23,16 @@ const meta = {
 
 export default meta;
 
-export const SpacingScale = { ...SpacingScaleStory, name: '간격 스케일' };
+export const SpacingScale = {
+  ...SpacingScaleStory,
+  name: '개요',
+  parameters: {
+    ...SpacingScaleStory.parameters,
+    ...storyDescription(
+      'LDS spacing scale의 단계와 실제 간격 차이를 비교합니다. 요소 사이 관계에 맞는 토큰을 반복 사용하고, 비슷한 간격을 임의 픽셀값으로 늘려 새 리듬을 만들지 마세요.',
+    ),
+  },
+};
 
 const panelStyle = {
   border: '1px solid var(--color-semantic-line-normal-normal)',
@@ -174,7 +191,10 @@ const tokenRows = [
 ];
 
 export const MobileSafeAreaSpacing = {
-  name: '모바일 세이프 에어리어 간격',
+  name: '참조 · 모바일 안전 영역',
+  parameters: storyDescription(
+    '상태 영역·하단 내비게이션·고정 액션이 기기 safe area와 만나는 방식을 비교합니다. 개별 컴포넌트에 inset을 중복 적용하지 말고 화면을 소유한 레이아웃 계층에서 공통 토큰으로 처리하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1120 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>

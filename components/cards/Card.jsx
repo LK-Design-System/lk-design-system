@@ -1,5 +1,6 @@
 import React from 'react';
 import { Skeleton } from '../status/Skeleton.jsx';
+import { Icon } from '../icon/Icon.jsx';
 
 function SaveButton({ saved = false, onClick }) {
   return (
@@ -22,10 +23,7 @@ function SaveButton({ saved = false, onClick }) {
         flexShrink: 0,
       }}
     >
-      {/* Glyph path kept in sync with content/Bookmark.jsx; box styling is a signed-off LK override. */}
-      <svg width="17" height="17" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-      </svg>
+      <Icon name={saved ? 'bookmark-fill' : 'bookmark'} size={17} aria-hidden="true" />
     </button>
   );
 }

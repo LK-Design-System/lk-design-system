@@ -128,7 +128,7 @@ export function TopBarNavItem({ children, active = false, href, menuItems, menuT
             height: 2.5,
             borderRadius: '2px 2px 0 0',
             background: onDark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)',
-            transform: activeOrHover ? 'scaleX(1)' : 'scaleX(0)',
+            transform: active ? 'scaleX(1)' : 'scaleX(0)',
             transformOrigin: 'center',
             transition: 'transform var(--dur-fast) var(--ease-out)',
           }}

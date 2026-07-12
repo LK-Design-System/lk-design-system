@@ -38,4 +38,4 @@ export interface CardProps extends Omit<
 }
 
 /** 중립 화이트(또는 네이비) 서피스 — 헤어라인 보더, 부드러운 네이비 그림자, 16px 반경. */
-export function Card(props: CardProps): JSX.Element;
+export function Card(props: CardProps): React.JSX.Element;

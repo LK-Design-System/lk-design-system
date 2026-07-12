@@ -51,4 +51,4 @@ export interface InputProps extends Omit<
 }
 
 /** 한 줄 텍스트 필드 — 화이트 박스, 헤어라인 링, 그래파이트 포커스 헤일로. */
-export function Input(props: InputProps): JSX.Element;
+export function Input(props: InputProps): React.JSX.Element;

@@ -9,4 +9,4 @@ export interface DimmerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 포지션드 조상을 채우는 스크림 오버레이(로딩 / 차단 상태). */
-export function Dimmer(props: DimmerProps): JSX.Element | null;
+export function Dimmer(props: DimmerProps): React.JSX.Element | null;

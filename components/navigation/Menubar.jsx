@@ -1,4 +1,5 @@
 import React from "react";
+import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
 
 function MenuItem({ item, variant, close }) {
   const [hover, setHover] = React.useState(false);
@@ -14,6 +15,7 @@ function MenuItem({ item, variant, close }) {
             : "menuitemcheckbox"
       }
       aria-checked={variant === "normal" ? undefined : checked}
+      tabIndex={-1}
       disabled={item.disabled}
       onClick={() => {
         if (item.disabled) return;
@@ -114,11 +116,22 @@ export function Menubar({
   variant = "normal",
   menuActionArea = false,
   maxHeight,
+  ariaLabel = '명령 메뉴',
   style,
   ...rest
 }) {
   const [open, setOpen] = React.useState(-1);
+  const [activeTop, setActiveTop] = React.useState(0);
   const ref = React.useRef(null);
+  const triggerRefs = React.useRef([]);
+  const actionAreaRef = React.useRef(null);
+  const menuIdBase = React.useId();
+  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
+    open: open >= 0,
+    onClose: () => setOpen(-1),
+    getTrigger: () => triggerRefs.current[open],
+    menuKey: open,
+  });
   React.useEffect(() => {
     if (open < 0) return undefined;
     const onDoc = (e) => {
@@ -128,10 +141,80 @@ export function Menubar({
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
 
+  const focusTop = (index) => {
+    if (menus.length === 0) return;
+    const nextIndex = (index + menus.length) % menus.length;
+    setActiveTop(nextIndex);
+    triggerRefs.current[nextIndex]?.focus({ preventScroll: true });
+  };
+  const openMenu = (index, position = 'first') => {
+    setActiveTop(index);
+    requestItemFocus(position);
+    setOpen(index);
+  };
+  const handleTopKeyDown = (event, index) => {
+    let nextIndex;
+    if (event.key === 'ArrowRight') nextIndex = index + 1;
+    if (event.key === 'ArrowLeft') nextIndex = index - 1;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = menus.length - 1;
+    if (nextIndex !== undefined) {
+      event.preventDefault();
+      const normalized = (nextIndex + menus.length) % menus.length;
+      if (open >= 0) openMenu(normalized, 'first');
+      else focusTop(normalized);
+      return;
+    }
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openMenu(index, 'first');
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      openMenu(index, 'last');
+    } else if (event.key === 'Escape' && open >= 0) {
+      event.preventDefault();
+      closeMenu({ restoreFocus: true });
+    }
+  };
+  const handleSubmenuKeyDown = (event) => {
+    if (event.key === 'Tab' && !event.shiftKey) {
+      const actionControl = actionAreaRef.current?.querySelector('button, [href], [tabindex]:not([tabindex="-1"])');
+      if (actionControl) {
+        event.preventDefault();
+        actionControl.focus({ preventScroll: true });
+        return;
+      }
+    }
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const nextIndex = (open + direction + menus.length) % menus.length;
+      openMenu(nextIndex, 'first');
+      return;
+    }
+    handleMenuKeyDown(event);
+  };
+  const handleActionAreaKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeMenu({ restoreFocus: true });
+    } else if ((event.key === 'ArrowUp') || (event.key === 'Tab' && event.shiftKey)) {
+      const items = menuRef.current?.querySelectorAll('[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]');
+      const lastItem = items?.item(items.length - 1);
+      if (lastItem) {
+        event.preventDefault();
+        lastItem.focus({ preventScroll: true });
+      }
+    } else if (event.key === 'Tab') {
+      closeMenu();
+    }
+  };
+
   return (
     <div
       ref={ref}
       role="menubar"
+      aria-label={ariaLabel}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -147,15 +230,19 @@ export function Menubar({
       {menus.map((menu, index) => (
         <div key={index} role="none" style={{ position: "relative" }}>
           <button
+            ref={(node) => { triggerRefs.current[index] = node; }}
             type="button"
             role="menuitem"
+            id={`${menuIdBase}-trigger-${index}`}
             aria-haspopup="menu"
             aria-expanded={open === index}
-            onClick={() =>
-              setOpen((current) => (current === index ? -1 : index))
-            }
-            onMouseEnter={() => {
-              if (open >= 0) setOpen(index);
+            aria-controls={open === index ? `${menuIdBase}-${index}` : undefined}
+            tabIndex={activeTop === index ? 0 : -1}
+            onFocus={() => setActiveTop(index)}
+            onKeyDown={(event) => handleTopKeyDown(event, index)}
+            onClick={() => {
+              if (open === index) setOpen(-1);
+              else openMenu(index, 'first');
             }}
             style={{
               height: 34,
@@ -174,7 +261,6 @@ export function Menubar({
           </button>
           {open === index && (
             <div
-              role="menu"
               style={{
                 position: "absolute",
                 top: "calc(100% + 6px)",
@@ -190,28 +276,38 @@ export function Menubar({
                 padding: 6,
               }}
             >
-              {(menu.items || []).map((item, itemIndex) =>
-                item.divider ? (
-                  <div
-                    key={itemIndex}
-                    role="separator"
-                    style={{
-                      height: 1,
-                      background: "var(--color-semantic-line-solid-normal)",
-                      margin: "6px 4px",
-                    }}
-                  />
-                ) : (
-                  <MenuItem
-                    key={itemIndex}
-                    item={item}
-                    variant={item.variant || menu.variant || variant}
-                    close={() => setOpen(-1)}
-                  />
-                ),
-              )}
+              <div
+                ref={menuRef}
+                id={`${menuIdBase}-${index}`}
+                role="menu"
+                aria-labelledby={`${menuIdBase}-trigger-${index}`}
+                onKeyDown={handleSubmenuKeyDown}
+              >
+                {(menu.items || []).map((item, itemIndex) =>
+                  item.divider ? (
+                    <div
+                      key={itemIndex}
+                      role="separator"
+                      style={{
+                        height: 1,
+                        background: "var(--color-semantic-line-solid-normal)",
+                        margin: "6px 4px",
+                      }}
+                    />
+                  ) : (
+                    <MenuItem
+                      key={itemIndex}
+                      item={item}
+                      variant={item.variant || menu.variant || variant}
+                      close={() => closeMenu({ restoreFocus: true })}
+                    />
+                  ),
+                )}
+              </div>
               {(menu.menuActionArea || menuActionArea || menu.action) && (
                 <div
+                  ref={actionAreaRef}
+                  onKeyDown={handleActionAreaKeyDown}
                   style={{
                     display: "flex",
                     justifyContent: "flex-end",

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 113 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 112 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -73,7 +73,6 @@
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: #EAECF1;
   --color-semantic-background-band: #F4F4F5;
-  --color-semantic-surface-overlay: #FFFFFF;
   --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 10%, transparent);
   --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
   --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
@@ -189,7 +188,6 @@
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
   --color-semantic-background-band: #0E121F;
-  --color-semantic-surface-overlay: #1A2036;
   --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
   --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
   --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);
@@ -306,7 +304,6 @@
     --color-semantic-secondary-normal: #2C3547;
     --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
     --color-semantic-background-band: #0E121F;
-    --color-semantic-surface-overlay: #1A2036;
     --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
     --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
     --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);

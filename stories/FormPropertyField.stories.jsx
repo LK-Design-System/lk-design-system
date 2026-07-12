@@ -1,10 +1,18 @@
 import React from 'react';
 import { PropertyField } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Selection and Input/Property Field',
   component: PropertyField,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-selection-and-input-property-field--property-fields',
+      eyebrow: 'Product / Property Field',
+      title: '속성 필드는 밀도 높은 설정 행에서 변경과 적용 단위를 분명히 합니다',
+      description:
+        '튜닝 패널처럼 각 속성에 단위·도움말·개별 Apply가 필요한 경우에 적합합니다. 일반 제출형 폼에는 Property Field 대신 FormField와 기본 입력 컴포넌트를 사용하세요.',
+    },
     docs: {
       description: {
         component:
@@ -37,7 +45,10 @@ function PropertyPanel({ children }) {
 }
 
 export const PropertyFields = {
-  name: '속성 필드',
+  name: '개요',
+  parameters: storyDescription(
+    '숫자·toggle·text 속성을 한 패널에서 개별 적용하는 대표 구성입니다. 값이 바뀐 행만 Apply가 활성화되고 단위와 도움말이 해당 속성에 붙는지 확인하세요.',
+  ),
   render: () => {
     const [vals, setVals] = React.useState({
       maxVel: 0.8,
@@ -88,7 +99,10 @@ export const PropertyFields = {
 };
 
 export const States = {
-  name: '필드 상태',
+  name: '변형·상태 · 비활성 · 읽기 전용과 적용 불가',
+  parameters: storyDescription(
+    '비활성·읽기 전용·Apply handler 없음 상태를 한 패널에서 비교합니다. 각 제한의 의미가 같아 보이지 않고 사용 가능한 제어만 키보드에 남는지 확인하세요.',
+  ),
   render: () => (
     <PropertyPanel>
       <PropertyField

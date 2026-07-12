@@ -18,4 +18,4 @@ export interface PinInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>
 }
 
 /** 코드 / OTP용 단일 문자 박스 행. */
-export function PinInput(props: PinInputProps): JSX.Element;
+export function PinInput(props: PinInputProps): React.JSX.Element;

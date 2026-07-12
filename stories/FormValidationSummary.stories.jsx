@@ -1,5 +1,6 @@
 import React from 'react';
 import { ValidationSummary } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 function getSummaryRoot(canvasElement) {
   const root = canvasElement.querySelector('.lk-validation-summary');
@@ -149,6 +150,13 @@ const meta = {
   component: ValidationSummary,
   parameters: {
     layout: 'padded',
+    storyGuide: {
+      storyId: 'lds-product-selection-and-input-validation-summary--errors-and-warnings',
+      eyebrow: 'Product / Validation Summary',
+      title: '검증 요약은 제출을 막는 문제와 돌아갈 위치를 한곳에 모읍니다',
+      description:
+        '긴 폼을 제출한 뒤 여러 오류·주의를 우선순위대로 고치게 할 때 적합합니다. 필드 하나의 즉시 오류에는 Validation Summary를 추가하지 말고 해당 필드의 inline error를 사용하세요.',
+    },
     docs: {
       description: {
         component: '제출을 막는 오류를 요약하고 원래 field로 돌아가는 링크를 제공합니다. Warning은 같은 목록에 섞지 않고 별도 검토 구역으로 구분합니다.',
@@ -165,7 +173,10 @@ const meta = {
 export default meta;
 
 export const ErrorsAndWarnings = {
-  name: '오류와 주의 분리',
+  name: '개요',
+  parameters: storyDescription(
+    '제출을 막는 오류 2개와 검토할 주의 1개를 별도 group으로 보여줍니다. focusable summary, live announcement, 항목 이동이 severity 위계와 일치하는지 확인하세요.',
+  ),
   args: {
     description: '아래 항목을 수정해야 저장할 수 있습니다. 주의 항목도 함께 검토하세요.',
     issues: mixedIssues,
@@ -190,7 +201,10 @@ export const ErrorsAndWarnings = {
 };
 
 export const ErrorsOnly = {
-  name: '오류 전용 요약',
+  name: '변형·상태 · 오류 전용 요약',
+  parameters: storyDescription(
+    '저장을 막는 필수 오류만 있는 요약입니다. 제목과 설명이 차단 상태를 분명히 알리고 각 오류가 수정 대상으로 읽히는지 확인하세요.',
+  ),
   args: {
     title: '저장할 수 없습니다',
     description: '아래 오류를 수정한 뒤 다시 저장하세요.',
@@ -213,7 +227,10 @@ export const ErrorsOnly = {
 };
 
 export const WarningOnly = {
-  name: '주의만 · 비차단',
+  name: '시나리오 · 차단하지 않는 주의',
+  parameters: storyDescription(
+    '저장을 막지 않는 주의 항목만 있는 상태입니다. alert가 아닌 status로 공지되고 사용자가 현재 설정으로 계속할 수 있음을 이해하는지 확인하세요.',
+  ),
   args: {
     title: '저장 전에 검토하세요',
     description: '주의 항목은 저장을 막지 않습니다. 현재 설정으로 계속할 수 있습니다.',
@@ -252,7 +269,10 @@ export const WarningOnly = {
 };
 
 export const Valid = {
-  name: '문제 없음',
+  name: '시나리오 · 문제 없음',
+  parameters: storyDescription(
+    '필수 항목과 실행 조건이 모두 유효한 완료 상태입니다. 문제 없음 공지만 남고 오류 group이나 이동 action이 렌더되지 않는지 확인하세요.',
+  ),
   args: {
     description: '필수 항목과 실행 조건을 모두 확인했습니다.',
     issues: [],
@@ -272,7 +292,10 @@ export const Valid = {
 };
 
 export const NarrowLongCopy = {
-  name: '좁은 폭 · 긴 문구',
+  name: '반응형 · 좁은 폭과 긴 문구',
+  parameters: storyDescription(
+    '320px 폭에서 긴 label·오류·주의 문장을 함께 보여줍니다. severity group과 복귀 action이 겹치거나 의미 없이 잘리지 않는지 확인하세요.',
+  ),
   args: {
     title: '저장 전에 수정하세요',
     description: '좁은 영역에서도 제목, 오류 문장, 복귀 링크가 겹치거나 의미 없이 잘리지 않아야 합니다.',
@@ -300,7 +323,10 @@ export const NarrowLongCopy = {
 };
 
 export const FieldLinksAndKeyboardFocus = {
-  name: '오류 문장 링크 · 키보드 포커스',
+  name: '상호작용 · 오류 링크와 키보드 초점',
+  parameters: storyDescription(
+    '오류 문장을 link로 제공해 원래 field 또는 field group으로 돌아가게 합니다. 키보드 포커스 순서와 링크 목적지가 오류 항목 순서에 맞는지 확인하세요.',
+  ),
   args: {
     title: '수정이 필요한 항목',
     description: '오류 문장을 선택하면 해당 field 또는 field group으로 돌아갑니다.',

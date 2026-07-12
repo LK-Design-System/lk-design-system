@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface PageHeaderProps extends React.HTMLAttributes<HTMLElement> {
+export interface PageHeaderProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   /** 제목 위 보조 라벨. */
   eyebrow?: React.ReactNode;
   /** Breadcrumb 등 제목 위 경로 슬롯. */
@@ -22,4 +22,4 @@ export interface PageHeaderProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 앱 화면의 제목, 설명, 상태, primary action을 일관되게 배치하는 페이지 헤더. */
-export function PageHeader(props: PageHeaderProps): JSX.Element;
+export function PageHeader(props: PageHeaderProps): React.JSX.Element;

@@ -2,7 +2,7 @@ import React from 'react';
 import { SearchField } from '../forms/SearchField.jsx';
 
 /**
- * LK ROBOTICS - DataToolbar
+ * LK PRODUCT — DataToolbar
  * Header/controls bar for DataGrid and Table surfaces: title, result count,
  * search field, filter chips/menus, and trailing commands. Row selection and
  * its bulk actions live on the DataGrid (they replace the grid's header row),

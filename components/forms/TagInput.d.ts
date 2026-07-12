@@ -10,4 +10,4 @@ export interface TagInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>
 }
 
 /** 입력한 항목을 제거 가능한 칩으로; 값은 string[]. */
-export function TagInput(props: TagInputProps): JSX.Element;
+export function TagInput(props: TagInputProps): React.JSX.Element;

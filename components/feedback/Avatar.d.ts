@@ -31,4 +31,4 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /** Round identity image with variants, sizes, placeholders, interaction states, pushBadge, and deactivated treatment. */
-export function Avatar(props: AvatarProps): JSX.Element;
+export function Avatar(props: AvatarProps): React.JSX.Element;

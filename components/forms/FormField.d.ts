@@ -14,4 +14,4 @@ export interface FormFieldProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 라벨 래퍼: 라벨(+ 필수) · 컨트롤 · 헬퍼/에러. */
-export function FormField(props: FormFieldProps): JSX.Element;
+export function FormField(props: FormFieldProps): React.JSX.Element;

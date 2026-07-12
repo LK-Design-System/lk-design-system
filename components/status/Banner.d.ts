@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface BannerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 톤. @default "info" */
-  tone?: 'info' | 'success' | 'warning' | 'error';
+  tone?: 'signal' | 'positive' | 'cautionary' | 'negative' | 'info' | 'success' | 'warning' | 'error';
+  /** 표면 배치. embedded는 부모 패널 내부의 edge-to-edge 상태 띠입니다. @default "standalone" */
+  variant?: 'standalone' | 'embedded';
   /** 굵은 헤드라인 줄. */
   title?: React.ReactNode;
   /** 본문 메시지. */
@@ -15,5 +17,5 @@ export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   closeLabel?: string;
 }
 
-/** 인라인 공지 바 — 틴트 서피스, 톤 아이콘, 메시지, 선택적 액션/닫기. */
-export function Banner(props: BannerProps): JSX.Element;
+/** 인라인 공지 바 — 독립형 또는 부모 표면에 결합된 틴트 상태 띠. */
+export function Banner(props: BannerProps): React.JSX.Element;

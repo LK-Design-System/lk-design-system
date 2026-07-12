@@ -12,4 +12,4 @@ export interface TimelineProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 세로 이벤트 타임라인 — 헤어라인 레일 위의 톤 노드. */
-export function Timeline(props: TimelineProps): JSX.Element;
+export function Timeline(props: TimelineProps): React.JSX.Element;

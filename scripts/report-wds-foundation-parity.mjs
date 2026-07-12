@@ -235,7 +235,7 @@ p('');
 p(summary);
 
 const report = lines.join('\n') + '\n';
-writeFileSync(REPORT, report);
+if (!CHECK) writeFileSync(REPORT, report);
 console.log(report);
-console.log(`Wrote ${REPORT}`);
+if (!CHECK) console.log(`Wrote ${REPORT}`);
 if (CHECK && driftCount > 0) { console.error(`\nFAIL: ${driftCount} foundation drift(s).`); process.exit(1); }

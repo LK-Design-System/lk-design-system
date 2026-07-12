@@ -1,14 +1,9 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
-import { statusToneStyle } from './status-presentation.js';
+import { normalizeStatusTone, statusToneStyle } from './status-presentation.js';
 
-const CT = {
-  signal: { fg: 'var(--component-callout-info-icon)', bg: 'var(--component-callout-info-bg)', border: 'var(--component-callout-info-border)' },
-  positive: { fg: 'var(--component-callout-positive-icon)', bg: 'var(--component-callout-positive-bg)', border: 'var(--component-callout-positive-border)' },
-  cautionary: { fg: 'var(--component-callout-cautionary-icon)', bg: 'var(--component-callout-cautionary-bg)', border: 'var(--component-callout-cautionary-border)' },
-  negative: { fg: 'var(--component-callout-negative-icon)', bg: 'var(--component-callout-negative-bg)', border: 'var(--component-callout-negative-border)' },
-  navy: { fg: 'var(--component-callout-neutral-icon)', bg: 'var(--component-callout-neutral-bg)', border: 'var(--component-callout-neutral-border)' },
-};
+// Status surface colors come straight from the semantic status tier via
+// statusToneStyle (the former --component-callout-* aliases were removed).
 const ICON_SIZE = 20;
 
 function normalizeIcon(icon, fallbackIcon) {
@@ -28,10 +23,10 @@ function normalizeIcon(icon, fallbackIcon) {
  * content.
  */
 export function Callout({ tone = 'signal', title, children, icon, style, ...rest }) {
-  const normalizedTone = CT[tone] ? tone : 'signal';
-  const palette = CT[normalizedTone];
-  const c = palette.fg;
-  const defaultIcon = <Icon name={statusToneStyle(normalizedTone === 'navy' ? 'offline' : normalizedTone).icon} size={ICON_SIZE} />;
+  const normalizedTone = tone === 'navy' ? 'offline' : normalizeStatusTone(tone);
+  const palette = statusToneStyle(normalizedTone);
+  const c = palette.foreground;
+  const defaultIcon = <Icon name={palette.icon} size={ICON_SIZE} />;
   const normalizedIcon = normalizeIcon(icon, defaultIcon);
   return (
     <div
@@ -40,7 +35,7 @@ export function Callout({ tone = 'signal', title, children, icon, style, ...rest
         gap: 14,
         padding: '16px 18px',
         boxSizing: 'border-box',
-        background: palette.bg,
+        background: palette.surface,
         border: `1px solid ${palette.border}`,
         borderRadius: 'var(--radius-lg)',
         boxShadow: 'none',

@@ -26,4 +26,4 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /** Shimmering loading placeholder with rect, text, and circle shapes. */
-export function Skeleton(props: SkeletonProps): JSX.Element;
+export function Skeleton(props: SkeletonProps): React.JSX.Element;

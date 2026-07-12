@@ -34,4 +34,4 @@ export interface SearchableMultiSelectProps<Value extends React.Key = React.Key>
 }
 
 /** Searchable multi-select with controlled values and removable selected chips. */
-export function SearchableMultiSelect<Value extends React.Key = React.Key>(props: SearchableMultiSelectProps<Value>): JSX.Element;
+export function SearchableMultiSelect<Value extends React.Key = React.Key>(props: SearchableMultiSelectProps<Value>): React.JSX.Element;

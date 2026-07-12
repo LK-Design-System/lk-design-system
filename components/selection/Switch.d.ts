@@ -32,4 +32,4 @@ export interface SwitchProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,
 }
 
 /** on/off 토글 — 켜지면 시그널 잉크 트랙, 미끄러지는 화이트 노브. */
-export function Switch(props: SwitchProps): JSX.Element;
+export function Switch(props: SwitchProps): React.JSX.Element;

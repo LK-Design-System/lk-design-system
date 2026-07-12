@@ -31,4 +31,4 @@ export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Overlapping avatars with variants, sizes, and trailingContent support. */
-export function AvatarGroup(props: AvatarGroupProps): JSX.Element;
+export function AvatarGroup(props: AvatarGroupProps): React.JSX.Element;

@@ -13,7 +13,7 @@ export type TabItem =
       style?: React.CSSProperties;
     };
 
-export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   items: TabItem[];
   value?: string;
   defaultValue?: string;
@@ -33,4 +33,4 @@ export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** underline tab navigation with hug/fill resize, size, padding, trailing icon, and scroll axes. */
-export function Tabs(props: TabsProps): JSX.Element;
+export function Tabs(props: TabsProps): React.JSX.Element;

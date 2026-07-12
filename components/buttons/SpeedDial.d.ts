@@ -22,4 +22,4 @@ export interface SpeedDialProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 열리면 라벨 툴 액션이 펼쳐지는 FAB 스피드다이얼. Fab 확장. */
-export function SpeedDial(props: SpeedDialProps): JSX.Element;
+export function SpeedDial(props: SpeedDialProps): React.JSX.Element;

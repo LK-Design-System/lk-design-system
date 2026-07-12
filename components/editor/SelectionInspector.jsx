@@ -4,8 +4,20 @@ import { IconButton } from '../buttons/IconButton.jsx';
 import { StatusBadge } from '../content/StatusBadge.jsx';
 import { Tag } from '../feedback/Tag.jsx';
 import { Icon } from '../icon/Icon.jsx';
+import {
+  getUnitSeparator,
+  isAttachedUnit,
+  normalizeUnit,
+  normalizeValueText,
+} from '../internal/unit-format.js';
 
-function displayValue(value, mixed) {
+function displayScalarValue(value, mixed) {
+  if (mixed || value == null) return '—';
+  const normalizedValue = normalizeValueText(value);
+  return normalizedValue === '' ? '—' : normalizedValue;
+}
+
+function displayValueNode(value, mixed) {
   if (mixed || value == null || value === '') return '—';
   if (typeof value === 'boolean') return String(value);
   return value;
@@ -13,13 +25,21 @@ function displayValue(value, mixed) {
 
 function FieldValue({ field }) {
   const toneColor = {
+    cautionary: 'var(--color-semantic-status-cautionary-text)',
+    negative: 'var(--color-semantic-status-negative-text)',
     warning: 'var(--color-semantic-status-cautionary-text)',
     danger: 'var(--color-semantic-status-negative-text)',
   }[field.tone] || (field.mixed ? 'var(--color-semantic-label-neutral)' : 'var(--color-semantic-label-strong)');
   const align = field.align ?? (typeof field.value === 'number' ? 'right' : 'left');
+  const renderedValue = displayScalarValue(field.value, field.mixed);
+  const normalizedUnit = field.mixed ? '' : normalizeUnit(field.unit);
+  const unitSeparator = getUnitSeparator(normalizedUnit);
+  const attachedUnit = isAttachedUnit(normalizedUnit);
 
   return (
     <span
+      data-selection-inspector-value=""
+      data-unit-attachment={normalizedUnit === '' ? 'none' : attachedUnit ? 'attached' : 'spaced'}
       style={{
         minWidth: 0,
         overflow: 'hidden',
@@ -34,10 +54,10 @@ function FieldValue({ field }) {
         fontVariantNumeric: 'tabular-nums',
       }}
     >
-      {displayValue(field.value, field.mixed)}
-      {!field.mixed && field.unit != null && (
-        <span style={{ marginLeft: 'var(--space-1)', color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-medium)' }}>
-          {field.unit}
+      <span>{renderedValue}</span>
+      {normalizedUnit !== '' && (
+        <span style={{ color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-medium)' }}>
+          {unitSeparator}{normalizedUnit}
         </span>
       )}
     </span>
@@ -65,7 +85,7 @@ function InspectorFields({ fields = [] }) {
             {field.label}
           </span>
           {field.valueNode != null
-            ? displayValue(field.valueNode, field.mixed)
+            ? displayValueNode(field.valueNode, field.mixed)
             : <FieldValue field={field} />}
         </div>
       ))}
@@ -118,7 +138,7 @@ export function SelectionInspector({
   item,
   selectionCount,
   title = '선택 객체',
-  emptyLabel = '선택한 객체가 없습니다',
+  emptyLabel = '선택한 객체가 없습니다.',
   sections = [],
   actions,
   onClearSelection,

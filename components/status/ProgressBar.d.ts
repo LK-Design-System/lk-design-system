@@ -20,4 +20,4 @@ export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Linear progress indicator with determinate and indeterminate states. */
-export function ProgressBar(props: ProgressBarProps): JSX.Element;
+export function ProgressBar(props: ProgressBarProps): React.JSX.Element;

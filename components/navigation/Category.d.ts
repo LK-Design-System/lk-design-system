@@ -10,7 +10,7 @@ export type CategoryItem =
       style?: React.CSSProperties;
     };
 
-export interface CategoryProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CategoryProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   items: CategoryItem[];
   value?: string;
   defaultValue?: string;
@@ -29,4 +29,4 @@ export interface CategoryProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** navigation category chip group. */
-export function Category(props: CategoryProps): JSX.Element;
+export function Category(props: CategoryProps): React.JSX.Element;

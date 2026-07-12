@@ -24,4 +24,4 @@ export interface ThemeToggleProps extends Omit<React.HTMLAttributes<HTMLDivEleme
 }
 
 /** `[data-theme]` + localStorage로 DS 테마를 구동하는 세그먼트형 Light / Dark / Auto 스위치. */
-export function ThemeToggle(props: ThemeToggleProps): JSX.Element;
+export function ThemeToggle(props: ThemeToggleProps): React.JSX.Element;

@@ -19,3 +19,7 @@ such as navigation arrows, close, search, and tool commands.
   it programmatically discoverable while applying unavailable styling and
   blocking activation; composite widgets decide whether it stays in their
   Arrow-key navigation model.
+- hover/pressed는 tone만 변경하고 lift·scale·shadow를 추가하지 않습니다.
+- [WAI-ARIA Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)의
+  accessible name, Enter/Space, unavailable semantics를 따릅니다. WDS의 원형
+  Icon Button을 기본으로 유지하고 `round={false}`는 명시적인 LDS 확장입니다.

@@ -1,5 +1,7 @@
 **Footer** — 사이트 푸터. 네이비 밴드 + 정보 블록(대표전화·사업자등록번호 → 본사·R&D·공장 주소 → 저작권)을 일관된 토큰으로 렌더합니다. `compact`는 대시보드 바닥용 한 줄 버전.
 
+Classification: **LK Product Extension**. 전체형 Footer는 랜딩·콘텐츠 사이트에서 `TopBar`와 조합하고, `compact`는 대시보드의 보조 메타데이터에만 사용합니다. 어느 변형도 주 탐색을 대신하지 않습니다.
+
 ```jsx
 <Footer />                                {/* 기본 푸터 */}
 <Footer backToTop />                      {/* '맨 위로' 플로팅 버튼 포함 */}

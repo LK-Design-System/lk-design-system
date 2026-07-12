@@ -7,4 +7,4 @@ export interface CenterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 자식을 양 축으로 가운데 정렬. */
-export function Center(props: CenterProps): JSX.Element;
+export function Center(props: CenterProps): React.JSX.Element;

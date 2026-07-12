@@ -274,7 +274,7 @@
       "wdsSource": "2 Element / 3 Decorate / Interaction",
       "status": "mapped",
       "storyEvidence": [
-        "stories/FoundationDecorate.stories.jsx#InteractionTokens"
+        "stories/FoundationInteraction.stories.jsx#InteractionTokens"
       ],
       "fileEvidence": [
         "tokens/effects.css",

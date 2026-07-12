@@ -1,3 +1,9 @@
+## Numeric columns
+
+Header and body cells use `font-variant-numeric: tabular-nums` so values do not jitter between rows. Set `align: 'right'` on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.
+
+Reference: [SAP Fiori data table usage](https://www.sap.com/design-system/fiori-design-android/v25-4/components/data-table/usage) recommends content-dependent alignment and right alignment for comparable numeric values.
+
 **Table** — 대문자 캡션 헤더, tabular 행, 부드러운 호버 워시가 있는 차분한 데이터 표.
 
 ```jsx

@@ -47,7 +47,7 @@ export function IconPicker({
   size = 'md',
   label = '아이콘 선택',
   disabled = false,
-  emptyLabel = '선택할 아이콘이 없습니다',
+  emptyLabel = '선택할 아이콘이 없습니다.',
   style,
   ...rest
 }) {

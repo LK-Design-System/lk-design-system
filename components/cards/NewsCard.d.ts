@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface NewsCardProps extends React.HTMLAttributes<HTMLAnchorElement> {
+export interface NewsCardProps extends Omit<React.HTMLAttributes<HTMLAnchorElement>, 'title'> {
   /** 커버 이미지 URL(선택). */
   image?: string;
   /** 대문자 카테고리 키커. */
@@ -20,4 +20,4 @@ export interface NewsCardProps extends React.HTMLAttributes<HTMLAnchorElement> {
 }
 
 /** 기사 / 보도 카드 — 커버, 카테고리, 헤드라인, 발췌, 출처 · 날짜. 호버 시 떠오름. */
-export function NewsCard(props: NewsCardProps): JSX.Element;
+export function NewsCard(props: NewsCardProps): React.JSX.Element;

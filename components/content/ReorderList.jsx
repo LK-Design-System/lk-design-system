@@ -99,7 +99,7 @@ export function ReorderList({
   showIndex = false,
   showMoveButtons = true,
   disabled = false,
-  emptyLabel = '정렬할 항목이 없습니다',
+  emptyLabel = '정렬할 항목이 없습니다.',
   getItemLabel,
   style,
   role = 'list',
@@ -115,6 +115,7 @@ export function ReorderList({
   const instructionId = React.useId();
   const liveId = React.useId();
   const cfg = DENSITY[density] || DENSITY.comfortable;
+  const listCanReorder = !disabled && typeof onReorder === 'function';
 
   const getAccessibleLabel = (item, index) => {
     if (getItemLabel) return getItemLabel(item, index);
@@ -122,7 +123,7 @@ export function ReorderList({
   };
 
   const move = (from, to, reason) => {
-    if (disabled || from < 0 || from >= ids.length) return false;
+    if (!listCanReorder || from < 0 || from >= ids.length) return false;
     const boundedTo = Math.max(0, Math.min(to, ids.length - 1));
     if (from === boundedTo) return false;
 
@@ -143,7 +144,7 @@ export function ReorderList({
 
   const handleDrop = (event, item, index) => {
     event.preventDefault();
-    if (disabled || dragId == null || item.disabled) return;
+    if (!listCanReorder || dragId == null || item.disabled) return;
 
     const from = ids.indexOf(dragId);
     const position = dropTarget?.id === item.id ? dropTarget.position : 'before';
@@ -211,14 +212,15 @@ export function ReorderList({
 
         {items.map((item, index) => {
           const itemDisabled = disabled || item.disabled;
+          const reorderDisabled = itemDisabled || !listCanReorder;
           const label = getAccessibleLabel(item, index);
           const dragging = dragId === item.id;
           const focused = focusId === item.id;
           const hovered = hoverId === item.id;
           const dropBefore = !dragging && dropTarget?.id === item.id && dropTarget.position === 'before';
           const dropAfter = !dragging && dropTarget?.id === item.id && dropTarget.position === 'after';
-          const canMoveUp = !itemDisabled && index > 0;
-          const canMoveDown = !itemDisabled && index < items.length - 1;
+          const canMoveUp = !reorderDisabled && index > 0;
+          const canMoveDown = !reorderDisabled && index < items.length - 1;
           const hasTrailing = item.trailing != null || showMoveButtons;
           const dividerLeft =
             cfg.paddingX + HANDLE_COLUMN_WIDTH + cfg.gap + (showIndex ? INDEX_COLUMN_WIDTH + cfg.gap : 0);
@@ -232,12 +234,12 @@ export function ReorderList({
               aria-posinset={index + 1}
               aria-setsize={items.length}
               aria-disabled={itemDisabled || undefined}
-              aria-describedby={`${instructionId} ${liveId}`}
+              aria-describedby={reorderDisabled ? undefined : `${instructionId} ${liveId}`}
               aria-label={`${index + 1}/${items.length}. ${label}`}
-              tabIndex={itemDisabled ? -1 : 0}
-              draggable={!itemDisabled}
+              tabIndex={reorderDisabled ? -1 : 0}
+              draggable={!reorderDisabled}
               onDragStart={(event) => {
-                if (itemDisabled) return;
+                if (reorderDisabled) return;
                 setDragId(item.id);
                 event.dataTransfer.effectAllowed = 'move';
                 event.dataTransfer.setData('text/plain', String(item.id));
@@ -247,7 +249,7 @@ export function ReorderList({
                 setDropTarget(null);
               }}
               onDragOver={(event) => {
-                if (itemDisabled || dragId == null) return;
+                if (reorderDisabled || dragId == null) return;
                 event.preventDefault();
                 event.dataTransfer.dropEffect = 'move';
                 const rect = event.currentTarget.getBoundingClientRect();
@@ -260,7 +262,7 @@ export function ReorderList({
               }}
               onDrop={(event) => handleDrop(event, item, index)}
               onKeyDown={(event) => {
-                if (itemDisabled || !event.altKey) return;
+                if (reorderDisabled || !event.altKey) return;
                 if (event.key === 'ArrowUp') {
                   event.preventDefault();
                   move(index, index - 1, 'keyboard');
@@ -314,13 +316,13 @@ export function ReorderList({
                   borderRadius: 'var(--radius-sm)',
                   background: itemDisabled
                     ? 'transparent'
-                    : focused
+                    : focused && !reorderDisabled
                       ? 'var(--color-semantic-fill-normal)'
                       : hovered || dragging
                         ? 'var(--color-semantic-fill-alternative)'
                         : 'transparent',
-                  boxShadow: focused && !itemDisabled ? 'inset 0 0 0 2px var(--color-semantic-focus-indicator)' : 'none',
-                  cursor: itemDisabled ? 'not-allowed' : dragging ? 'grabbing' : 'grab',
+                  boxShadow: focused && !reorderDisabled ? 'inset 0 0 0 2px var(--color-semantic-focus-indicator)' : 'none',
+                  cursor: itemDisabled ? 'not-allowed' : reorderDisabled ? 'default' : dragging ? 'grabbing' : 'grab',
                   transition: 'background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
                 }}
               >
@@ -348,12 +350,12 @@ export function ReorderList({
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: itemDisabled
+                    color: itemDisabled || reorderDisabled
                       ? 'var(--color-semantic-label-disable)'
                       : focused
                         ? 'var(--color-semantic-primary-normal)'
                         : 'var(--color-semantic-label-assistive)',
-                    cursor: itemDisabled ? 'not-allowed' : dragging ? 'grabbing' : 'grab',
+                    cursor: itemDisabled ? 'not-allowed' : reorderDisabled ? 'default' : dragging ? 'grabbing' : 'grab',
                   }}
                 >
                   <Icon name="handle" size={18} aria-hidden="true" />

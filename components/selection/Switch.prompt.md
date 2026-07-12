@@ -1,5 +1,11 @@
 **Switch** — 즉시 on/off 토글(설정, 기능 플래그, 실시간 알림). 켜지면 트랙이 LK 시그널 잉크로 채워지고, 화이트 노브가 바운스 없이 차분히 이동합니다.
 
+## State and reference basis
+
+- Switch exposes `role="switch"` with `aria-checked`; Space and Enter toggle immediately. The control-to-label gap is 8px.
+- `readOnly` remains focusable and communicates `aria-readonly`, but it suppresses pointer/keyboard changes and editable hover affordance. `disabled` is removed from the tab order.
+- Reference basis: [WAI-ARIA Switch pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/).
+
 ```jsx
 <Switch defaultChecked label="변경 알림" />
 <Switch size="sm" checked={on} onChange={setOn} />

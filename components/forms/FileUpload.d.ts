@@ -20,4 +20,4 @@ export interface FileUploadProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 키보드 접근 가능한 native file input 기반 drag-and-drop target. */
-export function FileUpload(props: FileUploadProps): JSX.Element;
+export function FileUpload(props: FileUploadProps): React.JSX.Element;

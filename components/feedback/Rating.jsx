@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — Rating
@@ -24,7 +25,7 @@ export function Rating({ value, defaultValue = 0, max = 5, onChange, size = 20, 
             onClick={() => set(i + 1)}
             style={{ display: 'inline-flex', cursor: readOnly ? 'default' : 'pointer', color: filled ? 'var(--color-semantic-accent-foreground-orange)' : 'var(--color-semantic-interaction-inactive)' }}
           >
-            <svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 18.6 6.2 21l1.1-6.5-4.7-4.6 6.5-.95z" /></svg>
+            <Icon name={filled ? 'star-fill' : 'star'} size={size} aria-hidden="true" />
           </span>
         );
       })}

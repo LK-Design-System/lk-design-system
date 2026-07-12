@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — NewsCard
@@ -9,7 +10,7 @@ import React from 'react';
 export function NewsCard({ image, category, title, excerpt, source, date, cta, href = '#', style, ...rest }) {
   const [hover, setHover] = React.useState(false);
   const ArrowR = (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+    <Icon name="arrow-right" size={15} aria-hidden="true" />
   );
   return (
     <a

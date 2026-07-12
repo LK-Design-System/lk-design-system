@@ -14,4 +14,4 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /** circular ring or the LK ROBOTICS wordmark-wave brand loader, with reduced-motion handling and an optional label. */
-export function Spinner(props: SpinnerProps): JSX.Element;
+export function Spinner(props: SpinnerProps): React.JSX.Element;

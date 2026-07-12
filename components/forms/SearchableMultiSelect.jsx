@@ -37,7 +37,7 @@ export function SearchableMultiSelect({
   filterOption,
   label,
   helper,
-  placeholder = '검색해서 선택',
+  placeholder = '검색해서 선택해 주세요.',
   loading = false,
   error,
   emptyLabel = '조건에 맞는 항목이 없습니다.',
@@ -207,7 +207,7 @@ export function SearchableMultiSelect({
         </div>
 
         {popupOpen && (
-          <div style={{ position: 'absolute', zIndex: 40, left: 0, right: 0, top: 'calc(100% + 6px)', padding: 6, display: 'grid', gap: 2, boxSizing: 'border-box', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-surface-overlay)', boxShadow: 'var(--shadow-md)' }}>
+          <div style={{ position: 'absolute', zIndex: 40, left: 0, right: 0, top: 'calc(100% + 6px)', padding: 6, display: 'grid', gap: 2, boxSizing: 'border-box', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)', boxShadow: 'var(--shadow-md)' }}>
             <div id={listboxId} role="listbox" aria-multiselectable="true" aria-busy={loading || undefined} style={{ maxHeight: 248, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
               {hasOptionList && filteredOptions.map((option, index) => {
             const selectedOption = selectedSet.has(option.value);
@@ -227,7 +227,7 @@ export function SearchableMultiSelect({
                   {selectedOption && <Icon name="check" size={12} aria-hidden="true" />}
                 </span>
                 <span style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
-                  <span style={{ overflowWrap: 'anywhere', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-semibold)' }}>{option.label}</span>
+                  <span style={{ overflowWrap: 'anywhere', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', fontWeight: 'var(--fw-semibold)' }}>{option.label}</span>
                   {option.description != null && <span style={{ overflowWrap: 'anywhere', color: option.effectiveDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{option.description}</span>}
                 </span>
               </div>

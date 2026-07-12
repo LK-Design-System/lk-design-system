@@ -1,4 +1,5 @@
 import React from 'react';
+import { Radio } from './Radio.jsx';
 
 /**
  * LK ROBOTICS — RadioGroup
@@ -18,16 +19,21 @@ export function RadioGroup({ options = [], value, defaultValue, onChange, name, 
       {norm.map((o) => {
         const on = o.value === val;
         return (
-          <label key={o.value} style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 10, cursor: o.disabled ? 'not-allowed' : 'pointer', opacity: o.disabled ? 0.45 : 1, fontFamily: 'var(--font-sans)' }}>
-            <input type="radio" name={gname} checked={on} disabled={o.disabled} onChange={() => pick(o.value)} style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />
-            <span style={{ marginTop: 1, flexShrink: 0, width: 20, height: 20, borderRadius: '50%', border: `2px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-interaction-inactive)'}`, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color var(--dur-fast) var(--ease-out)' }}>
-              {on && <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)' }} />}
-            </span>
-            <span>
+          <Radio
+            key={o.value}
+            name={gname}
+            value={o.value}
+            checked={on}
+            disabled={o.disabled}
+            onChange={() => pick(o.value)}
+            style={{ alignItems: 'flex-start' }}
+            label={(
+              <span>
               <span style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{o.label}</span>
               {o.description != null && <span style={{ display: 'block', marginTop: 2, fontSize: 'var(--label2-size)', color: 'var(--color-semantic-label-alternative)' }}>{o.description}</span>}
-            </span>
-          </label>
+              </span>
+            )}
+          />
         );
       })}
     </div>

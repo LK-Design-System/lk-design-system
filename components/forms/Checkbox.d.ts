@@ -36,4 +36,4 @@ export interface CheckboxProps {
 }
 
 /** Rounded LDS checkbox, or source-style check mark treatment via `variant="mark"`. */
-export function Checkbox(props: CheckboxProps): JSX.Element;
+export function Checkbox(props: CheckboxProps): React.JSX.Element;

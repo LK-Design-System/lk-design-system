@@ -9,4 +9,4 @@ export interface StatusBadgeProps extends React.HTMLAttributes<HTMLSpanElement> 
 }
 
 /** 컬러 상태 점 + 라벨(가동중 / 점검중 / 오프라인), 선택적 실시간 펄스. */
-export function StatusBadge(props: StatusBadgeProps): JSX.Element;
+export function StatusBadge(props: StatusBadgeProps): React.JSX.Element;

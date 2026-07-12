@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 import { pillChipStyle } from './pill-chip-style.js';
 
 /**
@@ -41,7 +42,7 @@ export function MultiSelectChip({
       {...rest}
     >
       {on && (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        <Icon name="check" size={15} aria-hidden="true" />
       )}
       <span>{children}</span>
     </button>

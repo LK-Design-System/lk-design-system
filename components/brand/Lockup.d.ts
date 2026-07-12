@@ -16,4 +16,4 @@ export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'
 }
 
 /** LK ROBOTICS 로고 — mark / stacked / inline, 틴트 가능한 SVG로 인라인 렌더. */
-export function Lockup(props: LockupProps): JSX.Element;
+export function Lockup(props: LockupProps): React.JSX.Element;

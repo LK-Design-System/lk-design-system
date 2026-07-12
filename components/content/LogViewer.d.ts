@@ -38,4 +38,4 @@ export interface LogViewerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Monospace log/console stream viewer with filters, search, tail controls, and copy affordances. */
-export function LogViewer(props: LogViewerProps): JSX.Element;
+export function LogViewer(props: LogViewerProps): React.JSX.Element;

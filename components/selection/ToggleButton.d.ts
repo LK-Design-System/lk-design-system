@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface ToggleButtonProps {
+export interface ToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onChange' | 'aria-pressed'> {
   /** 제어되는 눌림 상태. */
   pressed?: boolean;
   /** 비제어 초기 상태. @default false */
@@ -8,13 +8,13 @@ export interface ToggleButtonProps {
   onChange?: (next: boolean) => void;
   /** 선택적 리딩 아이콘 노드. */
   icon?: React.ReactNode;
-  /** 높이. @default "md" */
-  size?: 'sm' | 'md';
-  disabled?: boolean;
-  style?: React.CSSProperties;
-  /** 라벨 — 아이콘 전용 정사각 토글에는 생략. */
+  /** Button family height scale: 32 / 40 / 48. @default "md" */
+  size?: 'sm' | 'md' | 'lg' | 'small' | 'medium' | 'large';
+  /** Disabled alias retained for compatibility. */
+  disable?: boolean;
+  /** 아이콘 전용 정사각 토글은 구체적인 aria-label을 제공해야 합니다. */
   children?: React.ReactNode;
 }
 
-/** 상태 유지 토글 버튼 — 눌리면 시안 워시 + 시그널 잉크. */
-export function ToggleButton(props: ToggleButtonProps): JSX.Element;
+/** 상태 유지 토글 버튼 — 눌리면 primary wash와 aria-pressed 상태를 함께 전달합니다. */
+export function ToggleButton(props: ToggleButtonProps): React.JSX.Element;

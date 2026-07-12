@@ -20,4 +20,4 @@ export interface TopicTreeProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** ROS 토픽 / TF 계층 트리 — 타입 · Hz 메타 + 구독 토글. */
-export function TopicTree(props: TopicTreeProps): JSX.Element;
+export function TopicTree(props: TopicTreeProps): React.JSX.Element;

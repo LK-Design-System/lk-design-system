@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface ColorSwatchProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ColorSwatchProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** 색상(임의의 CSS 색). */
   colors: string[];
   value?: string;
@@ -13,4 +13,4 @@ export interface ColorSwatchProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 선택 가능한 색상 스와치 행; 활성은 시그널 잉크 링을 얻음. */
-export function ColorSwatch(props: ColorSwatchProps): JSX.Element;
+export function ColorSwatch(props: ColorSwatchProps): React.JSX.Element;

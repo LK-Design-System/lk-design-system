@@ -23,4 +23,4 @@ export interface IconPickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
 }
 
 /** 선택 가능한 아이콘 타일 그리드(빌딩·마커·카테고리 아이콘 지정). */
-export function IconPicker(props: IconPickerProps): JSX.Element;
+export function IconPicker(props: IconPickerProps): React.JSX.Element;

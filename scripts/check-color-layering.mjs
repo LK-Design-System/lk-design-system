@@ -42,6 +42,9 @@ for (const file of implementationFiles) {
   if (file.startsWith('components/') && text.includes('--color-atomic-')) {
     failures.push(`${file}: component implementation references an atomic color directly`);
   }
+  if (/var\(\s*--component-(?:banner|callout)-/.test(text)) {
+    failures.push(`${file}: --component-banner-*/--component-callout-* aliases are deprecated; consume status surface colors via statusToneStyle`);
+  }
   if (file.startsWith('stories/') && file !== 'stories/Foundations.shared.jsx' && text.includes('--color-atomic-')) {
     failures.push(`${file}: only the Color foundation story may render atomic colors directly`);
   }

@@ -11,4 +11,4 @@ export interface ChecklistItemProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 /** 기능 행 — 시그널 잉크 체크(또는 레드 크로스) + 라벨. 브랜드의 핵심 리스트 스타일. */
-export function ChecklistItem(props: ChecklistItemProps): JSX.Element;
+export function ChecklistItem(props: ChecklistItemProps): React.JSX.Element;

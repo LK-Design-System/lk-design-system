@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 function navBtnStyle(side) {
   return { position: 'absolute', top: '50%', [side]: 12, transform: 'translateY(-50%)', width: 40, height: 40, borderRadius: '50%', border: 'none', background: 'var(--scrim-dark)', color: 'var(--color-semantic-static-white)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)', zIndex: 2 };
@@ -20,8 +21,8 @@ export function Carousel({ slides = [], showDots = true, showArrows = true, styl
       </div>
       {showArrows && n > 1 && (
         <React.Fragment>
-          <button type="button" aria-label="previous" onClick={() => go(-1)} style={navBtnStyle('left')}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg></button>
-          <button type="button" aria-label="next" onClick={() => go(1)} style={navBtnStyle('right')}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg></button>
+          <button type="button" aria-label="previous" onClick={() => go(-1)} style={navBtnStyle('left')}><Icon name="chevron-left" size={20} aria-hidden="true" /></button>
+          <button type="button" aria-label="next" onClick={() => go(1)} style={navBtnStyle('right')}><Icon name="chevron-right" size={20} aria-hidden="true" /></button>
         </React.Fragment>
       )}
       {showDots && n > 1 && (

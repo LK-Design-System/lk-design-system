@@ -1,5 +1,11 @@
 **AutoComplete** — 필터링된 제안 목록이 있는 텍스트 입력.
 
+## Interaction and reference basis
+
+- The editable input owns `role="combobox"`, `aria-expanded`, `aria-controls`, `aria-autocomplete="list"`, and `aria-activedescendant`; DOM focus stays on the input while Arrow keys move the active option, Enter commits, and Escape closes.
+- The small field is 32px, the default field follows `--component-input-height`, and trigger/option text uses the common 16px input typography.
+- Reference basis: [WAI-ARIA Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) and [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/). Visual styling remains LDS-token based.
+
 ```jsx
 <AutoComplete options={['LKR-CP','LKR-T1','LKR-VisionX','LKR-SSAI','LKR-S1']}
   placeholder="모델 검색" onSelect={setModel} />

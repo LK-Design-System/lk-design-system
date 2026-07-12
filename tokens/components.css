@@ -174,7 +174,7 @@
 
   /* ---- Dialog ------------------------------------------------------------ */
   --component-dialog-radius: var(--radius-3xl);
-  --component-dialog-scrim: var(--scrim-dark);
+  --component-dialog-scrim: var(--color-semantic-material-dimmer);
   --component-dialog-scrim-blur: 2px;
   --component-confirm-dialog-max-width: 26.25rem;
 

@@ -29,6 +29,8 @@ Classification: **LK Robotics Extension**. Use it only when a workflow has a rea
 - Focus and selection remain visually distinct: arrow navigation moves focus; Enter/Space or pointer activation changes selection. An externally changed `activeLayerId` restores the corresponding visible row as the roving Tab stop.
 - Visibility and lock are named `IconButton` actions. From a focused row, F2 enters its two-action mode, Left/Right moves between actions, and Escape returns to the row. Do not assign single-letter `V`/`L` shortcuts at the component layer; those collide with editor tools and text entry.
 - `tone` is a decorative semantic-color marker unless paired with visible `toneLabel` or `status` text. Never communicate status by color alone.
+- New data uses `neutral / signal / positive / cautionary / negative`; `warning` and `danger` remain compatibility aliases. This keeps layer markers, inspector status, viewport status, and viewer status on one semantic vocabulary.
+- The trailing row-meta slot carries exactly one of two meanings: a child/item **count** (number) or a short **permission/status word** (e.g. 참조, 편집 가능). Do not put arbitrary copy, timestamps, or actions there — the slot narrows away under 260px container width.
 - The panel owns hierarchy interaction, not drag reordering, arbitrary docking, layout persistence, context menus, or product-specific asset loading. Those remain product responsibilities.
 
 ## Research and local adaptation
@@ -38,3 +40,5 @@ Classification: **LK Robotics Extension**. Use it only when a workflow has a rea
 - [WCAG 2.2: Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html) supports keeping all required actions available without drag-only interaction; reorder behavior is intentionally omitted from this DS primitive.
 
 The implementation adopts those behavioral expectations while retaining LDS spacing, typography, focus ring, `IconButton`, semantic colors, and editor-shell ownership. It intentionally does not copy Figma styling or expose Figma-specific file/page concepts.
+
+Visual delta decision: `LayerPanel` stays denser than `SelectionInspector` because hierarchy rows need scan efficiency, while the inspector needs a stronger selected-object identity block and form sections. Both share panel typography tokens, semantic status vocabulary, 32px micro-actions, and the shell-owned outer surface; density does not justify a second control or status language.

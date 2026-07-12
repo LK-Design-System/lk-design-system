@@ -13,4 +13,4 @@ export interface BookmarkProps {
 }
 
 /** 저장/북마크 토글 — 저장 시 시그널 잉크로 채움. */
-export function Bookmark(props: BookmarkProps): JSX.Element;
+export function Bookmark(props: BookmarkProps): React.JSX.Element;

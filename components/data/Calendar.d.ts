@@ -11,4 +11,4 @@ export interface CalendarProps extends Omit<React.HTMLAttributes<HTMLDivElement>
 }
 
 /** 날짜 선택용 월 그리드 — 시그널 잉크 선택일, 오늘 링. */
-export function Calendar(props: CalendarProps): JSX.Element;
+export function Calendar(props: CalendarProps): React.JSX.Element;

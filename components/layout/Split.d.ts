@@ -11,4 +11,4 @@ export interface SplitProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 두 패널 스플릿 레이아웃 — 모바일에서 쌓이고 `at`에서 나뉨. */
-export function Split(props: SplitProps): JSX.Element;
+export function Split(props: SplitProps): React.JSX.Element;

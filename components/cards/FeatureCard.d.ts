@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface FeatureCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FeatureCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 틴트 타일에 표시되는 인라인 SVG 글리프. */
   icon?: React.ReactNode;
   /** 제목. */
@@ -14,4 +14,4 @@ export interface FeatureCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 틴트 아이콘 타일 + 제목 + 설명 — 반복되는 기능 셀. */
-export function FeatureCard(props: FeatureCardProps): JSX.Element;
+export function FeatureCard(props: FeatureCardProps): React.JSX.Element;

@@ -26,4 +26,4 @@ export interface SocialButtonProps extends React.ButtonHTMLAttributes<HTMLButton
  * 기본 tone="outline"은 DS 네이티브, tone="brand"가 킷의 플랫폼 원색 필.
  * 마크는 `BrandLogo`를 재사용합니다.
  */
-export function SocialButton(props: SocialButtonProps): JSX.Element;
+export function SocialButton(props: SocialButtonProps): React.JSX.Element;

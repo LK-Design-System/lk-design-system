@@ -1,4 +1,7 @@
 import React from "react";
+import { Icon } from "../icon/Icon.jsx";
+import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useFloatingPosition } from './anchored-overlay.js';
 
 function CheckMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
@@ -50,18 +53,7 @@ function CheckMark({ variant, checked, disabled }) {
       }}
     >
       {checked && (
-        <svg
-          width="11"
-          height="11"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="m5 12 4 4 10-10" />
-        </svg>
+        <Icon name="check" size={11} aria-hidden="true" />
       )}
     </span>
   );
@@ -108,6 +100,7 @@ function MenuItemButton({
       }
       aria-checked={variant === "normal" ? undefined : checked}
       aria-current={variant === "normal" && active ? true : undefined}
+      tabIndex={-1}
       disabled={disabled}
       onClick={() => {
         if (disabled) return;
@@ -209,10 +202,72 @@ export function DropdownMenu({
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
   const ref = React.useRef(null);
+  const panelRef = React.useRef(null);
+  const menuId = React.useId();
+  const generatedTriggerId = React.useId();
+  const triggerId = trigger?.props?.id ?? generatedTriggerId;
   const setVisible = (next) => {
     if (!controlled) setInternalOpen(next);
     onOpenChange?.(next);
   };
+  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
+    open: visible,
+    onClose: () => setVisible(false),
+    getTrigger: () => ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]'),
+  });
+
+  const toggleMenu = (event) => {
+    trigger?.props?.onClick?.(event);
+    if (event?.defaultPrevented) return;
+    if (visible) setVisible(false);
+    else {
+      requestItemFocus('first');
+      setVisible(true);
+    }
+  };
+  const handleTriggerKeyDown = (event) => {
+    trigger?.props?.onKeyDown?.(event);
+    if (event.defaultPrevented) return;
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      requestItemFocus('first');
+      setVisible(true);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      requestItemFocus('last');
+      setVisible(true);
+    }
+  };
+  const renderedTrigger = React.isValidElement(trigger) && trigger.type !== React.Fragment
+    ? React.cloneElement(trigger, {
+        id: triggerId,
+        'aria-haspopup': 'menu',
+        'aria-expanded': visible,
+        'aria-controls': visible ? menuId : undefined,
+        onClick: toggleMenu,
+        onKeyDown: handleTriggerKeyDown,
+      })
+    : (
+      <span
+        id={triggerId}
+        role="button"
+        tabIndex={0}
+        aria-haspopup="menu"
+        aria-expanded={visible}
+        aria-controls={visible ? menuId : undefined}
+        onClick={toggleMenu}
+        onKeyDown={handleTriggerKeyDown}
+      >
+        {trigger}
+      </span>
+    );
+
+  const position = useFloatingPosition({
+    open: visible,
+    anchorRef: ref,
+    panelRef,
+    placement: 'bottom',
+  });
 
   React.useEffect(() => {
     if (!visible) return undefined;
@@ -230,22 +285,29 @@ export function DropdownMenu({
       {...rest}
     >
       <span
-        onClick={() => setVisible(!visible)}
         style={{ display: "inline-flex" }}
       >
-        {trigger}
+        {renderedTrigger}
       </span>
       {visible && (
         <div
+          ref={panelRef}
+          data-placement={position.placement}
           style={{
             position: "absolute",
-            top: "calc(100% + 8px)",
-            [align]: 0,
+            top: position.placement === 'bottom' ? "calc(100% + 8px)" : 'auto',
+            bottom: position.placement === 'top' ? "calc(100% + 8px)" : 'auto',
+            left: align === 'left' ? 0 : 'auto',
+            right: align === 'right' ? 0 : 'auto',
+            translate: `${position.shiftX}px ${position.shiftY}px`,
             zIndex: 40,
             width,
-            minWidth: width,
-            maxHeight,
-            overflowY: maxHeight ? "auto" : undefined,
+            minWidth: 0,
+            maxWidth: 'calc(100vw - var(--space-8))',
+            maxHeight: typeof maxHeight === 'number' && position.maxHeight != null
+              ? Math.min(maxHeight, position.maxHeight)
+              : (maxHeight ?? position.maxHeight ?? undefined),
+            overflowY: maxHeight || position.maxHeight != null ? "auto" : undefined,
             background: "var(--color-semantic-background-elevated-normal)",
             border: "1px solid var(--color-semantic-line-solid-normal)",
             borderRadius: "var(--component-menu-radius)",
@@ -257,7 +319,7 @@ export function DropdownMenu({
             gap: 4,
           }}
         >
-          <div role="menu" style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div ref={menuRef} id={menuId} role="menu" aria-labelledby={triggerId} onKeyDown={handleMenuKeyDown} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {items.map((item, index) =>
               item.divider ? (
                 <div
@@ -276,7 +338,7 @@ export function DropdownMenu({
                   variant={item.variant || variant}
                   cellPadding={cellPadding}
                   verticalPadding={verticalPadding}
-                  onSelect={() => setVisible(false)}
+                  onSelect={() => closeMenu({ restoreFocus: true })}
                 />
               ),
             )}

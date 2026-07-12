@@ -13,4 +13,4 @@ export interface MeterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 레드→앰버→그린 임계값(옵션)이 있는 라벨 값 바. */
-export function Meter(props: MeterProps): JSX.Element;
+export function Meter(props: MeterProps): React.JSX.Element;

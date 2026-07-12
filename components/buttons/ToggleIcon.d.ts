@@ -11,6 +11,8 @@ export interface ToggleIconProps extends Omit<React.ButtonHTMLAttributes<HTMLBut
   size?: 'sm' | 'md';
   /** Visual treatment for standalone, grouped-surface, or dark-viewer use. @default "default" */
   variant?: 'default' | 'plain' | 'on-dark';
+  /** Disable alias retained for WDS compatibility. */
+  disable?: boolean;
   children?: React.ReactNode;
 }
 

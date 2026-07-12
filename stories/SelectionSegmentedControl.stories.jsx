@@ -1,0 +1,88 @@
+import { userEvent } from 'storybook/test';
+import { Icon, SegmentedControl } from '../src/index.js';
+import { SegmentedControlCard as SegmentedControlCardStory } from './SelectionStatus.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
+
+const meta = {
+  title: 'LDS Core/Components/Selection and Input/Segmented Control',
+  component: SegmentedControl,
+  parameters: {
+    storyGuide: {
+      storyId: 'lds-core-components-selection-and-input-segmented-control--segmented-control-overview',
+      eyebrow: 'Core / Segmented Control',
+      title: '세그먼티드 컨트롤은 같은 맥락의 보기나 모드 하나를 즉시 전환합니다',
+      description:
+        '동시에 하나만 활성화되는 2~5개의 짧고 대등한 보기에 사용하세요. 서로 독립적인 기능을 실행하는 버튼 묶음에는 Toggle Button이 더 적합합니다.',
+    },
+  },
+};
+
+export default meta;
+
+export const SegmentedControlOverview = {
+  name: '개요',
+  parameters: storyDescription(
+    '목록 보기를 대등한 세 가지 모드로 전환합니다. 탭으로는 현재 선택에 한 번만 진입하고, 화살표·Home·End로 값을 바꿉니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 560 }}>
+      <SegmentedControl aria-label="로봇 보기" options={['상태', '목록', '로그']} defaultValue="목록" full />
+    </main>
+  ),
+};
+
+export const SegmentedControlStates = {
+  name: '상태와 좁은 너비',
+  tags: ['!dev'],
+  render: () => {
+    const iconOptions = [
+      { value: 'list', label: '목록', icon: <Icon name="list" size={15} /> },
+      { value: 'grid', label: '그리드', icon: <Icon name="apps" size={15} /> },
+      { value: 'map', label: '지도', icon: <Icon name="globe" size={15} />, disabled: true },
+    ];
+    return (
+      <main style={{ display: 'grid', gap: 'var(--space-5)', width: 280, maxWidth: '100%' }}>
+        <SegmentedControl aria-label="솔리드 보기" options={['상태', '목록', '로그']} defaultValue="목록" full />
+        <SegmentedControl aria-label="아웃라인 보기" options={iconOptions} defaultValue="grid" variant="outlined" full />
+        <SegmentedControl aria-label="비활성 보기" options={['상태', '목록']} defaultValue="상태" disabled full />
+      </main>
+    );
+  },
+};
+
+export const SegmentedKeyboardContract = {
+  name: '로빙 키보드 계약',
+  tags: ['!dev'],
+  render: () => (
+    <SegmentedControl
+      aria-label="키보드 보기"
+      options={[
+        { value: 'status', label: '상태' },
+        { value: 'list', label: '목록', disabled: true },
+        { value: 'log', label: '로그' },
+      ]}
+      defaultValue="status"
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const radios = [...canvasElement.querySelectorAll('[role="radio"]')];
+    if (radios.length !== 3 || radios.filter((radio) => radio.tabIndex === 0).length !== 1) {
+      throw new Error('The radiogroup must expose one roving tab stop.');
+    }
+    radios[0].focus();
+    await userEvent.keyboard('{ArrowRight}');
+    if (radios[2].getAttribute('aria-checked') !== 'true' || canvasElement.ownerDocument.activeElement !== radios[2]) {
+      throw new Error('ArrowRight must skip disabled segments, select the next value, and move focus.');
+    }
+    await userEvent.keyboard('{Home}');
+    if (radios[0].getAttribute('aria-checked') !== 'true') throw new Error('Home must select the first enabled segment.');
+    await userEvent.keyboard('{End}');
+    if (radios[2].getAttribute('aria-checked') !== 'true') throw new Error('End must select the last enabled segment.');
+  },
+};
+
+export const SegmentedControlCard = {
+  ...SegmentedControlCardStory,
+  name: 'SegmentedControl card parity',
+  tags: ['!dev', 'visual-parity'],
+};

@@ -1,11 +1,19 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import { Button, SecretField } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Selection and Input/Secret Field',
   component: SecretField,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-selection-and-input-secret-field--reveal-and-copy',
+      eyebrow: 'Product / Secret Field',
+      title: '비밀 값 필드는 민감한 값을 제한적으로 확인하고 복사하게 합니다',
+      description:
+        'API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다시 숨길 때 적합합니다. 사용자가 새 비밀번호를 입력하거나 수정하는 폼에는 Secret Field 대신 Password Input을 사용하세요.',
+    },
     docs: {
       description: {
         component: '인증 값을 제한적으로 표시하고 복사하며 자동으로 다시 숨기는 읽기 전용 필드 패턴입니다.',
@@ -17,7 +25,10 @@ const meta = {
 export default meta;
 
 export const RevealAndCopy = {
-  name: '값 보기와 복사',
+  name: '개요',
+  parameters: storyDescription(
+    '마스킹된 access token을 잠시 표시하고 복사하는 기본 상호작용입니다. 보기·숨기기 action 이름과 input type이 현재 상태를 정확히 반영하는지 확인하세요.',
+  ),
   render: () => <SecretField label="Access token" value="lk_live_8f21d0c9" revealDurationMs={10000} style={{ maxWidth: 620 }} />,
   play: async ({ canvasElement }) => {
     const input = canvasElement.querySelector('input[readonly]');
@@ -38,7 +49,10 @@ export const RevealAndCopy = {
 };
 
 export const DisabledAndRevealPolicy = {
-  name: '비활성·값 표시 정책',
+  name: '변형·상태 · 비활성과 값 표시 정책',
+  parameters: storyDescription(
+    '복사 전용으로 reveal을 금지한 값과 전체 비활성 값을 비교합니다. 정책으로 숨긴 action과 사용할 수 없는 필드가 서로 다른 제한으로 읽히는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 620 }}>
       <SecretField label="복사 전용 secret" value="lk_live_8f21d0c9" revealable={false} defaultRevealed />
@@ -59,7 +73,10 @@ export const DisabledAndRevealPolicy = {
 };
 
 export const ValidationAndNarrowWidth = {
-  name: '오류·좁은 폭·구분되는 동작',
+  name: '반응형 · 좁은 폭의 오류와 구분된 동작',
+  parameters: storyDescription(
+    '260px 폭에서 만료 오류, 보조 key, 긴 token을 함께 보여줍니다. 오류·helper·보기·복사 동작이 줄바꿈 뒤에도 각 필드에 정확히 연결되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: 260, maxWidth: '100%' }}>
       <SecretField label="Primary API key" value="lk_primary_8f21d0c9_long_value" error="이 key는 만료되었습니다." />
@@ -93,7 +110,10 @@ export const ValidationAndNarrowWidth = {
 };
 
 export const ClipboardFeedback = {
-  name: '복사 성공과 실패 피드백',
+  name: '시나리오 · 복사 성공과 실패 알림',
+  parameters: storyDescription(
+    '클립보드 복사 성공과 차단 결과를 나란히 비교합니다. 짧은 결과 문구가 해당 Secret Field에 귀속되고 성공·실패가 색만으로 구분되지 않는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 620 }}>
       <section data-testid="clipboard-success">
@@ -191,7 +211,10 @@ export const ClipboardFeedback = {
 };
 
 export const ControlledAutoHide = {
-  name: '제어형 값 표시 자동 숨김',
+  name: '상호작용 · 외부 제어 값 자동 숨김',
+  parameters: storyDescription(
+    '외부 제어로 token을 표시한 뒤 1.2초 후 자동으로 다시 마스킹합니다. controlled state와 내부 timer가 한 번만 상태를 되돌리고 현재 결과가 보이는지 확인하세요.',
+  ),
   render: function Example() {
     const [revealed, setRevealed] = React.useState(false);
     return (

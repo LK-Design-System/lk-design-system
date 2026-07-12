@@ -11,6 +11,71 @@ const update = process.argv.includes('--update');
 const check = process.argv.includes('--check');
 const REVIEW_METHOD = 'source-ast+layer-human-review';
 
+const PUBLIC_STORY_NAME_PREFIXES = {
+  'foundation-reference': '참조 · ',
+  usage: '사용법 · ',
+  'variants-states': '변형·상태 · ',
+  interaction: '상호작용 · ',
+  responsive: '반응형 · ',
+  scenario: '시나리오 · ',
+};
+
+const PUBLIC_STORY_ROLE_ORDER = {
+  overview: 0,
+  'foundation-reference': 1,
+  usage: 2,
+  'variants-states': 3,
+  interaction: 4,
+  responsive: 5,
+  scenario: 6,
+};
+
+const PAGE_TITLE_RENAMES = {
+  'LDS Core/Components/Content/Text': 'LDS Core/Components/Content/Text Primitives',
+  'LDS Core/Components/Content/Media': 'LDS Core/Components/Content/Media Patterns',
+  'LDS Core/Components/Layout/Essential': 'LDS Core/Components/Layout/Mobile System Bars',
+  'LDS Product/Content/Platform Marks': 'LDS Product/Content/Platform Logos',
+  'LDS Robotics/Viewer/Shared Viewer Frame': 'LDS Robotics/Viewer/Viewer Frame',
+};
+
+const ALLOWED_LATIN_STORY_TOKENS = new Set([
+  '2D',
+  '3D',
+  'API',
+  'ARIA',
+  'CSV',
+  'Ctrl',
+  'End',
+  'Enter',
+  'Escape',
+  'FPS',
+  'GNSS',
+  'GPU',
+  'Home',
+  'HUD',
+  'ID',
+  'JSON',
+  'LiDAR',
+  'LK',
+  'LDS',
+  'OS',
+  'PageDown',
+  'PageUp',
+  'PIN',
+  'ROBOTICS',
+  'ROS',
+  'ROS2',
+  'Shift+Tab',
+  'Space',
+  'SVG',
+  'Tab',
+  'UI',
+  'URL',
+  'WAI-ARIA',
+  'WDS',
+  'WebRTC',
+]);
+
 if (update && check) throw new Error('Choose either --update or --check.');
 
 const ROLE_DEFINITIONS = {
@@ -34,32 +99,24 @@ const LAYER_CONTRACTS = {
 };
 
 const PAGE_OWNER_OVERRIDES = {
-  'LDS Core/Components/Layout/Essential': ['MobileSystemBars'],
+  'LDS Core/Components/Layout/Mobile System Bars': ['MobileSystemBars'],
   'LDS Core/Components/Layout/Page Structure': ['Container', 'Section', 'Split'],
   'LDS Core/Components/Layout/Grid and Columns': ['Grid', 'Columns', 'Col'],
   'LDS Core/Components/Layout/Scroll and Accessibility': ['ScrollArea', 'AspectRatio', 'Center', 'VisuallyHidden'],
   'LDS Core/Components/Layout/Stack and Alignment': ['Stack', 'Cluster', 'Spacer'],
-  'LDS Core/Components/Action/Action Controls': ['ButtonGroup', 'SocialButton'],
   'LDS Core/Components/Selection and Input/Slider and Range': ['Slider', 'RangeSlider'],
   'LDS Core/Components/Selection and Input/Search and Autocomplete': ['SearchField', 'AutoComplete', 'Combobox', 'TagInput'],
-  'LDS Core/Components/Selection and Input/Selection Groups': ['CheckboxGroup', 'RadioGroup', 'Select'],
-  'LDS Core/Components/Selection and Input/Segmented and Toggle': ['SegmentedControl', 'ToggleButton'],
-  'LDS Core/Components/Content/Text': ['Blockquote', 'Code', 'Kbd', 'Overline', 'SourceTag'],
-  'LDS Core/Components/Content/Annotations': ['Tooltip', 'Bubble', 'Bookmark', 'Divider'],
+  'LDS Core/Components/Content/Text Primitives': ['Blockquote', 'Code', 'Kbd', 'Overline', 'SourceTag'],
+  'LDS Core/Components/Content/Media Patterns': ['ContentBadge', 'Thumbnail'],
   'LDS Core/Components/Content/Disclosure': ['Accordion', 'Collapsible'],
   'LDS Core/Components/Content/Lists': ['ListCell', 'Accordion'],
   'LDS Core/Components/Status/Badges and Tags': ['Badge', 'PushBadge', 'Tag'],
-  'LDS Core/Components/Status/Loading State': ['Skeleton', 'Spinner'],
-  'LDS Core/Components/Status/Progress': ['CircularProgress', 'Meter', 'ProgressBar'],
   'LDS Core/Components/Status/Notices and Callouts': ['Banner', 'Callout'],
-  'LDS Core/Components/Overlay/Anchored Overlay': ['Popover', 'HoverCard'],
-  'LDS Core/Components/Overlay/Menu': ['DropdownMenu', 'Menubar'],
   'LDS Core/Components/Overlay/Toast': ['Toast', 'ToastStack'],
   'LDS Theme/Brand/LK ROBOTICS Logo': ['Lockup', 'Overline'],
   'LDS Theme/Status/Brand Spinner': ['Theme:Brand Spinner'],
   'LDS Product/Action/Social Login': ['SocialButton'],
-  'LDS Product/Action/Utility Actions': ['CopyButton', 'Link'],
-  'LDS Product/Content/Platform Marks': ['BrandLogo'],
+  'LDS Product/Content/Platform Logos': ['BrandLogo'],
   'LDS Product/Data/Visualization/Telemetry': ['TelemetryGauge', 'TelemetryValue'],
   'LDS Product/Navigation/Adaptive Navigation': ['NavRail', 'BottomNav'],
   'LDS Robotics/Assets/Icons': ['Icon'],
@@ -68,8 +125,7 @@ const PAGE_OWNER_OVERRIDES = {
   'LDS Robotics/Status/Equipment State': ['EquipmentStatusCard'],
   'LDS Robotics/Viewer/2D Map': ['Map2DCanvas'],
   'LDS Robotics/Viewer/3D Scene': ['Scene3DFrame'],
-  'LDS Robotics/Viewer/Shared Viewer Frame': ['ViewerFrame'],
-  'LDS Robotics/Viewer/Telemetry': ['TelemetryGauge', 'TelemetryValue'],
+  'LDS Robotics/Viewer/Viewer Frame': ['ViewerFrame'],
 };
 
 function assert(condition, message) {
@@ -82,6 +138,23 @@ async function read(relOrAbs) {
 
 function sha256(value) {
   return createHash('sha256').update(value).digest('hex');
+}
+
+function publicStoryRoleRank(story, index) {
+  if (index === 0) return 0;
+  return PUBLIC_STORY_ROLE_ORDER[story.role] ?? Number.POSITIVE_INFINITY;
+}
+
+function expectedPublicStoryPrefix(story, index) {
+  if (index === 0) return '개요';
+  return PUBLIC_STORY_NAME_PREFIXES[story.role];
+}
+
+function disallowedLatinStoryTokens(name) {
+  const tokens = name.match(/(?:\d+[A-Za-z]+|[A-Za-z][A-Za-z0-9]*(?:[+-][A-Za-z0-9]+)*)/g) || [];
+  return tokens.filter(
+    (token) => !/^\d+(?:D|px)$/.test(token) && !ALLOWED_LATIN_STORY_TOKENS.has(token),
+  );
 }
 
 function layerForTitle(title) {
@@ -192,6 +265,32 @@ function findMetaOwner(sourceFile) {
   return owner;
 }
 
+function findStoryGuideId(sourceFile) {
+  let storyGuideId;
+  function visit(node) {
+    if (
+      !storyGuideId &&
+      ts.isPropertyAssignment(node) &&
+      ((ts.isIdentifier(node.name) && node.name.text === 'storyGuide') ||
+        (ts.isStringLiteral(node.name) && node.name.text === 'storyGuide')) &&
+      ts.isObjectLiteralExpression(node.initializer)
+    ) {
+      const storyIdProperty = node.initializer.properties.find(
+        (property) =>
+          ts.isPropertyAssignment(property) &&
+          ((ts.isIdentifier(property.name) && property.name.text === 'storyId') ||
+            (ts.isStringLiteral(property.name) && property.name.text === 'storyId')),
+      );
+      if (storyIdProperty && ts.isPropertyAssignment(storyIdProperty) && ts.isStringLiteral(storyIdProperty.initializer)) {
+        storyGuideId = storyIdProperty.initializer.text;
+      }
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(sourceFile);
+  return storyGuideId;
+}
+
 function classifyRole(story, layer, sourceText, isFirstPublic) {
   const tags = story.tags || [];
   const label = `${story.name} ${story.exportName || ''}`.toLowerCase();
@@ -202,15 +301,16 @@ function classifyRole(story, layer, sourceText, isFirstPublic) {
   if (
     /(keyboard|focus|interaction|contract|pointer|controlled|lifecycle|escape|roving|selection behavior|키보드|포커스|상호작용|계약|동기화|해제 요청|요청 직후)/i.test(label)
   ) return 'interaction';
-  if (/(narrow|responsive|mobile|compact|wide|overflow|density|320px|좁은|모바일|컴팩트|한 열|긴 콘텐츠)/i.test(label)) return 'responsive';
+  if (/(narrow|responsive|mobile|compact|wide|overflow|density|320px|반응형|좁은|모바일|컴팩트|한 열|긴 콘텐츠)/i.test(label)) return 'responsive';
   if (
     /(state|states|variant|matrix|disabled|error|loading|empty|readonly|tone|size|status|platform|dark|light|stale|offline|restricted|상태|변형|비활성|오류|로딩|빈 |색상|크기|플랫폼|다크|라이트|권한 회수|연결 끊김|신호 없음)/i.test(label)
   ) return 'variants-states';
-  if (/(usage|anatomy|composition|placement|pattern|guide|structure|사용|구조|패턴|조합|선택|가이드)/i.test(label)) return 'usage';
+  if (/(usage|anatomy|composition|placement|pattern|guide|structure|사용법|사용|구조|패턴|조합|선택|가이드)/i.test(label)) return 'usage';
   if (
     /(overview|playground|default|basic|primary|summary|개요|플레이그라운드|기본|전체형|표면|입력$|카드$|배지$|버튼$|토글$|목차$|라우트$|지표$|범례$|트리$|캘린더$|뷰어 툴바$)/i.test(label) ||
     (isFirstPublic && /<h1\b|<h2\b|<main\b/.test(sourceText))
   ) return 'overview';
+  if (/시나리오/i.test(label)) return 'scenario';
   if (layer === 'Product' || layer === 'Robotics') return 'scenario';
   return isFirstPublic ? 'overview' : 'usage';
 }
@@ -249,10 +349,12 @@ function preserveManualFields(page, previousPage) {
     if (previousPage[key] !== undefined) page[key] = previousPage[key];
   }
   const previousStories = new Map((previousPage.stories || []).map((story) => [story.id, story]));
+  const guidedEntryId = page.stories.find((story) => story.visibility === 'public' && story.hasCanvasGuidance)?.id;
   for (const story of page.stories) {
     const previous = previousStories.get(story.id);
     if (!previous) continue;
     for (const key of ['role', 'recommendedVisibility', 'reviewStatus', 'reviewMethod', 'reviewNote']) {
+      if (key === 'role' && story.id === guidedEntryId) continue;
       if (previous[key] !== undefined) story[key] = previous[key];
     }
   }
@@ -273,6 +375,7 @@ async function buildAudit(previous) {
   }
 
   const previousPages = new Map((previous?.pages || []).map((page) => [page.title, page]));
+  const previousPagesByImport = new Map((previous?.pages || []).map((page) => [page.importPath, page]));
   const pages = [];
   for (const [importPath, fileStories] of [...byImport].sort(([a], [b]) => a.localeCompare(b))) {
     const rel = importPath.replace(/^\.\//, '');
@@ -281,6 +384,7 @@ async function buildAudit(previous) {
     const topLevel = collectTopLevelNodes(sourceFile);
     const imported = importedComponents(sourceFile, exportNames);
     const metaOwner = findMetaOwner(sourceFile);
+    const storyGuideId = findStoryGuideId(sourceFile);
     const layer = layerForTitle(fileStories[0].title);
     const orderedStories = [...fileStories];
     const firstPublicId = orderedStories.find((story) => story.tags?.includes('dev'))?.id;
@@ -291,7 +395,12 @@ async function buildAudit(previous) {
       const usage = usageForNode(node, topLevel, imported, sourceFile);
       for (const owner of usage.used) renderedPageComponents.add(owner);
       const visibility = story.tags?.includes('dev') ? 'public' : 'hidden';
-      const role = classifyRole(story, layer, usage.text, story.id === firstPublicId);
+      const isGuidedEntry = story.id === storyGuideId || (story.id === firstPublicId && hasCanvasGuidance(usage.text));
+      const role = isGuidedEntry
+        ? layer === 'Foundation'
+          ? 'foundation-reference'
+          : 'overview'
+        : classifyRole(story, layer, usage.text, story.id === firstPublicId);
       return {
         id: story.id,
         name: story.name,
@@ -300,8 +409,9 @@ async function buildAudit(previous) {
         tags: [...(story.tags || [])].sort(),
         role,
         renderedComponents: [...usage.used].sort(),
-        hasStoryDescription: /description\s*:\s*\{\s*story\s*:/s.test(usage.text),
-        hasCanvasGuidance: hasCanvasGuidance(usage.text),
+        hasStoryDescription:
+          /description\s*:\s*\{\s*story\s*:/s.test(usage.text) || /\bstoryDescription\s*\(/.test(usage.text),
+        hasCanvasGuidance: hasCanvasGuidance(usage.text) || story.id === storyGuideId,
         recommendedVisibility: role === 'visual-parity' || role === 'internal-contract' ? 'hidden' : 'public',
         reviewStatus: 'pending',
         reviewMethod: null,
@@ -337,6 +447,7 @@ async function buildAudit(previous) {
       visibility: { public: publicStories.length, hidden: hiddenStories.length },
       descriptionEvidence: {
         componentDescription,
+        storyGuideId: storyGuideId || null,
         describedPublicStories: publicStories.filter((story) => story.hasStoryDescription).length,
         publicStoriesWithCanvasGuidance: publicStories.filter((story) => story.hasCanvasGuidance).length,
         decisionGuidance: hasDecisionGuidance(source),
@@ -355,7 +466,7 @@ async function buildAudit(previous) {
       reviewedSourceSha256: null,
       stories: auditedStories,
     };
-    pages.push(preserveManualFields(page, previousPages.get(page.title)));
+    pages.push(preserveManualFields(page, previousPages.get(page.title) || previousPagesByImport.get(importPath)));
   }
 
   pages.sort((a, b) => a.title.localeCompare(b.title));
@@ -377,7 +488,7 @@ async function buildAudit(previous) {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
     source: {
       name: 'LK Design System Storybook information architecture audit',
-      auditedAt: '2026-07-11',
+      auditedAt: '2026-07-12',
       storybookIndex: 'storybook-static/index.json',
       storybookIndexSha256: sha256(indexSource),
       publicExportEntry: 'src/index.js',
@@ -387,6 +498,15 @@ async function buildAudit(previous) {
     },
     roleDefinitions: ROLE_DEFINITIONS,
     layerDescriptionContracts: LAYER_CONTRACTS,
+    namingContract: {
+      pageTitles: 'Canonical English component names; explicit Primitives or Patterns labels for public family pages.',
+      publicEntryName: '개요',
+      publicRolePrefixes: PUBLIC_STORY_NAME_PREFIXES,
+      publicLanguage: 'Korean audience language, with Latin text reserved for approved standards, keys, brands, and units.',
+      publicOrder: ['overview', 'foundation-reference', 'usage', 'variants-states', 'interaction', 'responsive', 'scenario'],
+      normalizedPageTitles: PAGE_TITLE_RENAMES,
+      renamedPageIdPolicy: 'Renamed pages keep their previous explicit meta id so public story links remain stable.',
+    },
     summary: {
       pages: pages.length,
       stories: stories.length,
@@ -432,7 +552,8 @@ if (update) {
   assert(audit.summary.reviewedPages === audit.summary.pages, 'Every page must have a completed human review.');
   assert(audit.summary.reviewedStories === audit.summary.stories, 'Every story must have a completed human review.');
   assert(audit.summary.staleReviewedPages === 0, 'A reviewed page changed after review and must be reviewed again.');
-  for (const layer of ['Foundation', 'Core', 'Product', 'Robotics']) {
+  assert(audit.summary.recommendedVisibilityChanges === 0, 'Recommended public/hidden visibility changes remain unresolved.');
+  for (const layer of ['Foundation', 'Core', 'Product', 'Robotics', 'Theme']) {
     assert(audit.layerDescriptionContracts[layer], `Missing description contract for ${layer}.`);
   }
   const pageTitles = new Set();
@@ -446,6 +567,50 @@ if (update) {
     assert(page.reviewMethod === REVIEW_METHOD, `Unexpected reviewMethod for ${page.title}.`);
     assert(page.reviewedSourceSha256 === page.sourceSha256, `Stale page review for ${page.title}.`);
     assert(['keep', 'merge', 'split', 'hide'].includes(page.disposition), `Invalid disposition for ${page.title}.`);
+    const publicStories = page.stories.filter((story) => story.visibility === 'public');
+    const guideId = page.descriptionEvidence.storyGuideId;
+    if (guideId) {
+      assert(publicStories.some((story) => story.id === guideId), `${page.title} storyGuide must point to a public story.`);
+      assert(publicStories[0]?.id === guideId, `${page.title} storyGuide must point to the first public story.`);
+    }
+    assert(publicStories.length > 0, `${page.title} must retain a public audience entry story.`);
+    assert(
+      ['overview', 'foundation-reference'].includes(publicStories[0].role),
+      `${page.title} must begin with an overview or foundation reference.`,
+    );
+    assert(
+      page.descriptionEvidence.publicStoriesWithCanvasGuidance > 0,
+      `${page.title} must show a canvas introduction on its audience entry story.`,
+    );
+    if (page.layer !== 'Foundation') {
+      assert(page.descriptionEvidence.decisionGuidance, `${page.title} must explain when to use and when not to use the pattern.`);
+    }
+    assert(
+      page.descriptionEvidence.describedPublicStories === publicStories.length,
+      `${page.title} must describe every public story.`,
+    );
+    const publicStoryNames = new Set();
+    let previousPublicStoryRank = -1;
+    for (const [index, story] of publicStories.entries()) {
+      const expectedPrefix = expectedPublicStoryPrefix(story, index);
+      assert(expectedPrefix, `${story.id} has no public naming prefix for role ${story.role}.`);
+      if (index === 0) {
+        assert(story.name === expectedPrefix, `${page.title} must name its first public story "개요".`);
+      } else {
+        assert(story.name.startsWith(expectedPrefix), `${story.id} must start with "${expectedPrefix}".`);
+        assert(story.name.length > expectedPrefix.length, `${story.id} needs a specific audience-facing name after its role prefix.`);
+      }
+      assert(!publicStoryNames.has(story.name), `${page.title} has duplicate public story name "${story.name}".`);
+      publicStoryNames.add(story.name);
+      const roleRank = publicStoryRoleRank(story, index);
+      assert(roleRank >= previousPublicStoryRank, `${page.title} public stories are not ordered by the naming contract.`);
+      previousPublicStoryRank = roleRank;
+      const disallowedTokens = disallowedLatinStoryTokens(story.name);
+      assert(disallowedTokens.length === 0, `${story.id} uses non-audience Latin terms: ${disallowedTokens.join(', ')}.`);
+      assert(!story.name.includes('`'), `${story.id} exposes Markdown backticks in its public name.`);
+      assert(!/(계약|검증|핸들러|플레이그라운드)/.test(story.name), `${story.id} exposes internal authoring language in its public name.`);
+      assert(!/(?:\S\u00B7\s|\s\u00B7\S)/.test(story.name), `${story.id} uses asymmetric middle-dot spacing.`);
+    }
     if (['merge', 'split'].includes(page.disposition)) {
       const targets = Array.isArray(page.dispositionTarget) ? page.dispositionTarget : [page.dispositionTarget];
       assert(targets.length > 0 && targets.every(Boolean), `${page.title} requires a dispositionTarget.`);
@@ -462,6 +627,10 @@ if (update) {
         assert(story.recommendedVisibility === 'hidden', `${story.id} must be recommended hidden.`);
       }
     }
+  }
+  for (const [previousTitle, normalizedTitle] of Object.entries(PAGE_TITLE_RENAMES)) {
+    assert(!pageTitles.has(previousTitle), `Obsolete page title remains: ${previousTitle}.`);
+    assert(pageTitles.has(normalizedTitle), `Missing normalized page title: ${normalizedTitle}.`);
   }
   assert(pageTitles.size === audit.summary.pages, 'Page title census does not match the summary.');
   assert(storyIds.size === audit.summary.stories, 'Story id census does not match the summary.');

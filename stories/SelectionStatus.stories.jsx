@@ -1,16 +1,19 @@
-import {
-  ChoiceCard,
-  Icon,
-} from '../src/index.js';
+import React from 'react';
+import { userEvent } from 'storybook/test';
+import { ChoiceCard, Icon } from '../src/index.js';
 import { ChoiceCardCard as ChoiceCardCardStory } from './SelectionStatus.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Components/Selection and Input/Card Selection',
+  component: ChoiceCard,
   parameters: {
-    docs: {
-      description: {
-        component: '플랜, 옵션, 항목처럼 큰 선택지를 카드 단위로 비교하고 선택하는 ChoiceCard 패턴입니다.',
-      },
+    storyGuide: {
+      storyId: 'lds-core-components-selection-and-input-card-selection--choice-cards',
+      eyebrow: 'Core / Card Selection',
+      title: '카드 선택은 설명이 필요한 후보를 하나의 비교 단위로 보여 줍니다',
+      description:
+        '제목, 설명, 아이콘을 함께 읽어야 올바른 결정을 할 수 있는 플랜·구성 선택에 사용하세요. 짧은 라벨만으로 비교할 수 있다면 Radio나 Checkbox가 더 간결합니다.',
     },
   },
 };
@@ -18,14 +21,85 @@ const meta = {
 export default meta;
 
 export const ChoiceCards = {
-  name: '카드 선택',
+  name: '개요',
+  parameters: storyDescription(
+    '단일 선택은 radio 그룹으로 항상 하나의 값을 유지하고, 다중 선택은 checkbox로 각 카드를 독립적으로 켜고 끌 수 있습니다.',
+  ),
+  render: function Example() {
+    const [plan, setPlan] = React.useState('standard');
+    const [extras, setExtras] = React.useState(['audit']);
+    const toggleExtra = (value, selected) => {
+      setExtras((current) => selected
+        ? [...new Set([...current, value])]
+        : current.filter((item) => item !== value));
+    };
+    return (
+      <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 760 }}>
+        <section aria-labelledby="plan-choice-label" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+          <h2 id="plan-choice-label" style={{ margin: 0, fontSize: 'var(--body1-size)' }}>플랜 선택</h2>
+          <div role="radiogroup" aria-labelledby="plan-choice-label" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
+            <ChoiceCard name="plan" inputValue="standard" selected={plan === 'standard'} onSelect={() => setPlan('standard')} icon={<Icon name="document" />} title="기본 플랜" description="필수 설정으로 시작" />
+            <ChoiceCard name="plan" inputValue="review" selected={plan === 'review'} onSelect={() => setPlan('review')} icon={<Icon name="layers" />} title="검토 플랜" description="승인 절차를 포함" />
+          </div>
+        </section>
+        <section aria-labelledby="extra-choice-label" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+          <h2 id="extra-choice-label" style={{ margin: 0, fontSize: 'var(--body1-size)' }}>추가 옵션</h2>
+          <div role="group" aria-labelledby="extra-choice-label" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
+            <ChoiceCard multiple name="extras" inputValue="audit" selected={extras.includes('audit')} onSelect={(selected) => toggleExtra('audit', selected)} icon={<Icon name="check" />} title="검사 기록" description="변경 이력을 보존" />
+            <ChoiceCard multiple name="extras" inputValue="notice" selected={extras.includes('notice')} onSelect={(selected) => toggleExtra('notice', selected)} icon={<Icon name="bell" />} title="완료 알림" description="처리 결과를 전송" />
+          </div>
+        </section>
+      </main>
+    );
+  },
+};
+
+export const ChoiceCardStates = {
+  name: '상태와 좁은 너비',
+  tags: ['!dev'],
   render: () => (
-    <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)', maxWidth: 760 }}>
-      <ChoiceCard selected icon={<Icon name="document" />} title="기본 플랜" description="표준 설정으로 시작" />
-      <ChoiceCard multiple icon={<Icon name="layers" />} title="고급 옵션" description="추가 설정 포함" />
-      <ChoiceCard icon={<Icon name="plus" />} title="새 항목" description="검토 후 게시" />
+    <main style={{ display: 'grid', gap: 'var(--space-3)', width: 280, maxWidth: '100%' }}>
+      <ChoiceCard selected title="선택됨" description="단일 선택 표시" />
+      <ChoiceCard multiple selected title="다중 선택됨" description="checkbox 표시" />
+      <ChoiceCard disabled title="비활성" description="선택할 수 없음" />
+      <ChoiceCard title="긴 설명이 있는 선택지" description="좁은 화면에서도 제목, 설명, 선택 표시가 서로 겹치지 않아야 합니다." />
     </main>
   ),
 };
 
-export const ChoiceCardCard = { ...ChoiceCardCardStory, name: 'ChoiceCard card parity', tags: ['!dev', 'visual-parity'] };
+export const ChoiceCardInputContract = {
+  name: '단일·다중 선택 계약',
+  tags: ['!dev'],
+  render: function Contract() {
+    const [single, setSingle] = React.useState('one');
+    const [multiple, setMultiple] = React.useState(false);
+    return (
+      <main style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div role="radiogroup" aria-label="단일 선택">
+          <ChoiceCard name="choice-contract" inputValue="one" title="첫 번째" selected={single === 'one'} onSelect={() => setSingle('one')} />
+          <ChoiceCard name="choice-contract" inputValue="two" title="두 번째" selected={single === 'two'} onSelect={() => setSingle('two')} />
+        </div>
+        <ChoiceCard multiple name="choice-contract-extra" inputValue="extra" title="추가 선택" selected={multiple} onSelect={setMultiple} />
+      </main>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const radios = [...canvasElement.querySelectorAll('input[type="radio"][name="choice-contract"]')];
+    const checkbox = canvasElement.querySelector('input[type="checkbox"]');
+    if (radios.length !== 2 || !radios[0].checked || !checkbox) throw new Error('Native radio and checkbox inputs are required.');
+    await userEvent.click(radios[1]);
+    if (radios[0].checked || !radios[1].checked) throw new Error('Single selection must move between cards.');
+    await userEvent.click(radios[1]);
+    if (!radios[1].checked) throw new Error('Clicking the selected radio card must not clear the group.');
+    await userEvent.click(checkbox);
+    if (!checkbox.checked) throw new Error('The multiple card must toggle independently.');
+    await userEvent.click(checkbox);
+    if (checkbox.checked) throw new Error('The multiple card must support deselection.');
+  },
+};
+
+export const ChoiceCardCard = {
+  ...ChoiceCardCardStory,
+  name: 'ChoiceCard card parity',
+  tags: ['!dev', 'visual-parity'],
+};

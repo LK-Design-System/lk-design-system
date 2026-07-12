@@ -20,7 +20,7 @@ export interface TopBarProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 상단 앱 바 — 브랜드 · 내비 · 액션, 헤어라인 베이스의 카드 서피스 위. */
-export function TopBar(props: TopBarProps): JSX.Element;
+export function TopBar(props: TopBarProps): React.JSX.Element;
 
 export interface TopBarNavItemMenuItem {
   label: React.ReactNode;
@@ -43,4 +43,4 @@ export interface TopBarNavItemProps extends React.HTMLAttributes<HTMLSpanElement
 }
 
 /** TopBar 전용 내비 항목 — active underline과 선택적 드롭다운 메뉴 포함. */
-export function TopBarNavItem(props: TopBarNavItemProps): JSX.Element;
+export function TopBarNavItem(props: TopBarNavItemProps): React.JSX.Element;

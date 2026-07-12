@@ -2,6 +2,7 @@ import React from 'react';
 import { IconButton } from '../buttons/IconButton.jsx';
 import { Divider } from '../content/Divider.jsx';
 import { Icon } from '../icon/Icon.jsx';
+import { useRovingToolbar } from '../internal/useRovingToolbar.js';
 
 /**
  * LK ROBOTICS — HistoryToolbar
@@ -22,12 +23,11 @@ export function HistoryToolbar({
   role = 'toolbar',
   tabIndex,
   onKeyDown,
+  onFocusCapture,
   style,
   'aria-label': ariaLabel,
   ...rest
 }) {
-  const toolbarRef = React.useRef(null);
-  const [focusIndex, setFocusIndex] = React.useState(0);
   const undoEnabled = canUndo && typeof onUndo === 'function';
   const redoEnabled = canRedo && typeof onRedo === 'function';
   const resetVisible = typeof onReset === 'function';
@@ -36,29 +36,15 @@ export function HistoryToolbar({
     { key: 'redo', label: '다시 실행', icon: <span style={{ display: 'inline-flex', transform: 'scaleX(-1)' }}><Icon name="flip-backward" size={16} aria-hidden="true" /></span>, enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
     ...(resetVisible ? [{ key: 'reset', label: '변경사항 초기화', icon: <Icon name="reset" size={16} aria-hidden="true" />, enabled: true, onClick: onReset }] : []),
   ];
-  const enabledIndices = actions.reduce((indices, action, index) => {
-    if (action.enabled) indices.push(index);
-    return indices;
-  }, []);
-  const tabStopIndex = enabledIndices.includes(focusIndex) ? focusIndex : enabledIndices[0];
-
-  const moveFocus = (event) => {
-    if (!enabledIndices.length) return;
-    const currentIndex = enabledIndices.indexOf(focusIndex);
-    let nextIndex;
-
-    if (event.key === 'Home') nextIndex = enabledIndices[0];
-    else if (event.key === 'End') nextIndex = enabledIndices[enabledIndices.length - 1];
-    else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      nextIndex = enabledIndices[(Math.max(0, currentIndex) + 1) % enabledIndices.length];
-    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      nextIndex = enabledIndices[(currentIndex <= 0 ? enabledIndices.length : currentIndex) - 1];
-    } else return;
-
-    event.preventDefault();
-    setFocusIndex(nextIndex);
-    toolbarRef.current?.querySelector(`[data-history-index="${nextIndex}"]`)?.focus();
-  };
+  const enabledActions = actions.filter((action) => action.enabled);
+  const preferredKey = enabledActions[0]?.key;
+  const { toolbarRef, handleFocusCapture, handleKeyDown } = useRovingToolbar({
+    itemSelector: '[data-lk-history-toolbar-item]',
+    orientation: 'horizontal',
+    preferredKey,
+    onKeyDown,
+    onFocusCapture,
+  });
 
   return (
     <div
@@ -66,12 +52,10 @@ export function HistoryToolbar({
       role={role}
       aria-label={ariaLabel ?? label}
       aria-orientation={role === 'toolbar' ? 'horizontal' : undefined}
-      aria-disabled={enabledIndices.length === 0 || undefined}
-      tabIndex={enabledIndices.length === 0 ? (tabIndex ?? 0) : tabIndex}
-      onKeyDown={(event) => {
-        moveFocus(event);
-        onKeyDown?.(event);
-      }}
+      aria-disabled={enabledActions.length === 0 || undefined}
+      tabIndex={enabledActions.length === 0 ? (tabIndex ?? 0) : tabIndex}
+      onKeyDown={handleKeyDown}
+      onFocusCapture={handleFocusCapture}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', fontFamily: 'var(--font-sans)', ...style }}
       {...rest}
     >
@@ -82,13 +66,14 @@ export function HistoryToolbar({
           )}
           <IconButton
             data-history-index={index}
+            data-lk-history-toolbar-item=""
+            data-lk-toolbar-key={action.key}
             variant="ghost"
             round={false}
             size={size}
             disabled={!action.enabled}
             onClick={action.enabled ? action.onClick : undefined}
-            onFocus={() => setFocusIndex(index)}
-            tabIndex={action.enabled && index === tabStopIndex ? 0 : -1}
+            tabIndex={action.enabled && action.key === preferredKey ? 0 : -1}
             title={action.label}
             label={action.label}
             aria-keyshortcuts={action.shortcuts}

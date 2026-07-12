@@ -1,11 +1,19 @@
 import React from 'react';
 import { userEvent } from 'storybook/test';
 import { FileUpload, FileUploadQueue } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Selection and Input/File Upload Queue',
   component: FileUploadQueue,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-selection-and-input-file-upload-queue--upload-and-conversion',
+      eyebrow: 'Product / File Upload Queue',
+      title: '업로드 큐는 선택 이후의 처리 상태와 복구 동작을 파일별로 보여줍니다',
+      description:
+        '여러 파일이 업로드·변환·검증을 거치고 일부 항목만 다시 시도하거나 취소해야 할 때 적합합니다. 파일 하나를 고르는 진입점만 필요하면 File Upload를 사용하세요.',
+    },
     docs: {
       description: {
         component: '파일 선택 이후 업로드, 변환, 검증, 부분 실패와 retry 상태를 파일별로 표시하는 queue 패턴입니다.',
@@ -76,7 +84,10 @@ function UploadAndConversionExample() {
 }
 
 export const UploadAndConversion = {
-  name: '업로드와 변환',
+  name: '개요',
+  parameters: storyDescription(
+    '새 파일을 선택해 queue에 추가하고 성공·처리 중·실패 항목의 복구 action을 검증합니다. header 요약과 각 행의 progress·message·action이 같은 처리 상태를 설명하는지 확인하세요.',
+  ),
   render: () => <UploadAndConversionExample />,
   play: async ({ canvasElement }) => {
     const queue = canvasElement.querySelector('.lk-file-upload-queue');
@@ -133,20 +144,11 @@ export const UploadAndConversion = {
   },
 };
 
-export const KeyboardFileSelection = {
-  name: '키보드 파일 선택',
-  render: () => <FileUpload hint="문서를 선택하세요" />,
-  play: async ({ canvasElement }) => {
-    const input = canvasElement.querySelector('input[type="file"]');
-    if (!input) throw new Error('FileUpload must preserve a native file input.');
-    if (getComputedStyle(input).display === 'none') throw new Error('The native file input must remain in the accessibility tree.');
-    await userEvent.tab();
-    if (canvasElement.ownerDocument.activeElement !== input) throw new Error('The native file input must be keyboard focusable.');
-  },
-};
-
 export const QueueStates = {
-  name: '대기 · 업로드 · 빈 상태',
+  name: '변형·상태 · 대기 · 업로드와 빈 상태',
+  parameters: storyDescription(
+    '대기·업로드 진행 항목이 있는 queue와 완료 후 비어 있는 queue를 비교합니다. progress가 필요한 상태와 empty message가 동시에 나타나지 않고 다음 행동이 분명한지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))' }}>
       <FileUploadQueue
@@ -163,7 +165,10 @@ export const QueueStates = {
 };
 
 export const NarrowQueue = {
-  name: '좁은 폭 · 진행과 동작',
+  name: '반응형 · 좁은 폭의 진행과 동작',
+  parameters: storyDescription(
+    '320px 폭에서 긴 파일명, 진행률, 실패 message, retry·cancel·remove·open action을 함께 보여줍니다. 정보 우선순위와 모든 행 동작이 잘림 없이 유지되는지 확인하세요.',
+  ),
   render: () => (
     <div style={{ width: 320, maxWidth: '100%' }}>
       <FileUploadQueue

@@ -13,4 +13,4 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 반응형 콘텐츠 폭 + 여백이 있는 중앙 정렬 페이지 컨테이너. */
-export function Container(props: ContainerProps): JSX.Element;
+export function Container(props: ContainerProps): React.JSX.Element;

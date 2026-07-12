@@ -12,4 +12,4 @@ export interface CopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
 }
 
 /** value를 클립보드에 복사; 잠깐 체크 + "복사됨"으로 바뀝니다. */
-export function CopyButton(props: CopyButtonProps): JSX.Element;
+export function CopyButton(props: CopyButtonProps): React.JSX.Element;

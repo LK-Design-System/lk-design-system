@@ -52,7 +52,7 @@
       ],
       "localEvidence": [
         "stories/FoundationDecorate.stories.jsx#GradientTokens",
-        "stories/FoundationDecorate.stories.jsx#InteractionTokens",
+        "stories/FoundationInteraction.stories.jsx#InteractionTokens",
         "tokens/effects.css",
         "tokens/source.json"
       ],

@@ -1,8 +1,16 @@
 import { Timeline } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Components/Content/Timeline',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-components-content-timeline--timeline-events',
+      eyebrow: 'Core / Content / Timeline',
+      title: '시간순 사건과 상태 변화를 하나의 연속된 기록으로 보여줍니다',
+      description:
+        '검토 이력, 배포 기록, 장비 이벤트처럼 발생 시각과 순서가 중요한 읽기 전용 기록에 적합합니다. 사용자가 완료해야 할 절차는 Step List나 Stepper를, 단순 알림 목록은 List를 사용하고 상태 색만으로 사건의 의미를 구분하지 마세요.',
+    },
     docs: {
       description: {
         component: '시간 순서로 일어난 이벤트를 상태 색과 함께 읽는 Timeline 패턴입니다.',
@@ -14,7 +22,10 @@ const meta = {
 export default meta;
 
 export const TimelineEvents = {
-  name: '타임라인',
+  name: '개요',
+  parameters: storyDescription(
+    '검토 시작, 수정 요청, 게시 완료로 이어지는 사건 기록을 시간순으로 확인하는 상황입니다. 시각, 제목, 설명, 상태 톤이 같은 사건 단위로 읽히고 색 없이도 변화의 의미와 순서를 이해할 수 있는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 560 }}>
       <Timeline

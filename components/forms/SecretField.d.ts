@@ -37,4 +37,4 @@ export interface SecretFieldProps extends Omit<React.InputHTMLAttributes<HTMLInp
 }
 
 /** Read-only secret field with controlled reveal duration and copy feedback. */
-export function SecretField(props: SecretFieldProps): JSX.Element;
+export function SecretField(props: SecretFieldProps): React.JSX.Element;

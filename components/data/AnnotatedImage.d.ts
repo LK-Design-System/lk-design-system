@@ -43,4 +43,4 @@ export interface AnnotatedImageProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** Image renderer for normalized regions and points. Provenance and workflow actions are composed outside. */
-export function AnnotatedImage(props: AnnotatedImageProps): JSX.Element;
+export function AnnotatedImage(props: AnnotatedImageProps): React.JSX.Element;

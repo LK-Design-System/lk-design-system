@@ -35,4 +35,4 @@ export interface TextareaProps extends Omit<
 }
 
 /** Input의 박스·링·포커스 헤일로와 맞춘 여러 줄 텍스트 필드. */
-export function Textarea(props: TextareaProps): JSX.Element;
+export function Textarea(props: TextareaProps): React.JSX.Element;

@@ -79,4 +79,4 @@ export interface ContentEditorProps extends Omit<React.HTMLAttributes<HTMLElemen
 }
 
 /** 게시글, 공지, 운영 로그 작성 화면에 쓰는 제목/본문/툴바/상태/액션 에디터 셸. */
-export function ContentEditor(props: ContentEditorProps): JSX.Element;
+export function ContentEditor(props: ContentEditorProps): React.JSX.Element;

@@ -20,4 +20,4 @@ export interface CircularProgressProps extends React.HTMLAttributes<HTMLSpanElem
 }
 
 /** Circular progress indicator with determinate and indeterminate states. */
-export function CircularProgress(props: CircularProgressProps): JSX.Element;
+export function CircularProgress(props: CircularProgressProps): React.JSX.Element;

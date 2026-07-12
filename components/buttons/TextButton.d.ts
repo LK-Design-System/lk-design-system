@@ -24,4 +24,4 @@ export interface TextButtonProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** Action/Text Button primitive for low-emphasis text actions. */
-export function TextButton(props: TextButtonProps): JSX.Element;
+export function TextButton(props: TextButtonProps): React.JSX.Element;

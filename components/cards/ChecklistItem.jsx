@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — ChecklistItem
@@ -19,9 +20,9 @@ export function ChecklistItem({
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '11px', ...style }} {...rest}>
       <span style={{ display: 'inline-flex', flexShrink: 0, marginTop: 2, color }}>
         {ok ? (
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          <Icon name="check" size={18} aria-hidden="true" />
         ) : (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+          <Icon name="close" size={16} aria-hidden="true" />
         )}
       </span>
       <span style={{

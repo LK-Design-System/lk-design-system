@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface DockPanelProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DockPanelProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** @default "right" */
   side?: 'left' | 'right';
   open?: boolean;
@@ -29,4 +29,4 @@ export interface DockPanelProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 캔버스 위에서 돌출 핸들로 접고 펼치는 사이드 도킹 패널. */
-export function DockPanel(props: DockPanelProps): JSX.Element;
+export function DockPanel(props: DockPanelProps): React.JSX.Element;

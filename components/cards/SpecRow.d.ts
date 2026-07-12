@@ -14,4 +14,4 @@ export interface SpecRowProps extends React.HTMLAttributes<HTMLDivElement> {
  * 시맨틱 토큰만 사용 — 라이트 시트에 기본, 네이비 무대에선
  * `data-theme="dark"` 래퍼 안에서 그대로 동작.
  */
-export function SpecRow(props: SpecRowProps): JSX.Element;
+export function SpecRow(props: SpecRowProps): React.JSX.Element;

@@ -52,4 +52,4 @@ export interface ListCellProps extends Omit<
 }
 
 /** List Cell row: leading, text, trailing, divider, chevron, selected/disabled, and interaction states. */
-export function ListCell(props: ListCellProps): JSX.Element;
+export function ListCell(props: ListCellProps): React.JSX.Element;

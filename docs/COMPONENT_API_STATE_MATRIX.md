@@ -1,5 +1,13 @@
 # Component API and state matrix
 
+## Canonical public API grammar
+
+- Size values are `sm`, `md`, and `lg`. `small`, `medium`, and `large` remain compatibility aliases only and normalize at the component boundary.
+- Status tone values are `positive`, `cautionary`, `negative`, `signal`, and `offline`. `success`, `warning`, `error`, `info`, `normal`, and `online` are compatibility aliases handled by `normalizeStatusTone`; unknown values fall back to `offline`.
+- Reusable controlled state follows `value`, `defaultValue`, and `onChange(nextValue, metadata?)`. Native form wrappers may expose the native event when their contract explicitly says so; new composites must not introduce event-first callbacks.
+- Native controls accept the platform `'aria-label'` attribute. Composite controls that need to forward a name to an internal focus target use `ariaLabel`. Do not add `accessibleLabel` or another synonym.
+- CI ratchets existing exceptions in `API_GRAMMAR_BASELINE.json`; a new exception is a public API decision and requires versioning notes.
+
 컴포넌트는 “예쁘게 보이는 예시”만으로 완료되지 않습니다. 제품 팀이 안전하게 재사용하려면 API, 상태, 접근성, 토큰, 금지 조합을 한 표로 볼 수 있어야 합니다.
 
 ## Required component contract
@@ -15,6 +23,16 @@
 | Responsive | mobile, desktop, dense mode 기준 |
 | Migration | 이전 컴포넌트나 정적 HTML parity와의 관계 |
 
+## Navigation composition matrix
+
+| 맥락 | 기본 조합 | 경계 |
+| --- | --- | --- |
+| 랜딩·콘텐츠 사이트 | `TopBar` + 전체형 `Footer` | TopBar가 전역 탐색을 맡고 Footer는 정보·정책 링크를 제공한다. |
+| 계층형 대시보드 | `SideNav` + `UserMenu` | TopBar를 더하면 utility만 두고 로고·제품 경로를 중복하지 않는다. |
+| 평면형 반응형 앱 | 데스크톱 `NavRail` ↔ 모바일 `BottomNav` | 동일한 주요 목적지 3–5개를 공유하며 `SideNav`와 동시에 쓰지 않는다. |
+| 현재 위치와 페이지 목차 | `Breadcrumb` + 필요 시 `Anchor` | 각각 로컬 경로와 페이지 내 섹션을 보조하며 주 탐색을 대신하지 않는다. |
+| 순서형 워크플로 | 표시 전용 `Steps` 또는 제어 포함 `Wizard` | 사이트·제품 탐색과 분리한다. |
+
 ## Initial state matrix
 
 | Component | Public states | Required evidence |
@@ -22,12 +40,31 @@
 | Button | WDS variant/size axes, disabled, loading, icon-only, on-dark; explicit LDS-only danger safety extension | Storybook variants, icon accessible name, danger extension label |
 | ActionArea | default/compact padding, start/end/center/between alignment, divider, sticky, safe-area | action-area states and rendered 40px CTA/8px gap contract |
 | ChoiceCard | checked, unchecked, disabled, focus, keyboard selection | selection story, radio/checkbox semantics |
+| Banner | standalone, LDS embedded composition extension, signal/positive/cautionary/negative, title/body, action, close | status semantics, registry icons, embedded parent-surface seam story |
 | Callout | signal, positive, cautionary, negative, navy | tone default icon always present, custom icon size normalization, non-color label |
 | SideNav | expanded, compact hover, selected, nested group, overflow | hover behavior, hidden scrollbar policy |
+| DashboardShell | skip link, header/nav/main landmarks, wide/narrow/auto navigation slots, omitted-narrow fallback, safe-area, single main, 320px no-overflow | normal, auto fallback and 320px shell stories |
+| DashboardGrid | auto-fit repeated cards, configurable minimum width/gap, min-width containment, one-column narrow flow | normal and 320px card-flow stories |
+| SideNav/NavRail/BottomNav links | legacy button/onChange, native href anchors, aria-current, disabled destinations, renderLink router hook, long-label containment | native destination and router-renderer stories |
+| Pagination | controlled page, synchronized page-jump, page size/counter, extended/compact/minimize, localized landmark/previous/next/page-size names | pagination patterns and synchronized page-jump story |
 | PageHeader | breadcrumb, eyebrow, title, status, meta, action alignment | layout page header story |
-| DataGrid | controlled/manual sort, stable row ID selection, activation, loading/error/empty, pagination composition, keyboard focus | table hierarchy와 controlled resource states story |
+| PrimaryDetail | controlled open/selection handoff, inline named region, overlay Drawer, detail title/footer, presentation-stable close label and focus return, normal/narrow | inline and 320px overlay interaction/footer stories |
+| MetricCard | value/unit, period/baseline, direction separated from semantic tone, zero-change flat/neutral, legacy delta compatibility, action/freshness, loading/empty/error/stale, narrow wrapping | semantic reversal and zero-change, resource states, normal and 300px stories |
+| DataGrid | legacy/selectionModel page vs all-matching scope, row-level selection eligibility, entity labels, controlled column visibility/order/width/pinning, sticky header, single/multi-sort, expandable detail, controlled editor slot, loading/error/empty, pagination composition, keyboard activation with custom-control guard | legacy selection, eligibility/activation, 128-result selection, dashboard collection and 320px pinned-column stories |
+| BarChart | accessible name/description, deterministic text summary, empty state, value formatting, narrow long labels | chart, empty and 320px stories |
+| DonutChart | accessible name/description, deterministic total/segment/percentage summary, true zero-sum, empty state, narrow legend | chart, zero-sum and 320px stories |
+| LineChart | accessible name/description, deterministic per-series start/min/max/end summary, summary override, empty state, formatting | chart summary and empty-state stories |
+| Sparkline | accessible name/description, start/min/max/end summary, empty state, formatting | chart and empty-state stories |
+| ChartFrame | named title/description region, actions, legend, loading/empty/error/stale with last-good chart and freshness, narrow wrapping | normal, loading/error and 320px stale stories |
 | FileBrowser | product-provided path and entries, explicit directory navigation versus file/folder selection, up action, selected ID, loading/error/empty, disabled navigation | file browser action-separation stories |
 | DataToolbar | search, filter, selected bulk action, result count, compact density | toolbar with grid story |
+| DataExportAction | controlled/uncontrolled valid format/scope, disappearing-selection fallback, selected/all-matching counts, processing progress, success/error, allowed disabled/hidden reason, narrow wrapping | callback, scope fallback and 320px permission/progress stories |
+| FilterBar | controls, removable or read-only applied filters, clear all, result status, saved-view slot, embedded/standalone, narrow wrapping | interactive/read-only normal and 320px stories |
+| ResourceState | ready, loading, refreshing, empty, error, stale, offline, restricted; preserved last-good data and freshness | normal and 320px composed resource-state stories |
+| RefreshControl | refreshing, lastUpdated, controlled auto-refresh interval, disabled reason, narrow wrapping | callback and 320px operation stories |
+| SavedViewControl | controlled native selection, callback-absent read-only, empty/dirty/saving/disabled, save/update/save-as/rename/delete product action slots, long labels | normal, empty/read-only and 320px callback/state stories |
+| VisibilityManager | independently controlled visibility/order, callback-absent disabled axes, visible/locked items, reset slot, drag plus Alt+arrow and named up/down ordering, empty/disabled, column/widget reuse | normal, empty/read-only and 320px locked/reorder stories |
+| DateRangeField | controlled/uncontrolled start and end, preset slot, range-order validation, visible/compact/rich labels with plain accessible names, disabled, narrow stacking | normal preset, rich-label disabled and 320px invalid-range stories |
 | Tree | expanded, collapsed, selected, nested, keyboard | data tree story |
 | TreePicker | controlled/uncontrolled selected IDs, controlled/uncontrolled expanded IDs, descendant/independent selection, search, disabled branch, empty/no-result | hierarchy selection input stories, disabled-first roving-focus evidence |
 | TopicTree | same as Tree plus topic metadata | domain topic tree story |
@@ -45,8 +82,9 @@
 | ViewerToolbar | command, pressed/unpressed toggle, horizontal/vertical, on-dark/minimal, disabled action, roving focus | arrow/Home/End, remembered focus, explicit aria-pressed stories |
 | TelemetryGauge | exact value, min/max, formatter/precision/valueText, app-provided tone, compact size | meter semantics and non-rounded numeric story |
 | TelemetryValue | value, unit, tone label, stale, timestamp and helper, compact density | responsive 320px, non-color state, numeric readout story |
-| Modal/Drawer/Sheet | open, close, focus trap, escape, restore | overlay stories |
-| ConfirmDialog | default, danger, warning text, cancel, confirm, pending/disabled, scrim/Escape dismiss, initial focus/trap/restore | confirmation dialog and safety-confirmation stories |
+| Modal/Drawer/Sheet | controlled open/close, visible title or ariaLabel, localized close label where applicable, initialFocusRef, bidirectional Tab trap, topmost Escape/containment, returnFocusRef/automatic trigger restore, normal/narrow overflow | nested modal and normal/320px overlay focus stories |
+| ConfirmDialog | default, danger, warning text, cancel, confirm, pending/disabled, scrim/Escape dismiss, shared overlay stack, nested topmost Escape, initial focus/trap/restore | confirmation, nested overlay and safety-confirmation stories |
+| Select | controlled/uncontrolled value, combobox/listbox naming, Arrow/Home/End navigation, Enter/Space commit, Escape close/focus return, disabled/invalid/helper | selection control and keyboard-contract stories |
 | SearchableMultiSelect | async search, selected chip removal, keyboard option traversal that skips disabled options, loading/error/empty, max selection | searchable multi-select resource and disabled-option stories |
 | SecretField | masked/revealed, timed reveal, copy feedback, disabled, external re-auth composition | secret field story |
 | FileUploadQueue | queued/uploading/processing/succeeded/failed, progress, retry/remove/open, partial completion | upload queue states story |

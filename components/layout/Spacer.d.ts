@@ -8,4 +8,4 @@ export interface SpacerProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /** 유연한(flex:1) 또는 고정 스페이서. */
-export function Spacer(props: SpacerProps): JSX.Element;
+export function Spacer(props: SpacerProps): React.JSX.Element;

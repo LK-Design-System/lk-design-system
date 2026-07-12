@@ -52,9 +52,9 @@ export const ChoiceCardCard = {
     const [sel, setSel] = React.useState('field');
     return (
       <div data-visual-crop-root style={{ width: 700, height: 160, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-          <ChoiceCard title="기본 플랜" description="필수 옵션만 포함" selected={sel === 'patrol'} onSelect={() => setSel('patrol')} />
-          <ChoiceCard title="검토 플랜" description="승인 절차 포함" selected={sel === 'field'} onSelect={() => setSel('field')} />
+        <div role="radiogroup" aria-label="플랜 선택" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+          <ChoiceCard name="choice-card-parity" inputValue="patrol" title="기본 플랜" description="필수 옵션만 포함" selected={sel === 'patrol'} onSelect={() => setSel('patrol')} />
+          <ChoiceCard name="choice-card-parity" inputValue="field" title="검토 플랜" description="승인 절차 포함" selected={sel === 'field'} onSelect={() => setSel('field')} />
           <ChoiceCard title="보관 플랜" description="읽기 전용 상태" disabled />
         </div>
       </div>
@@ -172,10 +172,13 @@ export const BannerCard = {
   name: 'Banner card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 460, height: 180, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
+    <div data-visual-crop-root style={{ width: 460, height: 250, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ width: 420, display: 'flex', flexDirection: 'column', gap: 10 }}>
         <Banner tone="info" title="문서 업데이트" onClose={() => {}}>디자인 시스템 문서가 업데이트되었습니다.</Banner>
-        <Banner tone="warning">일부 항목에 검토가 필요합니다.</Banner>
+        <div style={{ overflow: 'hidden', border: 'var(--component-card-border)', borderRadius: 'var(--component-card-radius)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+          <div style={{ padding: '10px var(--space-5)', fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)' }}>패널 상태</div>
+          <Banner variant="embedded" tone="warning">일부 항목에 검토가 필요합니다.</Banner>
+        </div>
       </div>
     </div>
   ),

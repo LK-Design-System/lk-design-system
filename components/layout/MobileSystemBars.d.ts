@@ -11,4 +11,4 @@ export interface MobileSystemBarsProps extends React.HTMLAttributes<HTMLDivEleme
   time?: string;
 }
 
-export function MobileSystemBars(props: MobileSystemBarsProps): JSX.Element;
+export function MobileSystemBars(props: MobileSystemBarsProps): React.JSX.Element;

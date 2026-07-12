@@ -5,7 +5,7 @@ export interface LayerPanelLayer {
   label: React.ReactNode;
   description?: React.ReactNode;
   /** Semantic marker tone; arbitrary color strings are intentionally not accepted. @default "signal" */
-  tone?: 'neutral' | 'signal' | 'positive' | 'warning' | 'danger';
+  tone?: 'neutral' | 'signal' | 'positive' | 'cautionary' | 'negative' | 'warning' | 'danger';
   /** Visible text paired with `tone` when the color conveys semantic state. */
   toneLabel?: React.ReactNode;
   visible?: boolean;
@@ -19,7 +19,7 @@ export interface LayerPanelLayer {
   children?: LayerPanelLayer[];
 }
 
-export interface LayerPanelProps extends React.HTMLAttributes<HTMLElement> {
+export interface LayerPanelProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   layers?: LayerPanelLayer[];
   activeLayerId?: string;
   defaultActiveLayerId?: string;
@@ -40,4 +40,4 @@ export interface LayerPanelProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 맵/포인트클라우드 편집기용 레이어 패널 — 표시, 잠금, 활성 레이어, 중첩 그룹, 개수/메타. */
-export function LayerPanel(props: LayerPanelProps): JSX.Element;
+export function LayerPanel(props: LayerPanelProps): React.JSX.Element;

@@ -13,4 +13,4 @@ export interface CheckboxGroupProps extends Omit<React.HTMLAttributes<HTMLDivEle
 }
 
 /** 다중 선택 체크박스 세트; 값은 선택된 값들의 배열. */
-export function CheckboxGroup(props: CheckboxGroupProps): JSX.Element;
+export function CheckboxGroup(props: CheckboxGroupProps): React.JSX.Element;

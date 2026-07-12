@@ -1,23 +1,43 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
+import { useDialogFocus } from './dialog-focus.js';
 
 /**
- * LK ROBOTICS — Drawer
+ * LDS Product Extension — Drawer
  * A side panel that slides in over a navy scrim (filters, detail, settings).
  * `side` right/left; header (title + close), scrollable body, optional footer.
  * Controlled via `open`; Esc / scrim-click close.
  */
-export function Drawer({ open = false, side = 'right', width = 380, title, children, footer, onClose, closeOnScrim = true, style, ...rest }) {
+export function Drawer({
+  open = false,
+  side = 'right',
+  width = 380,
+  title,
+  children,
+  footer,
+  onClose,
+  closeOnScrim = true,
+  initialFocusRef,
+  returnFocusRef,
+  restoreFocus = true,
+  ariaLabel = '서랍 패널',
+  closeLabel = '닫기',
+  style,
+  ...rest
+}) {
   const [shown, setShown] = React.useState(false);
+  const titleId = React.useId();
+  const { dialogRef, zIndex } = useDialogFocus({
+    open,
+    onDismiss: onClose,
+    initialFocusRef,
+    returnFocusRef,
+    restoreFocus,
+  });
   React.useEffect(() => {
     if (open) { const id = requestAnimationFrame(() => setShown(true)); return () => cancelAnimationFrame(id); }
     setShown(false); return undefined;
   }, [open]);
-  React.useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (e) => { if (e.key === 'Escape' && onClose) onClose(); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
   if (!open) return null;
   const isRight = side === 'right';
   const hidden = isRight ? 'translateX(100%)' : 'translateX(-100%)';
@@ -25,25 +45,30 @@ export function Drawer({ open = false, side = 'right', width = 380, title, child
     <div
       role="presentation"
       onClick={closeOnScrim ? (e) => { if (e.target === e.currentTarget && onClose) onClose(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'var(--scrim-dark)', backdropFilter: 'blur(2px)', opacity: shown ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease-out)' }}
+      style={{ position: 'fixed', inset: 0, zIndex, background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', opacity: shown ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease-out)' }}
     >
       <div
-        role="dialog" aria-modal="true" aria-label={typeof title === 'string' ? title : undefined}
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title != null ? titleId : undefined}
+        aria-label={title == null ? ariaLabel : undefined}
+        tabIndex={-1}
         style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
         {...rest}
       >
         {(title != null || onClose) && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 22px', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
-            <div style={{ flex: 1, minWidth: 0, fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-5) var(--space-6)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
+            <div id={titleId} style={{ flex: 1, minWidth: 0, fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
             {onClose && (
-              <button type="button" aria-label="닫기" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+              <button type="button" aria-label={closeLabel} onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
+                <Icon name="close" size={20} aria-hidden="true" />
               </button>
             )}
           </div>
         )}
-        <div style={{ flex: 1, padding: '20px 22px', overflow: 'auto', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
-        {footer != null && <div style={{ padding: '16px 22px', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 10 }}>{footer}</div>}
+        <div style={{ flex: 1, padding: 'var(--space-5) var(--space-6)', overflow: 'auto', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
+        {footer != null && <div style={{ padding: 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
       </div>
     </div>
   );

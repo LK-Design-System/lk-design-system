@@ -11,4 +11,4 @@ export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
   variant?: "normal" | "thick";
 }
 
-export function Divider(props: DividerProps): JSX.Element;
+export function Divider(props: DividerProps): React.JSX.Element;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — NumberField
@@ -12,13 +13,13 @@ export function NumberField({ value, defaultValue = 0, min = -Infinity, max = In
   const val = isControlled ? value : internal;
   const resolvedLabel = ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '숫자 입력');
   const commit = (v) => { const c = Math.min(max, Math.max(min, v)); if (!isControlled) setInternal(c); onChange && onChange(c); };
-  const h = size === 'sm' ? 40 : 50;
+  const h = size === 'sm' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
   const Arrow = ({ dir }) => {
     const off = disabled || readOnly || (dir < 0 ? val <= min : val >= max);
     return (
       <button type="button" tabIndex={-1} aria-label={`${resolvedLabel} ${dir < 0 ? '값 감소' : '값 증가'}`} disabled={off} onClick={() => commit(Number(val) + dir * step)}
         style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, border: 'none', borderLeft: '1px solid var(--color-semantic-line-solid-normal)', background: 'transparent', cursor: off ? 'not-allowed' : 'pointer', color: off ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)' }}>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d={dir < 0 ? 'm6 9 6 6 6-6' : 'm6 15 6-6 6 6'} /></svg>
+        <Icon name={dir < 0 ? 'chevron-down-small' : 'chevron-up-small'} size={12} aria-hidden="true" />
       </button>
     );
   };
@@ -31,7 +32,7 @@ export function NumberField({ value, defaultValue = 0, min = -Infinity, max = In
         onChange={(e) => commit(e.target.value === '' ? 0 : Number(e.target.value))}
         onFocus={(event) => { setFocused(true); onFocus?.(event); }}
         onBlur={(event) => { setFocused(false); onBlur?.(event); }}
-        style={{ width: 92, padding: '0 12px', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-semibold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
+        style={{ width: 92, padding: '0 var(--component-input-padding-x)', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', fontWeight: 'var(--fw-semibold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
       />
       <div style={{ display: 'flex', flexDirection: 'column', width: 28 }}><Arrow dir={1} /><Arrow dir={-1} /></div>
     </div>

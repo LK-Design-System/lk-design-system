@@ -31,6 +31,38 @@ export const STATUS_TONE_STYLE = {
   },
 };
 
+const STATUS_TONE_ALIASES = {
+  info: 'signal',
+  success: 'positive',
+  warning: 'cautionary',
+  error: 'negative',
+  normal: 'offline',
+  online: 'positive',
+};
+
+export function normalizeStatusTone(tone, fallback = 'offline') {
+  const normalized = STATUS_TONE_ALIASES[tone] ?? tone;
+  return STATUS_TONE_STYLE[normalized] ? normalized : fallback;
+}
+
 export function statusToneStyle(tone, fallback = 'offline') {
-  return STATUS_TONE_STYLE[tone] ?? STATUS_TONE_STYLE[fallback];
+  return STATUS_TONE_STYLE[normalizeStatusTone(tone, fallback)];
+}
+
+/**
+ * Panel-embedded status band geometry shared by Banner `embedded` and the
+ * ValidationSummary severity heading bands (Primer Banner `flush` parity:
+ * side borders and radius removed, top/bottom tone hairlines kept). The band
+ * owns both hairlines, so adjacent neutral separators must be omitted
+ * wherever a band sits against them.
+ */
+export function embeddedBandStyle({ surface, border }) {
+  return {
+    background: surface,
+    borderTop: `1px solid ${border}`,
+    borderBottom: `1px solid ${border}`,
+    borderLeft: 'none',
+    borderRight: 'none',
+    borderRadius: 0,
+  };
 }

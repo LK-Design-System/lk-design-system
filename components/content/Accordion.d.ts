@@ -16,4 +16,4 @@ export interface AccordionProps {
 }
 
 /** 디스클로저 리스트(FAQ / 스펙 그룹) — 시그널 잉크 열린 헤더, 셰브론 뒤집힘. */
-export function Accordion(props: AccordionProps): JSX.Element;
+export function Accordion(props: AccordionProps): React.JSX.Element;

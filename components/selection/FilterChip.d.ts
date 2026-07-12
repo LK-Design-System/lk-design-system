@@ -15,4 +15,4 @@ export interface FilterChipProps extends Omit<React.ButtonHTMLAttributes<HTMLBut
 }
 
 /** 라운드 필터 필 — 패싯을 토글; 선택적 카운트 / 드롭다운 캐럿. */
-export function FilterChip(props: FilterChipProps): JSX.Element;
+export function FilterChip(props: FilterChipProps): React.JSX.Element;

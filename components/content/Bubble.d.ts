@@ -9,4 +9,4 @@ export interface BubbleProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 꼬리가 있는 콜아웃 / 말풍선 — 코치 마크, 주석, 채팅. */
-export function Bubble(props: BubbleProps): JSX.Element;
+export function Bubble(props: BubbleProps): React.JSX.Element;

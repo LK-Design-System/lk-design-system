@@ -9,4 +9,4 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 /** 작은 상태/카운트 토큰 — 솔리드 필 또는 상태 점. */
-export function Badge(props: BadgeProps): JSX.Element;
+export function Badge(props: BadgeProps): React.JSX.Element;

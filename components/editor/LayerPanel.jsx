@@ -6,6 +6,8 @@ const LAYER_TONE = {
   neutral: 'var(--color-semantic-label-neutral)',
   signal: 'var(--color-semantic-primary-normal)',
   positive: 'var(--color-semantic-status-positive)',
+  cautionary: 'var(--color-semantic-status-cautionary)',
+  negative: 'var(--color-semantic-status-negative)',
   warning: 'var(--color-semantic-status-cautionary)',
   danger: 'var(--color-semantic-status-negative)',
 };
@@ -211,7 +213,9 @@ function LayerRow({
           minHeight: 'var(--control-h-md)',
           borderRadius: 'var(--radius-sm)',
           background: active ? 'var(--color-semantic-fill-normal)' : 'transparent',
-          boxShadow: focused ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
+          /* 스크롤 컨테이너 안의 행이라 외부 글로우는 가장자리에서 잘린다 —
+             클리핑되는 행·셀의 표준인 inset focus-indicator를 쓴다. */
+          boxShadow: focused ? 'inset 0 0 0 2px var(--color-semantic-focus-indicator)' : 'none',
           outline: 'none',
           boxSizing: 'border-box',
           cursor: layerDisabled ? 'not-allowed' : 'pointer',
@@ -340,7 +344,7 @@ export function LayerPanel({
   onExpandedLayerIdsChange,
   title = '레이어',
   label = '레이어 목록',
-  emptyLabel = '레이어가 없습니다',
+  emptyLabel = '레이어가 없습니다.',
   disabled = false,
   style,
   ...rest

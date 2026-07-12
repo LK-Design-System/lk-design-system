@@ -11,7 +11,7 @@ export interface FileUploadQueueItem {
   message?: React.ReactNode;
 }
 
-export interface FileUploadQueueProps extends React.HTMLAttributes<HTMLElement> {
+export interface FileUploadQueueProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   items?: FileUploadQueueItem[];
   title?: React.ReactNode;
   emptyLabel?: React.ReactNode;
@@ -23,4 +23,4 @@ export interface FileUploadQueueProps extends React.HTMLAttributes<HTMLElement> 
 }
 
 /** Per-file upload and conversion queue. */
-export function FileUploadQueue(props: FileUploadQueueProps): JSX.Element;
+export function FileUploadQueue(props: FileUploadQueueProps): React.JSX.Element;

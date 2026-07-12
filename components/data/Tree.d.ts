@@ -7,14 +7,16 @@ export interface TreeNodeData {
   children?: TreeNodeData[];
 }
 
-export interface TreeProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   nodes: TreeNodeData[];
   /** 마운트 시 펼쳐진 키(id 또는 label). */
   defaultExpanded?: string[];
   /** Opens branch children while the branch is hovered or keyboard-focused. */
   openOnHover?: boolean;
+  /** Accessible name for the tree widget. @default "Hierarchy" */
+  ariaLabel?: string;
   onSelect?: (node: TreeNodeData) => void;
 }
 
 /** 펼칠 수 있는 계층 — 회전 캐럿 + 레벨별 들여쓰기. */
-export function Tree(props: TreeProps): JSX.Element;
+export function Tree(props: TreeProps): React.JSX.Element;

@@ -11,4 +11,4 @@ export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** CSS 그리드 프리미티브 — 고정 `columns` 또는 반응형 `minItemWidth`. */
-export function Grid(props: GridProps): JSX.Element;
+export function Grid(props: GridProps): React.JSX.Element;

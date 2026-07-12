@@ -9,4 +9,4 @@ export interface ClusterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 균등 갭의 줄바꿈 행 — 칩, 태그, 메타데이터. */
-export function Cluster(props: ClusterProps): JSX.Element;
+export function Cluster(props: ClusterProps): React.JSX.Element;

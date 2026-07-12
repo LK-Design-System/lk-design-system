@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface CalloutProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CalloutProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** @default "signal" */
   tone?: 'signal' | 'positive' | 'cautionary' | 'negative' | 'navy';
   title?: React.ReactNode;
@@ -10,4 +10,4 @@ export interface CalloutProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** tone별 아이콘과 얇은 전체 테두리를 항상 제공하는 강조 노트 블록 — 안내 / 팁. */
-export function Callout(props: CalloutProps): JSX.Element;
+export function Callout(props: CalloutProps): React.JSX.Element;

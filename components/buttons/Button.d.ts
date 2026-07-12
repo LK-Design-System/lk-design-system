@@ -40,4 +40,4 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  * Action/Button primitive. LDS keeps the role while mapping color,
  * state, and emphasis through LK theme tokens.
  */
-export function Button(props: ButtonProps): JSX.Element;
+export function Button(props: ButtonProps): React.JSX.Element;

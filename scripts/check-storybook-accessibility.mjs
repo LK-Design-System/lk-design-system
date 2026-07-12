@@ -8,6 +8,8 @@ import axe from 'axe-core';
 const root = process.cwd();
 const staticDir = path.join(root, 'storybook-static');
 const outDir = path.join(root, 'visual-artifacts', 'accessibility');
+const targetBaselinePath = path.join(root, 'docs', 'references', 'quality', 'TARGET_SIZE_BASELINE.json');
+const updateTargetBaseline = process.argv.includes('--update-target-baseline');
 const axeRules = [
   'aria-allowed-attr',
   'aria-conditional-attr',
@@ -45,6 +47,18 @@ function shardStories(stories) {
     stories: stories.filter((_, storyIndex) => storyIndex % total === index - 1),
     suffix: `-shard-${index}-of-${total}`,
   };
+}
+
+function filterStories(stories) {
+  const source = process.env.A11Y_STORY_PATTERN;
+  if (!source) return stories;
+  let pattern;
+  try {
+    pattern = new RegExp(source, 'i');
+  } catch (error) {
+    throw new Error(`A11Y_STORY_PATTERN must be a valid regular expression: ${error.message}`);
+  }
+  return stories.filter((story) => pattern.test(`${story.id} ${story.title} ${story.name}`));
 }
 
 function assert(condition, message) {
@@ -129,6 +143,31 @@ async function waitForStoryReady(page, storyId) {
       storyId,
       { timeout: 30000 }
     );
+
+    await page.waitForFunction(
+      (expectedId) => {
+        const lifecycle = window.__LDS_STORYBOOK_LIFECYCLE__;
+        return lifecycle?.finished?.some((result) => result?.storyId === expectedId);
+      },
+      storyId,
+      { timeout: 30000 }
+    );
+
+    const lifecycleResult = await page.evaluate((expectedId) => {
+      const lifecycle = window.__LDS_STORYBOOK_LIFECYCLE__;
+      const finished = lifecycle?.finished?.find((result) => result?.storyId === expectedId) || null;
+      return {
+        finished,
+        playErrors: lifecycle?.playErrors || [],
+        unhandledPlayErrors: lifecycle?.unhandledPlayErrors || [],
+        renderErrors: lifecycle?.renderErrors || [],
+        phase: window.__STORYBOOK_PREVIEW__?.currentRender?.phase || null,
+      };
+    }, storyId);
+
+    if (lifecycleResult.finished?.status !== 'success') {
+      throw new Error(`${storyId}: Storybook lifecycle failed: ${JSON.stringify(lifecycleResult)}`);
+    }
   } catch (error) {
     const diagnostics = await page
       .evaluate(() => ({
@@ -162,8 +201,12 @@ async function gotoStoryReady(page, url, storyId) {
 }
 
 async function main() {
+  if (updateTargetBaseline && (process.env.A11Y_SHARD || process.env.A11Y_STORY_PATTERN)) {
+    throw new Error('--update-target-baseline requires the complete unfiltered Storybook inventory.');
+  }
   const index = JSON.parse(await readFile(path.join(staticDir, 'index.json'), 'utf8'));
-  const { stories, suffix } = shardStories(implementationStories(index.entries || {}));
+  const filteredStories = filterStories(implementationStories(index.entries || {}));
+  const { stories, suffix } = shardStories(filteredStories);
   assert(stories.length > 0, 'No implementation stories found in storybook-static/index.json.');
 
   const { server, origin } = await startStaticServer();
@@ -179,10 +222,41 @@ async function main() {
   });
   const failures = [];
   const consoleErrors = [];
+  const undersizedTargets = [];
   let axeCheckedStories = 0;
+  let playFunctionStories = 0;
 
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.addInitScript(() => {
+      const lifecycle = {
+        finished: [],
+        playErrors: [],
+        unhandledPlayErrors: [],
+        renderErrors: [],
+      };
+      Object.defineProperty(window, '__LDS_STORYBOOK_LIFECYCLE__', {
+        configurable: true,
+        value: lifecycle,
+      });
+
+      const attach = () => {
+        const channel = window.__STORYBOOK_ADDONS_CHANNEL__;
+        if (!channel || typeof channel.on !== 'function') return false;
+        channel.on('storyFinished', (result) => lifecycle.finished.push(result));
+        channel.on('playFunctionThrewException', (error) => lifecycle.playErrors.push(error));
+        channel.on('unhandledErrorsWhilePlaying', (errors) => lifecycle.unhandledPlayErrors.push(...(errors || [])));
+        channel.on('storyThrewException', (error) => lifecycle.renderErrors.push(error));
+        channel.on('storyErrored', (error) => lifecycle.renderErrors.push(error));
+        return true;
+      };
+
+      if (!attach()) {
+        const interval = window.setInterval(() => {
+          if (attach()) window.clearInterval(interval);
+        }, 0);
+      }
+    });
     page.on('console', (message) => {
       if (message.type() === 'error') consoleErrors.push(message.text());
     });
@@ -193,6 +267,9 @@ async function main() {
     for (const story of stories) {
       await gotoStoryReady(page, storyUrl(origin, story.id), story.id);
       axeCheckedStories += 1;
+      if (await page.evaluate(() => Boolean(window.__STORYBOOK_PREVIEW__?.currentRender?.story?.playFunction))) {
+        playFunctionStories += 1;
+      }
       await page.evaluate(() => document.fonts?.ready).catch(() => {});
       await page.addScriptTag({ content: axe.source });
       const axeResults = await page.evaluate(async (rules) => {
@@ -306,6 +383,27 @@ async function main() {
         return failures;
       });
 
+      const storyTargetFindings = await page.evaluate(() => {
+        const root = document.querySelector('#storybook-root') || document.body;
+        const selector = [
+          'button', 'input:not([type="hidden"])', 'select', 'textarea',
+          '[role="button"]', '[role="radio"]', '[role="checkbox"]', '[role="switch"]',
+          '[role="tab"]', '[role="menuitem"]', '[role="treeitem"]',
+        ].join(',');
+        return [...root.querySelectorAll(selector)].flatMap((element) => {
+          if (element.matches(':disabled, [aria-disabled="true"]') || element.closest('[aria-hidden="true"]')) return [];
+          const style = getComputedStyle(element);
+          const rect = element.getBoundingClientRect();
+          if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0 || rect.width === 0 || rect.height === 0) return [];
+          if (rect.width >= 24 && rect.height >= 24) return [];
+          const name = (element.getAttribute('aria-label') || element.getAttribute('title') || element.textContent || '')
+            .replace(/\s+/g, ' ').trim().slice(0, 80);
+          const role = element.getAttribute('role') || element.tagName.toLowerCase();
+          return [`${role}:${name}:${Math.round(rect.width)}x${Math.round(rect.height)}`];
+        });
+      });
+      storyTargetFindings.forEach((finding) => undersizedTargets.push(`${story.id}::${finding}`));
+
       for (const failure of storyFailures) failures.push(`${story.title} / ${story.name}: ${failure}`);
       for (const violation of axeResults.violations) {
         for (const node of violation.nodes) {
@@ -319,10 +417,27 @@ async function main() {
   }
 
   const uniqueConsoleErrors = [...new Set(consoleErrors)].filter((message) => !/ResizeObserver loop/.test(message));
+  const normalizedTargets = [...new Set(undersizedTargets)].sort();
+  if (updateTargetBaseline) {
+    await mkdir(path.dirname(targetBaselinePath), { recursive: true });
+    await writeFile(targetBaselinePath, `${JSON.stringify({
+      schemaVersion: 1,
+      description: 'Known rendered interactive targets smaller than 24x24 CSS px. New signatures are rejected.',
+      findings: normalizedTargets,
+    }, null, 2)}\n`, 'utf8');
+  } else if (process.env.A11Y_SKIP_TARGET_RATCHET !== '1') {
+    const targetBaseline = JSON.parse(await readFile(targetBaselinePath, 'utf8'));
+    const allowedTargets = new Set(targetBaseline.findings || []);
+    normalizedTargets
+      .filter((finding) => !allowedTargets.has(finding))
+      .forEach((finding) => failures.push(`new undersized interactive target: ${finding}`));
+  }
   const report = {
     generatedAt: new Date().toISOString(),
     checkedStories: stories.length,
     axeCheckedStories,
+    playFunctionStories,
+    undersizedTargets: normalizedTargets.length,
     failures,
     consoleErrors: uniqueConsoleErrors,
   };
@@ -332,7 +447,7 @@ async function main() {
   assert(uniqueConsoleErrors.length === 0, `Storybook implementation stories emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
   assert(failures.length === 0, `Storybook accessibility guard failed:\n${failures.join('\n')}`);
 
-  console.log(`Validated Storybook accessibility guard: ${stories.length} implementation stories, ${axeCheckedStories} Axe-guarded stories, 0 violations, 0 missing names, 0 implicit button types, 0 console errors.`);
+  console.log(`Validated Storybook accessibility guard: ${stories.length} implementation stories, ${playFunctionStories} completed play functions, ${axeCheckedStories} Axe-guarded stories, ${normalizedTargets.length} ratcheted undersized target signatures, 0 violations, 0 missing names, 0 implicit button types, 0 console errors.`);
 }
 
 main().catch((error) => {

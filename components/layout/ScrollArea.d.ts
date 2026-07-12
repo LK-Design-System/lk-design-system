@@ -7,4 +7,4 @@ export interface ScrollAreaProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** 얇은 커스텀 스크롤바가 있는 스크롤 컨테이너. */
-export function ScrollArea(props: ScrollAreaProps): JSX.Element;
+export function ScrollArea(props: ScrollAreaProps): React.JSX.Element;

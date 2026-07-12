@@ -1,11 +1,6 @@
 import React from 'react';
 
-/**
- * LK ROBOTICS — SegmentedControl
- * Compact single-select: options sit in a cool-gray track; the active segment
- * lifts to a white pill with a soft shadow. Good for view toggles (KR/EN,
- * List/Grid, 기간 필터). Controlled (`value`) or uncontrolled (`defaultValue`).
- */
+/** Compact, mutually exclusive view or mode selection. */
 export function SegmentedControl({
   options = [],
   value,
@@ -19,56 +14,129 @@ export function SegmentedControl({
   disabled = false,
   disable = false,
   style,
-  ...rest
+  'aria-label': ariaLabel = '보기 선택',
+  ...groupProps
 }) {
-  const norm = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
+  const normalizedOptions = options.map((option) => (
+    typeof option === 'string' ? { value: option, label: option } : option
+  ));
+  const enabledIndices = normalizedOptions
+    .map((option, index) => (option.disabled ? -1 : index))
+    .filter((index) => index >= 0);
+  const fallbackValue = defaultValue ?? normalizedOptions[enabledIndices[0]]?.value;
   const isControlled = value !== undefined;
-  const [internal, setInternal] = React.useState(defaultValue != null ? defaultValue : (norm[0] && norm[0].value));
-  const val = isControlled ? value : internal;
+  const [internalValue, setInternalValue] = React.useState(fallbackValue);
+  const currentValue = isControlled ? value : internalValue;
   const disabledState = disabled || disable || interaction === 'inactive';
-  const pick = (v) => { if (disabledState) return; if (!isControlled) setInternal(v); onChange && onChange(v); };
+  const buttonRefs = React.useRef([]);
   const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
-  const h = normalizedSize === 'sm' ? 32 : normalizedSize === 'lg' ? 48 : 40;
-  const fs = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 'var(--headline2-size)' : 'var(--body1-size)';
+  const height = normalizedSize === 'sm' ? 32 : normalizedSize === 'lg' ? 48 : 40;
+  const fontSize = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 'var(--headline2-size)' : 'var(--body1-size)';
   const trackRadius = normalizedSize === 'sm' ? 'var(--radius-8)' : normalizedSize === 'lg' ? 'var(--radius-md)' : 'var(--radius-10)';
   const segmentRadius = normalizedSize === 'sm' ? 'var(--radius-sm)' : normalizedSize === 'lg' ? 'var(--radius-10)' : 'var(--radius-8)';
-  const trackPad = normalizedSize === 'lg' ? 3 : 2;
+  const trackPadding = normalizedSize === 'lg' ? 3 : 2;
   const outlined = variant === 'outlined';
   const fill = full || resize === 'fill';
+  const selectedIndex = normalizedOptions.findIndex((option) => option.value === currentValue && !option.disabled);
+  const rovingIndex = selectedIndex >= 0 ? selectedIndex : (enabledIndices[0] ?? -1);
+
+  const pick = (index, { focus = false } = {}) => {
+    const option = normalizedOptions[index];
+    if (!option || disabledState || option.disabled) return;
+    if (option.value !== currentValue) {
+      if (!isControlled) setInternalValue(option.value);
+      onChange?.(option.value);
+    }
+    if (focus) buttonRefs.current[index]?.focus();
+  };
+
+  const move = (currentIndex, direction) => {
+    if (!enabledIndices.length) return;
+    const currentEnabledIndex = enabledIndices.indexOf(currentIndex);
+    const base = currentEnabledIndex >= 0 ? currentEnabledIndex : 0;
+    const next = (base + direction + enabledIndices.length) % enabledIndices.length;
+    pick(enabledIndices[next], { focus: true });
+  };
+
   return (
     <div
-      role="tablist"
+      {...groupProps}
+      role="radiogroup"
+      aria-label={ariaLabel}
+      aria-disabled={disabledState || undefined}
       style={{
-        display: 'inline-flex', width: fill ? '100%' : undefined, justifySelf: fill ? undefined : 'start', padding: outlined ? 0 : trackPad, gap: outlined ? 0 : 2,
+        display: 'inline-flex',
+        width: fill ? '100%' : undefined,
+        justifySelf: fill ? undefined : 'start',
+        padding: outlined ? 0 : trackPadding,
+        gap: outlined ? 0 : 2,
         background: outlined ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-fill-normal)',
         border: outlined ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
         borderRadius: trackRadius,
         overflow: 'hidden',
         ...style,
       }}
-      {...rest}
     >
-      {norm.map((o, index) => {
-        const optionInteraction = o.interaction || interaction;
-        const selected = o.value === val;
+      {normalizedOptions.map((option, index) => {
+        const optionInteraction = option.interaction || interaction;
+        const selected = option.value === currentValue;
         const active = selected || optionInteraction === 'active' || optionInteraction === 'active-focused';
         const activeHover = optionInteraction === 'hovered';
         const activeFocus = optionInteraction === 'focused' || optionInteraction === 'active-focused';
+        const optionDisabled = disabledState || option.disabled;
         return (
           <button
-            key={o.value}
+            key={option.value}
+            ref={(node) => { buttonRefs.current[index] = node; }}
             type="button"
-            role="tab"
-            aria-selected={selected}
-            onClick={() => pick(o.value)}
-            disabled={disabledState || o.disabled}
+            role="radio"
+            aria-checked={selected}
+            aria-disabled={optionDisabled || undefined}
+            tabIndex={!optionDisabled && index === rovingIndex ? 0 : -1}
+            disabled={optionDisabled}
+            onClick={() => pick(index)}
+            onKeyDown={(event) => {
+              if (event.defaultPrevented || optionDisabled) return;
+              if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                event.preventDefault();
+                move(index, 1);
+              } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                move(index, -1);
+              } else if (event.key === 'Home') {
+                event.preventDefault();
+                pick(enabledIndices[0], { focus: true });
+              } else if (event.key === 'End') {
+                event.preventDefault();
+                pick(enabledIndices[enabledIndices.length - 1], { focus: true });
+              }
+            }}
             style={{
-              flex: fill ? 1 : undefined, height: h, padding: '0 9px', border: 'none',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 4,
-              cursor: disabledState || o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: fs,
-              fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)', letterSpacing: 0,
-              color: disabledState || o.disabled ? 'var(--color-semantic-label-disable)' : active ? 'var(--color-semantic-primary-heavy)' : activeFocus ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-neutral)',
-              background: active ? (outlined ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)') : activeHover || activeFocus ? 'var(--color-semantic-fill-normal)' : 'transparent',
+              flex: fill ? 1 : undefined,
+              height,
+              padding: '0 9px',
+              border: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 4,
+              cursor: optionDisabled ? 'not-allowed' : 'pointer',
+              fontFamily: 'var(--font-sans)',
+              fontSize,
+              fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)',
+              letterSpacing: 0,
+              color: optionDisabled
+                ? 'var(--color-semantic-label-disable)'
+                : active
+                  ? 'var(--color-semantic-primary-heavy)'
+                  : activeFocus
+                    ? 'var(--color-semantic-label-normal)'
+                    : 'var(--color-semantic-label-neutral)',
+              background: active
+                ? (outlined ? 'var(--color-semantic-primary-surface-strong)' : 'var(--color-semantic-background-elevated-normal)')
+                : activeHover || activeFocus
+                  ? 'var(--color-semantic-fill-normal)'
+                  : 'transparent',
               borderRadius: outlined ? 0 : segmentRadius,
               borderLeft: outlined && index > 0 ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
               boxShadow: [
@@ -79,8 +147,8 @@ export function SegmentedControl({
               whiteSpace: 'nowrap',
             }}
           >
-            {o.icon && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{o.icon}</span>}
-            {o.label}
+            {option.icon && <span aria-hidden="true" style={{ display: 'inline-flex', flex: '0 0 auto' }}>{option.icon}</span>}
+            {option.label}
           </button>
         );
       })}

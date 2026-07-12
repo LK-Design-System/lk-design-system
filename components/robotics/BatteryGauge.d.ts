@@ -10,4 +10,4 @@ export interface BatteryGaugeProps extends React.HTMLAttributes<HTMLSpanElement>
 }
 
 /** 배터리 잔량 인디케이터(셸 + 레벨색 fill + % 표기). ≤20% red · ≤50% amber · else green. */
-export function BatteryGauge(props: BatteryGaugeProps): JSX.Element;
+export function BatteryGauge(props: BatteryGaugeProps): React.JSX.Element;

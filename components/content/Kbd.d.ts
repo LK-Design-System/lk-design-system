@@ -5,4 +5,4 @@ export interface KbdProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 단축키용 키보드 키 글리프. */
-export function Kbd(props: KbdProps): JSX.Element;
+export function Kbd(props: KbdProps): React.JSX.Element;

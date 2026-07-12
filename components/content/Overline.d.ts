@@ -11,4 +11,4 @@ export interface OverlineProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 /** 제목 위의 아주 작은 대문자·자간 이브로우/키커(기본 뮤트 그레이). */
-export function Overline(props: OverlineProps): JSX.Element;
+export function Overline(props: OverlineProps): React.JSX.Element;

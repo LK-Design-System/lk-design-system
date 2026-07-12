@@ -22,4 +22,4 @@ export interface LegendProps extends React.HTMLAttributes<HTMLUListElement> {
 }
 
 /** 맵·차트·다이어그램용 색상 키(스와치 + 라벨 + 선택적 값). */
-export function Legend(props: LegendProps): JSX.Element;
+export function Legend(props: LegendProps): React.JSX.Element;
