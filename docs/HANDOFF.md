@@ -5,20 +5,26 @@ Branch: `main`
 Remote: `origin` (`https://github.com/LK-ROBOTICS/lk-design-system-core.git`)
 Working area: `lk-design-system-core`
 
-Latest focused handoff: [Storybook IA, guidance, and naming normalization](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
-(2026-07-12 completion update: all IA candidates are resolved, the final audit is 168 pages / 443 stories with
-168 `keep`; all 168 pages satisfy the friendly-entry contract and all 336 public stories have purpose descriptions and normalized
-display names. Every page starts with `개요`, later stories use purpose prefixes, five ambiguous page titles were clarified while
-their existing public IDs remained valid, and the sidebar now uses explicit layer/group order plus natural page sorting. Continues the
-[Storybook information architecture audit](handoff/2026-07-11-storybook-information-architecture-audit.md)
-and the [Quality audit and D-track design review](handoff/2026-07-11-quality-audit-and-design-review.md)
-and includes the executed [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md),
-the callout band grammar unification, the status-token consolidation, and the completed
-[D-track design convention review](references/quality/DESIGN_CONVENTION_REVIEW.json):
-9 lenses, 53 reviewed findings, 47 confirmed, 6 rejected).
+Latest focused handoff: [Family-consistency stabilization verification](handoff/2026-07-12-family-stabilization-verification.md)
+(2026-07-12 completion: a prior session aligned the button, input/selection, overlay, and editor/viewer families to shared
+visual/state/behavior contracts but was cut off mid-verification. This session closed every remaining guard failure —
+api-drift, token-hygiene, wds-alignment, inventory, storybook-ia, accessibility play/axe/target-size, and visual-regression —
+fixing real defects along the way, most notably Button dropping a consumer-supplied `aria-busy`. **HEAD `bbe7b29`; `npm run check`
+is fully green; accessibility is 469 stories / 0 violations; the four families were browser-verified at 320px with zero overflow.**
+Nothing is uncommitted except regenerated `dist` chunks. `origin` has NOT been pushed.)
 
-Next quality work is planned in [QUALITY_AUDIT_PLAN.md](QUALITY_AUDIT_PLAN.md)
-(2026-07-11 gap analysis: 47 confirmed gaps across 8 dimensions, phased P0–P3 + D track).
+The current index is **168 pages / 469 stories / 351 public / 118 hidden**. This continues the
+[Storybook IA, guidance, and naming normalization](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
+(friendly-entry contract on every page, purpose descriptions on every public story, `개요`-first naming with role prefixes),
+the [Storybook information architecture audit](handoff/2026-07-11-storybook-information-architecture-audit.md),
+the [Quality audit and D-track design review](handoff/2026-07-11-quality-audit-and-design-review.md),
+the executed [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md),
+and the completed [D-track design convention review](references/quality/DESIGN_CONVENTION_REVIEW.json)
+(9 lenses, 53 reviewed findings, 47 confirmed, 6 rejected).
+
+Next work (not started): [QUALITY_AUDIT_PLAN.md](QUALITY_AUDIT_PLAN.md) P3 (packaging, consumption matrix, release contract)
+for product adoption, or the D-track backlog (medium 23 + low 10). The 2026-07-11 gap analysis lists 47 confirmed gaps across
+8 dimensions (phased P0–P3 + D); P0–P2 guards are built and wired into `npm run check`.
 
 ## Current Direction
 
