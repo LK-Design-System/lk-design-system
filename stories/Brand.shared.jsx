@@ -34,7 +34,7 @@ export const LKRoboticsLogo = {
         </h1>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
           앱 화면, 내비게이션, 다크 배경에서 사용하는 공식 로고 컴포넌트입니다. 비율과 위치를 임의로
-          변형하지 않고 제공된 형태, 색상 톤, 높이 옵션 안에서만 조정합니다.
+          변형하지 않고 `variant`, `tone`, `height`만 조정합니다.
         </p>
       </header>
 
@@ -250,8 +250,8 @@ export const PlatformBrandMarks = {
           외부 플랫폼 로고
         </h1>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          BrandLogo 컴포넌트는 LK ROBOTICS 로고가 아니라 Google, GitHub, YouTube처럼 외부 플랫폼을
-          표시할 때 사용하는 풀컬러 브랜드 마크입니다.
+          `BrandLogo`는 LK ROBOTICS 로고가 아니라 Google, GitHub, YouTube처럼 외부 플랫폼을 표시할 때
+          사용하는 풀컬러 브랜드 마크입니다.
         </p>
       </header>
 
