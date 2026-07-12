@@ -28,7 +28,7 @@ export function NavRail({ items = [], value, defaultValue, onChange, renderLink,
           width: 68, height: 60, padding: 0, boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
           cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textDecoration: 'none',
           background: active ? 'var(--color-semantic-primary-surface-strong)' : 'transparent',
-          color: active ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-alternative)',
+          color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
           transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
         };
         const activate = (event) => {

@@ -28,7 +28,7 @@ export function BottomNav({ items = [], value, defaultValue, onChange, renderLin
           flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 4,
           padding: '9px 4px', minHeight: 58, boxSizing: 'border-box', border: 'none', background: 'transparent',
           cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textDecoration: 'none', textAlign: 'center',
-          color: active ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-alternative)',
+          color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
           transition: 'color var(--dur-fast) var(--ease-out)',
         };
         const activate = (event) => {

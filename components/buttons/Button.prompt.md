@@ -25,12 +25,23 @@ LK theme tokens.
 - Disabled foreground, fill, and outlined border resolve semantic roles at the
   button's rendered theme scope, so nested dark surfaces do not inherit a
   root-resolved light alias.
+- Ghost text also resolves from the rendered theme scope. Transparent fill and
+  the hairline border carry its lower emphasis; text contrast is not reduced to
+  create hierarchy.
 - Hover and pressed feedback use calm tone changes only: no lift, scale, or
   shadow escalation. Focus remains the shared 2px `:focus-visible` outline.
 - **as="a"** renders a link CTA while preserving Button styling.
 - **arrow** is deprecated and remains as a no-op compatibility prop.
 - Use `IconButton` for icon-only one-shot actions and `ToggleIcon` for
   icon-only persistent state actions.
+
+## Contrast evidence
+
+- [WCAG 2.2 contrast minimum](https://www.w3.org/TR/WCAG22/#contrast-minimum)
+  requires 4.5:1 for normal-size button text.
+- [Fluent 2 Button usage](https://fluent2.microsoft.design/components/web/react/core/button/usage)
+  applies text contrast across interactive button states. LDS keeps ghost low
+  emphasis through its transparent surface and border, not low-legibility text.
 
 ## 근거와 유지 차이
 

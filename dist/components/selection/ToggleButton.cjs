@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk6DB4ENC2cjs = require('../../chunk-6DB4ENC2.cjs');
+var _chunkYUXEADM2cjs = require('../../chunk-YUXEADM2.cjs');
 
 
-exports.ToggleButton = _chunk6DB4ENC2cjs.ToggleButton;
+exports.ToggleButton = _chunkYUXEADM2cjs.ToggleButton;
 //# sourceMappingURL=ToggleButton.cjs.map

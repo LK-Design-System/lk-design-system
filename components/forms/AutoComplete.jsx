@@ -280,7 +280,7 @@ export function AutoComplete({
                   color: option.disabled
                     ? 'var(--color-semantic-label-disable)'
                     : selected
-                      ? 'var(--color-semantic-primary-heavy)'
+                      ? 'var(--color-semantic-label-normal)'
                       : 'var(--color-semantic-label-normal)',
                   cursor: option.disabled ? 'not-allowed' : 'pointer',
                   fontFamily: 'var(--font-sans)',

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-12",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "56bc4533574a5d75f0145f0c86bb0888773d02b4f3e639bc3aa08461808ecb3b",
+    "storybookIndexSha256": "64909e471d7ab4f17314f57bb34c72d9ca56a9ea173222b70ec32ba56ed7a0f1",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -60,22 +60,22 @@
   },
   "summary": {
     "pages": 177,
-    "stories": 524,
-    "publicStories": 398,
+    "stories": 526,
+    "publicStories": 400,
     "hiddenStories": 126,
     "componentDescriptions": 173,
     "pagesWithVisibleCanvasIntroduction": 177,
     "pagesWithDecisionGuidance": 172,
-    "describedPublicStories": 398,
+    "describedPublicStories": 400,
     "reviewedPages": 177,
-    "reviewedStories": 524,
+    "reviewedStories": 526,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 170,
       "usage": 21,
-      "variants-states": 75,
+      "variants-states": 77,
       "interaction": 46,
       "responsive": 51,
       "scenario": 25,
@@ -91,8 +91,8 @@
     "layers": {
       "Core": {
         "pages": 52,
-        "stories": 146,
-        "public": 81,
+        "stories": 148,
+        "public": 83,
         "hidden": 65,
         "guideReadyPages": 52
       },
@@ -222,7 +222,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/Button.stories.jsx",
-      "sourceSha256": "e985aa93c35f61b6730ea07e6389af39fbbce936e37271f127f4fb0d5c8d7801",
+      "sourceSha256": "80591c624b99312949d2478781cf2b6bc49119ad2f766d2b00c704977766f4ab",
       "primaryOwner": "Button",
       "ownerComponents": [
         "Button"
@@ -231,13 +231,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-button--playground",
-        "describedPublicStories": 6,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -248,7 +248,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "e985aa93c35f61b6730ea07e6389af39fbbce936e37271f127f4fb0d5c8d7801",
+      "reviewedSourceSha256": "80591c624b99312949d2478781cf2b6bc49119ad2f766d2b00c704977766f4ab",
       "stories": [
         {
           "id": "lds-core-components-action-button--playground",
@@ -293,6 +293,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-action-button--dark-theme-ghost",
+          "name": "변형·상태 · 다크 테마 보조 버튼",
+          "exportName": "DarkThemeGhost",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Button"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 dark theme state, Button ownership, public visibility, and play contract review complete."
         },
         {
           "id": "lds-core-components-action-button--on-dark",
@@ -1013,7 +1036,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentBadgesAnnotations.stories.jsx",
-      "sourceSha256": "c69d68ec30676ea14bf30c169cb1a0027dd3ef78e12d9eae47c9266a4b1c83a5",
+      "sourceSha256": "bad9a0e3c2b12db1a29bc7ec1c405f9fce39a9b2cf6dac1879266c6517750fa0",
       "primaryOwner": "ContentBadge",
       "ownerComponents": [
         "ContentBadge"
@@ -1039,7 +1062,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "c69d68ec30676ea14bf30c169cb1a0027dd3ef78e12d9eae47c9266a4b1c83a5",
+      "reviewedSourceSha256": "bad9a0e3c2b12db1a29bc7ec1c405f9fce39a9b2cf6dac1879266c6517750fa0",
       "stories": [
         {
           "id": "lds-core-components-content-content-badge--content-badge-patterns",
@@ -3503,7 +3526,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionChips.stories.jsx",
-      "sourceSha256": "3df644a982d37b3bbb1088404fac86c021baf6ead9682a4d48ad7f9df9dd1506",
+      "sourceSha256": "45253035b0858dcf23bdeea88c98ec6c420d2086783671a54384b5e3c4937855",
       "primaryOwner": "Chip",
       "ownerComponents": [
         "Chip"
@@ -3513,13 +3536,13 @@
         "MultiSelectChip"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-selection-and-input-chip--chip-selection",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -3530,7 +3553,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "3df644a982d37b3bbb1088404fac86c021baf6ead9682a4d48ad7f9df9dd1506",
+      "reviewedSourceSha256": "45253035b0858dcf23bdeea88c98ec6c420d2086783671a54384b5e3c4937855",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-chip--chip-selection",
@@ -3556,6 +3579,32 @@
             "MultiSelectChip"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-chip--dark-theme-selection",
+          "name": "변형·상태 · 다크 테마 선택",
+          "exportName": "DarkThemeSelection",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Chip"
+          ],
+          "supportingComponents": [
+            "FilterChip",
+            "MultiSelectChip"
+          ],
+          "reviewNote": "2026-07-12 dark selected-state ownership, public visibility, and play contract review complete."
         },
         {
           "id": "lds-core-components-selection-and-input-chip--chip-card",

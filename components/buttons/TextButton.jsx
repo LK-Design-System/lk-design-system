@@ -1,6 +1,8 @@
 import React from 'react';
 import { Spinner } from '../status/Spinner.jsx';
 
+const BRAND_FOREGROUND = 'color-mix(in srgb, var(--color-semantic-primary-normal) 60%, var(--color-semantic-label-normal))';
+
 /**
  * LK ROBOTICS — TextButton
  * A no-chrome text action — inline links, card footers, "더보기". Takes the
@@ -46,8 +48,8 @@ export function TextButton({
   const textColor = normalizedColor === 'assistive'
     ? 'var(--color-semantic-label-alternative)'
     : normalizedColor === 'primary'
-      ? 'var(--color-semantic-primary-heavy)'
-      : tone === 'neutral' ? 'var(--color-semantic-label-neutral)' : tone === 'danger' ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-primary-heavy)';
+      ? BRAND_FOREGROUND
+      : tone === 'neutral' ? 'var(--color-semantic-label-neutral)' : tone === 'danger' ? 'var(--color-semantic-status-negative-text)' : BRAND_FOREGROUND;
   const fs = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 17 : 'var(--body1-size)';
   const ls = normalizedSize === 'sm' ? 'var(--label1-spacing)' : 'var(--body1-spacing)';
   const h = normalizedSize === 'sm' ? 28 : normalizedSize === 'lg' ? 36 : 32;

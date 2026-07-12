@@ -1,5 +1,7 @@
 import React from "react";
 
+const BRAND_FOREGROUND = "color-mix(in srgb, var(--color-semantic-primary-normal) 60%, var(--color-semantic-label-normal))";
+
 const TONES = {
   signal: "var(--color-semantic-primary-normal)",
   accent: "var(--color-semantic-primary-normal)",
@@ -14,10 +16,10 @@ const TONES = {
 // Text on soft/outlined badges uses the AA status *text* tokens; the vivid
 // TONES hues remain for solid fills and border mixes.
 const TEXT_TONES = {
-  signal: "var(--color-semantic-primary-heavy)",
-  accent: "var(--color-semantic-primary-heavy)",
+  signal: BRAND_FOREGROUND,
+  accent: BRAND_FOREGROUND,
   navy: "var(--color-semantic-inverse-background)",
-  neutral: "var(--color-semantic-label-alternative)",
+  neutral: "var(--color-semantic-label-neutral)",
   positive: "var(--color-semantic-status-positive-text)",
   cautionary: "var(--color-semantic-status-cautionary-text)",
   warning: "var(--color-semantic-status-cautionary-text)",
@@ -113,7 +115,7 @@ export function ContentBadge({
     accentBackgroundColor || (neutralColor ? "var(--color-semantic-fill-strong)" : baseColor);
   const solidFg =
     accentContentColor ||
-    (neutralColor ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-static-white)");
+    (neutralColor ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-background-normal-normal)");
   const borderColor =
     accentContentColor ||
     (neutralColor

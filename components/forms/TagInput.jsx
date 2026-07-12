@@ -17,9 +17,9 @@ export function TagInput({ value, defaultValue = [], onChange, placeholder = 'ìž
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', minHeight: 50, padding: '8px 10px', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-input)', background: 'var(--color-semantic-background-elevated-normal)', opacity: disabled ? 0.45 : 1, ...style }} {...rest}>
       {tags.map((t) => (
-        <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, height: 28, padding: '0 6px 0 11px', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-primary-heavy)', borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
+        <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, height: 28, padding: '0 6px 0 11px', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-label-normal)', borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
           {t}
-          <button type="button" aria-label="remove" onClick={() => remove(t)} style={{ display: 'inline-flex', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-primary-heavy)', padding: 2 }}>
+          <button type="button" aria-label="remove" onClick={() => remove(t)} style={{ display: 'inline-flex', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 2 }}>
             <Icon name="close" size={12} aria-hidden="true" />
           </button>
         </span>

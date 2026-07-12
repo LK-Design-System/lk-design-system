@@ -1,7 +1,7 @@
 "use client";
 import {
   EditorToolbar
-} from "../../chunk-QVRSANAA.js";
+} from "../../chunk-XEUWV7QO.js";
 import "../../chunk-7H4MEBA2.js";
 import "../../chunk-UUAJNYHQ.js";
 import "../../chunk-FVVTUKMD.js";

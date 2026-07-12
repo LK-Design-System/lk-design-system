@@ -75,7 +75,7 @@ export function Notification({
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: tone ? statusToneStyle(tone).foreground : 'var(--color-semantic-primary-heavy)',
+            color: tone ? statusToneStyle(tone).foreground : 'var(--color-semantic-label-normal)',
           }}
         >
           {icon}
@@ -87,9 +87,9 @@ export function Notification({
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-normal)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--label1-spacing)' }}>{title}</span>
             {unread && <span role="img" aria-label="읽지 않음" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)', flexShrink: 0 }} />}
           </span>
-          {time != null && <time dateTime={dateTime} style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', letterSpacing: 'var(--caption1-spacing)' }}>{time}</time>}
+          {time != null && <time dateTime={dateTime} style={{ flexShrink: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', letterSpacing: 'var(--caption1-spacing)' }}>{time}</time>}
         </div>
-        {description != null && <div style={{ marginTop: 'var(--space-1)', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', letterSpacing: 'var(--label2-spacing)', wordBreak: 'keep-all' }}>{description}</div>}
+        {description != null && <div style={{ marginTop: 'var(--space-1)', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', letterSpacing: 'var(--label2-spacing)', wordBreak: 'keep-all' }}>{description}</div>}
       </div>
     </Root>
   );

@@ -141,7 +141,7 @@ export function SegmentedControl({
               color: optionDisabled
                 ? 'var(--color-semantic-label-disable)'
                 : active
-                  ? 'var(--color-semantic-primary-heavy)'
+                  ? 'var(--color-semantic-label-normal)'
                   : activeFocus
                     ? 'var(--color-semantic-label-normal)'
                     : 'var(--color-semantic-label-neutral)',

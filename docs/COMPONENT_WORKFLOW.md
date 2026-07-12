@@ -160,6 +160,7 @@ API와 상태 증거는 [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MA
 
 ### 6. 시각, 반응형, 접근성 검토
 
+- 선택·활성 상태의 작은 텍스트는 light/dark 모두 4.5:1 이상을 유지한다. 낮은 강조나 선택 의미는 저대비 텍스트가 아니라 기존 surface, border, check/pressed semantics, font weight로 전달한다. 이 판정은 [WCAG 2.2 Contrast (Minimum)](https://www.w3.org/TR/WCAG22/#contrast-minimum), [Fluent 2 Button usage](https://fluent2.microsoft.design/components/web/react/core/button/usage), [Carbon Button usage](https://carbondesignsystem.com/components/button/usage/)를 근거로 하며, 외부 시스템의 색상은 복제하지 않고 LDS semantic foreground와 상태 문법으로 적용한다.
 - 가장 가까운 sibling과 동일 상태로 나란히 렌더해 control/icon size, spacing, typography, radius, border/divider, fill/foreground, shadow, hover/focus/disabled를 비교한다.
 - 대표 실제 콘텐츠로 normal width와 320~400px narrow width를 확인한다.
 - light와 dark/inverse, 긴 한국어·영어 label, 복수 action, mixed status, progress, error, disabled를 포함한 compound state를 확인한다.

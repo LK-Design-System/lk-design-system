@@ -215,3 +215,28 @@ export const OnDark = {
     </div>
   ),
 };
+
+export const DarkThemeGhost = {
+  name: '변형·상태 · 다크 테마 보조 버튼',
+  parameters: storyDescription(
+    '다크 semantic theme 안에서 낮은 강조의 ghost 행동을 배치하는 상황입니다. 투명한 표면과 얇은 보더가 위계를 낮추되, 텍스트는 현재 theme label foreground를 사용해 읽을 수 있어야 합니다.',
+  ),
+  render: () => (
+    <main
+      data-theme="dark"
+      style={{ width: 'min(100%, 520px)', padding: 28, boxSizing: 'border-box', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-normal-normal)' }}
+    >
+      <Button data-contract="dark-ghost" variant="ghost">세부 정보 보기</Button>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const button = canvasElement.querySelector('[data-contract="dark-ghost"]');
+    if (!button) throw new Error('Dark ghost Button contract target is required.');
+    const styles = getComputedStyle(button);
+    const foreground = styles.getPropertyValue('--component-button-ghost-fg').trim();
+    const scopedLabel = styles.getPropertyValue('--color-semantic-label-normal').trim();
+    if (foreground !== scopedLabel) {
+      throw new Error(`Dark ghost foreground must resolve at the rendered theme scope (${foreground} !== ${scopedLabel}).`);
+    }
+  },
+};

@@ -78,7 +78,7 @@ function MultiToggleSegment({ option, active, first, last, sizeStyle, disabled, 
         color: blocked
           ? 'var(--color-semantic-label-disable)'
           : active
-            ? 'var(--color-semantic-primary-heavy)'
+            ? 'var(--color-semantic-label-normal)'
             : 'var(--color-semantic-label-neutral)',
         background: blocked
           ? active

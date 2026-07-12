@@ -16,8 +16,8 @@
 
 - `main`은 PR #1의 design-system stabilization과 domain expansion 병합 commit `43ac938`을 기준선으로 문서 체계를 재정비했다.
 - public component implementation/type/export는 202개, named public export는 208개다.
-- 현재 Storybook 기준선은 177 pages / 524 stories / 398 public / 126 hidden / 89 visual-parity다.
-- 공용 dark-theme foreground는 design-owner 결정이 남아 있다. `Button/Playground`의 ghost label은 1.08:1, `Chip/ChipSelection`의 selected `Chip`은 2.24:1, active `FilterChip`은 2.65:1로 측정됐다. `--color-semantic-label-normal`을 사용하면 같은 표면에서 각각 15.92:1, 13.79:1, 11.99:1이지만, `Button`과 chip family 전체 및 `primary-heavy` selected-state 소비자에 영향을 주므로 승인 전에는 공용 값을 변경하지 않는다.
+- 현재 Storybook 기준선은 177 pages / 526 stories / 400 public / 126 hidden / 89 visual-parity다.
+- 승인된 dark-theme foreground 전수 감사를 완료했다. Button ghost와 `primary-heavy`를 소비하던 21개 component file을 theme-scope semantic foreground로 교정했고, 실제 다크 렌더 기준 Button ghost 15.92:1, selected Chip 13.79:1, active FilterChip/MultiSelectChip 11.99:1을 확인했다. `check:colors`는 이제 light/dark Button ghost, selected Chip, 공통 selected surface의 4.5:1 계약을 포함해 38개 pair를 검사한다.
 - 신규 컴포넌트·재설계·icon/asset/map symbol의 canonical 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)다.
 - 문서 탐색과 source-of-truth 순서는 [`README.md`](README.md)를 따른다.
 
@@ -53,6 +53,6 @@ npm run check:product-frontends
 
 ## Current next work
 
-1. design owner가 dark foreground 범위를 결정한다: `Button` + `Chip`/`FilterChip`/`MultiSelectChip`만 교정하거나, `primary-heavy` selected-state를 사용하는 21개 component file까지 별도 전수 감사한다.
-2. 승인된 범위에서는 root-resolved component alias 대신 렌더 theme scope의 semantic foreground를 사용하고, light/dark 대표 story와 4.5:1 text 대비 assertion을 추가한다.
-3. WF-15 wireframe evidence 다음으로 LK Control Full Daedeok와 LK Context Hub의 관련 workflow에 component disposition을 연결한다.
+1. WF-15 wireframe evidence 다음으로 LK Control Full Daedeok와 LK Context Hub의 관련 workflow에 component disposition을 연결한다.
+2. 신규 선택·활성 상태는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)의 4.5:1 light/dark foreground 계약과 기존 surface·border·pressed semantics를 재사용한다.
+3. 다음 component 변경에서도 정상 폭과 320~400px 좁은 폭을 함께 렌더하고 `check:colors`와 해당 Storybook play를 표적 실행한다.

@@ -1,7 +1,7 @@
 "use client";
 import {
   SegmentedControl
-} from "../../chunk-J6SY677P.js";
+} from "../../chunk-S264AQ77.js";
 export {
   SegmentedControl
 };

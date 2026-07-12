@@ -84,7 +84,7 @@
 
   --component-button-ghost-bg: transparent;
   --component-button-ghost-bg-hover: var(--component-button-ghost-bg);
-  --component-button-ghost-fg: var(--color-semantic-brand-ink);
+  --component-button-ghost-fg: var(--color-semantic-label-normal);
   --component-button-ghost-border: var(--border-thin) solid var(--color-semantic-line-solid-normal);
   --component-button-ghost-border-hover: var(--component-button-ghost-border);
 
@@ -153,7 +153,7 @@
   --component-chip-bg-hover: var(--color-semantic-background-elevated-normal);
   --component-chip-bg-selected: var(--color-semantic-primary-surface-strong);
   --component-chip-fg: var(--color-semantic-label-normal);
-  --component-chip-fg-active: var(--color-semantic-primary-heavy);
+  --component-chip-fg-active: var(--color-semantic-label-normal);
   --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
   --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
   --component-chip-solid-bg: var(--color-semantic-primary-normal);
@@ -250,4 +250,13 @@
   --component-card-shadow-lg: var(--shadow-lg);
   --component-card-hover-transform: translateY(-4px);
   --component-card-transition: var(--transition-base);
+}
+
+/* Component aliases declared at :root otherwise keep their light computed
+   value when inherited into a nested dark scope. Re-declare the two
+   theme-adaptive foreground contracts at the scope that owns the dark
+   semantic values. */
+:where([data-theme='dark'], .theme-dark) {
+  --component-button-ghost-fg: var(--color-semantic-label-normal);
+  --component-chip-fg-active: var(--color-semantic-label-normal);
 }

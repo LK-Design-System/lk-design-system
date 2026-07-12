@@ -5,6 +5,7 @@ const css = (await Promise.all([
   'tokens/color-atomic.css',
   'tokens/color-semantic.css',
   'tokens/color-components.css',
+  'tokens/components.css',
 ].map((file) => readFile(file, 'utf8')))).join('\n');
 
 const pairs = [
@@ -18,6 +19,9 @@ const pairs = [
   ['badge positive', '--component-badge-positive-fg', '--component-badge-positive-bg', 4.5],
   ['badge cautionary', '--component-badge-cautionary-fg', '--component-badge-cautionary-bg', 4.5],
   ['badge negative', '--component-badge-negative-fg', '--component-badge-negative-bg', 4.5],
+  ['button ghost text', '--component-button-ghost-fg', '--component-button-ghost-bg', 4.5],
+  ['chip selected text', '--component-chip-fg-active', '--component-chip-bg-selected', 4.5],
+  ['selected state text', '--color-semantic-label-normal', '--color-semantic-primary-surface-strong', 4.5],
   ['focus indicator on page', '--color-semantic-focus-indicator', '--color-semantic-background-normal-normal', 3],
   ['focus indicator on elevated', '--color-semantic-focus-indicator', '--color-semantic-background-elevated-normal', 3],
   ['status info text on surface', '--color-semantic-status-info-text', '--color-semantic-status-info-surface', 3],

@@ -212,7 +212,7 @@ export function Combobox({
             ? selectedValues.map((selectedValue) => {
                 const option = normalized.find((item) => item.value === selectedValue);
                 return (
-                  <span key={selectedValue} style={{ display: 'inline-flex', alignItems: 'center', maxWidth: '100%', height: 24, padding: '0 9px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-primary-heavy)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
+                  <span key={selectedValue} style={{ display: 'inline-flex', alignItems: 'center', maxWidth: '100%', height: 24, padding: '0 9px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-label-normal)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
                     {option?.label ?? selectedValue}
                   </span>
                 );
@@ -246,7 +246,7 @@ export function Combobox({
                 onMouseDown={(event) => event.preventDefault()}
                 onMouseEnter={() => { if (!option.disabled) setActiveIndex(index); }}
                 onClick={() => toggle(index)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', padding: '9px 10px', borderRadius: 'var(--radius-md)', background: selected ? 'var(--color-semantic-primary-surface-strong)' : active ? 'var(--color-semantic-fill-normal)' : 'transparent', color: option.disabled ? 'var(--color-semantic-label-disable)' : selected ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-normal)', cursor: option.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', padding: '9px 10px', borderRadius: 'var(--radius-md)', background: selected ? 'var(--color-semantic-primary-surface-strong)' : active ? 'var(--color-semantic-fill-normal)' : 'transparent', color: option.disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', cursor: option.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)' }}
               >
                 <span aria-hidden="true" style={{ width: 18, height: 18, borderRadius: 'var(--radius-5)', border: `1.5px solid ${selected ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, background: selected ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   {selected && <Icon name="check" size={16} color="var(--color-semantic-static-white)" aria-hidden="true" />}

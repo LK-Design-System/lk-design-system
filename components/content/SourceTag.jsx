@@ -1,6 +1,7 @@
 import React from 'react';
 
 const MONO = 'var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace)';
+const BRAND_FOREGROUND = 'color-mix(in srgb, var(--color-semantic-primary-normal) 60%, var(--color-semantic-label-normal))';
 
 /**
  * LK ROBOTICS — SourceTag
@@ -34,7 +35,7 @@ export function SourceTag({ children, label = 'SOURCE', href, tone = 'default', 
       }}
       {...rest}
     >
-      <span style={{ fontFamily: MONO, fontSize: 'var(--caption2-size)', fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: onDark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-heavy)' }}>{label}</span>
+      <span style={{ fontFamily: MONO, fontSize: 'var(--caption2-size)', fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: onDark ? 'var(--color-semantic-inverse-label)' : BRAND_FOREGROUND }}>{label}</span>
       <span aria-hidden="true" style={{ width: 1, height: 12, background: 'currentColor', opacity: 0.28 }} />
       <span style={{ fontWeight: 600 }}>{children}</span>
       {isLink && <span aria-hidden="true" style={{ opacity: hover ? 1 : 0.55, transition: 'opacity var(--dur-fast) var(--ease-out)' }}>↗</span>}

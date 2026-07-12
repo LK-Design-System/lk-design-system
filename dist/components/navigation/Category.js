@@ -1,7 +1,7 @@
 "use client";
 import {
   Category
-} from "../../chunk-ZINXTTNK.js";
+} from "../../chunk-RAOPVC4K.js";
 export {
   Category
 };

@@ -48,6 +48,44 @@ export const ChipSelection = {
   ),
 };
 
+export const DarkThemeSelection = {
+  name: '변형·상태 · 다크 테마 선택',
+  parameters: storyDescription(
+    'Chip, FilterChip, MultiSelectChip의 선택 상태를 같은 다크 semantic theme에서 비교합니다. 선택 의미는 surface·border·pressed semantics로 유지하고 텍스트와 count는 현재 theme label foreground로 읽혀야 합니다.',
+  ),
+  render: () => (
+    <main
+      data-theme="dark"
+      style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center', width: 'min(100%, 720px)', padding: 24, boxSizing: 'border-box', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-normal-normal)' }}
+    >
+      <Chip data-contract="dark-chip" selected>선택된 필터</Chip>
+      <FilterChip data-contract="dark-filter-chip" active count={3}>활성</FilterChip>
+      <MultiSelectChip data-contract="dark-multi-chip" defaultSelected>중요</MultiSelectChip>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const darkTheme = canvasElement.querySelector('[data-theme="dark"]');
+    const controls = [
+      canvasElement.querySelector('[data-contract="dark-chip"]'),
+      canvasElement.querySelector('[data-contract="dark-filter-chip"]'),
+      canvasElement.querySelector('[data-contract="dark-multi-chip"]'),
+    ];
+    if (!darkTheme || controls.some((control) => !control)) throw new Error('Dark chip family contract targets are required.');
+    const probe = canvasElement.ownerDocument.createElement('span');
+    probe.style.color = 'var(--color-semantic-label-normal)';
+    darkTheme.appendChild(probe);
+    const expectedForeground = getComputedStyle(probe).color;
+    probe.remove();
+    controls.forEach((control) => {
+      const styles = getComputedStyle(control);
+      const scopedLabel = styles.getPropertyValue('--color-semantic-label-normal').trim();
+      if (styles.color !== expectedForeground || !scopedLabel) {
+        throw new Error(`Selected chip foreground must resolve to the dark theme label (${styles.color}, ${scopedLabel}).`);
+      }
+    });
+  },
+};
+
 export const ChipCard = { ...ChipCardStory, name: 'Chip card parity', tags: ['!dev', 'visual-parity'] };
 export const FilterChipCard = { ...FilterChipCardStory, name: 'FilterChip card parity', tags: ['!dev', 'visual-parity'] };
 export const MultiSelectChipCard = { ...MultiSelectChipCardStory, name: 'MultiSelectChip card parity', tags: ['!dev', 'visual-parity'] };

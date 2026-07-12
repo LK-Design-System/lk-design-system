@@ -139,7 +139,7 @@ export function ToggleButton({
         color: blocked
           ? 'var(--color-semantic-label-disable)'
           : on
-            ? 'var(--color-semantic-primary-heavy)'
+            ? 'var(--color-semantic-label-normal)'
             : 'var(--color-semantic-label-neutral)',
         transition: 'var(--component-button-transition)',
         whiteSpace: 'nowrap',

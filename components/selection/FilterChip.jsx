@@ -37,7 +37,7 @@ export function FilterChip({
     >
       <span>{children}</span>
       {count != null && (
-        <span style={{ fontWeight: 'var(--fw-bold)', color: active ? 'var(--color-semantic-primary-heavy)' : 'var(--color-semantic-label-alternative)' }}>{count}</span>
+        <span style={{ fontWeight: 'var(--fw-bold)', color: active ? 'currentColor' : 'var(--color-semantic-label-alternative)' }}>{count}</span>
       )}
       {caret && (
         <Icon name="chevron-down-small" size={14} aria-hidden="true" />

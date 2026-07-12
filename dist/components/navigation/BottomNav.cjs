@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkPLAPUN62cjs = require('../../chunk-PLAPUN62.cjs');
+var _chunkEATEXZ3Ccjs = require('../../chunk-EATEXZ3C.cjs');
 
 
-exports.BottomNav = _chunkPLAPUN62cjs.BottomNav;
+exports.BottomNav = _chunkEATEXZ3Ccjs.BottomNav;
 //# sourceMappingURL=BottomNav.cjs.map

@@ -230,7 +230,7 @@ export function ChoiceCard({
             color: disabled
               ? 'var(--color-semantic-label-disable)'
               : selected
-                ? 'var(--color-semantic-primary-heavy)'
+                ? 'var(--color-semantic-label-normal)'
                 : 'var(--color-semantic-label-neutral)',
             display: 'inline-flex',
           }}
@@ -245,7 +245,7 @@ export function ChoiceCard({
           </div>
         )}
         {!isFrame && description != null && (
-          <div style={{ marginTop: 3, fontSize: 'var(--label2-size)', lineHeight: 1.55, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>
+          <div style={{ marginTop: 3, fontSize: 'var(--label2-size)', lineHeight: 1.55, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
             {description}
           </div>
         )}

@@ -53,7 +53,7 @@ export const ContentBadgePatterns = {
           <ContentBadge color="neutral">텍스트</ContentBadge>
           <ContentBadge color="accent">텍스트</ContentBadge>
           <ContentBadge color="accent" variant="outlined">텍스트</ContentBadge>
-          <ContentBadge color="accent" accentBackgroundColor="var(--color-semantic-primary-surface-strong)" accentContentColor="var(--color-semantic-accent-foreground-violet)">텍스트</ContentBadge>
+          <ContentBadge color="accent" accentBackgroundColor="var(--color-semantic-primary-surface-strong)" accentContentColor="var(--color-semantic-status-info-text)">텍스트</ContentBadge>
         </div>
       </section>
     </main>
