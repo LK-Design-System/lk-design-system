@@ -92,7 +92,7 @@ function FabStateDemo() {
 }
 
 export const InteractionAndDisabledContract = {
-  name: '상호작용 · 크기와 비활성 계약',
+  name: '상호작용 · 크기와 비활성',
   parameters: storyDescription(
     'FAB의 48·56·64px 크기와 hover·pressed·비활성 상태를 비교하는 상황입니다. 피드백은 위치를 움직이지 않는 색조 변화로 제공하며, aria-disabled FAB은 초점 순서에는 남지만 실행은 차단되어야 합니다.',
   ),

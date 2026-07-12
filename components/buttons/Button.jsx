@@ -41,6 +41,7 @@ export function Button({
   type,
   'aria-label': ariaLabel,
   'aria-disabled': ariaDisabled,
+  'aria-busy': ariaBusy,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
@@ -194,7 +195,7 @@ export function Button({
       disabled={as === 'button' ? disabledState : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
       aria-label={loading ? loadingLabel : ariaLabel}
-      aria-busy={loading || undefined}
+      aria-busy={loading || ariaBusy || undefined}
       aria-disabled={ariaBlocked || (as !== 'button' && disabledState) || undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); setPressed(false); onMouseLeave && onMouseLeave(e); }}

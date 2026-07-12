@@ -159,7 +159,7 @@ function ButtonStateContractDemo() {
 }
 
 export const InteractionContract = {
-  name: '상호작용 · 상태 계약',
+  name: '상호작용 · 상태와 처리',
   parameters: storyDescription(
     '일반·hover·pressed·loading·ARIA disabled·danger 상태를 한 흐름에서 검증하는 상황입니다. hover와 pressed는 위치를 바꾸지 않는 tone 변화이며 loading은 폭을 유지하고 aria-disabled는 focus 가능하지만 실행되지 않아야 합니다.',
   ),

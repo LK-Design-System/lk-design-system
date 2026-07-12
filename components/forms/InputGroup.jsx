@@ -109,6 +109,7 @@ export function InputGroup({
       <div
         {...groupProps}
         data-readonly={readOnly ? 'true' : undefined}
+        data-disabled={disabled ? 'true' : undefined}
         onMouseEnter={(event) => {
           setHovered(true);
           onMouseEnter?.(event);

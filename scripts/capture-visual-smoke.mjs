@@ -105,7 +105,7 @@ const targets = [
   },
   {
     name: 'wds-segmented-control-matrix',
-    match: { importPath: './stories/SelectionSegmentedControl.stories.jsx', exportName: 'SegmentedControlMatrix' },
+    match: { importPath: './stories/SelectionSegmentedControl.stories.jsx', exportName: 'SegmentedControlStates' },
     viewport: { width: 980, height: 760 },
   },
   {

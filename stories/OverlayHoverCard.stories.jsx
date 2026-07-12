@@ -40,7 +40,7 @@ export const HoverCardOverview = {
 };
 
 export const HoverCardInteractionContract = {
-  name: '상호작용 · hover·focus·Escape',
+  name: '상호작용 · 호버·초점·Escape',
   parameters: storyDescription(
     '화면 오른쪽 아래의 focusable trigger에서 Hover Card를 열어 키보드 focus와 pointer hover가 같은 미리보기를 제공하고, Escape로 닫은 뒤 trigger 초점과 화면 경계를 유지하는지 확인합니다.',
   ),

@@ -99,7 +99,7 @@ export const FormattingAndValueText = {
 };
 
 export const UnitFormattingAt320 = {
-  name: '반응형 · 320px 단위 결합 계약',
+  name: '반응형 · 320px 단위 결합',
   parameters: storyDescription(
     '320px 상태 패널에서 기호 단위와 SI·복합 단위를 나란히 비교합니다. 중앙 lockup과 aria-valuetext가 동일한 정규화 결과를 사용하고 두 열 게이지가 패널 밖으로 넘치지 않는지 확인하세요.',
   ),

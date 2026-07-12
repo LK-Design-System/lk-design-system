@@ -48,7 +48,7 @@ export const ButtonGroups = {
 };
 
 export const SelectionContracts = {
-  name: '상호작용 · 단일·복수 선택 계약',
+  name: '상호작용 · 단일·복수 선택',
   parameters: storyDescription(
     '서로 배타적인 보기 전환과 여러 표시 옵션을 각각 검증하는 상황입니다. 단일 선택은 Segmented Control의 radio 규칙과 방향키 이동을 공유하고, 복수 선택은 각 버튼의 pressed 상태를 독립적으로 바꾸며 비활성 옵션은 건너뜁니다.',
   ),

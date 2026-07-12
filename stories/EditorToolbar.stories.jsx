@@ -94,7 +94,7 @@ export const Vertical = {
     const toolbar = canvasElement.querySelector('[data-testid="editor-toolbar"]');
     const items = Array.from(toolbar.querySelectorAll('[data-lk-editor-toolbar-item]'));
     const rect = toolbar.getBoundingClientRect();
-    const expectedMainSize = items.length * 32 + (items.length - 1) * 2;
+    const expectedMainSize = items.length * 32 + (items.length - 1) * 4;
     if (toolbar.getAttribute('aria-orientation') !== 'vertical' || !toolbar.getAttribute('aria-label')) {
       throw new Error('EditorToolbar must expose its orientation and accessible name.');
     }
@@ -135,7 +135,7 @@ export const Horizontal = {
     const toolbar = canvasElement.querySelector('[data-testid="editor-toolbar"]');
     const items = Array.from(toolbar.querySelectorAll('[data-lk-editor-toolbar-item]'));
     const rect = toolbar.getBoundingClientRect();
-    const expectedMainSize = items.length * 32 + (items.length - 1) * 2;
+    const expectedMainSize = items.length * 32 + (items.length - 1) * 4;
     if (Math.abs(rect.height - 32) > 1 || Math.abs(rect.width - expectedMainSize) > 1) {
       throw new Error('A horizontal EditorToolbar must keep its shared 32px control geometry and intrinsic length.');
     }

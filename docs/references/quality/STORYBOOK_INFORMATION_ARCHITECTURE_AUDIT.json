@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-12",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "ef0d116c408c9f19c07c31a5c736b148f59ab7b600bb8f99d1be8e733f339248",
+    "storybookIndexSha256": "cde6027b18fc336c33861134032ec95514b0fed2022852d3b4cd6b9355234f36",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -60,15 +60,15 @@
   },
   "summary": {
     "pages": 168,
-    "stories": 443,
-    "publicStories": 336,
-    "hiddenStories": 107,
-    "componentDescriptions": 168,
+    "stories": 469,
+    "publicStories": 351,
+    "hiddenStories": 118,
+    "componentDescriptions": 164,
     "pagesWithVisibleCanvasIntroduction": 168,
     "pagesWithDecisionGuidance": 163,
-    "describedPublicStories": 336,
+    "describedPublicStories": 351,
     "reviewedPages": 168,
-    "reviewedStories": 443,
+    "reviewedStories": 469,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
@@ -76,11 +76,11 @@
       "overview": 161,
       "usage": 15,
       "variants-states": 63,
-      "interaction": 25,
-      "responsive": 38,
-      "scenario": 24,
+      "interaction": 36,
+      "responsive": 41,
+      "scenario": 25,
       "visual-parity": 82,
-      "internal-contract": 25
+      "internal-contract": 36
     },
     "dispositions": {
       "keep": 168,
@@ -91,9 +91,9 @@
     "layers": {
       "Core": {
         "pages": 54,
-        "stories": 134,
-        "public": 76,
-        "hidden": 58,
+        "stories": 150,
+        "public": 85,
+        "hidden": 65,
         "guideReadyPages": 54
       },
       "Foundation": {
@@ -105,15 +105,15 @@
       },
       "Product": {
         "pages": 80,
-        "stories": 199,
-        "public": 172,
-        "hidden": 27,
+        "stories": 206,
+        "public": 175,
+        "hidden": 31,
         "guideReadyPages": 80
       },
       "Robotics": {
         "pages": 24,
-        "stories": 93,
-        "public": 74,
+        "stories": 96,
+        "public": 77,
         "hidden": 19,
         "guideReadyPages": 24
       },
@@ -132,7 +132,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionArea.stories.jsx",
-      "sourceSha256": "e8c179bd2053fb1d72047aca0c65c13678e6107b030a988181fba2f190665e16",
+      "sourceSha256": "14cb902da5a982cc71185c00480e93280c3e9b9b66a842d13a82a48afe115641",
       "primaryOwner": "ActionArea",
       "ownerComponents": [
         "ActionArea"
@@ -161,7 +161,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "e8c179bd2053fb1d72047aca0c65c13678e6107b030a988181fba2f190665e16",
+      "reviewedSourceSha256": "14cb902da5a982cc71185c00480e93280c3e9b9b66a842d13a82a48afe115641",
       "stories": [
         {
           "id": "lds-core-components-action-action-area--bottom-action-area",
@@ -222,7 +222,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/Button.stories.jsx",
-      "sourceSha256": "b424d8d639197a58161f21c65fa1e0720c0df31125ce91e4862b684b64e24d0c",
+      "sourceSha256": "e985aa93c35f61b6730ea07e6389af39fbbce936e37271f127f4fb0d5c8d7801",
       "primaryOwner": "Button",
       "ownerComponents": [
         "Button"
@@ -231,13 +231,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-button--playground",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -248,7 +248,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "b424d8d639197a58161f21c65fa1e0720c0df31125ce91e4862b684b64e24d0c",
+      "reviewedSourceSha256": "e985aa93c35f61b6730ea07e6389af39fbbce936e37271f127f4fb0d5c8d7801",
       "stories": [
         {
           "id": "lds-core-components-action-button--playground",
@@ -363,6 +363,28 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-action-button--interaction-contract",
+          "name": "상호작용 · 상태와 처리",
+          "exportName": "InteractionContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Button"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
@@ -372,20 +394,20 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionButtonGroup.stories.jsx",
-      "sourceSha256": "492427a9896c9378321741f38aba57ba92293e1083995c9ba41bbc4e88adbe3f",
+      "sourceSha256": "206d9153fd809d089104d0473545d50b9b5f61796bf0110d0895b04ceb0f9ea3",
       "primaryOwner": "ButtonGroup",
       "ownerComponents": [
         "ButtonGroup"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-button-group--button-groups",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -396,7 +418,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "492427a9896c9378321741f38aba57ba92293e1083995c9ba41bbc4e88adbe3f",
+      "reviewedSourceSha256": "206d9153fd809d089104d0473545d50b9b5f61796bf0110d0895b04ceb0f9ea3",
       "stories": [
         {
           "id": "lds-core-components-action-button-group--button-groups",
@@ -419,6 +441,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-action-button-group--selection-contracts",
+          "name": "상호작용 · 단일·복수 선택",
+          "exportName": "SelectionContracts",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ButtonGroup"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-action-button-group--button-icon-button-social-button-card",
@@ -450,7 +494,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionFab.stories.jsx",
-      "sourceSha256": "91dcf84da6f31aa88306f52d69ded8ac36ed924a065990deea6c73658aa1503f",
+      "sourceSha256": "59dbbd602a30aead9e98891b75ef5bf02ff18e1a293ec331349d505d79d8d99a",
       "primaryOwner": "Fab",
       "ownerComponents": [
         "Fab"
@@ -459,13 +503,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-fab--floating-action-button",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -476,7 +520,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "91dcf84da6f31aa88306f52d69ded8ac36ed924a065990deea6c73658aa1503f",
+      "reviewedSourceSha256": "59dbbd602a30aead9e98891b75ef5bf02ff18e1a293ec331349d505d79d8d99a",
       "stories": [
         {
           "id": "lds-core-components-action-fab--floating-action-button",
@@ -501,6 +545,30 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-action-fab--interaction-and-disabled-contract",
+          "name": "상호작용 · 크기와 비활성",
+          "exportName": "InteractionAndDisabledContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Fab"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         }
       ],
       "reviewNote": "2026-07-12 post-split source and Core layer review: keep."
@@ -510,7 +578,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionIconButton.stories.jsx",
-      "sourceSha256": "35950d8b0c788089a6f05751a27067beea62a4c33faf9a12e5d0631b68ec4c38",
+      "sourceSha256": "d98baef6424ccb7de659a146788e47925fd297696696182ff4159d162958a205",
       "primaryOwner": "IconButton",
       "ownerComponents": [
         "IconButton"
@@ -519,13 +587,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-icon-button--icon-button-variants",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -536,7 +604,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "35950d8b0c788089a6f05751a27067beea62a4c33faf9a12e5d0631b68ec4c38",
+      "reviewedSourceSha256": "d98baef6424ccb7de659a146788e47925fd297696696182ff4159d162958a205",
       "stories": [
         {
           "id": "lds-core-components-action-icon-button--icon-button-variants",
@@ -561,6 +629,30 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-action-icon-button--interaction-and-disabled-contract",
+          "name": "상호작용 · 아이콘 행동",
+          "exportName": "InteractionAndDisabledContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "IconButton"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
@@ -570,7 +662,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionSplitButton.stories.jsx",
-      "sourceSha256": "537ecc236dc8a3efc3566beaaf7e6a014e9ba5f0b2a66c853a17c91399e1d85f",
+      "sourceSha256": "bc960c518f2159dc4abc40c79bc250f1d518208e3cc9dad662dba6750458a0b9",
       "primaryOwner": "SplitButton",
       "ownerComponents": [
         "SplitButton"
@@ -579,13 +671,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-split-button--split-buttons",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -596,7 +688,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "537ecc236dc8a3efc3566beaaf7e6a014e9ba5f0b2a66c853a17c91399e1d85f",
+      "reviewedSourceSha256": "bc960c518f2159dc4abc40c79bc250f1d518208e3cc9dad662dba6750458a0b9",
       "stories": [
         {
           "id": "lds-core-components-action-split-button--split-buttons",
@@ -621,6 +713,28 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-action-split-button--keyboard-and-state-contract",
+          "name": "상호작용 · 키보드와 처리 상태",
+          "exportName": "KeyboardAndStateContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SplitButton"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 post-split source and Core layer review: keep."
@@ -630,20 +744,20 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionTextButton.stories.jsx",
-      "sourceSha256": "507e0898b248bf3e4362a07a25c3638ed262c31e2425771f5a104a9db65b2f4c",
+      "sourceSha256": "dbdb7b82e2adcef7ec6408200ad9af69a8d04356e77a03e5243dcaa1f61da6cb",
       "primaryOwner": "TextButton",
       "ownerComponents": [
         "TextButton"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-text-button--text-button-states",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -654,7 +768,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "507e0898b248bf3e4362a07a25c3638ed262c31e2425771f5a104a9db65b2f4c",
+      "reviewedSourceSha256": "dbdb7b82e2adcef7ec6408200ad9af69a8d04356e77a03e5243dcaa1f61da6cb",
       "stories": [
         {
           "id": "lds-core-components-action-text-button--text-button-states",
@@ -677,6 +791,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-action-text-button--interaction-and-loading-contract",
+          "name": "상호작용 · 로딩과 비활성",
+          "exportName": "InteractionAndLoadingContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TextButton"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
@@ -686,7 +822,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionToggleIcon.stories.jsx",
-      "sourceSha256": "982cd5a4fc559b571c5634945edd51549c7c7577ab43aaf4e4bf9fb5f9d0b9f6",
+      "sourceSha256": "d6535a1fc511467c1e60173970026b8ce13300f990ac38b44c9ce672381c6dda",
       "primaryOwner": "ToggleIcon",
       "ownerComponents": [
         "ToggleIcon"
@@ -695,13 +831,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-action-toggle-icon--toggle-states",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -712,7 +848,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "982cd5a4fc559b571c5634945edd51549c7c7577ab43aaf4e4bf9fb5f9d0b9f6",
+      "reviewedSourceSha256": "d6535a1fc511467c1e60173970026b8ce13300f990ac38b44c9ce672381c6dda",
       "stories": [
         {
           "id": "lds-core-components-action-toggle-icon--toggle-states",
@@ -737,6 +873,30 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-action-toggle-icon--interaction-contract",
+          "name": "상호작용 · 지속 상태",
+          "exportName": "InteractionContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ToggleIcon"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
@@ -1572,7 +1732,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentTooltip.stories.jsx",
-      "sourceSha256": "f11c76acc3e5302cf6ee43bc02350a0b66b9ea7e31e6bd0ea48044f977ea82ef",
+      "sourceSha256": "b0f81a128e05cffde70a087b8e35b4398b1eb4cd5e74702c596e7f03693c9d70",
       "primaryOwner": "Tooltip",
       "ownerComponents": [
         "Tooltip"
@@ -1582,13 +1742,13 @@
         "IconButton"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-tooltip--tooltip-patterns",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -1599,7 +1759,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "f11c76acc3e5302cf6ee43bc02350a0b66b9ea7e31e6bd0ea48044f977ea82ef",
+      "reviewedSourceSha256": "b0f81a128e05cffde70a087b8e35b4398b1eb4cd5e74702c596e7f03693c9d70",
       "stories": [
         {
           "id": "lds-core-components-content-tooltip--tooltip-patterns",
@@ -1625,6 +1785,31 @@
             "IconButton"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-content-tooltip--tooltip-interaction-contract",
+          "name": "상호작용 · 초점·Escape·협폭 배치",
+          "exportName": "TooltipInteractionContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Tooltip"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ]
         },
         {
           "id": "lds-core-components-content-tooltip--tooltip-bubble-bookmark-divider-card",
@@ -2638,7 +2823,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayConfirmDialog.stories.jsx",
-      "sourceSha256": "827900e384210ef3c748e78025c7942a634bf4c03f401f1a1dcef77220ebdcff",
+      "sourceSha256": "31eca56bf05323aa1c18feb622246628fb94bd85cc73b26d160469f41f78f58a",
       "primaryOwner": "ConfirmDialog",
       "ownerComponents": [
         "ConfirmDialog"
@@ -2665,7 +2850,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "827900e384210ef3c748e78025c7942a634bf4c03f401f1a1dcef77220ebdcff",
+      "reviewedSourceSha256": "31eca56bf05323aa1c18feb622246628fb94bd85cc73b26d160469f41f78f58a",
       "stories": [
         {
           "id": "lds-core-components-overlay-confirm-dialog--confirmation-states",
@@ -2806,7 +2991,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
-      "sourceSha256": "3936f256e8ec01d4f873abe6b419ec5e261f24c3816d3977fc1cca3d64827678",
+      "sourceSha256": "ce1e26499d7a71788b8f2e61d477df6a0389d854a576f30578ee2584c622010d",
       "primaryOwner": "DropdownMenu",
       "ownerComponents": [
         "DropdownMenu"
@@ -2833,7 +3018,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "3936f256e8ec01d4f873abe6b419ec5e261f24c3816d3977fc1cca3d64827678",
+      "reviewedSourceSha256": "ce1e26499d7a71788b8f2e61d477df6a0389d854a576f30578ee2584c622010d",
       "stories": [
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
@@ -2915,7 +3100,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayModal.stories.jsx",
-      "sourceSha256": "85d73ec315d328dd176786fe6d4a2e4fa0a1267770a8e5371849fdcdf26de9cc",
+      "sourceSha256": "617919e20e8b0a5b3d32fd19175cd94c24e8fc17af6271b12610052144ed7297",
       "primaryOwner": "Modal",
       "ownerComponents": [
         "Modal"
@@ -2941,7 +3126,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "85d73ec315d328dd176786fe6d4a2e4fa0a1267770a8e5371849fdcdf26de9cc",
+      "reviewedSourceSha256": "617919e20e8b0a5b3d32fd19175cd94c24e8fc17af6271b12610052144ed7297",
       "stories": [
         {
           "id": "lds-core-components-overlay-modal--modal-open",
@@ -3103,21 +3288,23 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayToast.stories.jsx",
-      "sourceSha256": "3da26d3a3dd85896f440f1da95e80963961f6f2982be8575cf109e7f4c5c8274",
+      "sourceSha256": "71fcc941c49a1eaaa5d5de6a60a8555d4f62dcac819d4d03b7e3c6606ebf9ab8",
       "primaryOwner": "Toast",
       "ownerComponents": [
         "Toast",
         "ToastStack"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Button"
+      ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-overlay-toast--toast-notifications",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -3128,7 +3315,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "3da26d3a3dd85896f440f1da95e80963961f6f2982be8575cf109e7f4c5c8274",
+      "reviewedSourceSha256": "71fcc941c49a1eaaa5d5de6a60a8555d4f62dcac819d4d03b7e3c6606ebf9ab8",
       "stories": [
         {
           "id": "lds-core-components-overlay-toast--toast-notifications",
@@ -3174,6 +3361,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-overlay-toast--duration-policy",
+          "name": "시나리오 · 지속시간과 일시정지",
+          "exportName": "DurationPolicy",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Toast"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
         },
         {
           "id": "lds-core-components-overlay-toast--toast-card",
@@ -3228,19 +3438,20 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionStatus.stories.jsx",
-      "sourceSha256": "6b4a5edaf621d70ead866040eeaa9689f52beb8f27a245b03b0b2d2d95dedd07",
+      "sourceSha256": "0e2ca70e94b6b631025dd3441b9529cf59fde17ffab156e872a596a175d40543",
       "primaryOwner": "ChoiceCard",
       "ownerComponents": [
-        "ChoiceCard",
+        "ChoiceCard"
+      ],
+      "supportingComponents": [
         "Icon"
       ],
-      "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 1
+        "hidden": 3
       },
       "descriptionEvidence": {
-        "componentDescription": true,
+        "componentDescription": false,
         "storyGuideId": "lds-core-components-selection-and-input-card-selection--choice-cards",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
@@ -3253,7 +3464,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "6b4a5edaf621d70ead866040eeaa9689f52beb8f27a245b03b0b2d2d95dedd07",
+      "reviewedSourceSha256": "0e2ca70e94b6b631025dd3441b9529cf59fde17ffab156e872a596a175d40543",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-card-selection--choice-cards",
@@ -3278,6 +3489,47 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-card-selection--choice-card-input-contract",
+          "name": "단일·다중 선택 계약",
+          "exportName": "ChoiceCardInputContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ChoiceCard"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-card-selection--choice-card-states",
+          "name": "상태와 좁은 너비",
+          "exportName": "ChoiceCardStates",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ChoiceCard"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-selection-and-input-card-selection--choice-card-card",
@@ -3560,7 +3812,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormInput.stories.jsx",
-      "sourceSha256": "d2aa4b360d2d64b3cd946cd21b78bf227ce18c0edecfadd5c16694e7d0177766",
+      "sourceSha256": "3c4de39ead21f055a90572aafd4a1269c2599a249fc6a4f7e79db1e228747b67",
       "primaryOwner": "Input",
       "ownerComponents": [
         "Input"
@@ -3570,7 +3822,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 2
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -3586,7 +3838,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "d2aa4b360d2d64b3cd946cd21b78bf227ce18c0edecfadd5c16694e7d0177766",
+      "reviewedSourceSha256": "3c4de39ead21f055a90572aafd4a1269c2599a249fc6a4f7e79db1e228747b67",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-input--input-overview",
@@ -3633,6 +3885,27 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-input--input-description-contract",
+          "name": "설명 연결 계약",
+          "exportName": "InputDescriptionContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Input"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-selection-and-input-input--input-interaction-matrix",
@@ -3688,7 +3961,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormRadio.stories.jsx",
-      "sourceSha256": "2f915a995b05de684fb3aed6d8df85ebc1c576ee60f1d97d0311fd6523e123be",
+      "sourceSha256": "0b9f2635b2ffcba8a8d5c596c26c6cc995942f066fc87ed8b602491ca241c49d",
       "primaryOwner": "Radio",
       "ownerComponents": [
         "Radio"
@@ -3698,7 +3971,7 @@
       ],
       "visibility": {
         "public": 1,
-        "hidden": 2
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -3714,7 +3987,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "2f915a995b05de684fb3aed6d8df85ebc1c576ee60f1d97d0311fd6523e123be",
+      "reviewedSourceSha256": "0b9f2635b2ffcba8a8d5c596c26c6cc995942f066fc87ed8b602491ca241c49d",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-radio--radios",
@@ -3739,6 +4012,27 @@
             "RadioGroup"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-radio--radio-uncontrolled-group-contract",
+          "name": "비제어 그룹 동기화",
+          "exportName": "RadioUncontrolledGroupContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Radio"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-selection-and-input-radio--radio-state-contract",
@@ -3790,7 +4084,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSearchAutocomplete.stories.jsx",
-      "sourceSha256": "5d3a3e2f45d878e9b162f19bf577742c829a87f437fa3e25f442a74c865f09a2",
+      "sourceSha256": "2b06a85a07ee11c1a9ed591a9c31b985fceee2cd1d16ece159cb22caafc7c509",
       "primaryOwner": "SearchField",
       "ownerComponents": [
         "AutoComplete",
@@ -3801,7 +4095,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 2
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -3817,7 +4111,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "5d3a3e2f45d878e9b162f19bf577742c829a87f437fa3e25f442a74c865f09a2",
+      "reviewedSourceSha256": "2b06a85a07ee11c1a9ed591a9c31b985fceee2cd1d16ece159cb22caafc7c509",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
@@ -3844,6 +4138,50 @@
             "TagInput"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete-states",
+          "name": "상태와 좁은 너비",
+          "exportName": "SearchAndAutocompleteStates",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AutoComplete"
+          ],
+          "supportingComponents": [
+            "Combobox",
+            "SearchField"
+          ]
+        },
+        {
+          "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-keyboard-contract",
+          "name": "제안 키보드 계약",
+          "exportName": "AutocompleteKeyboardContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AutoComplete"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--auto-complete-card",
@@ -3897,7 +4235,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionSegmentedControl.stories.jsx",
-      "sourceSha256": "9106409c755257645b5cea7acf49155e26ba65d5b660a713ca47c1879e5edf12",
+      "sourceSha256": "0c27d384877241c9252d645881611eba5de7fcf27495da35673ae25af864328d",
       "primaryOwner": "SegmentedControl",
       "ownerComponents": [
         "SegmentedControl"
@@ -3910,7 +4248,7 @@
         "hidden": 3
       },
       "descriptionEvidence": {
-        "componentDescription": true,
+        "componentDescription": false,
         "storyGuideId": "lds-core-components-selection-and-input-segmented-control--segmented-control-overview",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
@@ -3923,7 +4261,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "9106409c755257645b5cea7acf49155e26ba65d5b660a713ca47c1879e5edf12",
+      "reviewedSourceSha256": "0c27d384877241c9252d645881611eba5de7fcf27495da35673ae25af864328d",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-overview",
@@ -3948,12 +4286,13 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
-          "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-matrix",
-          "name": "세그먼트 상태",
-          "exportName": "SegmentedControlMatrix",
+          "id": "lds-core-components-selection-and-input-segmented-control--segmented-keyboard-contract",
+          "name": "로빙 키보드 계약",
+          "exportName": "SegmentedKeyboardContract",
           "visibility": "hidden",
           "tags": [
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "internal-contract",
@@ -3965,15 +4304,12 @@
           "ownerComponents": [
             "SegmentedControl"
           ],
-          "supportingComponents": [
-            "Icon"
-          ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "supportingComponents": []
         },
         {
-          "id": "lds-core-components-selection-and-input-segmented-control--segmented-interaction-matrix",
-          "name": "Segmented interaction",
-          "exportName": "SegmentedInteractionMatrix",
+          "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-states",
+          "name": "상태와 좁은 너비",
+          "exportName": "SegmentedControlStates",
           "visibility": "hidden",
           "tags": [
             "manifest",
@@ -3990,8 +4326,7 @@
           ],
           "supportingComponents": [
             "Icon"
-          ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          ]
         },
         {
           "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-card",
@@ -4023,7 +4358,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSelect.stories.jsx",
-      "sourceSha256": "8f2d15577dcbddc79f9bade5d085ee36aead46d48d4f665a96820fcabb0eb74e",
+      "sourceSha256": "2050ce64f4f7ccc38dd76003255bca260b281667bff6158cd083a7a4abd79e12",
       "primaryOwner": "Select",
       "ownerComponents": [
         "Select"
@@ -4047,7 +4382,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "8f2d15577dcbddc79f9bade5d085ee36aead46d48d4f665a96820fcabb0eb74e",
+      "reviewedSourceSha256": "2050ce64f4f7ccc38dd76003255bca260b281667bff6158cd083a7a4abd79e12",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-select--selects",
@@ -4280,7 +4615,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionSwitch.stories.jsx",
-      "sourceSha256": "f87fad3692ee44cd9f42170a116ceda7b7f0983867ea8f60f1a5d1c2a145b1af",
+      "sourceSha256": "c57ed6a200b1449d7bce6a04344b37b7f7836fda4afbe5fcf59d8d6024f4a897",
       "primaryOwner": "Switch",
       "ownerComponents": [
         "Switch"
@@ -4304,7 +4639,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "f87fad3692ee44cd9f42170a116ceda7b7f0983867ea8f60f1a5d1c2a145b1af",
+      "reviewedSourceSha256": "c57ed6a200b1449d7bce6a04344b37b7f7836fda4afbe5fcf59d8d6024f4a897",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-switch--switch-control",
@@ -4400,7 +4735,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormTextarea.stories.jsx",
-      "sourceSha256": "5579a94b5f7ff6cac82f032ccacc58e38471b4d90ef335bd45c7a591f29c30ce",
+      "sourceSha256": "0de7746c66bba9731b0a509175ca5baff3e91dd25e0e8de3e83c4f321264bb84",
       "primaryOwner": "Textarea",
       "ownerComponents": [
         "Textarea"
@@ -4408,7 +4743,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 2,
-        "hidden": 2
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -4424,7 +4759,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "5579a94b5f7ff6cac82f032ccacc58e38471b4d90ef335bd45c7a591f29c30ce",
+      "reviewedSourceSha256": "0de7746c66bba9731b0a509175ca5baff3e91dd25e0e8de3e83c4f321264bb84",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-textarea--textarea-overview",
@@ -4469,6 +4804,27 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-textarea--textarea-description-contract",
+          "name": "설명 연결 계약",
+          "exportName": "TextareaDescriptionContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Textarea"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-selection-and-input-textarea--textarea-interaction-matrix",
@@ -9963,7 +10319,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationMenubar.stories.jsx",
-      "sourceSha256": "e25fa93be7800b625d9dfc88f51f50bf2ca6b9d3fff91882505ce824309c15ad",
+      "sourceSha256": "995381ca4c91e406093803fe1d43ca1ab8c11ac9a5568e45c188bd7043415830",
       "primaryOwner": "Menubar",
       "ownerComponents": [
         "Menubar"
@@ -9987,7 +10343,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "e25fa93be7800b625d9dfc88f51f50bf2ca6b9d3fff91882505ce824309c15ad",
+      "reviewedSourceSha256": "995381ca4c91e406093803fe1d43ca1ab8c11ac9a5568e45c188bd7043415830",
       "stories": [
         {
           "id": "lds-product-navigation-menubar--menubar-patterns",
@@ -10346,7 +10702,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationUserMenu.stories.jsx",
-      "sourceSha256": "90978872358db464bfcba2114f338a056152d2fc78617f9f2cbb304172216b9a",
+      "sourceSha256": "029aa77a3ab4ca81ad397a3e3bacb8dc5f7e75da13f13c8369280cc2f5db68f6",
       "primaryOwner": "UserMenu",
       "ownerComponents": [
         "UserMenu"
@@ -10370,7 +10726,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "90978872358db464bfcba2114f338a056152d2fc78617f9f2cbb304172216b9a",
+      "reviewedSourceSha256": "029aa77a3ab4ca81ad397a3e3bacb8dc5f7e75da13f13c8369280cc2f5db68f6",
       "stories": [
         {
           "id": "lds-product-navigation-user-menu--user-menus",
@@ -10565,7 +10921,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayDrawer.stories.jsx",
-      "sourceSha256": "79d3f414afba2ed248a7e60b96e431121bd9a8fb8d6aa70b0690b08608632ff1",
+      "sourceSha256": "16cfe993ba28855683aab5c3f33cd1fa35d75e8ca97dcbea98a425d3e39ec473",
       "primaryOwner": "Drawer",
       "ownerComponents": [
         "Drawer"
@@ -10592,7 +10948,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "79d3f414afba2ed248a7e60b96e431121bd9a8fb8d6aa70b0690b08608632ff1",
+      "reviewedSourceSha256": "16cfe993ba28855683aab5c3f33cd1fa35d75e8ca97dcbea98a425d3e39ec473",
       "stories": [
         {
           "id": "lds-product-overlay-drawer--drawer-open",
@@ -10674,7 +11030,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayHoverCard.stories.jsx",
-      "sourceSha256": "2fa38c5720b8f941641de6f88f019416dbc00a5950ba4390cbf6f3720e37ccc3",
+      "sourceSha256": "7492becb526ae07cab17343604362f15e59ced5e3613fbe059ec417472213298",
       "primaryOwner": "HoverCard",
       "ownerComponents": [
         "HoverCard"
@@ -10683,13 +11039,13 @@
         "Button"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-overlay-hover-card--hover-card-overview",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -10700,7 +11056,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "2fa38c5720b8f941641de6f88f019416dbc00a5950ba4390cbf6f3720e37ccc3",
+      "reviewedSourceSha256": "7492becb526ae07cab17343604362f15e59ced5e3613fbe059ec417472213298",
       "stories": [
         {
           "id": "lds-product-overlay-hover-card--hover-card-overview",
@@ -10725,6 +11081,30 @@
             "Button"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-overlay-hover-card--hover-card-interaction-contract",
+          "name": "상호작용 · 호버·초점·Escape",
+          "exportName": "HoverCardInteractionContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "HoverCard"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
         },
         {
           "id": "lds-product-overlay-hover-card--hover-card-card",
@@ -10861,7 +11241,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayPopover.stories.jsx",
-      "sourceSha256": "34460ecb84e9d6cab7ebccd5b57822fb069b3373662753a4115e4be541f29cb2",
+      "sourceSha256": "db76f89f71171029514baf87ce617ebb9eea9fa896b7a1ccf99d92c9e55e8709",
       "primaryOwner": "Popover",
       "ownerComponents": [
         "Popover"
@@ -10870,13 +11250,13 @@
         "Button"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-overlay-popover--popover-overview",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -10887,7 +11267,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "34460ecb84e9d6cab7ebccd5b57822fb069b3373662753a4115e4be541f29cb2",
+      "reviewedSourceSha256": "db76f89f71171029514baf87ce617ebb9eea9fa896b7a1ccf99d92c9e55e8709",
       "stories": [
         {
           "id": "lds-product-overlay-popover--popover-overview",
@@ -10912,6 +11292,30 @@
             "Button"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-overlay-popover--popover-interaction-contract",
+          "name": "상호작용 · 초점·Escape·화면 경계",
+          "exportName": "PopoverInteractionContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
         },
         {
           "id": "lds-product-overlay-popover--popover-card",
@@ -10943,7 +11347,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlaySheet.stories.jsx",
-      "sourceSha256": "99cb95a528b705dabd8d3f47f9d733e3b08bf36829e11198ac48ac81744dbb7e",
+      "sourceSha256": "08a75e48d50f85a8b71de5b5e0ad5f7411acc021d6439373eaf02e8c404a40ce",
       "primaryOwner": "Sheet",
       "ownerComponents": [
         "Sheet"
@@ -10969,7 +11373,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "99cb95a528b705dabd8d3f47f9d733e3b08bf36829e11198ac48ac81744dbb7e",
+      "reviewedSourceSha256": "08a75e48d50f85a8b71de5b5e0ad5f7411acc021d6439373eaf02e8c404a40ce",
       "stories": [
         {
           "id": "lds-product-overlay-sheet--sheet-open",
@@ -11702,7 +12106,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormInputGroup.stories.jsx",
-      "sourceSha256": "a687013689c77213dcbc1166a65bb4c460854a4f1ba1833c721717c84a8b606a",
+      "sourceSha256": "f6fd45c0be876810318a1d3dec3d8754bd13aca5910e92108ec43f084a6ace2e",
       "primaryOwner": "InputGroup",
       "ownerComponents": [
         "InputGroup"
@@ -11710,10 +12114,10 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 0
+        "hidden": 2
       },
       "descriptionEvidence": {
-        "componentDescription": true,
+        "componentDescription": false,
         "storyGuideId": "lds-product-selection-and-input-input-group--input-group-overview",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
@@ -11726,7 +12130,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "a687013689c77213dcbc1166a65bb4c460854a4f1ba1833c721717c84a8b606a",
+      "reviewedSourceSha256": "f6fd45c0be876810318a1d3dec3d8754bd13aca5910e92108ec43f084a6ace2e",
       "stories": [
         {
           "id": "lds-product-selection-and-input-input-group--input-group-overview",
@@ -11749,6 +12153,47 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-input-group--input-group-states",
+          "name": "상태와 좁은 너비",
+          "exportName": "InputGroupStates",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "InputGroup"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-selection-and-input-input-group--input-group-description-contract",
+          "name": "설명 연결 계약",
+          "exportName": "InputGroupDescriptionContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "InputGroup"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 post-split source and Product layer review: keep."
@@ -11818,7 +12263,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormPasswordInput.stories.jsx",
-      "sourceSha256": "cb126d13918e52d97ed7d609cad63442476df7fd0f887963b6d1c248b7950134",
+      "sourceSha256": "14fe394541853d61b14c6496aed0b70fc11cd96ae607ba16a7a95c1abe53487d",
       "primaryOwner": "PasswordInput",
       "ownerComponents": [
         "PasswordInput"
@@ -11826,10 +12271,10 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 0
+        "hidden": 2
       },
       "descriptionEvidence": {
-        "componentDescription": true,
+        "componentDescription": false,
         "storyGuideId": "lds-product-selection-and-input-password-input--password-input-overview",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
@@ -11842,7 +12287,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "cb126d13918e52d97ed7d609cad63442476df7fd0f887963b6d1c248b7950134",
+      "reviewedSourceSha256": "14fe394541853d61b14c6496aed0b70fc11cd96ae607ba16a7a95c1abe53487d",
       "stories": [
         {
           "id": "lds-product-selection-and-input-password-input--password-input-overview",
@@ -11865,6 +12310,47 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-password-input--password-reveal-contract",
+          "name": "보기 버튼 계약",
+          "exportName": "PasswordRevealContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "PasswordInput"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-selection-and-input-password-input--password-input-states",
+          "name": "상태와 좁은 너비",
+          "exportName": "PasswordInputStates",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "PasswordInput"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 post-split source and Product layer review: keep."
@@ -12395,7 +12881,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionToggleButton.stories.jsx",
-      "sourceSha256": "3118131cf3cf744d73e6ad0f5d68f167fb4516efc058260d017b0123e518df54",
+      "sourceSha256": "6fe1cefbe7683ff9ffeed949af5ad3d786a872bcc4c9c6f43d489c3167a38596",
       "primaryOwner": "ToggleButton",
       "ownerComponents": [
         "ToggleButton"
@@ -12404,13 +12890,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-toggle-button--toggle-button-overview",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12421,7 +12907,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "3118131cf3cf744d73e6ad0f5d68f167fb4516efc058260d017b0123e518df54",
+      "reviewedSourceSha256": "6fe1cefbe7683ff9ffeed949af5ad3d786a872bcc4c9c6f43d489c3167a38596",
       "stories": [
         {
           "id": "lds-product-selection-and-input-toggle-button--toggle-button-overview",
@@ -12446,6 +12932,30 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-toggle-button--interaction-and-size-contract",
+          "name": "상호작용 · 크기와 지속 상태",
+          "exportName": "InteractionAndSizeContract",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ToggleButton"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         },
         {
           "id": "lds-product-selection-and-input-toggle-button--toggle-button-card",
@@ -13940,7 +14450,7 @@
       "layer": "Robotics",
       "family": "Editor",
       "importPath": "./stories/EditorCommandBar.stories.jsx",
-      "sourceSha256": "5c7f652598159c808bcf5d1b9de8266d05a8a64e380f82fcbb007a8223b194f7",
+      "sourceSha256": "05978c186091eb19584e034e89d01802e5ea5df17e63e11bfb1512bf3bd7d8b9",
       "primaryOwner": "CanvasEditorCommandBar",
       "ownerComponents": [
         "CanvasEditorCommandBar"
@@ -13966,7 +14476,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "5c7f652598159c808bcf5d1b9de8266d05a8a64e380f82fcbb007a8223b194f7",
+      "reviewedSourceSha256": "05978c186091eb19584e034e89d01802e5ea5df17e63e11bfb1512bf3bd7d8b9",
       "stories": [
         {
           "id": "lds-robotics-editor-command-bar--document-commands",
@@ -13976,6 +14486,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -14071,7 +14582,7 @@
       "layer": "Robotics",
       "family": "Editor",
       "importPath": "./stories/EditorToolbar.stories.jsx",
-      "sourceSha256": "0eed738800d24e3f33641974d89c962624e28c6bceea426a268e76fe8ccf8211",
+      "sourceSha256": "df56bf0bb6f6269a4bcd73a3c480d72860bdf4ed8b16c4c2c32cf4b3ec64cb60",
       "primaryOwner": "EditorToolbar",
       "ownerComponents": [
         "EditorToolbar"
@@ -14095,7 +14606,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "0eed738800d24e3f33641974d89c962624e28c6bceea426a268e76fe8ccf8211",
+      "reviewedSourceSha256": "df56bf0bb6f6269a4bcd73a3c480d72860bdf4ed8b16c4c2c32cf4b3ec64cb60",
       "stories": [
         {
           "id": "lds-robotics-editor-editor-toolbar--vertical",
@@ -14197,7 +14708,7 @@
       "layer": "Robotics",
       "family": "Editor",
       "importPath": "./stories/EditorHistoryToolbar.stories.jsx",
-      "sourceSha256": "348a6e0914707bf2cdcc5e821f7dcc400bb011c53610a1902feb41a60fd6648f",
+      "sourceSha256": "2a1675322f7f4fba88f59fb4caa9f972aebcdd7c827d6b9102bc7ba51f2b0048",
       "primaryOwner": "HistoryToolbar",
       "ownerComponents": [
         "HistoryToolbar"
@@ -14221,7 +14732,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "348a6e0914707bf2cdcc5e821f7dcc400bb011c53610a1902feb41a60fd6648f",
+      "reviewedSourceSha256": "2a1675322f7f4fba88f59fb4caa9f972aebcdd7c827d6b9102bc7ba51f2b0048",
       "stories": [
         {
           "id": "lds-robotics-editor-history-toolbar--available-history",
@@ -14231,6 +14742,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -14297,7 +14809,7 @@
       "layer": "Robotics",
       "family": "Editor",
       "importPath": "./stories/EditorLayerPanel.stories.jsx",
-      "sourceSha256": "c6e8f589f947b6aaf154c7e58c9c41d72f98e0015e50b2dcbd92099ea861d85b",
+      "sourceSha256": "338ea6b02ae3c6d747fc7f085a23a053c7b6fbe1ef0e9efac4f14d6f373e9bf4",
       "primaryOwner": "LayerPanel",
       "ownerComponents": [
         "LayerPanel"
@@ -14321,7 +14833,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "c6e8f589f947b6aaf154c7e58c9c41d72f98e0015e50b2dcbd92099ea861d85b",
+      "reviewedSourceSha256": "338ea6b02ae3c6d747fc7f085a23a053c7b6fbe1ef0e9efac4f14d6f373e9bf4",
       "stories": [
         {
           "id": "lds-robotics-editor-layer-panel--interactive",
@@ -14463,22 +14975,23 @@
       "layer": "Robotics",
       "family": "Editor",
       "importPath": "./stories/EditorSelectionInspector.stories.jsx",
-      "sourceSha256": "2e2eed0b5d681363330f6b503c8aba309c4a3792e1c436896b889bb03612ada4",
+      "sourceSha256": "48fac59918f5ae4cf2de0fba1e3da890e3bbbff68693992f987d0d9acef0f494",
       "primaryOwner": "SelectionInspector",
       "ownerComponents": [
         "SelectionInspector"
       ],
       "supportingComponents": [
-        "Button"
+        "Button",
+        "ConfirmDialog"
       ],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-editor-selection-inspector--selected-object",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -14489,7 +15002,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "2e2eed0b5d681363330f6b503c8aba309c4a3792e1c436896b889bb03612ada4",
+      "reviewedSourceSha256": "48fac59918f5ae4cf2de0fba1e3da890e3bbbff68693992f987d0d9acef0f494",
       "stories": [
         {
           "id": "lds-robotics-editor-selection-inspector--selected-object",
@@ -14558,6 +15071,28 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-robotics-editor-selection-inspector--unit-formatting-at-320",
+          "name": "반응형 · 320px 단위 결합",
+          "exportName": "UnitFormattingAt320",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": []
+        },
+        {
           "id": "lds-robotics-editor-selection-inspector--action-footer",
           "name": "시나리오 · 선택 객체 작업",
           "exportName": "ActionFooter",
@@ -14565,6 +15100,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "scenario",
@@ -14577,7 +15113,8 @@
             "SelectionInspector"
           ],
           "supportingComponents": [
-            "Button"
+            "Button",
+            "ConfirmDialog"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
@@ -14610,7 +15147,7 @@
       "layer": "Robotics",
       "family": "Editor",
       "importPath": "./stories/EditorViewportStatusBar.stories.jsx",
-      "sourceSha256": "98d0f2ea4bdee912695666b506cb8513e08f1cc45bdf9d69419222bac54ba484",
+      "sourceSha256": "f0fce366278f20c0614e59ed9d07e4143b7c17b8d9d3e006b8b6ff01d764e370",
       "primaryOwner": "ViewportStatusBar",
       "ownerComponents": [
         "ViewportStatusBar"
@@ -14634,7 +15171,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "98d0f2ea4bdee912695666b506cb8513e08f1cc45bdf9d69419222bac54ba484",
+      "reviewedSourceSha256": "f0fce366278f20c0614e59ed9d07e4143b7c17b8d9d3e006b8b6ff01d764e370",
       "stories": [
         {
           "id": "lds-robotics-editor-viewport-status-bar--readouts",
@@ -14688,6 +15225,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "responsive",
@@ -15026,20 +15564,20 @@
       "layer": "Robotics",
       "family": "Status",
       "importPath": "./stories/RoboticsTelemetryGauge.stories.jsx",
-      "sourceSha256": "6ce5ae99357caf6906d6fa488771335a7cfee11142748fed6b94cc5790e1da05",
+      "sourceSha256": "9fa802b504229681eac9323ac073f913fcc2e17146efbbc83222165525f6ea41",
       "primaryOwner": "TelemetryGauge",
       "ownerComponents": [
         "TelemetryGauge"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 3,
+        "public": 4,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-status-telemetry-gauge--telemetry-overview",
-        "describedPublicStories": 3,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -15050,7 +15588,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "6ce5ae99357caf6906d6fa488771335a7cfee11142748fed6b94cc5790e1da05",
+      "reviewedSourceSha256": "9fa802b504229681eac9323ac073f913fcc2e17146efbbc83222165525f6ea41",
       "stories": [
         {
           "id": "lds-robotics-status-telemetry-gauge--telemetry-overview",
@@ -15096,6 +15634,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-robotics-status-telemetry-gauge--unit-formatting-at-320",
+          "name": "반응형 · 320px 단위 결합",
+          "exportName": "UnitFormattingAt320",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryGauge"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-robotics-status-telemetry-gauge--formatting-and-value-text",
@@ -15171,20 +15731,20 @@
       "layer": "Robotics",
       "family": "Status",
       "importPath": "./stories/RoboticsTelemetryValue.stories.jsx",
-      "sourceSha256": "32e70050694db78d9b74d176f42005816c209f16ee043b0fe0d79520cac1bdfa",
+      "sourceSha256": "a04f89947a7a910f33571d8cd57686989830cb44cc1459c6c21ca913e26fe095",
       "primaryOwner": "TelemetryValue",
       "ownerComponents": [
         "TelemetryValue"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-status-telemetry-value--compact-readouts",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -15195,7 +15755,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "32e70050694db78d9b74d176f42005816c209f16ee043b0fe0d79520cac1bdfa",
+      "reviewedSourceSha256": "a04f89947a7a910f33571d8cd57686989830cb44cc1459c6c21ca913e26fe095",
       "stories": [
         {
           "id": "lds-robotics-status-telemetry-value--compact-readouts",
@@ -15205,6 +15765,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -15241,6 +15802,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-robotics-status-telemetry-value--unit-formatting-at-320",
+          "name": "반응형 · 320px 단위 결합",
+          "exportName": "UnitFormattingAt320",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryValue"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 post-split source and Robotics layer review: keep."
@@ -15638,7 +16221,7 @@
       "layer": "Robotics",
       "family": "Viewer",
       "importPath": "./stories/ViewerToolbar.stories.jsx",
-      "sourceSha256": "5ef2f8ed998a0eb28caf4f598549e02eb0d480140aa6445da31677d37126d39c",
+      "sourceSha256": "33ab912b292a92b791152f3465a0505d2d6bced31ae62bd5e7f66728a4f62838",
       "primaryOwner": "ViewerToolbar",
       "ownerComponents": [
         "ViewerToolbar"
@@ -15667,7 +16250,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "5ef2f8ed998a0eb28caf4f598549e02eb0d480140aa6445da31677d37126d39c",
+      "reviewedSourceSha256": "33ab912b292a92b791152f3465a0505d2d6bced31ae62bd5e7f66728a4f62838",
       "stories": [
         {
           "id": "lds-robotics-viewer-toolbar--viewer-toolbar-overview",
@@ -15970,7 +16553,7 @@
       "layer": "Robotics",
       "family": "Viewer",
       "importPath": "./stories/ViewerFrame.stories.jsx",
-      "sourceSha256": "64698c30933dd42f135fcf47d25214e02f9c7802a8973eaa7557ebda1b1a9185",
+      "sourceSha256": "b453c33755116151f411fff2710481886b2f0bac8ee13ccf522e3d583b7220e7",
       "primaryOwner": "ViewerFrame",
       "ownerComponents": [
         "ViewerFrame"
@@ -15999,7 +16582,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "64698c30933dd42f135fcf47d25214e02f9c7802a8973eaa7557ebda1b1a9185",
+      "reviewedSourceSha256": "b453c33755116151f411fff2710481886b2f0bac8ee13ccf522e3d583b7220e7",
       "stories": [
         {
           "id": "lds-robotics-viewer-shared-viewer-frame--state-placement",

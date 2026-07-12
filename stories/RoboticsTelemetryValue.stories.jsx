@@ -95,7 +95,7 @@ export const CompactReadouts = {
 };
 
 export const UnitFormattingAt320 = {
-  name: '반응형 · 320px 단위 결합 계약',
+  name: '반응형 · 320px 단위 결합',
   parameters: storyDescription(
     '320px 진단 패널에서 비율·각도 기호와 SI·복합 단위를 함께 비교합니다. 입력 단위의 앞뒤 공백을 제거한 뒤 %·‰·평면각 °는 값에 붙고 °C·m/s·N·m은 한 칸 띄며, 어떤 readout도 가로 overflow를 만들지 않아야 합니다.',
   ),

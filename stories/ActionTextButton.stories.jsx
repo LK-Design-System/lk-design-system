@@ -58,7 +58,7 @@ function TextButtonContractDemo() {
 }
 
 export const InteractionAndLoadingContract = {
-  name: '상호작용 · 로딩과 비활성 계약',
+  name: '상호작용 · 로딩과 비활성',
   parameters: storyDescription(
     '낮은 강조의 텍스트 행동이 hover·pressed·loading·비활성으로 바뀌는 흐름을 검증하는 상황입니다. 로딩 중에는 원래 폭을 유지하며 하나의 처리 중 이름을 제공하고, aria-disabled 행동은 초점은 받되 실행되지 않아야 합니다.',
   ),

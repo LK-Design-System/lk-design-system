@@ -75,7 +75,7 @@ function IconButtonStateDemo() {
 }
 
 export const InteractionAndDisabledContract = {
-  name: '상호작용 · 아이콘 행동 계약',
+  name: '상호작용 · 아이콘 행동',
   parameters: storyDescription(
     '아이콘만 있는 행동의 hover·pressed·비활성 상태와 접근 가능한 이름을 검증하는 상황입니다. 상태 피드백은 위치 변화 없이 표면 색조로 구분하고, aria-disabled는 초점을 유지하면서 실행을 차단합니다.',
   ),

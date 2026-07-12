@@ -44,7 +44,7 @@ export const ToggleStates = {
 };
 
 export const InteractionContract = {
-  name: '상호작용 · 지속 상태 계약',
+  name: '상호작용 · 지속 상태',
   parameters: storyDescription(
     '아이콘 토글의 순간 pressed 피드백과 클릭 뒤 유지되는 선택 상태를 구분하는 상황입니다. 접근 가능한 이름과 aria-pressed가 함께 바뀌고 aria-disabled 토글은 초점은 받되 상태가 바뀌지 않아야 합니다.',
   ),

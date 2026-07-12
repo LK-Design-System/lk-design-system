@@ -39,7 +39,7 @@ export const ToggleButtonOverview = {
 };
 
 export const InteractionAndSizeContract = {
-  name: '상호작용 · 크기와 지속 상태 계약',
+  name: '상호작용 · 크기와 지속 상태',
   parameters: storyDescription(
     '독립 토글 행동의 32·40·48px 크기, hover·pressed·비활성 상태를 비교하는 상황입니다. 순간 눌림 피드백과 클릭 뒤 유지되는 aria-pressed 상태가 구분되고 aria-disabled는 초점은 유지하되 토글되지 않아야 합니다.',
   ),

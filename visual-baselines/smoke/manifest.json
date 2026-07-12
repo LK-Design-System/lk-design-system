@@ -185,14 +185,14 @@
     },
     {
       "name": "wds-segmented-control-matrix",
-      "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-matrix",
+      "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-states",
       "query": {},
       "viewport": {
         "width": 980,
         "height": 760
       },
-      "bytes": 20505,
-      "sha256": "282a43113d2a012f2649db14a5b1830c22f6fdad141da37084cf70d49482c01e"
+      "bytes": 10311,
+      "sha256": "c6f99fc94c91841cbeec752379615749363ea2ce3db775e5ef03ceaefe21d540"
     },
     {
       "name": "wds-menu-patterns",

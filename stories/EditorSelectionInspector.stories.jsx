@@ -150,7 +150,7 @@ export const PrimitiveValues = {
 };
 
 export const UnitFormattingAt320 = {
-  name: '반응형 · 320px 단위 결합 계약',
+  name: '반응형 · 320px 단위 결합',
   parameters: storyDescription(
     '320px 속성 패널에서 0·기호 단위·SI·복합 단위와 사용자 정의 valueNode를 함께 확인합니다. 표준 scalar 필드는 공용 단위 결합 규칙을 따르고 valueNode는 소비자가 텍스트와 접근성을 직접 소유하며 패널은 가로 overflow를 만들지 않아야 합니다.',
   ),
