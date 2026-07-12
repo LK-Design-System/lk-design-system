@@ -1,5 +1,12 @@
 # Domain component contracts
 
+| Field | Value |
+| --- | --- |
+| Type | Stable domain contract |
+| Status | Current |
+| Owner | Product and Robotics component owners |
+| Last reviewed | 2026-07-12 |
+
 이 문서는 완성된 화면이나 서비스 절차 예시를 정의하지 않는다. LK 디자인 시스템 안의 도메인 컴포넌트가 공통으로 지켜야 하는 상태 의미, 안전 문구, 단위 표기, 접근성 계약만 기록한다.
 
 Waypoint·lane·route/trajectory·공간 구역·lift 전환의 Open-RMF/Nav2 근거, renderer 결정, 실행 순서는
@@ -93,7 +100,7 @@ Viewer DS 범위에서 scene tree, property editing, free docking, robot command
 | `LogViewer` | log의 filtering/follow/freshness/dropped data/recovery chrome을 소유하고 transport와 retention은 앱에 남긴다. DeviceOps 전용 xterm session은 `ConnectionBadge`, `DescriptionList`, `Callout`, `Button`을 제품에서 조합한다. |
 | `AnnotatedImage` | normalized box/hotspot과 접근성 요약을 소유하고 inference와 이미지 pipeline은 앱에 남긴다. |
 | `ReorderList` / `ValidationSummary` / `DatePicker` / `TimePicker` / `CheckboxGroup` | peer order와 form-level issue return path를 제공하고 recurrence/timezone input은 제품에서 조합한다. command schema, target picker, preview, conflict 계산은 앱에 남긴다. |
-| `SourceDisclosure` / `TreePicker` / `ConfirmDialog` | conversation의 source provenance, active scope selection, reset guard만 제공한다. message list와 composer는 제품이 semantic list, `Textarea`, `ActionArea`, `Button`, `Callout`을 조합하고 retrieval·transport·persistence를 소유한다. |
+| `ConversationMessage` / `MessageFeed` / `MessageComposer` / `SourceDisclosure` / `TreePicker` / `ConfirmDialog` | message anatomy, additions-only feed, follow/unread/history anchoring, IME-safe composition, source provenance, active scope selection, reset guard를 재사용 계약으로 제공한다. 제품은 human/AI/operations 역할 정책, retrieval, transport, persistence, session reset과 backend completion truth를 소유하며 `ChatWindow` 같은 완성 workflow wrapper는 LDS에 추가하지 않는다. |
 | `ValidationSummary` / `DescriptionList` / `ProgressBar` / `StatusBadge` / `Timeline` | product-provided preflight evidence와 장기 operation 결과를 제품에서 조합한다. admission, 실제 실행, publish, polling, cancel은 앱 소유다. |
 | `DataGrid` / `SourceDisclosure` / `ValidationSummary` / `DescriptionList` | approval evidence와 state facts를 제공한다. verdict 계산, note, decision submit은 제품이 `ChoiceCard`, `Textarea`, `ActionArea`로 조합하고 transition policy·persistence를 소유한다. |
 

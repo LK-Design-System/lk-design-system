@@ -19,6 +19,12 @@
 - `LDS Product` and `LDS Robotics` are for reusable extension components and patterns. Do not add application screens, templates, workflows, demos, or example pages there.
 - Hidden visual parity stories are allowed only when they exist to support visual regression of a real component surface and are tagged with `!dev` and `visual-parity`.
 
+## LK Product Asset Workflow Coverage (MANDATORY)
+
+- Complete the product-workflow gate in `docs/COMPONENT_WORKFLOW.md` for every new component, substantial redesign, and domain-component review. At minimum, explicitly consider **LK Web Viz**, **LK Control Full Daedeok**, and **LK Context Hub**; record `not applicable` with a concrete reason instead of silently omitting an asset.
+- Inspect and pin the actual repository revision and relevant frontend source before claiming `supported` or `supported by composition`. Missing source evidence means `unverified`, never assumed coverage; store pins and detailed results in `docs/references/product-frontends/COVERAGE_AUDIT.json` and `docs/PRODUCT_FRONTEND_COVERAGE.md`.
+- Keep product routes, backend/transport policy, domain state machines, and complete screens outside LDS. Final notes must identify the workflow seam, coverage classification, gaps, and LDS-versus-product ownership; automated component checks do not replace this review.
+
 ## WDS Evidence Handling
 
 - Reflect WDS source evidence in the existing LDS component/story that owns that component. Do not create a new Storybook page just to show comparison or audit data.
@@ -27,6 +33,7 @@
 
 ## New Component / Redesign Fit
 
+- Treat `docs/COMPONENT_WORKFLOW.md` as the canonical end-to-end checklist for new components, substantial redesigns, reusable patterns, and new or changed icons/assets/map symbols. Complete its evidence, product-workflow, contract, visual, accessibility, asset-suitability, Storybook, and verification gates; the rules below add detail but do not replace that checklist.
 - Before adding a new component, or materially redesigning an existing one, inspect the closest existing LDS components in the same family, their `.prompt.md` files, Storybook stories, and relevant docs/tokens. Treat existing spacing, typography, divider alignment, radius, hover/focus/disabled behavior, icon usage, and Storybook naming conventions as design-system constraints.
 - Before choosing the design, make an explicit visual-delta inventory against the closest sibling components. Compare control and icon size, spacing, typography, radius, border/divider, fill and foreground, selected/active markers, hover, focus, disabled, orientation, and surrounding chrome. Small decorative differences such as an extra edge line, inset border, or shadow are part of this inventory; do not dismiss them as polish.
 - Every retained visual difference must be justified by at least one concrete source: an established LDS component/token convention, a functional state that must be communicated, an accessibility requirement, confirmed WDS evidence, or an authoritative external category reference. A different component name, product area, or public state model is not by itself sufficient reason to introduce different styling.
@@ -51,6 +58,12 @@
 - Passing type, accessibility, token, or interaction checks is not evidence that the composition is visually complete. Judge the rendered result against the sibling and reference on its own merits, not only as an improvement over the previous implementation. If the conclusion is merely "better than before," continue the visual review.
 - Use focused Storybook rendering and representative viewport checks while iterating; do not substitute repeated repository-wide verification. Follow the repository's Verification Cadence and run the full suite only at the final checkpoint unless broader impact requires it sooner.
 - Final notes for a composed UI change must identify the representative story, states, and normal/narrow widths that were visually checked, along with any intentional hierarchy or responsive deviation.
+
+### Icon, Asset, And Map-Symbol Suitability Gate (MANDATORY)
+
+- Complete the icon/asset/map-symbol suitability gate in `docs/COMPONENT_WORKFLOW.md` whenever a change adds or alters reusable visual assets or map geometry. Inventory the affected symbols, search existing registries/assets first, and research authoritative category conventions; current code and screenshots are not authority by themselves.
+- Review geometry, asset provenance/accessibility, and the combined map hierarchy across representative zoom, width, appearance, collision, label, and interaction states. Compare the current and candidate treatments in real LK product density.
+- A visual difference without established LDS, product, accessibility, or authoritative external evidence is `provisional`, not finished. Record the evidence and decision in the component prompt or nearest stable contract.
 
 ## Component Variant/Axis Parity — authoritative source (MANDATORY)
 

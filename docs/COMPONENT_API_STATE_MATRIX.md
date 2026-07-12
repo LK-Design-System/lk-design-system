@@ -1,5 +1,12 @@
 # Component API and state matrix
 
+| Field | Value |
+| --- | --- |
+| Type | Stable contract and component register |
+| Status | Current |
+| Owner | Component owners · Design system owner |
+| Last reviewed | 2026-07-12 |
+
 ## Canonical public API grammar
 
 - Size values are `sm`, `md`, and `lg`. `small`, `medium`, and `large` remain compatibility aliases only and normalize at the component boundary.

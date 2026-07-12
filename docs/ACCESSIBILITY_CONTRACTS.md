@@ -1,5 +1,12 @@
 # Accessibility contracts
 
+| Field | Value |
+| --- | --- |
+| Type | Stable contract |
+| Status | Current |
+| Owner | Design system owner · Accessibility reviewer |
+| Last reviewed | 2026-07-12 |
+
 LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제품 팀이 매번 새로 판단하지 않도록 하는 계약입니다. 모든 interactive 컴포넌트는 아래 항목을 Storybook 예시, 코드, 또는 테스트 근거로 증명해야 합니다.
 
 ## Required contract

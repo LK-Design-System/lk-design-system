@@ -31,7 +31,22 @@ for (const file of await collectDeclarations(path.join(root, 'components'))) {
 }
 rows.sort((a, b) => a.file.localeCompare(b.file) || a.declaration.localeCompare(b.declaration));
 
-const markdown = `# Deprecations\n\nThis generated register is the release-facing inventory of public compatibility contracts marked with \`@deprecated\`. Update the declaration comment first, then run \`npm run report:deprecations\`.\n\n| Declaration | Source | Migration |\n| --- | --- | --- |\n${rows.map((row) => `| \`${row.declaration}\` | \`${row.file}\` | ${row.reason} |`).join('\n')}\n`;
+const markdown = `# Deprecations
+
+| Field | Value |
+| --- | --- |
+| Type | Generated register |
+| Status | Generated · do not edit rows by hand |
+| Owner | Component owners |
+| Source | public declarations marked \`@deprecated\` |
+| Generator | \`npm run report:deprecations\` |
+
+This generated register is the release-facing inventory of public compatibility contracts marked with \`@deprecated\`. Update the declaration comment first, then run \`npm run report:deprecations\`.
+
+| Declaration | Source | Migration |
+| --- | --- | --- |
+${rows.map((row) => `| \`${row.declaration}\` | \`${row.file}\` | ${row.reason} |`).join('\n')}
+`;
 
 if (checkOnly) {
   const current = await readFile(outputPath, 'utf8').catch(() => '');

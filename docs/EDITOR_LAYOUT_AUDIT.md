@@ -1,5 +1,13 @@
 # Canvas editor Storybook boundary audit
 
+| Field | Value |
+| --- | --- |
+| Type | Focused audit |
+| Status | Completed |
+| Owner | Robotics component owner |
+| Last reviewed | 2026-07-11 |
+| Stable decisions | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) |
+
 ## Scope
 
 `CanvasEditorShell`과 Editor 하위 컴포넌트의 공개 Storybook 구성이 다른 LDS 페이지와 같은 문법을 따르는지 재검토했다. 제품 근거는 계속 `LK-ROBOTICS/lk_web_viz` commit `a984def117c05acd213f494cbb8a42e990595505`와 제품 캡처를 사용하지만, 그 근거를 완성된 애플리케이션 화면으로 Storybook에 복제하지 않는다.

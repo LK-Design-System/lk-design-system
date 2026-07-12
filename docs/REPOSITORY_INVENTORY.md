@@ -1,5 +1,13 @@
 # 레포 인벤토리
 
+| Field | Value |
+| --- | --- |
+| Type | Current register |
+| Status | Current |
+| Owner | Frontend platform · Design system owner |
+| Last reviewed | 2026-07-12 |
+| Update | `npm run report:inventory` · `npm run check:inventory` |
+
 Storybook의 516개 스토리 역할·공개 여부·소유 컴포넌트와 177개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 패키지 중심의 LK ROBOTICS 핵심 디자인 시스템입니다.

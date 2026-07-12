@@ -131,7 +131,7 @@ AI 도구로 LK ROBOTICS UI를 생성할 때는 `docs/AI_DESIGN_SYSTEM_GUIDE.md`
 Figma Variables export/import, 토큰 lifecycle, deprecation은 `docs/TOKEN_GOVERNANCE.md`를 기준으로 삼으세요.
 컴포넌트 API와 접근성 계약은 `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/ACCESSIBILITY_CONTRACTS.md`를 함께 봅니다.
 도메인 컴포넌트 계약은 `docs/ROBOTICS_PATTERNS.md`에 정리합니다.
-채팅·로보틱스 내비게이션·가상 입력의 후속 확장 순서는 `docs/DOMAIN_COMPONENT_EXPANSION_PLAN.md`에서 관리합니다.
+채팅·로보틱스 내비게이션·가상 입력의 완료된 확장 결정과 구현 순서는 `docs/DOMAIN_COMPONENT_EXPANSION_PLAN.md`에 보존되어 있습니다. 현재 후속 검토는 `docs/COMPONENT_WORKFLOW.md`를 따릅니다.
 에디터/맵/포인트클라우드 레이아웃 판단 기준은 `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`를 먼저 봅니다.
 현재 CanvasEditorShell 수정 전 감사와 작업 순서는 `docs/EDITOR_LAYOUT_AUDIT.md`를 봅니다.
 
@@ -173,6 +173,7 @@ CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/contract/publish policy/
 
 초기 raw export는 Git 이력에 보존되어 있습니다. 현재 `main`은 패키지 중심 구조이며 scratch preview, 업로드 참조, 스크린샷, gap analysis, 잘못 생성된 manifest 같은 export-only 파일은 제외합니다.
 
+문서 탐색, 문서 유형, source-of-truth 순서는 `docs/README.md`를 먼저 보세요.
 자세한 레포 구성은 `docs/REPOSITORY_INVENTORY.md`를 보세요.
-컴포넌트 문서화와 CI 유지보수 기준은 `docs/COMPONENT_WORKFLOW.md`를 보세요.
+신규 컴포넌트·재설계·icon/asset/map symbol의 공식 검토 절차와 문서화·CI 유지보수 기준은 `docs/COMPONENT_WORKFLOW.md`를 보세요.
 디자인 시스템 계약 검증 기준은 `docs/COMPONENT_API_STATE_MATRIX.md`와 `npm run check:contracts`를 보세요.

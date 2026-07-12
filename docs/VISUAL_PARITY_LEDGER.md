@@ -1,6 +1,12 @@
 # LK ROBOTICS Design System Visual Parity Ledger
 
-Updated: 2026-07-12
+| Field | Value |
+| --- | --- |
+| Type | Current parity register |
+| Status | Current |
+| Owner | Design system owner |
+| Last reviewed | 2026-07-12 |
+| Source | accepted WDS `.fig`, parity audit JSON, current Storybook index |
 
 This ledger tracks parity between the WDS source and the current
 React/Storybook implementation. Parity is anchored to the accepted local `.fig`

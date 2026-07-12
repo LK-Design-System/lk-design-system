@@ -1,8 +1,15 @@
 # 도메인 컴포넌트 확장 계획
 
-- Date: 2026-07-12
-- Status: proposed · implementation not started
-- Owners: Design system owner · Product design/engineering · Robotics domain engineering
+| Field | Value |
+| --- | --- |
+| Type | Completed implementation plan |
+| Status | Completed · follow-up review active |
+| Owner | Design system owner · Product design/engineering · Robotics domain engineering |
+| Date | 2026-07-12 |
+| Completed in | `e5b0f6c`, merged by `43ac938` |
+| Result | [`handoff/2026-07-12-domain-expansion-completion-and-visual-review.md`](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md) |
+
+이 계획의 N1–N6, C1–C4, K1 구현 단계는 완료됐다. 아래 실행 순서와 당시 기준선은 historical decision evidence로 유지하며, 현재 컴포넌트 검토와 후속 보완은 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)를 따른다.
 
 이 문서는 채팅·메시지, 로보틱스 경로·공간 의미, 가상 키패드/키보드의 확장 순서와
 디자인 시스템 경계를 정의한다. 완성 앱 화면이나 백엔드 정책을 Storybook에 옮기는 계획이 아니며,

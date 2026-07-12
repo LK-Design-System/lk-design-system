@@ -1,4 +1,35 @@
-# LK product workflow reset
+# LK Product Frontend Workflow Coverage
+
+| Field | Value |
+| --- | --- |
+| Type | Product workflow coverage contract and audit summary |
+| Status | Current · LK Web Viz review in discovery |
+| Owner | Product design/engineering · Design system owner |
+| Last reviewed | 2026-07-12 |
+| Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
+
+## 필수 LK 제품 자산 교차 검토
+
+앞으로 신규 컴포넌트, 대규모 재설계, 도메인 컴포넌트 품질 검토는 Storybook이나 LDS 코드만 보고 완료 처리하지 않는다. 실제 LK 제품 자산의 코드와 이미 구현된 프론트엔드를 확인하여, 공유 컴포넌트가 실제 사용자 워크플로우를 조합 가능한 형태로 지원하는지 검토한다.
+
+최소 필수 검토 대상은 다음 세 자산이다. 특정 컴포넌트와 관련이 없더라도 생략하지 않고 `not applicable`과 그 이유를 기록한다.
+
+| 제품 자산 | 기준 소스 | 현재 증거 상태 |
+| --- | --- | --- |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend` | source pin 완료, WF-15 discovery 진행 중 |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` | `docs/references/product-frontends/COVERAGE_AUDIT.json`의 pinned revision 재사용 또는 최신화 |
+| LK Context Hub | `LK-ROBOTICS/lk_context_hub` | `docs/references/product-frontends/COVERAGE_AUDIT.json`의 pinned revision 재사용 또는 최신화 |
+
+각 컴포넌트 리뷰에는 아래 내용을 남긴다.
+
+1. 확인한 repository, commit, frontend root, route/page/container와 핵심 source file
+2. 실제 사용자 진입점, 결정, 데이터·권한 전제조건과 완료 조건
+3. loading, empty, error, stale, offline, disabled, partial failure와 복구 경로
+4. LDS 컴포넌트 하나로 지원되는지, 여러 primitive의 composition이 필요한지, 아니면 gap인지
+5. gap이 LDS 공개 계약의 책임인지 product orchestration·backend·transport의 책임인지
+6. normal/narrow/dark 환경과 실제 제품 데이터 밀도에서의 시각·상호작용 적합성
+
+판정 값은 `supported`, `supported by composition`, `gap`, `not applicable`로 통일한다. 제품 화면을 Storybook에 복제하거나 route·backend 정책·transport 상태 머신을 공용 컴포넌트에 넣는 것은 커버리지로 인정하지 않는다. 타입, 접근성, Storybook, 픽셀 회귀 검사가 통과하더라도 이 교차 제품 워크플로우 검토를 대신할 수 없다.
 
 이 문서는 LDS가 지원해야 하는 다섯 제품의 워크플로우를 다시 발견하고 검증하기 위한 기준 문서다. 현재 제품 화면이나 기존 LDS 컴포넌트를 정답으로 보지 않는다. Storybook에는 감사표, 와이어프레임, 완성 화면을 추가하지 않으며, 검증된 컴포넌트와 패턴의 실제 상태만 둔다.
 
@@ -8,12 +39,12 @@
 
 | 단계 | 수 | 의미 |
 | --- | ---: | --- |
-| discovered | 0 | source만 확보하고 독립 wireframe을 만들지 않은 항목이다. |
+| discovered | 1 | source만 확보하고 독립 wireframe을 만들지 않은 항목이다. |
 | wireframed | 0 | 독립 low-fi까지만 있고 구현 근거가 없는 항목이다. |
 | implemented | 0 | 컴포넌트와 state story는 있으나 전체 trace가 닫히지 않은 항목이다. |
 | verified | 14 | source requirement, 독립 wireframe, 작은 LDS 책임, state story, 검증 근거가 연결됐다. |
 
-여기서 `verified`는 디자인 시스템의 shared responsibility와 product-owned seam이 추적 가능하다는 뜻이다. 다섯 제품이 이 패키지를 실제로 통합했거나 production workflow가 end-to-end 검증됐다는 뜻은 아니다.
+여기서 `verified`는 디자인 시스템의 shared responsibility와 product-owned seam이 추적 가능하다는 뜻이다. 여섯 제품이 이 패키지를 실제로 통합했거나 production workflow가 end-to-end 검증됐다는 뜻은 아니다.
 
 ## 판단 근거의 우선순위
 
@@ -41,6 +72,7 @@
 | --- | --- | --- |
 | DeviceOps | `41c319eb0ad863f67d73facc64f7dd2a13ab9585` | 운영자가 보드의 실제 상태를 믿고 원격 변경의 적용 여부까지 확인할 수 있는가? |
 | VisionOps | `308da0c0624024ba2497cf05cda2841e4411b522` | 입력·처리·판정 evidence를 혼동하지 않고 원인과 안전한 조치를 찾을 수 있는가? |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` | 지도 point·line·region·facility와 층별 target을 의미·상태·zoom에 맞게 구분하고 편집할 수 있는가? |
 | Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` | 어떤 범위와 근거가 사용됐는지 확인하면서 관계·문서·질의를 관리할 수 있는가? |
 | Control | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` | 로봇을 선택하고 계획·감시·직접 제어할 때 위험한 상태 전이를 안전하게 다룰 수 있는가? |
 | MLOps | `0e9f3b03fccd60ab0575b55c18035cc9f9e91521` | 선택 버전의 blocker, 다음 안전한 행동, evidence, 실제 외부 반영 범위를 판단할 수 있는가? |
@@ -62,6 +94,14 @@
 - graph exploration: 노드 선택과 상세 열기를 분리하고 upstream/downstream 관계를 보존한 채 원인을 추적한다.
 - staged configuration: current와 draft를 비교하고 변경·validation·high-risk·restart-required를 확인한 뒤 적용과 실제 반영을 구분한다.
 - guarded recovery: event clear나 pipeline restart의 영향과 command lifecycle을 확인한다.
+
+### LK Web Viz
+
+- map object authoring: point, line, polygon region과 landmark를 선택·생성·수정하고 저장 실패 시 작업 문맥을 유지한다.
+- facility semantics: elevator entry/interior, door, stair, waypoint, charger, generic POI를 같은 점 glyph로 축약하지 않고 의미와 상태를 구분한다.
+- zoom-stable inspection: 작은 zoom에서도 point·line·region·label의 위계와 selection이 유지되고, 조밀한 geometry는 inspector나 이름 있는 목록으로 보완한다.
+- floor-aware task targeting: 건물·층·map identity를 유지하면서 landmark 또는 좌표를 task step에 연결한다.
+- product boundary: persistence, editor command, floor topology, task schema, device control은 제품이 소유하고 LDS는 renderer-neutral feature·state·selection·accessible mirror 계약만 공유한다.
 
 ### Context Hub
 
@@ -108,6 +148,7 @@
 | WF-12 | External publish | validation-only와 실제 외부 write, publish evidence를 구분하는가? | wireframed |
 | WF-13 | Schedule automation | recurrence·timezone·conflict와 개별 run 상태를 구분하는가? | wireframed |
 | WF-14 | Approval transition | review completion, approval, external release를 서로 다른 truth로 다루는가? | wireframed |
+| WF-15 | Map navigation and facility authoring | point·line·region·facility와 층 identity가 일반 관례와 실제 LK workflow에서 구분되는가? | discovered |
 
 ## 독립 설계 원칙
 
@@ -566,6 +607,20 @@ Message·feed·composer의 독립 시각·접근성 계약을 Product extension�
 - transition을 optimistic UI로 먼저 성공 표시하지 않는다.
 - approval UI를 별도 public component로 고정하지 않는다. 제품이 policy와 persistence를 소유하고, LDS의 evidence·form·action 요소를 조합하되 approval과 external release를 별도 축으로 유지한다.
 
+### WF-15 Map navigation and facility authoring
+
+현재 단계는 `discovered`다. `LK-ROBOTICS/lk_web_viz`의 `MapEditScreen`, `ZoneEditor`, `TaskCreateScreen`을 pin했고, point·line·region·landmark·층별 task target의 실제 workflow를 확인했다.
+
+검토에서 답해야 할 질문:
+
+- elevator entry/interior, door, stair, charger, waypoint와 generic POI가 형태·label·상태에서 충분히 구분되는가?
+- point, lane/line, route/trajectory, facility region이 한 지도에서 올바른 paint order와 zoom-stable hierarchy를 갖는가?
+- 현재 제품의 Material icon 이름을 그대로 복제하지 않고 LK `Icon` registry와 지도 symbol grammar로 일관되게 번역할 수 있는가?
+- selection, focus, invalid, unavailable, stale이 색상만이 아니라 shape·pattern·text로도 전달되는가?
+- 제품 편집·저장·task schema는 product-owned로 남기면서 LDS renderer를 실제 화면에 조합할 수 있는가?
+
+이 workflow는 아직 independent wireframe, LDS mapping, Storybook visual review가 닫히지 않았으므로 `verified`로 승격하지 않는다.
+
 ## 현재 신규 컴포넌트 disposition
 
 이 표는 현재 구현을 보존하기 위한 목록이 아니다. 새 workflow 계약에 비춰 public component 경계를 다시 판단한 결과다. 현재 화면이나 wireframe에 반복된다는 사실만으로 component를 만들지 않으며, 고유 interaction·accessibility contract 또는 둘 이상의 제품에서 반복되는 상태 문법이 없으면 product-owned composition으로 남긴다.
@@ -610,7 +665,7 @@ Message·feed·composer의 독립 시각·접근성 계약을 Product extension�
 | 현재 컴포넌트 | 분해 방향 |
 | --- | --- |
 | `DocumentSurface` | 제거했다. provenance/availability는 `SourceDisclosure`, renderer와 patch decision은 product-owned `ChoiceCard`/`Textarea`/`ActionArea` 조합으로 분리한다. |
-| `ScopedConversation` | 제거했다. provenance는 `SourceDisclosure`, scope selection은 `TreePicker`, reset guard는 `ConfirmDialog`로 분리한다. message list와 composer는 제품이 semantic list, `Textarea`, `ActionArea`, `Button`, `Callout`을 조합한다. |
+| `ScopedConversation` | 완성 workflow wrapper는 제거했다. 재사용 가능한 message anatomy·feed history/follow·IME-safe compose는 `ConversationMessage`, `MessageFeed`, `MessageComposer`가 소유하고, provenance는 `SourceDisclosure`, scope selection은 `TreePicker`, reset guard는 `ConfirmDialog`로 분리한다. retrieval, transport, persistence, session policy는 제품이 소유한다. |
 | `RunAction` | 제거했다. preflight evidence는 `ValidationSummary`/`DescriptionList`, confirmation은 `ConfirmDialog`, admission/actual-run intent는 product-owned `Button`/`ActionArea` 조합으로 분리한다. |
 | `SchemaConfigEditor` | 제거했다. field renderer는 제품에 남기고 `PropertyField`, `DescriptionList`, `ValidationSummary`, `DockPanel`, `ActionArea`로 current/draft evidence와 persistent action layout을 조합한다. |
 | `StepComposer` | 제거했다. `ReorderList`, `ValidationSummary`, `DescriptionList`와 product-owned target/step editor composition으로 돌린다. |
@@ -662,11 +717,13 @@ Message·feed·composer의 독립 시각·접근성 계약을 Product extension�
 | WF-07 | `SourceDisclosure`, `AnnotatedImage`, `DataGrid`, `ChoiceCard`, `Textarea`, `ActionArea` 조합 | review policy, metric verdict, authorization, persistence, queue navigation |
 | WF-08 | `SourceDisclosure`, `AnnotatedImage`, `LogViewer`, `FileBrowser`, chart/legend의 renderer chrome | Markdown/media decoder, graph layout, artifact access, claim semantics |
 | WF-09 | `ManualControlSession`, `ConnectionBadge`, `Joystick`, `DirectionalPad`의 authority/arm/hold/release 분리 | authority policy, freshness/health 판정, cadence, STOP transport, robot watchdog |
-| WF-10 | `SourceDisclosure`, `TreePicker`, `ConfirmDialog`와 `Textarea`/`ActionArea`/`Button`/`Callout` 조합 | message list, draft/submit policy, provider/stream transport, retrieval, scope resolution, persistence |
+| WF-10 | `ConversationMessage`, `MessageFeed`, `MessageComposer`, `SourceDisclosure`, `TreePicker`, `ConfirmDialog`의 message/feed/compose/source/scope 계약 | role policy, provider/stream transport, retrieval, scope resolution, persistence, session reset |
 | WF-11 | `SecretField`, `ConfirmDialog`, `Callout`의 masked/reveal/copy/re-auth composition | encryption, permission, audit logging, update/revoke API |
 | WF-12 | `ValidationSummary`, `ConfirmDialog`, `ProgressBar`, `SourceDisclosure`, `ActionArea`의 external-impact/result 조합 | target validation, credential use, upload, outcome schema, external release truth |
 | WF-13 | `DatePicker`, `TimePicker`, `CheckboxGroup`, `ValidationSummary`, `SearchableMultiSelect`, `Button`/`ActionArea` 조합 | recurrence schema, eligibility, conflict calculation, task lookup, persistence, occurrence execution |
 | WF-14 | `DataGrid`, `SourceDisclosure`, `ValidationSummary`, `DescriptionList`, `Textarea`, `ActionArea` 조합으로 eligibility/approval/release를 구분 | metric verdict policy, authorization, persistence, external release evidence |
+
+WF-15는 source discovery만 완료됐으므로 위 verified closure matrix에 포함하지 않는다. navigation component·symbol review와 실제 product-density 검증이 끝난 뒤 LDS 책임과 제품 seam을 확정한다.
 
 검증은 2026-07-10 기준 다음 범위로 수행했다.
 

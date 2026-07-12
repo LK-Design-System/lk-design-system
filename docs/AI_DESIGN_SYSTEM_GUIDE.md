@@ -1,12 +1,19 @@
-# UI copy conventions
+# AI 디자인 시스템 가이드
+
+| Field | Value |
+| --- | --- |
+| Type | Implementation guide |
+| Status | Current |
+| Owner | Design system owner |
+| Last reviewed | 2026-07-12 |
+
+AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제공할 문서입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
+
+## UI copy conventions
 
 - Complete Korean descriptive messages ending in `-습니다`, `-세요`, or `-해 주세요` use a final period. Noun labels, titles, status fragments, and loading labels omit it.
 - WDS Core field placeholders follow the local WDS sentence pattern (`입력해 주세요.`, `선택해 주세요.`). Essential instructions still belong in labels or helper text, following [Fluent 2 Field accessibility guidance](https://fluent2.microsoft.design/components/web/react/core/field/usage).
 - Product and Robotics surfaces may use a concise domain hint only when a persistent visible label already explains the field. Do not mix `입력하세요` and `입력해 주세요` within one component family.
-
-# AI 디자인 시스템 가이드
-
-AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제공할 문서입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
 
 ## 기준 소스
 

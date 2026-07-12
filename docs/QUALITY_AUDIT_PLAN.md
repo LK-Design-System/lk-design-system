@@ -1,5 +1,15 @@
 # 디자인 시스템 완성도 검사 계획
 
+| Field | Value |
+| --- | --- |
+| Type | Executed audit plan and follow-up register |
+| Status | Baseline completed · residual findings remain |
+| Owner | Design system owner · Component owners |
+| Last reviewed | 2026-07-12 |
+| Evidence | `references/quality/` baselines and audit JSON |
+
+이 문서의 M0–M6 및 D-track 실행 기록은 2026-07-11~12 baseline의 historical evidence다. 현재 신규 컴포넌트 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md), 현재 수치와 gate 상태는 각 verifier와 [`HANDOFF.md`](HANDOFF.md)를 우선한다.
+
 ## 구현 상태 — 2026-07-11
 
 승인된 M0~M6 로드맵을 모두 구현했다. 핵심 결과는 다음과 같다.

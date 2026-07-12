@@ -1,5 +1,13 @@
 # Editor layout reference matrix
 
+| Field | Value |
+| --- | --- |
+| Type | Stable domain reference contract |
+| Status | Current |
+| Owner | Robotics component owner · Product engineering |
+| Last reviewed | 2026-07-12 |
+| Product source | `LK-ROBOTICS/lk_web_viz` at the revision recorded below |
+
 이 문서는 `CanvasEditorShell`과 로보틱스 편집 패턴을 변경할 때 적용할 근거 우선순위와 영역 소유권을 정의한다. 일반적인 GIS/3D 에디터 관행은 참고 자료이고, LK 제품 흐름을 설명할 때는 실제 `lk_web_viz` 소스가 우선한다.
 
 이 편집기 패턴은 **LK Robotics Extension**이다. 아래 외부 자료는 에디터 카테고리의 해부 구조, 상호작용, 접근성 기대치를 확인하기 위한 근거이며 WDS parity 증거가 아니다. 외부 제품의 스타일이나 완성 화면을 복제하지 않고 LDS 토큰과 기존 컴포넌트 계약으로 번역한다.

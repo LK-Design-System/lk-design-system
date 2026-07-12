@@ -7,6 +7,7 @@ const docPath = 'docs/PRODUCT_FRONTEND_COVERAGE.md';
 const requiredRepositories = [
   'LK-ROBOTICS/lk_deviceops',
   'LK-ROBOTICS/lk_visionops',
+  'LK-ROBOTICS/lk_web_viz',
   'LK-ROBOTICS/lk_context_hub',
   'LK-ROBOTICS/lkrobotics-control-full-daedeok',
   'LK-ROBOTICS/lk_mlops',

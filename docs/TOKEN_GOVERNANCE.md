@@ -1,5 +1,13 @@
 # Token governance
 
+| Field | Value |
+| --- | --- |
+| Type | Governance policy |
+| Status | Current |
+| Owner | Foundation owner |
+| Last reviewed | 2026-07-12 |
+| Source | `tokens/source.json` |
+
 `tokens/source.json` is the source of truth for LK ROBOTICS design tokens.
 Figma Variables, Storybook examples, React components,
 and AI-generated UI must all resolve back to this token contract.

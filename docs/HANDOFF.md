@@ -1,285 +1,57 @@
-# LK Design System Handoff
+# LK Design System current handoff
 
-Date: 2026-07-12
-Branch: `main`
-Remote: `origin` (`https://github.com/LK-ROBOTICS/lk-design-system-core.git`)
-Working area: `lk-design-system-core`
+| Field | Value |
+| --- | --- |
+| Type | Current-state pointer |
+| Status | Current |
+| Owner | Design system owner |
+| Last reviewed | 2026-07-12 |
+| Branch | `main` |
+| Baseline | `43ac938` (documentation reorganization 이전) |
+| Remote | `origin` · `LK-ROBOTICS/lk-design-system-core` |
 
-Latest focused handoff: [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
-(2026-07-12: the robotics navigation (N1–N6), communication (C1–C4), and virtual keypad (K1) expansion is
-**implemented, wired to the public entry, and verified by targeted checks — the accessibility guard (46 new stories,
-0 violations), `check:storybook-ia`, and `check:inventory` are all green**, and representative stories were visually
-reviewed by screenshot (which caught and fixed a map-label overlap in the N6 semantic mirror that axe/geometry checks
-missed). **HEAD `04eb718`; all new work is still uncommitted in a very dirty shared worktree; `origin` has NOT been
-pushed.** Per the user's instruction the repository-wide `npm run check` was NOT run — targeted verification only. The
-completion handoff records the found/fixed defects, the exact resume sequence, and what remains (full check,
-visual-regression baseline, commit). It continues the
-[implementation checkpoint](handoff/2026-07-12-domain-component-expansion-implementation.md).)
+이 문서는 현재 상태와 최신 상세 handoff를 연결하는 짧은 포인터다. 날짜별 handoff의 HEAD, dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 상태로 해석하지 않는다.
 
-The prior [Family-consistency stabilization verification](handoff/2026-07-12-family-stabilization-verification.md) remains
-the immediate historical checkpoint for the selection/input, menu/overlay, status, ButtonGroup, and SplitButton work.
+## Current state
 
-The last regenerated Storybook index is **177 pages / 516 stories / 397 public / 119 hidden** (the +9 pages / +46
-stories over the prior 168/470 baseline are the verified domain expansion). This continues the
-[Storybook IA, guidance, and naming normalization](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
-(friendly-entry contract on every page, purpose descriptions on every public story, `개요`-first naming with role prefixes),
-the [Storybook information architecture audit](handoff/2026-07-11-storybook-information-architecture-audit.md),
-the [Quality audit and D-track design review](handoff/2026-07-11-quality-audit-and-design-review.md),
-the executed [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md),
-and the completed [D-track design convention review](references/quality/DESIGN_CONVENTION_REVIEW.json)
-(9 lenses, 53 reviewed findings, 47 confirmed, 6 rejected).
+- `main`은 PR #1의 design-system stabilization과 domain expansion 병합 commit `43ac938`을 기준선으로 문서 체계를 재정비했다.
+- public component implementation/type/export는 202개, named public export는 208개다.
+- 현재 Storybook 기준선은 177 pages / 516 stories / 397 public / 119 hidden / 82 visual-parity다.
+- 신규 컴포넌트·재설계·icon/asset/map symbol의 canonical 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)다.
+- 문서 탐색과 source-of-truth 순서는 [`README.md`](README.md)를 따른다.
 
-Immediate next work: the domain expansion goal is complete and targeted-verified (a11y, IA, inventory green). Remaining
-are user-judgment items — run the repository-wide `npm run check` if desired (dirty-worktree gates like `check:generated`
-are structurally noisy and unrelated to this work), register the visual-regression baseline (`npm run update:visual-baseline`)
-for the new stories, and commit / push. P3 or the remaining D-track backlog follows after those.
+현재 revision은 Git을 직접 확인한다. 날짜별 handoff의 commit과 이 문서의 baseline은 변경 전후를 설명하는 기준점이며 현재 branch tip을 뜻하지 않는다.
 
-## Current Direction
+## Latest focused handoffs
 
-This repository is the LK ROBOTICS Design System Core. The intended relationship to Wanted Design System Community (WDS) is:
+1. [Documentation system review and reorganization](handoff/2026-07-12-documentation-system-review.md)
+   - 공식 문서 인덱스, metadata/status, canonical component review workflow, product coverage와 drift guard 정리
+2. [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
+   - Robotics Navigation N1–N6, Communication C1–C4, VirtualKeypad K1 구현·표적 검증 snapshot
+3. [Family stabilization verification](handoff/2026-07-12-family-stabilization-verification.md)
+   - component family consistency, Storybook, accessibility verification snapshot
+4. [Storybook IA execution and guidance](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
+   - page ownership, naming, review ledger 운영 방법
+5. [Quality audit and design review](handoff/2026-07-11-quality-audit-and-design-review.md)
+   - quality guard와 D-track finding의 historical evidence
+6. [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md)
+   - taxonomy 실행 전 계획 snapshot; 결과 판단에는 현재 IA audit를 사용
 
-- LDS should follow WDS structure, component taxonomy, interaction model, and primitive behavior.
-- LDS may replace WDS colors with LK ROBOTICS brand tokens.
-- Domain-specific robotics/product examples should demonstrate components, but should not become the design system's source of truth.
-- Full WDS parity is now claimed against the accepted local `.fig` snapshot (decision 2026-07-08): the checked-in `Wanted Design System (Community).fig` export, decoded to `FIGMA_LOCAL_CONTENT_AUDIT.json`, is the authoritative WDS source. All Figma node queue rows are closed and `COVERAGE_COMPLETION_GATE.json` is `ready`. Live Figma re-verification is optional and only needed if the upstream community file changes. Residual follow-ups are listed in `docs/references/wds/COVERAGE_GAPS.md`.
+## Current verification commands
 
-The current Storybook is running around the WDS/LDS audit and component expansion work. The in-app browser may already be open at `http://127.0.0.1:6006`.
-
-## Major Work Completed In This Pass
-
-### WDS relationship and audit model
-
-- Added visible WDS/LDS relationship documentation in `readme.md` and docs-backed audit references.
-- Added WDS alignment data under `docs/references/wds/`.
-- Added machine-readable coverage files:
-  - `COVERAGE_AUDIT.json`
-  - `FOUNDATION_AUDIT.json`
-  - `TOKEN_MAP.json`
-  - `COVERAGE_DETAIL_AUDIT.json`
-  - `VARIANT_AUDIT_CHECKLIST.json`
-  - `PUBLIC_EXPORT_CLASSIFICATION.json`
-  - `FIGMA_NODE_AUDIT_QUEUE.json`
-  - `COVERAGE_COMPLETION_GATE.json`
-- Added `scripts/check-wds-alignment.mjs` to validate these references together.
-
-### Figma/PDF source evidence
-
-Local WDS PDF exports from Figma are preserved in:
-
-- `docs/references/wds/source-pdfs/1basic.pdf`
-- `docs/references/wds/source-pdfs/2spacing.pdf`
-- `docs/references/wds/source-pdfs/3decorate.pdf`
-- `docs/references/wds/source-pdfs/1layout.pdf`
-- `docs/references/wds/source-pdfs/2action.pdf`
-
-Mapped evidence files:
-
-- `docs/references/wds/FOUNDATION_SOURCE_PDFS.json`
-- `docs/references/wds/COMPONENT_SOURCE_PDFS.json`
-
-Important constraint: the local PDF evidence is useful, but it is not a complete replacement for direct WDS Figma node checks.
-
-### Icon adoption
-
-- Imported the local icon export folder into `assets/icons/`.
-- Added/generated the icon registry and public icon surface.
-- `scripts/generate-icons.mjs` is present.
-- `components/icon/Icon.jsx` and related type/prompt files now use the LDS icon registry instead of ad hoc hand-drawn SVGs.
-
-### Component additions and corrections
-
-New or significantly updated primitives include:
-
-- `components/buttons/ActionArea.jsx`
-- `components/buttons/ToggleIcon.jsx`
-- `components/content/ContentEditor.jsx`
-- `components/content/Divider.jsx`
-- `components/data/DataToolbar.jsx`
-- `components/layout/MobileSystemBars.jsx`
-- `components/layout/PageHeader.jsx`
-- `components/overlay/ConfirmDialog.jsx`
-- `components/viz/TelemetryValue.jsx`
-
-Notable design corrections:
-
-- Viewer/editor toolbar icons should use the icon registry, not newly invented SVGs.
-- Editor action cluster alignment was corrected toward a more conventional toolbar pattern.
-- Navigation stories were split and SideNav behavior documented more carefully.
-- Status/feedback pages were split so unrelated patterns do not sit on one mixed page.
-- Viewer/telemetry pages were reorganized.
-- Telemetry data should prefer table-like separation for comparable data. One column should hold one primary datum where possible; avoid packing value and timestamp into the same data column.
-- Robotics workflow examples were moved toward product-extension/documentation status instead of being treated as core design-system output.
-
-### Storybook reorganization
-
-Many mixed Storybook pages were split into narrower component and pattern stories. Audit and operating-model material belongs in docs, not Storybook. Important new story files include:
-Public Storybook titles now use audience-facing navigation groups such as `LDS Core/Foundation` and `LDS Core/Components/Action`; numbered WDS source labels stay in `docs/references/wds/` evidence. `LDS Product` and `LDS Robotics` must stay reusable component/pattern layers rather than application screens, templates, workflows, or demos.
-
-- `stories/FoundationBasic.stories.jsx`
-- `stories/FoundationSpacing.stories.jsx`
-- `stories/FoundationDecorate.stories.jsx`
-- `stories/LayoutEssentials.stories.jsx`
-- `stories/ActionArea.stories.jsx`
-- `stories/ContentEditor.stories.jsx`
-- `stories/DataToolbar.stories.jsx`
-- `stories/LayoutPageHeader.stories.jsx`
-- `stories/OverlayConfirmDialog.stories.jsx`
-- `stories/ViewerTelemetry.stories.jsx`
-
-Shared story modules were added to keep public stories focused while preserving examples:
-
-- `stories/*.shared.jsx`
-
-## Historical Verification Snapshot
-
-The following commands were reconfirmed during the 2026-07-08 documentation refresh:
-
-```bash
-node scripts/check-wds-alignment.mjs
-pnpm run build:storybook
-pnpm run check:inventory
+```powershell
+npm run build:storybook
+npm run check:storybook-ia
+npm run check:inventory
+npm run check:contracts
+npm run check:docs
+npm run check:product-frontends
 ```
 
-That run predated the 2026-07-08 local `.fig` acceptance decision and the 2026-07-11 taxonomy
-cleanup. Do not use its old completion-gate or story-count output as current state. The authoritative
-current source is `docs/references/wds/COVERAGE_COMPLETION_GATE.json` (`claimStatus: ready`), and
-the latest focused handoff records 168 story titles, 336 public stories, and 443 total stories.
+전체 repository gate는 문서와 컴포넌트 보완이 끝난 최종 checkpoint에서 `npm run check`로 실행한다.
 
-Storybook static build passed. It still prints a Vite chunk-size warning around the large bundle/icon surface; this is currently a warning, not a failing gate.
+## Current next work
 
-## Build Notes
-
-CI uses npm and `package-lock.json`, but package scripts avoid nested `npm run`
-calls so the same script names can be run with pnpm in this desktop
-environment. If package-manager commands such as pack or audit are needed,
-`scripts/run-package-command.mjs` chooses npm or pnpm based on what is available.
-
-If the generated entrypoints drift, the build sequence is:
-
-```bash
-node scripts/generate-entry.mjs
-pnpm exec tsup
-node scripts/copy-types.mjs
-```
-
-Generated files updated by this flow:
-
-- `src/index.js`
-- `src/index.d.ts`
-- `dist/index.js`
-- `dist/index.cjs`
-- `dist/index.d.ts`
-- source maps under `dist/`
-
-## Remaining Risks And Next Work
-
-### WDS parity status (updated 2026-07-11)
-
-`docs/references/wds/COVERAGE_COMPLETION_GATE.json` is now:
-
-```json
-"claimStatus": "ready"
-```
-
-The gate was closed by the 2026-07-08 acceptance decision: the checked-in
-local `.fig` snapshot is the authoritative WDS source, all 14 rows in
-`FIGMA_NODE_AUDIT_QUEUE.json` are `confirmed-covered`, and live Figma
-re-verification is optional unless the upstream community file changes.
-Residual follow-ups stay in `docs/references/wds/COVERAGE_GAPS.md`.
-
-The 2026-07-11 Storybook taxonomy cleanup
-(`docs/handoff/2026-07-11-storybook-taxonomy-cleanup.md`) has been executed:
-self-repeating sidebar paths removed, layer leaks fixed (including the
-LogViewer-to-robotics import), Product Data regrouped into
-Display/Visualization/Collections/Operations, combined pages split per the
-local `.fig` component-set evidence, and the classification JSONs
-resynchronized. One evidence-backed deviation from the original target tree:
-the local snapshot's `7 Feedback` section defines only Toast/Snackbar/Alert,
-so Avatar moved to `Content`, Badges and Tags plus Notification moved to
-`Status`, and the empty `LDS Core/Components/Feedback` group was removed from
-`storySort`.
-
-### Check product-extension boundaries
-
-Some stories are intentionally product/domain examples, not core WDS primitives. Keep this distinction sharp:
-
-- Core WDS/LDS primitives belong in component/foundation sections.
-- Robotics-specific flows, mission planning, and application-like pages should stay under product-extension, pattern documentation, or examples.
-- Do not promote finished application screens into the design-system source of truth.
-
-### Review component semantics
-
-The user has repeatedly flagged cases where examples were visually invented rather than derived from WDS. Future edits should check:
-
-- Is this component present in WDS?
-- Is the story showing a primitive, a variant, or an application result?
-- Are colors/tokens coming from LDS token overrides rather than local ad hoc values?
-- Does a data table separate values into clear columns?
-- Are icons from the LDS registry?
-
-## Useful Commands
-
-Run focused gates:
-
-```bash
-node scripts/check-wds-alignment.mjs
-node scripts/check-token-source.mjs
-node scripts/check-visual-token-drift.mjs
-node scripts/check-type-surface.mjs
-node scripts/report-inventory.mjs
-pnpm exec tsc --noEmit
-pnpm exec storybook build
-pnpm run check:inventory
-```
-
-Run Storybook locally:
-
-```bash
-pnpm exec storybook dev -p 6006 --host 127.0.0.1 --no-open
-```
-
-If the generated entrypoints drift:
-
-```bash
-node scripts/generate-entry.mjs
-pnpm exec tsup
-node scripts/copy-types.mjs
-```
-
-## Files To Inspect First
-
-For WDS coverage state:
-
-- `docs/references/wds/COVERAGE_COMPLETION_GATE.json`
-- `docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json`
-- `docs/references/wds/COVERAGE_AUDIT.json`
-- `docs/references/wds/COVERAGE_DETAIL_AUDIT.json`
-- `docs/references/wds/VARIANT_AUDIT_CHECKLIST.json`
-- `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`
-
-For source evidence:
-
-- `docs/references/wds/FOUNDATION_SOURCE_PDFS.json`
-- `docs/references/wds/COMPONENT_SOURCE_PDFS.json`
-- `docs/references/wds/source-pdfs/`
-
-For generated/public API surface:
-
-- `src/index.js`
-- `src/index.d.ts`
-- `dist/index.d.ts`
-- `scripts/check-type-surface.mjs`
-
-For Storybook organization:
-
-- `stories/*shared.jsx`
-- `stories/Audit.data.jsx` as hidden source data for scripts only, not a Storybook page
-
-## Handoff Summary
-
-This handoff captures the WDS alignment pass and points to the latest 2026-07-11 quality work.
-Full WDS parity is claimed against the accepted checked-in local `.fig` snapshot; live Figma
-re-verification is optional unless that upstream snapshot changes. The D-track design review is also
-complete and recorded in `docs/references/quality/DESIGN_CONVENTION_REVIEW.json`. The next work is
-the focused handoff's final checkpoint: static Storybook rebuild, IA regeneration and review promotion,
-`check:storybook-ia`, then one full `npm run check`. P3 or remaining D findings follow only after that passes.
+1. [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)의 공식 gate로 오늘 추가된 component와 icon/asset/map symbol을 검토한다.
+2. LK Web Viz의 `WF-15`를 시작으로 LK Control Full Daedeok, LK Context Hub의 관련 workflow에 component disposition을 연결한다.
+3. 확정 finding을 범위별로 보완하고 표적 검사 후 최종 전체 gate를 실행한다.

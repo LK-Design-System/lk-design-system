@@ -16,7 +16,7 @@
     "verified": "Source requirements, wireframe, implementation stories, and interaction verification are traceably connected."
   },
   "summary": {
-    "discovered": 0,
+    "discovered": 1,
     "wireframed": 0,
     "implemented": 0,
     "verified": 14
@@ -559,6 +559,13 @@
       "commit": "308da0c0624024ba2497cf05cda2841e4411b522",
       "frontendRoot": "frontend",
       "framework": "Next.js 16, React 19"
+    },
+    {
+      "id": "web-viz",
+      "repository": "LK-ROBOTICS/lk_web_viz",
+      "commit": "a984def117c05acd213f494cbb8a42e990595505",
+      "frontendRoot": "frontend",
+      "framework": "Vite 6, React 19, react-konva"
     },
     {
       "id": "context-hub",
@@ -1627,6 +1634,63 @@
         "scripts/check-product-frontend-coverage.mjs",
         "scripts/check-storybook-accessibility.mjs"
       ]
+    },
+    {
+      "id": "WF-15",
+      "name": "Map navigation and facility authoring",
+      "userGoal": "Inspect and edit map points, lines, regions, landmarks, and floor-specific task targets while preserving the semantic difference between elevator entry, elevator interior, door, waypoint, route, and region geometry.",
+      "trigger": "The user opens a map editor or a floor-aware task authoring surface in LK Web Viz.",
+      "consumers": [
+        "web-viz"
+      ],
+      "states": [
+        "loading",
+        "map-ready",
+        "tool-active",
+        "selected",
+        "editing",
+        "invalid",
+        "saving",
+        "saved",
+        "load-error",
+        "unsaved"
+      ],
+      "decisions": [
+        "Which map feature or facility endpoint is being inspected or edited?",
+        "Is the feature a point, line, region, landmark, or cross-floor facility relationship?",
+        "Which floor and map identity own the selected target?",
+        "Can the user distinguish the feature and its state at the current zoom without relying on color alone?"
+      ],
+      "failureRecovery": [
+        "Keep unsaved edits and the selected feature visible when save fails.",
+        "Distinguish missing map data from a loading or transport failure.",
+        "Do not collapse elevator entry, elevator interior, door, stair, and generic waypoint into one ambiguous marker.",
+        "Preserve a named list or inspector path when dense map geometry is not reliable for keyboard traversal."
+      ],
+      "dsBoundary": "LDS may own renderer-neutral point, line, route, trajectory, region, facility-transition, selection, state, and accessible-mirror contracts; map persistence, editor commands, floor topology, task schema, facility control, and transport remain product-owned.",
+      "designQuestion": "Do the navigation components and map symbols provide a coherent, conventional, zoom-stable visual grammar that LK Web Viz can compose without redrawing the same semantics?",
+      "sourceEvidence": [
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/MapEditScreen.tsx",
+          "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/components/editor/ZoneEditor.tsx",
+          "blobSha": "7c80fcb4fb50d8e98438fa0225a43f1c390f292e"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/TaskCreateScreen.tsx",
+          "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+        }
+      ],
+      "stage": "discovered",
+      "wireframeEvidence": [],
+      "implementationEvidence": [],
+      "storyEvidence": [],
+      "verificationEvidence": []
     }
   ]
 }
