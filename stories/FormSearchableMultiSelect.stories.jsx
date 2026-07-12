@@ -1,11 +1,19 @@
 import React from 'react';
 import { userEvent } from 'storybook/test';
 import { SearchableMultiSelect } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Selection and Input/Searchable Multi Select',
   component: SearchableMultiSelect,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-selection-and-input-searchable-multi-select--relation-selection',
+      eyebrow: 'Product / Searchable Multi Select',
+      title: '검색형 다중 선택은 큰 목록에서 여러 관계를 찾고 유지합니다',
+      description:
+        '저장소·사용자처럼 항목이 많고 검색 후 복수 값을 chip으로 남겨야 할 때 적합합니다. 선택지가 적거나 하나만 고르면 Checkbox Group 또는 Select를 사용하세요.',
+    },
     docs: {
       description: {
         component: '큰 관계 목록을 검색하고 여러 값을 chip으로 선택하는 controlled multi-select입니다.',
@@ -28,7 +36,10 @@ function settle() {
 }
 
 export const RelationSelection = {
-  name: '관계 선택',
+  name: '개요',
+  parameters: storyDescription(
+    '저장소 목록을 검색해 여러 관계를 chip으로 유지하는 기본 controlled 예제입니다. 검색 입력, 선택 목록, 제거 동작이 하나의 필드로 읽히는지 확인하세요.',
+  ),
   render: () => {
     const [value, setValue] = React.useState(['visionops']);
     return <SearchableMultiSelect label="연결 저장소" helper="검색한 저장소를 여러 개 연결할 수 있습니다." options={options} value={value} onChange={setValue} style={{ maxWidth: 520 }} />;
@@ -36,7 +47,10 @@ export const RelationSelection = {
 };
 
 export const ResourceStates = {
-  name: '불러오기·오류·빈 결과·최대 선택',
+  name: '변형·상태 · 불러오기 · 오류 · 빈 결과와 최대 선택',
+  parameters: storyDescription(
+    '원격 옵션의 loading, fetch error, 빈 목록, 최대 선택 도달 상태를 비교합니다. 상태마다 다음 행동과 입력 가능 여부가 명확히 달라지는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))' }}>
       <SearchableMultiSelect data-testid="loading-root" aria-busy="false" label="불러오는 관계" options={options} loading />
@@ -68,7 +82,10 @@ export const ResourceStates = {
 };
 
 export const KeyboardSelectionContract = {
-  name: '키보드 선택·제거 동작',
+  name: '상호작용 · 키보드 선택과 제거',
+  parameters: storyDescription(
+    '키보드만으로 목록을 열고 첫 항목을 선택한 뒤 chip을 제거합니다. combobox의 확장·활성 항목·선택 값이 포커스 이동과 동기화되는지 확인하세요.',
+  ),
   render: function Example() {
     const [value, setValue] = React.useState([]);
     return <SearchableMultiSelect label="키보드 저장소" options={options} value={value} onChange={setValue} style={{ maxWidth: 520 }} />;
@@ -100,7 +117,10 @@ export const KeyboardSelectionContract = {
 };
 
 export const DisabledOptionNavigation = {
-  name: '비활성 항목 건너뛰기',
+  name: '변형·상태 · 비활성 항목 건너뛰기',
+  parameters: storyDescription(
+    '권한 없는 첫 옵션을 포함한 검색 목록입니다. 방향키가 비활성 항목을 건너뛰고 첫 사용 가능 항목에 활성 descendant를 두는지 확인하세요.',
+  ),
   render: () => (
     <SearchableMultiSelect
       label="접근 가능한 저장소"
@@ -124,7 +144,10 @@ export const DisabledOptionNavigation = {
 };
 
 export const OpenedSelection = {
-  name: '선택 유지·열린 항목 목록',
+  name: '사용법 · 선택 유지와 열린 항목 목록',
+  parameters: storyDescription(
+    '이미 선택한 저장소 chip을 유지한 채 옵션 목록을 연 상태입니다. 선택된 값이 목록에서도 구분되고 중복 선택으로 추가되지 않는지 확인하세요.',
+  ),
   render: () => (
     <SearchableMultiSelect
       label="연결 저장소"
@@ -140,7 +163,10 @@ export const OpenedSelection = {
 };
 
 export const MobileWidth = {
-  name: '좁은 폭·읽기 전용',
+  name: '반응형 · 좁은 폭과 읽기 전용',
+  parameters: storyDescription(
+    '260px 폭에서 두 값을 읽기 전용으로 보여줍니다. chip이 겹치지 않고 입력이 열리지 않으며 기존 값은 끝까지 읽을 수 있는지 확인하세요.',
+  ),
   render: () => (
     <div style={{ width: 260, maxWidth: '100%' }}>
       <SearchableMultiSelect label="연결 저장소" helper="값은 읽을 수 있지만 변경할 수 없습니다." options={options} defaultValue={['visionops', 'mlops']} readOnly />

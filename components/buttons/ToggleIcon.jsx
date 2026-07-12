@@ -13,20 +13,28 @@ export function ToggleIcon({
   size = "md",
   variant = "default",
   disabled = false,
+  disable = false,
   style,
   className,
   onClick,
   onMouseEnter,
   onMouseLeave,
+  onMouseDown,
+  onMouseUp,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
   type,
   'aria-disabled': ariaDisabled,
   ...rest
 }) {
   const [internal, setInternal] = React.useState(defaultPressed);
   const [hover, setHover] = React.useState(false);
+  const [pointerPressed, setPointerPressed] = React.useState(false);
   const active = pressed ?? internal;
   const ariaBlocked = ariaDisabled === true || ariaDisabled === 'true';
-  const blocked = disabled || ariaBlocked;
+  const disabledState = disabled || disable;
+  const blocked = disabledState || ariaBlocked;
   const side =
     size === "sm"
       ? "var(--component-toggle-icon-size-sm)"
@@ -73,7 +81,7 @@ export function ToggleIcon({
       aria-label={label}
       aria-pressed={active}
       aria-disabled={ariaBlocked || undefined}
-      disabled={disabled}
+      disabled={disabledState}
       className={["lk-toggle-icon", `lk-toggle-icon--${variant}`, className].filter(Boolean).join(" ")}
       onClick={setNext}
       onMouseEnter={(event) => {
@@ -82,8 +90,26 @@ export function ToggleIcon({
       }}
       onMouseLeave={(event) => {
         setHover(false);
+        setPointerPressed(false);
         onMouseLeave?.(event);
       }}
+      onMouseDown={(event) => {
+        if (!blocked) setPointerPressed(true);
+        onMouseDown?.(event);
+      }}
+      onMouseUp={(event) => {
+        setPointerPressed(false);
+        onMouseUp?.(event);
+      }}
+      onKeyDown={(event) => {
+        if (!blocked && (event.key === 'Enter' || event.key === ' ')) setPointerPressed(true);
+        onKeyDown?.(event);
+      }}
+      onKeyUp={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') setPointerPressed(false);
+        onKeyUp?.(event);
+      }}
+      onBlur={(event) => { setPointerPressed(false); onBlur?.(event); }}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -97,11 +123,13 @@ export function ToggleIcon({
             : palette.foreground,
         background: blocked
           ? "var(--color-semantic-fill-normal)"
-          : active
-            ? "var(--component-toggle-icon-bg-active)"
-            : hover
-              ? palette.hoverBackground
-              : palette.background,
+          : pointerPressed
+            ? `color-mix(in srgb, ${active ? "var(--component-toggle-icon-bg-active)" : palette.hoverBackground} 88%, var(--color-semantic-label-normal))`
+            : active
+              ? "var(--component-toggle-icon-bg-active)"
+              : hover
+                ? palette.hoverBackground
+                : palette.background,
         border: blocked
           ? "var(--border-thin) solid var(--color-semantic-line-normal-neutral)"
           : active

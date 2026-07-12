@@ -1,11 +1,19 @@
 import React from 'react';
 import { Button, CanvasEditorCommandBar } from '../src/index.js';
 import { EditorStoryFrame } from './EditorShell.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Editor/Command Bar',
   component: CanvasEditorCommandBar,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-robotics-editor-command-bar--document-commands',
+      eyebrow: 'Robotics / Command Bar',
+      title: '커맨드 바는 문서 전체에 영향을 주는 명령을 한곳에 모읍니다',
+      description:
+        '운영자가 저장·내보내기·실행 취소처럼 편집 문서 전체의 수명주기를 다룰 때 적합합니다. 줌·카메라·레이어처럼 현재 뷰포트에만 영향을 주는 동작에는 Viewer Toolbar 또는 해당 로컬 도구를 사용하세요.',
+    },
     docs: {
       description: {
         component:
@@ -47,7 +55,10 @@ const documentActions = [
 ];
 
 export const DocumentCommands = {
-  name: '문서 명령',
+  name: '개요',
+  parameters: storyDescription(
+    '편집 문서의 실행 취소·다시 실행·저장·내보내기를 한 막대에서 사용하는 기본 상황입니다. 명령 그룹과 현재 가능한 작업이 아이콘과 접근 가능한 이름으로 구분되는지 확인하세요.',
+  ),
   render: () => (
     <CommandBarFrame>
       <CanvasEditorCommandBar
@@ -62,10 +73,29 @@ export const DocumentCommands = {
       </CanvasEditorCommandBar>
     </CommandBarFrame>
   ),
+  play: async ({ canvasElement }) => {
+    const history = canvasElement.querySelector('[role="toolbar"][aria-label="편집 이력"]');
+    const documentToolbar = canvasElement.querySelector('[role="toolbar"][aria-label="문서 명령"]');
+    const historyItems = [...(history?.querySelectorAll('[data-lk-history-toolbar-item]') ?? [])];
+    const documentItems = [...(documentToolbar?.querySelectorAll('[data-lk-command-toolbar-item]') ?? [])];
+    const enabledHistory = historyItems.filter((item) => !item.disabled);
+    const enabledDocument = documentItems.filter((item) => !item.disabled);
+    if (!history || !documentToolbar || enabledHistory.filter((item) => item.tabIndex === 0).length !== 1 || enabledDocument.filter((item) => item.tabIndex === 0).length !== 1) {
+      throw new Error('Each command group must preserve exactly one roving Tab stop.');
+    }
+    enabledHistory[0].focus();
+    enabledHistory[0].dispatchEvent(new canvasElement.ownerDocument.defaultView.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    if (canvasElement.ownerDocument.activeElement !== enabledHistory[1]) {
+      throw new Error('History focus must skip unavailable commands and reach reset.');
+    }
+  },
 };
 
 export const HandlerGating = {
-  name: '상태와 핸들러 동시 검증',
+  name: '변형·상태 · 작업 가능 여부',
+  parameters: storyDescription(
+    '가능 상태는 true지만 대응 handler가 없거나 그 반대인 불완전한 연결 상황입니다. 실제 실행 가능한 명령만 활성화되어 눌러도 무응답인 제어가 생기지 않는지 확인하세요.',
+  ),
   render: () => (
     <CommandBarFrame>
       <CanvasEditorCommandBar
@@ -80,7 +110,10 @@ export const HandlerGating = {
 };
 
 export const MediumDensity = {
-  name: '40px 문서 제어',
+  name: '반응형 · 40px 문서 제어',
+  parameters: storyDescription(
+    '중간 밀도의 40px 문서 제어를 에디터 상단에 배치한 상황입니다. 버튼 크기와 간격이 인접 도구와 조화를 이루면서 포인터 타깃과 라벨이 유지되는지 확인하세요.',
+  ),
   render: () => (
     <CommandBarFrame>
       <CanvasEditorCommandBar
@@ -96,7 +129,10 @@ export const MediumDensity = {
 };
 
 export const NarrowCommandTargets = {
-  name: '좁은 폭 · 긴 문서 작업',
+  name: '반응형 · 좁은 폭 · 긴 문서 작업',
+  parameters: storyDescription(
+    '좁은 편집 폭에서 긴 문서 작업명과 여러 명령이 함께 놓이는 상황입니다. 필수 명령이 겹치거나 잘리지 않고 긴 사용자 작업명이 타깃 안에서 자연스럽게 줄바꿈되는지 확인하세요.',
+  ),
   render: () => (
     <CommandBarFrame maxWidth={360}>
       <CanvasEditorCommandBar

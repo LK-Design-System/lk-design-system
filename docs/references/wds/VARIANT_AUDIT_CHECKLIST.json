@@ -31,7 +31,7 @@
             "not production OS chrome"
           ],
           "localEvidence": [
-            "stories/LayoutEssentials.stories.jsx#EssentialAndDivider"
+            "stories/LayoutEssentials.stories.jsx#MobileSystemBarsByPlatform"
           ]
         },
         {
@@ -44,8 +44,10 @@
             "vertical = true"
           ],
           "localEvidence": [
-            "stories/LayoutEssentials.stories.jsx#EssentialAndDivider",
-            "stories/ContentAnnotations.stories.jsx#Annotations"
+            "stories/LayoutDivider.stories.jsx#DividerVariants",
+            "stories/ContentTooltip.stories.jsx#TooltipPatterns",
+            "stories/ContentBubble.stories.jsx#BubblePatterns",
+            "stories/ActionBookmark.stories.jsx#BookmarkStates"
           ]
         }
       ],
@@ -80,8 +82,7 @@
           ],
           "localEvidence": [
             "stories/Button.stories.jsx#Variants",
-            "stories/Button.stories.jsx#ActionMatrix",
-            "stories/ButtonsExtended.stories.jsx#ActionControls"
+            "stories/Button.stories.jsx#ActionMatrix"
           ]
         },
         {
@@ -101,41 +102,39 @@
         },
         {
           "id": "button-interaction-states",
-          "label": "Interaction states",
+          "label": "Interaction states and LDS processing extension",
           "wdsChecks": [
             "default",
             "hover",
             "active/pressed",
             "focus-visible",
             "disabled",
-            "Button loading",
-            "Text Button loading"
+            "Button loading = LDS extension",
+            "Text Button loading = LDS extension"
           ],
           "localEvidence": [
             "stories/Button.stories.jsx#ActionMatrix",
             "stories/Button.stories.jsx#SizesAndStates",
-            "stories/Button.stories.jsx#Playground",
-            "stories/ActionArea.stories.jsx#ActionTaxonomy"
+            "stories/Button.stories.jsx#InteractionContract",
+            "stories/ActionTextButton.stories.jsx#InteractionAndLoadingContract"
           ]
         },
         {
-          "id": "button-slots-and-groups",
-          "label": "Icon slots and grouped actions",
+          "id": "button-slots-and-fab",
+          "label": "Icon slots, icon buttons, and FAB",
           "wdsChecks": [
             "leading icon",
             "trailing icon",
             "icon-only",
             "Icon Button normal/background/outlined/solid",
             "Chip icon/thumbnail content",
-            "button group",
-            "split action",
             "floating action"
           ],
           "localEvidence": [
             "stories/Button.stories.jsx#ActionMatrix",
-            "stories/ActionArea.stories.jsx#ActionTaxonomy",
-            "stories/ButtonsExtended.stories.jsx#ActionControls",
-            "stories/ButtonsExtended.stories.jsx#ButtonIconButtonSocialButtonCard",
+            "stories/ActionIconButton.stories.jsx#IconButtonVariants",
+            "stories/ActionIconButton.stories.jsx#InteractionAndDisabledContract",
+            "stories/ActionFab.stories.jsx#FloatingActionButton",
             "stories/SelectionChips.stories.jsx#ChipCard"
           ]
         },
@@ -166,8 +165,49 @@
             "icon-only accessible label"
           ],
           "localEvidence": [
-            "stories/ActionArea.stories.jsx#ActionTaxonomy",
-            "stories/SelectionSegmentedToggle.stories.jsx#ToggleButtonCard"
+            "stories/ActionToggleIcon.stories.jsx#ToggleStates",
+            "stories/ActionToggleIcon.stories.jsx#InteractionContract"
+          ]
+        },
+        {
+          "id": "grouped-action-source-boundary",
+          "label": "Grouped action extension boundary",
+          "wdsChecks": [
+            "ButtonGroup has no direct WDS component set",
+            "SplitButton has no direct WDS component set",
+            "single-selection ButtonGroup composes SegmentedControl instead of defining a second radio pattern",
+            "SplitButton remains an LK Product Extension menu-button composition"
+          ],
+          "localEvidence": [
+            "stories/ActionButtonGroup.stories.jsx#SelectionContracts",
+            "stories/ActionSplitButton.stories.jsx#KeyboardAndStateContract"
+          ]
+        },
+        {
+          "id": "grouped-action-behavior",
+          "label": "Grouped action behavior",
+          "wdsChecks": [
+            "single and multiple ButtonGroup outer boxes use the 32/40/48 Button scale",
+            "multiple ButtonGroup options expose aria-pressed and option/group disabled states",
+            "disabled selected segments preserve selection with neutral roles instead of primary emphasis",
+            "SplitButton exposes menu ARIA and Arrow/Home/End/Escape focus behavior",
+            "SplitButton exposes loading, control disabled, and item disabled states"
+          ],
+          "localEvidence": [
+            "stories/ActionButtonGroup.stories.jsx#SelectionContracts",
+            "stories/ActionSplitButton.stories.jsx#KeyboardAndStateContract"
+          ]
+        },
+        {
+          "id": "product-toggle-button-boundary",
+          "label": "Product ToggleButton extension boundary",
+          "wdsChecks": [
+            "standalone text/icon aria-pressed action remains an LK Product Extension",
+            "uses the 32/40/48 Button scale",
+            "native disabled and focusable aria-disabled remain distinct"
+          ],
+          "localEvidence": [
+            "stories/SelectionToggleButton.stories.jsx#InteractionAndSizeContract"
           ]
         },
         {
@@ -183,7 +223,7 @@
           ]
         }
       ],
-      "notes": "Verified against local Action nodes: variant, color, size, icon-only, disable, active, and loading axes map with WDS-exact dimensions. Follow-ups recorded: focus-visible styling evidence, ActionArea sticky/divider-false story demos. IconButton \"normal\" and ToggleIcon disable are LK deviations/extensions, not parity failures."
+      "notes": "Direct component-set extraction confirms Button solid/outlined, primary/assistive, sm/md/lg, iconOnly and disable; FAB disable; Icon Button disable and documented size/alternative values; Text Button primary/assistive, sm/md and disable; Toggle Icon active/inactive. Loading, extra visual aliases and behavior contracts are explicit LDS compatibility extensions rather than WDS axes. ButtonGroup, SplitButton and Product ToggleButton remain LK extensions; no direct ButtonGroup or SplitButton component set was found. Hover, pressed, focus, grouping and dark-surface treatments are LDS behavior extensions, not WDS component-property axes; they are confirmed against the accepted local .fig snapshot visual samples per the 2026-07-08 snapshot-acceptance policy rather than requiring a live Figma read."
     },
     {
       "wdsFamily": "Textinput/Textfield",
@@ -200,7 +240,10 @@
             "required/optional marker"
           ],
           "localEvidence": [
-            "stories/FormsFull.stories.jsx#TextInputs"
+            "stories/FormInput.stories.jsx#InputOverview",
+            "stories/FormTextarea.stories.jsx#TextareaOverview",
+            "stories/FormPasswordInput.stories.jsx#PasswordInputOverview",
+            "stories/FormInputGroup.stories.jsx#InputGroupOverview"
           ]
         },
         {
@@ -217,7 +260,10 @@
             "read-only"
           ],
           "localEvidence": [
-            "stories/FormsFull.stories.jsx#TextInputs"
+            "stories/FormInput.stories.jsx#InputOverview",
+            "stories/FormTextarea.stories.jsx#TextareaOverview",
+            "stories/FormPasswordInput.stories.jsx#PasswordInputOverview",
+            "stories/FormInputGroup.stories.jsx#InputGroupOverview"
           ]
         },
         {
@@ -245,7 +291,10 @@
             "unit suffix"
           ],
           "localEvidence": [
-            "stories/FormsFull.stories.jsx#TextInputs"
+            "stories/FormInput.stories.jsx#InputOverview",
+            "stories/FormTextarea.stories.jsx#TextareaOverview",
+            "stories/FormPasswordInput.stories.jsx#PasswordInputOverview",
+            "stories/FormInputGroup.stories.jsx#InputGroupOverview"
           ]
         },
         {
@@ -261,9 +310,10 @@
             "shadow"
           ],
           "localEvidence": [
-            "stories/FormsFull.stories.jsx#TextInputInteractionMatrix",
-            "stories/FormSelectionControls.stories.jsx#FrameTreatmentMatrix",
-            "stories/SelectionStatus.stories.jsx#ChoiceCards"
+            "stories/FormInput.stories.jsx#InputInteractionMatrix",
+            "stories/FormTextarea.stories.jsx#TextareaInteractionMatrix",
+            "stories/SelectionStatus.stories.jsx#ChoiceCards",
+            "stories/SelectionStatus.stories.jsx#ChoiceCardStates"
           ]
         }
       ],
@@ -285,23 +335,24 @@
             "chevron treatment"
           ],
           "localEvidence": [
-            "stories/FormsFull.stories.jsx#TextInputs",
-            "stories/FormsFull.stories.jsx#TextInputInteractionMatrix"
+            "stories/FormSelect.stories.jsx#Selects",
+            "stories/FormSelect.stories.jsx#SelectStateContract",
+            "stories/FormSelect.stories.jsx#SelectKeyboardContract",
+            "stories/FormSelect.stories.jsx#SelectDisabledOptionContract"
           ]
         },
         {
-          "id": "select-menu",
-          "label": "Option list",
+          "id": "select-option-list-lds-extension",
+          "label": "LDS option-list composition and accessibility extension (not a WDS Select axis)",
           "wdsChecks": [
-            "option row",
-            "selected option",
-            "hovered option",
-            "disabled option",
-            "group label if present"
+            "LDS composition: named listbox and option rows",
+            "LDS semantics: confirmed value uses aria-selected",
+            "LDS interaction: hovered/active option remains distinct from the confirmed value",
+            "LDS accessibility: aria-disabled option is skipped and cannot be committed"
           ],
           "localEvidence": [
-            "stories/FormSearchAutocomplete.stories.jsx#SearchAndAutocomplete",
-            "stories/FormSearchAutocomplete.stories.jsx#AutoCompleteCard"
+            "stories/FormSelect.stories.jsx#SelectKeyboardContract",
+            "stories/FormSelect.stories.jsx#SelectDisabledOptionContract"
           ]
         },
         {
@@ -319,7 +370,7 @@
           ]
         }
       ],
-      "notes": "Verified against local node 16215:32967: render chip/text, negative/status, open/focus/disable, overflow, leading icon covered. Option-row states exceed the WDS Select section (WDS Menu is a separate family)."
+      "notes": "Verified against the direct children of local component set 16215:33116: render chip/text, negative, active, focus, disable, and overflow are the authoritative WDS axes. Leading icon is composition evidence rather than a component-set axis. Option-row disabled semantics, dynamic disabled updates, and Arrow/Home/End skipping are explicit LDS APG behavior extensions; they do not add WDS axes."
     },
     {
       "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
@@ -337,8 +388,12 @@
             "disabled"
           ],
           "localEvidence": [
-            "stories/FormSelectionControls.stories.jsx#SelectionGroups",
-            "stories/FormSelectionControls.stories.jsx#ControlInteractionMatrix",
+            "stories/FormCheckbox.stories.jsx#Checkboxes",
+            "stories/FormRadio.stories.jsx#Radios",
+            "stories/FormCheckbox.stories.jsx#CheckboxInteractionContract",
+            "stories/FormRadio.stories.jsx#RadioInteractionContract",
+            "stories/FormRadio.stories.jsx#RadioStateContract",
+            "stories/SelectionStatus.stories.jsx#ChoiceCardStates",
             "stories/SelectionSwitch.stories.jsx#SwitchInteractionMatrix"
           ]
         },
@@ -357,7 +412,7 @@
             "custom typography color"
           ],
           "localEvidence": [
-            "stories/FormSelectionControls.stories.jsx#MarkTreatmentMatrix"
+            "stories/FormCheckbox.stories.jsx#CheckboxMarkContract"
           ]
         },
         {
@@ -371,7 +426,9 @@
             "vertical/horizontal layout"
           ],
           "localEvidence": [
-            "stories/FormSelectionControls.stories.jsx#SelectionGroups"
+            "stories/FormSelect.stories.jsx#Selects",
+            "stories/FormCheckbox.stories.jsx#Checkboxes",
+            "stories/FormRadio.stories.jsx#Radios"
           ]
         },
         {
@@ -384,8 +441,10 @@
             "multi selection if present"
           ],
           "localEvidence": [
-            "stories/SelectionSegmentedToggle.stories.jsx#SegmentedAndToggle",
-            "stories/SelectionSegmentedToggle.stories.jsx#SegmentedInteractionMatrix",
+            "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlOverview",
+            "stories/SelectionToggleButton.stories.jsx#ToggleButtonOverview",
+            "stories/SelectionSegmentedControl.stories.jsx#SegmentedControlStates",
+            "stories/SelectionSegmentedControl.stories.jsx#SegmentedKeyboardContract",
             "stories/SelectionChips.stories.jsx#ChipSelection"
           ]
         },
@@ -406,7 +465,7 @@
           ]
         }
       ],
-      "notes": "Verified against local node 16215:33806: checked/indeterminate/unchecked, size, bold, tight, mark treatment incl. negative, and iOS switch platform covered. WDS \"Normal\" resource glyph tier intentionally unmapped; stepper/slider/range remain product extensions."
+      "notes": "Direct component-set reads confirm Checkbox 16215:33897 (state, size, bold, tight, disable), Radio 16215:34160 (state, size, tight, disable), and Segmented Control 16215:35115 (variant, size, icon). Segmented interaction/inactive aliases and roving disabled-skip behavior are LDS evidence/accessibility contracts, not WDS axes. Disabled+selected visuals preserve selection with neutral roles across Radio, ChoiceCard, SegmentedControl, and ButtonGroup. WDS \"Normal\" resource glyph tier intentionally remains unmapped; stepper/slider/range remain product extensions."
     },
     {
       "wdsFamily": "Card/Card, Card/List Card",
@@ -487,7 +546,7 @@
           "wdsChecks": [
             "LK product card must not redefine WDS Card baseline",
             "feature/news/spec cards remain product patterns unless WDS source confirms them",
-            "metric/stat examples stay under Dashboard Metrics as product extensions"
+            "metric/stat examples stay under Display/Metric Card as product extensions"
           ],
           "localEvidence": [
             "stories/CardInfo.stories.jsx#FeatureCards",
@@ -552,7 +611,8 @@
             "Table/DataGrid/Tree are LDS product data extensions unless WDS source includes equivalent patterns"
           ],
           "localEvidence": [
-            "stories/DataTablesHierarchy.stories.jsx#TablePatterns",
+            "stories/DataGrid.stories.jsx#SelectableList",
+            "stories/DataTable.stories.jsx#StaticTable",
             "stories/DataTree.stories.jsx#TreeInteractionStates"
           ]
         }
@@ -576,7 +636,7 @@
             "active resource false/true"
           ],
           "localEvidence": [
-            "stories/NavigationTabs.stories.jsx#TabAndCategoryPatterns"
+            "stories/NavigationCategory.stories.jsx#CategoryPatterns"
           ]
         },
         {
@@ -591,7 +651,7 @@
             "scroll = auto"
           ],
           "localEvidence": [
-            "stories/NavigationTabs.stories.jsx#TabAndCategoryPatterns"
+            "stories/NavigationTabs.stories.jsx#TabPatterns"
           ]
         },
         {
@@ -605,7 +665,7 @@
             "dot resource treatment"
           ],
           "localEvidence": [
-            "stories/NavigationCompact.stories.jsx#PaginationPatterns"
+            "stories/NavigationPageIndicator.stories.jsx#CounterAndDots"
           ]
         },
         {
@@ -713,9 +773,13 @@
             "max width"
           ],
           "localEvidence": [
-            "stories/ContentAnnotations.stories.jsx#Annotations",
-            "stories/ContentAnnotations.stories.jsx#TooltipPatterns",
-            "stories/OverlayAnchored.stories.jsx#AnchoredOverlays"
+            "stories/ContentTooltip.stories.jsx#TooltipPatterns",
+            "stories/ContentBubble.stories.jsx#BubblePatterns",
+            "stories/ActionBookmark.stories.jsx#BookmarkStates",
+            "stories/LayoutDivider.stories.jsx#DividerVariants",
+            "stories/OverlayPopover.stories.jsx#PopoverOverview",
+            "stories/OverlayHoverCard.stories.jsx#HoverCardOverview",
+            "stories/OverlayDropdownMenu.stories.jsx#DropdownMenuPatterns"
           ]
         },
         {
@@ -738,8 +802,9 @@
             "description/caption"
           ],
           "localEvidence": [
-            "stories/OverlayMenu.stories.jsx#MenuPatterns",
-            "stories/OverlayMenu.stories.jsx#DropdownMenuCard"
+            "stories/OverlayDropdownMenu.stories.jsx#DropdownMenuPatterns",
+            "stories/NavigationMenubar.stories.jsx#MenubarPatterns",
+            "stories/OverlayDropdownMenu.stories.jsx#DropdownMenuCard"
           ]
         },
         {
@@ -753,7 +818,9 @@
             "collision handling"
           ],
           "localEvidence": [
-            "stories/OverlayAnchored.stories.jsx#AnchoredOverlays",
+            "stories/OverlayPopover.stories.jsx#PopoverOverview",
+            "stories/OverlayHoverCard.stories.jsx#HoverCardOverview",
+            "stories/OverlayDropdownMenu.stories.jsx#DropdownMenuPatterns",
             "stories/OverlayCommandPalette.stories.jsx#CommandPaletteOpen"
           ]
         }
@@ -780,8 +847,8 @@
             "animation timing"
           ],
           "localEvidence": [
-            "stories/StatusLoading.stories.jsx#LoadingStates",
-            "stories/StatusLoading.stories.jsx#SkeletonCard"
+            "stories/StatusSkeleton.stories.jsx#SkeletonOverview",
+            "stories/StatusSkeleton.stories.jsx#SkeletonCard"
           ]
         },
         {
@@ -796,9 +863,10 @@
             "label/value"
           ],
           "localEvidence": [
-            "stories/StatusProgress.stories.jsx#ProgressIndicators",
-            "stories/StatusProgress.stories.jsx#CircularProgressCard",
-            "stories/StatusProgress.stories.jsx#ProgressBarCard"
+            "stories/ProductProgress.stories.jsx#ProgressIndicators",
+            "stories/ProductMeter.stories.jsx#BoundedMeasurements",
+            "stories/ProductProgress.stories.jsx#CircularProgressCard",
+            "stories/ProductProgress.stories.jsx#ProgressBarCard"
           ]
         },
         {
@@ -811,9 +879,10 @@
             "reduced motion handling"
           ],
           "localEvidence": [
-            "stories/StatusLoading.stories.jsx#LoadingStates",
-            "stories/StatusLoading.stories.jsx#SpinnerCard",
-            "stories/StatusProgress.stories.jsx#ProgressIndicators"
+            "stories/StatusSpinner.stories.jsx#SpinnerOverview",
+            "stories/StatusSpinner.stories.jsx#SpinnerCard",
+            "stories/ProductProgress.stories.jsx#ProgressIndicators",
+            "stories/ProductMeter.stories.jsx#BoundedMeasurements"
           ]
         }
       ],
@@ -850,7 +919,8 @@
             "stories/ViewerMap.stories.jsx#MapCanvasOverview",
             "stories/Viewer3D.stories.jsx#Scene3DOverview",
             "stories/ViewerVideo.stories.jsx#VideoStreamOverview",
-            "stories/ViewerTelemetry.stories.jsx#TelemetryOverview",
+            "stories/RoboticsTelemetryGauge.stories.jsx#TelemetryOverview",
+            "stories/RoboticsTelemetryValue.stories.jsx#CompactReadouts",
             "stories/ViewerToolbar.stories.jsx#ViewerToolbarOverview"
           ]
         },

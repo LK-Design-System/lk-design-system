@@ -1,19 +1,41 @@
 import { createHash } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
+import pixelmatch from 'pixelmatch';
+import { PNG } from 'pngjs';
 
 const root = process.cwd();
 const staticDir = path.join(root, 'storybook-static');
 const outDir = path.join(root, 'visual-artifacts', 'smoke');
+const baselineDir = path.join(root, 'visual-baselines', 'smoke');
+const diffDir = path.join(root, 'visual-artifacts', 'smoke-diff');
+const updateBaseline = process.argv.includes('--update-baseline');
+const checkBaseline = process.argv.includes('--check');
+const maxDiffRatio = Number(process.env.VISUAL_MAX_DIFF_RATIO || 0.01);
+
+if (updateBaseline && checkBaseline) {
+  throw new Error('Choose either --update-baseline or --check, not both.');
+}
 
 const targets = [
+  {
+    name: 'foundation-color-brand-icons',
+    match: { importPath: './stories/Iconography.stories.jsx', exportName: 'ColorBrandIcons' },
+    viewport: { width: 980, height: 620 },
+  },
   {
     name: 'react-card-interactive-dark',
     match: { importPath: './stories/Card.stories.jsx', exportName: 'InteractiveAndDark' },
     viewport: { width: 980, height: 520 },
+  },
+  {
+    name: 'react-card-content-patterns-dark',
+    match: { importPath: './stories/Card.stories.jsx', exportName: 'ContentCardPatterns' },
+    query: { globals: 'backgrounds.value:Dark' },
+    viewport: { width: 1180, height: 860 },
   },
   {
     name: 'wds-content-card-patterns',
@@ -36,38 +58,75 @@ const targets = [
     viewport: { width: 1120, height: 520 },
   },
   {
+    name: 'react-topbar-dark',
+    match: { importPath: './stories/Navigation.stories.jsx', exportName: 'TopBarDefault' },
+    query: { globals: 'backgrounds.value:Dark' },
+    viewport: { width: 1120, height: 520 },
+  },
+  {
     name: 'react-forms',
-    match: { importPath: './stories/FormsFull.stories.jsx', exportName: 'TextInputs' },
+    match: { importPath: './stories/FormInput.stories.jsx', exportName: 'InputOverview' },
     viewport: { width: 1120, height: 760 },
   },
   {
+    name: 'react-forms-narrow',
+    match: { importPath: './stories/FormInput.stories.jsx', exportName: 'InputOverview' },
+    viewport: { width: 320, height: 900 },
+  },
+  {
+    name: 'wds-selection-groups',
+    match: { importPath: './stories/FormCheckbox.stories.jsx', exportName: 'Checkboxes' },
+    viewport: { width: 980, height: 760 },
+  },
+  {
+    name: 'wds-selection-groups-narrow',
+    match: { importPath: './stories/FormCheckbox.stories.jsx', exportName: 'Checkboxes' },
+    viewport: { width: 320, height: 900 },
+  },
+  {
+    name: 'wds-action-area-states',
+    match: { importPath: './stories/ActionArea.stories.jsx', exportName: 'ActionAreaStates' },
+    viewport: { width: 980, height: 900 },
+  },
+  {
+    name: 'wds-action-area-states-narrow',
+    match: { importPath: './stories/ActionArea.stories.jsx', exportName: 'ActionAreaStates' },
+    viewport: { width: 320, height: 900 },
+  },
+  {
     name: 'wds-textinput-interactions',
-    match: { importPath: './stories/FormsFull.stories.jsx', exportName: 'TextInputInteractionMatrix' },
+    match: { importPath: './stories/FormInput.stories.jsx', exportName: 'InputInteractionMatrix' },
     viewport: { width: 1180, height: 920 },
   },
   {
     name: 'wds-control-states',
-    match: { importPath: './stories/FormSelectionControls.stories.jsx', exportName: 'ControlStateMatrix' },
+    match: { importPath: './stories/FormCheckbox.stories.jsx', exportName: 'CheckboxStateContract' },
     viewport: { width: 1180, height: 920 },
   },
   {
     name: 'wds-segmented-control-matrix',
-    match: { importPath: './stories/SelectionSegmentedToggle.stories.jsx', exportName: 'SegmentedControlMatrix' },
+    match: { importPath: './stories/SelectionSegmentedControl.stories.jsx', exportName: 'SegmentedControlStates' },
     viewport: { width: 980, height: 760 },
   },
   {
     name: 'wds-menu-patterns',
-    match: { importPath: './stories/OverlayMenu.stories.jsx', exportName: 'MenuPatterns' },
+    match: { importPath: './stories/OverlayDropdownMenu.stories.jsx', exportName: 'DropdownMenuPatterns' },
+    viewport: { width: 1180, height: 860 },
+  },
+  {
+    name: 'wds-menu-patterns-dark',
+    match: { importPath: './stories/OverlayDropdownMenu.stories.jsx', exportName: 'DropdownMenuPatterns' },
+    query: { globals: 'backgrounds.value:Dark' },
     viewport: { width: 1180, height: 860 },
   },
   {
     name: 'wds-tooltip-patterns',
-    match: { importPath: './stories/ContentAnnotations.stories.jsx', exportName: 'TooltipPatterns' },
+    match: { importPath: './stories/ContentTooltip.stories.jsx', exportName: 'TooltipPatterns' },
     viewport: { width: 1180, height: 960 },
   },
   {
     name: 'wds-loading-states',
-    match: { importPath: './stories/StatusLoading.stories.jsx', exportName: 'LoadingStates' },
+    match: { importPath: './stories/StatusSkeleton.stories.jsx', exportName: 'SkeletonOverview' },
     viewport: { width: 1120, height: 860 },
   },
   {
@@ -76,8 +135,14 @@ const targets = [
     viewport: { width: 1120, height: 700 },
   },
   {
+    name: 'wds-alert-platform-variants-dark',
+    match: { importPath: './stories/OverlayConfirmAlert.stories.jsx', exportName: 'AlertPlatformPreview' },
+    query: { globals: 'backgrounds.value:Dark' },
+    viewport: { width: 1120, height: 700 },
+  },
+  {
     name: 'react-overlay-alert',
-    match: { importPath: './stories/OverlayAnchored.stories.jsx', exportName: 'AnchoredOverlays' },
+    match: { importPath: './stories/OverlayPopover.stories.jsx', exportName: 'PopoverOverview' },
     viewport: { width: 980, height: 720 },
   },
   {
@@ -133,7 +198,7 @@ const targets = [
   },
   {
     name: 'robotics-viewer-telemetry-compact',
-    match: { importPath: './stories/ViewerTelemetry.stories.jsx', exportName: 'CompactReadouts' },
+    match: { importPath: './stories/RoboticsTelemetryValue.stories.jsx', exportName: 'CompactReadouts' },
     viewport: { width: 320, height: 900 },
   },
   {
@@ -224,6 +289,41 @@ async function sha256(filePath) {
   return hash.digest('hex');
 }
 
+async function compareScreenshot(name, actualPath) {
+  const baselinePath = path.join(baselineDir, `${name}.png`);
+  let baselineBuffer;
+  try {
+    baselineBuffer = await readFile(baselinePath);
+  } catch {
+    throw new Error(`Missing visual baseline: ${path.relative(root, baselinePath)}. Run npm run update:visual-baseline.`);
+  }
+
+  const actual = PNG.sync.read(await readFile(actualPath));
+  const baseline = PNG.sync.read(baselineBuffer);
+  if (actual.width !== baseline.width || actual.height !== baseline.height) {
+    throw new Error(
+      `${name} changed dimensions: baseline ${baseline.width}x${baseline.height}, actual ${actual.width}x${actual.height}`
+    );
+  }
+
+  const diff = new PNG({ width: actual.width, height: actual.height });
+  const differentPixels = pixelmatch(
+    baseline.data,
+    actual.data,
+    diff.data,
+    actual.width,
+    actual.height,
+    { threshold: 0.1, includeAA: false }
+  );
+  const totalPixels = actual.width * actual.height;
+  const diffRatio = differentPixels / totalPixels;
+  if (differentPixels > 0) {
+    await mkdir(diffDir, { recursive: true });
+    await writeFile(path.join(diffDir, `${name}.png`), PNG.sync.write(diff));
+  }
+  return { differentPixels, totalPixels, diffRatio };
+}
+
 async function main() {
   const indexPath = path.join(staticDir, 'index.json');
   const index = JSON.parse(await readFile(indexPath, 'utf8'));
@@ -243,6 +343,7 @@ async function main() {
     count: targets.length,
     captures: [],
   };
+  const regressions = [];
 
   try {
     for (const target of targets) {
@@ -289,6 +390,19 @@ async function main() {
         bytes: fileStat.size,
         sha256: await sha256(outputPath),
       });
+
+      if (updateBaseline) {
+        await mkdir(baselineDir, { recursive: true });
+        await copyFile(outputPath, path.join(baselineDir, `${target.name}.png`));
+      } else if (checkBaseline) {
+        const comparison = await compareScreenshot(target.name, outputPath);
+        manifest.captures.at(-1).comparison = comparison;
+        const percent = (comparison.diffRatio * 100).toFixed(3);
+        console.log(`${target.name}: ${percent}% pixel difference`);
+        if (comparison.diffRatio > maxDiffRatio) {
+          regressions.push(`${target.name} ${percent}% > ${(maxDiffRatio * 100).toFixed(3)}%`);
+        }
+      }
     }
   } finally {
     await page.close();
@@ -298,6 +412,30 @@ async function main() {
 
   const manifestPath = path.join(outDir, 'manifest.json');
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  if (updateBaseline) {
+    const baselineManifest = {
+      schemaVersion: 1,
+      count: manifest.captures.length,
+      maxDiffRatio,
+      captures: manifest.captures.map(({ name, id, query, viewport, bytes, sha256 }) => ({
+        name,
+        id,
+        query,
+        viewport,
+        bytes,
+        sha256,
+      })),
+    };
+    await writeFile(
+      path.join(baselineDir, 'manifest.json'),
+      `${JSON.stringify(baselineManifest, null, 2)}\n`,
+      'utf8'
+    );
+    console.log(`Updated ${manifest.captures.length} visual baselines in ${path.relative(root, baselineDir)}.`);
+  }
+  if (regressions.length > 0) {
+    throw new Error(`Visual regressions exceeded the pixel threshold:\n- ${regressions.join('\n- ')}`);
+  }
   console.log(`Captured ${manifest.captures.length} visual smoke screenshots to ${path.relative(root, outDir)}.`);
 }
 

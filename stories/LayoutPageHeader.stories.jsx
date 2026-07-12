@@ -5,10 +5,18 @@ import {
   SegmentedControl,
   StatusBadge,
 } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Layout/Page Header',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-layout-page-header--page-header-pattern',
+      eyebrow: 'Product / Page Header',
+      title: '사용자가 현재 화면의 위치·상태·목적과 다음 주요 작업을 이해합니다',
+      description:
+        '제품 화면의 breadcrumb, 제목, 설명, 상태, 메타데이터, 주요 액션을 일관된 상단 영역으로 묶을 때 적합합니다. 카드나 작은 섹션 제목에는 PageHeader 대신 해당 영역의 heading과 필요한 액션만 사용하세요.',
+    },
     docs: {
       description: {
         component: '앱 화면의 제목, 설명, 상태, 경로, primary action을 일관되게 정렬하는 PageHeader입니다.',
@@ -20,7 +28,10 @@ const meta = {
 export default meta;
 
 export const PageHeaderPattern = {
-  name: '페이지 헤더',
+  name: '개요',
+  parameters: storyDescription(
+    '관리 화면, compact 패널, 범위 전환 화면에서 PageHeader 구성을 비교하는 상황입니다. 경로·제목·상태·설명·액션의 읽기 순서와 좁은 구성의 정보 축약이 일관적인지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1040 }}>
       <PageHeader

@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "../icon/Icon.jsx";
-import { statusToneStyle } from "../status/status-presentation.js";
+import { normalizeStatusTone, statusToneStyle } from "../status/status-presentation.js";
 
 // Glyphs come from the shared Icon registry (statusToneStyle grammar); the
 // colours stay Toast-specific because vivid status hues read best on the
@@ -25,11 +25,8 @@ const ICONS = {
 };
 
 function normalizeTone(value) {
-  if (value === "success") return "positive";
-  if (value === "warning") return "cautionary";
-  if (value === "error") return "negative";
-  if (value === "info") return "normal";
-  return value || "normal";
+  const normalized = normalizeStatusTone(value || "normal");
+  return normalized === "signal" || normalized === "offline" ? "normal" : normalized;
 }
 
 /**
@@ -52,10 +49,11 @@ export function Toast({
   const [actionHover, setActionHover] = React.useState(false);
   const normalized = normalizeTone(variant || tone);
   const t = ICONS[normalized] || ICONS.normal;
+  const urgent = normalized === "negative";
   return (
     <div
-      role="status"
-      aria-live="polite"
+      role={urgent ? "alert" : "status"}
+      aria-live={urgent ? "assertive" : "polite"}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -146,19 +144,7 @@ export function Toast({
             color: "var(--color-semantic-inverse-label)",
           }}
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M18 6 6 18M6 6l12 12" />
-          </svg>
+          <Icon name="close" size={16} aria-hidden="true" />
         </button>
       )}
     </div>

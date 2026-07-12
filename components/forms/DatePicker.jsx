@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar } from '../data/Calendar.jsx';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — DatePicker
@@ -7,7 +8,7 @@ import { Calendar } from '../data/Calendar.jsx';
  * component). Controlled (`value`) or uncontrolled (`defaultValue`); closes on
  * outside-click and on selection.
  */
-export function DatePicker({ value, defaultValue, onChange, placeholder = '날짜 선택', size = 'md', disabled = false, style, 'aria-label': ariaLabel, onKeyDown, ...rest }) {
+export function DatePicker({ value, defaultValue, onChange, placeholder = '날짜를 선택해 주세요.', size = 'md', disabled = false, full = false, style, 'aria-label': ariaLabel, onKeyDown, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue || null);
   const sel = isControlled ? value : internal;
@@ -27,7 +28,7 @@ export function DatePicker({ value, defaultValue, onChange, placeholder = '날�
     if (disabled && open) setOpen(false);
   }, [disabled, open]);
   const fmt = (d) => { if (!d) return ''; const dt = d instanceof Date ? d : new Date(d); return `${dt.getFullYear()}. ${String(dt.getMonth() + 1).padStart(2, '0')}. ${String(dt.getDate()).padStart(2, '0')}`; };
-  const h = size === 'sm' ? 40 : 50;
+  const h = size === 'sm' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
   const formattedValue = sel ? fmt(sel) : '';
   const triggerLabel = `${ariaLabel ?? placeholder}${formattedValue ? `, ${formattedValue}` : ''}`;
   const pick = (d) => {
@@ -39,7 +40,7 @@ export function DatePicker({ value, defaultValue, onChange, placeholder = '날�
   return (
     <div
       ref={ref}
-      style={{ position: 'relative', display: 'inline-block', ...style }}
+      style={{ position: 'relative', display: full ? 'block' : 'inline-block', width: full ? '100%' : undefined, ...style }}
       onKeyDown={(event) => {
         onKeyDown?.(event);
         if (event.defaultPrevented) return;
@@ -62,9 +63,9 @@ export function DatePicker({ value, defaultValue, onChange, placeholder = '날�
         onClick={() => setOpen((current) => !current)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: h, padding: '0 14px', minWidth: 200, background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', border: `1px solid ${focused || open ? 'var(--component-input-border-color-focus)' : 'var(--component-input-border-color)'}`, borderRadius: 'var(--component-input-radius)', boxShadow: focused || open ? 'var(--component-input-focus-shadow)' : 'none', cursor: disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', color: disabled ? 'var(--color-semantic-label-disable)' : sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)', width: full ? '100%' : undefined, height: h, padding: '0 var(--component-input-padding-x)', minWidth: full ? 0 : 200, boxSizing: 'border-box', background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', border: `1px solid ${focused || open ? 'var(--component-input-border-color-focus)' : 'var(--component-input-border-color)'}`, borderRadius: 'var(--component-input-radius)', boxShadow: focused || open ? 'var(--component-input-focus-shadow)' : 'none', cursor: disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', color: disabled ? 'var(--color-semantic-label-disable)' : sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5" /><path d="M3 9.5h18M8 2.5v4M16 2.5v4" /></svg>
+        <Icon name="calendar" size={18} color="var(--color-semantic-label-alternative)" aria-hidden="true" />
         <span style={{ flex: 1, textAlign: 'left' }}>{formattedValue || placeholder}</span>
       </button>
       {expanded && (

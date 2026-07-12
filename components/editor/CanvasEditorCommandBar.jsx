@@ -2,6 +2,7 @@ import React from 'react';
 import { IconButton } from '../buttons/IconButton.jsx';
 import { Divider } from '../content/Divider.jsx';
 import { Icon } from '../icon/Icon.jsx';
+import { useRovingToolbar } from '../internal/useRovingToolbar.js';
 import { HistoryToolbar } from './HistoryToolbar.jsx';
 
 function actionKey(action, index) {
@@ -13,13 +14,16 @@ function actionIcon(icon) {
   return icon;
 }
 
-function CommandButton({ action, size, index, tabStopIndex, onFocus }) {
+function CommandButton({ action, size, index, tabStopKey }) {
   const disabled = !!action.disabled || typeof action.onClick !== 'function';
   const active = !!action.active;
+  const key = String(actionKey(action, index));
 
   return (
     <IconButton
       data-command-index={index}
+      data-lk-command-toolbar-item=""
+      data-lk-toolbar-key={key}
       variant={active ? 'signal' : 'ghost'}
       round={false}
       size={size}
@@ -28,8 +32,7 @@ function CommandButton({ action, size, index, tabStopIndex, onFocus }) {
       aria-pressed={action.active === undefined ? undefined : active}
       aria-keyshortcuts={action.ariaKeyShortcuts}
       disabled={disabled}
-      tabIndex={!disabled && index === tabStopIndex ? 0 : -1}
-      onFocus={onFocus}
+      tabIndex={!disabled && key === tabStopKey ? 0 : -1}
       onClick={disabled ? undefined : action.onClick}
     >
       {actionIcon(action.icon)}
@@ -38,31 +41,15 @@ function CommandButton({ action, size, index, tabStopIndex, onFocus }) {
 }
 
 function ActionToolbar({ actions, label, size }) {
-  const toolbarRef = React.useRef(null);
-  const [focusIndex, setFocusIndex] = React.useState(0);
-  const enabledIndices = actions.reduce((indices, action, index) => {
-    if (!action.disabled && typeof action.onClick === 'function') indices.push(index);
-    return indices;
-  }, []);
-  const tabStopIndex = enabledIndices.includes(focusIndex) ? focusIndex : enabledIndices[0];
-
-  const moveFocus = (event) => {
-    if (!enabledIndices.length) return;
-    const currentIndex = enabledIndices.indexOf(focusIndex);
-    let nextIndex;
-
-    if (event.key === 'Home') nextIndex = enabledIndices[0];
-    else if (event.key === 'End') nextIndex = enabledIndices[enabledIndices.length - 1];
-    else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      nextIndex = enabledIndices[(Math.max(0, currentIndex) + 1) % enabledIndices.length];
-    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      nextIndex = enabledIndices[(currentIndex <= 0 ? enabledIndices.length : currentIndex) - 1];
-    } else return;
-
-    event.preventDefault();
-    setFocusIndex(nextIndex);
-    toolbarRef.current?.querySelector(`[data-command-index="${nextIndex}"]`)?.focus();
-  };
+  const enabledActions = actions.filter((action) => !action.disabled && typeof action.onClick === 'function');
+  const tabStopKey = enabledActions.length > 0
+    ? String(actionKey(enabledActions[0], actions.indexOf(enabledActions[0])))
+    : undefined;
+  const { toolbarRef, handleFocusCapture, handleKeyDown } = useRovingToolbar({
+    itemSelector: '[data-lk-command-toolbar-item]',
+    orientation: 'horizontal',
+    preferredKey: tabStopKey,
+  });
 
   return (
     <div
@@ -70,9 +57,10 @@ function ActionToolbar({ actions, label, size }) {
       role="toolbar"
       aria-label={label}
       aria-orientation="horizontal"
-      aria-disabled={enabledIndices.length === 0 || undefined}
-      tabIndex={enabledIndices.length === 0 ? 0 : undefined}
-      onKeyDown={moveFocus}
+      aria-disabled={enabledActions.length === 0 || undefined}
+      tabIndex={enabledActions.length === 0 ? 0 : undefined}
+      onKeyDown={handleKeyDown}
+      onFocusCapture={handleFocusCapture}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)' }}
     >
       {actions.map((action, index) => (
@@ -81,8 +69,7 @@ function ActionToolbar({ actions, label, size }) {
           action={action}
           size={size}
           index={index}
-          tabStopIndex={tabStopIndex}
-          onFocus={() => setFocusIndex(index)}
+          tabStopKey={tabStopKey}
         />
       ))}
     </div>

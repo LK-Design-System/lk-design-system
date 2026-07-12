@@ -1,10 +1,18 @@
 import React from 'react';
 import { WheelPicker } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Selection and Input/Wheel Picker',
   component: WheelPicker,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-selection-and-input-wheel-picker--wheel-pickers',
+      eyebrow: 'Product / Wheel Picker',
+      title: '휠 피커는 짧고 순차적인 값을 터치 중심으로 빠르게 고르게 합니다',
+      description:
+        '층·시·분처럼 순서가 있고 선택지가 짧은 값을 모바일에서 조절할 때 적합합니다. 긴 목록이나 키보드 중심 데스크톱 폼에는 Wheel Picker 대신 Select를 사용하세요.',
+    },
     docs: {
       description: {
         component:
@@ -144,7 +152,10 @@ function TimeExample() {
 }
 
 export const WheelPickers = {
-  name: '휠 피커',
+  name: '개요',
+  parameters: storyDescription(
+    '층과 시각처럼 짧고 순차적인 값을 두 개의 controlled 휠로 선택합니다. 가운데 선택 영역과 현재 값이 스크롤 뒤에도 동기화되는지 확인하세요.',
+  ),
   render: () => (
     <Stage>
       <ControlledFloorExample />
@@ -154,12 +165,18 @@ export const WheelPickers = {
 };
 
 export const TimePicker = {
-  name: '시간 선택',
+  name: '사용법 · 시간 선택',
+  parameters: storyDescription(
+    '시·분 두 휠을 조합해 하나의 시간 값을 만드는 구성입니다. 각 휠 label과 결합된 결과가 명확하고 순환 탐색이 예측 가능한지 확인하세요.',
+  ),
   render: () => <TimeExample />,
 };
 
 export const DisabledOptions = {
-  name: '휠 비활성 옵션',
+  name: '변형·상태 · 비활성 옵션',
+  parameters: storyDescription(
+    '일부 옵션 비활성, 읽기 전용, 전체 비활성 휠을 비교합니다. 건너뛸 값과 변경할 수 없는 제어가 서로 다른 상태로 전달되는지 확인하세요.',
+  ),
   render: () => (
     <Stage>
       <DisabledSpeedExample />
@@ -174,7 +191,10 @@ export const DisabledOptions = {
 };
 
 export const Empty = {
-  name: '휠 항목 없음',
+  name: '변형·상태 · 항목 없음',
+  parameters: storyDescription(
+    '선택할 항목이 전혀 없는 휠 상태입니다. 빈 메시지가 선택 viewport를 대신하고 사용자가 값을 조절할 수 있다고 오인하지 않는지 확인하세요.',
+  ),
   render: () => (
     <Stage>
       <WheelPicker

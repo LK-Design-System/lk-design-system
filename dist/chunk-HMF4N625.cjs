@@ -1,0 +1,106 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
+
+
+var _chunkVGM7HVYYcjs = require('./chunk-VGM7HVYY.cjs');
+
+// components/selection/Stepper.jsx
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
+function Stepper({
+  value,
+  defaultValue = 0,
+  min = -Infinity,
+  max = Infinity,
+  step = 1,
+  onChange,
+  size = "md",
+  disabled = false,
+  style,
+  ...rest
+}) {
+  const isControlled = value !== void 0;
+  const [internal, setInternal] = _react2.default.useState(defaultValue);
+  const val = isControlled ? value : internal;
+  const set = (next) => {
+    const clamped = Math.min(max, Math.max(min, next));
+    if (!isControlled) setInternal(clamped);
+    onChange && onChange(clamped);
+  };
+  const h = size === "sm" ? 36 : 44;
+  const StepBtn = ({ kind }) => {
+    const isMinus = kind === "minus";
+    const off = disabled || (isMinus ? val <= min : val >= max);
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      "button",
+      {
+        type: "button",
+        "aria-label": isMinus ? "decrease" : "increase",
+        disabled: off,
+        onClick: () => set(val + (isMinus ? -step : step)),
+        onMouseEnter: (e) => {
+          if (!off) e.currentTarget.style.background = "var(--color-semantic-fill-normal)";
+        },
+        onMouseLeave: (e) => {
+          e.currentTarget.style.background = "transparent";
+        },
+        style: {
+          width: h,
+          height: h,
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "none",
+          background: "transparent",
+          cursor: off ? "not-allowed" : "pointer",
+          color: off ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
+          borderRadius: "var(--radius-md)",
+          transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)"
+        },
+        children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: isMinus ? "minus" : "plus", size: 18, "aria-hidden": "true" })
+      }
+    );
+  };
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    "div",
+    {
+      style: {
+        display: "inline-flex",
+        alignItems: "center",
+        height: h,
+        width: "fit-content",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
+        borderRadius: "var(--radius-md)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        opacity: disabled ? 0.45 : 1,
+        ...style
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StepBtn, { kind: "minus" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          "span",
+          {
+            "aria-live": "polite",
+            style: {
+              minWidth: 40,
+              textAlign: "center",
+              fontFamily: "var(--font-sans)",
+              fontSize: size === "sm" ? 15 : 16,
+              fontWeight: "var(--fw-bold)",
+              letterSpacing: 0,
+              color: "var(--color-semantic-label-normal)",
+              fontVariantNumeric: "tabular-nums"
+            },
+            children: val
+          }
+        ),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StepBtn, { kind: "plus" })
+      ]
+    }
+  );
+}
+
+
+
+exports.Stepper = Stepper;
+//# sourceMappingURL=chunk-HMF4N625.cjs.map

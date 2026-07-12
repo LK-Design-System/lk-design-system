@@ -1,4 +1,5 @@
 import React from 'react';
+import { VisuallyHidden } from '../layout/VisuallyHidden.jsx';
 import { Legend } from './Legend.jsx';
 
 const PALETTE = [
@@ -74,6 +75,21 @@ function defaultFormatX(value) {
   return `${value}`;
 }
 
+function nodeText(node) {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(nodeText).filter(Boolean).join(' ');
+  if (React.isValidElement(node)) return nodeText(node.props.children);
+  return '';
+}
+
+function joinIds(...ids) {
+  return ids.filter(Boolean).join(' ') || undefined;
+}
+
+function formattedText(formatter, value) {
+  return nodeText(formatter(value)) || `${value}`;
+}
+
 /**
  * LDS Product Data — LineChart
  * Multi-series SVG line chart for training curves and telemetry trends. It stays
@@ -94,12 +110,14 @@ export function LineChart({
   showLegend = true,
   showPoints = false,
   referenceLines = [],
-  emptyLabel = '데이터가 없습니다',
+  emptyLabel = '데이터가 없습니다.',
   formatX,
   formatY,
   description,
+  summary,
   style,
   'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedBy,
   ...rest
 }) {
   const normalized = normalizeSeries(series);
@@ -120,7 +138,22 @@ export function LineChart({
   const hasData = allPoints.length > 0;
   const rawId = React.useId();
   const clipId = `line-chart-${rawId.replace(/:/g, '')}-clip`;
+  const descriptionId = `${rawId}-description`;
+  const summaryId = `${rawId}-summary`;
   const chartLabel = ariaLabel || (yLabel ? `${yLabel} 라인 차트` : '라인 차트');
+  const emptyText = nodeText(emptyLabel) || '데이터가 없습니다.';
+  const automaticSummary = hasData
+    ? normalized.map((item, index) => {
+      const label = item.accessibleLabel || nodeText(item.name) || `시리즈 ${index + 1}`;
+      if (!item.points.length) return `${label}: ${emptyText}.`;
+      const first = item.points[0];
+      const last = item.points[item.points.length - 1];
+      const minimum = item.points.reduce((current, point) => (point.y < current.y ? point : current), first);
+      const maximum = item.points.reduce((current, point) => (point.y > current.y ? point : current), first);
+      return `${label}: ${item.points.length}개 점. 시작 ${formattedText(fx, first.x)}에서 ${formattedText(fy, first.y)}, 최저 ${formattedText(fy, minimum.y)}, 최고 ${formattedText(fy, maximum.y)}, 마지막 ${formattedText(fx, last.x)}에서 ${formattedText(fy, last.y)}.`;
+    }).join(' ')
+    : emptyText;
+  const resolvedSummary = summary ?? automaticSummary;
   const legendItems = normalized.map((item, index) => ({
     id: item.id,
     label: item.name ?? `시리즈 ${index + 1}`,
@@ -143,10 +176,14 @@ export function LineChart({
       }}
       {...rest}
     >
+      {description != null && <VisuallyHidden id={descriptionId}>{description}</VisuallyHidden>}
+      {resolvedSummary != null && <VisuallyHidden id={summaryId} data-chart-summary>{resolvedSummary}</VisuallyHidden>}
       <svg
         viewBox={`0 0 ${chartWidth} ${chartHeight}`}
         role="img"
         aria-label={chartLabel}
+        aria-describedby={joinIds(ariaDescribedBy, description != null && descriptionId, resolvedSummary != null && summaryId)}
+        data-chart-type="line"
         style={{
           display: 'block',
           width: '100%',
@@ -155,7 +192,6 @@ export function LineChart({
           overflow: 'visible',
         }}
       >
-        {description && <desc>{description}</desc>}
         <defs>
           <clipPath id={clipId}>
             <rect x={pad.left} y={pad.top} width={innerWidth} height={innerHeight} />
@@ -303,6 +339,7 @@ export function LineChart({
 
         {!hasData && (
           <text
+            data-chart-empty
             x={pad.left + innerWidth / 2}
             y={pad.top + innerHeight / 2}
             textAnchor="middle"

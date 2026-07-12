@@ -1,4 +1,40 @@
 import React from "react";
+import { Icon } from "../icon/Icon.jsx";
+import { Button } from '../buttons/Button.jsx';
+import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useFloatingPosition } from './anchored-overlay.js';
+
+const ACTION_CONTROL_SELECTOR = [
+  'button:not(:disabled)',
+  'a[href]',
+  'input:not(:disabled)',
+  'select:not(:disabled)',
+  'textarea:not(:disabled)',
+  '[tabindex]:not([tabindex="-1"]):not([aria-disabled="true"])',
+].join(',');
+
+const MENU_ITEM_SELECTOR = [
+  '[role="menuitem"]',
+  '[role="menuitemradio"]',
+  '[role="menuitemcheckbox"]',
+].join(',');
+
+function focusableActionControls(region) {
+  return Array.from(region?.querySelectorAll(ACTION_CONTROL_SELECTOR) ?? []);
+}
+
+function availableMenuItems(menu) {
+  return Array.from(menu?.querySelectorAll(MENU_ITEM_SELECTOR) ?? []).filter(
+    (item) => !item.disabled && item.getAttribute('aria-disabled') !== 'true',
+  );
+}
+
+function constrainedMaxHeight(requested, available) {
+  if (available == null) return requested;
+  if (requested == null) return available;
+  if (typeof requested === 'number') return Math.min(requested, available);
+  return `min(${requested}, ${available}px)`;
+}
 
 function CheckMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
@@ -50,18 +86,7 @@ function CheckMark({ variant, checked, disabled }) {
       }}
     >
       {checked && (
-        <svg
-          width="11"
-          height="11"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="m5 12 4 4 10-10" />
-        </svg>
+        <Icon name="check" size={11} aria-hidden="true" />
       )}
     </span>
   );
@@ -108,6 +133,7 @@ function MenuItemButton({
       }
       aria-checked={variant === "normal" ? undefined : checked}
       aria-current={variant === "normal" && active ? true : undefined}
+      tabIndex={-1}
       disabled={disabled}
       onClick={() => {
         if (disabled) return;
@@ -197,6 +223,10 @@ export function DropdownMenu({
   verticalPadding,
   menuActionArea = false,
   action,
+  onApply,
+  onCancel,
+  applyLabel = '적용',
+  cancelLabel = '취소',
   width = 320,
   maxHeight,
   open,
@@ -209,9 +239,116 @@ export function DropdownMenu({
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
   const ref = React.useRef(null);
+  const panelRef = React.useRef(null);
+  const actionAreaRef = React.useRef(null);
+  const menuId = React.useId();
+  const generatedTriggerId = React.useId();
+  const triggerId = trigger?.props?.id ?? generatedTriggerId;
   const setVisible = (next) => {
     if (!controlled) setInternalOpen(next);
     onOpenChange?.(next);
+  };
+  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
+    open: visible,
+    onClose: () => setVisible(false),
+    getTrigger: () => ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]'),
+  });
+
+  const toggleMenu = (event) => {
+    trigger?.props?.onClick?.(event);
+    if (event?.defaultPrevented) return;
+    if (visible) setVisible(false);
+    else {
+      requestItemFocus('first');
+      setVisible(true);
+    }
+  };
+  const handleTriggerKeyDown = (event) => {
+    trigger?.props?.onKeyDown?.(event);
+    if (event.defaultPrevented) return;
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      requestItemFocus('first');
+      setVisible(true);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      requestItemFocus('last');
+      setVisible(true);
+    }
+  };
+  const renderedTrigger = React.isValidElement(trigger) && trigger.type !== React.Fragment
+    ? React.cloneElement(trigger, {
+        id: triggerId,
+        'aria-haspopup': 'menu',
+        'aria-expanded': visible,
+        'aria-controls': visible ? menuId : undefined,
+        onClick: toggleMenu,
+        onKeyDown: handleTriggerKeyDown,
+      })
+    : (
+      <span
+        id={triggerId}
+        role="button"
+        tabIndex={0}
+        aria-haspopup="menu"
+        aria-expanded={visible}
+        aria-controls={visible ? menuId : undefined}
+        onClick={toggleMenu}
+        onKeyDown={handleTriggerKeyDown}
+      >
+        {trigger}
+      </span>
+    );
+
+  const position = useFloatingPosition({
+    open: visible,
+    anchorRef: ref,
+    panelRef,
+    placement: 'bottom',
+  });
+  const showGeneratedActionArea = menuActionArea && (onApply || onCancel);
+  const showActionArea = Boolean(action || showGeneratedActionArea);
+  const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
+
+  const handleMenuRegionKeyDown = (event) => {
+    if (event.key === 'Tab' && !event.shiftKey) {
+      const firstAction = focusableActionControls(actionAreaRef.current)[0];
+      if (firstAction) {
+        event.preventDefault();
+        firstAction.focus({ preventScroll: true });
+        return;
+      }
+    }
+    handleMenuKeyDown(event);
+  };
+
+  const handleActionAreaKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeMenu({ restoreFocus: true });
+      return;
+    }
+
+    const controls = focusableActionControls(actionAreaRef.current);
+    const currentControl = event.target.closest?.(ACTION_CONTROL_SELECTOR);
+    const currentIndex = controls.indexOf(currentControl);
+    if (event.key === 'ArrowUp' || (event.key === 'Tab' && event.shiftKey && currentIndex === 0)) {
+      const lastItem = availableMenuItems(menuRef.current).at(-1);
+      if (lastItem) {
+        event.preventDefault();
+        lastItem.focus({ preventScroll: true });
+      }
+      return;
+    }
+    if (event.key === 'Tab' && !event.shiftKey && currentIndex === controls.length - 1) {
+      const view = event.currentTarget.ownerDocument.defaultView ?? window;
+      view.setTimeout(() => setVisible(false), 0);
+    }
+  };
+
+  const finishAction = (callback) => {
+    callback?.();
+    closeMenu({ restoreFocus: true });
   };
 
   React.useEffect(() => {
@@ -230,22 +367,27 @@ export function DropdownMenu({
       {...rest}
     >
       <span
-        onClick={() => setVisible(!visible)}
         style={{ display: "inline-flex" }}
       >
-        {trigger}
+        {renderedTrigger}
       </span>
       {visible && (
         <div
+          ref={panelRef}
+          data-placement={position.placement}
           style={{
             position: "absolute",
-            top: "calc(100% + 8px)",
-            [align]: 0,
+            top: position.placement === 'bottom' ? "calc(100% + 8px)" : 'auto',
+            bottom: position.placement === 'top' ? "calc(100% + 8px)" : 'auto',
+            left: align === 'left' ? 0 : 'auto',
+            right: align === 'right' ? 0 : 'auto',
+            translate: `${position.shiftX}px ${position.shiftY}px`,
             zIndex: 40,
             width,
-            minWidth: width,
-            maxHeight,
-            overflowY: maxHeight ? "auto" : undefined,
+            minWidth: 0,
+            maxWidth: 'calc(100vw - var(--space-8))',
+            maxHeight: panelMaxHeight ?? undefined,
+            overflow: panelMaxHeight != null ? 'hidden' : undefined,
             background: "var(--color-semantic-background-elevated-normal)",
             border: "1px solid var(--color-semantic-line-solid-normal)",
             borderRadius: "var(--component-menu-radius)",
@@ -257,7 +399,14 @@ export function DropdownMenu({
             gap: 4,
           }}
         >
-          <div role="menu" style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div
+            ref={menuRef}
+            id={menuId}
+            role="menu"
+            aria-labelledby={triggerId}
+            onKeyDown={handleMenuRegionKeyDown}
+            style={{ display: "flex", flexDirection: "column", gap: 4, minHeight: 0, overflowY: panelMaxHeight != null ? 'auto' : undefined }}
+          >
             {items.map((item, index) =>
               item.divider ? (
                 <div
@@ -276,37 +425,39 @@ export function DropdownMenu({
                   variant={item.variant || variant}
                   cellPadding={cellPadding}
                   verticalPadding={verticalPadding}
-                  onSelect={() => setVisible(false)}
+                  onSelect={() => closeMenu({ restoreFocus: true })}
                 />
               ),
             )}
           </div>
-          {(menuActionArea || action) && (
+          {showActionArea && (
             <div
+              ref={actionAreaRef}
+              role="group"
+              aria-label="메뉴 작업"
+              onKeyDown={handleActionAreaKeyDown}
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
+                gap: 'var(--space-2)',
                 padding: "8px 4px 2px",
                 borderTop: "1px solid var(--color-semantic-line-solid-normal)",
+                flexShrink: 0,
               }}
             >
               {action || (
-                <button
-                  type="button"
-                  style={{
-                    height: 28,
-                    padding: "0 10px",
-                    border: "none",
-                    borderRadius: "var(--radius-8)",
-                    background: "var(--color-semantic-primary-normal)",
-                    color: "var(--color-semantic-inverse-label)",
-                    fontFamily: "var(--font-sans)",
-                    fontSize: "var(--caption1-size)",
-                    fontWeight: "var(--fw-bold)",
-                  }}
-                >
-                  Apply
-                </button>
+                <>
+                  {onCancel && (
+                    <Button variant="outlined" color="assistive" size="sm" onClick={() => finishAction(onCancel)}>
+                      {cancelLabel}
+                    </Button>
+                  )}
+                  {onApply && (
+                    <Button size="sm" onClick={() => finishAction(onApply)}>
+                      {applyLabel}
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS â€” TagInput
@@ -19,7 +20,7 @@ export function TagInput({ value, defaultValue = [], onChange, placeholder = 'ìž
         <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, height: 28, padding: '0 6px 0 11px', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-primary-heavy)', borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
           {t}
           <button type="button" aria-label="remove" onClick={() => remove(t)} style={{ display: 'inline-flex', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-primary-heavy)', padding: 2 }}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+            <Icon name="close" size={12} aria-hidden="true" />
           </button>
         </span>
       ))}

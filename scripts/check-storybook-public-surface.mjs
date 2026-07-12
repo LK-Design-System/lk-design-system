@@ -5,7 +5,6 @@ const root = process.cwd();
 const staticRoot = path.join(root, 'storybook-static');
 const indexPath = path.join(staticRoot, 'index.json');
 const forbiddenStorybookName = /\bwds\b/i;
-const allowedDuplicateNames = new Set(['플레이그라운드']);
 const forbiddenNumberedStorybookSegments = new Set([
   '0 Foundation',
   '1 Theme',
@@ -24,10 +23,10 @@ const extensionLayerTitle = /^LDS (?:Product|Robotics)\//;
 const forbiddenExtensionSurfaceSegment =
   /\b(?:app|application|screen|screens|template|templates|workflow|workflows|flow|flows|demo|demos|example|examples)\b/i;
 const forbiddenExtensionStoryName = /^(?:작업 생성|맵 편집)\s*[·:–—-]/;
-const requiredPublicStoryNames = new Map([
-  ['IconRegistry', '기본 아이콘 레지스트리'],
-  ['BreadcrumbRoutes', '브레드크럼 라우트'],
-  ['ContentBadgePatterns', '콘텐츠 배지 패턴'],
+const requiredPublicStoryOwners = new Map([
+  ['IconRegistry', 'LDS Core/Foundation/Iconography'],
+  ['BreadcrumbRoutes', 'LDS Product/Navigation/Breadcrumb'],
+  ['ContentBadgePatterns', 'LDS Core/Components/Content/Content Badge'],
 ]);
 const forbiddenPublicTitles = new Map([
   ['LDS Core/Components/Content/Badges', 'Use Content Badge for ContentBadge and Badges and Tags for Badge/Tag grouping.'],
@@ -38,10 +37,11 @@ const productCardPatternTitles = new Map([
   ['LDS Core/Components/Content/Spec Row', 'SpecRow is an LK Product content pattern unless WDS source confirms a direct component contract.'],
 ]);
 const absorbedProductDataTitles = new Map([
-  ['LDS Product/Data/Stats', 'Use Dashboard Metrics for stat/metric tiles so KPI patterns stay in one sidebar group.'],
+  ['LDS Product/Data/Stats', 'Use Display/Metric Card for stat/metric tiles so KPI patterns stay in one sidebar group.'],
+  ['LDS Product/Data/Dashboard Metrics', 'Use Display/Metric Card as the single metric-tile home.'],
 ]);
 const absorbedProductDataStories = new Map([
-  ['LDS Product/Data/Dashboard Metrics / 요약 지표', 'Use the single Dashboard Metrics / 지표 story instead of splitting summary metrics from metrics.'],
+  ['LDS Product/Data/Display/Metric Card / 요약 지표', 'Use the single Metric Card / 지표 story instead of splitting summary metrics from metrics.'],
 ]);
 
 function assert(condition, message) {
@@ -89,18 +89,6 @@ for (const [key, duplicates] of titleNameCounts) {
   if (duplicates.length > 1) failures.push(`duplicate story title/name: ${key}`);
 }
 
-const publicNameCounts = new Map();
-for (const story of publicStories) {
-  const current = publicNameCounts.get(story.name) || [];
-  current.push(story);
-  publicNameCounts.set(story.name, current);
-}
-for (const [name, duplicates] of publicNameCounts) {
-  if (duplicates.length > 1 && !allowedDuplicateNames.has(name)) {
-    failures.push(`duplicate public story name "${name}": ${duplicates.map(storyLabel).join(' | ')}`);
-  }
-}
-
 for (const story of publicStories) {
   if (/card parity/i.test(story.name || '')) failures.push(`visual parity story is public: ${storyLabel(story)}`);
   if (String(story.title || '').includes('상세')) failures.push(`public Storybook title still uses 상세 split: ${storyLabel(story)}`);
@@ -110,9 +98,9 @@ for (const story of publicStories) {
   if (forbiddenPublicTitles.has(story.title)) {
     failures.push(`ambiguous duplicate-prone public Storybook title: ${storyLabel(story)}. ${forbiddenPublicTitles.get(story.title)}`);
   }
-  if (requiredPublicStoryNames.has(story.exportName) && story.name !== requiredPublicStoryNames.get(story.exportName)) {
+  if (requiredPublicStoryOwners.has(story.exportName) && story.title !== requiredPublicStoryOwners.get(story.exportName)) {
     failures.push(
-      `public Storybook story lost duplicate-cleanup ownership name: ${storyLabel(story)} should be "${requiredPublicStoryNames.get(story.exportName)}"`
+      `public Storybook story lost duplicate-cleanup owner: ${storyLabel(story)} should belong to "${requiredPublicStoryOwners.get(story.exportName)}"`
     );
   }
 }

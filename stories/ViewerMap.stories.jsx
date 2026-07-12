@@ -1,11 +1,19 @@
 import React from 'react';
 import { Map2DCanvas } from '../src/index.js';
 import { Map2DCanvasCard as Map2DCanvasCardStory } from './RoboticsAndViz.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Viewer/2D Map',
   component: Map2DCanvas,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-robotics-viewer-2d-map--map-canvas-overview',
+      eyebrow: 'Robotics / 2D Map',
+      title: '2D 지도는 공간 맥락을 유지한 채 경로와 로봇 위치를 탐색하게 합니다',
+      description:
+        '운영자가 점유 격자·경로·로봇 위치를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 공간 관계가 필요 없는 수치 모니터링이나 3차원 장면에는 Telemetry 또는 3D Scene을 사용하세요.',
+    },
     docs: {
       description: {
         component: '점유 격자, 경로, 로봇 위치 같은 2D 공간 콘텐츠를 담는 renderer-independent 팬/줌 viewport입니다.',
@@ -97,7 +105,10 @@ function waitForRender() {
 }
 
 export const MapCanvasOverview = {
-  name: 'Light · Dark 지도 캔버스',
+  name: '개요',
+  parameters: storyDescription(
+    '같은 경로와 로봇 위치를 밝은 지도와 어두운 지도에서 나란히 비교합니다. appearance가 달라도 경로·현재 위치·프레임 도구의 정보 우선순위와 대비가 동등한지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
       <section aria-labelledby="map-light-label" style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -124,7 +135,10 @@ export const MapCanvasOverview = {
 };
 
 export const OriginAndNavigationStates = {
-  name: '중앙 원점 · 탐색 비활성',
+  name: '변형·상태 · 중앙 원점 · 탐색 비활성',
+  parameters: storyDescription(
+    '세계 좌표 원점이 중앙인 지도와 탐색을 잠근 검토 전용 지도를 비교합니다. 콘텐츠 원점이 올바르게 배치되고 팬·줌 비활성 상태가 보이며 입력이 실제로 차단되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 840 }}>
       <Map2DCanvas contentOrigin="center" label="중앙 세계 좌표 지도" style={{ height: 300 }}>
@@ -147,7 +161,10 @@ export const OriginAndNavigationStates = {
 };
 
 export const KeyboardAndPointerContract = {
-  name: '키보드 · 포인터 기준 줌',
+  name: '상호작용 · 키보드·포인터 줌',
+  parameters: storyDescription(
+    '운영자가 키보드로 팬하고 포인터 위치를 기준으로 휠 줌하며 내부 도구도 함께 쓰는 상황입니다. 중첩 제어의 입력이 지도 탐색으로 새지 않고 줌의 기준점과 reset·fit 계약이 유지되는지 확인하세요.',
+  ),
   render: () => <InteractiveMapFixture />,
   play: async ({ canvasElement }) => {
     const map = canvasElement.querySelector('[data-testid="interaction-map"]');
@@ -235,7 +252,10 @@ export const KeyboardAndPointerContract = {
 };
 
 export const NarrowWidth = {
-  name: '320px 좁은 지도',
+  name: '반응형 · 320px 좁은 폭',
+  parameters: storyDescription(
+    '320px 패널 안에 2D 지도를 배치하는 좁은 화면 상황입니다. 지도 콘텐츠와 뷰포트 제어가 잘리거나 가로 overflow를 만들지 않고 최소 탐색 공간을 유지하는지 확인하세요.',
+  ),
   render: () => (
     <div style={{ width: 320, maxWidth: '100%' }}>
       <Map2DCanvas defaultViewport={{ x: 16, y: 16, z: 1 }} style={{ height: 280 }}>

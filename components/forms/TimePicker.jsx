@@ -80,7 +80,7 @@ export function TimePicker({
   const normalizedStep = Number.isFinite(minuteStep)
     ? Math.max(1, Math.min(60, Math.round(minuteStep)))
     : 5;
-  const height = size === 'sm' ? 40 : 50;
+  const height = size === 'sm' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
   const hours = Array.from({ length: 24 }, (_, index) => index);
   const minutes = Array.from({ length: Math.ceil(60 / normalizedStep) }, (_, index) => index * normalizedStep)
     .filter((option) => option < 60);

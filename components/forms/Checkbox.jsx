@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — Checkbox
@@ -83,7 +84,7 @@ export function Checkbox({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        display: 'inline-flex', alignItems: 'center', gap: tight ? 4 : 8,
+        display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)',
         cursor: disabledState ? 'not-allowed' : 'pointer',
         fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-brand-ink)',
         fontWeight: bold ? 'var(--fw-bold)' : undefined,
@@ -104,9 +105,7 @@ export function Checkbox({
         {...rest}
       >
         {(on || isMark) && (
-          <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke={isMark ? 'currentColor' : checkStroke} strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 6 9 17l-5-5" />
-          </svg>
+          <Icon name="check" size={iconSize} color={isMark ? 'currentColor' : checkStroke} aria-hidden="true" />
         )}
         {mixed && <span style={{ width: d - 8, height: 2, borderRadius: 'var(--radius-pill)', background: checkStroke }} />}
       </span>

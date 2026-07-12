@@ -23,7 +23,13 @@ Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFr
 - Blocking presentation keeps the visible source identity. If a state transition blocks the currently focused renderer/control, focus moves to the first recovery action or to the blocking-state group instead of being discarded; after recovery it returns to that exact originating control when the control still exists.
 - Very narrow blocking tiles keep source + state label + recovery action in normal grid flow. Below 240px, the icon and secondary description collapse visually (the description remains available to assistive technology) so 16:9 tiles do not overlap.
 - The edge strip announces only the state transition. Rapid FPS, resolution, and freshness metadata remains visually adjacent but outside the live region.
+- Live-region urgency follows whether a transition removes usable content. `disconnected`, `no-signal`, and
+  `error` are blocking losses and use `alert`/assertive. Expected setup states such as `no-source`, `loading`,
+  and `connecting` use `status`/polite. Retained-content edge states (`degraded`, `stale`, `frozen`, `paused`)
+  always remain polite so repeated transport changes do not interrupt the user's current announcement.
 - `ready` leaves chrome quiet. `live` adds a text-and-icon state badge; it never relies on color or motion alone.
+- Tone을 직접 전달하는 positive/cautionary/negative 상태 글리프는 공용 상태 문법과 같은 fill 변형을 사용합니다. `clock`, `pause`, `signal`, `circle-block`처럼 상태의 원인이나 기능을 설명하는 글리프는 outline을 유지합니다.
+- 오류·신호 없음·사용 불가 기본 문구는 원인만 알리는 막다른 문장이 아니라 다음 확인 행동까지 안내합니다. 제품이 더 구체적인 복구 경로를 알면 `stateDescription`과 `stateAction`으로 대체합니다.
 - Default HUD content should be limited to a few values needed to interpret the viewport. Detailed renderer diagnostics belong in an optional product surface.
 - Toolbar actions must affect only this viewport. Document commands, scene hierarchy, properties, robot control, and emergency actions do not belong in the frame.
 - Use `toolbarPlacement="top-right"` for 3D/video camera controls and `bottom-right` when a map's scale/status occupies the opposite edge.
@@ -39,6 +45,10 @@ Classification: **LK Robotics Extension**. Sibling contracts checked: `Map2DCanv
 - [Unity Scene view draw modes](https://docs.unity3d.com/Manual/GIVis.html) expose multiple lighting/debug presentations and customizable diagnostic colors rather than prescribing one permanent viewport palette. LDS therefore treats dark as the 3D default, not as a 3D-only capability.
 - [Mapbox Standard style](https://docs.mapbox.com/map-styles/reference/standard/) and its [runtime style configuration](https://docs.mapbox.com/map-styles/guides/standard-styles/) expose day/night-adjacent lighting presets and runtime updates. LDS therefore keeps both light and dark available to map viewports.
 - [WAI-ARIA Toolbar](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/) keeps keyboard behavior in the composed toolbar instead of making the viewport frame a second toolbar implementation.
+- [WCAG 2.2 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html) requires state
+  changes to be programmatically exposed without moving focus, while the [WAI-ARIA Alert pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alert/)
+  reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from
+  blocking loss, not merely from a negative color or connection label.
 - [WCAG 2.2 Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html) requires non-drag alternatives for operations such as pan, zoom, and fit.
 
 Intentional LDS adaptation: external tools offer more granular lighting/style controls and dense desktop chrome. ViewerFrame deliberately exposes only a two-value presentation axis bound to LDS component roles and keeps responsive chrome sparse. Intentionally excluded from the DS layer are render engines, scene hierarchy, property editing, transform gizmos, stream reconnection policy, recording/seek sessions, robot commands, and product threshold schemas.

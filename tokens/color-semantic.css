@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 113 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 112 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -22,7 +22,7 @@
   --color-semantic-label-neutral: rgba(46, 47, 51, 0.88);
   --color-semantic-label-alternative: rgba(55, 56, 60, 0.74);
   --color-semantic-label-assistive: rgba(55, 56, 60, 0.28);
-  --color-semantic-label-disable: rgba(55, 56, 60, 0.16);
+  --color-semantic-label-disable: rgba(55, 56, 60, 0.52);
   --color-semantic-background-normal-alternative: #F7F7F8;
   --color-semantic-background-elevated-normal: #FFFFFF;
   --color-semantic-background-elevated-alternative: #F7F7F8;
@@ -73,7 +73,6 @@
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: #EAECF1;
   --color-semantic-background-band: #F4F4F5;
-  --color-semantic-surface-overlay: #FFFFFF;
   --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 10%, transparent);
   --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
   --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
@@ -138,7 +137,7 @@
   --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
   --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
   --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
-  --color-semantic-label-disable: rgba(152, 155, 162, 0.16);
+  --color-semantic-label-disable: rgba(174, 176, 182, 0.52);
   --color-semantic-background-normal-alternative: #0F0F10;
   --color-semantic-background-elevated-normal: #212225;
   --color-semantic-background-elevated-alternative: #141415;
@@ -189,7 +188,6 @@
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
   --color-semantic-background-band: #0E121F;
-  --color-semantic-surface-overlay: #1A2036;
   --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
   --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
   --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);
@@ -255,7 +253,7 @@
     --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
     --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
     --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
-    --color-semantic-label-disable: rgba(152, 155, 162, 0.16);
+    --color-semantic-label-disable: rgba(174, 176, 182, 0.52);
     --color-semantic-background-normal-alternative: #0F0F10;
     --color-semantic-background-elevated-normal: #212225;
     --color-semantic-background-elevated-alternative: #141415;
@@ -306,7 +304,6 @@
     --color-semantic-secondary-normal: #2C3547;
     --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
     --color-semantic-background-band: #0E121F;
-    --color-semantic-surface-overlay: #1A2036;
     --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
     --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
     --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);

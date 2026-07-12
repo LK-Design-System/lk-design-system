@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — Steps
@@ -20,7 +21,7 @@ export function Steps({ steps = [], current = 0, style, ...rest }) {
           <React.Fragment key={i}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, flexShrink: 0 }}>
               <span style={{ width: 32, height: 32, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: bg, border: `2px solid ${bd}`, color: fg, fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-bold)' }}>
-                {done ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> : (i + 1)}
+                {done ? <Icon name="check" size={16} aria-hidden="true" /> : (i + 1)}
               </span>
               <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', whiteSpace: 'nowrap' }}>{label}</span>
             </div>

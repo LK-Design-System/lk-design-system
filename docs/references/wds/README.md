@@ -21,6 +21,24 @@ The rule is:
 When a design or component does not fit WDS Core, it must be classified as an
 LK override or extension rather than silently changing the WDS baseline.
 
+### Action family taxonomy
+
+The WDS action system groups Action Area, Button, Text Button, Icon Button,
+Chip, and Toggle Icon as one family with explicit roles. LDS keeps each role's
+contract separate so action styling stays consistent across stories:
+
+- Button, Text Button, Icon Button, Toggle Icon, and grouped actions
+  (ButtonGroup, SplitButton, Fab) are demonstrated in
+  `stories/Button.stories.jsx`, `stories/ActionButtonGroup.stories.jsx`,
+  `stories/ActionSplitButton.stories.jsx`, and `stories/ActionFab.stories.jsx`.
+- ButtonGroup and SplitButton reuse those primitives but have no direct WDS
+  component set; their public stories and exports are classified as LK Product
+  Extension evidence, not WDS Core parity.
+- Action Area (bottom placement, divider, caption, sticky, safe-area padding)
+  is demonstrated in `stories/ActionArea.stories.jsx`.
+- Chip variants live in the Selection and Input Chip page and the content
+  badge pages.
+
 - `Wanted Design System (Community).fig`: original WDS Community Figma file
 - `CONFLICT_AUDIT.md`: WDS vs LK conflict and extension audit based on the
   Figma connector and local `.fig` content extraction

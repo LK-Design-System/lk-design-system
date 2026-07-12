@@ -1,4 +1,5 @@
 import React from "react";
+import { useDialogFocus } from './dialog-focus.js';
 
 const platformStyle = {
   /* iOS internals retained as an LDS simplification (WDS iOS table layout
@@ -75,18 +76,28 @@ export function Alert({
   onClose,
   actions,
   closeOnScrim = true,
+  initialFocusRef,
+  returnFocusRef,
+  restoreFocus = true,
+  ariaLabel = '알림',
   style,
   ...rest
 }) {
   const dismiss = onClose || onCancel;
-  React.useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (e) => {
-      if (e.key === "Escape") dismiss?.();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [open, dismiss]);
+  const titleId = React.useId();
+  const descriptionId = React.useId();
+  const defaultFocusRef = React.useRef(null);
+  const { dialogRef, zIndex } = useDialogFocus({
+    open,
+    onDismiss: dismiss,
+    initialFocusRef: initialFocusRef ?? defaultFocusRef,
+    returnFocusRef,
+    restoreFocus,
+  });
+  const setDialogRef = React.useCallback((node) => {
+    dialogRef.current = node;
+    defaultFocusRef.current = node?.querySelector('[data-alert-secondary], [data-alert-primary]') ?? null;
+  }, [dialogRef]);
 
   if (!open) return null;
 
@@ -96,6 +107,7 @@ export function Alert({
   const normalizedVariant = normalizeVariant(variant ?? tone);
   const accent = variantColor[normalizedVariant] || variantColor.normal;
   const body = description ?? children;
+  const hasVisibleTitle = heading && title != null;
   const buttonBase = {
     height: p.buttonHeight,
     padding: p.buttonPadding,
@@ -123,19 +135,23 @@ export function Alert({
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 100,
+        zIndex,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: 24,
-        background: "var(--material-control-dimmer)",
-        backdropFilter: "blur(1px)",
+        background: "var(--component-dialog-scrim)",
+        backdropFilter: "blur(var(--component-dialog-scrim-blur))",
       }}
     >
       <div
+        ref={setDialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={typeof title === "string" ? title : undefined}
+        aria-labelledby={hasVisibleTitle ? titleId : undefined}
+        aria-label={!hasVisibleTitle ? (typeof title === 'string' ? title : ariaLabel) : undefined}
+        aria-describedby={body != null ? descriptionId : undefined}
+        tabIndex={-1}
         style={{
           width: "100%",
           maxWidth: p.maxWidth,
@@ -150,6 +166,7 @@ export function Alert({
       >
         {heading && title != null && (
           <div
+            id={titleId}
             style={{
               fontSize: p.titleSize,
               fontWeight: p.titleWeight,
@@ -163,6 +180,7 @@ export function Alert({
         )}
         {body != null && (
           <div
+            id={descriptionId}
             style={{
               fontSize: "var(--body2-size)",
               lineHeight: 1.55,
@@ -187,6 +205,7 @@ export function Alert({
             <React.Fragment>
               {secondary && (
                 <button
+                  data-alert-secondary
                   type="button"
                   style={{
                     ...buttonBase,
@@ -200,6 +219,7 @@ export function Alert({
                 </button>
               )}
               <button
+                data-alert-primary
                 type="button"
                 style={{
                   ...buttonBase,

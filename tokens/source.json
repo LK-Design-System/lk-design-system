@@ -1828,10 +1828,11 @@
         "$type": "color",
         "css": "--color-semantic-label-disable",
         "modes": {
-          "light": "rgba(55, 56, 60, 0.16)",
-          "dark": "rgba(152, 155, 162, 0.16)"
+          "light": "rgba(55, 56, 60, 0.52)",
+          "dark": "rgba(174, 176, 182, 0.52)"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "note": "Disabled foreground is held at 0.52 alpha so labels and glyphs remain identifiable on light and dark surfaces without resembling enabled controls."
       },
       "background-normal-alternative": {
         "$type": "color",
@@ -2288,16 +2289,6 @@
         "modes": {
           "light": "#F4F4F5",
           "dark": "#0E121F"
-        },
-        "origin": "lds-extension",
-        "group": "background"
-      },
-      "surface-overlay": {
-        "$type": "color",
-        "css": "--color-semantic-surface-overlay",
-        "modes": {
-          "light": "#FFFFFF",
-          "dark": "#1A2036"
         },
         "origin": "lds-extension",
         "group": "background"
@@ -3435,178 +3426,6 @@
         "negativeFg": {
           "$type": "color",
           "css": "--component-badge-negative-fg",
-          "$value": "var(--color-semantic-status-negative-text)",
-          "generated": true
-        }
-      }
-    },
-    "callout": {
-      "component": "components/status/Callout.jsx",
-      "tokens": {
-        "infoBg": {
-          "$type": "color",
-          "css": "--component-callout-info-bg",
-          "$value": "var(--color-semantic-status-info-surface)",
-          "generated": true
-        },
-        "infoBorder": {
-          "$type": "color",
-          "css": "--component-callout-info-border",
-          "$value": "var(--color-semantic-status-info-border)",
-          "generated": true
-        },
-        "infoIcon": {
-          "$type": "color",
-          "css": "--component-callout-info-icon",
-          "$value": "var(--color-semantic-status-info-text)",
-          "generated": true
-        },
-        "positiveBg": {
-          "$type": "color",
-          "css": "--component-callout-positive-bg",
-          "$value": "var(--color-semantic-status-positive-surface)",
-          "generated": true
-        },
-        "positiveBorder": {
-          "$type": "color",
-          "css": "--component-callout-positive-border",
-          "$value": "var(--color-semantic-status-positive-border)",
-          "generated": true
-        },
-        "positiveIcon": {
-          "$type": "color",
-          "css": "--component-callout-positive-icon",
-          "$value": "var(--color-semantic-status-positive-text)",
-          "generated": true
-        },
-        "cautionaryBg": {
-          "$type": "color",
-          "css": "--component-callout-cautionary-bg",
-          "$value": "var(--color-semantic-status-cautionary-surface)",
-          "generated": true
-        },
-        "cautionaryBorder": {
-          "$type": "color",
-          "css": "--component-callout-cautionary-border",
-          "$value": "var(--color-semantic-status-cautionary-border)",
-          "generated": true
-        },
-        "cautionaryIcon": {
-          "$type": "color",
-          "css": "--component-callout-cautionary-icon",
-          "$value": "var(--color-semantic-status-cautionary-text)",
-          "generated": true
-        },
-        "negativeBg": {
-          "$type": "color",
-          "css": "--component-callout-negative-bg",
-          "$value": "var(--color-semantic-status-negative-surface)",
-          "generated": true
-        },
-        "negativeBorder": {
-          "$type": "color",
-          "css": "--component-callout-negative-border",
-          "$value": "var(--color-semantic-status-negative-border)",
-          "generated": true
-        },
-        "negativeIcon": {
-          "$type": "color",
-          "css": "--component-callout-negative-icon",
-          "$value": "var(--color-semantic-status-negative-text)",
-          "generated": true
-        },
-        "neutralBg": {
-          "$type": "color",
-          "css": "--component-callout-neutral-bg",
-          "$value": "var(--color-semantic-status-neutral-surface)",
-          "generated": true
-        },
-        "neutralBorder": {
-          "$type": "color",
-          "css": "--component-callout-neutral-border",
-          "$value": "var(--color-semantic-status-neutral-border)",
-          "generated": true
-        },
-        "neutralIcon": {
-          "$type": "color",
-          "css": "--component-callout-neutral-icon",
-          "$value": "var(--color-semantic-status-neutral-text)",
-          "generated": true
-        }
-      }
-    },
-    "banner": {
-      "component": "components/status/Banner.jsx",
-      "tokens": {
-        "infoBg": {
-          "$type": "color",
-          "css": "--component-banner-info-bg",
-          "$value": "var(--color-semantic-status-info-surface)",
-          "generated": true
-        },
-        "infoBorder": {
-          "$type": "color",
-          "css": "--component-banner-info-border",
-          "$value": "var(--color-semantic-status-info-border)",
-          "generated": true
-        },
-        "infoIcon": {
-          "$type": "color",
-          "css": "--component-banner-info-icon",
-          "$value": "var(--color-semantic-status-info-text)",
-          "generated": true
-        },
-        "positiveBg": {
-          "$type": "color",
-          "css": "--component-banner-positive-bg",
-          "$value": "var(--color-semantic-status-positive-surface)",
-          "generated": true
-        },
-        "positiveBorder": {
-          "$type": "color",
-          "css": "--component-banner-positive-border",
-          "$value": "var(--color-semantic-status-positive-border)",
-          "generated": true
-        },
-        "positiveIcon": {
-          "$type": "color",
-          "css": "--component-banner-positive-icon",
-          "$value": "var(--color-semantic-status-positive-text)",
-          "generated": true
-        },
-        "cautionaryBg": {
-          "$type": "color",
-          "css": "--component-banner-cautionary-bg",
-          "$value": "var(--color-semantic-status-cautionary-surface)",
-          "generated": true
-        },
-        "cautionaryBorder": {
-          "$type": "color",
-          "css": "--component-banner-cautionary-border",
-          "$value": "var(--color-semantic-status-cautionary-border)",
-          "generated": true
-        },
-        "cautionaryIcon": {
-          "$type": "color",
-          "css": "--component-banner-cautionary-icon",
-          "$value": "var(--color-semantic-status-cautionary-text)",
-          "generated": true
-        },
-        "negativeBg": {
-          "$type": "color",
-          "css": "--component-banner-negative-bg",
-          "$value": "var(--color-semantic-status-negative-surface)",
-          "generated": true
-        },
-        "negativeBorder": {
-          "$type": "color",
-          "css": "--component-banner-negative-border",
-          "$value": "var(--color-semantic-status-negative-border)",
-          "generated": true
-        },
-        "negativeIcon": {
-          "$type": "color",
-          "css": "--component-banner-negative-icon",
           "$value": "var(--color-semantic-status-negative-text)",
           "generated": true
         }

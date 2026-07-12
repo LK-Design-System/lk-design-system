@@ -1,5 +1,7 @@
 # 컴포넌트 워크플로
 
+Storybook 페이지 소유권, 공개/숨김 역할, 영역별 설명 순서는 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md)를 따른다. 전수 판정 원장은 `docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`에서 관리한다.
+
 이 레포는 운영 품질 게이트를 기준으로 관리합니다.
 
 1. 패키지 빌드: `npm run build`

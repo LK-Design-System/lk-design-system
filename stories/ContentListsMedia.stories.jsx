@@ -6,10 +6,18 @@ import {
   StatusBadge,
 } from '../src/index.js';
 import { ListCellAccordionCard as ListCellAccordionCardStory } from './Content.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Components/Content/Lists',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-components-content-lists--lists',
+      eyebrow: 'Core / Content / Lists',
+      title: '반복되는 항목의 핵심 정보와 상태를 빠르게 훑게 합니다',
+      description:
+        '같은 정보 구조를 가진 문서, 알림, 설정 항목을 세로 목록으로 비교하거나 탐색할 때 적합합니다. 독립된 풍부한 콘텐츠 단위는 Card를, 단순한 값의 행·열 비교는 Table을 사용하고 서로 다른 구조를 한 목록에 섞지 마세요.',
+    },
     docs: {
       description: {
         component: '항목 목록처럼 순서와 상태를 읽는 ListCell 패턴입니다.',
@@ -21,7 +29,10 @@ const meta = {
 export default meta;
 
 export const Lists = {
-  name: '리스트',
+  name: '개요',
+  parameters: storyDescription(
+    '문서와 알림 항목을 아이콘, 설명, 상태, 단축키, 탐색 어포던스와 함께 나열하는 상황입니다. 반복되는 행의 정렬이 유지되고 선택 상태와 이동 가능성이 trailing 요소만 보아도 구분되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920, minWidth: 0 }}>
       <section style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', padding: 8, boxSizing: 'border-box' }}>
@@ -34,7 +45,10 @@ export const Lists = {
 };
 
 export const ListCellStates = {
-  name: '리스트 셀 상태',
+  name: '변형·상태 · 밀도와 선택 상태',
+  parameters: storyDescription(
+    '목록의 밀도, 선택·비활성·상호작용 상태, 긴 텍스트 처리를 비교하는 상황입니다. 패딩이 달라도 행의 기준선이 안정적이고 여러 줄 콘텐츠와 키보드 포커스가 잘리거나 겹치지 않는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920, minWidth: 0 }}>
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', minWidth: 0 }}>

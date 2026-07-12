@@ -11,10 +11,23 @@
 />
 ```
 
-- **series** `{id?,name,color,dashed,points:[{x,y}]}[]` · **width/height** · **xTicks/yTicks** · **xDomain/yDomain** · **includeZero** · **showGrid/showLegend/showPoints** · **referenceLines** `{y,label,color?,dashed?}[]` · **emptyLabel** · **formatX/formatY**.
+- **series** `{id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[]` · **width/height** · **xTicks/yTicks** · **xDomain/yDomain** · **includeZero** · **showGrid/showLegend/showPoints** · **referenceLines** `{y,label,color?,dashed?}[]` · **emptyLabel** · **formatX/formatY**.
+- **description / summary** — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 `accessibleLabel`로 요약 이름을 고정합니다.
 - Compare against common line chart expectations before changing it: bounded domains, axis ticks and labels, grid option, multiple series, legend handoff, reference lines, empty state, responsive SVG, and predictable formatting hooks.
 - Layer: LDS Product Data extension. This is a lightweight presentational chart pattern, not a full analytics/charting engine or WDS component-set parity claim.
 - 기본은 responsive SVG입니다. `width`/`height`는 viewBox 기준 크기이며, 실제 렌더는 부모 너비 안에서 줄어듭니다.
 - `Legend`를 재사용합니다. 범례용 선 swatch는 `shape="line"`과 `dashed`로 표현하고, point marker는 데이터 밀도가 낮거나 샘플 강조가 필요할 때만 켭니다.
 - 색상은 semantic token 또는 series `color`로만 지정합니다. raw hex/rgb를 story source of truth로 올리지 않습니다.
-- 데이터가 없으면 축과 빈 상태 텍스트를 유지합니다. loading/error/zoom/tooltip/crosshair가 필요한 분석용 차트는 별도 composed product pattern으로 둡니다.
+- 데이터가 없으면 축과 보이는 `emptyLabel`을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. loading/error/zoom/tooltip/crosshair가 필요한 분석용 차트는 별도 composed product pattern으로 둡니다.
+
+## Internal LDS comparison and retained deltas
+
+- `BarChart`, `DonutChart`, `Sparkline`과 같은 named image, 맥락 설명, 결정적 텍스트 요약, 보이는 empty-state 계약을 사용합니다.
+- `Legend`의 시리즈 이름은 시각 범례를 담당하고, 자동 요약은 색과 선 모양 없이도 값의 범위와 추이를 이해할 수 있게 합니다.
+- host `Card`/`ChartFrame`이 title, surface, action, refresh를 소유합니다. LineChart에는 별도 카드 chrome을 추가하지 않습니다.
+
+## External references and design conclusions
+
+- [Carbon chart anatomy](https://v10.carbondesignsystem.com/data-visualization/chart-anatomy/)는 title, axes, labels, legend가 함께 데이터 의미를 전달해야 한다고 정의합니다. LDS는 축과 범례를 유지하면서 screen-reader용 시리즈 요약을 추가합니다.
+- [Carbon accessibility for developers](https://carbondesignsystem.com/guidelines/accessibility/developers/)의 meaningful description/data alternative 원칙에 따라 선 모양과 색만 발표하지 않고 시작·범위·마지막 값을 텍스트로 제공합니다.
+- [PatternFly dashboard guidelines](https://www.patternfly.org/patterns/dashboard/design-guidelines/)는 trend card에서 current value와 시간 범위, prior values의 관계를 명확히 하도록 안내합니다. 기간·current KPI·action은 `MetricCard`/`ChartFrame`에 남기고 LineChart는 다중 시리즈 추이만 소유합니다.

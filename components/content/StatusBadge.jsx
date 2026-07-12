@@ -5,6 +5,9 @@ const DOT = {
   online: 'var(--component-status-badge-positive-indicator)',
   cautionary: 'var(--component-status-badge-cautionary-indicator)',
   warning: 'var(--component-status-badge-cautionary-indicator)',
+  success: 'var(--component-status-badge-positive-indicator)',
+  info: 'var(--component-status-badge-signal-indicator)',
+  error: 'var(--component-status-badge-negative-indicator)',
   negative: 'var(--component-status-badge-negative-indicator)',
   offline: 'var(--component-status-badge-offline-indicator)',
   signal: 'var(--component-status-badge-signal-indicator)',
@@ -24,10 +27,10 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
     if (typeof document === 'undefined' || document.getElementById('lk-status-kf')) return;
     const el = document.createElement('style');
     el.id = 'lk-status-kf';
-    el.textContent = '@keyframes lk-status-pulse{0%{transform:scale(1);opacity:.55}70%{transform:scale(2.6);opacity:0}100%{opacity:0}}';
+    el.textContent = '@keyframes lk-status-pulse{0%{transform:scale(1);opacity:.55}70%{transform:scale(2.6);opacity:0}100%{opacity:0}}@media (prefers-reduced-motion: reduce){[data-lds-status-pulse]{animation:none!important}}';
     document.head.appendChild(el);
   }, []);
-  const c = DOT[tone] || DOT.positive;
+  const c = DOT[tone] || DOT.offline;
   return (
     <span
       style={{
@@ -41,7 +44,7 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
     >
       <span style={{ position: 'relative', width: 6, height: 6, borderRadius: '50%', background: c, flexShrink: 0 }}>
         {(pulse || tone === 'critical') && (
-          <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: c, animation: 'lk-status-pulse 1.7s var(--ease-out) infinite' }} />
+          <span data-lds-status-pulse="" style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: c, animation: 'lk-status-pulse 1.7s var(--ease-out) infinite' }} />
         )}
       </span>
       {children}

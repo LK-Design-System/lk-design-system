@@ -93,13 +93,14 @@
           "status": "covered",
           "ldsCoverage": [
             "stories/FoundationDecorate.stories.jsx",
+            "stories/FoundationInteraction.stories.jsx",
             "tokens/effects.css",
             "stories/Foundations.stories.jsx",
             "docs/references/wds/VISUAL_TOKEN_EXCEPTIONS.json",
             "docs/references/wds/source-pdfs/3decorate.pdf",
             "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
           ],
-          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): WDS Decorate contains exactly Gradient (Solid/Multiple/Mask x 4 directions) and Interaction (4 states + layer variants), all mapped to --decorate-* and --interaction-* tokens with FoundationDecorate stories. The Interaction Size axis is a Figma resource-swatch property with no token counterpart needed."
+          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): WDS Decorate contains exactly Gradient (Solid/Multiple/Mask x 4 directions) and Interaction (4 states + layer variants), all mapped to --decorate-* and --interaction-* tokens with the FoundationDecorate (Effects) and FoundationInteraction stories. The Interaction Size axis is a Figma resource-swatch property with no token counterpart needed."
         }
       ]
     },
@@ -123,7 +124,7 @@
             "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
             "components/layout/"
           ],
-          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Layout contains only Essential (system bars) and Divider, mapped to MobileSystemBars and Divider with LayoutEssentials#EssentialAndDivider evidence. LK overrides recorded: thick divider 8px (WDS 12px), iOS bar metrics used for both platforms. The Resource section is Figma doc tooling (excluded); PageHeader stays a product extension."
+          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Layout contains only Essential (system bars) and Divider, mapped to MobileSystemBars and Divider with LayoutEssentials#MobileSystemBarsByPlatform and LayoutDivider#DividerVariants evidence. LK overrides recorded: thick divider 8px (WDS 12px), iOS bar metrics used for both platforms. The Resource section is Figma doc tooling (excluded); PageHeader stays a product extension."
         },
         {
           "wdsSection": "2 Action",
@@ -132,7 +133,9 @@
           "ldsCoverage": [
             "stories/ActionArea.stories.jsx",
             "stories/Button.stories.jsx",
-            "stories/ButtonsExtended.stories.jsx",
+            "stories/ActionButtonGroup.stories.jsx",
+            "stories/ActionSplitButton.stories.jsx",
+            "stories/ActionFab.stories.jsx",
             "stories/SocialButtons.stories.jsx",
             "components/buttons/ActionArea.jsx",
             "components/buttons/ToggleIcon.jsx",
@@ -147,14 +150,20 @@
           "figmaNodeId": "16215:30100",
           "status": "covered",
           "ldsCoverage": [
-            "stories/FormsFull.stories.jsx",
+            "stories/FormInput.stories.jsx",
+            "stories/FormTextarea.stories.jsx",
+            "stories/FormPasswordInput.stories.jsx",
+            "stories/FormInputGroup.stories.jsx",
             "stories/FormAdvancedInputs.stories.jsx",
-            "stories/FormSelectionControls.stories.jsx",
+            "stories/FormSelect.stories.jsx",
+            "stories/FormCheckbox.stories.jsx",
+            "stories/FormRadio.stories.jsx",
             "stories/FormSearchAutocomplete.stories.jsx",
             "stories/FormRangeControls.stories.jsx",
             "stories/FormDateTime.stories.jsx",
             "stories/SelectionChips.stories.jsx",
-            "stories/SelectionSegmentedToggle.stories.jsx",
+            "stories/SelectionSegmentedControl.stories.jsx",
+            "stories/SelectionToggleButton.stories.jsx",
             "stories/SelectionStatus.stories.jsx",
             "stories/SelectionSwitch.stories.jsx",
             "docs/references/wds/source-screenshots/3selectionandinput.png",
@@ -175,7 +184,9 @@
             "stories/ContentMedia.stories.jsx",
             "stories/ContentDisclosure.stories.jsx",
             "stories/ContentBadgesAnnotations.stories.jsx",
-            "stories/ContentAnnotations.stories.jsx",
+            "stories/ContentTooltip.stories.jsx",
+            "stories/ContentBubble.stories.jsx",
+            "stories/ActionBookmark.stories.jsx",
             "stories/Feedback.stories.jsx",
             "assets/source/avatar/resource",
             "docs/references/wds/source-pdfs/avatar-name.pdf",
@@ -197,8 +208,10 @@
           "figmaNodeId": "16215:24867",
           "status": "covered",
           "ldsCoverage": [
-            "stories/StatusLoading.stories.jsx",
-            "stories/StatusProgress.stories.jsx",
+            "stories/StatusSkeleton.stories.jsx",
+            "stories/StatusSpinner.stories.jsx",
+            "stories/ProductProgress.stories.jsx",
+            "stories/ProductMeter.stories.jsx",
             "components/status/Skeleton.jsx",
             "components/status/Spinner.jsx",
             "components/status/ProgressBar.jsx",
@@ -207,20 +220,15 @@
             "docs/references/wds/source-pdfs/loading.pdf",
             "docs/references/wds/COMPONENT_SOURCE_PDFS.json"
           ],
-          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Wanted/Circular loading, Skeleton Text Align x Color x Length, and rect/circle customize map to Skeleton/Spinner props with StatusLoading/StatusProgress evidence. The Animate=False static frame maps to prefers-reduced-motion handling; Meter remains a documented product extension."
+          "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Wanted/Circular loading, Skeleton Text Align x Color x Length, and rect/circle customize map to Skeleton/Spinner props with StatusSkeleton/StatusSpinner/StatusProgress evidence. The Animate=False static frame maps to prefers-reduced-motion handling; Meter remains a documented product extension."
         },
         {
           "wdsSection": "6 Navigation",
           "figmaNodeId": "16215:20255",
           "status": "covered",
           "ldsCoverage": [
-            "stories/Navigation.stories.jsx",
-            "stories/NavigationFull.stories.jsx",
             "stories/NavigationCompact.stories.jsx",
             "stories/NavigationTabs.stories.jsx",
-            "stories/NavigationFooter.stories.jsx",
-            "stories/OverlayMenu.stories.jsx",
-            "stories/NavigationSteps.stories.jsx",
             "docs/references/wds/source-pdfs/navigation-category.pdf",
             "docs/references/wds/source-pdfs/navigation-tab.pdf",
             "docs/references/wds/source-pdfs/navigation-page-indicator.pdf",
@@ -229,8 +237,7 @@
             "components/navigation/Category.jsx",
             "components/navigation/PageIndicator.jsx",
             "components/navigation/Tabs.jsx",
-            "components/navigation/Pagination.jsx",
-            "components/navigation/"
+            "components/navigation/Pagination.jsx"
           ],
           "notes": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): the WDS Navigation node contains exactly Category, Tab, Page Indicator, and Pagination, all mapped to LDS props with NavigationTabs/NavigationCompact evidence. TopBar, Footer, SideNav, Steps and related LDS components have no WDS counterpart and are recorded as product extensions; SideNav keeps hover-peek behavior without an invented explicit close pattern."
         },
@@ -263,10 +270,14 @@
           "figmaNodeId": "16215:17599",
           "status": "covered",
           "ldsCoverage": [
-            "stories/OverlayAnchored.stories.jsx",
+            "stories/OverlayPopover.stories.jsx",
+            "stories/OverlayHoverCard.stories.jsx",
+            "stories/OverlayDropdownMenu.stories.jsx",
             "stories/OverlayDimmer.stories.jsx",
-            "stories/OverlayMenu.stories.jsx",
-            "stories/ContentAnnotations.stories.jsx",
+            "stories/NavigationMenubar.stories.jsx",
+            "stories/ContentTooltip.stories.jsx",
+            "stories/ContentBubble.stories.jsx",
+            "stories/ActionBookmark.stories.jsx",
             "docs/references/wds/source-pdfs/presentation-tooltip.pdf",
             "docs/references/wds/source-pdfs/presentation-menu.pdf",
             "docs/references/wds/COMPONENT_SOURCE_PDFS.json",

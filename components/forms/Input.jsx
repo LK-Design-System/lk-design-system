@@ -1,4 +1,12 @@
 import React from 'react';
+import {
+  FieldLabel,
+  FieldMessage,
+  FieldStatusIcon,
+  fieldBackground,
+  fieldBorderColor,
+  mergeIds,
+} from './field-shared.js';
 
 function usePlaceholderStyle() {
   React.useEffect(() => {
@@ -13,7 +21,7 @@ function usePlaceholderStyle() {
 /**
  * LK ROBOTICS — Input
  * Text field with optional label and leading/trailing icon. White box,
- * hairline ring, 16px radius, 50px tall. Focus = signal-ink ring + soft halo.
+ * hairline ring, 12px radius, 48px default height. Focus = signal-ink ring + soft halo.
  */
 export function Input({
   label,
@@ -43,72 +51,58 @@ export function Input({
   ...rest
 }) {
   const autoId = React.useId();
-  const inputId = id || (label ? `in-${String(label).replace(/\s+/g, '-').toLowerCase()}` : `in-${autoId}`);
+  const inputId = id || `in-${autoId}`;
   const message = error ?? helper;
   const messageId = message != null ? `${inputId}-message` : undefined;
   const [focused, setFocused] = React.useState(false);
   const [hover, setHover] = React.useState(false);
   const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
   const disabled = !!rest.disabled || disable || interaction === 'inactive';
+  const readOnly = !!rest.readOnly;
   const activeFocus = focused || focus || interaction === 'focused' || interaction === 'active-focused';
-  const activeHover = hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused';
+  const activeHover = !readOnly && (hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused');
   const isInvalid = invalid || status === 'negative' || error != null;
   usePlaceholderStyle();
-  const ring = disabled
-    ? 'var(--color-semantic-line-normal-neutral)'
-    : isInvalid
-    ? 'var(--component-input-border-color-invalid)'
-    : status === 'positive'
-      ? 'var(--color-semantic-status-positive)'
-    : activeFocus
-      ? 'var(--component-input-border-color-focus)'
-    : activeHover
-      ? 'var(--color-semantic-line-solid-normal)'
-      : 'var(--component-input-border-color)';
+  const ring = fieldBorderColor({ disabled, readOnly, invalid: isInvalid, status, focused: activeFocus, hovered: activeHover });
   const h = height || (normalizedSize === 'sm' ? 'var(--control-h-sm)' : normalizedSize === 'lg' ? 'var(--control-h-lg)' : 'var(--component-input-height)');
   const startIcon = leadingIcon ?? iconLeft;
   const endIcon = trailingIcon ?? iconRight;
   const endAction = trailingButton ?? actionRight;
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
-      {label && (
-        <label htmlFor={inputId} style={{ fontWeight: 'var(--component-input-label-font-weight)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', letterSpacing: 'var(--component-input-label-letter-spacing)', color: 'var(--component-input-label-color)' }}>
-          {label}{required && <span style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>}
-        </label>
-      )}
+    <div data-readonly={readOnly ? 'true' : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
+      <FieldLabel htmlFor={inputId} label={label} required={required} disabled={disabled} />
       <div
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
         position: 'relative', display: 'flex', alignItems: 'center', gap: 'var(--component-input-gap)',
         height: h, padding: '0 var(--component-input-padding-x)',
-        background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)',
+        background: fieldBackground({ disabled, readOnly }),
         border: `var(--component-input-border-width) solid ${ring}`,
         borderRadius: 'var(--component-input-radius)',
         boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
       }}>
-        {startIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{startIcon}</span>}
+        {startIcon && <span style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto' }}>{startIcon}</span>}
         <input
           id={inputId}
           data-lds-field=""
           {...rest}
           disabled={disabled}
+          readOnly={readOnly}
+          required={required}
           aria-label={ariaLabel ?? (!label && typeof rest.placeholder === 'string' ? rest.placeholder : undefined)}
-          aria-describedby={messageId ?? rest['aria-describedby']}
+          aria-describedby={mergeIds(rest['aria-describedby'], messageId)}
           aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
-          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)' }}
+          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined, fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
         />
-        {endIcon && <span style={{ color: 'var(--component-input-icon-color)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
+        {endIcon && <span style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
+        {!endIcon && <FieldStatusIcon invalid={isInvalid} status={status} />}
         {endAction && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{endAction}</span>}
       </div>
-      {message != null && (
-        <span id={messageId} style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: error != null || status === 'negative' ? 'var(--color-semantic-status-negative-text)' : status === 'positive' ? 'var(--color-semantic-status-positive-text)' : 'var(--color-semantic-label-neutral)' }}>
-          {message}
-        </span>
-      )}
+      <FieldMessage id={messageId} message={message} error={error} status={status} />
     </div>
   );
 }

@@ -1,0 +1,83 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
+
+
+var _chunkHKYVPF5Dcjs = require('./chunk-HKYVPF5D.cjs');
+
+// components/data/DataToolbar.jsx
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
+function DataToolbar({
+  title,
+  description,
+  count,
+  searchValue,
+  defaultSearchValue = "",
+  onSearchChange,
+  searchPlaceholder = "\uAC80\uC0C9",
+  filters,
+  actions,
+  size = "md",
+  style,
+  ...rest
+}) {
+  const isSearchControlled = searchValue !== void 0;
+  const [internalSearch, setInternalSearch] = _react2.default.useState(defaultSearchValue);
+  const currentSearch = isSearchControlled ? searchValue : internalSearch;
+  const setSearch = (value) => {
+    if (!isSearchControlled) setInternalSearch(value);
+    onSearchChange && onSearchChange(value);
+  };
+  const compact = size === "sm";
+  const controlHeight = compact ? "var(--component-button-height-sm)" : "var(--component-button-height-md)";
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    "div",
+    {
+      style: {
+        display: "grid",
+        gap: compact ? "var(--space-2)" : "var(--space-3)",
+        padding: compact ? "10px 12px" : "14px 16px",
+        border: "1px solid var(--color-semantic-line-solid-normal)",
+        borderRadius: "var(--radius-md)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        fontFamily: "var(--font-sans)",
+        minWidth: 0,
+        ...style
+      },
+      ...rest,
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: 3, minWidth: 0 }, children: [
+            (title != null || count != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-2)", minWidth: 0 }, children: [
+              title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
+              count != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+                count,
+                "\uAC1C"
+              ] })
+            ] }),
+            description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)" }, children: description })
+          ] }),
+          actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
+        ] }),
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            _chunkHKYVPF5Dcjs.SearchField,
+            {
+              value: currentSearch,
+              onChange: setSearch,
+              placeholder: searchPlaceholder,
+              "aria-label": searchPlaceholder,
+              size: "sm",
+              style: { height: controlHeight }
+            }
+          ) }),
+          filters != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: filters })
+        ] })
+      ]
+    }
+  );
+}
+
+
+
+exports.DataToolbar = DataToolbar;
+//# sourceMappingURL=chunk-66RA4WKL.cjs.map

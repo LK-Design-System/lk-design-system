@@ -1,5 +1,8 @@
 import React from 'react';
 import { Avatar } from '../feedback/Avatar';
+import { Icon } from '../icon/Icon.jsx';
+import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useFloatingPosition } from '../overlay/anchored-overlay.js';
 
 /**
  * LK ROBOTICS — UserMenu
@@ -13,24 +16,55 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
   const [open, setOpen] = React.useState(false);
   const [hov, setHov] = React.useState(-1);
   const ref = React.useRef(null);
+  const triggerRef = React.useRef(null);
+  const menuId = React.useId();
+  const triggerId = React.useId();
+  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
+    open,
+    onClose: () => setOpen(false),
+    getTrigger: () => triggerRef.current,
+  });
   React.useEffect(() => {
     if (!open) return undefined;
     const h = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    const k = (e) => { if (e.key === 'Escape') setOpen(false); };
     document.addEventListener('mousedown', h);
-    document.addEventListener('keydown', k);
-    return () => { document.removeEventListener('mousedown', h); document.removeEventListener('keydown', k); };
+    return () => { document.removeEventListener('mousedown', h); };
   }, [open]);
+
+  const toggleMenu = () => {
+    if (open) setOpen(false);
+    else {
+      requestItemFocus('first');
+      setOpen(true);
+    }
+  };
+  const handleTriggerKeyDown = (event) => {
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      requestItemFocus('first');
+      setOpen(true);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      requestItemFocus('last');
+      setOpen(true);
+    }
+  };
+  const position = useFloatingPosition({
+    open,
+    anchorRef: ref,
+    panelRef: menuRef,
+    placement: 'top',
+  });
 
   return (
     <div ref={ref} style={{ position: 'relative', ...style }} {...rest}>
       {open && (
-        <div role="menu" style={{ position: 'absolute', bottom: 'calc(100% + 8px)', left: 0, minWidth: collapsed ? 200 : '100%', boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--component-menu-radius)', padding: 'var(--component-menu-padding-y) var(--component-menu-padding-x)', boxShadow: 'var(--shadow-md)', zIndex: 30 }}>
+        <div ref={menuRef} id={menuId} role="menu" aria-labelledby={triggerId} data-placement={position.placement} onKeyDown={handleMenuKeyDown} style={{ position: 'absolute', top: position.placement === 'bottom' ? 'calc(100% + 8px)' : 'auto', bottom: position.placement === 'top' ? 'calc(100% + 8px)' : 'auto', left: 0, minWidth: collapsed ? 200 : '100%', maxWidth: 'calc(100vw - var(--space-8))', maxHeight: position.maxHeight ?? undefined, overflowY: position.maxHeight != null ? 'auto' : undefined, translate: `${position.shiftX}px ${position.shiftY}px`, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--component-menu-radius)', padding: 'var(--component-menu-padding-y) var(--component-menu-padding-x)', boxShadow: 'var(--shadow-md)', zIndex: 30 }}>
           {items.map((it, i) => it.divider
-            ? <div key={'d' + i} style={{ height: 1, background: 'var(--color-semantic-line-solid-normal)', margin: '5px 4px' }} />
+            ? <div key={'d' + i} role="separator" style={{ height: 1, background: 'var(--color-semantic-line-solid-normal)', margin: '5px 4px' }} />
             : (
-              <button key={i} type="button" role="menuitem" disabled={it.disabled}
-                onClick={() => { setOpen(false); it.onClick && it.onClick(); }}
+              <button key={i} type="button" role="menuitem" tabIndex={-1} disabled={it.disabled}
+                onClick={() => { closeMenu({ restoreFocus: true }); it.onClick?.(); }}
                 onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(-1)}
                 style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 'var(--radius-8)', cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
                 {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--color-semantic-label-alternative)' }}>{it.icon}</span>}
@@ -39,8 +73,8 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
             ))}
         </div>
       )}
-      <button type="button" aria-haspopup="menu" aria-expanded={open} title={collapsed && typeof name === 'string' ? name : undefined}
-        onClick={() => setOpen(!open)}
+      <button ref={triggerRef} id={triggerId} type="button" aria-haspopup="menu" aria-expanded={open} aria-controls={open ? menuId : undefined} title={collapsed && typeof name === 'string' ? name : undefined}
+        onClick={toggleMenu} onKeyDown={handleTriggerKeyDown}
         style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 10, width: '100%', padding: collapsed ? '6px 0' : '6px 8px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)', cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-sans)', background: open ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}>
         <Avatar name={typeof name === 'string' ? name : undefined} src={src} status={status} size={30} style={{ flexShrink: 0 }} />
         {!collapsed && (
@@ -50,9 +84,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
           </span>
         )}
         {!collapsed && (
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-label-assistive)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}>
-            <path d="M6 15l6-6 6 6" />
-          </svg>
+          <Icon name="chevron-up-small" size={14} color="var(--color-semantic-label-assistive)" aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />
         )}
       </button>
     </div>

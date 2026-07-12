@@ -1,10 +1,18 @@
 import React from 'react';
 import { CanvasEditorShellEditorToolbarHistoryToolbarCard as CanvasEditorShellEditorToolbarHistoryToolbarCardStory } from './RoboticsAndViz.shared.jsx';
 import { BasicShellExample, CanvasEditorShellMobileExample, ContextDrawerExample, WorkspaceRegionsExample } from './EditorShell.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Editor/Canvas Shell',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-robotics-editor-canvas-shell--basic',
+      eyebrow: 'Robotics / Canvas Shell',
+      title: '캔버스 셸은 문서 명령과 편집 영역의 읽기 순서를 안정적으로 묶습니다',
+      description:
+        '계층·도구·뷰포트·속성 패널이 함께 작동하는 로보틱스 편집 화면을 구성할 때 적합합니다. 단일 캔버스나 읽기 전용 뷰어에는 전체 셸 대신 필요한 Viewer 또는 개별 패널만 사용하세요.',
+    },
     docs: {
       description: {
         component:
@@ -17,22 +25,34 @@ const meta = {
 export default meta;
 
 export const Basic = {
-  name: '기본 셸',
+  name: '개요',
+  parameters: storyDescription(
+    '문서 명령·도구·레이어·뷰포트·속성 패널이 배치된 기본 편집 셸입니다. 운영자의 시선과 키보드 이동이 문서 수준 명령에서 작업 영역과 선택 정보 순으로 이어지는지 확인하세요.',
+  ),
   render: () => <BasicShellExample />,
 };
 
 export const WorkspaceRegions = {
-  name: '통합 편집 워크스페이스',
+  name: '시나리오 · 통합 편집 작업공간',
+  parameters: storyDescription(
+    '여러 편집 영역을 동시에 사용하는 넓은 워크스페이스 상황입니다. 좌우 패널과 중앙 캔버스가 같은 작업 단위로 읽히고 각 영역의 크기 조절 경계가 분명한지 확인하세요.',
+  ),
   render: () => <WorkspaceRegionsExample />,
 };
 
 export const ContextDrawer = {
-  name: '뷰포트 오버레이 인스펙터',
+  name: '시나리오 · 화면 위 속성 패널',
+  parameters: storyDescription(
+    '선택 객체의 세부 정보를 중앙 뷰포트 위 임시 패널로 확인하는 상황입니다. 오버레이가 장면 맥락을 과도하게 가리지 않고 닫은 뒤 포커스가 안정적으로 복귀하는지 확인하세요.',
+  ),
   render: () => <ContextDrawerExample />,
 };
 
 export const MobileActiveRegion = {
-  name: '좁은 화면 영역 전환',
+  name: '반응형 · 좁은 화면 · 영역 전환',
+  parameters: storyDescription(
+    '390px 폭에서 캔버스와 보조 영역을 한 번에 하나씩 전환하는 상황입니다. 활성 영역이 명확하고 숨겨진 패널이 키보드 순서나 가로 overflow에 남지 않는지 확인하세요.',
+  ),
   render: () => {
     const [region, setRegion] = React.useState('canvas');
     return (

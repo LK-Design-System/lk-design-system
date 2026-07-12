@@ -20,10 +20,10 @@ const pairs = [
   ['badge negative', '--component-badge-negative-fg', '--component-badge-negative-bg', 4.5],
   ['focus indicator on page', '--color-semantic-focus-indicator', '--color-semantic-background-normal-normal', 3],
   ['focus indicator on elevated', '--color-semantic-focus-indicator', '--color-semantic-background-elevated-normal', 3],
-  ['callout info icon', '--component-callout-info-icon', '--component-callout-info-bg', 3],
-  ['callout positive icon', '--component-callout-positive-icon', '--component-callout-positive-bg', 3],
-  ['callout cautionary icon', '--component-callout-cautionary-icon', '--component-callout-cautionary-bg', 3],
-  ['callout negative icon', '--component-callout-negative-icon', '--component-callout-negative-bg', 3],
+  ['status info text on surface', '--color-semantic-status-info-text', '--color-semantic-status-info-surface', 3],
+  ['status positive text on surface', '--color-semantic-status-positive-text', '--color-semantic-status-positive-surface', 3],
+  ['status cautionary text on surface', '--color-semantic-status-cautionary-text', '--color-semantic-status-cautionary-surface', 3],
+  ['status negative text on surface', '--color-semantic-status-negative-text', '--color-semantic-status-negative-surface', 3],
 ];
 
 function parseColor(value) {

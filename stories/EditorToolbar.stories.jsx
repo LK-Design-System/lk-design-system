@@ -1,15 +1,23 @@
 import React from 'react';
 import { EditorToolbar } from '../src/index.js';
 import { EditorStoryFrame, editorTools } from './EditorShell.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Editor/Editor Toolbar',
   component: EditorToolbar,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-robotics-editor-editor-toolbar--vertical',
+      eyebrow: 'Robotics / Editor Toolbar',
+      title: '에디터 툴바는 현재 캔버스 편집 모드를 하나만 선택하게 합니다',
+      description:
+        '선택·영역·확대·이동처럼 서로 배타적인 편집 모드를 전환할 때 적합합니다. 저장이나 삭제 같은 즉시 실행 명령에는 Editor Toolbar 대신 Command Bar 또는 Button을 사용하세요.',
+    },
     docs: {
       description: {
         component:
-          'EditorToolbar는 캔버스 편집 모드 중 하나를 선택하는 32px 단일 선택 도구 그룹입니다. roving Tab stop, 방향키, Home/End와 ARIA 단축키 선언을 지원하며, 외곽 rail surface와 divider는 CanvasEditorShell이 소유합니다.',
+          'EditorToolbar는 캔버스 편집 모드 중 하나를 선택하는 32px 단일 선택 도구 그룹입니다. roving Tab stop, 방향키, Home/End와 ARIA 단축키 선언을 지원하며, 외곽 rail surface와 divider는 상위 편집 셸이 소유합니다.',
       },
     },
   },
@@ -77,13 +85,16 @@ function waitForRender() {
 }
 
 export const Vertical = {
-  name: '세로 도구 레일',
+  name: '개요',
+  parameters: storyDescription(
+    '캔버스 왼쪽에 세로 방향의 단일 선택 편집 도구를 배치한 기본 상황입니다. 선택 모드와 roving Tab stop이 일치하고 Home·End 키가 시각적 순서대로 이동하는지 확인하세요.',
+  ),
   render: () => <ToolbarExample uncontrolled initialValue="region" />,
   play: async ({ canvasElement }) => {
     const toolbar = canvasElement.querySelector('[data-testid="editor-toolbar"]');
     const items = Array.from(toolbar.querySelectorAll('[data-lk-editor-toolbar-item]'));
     const rect = toolbar.getBoundingClientRect();
-    const expectedMainSize = items.length * 32 + (items.length - 1) * 2;
+    const expectedMainSize = items.length * 32 + (items.length - 1) * 4;
     if (toolbar.getAttribute('aria-orientation') !== 'vertical' || !toolbar.getAttribute('aria-label')) {
       throw new Error('EditorToolbar must expose its orientation and accessible name.');
     }
@@ -115,13 +126,16 @@ export const Vertical = {
 };
 
 export const Horizontal = {
-  name: '가로 도구 막대',
+  name: '시나리오 · 가로 도구 막대',
+  parameters: storyDescription(
+    '좁은 높이나 상단 배치에 맞춰 도구를 가로로 제공하는 상황입니다. 방향키 이동이 가로 축을 따르고 포커스 이동만으로 선택 모드가 바뀌지 않는지 확인하세요.',
+  ),
   render: () => <ToolbarExample orientation="horizontal" initialValue="region" />,
   play: async ({ canvasElement }) => {
     const toolbar = canvasElement.querySelector('[data-testid="editor-toolbar"]');
     const items = Array.from(toolbar.querySelectorAll('[data-lk-editor-toolbar-item]'));
     const rect = toolbar.getBoundingClientRect();
-    const expectedMainSize = items.length * 32 + (items.length - 1) * 2;
+    const expectedMainSize = items.length * 32 + (items.length - 1) * 4;
     if (Math.abs(rect.height - 32) > 1 || Math.abs(rect.width - expectedMainSize) > 1) {
       throw new Error('A horizontal EditorToolbar must keep its shared 32px control geometry and intrinsic length.');
     }
@@ -149,7 +163,10 @@ export const Horizontal = {
 };
 
 export const Disabled = {
-  name: '도구 전체 비활성',
+  name: '변형·상태 · 전체 비활성',
+  parameters: storyDescription(
+    '읽기 전용 또는 편집 잠금으로 모든 캔버스 도구를 사용할 수 없는 상황입니다. 비활성 이유가 그룹에 전달되고 모든 항목이 입력과 Tab 순서에서 제외되는지 확인하세요.',
+  ),
   render: () => <ToolbarExample disabled />,
   play: async ({ canvasElement }) => {
     const toolbar = canvasElement.querySelector('[data-testid="editor-toolbar"]');
@@ -172,7 +189,10 @@ export const Disabled = {
 };
 
 export const ItemDisabled = {
-  name: '개별 도구 비활성 · 동적 순서',
+  name: '변형·상태 · 개별 비활성 · 동적 순서',
+  parameters: storyDescription(
+    '일부 편집 모드만 사용할 수 없고 도구 순서가 실행 중 바뀌는 상황입니다. 비활성 항목은 이유와 단축키를 유지하며 선택되지 않고, 재정렬 뒤에도 포커스가 같은 도구를 따라가는지 확인하세요.',
+  ),
   render: () => <ToolbarExample itemDisabled dynamicOrder />,
   play: async ({ canvasElement }) => {
     const toolbar = canvasElement.querySelector('[data-testid="editor-toolbar"]');

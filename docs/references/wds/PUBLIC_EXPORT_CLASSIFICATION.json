@@ -19,13 +19,22 @@
       "layer": "lk-theme-override",
       "classification": "theme-override",
       "storyEvidence": [
-        "stories/Brand.stories.jsx",
+        "stories/Brand.stories.jsx"
+      ],
+      "exports": [
+        "Lockup"
+      ]
+    },
+    {
+      "name": "Platform brand marks",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": [
         "stories/BrandPlatform.stories.jsx"
       ],
       "exports": [
         "BRAND_LOGO_NAMES",
-        "BrandLogo",
-        "Lockup"
+        "BrandLogo"
       ]
     },
     {
@@ -46,16 +55,17 @@
       "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
       "storyEvidence": [
         "stories/ActionArea.stories.jsx",
+        "stories/ActionIconButton.stories.jsx",
+        "stories/ActionTextButton.stories.jsx",
+        "stories/ActionToggleIcon.stories.jsx",
         "stories/Button.stories.jsx",
-        "stories/ButtonsExtended.stories.jsx"
+        "stories/ActionFab.stories.jsx"
       ],
       "exports": [
         "ActionArea",
         "Button",
-        "ButtonGroup",
         "Fab",
         "IconButton",
-        "SplitButton",
         "TextButton",
         "ToggleIcon"
       ]
@@ -65,14 +75,19 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/ActionButtonGroup.stories.jsx",
+        "stories/ActionSplitButton.stories.jsx",
         "stories/ActionSpeedDial.stories.jsx",
-        "stories/ActionUtility.stories.jsx",
+        "stories/ActionCopyButton.stories.jsx",
+        "stories/ActionLink.stories.jsx",
         "stories/SocialButtons.stories.jsx"
       ],
       "exports": [
+        "ButtonGroup",
         "CopyButton",
         "Link",
         "SpeedDial",
+        "SplitButton",
         "SocialButton"
       ]
     },
@@ -120,13 +135,16 @@
       "wdsFamily": "Card/Card, Card/List Card",
       "storyEvidence": [
         "stories/Content.stories.jsx",
-        "stories/ContentAnnotations.stories.jsx",
+        "stories/ContentTooltip.stories.jsx",
+        "stories/ContentBubble.stories.jsx",
+        "stories/ActionBookmark.stories.jsx",
         "stories/ContentBadgesAnnotations.stories.jsx",
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentListsMedia.stories.jsx",
         "stories/ContentMedia.stories.jsx",
         "stories/ContentStepList.stories.jsx",
-        "stories/ContentTimeline.stories.jsx"
+        "stories/ContentTimeline.stories.jsx",
+        "stories/StatusStatusBadge.stories.jsx"
       ],
       "exports": [
         "Accordion",
@@ -173,13 +191,23 @@
         "stories/ContentMedia.stories.jsx",
         "stories/DataAnnotatedImage.stories.jsx",
         "stories/DataCalendar.stories.jsx",
+        "stories/DataChartFrame.stories.jsx",
         "stories/DataDescriptionList.stories.jsx",
-        "stories/DataDisplay.stories.jsx",
+        "stories/DataBarChart.stories.jsx",
+        "stories/DataDonutChart.stories.jsx",
+        "stories/DataSparkline.stories.jsx",
+        "stories/DataFilterBar.stories.jsx",
         "stories/DataFileBrowser.stories.jsx",
         "stories/DataLegend.stories.jsx",
         "stories/DataLineChart.stories.jsx",
-        "stories/DataTablesHierarchy.stories.jsx",
+        "stories/DataExportAction.stories.jsx",
+        "stories/DataRefreshControl.stories.jsx",
+        "stories/DataResourceState.stories.jsx",
+        "stories/DataGrid.stories.jsx",
+        "stories/DataTable.stories.jsx",
         "stories/DataToolbar.stories.jsx",
+        "stories/DataSavedView.stories.jsx",
+        "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
         "stories/DataTreePicker.stories.jsx"
       ],
@@ -187,18 +215,25 @@
         "AnnotatedImage",
         "BarChart",
         "Calendar",
+        "ChartFrame",
         "Carousel",
         "DataGrid",
         "DataToolbar",
+        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
+        "FilterBar",
         "Legend",
         "LineChart",
+        "ResourceState",
+        "RefreshControl",
+        "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
-        "TreePicker"
+        "TreePicker",
+        "VisibilityManager"
       ]
     },
     {
@@ -239,8 +274,13 @@
       "wdsFamily": "Textinput/Textfield",
       "storyEvidence": [
         "stories/FormSearchAutocomplete.stories.jsx",
-        "stories/FormSelectionControls.stories.jsx",
-        "stories/FormsFull.stories.jsx"
+        "stories/FormSelect.stories.jsx",
+        "stories/FormCheckbox.stories.jsx",
+        "stories/FormRadio.stories.jsx",
+        "stories/FormInput.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx",
+        "stories/FormInputGroup.stories.jsx"
       ],
       "exports": [
         "AutoComplete",
@@ -261,19 +301,25 @@
       "classification": "product-extension",
       "storyEvidence": [
         "stories/FormAdvancedInputs.stories.jsx",
+        "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
+        "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
         "stories/FormSearchableMultiSelect.stories.jsx",
         "stories/FormSecretField.stories.jsx",
-        "stories/FormSelectionControls.stories.jsx",
+        "stories/FormTimePicker.stories.jsx",
         "stories/FormValidationSummary.stories.jsx",
+        "stories/SelectionColorSwatch.stories.jsx",
         "stories/SelectionIconPicker.stories.jsx",
+        "stories/SelectionToggleButton.stories.jsx",
+        "stories/SelectionVirtualKeypad.stories.jsx",
         "stories/SelectionWheelPicker.stories.jsx"
       ],
       "exports": [
         "ColorSwatch",
         "DatePicker",
+        "DateRangeField",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -283,7 +329,9 @@
         "SearchableMultiSelect",
         "SecretField",
         "TimePicker",
+        "ToggleButton",
         "ValidationSummary",
+        "VirtualKeypad",
         "WheelPicker"
       ]
     },
@@ -293,9 +341,11 @@
       "classification": "direct-wds",
       "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
       "storyEvidence": [
-        "stories/FormSelectionControls.stories.jsx",
+        "stories/FormSelect.stories.jsx",
+        "stories/FormCheckbox.stories.jsx",
+        "stories/FormRadio.stories.jsx",
         "stories/SelectionChips.stories.jsx",
-        "stories/SelectionSegmentedToggle.stories.jsx",
+        "stories/SelectionSegmentedControl.stories.jsx",
         "stories/SelectionStepper.stories.jsx",
         "stories/SelectionSwitch.stories.jsx"
       ],
@@ -310,8 +360,7 @@
         "SegmentedControl",
         "Slider",
         "Stepper",
-        "Switch",
-        "ToggleButton"
+        "Switch"
       ]
     },
     {
@@ -333,6 +382,7 @@
       "wdsFamily": "Layout/Essential, Divider",
       "storyEvidence": [
         "stories/Layout.stories.jsx",
+        "stories/LayoutDivider.stories.jsx",
         "stories/LayoutEssentials.stories.jsx",
         "stories/LayoutGrid.stories.jsx",
         "stories/LayoutScrollAccess.stories.jsx",
@@ -361,12 +411,18 @@
       "layer": "lk-product-extension",
       "classification": "product-extension",
       "storyEvidence": [
+        "stories/LayoutDashboardGrid.stories.jsx",
+        "stories/LayoutDashboardShell.stories.jsx",
         "stories/LayoutDockPanel.stories.jsx",
-        "stories/LayoutPageHeader.stories.jsx"
+        "stories/LayoutPageHeader.stories.jsx",
+        "stories/LayoutPrimaryDetail.stories.jsx"
       ],
       "exports": [
+        "DashboardGrid",
+        "DashboardShell",
         "DockPanel",
-        "PageHeader"
+        "PageHeader",
+        "PrimaryDetail"
       ]
     },
     {
@@ -375,29 +431,41 @@
       "classification": "direct-wds",
       "wdsFamily": "Navigation/Category, Tab, Page Indicator, Pagination",
       "storyEvidence": [
-        "stories/Navigation.stories.jsx",
-        "stories/NavigationBreadcrumb.stories.jsx",
+        "stories/NavigationCategory.stories.jsx",
         "stories/NavigationCompact.stories.jsx",
+        "stories/NavigationPageIndicator.stories.jsx",
+        "stories/NavigationTabs.stories.jsx"
+      ],
+      "exports": [
+        "Category",
+        "PageIndicator",
+        "Pagination",
+        "Tabs"
+      ]
+    },
+    {
+      "name": "Navigation product extension",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": [
+        "stories/Navigation.stories.jsx",
+        "stories/NavigationAdaptive.stories.jsx",
+        "stories/NavigationBreadcrumb.stories.jsx",
         "stories/NavigationFooter.stories.jsx",
-        "stories/NavigationFull.stories.jsx",
+        "stories/NavigationAnchor.stories.jsx",
+        "stories/NavigationSideNav.stories.jsx",
         "stories/NavigationSteps.stories.jsx",
-        "stories/NavigationTabs.stories.jsx",
         "stories/NavigationUserMenu.stories.jsx",
-        "stories/OverlayMenu.stories.jsx"
+        "stories/NavigationWizard.stories.jsx"
       ],
       "exports": [
         "Anchor",
         "BottomNav",
         "Breadcrumb",
-        "Category",
         "Footer",
-        "Menubar",
         "NavRail",
-        "PageIndicator",
-        "Pagination",
         "SideNav",
         "Steps",
-        "Tabs",
         "Toolbar",
         "TopBar",
         "TopBarNavItem",
@@ -406,28 +474,21 @@
       ]
     },
     {
-      "name": "Navigation product extension",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
-      "storyEvidence": [
-        "stories/LayoutPageHeader.stories.jsx"
-      ],
-      "exports": [
-        "FloorSelector"
-      ]
-    },
-    {
       "name": "WDS overlays and presentation",
       "layer": "wds-core",
       "classification": "wds-adjacent",
       "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
       "storyEvidence": [
-        "stories/ContentAnnotations.stories.jsx",
-        "stories/OverlayAnchored.stories.jsx",
+        "stories/ContentTooltip.stories.jsx",
+        "stories/ContentBubble.stories.jsx",
+        "stories/ActionBookmark.stories.jsx",
+        "stories/OverlayPopover.stories.jsx",
+        "stories/OverlayHoverCard.stories.jsx",
+        "stories/OverlayDropdownMenu.stories.jsx",
         "stories/OverlayConfirmAlert.stories.jsx",
         "stories/OverlayConfirmDialog.stories.jsx",
         "stories/OverlayDimmer.stories.jsx",
-        "stories/OverlayMenu.stories.jsx",
+        "stories/NavigationMenubar.stories.jsx",
         "stories/OverlayModal.stories.jsx",
         "stories/OverlaySnackbar.stories.jsx",
         "stories/OverlayToast.stories.jsx"
@@ -438,6 +499,7 @@
         "Dimmer",
         "DropdownMenu",
         "HoverCard",
+        "Menubar",
         "Modal",
         "Popover",
         "Snackbar",
@@ -451,7 +513,8 @@
       "classification": "product-extension",
       "storyEvidence": [
         "stories/OverlayCommandPalette.stories.jsx",
-        "stories/OverlayDrawerSheet.stories.jsx",
+        "stories/OverlayDrawer.stories.jsx",
+        "stories/OverlaySheet.stories.jsx",
         "stories/OverlayLightbox.stories.jsx"
       ],
       "exports": [
@@ -469,8 +532,10 @@
       "storyEvidence": [
         "stories/StatusEmpty.stories.jsx",
         "stories/StatusFeedback.stories.jsx",
-        "stories/StatusLoading.stories.jsx",
-        "stories/StatusProgress.stories.jsx"
+        "stories/StatusSkeleton.stories.jsx",
+        "stories/StatusSpinner.stories.jsx",
+        "stories/ProductProgress.stories.jsx",
+        "stories/ProductMeter.stories.jsx"
       ],
       "exports": [
         "Banner",
@@ -481,6 +546,42 @@
         "ProgressBar",
         "Skeleton",
         "Spinner"
+      ]
+    },
+    {
+      "name": "Communication product extension",
+      "layer": "lk-product-extension",
+      "classification": "product-extension",
+      "storyEvidence": [
+        "stories/CommunicationMessage.stories.jsx",
+        "stories/CommunicationMessageComposer.stories.jsx",
+        "stories/CommunicationMessageFeed.stories.jsx"
+      ],
+      "exports": [
+        "ConversationMessage",
+        "MessageComposer",
+        "MessageFeed"
+      ]
+    },
+    {
+      "name": "Robotics navigation semantics",
+      "layer": "lk-robotics-extension",
+      "classification": "robotics-extension",
+      "wdsFamily": "Robotics navigation extension",
+      "storyEvidence": [
+        "stories/RoboticsNavigationFacilities.stories.jsx",
+        "stories/RoboticsNavigationLane.stories.jsx",
+        "stories/RoboticsNavigationRegions.stories.jsx",
+        "stories/RoboticsNavigationRouteTrajectory.stories.jsx",
+        "stories/RoboticsNavigationWaypoint.stories.jsx"
+      ],
+      "exports": [
+        "FacilityTransition",
+        "LaneOverlay",
+        "RouteOverlay",
+        "SpatialRegion",
+        "TrajectoryOverlay",
+        "WaypointMarker"
       ]
     },
     {
@@ -495,6 +596,7 @@
         "stories/EditorShell.stories.jsx",
         "stories/EditorToolbar.stories.jsx",
         "stories/EditorViewportStatusBar.stories.jsx",
+        "stories/RoboticsAssetsIcons.stories.jsx",
         "stories/RoboticsManualControlSession.stories.jsx",
         "stories/RoboticsAndViz.stories.jsx",
         "stories/RoboticsBatteryGauge.stories.jsx",
@@ -504,9 +606,11 @@
         "stories/RoboticsJoystick.stories.jsx",
         "stories/RoboticsTopicTree.stories.jsx",
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
-        "stories/ViewerTelemetry.stories.jsx",
+        "stories/RoboticsTelemetryGauge.stories.jsx",
+        "stories/RoboticsTelemetryValue.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
@@ -518,6 +622,7 @@
         "DirectionalPad",
         "EditorToolbar",
         "EquipmentStatusCard",
+        "FloorSelector",
         "HistoryToolbar",
         "Joystick",
         "LayerPanel",

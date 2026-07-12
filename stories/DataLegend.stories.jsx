@@ -1,8 +1,16 @@
 import { Legend } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Data/Legend',
+  title: 'LDS Product/Data/Visualization/Legend',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-data-visualization-legend--legends',
+      eyebrow: 'Product / Data / Legend',
+      title: '사용자가 색·선·도형이 데이터에서 뜻하는 바를 확인합니다',
+      description:
+        '맵·차트·다이어그램의 시각 인코딩을 명시적인 라벨과 값에 연결할 때 적합합니다. 항목 자체에 충분한 직접 라벨이 있거나 단순 상태 하나만 설명할 때는 별도 Legend 대신 인라인 라벨을 사용하세요.',
+    },
     docs: {
       description: {
         component: '맵·차트·다이어그램의 색상, 선, 레이어 의미를 라벨과 짝지어 설명하는 Legend 패턴입니다.',
@@ -14,7 +22,10 @@ const meta = {
 export default meta;
 
 export const Legends = {
-  name: '범례',
+  name: '개요',
+  parameters: storyDescription(
+    '지도 레이어와 설비 상태의 색·선·도형·값을 가로 및 세로 범례로 설명하는 상황입니다. 각 표식이 라벨과 명확히 짝지어지고 비활성·점선 의미가 색 외 단서로도 구분되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: 'min(560px, 100%)' }}>
       <section style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -53,7 +64,10 @@ export const Legends = {
 };
 
 export const CompactChartLegend = {
-  name: '컴팩트 차트 범례',
+  name: '반응형 · 좁은 차트의 조밀한 배치',
+  parameters: storyDescription(
+    '작은 차트 주변에 실측·목표·주의 series를 압축해 표시하는 상황입니다. 작은 크기에서도 선 종류와 라벨이 구분되고 차트와 같은 순서를 유지하는지 확인하세요.',
+  ),
   render: () => (
     <Legend
       aria-label="컴팩트 차트 범례"
@@ -68,6 +82,9 @@ export const CompactChartLegend = {
 };
 
 export const Empty = {
-  name: '빈 범례',
+  name: '변형·상태 · 항목 없음',
+  parameters: storyDescription(
+    '표시할 series나 레이어가 없어 범례 항목이 비어 있는 상황입니다. 빈 공간만 남기지 않고 현재 설명할 항목이 없다는 메시지가 제공되는지 확인하세요.',
+  ),
   render: () => <Legend emptyLabel="표시할 범례가 없습니다" />,
 };

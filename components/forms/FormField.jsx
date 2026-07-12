@@ -1,4 +1,5 @@
 import React from 'react';
+import { FieldLabel, FieldMessage } from './field-shared.js';
 
 /**
  * LK ROBOTICS — FormField
@@ -6,18 +7,12 @@ import React from 'react';
  * (children), and a helper or error line. Error state tints the message red.
  */
 export function FormField({ label, required = false, helper, error, htmlFor, children, style, ...rest }) {
+  const message = error ?? helper;
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-      {label != null && (
-        <label htmlFor={htmlFor} style={{ fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>
-          {label}
-          {required && <span style={{ color: 'var(--color-semantic-status-negative-text)', marginLeft: 3 }}>*</span>}
-        </label>
-      )}
+    <div {...rest} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', minWidth: 0, fontFamily: 'var(--font-sans)', ...style }}>
+      <FieldLabel htmlFor={htmlFor} label={label} required={required} />
       {children}
-      {(error != null || helper != null) && (
-        <span style={{ fontSize: 'var(--label2-size)', lineHeight: 1.5, color: error != null ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-neutral)' }}>{error != null ? error : helper}</span>
-      )}
+      <FieldMessage message={message} error={error} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ConnectionBadge } from './ConnectionBadge';
+import { Icon } from '../icon/Icon.jsx';
 
 // Tone drives non-text marks only (direction arrow + status dot); the ringLabel
 // text stays on --color-semantic-label-neutral, so these carry the semantic hue, not AA-text duty.
@@ -16,7 +17,7 @@ function useDimKeyframes() {
     if (typeof document === 'undefined' || document.getElementById('lk-equip-dim-kf')) return;
     const el = document.createElement('style');
     el.id = 'lk-equip-dim-kf';
-    el.textContent = '@keyframes lk-equip-dim{0%,100%{opacity:1}50%{opacity:.4}}';
+    el.textContent = '@keyframes lk-equip-dim{0%,100%{opacity:1}50%{opacity:.4}}@media (prefers-reduced-motion: reduce){[data-lds-equipment-motion]{animation:none!important}}';
     document.head.appendChild(el);
   }, []);
 }
@@ -71,10 +72,8 @@ export function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone 
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0, whiteSpace: 'nowrap',
           fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
           {moving ? (
-            <span role="img" aria-label={direction === 'up' ? '상승 중' : '하강 중'} style={{ display: 'inline-flex', color: c, animation: 'lk-equip-dim 1.5s var(--ease-in-out) infinite' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-                {direction === 'up' ? <path d="M12 19V5M5 12l7-7 7 7" /> : <path d="M12 5v14M19 12l-7 7-7-7" />}
-              </svg>
+            <span data-lds-equipment-motion="" role="img" aria-label={direction === 'up' ? '상승 중' : '하강 중'} style={{ display: 'inline-flex', color: c, animation: 'lk-equip-dim 1.5s var(--ease-in-out) infinite' }}>
+              <Icon name={direction === 'up' ? 'arrow-up' : 'arrow-down'} size={14} aria-hidden="true" />
             </span>
           ) : connection != null ? (
             <ConnectionBadge status={connection} showLabel={false} size="sm" style={{ flexShrink: 0 }} />

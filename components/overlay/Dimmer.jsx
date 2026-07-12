@@ -13,11 +13,25 @@ export function Dimmer({ open = false, children, onClick, blur = false, style, .
       onClick={onClick}
       style={{
         position: 'absolute', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'var(--scrim-dark)', color: 'var(--color-semantic-inverse-label)', backdropFilter: blur ? 'blur(3px)' : 'none', borderRadius: 'inherit', ...style,
+        background: 'var(--component-dialog-scrim)', color: 'var(--color-semantic-inverse-label)', backdropFilter: blur ? 'blur(var(--component-dialog-scrim-blur))' : 'none', borderRadius: 'inherit', ...style,
       }}
       {...rest}
     >
-      {children}
+      <span
+        data-dimmer-content=""
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 'var(--space-2) var(--space-3)',
+          borderRadius: 'var(--radius-md)',
+          background: 'var(--color-semantic-inverse-background)',
+          color: 'var(--color-semantic-inverse-label)',
+          boxShadow: 'var(--shadow-sm)',
+        }}
+      >
+        {children}
+      </span>
     </div>
   );
 }

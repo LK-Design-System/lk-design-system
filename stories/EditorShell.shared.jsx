@@ -44,7 +44,7 @@ export const editorLayers = [
     id: 'guides',
     label: '가이드',
     count: 2,
-    tone: 'warning',
+    tone: 'cautionary',
   },
 ];
 
@@ -67,7 +67,7 @@ const OBJECTS = {
         title: '동작',
         fields: [
           { label: '유형', value: '속도 제한' },
-          { label: '최대 속도', value: 0.4, unit: 'm/s', tone: 'warning' },
+          { label: '최대 속도', value: 0.4, unit: 'm/s', tone: 'cautionary' },
         ],
       },
     ],

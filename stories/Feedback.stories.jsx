@@ -6,13 +6,21 @@ import {
   AvatarCard as AvatarCardStory,
   AvatarGroupCard as AvatarGroupCardStory,
 } from './Feedback.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Feedback/Avatar',
+  title: 'LDS Core/Components/Content/Avatar',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-components-content-avatar--avatar-patterns',
+      eyebrow: 'Core / Content / Avatar',
+      title: '사람과 조직의 정체성을 작은 시각 표식으로 구분합니다',
+      description:
+        '작성자, 담당자, 참여자처럼 동일한 종류의 주체를 빠르게 식별해야 하는 목록과 협업 화면에 적합합니다. 대상의 이름이 핵심이면 텍스트 레이블을 함께 제공하고, 상태나 범주를 나타낼 때는 Avatar 대신 Status Badge나 Content Badge를 사용하세요.',
+    },
     docs: {
       description: {
-        component: '플레이스홀더 리소스 패리티를 포함한 Avatar와 AvatarGroup 패턴입니다.',
+        component: '플레이스홀더 리소스 패리티를 포함한 Avatar와 AvatarGroup 패턴입니다. 로컬 WDS 스냅샷에서 Avatar 패밀리는 4 Content 섹션 소속이라 Content 그룹에 둡니다(7 Feedback은 토스트·스낵바·알럿만 정의).',
       },
     },
   },
@@ -133,7 +141,10 @@ function AvatarResourceComparison() {
 }
 
 export const AvatarPatterns = {
-  name: '아바타',
+  name: '개요',
+  parameters: storyDescription(
+    '사람·회사·기관의 단일 아바타와 겹친 참여자 그룹을 다양한 크기와 상태로 표시하는 상황입니다. 플레이스홀더, 상호작용, 푸시 배지, 그룹 초과 인원이 정체성을 가리지 않고 접근 가능한 이름을 유지하는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 920 }}>
       <MatrixSection title="Person Avatar">

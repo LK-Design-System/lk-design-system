@@ -46,7 +46,6 @@
   --component-button-disabled-bg: var(--color-semantic-fill-normal);
   --component-button-disabled-fg: var(--color-semantic-label-assistive);
   --component-button-disabled-fg-outlined: var(--color-semantic-label-disable);
-  --component-button-disabled-border: var(--border-thin) solid transparent;
   --component-button-disabled-outlined-border: var(--border-thin) solid var(--color-semantic-line-normal-neutral);
   --component-button-text-hover-opacity: 0.9;
   --component-button-shadow-rest: var(--shadow-xs);
@@ -174,7 +173,7 @@
 
   /* ---- Dialog ------------------------------------------------------------ */
   --component-dialog-radius: var(--radius-3xl);
-  --component-dialog-scrim: var(--scrim-dark);
+  --component-dialog-scrim: var(--color-semantic-material-dimmer);
   --component-dialog-scrim-blur: 2px;
   --component-confirm-dialog-max-width: 26.25rem;
 

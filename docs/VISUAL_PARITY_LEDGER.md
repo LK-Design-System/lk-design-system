@@ -1,6 +1,6 @@
 # LK ROBOTICS Design System Visual Parity Ledger
 
-Updated: 2026-07-10
+Updated: 2026-07-12
 
 This ledger tracks parity between the WDS source and the current
 React/Storybook implementation. Parity is anchored to the accepted local `.fig`
@@ -13,12 +13,12 @@ parity gates.
 | Area | Source baseline | Current status |
 | --- | ---: | --- |
 | Runtime export gaps | 0 | No public export gap required by the WDS source |
-| React component entry exports | 181 | Public package component entries covered by checks |
-| Named public exports | 187 | Public package surface covered by type checks |
-| Storybook public stories | 231 | Component and pattern surfaces only |
+| React component entry exports | 202 | Public package component entries covered by checks |
+| Named public exports | 208 | Public package surface covered by type checks |
+| Storybook public stories | 397 | Component and pattern surfaces only |
 | Storybook hidden visual parity stories | 82 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 323 | Current implementation stories checked by the accessibility guard |
-| Accessibility checked implementation stories | 323 | Current implementation stories checked by accessibility guard |
+| Visual inventory React stories | 516 | Current implementation stories checked by the accessibility guard |
+| Accessibility checked implementation stories | 516 | Current implementation stories checked by accessibility guard |
 
 ## Parity source of truth
 

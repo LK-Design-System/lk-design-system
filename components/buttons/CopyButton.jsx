@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from './Button.jsx';
+import { Icon } from '../icon/Icon.jsx';
 
 /**
  * LK ROBOTICS — CopyButton
@@ -40,8 +41,8 @@ export function CopyButton({ value, children = '복사', copiedLabel = '복사�
       {...rest}
     >
       {copied
-        ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-        : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>}
+        ? <Icon name="check" size={16} aria-hidden="true" />
+        : <Icon name="copy" size={16} aria-hidden="true" />}
       {copied ? copiedLabel : children}
     </Button>
   );

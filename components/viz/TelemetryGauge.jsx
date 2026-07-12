@@ -1,5 +1,12 @@
 import React from 'react';
 import { StatusBadge } from '../content/StatusBadge.jsx';
+import {
+  formatValueWithUnit,
+  getUnitSeparator,
+  isAttachedUnit,
+  normalizeUnit,
+  normalizeValueText,
+} from '../internal/unit-format.js';
 
 const TONE = {
   signal: 'var(--color-semantic-status-info-text)',
@@ -86,15 +93,18 @@ export function TelemetryGauge({
     ? statusLabel
     : (tone != null || inferredTone != null ? STATUS_LABEL[resolvedTone] : null);
 
+  const normalizedUnit = normalizeUnit(unit);
+  const unitSeparator = getUnitSeparator(normalizedUnit);
+  const attachedUnit = isAttachedUnit(normalizedUnit);
   const formattedNumber = formatValue(resolvedValue, precision);
-  const renderedValue = typeof formatter === 'function'
-    ? formatter(resolvedValue, { min: resolvedMin, max: resolvedMax, unit })
+  const formatterResult = typeof formatter === 'function'
+    ? formatter(resolvedValue, { min: resolvedMin, max: resolvedMax, unit: normalizedUnit })
     : formattedNumber;
-  const accessibleFormattedNumber = typeof renderedValue === 'string' || typeof renderedValue === 'number'
-    ? String(renderedValue)
+  const renderedValue = typeof formatterResult === 'string' || typeof formatterResult === 'number'
+    ? normalizeValueText(formatterResult)
     : formattedNumber;
-  const baseValueText = `${accessibleFormattedNumber}${unit ? ` ${unit}` : ''}`;
-  const resolvedValueText = valueText ?? (
+  const baseValueText = formatValueWithUnit(renderedValue, normalizedUnit);
+  const resolvedValueText = valueText != null ? normalizeValueText(valueText) : (
     typeof resolvedStatusLabel === 'string'
       ? `${baseValueText}, ${resolvedStatusLabel}`
       : baseValueText
@@ -163,15 +173,19 @@ export function TelemetryGauge({
             style={{ transition: 'stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)' }}
           />
         </svg>
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: 0 }}>
-          <span style={{ maxWidth: '82%', color: 'var(--color-semantic-label-strong)', fontSize: size * 0.24, lineHeight: 1, fontWeight: 'var(--fw-extra)', fontVariantNumeric: 'tabular-nums', overflowWrap: 'anywhere', textAlign: 'center' }}>
-            {renderedValue}
-          </span>
-          {unit && (
-            <span style={{ marginTop: 3, color: 'var(--color-semantic-label-neutral)', fontSize: Math.max(12, size * 0.11), lineHeight: 1.2, fontWeight: 'var(--fw-semibold)' }}>
-              {unit}
-            </span>
-          )}
+        <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', minWidth: 0 }}>
+          <strong
+            data-telemetry-gauge-lockup=""
+            data-unit-attachment={normalizedUnit === '' ? 'none' : attachedUnit ? 'attached' : 'spaced'}
+            style={{ display: 'inline-block', maxWidth: '82%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--color-semantic-label-strong)', fontSize: size * 0.24, lineHeight: 1, fontWeight: 'var(--fw-extra)', fontVariantNumeric: 'tabular-nums', textAlign: 'center' }}
+          >
+            <span>{renderedValue}</span>
+            {normalizedUnit !== '' && (
+              <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: Math.max(12, size * 0.11), lineHeight: 1.2, fontWeight: 'var(--fw-semibold)' }}>
+                {unitSeparator}{normalizedUnit}
+              </span>
+            )}
+          </strong>
         </div>
       </div>
 

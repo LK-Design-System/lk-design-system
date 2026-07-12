@@ -1,9 +1,17 @@
 import { Switch } from '../src/index.js';
 import { SwitchCard as SwitchCardStory } from './SelectionStatus.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Components/Selection and Input/Switch',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-components-selection-and-input-switch--switch-control',
+      eyebrow: 'Core / Switch',
+      title: '사용자가 즉시 적용되는 이진 설정을 켜거나 끕니다',
+      description:
+        '변경 즉시 시스템 상태나 설정이 적용되는 on/off 제어에 적합합니다. 제출 시 한꺼번에 적용되는 동의·선택에는 Checkbox를, 실행 명령에는 Button을 사용하세요.',
+    },
     docs: {
       description: {
         component: '이진 설정에 쓰는 Switch 패턴입니다.',
@@ -15,7 +23,10 @@ const meta = {
 export default meta;
 
 export const SwitchControl = {
-  name: '스위치',
+  name: '개요',
+  parameters: storyDescription(
+    '원격 제어와 야간 모드처럼 독립적인 이진 설정을 전환하는 상황입니다. 레이블과 현재 on/off 상태가 함께 읽히고 포인터·키보드 입력 뒤 즉시 갱신되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 420 }}>
       <Switch label="원격 제어 허용" defaultChecked />
@@ -70,6 +81,7 @@ export const SwitchInteractionMatrix = {
           <Switch label="on" defaultChecked />
           <Switch label="hovered" interaction="hovered" />
           <Switch label="focused" interaction="focused" />
+          <Switch label="read only" defaultChecked readOnly interaction="hovered" />
           <Switch label="disabled" disabled />
         </div>
       </section>

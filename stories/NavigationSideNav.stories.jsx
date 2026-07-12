@@ -1,6 +1,8 @@
 import React from 'react';
 import { userEvent } from 'storybook/test';
 import { Icon, Lockup, SideNav, UserMenu } from '../src/index.js';
+import { SideNavUserMenuCard as SideNavUserMenuCardStory } from './NavigationFull.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const navigationItems = [
   { heading: '운영' },
@@ -50,10 +52,17 @@ const meta = {
   ],
   parameters: {
     layout: 'fullscreen',
+    storyGuide: {
+      storyId: 'lds-product-navigation-side-nav--link-destinations',
+      eyebrow: 'Product / Side Nav',
+      title: '사이드 내비게이션은 제품의 계층과 지속적인 목적지를 소유합니다',
+      description:
+        '데스크톱 제품에서 그룹·하위 항목·배지·계정 진입점을 계속 노출할 때 적합합니다. 3~5개의 평면 목적지만 필요하면 Adaptive Navigation을, 페이지 안 이동이면 Anchor를 사용하세요.',
+    },
     docs: {
       description: {
         component:
-          'SideNav는 WDS 대응이 없는 LK Product Extension입니다. 데스크톱 앱 셸의 넓은 라벨형 탐색, 계층 disclosure, 선택·비활성 상태, 접힘 레일과 오버레이 동작을 제공합니다. 고정 아이콘 레일은 NavRail, 모바일 탐색은 BottomNav를 사용합니다.',
+          'SideNav는 WDS 대응이 없는 LK Product Extension입니다. 데스크톱 제품 셸의 계층·그룹·배지·계정 푸터와 오버레이 레일을 담당하며, 고정 아이콘 레일과 모바일 하단 내비게이션은 별도 Product Navigation 패턴으로 구분합니다.',
       },
     },
   },
@@ -143,8 +152,71 @@ function SideNavFixture() {
   );
 }
 
+const linkedNavigationItems = [
+  { heading: '목적지' },
+  { value: 'overview', label: '운영 개요', href: '#overview', icon: <Icon name="home" size={18} />, onClick: (event) => event.preventDefault() },
+  {
+    value: 'missions',
+    label: '미션',
+    icon: <Icon name="document" size={18} />,
+    children: [
+      { value: 'missions-live', label: '실행 중', href: '#missions-live', onClick: (event) => event.preventDefault() },
+      { value: 'missions-queued', label: '아주 긴 대기 작업 목적지와 원격 점검 상세 이름', href: '#missions-queued', onClick: (event) => event.preventDefault() },
+    ],
+  },
+  { value: 'disabled', label: '권한 없는 목적지', href: '#disabled', icon: <Icon name="setting" size={18} />, disabled: true },
+];
+
+function SideNavLinkFixture() {
+  const [value, setValue] = React.useState('overview');
+  return (
+    <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+      <SideNav
+        aria-label="링크 목적지 탐색"
+        items={linkedNavigationItems}
+        value={value}
+        onChange={setValue}
+        width={280}
+        style={{ height: 420 }}
+      />
+      <output data-testid="sidenav-linked-value" style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>선택: {value}</output>
+    </div>
+  );
+}
+
+export const LinkDestinations = {
+  name: '개요',
+  parameters: storyDescription(
+    '직접 이동하는 link, 하위 항목을 여는 disclosure, 사용할 수 없는 목적지를 함께 검증합니다. 각 항목의 의미와 키보드 도달 가능성이 DOM 역할과 일치하는지 확인하세요.',
+  ),
+  render: () => <SideNavLinkFixture />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('nav[aria-label="링크 목적지 탐색"]');
+    const overview = nav?.querySelector('a[href="#overview"]');
+    const group = nav?.querySelector('button[aria-expanded]');
+    const disabled = nav?.querySelector('a[aria-disabled="true"]');
+    if (!nav || !overview || !group || !disabled || disabled.hasAttribute('href') || disabled.tabIndex !== -1) {
+      throw new Error('SideNav must render leaf destinations as anchors, groups as disclosure buttons, and disabled links as non-navigable.');
+    }
+    await userEvent.click(group);
+    const queued = nav.querySelector('a[href="#missions-queued"]');
+    const queuedLabel = Array.from(queued?.querySelectorAll('span') ?? []).find((node) => node.textContent === '아주 긴 대기 작업 목적지와 원격 점검 상세 이름');
+    if (!queued || !queuedLabel || getComputedStyle(queuedLabel).textOverflow !== 'ellipsis' || queuedLabel.scrollWidth <= queuedLabel.clientWidth) {
+      throw new Error('Expanded linked children must preserve the long-label truncation contract.');
+    }
+    queued.focus();
+    await userEvent.keyboard('{Enter}');
+    if (!canvasElement.querySelector('[data-testid="sidenav-linked-value"]')?.textContent?.includes('missions-queued') || queued.getAttribute('aria-current') !== 'page') {
+      throw new Error('Keyboard link activation must update SideNav selection and aria-current.');
+    }
+  },
+};
+
 export const OverlayPeek = {
-  name: '오버레이 호버와 Escape 복귀',
+  name: '상호작용 · 겹침형 미리보기와 Escape 복귀',
+  parameters: storyDescription(
+    '접힌 레일이 hover와 focus에서 임시로 펼쳐지고 Escape 뒤 원래 폭과 초점으로 돌아오는 상황입니다. 본문을 밀지 않고 탐색 맥락을 보존하는지 확인하세요.',
+  ),
   render: () => <SideNavFixture />,
   play: async ({ canvasElement }) => {
     const fixture = canvasElement.querySelector('[data-testid="overlay-fixture"]');
@@ -231,4 +303,10 @@ export const OverlayPeek = {
       throw new Error('Collapsing an overlay must keep focus on a persistent footer action.');
     }
   },
+};
+
+export const SideNavUserMenuCard = {
+  ...SideNavUserMenuCardStory,
+  name: 'SideNav and UserMenu card parity',
+  tags: ['!dev', 'visual-parity'],
 };

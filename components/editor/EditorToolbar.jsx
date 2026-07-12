@@ -66,7 +66,7 @@ export function EditorToolbar({
       data-orientation={orientation}
       onKeyDown={handleKeyDown}
       onFocusCapture={handleFocusCapture}
-      style={{ display: 'inline-flex', width: 'fit-content', maxWidth: '100%', boxSizing: 'border-box', flexDirection: orientation === 'vertical' ? 'column' : 'row', gap: 2, ...style }}
+      style={{ display: 'inline-flex', width: 'fit-content', maxWidth: '100%', boxSizing: 'border-box', flexDirection: orientation === 'vertical' ? 'column' : 'row', gap: 'var(--space-1)', ...style }}
     >
       <style>{`
         .lk-editor-toolbar__button {

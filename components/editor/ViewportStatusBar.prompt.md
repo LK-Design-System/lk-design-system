@@ -17,6 +17,8 @@
 - `priority="high"` items render first and resist shrinking; `low` items render last and yield first. Source order is preserved within each priority tier.
 - The bar never wraps. It uses spacing instead of independent divider nodes, preventing orphaned separators when space contracts.
 - Use `mono` for coordinates, camera values, and frequently changing numeric telemetry. Toned values always include a visible semantic label; customize it with `toneLabel`/`messageToneLabel`.
+- New code uses the system status vocabulary `signal / positive / cautionary / negative`. `warning` and `danger` remain compatibility aliases only, so Editor/Viewer status surfaces do not invent a second tone language.
+- Item `value` is `string | number` and `unit` is a string; surrounding whitespace is normalized. Value/unit DOM text follows `TelemetryValue`: `%`, `‰`, and plane-angle `°` attach to the number, while SI·compound units and `°C`/`°F` keep one literal space. Arbitrary ReactNode readouts belong in the deprecated trailing `children` escape and must own their accessible text.
 - Keep this bar passive. History, save, reset, viewport controls, and destructive actions belong in their respective command surfaces. `children` remains only as a deprecated passive-status compatibility slot.
 
 ## Research basis

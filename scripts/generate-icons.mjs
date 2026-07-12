@@ -296,12 +296,13 @@ function buildManifest(entries, copiedFiles, rasterFiles) {
   };
 }
 
-await mkdir(assetsRoot, { recursive: true });
-await rm(assetsRoot, { recursive: true, force: true });
-await mkdir(assetsRoot, { recursive: true });
-
 const svgFiles = await collectFiles(sourceRoot, (file) => file.toLowerCase().endsWith('.svg'));
 const rasterSourceFiles = await collectFiles(sourceRoot, (file) => /\.(png|jpg|jpeg|webp)$/i.test(file));
+
+// Resolve and read the source inventory before replacing generated output. A
+// missing or unreadable source must leave the existing icon package intact.
+await rm(assetsRoot, { recursive: true, force: true });
+await mkdir(assetsRoot, { recursive: true });
 const usedNames = new Set();
 const importedEntries = [];
 const copiedSvgFiles = [];

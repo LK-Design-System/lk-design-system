@@ -1,12 +1,23 @@
+import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
+import { Alert, Button } from '../src/index.js';
 import {
   AlertCard as AlertCardStory,
   AlertOpen as AlertOpenStory,
   AlertToastCard as AlertToastCardStory,
 } from './Overlay.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Overlay/Confirm Alert',
+  title: 'LDS Core/Components/Overlay/Alert',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-components-overlay-alert--alert-open',
+      eyebrow: 'Core / Overlay',
+      title: 'Alert는 즉시 확인해야 하는 짧고 중요한 결정을 흐름 위에 제시합니다',
+      description:
+        '진행을 멈추고 경고나 간단한 선택에 응답해야만 다음 단계로 갈 수 있을 때 적합합니다. 긴 설명이나 입력이 필요한 작업에는 Modal을, 흐름을 막지 않는 완료·오류 알림에는 Toast나 Snackbar를 사용하세요.',
+    },
     docs: {
       description: {
         component: 'Alert 플랫폼별 처리에 맞춘 모달 피드백 알럿 패턴입니다.',
@@ -75,10 +86,54 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
   );
 }
 
-export const AlertOpen = { ...AlertOpenStory, name: 'Alert 열림' };
+export const AlertOpen = {
+  ...AlertOpenStory,
+  name: '개요',
+  parameters: storyDescription(
+    '게시 전 선택 내용을 다시 확인하는 기본 Alert입니다. 제목과 본문, 취소·게시 동작의 우선순위가 즉시 읽히고 열린 동안 배경 흐름이 차단되는지 확인하세요.',
+  ),
+};
+
+function AlertKeyboardDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div style={{ minHeight: 260, display: 'grid', placeItems: 'center' }}>
+      <Button onClick={() => setOpen(true)}>Alert 열기</Button>
+      <Alert open={open} title="변경 사항을 게시할까요?" secondaryLabel="취소" primaryLabel="게시" onCancel={() => setOpen(false)} onConfirm={() => setOpen(false)} />
+    </div>
+  );
+}
+
+export const AlertKeyboardContract = {
+  name: '상호작용 · 키보드 탐색과 초점 복원',
+  parameters: storyDescription(
+    '키보드로 Alert를 열고 취소·게시 동작 사이를 순환한 뒤 Escape로 닫는 계약입니다. 첫 초점이 안전한 보조 동작에 놓이고 초점이 내부에서 순환하며 닫힌 뒤 호출 버튼으로 복원되는지 확인하세요.',
+  ),
+  render: () => <AlertKeyboardDemo />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const trigger = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === 'Alert 열기');
+    await userEvent.click(trigger);
+    await waitFor(() => {
+      if (ownerDocument.activeElement?.textContent?.trim() !== '취소') throw new Error('Alert must focus the secondary action first.');
+    });
+    await userEvent.tab();
+    if (ownerDocument.activeElement?.textContent?.trim() !== '게시') throw new Error('Alert Tab must move to the primary action.');
+    await userEvent.tab();
+    if (ownerDocument.activeElement?.textContent?.trim() !== '취소') throw new Error('Alert Tab must wrap inside the dialog.');
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (canvasElement.querySelector('[role="dialog"]')) throw new Error('Alert must close on Escape.');
+      if (ownerDocument.activeElement !== trigger) throw new Error('Alert must restore focus to its trigger.');
+    });
+  },
+};
 
 export const AlertPlatformPreview = {
-  name: 'Alert 플랫폼·변형 미리보기',
+  name: '변형·상태 · 플랫폼별 형태',
+  parameters: storyDescription(
+    'iOS·Android·Web 환경에서 negative·normal·assistive Alert의 밀도와 동작 강조를 비교합니다. 플랫폼 차이를 유지하면서도 제목·설명·주요 동작의 읽기 순서와 위험 정도가 일관되게 전달되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980 }}>
       <div style={{ padding: 24, borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-normal-alternative)' }}>

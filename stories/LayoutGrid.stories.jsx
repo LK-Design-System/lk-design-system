@@ -7,10 +7,18 @@ import {
   ColumnsColCard as ColumnsColCardStory,
   GridCard as GridCardStory,
 } from './Layout.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Core/Components/Layout/Grid and Columns',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-components-layout-grid-and-columns--grid-and-columns',
+      eyebrow: 'Core / Grid and Columns',
+      title: '콘텐츠 관계를 유지하며 화면 너비에 맞춰 열을 재배치합니다',
+      description:
+        '주요·보조 영역의 비율이나 반복 카드의 최소 너비가 여러 화면 구간에서 유지되어야 할 때 적합합니다. 단순한 한 방향 간격에는 Grid를 사용하지 말고 Stack 또는 Cluster를 사용하세요.',
+    },
     docs: {
       description: {
         component: '반응형 열 배치와 반복 카드 배치에 쓰는 Columns, Col, Grid 패턴입니다.',
@@ -39,7 +47,10 @@ const sampleTile = (label, tone = 'normal') => (
 );
 
 export const GridAndColumns = {
-  name: '그리드와 컬럼',
+  name: '개요',
+  parameters: storyDescription(
+    '주요 영역과 보조 영역을 12단 컬럼으로 나누고 반복 카드를 최소 너비 기반으로 배치하는 상황입니다. 브레이크포인트에서 열 비율이 의도대로 바뀌고 반복 항목이 넘침 없이 균등하게 재배치되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 960 }}>
       <Columns gap="var(--space-4)">
@@ -91,7 +102,10 @@ function ColumnGridPreview({ cols, caption }) {
 }
 
 export const GridGuidelines = {
-  name: '그리드 가이드',
+  name: '사용법 · 화면 구간별 열 구성',
+  parameters: storyDescription(
+    '모바일·태블릿·데스크톱의 컬럼 수, 컨테이너 너비, 마진, 거터, 간격 기준을 설계 전에 확인하는 상황입니다. 구현 값이 그리드 토큰과 일치하고 4px 간격 기준 및 20px 마진·거터가 각 화면 구간에 일관되게 적용되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 40, width: '100%', maxWidth: 1040, minWidth: 0 }}>
       <header style={{ display: 'grid', gap: 10 }}>

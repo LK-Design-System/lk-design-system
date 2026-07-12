@@ -1,11 +1,19 @@
 import React from 'react';
 import { Icon, Popover, Switch, ViewerToolbar, ViewerToolbarButton } from '../src/index.js';
 import { ViewerToolbarCard as ViewerToolbarCardStory } from './RoboticsAndViz.shared.jsx';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Viewer/Toolbar',
   component: ViewerToolbar,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-robotics-viewer-toolbar--viewer-toolbar-overview',
+      eyebrow: 'Robotics / Viewer Toolbar',
+      title: '뷰어 툴바는 현재 장면에만 영향을 주는 탐색 명령을 모읍니다',
+      description:
+        '운영자가 지도·3D·영상에서 확대·맞춤·레이어 토글 같은 로컬 도구를 사용할 때 적합합니다. 저장·내보내기처럼 문서 전체에 영향을 주는 명령에는 Viewer Toolbar 대신 Command Bar를 사용하세요.',
+    },
     docs: {
       description: {
         component: '지도·3D·영상 viewport에 귀속되는 command와 persistent toggle을 모으는 roving-focus icon toolbar입니다.',
@@ -57,6 +65,7 @@ function ToolbarInteractionFixture() {
   const [pathAvailable, setPathAvailable] = React.useState(true);
   const [zoomAvailable, setZoomAvailable] = React.useState(true);
   const [extraVisible, setExtraVisible] = React.useState(false);
+  const [ownershipProbeVisible, setOwnershipProbeVisible] = React.useState(false);
   const [lastAction, setLastAction] = React.useState('없음');
 
   return (
@@ -79,11 +88,27 @@ function ToolbarInteractionFixture() {
       </ViewerToolbar>
       <button data-testid="disable-zoom" type="button" hidden onClick={() => setZoomAvailable(false)}>확대 비활성</button>
       <button data-testid="disable-path" type="button" hidden onClick={() => setPathAvailable(false)}>경로 제어 비활성</button>
+      <button data-testid="mount-toolbar-ownership-probe" type="button" hidden onClick={() => setOwnershipProbeVisible(true)}>소유권 검증 마운트</button>
+      <button data-testid="unmount-toolbar-ownership-probe" type="button" hidden onClick={() => setOwnershipProbeVisible(false)}>소유권 검증 해제</button>
       <ViewerToolbar data-testid="vertical-toolbar" orientation="vertical" appearance="surface" label="세로 키보드 검증 툴바">
         <ViewerToolbarButton label="위로 이동" onClick={() => setLastAction('위로 이동')}><ToolbarIcon name="arrow-up" /></ViewerToolbarButton>
         <ViewerToolbarButton label="아래로 이동" onClick={() => setLastAction('아래로 이동')}><ToolbarIcon name="arrow-down" /></ViewerToolbarButton>
         <ViewerToolbarButton label="중앙으로 이동" onClick={() => setLastAction('중앙으로 이동')}><ToolbarIcon name="crosshair" /></ViewerToolbarButton>
       </ViewerToolbar>
+      {ownershipProbeVisible && (
+        <ViewerToolbar data-testid="toolbar-ownership-probe" orientation="horizontal" appearance="surface" label="역할 소유권 검증 툴바">
+          <ViewerToolbarButton label="직접 소유 제어" onClick={() => {}}><ToolbarIcon name="plus" /></ViewerToolbarButton>
+          <span role="presentation">
+            <ViewerToolbarButton label="presentation 래퍼 제어" onClick={() => {}}><ToolbarIcon name="minus" /></ViewerToolbarButton>
+          </span>
+          <span role="none">
+            <ViewerToolbarButton label="none 래퍼 제어" onClick={() => {}}><ToolbarIcon name="crosshair" /></ViewerToolbarButton>
+          </span>
+          <ViewerToolbar data-testid="nested-toolbar-ownership-probe" orientation="horizontal" appearance="minimal" label="중첩 역할 소유권 검증 툴바">
+            <ViewerToolbarButton label="중첩 툴바 제어" onClick={() => {}}><ToolbarIcon name="reset" /></ViewerToolbarButton>
+          </ViewerToolbar>
+        </ViewerToolbar>
+      )}
       <output data-testid="toggle-state" style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>
         경로 표시: {pathVisible ? '켜짐' : '꺼짐'} · 마지막 동작: {lastAction}
       </output>
@@ -96,7 +121,10 @@ function waitForRender() {
 }
 
 export const ViewerToolbarOverview = {
-  name: '뷰어 툴바',
+  name: '개요',
+  parameters: storyDescription(
+    '지도 위에서 확대·축소·초기화·로봇 표시와 레이어 설정을 사용하는 기본 상황입니다. 즉시 명령과 지속 토글이 구분되고 팝오버 설정이 현재 장면과 같은 문맥으로 읽히는지 확인하세요.',
+  ),
   render: () => {
     const [zoom, setZoom] = React.useState(100);
     const [layers, setLayers] = React.useState({ map: true, path: true, robots: true });
@@ -140,7 +168,10 @@ export const ViewerToolbarOverview = {
 };
 
 export const AppearanceAndDisabledStates = {
-  name: 'Minimal · Surface · On dark · Disabled',
+  name: '변형·상태 · 최소·표면·어두운 배경·비활성',
+  parameters: storyDescription(
+    'minimal·surface·on-dark appearance와 비활성 명령을 서로 다른 뷰어 배경에서 비교합니다. 각 표면에서 아이콘 대비와 그룹 경계가 유지되고 disabled 제어가 실행되지 않는지 확인하세요.',
+  ),
   render: () => {
     const [lastAction, setLastAction] = React.useState('없음');
     return (
@@ -173,7 +204,10 @@ export const AppearanceAndDisabledStates = {
 };
 
 export const RovingFocusAndToggleContract = {
-  name: 'Roving focus · Toggle contract',
+  name: '상호작용 · 키보드 탐색과 토글',
+  parameters: storyDescription(
+    '도구의 가용성과 자식 구성이 실행 중 바뀌는 가운데 키보드로 명령과 토글을 탐색합니다. 비활성 항목을 건너뛰고 하나의 Tab stop과 현재 포커스·pressed 상태가 안정적으로 유지되는지 확인하세요.',
+  ),
   render: () => <ToolbarInteractionFixture />,
   play: async ({ canvasElement }) => {
     const view = canvasElement.ownerDocument.defaultView;
@@ -270,6 +304,35 @@ export const RovingFocusAndToggleContract = {
     if (canvasElement.ownerDocument.activeElement !== verticalItems[1]) {
       throw new Error('ArrowDown did not advance focus in a vertical toolbar.');
     }
+
+    canvasElement.querySelector('[data-testid="mount-toolbar-ownership-probe"]')?.click();
+    await waitForRender();
+    const ownershipToolbar = canvasElement.querySelector('[data-testid="toolbar-ownership-probe"]');
+    const directControl = ownershipToolbar?.querySelector('button[aria-label="직접 소유 제어"]');
+    const presentationControl = ownershipToolbar?.querySelector('button[aria-label="presentation 래퍼 제어"]');
+    const noneControl = ownershipToolbar?.querySelector('button[aria-label="none 래퍼 제어"]');
+    const nestedControl = ownershipToolbar?.querySelector('button[aria-label="중첩 툴바 제어"]');
+    if (!ownershipToolbar || !directControl || !presentationControl || !noneControl || !nestedControl) {
+      throw new Error('The toolbar role-ownership fixture is incomplete.');
+    }
+    directControl.focus();
+    directControl.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    if (canvasElement.ownerDocument.activeElement !== presentationControl) {
+      throw new Error('A presentation wrapper must not take ownership away from its toolbar item.');
+    }
+    presentationControl.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    if (canvasElement.ownerDocument.activeElement !== noneControl) {
+      throw new Error('A role=none wrapper must not take ownership away from its toolbar item.');
+    }
+    noneControl.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    if (canvasElement.ownerDocument.activeElement !== directControl) {
+      throw new Error('The outer toolbar must exclude a nested toolbar item from its Arrow sequence.');
+    }
+    if ([directControl, presentationControl, noneControl].filter((item) => item.tabIndex === 0).length !== 1 || nestedControl.tabIndex !== 0) {
+      throw new Error('Outer and nested toolbars must each preserve their own single Tab stop.');
+    }
+    canvasElement.querySelector('[data-testid="unmount-toolbar-ownership-probe"]')?.click();
+    await waitForRender();
   },
 };
 

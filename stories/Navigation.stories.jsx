@@ -1,13 +1,21 @@
 import React from 'react';
-import { IconButton, Lockup, TopBar, TopBarNavItem } from '../src/index.js';
+import { Button, Icon, IconButton, Lockup, TopBar, TopBarNavItem } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Navigation/Top Bar',
+  title: 'LDS Product/Navigation/Top Bar',
   component: TopBar,
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-navigation-top-bar--top-bar-default',
+      eyebrow: 'Product / Top Bar',
+      title: '탑 바는 제품 전역의 브랜드·탐색·유틸리티를 한 줄로 정리합니다',
+      description:
+        '랜딩의 주요 섹션이나 대시보드의 전역 검색·알림을 상단에 유지할 때 적합합니다. 깊은 제품 계층에는 Top Bar 목적지를 반복하지 말고 Side Nav를 사용하세요.',
+    },
     docs: {
       description: {
-        component: '브랜드, 중앙 정렬 내비게이션, 드롭다운 항목, 액션 컨트롤을 갖춘 TopBar 내비게이션 패턴입니다.',
+        component: 'TopBar는 랜딩·콘텐츠의 사이트 탐색 또는 대시보드의 전역 utility bar로 사용하는 LK Product Extension입니다. 사이드 내비게이션과 함께 쓸 때는 로고와 로컬 목적지를 반복하지 않습니다.',
       },
     },
   },
@@ -22,16 +30,19 @@ const productMenu = [
 ];
 
 const SearchIcon = (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="11" cy="11" r="7" />
     <path d="m21 21-4.3-4.3" />
   </svg>
 );
 
 export const TopBarDefault = {
-  name: 'TopBar 기본',
+  name: '개요',
+  parameters: storyDescription(
+    '브랜드·주요 목적지·검색을 포함한 사이트 탐색을 밝은 표면과 어두운 표면에서 비교합니다. 두 테마에서 선택 상태와 액션 대비가 같은 위계로 읽히는지 확인하세요.',
+  ),
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-7)', width: 'min(880px, 100%)', minWidth: 0 }}>
+    <main style={{ display: 'grid', gap: 'var(--space-8)', width: 'min(880px, 100%)', minWidth: 0 }}>
       <div data-theme="light" className="theme-light" style={{ position: 'relative', zIndex: 2, width: '100%', minWidth: 0, overflow: 'hidden', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>
         <TopBar
           navAlign="center"
@@ -62,6 +73,40 @@ export const TopBarDefault = {
       </div>
     </main>
   ),
+};
+
+export const UtilityOnly = {
+  name: '시나리오 · 대시보드 전역 도구',
+  parameters: storyDescription(
+    'Side Nav가 로컬 탐색을 소유하는 대시보드에서 Top Bar를 검색·알림·사용자 작업만 담는 유틸리티 영역으로 사용합니다. 브랜드와 목적지가 중복되지 않는지 확인하세요.',
+  ),
+  render: () => (
+    <div style={{ width: 'min(880px, 100%)', minWidth: 0, overflow: 'hidden', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sm)' }}>
+      <TopBar
+        aria-label="대시보드 전역 유틸리티"
+        height={56}
+        brand={<strong style={{ fontSize: 'var(--body2-size)', color: 'var(--color-semantic-label-normal)' }}>AMR 운영</strong>}
+        actions={(
+          <React.Fragment>
+            <IconButton variant="ghost" label="전역 검색" size={36}><span aria-hidden="true">{SearchIcon}</span></IconButton>
+            <IconButton variant="ghost" label="알림" size={36}><Icon name="bell" size={19} aria-hidden="true" /></IconButton>
+            <Button size="sm" variant="outlined">제품 전환</Button>
+          </React.Fragment>
+        )}
+      />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const topBar = canvasElement.querySelector('header[aria-label="대시보드 전역 유틸리티"]');
+    if (!topBar || topBar.querySelector('nav')) {
+      throw new Error('Utility TopBar must omit primary navigation when local routes belong to SideNav.');
+    }
+    for (const label of ['전역 검색', '알림']) {
+      if (!topBar.querySelector(`button[aria-label="${label}"]`)) {
+        throw new Error(`Utility TopBar must preserve its global action: ${label}`);
+      }
+    }
+  },
 };
 
 const topBarNavStyle = {

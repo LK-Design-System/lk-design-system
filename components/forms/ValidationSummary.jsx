@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextButton } from '../buttons/TextButton.jsx';
 import { Icon } from '../icon/Icon.jsx';
-import { statusToneStyle } from '../status/status-presentation.js';
+import { embeddedBandStyle, statusToneStyle } from '../status/status-presentation.js';
 
 const SEVERITY_META = {
   error: {
@@ -106,9 +106,6 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
           outline: 2px solid var(--color-semantic-focus-indicator);
           outline-offset: 2px;
         }
-        .lk-validation-summary__group + .lk-validation-summary__group {
-          border-top: 1px solid var(--color-semantic-line-normal-normal);
-        }
         .lk-validation-summary__item + .lk-validation-summary__item {
           border-top: 1px solid var(--color-semantic-line-normal-alternative);
         }
@@ -129,7 +126,10 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
           display: 'grid',
           gap: 'var(--space-1)',
           padding: 'var(--space-4)',
-          borderBottom: '1px solid var(--color-semantic-line-normal-normal)',
+          // The first severity band below owns its own top hairline
+          // (embeddedBandStyle); keep the neutral separator only when no
+          // band follows, so hairlines never stack.
+          borderBottom: issues.length === 0 ? '1px solid var(--color-semantic-line-normal-normal)' : 'none',
           background: 'var(--color-semantic-background-elevated-normal)',
         }}
       >
@@ -200,8 +200,7 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
                   alignItems: 'center',
                   gap: 'var(--space-2)',
                   padding: 'var(--space-2) var(--space-4)',
-                  borderBottom: `1px solid ${group.border}`,
-                  background: group.surface,
+                  ...embeddedBandStyle(group),
                 }}
               >
                 <Icon name={group.icon} size={16} color={group.foreground} aria-hidden="true" />

@@ -22,6 +22,11 @@ export function IconButton({
   disable = false,
   onMouseEnter,
   onMouseLeave,
+  onMouseDown,
+  onMouseUp,
+  onKeyDown,
+  onKeyUp,
+  onBlur,
   className,
   onClick,
   type,
@@ -29,6 +34,7 @@ export function IconButton({
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
   const resolvedSize = typeof size === 'number'
     ? size
     : ({
@@ -71,7 +77,18 @@ export function IconButton({
         onClick?.(event);
       }}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
-      onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
+      onMouseLeave={(e) => { setHover(false); setPressed(false); onMouseLeave && onMouseLeave(e); }}
+      onMouseDown={(e) => { if (!blocked) setPressed(true); onMouseDown?.(e); }}
+      onMouseUp={(e) => { setPressed(false); onMouseUp?.(e); }}
+      onKeyDown={(e) => {
+        if (!blocked && (e.key === 'Enter' || e.key === ' ')) setPressed(true);
+        onKeyDown?.(e);
+      }}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') setPressed(false);
+        onKeyUp?.(e);
+      }}
+      onBlur={(e) => { setPressed(false); onBlur?.(e); }}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -81,7 +98,11 @@ export function IconButton({
         color: blocked ? 'var(--color-semantic-label-disable)' : p.fg,
         background: blocked
           ? 'var(--color-semantic-fill-normal)'
-          : hover ? p.bgHover : p.bg,
+          : pressed
+            ? `color-mix(in srgb, ${p.bgHover || p.bg} 88%, var(--color-semantic-label-normal))`
+            : hover
+              ? `color-mix(in srgb, ${p.bgHover || p.bg} 96%, var(--color-semantic-label-normal))`
+              : p.bg,
         border: blocked
           ? 'var(--border-thin) solid var(--color-semantic-line-normal-neutral)'
           : p.bd,

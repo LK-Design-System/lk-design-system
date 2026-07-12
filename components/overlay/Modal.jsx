@@ -1,45 +1,66 @@
 import React from 'react';
+import { Icon } from '../icon/Icon.jsx';
+import { useDialogFocus } from './dialog-focus.js';
 
 /**
- * LK ROBOTICS — Modal
+ * LDS Core — Modal
  * A general content dialog over a navy scrim — header (title + close), a
  * scrollable body, and an optional footer slot. Larger and more flexible than
  * Alert. Controlled via `open`; Esc / scrim-click call `onClose`.
  */
-export function Modal({ open = false, title, children, footer, onClose, width = 520, closeOnScrim = true, style, ...rest }) {
-  React.useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (e) => { if (e.key === 'Escape' && onClose) onClose(); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
+export function Modal({
+  open = false,
+  title,
+  children,
+  footer,
+  onClose,
+  width = 520,
+  closeOnScrim = true,
+  initialFocusRef,
+  returnFocusRef,
+  restoreFocus = true,
+  ariaLabel = '모달',
+  style,
+  ...rest
+}) {
+  const titleId = React.useId();
+  const { dialogRef, zIndex } = useDialogFocus({
+    open,
+    onDismiss: onClose,
+    initialFocusRef,
+    returnFocusRef,
+    restoreFocus,
+  });
   if (!open) return null;
   return (
     <div
       role="presentation"
       onClick={closeOnScrim ? (e) => { if (e.target === e.currentTarget && onClose) onClose(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))' }}
+      style={{ position: 'fixed', inset: 0, zIndex, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-6)', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))' }}
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={typeof title === 'string' ? title : undefined}
+        aria-labelledby={title != null ? titleId : undefined}
+        aria-label={title == null ? ariaLabel : undefined}
+        tabIndex={-1}
         style={{ width: '100%', maxWidth: width, maxHeight: '86vh', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', borderRadius: 'var(--component-dialog-radius)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', overflow: 'hidden', ...style }}
         {...rest}
       >
         {(title != null || onClose) && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '20px 24px', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
-            <div style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-5) var(--space-6)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
+            <div id={titleId} style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{title}</div>
             {onClose && (
               <button type="button" aria-label="닫기" onClick={onClose} style={{ display: 'inline-flex', padding: 4, border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-semantic-label-assistive)' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                <Icon name="close" size={20} aria-hidden="true" />
               </button>
             )}
           </div>
         )}
-        <div style={{ padding: '20px 24px', overflow: 'auto', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
+        <div style={{ padding: 'var(--space-5) var(--space-6)', overflow: 'auto', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         {footer != null && (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, padding: '16px 24px', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)', padding: 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
         )}
       </div>
     </div>

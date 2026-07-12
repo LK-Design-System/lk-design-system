@@ -1,11 +1,19 @@
 import { SourceDisclosure } from '../src/index.js';
 import { userEvent } from 'storybook/test';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Content/Source Disclosure',
   component: SourceDisclosure,
   decorators: [(Story) => <div style={{ width: '100%', maxWidth: 800 }}><Story /></div>],
   parameters: {
+    storyGuide: {
+      storyId: 'lds-product-content-source-disclosure--availability-and-provenance',
+      eyebrow: 'Product / Source Disclosure',
+      title: '사용자가 판단의 근거와 원본 접근 가능 여부를 직접 확인합니다',
+      description:
+        '응답이나 문서의 근거가 된 출처·시점·가용성·원본 경로를 투명하게 제시할 때 적합합니다. 단순 관련 링크나 일반 속성 목록에는 SourceDisclosure 대신 Link 또는 Description List를 사용하세요.',
+    },
     docs: {
       description: {
         component: '제품이 제공한 source provenance, availability, freshness와 원본으로 돌아가는 경로를 보여줍니다.',
@@ -17,7 +25,10 @@ const meta = {
 export default meta;
 
 export const AvailabilityAndProvenance = {
-  name: '출처 상태와 근거 정보',
+  name: '개요',
+  parameters: storyDescription(
+    '가용·오래됨·접근 제한 출처를 한 근거 목록에서 비교하는 상황입니다. 각 상태와 관측 시점, 세부 근거, 원본 이동 경로가 과장 없이 구분되는지 확인하세요.',
+  ),
   args: {
     description: '응답이나 문서 판단에 사용한 source의 현재 가용성을 확인합니다.',
     sources: [
@@ -79,7 +90,10 @@ export const AvailabilityAndProvenance = {
 };
 
 export const MissingSource = {
-  name: '출처 없음',
+  name: '시나리오 · 출처 없음',
+  parameters: storyDescription(
+    '참조했던 원본이 삭제되어 세부 정보와 이동 액션을 제공할 수 없는 상황입니다. 존재하지 않는 disclosure나 링크를 만들지 않고 출처 없음 상태를 정적으로 알리는지 확인하세요.',
+  ),
   args: {
     sources: [{ id: 'missing', label: 'Deleted build artifact', availability: 'missing' }],
   },
@@ -92,7 +106,10 @@ export const MissingSource = {
 };
 
 export const UnresolvedAvailability = {
-  name: '확인 실패와 상태 불명',
+  name: '변형·상태 · 확인 실패와 상태 불명',
+  parameters: storyDescription(
+    '출처 자체는 알려져 있지만 현재 가용성을 확인하지 못한 상황입니다. 확인 실패와 상태 불명이 서로 다른 라벨로 전달되고 사용할 수 없는 액션을 암시하지 않는지 확인하세요.',
+  ),
   args: {
     description: '가용성을 확인하지 못한 source도 과장된 별도 화면 없이 같은 중립 목록 구조에서 구분합니다.',
     sources: [
@@ -130,7 +147,10 @@ export const UnresolvedAvailability = {
 };
 
 export const DirectSourceLink = {
-  name: '상세 정보 없는 출처 링크',
+  name: '시나리오 · 세부 정보 없는 출처 링크',
+  parameters: storyDescription(
+    '추가 provenance 없이 원본 문서로 바로 이동할 수 있는 상황입니다. 불필요한 disclosure 단계를 만들지 않고 고유한 출처 이름이 안전한 외부 링크가 되는지 확인하세요.',
+  ),
   args: {
     description: '추가 provenance가 없으면 불필요한 disclosure 없이 source 이름에서 바로 원본으로 이동합니다.',
     sources: [
@@ -157,7 +177,10 @@ export const DirectSourceLink = {
 };
 
 export const NarrowLongProvenance = {
-  name: '좁은 폭 · 긴 출처 정보',
+  name: '반응형 · 좁은 폭과 긴 출처 정보',
+  parameters: storyDescription(
+    '320px 폭에서 긴 출처명·위치·제한 사유·메타데이터를 함께 보여 주는 상황입니다. 상태 배지와 summary가 영역 안에서 줄바꿈되고 가로 overflow 없이 읽히는지 확인하세요.',
+  ),
   args: {
     description: '긴 identity와 제한 상태가 좁은 폭에서도 겹치거나 잘리지 않아야 합니다.',
     sources: [

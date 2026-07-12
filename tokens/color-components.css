@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Component color contracts — 48 tokens (GENERATED — do not hand-edit)
+   LK ROBOTICS — Component color contracts — 21 tokens (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -25,33 +25,6 @@
   --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
-  --component-callout-info-bg: var(--color-semantic-status-info-surface);
-  --component-callout-info-border: var(--color-semantic-status-info-border);
-  --component-callout-info-icon: var(--color-semantic-status-info-text);
-  --component-callout-positive-bg: var(--color-semantic-status-positive-surface);
-  --component-callout-positive-border: var(--color-semantic-status-positive-border);
-  --component-callout-positive-icon: var(--color-semantic-status-positive-text);
-  --component-callout-cautionary-bg: var(--color-semantic-status-cautionary-surface);
-  --component-callout-cautionary-border: var(--color-semantic-status-cautionary-border);
-  --component-callout-cautionary-icon: var(--color-semantic-status-cautionary-text);
-  --component-callout-negative-bg: var(--color-semantic-status-negative-surface);
-  --component-callout-negative-border: var(--color-semantic-status-negative-border);
-  --component-callout-negative-icon: var(--color-semantic-status-negative-text);
-  --component-callout-neutral-bg: var(--color-semantic-status-neutral-surface);
-  --component-callout-neutral-border: var(--color-semantic-status-neutral-border);
-  --component-callout-neutral-icon: var(--color-semantic-status-neutral-text);
-  --component-banner-info-bg: var(--color-semantic-status-info-surface);
-  --component-banner-info-border: var(--color-semantic-status-info-border);
-  --component-banner-info-icon: var(--color-semantic-status-info-text);
-  --component-banner-positive-bg: var(--color-semantic-status-positive-surface);
-  --component-banner-positive-border: var(--color-semantic-status-positive-border);
-  --component-banner-positive-icon: var(--color-semantic-status-positive-text);
-  --component-banner-cautionary-bg: var(--color-semantic-status-cautionary-surface);
-  --component-banner-cautionary-border: var(--color-semantic-status-cautionary-border);
-  --component-banner-cautionary-icon: var(--color-semantic-status-cautionary-text);
-  --component-banner-negative-bg: var(--color-semantic-status-negative-surface);
-  --component-banner-negative-border: var(--color-semantic-status-negative-border);
-  --component-banner-negative-icon: var(--color-semantic-status-negative-text);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
 }
 
@@ -76,33 +49,6 @@
   --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
-  --component-callout-info-bg: var(--color-semantic-status-info-surface);
-  --component-callout-info-border: var(--color-semantic-status-info-border);
-  --component-callout-info-icon: var(--color-semantic-status-info-text);
-  --component-callout-positive-bg: var(--color-semantic-status-positive-surface);
-  --component-callout-positive-border: var(--color-semantic-status-positive-border);
-  --component-callout-positive-icon: var(--color-semantic-status-positive-text);
-  --component-callout-cautionary-bg: var(--color-semantic-status-cautionary-surface);
-  --component-callout-cautionary-border: var(--color-semantic-status-cautionary-border);
-  --component-callout-cautionary-icon: var(--color-semantic-status-cautionary-text);
-  --component-callout-negative-bg: var(--color-semantic-status-negative-surface);
-  --component-callout-negative-border: var(--color-semantic-status-negative-border);
-  --component-callout-negative-icon: var(--color-semantic-status-negative-text);
-  --component-callout-neutral-bg: var(--color-semantic-status-neutral-surface);
-  --component-callout-neutral-border: var(--color-semantic-status-neutral-border);
-  --component-callout-neutral-icon: var(--color-semantic-status-neutral-text);
-  --component-banner-info-bg: var(--color-semantic-status-info-surface);
-  --component-banner-info-border: var(--color-semantic-status-info-border);
-  --component-banner-info-icon: var(--color-semantic-status-info-text);
-  --component-banner-positive-bg: var(--color-semantic-status-positive-surface);
-  --component-banner-positive-border: var(--color-semantic-status-positive-border);
-  --component-banner-positive-icon: var(--color-semantic-status-positive-text);
-  --component-banner-cautionary-bg: var(--color-semantic-status-cautionary-surface);
-  --component-banner-cautionary-border: var(--color-semantic-status-cautionary-border);
-  --component-banner-cautionary-icon: var(--color-semantic-status-cautionary-text);
-  --component-banner-negative-bg: var(--color-semantic-status-negative-surface);
-  --component-banner-negative-border: var(--color-semantic-status-negative-border);
-  --component-banner-negative-icon: var(--color-semantic-status-negative-text);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
 }
 
@@ -128,33 +74,6 @@
     --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
     --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
     --component-badge-negative-fg: var(--color-semantic-status-negative-text);
-    --component-callout-info-bg: var(--color-semantic-status-info-surface);
-    --component-callout-info-border: var(--color-semantic-status-info-border);
-    --component-callout-info-icon: var(--color-semantic-status-info-text);
-    --component-callout-positive-bg: var(--color-semantic-status-positive-surface);
-    --component-callout-positive-border: var(--color-semantic-status-positive-border);
-    --component-callout-positive-icon: var(--color-semantic-status-positive-text);
-    --component-callout-cautionary-bg: var(--color-semantic-status-cautionary-surface);
-    --component-callout-cautionary-border: var(--color-semantic-status-cautionary-border);
-    --component-callout-cautionary-icon: var(--color-semantic-status-cautionary-text);
-    --component-callout-negative-bg: var(--color-semantic-status-negative-surface);
-    --component-callout-negative-border: var(--color-semantic-status-negative-border);
-    --component-callout-negative-icon: var(--color-semantic-status-negative-text);
-    --component-callout-neutral-bg: var(--color-semantic-status-neutral-surface);
-    --component-callout-neutral-border: var(--color-semantic-status-neutral-border);
-    --component-callout-neutral-icon: var(--color-semantic-status-neutral-text);
-    --component-banner-info-bg: var(--color-semantic-status-info-surface);
-    --component-banner-info-border: var(--color-semantic-status-info-border);
-    --component-banner-info-icon: var(--color-semantic-status-info-text);
-    --component-banner-positive-bg: var(--color-semantic-status-positive-surface);
-    --component-banner-positive-border: var(--color-semantic-status-positive-border);
-    --component-banner-positive-icon: var(--color-semantic-status-positive-text);
-    --component-banner-cautionary-bg: var(--color-semantic-status-cautionary-surface);
-    --component-banner-cautionary-border: var(--color-semantic-status-cautionary-border);
-    --component-banner-cautionary-icon: var(--color-semantic-status-cautionary-text);
-    --component-banner-negative-bg: var(--color-semantic-status-negative-surface);
-    --component-banner-negative-border: var(--color-semantic-status-negative-border);
-    --component-banner-negative-icon: var(--color-semantic-status-negative-text);
     --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
   }
 }

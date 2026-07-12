@@ -1,9 +1,38 @@
 # LK Design System Handoff
 
-Date: 2026-07-08
+Date: 2026-07-12
 Branch: `main`
 Remote: `origin` (`https://github.com/LK-ROBOTICS/lk-design-system-core.git`)
 Working area: `lk-design-system-core`
+
+Latest focused handoff: [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
+(2026-07-12: the robotics navigation (N1–N6), communication (C1–C4), and virtual keypad (K1) expansion is
+**implemented, wired to the public entry, and verified by targeted checks — the accessibility guard (46 new stories,
+0 violations), `check:storybook-ia`, and `check:inventory` are all green**, and representative stories were visually
+reviewed by screenshot (which caught and fixed a map-label overlap in the N6 semantic mirror that axe/geometry checks
+missed). **HEAD `04eb718`; all new work is still uncommitted in a very dirty shared worktree; `origin` has NOT been
+pushed.** Per the user's instruction the repository-wide `npm run check` was NOT run — targeted verification only. The
+completion handoff records the found/fixed defects, the exact resume sequence, and what remains (full check,
+visual-regression baseline, commit). It continues the
+[implementation checkpoint](handoff/2026-07-12-domain-component-expansion-implementation.md).)
+
+The prior [Family-consistency stabilization verification](handoff/2026-07-12-family-stabilization-verification.md) remains
+the immediate historical checkpoint for the selection/input, menu/overlay, status, ButtonGroup, and SplitButton work.
+
+The last regenerated Storybook index is **177 pages / 516 stories / 397 public / 119 hidden** (the +9 pages / +46
+stories over the prior 168/470 baseline are the verified domain expansion). This continues the
+[Storybook IA, guidance, and naming normalization](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
+(friendly-entry contract on every page, purpose descriptions on every public story, `개요`-first naming with role prefixes),
+the [Storybook information architecture audit](handoff/2026-07-11-storybook-information-architecture-audit.md),
+the [Quality audit and D-track design review](handoff/2026-07-11-quality-audit-and-design-review.md),
+the executed [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md),
+and the completed [D-track design convention review](references/quality/DESIGN_CONVENTION_REVIEW.json)
+(9 lenses, 53 reviewed findings, 47 confirmed, 6 rejected).
+
+Immediate next work: the domain expansion goal is complete and targeted-verified (a11y, IA, inventory green). Remaining
+are user-judgment items — run the repository-wide `npm run check` if desired (dirty-worktree gates like `check:generated`
+are structurally noisy and unrelated to this work), register the visual-regression baseline (`npm run update:visual-baseline`)
+for the new stories, and commit / push. P3 or the remaining D-track backlog follows after those.
 
 ## Current Direction
 
@@ -101,7 +130,7 @@ Shared story modules were added to keep public stories focused while preserving 
 
 - `stories/*.shared.jsx`
 
-## Current Verification Status
+## Historical Verification Snapshot
 
 The following commands were reconfirmed during the 2026-07-08 documentation refresh:
 
@@ -111,11 +140,10 @@ pnpm run build:storybook
 pnpm run check:inventory
 ```
 
-Observed `check-wds-alignment` summary:
-
-```text
-Validated WDS alignment: 82 story titles, 20 token map refs, 12 component-family mappings, 13 coverage rows, 13 foundation rows, 3 foundation PDF rows, 18 component PDF rows, 14 Figma node queue rows, 12 detail families, 160 public exports, 357 icons, 46 variant checks, completion gate not-ready.
-```
+That run predated the 2026-07-08 local `.fig` acceptance decision and the 2026-07-11 taxonomy
+cleanup. Do not use its old completion-gate or story-count output as current state. The authoritative
+current source is `docs/references/wds/COVERAGE_COMPLETION_GATE.json` (`claimStatus: ready`), and
+the latest focused handoff records 168 story titles, 336 public stories, and 443 total stories.
 
 Storybook static build passed. It still prints a Vite chunk-size warning around the large bundle/icon surface; this is currently a warning, not a failing gate.
 
@@ -145,25 +173,31 @@ Generated files updated by this flow:
 
 ## Remaining Risks And Next Work
 
-### WDS parity is not complete
+### WDS parity status (updated 2026-07-11)
 
-`docs/references/wds/COVERAGE_COMPLETION_GATE.json` intentionally remains:
+`docs/references/wds/COVERAGE_COMPLETION_GATE.json` is now:
 
 ```json
-"claimStatus": "not-ready"
+"claimStatus": "ready"
 ```
 
-Reason:
+The gate was closed by the 2026-07-08 acceptance decision: the checked-in
+local `.fig` snapshot is the authoritative WDS source, all 14 rows in
+`FIGMA_NODE_AUDIT_QUEUE.json` are `confirmed-covered`, and live Figma
+re-verification is optional unless the upstream community file changes.
+Residual follow-ups stay in `docs/references/wds/COVERAGE_GAPS.md`.
 
-- Figma MCP rate limits prevented complete node-level source reads.
-- 13 node-level WDS reads remain pending in `FIGMA_NODE_AUDIT_QUEUE.json`.
-- Local PDF exports cover some WDS foundations/components, but they do not prove total parity.
-
-Next agent should prioritize:
-
-1. Continue Figma node-level reads from `FIGMA_NODE_AUDIT_QUEUE.json`.
-2. For each confirmed node, update the corresponding audit row and variant checklist.
-3. Only move the completion gate toward ready when all node reads are closed or documented as LK-approved theme overrides.
+The 2026-07-11 Storybook taxonomy cleanup
+(`docs/handoff/2026-07-11-storybook-taxonomy-cleanup.md`) has been executed:
+self-repeating sidebar paths removed, layer leaks fixed (including the
+LogViewer-to-robotics import), Product Data regrouped into
+Display/Visualization/Collections/Operations, combined pages split per the
+local `.fig` component-set evidence, and the classification JSONs
+resynchronized. One evidence-backed deviation from the original target tree:
+the local snapshot's `7 Feedback` section defines only Toast/Snackbar/Alert,
+so Avatar moved to `Content`, Badges and Tags plus Notification moved to
+`Status`, and the empty `LDS Core/Components/Feedback` group was removed from
+`storySort`.
 
 ### Check product-extension boundaries
 
@@ -243,4 +277,9 @@ For Storybook organization:
 
 ## Handoff Summary
 
-This handoff captures a large WDS alignment pass. The codebase now has broader component coverage, a clearer audit model, imported icon assets, PDF-backed WDS evidence, and several new validation gates. The most important open item is still direct WDS Figma node parity. Treat the current system as locally well-instrumented but not yet fully WDS-certified.
+This handoff captures the WDS alignment pass and points to the latest 2026-07-11 quality work.
+Full WDS parity is claimed against the accepted checked-in local `.fig` snapshot; live Figma
+re-verification is optional unless that upstream snapshot changes. The D-track design review is also
+complete and recorded in `docs/references/quality/DESIGN_CONVENTION_REVIEW.json`. The next work is
+the focused handoff's final checkpoint: static Storybook rebuild, IA regeneration and review promotion,
+`check:storybook-ia`, then one full `npm run check`. P3 or remaining D findings follow only after that passes.

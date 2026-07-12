@@ -89,7 +89,7 @@ export const ToastCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-        <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>
+        <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다.</Toast>
         <Toast tone="info" onClose={() => {}}>대시보드로 이동했습니다.</Toast>
       </div>
     </div>
@@ -124,7 +124,7 @@ export const DrawerOpen = {
     <Drawer
       open
       title="필터"
-      footer={<Button size="sm" full>적용</Button>}
+      footer={<Button size="sm">적용</Button>}
     >
       그룹, 상태, 유형을 좁히는 사이드 패널입니다.
     </Drawer>
@@ -145,7 +145,7 @@ export const DrawerCard = {
           side="right"
           title="필터"
           onClose={() => {}}
-          footer={<Button variant="signal" full>적용</Button>}
+          footer={<Button variant="signal">적용</Button>}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <Input label="현장" placeholder="전체" />
@@ -316,7 +316,7 @@ export const AlertToastCard = {
       <div data-visual-crop-root style={{ width: 700, height: 360, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다</Toast>
+            <Toast tone="success" action="확인">현장 실사 요청이 접수되었습니다.</Toast>
             <Toast tone="info" onClose={() => {}}>대시보드로 이동했습니다.</Toast>
           </div>
           <div>
@@ -387,7 +387,7 @@ export const ModalCard = {
       <div>
         <Button variant="primary" onClick={() => setOpen(true)}>항목 정보 수정</Button>
         <Modal open={open} title="항목 정보 수정" onClose={() => setOpen(false)}
-          footer={<><Button variant="ghost" onClick={() => setOpen(false)}>취소</Button><Button variant="signal" onClick={() => setOpen(false)}>저장</Button></>}>
+          footer={<><Button variant="outlined" color="assistive" onClick={() => setOpen(false)}>취소</Button><Button variant="signal" onClick={() => setOpen(false)}>저장</Button></>}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             <Input label="항목명" defaultValue="디자인 토큰" />
             <Input label="그룹" defaultValue="Foundation" />

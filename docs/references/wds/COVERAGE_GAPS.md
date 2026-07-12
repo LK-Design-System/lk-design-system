@@ -96,8 +96,8 @@ intentional-override register (no action).
    documents an explicit lockup clear-space rule (≥ ½ × height on all sides,
    min height 20px) with a visual spec.
 5. **Textinput Timer / Character Counter** — ✅ RESOLVED. Dedicated timer
-   (`actionRight` countdown) and live character-counter tiles in the
-   "타이머 · 문자 수 카운터" story (`stories/FormsFull.stories.jsx`).
+   (`actionRight` countdown) and live character-counter examples in
+   `stories/FormInput.stories.jsx` and `stories/FormTextarea.stories.jsx`.
 6. **Intentional LK overrides recorded during closure**: thick divider 8px
    (WDS 12px); iOS bar metrics used for both `MobileSystemBars` platforms; no
    chromeless IconButton `normal` style; TextButton icons via composition;

@@ -1,7 +1,15 @@
 import React from 'react';
 import { StatusBadge } from '../content/StatusBadge.jsx';
+import {
+  getUnitSeparator,
+  isAttachedUnit,
+  normalizeUnit,
+  normalizeValueText,
+} from '../internal/unit-format.js';
 
 const STATUS_TONE = {
+  negative: { badge: 'negative', label: '위험' },
+  cautionary: { badge: 'cautionary', label: '주의' },
   danger: { badge: 'negative', label: '위험' },
   warning: { badge: 'cautionary', label: '주의' },
   positive: { badge: 'positive', label: '정상' },
@@ -18,15 +26,26 @@ function numericStyle(mono) {
 }
 
 function StatusValue({ item }) {
-  const unit = item.unit != null ? <span style={{ whiteSpace: 'nowrap' }}>{item.unit}</span> : null;
+  const renderedValue = normalizeValueText(item.value);
+  const normalizedUnit = normalizeUnit(item.unit);
+  const unitSeparator = getUnitSeparator(normalizedUnit);
+  const attachedUnit = isAttachedUnit(normalizedUnit);
+  const lockup = (
+    <span
+      data-viewport-status-value=""
+      data-unit-attachment={normalizedUnit === '' ? 'none' : attachedUnit ? 'attached' : 'spaced'}
+      style={{ display: 'inline-block', minWidth: 0, maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...numericStyle(item.mono) }}
+    >
+      <span>{renderedValue}</span>
+      {normalizedUnit !== '' && <span>{unitSeparator}{normalizedUnit}</span>}
+    </span>
+  );
 
   if (item.tone != null && item.tone !== 'default') {
     const tone = STATUS_TONE[item.tone] ?? { badge: 'offline', label: '상태' };
     return (
       <StatusBadge tone={tone.badge} style={{ minWidth: 0, maxWidth: '100%', overflow: 'hidden', flexShrink: 1 }}>
-        <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-1)', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...numericStyle(item.mono) }}>
-          {item.value}{unit}
-        </span>
+        {lockup}
         <span style={{ whiteSpace: 'nowrap' }}>· {item.toneLabel ?? tone.label}</span>
       </StatusBadge>
     );
@@ -35,20 +54,17 @@ function StatusValue({ item }) {
   return (
     <strong
       style={{
-        display: 'inline-flex',
-        alignItems: 'baseline',
-        gap: 'var(--space-1)',
+        display: 'inline-block',
         minWidth: 0,
+        maxWidth: '100%',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         color: 'var(--color-semantic-label-strong)',
         fontWeight: 'var(--fw-bold)',
-        ...numericStyle(item.mono),
       }}
     >
-      <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.value}</span>
-      {unit}
+      {lockup}
     </strong>
   );
 }

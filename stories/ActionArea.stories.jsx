@@ -1,11 +1,13 @@
-import { ActionArea, Button, Checkbox, Chip, Icon, IconButton, TextButton, ToggleIcon } from '../src/index.js';
+import { ActionArea, Button, Checkbox, Chip, Icon } from '../src/index.js';
+import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Core/Components/Action/Action Overview',
+  title: 'LDS Core/Components/Action/Action Area',
+  component: ActionArea,
   parameters: {
     docs: {
       description: {
-        component: '버튼, 텍스트 버튼, 아이콘 버튼, 칩, 토글 아이콘을 아우르는 액션 분류 개요와 ActionArea 하단 액션 영역 패턴입니다.',
+        component: '하단 배치, 구분선, 캡션, 스티키, 세이프 에어리어 패딩을 담당하는 ActionArea 패턴입니다.',
       },
     },
   },
@@ -21,65 +23,11 @@ const panelStyle = {
   boxShadow: 'var(--shadow-xs)',
 };
 
-export const ActionTaxonomy = {
-  name: '액션 분류',
-  render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 1120 }}>
-      <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
-        <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
-          Action
-        </p>
-        <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          액션 컨트롤은 하나의 체계를 공유합니다
-        </h1>
-        <p style={{ margin: 0, maxWidth: 820, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          액션 시스템은 Action Area, Button, Text Button, Icon Button, Chip, Toggle Icon을 하나로 묶어 관리합니다.
-          LDS는 각 역할을 명시적으로 유지해 스토리마다 액션 스타일이 어긋나지 않도록 합니다.
-        </p>
-      </header>
-
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
-        <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--color-semantic-label-strong)', fontSize: 18 }}>Button</h2>
-          <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-            <Button>로봇 등록</Button>
-            <Button variant="outlined" color="primary">Outlined</Button>
-          </div>
-        </article>
-        <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--color-semantic-label-strong)', fontSize: 18 }}>Text Button</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
-            <TextButton color="primary">더보기</TextButton>
-            <TextButton color="assistive">취소</TextButton>
-            <TextButton loading loadingLabel="불러오는 중">Loading</TextButton>
-          </div>
-        </article>
-        <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--color-semantic-label-strong)', fontSize: 18 }}>Icon Button</h2>
-          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-            <IconButton label="검색" size="small"><Icon name="search" size={18} /></IconButton>
-            <IconButton label="추가" size="medium" variant="solid"><Icon name="plus" size={18} /></IconButton>
-            <IconButton label="설정" size="custom" variant="ghost"><Icon name="settings" size={16} /></IconButton>
-          </div>
-        </article>
-        <article style={panelStyle}>
-          <h2 style={{ margin: '0 0 var(--space-3)', color: 'var(--color-semantic-label-strong)', fontSize: 18 }}>Toggle Icon</h2>
-          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-            <ToggleIcon label="미리보기 표시" defaultPressed><Icon name="eye" size={18} /></ToggleIcon>
-            <ToggleIcon label="즐겨찾기"><Icon name="star" size={18} /></ToggleIcon>
-          </div>
-        </article>
-      </section>
-
-      <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 13, lineHeight: 1.6 }}>
-        Chip 변형은 Selection and Input/Chip 페이지와 Content/Badges and Tags 페이지에서 확인합니다.
-      </p>
-    </main>
-  ),
-};
-
 export const BottomActionArea = {
-  name: '하단 액션 영역',
+  name: '개요',
+  parameters: storyDescription(
+    '콘텐츠를 검토한 뒤 화면 하단에서 취소와 주요 행동을 완료하는 상황입니다. 요약은 버튼보다 먼저, 결과 캡션은 버튼 다음에 읽히며 주요 행동이 일관된 위치와 강조로 유지되는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 880 }}>
       <header style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -89,6 +37,9 @@ export const BottomActionArea = {
         <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
           Action Area가 하단 배치, 구분선, 캡션, 스티키, 세이프 에어리어 패딩을 담당합니다
         </h1>
+        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+          검토가 끝난 뒤 화면이나 패널 하단에서 취소와 주요 완료 행동을 한 단위로 유지할 때 적합합니다. 본문 안의 단일 즉시 행동에는 Action Area를 사용하지 말고 Button이나 Text Button을 배치하세요.
+        </p>
       </header>
 
       <section style={panelStyle}>
@@ -111,8 +62,8 @@ export const BottomActionArea = {
             summary={<><strong>요약</strong><span style={{ color: 'var(--color-semantic-label-neutral)' }}>값과 상태를 액션 위에 표시할 수 있습니다.</span></>}
             caption="캡션은 주요 동작의 결과를 설명하는 선택 요소입니다."
           >
-            <Button variant="solid" color="primary" style={{ flex: 1 }}>배차 시작</Button>
             <Button variant="outlined" color="assistive" style={{ flex: 1 }}>나중에</Button>
+            <Button variant="solid" color="primary" style={{ flex: 1 }}>배차 시작</Button>
           </ActionArea>
         </div>
       </section>
@@ -121,7 +72,10 @@ export const BottomActionArea = {
 };
 
 export const ActionAreaStates = {
-  name: '액션 영역 상태',
+  name: '변형·상태 · 밀도와 고정 배치',
+  parameters: storyDescription(
+    '밀도, 구분선, 정렬, 동의 정보, 예약 안내, 스크롤 고정처럼 하단 행동 영역의 조합을 선택하는 상황입니다. ActionArea는 children의 DOM·키보드 순서를 유지하므로 자동 줄바꿈이 액션 우선순위를 재배열하지 않는다는 점도 함께 확인하세요.',
+  ),
   render: () => {
     const frame = {
       border: '1px solid var(--color-semantic-line-normal-normal)',
@@ -173,8 +127,8 @@ export const ActionAreaStates = {
                 }
                 caption="안내: 예약 발송은 대기열 상태에 따라 최대 2분 지연될 수 있습니다."
               >
-                <Button variant="solid" color="primary" style={{ flex: 1 }}>예약</Button>
                 <Button variant="outlined" color="assistive" style={{ flex: 1 }}>지금 발송</Button>
+                <Button variant="solid" color="primary" style={{ flex: 1 }}>예약</Button>
               </ActionArea>
             </div>
           </div>
@@ -188,8 +142,8 @@ export const ActionAreaStates = {
                 ))}
               </div>
               <ActionArea sticky>
-                <Button variant="solid" color="primary" style={{ flex: 1 }}>배차 시작</Button>
                 <Button variant="outlined" color="assistive" style={{ flex: 1 }}>나중에</Button>
+                <Button variant="solid" color="primary" style={{ flex: 1 }}>배차 시작</Button>
               </ActionArea>
             </div>
           </div>

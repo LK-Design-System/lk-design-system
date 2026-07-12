@@ -4,6 +4,30 @@ function itemKey(item) {
   return item?.getAttribute?.('data-lk-toolbar-key') ?? null;
 }
 
+const PRESENTATIONAL_ROLES = new Set(['none', 'presentation']);
+
+function isOwnedToolbarItem(toolbar, item) {
+  if (!toolbar || !item || !toolbar.contains(item)) return false;
+
+  let ancestor = item.parentElement;
+  while (ancestor && ancestor !== toolbar) {
+    const role = ancestor.getAttribute('role')?.trim().toLowerCase();
+    if (role && !PRESENTATIONAL_ROLES.has(role)) return false;
+    ancestor = ancestor.parentElement;
+  }
+
+  return ancestor === toolbar;
+}
+
+function shouldRestoreLostFocus(toolbar, focusWithin, lostFocusedItem) {
+  if (!toolbar || !lostFocusedItem) return false;
+  const ownerDocument = toolbar.ownerDocument;
+  const activeElement = ownerDocument.activeElement;
+  return focusWithin
+    || activeElement === ownerDocument.body
+    || activeElement === ownerDocument.documentElement;
+}
+
 /**
  * Private keyboard engine for LDS toolbars.
  *
@@ -25,13 +49,14 @@ export function useRovingToolbar({
   const lastFocusedKeyRef = React.useRef(null);
   const lastFocusedIndexRef = React.useRef(-1);
   const focusWithinRef = React.useRef(false);
+  const containerFallbackFocusedRef = React.useRef(false);
 
   const toolbarItems = (includeUnavailable = false) => {
     const toolbar = toolbarRef.current;
     if (!toolbar) return [];
 
     return Array.from(toolbar.querySelectorAll(itemSelector)).filter((item) => {
-      if (item.closest('[role="toolbar"]') !== toolbar) return false;
+      if (!isOwnedToolbarItem(toolbar, item)) return false;
       if (includeUnavailable) return true;
       if (item.disabled) return false;
       return includeAriaDisabled || item.getAttribute('aria-disabled') !== 'true';
@@ -42,17 +67,28 @@ export function useRovingToolbar({
     const toolbar = toolbarRef.current;
     const allItems = toolbarItems(true);
     const focusableItems = toolbarItems();
+    const ownerDocument = toolbar?.ownerDocument;
+    const activeElement = ownerDocument?.activeElement;
 
     if (focusableItems.length === 0) {
       allItems.forEach((item) => { item.tabIndex = -1; });
       lastFocusedItemRef.current = null;
       lastFocusedKeyRef.current = null;
       lastFocusedIndexRef.current = -1;
+      if (restoreLostFocus && toolbar?.tabIndex >= 0 && activeElement !== toolbar) {
+        toolbar.focus({ preventScroll: true });
+        containerFallbackFocusedRef.current = toolbar.ownerDocument.activeElement === toolbar;
+      } else {
+        containerFallbackFocusedRef.current = activeElement === toolbar;
+      }
       return;
     }
 
-    const ownerDocument = toolbar?.ownerDocument;
-    const activeElement = ownerDocument?.activeElement;
+    const containerHasFocus = activeElement === toolbar;
+    const documentHasFocusFallback = activeElement === ownerDocument?.body
+      || activeElement === ownerDocument?.documentElement;
+    const restoreContainerFallback = containerFallbackFocusedRef.current
+      && (containerHasFocus || documentHasFocusFallback);
     const activeItem = focusableItems.includes(activeElement)
       ? activeElement
       : null;
@@ -93,9 +129,10 @@ export function useRovingToolbar({
     lastFocusedItemRef.current = nextTabStop;
     lastFocusedKeyRef.current = itemKey(nextTabStop);
     lastFocusedIndexRef.current = allItems.indexOf(nextTabStop);
-    if ((unavailableActiveIndex >= 0 || restoreLostFocus) && activeElement !== nextTabStop) {
-      nextTabStop.focus();
+    if ((restoreContainerFallback || unavailableActiveIndex >= 0 || restoreLostFocus) && activeElement !== nextTabStop) {
+      nextTabStop.focus({ preventScroll: true });
     }
+    containerFallbackFocusedRef.current = false;
   };
 
   // Child order and availability can change either with the toolbar render or
@@ -104,7 +141,7 @@ export function useRovingToolbar({
   React.useLayoutEffect(() => {
     const lostFocusedItem = !!lastFocusedItemRef.current
       && !toolbarItems().includes(lastFocusedItemRef.current);
-    syncTabStops(undefined, focusWithinRef.current && lostFocusedItem);
+    syncTabStops(undefined, shouldRestoreLostFocus(toolbarRef.current, focusWithinRef.current, lostFocusedItem));
 
     const toolbar = toolbarRef.current;
     const Observer = toolbar?.ownerDocument?.defaultView?.MutationObserver;
@@ -112,10 +149,15 @@ export function useRovingToolbar({
 
     const ownerDocument = toolbar.ownerDocument;
     const handleDocumentFocusIn = (event) => {
-      focusWithinRef.current = toolbar.contains(event.target);
+      const focusWithin = toolbar.contains(event.target);
+      focusWithinRef.current = focusWithin;
+      containerFallbackFocusedRef.current = focusWithin && event.target === toolbar;
     };
     const handleDocumentPointerDown = (event) => {
-      if (!toolbar.contains(event.target)) focusWithinRef.current = false;
+      if (!toolbar.contains(event.target)) {
+        focusWithinRef.current = false;
+        containerFallbackFocusedRef.current = false;
+      }
     };
     ownerDocument.addEventListener('focusin', handleDocumentFocusIn, true);
     ownerDocument.addEventListener('pointerdown', handleDocumentPointerDown, true);
@@ -130,7 +172,7 @@ export function useRovingToolbar({
           node === lastFocusedItem || node.contains?.(lastFocusedItem)
         ));
       });
-      syncTabStops(undefined, focusWithinRef.current && lostFocusedItem);
+      syncTabStops(undefined, shouldRestoreLostFocus(toolbar, focusWithinRef.current, lostFocusedItem));
     });
     observer.observe(toolbar, {
       childList: true,
@@ -149,13 +191,20 @@ export function useRovingToolbar({
     onFocusCapture?.(event);
     if (event.defaultPrevented) return;
 
+    if (event.target === toolbarRef.current) {
+      focusWithinRef.current = true;
+      containerFallbackFocusedRef.current = true;
+      return;
+    }
+
     const item = event.target.closest?.(itemSelector);
-    if (!item || item.closest('[role="toolbar"]') !== toolbarRef.current) return;
+    if (!isOwnedToolbarItem(toolbarRef.current, item)) return;
     if (!toolbarItems().includes(item)) return;
 
     lastFocusedItemRef.current = item;
     lastFocusedKeyRef.current = itemKey(item);
     focusWithinRef.current = true;
+    containerFallbackFocusedRef.current = false;
     syncTabStops(item);
   };
 
@@ -167,7 +216,7 @@ export function useRovingToolbar({
     const items = toolbarItems();
     const item = event.target.closest?.(itemSelector);
     const currentIndex = items.indexOf(item);
-    if (currentIndex < 0 || item.closest('[role="toolbar"]') !== toolbar) return;
+    if (currentIndex < 0 || !isOwnedToolbarItem(toolbar, item)) return;
 
     const previousKey = orientation === 'vertical' ? 'ArrowUp' : 'ArrowLeft';
     const nextKey = orientation === 'vertical' ? 'ArrowDown' : 'ArrowRight';

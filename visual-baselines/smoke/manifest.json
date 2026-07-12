@@ -1,0 +1,424 @@
+{
+  "schemaVersion": 1,
+  "count": 37,
+  "maxDiffRatio": 0.01,
+  "captures": [
+    {
+      "name": "foundation-color-brand-icons",
+      "id": "lds-core-foundation-iconography--color-brand-icons",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 620
+      },
+      "bytes": 18641,
+      "sha256": "55d6ca13bbb09402d1a63c390c46a2903a683dfb3f664a9f5b3d73cd5cf0dae1"
+    },
+    {
+      "name": "react-card-interactive-dark",
+      "id": "lds-core-components-content-card--interactive-and-dark",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 520
+      },
+      "bytes": 25358,
+      "sha256": "2543f7eef2f64787585d7c2cb0d0dbd65f528f98bac57b1be97fd6b0f08e4bf8"
+    },
+    {
+      "name": "react-card-content-patterns-dark",
+      "id": "lds-core-components-content-card--content-card-patterns",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "bytes": 91366,
+      "sha256": "a5a3860ad8ae2969eb82d7403e6f0d2b797bae273a339ee720dbc78e0d0aaedc"
+    },
+    {
+      "name": "wds-content-card-patterns",
+      "id": "lds-core-components-content-card--content-card-patterns",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "bytes": 99540,
+      "sha256": "dafc5f8fc1e61624eaa26499d70771abee98c916d42539e6ef2a7a480a90382f"
+    },
+    {
+      "name": "action-button-matrix",
+      "id": "lds-core-components-action-button--action-matrix",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "bytes": 32022,
+      "sha256": "ac0705fd1a58c326ae513b4a3f0b5da90c719d6b3216f8ff1204ab250212f43b"
+    },
+    {
+      "name": "react-product-content-cards",
+      "id": "lds-product-content-product-card--product-cards",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 760
+      },
+      "bytes": 61367,
+      "sha256": "047d3097caf7399654bb7c01fd95139e0beed03d7cce0336de974db0c824d4cf"
+    },
+    {
+      "name": "react-topbar",
+      "id": "lds-product-navigation-top-bar--top-bar-default",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 520
+      },
+      "bytes": 56601,
+      "sha256": "79576d19302fdd5bd09822554abedd035d99de8a796904dbab737ac972601b70"
+    },
+    {
+      "name": "react-topbar-dark",
+      "id": "lds-product-navigation-top-bar--top-bar-default",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1120,
+        "height": 520
+      },
+      "bytes": 58195,
+      "sha256": "dc8a7cf2d19cd4490e8c2a8f4dc8441fa07aeced4f0a4602b85bf76555d1aa8f"
+    },
+    {
+      "name": "react-forms",
+      "id": "lds-core-components-selection-and-input-input--input-overview",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 760
+      },
+      "bytes": 33723,
+      "sha256": "0eedcae4aac9fd987a7a7ae761e38809b8da8699cd6e6a6d3416dc3fd3091884"
+    },
+    {
+      "name": "react-forms-narrow",
+      "id": "lds-core-components-selection-and-input-input--input-overview",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "bytes": 31330,
+      "sha256": "a47f252d8b33be8bfe73e05e4338bc890a160d76b7abfd396b9f87a099780018"
+    },
+    {
+      "name": "wds-selection-groups",
+      "id": "lds-core-components-selection-and-input-checkbox--checkboxes",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 36313,
+      "sha256": "846939eb4d179c1e8941d57e071bb06f0f04f96cbbc224c12bb07d99054f5609"
+    },
+    {
+      "name": "wds-selection-groups-narrow",
+      "id": "lds-core-components-selection-and-input-checkbox--checkboxes",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "bytes": 35047,
+      "sha256": "e413454ee2cee804e776a36c1c63a9d22f7a5c3b8c71950781d827bc8913ca13"
+    },
+    {
+      "name": "wds-action-area-states",
+      "id": "lds-core-components-action-action-area--action-area-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 900
+      },
+      "bytes": 71762,
+      "sha256": "55f6e8950b56a6a2c0eeb49e44e26f0fcfcc64a5ce56b51dcebcbe079d3bceeb"
+    },
+    {
+      "name": "wds-action-area-states-narrow",
+      "id": "lds-core-components-action-action-area--action-area-states",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "bytes": 58101,
+      "sha256": "dd8c2286724b066d235e3449145b94a59880c535642c145a07f1e53bf6351dfb"
+    },
+    {
+      "name": "wds-textinput-interactions",
+      "id": "lds-core-components-selection-and-input-input--input-interaction-matrix",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 920
+      },
+      "bytes": 40883,
+      "sha256": "3799a81185ebbe646da462b7676813effb63033456992ee80b20850f12abe15e"
+    },
+    {
+      "name": "wds-control-states",
+      "id": "lds-core-components-selection-and-input-checkbox--checkbox-state-contract",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 920
+      },
+      "bytes": 12711,
+      "sha256": "b82e7de810e64ae11c392e52d710c4b9b63ecbc8572d6b082c69d67f140d3743"
+    },
+    {
+      "name": "wds-segmented-control-matrix",
+      "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 10311,
+      "sha256": "c6f99fc94c91841cbeec752379615749363ea2ce3db775e5ef03ceaefe21d540"
+    },
+    {
+      "name": "wds-menu-patterns",
+      "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "bytes": 68622,
+      "sha256": "7eec5b66ce1c9743684acc8bfd864bf65d33d8a0f3f2994233147d5a5d363458"
+    },
+    {
+      "name": "wds-menu-patterns-dark",
+      "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "bytes": 73403,
+      "sha256": "5cac9f8c6f498894ab18e0eecea74914c9d6b165ac9423a562bd0ae8f7e1a62d"
+    },
+    {
+      "name": "wds-tooltip-patterns",
+      "id": "lds-core-components-content-tooltip--tooltip-patterns",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 960
+      },
+      "bytes": 87379,
+      "sha256": "7236918235473a58a6bc7e7a65f9da2dfda7e0a0b2543b94bba46f32fe56edc6"
+    },
+    {
+      "name": "wds-loading-states",
+      "id": "lds-core-components-status-skeleton--skeleton-overview",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 860
+      },
+      "bytes": 65131,
+      "sha256": "471aab892495e29f4dd2354a871e09ca11d587a4ce6124c58f6213075dcfa7d8"
+    },
+    {
+      "name": "wds-alert-platform-variants",
+      "id": "lds-core-components-overlay-alert--alert-platform-preview",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 700
+      },
+      "bytes": 43566,
+      "sha256": "2091d6683e5ac43019ff570fe9f7c9e06963648994052f7c7d45af6431ad054b"
+    },
+    {
+      "name": "wds-alert-platform-variants-dark",
+      "id": "lds-core-components-overlay-alert--alert-platform-preview",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1120,
+        "height": 700
+      },
+      "bytes": 56907,
+      "sha256": "2fac651bb4757a3a4560845d5d60a8ed5cd5d4a878d05434ae7ce5fa0f94c05d"
+    },
+    {
+      "name": "react-overlay-alert",
+      "id": "lds-product-overlay-popover--popover-overview",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 720
+      },
+      "bytes": 35956,
+      "sha256": "009d933dddd2acd7aac41f2f6461672a6df92e023909113aaf670c49737a5bca"
+    },
+    {
+      "name": "react-robotics-viz",
+      "id": "lds-robotics-status-robot-state--robot-state",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 820
+      },
+      "bytes": 46716,
+      "sha256": "1f25d84d9ee61495ea5948167f20ffeec89a4f90d252d37a25d852bb80cbe57c"
+    },
+    {
+      "name": "robotics-viewer-frame-states",
+      "id": "lds-robotics-viewer-shared-viewer-frame--state-placement",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 720
+      },
+      "bytes": 104921,
+      "sha256": "15ce60d5f660efc1bcc979f6daec7c6f8f2e63690c782db8c812280c5dbc069d"
+    },
+    {
+      "name": "robotics-viewer-light-frame-on-dark",
+      "id": "lds-robotics-viewer-shared-viewer-frame--light-map-frame",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 720,
+        "height": 520
+      },
+      "bytes": 10257,
+      "sha256": "fe7b0c850064d02169fdc384c1fed84dd058ab4124607a3dc67502f34de3243a"
+    },
+    {
+      "name": "robotics-viewer-map",
+      "id": "lds-robotics-viewer-2d-map--map-canvas-overview",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 620
+      },
+      "bytes": 48103,
+      "sha256": "b1b8a1d42872c8b0fcec9a29aa68914430aacf111e047fcfb3abaae21611cfa0"
+    },
+    {
+      "name": "robotics-viewer-map-narrow",
+      "id": "lds-robotics-viewer-2d-map--keyboard-and-pointer-contract",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 520
+      },
+      "bytes": 10439,
+      "sha256": "dc5d315946c18b786999e389e2e83d60030baecacb19930dd5d08ecbb3837a51"
+    },
+    {
+      "name": "robotics-viewer-3d-narrow",
+      "id": "lds-robotics-viewer-3d-scene--narrow-width",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 520
+      },
+      "bytes": 48820,
+      "sha256": "f81346a9e0f6a65c5ac56539f350d9cf9731b6dde61bbd11490be06571371778"
+    },
+    {
+      "name": "robotics-viewer-toolbar",
+      "id": "lds-robotics-viewer-toolbar--viewer-toolbar-overview",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 520
+      },
+      "bytes": 35487,
+      "sha256": "843406534199453bda637f433c901d437bd6bc4617c4792e21180a55e02de380"
+    },
+    {
+      "name": "robotics-viewer-video-states",
+      "id": "lds-robotics-viewer-video-stream--video-stream-overview",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 920
+      },
+      "bytes": 106331,
+      "sha256": "8183b782b4d510113c65827262d80b2dd24b6bbe6c46efd7d884edc0423d9dbe"
+    },
+    {
+      "name": "robotics-viewer-video-narrow",
+      "id": "lds-robotics-viewer-video-stream--narrow-width",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 520
+      },
+      "bytes": 18917,
+      "sha256": "efb3795129dee9f017523a77f51b6641309ab885ce0af6f90a19e6ba1aab488d"
+    },
+    {
+      "name": "robotics-viewer-video-compact-states",
+      "id": "lds-robotics-viewer-video-stream--common-state-contract",
+      "query": {},
+      "viewport": {
+        "width": 240,
+        "height": 900
+      },
+      "bytes": 114426,
+      "sha256": "138d4ad48223e158e369836a2332f25d9c08e9c335125679ba9c1c093809e847"
+    },
+    {
+      "name": "robotics-viewer-telemetry-compact",
+      "id": "lds-robotics-status-telemetry-value--compact-readouts",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "bytes": 49513,
+      "sha256": "8bfc48c8d47e864563ea70638278fff6c7324aade569608d4d0fe9035c0d3b9e"
+    },
+    {
+      "name": "product-validation-summary",
+      "id": "lds-product-selection-and-input-validation-summary--errors-and-warnings",
+      "query": {},
+      "viewport": {
+        "width": 860,
+        "height": 520
+      },
+      "bytes": 53117,
+      "sha256": "4654b18137ab5eba342d06233c534542473a997ac246d60e6c8ec54c01513e9b"
+    },
+    {
+      "name": "product-file-upload-queue",
+      "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
+      "query": {},
+      "viewport": {
+        "width": 800,
+        "height": 720
+      },
+      "bytes": 56341,
+      "sha256": "9e6bd97e1cd0ccd31e3f4508481f6d140b1ad6dc34a52c270a4bf18e87f146a9"
+    }
+  ]
+}

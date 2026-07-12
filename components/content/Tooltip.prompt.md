@@ -5,5 +5,22 @@
 <Tooltip content="Save" shortcut="⌘S" size="small" position="right" />
 ```
 
-- Keep content short. Use `Bubble` for persistent annotation text.
-- WDS axes: `size`, `position`, arrow `align`, and `shortcut`.
+- 콘텐츠는 짧은 보조 설명으로 제한하고, 지속되는 주석에는 `Bubble`, 서식·동작이 있는 본문에는
+  `Popover`를 사용합니다. focusable한 단일 trigger가 ARIA prop을 DOM에 전달해야 합니다.
+- WDS axes `size`, `position`, arrow `align`, `shortcut`은 유지합니다. Medium은 WDS r8·padX12·
+  padY8·inverse surface·fs14를 그대로 쓰며 Popover/Menu의 밝은 surface와 합치지 않습니다.
+- hover와 focus가 같은 Tooltip을 열고 `aria-describedby`로 연결합니다. 포인터를 Tooltip 위로
+  옮겨도 유지되며, `Escape`는 trigger focus를 보존한 채 닫습니다. `open · defaultOpen ·
+  onOpenChange`로 상태를 제어할 수 있습니다.
+- 긴 번역 문자열은 20rem/viewport 안에서 줄바꿈하고, 화면 경계에서는 placement를 flip·clamp합니다.
+  Tooltip 콘텐츠에는 focusable 요소를 넣지 않습니다.
+
+## 공식 근거
+
+- [WAI-ARIA APG Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)은
+  `role="tooltip"`, trigger `aria-describedby`, focus 유지, Escape dismiss를 정의합니다.
+- [WCAG 2.2 SC 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)은
+  hover/focus 콘텐츠의 dismissible·hoverable·persistent 조건을 요구합니다.
+- [Fluent 2 Tooltip](https://fluent2.microsoft.design/components/web/react/core/tooltip/usage)과
+  [React Spectrum Tooltip](https://react-spectrum.adobe.com/Tooltip)은 hover/focus 동등성, 짧은
+  비필수 문구, focusable trigger, target을 가리키는 배치를 공통으로 권고합니다.

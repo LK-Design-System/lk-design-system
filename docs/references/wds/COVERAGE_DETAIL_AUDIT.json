@@ -76,16 +76,6 @@
           "publicExport": true
         },
         {
-          "name": "ButtonGroup",
-          "file": "components/buttons/ButtonGroup.jsx",
-          "publicExport": true
-        },
-        {
-          "name": "SplitButton",
-          "file": "components/buttons/SplitButton.jsx",
-          "publicExport": true
-        },
-        {
           "name": "Fab",
           "file": "components/buttons/Fab.jsx",
           "publicExport": true
@@ -94,20 +84,34 @@
       "stories": [
         "stories/ActionArea.stories.jsx",
         "stories/Button.stories.jsx",
-        "stories/ButtonsExtended.stories.jsx"
+        "stories/ActionButtonGroup.stories.jsx",
+        "stories/ActionSplitButton.stories.jsx",
+        "stories/ActionFab.stories.jsx"
       ],
       "extensionComponents": [
+        {
+          "name": "ButtonGroup",
+          "file": "components/buttons/ButtonGroup.jsx",
+          "publicExport": true,
+          "story": "stories/ActionButtonGroup.stories.jsx"
+        },
+        {
+          "name": "SplitButton",
+          "file": "components/buttons/SplitButton.jsx",
+          "publicExport": true,
+          "story": "stories/ActionSplitButton.stories.jsx"
+        },
         {
           "name": "CopyButton",
           "file": "components/buttons/CopyButton.jsx",
           "publicExport": true,
-          "story": "stories/ActionUtility.stories.jsx"
+          "story": "stories/ActionCopyButton.stories.jsx"
         },
         {
           "name": "Link",
           "file": "components/buttons/Link.jsx",
           "publicExport": true,
-          "story": "stories/ActionUtility.stories.jsx"
+          "story": "stories/ActionLink.stories.jsx"
         },
         {
           "name": "SocialButton",
@@ -164,7 +168,10 @@
         }
       ],
       "stories": [
-        "stories/FormsFull.stories.jsx",
+        "stories/FormInput.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx",
+        "stories/FormInputGroup.stories.jsx",
         "stories/FormSearchAutocomplete.stories.jsx"
       ],
       "extensionComponents": [
@@ -220,7 +227,10 @@
         }
       ],
       "stories": [
-        "stories/FormsFull.stories.jsx",
+        "stories/FormInput.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx",
+        "stories/FormInputGroup.stories.jsx",
         "stories/FormSearchAutocomplete.stories.jsx"
       ],
       "pendingFigmaAudit": [
@@ -281,8 +291,11 @@
         }
       ],
       "stories": [
-        "stories/FormSelectionControls.stories.jsx",
-        "stories/SelectionSegmentedToggle.stories.jsx",
+        "stories/FormSelect.stories.jsx",
+        "stories/FormCheckbox.stories.jsx",
+        "stories/FormRadio.stories.jsx",
+        "stories/SelectionSegmentedControl.stories.jsx",
+        "stories/SelectionToggleButton.stories.jsx",
         "stories/SelectionSwitch.stories.jsx",
         "stories/SelectionThemeToggle.stories.jsx"
       ],
@@ -432,7 +445,8 @@
       ],
       "stories": [
         "stories/ContentListsMedia.stories.jsx",
-        "stories/DataTablesHierarchy.stories.jsx",
+        "stories/DataGrid.stories.jsx",
+        "stories/DataTable.stories.jsx",
         "stories/DataTree.stories.jsx"
       ],
       "extensionComponents": [
@@ -587,9 +601,11 @@
         }
       ],
       "stories": [
-        "stories/OverlayAnchored.stories.jsx",
+        "stories/OverlayPopover.stories.jsx",
+        "stories/OverlayHoverCard.stories.jsx",
+        "stories/OverlayDropdownMenu.stories.jsx",
         "stories/OverlayCommandPalette.stories.jsx",
-        "stories/OverlayMenu.stories.jsx",
+        "stories/NavigationMenubar.stories.jsx",
         "stories/OverlayDimmer.stories.jsx"
       ],
       "pendingFigmaAudit": [
@@ -631,8 +647,10 @@
         }
       ],
       "stories": [
-        "stories/StatusLoading.stories.jsx",
-        "stories/StatusProgress.stories.jsx"
+        "stories/StatusSkeleton.stories.jsx",
+        "stories/StatusSpinner.stories.jsx",
+        "stories/ProductProgress.stories.jsx",
+        "stories/ProductMeter.stories.jsx"
       ],
       "pendingFigmaAudit": [
         "Local Loading PDF confirms Wanted loading, Circular loading, Skeleton Text length, align, Rectangle customization, and Circle customization axes.",
@@ -719,7 +737,8 @@
         "stories/RoboticsTopicTree.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/Viewer3D.stories.jsx",
-        "stories/ViewerTelemetry.stories.jsx",
+        "stories/RoboticsTelemetryGauge.stories.jsx",
+        "stories/RoboticsTelemetryValue.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],

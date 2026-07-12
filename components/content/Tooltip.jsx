@@ -1,4 +1,11 @@
 import React from "react";
+import {
+  appendAriaReference,
+  findOverlayTrigger,
+  useControllableOpen,
+  useFloatingPosition,
+  useLightDismiss,
+} from "../overlay/anchored-overlay.js";
 
 const POS = {
   top: { bottom: "100%", left: "50%" },
@@ -52,7 +59,14 @@ function bubbleOffset(placement, align) {
 const START_ALIGNS = new Set(["leading", "top"]);
 const END_ALIGNS = new Set(["trailing", "bottom"]);
 
-function arrowMainAxis(normalizedAlign, target, axis) {
+function offsetValue(value, delta) {
+  if (!delta) return value;
+  if (typeof value === "number") return value + delta;
+  const operator = delta < 0 ? "-" : "+";
+  return `calc(${value} ${operator} ${Math.abs(delta)}px)`;
+}
+
+function arrowMainAxis(normalizedAlign, target, axis, floatingShift = 0) {
   const size = target ? (axis === "x" ? target.w : target.h) : null;
   const half = axis === "x" ? "translateX" : "translateY";
   const startEdge = axis === "x" ? "left" : "top";
@@ -60,16 +74,30 @@ function arrowMainAxis(normalizedAlign, target, axis) {
   const isStart = START_ALIGNS.has(normalizedAlign);
   const isEnd = END_ALIGNS.has(normalizedAlign);
   if (size == null || (!isStart && !isEnd)) {
-    return { edge: startEdge, value: "50%", shift: `${half}(-50%)` };
+    return {
+      edge: startEdge,
+      value: offsetValue("50%", -floatingShift),
+      shift: `${half}(-50%)`,
+    };
   }
-  if (isStart) return { edge: startEdge, value: size / 2, shift: `${half}(-50%)` };
-  return { edge: endEdge, value: size / 2, shift: `${half}(50%)` };
+  if (isStart) {
+    return {
+      edge: startEdge,
+      value: offsetValue(size / 2, -floatingShift),
+      shift: `${half}(-50%)`,
+    };
+  }
+  return {
+    edge: endEdge,
+    value: offsetValue(size / 2, floatingShift),
+    shift: `${half}(50%)`,
+  };
 }
 
-function arrowStyle(placement, arrowHalf, arrowHeight, normalizedAlign, target) {
+function arrowStyle(placement, arrowHalf, arrowHeight, normalizedAlign, target, floatingShift) {
   const bg = "var(--color-semantic-inverse-background)";
   if (placement === "top" || placement === "bottom") {
-    const a = arrowMainAxis(normalizedAlign, target, "x");
+    const a = arrowMainAxis(normalizedAlign, target, "x", floatingShift);
     const base = {
       width: arrowHalf * 2,
       height: arrowHeight,
@@ -82,7 +110,7 @@ function arrowStyle(placement, arrowHalf, arrowHeight, normalizedAlign, target) 
       : { ...base, top: "calc(100% - 1px)", clipPath: "polygon(0 0, 50% 100%, 100% 0)" };
   }
 
-  const a = arrowMainAxis(normalizedAlign, target, "y");
+  const a = arrowMainAxis(normalizedAlign, target, "y", floatingShift);
   const base = {
     width: arrowHeight,
     height: arrowHalf * 2,
@@ -111,25 +139,39 @@ export function Tooltip({
   arrow = true,
   open,
   defaultOpen = false,
+  onOpenChange,
   children,
   style,
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+  onBlur,
   ...rest
 }) {
-  const [show, setShow] = React.useState(defaultOpen);
-  const visible = open ?? show;
-  const place = position || placement || "top";
+  const [visible, setVisible] = useControllableOpen({ open, defaultOpen, onOpenChange });
+  const requestedPlace = position || placement || "top";
+  const wrapperRef = React.useRef(null);
+  const bubbleRef = React.useRef(null);
+  const tooltipId = React.useId();
+  const getTrigger = React.useCallback(() => findOverlayTrigger(wrapperRef.current), []);
+  const floating = useFloatingPosition({
+    open: visible,
+    anchorRef: wrapperRef,
+    panelRef: bubbleRef,
+    placement: requestedPlace,
+  });
+  const place = floating.placement;
   const pos = POS[place] || POS.top;
   const compact = size === "small" || size === "sm";
   const arrowHalf = compact ? 7 : 10;
   const arrowHeight = compact ? 6 : 8;
   const normalizedAlign = normalizeAlign(align);
 
-  const wrapperRef = React.useRef(null);
   const [target, setTarget] = React.useState(null);
   const edgeAligned = START_ALIGNS.has(normalizedAlign) || END_ALIGNS.has(normalizedAlign);
   React.useLayoutEffect(() => {
     if (!arrow || !edgeAligned || !wrapperRef.current) return;
-    const node = wrapperRef.current;
+    const node = getTrigger() ?? wrapperRef.current;
     const measure = () => {
       const r = node.getBoundingClientRect();
       setTarget((prev) =>
@@ -141,28 +183,67 @@ export function Tooltip({
     const ro = new ResizeObserver(measure);
     ro.observe(node);
     return () => ro.disconnect();
-  }, [arrow, edgeAligned, place, size]);
+  }, [arrow, edgeAligned, getTrigger, place, size]);
+
+  useLightDismiss({
+    open: visible,
+    rootRef: wrapperRef,
+    getTrigger,
+    onDismiss: () => setVisible(false),
+    outsidePress: false,
+  });
+
+  const showTooltip = (event) => {
+    onMouseEnter?.(event);
+    setVisible(true);
+  };
+  const hideTooltip = (event) => {
+    onMouseLeave?.(event);
+    setVisible(false);
+  };
+  const showOnFocus = (event) => {
+    onFocus?.(event);
+    setVisible(true);
+  };
+  const hideOnBlur = (event) => {
+    onBlur?.(event);
+    if (!event.currentTarget.contains(event.relatedTarget)) setVisible(false);
+  };
+  const validTrigger = React.isValidElement(children) && children.type !== React.Fragment;
+  const renderedChildren = validTrigger
+    ? React.cloneElement(children, {
+        'data-anchored-overlay-trigger': '',
+        'aria-describedby': appendAriaReference(children.props['aria-describedby'], tooltipId),
+      })
+    : children;
 
   return (
     <span
       ref={wrapperRef}
-      style={{ position: "relative", display: "inline-flex", ...style }}
-      onMouseEnter={() => setShow(true)}
-      onMouseLeave={() => setShow(false)}
-      onFocus={() => setShow(true)}
-      onBlur={() => setShow(false)}
       {...rest}
+      data-anchored-overlay-trigger={validTrigger ? undefined : ''}
+      aria-describedby={validTrigger ? undefined : tooltipId}
+      tabIndex={validTrigger ? rest.tabIndex : (rest.tabIndex ?? 0)}
+      style={{ position: "relative", display: "inline-flex", ...style }}
+      onMouseEnter={showTooltip}
+      onMouseLeave={hideTooltip}
+      onFocus={showOnFocus}
+      onBlur={hideOnBlur}
     >
-      {children}
+      {renderedChildren}
       <span
+        ref={bubbleRef}
+        id={tooltipId}
         role="tooltip"
-        aria-hidden={!visible}
+        aria-hidden={visible ? false : undefined}
+        data-placement={place}
         style={{
           position: "absolute",
           ...pos,
           ...bubbleOffset(place, align),
+          translate: `${floating.shiftX}px ${floating.shiftY}px`,
           zIndex: 40,
-          pointerEvents: "none",
+          pointerEvents: "auto",
           display: "inline-flex",
           alignItems: "center",
           gap: compact ? 6 : 8,
@@ -175,7 +256,13 @@ export function Tooltip({
           letterSpacing: 0,
           lineHeight: compact ? 1.35 : "var(--label1-line)",
           borderRadius: compact ? 6 : 8,
-          whiteSpace: "nowrap",
+          boxSizing: "border-box",
+          width: "max-content",
+          maxWidth: "min(20rem, calc(100vw - var(--space-8)))",
+          maxHeight: floating.maxHeight ?? undefined,
+          overflowY: "auto",
+          whiteSpace: "normal",
+          overflowWrap: "anywhere",
           boxShadow: "var(--shadow-md)",
           visibility: visible ? "visible" : "hidden",
           opacity: visible ? 1 : 0,
@@ -200,7 +287,14 @@ export function Tooltip({
               position: "absolute",
               display: "block",
               pointerEvents: "none",
-              ...arrowStyle(place, arrowHalf, arrowHeight, normalizedAlign, target),
+              ...arrowStyle(
+                place,
+                arrowHalf,
+                arrowHeight,
+                normalizedAlign,
+                target,
+                place === "top" || place === "bottom" ? floating.shiftX : floating.shiftY,
+              ),
             }}
           />
         )}

@@ -1,3 +1,9 @@
+# UI copy conventions
+
+- Complete Korean descriptive messages ending in `-습니다`, `-세요`, or `-해 주세요` use a final period. Noun labels, titles, status fragments, and loading labels omit it.
+- WDS Core field placeholders follow the local WDS sentence pattern (`입력해 주세요.`, `선택해 주세요.`). Essential instructions still belong in labels or helper text, following [Fluent 2 Field accessibility guidance](https://fluent2.microsoft.design/components/web/react/core/field/usage).
+- Product and Robotics surfaces may use a concise domain hint only when a persistent visible label already explains the field. Do not mix `입력하세요` and `입력해 주세요` within one component family.
+
 # AI 디자인 시스템 가이드
 
 AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제공할 문서입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
@@ -116,7 +122,8 @@ warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadg
 
 | 역할 | 예 | 표면 처리 |
 | --- | --- | --- |
-| 단일 메시지 표면 | `Callout`, `Banner` | 전체 tinted surface + 같은 tone의 hairline border |
+| 단일 메시지 표면 | `Callout`, `Banner variant="standalone"` | 전체 tinted surface + 같은 tone의 hairline border |
+| 부모 표면 결합 상태 | `Banner variant="embedded"` (LDS composition extension) | 부모 안의 edge-to-edge tinted band + 상·하단 tone hairline. 외곽 border·radius·shadow는 부모가 소유 |
 | 제출/검증 결과 요약 | `ValidationSummary` | 중립 목록 본문 + severity 구역 heading band(tone surface/border) + 최고 심각도의 외곽 hairline |
 | 진행형 작업 목록 | `FileUploadQueue` | 카드 외곽·헤더는 항상 중립. 상태는 행 단위 `StatusBadge`·아이콘·텍스트로만 표현 |
 
@@ -126,9 +133,39 @@ warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadg
 - 행 목록의 리딩 아이콘은 **36px 둥근 사각(`radius-md`) tinted 타일**로 통일합니다 — `ListCell`·`FeatureCard`·`StepList`·`DataGrid`에 걸쳐 서명된 LK icon-tile 패턴이며(`docs/references/wds/COMPONENT_STYLE_PARITY.md` 참조), severity가 있으면 타일 wash를 tone surface/전경으로 칠합니다(`FileUploadQueue`, `Notification`). 원형 등 새 chip 모양을 만들지 않습니다.
 - 색만으로 의미를 전달하지 않습니다. tint에는 항상 아이콘 또는 명시적 상태 문구가 동반되어야 합니다.
 - tone 어휘의 canonical 형태는 `positive · cautionary · negative · signal`(+중립)입니다. 새 컴포넌트는 이 어휘만 받고, 기존 호환용 별칭(`success/warning/error/info` 등)은 Toast처럼 내부에서 canonical로 정규화합니다. 새 별칭을 만들지 않습니다.
-- severity 글리프는 손으로 그리지 않습니다. Toast·Snackbar·Banner처럼 공통 `Icon` registry + `statusToneStyle` 매핑을 사용합니다. 체브런·체크·닫기 같은 기능성 마이크로 글리프의 인라인 SVG는 허용됩니다.
+- severity 글리프는 손으로 그리지 않습니다. Toast·Snackbar·Banner처럼 공통 `Icon` registry + `statusToneStyle` 매핑을 사용합니다. 체브런·체크·닫기 같은 기능성 마이크로 글리프도 registry에 대응 아이콘이 있으면 반드시 사용하며, 대응 아이콘이 없고 컴포넌트 prompt에 예외를 기록한 경우에만 인라인 SVG를 허용합니다.
 - keyboard focus는 `tokens/focus.css`의 전역 `:focus-visible` 링이 기본입니다. 컴포넌트가 focus 시각을 더할 때는 두 형태만 허용합니다 — 입력형 필드의 soft glow `0 0 0 4px var(--color-semantic-focus-ring)`, 클리핑되는 행·셀의 `inset 0 0 0 2px var(--color-semantic-focus-indicator)`. 다른 두께·색 조합을 만들지 않습니다.
 - disabled 표현은 `label-disable` 계열 색 교체가 기본입니다. 아이콘·스와치처럼 색 교체가 어려운 요소에만 opacity를 쓰되 값은 **0.45** 하나로 통일합니다.
+
+## 대시보드 조합 계약
+
+대시보드는 한 개의 화면형 컴포넌트가 아니라 아래의 작은 책임을 조합합니다. Storybook에는 실제 컴포넌트·패턴의 상태만 두고, 특정 제품의 완성 대시보드·workflow·template을 추가하지 않습니다.
+
+| 책임 | 기본 조합 | 지켜야 할 경계 |
+| --- | --- | --- |
+| 앱 구조 | `DashboardShell` + `TopBar` + `SideNav`/`NavRail` + `BottomNav` + `Container` + `PageHeader` | shell은 skip link와 `header/nav/main` landmark, 넓은/좁은 탐색 전환만 소유합니다. router·인증·권한은 제품 소유입니다. |
+| 반복 카드 배치 | `DashboardGrid` + `MetricCard`/`ChartFrame`/제품 카드 | grid는 최소 카드 폭과 gap만 소유합니다. 카드 surface를 다시 만들거나 카드 안에 카드를 넣지 않습니다. |
+| KPI | `MetricCard` | 변화 방향(`up/down/flat`)과 의미(`positive/negative/cautionary/neutral`)를 분리하고 0 변화는 기본적으로 `flat/neutral`로 둡니다. 단위·기간·기준·freshness·resource state를 생략하지 않습니다. |
+| 차트 | `ChartFrame` + 개별 chart + `Legend` | frame은 title/context/action/state 순서, chart는 accessible name·description·결정적 텍스트 요약을 소유합니다. 0합계를 임의의 1로 치환하지 않습니다. |
+| 리소스 상태 | `ResourceState` | initial loading은 콘텐츠를 대체하고, refreshing/stale/offline/error는 마지막 정상 데이터를 유지합니다. 읽기 순서는 상태 메시지 → 콘텐츠 → freshness입니다. fetch·retry·stale 계산은 제품 소유입니다. |
+| 검색·필터 | `DataToolbar` + `FilterBar` + `DateRangeField` | page-level 검색/action, 적용 필터 제거·초기화, 기간 입력을 분리합니다. query·URL·facet fetch·preset 날짜 계산은 제품 소유입니다. |
+| 표 | `DataGrid` + `Pagination` + `VisibilityManager` | page와 all-matching 선택 범위 및 행별 선택 가능성을 명시하고 열 표시·순서·고정·다중 정렬·확장·편집을 controlled로 전달합니다. pagination 입력은 외부 page와 동기화합니다. virtualization과 편집 lifecycle은 전문 제품 계층에 둡니다. |
+| 목록 상세 | `PrimaryDetail` | 넓은 화면은 이름 있는 병렬 region, 좁은 화면은 focus-managed 서랍 패널을 사용합니다. 선택·route·breakpoint source of truth는 제품 소유입니다. |
+| 운영 action | `RefreshControl` + `DataExportAction` | polling·파일 생성·download·RBAC 판정을 실행하지 않습니다. freshness, 항상 유효한 형식/범위, 진행 상태, 사용할 수 없는 이유만 일관되게 표시합니다. |
+| 개인화 | `SavedViewControl` + `VisibilityManager` | 저장 보기와 열/위젯 표시는 controlled state로 노출합니다. callback이 없는 축은 no-op control이 아니라 읽기 전용/비활성 상태로 둡니다. persistence, URL 동기화, 서버 저장은 제품 소유입니다. drag만 제공하지 말고 키보드·명명된 이동 control을 함께 둡니다. |
+
+구현 순서는 다음을 기본으로 합니다.
+
+1. `DashboardShell`의 skip link와 하나의 `main`을 먼저 확정합니다.
+2. `PageHeader`와 filter/query control을 배치합니다.
+3. `DashboardGrid`, `DataGrid`, `PrimaryDetail` 중 정보 구조에 맞는 패턴을 선택합니다.
+4. 모든 비동기 표면에 loading/empty/error/refreshing/stale/freshness 계약을 연결합니다.
+5. normal 폭과 320px에서 실제 긴 텍스트, action wrapping, 내부 scroll 경계를 확인합니다.
+6. 내비게이션 destination은 `href` 또는 router renderer를 사용하고, 단순 `button + onChange`는 route가 아닌 local view 전환에만 사용합니다.
+
+좁은 폭에서 전체 page의 가로 스크롤을 만들지 않습니다. 카드·filter·action은 줄바꿈하고, 열 맥락을 유지해야 하는 `DataGrid`만 자체 scroll container 안에서 가로 스크롤을 허용합니다. `DashboardShell`은 전용 narrow navigation이 없어도 기존 탐색을 숨기지 않습니다. disabled action은 색만 흐리게 두지 말고 사용할 수 없는 이유와 접근 방법을 보이게 제공하며, callback이 없는 control을 조작 가능하게 보이지 않도록 합니다.
+
+외부 비교 기준은 [PatternFly dashboard](https://www.patternfly.org/patterns/dashboard/design-guidelines/), [Carbon UI shell](https://carbondesignsystem.com/components/UI-shell-header/usage/), [Carbon data table](https://carbondesignsystem.com/components/data-table/usage/), [Fluent Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)입니다. 세부 결론과 의도적 차이는 각 컴포넌트의 `.prompt.md`에 기록합니다.
 
 ## 프롬프트 템플릿
 

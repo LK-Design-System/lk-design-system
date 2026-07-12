@@ -37,6 +37,7 @@
 - 공식 Error Summary가 icon을 요구하는 것은 아닙니다. LDS는 빠른 severity 식별을 위해 error summary와 warning 구역 heading에 공통 `Icon` registry와 `statusToneStyle`의 leading icon을 한 번씩 사용하는 Product extension을 허용합니다.
 - issue마다 큰 원형 status icon을 반복하거나 새 전용 glyph를 만들지 않습니다. 색만으로 의미를 전달하지 않도록 section heading의 icon, 명시적인 오류·주의 문구, count를 함께 사용합니다.
 - GOV.UK Error Summary의 두꺼운 error border는 LDS에서 `statusToneStyle`의 hairline `border`와 `surface` 토큰으로 번역합니다. 카드 외곽선은 최고 심각도(error 우선)의 status border를, 각 severity 구역 heading band는 해당 tone의 surface/border를 사용해 카드 레벨에서 상태가 먼저 읽히게 합니다.
+- severity heading band는 `status-presentation.js`의 `embeddedBandStyle`을 소비합니다 — Banner `variant="embedded"`와 동일한 패널 결합형 밴드 문법(상·하단 tone hairline 유지, 좌우 테두리·radius 제거; Primer Banner `flush`와 동형: `border-left/right: none; border-radius: 0`)입니다. 밴드가 자기 상·하단 hairline을 소유하므로 밴드와 맞닿는 중립 구분선(header 하단선, 그룹 간 구분선)은 그 자리에서 생략해 1px 선이 겹치지 않게 합니다.
 - issue 목록 본문은 중립 목록 surface와 divider를 유지합니다. error와 warning을 각각 중첩 카드나 여러 개의 Callout으로 만들지 않습니다.
 - summary는 form 컬럼 폭 안에서 사용합니다(권장 max-width 640px 수준). 항목이 두 줄 텍스트뿐인 요약을 전폭 컨테이너에 늘어놓지 않습니다.
 - `description`은 결과와 다음 행동만 말합니다. severity 구역 heading이 이미 count를 표시하므로 description에 오류·주의 개수를 반복하지 않습니다.
