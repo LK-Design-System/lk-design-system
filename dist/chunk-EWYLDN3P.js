@@ -20,6 +20,17 @@ var AVAILABILITY_META = {
   error: { label: "\uD655\uC778 \uC2E4\uD328", tone: "negative" },
   unknown: { label: "\uC0C1\uD0DC \uBD88\uBA85", tone: "offline" }
 };
+var VISUALLY_HIDDEN_STYLE = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  border: 0
+};
 function hasDisclosureContent(source) {
   return source.excerpt != null || source.description != null || source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0;
 }
@@ -39,6 +50,7 @@ function ExternalLinkContent({ children }) {
 function SourceDisclosure({
   title = "\uCD9C\uCC98",
   headingLevel = 2,
+  titleVisuallyHidden = false,
   description,
   sources = [],
   emptyMessage = "\uD45C\uC2DC\uD560 \uCD9C\uCC98\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
@@ -110,12 +122,12 @@ function SourceDisclosure({
             transition: none !important;
           }
         }` }),
-        /* @__PURE__ */ jsxs("header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
+        titleVisuallyHidden && description == null ? /* @__PURE__ */ jsx(Heading, { id: titleId, style: VISUALLY_HIDDEN_STYLE, children: title }) : /* @__PURE__ */ jsxs("header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
           /* @__PURE__ */ jsx(
             Heading,
             {
               id: titleId,
-              style: {
+              style: titleVisuallyHidden ? VISUALLY_HIDDEN_STYLE : {
                 margin: 0,
                 color: "var(--color-semantic-label-strong)",
                 fontSize: "var(--body1-size)",
@@ -254,4 +266,4 @@ function SourceDisclosure({
 export {
   SourceDisclosure
 };
-//# sourceMappingURL=chunk-IGWSVIIL.js.map
+//# sourceMappingURL=chunk-EWYLDN3P.js.map

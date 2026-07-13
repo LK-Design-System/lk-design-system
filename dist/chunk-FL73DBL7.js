@@ -1,7 +1,7 @@
 "use client";
 import {
   SourceDisclosure
-} from "./chunk-IGWSVIIL.js";
+} from "./chunk-EWYLDN3P.js";
 import {
   Button
 } from "./chunk-7WDUT67E.js";
@@ -42,6 +42,20 @@ var VISUALLY_HIDDEN_STYLE = {
   clip: "rect(0 0 0 0)",
   whiteSpace: "nowrap",
   border: 0
+};
+var COMPACT_SOURCE_SUMMARY_STYLE = {
+  width: "fit-content",
+  minHeight: "var(--component-button-height-sm)",
+  padding: "calc(var(--space-2) - 1px) var(--space-3)",
+  boxSizing: "border-box",
+  cursor: "pointer",
+  border: "1px solid var(--color-semantic-line-normal-normal)",
+  borderRadius: "var(--radius-pill)",
+  background: "var(--color-semantic-fill-normal)",
+  color: "var(--color-semantic-label-neutral)",
+  fontSize: "var(--caption1-size)",
+  lineHeight: "var(--caption1-line)",
+  fontWeight: "var(--fw-semibold)"
 };
 function normalizeLifecycle(lifecycle) {
   if (lifecycle?.kind === "delivery" && LIFECYCLE_LABELS.delivery[lifecycle.state]) {
@@ -85,6 +99,7 @@ function ConversationMessage({
   statusLabel,
   attachments,
   sources,
+  sourcePresentation = "full",
   actions,
   onRetry,
   onStop,
@@ -261,7 +276,10 @@ function ConversationMessage({
           /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { flex: "1 1 0", minWidth: "var(--space-4)", height: 1, background: "var(--color-semantic-line-normal-alternative)" } })
         ] }) : /* @__PURE__ */ jsx("div", { "data-message-part": "body", "data-message-surface": true, style: bodySurfaceStyle, children }),
         attachments != null && /* @__PURE__ */ jsx("div", { "data-message-part": "attachments", style: commonPartStyle, children: attachments }),
-        Array.isArray(sources) && sources.length > 0 && /* @__PURE__ */ jsx("div", { "data-message-part": "sources", style: commonPartStyle, children: /* @__PURE__ */ jsx(SourceDisclosure, { headingLevel: 3, sources }) }),
+        Array.isArray(sources) && sources.length > 0 && /* @__PURE__ */ jsx("div", { "data-message-part": "sources", style: commonPartStyle, children: sourcePresentation === "compact" ? /* @__PURE__ */ jsxs("details", { "data-message-sources-disclosure": "", children: [
+          /* @__PURE__ */ jsx("summary", { style: COMPACT_SOURCE_SUMMARY_STYLE, children: `\uADFC\uAC70 ${sources.length}\uAC1C` }),
+          /* @__PURE__ */ jsx("div", { "data-message-sources-panel": "", style: { marginTop: "var(--space-2)" }, children: /* @__PURE__ */ jsx(SourceDisclosure, { headingLevel: 3, titleVisuallyHidden: true, sources }) })
+        ] }) : /* @__PURE__ */ jsx(SourceDisclosure, { headingLevel: 3, sources }) }),
         resolvedStatusLabel != null && /* @__PURE__ */ jsxs(
           "p",
           {
@@ -329,4 +347,4 @@ function ConversationMessage({
 export {
   ConversationMessage
 };
-//# sourceMappingURL=chunk-C4VATCDF.js.map
+//# sourceMappingURL=chunk-FL73DBL7.js.map

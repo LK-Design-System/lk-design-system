@@ -12,6 +12,18 @@ const AVAILABILITY_META = {
   unknown: { label: '상태 불명', tone: 'offline' },
 };
 
+const VISUALLY_HIDDEN_STYLE = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
 function hasDisclosureContent(source) {
   return source.excerpt != null
     || source.description != null
@@ -41,6 +53,7 @@ function ExternalLinkContent({ children }) {
 export function SourceDisclosure({
   title = '출처',
   headingLevel = 2,
+  titleVisuallyHidden = false,
   description,
   sources = [],
   emptyMessage = '표시할 출처가 없습니다.',
@@ -115,26 +128,34 @@ export function SourceDisclosure({
         }`}
       </style>
 
-      <header style={{ display: 'grid', gap: 'var(--space-1)' }}>
-        <Heading
-          id={titleId}
-          style={{
-            margin: 0,
-            color: 'var(--color-semantic-label-strong)',
-            fontSize: 'var(--body1-size)',
-            lineHeight: 'var(--body1-line)',
-            fontWeight: 'var(--fw-bold)',
-            letterSpacing: 'var(--body1-spacing)',
-          }}
-        >
+      {titleVisuallyHidden && description == null ? (
+        <Heading id={titleId} style={VISUALLY_HIDDEN_STYLE}>
           {title}
         </Heading>
-        {description != null && (
-          <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
-            {description}
-          </p>
-        )}
-      </header>
+      ) : (
+        <header style={{ display: 'grid', gap: 'var(--space-1)' }}>
+          <Heading
+            id={titleId}
+            style={titleVisuallyHidden
+              ? VISUALLY_HIDDEN_STYLE
+              : {
+                  margin: 0,
+                  color: 'var(--color-semantic-label-strong)',
+                  fontSize: 'var(--body1-size)',
+                  lineHeight: 'var(--body1-line)',
+                  fontWeight: 'var(--fw-bold)',
+                  letterSpacing: 'var(--body1-spacing)',
+                }}
+          >
+            {title}
+          </Heading>
+          {description != null && (
+            <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
+              {description}
+            </p>
+          )}
+        </header>
+      )}
 
       {sources.length === 0 ? (
         <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>

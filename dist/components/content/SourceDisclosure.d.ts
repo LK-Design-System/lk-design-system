@@ -29,6 +29,8 @@ export interface SourceDisclosureItem {
 export interface SourceDisclosureProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   title?: React.ReactNode;
   headingLevel?: 2 | 3 | 4 | 5 | 6;
+  /** Keeps the section name available to assistive technology when an embedding surface already supplies a visible label. */
+  titleVisuallyHidden?: boolean;
   description?: React.ReactNode;
   sources?: SourceDisclosureItem[];
   emptyMessage?: React.ReactNode;

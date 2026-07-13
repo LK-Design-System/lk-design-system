@@ -265,6 +265,7 @@ const evidenceSources = [
     location: 'Fleet operations',
     availability: 'available',
     href: 'https://example.com/fleet-policy',
+    actionAriaLabel: 'Fleet charging policy / 2026-Q3: \uc0c8 \ucc3d\uc5d0\uc11c \uc5f4\uae30',
   },
 ];
 
@@ -298,6 +299,7 @@ export const GroupedMessagesAndSlots = {
         lifecycle={{ kind: 'response', state: 'complete' }}
         attachments={<AttachmentSlot />}
         sources={evidenceSources}
+        sourcePresentation="compact"
         actions={<Button size="sm" variant="ghost">답변 복사</Button>}
       >
         배터리 30% 미만 장비는 robot-17 한 대입니다.
@@ -338,6 +340,18 @@ export const GroupedMessagesAndSlots = {
     if (partOrder.join(',') !== expectedOrder.join(',')) {
       throw new Error(`Message DOM order must be ${expectedOrder.join(' → ')}, received ${partOrder.join(' → ')}.`);
     }
+    const compactSources = first.querySelector('[data-message-sources-disclosure]');
+    const compactSummary = compactSources?.querySelector('summary');
+    if (!compactSources || compactSources.open || compactSummary?.textContent?.trim() !== '\uadfc\uac70 1\uac1c') {
+      throw new Error('The compact source disclosure must start closed with its source count.');
+    }
+    await userEvent.click(compactSummary);
+    const sourceLink = compactSources.querySelector('a[href="https://example.com/fleet-policy"]');
+    if (!compactSources.open
+      || sourceLink?.getAttribute('aria-label') !== 'Fleet charging policy / 2026-Q3: \uc0c8 \ucc3d\uc5d0\uc11c \uc5f4\uae30') {
+      throw new Error('Expanding compact sources must reveal the original provenance link with a new-window label.');
+    }
+    await userEvent.click(compactSummary);
     if (first.querySelectorAll('[data-message-avatar]').length !== 1
       || middle.querySelector('[data-message-avatar]')
       || last.querySelector('[data-message-avatar]')) {

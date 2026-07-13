@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
-var _chunkG3QYV6E7cjs = require('./chunk-G3QYV6E7.cjs');
+var _chunkK3MR2NFBcjs = require('./chunk-K3MR2NFB.cjs');
 
 
 var _chunk3BBCS67Wcjs = require('./chunk-3BBCS67W.cjs');
@@ -42,6 +42,20 @@ var VISUALLY_HIDDEN_STYLE = {
   clip: "rect(0 0 0 0)",
   whiteSpace: "nowrap",
   border: 0
+};
+var COMPACT_SOURCE_SUMMARY_STYLE = {
+  width: "fit-content",
+  minHeight: "var(--component-button-height-sm)",
+  padding: "calc(var(--space-2) - 1px) var(--space-3)",
+  boxSizing: "border-box",
+  cursor: "pointer",
+  border: "1px solid var(--color-semantic-line-normal-normal)",
+  borderRadius: "var(--radius-pill)",
+  background: "var(--color-semantic-fill-normal)",
+  color: "var(--color-semantic-label-neutral)",
+  fontSize: "var(--caption1-size)",
+  lineHeight: "var(--caption1-line)",
+  fontWeight: "var(--fw-semibold)"
 };
 function normalizeLifecycle(lifecycle) {
   if (_optionalChain([lifecycle, 'optionalAccess', _ => _.kind]) === "delivery" && LIFECYCLE_LABELS.delivery[lifecycle.state]) {
@@ -85,6 +99,7 @@ function ConversationMessage({
   statusLabel,
   attachments,
   sources,
+  sourcePresentation = "full",
   actions,
   onRetry,
   onStop,
@@ -261,7 +276,10 @@ function ConversationMessage({
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { flex: "1 1 0", minWidth: "var(--space-4)", height: 1, background: "var(--color-semantic-line-normal-alternative)" } })
         ] }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-message-part": "body", "data-message-surface": true, style: bodySurfaceStyle, children }),
         attachments != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-message-part": "attachments", style: commonPartStyle, children: attachments }),
-        Array.isArray(sources) && sources.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-message-part": "sources", style: commonPartStyle, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkG3QYV6E7cjs.SourceDisclosure, { headingLevel: 3, sources }) }),
+        Array.isArray(sources) && sources.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-message-part": "sources", style: commonPartStyle, children: sourcePresentation === "compact" ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "details", { "data-message-sources-disclosure": "", children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "summary", { style: COMPACT_SOURCE_SUMMARY_STYLE, children: `\uADFC\uAC70 ${sources.length}\uAC1C` }),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-message-sources-panel": "", style: { marginTop: "var(--space-2)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkK3MR2NFBcjs.SourceDisclosure, { headingLevel: 3, titleVisuallyHidden: true, sources }) })
+        ] }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkK3MR2NFBcjs.SourceDisclosure, { headingLevel: 3, sources }) }),
         resolvedStatusLabel != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "p",
           {
@@ -329,4 +347,4 @@ function ConversationMessage({
 
 
 exports.ConversationMessage = ConversationMessage;
-//# sourceMappingURL=chunk-6APKOJMD.cjs.map
+//# sourceMappingURL=chunk-WQZKUTBR.cjs.map

@@ -39,6 +39,21 @@ const VISUALLY_HIDDEN_STYLE = {
   border: 0,
 };
 
+const COMPACT_SOURCE_SUMMARY_STYLE = {
+  width: 'fit-content',
+  minHeight: 'var(--component-button-height-sm)',
+  padding: 'calc(var(--space-2) - 1px) var(--space-3)',
+  boxSizing: 'border-box',
+  cursor: 'pointer',
+  border: '1px solid var(--color-semantic-line-normal-normal)',
+  borderRadius: 'var(--radius-pill)',
+  background: 'var(--color-semantic-fill-normal)',
+  color: 'var(--color-semantic-label-neutral)',
+  fontSize: 'var(--caption1-size)',
+  lineHeight: 'var(--caption1-line)',
+  fontWeight: 'var(--fw-semibold)',
+};
+
 function normalizeLifecycle(lifecycle) {
   if (lifecycle?.kind === 'delivery' && LIFECYCLE_LABELS.delivery[lifecycle.state]) {
     return lifecycle;
@@ -89,6 +104,7 @@ export function ConversationMessage({
   statusLabel,
   attachments,
   sources,
+  sourcePresentation = 'full',
   actions,
   onRetry,
   onStop,
@@ -296,7 +312,18 @@ export function ConversationMessage({
 
       {Array.isArray(sources) && sources.length > 0 && (
         <div data-message-part="sources" style={commonPartStyle}>
-          <SourceDisclosure headingLevel={3} sources={sources} />
+          {sourcePresentation === 'compact' ? (
+            <details data-message-sources-disclosure="">
+              <summary style={COMPACT_SOURCE_SUMMARY_STYLE}>
+                {`\uadfc\uac70 ${sources.length}\uac1c`}
+              </summary>
+              <div data-message-sources-panel="" style={{ marginTop: 'var(--space-2)' }}>
+                <SourceDisclosure headingLevel={3} titleVisuallyHidden sources={sources} />
+              </div>
+            </details>
+          ) : (
+            <SourceDisclosure headingLevel={3} sources={sources} />
+          )}
         </div>
       )}
 

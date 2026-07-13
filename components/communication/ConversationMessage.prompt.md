@@ -17,6 +17,8 @@
 
 ## Meaning and ownership
 
+- `sourcePresentation="full"` keeps the complete provenance list visible. Explicit `compact` starts with a source-count disclosure and reveals the same `SourceDisclosure` list on request; the component never infers this presentation from source count or author role.
+
 - `direction`은 배치와 surface만 소유하고 `authorRole`은 발신자 의미만 소유합니다. `outbound + human-agent`, `inbound + user`처럼 제품이 명시한 조합을 허용하며 한 값에서 다른 값을 추론하지 않습니다.
 - lifecycle은 `{ kind: 'static' }`, `{ kind: 'delivery', state }`, `{ kind: 'response', state }`의 판별 공용체입니다. outbound 전송과 assistant 응답 생명주기를 하나의 평면 enum으로 섞지 않습니다.
 - 읽기 순서와 DOM 순서는 identity → body → attachments → sources → lifecycle/status → actions입니다. `single`/`first`에만 32px avatar slot을 보이고, `middle`/`last`에서도 author identity는 visually hidden 상태로 접근성 트리에 남깁니다.
@@ -50,6 +52,9 @@
 - dark theme에서도 semantic token을 그대로 재해석하며 별도의 hard-coded inverse palette를 만들지 않습니다.
 
 ## Authoritative external basis
+
+- [WHATWG HTML `details`/`summary`](https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element) defines a native disclosure for additional information. Compact sources use that semantic instead of presenting the source list as a tab or menu.
+- [WAI-ARIA APG Disclosure Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/) requires the trigger to toggle with Enter and Space and expose its expanded state. LDS delegates that contract to native `details`/`summary` and composes the existing `SourceDisclosure` list inside it.
 
 - [WAI-ARIA 1.2 `log` role](https://www.w3.org/TR/wai-aria/#log)은 chat history를 의미 있는 순서로 끝에 추가되는 하나의 live region으로 정의합니다. 그래서 개별 message article은 live region이 아니며 상위 feed가 log 경계를 소유합니다.
 - [WCAG Technique ARIA23](https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA23)는 chat conversation container에 `role="log"`를 두어 새 항목을 알리는 예시를 제공합니다. message 자체에 반복 live region을 만들지 않는 근거입니다.

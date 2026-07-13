@@ -41,6 +41,8 @@ export interface ConversationMessageProps extends React.HTMLAttributes<HTMLEleme
   attachments?: React.ReactNode;
   /** Provenance rendered with SourceDisclosure below the message body. */
   sources?: SourceDisclosureItem[];
+  /** Full provenance list by default; compact exposes a count disclosure for product-validated supporting sources before revealing the same list. @default 'full' */
+  sourcePresentation?: 'full' | 'compact';
   /** Additional message-level actions. */
   actions?: React.ReactNode;
   /** Called only from failed delivery/response retry controls. No lifecycle transition is inferred. */

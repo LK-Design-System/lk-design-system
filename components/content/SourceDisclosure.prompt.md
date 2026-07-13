@@ -25,6 +25,7 @@
 - excerpt는 `blockquote`이며 `href`가 있으면 HTML `cite` 속성으로 원본 URL을 연결합니다.
 - 좁은 폭에서는 availability가 identity 아래로 이동하고 chevron은 첫 행 끝에 남습니다. 내부 가로 스크롤이나 source별 중첩 card를 만들지 않습니다.
 - source 조회, permission, freshness 계산, excerpt 생성과 renderer 선택은 제품이 소유합니다. LDS는 URL이나 timestamp에서 availability를 추론하지 않습니다.
+- 기본 visible `title`은 독립 provenance 목록의 시작점을 제공합니다. 이미 `근거 N개`처럼 동등한 visible label을 제공하는 embedding surface만 `titleVisuallyHidden`을 사용해 중복 heading을 제거할 수 있으며, section의 `aria-labelledby` 이름은 그대로 유지됩니다.
 
 ## Internal LDS comparison
 
