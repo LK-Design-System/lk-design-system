@@ -6,7 +6,7 @@
 | Status | Current |
 | Owner | Design system owner · Frontend platform · Component owners |
 | Last reviewed | 2026-07-14 |
-| Reviewed revision | `aacb0a0` base + current change set |
+| Reviewed revision | current `main` · full-check implementation checkpoint `3829374` |
 | Refresh | release 후보, public contract 변경, product source pin 변경 시 |
 | Source | 현재 코드, verifier, current register, machine-readable audit JSON |
 
@@ -54,7 +54,7 @@ workflow가 모두 `verified`이고, `separate-audit` 항목이 완료되거나 
 | 사람 중심 디자인 품질 | 부분 | D-track high 14건 해결, medium 23건·low 10건 추적 | medium/low를 수정·수락·기각 중 하나로 닫기 |
 | 제품 workflow coverage | 부분 | 15개 중 14개 `verified`, WF-15 `wireframed` | WF-15 semantic renderer gap과 제품 연결 증거 해결 |
 | Robotics editor 계열 | 완료(별도 audit 범위) | 5개 component를 workflow coverage와 격리하고 [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md)에서 source-first 검토 완료 | 제품 source 또는 editor contract 변경 시 별도 재감사 |
-| Git·원격 릴리스 반영 | 부분 | `main`과 `origin/main`은 `aacb0a0`에서 0/0이지만 현재 change set은 미커밋 | 최종 검사 후 의도한 변경만 commit·push하고 parity 확인 |
+| Git·원격 릴리스 반영 | 완료 | full-check change set `3829374`와 이 parity 기록을 `main`에 반영하고 `origin/main` 0/0 확인 | 다음 변경에서도 push 후 fetch·parity 재확인 |
 
 위 수치는 [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md),
 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`,
@@ -146,8 +146,8 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | --- | --- | --- | --- | --- |
 | H-01 | 전체 repository gate | 같은 revision에서 build, contract, Storybook, a11y, visual regression, package artifact가 모두 통과한다. | `npm run check` | 완료: 2026-07-14 현재 staged change set 전체 gate 통과 |
 | H-02 | release audit | 외부 배포 또는 release 후보면 runtime audit을 포함한 release gate가 통과한다. | `npm run check:ops-release` | 해당 없음: 현재 private Git 소비 |
-| H-03 | 변경 범위 clean | 의도한 파일만 남고 generated drift와 타인 소유 변경을 포함하지 않는다. | `git status --short`, `git diff --check` | 부분: 의도한 staged change set과 generated drift 0 확인, 아직 미커밋 |
-| H-04 | main·remote parity | 승인된 변경이 `main`에 통합되고 `origin/main`과 ahead/behind가 0/0이다. | `git fetch --prune`, `git status --short --branch` | 부분: 현재 HEAD는 0/0이나 change set 미커밋·미push |
+| H-03 | 변경 범위 clean | 의도한 파일만 남고 generated drift와 타인 소유 변경을 포함하지 않는다. | `git status --short`, `git diff --check` | 완료: 의도한 change set 커밋, generated drift 0, final clean 상태 확인 |
+| H-04 | main·remote parity | 승인된 변경이 `main`에 통합되고 `origin/main`과 ahead/behind가 0/0이다. | `git fetch --prune`, `git status --short --branch` | 완료: `main...origin/main` 0/0 확인 |
 | H-05 | current handoff | 현재 판정, 검증 명령, 남은 finding, 다음 owner가 current handoff에서 이 문서로 연결된다. | [`HANDOFF.md`](HANDOFF.md) | 완료 |
 
 ## 남은 검토 원장
@@ -157,7 +157,6 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | R-01 | P1 · 제품 workflow | WF-15의 `forbidden` line과 stair/stair-slope semantic renderer를 LDS가 소유할지 제품 renderer에 남길지 결정한다. | LK Web Viz source-first audit, public contract 또는 명시적 product boundary, WF-15 `verified` 또는 승인된 scope-out | 지도 authoring workflow 완결을 차단; 코어 일반 사용은 차단하지 않음 |
 | R-02 | P2 · 채택 추적 | LK Control Full Daedeok의 WF-15에 Navigation renderer의 component-level mapping을 직접 연결한다. | pinned Control source row와 component disposition의 양방향 trace, `check:product-frontends` 통과 | Control의 지도·감독 조합 지원 여부를 `unverified`로 제한 |
 | R-03 | P2/P3 · 디자인 품질 | D-track medium 23건과 low 10건을 수정, 근거 있는 수락, 또는 기각으로 닫는다. | finding별 remediation·owner·검증 evidence | 코어 release blocker는 아니지만 디자인 품질 완결을 차단 |
-| R-04 | 운영 | 현재 working tree change set을 검토해 의도한 범위만 커밋하고 원격에 반영한다. | clean worktree, `main...origin/main` 0/0, 최신 handoff | 원격 릴리스 반영 완료를 차단 |
 
 ## 점검 실행 순서
 
