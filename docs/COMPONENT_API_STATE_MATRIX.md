@@ -5,7 +5,7 @@
 | Type | Stable contract and component register |
 | Status | Current |
 | Owner | Component owners · Design system owner |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-13 |
 
 ## Canonical public API grammar
 
@@ -101,14 +101,14 @@
 | SearchableMultiSelect | async search, selected chip removal, keyboard option traversal that skips disabled options, loading/error/empty, max selection | searchable multi-select resource and disabled-option stories |
 | SecretField | masked/revealed, timed reveal, copy feedback, disabled, external re-auth composition | secret field story |
 | FileUploadQueue | queued/uploading/processing/succeeded/failed, progress, retry/remove/open, partial completion | upload queue states story |
-| SourceDisclosure | product-provided availability, provenance, observed/updated time, excerpt, source action, missing/restricted/error | source disclosure stories |
+| SourceDisclosure | product-provided availability, provenance, observed/updated time, excerpt, source action, missing/restricted/error, optional visually hidden title for already-labelled embedding surfaces | source disclosure stories plus ConversationMessage compact-source composition |
 | LogViewer | level/search, pause/tail/latest, virtualized buffer, dropped line, reconnect/stale, copy/export/clear | log viewer stream states |
 | AnnotatedImage | load/error/empty, normalized region/point, annotation toggle, object fit, caption, accessible annotation summary; no provenance/actions/metrics | annotated image renderer stories |
 | ManualControlSession | independent link/authority/UI-arm/dead-man/focus axes, blocked reason, focus/visibility loss, safe-release reason, unmount release, re-arm request, emergency-stop request; no transport guarantee | manual control session stories |
 | ValidationSummary | error/warning issue, label/message, field or step return path, empty, optional announcement | form validation summary stories |
-| ConversationMessage | inbound/outbound/system direction independent of user/assistant/human-agent/system role, single/first/middle/last grouping, static/delivery/response lifecycle, aria-busy only on response pending/streaming/stopping, failed-only retry and pending/streaming-only stop, attachment/source/action slots; identity→body→attachments→sources→status→actions order | role/lifecycle overview, grouping and slots, composition, dark and 320px long-content stories |
+| ConversationMessage | inbound/outbound/system direction independent of user/assistant/human-agent/system role, explicit soft/solid surface variant independent of both axes, soft full-column rich content vs shrink-wrapped/pre-wrapped/non-empty plain-text-only solid, system always neutral line, single/first/middle/last grouping, static/delivery/response lifecycle, response complete silent by default, aria-busy only on response pending/streaming/stopping, failed-only retry and pending/streaming-only stop, attachment/source/action slots, full(default)/compact source presentation; response status follows body before evidence, delivery/static status follows payload, actions last | same-axis soft/solid multiline overview, role/lifecycle, conditional status order, grouping and slots, chatbot composition with compact source hierarchy, dark contrast and 320px long-content stories |
 | MessageFeed | role="log" polite additions-only named viewport, controlled following with user-scroll/jump-to-latest reason, prepend scroll-anchor restoration, history load/busy, unread jump with focus retention, separate liveStatus status region, empty | history anchoring, follow/unread, empty/busy and 320px stories |
-| MessageComposer | controlled value, idle/submitting/streaming/stopping, enter/modifier-enter/button-only submit modes, IME-safe Enter, Shift+Enter newline, disabled requires disabledReason, canSubmit/readOnly, attachment/secondary slots, autosize min/max rows; never infers transport completion or clears value | submit-mode, IME, streaming stop, disabled-reason, dark and 320px stories |
+| MessageComposer | controlled value, idle/submitting/streaming/stopping, enter/modifier-enter/button-only submit modes, IME-safe Enter, Shift+Enter newline, disabled requires disabledReason, canSubmit/readOnly, attachment/secondary slots, 44px autosize input with 32px send/stop centered in a fixed 40×44px bottom slot, parent-stretch isolation; never infers transport completion or clears value | submit-mode, IME, streaming stop, disabled-reason, normal/dark, parent-grid and 320px stories |
 | VirtualKeypad | controlled canonical string value preserving `-`/`0.`/leading zeros, integer/decimal mode, optional sign, canonical `.` with localized display separator, min/max applied to confirmation validity only, maxLength, disabled/confirmDisabled, targetId focus preservation | integer/decimal and sign, range-invalid confirm, target-focus retention, 320px and landscape stories |
 
 ## Disallowed patterns

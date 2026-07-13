@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-07-12",
+  "auditedAt": "2026-07-13",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -1291,6 +1291,53 @@
       "consumers": [
         "context-hub"
       ],
+      "assetReviews": [
+        {
+          "repo": "context-hub",
+          "classification": "supported by composition",
+          "reason": "Pinned chat panel and chat contract map to explicit message surfaces, message lifecycle, feed, composer, scope/reset composition, and compact citations; retrieval, provider transport, persistence, and citation truth remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+            },
+            {
+              "path": "docs/chat.md",
+              "blobSha": "183d5ff54b546c9973e12370b1b2c9c027d09def"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "Pinned map editor and task authoring sources own map and floor geometry plus task targets, with no evidence-backed conversation or citation entry point.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/MapEditScreen.tsx",
+              "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+            },
+            {
+              "path": "frontend/src/screens/TaskCreateScreen.tsx",
+              "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "Pinned dashboard and task-command sources own supervision, task command, and manual-control workflows, with no scoped-knowledge conversation or citation UI.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx",
+              "blobSha": "55d79e36d4b8797d3eabd1e35ae64422a9fc38a0"
+            }
+          ]
+        }
+      ],
       "states": [
         "provider-checking",
         "unavailable",
@@ -1311,7 +1358,7 @@
         "Confirm or clearly communicate session reset on provider or scope change.",
         "Keep the failed prompt and allow an explicit retry without inventing sources."
       ],
-      "dsBoundary": "LDS may own conversation states, active-scope disclosure, source expansion, reset confirmation, and accessible streaming; provider transport, retrieval, scope resolution, persistence, and source truth remain product-owned.",
+      "dsBoundary": "LDS may own explicit message surface variants, message lifecycle anatomy, feed history/follow behavior, IME-safe composition, active-scope disclosure, full or compact source presentation, reset confirmation, and accessible streaming; role-to-surface policy, provider transport, retrieval, scope resolution, persistence, and source truth remain product-owned.",
       "designQuestion": "Which chat primitives are reusable without promoting the complete Context Hub conversation workflow into one component?",
       "sourceEvidence": [
         {
@@ -1330,6 +1377,9 @@
         "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-10-scoped-knowledge-assistance"
       ],
       "implementationEvidence": [
+        "components/communication/ConversationMessage.jsx",
+        "components/communication/MessageFeed.jsx",
+        "components/communication/MessageComposer.jsx",
         "components/content/SourceDisclosure.jsx",
         "components/data/TreePicker.jsx",
         "components/overlay/ConfirmDialog.jsx",
@@ -1339,6 +1389,9 @@
         "components/status/Callout.jsx"
       ],
       "storyEvidence": [
+        "stories/CommunicationMessage.stories.jsx",
+        "stories/CommunicationMessageFeed.stories.jsx",
+        "stories/CommunicationMessageComposer.stories.jsx",
         "stories/ContentSourceDisclosure.stories.jsx",
         "stories/DataTreePicker.stories.jsx",
         "stories/OverlayConfirmDialog.stories.jsx",
@@ -1642,6 +1695,65 @@
       "trigger": "The user opens a map editor or a floor-aware task authoring surface in LK Web Viz.",
       "consumers": [
         "web-viz"
+      ],
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "Pinned map editor, zone editor, and task target sources map to renderer-neutral point, line, route, trajectory, region, facility-transition, and named-mirror contracts; projection, floor topology, editing, persistence, and recovery remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/MapEditScreen.tsx",
+              "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+            },
+            {
+              "path": "frontend/src/components/editor/ZoneEditor.tsx",
+              "blobSha": "7c80fcb4fb50d8e98438fa0225a43f1c390f292e"
+            },
+            {
+              "path": "frontend/src/screens/TaskCreateScreen.tsx",
+              "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "unverified",
+          "reason": "Pinned robot dashboard and task-command sources show a relevant supervision and map-target seam, but no component-level mapping to the six Robotics Navigation renderers has been closed; no support claim is made.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx",
+              "blobSha": "55d79e36d4b8797d3eabd1e35ae64422a9fc38a0"
+            },
+            {
+              "path": "frontend/src/views/task-management/index.jsx",
+              "blobSha": "929f25340a4845248fb80c355841193cac41a51d"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "Pinned frontend evidence owns project and evidence scope, document intake, assistance, and credential workflows; it has no map, floor, robot-navigation, or geometry-authoring entry point.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/projects/page.tsx",
+              "blobSha": "e1539973aebffb3566983f27e8845ed8384dba59"
+            },
+            {
+              "path": "src/components/scopes/ScopeManager.tsx",
+              "blobSha": "082684c6443346ca6f6a91cd011fe7a5bf0b5a3e"
+            },
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+            }
+          ]
+        }
       ],
       "states": [
         "loading",

@@ -57,5 +57,5 @@ export interface RouteOverlayProps extends NavigationSvgFeatureProps {
   onActivate?: (target: RouteSelection, event: NavigationActivateEvent) => void;
 }
 
-/** SVG `<g>` fragment for one map-filtered planned graph route. */
-export function RouteOverlay(props: RouteOverlayProps): React.JSX.Element;
+/** SVG `<g>` fragment for one map-filtered planned graph route. Returns `null` when the active map has no renderable segment. */
+export function RouteOverlay(props: RouteOverlayProps): React.JSX.Element | null;

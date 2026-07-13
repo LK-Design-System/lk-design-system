@@ -488,7 +488,7 @@ async function buildAudit(previous) {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
     source: {
       name: 'LK Design System Storybook information architecture audit',
-      auditedAt: '2026-07-12',
+      auditedAt: '2026-07-13',
       storybookIndex: 'storybook-static/index.json',
       storybookIndexSha256: sha256(indexSource),
       publicExportEntry: 'src/index.js',

@@ -1,4 +1,6 @@
 import React from 'react';
+import { isFocusVisibleTarget } from './_NavigationFocus.js';
+import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -9,15 +11,24 @@ const STATUS_LABEL = {
   completed: '완료됨',
 };
 
-const STATUS_GLYPH = {
-  planned: '○',
-  active: '▶',
-  waiting: 'Ⅱ',
-  blocked: '×',
-  rerouting: '↻',
-  completed: '✓',
+const STATUS_GLYPH_KIND = {
+  planned: 'planned',
+  active: 'active',
+  waiting: 'waiting',
+  blocked: 'blocked',
+  rerouting: 'rerouting',
+  completed: 'completed',
 };
 
+const MARKER_GAP_PX = 4;
+const MARKER_ROW_CLEARANCE_PX = 8;
+const LABEL_ROW_GAP_PX = 12;
+const MARKER_RADIUS_PX = {
+  status: 7.75,
+  current: 9,
+  invalid: 7.75,
+  stale: 7.75,
+};
 function finitePoint(point) {
   return point && Number.isFinite(point.x) && Number.isFinite(point.y);
 }
@@ -25,6 +36,65 @@ function finitePoint(point) {
 function pathFromPoints(points) {
   if (points.length < 2) return '';
   return points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
+}
+
+function markerTransform(point, inverseScale, screenSlot) {
+  const anchor = `translate(${point.x} ${point.y}) scale(${inverseScale})`;
+  return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
+}
+
+function markerCollisionLayout(markers, scale) {
+  if (markers.length < 2) return undefined;
+  const collidingIndexes = new Set();
+  for (let first = 0; first < markers.length; first += 1) {
+    for (let second = first + 1; second < markers.length; second += 1) {
+      const a = markers[first];
+      const b = markers[second];
+      const naturalDistance = Math.hypot(
+        a.point.x - b.point.x,
+        a.point.y - b.point.y,
+      ) * scale;
+      if (naturalDistance < a.radius + b.radius + MARKER_GAP_PX) {
+        collidingIndexes.add(first);
+        collidingIndexes.add(second);
+      }
+    }
+  }
+  if (collidingIndexes.size === 0) return undefined;
+
+  const collisionMarkers = [...collidingIndexes].map((index) => markers[index]);
+  const reference = collisionMarkers.reduce((point, marker) => ({
+    x: point.x + marker.point.x / collisionMarkers.length,
+    y: point.y + marker.point.y / collisionMarkers.length,
+  }), { x: 0, y: 0 });
+  const maxRadius = Math.max(...markers.map((marker) => marker.radius));
+  const totalWidth = markers.reduce((width, marker) => width + marker.radius * 2, 0)
+    + MARKER_GAP_PX * (markers.length - 1);
+  const rowY = -(maxRadius + MARKER_ROW_CLEARANCE_PX);
+  const slots = {};
+  let cursor = -totalWidth / 2;
+  markers.forEach((marker) => {
+    const centerX = cursor + marker.radius;
+    slots[marker.name] = {
+      x: (reference.x - marker.point.x) * scale + centerX,
+      y: (reference.y - marker.point.y) * scale + rowY,
+    };
+    cursor += marker.radius * 2 + MARKER_GAP_PX;
+  });
+  return {
+    reference,
+    slots,
+    totalWidth,
+    labelY: rowY - maxRadius - LABEL_ROW_GAP_PX,
+  };
+}
+
+function labelScreenSlot(point, layout, scale) {
+  if (!layout) return undefined;
+  return {
+    x: (layout.reference.x - point.x) * scale,
+    y: (layout.reference.y - point.y) * scale + layout.labelY,
+  };
 }
 
 function pointAlong(points, ratio) {
@@ -77,7 +147,7 @@ function statusDash(status) {
   return undefined;
 }
 
-function trajectoryAccessibleName(trajectory, selected, invalid, stale) {
+function trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale) {
   const samples = trajectory?.samples ?? [];
   const currentIndex = Number.isInteger(trajectory?.currentSampleIndex)
     && trajectory.currentSampleIndex >= 0
@@ -98,6 +168,8 @@ function trajectoryAccessibleName(trajectory, selected, invalid, stale) {
   if (currentIndex != null) parts.push(`현재 sample ${currentIndex + 1}`);
   if (currentTime != null) parts.push(`현재 시간 ${currentTime} 밀리초`);
   if (selected) parts.push('선택됨');
+  if (focused) parts.push('포커스됨');
+  if (disabled) parts.push('선택할 수 없음');
   if (invalid) parts.push('데이터 오류');
   if (stale) parts.push('오래된 데이터');
   return parts.join(', ');
@@ -117,7 +189,10 @@ export function TrajectoryOverlay({
   tabIndex,
   onFocus,
   onBlur,
+  onPointerDown,
+  onMouseDown,
   'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
   style,
   ...rest
 }) {
@@ -125,10 +200,13 @@ export function TrajectoryOverlay({
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === 'function';
-  const focusVisible = focused || hasDomFocus;
+  const hiddenFromAccessibility = ariaHidden === true || ariaHidden === 'true';
+  const pointerOnly = interactive && hiddenFromAccessibility;
+  const focusVisible = !hiddenFromAccessibility && (focused || hasDomFocus);
   const samples = trajectory?.samples ?? [];
   const points = samples.map((sample) => sample.position).filter(finitePoint);
   const pathData = pathFromPoints(points);
+  if (points.length < 2) return null;
   const currentIndex = Number.isInteger(trajectory?.currentSampleIndex)
     && trajectory.currentSampleIndex >= 0
     && trajectory.currentSampleIndex < samples.length
@@ -146,6 +224,32 @@ export function TrajectoryOverlay({
   const dash = statusDash(trajectory?.status);
   const foreground = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
   const surface = 'var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))';
+  const trajectoryStateMarkers = [
+    invalid ? {
+      state: 'invalid',
+      glyphKind: 'invalid',
+      point: pointAlong(points, 0.8),
+      tone: 'var(--color-semantic-status-negative-foreground)',
+    } : null,
+    stale ? {
+      state: 'stale',
+      glyphKind: 'stale',
+      point: pointAlong(points, invalid ? 0.9 : 0.8),
+      tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))',
+    } : null,
+  ].filter(Boolean);
+  const naturalMarkers = [
+    { name: 'status', point: statePoint, radius: MARKER_RADIUS_PX.status },
+    currentSample ? { name: 'current', point: markerPoint, radius: MARKER_RADIUS_PX.current } : null,
+    ...trajectoryStateMarkers.map((item) => ({
+      name: item.state,
+      point: item.point,
+      radius: MARKER_RADIUS_PX[item.state],
+    })),
+  ].filter(Boolean);
+  const markerLayout = markerCollisionLayout(naturalMarkers, scale);
+  const trajectoryMarkerSlot = (name) => markerLayout?.slots[name];
+  const trajectoryLabelSlot = labelScreenSlot(markerPoint, markerLayout, scale);
 
   const activate = (event) => {
     if (disabled || !interactive) return;
@@ -153,9 +257,21 @@ export function TrajectoryOverlay({
   };
 
   const handleKeyDown = (event) => {
+    if (!hiddenFromAccessibility) setHasDomFocus(true);
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
+    if (!interactive || disabled || event.repeat || pointerOnly) return;
     activate(event);
+  };
+
+  const handlePointerDown = (event) => {
+    if (pointerOnly) event.preventDefault();
+    onPointerDown?.(event);
+  };
+
+  const handleMouseDown = (event) => {
+    if (pointerOnly) event.preventDefault();
+    onMouseDown?.(event);
   };
 
   return (
@@ -166,31 +282,40 @@ export function TrajectoryOverlay({
       data-map-id={trajectory?.mapId}
       data-trajectory-status={trajectory?.status}
       data-current-sample-index={currentIndex}
+      data-viewport-scale={scale}
+      data-trajectory-marker-layout={markerLayout ? 'screen-slots' : 'path-anchored'}
+      data-trajectory-marker-row-width={markerLayout?.totalWidth}
+      data-pointer-only={pointerOnly ? 'true' : undefined}
       data-selected={selected ? 'true' : 'false'}
       data-focused={focusVisible ? 'true' : 'false'}
       data-disabled={disabled ? 'true' : 'false'}
       data-invalid={invalid ? 'true' : 'false'}
       data-stale={stale ? 'true' : 'false'}
-      role={interactive ? 'button' : 'img'}
-      tabIndex={interactive ? (disabled ? -1 : tabIndex ?? 0) : tabIndex}
-      focusable={interactive ? 'true' : undefined}
-      aria-label={ariaLabel ?? trajectoryAccessibleName(trajectory, selected, invalid, stale)}
-      aria-pressed={interactive ? selected : undefined}
-      aria-disabled={interactive && disabled ? true : undefined}
-      aria-invalid={invalid || undefined}
+      role={hiddenFromAccessibility ? undefined : interactive ? 'button' : 'img'}
+      tabIndex={hiddenFromAccessibility ? undefined : interactive ? (disabled ? -1 : tabIndex ?? 0) : tabIndex}
+      focusable={hiddenFromAccessibility ? 'false' : interactive ? 'true' : undefined}
+      aria-hidden={hiddenFromAccessibility || undefined}
+      aria-label={hiddenFromAccessibility
+        ? undefined
+        : ariaLabel ?? trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale)}
+      aria-pressed={!hiddenFromAccessibility && interactive ? selected : undefined}
+      aria-disabled={!hiddenFromAccessibility && interactive && disabled ? true : undefined}
+      aria-invalid={!hiddenFromAccessibility && invalid ? true : undefined}
       onClick={activate}
-      onKeyDown={handleKeyDown}
-      onFocus={(event) => {
-        setHasDomFocus(true);
+      onKeyDown={!hiddenFromAccessibility ? handleKeyDown : undefined}
+      onPointerDown={pointerOnly || onPointerDown ? handlePointerDown : undefined}
+      onMouseDown={pointerOnly || onMouseDown ? handleMouseDown : undefined}
+      onFocus={!hiddenFromAccessibility ? (event) => {
+        setHasDomFocus(isFocusVisibleTarget(event.currentTarget));
         onFocus?.(event);
-      }}
-      onBlur={(event) => {
+      } : undefined}
+      onBlur={!hiddenFromAccessibility ? (event) => {
         setHasDomFocus(false);
         onBlur?.(event);
-      }}
+      } : undefined}
       style={{
         cursor: disabled ? 'not-allowed' : interactive ? 'pointer' : 'default',
-        opacity: disabled ? 0.42 : stale ? 0.76 : 1,
+        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
         outline: 'none',
         ...style,
       }}
@@ -250,10 +375,12 @@ export function TrajectoryOverlay({
           />
           <circle
             data-trajectory-hit-target-core=""
+            data-trajectory-actual-hit-core=""
             data-screen-target-size="24"
+            data-screen-target-diameter="35"
             cx={statePoint.x}
             cy={statePoint.y}
-            r={17 * inverseScale}
+            r={17.5 * inverseScale}
             fill="transparent"
             pointerEvents="all"
           />
@@ -262,11 +389,16 @@ export function TrajectoryOverlay({
       {pathData && currentSample && (
         <g
           data-trajectory-current-marker=""
-          transform={`translate(${markerPoint.x} ${markerPoint.y}) scale(${inverseScale})`}
+          data-trajectory-screen-slot={markerLayout ? 'current' : undefined}
+          data-trajectory-anchor-x={markerPoint.x}
+          data-trajectory-anchor-y={markerPoint.y}
+          transform={markerTransform(markerPoint, inverseScale, trajectoryMarkerSlot('current'))}
           aria-hidden="true"
           pointerEvents="none"
         >
           <circle
+            data-trajectory-marker-badge="current"
+            data-navigation-marker-circle=""
             r="8"
             fill={surface}
             stroke={tone}
@@ -274,13 +406,14 @@ export function TrajectoryOverlay({
             vectorEffect="non-scaling-stroke"
           />
           {headingDegrees == null ? (
-            <circle r="3" fill={tone} />
+            <circle r="3" fill={foreground} />
           ) : (
             <path
               data-trajectory-current-heading=""
-              d="M -5 -4 L 5 0 L -5 4 Z"
+              data-navigation-vector-glyph="heading"
+              d={NAVIGATION_DIRECTION_PATH}
               transform={`rotate(${headingDegrees})`}
-              fill={tone}
+              fill={foreground}
               stroke={surface}
               strokeWidth="1"
               strokeLinejoin="round"
@@ -293,36 +426,46 @@ export function TrajectoryOverlay({
         <g
           data-trajectory-status-marker=""
           data-trajectory-status-glyph={trajectory?.status}
-          transform={`translate(${statePoint.x} ${statePoint.y}) scale(${inverseScale})`}
+          data-trajectory-screen-slot={markerLayout ? 'status' : undefined}
+          data-trajectory-anchor-x={statePoint.x}
+          data-trajectory-anchor-y={statePoint.y}
+          transform={markerTransform(statePoint, inverseScale, trajectoryMarkerSlot('status'))}
           aria-hidden="true"
           pointerEvents="none"
         >
           <circle
+            data-trajectory-marker-badge="status"
+            data-navigation-marker-circle=""
             r="7"
             fill={surface}
             stroke={tone}
             strokeWidth="1.5"
             vectorEffect="non-scaling-stroke"
           />
-          <text x="0" y="3" textAnchor="middle" fill={tone} fontFamily="var(--font-sans)" fontSize="9" fontWeight="var(--fw-bold)">
-            {STATUS_GLYPH[trajectory?.status] ?? '•'}
-          </text>
+          <NavigationStateGlyph
+            kind={STATUS_GLYPH_KIND[trajectory?.status] ?? 'unknown'}
+            size={10}
+            color={foreground}
+          />
         </g>
       )}
-      {pathData && [
-        invalid ? { state: 'invalid', glyph: '!', ratio: 0.8, tone: 'var(--color-semantic-status-negative-foreground)' } : null,
-        stale ? { state: 'stale', glyph: '~', ratio: invalid ? 0.9 : 0.8, tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))' } : null,
-      ].filter(Boolean).map((item) => {
-        const point = pointAlong(points, item.ratio);
+      {pathData && trajectoryStateMarkers.map((item) => {
+        const point = item.point;
+        const stateSlot = trajectoryMarkerSlot(item.state);
         return (
           <g
             key={item.state}
             data-trajectory-overlay-state={item.state}
-            transform={`translate(${point.x} ${point.y}) scale(${inverseScale})`}
+            data-trajectory-screen-slot={stateSlot ? item.state : undefined}
+            data-trajectory-anchor-x={point.x}
+            data-trajectory-anchor-y={point.y}
+            transform={markerTransform(point, inverseScale, stateSlot)}
             aria-hidden="true"
             pointerEvents="none"
           >
             <circle
+              data-trajectory-marker-badge={item.state}
+              data-navigation-marker-circle=""
               r="7"
               fill={surface}
               stroke={item.tone}
@@ -330,19 +473,20 @@ export function TrajectoryOverlay({
               strokeDasharray={item.state === 'stale' ? '2 2' : undefined}
               vectorEffect="non-scaling-stroke"
             />
-            <text x="0" y="3" textAnchor="middle" fill={item.tone} fontFamily="var(--font-sans)" fontSize="10" fontWeight="var(--fw-bold)">
-              {item.glyph}
-            </text>
+            <NavigationStateGlyph kind={item.glyphKind} size={10} color={foreground} />
           </g>
         );
       })}
       {showLabel && trajectory?.label && pathData && (
         <text
           data-trajectory-label=""
+          data-trajectory-screen-row={trajectoryLabelSlot ? 'label' : undefined}
+          data-trajectory-label-anchor-x={markerPoint.x}
+          data-trajectory-label-anchor-y={markerPoint.y}
           x="0"
-          y="-13"
+          y={trajectoryLabelSlot ? 0 : -13}
           textAnchor="middle"
-          transform={`translate(${markerPoint.x} ${markerPoint.y}) scale(${inverseScale})`}
+          transform={markerTransform(markerPoint, inverseScale, trajectoryLabelSlot)}
           fill={foreground}
           stroke={surface}
           strokeWidth="3"

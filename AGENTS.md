@@ -9,6 +9,14 @@
 - If concurrent edits overlap and their intent cannot be preserved with a confident merge, stop editing the overlapping file, coordinate with the active agent when possible, and report the conflict instead of choosing one version silently.
 - Keep verification scoped to the files and contracts owned by the current task while parallel work is active. A failure or diff in an unrelated agent-owned area is not authorization to modify that area.
 
+## Branch Startup And Lifecycle (MANDATORY)
+
+- At the start of every task, before editing files, inspect the current branch plus all local and remote branches. If the current branch is not `main`, or if any branch other than `main` exists, explicitly warn the user and identify those branches before continuing with implementation.
+- Do not create a work branch, temporary branch, or pull request unless the user requests it or the task genuinely requires it. The repository's default working model is a single persistent `main` branch.
+- Any branch created by an agent for temporary work is ephemeral. Before declaring the task complete, integrate its finished commits into `main` (or the user-specified persistent branch), push the integrated branch, close or merge any associated pull request, and delete the temporary branch both locally and remotely.
+- After temporary-branch cleanup, fetch with pruning and verify the current branch, local branch list, remote branch list, worktree status, and local/remote commit parity. Do not hand off as complete while an agent-created temporary branch remains unless the user explicitly asks to keep it or cleanup is externally blocked.
+- Do not delete a pre-existing or unrelated branch merely because this startup check found it. Warn the user, state whether it is already merged, and obtain explicit approval before deleting it.
+
 ## Storybook Scope
 
 - Storybook is reserved for actual design-system components, patterns, variants, states, and visual parity examples.

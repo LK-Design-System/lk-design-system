@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent } from 'storybook/test';
 import { Map2DCanvas, SpatialRegion } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -22,6 +23,31 @@ const meta = {
 };
 
 export default meta;
+
+function assertCenteredStateGlyph(mark, expectedKind) {
+  const glyph = mark?.querySelector('[data-navigation-state-glyph]');
+  const badge = mark?.querySelector(':scope > circle');
+  if (!glyph || !badge) throw new Error(`State badge is missing SVG geometry for ${expectedKind}.`);
+  if (mark.querySelector('text')) throw new Error(`${expectedKind} state badge must not use a font glyph.`);
+  if (glyph.dataset.navigationStateGlyph !== expectedKind || !glyph.dataset.navigationStateGlyphSource?.startsWith('lds-icon:')) {
+    throw new Error(`${expectedKind} state badge must expose its LDS SVG source.`);
+  }
+
+  const matrix = glyph.getScreenCTM();
+  const badgeBounds = badge.getBoundingClientRect();
+  const glyphBounds = glyph.getBoundingClientRect();
+  if (!matrix || !badgeBounds.width || !glyphBounds.width || !glyphBounds.height) {
+    throw new Error(`${expectedKind} state badge bounds are unavailable.`);
+  }
+  const badgeCenter = { x: badgeBounds.left + badgeBounds.width / 2, y: badgeBounds.top + badgeBounds.height / 2 };
+  if (Math.abs(matrix.e - badgeCenter.x) > 0.75 || Math.abs(matrix.f - badgeCenter.y) > 0.75) {
+    throw new Error(`${expectedKind} SVG origin must remain centered in its badge.`);
+  }
+  if (glyphBounds.left < badgeBounds.left + 0.5 || glyphBounds.right > badgeBounds.right - 0.5
+    || glyphBounds.top < badgeBounds.top + 0.5 || glyphBounds.bottom > badgeBounds.bottom - 0.5) {
+    throw new Error(`${expectedKind} SVG geometry must retain visible inset inside its badge.`);
+  }
+}
 
 const keepOutRegion = {
   id: 'keep-out-west',
@@ -97,6 +123,25 @@ function RegionMap({ children, appearance = 'light', width = 480, height = 288, 
       </svg>
     </Map2DCanvas>
   );
+}
+
+function pointInsidePolygon(point, points) {
+  let inside = false;
+  for (let index = 0, previous = points.length - 1; index < points.length; previous = index++) {
+    const currentPoint = points[index];
+    const previousPoint = points[previous];
+    const crosses = (currentPoint.y > point.y) !== (previousPoint.y > point.y)
+      && point.x < ((previousPoint.x - currentPoint.x) * (point.y - currentPoint.y)) / (previousPoint.y - currentPoint.y) + currentPoint.x;
+    if (crosses) inside = !inside;
+  }
+  return inside;
+}
+
+function boundsOverlap(first, second) {
+  return first.left < second.right
+    && first.right > second.left
+    && first.top < second.bottom
+    && first.bottom > second.top;
 }
 
 function OverviewFixture() {
@@ -191,6 +236,98 @@ export const DarkPatternsAndStates = {
   ),
 };
 
+const concaveKeepOutRegion = {
+  ...keepOutRegion,
+  id: 'concave-keep-out',
+  label: '오목 통행 금지 구역',
+  shape: {
+    kind: 'polygon',
+    points: [
+      { x: 36, y: 34 },
+      { x: 310, y: 34 },
+      { x: 310, y: 78 },
+      { x: 112, y: 78 },
+      { x: 112, y: 206 },
+      { x: 310, y: 206 },
+      { x: 310, y: 250 },
+      { x: 36, y: 250 },
+    ],
+  },
+};
+
+export const ConcaveGeometryAndCompoundStates = {
+  name: '변형·상태 · 오목 영역의 내부 앵커',
+  parameters: storyDescription(
+    '단순 꼭짓점 평균이 영역 밖의 빈 공간에 놓이는 C형 polygon입니다. point-on-surface 앵커는 실제 면 내부에 남고, 수동 선택·포커스·오류·지연 상태와 라벨이 서로 겹치지 않으면서 접근 가능한 이름과 일치해야 합니다.',
+  ),
+  render: () => (
+    <main style={{ width: 'min(100%, 520px)' }}>
+      <RegionMap width={360} height={280} label="오목 공간 영역 상태 지도">
+        <SpatialRegion region={concaveKeepOutRegion} selected focused invalid stale />
+      </RegionMap>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const region = canvasElement.querySelector('[data-region-id="concave-keep-out"]');
+    const stateAnchor = region?.querySelector('[data-region-state-anchor]');
+    const label = region?.querySelector('[data-region-label]');
+    if (!region || !stateAnchor || !label) throw new Error('Concave region state fixture is incomplete.');
+    if (region.getAttribute('role') !== 'img' || region.hasAttribute('aria-pressed')) {
+      throw new Error('Passive selected region must remain an image without aria-pressed.');
+    }
+    if (region.getAttribute('aria-invalid') !== 'true') throw new Error('Invalid region must expose aria-invalid.');
+
+    const name = region.getAttribute('aria-label') ?? '';
+    for (const state of ['선택됨', '포커스됨', '잘못된 영역', '데이터 지연']) {
+      if (!name.includes(state)) throw new Error(`Accessible name is missing the visible region state: ${state}.`);
+    }
+    for (const selector of [
+      '[data-region-selection-ring]',
+      '[data-region-focus-ring]',
+      '[data-region-invalid-mark]',
+      '[data-region-stale-mark]',
+    ]) {
+      if (!region.querySelector(selector)) throw new Error(`Concave compound-state glyph is missing: ${selector}.`);
+    }
+    assertCenteredStateGlyph(region.querySelector('[data-region-invalid-mark]'), 'invalid');
+    assertCenteredStateGlyph(region.querySelector('[data-region-stale-mark]'), 'stale');
+    const focusWidth = Number(region.querySelector('[data-region-focus-ring]')?.getAttribute('stroke-width'));
+    const selectionWidth = Number(region.querySelector('[data-region-selection-ring]')?.getAttribute('stroke-width'));
+    if (!Number.isFinite(focusWidth) || !Number.isFinite(selectionWidth) || (focusWidth - selectionWidth) / 2 < 1.5) {
+      throw new Error(`Compound region must preserve at least a 1.5px visible focus band outside selection: ${focusWidth}/${selectionWidth}.`);
+    }
+
+    const points = concaveKeepOutRegion.shape.points;
+    const naiveAverage = points.reduce(
+      (sum, point) => ({ x: sum.x + point.x / points.length, y: sum.y + point.y / points.length }),
+      { x: 0, y: 0 },
+    );
+    if (pointInsidePolygon(naiveAverage, points)) throw new Error('Stress polygon must keep its naive vertex average outside the visible surface.');
+
+    const anchor = {
+      x: Number(stateAnchor.dataset.regionAnchorX),
+      y: Number(stateAnchor.dataset.regionAnchorY),
+    };
+    if (!Number.isFinite(anchor.x) || !Number.isFinite(anchor.y) || !pointInsidePolygon(anchor, points)) {
+      throw new Error(`Point-on-surface anchor must remain inside the concave polygon: ${JSON.stringify(anchor)}.`);
+    }
+    if (label.dataset.regionAnchorX !== stateAnchor.dataset.regionAnchorX || label.dataset.regionAnchorY !== stateAnchor.dataset.regionAnchorY) {
+      throw new Error('Visible label and compound state glyphs must share the same point-on-surface anchor.');
+    }
+
+    const invalidBounds = region.querySelector('[data-region-invalid-mark] circle')?.getBoundingClientRect();
+    const staleBounds = region.querySelector('[data-region-stale-mark] circle')?.getBoundingClientRect();
+    const labelBounds = label.querySelector('text')?.getBoundingClientRect();
+    if (!invalidBounds || !staleBounds || !labelBounds) throw new Error('Region screen-space bounds are unavailable.');
+    if (boundsOverlap(invalidBounds, labelBounds) || boundsOverlap(staleBounds, labelBounds) || boundsOverlap(invalidBounds, staleBounds)) {
+      throw new Error('Region label, invalid indicator, and stale glyph need distinct screen-space bounds.');
+    }
+
+    const opacity = Number(canvasElement.ownerDocument.defaultView.getComputedStyle(region).opacity);
+    if (Math.abs(opacity - 0.76) > 0.001) throw new Error(`Stale region opacity must remain 0.76, received ${opacity}.`);
+  },
+};
+
 const filteredRegion = {
   ...keepOutRegion,
   id: 'other-map-region',
@@ -210,10 +347,18 @@ const disabledRegion = {
   shape: { kind: 'circle', center: { x: 370, y: 210 }, radius: 42 },
 };
 
+const pointerOnlyRegion = {
+  ...liftCabinRegion,
+  id: 'pointer-only-region',
+  label: '목록 소유 영역',
+  kind: 'dock-area',
+  shape: { kind: 'circle', center: { x: 250, y: 210 }, radius: 32 },
+};
+
 function InteractionFixture() {
   const activeMapId = 'warehouse-1f';
   const [activation, setActivation] = React.useState({ id: '없음', count: 0 });
-  const regions = [slopeRegion, filteredRegion, hiddenRegion, disabledRegion];
+  const regions = [slopeRegion, pointerOnlyRegion, filteredRegion, hiddenRegion, disabledRegion];
   const activate = (id) => setActivation((current) => ({ id, count: current.count + 1 }));
 
   return (
@@ -227,6 +372,7 @@ function InteractionFixture() {
               region={region}
               hidden={region.id === hiddenRegion.id}
               disabled={region.id === disabledRegion.id}
+              aria-hidden={region.id === pointerOnlyRegion.id ? 'true' : undefined}
               tabIndex={region.id === disabledRegion.id ? 0 : undefined}
               onActivate={activate}
             />
@@ -251,20 +397,34 @@ export const InteractionAndMapFiltering = {
   render: () => <InteractionFixture />,
   play: async ({ canvasElement }) => {
     const visible = canvasElement.querySelector('[data-region-id="slope-east"]');
+    const pointerOnly = canvasElement.querySelector('[data-region-id="pointer-only-region"]');
     const disabled = canvasElement.querySelector('[data-region-id="disabled-region"]');
-    if (!visible || !disabled) throw new Error('Visible and disabled active-map regions must render.');
+    if (!visible || !pointerOnly || !disabled) throw new Error('Visible, pointer-only, and disabled active-map regions must render.');
     if (canvasElement.querySelector('[data-region-id="other-map-region"]') || canvasElement.querySelector('[data-region-id="hidden-region"]')) {
       throw new Error('Renderer filtering and hidden behavior must remove unrelated regions.');
     }
     if (disabled.tabIndex !== -1 || disabled.getAttribute('aria-disabled') !== 'true') {
       throw new Error('Disabled interactive regions must override consumer tabIndex and expose aria-disabled.');
     }
+    const disabledOpacity = Number(canvasElement.ownerDocument.defaultView.getComputedStyle(disabled).opacity);
+    if (Math.abs(disabledOpacity - 0.45) > 0.001) {
+      throw new Error(`Disabled region opacity must remain 0.45, received ${disabledOpacity}.`);
+    }
 
     const view = canvasElement.ownerDocument.defaultView;
-    visible.dispatchEvent(new view.MouseEvent('click', { bubbles: true, cancelable: true }));
+    await userEvent.click(visible);
+    const regionFocusVisible = visible.matches(':focus-visible');
     await waitForRender();
+    const hasRegionFocusRing = Boolean(visible.querySelector('[data-region-focus-ring]'));
+    if (hasRegionFocusRing !== regionFocusVisible
+      || (regionFocusVisible && view.getComputedStyle(visible).outlineStyle !== 'none')) {
+      throw new Error('Spatial region must mirror :focus-visible with one shape-managed ring and no rectangular outline.');
+    }
     visible.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
     await waitForRender();
+    if (!visible.querySelector('[data-region-focus-ring]') || view.getComputedStyle(visible).outlineStyle !== 'none') {
+      throw new Error('Spatial region keyboard input must restore only its shape-managed focus ring after pointer modality.');
+    }
     visible.dispatchEvent(new view.KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }));
     await waitForRender();
 
@@ -272,11 +432,31 @@ export const InteractionAndMapFiltering = {
     if (output?.dataset.activationCount !== '3' || !output.textContent?.includes('slope-east')) {
       throw new Error(`Pointer, Enter, and Space must activate the same region callback: ${output?.textContent}`);
     }
+    visible.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', repeat: true, bubbles: true, cancelable: true }));
+    await waitForRender();
+    if (output?.dataset.activationCount !== '3') throw new Error('Repeated region keydown must not emit another inspect activation.');
+
+    if (pointerOnly.hasAttribute('role') || pointerOnly.hasAttribute('tabindex') || pointerOnly.hasAttribute('aria-label')
+      || pointerOnly.getAttribute('focusable') !== 'false' || pointerOnly.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('Pointer-only region must be hidden from AT and non-focusable without duplicate control semantics.');
+    }
+    await userEvent.click(pointerOnly.querySelector('[data-region-geometry]'));
+    await waitForRender();
+    if (output?.dataset.activationCount !== '4' || !output.textContent?.includes('pointer-only-region')) {
+      throw new Error(`Pointer-only region must preserve pointer selection: ${output?.textContent}`);
+    }
+    const focusedNode = canvasElement.ownerDocument.activeElement;
+    if (focusedNode === pointerOnly || pointerOnly.contains(focusedNode)) {
+      throw new Error('Pointer-only region selection moved focus into an aria-hidden SVG fragment.');
+    }
+    pointerOnly.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+    await waitForRender();
+    if (output?.dataset.activationCount !== '4') throw new Error('Pointer-only region must not provide hidden keyboard activation.');
 
     disabled.dispatchEvent(new view.MouseEvent('click', { bubbles: true, cancelable: true }));
     disabled.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
     await waitForRender();
-    if (output?.dataset.activationCount !== '3') throw new Error('Disabled region activation must be blocked.');
+    if (output?.dataset.activationCount !== '4') throw new Error('Disabled region activation must be blocked.');
   },
 };
 

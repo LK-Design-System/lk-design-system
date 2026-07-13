@@ -10,6 +10,7 @@ import {
   ConversationMessage,
   MessageFeed,
   MessageComposer,
+  SourceDisclosure,
   VirtualKeypad,
 } from '@lk-robotics/design-system-core';
 
@@ -90,6 +91,44 @@ export const messageContract: React.ReactElement = (
     lifecycle={{ kind: 'response', state: 'complete' }}
   >
     응답 본문
+  </ConversationMessage>
+);
+
+export const solidMessageContract: React.ReactElement = (
+  <ConversationMessage direction="outbound" authorRole="user" variant="solid" author="김서윤">
+    {'첫 줄\n둘째 줄'}
+  </ConversationMessage>
+);
+
+export const richSoftMessageContract: React.ReactElement = (
+  <ConversationMessage direction="inbound" authorRole="assistant" author="LK Assistant">
+    <a href="https://example.com/source">근거 열기</a>
+  </ConversationMessage>
+);
+
+export const compactSourceMessageContract: React.ReactElement = (
+  <ConversationMessage
+    direction="inbound"
+    authorRole="assistant"
+    author="LK Assistant"
+    sourcePresentation="compact"
+    sources={[{ id: 'policy', label: '운영 정책', availability: 'available' }]}
+  >
+    근거가 있는 응답
+  </ConversationMessage>
+);
+
+export const embeddedSourceContract: React.ReactElement = (
+  <SourceDisclosure
+    titleVisuallyHidden
+    sources={[{ id: 'policy', label: '운영 정책', availability: 'available' }]}
+  />
+);
+
+export const invalidRichSolidMessageContract: React.ReactElement = (
+  // @ts-expect-error Solid message bodies intentionally reject rich content.
+  <ConversationMessage direction="outbound" authorRole="user" variant="solid" author="김서윤">
+    <a href="https://example.com/source">근거 열기</a>
   </ConversationMessage>
 );
 

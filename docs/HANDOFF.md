@@ -5,7 +5,7 @@
 | Type | Current-state pointer |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-14 |
 | Branch | `main` |
 | Baseline | `43ac938` (documentation reorganization 이전) |
 | Remote | `origin` · `LK-ROBOTICS/lk-design-system-core` |
@@ -16,7 +16,9 @@
 
 - `main`은 PR #1의 design-system stabilization과 domain expansion 병합 commit `43ac938`을 기준선으로 문서 체계를 재정비했다.
 - public component implementation/type/export는 202개, named public export는 208개다.
-- 현재 Storybook 기준선은 177 pages / 526 stories / 400 public / 126 hidden / 89 visual-parity다.
+- 현재 Storybook 기준선은 177 pages / 534 stories / 408 public / 126 hidden / 89 visual-parity다.
+- 현재 완성도 판정과 남은 제품·디자인·원격 반영 gate는 [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md)를 따른다. 코어 운영 준비는 완료, 전체 제품 적용은 부분 완료로 판정했다.
+- 2026-07-14 staged change set에서 `npm run check`가 통과했다. 534개 implementation story의 Axe, 215개 play, 37개 visual smoke, 실제 tarball ESM/CJS·compiled subpath·SSR 검증을 포함한다.
 - 승인된 dark-theme foreground 전수 감사를 완료했다. Button ghost와 `primary-heavy`를 소비하던 21개 component file을 theme-scope semantic foreground로 교정했고, 실제 다크 렌더 기준 Button ghost 15.92:1, selected Chip 13.79:1, active FilterChip/MultiSelectChip 11.99:1을 확인했다. `check:colors`는 이제 light/dark Button ghost, selected Chip, 공통 selected surface의 4.5:1 계약을 포함해 38개 pair를 검사한다.
 - 신규 컴포넌트·재설계·icon/asset/map symbol의 canonical 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)다.
 - 문서 탐색과 source-of-truth 순서는 [`README.md`](README.md)를 따른다.
@@ -47,9 +49,10 @@ npm run check:inventory
 npm run check:contracts
 npm run check:docs
 npm run check:product-frontends
+npm run check
 ```
 
-전체 repository gate는 문서와 컴포넌트 보완이 끝난 최종 checkpoint에서 `npm run check`로 실행한다.
+전체 repository gate는 문서와 컴포넌트 보완이 끝난 2026-07-14 checkpoint에서 `npm run check`로 통과했다.
 
 ## Current next work
 

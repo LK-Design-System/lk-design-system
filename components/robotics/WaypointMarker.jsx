@@ -1,4 +1,6 @@
 import React from 'react';
+import { isFocusVisibleTarget } from './_NavigationFocus.js';
+import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 
 const ROLE_CODES = {
   holding: 'H',
@@ -50,7 +52,7 @@ function semanticSummary(waypoint) {
   return `${codes.slice(0, 3).join(' · ')} +${codes.length - 3}`;
 }
 
-function accessibleName(waypoint, { selected, disabled, invalid, stale }) {
+function accessibleName(waypoint, { selected, focused, disabled, invalid, stale }) {
   const roles = (waypoint.roles || []).map((role) => ROLE_LABELS[role] || role);
   const annotations = (waypoint.annotations || [])
     .map((annotation) => {
@@ -60,6 +62,7 @@ function accessibleName(waypoint, { selected, disabled, invalid, stale }) {
   const states = [
     `availability ${waypoint.availability || 'unknown'}`,
     selected && 'selected',
+    focused && 'focused',
     disabled && 'disabled',
     invalid && 'invalid',
     stale && 'stale',
@@ -90,22 +93,28 @@ export function WaypointMarker({
   stale = false,
   showLabel = true,
   onActivate,
+  role,
   tabIndex,
   onFocus,
   onBlur,
+  onMouseDown,
   style,
   'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
   ...rest
 }) {
   const [hasDomFocus, setHasDomFocus] = React.useState(false);
   const scale = normalizeViewportScale(viewportScale);
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === 'function';
-  const focusVisible = focused || hasDomFocus;
+  const pointerOnly = ariaHidden === true || ariaHidden === 'true';
+  const focusVisible = !pointerOnly && (focused || hasDomFocus);
   const availability = waypoint.availability || 'unknown';
+  const compoundUnknownInvalid = availability === 'unknown' && invalid;
   const details = semanticSummary(waypoint);
   const label = ariaLabel ?? accessibleName(waypoint, {
     selected,
+    focused: focusVisible,
     disabled,
     invalid,
     stale,
@@ -125,6 +134,8 @@ export function WaypointMarker({
   };
 
   const handleKeyDown = (event) => {
+    if (!pointerOnly) setHasDomFocus(true);
+    if (pointerOnly || disabled || !interactive || event.repeat) return;
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
     activate(event);
@@ -145,16 +156,22 @@ export function WaypointMarker({
       data-role-codes={(waypoint.roles || []).map((role) => ROLE_CODES[role]).filter(Boolean).join('')}
       data-annotation-count={(waypoint.annotations || []).length}
       transform={`translate(${waypoint.position.x} ${waypoint.position.y})`}
-      role={interactive ? 'button' : 'img'}
-      tabIndex={interactive ? (disabled ? -1 : tabIndex ?? 0) : tabIndex}
-      aria-label={label}
-      aria-pressed={interactive ? selected : undefined}
-      aria-disabled={interactive && disabled ? true : undefined}
-      aria-invalid={invalid || undefined}
+      role={pointerOnly ? undefined : role ?? (interactive ? 'button' : 'img')}
+      tabIndex={pointerOnly ? undefined : interactive ? (disabled ? -1 : tabIndex ?? 0) : tabIndex}
+      focusable={pointerOnly ? 'false' : interactive && !disabled ? 'true' : undefined}
+      aria-hidden={pointerOnly || undefined}
+      aria-label={pointerOnly ? undefined : label}
+      aria-pressed={!pointerOnly && interactive ? selected : undefined}
+      aria-disabled={!pointerOnly && interactive && disabled ? true : undefined}
+      aria-invalid={!pointerOnly && invalid ? true : undefined}
       onClick={activate}
       onKeyDown={handleKeyDown}
+      onMouseDown={(event) => {
+        if (pointerOnly) event.preventDefault();
+        onMouseDown?.(event);
+      }}
       onFocus={(event) => {
-        setHasDomFocus(true);
+        if (!pointerOnly) setHasDomFocus(isFocusVisibleTarget(event.currentTarget));
         onFocus?.(event);
       }}
       onBlur={(event) => {
@@ -163,7 +180,7 @@ export function WaypointMarker({
       }}
       style={{
         cursor: disabled ? 'not-allowed' : interactive ? 'pointer' : 'default',
-        opacity: disabled ? 0.42 : stale ? 0.76 : 1,
+        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
         outline: 'none',
         ...style,
       }}
@@ -247,41 +264,63 @@ export function WaypointMarker({
           />
         )}
 
-        {availability === 'unknown' && !invalid && (
-          <text
+        {availability === 'unknown' && (
+          <g
             data-waypoint-unknown-indicator=""
-            x="0"
-            y="0.5"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fill="var(--color-semantic-status-cautionary-text)"
-            fontFamily="var(--font-sans)"
-            fontSize="9"
-            fontWeight="var(--fw-bold)"
+            data-waypoint-state-slot="unknown"
+            transform={compoundUnknownInvalid ? 'translate(-8 -8)' : undefined}
             aria-hidden="true"
           >
-            ?
-          </text>
+            {compoundUnknownInvalid && (
+              <circle
+                data-waypoint-state-circle="unknown"
+                r="6.5"
+                fill={surface}
+                stroke="var(--color-semantic-status-cautionary-foreground)"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+              />
+            )}
+            <NavigationStateGlyph
+              kind="unknown"
+              size={10}
+              color={foreground}
+              data-waypoint-state-glyph-geometry="unknown"
+            />
+          </g>
         )}
 
         {invalid && (
           <g
             data-waypoint-invalid-indicator=""
-            fill="none"
-            stroke="var(--color-semantic-status-negative-foreground)"
-            strokeWidth="2"
-            strokeLinecap="round"
+            data-waypoint-state-slot="invalid"
+            transform={compoundUnknownInvalid ? 'translate(-8 8)' : undefined}
             aria-hidden="true"
           >
-            <path d="M-3 -3 L3 3" vectorEffect="non-scaling-stroke" />
-            <path d="M3 -3 L-3 3" vectorEffect="non-scaling-stroke" />
+            {compoundUnknownInvalid && (
+              <circle
+                data-waypoint-state-circle="invalid"
+                r="6.5"
+                fill={surface}
+                stroke="var(--color-semantic-status-negative-foreground)"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+              />
+            )}
+            <NavigationStateGlyph
+              kind="invalid"
+              size={10}
+              color={foreground}
+              data-waypoint-state-glyph-geometry="invalid"
+            />
           </g>
         )}
 
         {showLabel && (
-          <g data-waypoint-label="" pointerEvents="none" aria-hidden="true">
+          <g data-waypoint-label="" data-waypoint-label-offset-x="15" pointerEvents="none" aria-hidden="true">
             <text
-              x="11"
+              data-waypoint-primary-label=""
+              x="15"
               y={details ? '-1.5' : '3.5'}
               fill={foreground}
               stroke={surface}
@@ -297,7 +336,8 @@ export function WaypointMarker({
             </text>
             {details && (
               <text
-                x="11"
+                data-waypoint-details=""
+                x="15"
                 y="10"
                 fill={muted}
                 stroke={surface}

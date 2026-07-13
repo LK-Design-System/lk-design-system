@@ -3,7 +3,10 @@ import type { SourceDisclosureItem } from '../content/SourceDisclosure.js';
 
 export type ConversationMessageDirection = 'inbound' | 'outbound' | 'system';
 export type ConversationMessageAuthorRole = 'user' | 'assistant' | 'human-agent' | 'system';
+export type ConversationMessageVariant = 'soft' | 'solid';
 export type ConversationMessageGroupPosition = 'single' | 'first' | 'middle' | 'last';
+type ConversationMessageNonSystemDirection = Exclude<ConversationMessageDirection, 'system'>;
+type ConversationMessagePlainText = string | number | readonly (string | number)[];
 
 export type ConversationMessageLifecycle =
   | { kind: 'static' }
@@ -16,9 +19,7 @@ export type ConversationMessageLifecycle =
       state: 'pending' | 'streaming' | 'stopping' | 'complete' | 'cancelled' | 'failed';
     };
 
-export interface ConversationMessageProps extends React.HTMLAttributes<HTMLElement> {
-  /** Visual placement and surface treatment. It never derives authorRole. */
-  direction: ConversationMessageDirection;
+interface ConversationMessageBaseProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   /** Semantic sender category. It never derives visual direction. */
   authorRole: ConversationMessageAuthorRole;
   /** Position within a visually grouped run from the same author. @default 'single' */
@@ -35,7 +36,7 @@ export interface ConversationMessageProps extends React.HTMLAttributes<HTMLEleme
   timestamp?: React.ReactNode;
   /** Machine-readable ISO date/time for the time element. */
   dateTime?: string;
-  /** Optional lifecycle label override. */
+  /** Optional lifecycle label override. `null` suppresses the marker; response complete is silent by default. */
   statusLabel?: React.ReactNode;
   /** Attachment row/list supplied by the product. */
   attachments?: React.ReactNode;
@@ -51,8 +52,35 @@ export interface ConversationMessageProps extends React.HTMLAttributes<HTMLEleme
   onStop?: () => void;
   retryLabel?: React.ReactNode;
   stopLabel?: React.ReactNode;
-  children?: React.ReactNode;
 }
+
+type ConversationMessageSystemProps = ConversationMessageBaseProps & {
+  /** System placement always renders a neutral line, regardless of variant. */
+  direction: 'system';
+  variant?: ConversationMessageVariant;
+  children?: React.ReactNode;
+};
+
+type ConversationMessageSoftProps = ConversationMessageBaseProps & {
+  /** Visual placement. Soft selects the inbound neutral or outbound tinted branch. */
+  direction: ConversationMessageNonSystemDirection;
+  variant?: 'soft';
+  children?: React.ReactNode;
+};
+
+type ConversationMessageSolidProps = ConversationMessageBaseProps & {
+  /** Visual placement. Solid never derives authorRole. */
+  direction: ConversationMessageNonSystemDirection;
+  /** Explicit shrink-wrapped primary surface with pre-wrapped plain text. */
+  variant: 'solid';
+  /** Required non-empty plain message body. Use soft for links, headings, markdown, or other rich content. */
+  children: ConversationMessagePlainText;
+};
+
+export type ConversationMessageProps =
+  | ConversationMessageSystemProps
+  | ConversationMessageSoftProps
+  | ConversationMessageSolidProps;
 
 /** A single conversation article; MessageFeed owns ordered log/live-region behavior. */
 export function ConversationMessage(props: ConversationMessageProps): React.JSX.Element;

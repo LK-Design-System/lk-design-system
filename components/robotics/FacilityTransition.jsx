@@ -1,4 +1,6 @@
 import React from 'react';
+import { isFocusVisibleTarget } from './_NavigationFocus.js';
+import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 
 const AVAILABILITY_PRESENTATION = {
   available: {
@@ -225,8 +227,10 @@ export function FacilityTransition({
   role,
   tabIndex,
   'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
   onFocus,
   onBlur,
+  onMouseDown,
   ...rest
 }) {
   const [focusVisible, setFocusVisible] = React.useState(false);
@@ -234,8 +238,10 @@ export function FacilityTransition({
   const availability = AVAILABILITY_PRESENTATION[transition.availability]
     ?? AVAILABILITY_PRESENTATION.unknown;
   const interactive = typeof onActivate === 'function';
-  const activeFocus = focused || focusVisible;
-  const inverseScale = 1 / safeScale(viewportScale);
+  const pointerOnly = ariaHidden === true || ariaHidden === 'true';
+  const activeFocus = !pointerOnly && (focused || focusVisible);
+  const scale = safeScale(viewportScale);
+  const inverseScale = 1 / scale;
   const stroke = invalid
     ? 'var(--color-semantic-status-negative-foreground)'
     : disabled
@@ -245,10 +251,26 @@ export function FacilityTransition({
   const rows = visibleDetailRows(transition, availability.label);
   const computedLabel = [
     computedAccessibleLabel(transition, availability.label),
+    selected ? '선택됨' : undefined,
+    activeFocus ? '포커스됨' : undefined,
     invalid ? '잘못된 설비 전이' : undefined,
     stale ? '데이터 지연' : undefined,
     disabled ? '선택할 수 없음' : undefined,
   ].filter(Boolean).join(' · ');
+  const stateBadges = [
+    transition.availability === 'unknown'
+      ? { kind: 'unknown', tone: 'var(--color-semantic-status-cautionary-foreground)' }
+      : null,
+    invalid
+      ? { kind: 'invalid', tone: 'var(--color-semantic-status-negative-foreground)' }
+      : null,
+    stale
+      ? { kind: 'stale', tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))', dash: '2 2' }
+      : null,
+  ].filter(Boolean).map((state, index, states) => ({
+    ...state,
+    x: (index - (states.length - 1) / 2) * 16,
+  }));
 
   if (hidden || !endpoint) return null;
 
@@ -264,7 +286,8 @@ export function FacilityTransition({
   };
 
   const handleKeyDown = (event) => {
-    if (disabled || !interactive || event.repeat) return;
+    if (!pointerOnly) setFocusVisible(true);
+    if (pointerOnly || disabled || !interactive || event.repeat) return;
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
     activate(event);
@@ -273,12 +296,14 @@ export function FacilityTransition({
   return (
     <g
       {...rest}
-      role={role ?? (interactive ? 'button' : 'img')}
-      tabIndex={interactive ? (disabled ? -1 : (tabIndex ?? 0)) : tabIndex}
-      focusable={interactive && !disabled ? 'true' : undefined}
-      aria-label={ariaLabel ?? computedLabel}
-      aria-pressed={interactive ? selected : undefined}
-      aria-disabled={interactive && disabled ? true : undefined}
+      role={pointerOnly ? undefined : role ?? (interactive ? 'button' : 'img')}
+      tabIndex={pointerOnly ? undefined : interactive ? (disabled ? -1 : (tabIndex ?? 0)) : tabIndex}
+      focusable={pointerOnly ? 'false' : interactive && !disabled ? 'true' : undefined}
+      aria-hidden={pointerOnly || undefined}
+      aria-label={pointerOnly ? undefined : ariaLabel ?? computedLabel}
+      aria-pressed={!pointerOnly && interactive ? selected : undefined}
+      aria-disabled={!pointerOnly && interactive && disabled ? true : undefined}
+      aria-invalid={!pointerOnly && invalid ? true : undefined}
       transform={`translate(${endpoint.position.x} ${endpoint.position.y})`}
       data-lds-facility-transition=""
       data-transition-id={transition.id}
@@ -299,13 +324,19 @@ export function FacilityTransition({
       data-destination-map-id={transition.kind === 'lift' ? transition.destinationMapId : undefined}
       data-dock-phase={transition.kind === 'dock' ? transition.phase : undefined}
       data-selected={selected || undefined}
+      data-focused={activeFocus || undefined}
       data-invalid={invalid || undefined}
       data-stale={stale || undefined}
       data-disabled={disabled || undefined}
+      data-viewport-scale={scale}
       onClick={activate}
       onKeyDown={handleKeyDown}
+      onMouseDown={(event) => {
+        if (pointerOnly) event.preventDefault();
+        onMouseDown?.(event);
+      }}
       onFocus={(event) => {
-        setFocusVisible(true);
+        if (!pointerOnly) setFocusVisible(isFocusVisibleTarget(event.currentTarget));
         onFocus?.(event);
       }}
       onBlur={(event) => {
@@ -314,14 +345,14 @@ export function FacilityTransition({
       }}
       style={{
         cursor: interactive && !disabled ? 'pointer' : disabled ? 'not-allowed' : 'default',
-        opacity: disabled ? 0.52 : 1,
+        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
         outline: 'none',
         ...style,
       }}
     >
-      <g transform={`scale(${inverseScale})`}>
+      <g transform={`scale(${inverseScale})`} data-transition-screen-space="">
         {activeFocus && (
-          <circle r="16" fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth="4" vectorEffect="non-scaling-stroke" pointerEvents="none" />
+          <circle r="16" fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth="4" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-focus-ring="" />
         )}
         {selected && (
           <circle r="14" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="3" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-selection-ring="" />
@@ -348,40 +379,33 @@ export function FacilityTransition({
         {transition.availability === 'unavailable' && (
           <path d="M-8 8L8-8" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-unavailable-mark="" />
         )}
-        {transition.availability === 'unknown' && (
-          <text
-            x="8"
-            y="-8"
-            textAnchor="middle"
-            dominantBaseline="central"
-            fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-            stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-            strokeWidth="3"
-            paintOrder="stroke"
-            vectorEffect="non-scaling-stroke"
-            pointerEvents="none"
-            style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
-          >
-            ?
-          </text>
-        )}
-        {invalid && (
-          <text
-            x="0"
-            y="1"
-            textAnchor="middle"
-            dominantBaseline="central"
-            fill="var(--color-semantic-status-negative-foreground)"
-            stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-            strokeWidth="3"
-            paintOrder="stroke"
-            vectorEffect="non-scaling-stroke"
-            pointerEvents="none"
-            data-transition-invalid-mark=""
-            style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-bold)' }}
-          >
-            !
-          </text>
+        {stateBadges.length > 0 && (
+          <g data-transition-state-slot-layer="" pointerEvents="none">
+            {stateBadges.map((state) => (
+              <g
+                key={state.kind}
+                transform={`translate(${state.x} -28)`}
+                data-transition-state-slot={state.kind}
+                data-transition-unknown-mark={state.kind === 'unknown' ? '' : undefined}
+                data-transition-invalid-mark={state.kind === 'invalid' ? '' : undefined}
+                data-transition-stale-mark={state.kind === 'stale' ? '' : undefined}
+              >
+                <circle
+                  r="7"
+                  fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
+                  stroke={state.tone}
+                  strokeWidth="1.5"
+                  strokeDasharray={state.dash}
+                  vectorEffect="non-scaling-stroke"
+                />
+                <NavigationStateGlyph
+                  kind={state.kind}
+                  size={10}
+                  color="var(--viewer-foreground, var(--color-semantic-label-strong))"
+                />
+              </g>
+            ))}
+          </g>
         )}
 
         {showLabel && (

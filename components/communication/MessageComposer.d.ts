@@ -52,9 +52,9 @@ interface MessageComposerBaseProps {
   attachmentAction?: React.ReactNode;
   /** Additional 32px utility actions. */
   secondaryActions?: React.ReactNode;
-  /** Accessible name for the 40px submit control. @default "메시지 보내기" */
+  /** Accessible name for the 32px submit control. @default "메시지 보내기" */
   submitLabel?: string;
-  /** Accessible name for the 40px stop control. @default "응답 중지" */
+  /** Accessible name for the 32px stop control. @default "응답 중지" */
   stopLabel?: string;
   /** Requests transport cancellation in submitting/streaming states. */
   onStop?: () => void;

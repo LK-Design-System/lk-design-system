@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent } from 'storybook/test';
 import { Map2DCanvas, FacilityTransition, SpatialRegion } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -23,6 +24,31 @@ const meta = {
 
 export default meta;
 
+function assertCenteredStateGlyph(mark, expectedKind) {
+  const glyph = mark?.querySelector('[data-navigation-state-glyph]');
+  const badge = mark?.querySelector(':scope > circle');
+  if (!glyph || !badge) throw new Error(`State badge is missing SVG geometry for ${expectedKind}.`);
+  if (mark.querySelector('text')) throw new Error(`${expectedKind} state badge must not use a font glyph.`);
+  if (glyph.dataset.navigationStateGlyph !== expectedKind || !glyph.dataset.navigationStateGlyphSource?.startsWith('lds-icon:')) {
+    throw new Error(`${expectedKind} state badge must expose its LDS SVG source.`);
+  }
+
+  const matrix = glyph.getScreenCTM();
+  const badgeBounds = badge.getBoundingClientRect();
+  const glyphBounds = glyph.getBoundingClientRect();
+  if (!matrix || !badgeBounds.width || !glyphBounds.width || !glyphBounds.height) {
+    throw new Error(`${expectedKind} state badge bounds are unavailable.`);
+  }
+  const badgeCenter = { x: badgeBounds.left + badgeBounds.width / 2, y: badgeBounds.top + badgeBounds.height / 2 };
+  if (Math.abs(matrix.e - badgeCenter.x) > 0.75 || Math.abs(matrix.f - badgeCenter.y) > 0.75) {
+    throw new Error(`${expectedKind} SVG origin must remain centered in its badge.`);
+  }
+  if (glyphBounds.left < badgeBounds.left + 0.5 || glyphBounds.right > badgeBounds.right - 0.5
+    || glyphBounds.top < badgeBounds.top + 0.5 || glyphBounds.bottom > badgeBounds.bottom - 0.5) {
+    throw new Error(`${expectedKind} SVG geometry must retain visible inset inside its badge.`);
+  }
+}
+
 function MapFloor({ width = 400, height = 260 }) {
   return (
     <g aria-hidden="true" pointerEvents="none">
@@ -33,6 +59,29 @@ function MapFloor({ width = 400, height = 260 }) {
 }
 
 function TransitionMap({ children, appearance = 'light', width = 400, height = 260, label, testId }) {
+  const svgRef = React.useRef(null);
+  const [viewBoxScale, setViewBoxScale] = React.useState(1);
+
+  React.useLayoutEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return undefined;
+
+    const measure = () => {
+      const nextScale = svg.getBoundingClientRect().width / width;
+      if (!Number.isFinite(nextScale) || nextScale <= 0) return;
+      setViewBoxScale((current) => (Math.abs(current - nextScale) < 0.0001 ? current : nextScale));
+    };
+
+    measure();
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : undefined;
+    observer?.observe(svg);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [width]);
+
   return (
     <Map2DCanvas
       data-testid={testId}
@@ -45,9 +94,18 @@ function TransitionMap({ children, appearance = 'light', width = 400, height = 2
       grid={false}
       style={{ width: '100%', maxWidth: width, height: 'auto', aspectRatio: `${width} / ${height}` }}
     >
-      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="group" style={{ display: 'block', width: '100%', height: 'auto' }} aria-label={label}>
+      <svg
+        ref={svgRef}
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        role="group"
+        style={{ display: 'block', width: '100%', height: 'auto' }}
+        aria-label={label}
+        data-transition-map-scale={viewBoxScale}
+      >
         <MapFloor width={width} height={height} />
-        {children}
+        {typeof children === 'function' ? children({ viewportScale: viewBoxScale }) : children}
       </svg>
     </Map2DCanvas>
   );
@@ -200,7 +258,7 @@ export const AvailabilityAndSourceStates = {
   name: '변형·상태 · 가용성·오프라인·미확인',
   parameters: {
     ...storyDescription(
-      '사용 불가이지만 열린 문, source가 available로 보낸 상태에서 operating mode만 offline인 승강기, 가용성을 알 수 없는 도크를 비교합니다. availability를 내부 축에서 추론하지 않고 slash·점선·물음표와 텍스트로 함께 전달해야 합니다.',
+      '사용 불가이지만 열린 문, source가 available로 보낸 상태에서 operating mode만 offline인 승강기, 가용성을 알 수 없는 도크를 비교합니다. availability를 내부 축에서 추론하지 않고 slash·점선·question SVG와 텍스트로 함께 전달해야 합니다.',
     ),
     backgrounds: { default: 'Navy' },
   },
@@ -224,9 +282,87 @@ export const AvailabilityAndSourceStates = {
     if (lift.dataset.transitionAvailability !== 'available' || lift.dataset.operatingMode !== 'offline') {
       throw new Error('Offline operating mode must not overwrite source-provided availability.');
     }
-    if (dock.dataset.transitionAvailability !== 'unknown' || !dock.textContent?.includes('?')) {
-      throw new Error('Unknown availability requires a question mark and text label.');
+    const unknownGlyph = dock.querySelector('[data-transition-unknown-mark] [data-navigation-state-glyph="unknown"]');
+    if (dock.dataset.transitionAvailability !== 'unknown' || !unknownGlyph || dock.querySelector('[data-transition-unknown-mark] text') || !dock.textContent?.includes('가용성 미확인')) {
+      throw new Error('Unknown availability requires the shared question SVG and a text label.');
     }
+  },
+};
+
+const compoundStateDock = {
+  ...unknownDock,
+  id: 'dock-compound-state',
+  label: '도크 04',
+  facilityId: 'dock-04',
+  from: { mapId: 'warehouse-1f', position: { x: 112, y: 126 }, label: '도크 04 접근로' },
+};
+
+export const ValidationAndFocusStates = {
+  name: '변형·상태 · 선택·포커스·오류·지연',
+  parameters: storyDescription(
+    '수동 설비 전이에 선택·포커스·오류·지연이 동시에 적용된 상황입니다. source의 미확인 question SVG와 네 상태 glyph가 서로 덮이지 않고, 시각 상태와 접근 가능한 이름·aria-invalid가 같은 정보를 제공해야 합니다.',
+  ),
+  render: () => (
+    <main style={{ width: 'min(100%, 520px)' }}>
+      <TransitionMap width={420} height={250} label="복합 설비 전이 상태 지도">
+        <FacilityTransition
+          transition={compoundStateDock}
+          activeMapId="warehouse-1f"
+          selected
+          focused
+          invalid
+          stale
+        />
+      </TransitionMap>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const transition = canvasElement.querySelector('[data-transition-id="dock-compound-state"]');
+    if (!transition) throw new Error('Compound facility transition state is missing.');
+    if (transition.getAttribute('role') !== 'img' || transition.hasAttribute('aria-pressed')) {
+      throw new Error('Passive selected transition must remain an image without aria-pressed.');
+    }
+    if (transition.getAttribute('aria-invalid') !== 'true') {
+      throw new Error('Invalid facility transition must expose aria-invalid.');
+    }
+
+    const name = transition.getAttribute('aria-label') ?? '';
+    for (const state of ['선택됨', '포커스됨', '잘못된 설비 전이', '데이터 지연']) {
+      if (!name.includes(state)) throw new Error(`Accessible name is missing the visible state: ${state}.`);
+    }
+    for (const selector of [
+      '[data-transition-selection-ring]',
+      '[data-transition-focus-ring]',
+      '[data-transition-invalid-mark]',
+      '[data-transition-stale-mark]',
+    ]) {
+      if (!transition.querySelector(selector)) throw new Error(`Compound state glyph is missing: ${selector}.`);
+    }
+    const unknownMark = transition.querySelector('[data-transition-unknown-mark]');
+    const invalidMark = transition.querySelector('[data-transition-invalid-mark]');
+    const staleMark = transition.querySelector('[data-transition-stale-mark]');
+    const glyphs = [
+      unknownMark?.querySelector('circle'),
+      invalidMark?.querySelector('circle'),
+      staleMark?.querySelector('circle'),
+    ];
+    if (glyphs.some((glyph) => !glyph)) throw new Error('Unknown, invalid, and stale facility glyphs must all remain visible.');
+    assertCenteredStateGlyph(unknownMark, 'unknown');
+    assertCenteredStateGlyph(invalidMark, 'invalid');
+    assertCenteredStateGlyph(staleMark, 'stale');
+    const bounds = glyphs.map((glyph) => glyph.getBoundingClientRect());
+    for (let first = 0; first < bounds.length; first += 1) {
+      for (let second = first + 1; second < bounds.length; second += 1) {
+        const overlapWidth = Math.min(bounds[first].right, bounds[second].right) - Math.max(bounds[first].left, bounds[second].left);
+        const overlapHeight = Math.min(bounds[first].bottom, bounds[second].bottom) - Math.max(bounds[first].top, bounds[second].top);
+        if (overlapWidth > 0.25 && overlapHeight > 0.25) {
+          throw new Error(`Facility compound glyphs ${first}/${second} overlap by ${overlapWidth}×${overlapHeight} CSS px.`);
+        }
+      }
+    }
+
+    const opacity = Number(canvasElement.ownerDocument.defaultView.getComputedStyle(transition).opacity);
+    if (Math.abs(opacity - 0.76) > 0.001) throw new Error(`Stale transition opacity must remain 0.76, received ${opacity}.`);
   },
 };
 
@@ -240,6 +376,15 @@ const activeDoor = {
   availability: 'available',
   doorState: 'moving',
   event: 'open',
+};
+
+const pointerOnlyDoor = {
+  ...activeDoor,
+  id: 'pointer-only-door',
+  label: '목록 소유 자동문',
+  facilityId: 'door-pointer-only',
+  from: { mapId: 'warehouse-1f', position: { x: 180, y: 70 }, label: '목록 소유 입구', doorId: 'door-pointer-only' },
+  to: { mapId: 'warehouse-1f', position: { x: 216, y: 70 }, label: '목록 소유 출구', doorId: 'door-pointer-only' },
 };
 
 const otherMapLift = {
@@ -272,6 +417,7 @@ function InteractionFixture() {
     <main style={{ display: 'grid', gap: 'var(--space-3)', width: 'min(100%, 680px)' }}>
       <TransitionMap label="설비 전이 상호작용 지도" testId="facility-interaction-map">
         <FacilityTransition transition={activeDoor} activeMapId="warehouse-1f" onActivate={activate} />
+        <FacilityTransition transition={pointerOnlyDoor} activeMapId="warehouse-1f" aria-hidden="true" onActivate={activate} />
         <FacilityTransition transition={otherMapLift} activeMapId="warehouse-1f" onActivate={activate} />
         <FacilityTransition transition={hiddenDock} activeMapId="warehouse-1f" hidden onActivate={activate} />
         <FacilityTransition transition={disabledLift} activeMapId="warehouse-1f" disabled tabIndex={0} onActivate={activate} />
@@ -295,13 +441,18 @@ export const InteractionAndMapFiltering = {
   render: () => <InteractionFixture />,
   play: async ({ canvasElement }) => {
     const active = canvasElement.querySelector('[data-transition-id="active-door"]');
+    const pointerOnly = canvasElement.querySelector('[data-transition-id="pointer-only-door"]');
     const disabled = canvasElement.querySelector('[data-transition-id="disabled-lift"]');
-    if (!active || !disabled) throw new Error('Active and disabled facility transitions must render.');
+    if (!active || !pointerOnly || !disabled) throw new Error('Active, pointer-only, and disabled facility transitions must render.');
     if (canvasElement.querySelector('[data-transition-id="other-map-lift"]') || canvasElement.querySelector('[data-transition-id="hidden-dock"]')) {
       throw new Error('Unrelated-map and hidden facility transitions must not render.');
     }
     if (disabled.tabIndex !== -1 || disabled.getAttribute('aria-disabled') !== 'true') {
       throw new Error('Disabled transition must override consumer tabIndex and expose aria-disabled.');
+    }
+    const disabledOpacity = Number(canvasElement.ownerDocument.defaultView.getComputedStyle(disabled).opacity);
+    if (Math.abs(disabledOpacity - 0.45) > 0.001) {
+      throw new Error(`Disabled transition opacity must remain 0.45, received ${disabledOpacity}.`);
     }
     const hitArea = active.querySelector('[data-transition-hit-area]');
     if (!hitArea || Number(hitArea.getAttribute('r')) * Math.SQRT2 < 24) {
@@ -309,10 +460,19 @@ export const InteractionAndMapFiltering = {
     }
 
     const view = canvasElement.ownerDocument.defaultView;
-    active.dispatchEvent(new view.MouseEvent('click', { bubbles: true, cancelable: true }));
+    await userEvent.click(active);
+    const transitionFocusVisible = active.matches(':focus-visible');
     await waitForRender();
+    const hasTransitionFocusRing = Boolean(active.querySelector('[data-transition-focus-ring]'));
+    if (hasTransitionFocusRing !== transitionFocusVisible
+      || (transitionFocusVisible && view.getComputedStyle(active).outlineStyle !== 'none')) {
+      throw new Error('Facility transition must mirror :focus-visible with one shape-managed ring and no rectangular outline.');
+    }
     active.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
     await waitForRender();
+    if (!active.querySelector('[data-transition-focus-ring]') || view.getComputedStyle(active).outlineStyle !== 'none') {
+      throw new Error('Facility keyboard input must restore only its shape-managed focus ring after pointer modality.');
+    }
     active.dispatchEvent(new view.KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }));
     await waitForRender();
 
@@ -320,10 +480,31 @@ export const InteractionAndMapFiltering = {
     if (output?.dataset.activationCount !== '3' || !output.textContent?.includes('active-door')) {
       throw new Error(`Pointer and keyboard activation must share one callback: ${output?.textContent}`);
     }
+    active.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', repeat: true, bubbles: true, cancelable: true }));
+    await waitForRender();
+    if (output?.dataset.activationCount !== '3') throw new Error('Repeated facility keydown must not emit another inspect activation.');
+
+    if (pointerOnly.hasAttribute('role') || pointerOnly.hasAttribute('tabindex') || pointerOnly.hasAttribute('aria-label')
+      || pointerOnly.getAttribute('focusable') !== 'false' || pointerOnly.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('Pointer-only facility fragment must be hidden from AT and non-focusable without duplicate control semantics.');
+    }
+    await userEvent.click(pointerOnly.querySelector('[data-transition-hit-area]'));
+    await waitForRender();
+    if (output?.dataset.activationCount !== '4' || !output.textContent?.includes('pointer-only-door')) {
+      throw new Error(`Pointer-only facility fragment must preserve pointer selection: ${output?.textContent}`);
+    }
+    const focusedNode = canvasElement.ownerDocument.activeElement;
+    if (focusedNode === pointerOnly || pointerOnly.contains(focusedNode)) {
+      throw new Error('Pointer-only facility selection moved focus into an aria-hidden SVG fragment.');
+    }
+    pointerOnly.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+    await waitForRender();
+    if (output?.dataset.activationCount !== '4') throw new Error('Pointer-only facility fragment must not provide hidden keyboard activation.');
+
     disabled.dispatchEvent(new view.MouseEvent('click', { bubbles: true, cancelable: true }));
     disabled.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
     await waitForRender();
-    if (output?.dataset.activationCount !== '3') throw new Error('Disabled transition activation must be blocked.');
+    if (output?.dataset.activationCount !== '4') throw new Error('Disabled transition activation must be blocked.');
   },
 };
 
@@ -353,8 +534,12 @@ export const NarrowWidth = {
   render: () => (
     <div data-testid="narrow-facility-shell" style={{ width: 320, maxWidth: '100%', minWidth: 0 }}>
       <TransitionMap width={320} height={280} label="320px 설비 전이 지도" testId="narrow-facility-map">
-        <FacilityTransition transition={narrowLift} activeMapId="warehouse-1f" />
-        <FacilityTransition transition={narrowDoor} activeMapId="warehouse-1f" />
+        {({ viewportScale }) => (
+          <>
+            <FacilityTransition transition={narrowLift} activeMapId="warehouse-1f" viewportScale={viewportScale} onActivate={() => {}} />
+            <FacilityTransition transition={narrowDoor} activeMapId="warehouse-1f" viewportScale={viewportScale} onActivate={() => {}} />
+          </>
+        )}
       </TransitionMap>
     </div>
   ),
@@ -366,6 +551,31 @@ export const NarrowWidth = {
       throw new Error(`Facility map must not create horizontal overflow: shell ${shell.scrollWidth}/${shell.clientWidth}, map ${map.scrollWidth}/${map.clientWidth}.`);
     }
     if (shell.getBoundingClientRect().width > 320.5) throw new Error('Narrow facility shell exceeds 320px.');
+
+    const svg = map.querySelector('svg[data-transition-map-scale]');
+    if (!svg) throw new Error('Narrow facility map scale probe is missing.');
+    const viewBoxWidth = svg.viewBox.baseVal.width;
+    const measuredScale = svg.getBoundingClientRect().width / viewBoxWidth;
+    const reportedScale = Number(svg.dataset.transitionMapScale);
+    if (!Number.isFinite(measuredScale) || Math.abs(reportedScale - measuredScale) > 0.01) {
+      throw new Error(`CSS/viewBox scale must use the rendered SVG width: reported ${reportedScale}, measured ${measuredScale}.`);
+    }
+
+    const transitions = Array.from(map.querySelectorAll('[data-lds-facility-transition]'));
+    if (transitions.length !== 2) throw new Error(`Expected two narrow facility targets, received ${transitions.length}.`);
+    for (const transition of transitions) {
+      const componentScale = Number(transition.dataset.viewportScale);
+      if (Math.abs(componentScale - measuredScale) > 0.01) {
+        throw new Error(`Facility target must receive actual CSS/viewBox scale: ${componentScale} versus ${measuredScale}.`);
+      }
+      const hitArea = transition.querySelector('[data-transition-hit-area]');
+      if (!hitArea) throw new Error('Interactive narrow facility transition is missing its transparent hit target.');
+      const targetBounds = hitArea.getBoundingClientRect();
+      const containedSquare = Math.min(targetBounds.width, targetBounds.height) / Math.SQRT2;
+      if (containedSquare < 23.9) {
+        throw new Error(`Rendered circular target must contain a 24×24 CSS px square: ${containedSquare.toFixed(2)}px.`);
+      }
+    }
   },
 };
 

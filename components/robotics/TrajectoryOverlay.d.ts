@@ -28,5 +28,5 @@ export interface TrajectoryOverlayProps extends NavigationSvgFeatureProps {
   onActivate?: (id: string, event: NavigationActivateEvent) => void;
 }
 
-/** SVG `<g>` fragment for one dense, single-map LK Robotics trajectory. */
-export function TrajectoryOverlay(props: TrajectoryOverlayProps): React.JSX.Element;
+/** SVG `<g>` fragment for one dense, single-map LK Robotics trajectory. Returns `null` when fewer than two finite samples remain. */
+export function TrajectoryOverlay(props: TrajectoryOverlayProps): React.JSX.Element | null;

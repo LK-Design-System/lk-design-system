@@ -1,4 +1,6 @@
 import React from 'react';
+import { isFocusVisibleTarget } from './_NavigationFocus.js';
+import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -9,13 +11,13 @@ const STATUS_LABEL = {
   completed: '완료됨',
 };
 
-const STATUS_GLYPH = {
-  planned: '○',
-  active: '▶',
-  waiting: 'Ⅱ',
-  blocked: '×',
-  rerouting: '↻',
-  completed: '✓',
+const STATUS_GLYPH_KIND = {
+  planned: 'planned',
+  active: 'active',
+  waiting: 'waiting',
+  blocked: 'blocked',
+  rerouting: 'rerouting',
+  completed: 'completed',
 };
 
 const PHASE_LABEL = {
@@ -31,10 +33,20 @@ const CONDITION_LABEL = {
   conflict: '충돌',
 };
 
-const CONDITION_GLYPH = {
-  waiting: 'Ⅱ',
-  blocked: '×',
-  conflict: '!',
+const CONDITION_GLYPH_KIND = {
+  waiting: 'waiting',
+  blocked: 'blocked',
+  conflict: 'conflict',
+};
+
+const MARKER_GAP_PX = 4;
+const MARKER_ROW_CLEARANCE_PX = 8;
+const LABEL_ROW_GAP_PX = 12;
+const MARKER_RADIUS_PX = {
+  condition: 8.75,
+  progress: 10,
+  invalid: 8.75,
+  stale: 8.75,
 };
 
 function finitePoint(point) {
@@ -44,6 +56,65 @@ function finitePoint(point) {
 function pathFromPoints(points) {
   if (points.length < 2) return '';
   return points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
+}
+
+function markerTransform(point, inverseScale, screenSlot) {
+  const anchor = `translate(${point.x} ${point.y}) scale(${inverseScale})`;
+  return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
+}
+
+function markerCollisionLayout(markers, scale) {
+  if (markers.length < 2) return undefined;
+  const collidingIndexes = new Set();
+  for (let first = 0; first < markers.length; first += 1) {
+    for (let second = first + 1; second < markers.length; second += 1) {
+      const a = markers[first];
+      const b = markers[second];
+      const naturalDistance = Math.hypot(
+        a.point.x - b.point.x,
+        a.point.y - b.point.y,
+      ) * scale;
+      if (naturalDistance < a.radius + b.radius + MARKER_GAP_PX) {
+        collidingIndexes.add(first);
+        collidingIndexes.add(second);
+      }
+    }
+  }
+  if (collidingIndexes.size === 0) return undefined;
+
+  const collisionMarkers = [...collidingIndexes].map((index) => markers[index]);
+  const reference = collisionMarkers.reduce((point, marker) => ({
+    x: point.x + marker.point.x / collisionMarkers.length,
+    y: point.y + marker.point.y / collisionMarkers.length,
+  }), { x: 0, y: 0 });
+  const maxRadius = Math.max(...markers.map((marker) => marker.radius));
+  const totalWidth = markers.reduce((width, marker) => width + marker.radius * 2, 0)
+    + MARKER_GAP_PX * (markers.length - 1);
+  const rowY = -(maxRadius + MARKER_ROW_CLEARANCE_PX);
+  const slots = {};
+  let cursor = -totalWidth / 2;
+  markers.forEach((marker) => {
+    const centerX = cursor + marker.radius;
+    slots[marker.name] = {
+      x: (reference.x - marker.point.x) * scale + centerX,
+      y: (reference.y - marker.point.y) * scale + rowY,
+    };
+    cursor += marker.radius * 2 + MARKER_GAP_PX;
+  });
+  return {
+    reference,
+    slots,
+    totalWidth,
+    labelY: rowY - maxRadius - LABEL_ROW_GAP_PX,
+  };
+}
+
+function labelScreenSlot(point, layout, scale) {
+  if (!layout) return undefined;
+  return {
+    x: (layout.reference.x - point.x) * scale,
+    y: (layout.reference.y - point.y) * scale + layout.labelY,
+  };
 }
 
 function pointAlong(points, ratio) {
@@ -115,13 +186,15 @@ function segmentDash(segment) {
   return undefined;
 }
 
-function routeAccessibleName(route, progress, selected, invalid, stale) {
+function routeAccessibleName(route, progress, selected, focused, disabled, invalid, stale) {
   const parts = [
     route.label ?? `경로 ${route.id}`,
     STATUS_LABEL[route.status] ?? route.status,
   ];
   if (progress) parts.push(`현재 구간 ${Math.round(progress.fraction * 100)}%`);
   if (selected) parts.push('선택됨');
+  if (focused) parts.push('포커스됨');
+  if (disabled) parts.push('선택할 수 없음');
   if (invalid) parts.push('데이터 오류');
   if (stale) parts.push('오래된 데이터');
   return parts.join(', ');
@@ -141,9 +214,13 @@ export function RouteOverlay({
   showLabel = true,
   onActivate,
   'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
   tabIndex,
   onFocus,
   onBlur,
+  onKeyDown,
+  onPointerDown,
+  onMouseDown,
   style,
   ...rest
 }) {
@@ -151,10 +228,27 @@ export function RouteOverlay({
   const [hasRootFocus, setHasRootFocus] = React.useState(false);
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
-  const progress = normalizedProgress(route);
   const interactive = typeof onActivate === 'function';
-  const visibleSegments = (route?.segments ?? []).filter((segment) => segment.mapId === activeMapId);
-  const baseAccessibleName = ariaLabel ?? routeAccessibleName(route, progress, selected, invalid, stale);
+  const hiddenFromAccessibility = ariaHidden === true || ariaHidden === 'true';
+  const pointerOnly = interactive && hiddenFromAccessibility;
+  const visibleSegments = (route?.segments ?? []).filter((segment) => (
+    segment.mapId === activeMapId
+    && (segment.points ?? []).filter(finitePoint).length >= 2
+  ));
+  const routeProgress = normalizedProgress(route);
+  const progressSegment = routeProgress
+    ? visibleSegments.find((segment) => segment.id === routeProgress.segmentId)
+    : undefined;
+  // Progress belongs to one concrete segment. Once map filtering removes that
+  // segment, neither the accessibility name nor diagnostic data may imply that
+  // its progress is visible on the active map.
+  const progress = progressSegment ? routeProgress : undefined;
+  const baseAccessibleName = ariaLabel
+    ?? routeAccessibleName(route, progress, selected, focused, disabled, invalid, stale);
+
+  // An empty map-filtered route, including one with fewer than two finite
+  // points per remaining segment, is not a perceivable graphic or control.
+  if (visibleSegments.length === 0) return null;
 
   const activate = (segmentId, event) => {
     if (disabled) {
@@ -166,14 +260,28 @@ export function RouteOverlay({
   };
 
   const handleKeyDown = (segmentId, event) => {
+    if (!pointerOnly) setFocusedSegment(segmentId);
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
+    if (!interactive || disabled || event.repeat || pointerOnly) return;
     activate(segmentId, event);
   };
 
-  const progressSegment = progress
-    ? visibleSegments.find((segment) => segment.id === progress.segmentId)
-    : undefined;
+  const handleRootKeyDown = (event) => {
+    if (!interactive && !hiddenFromAccessibility) setHasRootFocus(true);
+    onKeyDown?.(event);
+  };
+
+  const handlePointerDown = (event) => {
+    if (pointerOnly) event.preventDefault();
+    onPointerDown?.(event);
+  };
+
+  const handleMouseDown = (event) => {
+    if (pointerOnly) event.preventDefault();
+    onMouseDown?.(event);
+  };
+
   const statusSegment = progressSegment
     ?? visibleSegments.find((segment) => segment.phase === 'current')
     ?? visibleSegments[0];
@@ -181,6 +289,38 @@ export function RouteOverlay({
   const statusPoint = progressSegment && progress?.position
     ? progress.position
     : pointAlong(statusPoints, progressSegment ? progress.fraction : 0.18);
+  const statusCondition = ['normal', 'waiting', 'blocked', 'conflict'].includes(statusSegment?.condition)
+    ? statusSegment.condition
+    : 'normal';
+  const statusMidpoint = pointAlong(statusPoints, 0.5);
+  const routeStateMarkers = [
+    invalid ? {
+      state: 'invalid',
+      glyphKind: 'invalid',
+      point: pointAlong(statusPoints, 0.82),
+      tone: 'var(--color-semantic-status-negative-foreground)',
+    } : null,
+    stale ? {
+      state: 'stale',
+      glyphKind: 'stale',
+      point: pointAlong(statusPoints, invalid ? 0.9 : 0.82),
+      tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))',
+    } : null,
+  ].filter(Boolean);
+  const naturalMarkers = statusPoints.length >= 2 ? [
+    CONDITION_GLYPH_KIND[statusCondition]
+      ? { name: 'condition', point: statusMidpoint, radius: MARKER_RADIUS_PX.condition }
+      : null,
+    { name: 'progress', point: statusPoint, radius: MARKER_RADIUS_PX.progress },
+    ...routeStateMarkers.map((item) => ({
+      name: item.state,
+      point: item.point,
+      radius: MARKER_RADIUS_PX[item.state],
+    })),
+  ].filter(Boolean) : [];
+  const markerLayout = markerCollisionLayout(naturalMarkers, scale);
+  const routeMarkerSlot = (name) => markerLayout?.slots[name];
+  const markerForeground = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
 
   return (
     <g
@@ -189,28 +329,37 @@ export function RouteOverlay({
       data-route-id={route?.id}
       data-active-map-id={activeMapId}
       data-route-status={route?.status}
+      data-visible-segment-count={visibleSegments.length}
+      data-viewport-scale={scale}
       data-progress-segment-id={progress?.segmentId}
       data-progress-fraction={progress?.fraction}
+      data-route-marker-layout={markerLayout ? 'screen-slots' : 'path-anchored'}
+      data-route-marker-row-width={markerLayout?.totalWidth}
+      data-pointer-only={pointerOnly ? 'true' : undefined}
       data-selected={selected ? 'true' : 'false'}
-      data-focused={focused || hasRootFocus || focusedSegment != null ? 'true' : 'false'}
+      data-focused={!hiddenFromAccessibility && (focused || hasRootFocus || focusedSegment != null) ? 'true' : 'false'}
       data-disabled={disabled ? 'true' : 'false'}
       data-invalid={invalid ? 'true' : 'false'}
       data-stale={stale ? 'true' : 'false'}
-      role={interactive ? 'group' : 'img'}
-      tabIndex={!interactive ? tabIndex : undefined}
-      focusable={!interactive && tabIndex != null ? 'true' : undefined}
-      aria-label={baseAccessibleName}
-      aria-disabled={interactive && disabled ? true : undefined}
-      aria-invalid={invalid || undefined}
-      onFocus={!interactive ? (event) => {
-        setHasRootFocus(true);
+      role={hiddenFromAccessibility ? undefined : interactive ? 'group' : 'img'}
+      tabIndex={hiddenFromAccessibility ? undefined : !interactive ? tabIndex : undefined}
+      focusable={hiddenFromAccessibility ? 'false' : !interactive && tabIndex != null ? 'true' : undefined}
+      aria-hidden={hiddenFromAccessibility || undefined}
+      aria-label={hiddenFromAccessibility ? undefined : baseAccessibleName}
+      aria-disabled={hiddenFromAccessibility ? undefined : interactive && disabled ? true : undefined}
+      aria-invalid={hiddenFromAccessibility ? undefined : invalid || undefined}
+      onKeyDown={((!interactive && !hiddenFromAccessibility) || onKeyDown) ? handleRootKeyDown : undefined}
+      onPointerDown={pointerOnly || onPointerDown ? handlePointerDown : undefined}
+      onMouseDown={pointerOnly || onMouseDown ? handleMouseDown : undefined}
+      onFocus={!interactive && !hiddenFromAccessibility ? (event) => {
+        setHasRootFocus(isFocusVisibleTarget(event.currentTarget));
         onFocus?.(event);
       } : undefined}
-      onBlur={!interactive ? (event) => {
+      onBlur={!interactive && !hiddenFromAccessibility ? (event) => {
         setHasRootFocus(false);
         onBlur?.(event);
       } : undefined}
-      style={{ opacity: disabled ? 0.42 : stale ? 0.7 : 1, outline: 'none', ...style }}
+      style={{ opacity: disabled ? 0.45 : stale ? 0.76 : 1, outline: 'none', ...style }}
     >
       {visibleSegments.map((segment) => {
         const points = (segment.points ?? []).filter(finitePoint);
@@ -218,7 +367,7 @@ export function RouteOverlay({
         const midpoint = pointAlong(points, 0.5);
         const directionPoint = pointAlong(points, 0.7);
         const segmentSelected = selected || segment.id === selectedSegmentId;
-        const segmentFocused = focused || hasRootFocus || focusedSegment === segment.id;
+        const segmentFocused = !pointerOnly && (focused || hasRootFocus || focusedSegment === segment.id);
         const condition = ['normal', 'waiting', 'blocked', 'conflict'].includes(segment.condition)
           ? segment.condition
           : 'normal';
@@ -228,7 +377,11 @@ export function RouteOverlay({
         const normalizedSegment = { ...segment, condition, phase };
         const tone = segmentTone(normalizedSegment, invalid);
         const dash = segmentDash(normalizedSegment);
-        const conditionGlyph = CONDITION_GLYPH[condition];
+        const conditionGlyphKind = CONDITION_GLYPH_KIND[condition];
+        const conditionSlot = segment.id === statusSegment?.id ? routeMarkerSlot('condition') : undefined;
+        const segmentLabelSlot = segment.id === statusSegment?.id
+          ? labelScreenSlot(midpoint, markerLayout, scale)
+          : undefined;
         const segmentName = [
           segment.label ?? `구간 ${segment.id}`,
           PHASE_LABEL[phase],
@@ -251,23 +404,23 @@ export function RouteOverlay({
             data-disabled={disabled ? 'true' : 'false'}
             data-invalid={invalid ? 'true' : 'false'}
             data-stale={stale ? 'true' : 'false'}
-            role={interactive ? 'button' : undefined}
-            tabIndex={interactive ? (disabled ? -1 : tabIndex ?? 0) : undefined}
-            focusable={interactive ? 'true' : undefined}
-            aria-label={interactive ? `${baseAccessibleName}, ${segmentName}` : undefined}
-            aria-pressed={interactive ? segmentSelected : undefined}
-            aria-disabled={interactive && disabled ? true : undefined}
-            aria-invalid={invalid || undefined}
+            role={pointerOnly ? undefined : interactive ? 'button' : undefined}
+            tabIndex={pointerOnly ? undefined : interactive ? (disabled ? -1 : tabIndex ?? 0) : undefined}
+            focusable={pointerOnly ? 'false' : interactive ? 'true' : undefined}
+            aria-label={!pointerOnly && interactive ? `${baseAccessibleName}, ${segmentName}` : undefined}
+            aria-pressed={!pointerOnly && interactive ? segmentSelected : undefined}
+            aria-disabled={!pointerOnly && interactive && disabled ? true : undefined}
+            aria-invalid={!hiddenFromAccessibility && invalid ? true : undefined}
             onClick={interactive ? (event) => activate(segment.id, event) : undefined}
-            onKeyDown={interactive ? (event) => handleKeyDown(segment.id, event) : undefined}
-            onFocus={(event) => {
-              setFocusedSegment(segment.id);
+            onKeyDown={interactive && !pointerOnly ? (event) => handleKeyDown(segment.id, event) : undefined}
+            onFocus={!pointerOnly ? (event) => {
+              setFocusedSegment(isFocusVisibleTarget(event.currentTarget) ? segment.id : null);
               onFocus?.(event);
-            }}
-            onBlur={(event) => {
+            } : undefined}
+            onBlur={!pointerOnly ? (event) => {
               setFocusedSegment((current) => current === segment.id ? null : current);
               onBlur?.(event);
-            }}
+            } : undefined}
             style={{ cursor: interactive && !disabled ? 'pointer' : 'default' }}
           >
             {segmentFocused && pathData && (
@@ -337,7 +490,8 @@ export function RouteOverlay({
             {pathData && (
               <path
                 data-route-direction=""
-                d="M -5 -4 L 5 0 L -5 4 Z"
+                data-navigation-vector-glyph="direction"
+                d={NAVIGATION_DIRECTION_PATH}
                 transform={`translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`}
                 fill={tone}
                 stroke="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
@@ -347,23 +501,26 @@ export function RouteOverlay({
                 pointerEvents="none"
               />
             )}
-            {conditionGlyph && (
+            {conditionGlyphKind && (
               <g
                 data-route-condition-glyph={condition}
-                transform={`translate(${midpoint.x} ${midpoint.y}) scale(${inverseScale})`}
+                data-route-screen-slot={conditionSlot ? 'condition' : undefined}
+                data-route-anchor-x={midpoint.x}
+                data-route-anchor-y={midpoint.y}
+                transform={markerTransform(midpoint, inverseScale, conditionSlot)}
                 aria-hidden="true"
                 pointerEvents="none"
               >
                 <circle
-                  r="7"
+                  data-route-marker-badge="condition"
+                  data-navigation-marker-circle=""
+                  r="8"
                   fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
                   stroke={tone}
                   strokeWidth="1.5"
                   vectorEffect="non-scaling-stroke"
                 />
-                <text x="0" y="3" textAnchor="middle" fill={tone} fontFamily="var(--font-sans)" fontSize="10" fontWeight="var(--fw-bold)">
-                  {conditionGlyph}
-                </text>
+                <NavigationStateGlyph kind={conditionGlyphKind} size={10} color={markerForeground} />
               </g>
             )}
             {[
@@ -379,13 +536,25 @@ export function RouteOverlay({
                 pointerEvents="none"
               >
                 <circle
-                  r="6"
+                  r="7"
                   fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
                   stroke="var(--viewer-muted, var(--color-semantic-label-neutral))"
                   strokeWidth="1.5"
                   vectorEffect="non-scaling-stroke"
                 />
-                <text x="0" y="2.5" textAnchor="middle" fill="var(--viewer-foreground, var(--color-semantic-label-strong))" fontFamily="var(--font-sans)" fontSize="7" fontWeight="var(--fw-bold)">
+                <text
+                  x="0"
+                  y="0.5"
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+                  stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+                  strokeWidth="2.5"
+                  paintOrder="stroke"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)' }}
+                >
                   T
                 </text>
               </g>
@@ -393,14 +562,20 @@ export function RouteOverlay({
             {showLabel && segment.label && (
               <text
                 data-route-segment-label=""
+                data-route-screen-row={segmentLabelSlot ? 'label' : undefined}
+                data-route-label-anchor-x={midpoint.x}
+                data-route-label-anchor-y={midpoint.y}
                 x="0"
-                y="-12"
+                y={segmentLabelSlot ? 0 : -12}
                 textAnchor="middle"
-                transform={`translate(${midpoint.x} ${midpoint.y}) scale(${inverseScale})`}
+                transform={markerTransform(midpoint, inverseScale, segmentLabelSlot)}
                 fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-                fontFamily="var(--font-sans)"
-                fontSize="9"
-                fontWeight="var(--fw-semibold)"
+                stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+                strokeWidth="4"
+                paintOrder="stroke"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
                 aria-hidden="true"
                 pointerEvents="none"
               >
@@ -410,30 +585,31 @@ export function RouteOverlay({
           </g>
         );
       })}
-      {statusPoints.length >= 2 && [
-        invalid ? { state: 'invalid', glyph: '!', ratio: 0.82, tone: 'var(--color-semantic-status-negative-foreground)' } : null,
-        stale ? { state: 'stale', glyph: '~', ratio: invalid ? 0.9 : 0.82, tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))' } : null,
-      ].filter(Boolean).map((item) => {
-        const point = pointAlong(statusPoints, item.ratio);
+      {statusPoints.length >= 2 && routeStateMarkers.map((item) => {
+        const point = item.point;
+        const stateSlot = routeMarkerSlot(item.state);
         return (
           <g
             key={item.state}
             data-route-overlay-state={item.state}
-            transform={`translate(${point.x} ${point.y}) scale(${inverseScale})`}
+            data-route-screen-slot={stateSlot ? item.state : undefined}
+            data-route-anchor-x={point.x}
+            data-route-anchor-y={point.y}
+            transform={markerTransform(point, inverseScale, stateSlot)}
             aria-hidden="true"
             pointerEvents="none"
           >
             <circle
-              r="7"
+              data-route-marker-badge={item.state}
+              data-navigation-marker-circle=""
+              r="8"
               fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
               stroke={item.tone}
               strokeWidth="1.5"
               strokeDasharray={item.state === 'stale' ? '2 2' : undefined}
               vectorEffect="non-scaling-stroke"
             />
-            <text x="0" y="3" textAnchor="middle" fill={item.tone} fontFamily="var(--font-sans)" fontSize="10" fontWeight="var(--fw-bold)">
-              {item.glyph}
-            </text>
+            <NavigationStateGlyph kind={item.glyphKind} size={10} color={markerForeground} />
           </g>
         );
       })}
@@ -441,37 +617,40 @@ export function RouteOverlay({
         <g
           data-route-progress-marker=""
           data-current-segment-id={progressSegment.id}
-          transform={`translate(${statusPoint.x} ${statusPoint.y}) scale(${inverseScale})`}
+          data-route-screen-slot={markerLayout ? 'progress' : undefined}
+          data-route-anchor-x={statusPoint.x}
+          data-route-anchor-y={statusPoint.y}
+          transform={markerTransform(statusPoint, inverseScale, routeMarkerSlot('progress'))}
           aria-hidden="true"
           pointerEvents="none"
         >
           <circle
-            r="8"
+            data-route-marker-badge="progress"
+            data-navigation-marker-circle=""
+            r="9"
             fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
             stroke={statusTone(route.status)}
             strokeWidth="2"
             vectorEffect="non-scaling-stroke"
           />
-          <text
-            x="0"
-            y="3"
-            textAnchor="middle"
-            fill={statusTone(route.status)}
-            fontFamily="var(--font-sans)"
-            fontSize="9"
-            fontWeight="var(--fw-bold)"
-          >
-            {STATUS_GLYPH[route.status] ?? '•'}
-          </text>
+          <NavigationStateGlyph
+            kind={STATUS_GLYPH_KIND[route.status] ?? 'unknown'}
+            size={10}
+            color={markerForeground}
+          />
           {showLabel && (
             <text
+              data-route-progress-label=""
               x="0"
-              y="19"
+              y={markerLayout ? 36 : 24}
               textAnchor="middle"
               fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-              fontFamily="var(--font-sans)"
-              fontSize="9"
-              fontWeight="var(--fw-bold)"
+              stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+              strokeWidth="3"
+              paintOrder="stroke"
+              strokeLinejoin="round"
+              vectorEffect="non-scaling-stroke"
+              style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)' }}
             >
               현재 {Math.round(progress.fraction * 100)}%
             </text>
@@ -481,20 +660,27 @@ export function RouteOverlay({
       {!progressSegment && statusSegment && statusPoints.length >= 2 && (
         <g
           data-route-status-marker=""
-          transform={`translate(${statusPoint.x} ${statusPoint.y}) scale(${inverseScale})`}
+          data-route-screen-slot={markerLayout ? 'progress' : undefined}
+          data-route-anchor-x={statusPoint.x}
+          data-route-anchor-y={statusPoint.y}
+          transform={markerTransform(statusPoint, inverseScale, routeMarkerSlot('progress'))}
           aria-hidden="true"
           pointerEvents="none"
         >
           <circle
-            r="8"
+            data-route-marker-badge="progress"
+            data-navigation-marker-circle=""
+            r="9"
             fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
             stroke={statusTone(route.status)}
             strokeWidth="2"
             vectorEffect="non-scaling-stroke"
           />
-          <text x="0" y="3" textAnchor="middle" fill={statusTone(route.status)} fontFamily="var(--font-sans)" fontSize="9" fontWeight="var(--fw-bold)">
-            {STATUS_GLYPH[route.status] ?? '•'}
-          </text>
+          <NavigationStateGlyph
+            kind={STATUS_GLYPH_KIND[route.status] ?? 'unknown'}
+            size={10}
+            color={markerForeground}
+          />
         </g>
       )}
     </g>

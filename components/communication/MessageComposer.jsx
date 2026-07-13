@@ -23,6 +23,7 @@ const STATE_LABELS = {
 const LINE_HEIGHT = 22;
 const TEXTAREA_VERTICAL_INSET = 22;
 const COMPACT_TEXTAREA_HEIGHT = 44;
+const PRIMARY_ACTION_SLOT_WIDTH = 40;
 
 const useSafeLayoutEffect = typeof window === 'undefined'
   ? React.useEffect
@@ -211,6 +212,7 @@ export function MessageComposer({
       }}
       style={{
         display: 'grid',
+        alignContent: 'start',
         gap: 'var(--space-2)',
         width: '100%',
         maxWidth: '100%',
@@ -372,33 +374,47 @@ export function MessageComposer({
           }}
         />
 
-        {nonIdle ? (
-          <Button
-            type="button"
-            size="md"
-            variant="primary"
-            iconOnly
-            aria-label={stopLabel}
-            disabled={!stopAllowed}
-            onClick={() => {
-              if (!stopAllowed) return;
-              onStop();
-            }}
-          >
-            <StopIcon />
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            size="md"
-            variant="primary"
-            iconOnly
-            aria-label={submitLabel}
-            disabled={!submitAllowed}
-          >
-            <SendIcon />
-          </Button>
-        )}
+        <div
+          data-composer-primary-action=""
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignSelf: 'end',
+            width: PRIMARY_ACTION_SLOT_WIDTH,
+            minWidth: PRIMARY_ACTION_SLOT_WIDTH,
+            minHeight: COMPACT_TEXTAREA_HEIGHT,
+            boxSizing: 'border-box',
+          }}
+        >
+          {nonIdle ? (
+            <Button
+              type="button"
+              size="sm"
+              variant="primary"
+              iconOnly
+              aria-label={stopLabel}
+              disabled={!stopAllowed}
+              onClick={() => {
+                if (!stopAllowed) return;
+                onStop();
+              }}
+            >
+              <StopIcon />
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              size="sm"
+              variant="primary"
+              iconOnly
+              aria-label={submitLabel}
+              disabled={!submitAllowed}
+            >
+              <SendIcon />
+            </Button>
+          )}
+        </div>
       </div>
 
       {(resolvedStatusLabel != null || maxLength != null) && (

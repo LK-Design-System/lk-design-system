@@ -87,8 +87,9 @@ export const MessageComposerOverview = {
   play: async ({ canvasElement }) => {
     const textarea = canvasElement.querySelector('[data-composer-input]');
     const utilityButtons = Array.from(canvasElement.querySelectorAll('[data-composer-utilities] button'));
+    const primaryActionSlot = canvasElement.querySelector('[data-composer-primary-action]');
     const submitButton = canvasElement.querySelector('button[type="submit"]');
-    if (!textarea || utilityButtons.length !== 2 || !submitButton) {
+    if (!textarea || utilityButtons.length !== 2 || !primaryActionSlot || !submitButton) {
       throw new Error('MessageComposer overview anatomy is incomplete.');
     }
     const textareaHeight = textarea.getBoundingClientRect().height;
@@ -101,8 +102,18 @@ export const MessageComposerOverview = {
         throw new Error('Composer utility actions must use the 32px IconButton scale.');
       }
     }
-    if (Math.abs(submitButton.getBoundingClientRect().height - 40) > 0.5) {
-      throw new Error('Composer submit action must use the 40px Button scale.');
+    const slotRect = primaryActionSlot.getBoundingClientRect();
+    const submitRect = submitButton.getBoundingClientRect();
+    if (Math.abs(slotRect.width - 40) > 0.5 || Math.abs(slotRect.height - 44) > 0.5) {
+      throw new Error('Composer primary action must occupy the 40×44px trailing slot.');
+    }
+    if (Math.abs(submitRect.width - 32) > 0.5 || Math.abs(submitRect.height - 32) > 0.5) {
+      throw new Error('Composer submit action must use the 32px Button scale.');
+    }
+    const slotCenterY = slotRect.top + slotRect.height / 2;
+    const submitCenterY = submitRect.top + submitRect.height / 2;
+    if (Math.abs(slotCenterY - submitCenterY) > 0.5) {
+      throw new Error('Composer submit action must be vertically centered in its trailing slot.');
     }
   },
 };
@@ -163,9 +174,25 @@ export const RequestStates = {
     if (!stopping?.querySelector('button[aria-label="응답 중지"]')?.disabled) {
       throw new Error('Stopping state must prevent a repeated stop request.');
     }
+    for (const action of canvasElement.querySelectorAll('[data-composer-primary-action] button')) {
+      const rect = action.getBoundingClientRect();
+      if (Math.abs(rect.width - 32) > 0.5 || Math.abs(rect.height - 32) > 0.5) {
+        throw new Error('Every send/stop state must preserve the 32px primary action geometry.');
+      }
+    }
     for (const form of canvasElement.querySelectorAll('form[data-state]:not([data-state="idle"])')) {
       if (form.getAttribute('aria-busy') !== 'true') {
         throw new Error('Every non-idle composer state must expose aria-busy.');
+      }
+    }
+    for (const row of canvasElement.querySelectorAll('[data-composer-control-row]')) {
+      const textarea = row.querySelector('[data-composer-input]');
+      const rowStyle = getComputedStyle(row);
+      const expectedHeight = textarea.getBoundingClientRect().height
+        + Number.parseFloat(rowStyle.borderTopWidth)
+        + Number.parseFloat(rowStyle.borderBottomWidth);
+      if (Math.abs(row.getBoundingClientRect().height - expectedHeight) > 0.5) {
+        throw new Error('A parent grid must not stretch a one-line composer control row.');
       }
     }
   },
@@ -343,13 +370,29 @@ export const NarrowWidth = {
     if (composerRect.left < fixtureRect.left - 1 || composerRect.right > fixtureRect.right + 1) {
       throw new Error('MessageComposer escaped the narrow product region.');
     }
+    const textarea = composer.querySelector('[data-composer-input]');
+    const actionSlot = composer.querySelector('[data-composer-primary-action]');
+    const action = actionSlot?.querySelector('button');
+    if (!textarea || !actionSlot || !action) throw new Error('The narrow composer action geometry is incomplete.');
+    const textareaRect = textarea.getBoundingClientRect();
+    const slotRect = actionSlot.getBoundingClientRect();
+    const actionRect = action.getBoundingClientRect();
+    if (Math.abs(textareaRect.bottom - slotRect.bottom) > 0.5) {
+      throw new Error('The narrow composer action slot must stay in the textarea bottom band.');
+    }
+    if (textareaRect.width < 220) {
+      throw new Error('The 320px composer must preserve enough width for the message draft.');
+    }
+    if (Math.abs((slotRect.top + slotRect.height / 2) - (actionRect.top + actionRect.height / 2)) > 0.5) {
+      throw new Error('The narrow composer action must remain centered inside its bottom slot.');
+    }
   },
 };
 
 export const ButtonOnlyExample = {
   name: '사용법 · 버튼으로만 제출',
   parameters: storyDescription(
-    '키오스크·다중 줄 작성처럼 Enter를 항상 줄바꿈으로 보존해야 할 때 button-only를 선택합니다. 숨은 keyboard shortcut 없이 이름이 있는 40px 전송 action을 사용합니다.',
+    '키오스크·다중 줄 작성처럼 Enter를 항상 줄바꿈으로 보존해야 할 때 button-only를 선택합니다. 숨은 keyboard shortcut 없이 이름이 있는 32px 전송 action을 사용합니다.',
   ),
   render: () => (
     <main style={{ width: '100%', maxWidth: 720 }}>

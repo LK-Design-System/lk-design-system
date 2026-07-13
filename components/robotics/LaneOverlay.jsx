@@ -1,4 +1,10 @@
 import React from 'react';
+import { isFocusVisibleTarget } from './_NavigationFocus.js';
+import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
+
+const VIEWER_FOREGROUND = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
+const VIEWER_MUTED = 'var(--viewer-muted, var(--color-semantic-label-neutral))';
+const VIEWER_SURFACE = 'var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))';
 
 const AVAILABILITY_LABEL = {
   available: '통행 가능',
@@ -55,7 +61,28 @@ function orientationAngle(orientation, fallbackAngle) {
   return fallbackAngle;
 }
 
-function laneAccessibleName(lane, availability, conflict, selected, invalid, stale) {
+function upperScreenNormal(angle) {
+  const radians = angle * Math.PI / 180;
+  let x = Math.sin(radians);
+  let y = -Math.cos(radians);
+
+  // Keep labels on the visually upper side of a lane regardless of travel
+  // direction. A vertical lane uses its left side as the stable tie-breaker.
+  if (y > 0 || (Math.abs(y) < 0.0001 && x > 0)) {
+    x *= -1;
+    y *= -1;
+  }
+
+  return { x, y };
+}
+
+function outwardTextAnchor(horizontalDirection) {
+  if (horizontalDirection > 0.15) return 'start';
+  if (horizontalDirection < -0.15) return 'end';
+  return 'middle';
+}
+
+function laneAccessibleName(lane, availability, conflict, selected, focused, disabled, invalid, stale) {
   const entryName = lane.entry?.waypointId ?? '진입점';
   const exitName = lane.exit?.waypointId ?? '이탈점';
   const parts = [
@@ -70,6 +97,8 @@ function laneAccessibleName(lane, availability, conflict, selected, invalid, sta
   if (lane.exit?.transitionIds?.length) parts.push(`이탈 전환 ${lane.exit.transitionIds.join(', ')}`);
   if (conflict) parts.push('충돌 있음');
   if (selected) parts.push('선택됨');
+  if (focused) parts.push('포커스됨');
+  if (disabled) parts.push('선택할 수 없음');
   if (invalid) parts.push('데이터 오류');
   if (stale) parts.push('오래된 데이터');
   return parts.join(', ');
@@ -91,39 +120,52 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
       pointerEvents="none"
     >
       <circle
+        data-lane-endpoint-point={kind}
         r="4"
-        fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
-        stroke="var(--viewer-muted, var(--color-semantic-label-neutral))"
+        fill={VIEWER_SURFACE}
+        stroke={VIEWER_MUTED}
         strokeWidth="1.5"
         vectorEffect="non-scaling-stroke"
       />
       <text
+        data-lane-endpoint-label={kind}
         x="0"
-        y="-7"
+        y="-8"
         textAnchor="middle"
-        fill="var(--viewer-muted, var(--color-semantic-label-neutral))"
+        fill={VIEWER_MUTED}
+        stroke={VIEWER_SURFACE}
+        strokeWidth="3"
+        paintOrder="stroke"
+        vectorEffect="non-scaling-stroke"
         fontFamily="var(--font-sans)"
-        fontSize="7"
+        fontSize="var(--caption2-size)"
         fontWeight="var(--fw-bold)"
       >
         {markerLabel}
       </text>
       {transitionCount > 0 && (
-        <g data-lane-transition-count={transitionCount} transform="translate(0 11)">
+        <g data-lane-transition-count={transitionCount} transform="translate(0 16)">
           <circle
-            r="6"
-            fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
-            stroke="var(--viewer-muted, var(--color-semantic-label-neutral))"
+            data-lane-transition-count-circle=""
+            r="9"
+            fill={VIEWER_SURFACE}
+            stroke={VIEWER_MUTED}
             strokeWidth="1.5"
             vectorEffect="non-scaling-stroke"
           />
           <text
+            data-lane-transition-count-text=""
             x="0"
-            y="2.5"
+            y="0.5"
             textAnchor="middle"
-            fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+            dominantBaseline="middle"
+            fill={VIEWER_FOREGROUND}
+            stroke={VIEWER_SURFACE}
+            strokeWidth="1.5"
+            paintOrder="stroke"
+            vectorEffect="non-scaling-stroke"
             fontFamily="var(--font-sans)"
-            fontSize="7"
+            fontSize="var(--caption2-size)"
             fontWeight="var(--fw-bold)"
           >
             T{transitionCount}
@@ -136,7 +178,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
           d="M -5 0 H 5 M 2 -3 L 5 0 L 2 3"
           transform={`rotate(${orientation}) translate(10 0)`}
           fill="none"
-          stroke="var(--viewer-foreground, var(--color-semantic-label-strong))"
+          stroke={VIEWER_FOREGROUND}
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -159,15 +201,20 @@ export function LaneOverlay({
   invalid = false,
   stale = false,
   showLabel = true,
+  showEndpoints = true,
   onActivate,
+  role,
   'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
   tabIndex,
   onFocus,
   onBlur,
+  onMouseDown,
   style,
   ...rest
 }) {
   const [hasFocus, setHasFocus] = React.useState(false);
+  const pointerOnly = ariaHidden === true || ariaHidden === 'true';
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const resolvedAvailability = ['available', 'closed', 'unknown'].includes(availability)
@@ -175,13 +222,15 @@ export function LaneOverlay({
     : 'available';
   const hasConflict = Boolean(conflict);
   const points = (lane?.points ?? []).filter(finitePoint);
+  if (points.length < 2) return null;
+
   const pathData = pathFromPoints(points);
   const midpoint = pointAlong(points, 0.5);
   const directionPoint = pointAlong(points, 0.64);
   const entryDirection = pointAlong(points.slice(0, 2), 0.5).angle;
   const exitDirection = pointAlong(points.slice(-2), 0.5).angle;
   const interactive = typeof onActivate === 'function';
-  const visibleFocus = focused || hasFocus;
+  const visibleFocus = !pointerOnly && (focused || hasFocus);
   const relation = lane?.relation?.kind === 'paired' ? 'paired' : 'single';
 
   const availabilityDash = resolvedAvailability === 'closed'
@@ -195,12 +244,38 @@ export function LaneOverlay({
       ? 'var(--color-semantic-primary-normal)'
       : 'var(--viewer-muted, var(--color-semantic-label-alternative))';
   const stateGlyphs = [
-    resolvedAvailability === 'closed' ? { glyph: '×', ratio: hasConflict ? 0.43 : 0.5, tone: 'var(--viewer-foreground, var(--color-semantic-label-strong))' } : null,
-    resolvedAvailability === 'unknown' ? { glyph: '?', ratio: hasConflict ? 0.43 : 0.5, tone: 'var(--viewer-foreground, var(--color-semantic-label-strong))' } : null,
-    hasConflict ? { glyph: '!', ratio: resolvedAvailability === 'available' ? 0.5 : 0.57, tone: 'var(--color-semantic-status-negative-text)' } : null,
-    invalid ? { glyph: '!', ratio: 0.33, tone: 'var(--color-semantic-status-negative-text)' } : null,
-    stale ? { glyph: '~', ratio: 0.72, tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))' } : null,
+    resolvedAvailability === 'closed' ? { state: 'closed', tone: VIEWER_FOREGROUND } : null,
+    resolvedAvailability === 'unknown' ? { state: 'unknown', tone: 'var(--color-semantic-status-cautionary-foreground)' } : null,
+    hasConflict ? { state: 'conflict', tone: 'var(--color-semantic-status-negative-foreground)' } : null,
+    invalid ? { state: 'invalid', tone: 'var(--color-semantic-status-negative-foreground)' } : null,
+    stale ? { state: 'stale', tone: VIEWER_MUTED } : null,
   ].filter(Boolean);
+  const midpointRadians = midpoint.angle * Math.PI / 180;
+  const labelNormal = upperScreenNormal(midpoint.angle);
+  const stateTangent = {
+    x: Math.cos(midpointRadians),
+    y: Math.sin(midpointRadians),
+  };
+  const positionedStateGlyphs = stateGlyphs.map((state, index) => ({
+    ...state,
+    slot: {
+      x: stateTangent.x * (index - (stateGlyphs.length - 1) / 2) * 18 + labelNormal.x * 32,
+      y: stateTangent.y * (index - (stateGlyphs.length - 1) / 2) * 18 + labelNormal.y * 32,
+    },
+  }));
+  const primaryLabelDistance = positionedStateGlyphs.length > 0 ? 56 : 22;
+  const metadataDistance = positionedStateGlyphs.length > 0 ? 40 : 28;
+  const primaryLabelPosition = {
+    x: labelNormal.x * primaryLabelDistance,
+    y: labelNormal.y * primaryLabelDistance,
+  };
+  const primaryLabelAnchor = outwardTextAnchor(labelNormal.x);
+  const metadataNormalDistance = lane?.label ? -metadataDistance : primaryLabelDistance;
+  const metadataPosition = {
+    x: labelNormal.x * metadataNormalDistance,
+    y: labelNormal.y * metadataNormalDistance,
+  };
+  const metadataAnchor = outwardTextAnchor(labelNormal.x * Math.sign(metadataNormalDistance));
   const metadata = [
     lane?.speedLimitMps != null
       ? `≤ ${lane.speedLimitMps} m/s`
@@ -218,6 +293,8 @@ export function LaneOverlay({
   };
 
   const handleKeyDown = (event) => {
+    if (!pointerOnly) setHasFocus(true);
+    if (pointerOnly || disabled || !interactive || event.repeat) return;
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
     activate(event);
@@ -238,17 +315,31 @@ export function LaneOverlay({
       data-disabled={disabled ? 'true' : 'false'}
       data-invalid={invalid ? 'true' : 'false'}
       data-stale={stale ? 'true' : 'false'}
-      role={interactive ? 'button' : 'img'}
-      tabIndex={interactive ? (disabled ? -1 : tabIndex ?? 0) : tabIndex}
-      focusable={interactive ? 'true' : undefined}
-      aria-label={ariaLabel ?? laneAccessibleName(lane, resolvedAvailability, hasConflict, selected, invalid, stale)}
-      aria-pressed={interactive ? selected : undefined}
-      aria-disabled={interactive && disabled ? true : undefined}
-      aria-invalid={invalid || undefined}
+      role={pointerOnly ? undefined : role ?? (interactive ? 'button' : 'img')}
+      tabIndex={pointerOnly ? undefined : interactive ? (disabled ? -1 : tabIndex ?? 0) : tabIndex}
+      focusable={pointerOnly ? 'false' : interactive && !disabled ? 'true' : undefined}
+      aria-hidden={pointerOnly || undefined}
+      aria-label={pointerOnly ? undefined : ariaLabel ?? laneAccessibleName(
+        lane,
+        resolvedAvailability,
+        hasConflict,
+        selected,
+        visibleFocus,
+        disabled,
+        invalid,
+        stale,
+      )}
+      aria-pressed={!pointerOnly && interactive ? selected : undefined}
+      aria-disabled={!pointerOnly && interactive && disabled ? true : undefined}
+      aria-invalid={!pointerOnly && invalid ? true : undefined}
       onClick={interactive ? activate : undefined}
-      onKeyDown={interactive ? handleKeyDown : undefined}
+      onKeyDown={handleKeyDown}
+      onMouseDown={(event) => {
+        if (pointerOnly) event.preventDefault();
+        onMouseDown?.(event);
+      }}
       onFocus={(event) => {
-        setHasFocus(true);
+        if (!pointerOnly) setHasFocus(isFocusVisibleTarget(event.currentTarget));
         onFocus?.(event);
       }}
       onBlur={(event) => {
@@ -257,7 +348,7 @@ export function LaneOverlay({
       }}
       style={{
         cursor: disabled ? 'not-allowed' : interactive ? 'pointer' : 'default',
-        opacity: disabled ? 0.42 : stale ? 0.7 : 1,
+        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
         outline: 'none',
         ...style,
       }}
@@ -330,10 +421,12 @@ export function LaneOverlay({
           />
           <circle
             data-lane-hit-target-core=""
+            data-lane-actual-hit-core=""
             data-screen-target-size="24"
+            data-screen-target-diameter="35"
             cx={midpoint.x}
             cy={midpoint.y}
-            r={17 * inverseScale}
+            r={17.5 * inverseScale}
             fill="transparent"
             pointerEvents="all"
           />
@@ -342,64 +435,83 @@ export function LaneOverlay({
       {pathData && (
         <path
           data-lane-direction="entry-to-exit"
-          d="M -5 -4 L 5 0 L -5 4 Z"
+          data-lane-direction-anchor-x={directionPoint.x}
+          data-lane-direction-anchor-y={directionPoint.y}
+          d={NAVIGATION_DIRECTION_PATH}
           transform={`translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`}
           fill={baseColor}
-          stroke="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
+          stroke={VIEWER_SURFACE}
           strokeWidth="1"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />
       )}
-      {endpointMarker(points[0], lane?.entry, 'entry', entryDirection, inverseScale)}
-      {endpointMarker(points[points.length - 1], lane?.exit, 'exit', exitDirection, inverseScale)}
-      {stateGlyphs.map((state, index) => {
-        const point = pointAlong(points, state.ratio);
-        return (
-          <g
-            key={`${state.glyph}-${index}`}
-            data-lane-state-glyph={state.glyph}
-            transform={`translate(${point.x} ${point.y}) scale(${inverseScale})`}
-            aria-hidden="true"
-            pointerEvents="none"
-          >
-            <circle
-              r="7"
-              fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
-              stroke={state.tone}
-              strokeWidth="1.5"
-              vectorEffect="non-scaling-stroke"
-            />
-            <text
-              x="0"
-              y="3"
-              textAnchor="middle"
-              fill={state.tone}
-              fontFamily="var(--font-sans)"
-              fontSize="10"
-              fontWeight="var(--fw-bold)"
+      {showEndpoints && endpointMarker(points[0], lane?.entry, 'entry', entryDirection, inverseScale)}
+      {showEndpoints && endpointMarker(points[points.length - 1], lane?.exit, 'exit', exitDirection, inverseScale)}
+      {positionedStateGlyphs.length > 0 && (
+        <g
+          data-lane-state-slot-layer=""
+          data-viewport-scale={scale}
+          data-lane-state-tangent-x={stateTangent.x}
+          data-lane-state-tangent-y={stateTangent.y}
+          data-lane-state-normal-x={labelNormal.x}
+          data-lane-state-normal-y={labelNormal.y}
+          transform={`translate(${midpoint.x} ${midpoint.y}) scale(${inverseScale})`}
+          aria-hidden="true"
+          pointerEvents="none"
+        >
+          {positionedStateGlyphs.map((state) => (
+            <g
+              key={state.state}
+              data-lane-state-glyph={state.state}
+              data-lane-state={state.state}
+              data-lane-state-slot-x={state.slot.x}
+              data-lane-state-slot-y={state.slot.y}
+              transform={`translate(${state.slot.x} ${state.slot.y})`}
             >
-              {state.glyph}
-            </text>
-          </g>
-        );
-      })}
+              <circle
+                data-lane-state-circle={state.state}
+                r="7"
+                fill={VIEWER_SURFACE}
+                stroke={state.tone}
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+              />
+              <NavigationStateGlyph
+                kind={state.state}
+                size={10}
+                color={VIEWER_FOREGROUND}
+                data-lane-state-glyph-geometry=""
+              />
+            </g>
+          ))}
+        </g>
+      )}
       {showLabel && (lane?.label || metadata) && (
         <g
           data-lane-label=""
+          data-lane-label-normal-x={labelNormal.x}
+          data-lane-label-normal-y={labelNormal.y}
           transform={`translate(${midpoint.x} ${midpoint.y}) scale(${inverseScale})`}
           aria-hidden="true"
           pointerEvents="none"
         >
           {lane?.label && (
             <text
-              x="0"
-              y="-12"
-              textAnchor="middle"
-              fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+              data-lane-primary-label=""
+              data-lane-normal-distance={primaryLabelDistance}
+              data-lane-outward-anchor={primaryLabelAnchor}
+              x={primaryLabelPosition.x}
+              y={primaryLabelPosition.y}
+              textAnchor={primaryLabelAnchor}
+              fill={VIEWER_FOREGROUND}
+              stroke={VIEWER_SURFACE}
+              strokeWidth="4"
+              paintOrder="stroke"
+              vectorEffect="non-scaling-stroke"
               fontFamily="var(--font-sans)"
-              fontSize="10"
+              fontSize="var(--caption1-size)"
               fontWeight="var(--fw-bold)"
             >
               {lane.label}
@@ -407,12 +519,19 @@ export function LaneOverlay({
           )}
           {metadata && (
             <text
-              x="0"
-              y={lane?.label ? 16 : -10}
-              textAnchor="middle"
-              fill="var(--viewer-muted, var(--color-semantic-label-neutral))"
+              data-lane-metadata=""
+              data-lane-normal-distance={metadataNormalDistance}
+              data-lane-outward-anchor={metadataAnchor}
+              x={metadataPosition.x}
+              y={metadataPosition.y}
+              textAnchor={metadataAnchor}
+              fill={VIEWER_MUTED}
+              stroke={VIEWER_SURFACE}
+              strokeWidth="3"
+              paintOrder="stroke"
+              vectorEffect="non-scaling-stroke"
               fontFamily="var(--font-sans)"
-              fontSize="8"
+              fontSize="var(--caption2-size)"
               fontWeight="var(--fw-semibold)"
             >
               {metadata}

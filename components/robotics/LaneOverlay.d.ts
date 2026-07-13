@@ -40,8 +40,10 @@ export interface LaneOverlayProps extends NavigationSvgFeatureProps {
   availability?: LaneAvailability;
   /** Runtime schedule/resource conflict, independent from availability. @default false */
   conflict?: boolean;
+  /** Show entry/exit endpoint chrome. Disable when a composed waypoint layer owns the same endpoint identities. @default true */
+  showEndpoints?: boolean;
   onActivate?: (id: string, event: NavigationActivateEvent) => void;
 }
 
-/** SVG `<g>` fragment for one directed LK Robotics navigation lane. */
-export function LaneOverlay(props: LaneOverlayProps): React.JSX.Element;
+/** SVG `<g>` fragment for one directed LK Robotics navigation lane. Returns `null` when fewer than two finite points remain. */
+export function LaneOverlay(props: LaneOverlayProps): React.JSX.Element | null;

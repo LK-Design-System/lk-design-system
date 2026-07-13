@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "source": {
     "name": "LK Design System Storybook information architecture audit",
-    "auditedAt": "2026-07-12",
+    "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "64909e471d7ab4f17314f57bb34c72d9ca56a9ea173222b70ec32ba56ed7a0f1",
+    "storybookIndexSha256": "00b57d8cae4a52416c83f9dd92fdc3febf38182b9ab7e6895393ef911dce6d76",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -60,24 +60,24 @@
   },
   "summary": {
     "pages": 177,
-    "stories": 526,
-    "publicStories": 400,
+    "stories": 534,
+    "publicStories": 408,
     "hiddenStories": 126,
     "componentDescriptions": 173,
     "pagesWithVisibleCanvasIntroduction": 177,
     "pagesWithDecisionGuidance": 172,
-    "describedPublicStories": 400,
+    "describedPublicStories": 408,
     "reviewedPages": 177,
-    "reviewedStories": 526,
+    "reviewedStories": 534,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 170,
       "usage": 21,
-      "variants-states": 77,
-      "interaction": 46,
-      "responsive": 51,
+      "variants-states": 82,
+      "interaction": 48,
+      "responsive": 52,
       "scenario": 25,
       "visual-parity": 89,
       "internal-contract": 37
@@ -112,8 +112,8 @@
       },
       "Robotics": {
         "pages": 29,
-        "stories": 124,
-        "public": 100,
+        "stories": 132,
+        "public": 108,
         "hidden": 24,
         "guideReadyPages": 29
       },
@@ -6370,7 +6370,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "4749944f1d925d9b8666618f58fb7062d476eb168a540ac4a5ce6b33cc3f14eb",
+      "sourceSha256": "90b70343311771e296cdef8db677347bddac0368877d0fcf7a1c338dbf6eee82",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -6398,8 +6398,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "4749944f1d925d9b8666618f58fb7062d476eb168a540ac4a5ce6b33cc3f14eb",
+      "reviewedAt": "2026-07-13",
+      "reviewedSourceSha256": "90b70343311771e296cdef8db677347bddac0368877d0fcf7a1c338dbf6eee82",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6569,14 +6569,14 @@
           "reviewNote": "2026-07-12 normal, narrow, and dark rendered states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
+      "reviewNote": "2026-07-13 re-reviewed after the soft/solid surface, lifecycle order, compact source hierarchy, and representative composition updates; current source AST plus 19 targeted Communication stories, 17 completed play functions, and Axe were verified."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "3ea56c0cd70d87a249c8a031faf820af7a91c356aed50417a5ea6cf082e7100e",
+      "sourceSha256": "1404c0a21c61ef555ed571f50b5a47cdfad34080fe2358328dd4dc3fe11dcc4f",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -6603,8 +6603,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "3ea56c0cd70d87a249c8a031faf820af7a91c356aed50417a5ea6cf082e7100e",
+      "reviewedAt": "2026-07-13",
+      "reviewedSourceSha256": "1404c0a21c61ef555ed571f50b5a47cdfad34080fe2358328dd4dc3fe11dcc4f",
       "stories": [
         {
           "id": "lds-product-communication-message-composer--message-composer-overview",
@@ -6754,7 +6754,7 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience naming/description normalization; verified via targeted Storybook play/axe."
+      "reviewNote": "2026-07-13 re-reviewed after the 32px primary action, fixed 40×44px slot, parent-stretch isolation, and narrow/dark coverage updates; current source AST plus targeted Communication play/Axe were verified."
     },
     {
       "title": "LDS Product/Communication/Message Feed",
@@ -16122,7 +16122,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationFacilities.stories.jsx",
-      "sourceSha256": "e0903703aa44528a98147f26f9a422bcba53597407766f16aae008dfe25af7c7",
+      "sourceSha256": "41f1cf8eb5bcad9adbb0257df25e45a509b956bf2bd91f612015b91208be34f5",
       "primaryOwner": "FacilityTransition",
       "ownerComponents": [
         "FacilityTransition"
@@ -16132,13 +16132,13 @@
         "SpatialRegion"
       ],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-navigation-facility-transition--facility-transition-overview",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -16148,8 +16148,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "e0903703aa44528a98147f26f9a422bcba53597407766f16aae008dfe25af7c7",
+      "reviewedAt": "2026-07-13",
+      "reviewedSourceSha256": "41f1cf8eb5bcad9adbb0257df25e45a509b956bf2bd91f612015b91208be34f5",
       "stories": [
         {
           "id": "lds-robotics-navigation-facility-transition--facility-transition-overview",
@@ -16201,6 +16201,31 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-facility-transition--validation-and-focus-states",
+          "name": "변형·상태 · 선택·포커스·오류·지연",
+          "exportName": "ValidationAndFocusStates",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FacilityTransition"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
         },
         {
           "id": "lds-robotics-navigation-facility-transition--interaction-and-map-filtering",
@@ -16275,14 +16300,14 @@
           "reviewNote": "2026-07-12 normal, narrow, source, and availability states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
+      "reviewNote": "2026-07-13 re-reviewed after navigation state glyph, compound state, pointer-only, screen-space focus, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
       "title": "LDS Robotics/Navigation/Lane",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationLane.stories.jsx",
-      "sourceSha256": "1297e98429debead89e184169f36e2d7f1630396469f6394af621d58da3da207",
+      "sourceSha256": "4bbbfe0bbef4e917a5ccd909d9a461ef0180298aa846414b15e8775e5b239ae1",
       "primaryOwner": "LaneOverlay",
       "ownerComponents": [
         "LaneOverlay"
@@ -16292,14 +16317,14 @@
         "Map2DCanvas"
       ],
       "visibility": {
-        "public": 4,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-navigation-lane--lane-overview",
-        "describedPublicStories": 4,
-        "publicStoriesWithCanvasGuidance": 4,
+        "describedPublicStories": 7,
+        "publicStoriesWithCanvasGuidance": 7,
         "decisionGuidance": true
       },
       "missingGuidance": [],
@@ -16308,8 +16333,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "1297e98429debead89e184169f36e2d7f1630396469f6394af621d58da3da207",
+      "reviewedAt": "2026-07-13",
+      "reviewedSourceSha256": "4bbbfe0bbef4e917a5ccd909d9a461ef0180298aa846414b15e8775e5b239ae1",
       "stories": [
         {
           "id": "lds-robotics-navigation-lane--lane-overview",
@@ -16335,6 +16360,56 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-lane--lane-dark-compound-states",
+          "name": "변형·상태 · 다크 복합 상태",
+          "exportName": "LaneDarkCompoundStates",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LaneOverlay"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+        },
+        {
+          "id": "lds-robotics-navigation-lane--lane-short-path-compound-states",
+          "name": "변형·상태 · 짧은 경로 복합 상태 표식",
+          "exportName": "LaneShortPathCompoundStates",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LaneOverlay"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
@@ -16387,6 +16462,32 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
+          "id": "lds-robotics-navigation-lane--lane-pointer-only-and-geometry-guard",
+          "name": "상호작용 · 포인터 전용과 형상 방어",
+          "exportName": "LanePointerOnlyAndGeometryGuard",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LaneOverlay"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Map2DCanvas"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+        },
+        {
           "id": "lds-robotics-navigation-lane--lane-narrow-320",
           "name": "반응형 · 320px 좁은 폭",
           "exportName": "LaneNarrow320",
@@ -16435,14 +16536,14 @@
           "reviewNote": "2026-07-12 normal, narrow, selection, disabled, and constraint states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
+      "reviewNote": "2026-07-13 re-reviewed after endpoint composition, screen-normal labels/states, 35px target, pointer-only, invalid geometry, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
       "title": "LDS Robotics/Navigation/Regions",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRegions.stories.jsx",
-      "sourceSha256": "e3ae46e15a68ebf21ccac0b681845e7dba81d4abe094133a99305a622f977e9a",
+      "sourceSha256": "2853de8b89f4b599c217e3626db3c9845f8eb5b178d36804ae35b1f94385366d",
       "primaryOwner": "SpatialRegion",
       "ownerComponents": [
         "SpatialRegion"
@@ -16451,13 +16552,13 @@
         "Map2DCanvas"
       ],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-navigation-regions--spatial-region-overview",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -16467,8 +16568,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "e3ae46e15a68ebf21ccac0b681845e7dba81d4abe094133a99305a622f977e9a",
+      "reviewedAt": "2026-07-13",
+      "reviewedSourceSha256": "2853de8b89f4b599c217e3626db3c9845f8eb5b178d36804ae35b1f94385366d",
       "stories": [
         {
           "id": "lds-robotics-navigation-regions--spatial-region-overview",
@@ -16518,6 +16619,31 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-regions--concave-geometry-and-compound-states",
+          "name": "변형·상태 · 오목 영역의 내부 앵커",
+          "exportName": "ConcaveGeometryAndCompoundStates",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SpatialRegion"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
         },
         {
           "id": "lds-robotics-navigation-regions--interaction-and-map-filtering",
@@ -16592,14 +16718,14 @@
           "reviewNote": "2026-07-12 normal, narrow, dark, and pattern states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after adding audience decision-guidance (\"when suitable / when not\") to the storyGuide and completing per-story purpose descriptions; verified via targeted Storybook play/axe."
+      "reviewNote": "2026-07-13 re-reviewed after concave polygon anchoring, compound states, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
       "title": "LDS Robotics/Navigation/Route and Trajectory",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRouteTrajectory.stories.jsx",
-      "sourceSha256": "12dba9e198cbe8399c1a63864489e80adc08c9147b3cd78a33c0084a4555d81e",
+      "sourceSha256": "b78c813df048503a5e1fad35b0914a43fedbe68f605f77b855da9b62495f1ca8",
       "primaryOwner": "RouteOverlay",
       "ownerComponents": [
         "RouteOverlay"
@@ -16617,14 +16743,14 @@
         "WaypointMarker"
       ],
       "visibility": {
-        "public": 6,
+        "public": 8,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-overview",
-        "describedPublicStories": 6,
-        "publicStoriesWithCanvasGuidance": 6,
+        "describedPublicStories": 8,
+        "publicStoriesWithCanvasGuidance": 8,
         "decisionGuidance": true
       },
       "missingGuidance": [],
@@ -16633,8 +16759,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "12dba9e198cbe8399c1a63864489e80adc08c9147b3cd78a33c0084a4555d81e",
+      "reviewedAt": "2026-07-13",
+      "reviewedSourceSha256": "b78c813df048503a5e1fad35b0914a43fedbe68f605f77b855da9b62495f1ca8",
       "stories": [
         {
           "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-overview",
@@ -16749,6 +16875,32 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
+          "id": "lds-robotics-navigation-route-and-trajectory--short-path-compound-markers",
+          "name": "변형·상태 · 기준점 충돌 복합 표식",
+          "exportName": "ShortPathCompoundMarkers",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "RouteOverlay"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas",
+            "TrajectoryOverlay"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+        },
+        {
           "id": "lds-robotics-navigation-route-and-trajectory--path-selection-and-activation",
           "name": "상호작용 · 구간과 궤적 선택",
           "exportName": "PathSelectionAndActivation",
@@ -16773,6 +16925,39 @@
             "TrajectoryOverlay"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-route-and-trajectory--semantic-mirror-narrow-320",
+          "name": "반응형 · 320px 의미 목록 연동",
+          "exportName": "SemanticMirrorNarrow320",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "RouteOverlay"
+          ],
+          "supportingComponents": [
+            "FacilityTransition",
+            "LaneOverlay",
+            "LayerPanel",
+            "Legend",
+            "Map2DCanvas",
+            "SelectionInspector",
+            "SpatialRegion",
+            "TrajectoryOverlay",
+            "WaypointMarker"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
         },
         {
           "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-narrow-320",
@@ -16823,14 +17008,14 @@
           "reviewNote": "2026-07-12 normal, narrow, progress, invalid, stale, and selection states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience naming/description normalization; verified via targeted Storybook play/axe."
+      "reviewNote": "2026-07-13 re-reviewed after screen-space marker collision, map-filtered progress, semantic mirror identity, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
       "title": "LDS Robotics/Navigation/Waypoint",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationWaypoint.stories.jsx",
-      "sourceSha256": "d46083b20217da8ddd2f08886a6cb96011807dfa8b0cd5b816b435c6aa677d5a",
+      "sourceSha256": "1c456adf68c2a17d5ebf06be7e6fd6d1905be73038e66d7f5b0a5f9849a99985",
       "primaryOwner": "WaypointMarker",
       "ownerComponents": [
         "WaypointMarker"
@@ -16840,13 +17025,13 @@
         "Map2DCanvas"
       ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-navigation-waypoint--overview",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -16856,8 +17041,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "d46083b20217da8ddd2f08886a6cb96011807dfa8b0cd5b816b435c6aa677d5a",
+      "reviewedAt": "2026-07-13",
+      "reviewedSourceSha256": "1c456adf68c2a17d5ebf06be7e6fd6d1905be73038e66d7f5b0a5f9849a99985",
       "stories": [
         {
           "id": "lds-robotics-navigation-waypoint--overview",
@@ -16893,6 +17078,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "variants-states",
@@ -16933,6 +17119,32 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-waypoint--pointer-only-map-fragment",
+          "name": "상호작용 · 포인터 전용 지도 조각",
+          "exportName": "PointerOnlyMapFragment",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "WaypointMarker"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Map2DCanvas"
+          ],
+          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
         },
         {
           "id": "lds-robotics-navigation-waypoint--zoom-and-hit-area",
@@ -17006,7 +17218,7 @@
           "reviewNote": "2026-07-12 normal, narrow, light/dark, compound, disabled, and hit-area states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+      "reviewNote": "2026-07-13 re-reviewed after shared SVG state glyphs, compound unknown/invalid layout, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
       "title": "LDS Robotics/Status/Battery Gauge",

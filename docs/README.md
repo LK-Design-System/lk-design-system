@@ -5,7 +5,7 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-13 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
@@ -36,6 +36,7 @@
 | Document | Update source |
 | --- | --- |
 | [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md) | `npm run report:inventory`, `npm run check:inventory` |
+| [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md) | 현재 완성도 판정, 영역별 gate, 남은 검토 원장 |
 | [`VISUAL_PARITY_LEDGER.md`](VISUAL_PARITY_LEDGER.md) | WDS evidence와 visual parity guards |
 | [`DEPRECATIONS.md`](DEPRECATIONS.md) | generated: `npm run report:deprecations` |
 | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | product source pins와 `check:product-frontends` |

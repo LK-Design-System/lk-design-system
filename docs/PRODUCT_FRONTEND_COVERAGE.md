@@ -5,7 +5,7 @@
 | Type | Product workflow coverage contract and audit summary |
 | Status | Current · LK Web Viz WF-15 wireframe and LDS mapping reviewed |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-13 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
 
 ## 필수 LK 제품 자산 교차 검토
@@ -465,6 +465,14 @@
 
 핵심은 채팅창이 아니라 모델이 실제로 어떤 범위와 source를 사용했는지 신뢰할 수 있게 하는 것이다.
 
+최소 세 제품 자산의 source 기반 판정은 다음과 같다.
+
+| 제품 자산 | 고정 revision과 관련 source | 판정 | workflow seam |
+| --- | --- | --- | --- |
+| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` · `docs/chat.md` | supported by composition | user/assistant surface, streaming, compact citation, composer·scope/reset 흐름은 LDS message/feed/composer/source primitive로 조합할 수 있고 retrieval·provider·citation truth는 Context Hub가 소유한다. |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` · `frontend/src/screens/TaskCreateScreen.tsx` | not applicable | 현재 고정 frontend는 map/floor geometry 편집과 task target authoring을 소유하며 evidence-backed conversation 진입점이 없다. |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx` | not applicable | 현재 고정 frontend는 supervision·task command·manual control workflow를 소유하며 scoped-knowledge chat 또는 citation UI가 없다. |
+
 ```text
 ┌ Scope truth ────────────────────────────────────────────┐
 │ provider availability · resolved project/scope · source │
@@ -489,10 +497,13 @@
 - scope chip을 실제 backend evidence와 무관한 장식으로 쓰지 않는다.
 - 전체 `ScopedConversation`을 한 컴포넌트로 유지하지 않고 message, source disclosure, composer state, reset guard로 분해한다.
 - retrieval, citation truth, persistence, provider bridge는 앱 소유다.
+- 고정된 Context Hub `PortalChatPanel.tsx`는 user를 solid blue + white plain text, assistant를 neutral + rich markdown으로 구분한다. LDS는 이 role mapping을 추론하지 않고 `ConversationMessage`의 명시적 `soft`/`solid` surface 축만 제공하며, Context Hub composition이 user→solid/assistant→soft를 선택한다.
+- 같은 source는 답변 뒤에 `근거 N개`를 먼저 두고 사용자가 펼쳤을 때 citation links를 보여준다. LDS는 독립 provenance 화면의 기본 full `SourceDisclosure`를 유지하면서, 대화 조합만 `ConversationMessage sourcePresentation="compact"`를 명시해 본문보다 출처 card가 더 무거워지는 문제를 피한다.
 
-Message·feed·composer의 독립 시각·접근성 계약을 Product extension으로 다시 검토하는 후속 gate는
-[`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)의 Track C에 기록한다. 해당 gate가
-통과하기 전까지 이 문서의 product-owned workflow 판정은 유지한다.
+[`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)의 Track C 후속 gate는 완료했다.
+`ConversationMessage`, `MessageFeed`, `MessageComposer`가 각각 message anatomy·history/follow·IME-safe compose의
+독립 시각·접근성 계약을 소유한다. role→surface 정책, provider/stream transport, retrieval, persistence와 session
+reset은 계속 product-owned seam이며, 완료된 Product extension을 전체 `ScopedConversation` wrapper로 되돌리지 않는다.
 
 ### WF-11 Sensitive credential handling
 
@@ -610,6 +621,14 @@ Message·feed·composer의 독립 시각·접근성 계약을 Product extension�
 ### WF-15 Map navigation and facility authoring
 
 현재 단계는 `wireframed`다. `LK-ROBOTICS/lk_web_viz`의 `MapEditScreen`, `ZoneEditor`, `TaskCreateScreen`을 pin해 point·line·region·landmark·층별 task target을 다시 읽었고, 현재 화면 배치를 복제하지 않은 독립 구조와 LDS mapping을 검토했다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
+
+필수 세 자산의 이번 Robotics Navigation 교차 판정은 다음과 같다. `supported` 계열 판정은 실제 component-level source mapping이 닫힌 경우에만 사용한다.
+
+| 제품 자산 | 고정 revision과 관련 source | 판정 | workflow seam |
+| --- | --- | --- | --- |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` · `frontend/src/components/editor/ZoneEditor.tsx` · `frontend/src/screens/TaskCreateScreen.tsx` | supported by composition | LDS가 point/lane/route/trajectory/region/facility symbol과 named mirror 계약을 제공하고, projection·floor topology·editor command·save/retry는 Web Viz가 소유한다. `forbidden` line과 stair/stair-slope는 아래의 gap으로 남는다. |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx` · `frontend/src/views/task-management/index.jsx` | unverified | robot supervision과 map target의 관련성은 확인했지만 여섯 Navigation renderer와 Control source의 component-level mapping을 닫지 않았다. 따라서 지원을 추정하지 않고 후속 source review 전까지 Control-owned composition으로 남긴다. |
+| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/projects/page.tsx` · `src/components/scopes/ScopeManager.tsx` · `src/components/chat/PortalChatPanel.tsx` | not applicable | 현재 고정 frontend는 project/evidence scope, document intake, assistance, credential workflow를 소유하며 map·floor·robot navigation 진입점이나 geometry authoring 책임이 없다. |
 
 독립 low-fi의 읽기·키보드 순서는 다음과 같다.
 
