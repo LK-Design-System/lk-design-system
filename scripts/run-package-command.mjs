@@ -1,4 +1,7 @@
 import { spawn, spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
 const actions = {
   'audit-runtime': {
@@ -29,6 +32,22 @@ function preferredManager() {
 }
 
 if (!actions[action]) fail(`Unknown package-manager action: ${action}`);
+
+// A --prod/--omit=dev runtime audit scans only production dependencies. This
+// package ships with none (check:pack enforces an empty `dependencies`), so the
+// audit is vacuously clean and there is nothing to send to the (now retired)
+// registry audit endpoint. Skip the network call while there are zero runtime
+// deps; if a runtime dependency is ever added, this guard falls through to the
+// real audit below.
+if (action === 'audit-runtime') {
+  const packageJsonPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'package.json');
+  const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+  const runtimeDeps = Object.keys(pkg.dependencies || {});
+  if (runtimeDeps.length === 0) {
+    console.log('No runtime dependencies to audit; skipping the production advisory scan.');
+    process.exit(0);
+  }
+}
 
 const preferred = preferredManager();
 const fallback = preferred === 'pnpm' ? 'npm' : 'pnpm';
