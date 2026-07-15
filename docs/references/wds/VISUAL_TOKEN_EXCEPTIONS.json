@@ -6,7 +6,10 @@
     "components/icon/Icon.jsx": "Imported WDS color brand icons preserve provider logo colors; monochrome icons still use currentColor."
   },
   "allowedStoryFiles": {
-    "stories/Content.shared.jsx": "The mini map preview is an encoded SVG media fixture. CSS variables do not resolve inside the encoded image payload, so its internal art colors are fixed sample asset data rather than component styling."
+    "stories/Content.shared.jsx": "The mini map preview is an encoded SVG media fixture. CSS variables do not resolve inside the encoded image payload, so its internal art colors are fixed sample asset data rather than component styling.",
+    "stories/CommunicationMessage.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
+    "stories/CommunicationMessageComposer.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
+    "stories/CommunicationMessageFeed.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling."
   },
   "rule": "Reusable component implementation files and Storybook examples must not introduce hardcoded hex/rgb/rgba visual values outside these exceptions. Use semantic, component, inverse, material, status, or effect tokens instead."
 }
