@@ -2,7 +2,7 @@
 
 
 
-var _chunkYB4742KUcjs = require('./chunk-YB4742KU.cjs');
+var _chunkQDSVSP6Ncjs = require('./chunk-QDSVSP6N.cjs');
 
 // components/robotics/SpatialRegion.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -311,7 +311,7 @@ function SpatialRegion({
         _optionalChain([onMouseDown, 'optionalCall', _ => _(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setFocusVisible(_chunkYB4742KUcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setFocusVisible(_chunkQDSVSP6Ncjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _2 => _2(event)]);
       },
       onBlur: (event) => {
@@ -383,11 +383,11 @@ function SpatialRegion({
             children: [
               invalid && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: "translate(0 -18)", "data-region-invalid-mark": "", children: [
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: "7", fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))", strokeWidth: "1.5", vectorEffect: "non-scaling-stroke" }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkYB4742KUcjs.NavigationStateGlyph, { kind: "invalid", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkQDSVSP6Ncjs.NavigationStateGlyph, { kind: "invalid", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
               ] }),
               stale && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: `translate(0 ${invalid ? 18 : -18})`, "data-region-stale-mark": "", children: [
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: "7", fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-muted, var(--color-semantic-label-alternative))", strokeWidth: "1.5", strokeDasharray: "2 2", vectorEffect: "non-scaling-stroke" }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkYB4742KUcjs.NavigationStateGlyph, { kind: "stale", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkQDSVSP6Ncjs.NavigationStateGlyph, { kind: "stale", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
               ] })
             ]
           }
@@ -426,4 +426,4 @@ function SpatialRegion({
 
 
 exports.SpatialRegion = SpatialRegion;
-//# sourceMappingURL=chunk-GEZR2G72.cjs.map
+//# sourceMappingURL=chunk-NZEBNVGV.cjs.map

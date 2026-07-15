@@ -1,13 +1,13 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-
-
-var _chunkYB4742KUcjs = require('./chunk-YB4742KU.cjs');
+"use client";
+import {
+  NAVIGATION_DIRECTION_PATH,
+  NavigationStateGlyph,
+  isFocusVisibleTarget
+} from "./chunk-HYFL5LBC.js";
 
 // components/robotics/RouteOverlay.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var STATUS_LABEL = {
   planned: "\uACC4\uD68D\uB428",
   active: "\uC774\uB3D9 \uC911",
@@ -141,7 +141,7 @@ function pointAlong(points, ratio) {
   return { ...points[points.length - 1], angle: 0 };
 }
 function normalizedProgress(route) {
-  if (!_optionalChain([route, 'optionalAccess', _ => _.progress])) return void 0;
+  if (!route?.progress) return void 0;
   return {
     segmentId: route.progress.segmentId,
     fraction: Math.max(0, Math.min(1, Number(route.progress.fraction) || 0)),
@@ -174,8 +174,8 @@ function segmentDash(segment) {
 }
 function routeAccessibleName(route, progress, selected, focused, disabled, invalid, stale) {
   const parts = [
-    _nullishCoalesce(route.label, () => ( `\uACBD\uB85C ${route.id}`)),
-    _nullishCoalesce(STATUS_LABEL[route.status], () => ( route.status))
+    route.label ?? `\uACBD\uB85C ${route.id}`,
+    STATUS_LABEL[route.status] ?? route.status
   ];
   if (progress) parts.push(`\uD604\uC7AC \uAD6C\uAC04 ${Math.round(progress.fraction * 100)}%`);
   if (selected) parts.push("\uC120\uD0DD\uB428");
@@ -208,18 +208,18 @@ function RouteOverlay({
   style,
   ...rest
 }) {
-  const [focusedSegment, setFocusedSegment] = _react2.default.useState(null);
-  const [hasRootFocus, setHasRootFocus] = _react2.default.useState(false);
+  const [focusedSegment, setFocusedSegment] = React.useState(null);
+  const [hasRootFocus, setHasRootFocus] = React.useState(false);
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === "function";
   const hiddenFromAccessibility = ariaHidden === true || ariaHidden === "true";
   const pointerOnly = interactive && hiddenFromAccessibility;
-  const visibleSegments = (_nullishCoalesce(_optionalChain([route, 'optionalAccess', _2 => _2.segments]), () => ( []))).filter((segment) => segment.mapId === activeMapId && (_nullishCoalesce(segment.points, () => ( []))).filter(finitePoint).length >= 2);
+  const visibleSegments = (route?.segments ?? []).filter((segment) => segment.mapId === activeMapId && (segment.points ?? []).filter(finitePoint).length >= 2);
   const routeProgress = normalizedProgress(route);
   const progressSegment = routeProgress ? visibleSegments.find((segment) => segment.id === routeProgress.segmentId) : void 0;
   const progress = progressSegment ? routeProgress : void 0;
-  const baseAccessibleName = _nullishCoalesce(ariaLabel, () => ( routeAccessibleName(route, progress, selected, focused, disabled, invalid, stale)));
+  const baseAccessibleName = ariaLabel ?? routeAccessibleName(route, progress, selected, focused, disabled, invalid, stale);
   if (visibleSegments.length === 0) return null;
   const activate = (segmentId, event) => {
     if (disabled) {
@@ -227,7 +227,7 @@ function RouteOverlay({
       event.stopPropagation();
       return;
     }
-    _optionalChain([onActivate, 'optionalCall', _3 => _3({ routeId: route.id, segmentId }, event)]);
+    onActivate?.({ routeId: route.id, segmentId }, event);
   };
   const handleKeyDown = (segmentId, event) => {
     if (!pointerOnly) setFocusedSegment(segmentId);
@@ -238,20 +238,20 @@ function RouteOverlay({
   };
   const handleRootKeyDown = (event) => {
     if (!interactive && !hiddenFromAccessibility) setHasRootFocus(true);
-    _optionalChain([onKeyDown, 'optionalCall', _4 => _4(event)]);
+    onKeyDown?.(event);
   };
   const handlePointerDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onPointerDown, 'optionalCall', _5 => _5(event)]);
+    onPointerDown?.(event);
   };
   const handleMouseDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onMouseDown, 'optionalCall', _6 => _6(event)]);
+    onMouseDown?.(event);
   };
-  const statusSegment = _nullishCoalesce(_nullishCoalesce(progressSegment, () => ( visibleSegments.find((segment) => segment.phase === "current"))), () => ( visibleSegments[0]));
-  const statusPoints = _nullishCoalesce(_optionalChain([statusSegment, 'optionalAccess', _7 => _7.points, 'optionalAccess', _8 => _8.filter, 'call', _9 => _9(finitePoint)]), () => ( []));
-  const statusPoint = progressSegment && _optionalChain([progress, 'optionalAccess', _10 => _10.position]) ? progress.position : pointAlong(statusPoints, progressSegment ? progress.fraction : 0.18);
-  const statusCondition = ["normal", "waiting", "blocked", "conflict"].includes(_optionalChain([statusSegment, 'optionalAccess', _11 => _11.condition])) ? statusSegment.condition : "normal";
+  const statusSegment = progressSegment ?? visibleSegments.find((segment) => segment.phase === "current") ?? visibleSegments[0];
+  const statusPoints = statusSegment?.points?.filter(finitePoint) ?? [];
+  const statusPoint = progressSegment && progress?.position ? progress.position : pointAlong(statusPoints, progressSegment ? progress.fraction : 0.18);
+  const statusCondition = ["normal", "waiting", "blocked", "conflict"].includes(statusSegment?.condition) ? statusSegment.condition : "normal";
   const statusMidpoint = pointAlong(statusPoints, 0.5);
   const routeStateMarkers = [
     invalid ? {
@@ -277,22 +277,22 @@ function RouteOverlay({
     }))
   ].filter(Boolean) : [];
   const markerLayout = markerCollisionLayout(naturalMarkers, scale);
-  const routeMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _12 => _12.slots, 'access', _13 => _13[name]]);
+  const routeMarkerSlot = (name) => markerLayout?.slots[name];
   const markerForeground = "var(--viewer-foreground, var(--color-semantic-label-strong))";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "g",
     {
       ...rest,
       "data-lk-route-overlay": "",
-      "data-route-id": _optionalChain([route, 'optionalAccess', _14 => _14.id]),
+      "data-route-id": route?.id,
       "data-active-map-id": activeMapId,
-      "data-route-status": _optionalChain([route, 'optionalAccess', _15 => _15.status]),
+      "data-route-status": route?.status,
       "data-visible-segment-count": visibleSegments.length,
       "data-viewport-scale": scale,
-      "data-progress-segment-id": _optionalChain([progress, 'optionalAccess', _16 => _16.segmentId]),
-      "data-progress-fraction": _optionalChain([progress, 'optionalAccess', _17 => _17.fraction]),
+      "data-progress-segment-id": progress?.segmentId,
+      "data-progress-fraction": progress?.fraction,
       "data-route-marker-layout": markerLayout ? "screen-slots" : "path-anchored",
-      "data-route-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _18 => _18.totalWidth]),
+      "data-route-marker-row-width": markerLayout?.totalWidth,
       "data-pointer-only": pointerOnly ? "true" : void 0,
       "data-selected": selected ? "true" : "false",
       "data-focused": !hiddenFromAccessibility && (focused || hasRootFocus || focusedSegment != null) ? "true" : "false",
@@ -310,17 +310,17 @@ function RouteOverlay({
       onPointerDown: pointerOnly || onPointerDown ? handlePointerDown : void 0,
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !interactive && !hiddenFromAccessibility ? (event) => {
-        setHasRootFocus(_chunkYB4742KUcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
-        _optionalChain([onFocus, 'optionalCall', _19 => _19(event)]);
+        setHasRootFocus(isFocusVisibleTarget(event.currentTarget));
+        onFocus?.(event);
       } : void 0,
       onBlur: !interactive && !hiddenFromAccessibility ? (event) => {
         setHasRootFocus(false);
-        _optionalChain([onBlur, 'optionalCall', _20 => _20(event)]);
+        onBlur?.(event);
       } : void 0,
       style: { opacity: disabled ? 0.45 : stale ? 0.76 : 1, outline: "none", ...style },
       children: [
         visibleSegments.map((segment) => {
-          const points = (_nullishCoalesce(segment.points, () => ( []))).filter(finitePoint);
+          const points = (segment.points ?? []).filter(finitePoint);
           const pathData = pathFromPoints(points);
           const midpoint = pointAlong(points, 0.5);
           const directionPoint = pointAlong(points, 0.7);
@@ -332,17 +332,17 @@ function RouteOverlay({
           const tone = segmentTone(normalizedSegment, invalid);
           const dash = segmentDash(normalizedSegment);
           const conditionGlyphKind = CONDITION_GLYPH_KIND[condition];
-          const conditionSlot = segment.id === _optionalChain([statusSegment, 'optionalAccess', _21 => _21.id]) ? routeMarkerSlot("condition") : void 0;
-          const segmentLabelSlot = segment.id === _optionalChain([statusSegment, 'optionalAccess', _22 => _22.id]) ? labelScreenSlot(midpoint, markerLayout, scale) : void 0;
+          const conditionSlot = segment.id === statusSegment?.id ? routeMarkerSlot("condition") : void 0;
+          const segmentLabelSlot = segment.id === statusSegment?.id ? labelScreenSlot(midpoint, markerLayout, scale) : void 0;
           const segmentName = [
-            _nullishCoalesce(segment.label, () => ( `\uAD6C\uAC04 ${segment.id}`)),
+            segment.label ?? `\uAD6C\uAC04 ${segment.id}`,
             PHASE_LABEL[phase],
             CONDITION_LABEL[condition],
-            _optionalChain([segment, 'access', _23 => _23.laneIds, 'optionalAccess', _24 => _24.length]) ? `graph lane ${segment.laneIds.length}\uAC1C` : null,
+            segment.laneIds?.length ? `graph lane ${segment.laneIds.length}\uAC1C` : null,
             segment.entryTransitionId ? `\uC9C4\uC785 \uC804\uD658 ${segment.entryTransitionId}` : null,
             segment.exitTransitionId ? `\uC774\uD0C8 \uC804\uD658 ${segment.exitTransitionId}` : null
           ].filter(Boolean).join(", ");
-          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          return /* @__PURE__ */ jsxs(
             "g",
             {
               "data-route-segment": "",
@@ -356,7 +356,7 @@ function RouteOverlay({
               "data-invalid": invalid ? "true" : "false",
               "data-stale": stale ? "true" : "false",
               role: pointerOnly ? void 0 : interactive ? "button" : void 0,
-              tabIndex: pointerOnly ? void 0 : interactive ? disabled ? -1 : _nullishCoalesce(tabIndex, () => ( 0)) : void 0,
+              tabIndex: pointerOnly ? void 0 : interactive ? disabled ? -1 : tabIndex ?? 0 : void 0,
               focusable: pointerOnly ? "false" : interactive ? "true" : void 0,
               "aria-label": !pointerOnly && interactive ? `${baseAccessibleName}, ${segmentName}` : void 0,
               "aria-pressed": !pointerOnly && interactive ? segmentSelected : void 0,
@@ -365,16 +365,16 @@ function RouteOverlay({
               onClick: interactive ? (event) => activate(segment.id, event) : void 0,
               onKeyDown: interactive && !pointerOnly ? (event) => handleKeyDown(segment.id, event) : void 0,
               onFocus: !pointerOnly ? (event) => {
-                setFocusedSegment(_chunkYB4742KUcjs.isFocusVisibleTarget.call(void 0, event.currentTarget) ? segment.id : null);
-                _optionalChain([onFocus, 'optionalCall', _25 => _25(event)]);
+                setFocusedSegment(isFocusVisibleTarget(event.currentTarget) ? segment.id : null);
+                onFocus?.(event);
               } : void 0,
               onBlur: !pointerOnly ? (event) => {
                 setFocusedSegment((current) => current === segment.id ? null : current);
-                _optionalChain([onBlur, 'optionalCall', _26 => _26(event)]);
+                onBlur?.(event);
               } : void 0,
               style: { cursor: interactive && !disabled ? "pointer" : "default" },
               children: [
-                segmentFocused && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                segmentFocused && pathData && /* @__PURE__ */ jsx(
                   "path",
                   {
                     "data-route-focus-ring": "",
@@ -388,7 +388,7 @@ function RouteOverlay({
                     pointerEvents: "none"
                   }
                 ),
-                segmentSelected && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                segmentSelected && pathData && /* @__PURE__ */ jsx(
                   "path",
                   {
                     "data-route-selection-halo": "",
@@ -403,7 +403,7 @@ function RouteOverlay({
                     pointerEvents: "none"
                   }
                 ),
-                pathData && !segmentSelected && !segmentFocused && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                pathData && !segmentSelected && !segmentFocused && /* @__PURE__ */ jsx(
                   "path",
                   {
                     "data-route-casing": "",
@@ -417,7 +417,7 @@ function RouteOverlay({
                     pointerEvents: "none"
                   }
                 ),
-                pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                pathData && /* @__PURE__ */ jsx(
                   "path",
                   {
                     "data-route-path": "",
@@ -432,8 +432,8 @@ function RouteOverlay({
                     pointerEvents: "none"
                   }
                 ),
-                pathData && interactive && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                pathData && interactive && /* @__PURE__ */ jsxs(Fragment, { children: [
+                  /* @__PURE__ */ jsx(
                     "path",
                     {
                       "data-route-hit-target": "",
@@ -446,7 +446,7 @@ function RouteOverlay({
                       pointerEvents: "stroke"
                     }
                   ),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ jsx(
                     "circle",
                     {
                       "data-route-hit-target-core": "",
@@ -459,12 +459,12 @@ function RouteOverlay({
                     }
                   )
                 ] }),
-                pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                pathData && /* @__PURE__ */ jsx(
                   "path",
                   {
                     "data-route-direction": "",
                     "data-navigation-vector-glyph": "direction",
-                    d: _chunkYB4742KUcjs.NAVIGATION_DIRECTION_PATH,
+                    d: NAVIGATION_DIRECTION_PATH,
                     transform: `translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`,
                     fill: tone,
                     stroke: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
@@ -474,7 +474,7 @@ function RouteOverlay({
                     pointerEvents: "none"
                   }
                 ),
-                conditionGlyphKind && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                conditionGlyphKind && /* @__PURE__ */ jsxs(
                   "g",
                   {
                     "data-route-condition-glyph": condition,
@@ -485,7 +485,7 @@ function RouteOverlay({
                     "aria-hidden": "true",
                     pointerEvents: "none",
                     children: [
-                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                      /* @__PURE__ */ jsx(
                         "circle",
                         {
                           "data-route-marker-badge": "condition",
@@ -497,14 +497,14 @@ function RouteOverlay({
                           vectorEffect: "non-scaling-stroke"
                         }
                       ),
-                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkYB4742KUcjs.NavigationStateGlyph, { kind: conditionGlyphKind, size: 10, color: markerForeground })
+                      /* @__PURE__ */ jsx(NavigationStateGlyph, { kind: conditionGlyphKind, size: 10, color: markerForeground })
                     ]
                   }
                 ),
                 [
                   segment.entryTransitionId && points[0] ? { kind: "entry", id: segment.entryTransitionId, point: points[0] } : null,
                   segment.exitTransitionId && points[points.length - 1] ? { kind: "exit", id: segment.exitTransitionId, point: points[points.length - 1] } : null
-                ].filter(Boolean).map((transition) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                ].filter(Boolean).map((transition) => /* @__PURE__ */ jsxs(
                   "g",
                   {
                     "data-route-transition": transition.kind,
@@ -513,7 +513,7 @@ function RouteOverlay({
                     "aria-hidden": "true",
                     pointerEvents: "none",
                     children: [
-                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                      /* @__PURE__ */ jsx(
                         "circle",
                         {
                           r: "7",
@@ -523,7 +523,7 @@ function RouteOverlay({
                           vectorEffect: "non-scaling-stroke"
                         }
                       ),
-                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                      /* @__PURE__ */ jsx(
                         "text",
                         {
                           x: "0",
@@ -544,7 +544,7 @@ function RouteOverlay({
                   },
                   transition.kind
                 )),
-                showLabel && segment.label && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                showLabel && segment.label && /* @__PURE__ */ jsx(
                   "text",
                   {
                     "data-route-segment-label": "",
@@ -575,7 +575,7 @@ function RouteOverlay({
         statusPoints.length >= 2 && routeStateMarkers.map((item) => {
           const point = item.point;
           const stateSlot = routeMarkerSlot(item.state);
-          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          return /* @__PURE__ */ jsxs(
             "g",
             {
               "data-route-overlay-state": item.state,
@@ -586,7 +586,7 @@ function RouteOverlay({
               "aria-hidden": "true",
               pointerEvents: "none",
               children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                /* @__PURE__ */ jsx(
                   "circle",
                   {
                     "data-route-marker-badge": item.state,
@@ -599,13 +599,13 @@ function RouteOverlay({
                     vectorEffect: "non-scaling-stroke"
                   }
                 ),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkYB4742KUcjs.NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: markerForeground })
+                /* @__PURE__ */ jsx(NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: markerForeground })
               ]
             },
             item.state
           );
         }),
-        progressSegment && statusPoints.length >= 2 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        progressSegment && statusPoints.length >= 2 && /* @__PURE__ */ jsxs(
           "g",
           {
             "data-route-progress-marker": "",
@@ -617,7 +617,7 @@ function RouteOverlay({
             "aria-hidden": "true",
             pointerEvents: "none",
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ jsx(
                 "circle",
                 {
                   "data-route-marker-badge": "progress",
@@ -629,15 +629,15 @@ function RouteOverlay({
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                _chunkYB4742KUcjs.NavigationStateGlyph,
+              /* @__PURE__ */ jsx(
+                NavigationStateGlyph,
                 {
-                  kind: _nullishCoalesce(STATUS_GLYPH_KIND[route.status], () => ( "unknown")),
+                  kind: STATUS_GLYPH_KIND[route.status] ?? "unknown",
                   size: 10,
                   color: markerForeground
                 }
               ),
-              showLabel && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              showLabel && /* @__PURE__ */ jsxs(
                 "text",
                 {
                   "data-route-progress-label": "",
@@ -661,7 +661,7 @@ function RouteOverlay({
             ]
           }
         ),
-        !progressSegment && statusSegment && statusPoints.length >= 2 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        !progressSegment && statusSegment && statusPoints.length >= 2 && /* @__PURE__ */ jsxs(
           "g",
           {
             "data-route-status-marker": "",
@@ -672,7 +672,7 @@ function RouteOverlay({
             "aria-hidden": "true",
             pointerEvents: "none",
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ jsx(
                 "circle",
                 {
                   "data-route-marker-badge": "progress",
@@ -684,10 +684,10 @@ function RouteOverlay({
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                _chunkYB4742KUcjs.NavigationStateGlyph,
+              /* @__PURE__ */ jsx(
+                NavigationStateGlyph,
                 {
-                  kind: _nullishCoalesce(STATUS_GLYPH_KIND[route.status], () => ( "unknown")),
+                  kind: STATUS_GLYPH_KIND[route.status] ?? "unknown",
                   size: 10,
                   color: markerForeground
                 }
@@ -700,7 +700,7 @@ function RouteOverlay({
   );
 }
 
-
-
-exports.RouteOverlay = RouteOverlay;
-//# sourceMappingURL=chunk-2JKCYKBX.cjs.map
+export {
+  RouteOverlay
+};
+//# sourceMappingURL=chunk-YAX6HG3U.js.map

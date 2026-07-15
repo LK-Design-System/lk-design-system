@@ -39,7 +39,7 @@
   "scripts": {
     "generate:colors": "node scripts/generate-lk-color-system.mjs",
     "generate:entry": "node scripts/generate-entry.mjs",
-    "build": "node scripts/generate-lk-color-system.mjs && node scripts/generate-entry.mjs && tsup && node scripts/copy-types.mjs",
+    "build": "node scripts/generate-lk-color-system.mjs && node scripts/generate-entry.mjs && tsup && node scripts/copy-types.mjs && node scripts/normalize-sourcemaps.mjs",
     "check:entry": "node scripts/generate-entry.mjs && git diff --exit-code -- src/index.js src/index.d.ts",
     "check:generated": "git diff --exit-code -- src dist",
     "check:tokens": "node scripts/check-token-source.mjs",
@@ -56,6 +56,8 @@
     "check:storybook": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
     "check:pack": "node scripts/check-package-artifact.mjs",
     "check": "node scripts/run-package-scripts.mjs check:fast check:storybook check:pack",
+    "check:storybook-ci": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
+    "check:ci": "node scripts/run-package-scripts.mjs check:fast check:storybook-ci check:pack",
     "report:inventory": "node scripts/report-inventory.mjs",
     "report:storybook-ia": "node scripts/report-storybook-information-architecture.mjs --update",
     "check:storybook-ia": "node scripts/report-storybook-information-architecture.mjs --check",

@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { existsSync } from 'node:fs';
 import { mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -18,10 +19,31 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+// Resolve the npm CLI bundled with the running Node. npm_execpath is honored
+// only when it actually points at npm's own CLI — under pnpm/yarn it points at
+// that package manager instead, and `pnpm pack` rejects npm's flags (e.g.
+// --ignore-scripts). Fall back to the npm shipped alongside process.execPath so
+// the artifact check runs identically regardless of the launching manager.
+function resolveNpmCli() {
+  const execpath = process.env.npm_execpath;
+  if (execpath && /npm-cli\.js$/i.test(execpath)) return execpath;
+  const nodeDir = path.dirname(process.execPath);
+  const candidates = [
+    path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npm-cli.js'),
+    path.join(nodeDir, '..', 'lib', 'node_modules', 'npm', 'bin', 'npm-cli.js'),
+  ];
+  return candidates.find((candidate) => existsSync(candidate)) || null;
+}
+
 function run(command, args, cwd = root) {
-  const useNpmCli = command === 'npm' && process.env.npm_execpath;
-  const executable = useNpmCli ? process.execPath : command;
-  const commandArgs = useNpmCli ? [process.env.npm_execpath, ...args] : args;
+  let executable = command;
+  let commandArgs = args;
+  if (command === 'npm') {
+    const npmCli = resolveNpmCli();
+    assert(npmCli, 'Could not resolve the npm CLI to validate the packaged artifact.');
+    executable = process.execPath;
+    commandArgs = [npmCli, ...args];
+  }
   const result = spawnSync(executable, commandArgs, { cwd, encoding: 'utf8', shell: false });
   if (result.status !== 0) {
     throw new Error(`${command} ${args.join(' ')} failed:\n${result.error || ''}\n${result.stdout || ''}\n${result.stderr || ''}`);
