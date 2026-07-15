@@ -3,6 +3,33 @@ import { userEvent, waitFor } from 'storybook/test';
 import { Menubar } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
+// userEvent dispatches a single keydown; under CI load the ArrowDown can land
+// before focus settles on the trigger and be dropped, and a plain waitFor only
+// re-reads the DOM — it never re-fires the key, so the submenu never opens and
+// the wait times out (flaky "submenu must open"). Retry focus+ArrowDown until a
+// [role="menu"] appears in the scoped container, then stop firing so later focus
+// and close assertions see exactly one open. Re-fires only while the menu is
+// absent, so the happy path fires exactly once.
+async function openSubmenu(trigger, container, message) {
+  let lastError;
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    trigger.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    try {
+      await waitFor(
+        () => {
+          if (!container.querySelector('[role="menu"]')) throw new Error(message);
+        },
+        { timeout: 700 },
+      );
+      return;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError;
+}
+
 const menuItems = [
   { label: '프로필 열기', shortcut: 'Enter', active: true },
   { label: '공유', description: '협업자에게 링크를 복사합니다', shortcut: 'S' },
@@ -116,7 +143,7 @@ export const MenubarKeyboardContract = {
     topItems[0].focus();
     await userEvent.keyboard('{ArrowRight}');
     if (ownerDocument.activeElement !== topItems[1]) throw new Error('Menubar ArrowRight must move top-level focus.');
-    await userEvent.keyboard('{ArrowDown}');
+    await openSubmenu(topItems[1], menubar, 'Menubar ArrowDown must open the active submenu.');
     await waitFor(() => {
       if (ownerDocument.activeElement?.textContent?.trim() !== '목록') throw new Error('Menubar ArrowDown must open the active submenu.');
     });
@@ -135,7 +162,7 @@ export const MenubarKeyboardContract = {
       if (ownerDocument.activeElement !== topItems[1]) throw new Error('Menubar Escape must restore focus to its top-level item.');
     });
 
-    await userEvent.keyboard('{ArrowDown}');
+    await openSubmenu(topItems[1], menubar, 'Menubar must reopen at its first item.');
     await waitFor(() => {
       if (ownerDocument.activeElement?.textContent?.trim() !== '목록') throw new Error('Menubar must reopen at its first item.');
     });
@@ -150,8 +177,7 @@ export const MenubarKeyboardContract = {
       if (ownerDocument.activeElement !== topItems[1]) throw new Error('Menubar Apply must restore top-level focus.');
     });
 
-    topItems[3].focus();
-    await userEvent.keyboard('{ArrowDown}');
+    await openSubmenu(topItems[3], menubar, 'All-disabled Menubar submenu must open.');
     await waitFor(() => {
       if (!menubar.querySelector('[role="menu"]')) throw new Error('All-disabled Menubar submenu must open.');
       if (ownerDocument.activeElement !== topItems[3]) throw new Error('All-disabled Menubar submenu must retain trigger focus.');
@@ -165,8 +191,7 @@ export const MenubarKeyboardContract = {
     const edgeMenubar = canvasElement.querySelector('[data-contract="viewport-edge"]');
     const edgeTrigger = edgeMenubar?.querySelector('[role="menuitem"]');
     if (!edgeMenubar || !edgeTrigger) throw new Error('Viewport-edge Menubar contract target is required.');
-    edgeTrigger.focus();
-    await userEvent.keyboard('{ArrowDown}');
+    await openSubmenu(edgeTrigger, edgeMenubar, 'Viewport-edge Menubar submenu must open.');
     const edgeMenu = await waitFor(() => {
       const openedMenu = edgeMenubar.querySelector('[role="menu"]');
       const panel = openedMenu?.parentElement;
