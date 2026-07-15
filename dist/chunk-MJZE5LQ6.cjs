@@ -3,7 +3,7 @@
 
 
 
-var _chunkYB4742KUcjs = require('./chunk-YB4742KU.cjs');
+var _chunkQDSVSP6Ncjs = require('./chunk-QDSVSP6N.cjs');
 
 // components/robotics/LaneOverlay.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -324,7 +324,7 @@ function LaneOverlay({
         _optionalChain([onMouseDown, 'optionalCall', _26 => _26(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasFocus(_chunkYB4742KUcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setHasFocus(_chunkQDSVSP6Ncjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _27 => _27(event)]);
       },
       onBlur: (event) => {
@@ -445,7 +445,7 @@ function LaneOverlay({
             "data-lane-direction": "entry-to-exit",
             "data-lane-direction-anchor-x": directionPoint.x,
             "data-lane-direction-anchor-y": directionPoint.y,
-            d: _chunkYB4742KUcjs.NAVIGATION_DIRECTION_PATH,
+            d: _chunkQDSVSP6Ncjs.NAVIGATION_DIRECTION_PATH,
             transform: `translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`,
             fill: baseColor,
             stroke: VIEWER_SURFACE,
@@ -490,7 +490,7 @@ function LaneOverlay({
                     }
                   ),
                   /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                    _chunkYB4742KUcjs.NavigationStateGlyph,
+                    _chunkQDSVSP6Ncjs.NavigationStateGlyph,
                     {
                       kind: state.state,
                       size: 10,
@@ -565,4 +565,4 @@ function LaneOverlay({
 
 
 exports.LaneOverlay = LaneOverlay;
-//# sourceMappingURL=chunk-2PIYABCV.cjs.map
+//# sourceMappingURL=chunk-MJZE5LQ6.cjs.map

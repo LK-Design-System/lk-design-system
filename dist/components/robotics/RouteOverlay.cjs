@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk2JKCYKBXcjs = require('../../chunk-2JKCYKBX.cjs');
-require('../../chunk-YB4742KU.cjs');
+var _chunk6UZE7RQZcjs = require('../../chunk-6UZE7RQZ.cjs');
+require('../../chunk-QDSVSP6N.cjs');
 
 
-exports.RouteOverlay = _chunk2JKCYKBXcjs.RouteOverlay;
+exports.RouteOverlay = _chunk6UZE7RQZcjs.RouteOverlay;
 //# sourceMappingURL=RouteOverlay.cjs.map

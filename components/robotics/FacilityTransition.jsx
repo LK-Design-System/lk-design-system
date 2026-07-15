@@ -1,6 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { FacilityGlyph } from './_FacilityGlyph.js';
 
 const AVAILABILITY_PRESENTATION = {
   available: {
@@ -185,44 +186,6 @@ function computedAccessibleLabel(transition, availabilityLabel) {
 // with a highlight — not a competing circular target ringed around it.
 const PIN_PATH = 'M0 15 Q-6 10 -9.2 5 A10.5 10.5 0 1 1 9.2 5 Q6 10 0 15 Z';
 
-// Filled-silhouette facility glyphs authored for the ~22px map badge (see the
-// icon-audit method): solids survive small sizes and low opacity where the old
-// hairline outlines collapsed. `color` is the knockout fill (white on the
-// state-colored badge); `badge` is the badge color, used to cut the lift's
-// up/down arrows back out of its cab so the metaphor reads as the recognised
-// "cab + up/down arrows" elevator convention (ISO 7001 / Material / AIGA),
-// reduced for small scale by dropping the human figure.
-function FacilityGlyph({ kind, color, badge }) {
-  if (kind === 'door') {
-    // Two door leaves with a center gap.
-    return (
-      <g fill={color} pointerEvents="none">
-        <rect x="-6" y="-6" width="4.6" height="12" rx="1" />
-        <rect x="1.4" y="-6" width="4.6" height="12" rx="1" />
-      </g>
-    );
-  }
-
-  if (kind === 'lift') {
-    // Cab frame (white) with up/down arrows knocked back out in the badge color.
-    return (
-      <g pointerEvents="none">
-        <rect x="-5.6" y="-4.8" width="11.2" height="9.6" rx="1.8" fill={color} />
-        <path d="M0 -3.4L2.3 -0.7L-2.3 -0.7Z" fill={badge} />
-        <path d="M0 3.4L2.3 0.7L-2.3 0.7Z" fill={badge} />
-      </g>
-    );
-  }
-
-  // Dock: a downward arrow settling onto a platform bar.
-  return (
-    <g fill={color} pointerEvents="none">
-      <path d="M0 3.4L3.2 -0.2L1 -0.2L1 -6L-1 -6L-1 -0.2L-3.2 -0.2Z" />
-      <rect x="-5" y="4.6" width="10" height="1.8" rx="0.9" />
-    </g>
-  );
-}
-
 /**
  * LK Robotics — FacilityTransition
  *
@@ -400,7 +363,12 @@ export function FacilityTransition({
         />
 
         {transition.availability === 'unavailable' && (
-          <path d="M-6.5 6.5L6.5-6.5" fill="none" stroke="var(--color-semantic-static-white)" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-unavailable-mark="" />
+          <g pointerEvents="none" data-transition-unavailable-mark="">
+            {/* Badge-color halo cuts a gap through the white knockout glyph so the
+                white slash core reads cleanly over BOTH the glyph and the badge. */}
+            <path d="M-6.5 6.5L6.5-6.5" fill="none" stroke={stroke} strokeWidth="5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            <path d="M-6.5 6.5L6.5-6.5" fill="none" stroke="var(--color-semantic-static-white)" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+          </g>
         )}
         {stateBadges.length > 0 && (
           <g data-transition-state-slot-layer="" pointerEvents="none">

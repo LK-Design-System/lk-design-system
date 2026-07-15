@@ -2,7 +2,7 @@
 import {
   NavigationStateGlyph,
   isFocusVisibleTarget
-} from "./chunk-5EDR2GNA.js";
+} from "./chunk-HYFL5LBC.js";
 
 // components/robotics/SpatialRegion.jsx
 import React from "react";
@@ -426,4 +426,4 @@ function SpatialRegion({
 export {
   SpatialRegion
 };
-//# sourceMappingURL=chunk-OJZRZW4A.js.map
+//# sourceMappingURL=chunk-RM2QWMVT.js.map

@@ -1,13 +1,13 @@
-"use client";
-import {
-  NAVIGATION_DIRECTION_PATH,
-  NavigationStateGlyph,
-  isFocusVisibleTarget
-} from "./chunk-5EDR2GNA.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+
+
+var _chunkQDSVSP6Ncjs = require('./chunk-QDSVSP6N.cjs');
 
 // components/robotics/TrajectoryOverlay.jsx
-import React from "react";
-import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var STATUS_LABEL = {
   planned: "\uACC4\uD68D\uB428",
   active: "\uC774\uB3D9 \uC911",
@@ -140,16 +140,16 @@ function statusDash(status) {
   return void 0;
 }
 function trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale) {
-  const samples = trajectory?.samples ?? [];
-  const currentIndex = Number.isInteger(trajectory?.currentSampleIndex) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
+  const samples = _nullishCoalesce(_optionalChain([trajectory, 'optionalAccess', _ => _.samples]), () => ( []));
+  const currentIndex = Number.isInteger(_optionalChain([trajectory, 'optionalAccess', _2 => _2.currentSampleIndex])) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
   const timedSamples = samples.filter((sample) => Number.isFinite(sample.timeMs));
-  const firstTime = timedSamples[0]?.timeMs;
-  const lastTime = timedSamples[timedSamples.length - 1]?.timeMs;
-  const currentTime = currentIndex == null ? void 0 : samples[currentIndex]?.timeMs;
+  const firstTime = _optionalChain([timedSamples, 'access', _3 => _3[0], 'optionalAccess', _4 => _4.timeMs]);
+  const lastTime = _optionalChain([timedSamples, 'access', _5 => _5[timedSamples.length - 1], 'optionalAccess', _6 => _6.timeMs]);
+  const currentTime = currentIndex == null ? void 0 : _optionalChain([samples, 'access', _7 => _7[currentIndex], 'optionalAccess', _8 => _8.timeMs]);
   const parts = [
-    trajectory.label ?? `\uADA4\uC801 ${trajectory.id}`,
+    _nullishCoalesce(trajectory.label, () => ( `\uADA4\uC801 ${trajectory.id}`)),
     `\uC9C0\uB3C4 ${trajectory.mapId}`,
-    STATUS_LABEL[trajectory.status] ?? trajectory.status,
+    _nullishCoalesce(STATUS_LABEL[trajectory.status], () => ( trajectory.status)),
     `sample ${samples.length}\uAC1C`
   ];
   if (firstTime != null && lastTime != null) parts.push(`\uC2DC\uAC04 ${firstTime}\uC5D0\uC11C ${lastTime} \uBC00\uB9AC\uCD08`);
@@ -182,24 +182,24 @@ function TrajectoryOverlay({
   style,
   ...rest
 }) {
-  const [hasDomFocus, setHasDomFocus] = React.useState(false);
+  const [hasDomFocus, setHasDomFocus] = _react2.default.useState(false);
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === "function";
   const hiddenFromAccessibility = ariaHidden === true || ariaHidden === "true";
   const pointerOnly = interactive && hiddenFromAccessibility;
   const focusVisible = !hiddenFromAccessibility && (focused || hasDomFocus);
-  const samples = trajectory?.samples ?? [];
+  const samples = _nullishCoalesce(_optionalChain([trajectory, 'optionalAccess', _9 => _9.samples]), () => ( []));
   const points = samples.map((sample) => sample.position).filter(finitePoint);
   const pathData = pathFromPoints(points);
   if (points.length < 2) return null;
-  const currentIndex = Number.isInteger(trajectory?.currentSampleIndex) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
+  const currentIndex = Number.isInteger(_optionalChain([trajectory, 'optionalAccess', _10 => _10.currentSampleIndex])) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
   const currentSample = currentIndex == null ? void 0 : samples[currentIndex];
-  const markerPoint = finitePoint(currentSample?.position) ? currentSample.position : pointAlong(points, 0.5);
+  const markerPoint = finitePoint(_optionalChain([currentSample, 'optionalAccess', _11 => _11.position])) ? currentSample.position : pointAlong(points, 0.5);
   const statePoint = pointAlong(points, 0.12);
-  const headingDegrees = Number.isFinite(currentSample?.headingRad) ? currentSample.headingRad * 180 / Math.PI : void 0;
-  const tone = statusTone(trajectory?.status, invalid);
-  const dash = statusDash(trajectory?.status);
+  const headingDegrees = Number.isFinite(_optionalChain([currentSample, 'optionalAccess', _12 => _12.headingRad])) ? currentSample.headingRad * 180 / Math.PI : void 0;
+  const tone = statusTone(_optionalChain([trajectory, 'optionalAccess', _13 => _13.status]), invalid);
+  const dash = statusDash(_optionalChain([trajectory, 'optionalAccess', _14 => _14.status]));
   const foreground = "var(--viewer-foreground, var(--color-semantic-label-strong))";
   const surface = "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))";
   const trajectoryStateMarkers = [
@@ -226,7 +226,7 @@ function TrajectoryOverlay({
     }))
   ].filter(Boolean);
   const markerLayout = markerCollisionLayout(naturalMarkers, scale);
-  const trajectoryMarkerSlot = (name) => markerLayout?.slots[name];
+  const trajectoryMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _15 => _15.slots, 'access', _16 => _16[name]]);
   const trajectoryLabelSlot = labelScreenSlot(markerPoint, markerLayout, scale);
   const activate = (event) => {
     if (disabled || !interactive) return;
@@ -241,24 +241,24 @@ function TrajectoryOverlay({
   };
   const handlePointerDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    onPointerDown?.(event);
+    _optionalChain([onPointerDown, 'optionalCall', _17 => _17(event)]);
   };
   const handleMouseDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    onMouseDown?.(event);
+    _optionalChain([onMouseDown, 'optionalCall', _18 => _18(event)]);
   };
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "g",
     {
       ...rest,
       "data-lk-trajectory-overlay": "",
-      "data-trajectory-id": trajectory?.id,
-      "data-map-id": trajectory?.mapId,
-      "data-trajectory-status": trajectory?.status,
+      "data-trajectory-id": _optionalChain([trajectory, 'optionalAccess', _19 => _19.id]),
+      "data-map-id": _optionalChain([trajectory, 'optionalAccess', _20 => _20.mapId]),
+      "data-trajectory-status": _optionalChain([trajectory, 'optionalAccess', _21 => _21.status]),
       "data-current-sample-index": currentIndex,
       "data-viewport-scale": scale,
       "data-trajectory-marker-layout": markerLayout ? "screen-slots" : "path-anchored",
-      "data-trajectory-marker-row-width": markerLayout?.totalWidth,
+      "data-trajectory-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _22 => _22.totalWidth]),
       "data-pointer-only": pointerOnly ? "true" : void 0,
       "data-selected": selected ? "true" : "false",
       "data-focused": focusVisible ? "true" : "false",
@@ -266,10 +266,10 @@ function TrajectoryOverlay({
       "data-invalid": invalid ? "true" : "false",
       "data-stale": stale ? "true" : "false",
       role: hiddenFromAccessibility ? void 0 : interactive ? "button" : "img",
-      tabIndex: hiddenFromAccessibility ? void 0 : interactive ? disabled ? -1 : tabIndex ?? 0 : tabIndex,
+      tabIndex: hiddenFromAccessibility ? void 0 : interactive ? disabled ? -1 : _nullishCoalesce(tabIndex, () => ( 0)) : tabIndex,
       focusable: hiddenFromAccessibility ? "false" : interactive ? "true" : void 0,
       "aria-hidden": hiddenFromAccessibility || void 0,
-      "aria-label": hiddenFromAccessibility ? void 0 : ariaLabel ?? trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale),
+      "aria-label": hiddenFromAccessibility ? void 0 : _nullishCoalesce(ariaLabel, () => ( trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale))),
       "aria-pressed": !hiddenFromAccessibility && interactive ? selected : void 0,
       "aria-disabled": !hiddenFromAccessibility && interactive && disabled ? true : void 0,
       "aria-invalid": !hiddenFromAccessibility && invalid ? true : void 0,
@@ -278,12 +278,12 @@ function TrajectoryOverlay({
       onPointerDown: pointerOnly || onPointerDown ? handlePointerDown : void 0,
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !hiddenFromAccessibility ? (event) => {
-        setHasDomFocus(isFocusVisibleTarget(event.currentTarget));
-        onFocus?.(event);
+        setHasDomFocus(_chunkQDSVSP6Ncjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        _optionalChain([onFocus, 'optionalCall', _23 => _23(event)]);
       } : void 0,
       onBlur: !hiddenFromAccessibility ? (event) => {
         setHasDomFocus(false);
-        onBlur?.(event);
+        _optionalChain([onBlur, 'optionalCall', _24 => _24(event)]);
       } : void 0,
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
@@ -292,7 +292,7 @@ function TrajectoryOverlay({
         ...style
       },
       children: [
-        focusVisible && pathData && /* @__PURE__ */ jsx(
+        focusVisible && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "path",
           {
             "data-trajectory-focus-indicator": "",
@@ -306,7 +306,7 @@ function TrajectoryOverlay({
             pointerEvents: "none"
           }
         ),
-        selected && pathData && /* @__PURE__ */ jsx(
+        selected && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "path",
           {
             "data-trajectory-selected-indicator": "",
@@ -321,7 +321,7 @@ function TrajectoryOverlay({
             pointerEvents: "none"
           }
         ),
-        pathData && !selected && !focusVisible && /* @__PURE__ */ jsx(
+        pathData && !selected && !focusVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "path",
           {
             "data-trajectory-casing": "",
@@ -335,14 +335,14 @@ function TrajectoryOverlay({
             pointerEvents: "none"
           }
         ),
-        pathData && /* @__PURE__ */ jsx(
+        pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "path",
           {
             "data-trajectory-path": "",
             d: pathData,
             fill: "none",
             stroke: tone,
-            strokeWidth: selected || trajectory?.status === "active" ? 3.5 : 2.5,
+            strokeWidth: selected || _optionalChain([trajectory, 'optionalAccess', _25 => _25.status]) === "active" ? 3.5 : 2.5,
             strokeDasharray: dash,
             strokeLinecap: "round",
             strokeLinejoin: "round",
@@ -350,8 +350,8 @@ function TrajectoryOverlay({
             pointerEvents: "none"
           }
         ),
-        pathData && interactive && /* @__PURE__ */ jsxs(Fragment, { children: [
-          /* @__PURE__ */ jsx(
+        pathData && interactive && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "path",
             {
               "data-trajectory-hit-target": "",
@@ -364,7 +364,7 @@ function TrajectoryOverlay({
               pointerEvents: "stroke"
             }
           ),
-          /* @__PURE__ */ jsx(
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "circle",
             {
               "data-trajectory-hit-target-core": "",
@@ -379,7 +379,7 @@ function TrajectoryOverlay({
             }
           )
         ] }),
-        pathData && currentSample && /* @__PURE__ */ jsxs(
+        pathData && currentSample && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "g",
           {
             "data-trajectory-current-marker": "",
@@ -390,7 +390,7 @@ function TrajectoryOverlay({
             "aria-hidden": "true",
             pointerEvents: "none",
             children: [
-              /* @__PURE__ */ jsx(
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "circle",
                 {
                   "data-trajectory-marker-badge": "current",
@@ -402,12 +402,12 @@ function TrajectoryOverlay({
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
-              headingDegrees == null ? /* @__PURE__ */ jsx("circle", { r: "3", fill: foreground }) : /* @__PURE__ */ jsx(
+              headingDegrees == null ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: "3", fill: foreground }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "path",
                 {
                   "data-trajectory-current-heading": "",
                   "data-navigation-vector-glyph": "heading",
-                  d: NAVIGATION_DIRECTION_PATH,
+                  d: _chunkQDSVSP6Ncjs.NAVIGATION_DIRECTION_PATH,
                   transform: `rotate(${headingDegrees})`,
                   fill: foreground,
                   stroke: surface,
@@ -419,11 +419,11 @@ function TrajectoryOverlay({
             ]
           }
         ),
-        pathData && /* @__PURE__ */ jsxs(
+        pathData && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "g",
           {
             "data-trajectory-status-marker": "",
-            "data-trajectory-status-glyph": trajectory?.status,
+            "data-trajectory-status-glyph": _optionalChain([trajectory, 'optionalAccess', _26 => _26.status]),
             "data-trajectory-screen-slot": markerLayout ? "status" : void 0,
             "data-trajectory-anchor-x": statePoint.x,
             "data-trajectory-anchor-y": statePoint.y,
@@ -431,7 +431,7 @@ function TrajectoryOverlay({
             "aria-hidden": "true",
             pointerEvents: "none",
             children: [
-              /* @__PURE__ */ jsx(
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "circle",
                 {
                   "data-trajectory-marker-badge": "status",
@@ -443,10 +443,10 @@ function TrajectoryOverlay({
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
-              /* @__PURE__ */ jsx(
-                NavigationStateGlyph,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                _chunkQDSVSP6Ncjs.NavigationStateGlyph,
                 {
-                  kind: STATUS_GLYPH_KIND[trajectory?.status] ?? "unknown",
+                  kind: _nullishCoalesce(STATUS_GLYPH_KIND[_optionalChain([trajectory, 'optionalAccess', _27 => _27.status])], () => ( "unknown")),
                   size: 10,
                   color: foreground
                 }
@@ -457,7 +457,7 @@ function TrajectoryOverlay({
         pathData && trajectoryStateMarkers.map((item) => {
           const point = item.point;
           const stateSlot = trajectoryMarkerSlot(item.state);
-          return /* @__PURE__ */ jsxs(
+          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "g",
             {
               "data-trajectory-overlay-state": item.state,
@@ -468,7 +468,7 @@ function TrajectoryOverlay({
               "aria-hidden": "true",
               pointerEvents: "none",
               children: [
-                /* @__PURE__ */ jsx(
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "circle",
                   {
                     "data-trajectory-marker-badge": item.state,
@@ -481,13 +481,13 @@ function TrajectoryOverlay({
                     vectorEffect: "non-scaling-stroke"
                   }
                 ),
-                /* @__PURE__ */ jsx(NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: foreground })
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkQDSVSP6Ncjs.NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: foreground })
               ]
             },
             item.state
           );
         }),
-        showLabel && trajectory?.label && pathData && /* @__PURE__ */ jsx(
+        showLabel && _optionalChain([trajectory, 'optionalAccess', _28 => _28.label]) && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "text",
           {
             "data-trajectory-label": "",
@@ -517,7 +517,7 @@ function TrajectoryOverlay({
   );
 }
 
-export {
-  TrajectoryOverlay
-};
-//# sourceMappingURL=chunk-QXOL2SBH.js.map
+
+
+exports.TrajectoryOverlay = TrajectoryOverlay;
+//# sourceMappingURL=chunk-FHVYYXIO.cjs.map
