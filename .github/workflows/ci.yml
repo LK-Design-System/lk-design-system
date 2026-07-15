@@ -13,7 +13,10 @@ permissions:
 jobs:
   design-system:
     name: Design system checks
-    runs-on: ubuntu-latest
+    # Generated artifacts (src/index ordering via Intl, dist, visual-smoke
+    # baselines) are produced on Windows, so run checks on Windows to keep them
+    # reproducible. Matches the Storybook Pages deploy workflow.
+    runs-on: windows-latest
 
     steps:
       - name: Checkout
@@ -40,7 +43,7 @@ jobs:
         # pnpm does not run dependencies' postinstall scripts, so Playwright's
         # browser download is skipped; the color-contrast and visual-smoke
         # checks launch chromium, so install it explicitly.
-        run: pnpm exec playwright install --with-deps chromium
+        run: pnpm exec playwright install chromium
 
       - name: Build, typecheck, Storybook, and pack
         run: pnpm run check
