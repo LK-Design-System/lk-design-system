@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../buttons/Button.jsx';
+import { Icon } from '../icon/Icon.jsx';
 
 const VISUALLY_HIDDEN_STYLE = {
   position: 'absolute',
@@ -20,10 +21,11 @@ const STATE_LABELS = {
   stopping: '응답 중지를 요청하는 중입니다.',
 };
 
-const LINE_HEIGHT = 22;
-const TEXTAREA_VERTICAL_INSET = 22;
-const COMPACT_TEXTAREA_HEIGHT = 44;
-const PRIMARY_ACTION_SLOT_WIDTH = 40;
+const LINE_HEIGHT = 24;
+const TEXTAREA_VERTICAL_INSET = 24;
+const COMPACT_TEXTAREA_HEIGHT = 48;
+const COMPACT_TEXTAREA_HEIGHT_TOKEN = 'var(--space-12)';
+const ACTION_SLOT_SIZE_TOKEN = 'var(--component-button-height-sm)';
 
 const useSafeLayoutEffect = typeof window === 'undefined'
   ? React.useEffect
@@ -36,27 +38,11 @@ function mergeIds(...ids) {
   return merged.length > 0 ? [...new Set(merged)].join(' ') : undefined;
 }
 
-function SendIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18" fill="none">
-      <path d="M3 9.3 16.2 3l-4.7 13.7-2.2-5.2L3 9.3Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-      <path d="m9.3 11.5 3.1-3.1" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function StopIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
-      <rect x="4.5" y="4.5" width="11" height="11" rx="2" />
-    </svg>
-  );
-}
-
 /**
- * Compact controlled message input for product conversations. The product owns
- * transport state and value updates; MessageComposer owns input, submit-mode,
- * IME, disabled-reason, and focus contracts only.
+ * LK Product Extension for general conversations. MessageComposer owns a
+ * product-neutral elevated input shell, controlled draft behavior, submit
+ * modes, IME safety, disabled-reason, and focus contracts. Products own
+ * transport state and compose optional actions into its slots.
  */
 export function MessageComposer({
   value,
@@ -75,14 +61,17 @@ export function MessageComposer({
   minRows = 1,
   maxRows = 6,
   attachments,
-  attachmentAction,
-  secondaryActions,
+  leadingActions,
+  trailingActions,
   submitLabel = '메시지 보내기',
   stopLabel = '응답 중지',
   onStop,
   textareaProps = {},
   disabled = false,
   disabledReason,
+  className,
+  style,
+  ...formProps
 }) {
   const missingDisabledReason = disabledReason == null
     || (typeof disabledReason === 'string' && disabledReason.trim().length === 0);
@@ -134,7 +123,9 @@ export function MessageComposer({
   const stopAllowed = !disabled
     && (state === 'submitting' || state === 'streaming')
     && typeof onStop === 'function';
-  const resolvedStatusLabel = statusLabel ?? STATE_LABELS[state] ?? null;
+  const resolvedStatusLabel = statusLabel !== undefined
+    ? statusLabel
+    : STATE_LABELS[state] ?? null;
 
   const resizeTextarea = React.useCallback(() => {
     const textarea = textareaRef.current;
@@ -190,7 +181,8 @@ export function MessageComposer({
     submitValue('enter');
   };
 
-  const hasUtilities = attachmentAction != null || secondaryActions != null;
+  const hasLeadingActions = leadingActions != null;
+  const hasTrailingActions = trailingActions != null;
   const textareaDescriptionIds = mergeIds(
     externalDescriptionIds,
     descriptionId,
@@ -200,7 +192,8 @@ export function MessageComposer({
 
   return (
     <form
-      className="lk-message-composer"
+      {...formProps}
+      className={['lk-message-composer', className].filter(Boolean).join(' ')}
       aria-label={formLabel}
       aria-busy={nonIdle || undefined}
       aria-disabled={disabled || undefined}
@@ -220,6 +213,7 @@ export function MessageComposer({
         boxSizing: 'border-box',
         color: 'var(--color-semantic-label-normal)',
         fontFamily: 'var(--font-sans)',
+        ...style,
       }}
     >
       <label htmlFor={textareaId} style={VISUALLY_HIDDEN_STYLE}>{inputLabel}</label>
@@ -254,26 +248,23 @@ export function MessageComposer({
         </p>
       )}
 
-      {attachments != null && (
-        <div
-          data-composer-attachments=""
-          style={{ minWidth: 0, overflowWrap: 'anywhere' }}
-        >
-          {attachments}
-        </div>
-      )}
-
       <div
-        data-composer-control-row=""
+        data-composer-shell=""
         data-focused={focused ? 'true' : undefined}
+        aria-disabled={disabled || undefined}
+        inert={disabled || undefined}
+        onClickCapture={disabled
+          ? (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+          : undefined}
         style={{
           display: 'grid',
-          gridTemplateColumns: `${hasUtilities ? 'auto ' : ''}minmax(0, 1fr) auto`,
-          alignItems: 'end',
-          gap: 'var(--space-1)',
+          gap: 0,
           width: '100%',
           minWidth: 0,
-          padding: '0 var(--space-1)',
+          padding: 'var(--space-1)',
           boxSizing: 'border-box',
           background: disabled
             ? 'var(--color-semantic-fill-normal)'
@@ -281,139 +272,196 @@ export function MessageComposer({
               ? 'var(--color-semantic-background-normal-alternative)'
               : 'var(--color-semantic-background-elevated-normal)',
           border: `var(--component-input-border-width) solid ${focused && !disabled
-            ? 'var(--component-input-border-color-focus)'
-            : 'var(--component-input-border-color)'}`,
-          borderRadius: 'var(--component-input-radius)',
-          boxShadow: focused && !disabled ? 'var(--component-input-focus-shadow)' : 'none',
+            ? 'var(--color-semantic-primary-normal)'
+            : 'var(--color-semantic-line-normal-normal)'}`,
+          borderRadius: 'var(--radius-xl)',
+          boxShadow: focused && !disabled
+            ? '0 0 0 var(--space-1) var(--color-semantic-focus-ring)'
+            : 'var(--shadow-sm)',
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
         }}
       >
-        {hasUtilities && (
+        {attachments != null && (
           <div
-            role="group"
-            aria-label="메시지 작성 도구"
-            data-composer-utilities=""
+            data-composer-attachments=""
+            style={{
+              minWidth: 0,
+              padding: 'var(--space-2) var(--space-2) 0',
+              overflowWrap: 'anywhere',
+            }}
+          >
+            {attachments}
+          </div>
+        )}
+
+        <div
+          data-composer-control-row=""
+          style={{
+            display: 'grid',
+            gap: 0,
+            width: '100%',
+            minWidth: 0,
+            boxSizing: 'border-box',
+          }}
+        >
+          <textarea
+            {...restTextareaProps}
+            ref={textareaRef}
+            id={textareaId}
+            className={textareaClassName}
+            data-composer-input=""
+            rows={1}
+            value={value}
+            disabled={disabled}
+            readOnly={readOnly}
+            maxLength={maxLength}
+            placeholder={placeholder}
+            enterKeyHint={providedEnterKeyHint ?? (submitMode === 'enter' ? 'send' : 'enter')}
+            aria-describedby={textareaDescriptionIds}
+            onChange={(event) => {
+              onValueChange?.(event.target.value, event);
+              onTextareaChange?.(event);
+            }}
+            onKeyDown={handleKeyDown}
+            onFocus={(event) => {
+              setFocused(true);
+              onTextareaFocus?.(event);
+            }}
+            onBlur={(event) => {
+              setFocused(false);
+              onTextareaBlur?.(event);
+            }}
+            onCompositionStart={(event) => {
+              compositionSessionRef.current = true;
+              onTextareaCompositionStart?.(event);
+            }}
+            onCompositionEnd={(event) => {
+              compositionSessionRef.current = false;
+              onTextareaCompositionEnd?.(event);
+            }}
+            style={{
+              display: 'block',
+              width: '100%',
+              minWidth: 0,
+              minHeight: normalizedMinRows === 1 ? COMPACT_TEXTAREA_HEIGHT_TOKEN : minimumHeight,
+              maxHeight: maximumHeight,
+              height: normalizedMinRows === 1 ? COMPACT_TEXTAREA_HEIGHT_TOKEN : minimumHeight,
+              padding: 'var(--space-3) var(--space-2)',
+              boxSizing: 'border-box',
+              resize: 'none',
+              overflowX: 'hidden',
+              overflowY: 'hidden',
+              border: 0,
+              outline: 0,
+              background: 'transparent',
+              color: disabled
+                ? 'var(--color-semantic-label-disable)'
+                // Reference the semantic label directly: --component-input-text-color is
+                // resolved once at :root, so it does not flip inside a dark theme scope.
+                : 'var(--color-semantic-label-normal)',
+              caretColor: 'var(--color-semantic-primary-normal)',
+              fontFamily: 'var(--font-sans)',
+              fontSize: 'var(--component-input-font-size)',
+              lineHeight: 'var(--body1-line)',
+              letterSpacing: 'var(--component-input-letter-spacing)',
+              cursor: disabled ? 'not-allowed' : 'text',
+              ...textareaStyle,
+            }}
+          />
+
+          <div
+            data-composer-actions-row=""
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 'var(--space-1)',
-              minHeight: 44,
-              paddingBlock: 6,
+              width: '100%',
+              minWidth: 0,
+              minHeight: ACTION_SLOT_SIZE_TOKEN,
+              padding: '0 var(--space-1) var(--space-1)',
               boxSizing: 'border-box',
               flexWrap: 'wrap',
             }}
           >
-            {attachmentAction}
-            {secondaryActions}
-          </div>
-        )}
+            {hasLeadingActions && (
+              <div
+                role="group"
+                aria-label="메시지 앞쪽 동작"
+                data-composer-leading-actions=""
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-1)',
+                  flex: '1 1 auto',
+                  minWidth: 0,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {leadingActions}
+              </div>
+            )}
 
-        <textarea
-          {...restTextareaProps}
-          ref={textareaRef}
-          id={textareaId}
-          className={textareaClassName}
-          data-composer-input=""
-          rows={1}
-          value={value}
-          disabled={disabled}
-          readOnly={readOnly}
-          maxLength={maxLength}
-          placeholder={placeholder}
-          enterKeyHint={providedEnterKeyHint ?? (submitMode === 'enter' ? 'send' : 'enter')}
-          aria-describedby={textareaDescriptionIds}
-          onChange={(event) => {
-            onValueChange?.(event.target.value, event);
-            onTextareaChange?.(event);
-          }}
-          onKeyDown={handleKeyDown}
-          onFocus={(event) => {
-            setFocused(true);
-            onTextareaFocus?.(event);
-          }}
-          onBlur={(event) => {
-            setFocused(false);
-            onTextareaBlur?.(event);
-          }}
-          onCompositionStart={(event) => {
-            compositionSessionRef.current = true;
-            onTextareaCompositionStart?.(event);
-          }}
-          onCompositionEnd={(event) => {
-            compositionSessionRef.current = false;
-            onTextareaCompositionEnd?.(event);
-          }}
-          style={{
-            display: 'block',
-            width: '100%',
-            minWidth: 0,
-            minHeight: minimumHeight,
-            maxHeight: maximumHeight,
-            height: minimumHeight,
-            // A 1px optical inset centers the 22px line box in the 44px field.
-            padding: 'calc(var(--space-3) - 1px) var(--space-2)',
-            boxSizing: 'border-box',
-            resize: 'none',
-            overflowX: 'hidden',
-            overflowY: 'hidden',
-            border: 0,
-            outline: 0,
-            background: 'transparent',
-            color: disabled
-              ? 'var(--color-semantic-label-disable)'
-              // Reference the semantic label directly: --component-input-text-color is
-              // resolved once at :root, so it does not flip inside a dark theme scope.
-              : 'var(--color-semantic-label-normal)',
-            caretColor: 'var(--color-semantic-primary-normal)',
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'var(--component-input-font-size)',
-            lineHeight: `${LINE_HEIGHT}px`,
-            letterSpacing: 'var(--component-input-letter-spacing)',
-            cursor: disabled ? 'not-allowed' : 'text',
-            ...textareaStyle,
-          }}
-        />
+            {!hasLeadingActions && <span aria-hidden="true" style={{ flex: '1 1 auto' }} />}
 
-        <div
-          data-composer-primary-action=""
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignSelf: 'end',
-            width: PRIMARY_ACTION_SLOT_WIDTH,
-            minWidth: PRIMARY_ACTION_SLOT_WIDTH,
-            minHeight: COMPACT_TEXTAREA_HEIGHT,
-            boxSizing: 'border-box',
-          }}
-        >
-          {nonIdle ? (
-            <Button
-              type="button"
-              size="sm"
-              variant="primary"
-              iconOnly
-              aria-label={stopLabel}
-              disabled={!stopAllowed}
-              onClick={() => {
-                if (!stopAllowed) return;
-                onStop();
+            {hasTrailingActions && (
+              <div
+                role="group"
+                aria-label="메시지 뒤쪽 동작"
+                data-composer-trailing-actions=""
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-1)',
+                  minWidth: 0,
+                  marginInlineStart: hasLeadingActions ? 'auto' : 0,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {trailingActions}
+              </div>
+            )}
+
+            <div
+              data-composer-primary-action=""
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: ACTION_SLOT_SIZE_TOKEN,
+                minWidth: ACTION_SLOT_SIZE_TOKEN,
+                minHeight: ACTION_SLOT_SIZE_TOKEN,
+                boxSizing: 'border-box',
               }}
             >
-              <StopIcon />
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              size="sm"
-              variant="primary"
-              iconOnly
-              aria-label={submitLabel}
-              disabled={!submitAllowed}
-            >
-              <SendIcon />
-            </Button>
-          )}
+              {nonIdle ? (
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="primary"
+                  iconOnly
+                  aria-label={stopLabel}
+                  disabled={!stopAllowed}
+                  onClick={() => {
+                    if (!stopAllowed) return;
+                    onStop();
+                  }}
+                >
+                  <Icon name="square-fill" size={16} aria-hidden="true" />
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  size="sm"
+                  variant="primary"
+                  iconOnly
+                  aria-label={submitLabel}
+                  disabled={!submitAllowed}
+                >
+                  <Icon name="send-fill" size={18} aria-hidden="true" />
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

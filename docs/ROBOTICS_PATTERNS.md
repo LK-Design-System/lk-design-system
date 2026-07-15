@@ -5,7 +5,7 @@
 | Type | Stable domain contract |
 | Status | Current |
 | Owner | Product and Robotics component owners |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-14 |
 
 이 문서는 완성된 화면이나 서비스 절차 예시를 정의하지 않는다. LK 디자인 시스템 안의 도메인 컴포넌트가 공통으로 지켜야 하는 상태 의미, 안전 문구, 단위 표기, 접근성 계약만 기록한다.
 
@@ -20,15 +20,32 @@ reference renderer는 **LK Robotics Extension**으로 승인됐으며 WDS parity
 - 도메인 맥락이 필요한 경우에도 `RobotStatusCard`, `Map2DCanvas`, `CanvasEditorShell`, `ManualControlSession`, `AnnotatedImage` 같은 독립 계약이 있는 컴포넌트 story 안에서 대표 상태만 보여준다.
 - Do not publish end-to-end flow pages as design system stories.
 
-## Status semantics
+## Status semantics and operational truth
 
-| 상태 | 기준 |
-| --- | --- |
-| online | 정상 연결, 즉시 조작 또는 모니터링 가능 |
-| weak | 연결은 유지되지만 신호 품질이 낮음 |
-| reconnecting | 자동 복구 중이며 현재값을 확정값처럼 보이지 않게 처리 |
-| offline | 마지막 수신 시각과 다음 조치가 함께 필요 |
-| danger | 색상, 아이콘, 텍스트를 함께 사용하고 색상만으로 의미를 전달하지 않음 |
+로보틱스 상태는 하나의 포괄적인 `status`로 합치지 않는다. 사람이 “지금 이 장비를 믿고 조작할 수 있는가?”를 판단할 수 있도록 아래 의미 축을 독립적으로 전달한다. 허용 상태와 컴포넌트 소유권의 기계 판독 가능한 기준은 [`SEMANTIC_CONTRACTS.json`](./references/robotics/SEMANTIC_CONTRACTS.json)에 유지한다.
+
+| 의미 축 | 답해야 하는 질문 | LDS 표현 책임 |
+| --- | --- | --- |
+| transport | 통신 경로가 연결되어 있는가? | `ConnectionBadge` |
+| freshness | 이 값은 얼마나 최근에 관측되었는가? | `TelemetryValue`, timestamp 또는 labeled fact |
+| health | 시스템이 정상·저하·고장 중 어느 상태인가? | 제품이 판정하고 `StatusBadge` 등으로 표현 |
+| operability | 지금 안전하게 사용할 수 있는가? | 제품이 판정하고 control boundary에 표현 |
+| authority | 누가 제어 권한을 갖는가? | `ManualControlSession`과 labeled fact |
+| command | 요청이 수락·적용·확인되었는가? | `Timeline`, `StatusBadge` |
+| evidence | 이 판단의 근거는 무엇인가? | `SourceDisclosure`, `DescriptionList` |
+| review | 사람이 검토하거나 승인했는가? | 제품 workflow가 판정하고 LDS primitive로 조합 |
+| urgency | 언제 사용자의 주의를 끌어야 하는가? | tone·live-region 정책으로 별도 표현 |
+
+의미 계약에는 다음 불변 조건을 적용한다.
+
+- `connected`는 fresh, healthy, operable 또는 authorized를 뜻하지 않는다.
+- `unknown`은 누락값의 임시 대체가 아니라 모든 운영 의미 축의 명시적인 상태다.
+- 마지막으로 알려진 값은 freshness 또는 관측 시각 없이 현재값처럼 표시하지 않는다.
+- 제품은 telemetry, threshold, state machine과 policy에서 운영 진실을 계산하고 LDS는 그 결과를 일관되게 표현한다.
+- semantic state, visual tone, announcement urgency를 하나의 enum으로 결합하지 않는다.
+- 안정 상태와 `connecting`, `reconnecting` 같은 전이 상태를 구분한다.
+
+새 `ConnectionBadge` 사용은 `connectionState`를 기준으로 한다. 기존 `status` prop은 호환을 위해 유지하지만 `online`, `ready`, `weak`, `stale`, `error`를 새 transport 계약으로 확장하지 않는다. 특히 `stale`은 freshness 축이므로 `TelemetryValue`, timestamp 또는 별도 labeled fact가 소유한다.
 
 ## Editor and map contracts
 
@@ -88,6 +105,7 @@ Viewer DS 범위에서 scene tree, property editing, free docking, robot command
 | `Timeline` / `StatusBadge` / `DescriptionList` | 제품이 제공한 phase order를 그대로 표시하고 accepted, applied, confirmed, failure, timed-out, superseded와 late evidence의 의미는 제품 계약으로 유지한다. |
 | `ConfirmDialog` / `Input` | typed phrase, blockers, affected resources, irreversible/external write 정책은 제품에서 조합한다. 즉시 안전 동작인 e-stop에는 confirmation을 사용하지 않는다. |
 | `ConnectionBadge` / `DescriptionList` | transport 연결과 data freshness를 분리하고 stale 값을 현재값처럼 표시하지 않는다. freshness와 health 판정은 제품이 제공한다. |
+| `EquipmentStatusCard` / `StatusBadge` / `ConnectionBadge` | 주변 설비의 identity → 보이는 대표 상태 → labeled facts → meta/action 순서를 제공한다. 연결·방향은 필요한 fact value로 조합하며 설비별 state machine, telemetry truth, command와 transport는 제품에 남긴다. 제품 저장소는 coverage inventory일 뿐 카드 anatomy·geometry·API 근거가 아니다. |
 | `ViewerToolbar` | viewer control은 icon-only button으로 두고 tooltip 또는 label을 제공한다. |
 | `Callout` | 작업 전에 항상 읽어야 하는 고정 안내에만 사용한다. 실시간 연결·권한·command eligibility 상태에는 `Banner`를 사용한다. |
 | `ConfirmDialog` | 파괴적 또는 되돌릴 수 없는 action은 cancel과 confirm label을 명시한다. |

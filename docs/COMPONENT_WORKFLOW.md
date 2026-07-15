@@ -115,6 +115,8 @@ Storybook 표면의 LDS 자체 규칙:
 
 외부 자료는 카테고리 기대치를 확인하는 근거이며 스타일을 그대로 복사하는 템플릿이 아니다. 외부 조사나 WDS 원본 확인이 필요한데 수행할 수 없으면 기억으로 설계하지 않고 `unverified`로 중단한다.
 
+제품 frontend는 이 절의 설계 근거가 아니다. 제품 source가 증명할 수 있는 것은 필요한 component 종류, 실제 workflow·상태·데이터 밀도, 소비 가능 여부와 ownership seam뿐이다. 제품의 현재 anatomy, 화면 배치, 치수, 색, 시각 위계, prop 이름이나 로컬 컴포넌트 경계를 LDS 공용 설계로 승격하지 않는다. 같은 결과가 필요해 보여도 LDS sibling·WDS evidence·권위 있는 외부 category reference에서 독립적으로 다시 도출하고, 그 근거가 없으면 public API나 시각 차이로 채택하지 않는다.
+
 ### 3. LK 제품 자산과 실제 워크플로우
 
 신규·재설계 component가 회사 자산의 실제 workflow와 기존 frontend를 지원할 수 있는지 코드 근거로 확인한다. 최소 검토 대상은 **LK Web Viz**, **LK Control Full Daedeok**, **LK Context Hub**이며, 관련이 없으면 생략하지 말고 `not applicable`과 이유를 기록한다.
@@ -126,7 +128,7 @@ Storybook 표면의 LDS 자체 규칙:
 5. gap이 LDS 공개 계약의 책임인지 product orchestration, backend, transport의 책임인지 분리한다.
 6. source pin과 판정은 [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md)와 `docs/references/product-frontends/COVERAGE_AUDIT.json`에 남긴다.
 
-제품 page, route, backend policy, transport logic, 완성 workflow를 Storybook component로 복제하지 않는다. LDS는 제품이 자체 스타일이나 접근성 동작을 다시 만들지 않고 workflow를 조합할 수 있는 primitive와 public contract를 제공한다.
+제품 page, route, backend policy, transport logic, 완성 workflow를 Storybook component로 복제하지 않는다. 이 절의 source pin과 판정은 2절에서 독립적으로 정한 설계를 실제 제품이 조합할 수 있는지 확인하는 **coverage gate**이며, 설계 선택을 승인하거나 public component의 생성·삭제·API·스타일을 단독으로 결정하는 authority가 아니다. LDS는 제품이 자체 스타일이나 접근성 동작을 다시 만들지 않고 workflow를 조합할 수 있는 primitive와 public contract를 제공한다.
 
 ### 4. 공개 API와 코드 계약
 
@@ -148,7 +150,7 @@ API와 상태 증거는 [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MA
 1. 변경되는 icon/asset/symbol inventory와 각각의 semantic role을 작성한다.
 2. 기존 `Icon` registry, brand asset, WDS asset, 가까운 LK domain symbol을 먼저 검색하고 재사용·조합 가능성을 판단한다.
 3. elevator/lift, door, dock, waypoint, charger, robot pose, route, restricted region처럼 도메인 의미가 있는 표시는 권위 있는 지도·시설 안내·로봇 관제 관례에서 보통 어떻게 표현되는지 조사한다.
-4. 기존 관례와 다른 geometry를 유지하면 기능, 접근성, LK 제품 근거 중 하나로 차이를 정당화한다. 현재 구현이나 기존 screenshot 자체는 근거가 아니다.
+4. 기존 관례와 다른 geometry를 유지하면 기능, 접근성, 공식 도메인 관례 또는 확정된 LDS/WDS 근거로 차이를 정당화한다. LK 제품 source는 어떤 의미와 상태가 필요한지는 증명할 수 있지만 geometry의 정답은 아니며, 현재 구현이나 기존 screenshot 자체도 근거가 아니다.
 5. viewBox, stroke/fill 비율, corner와 line-cap, optical size, pixel alignment, `currentColor`/token 사용, path 복잡도, light/dark 대비를 확인한다.
 6. map symbol은 point/line/polygon 역할, paint order와 z-index, screen-space 크기, minimum hit target, zoom 단계별 visibility, label collision, clustering/overlap, selected/focused/error/unavailable 상태를 확인한다.
 7. 색상만으로 의미를 전달하지 않고 shape, line pattern, glyph, text 중 필요한 단서를 함께 제공한다.

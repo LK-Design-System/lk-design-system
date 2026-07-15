@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button } from '../buttons/Button.jsx';
+import { IconButton } from '../buttons/IconButton.jsx';
+import { Icon } from '../icon/Icon.jsx';
 import { VisuallyHidden } from '../layout/VisuallyHidden.jsx';
 
 const useIsomorphicLayoutEffect = typeof window === 'undefined'
@@ -30,23 +32,23 @@ function cancelFrame(frame) {
 }
 
 /**
- * LK Product Extension — MessageFeed
- *
- * Owns the accessible conversation log and its reading-position behavior.
- * Message rendering, transport, persistence, and streaming content stay with
- * the product and are supplied through `children`.
+ * LK Product Extension for general conversations. MessageFeed owns the
+ * accessible log and reading-position behavior without introducing an outer
+ * product surface. Rendering, transport, persistence, and streaming content
+ * are supplied through `children`.
  */
 export function MessageFeed({
   ariaLabel = '메시지 내역',
   children,
   empty,
   maxHeight = 400,
+  viewportMinHeight,
   busy = false,
   hasPrevious = false,
   loadingPrevious = false,
   onLoadPrevious,
   loadPreviousLabel = '이전 메시지 불러오기',
-  following = true,
+  following,
   onFollowingChange,
   unreadCount = 0,
   jumpToLatestLabel = '최신 메시지로 이동',
@@ -64,7 +66,9 @@ export function MessageFeed({
   const programmaticScrollRef = React.useRef(false);
   const programmaticFrameRef = React.useRef(null);
   const settlingFrameRef = React.useRef(null);
+  const requestFallbackFrameRef = React.useRef(null);
   const followingRef = React.useRef(following);
+  const loadingPreviousRef = React.useRef(loadingPrevious);
   const lastRequestedFollowingRef = React.useRef(following);
   const [retainJumpFocus, setRetainJumpFocus] = React.useState(false);
   const [historyLiveSuppressed, setHistoryLiveSuppressed] = React.useState(false);
@@ -73,6 +77,7 @@ export function MessageFeed({
     followingRef.current = following;
     lastRequestedFollowingRef.current = following;
   }
+  loadingPreviousRef.current = loadingPrevious;
 
   const releaseProgrammaticScroll = React.useCallback(() => {
     cancelFrame(programmaticFrameRef.current);
@@ -100,6 +105,33 @@ export function MessageFeed({
     });
   }, []);
 
+  const finishHistoryRequest = React.useCallback((anchor) => {
+    const viewport = viewportRef.current;
+    if (!viewport || historyAnchorRef.current !== anchor) return;
+    const heightDelta = viewport.scrollHeight - anchor.scrollHeight;
+    programmaticScrollRef.current = true;
+    viewport.scrollTop = Math.max(0, anchor.scrollTop + heightDelta);
+    historyAnchorRef.current = null;
+    releaseProgrammaticScroll();
+    markHistorySettled();
+  }, [markHistorySettled, releaseProgrammaticScroll]);
+
+  const scheduleNoSignalHistoryFallback = React.useCallback((anchor) => {
+    cancelFrame(requestFallbackFrameRef.current);
+    requestFallbackFrameRef.current = requestFrame(() => {
+      requestFallbackFrameRef.current = requestFrame(() => {
+        requestFallbackFrameRef.current = null;
+        if (
+          historyAnchorRef.current === anchor
+          && !anchor.sawLoading
+          && !loadingPreviousRef.current
+        ) {
+          finishHistoryRequest(anchor);
+        }
+      });
+    });
+  }, [finishHistoryRequest]);
+
   const scrollToBottom = React.useCallback(() => {
     const viewport = viewportRef.current;
     if (!viewport) return;
@@ -111,7 +143,14 @@ export function MessageFeed({
   React.useEffect(() => () => {
     cancelFrame(programmaticFrameRef.current);
     cancelFrame(settlingFrameRef.current);
+    cancelFrame(requestFallbackFrameRef.current);
   }, []);
+
+  React.useEffect(() => {
+    if (!hasPrevious && historyAnchorRef.current) {
+      finishHistoryRequest(historyAnchorRef.current);
+    }
+  }, [finishHistoryRequest, hasPrevious]);
 
   useIsomorphicLayoutEffect(() => {
     const viewport = viewportRef.current;
@@ -125,17 +164,13 @@ export function MessageFeed({
       const loadingFinished = anchor.sawLoading && !loadingPrevious;
 
       if (heightDelta !== 0 || loadingFinished || (childrenChanged && !loadingPrevious)) {
-        programmaticScrollRef.current = true;
-        viewport.scrollTop = Math.max(0, anchor.scrollTop + heightDelta);
-        historyAnchorRef.current = null;
-        releaseProgrammaticScroll();
-        markHistorySettled();
+        finishHistoryRequest(anchor);
       }
       return;
     }
 
     if (following) scrollToBottom();
-  }, [children, following, loadingPrevious, markHistorySettled, maxHeight, releaseProgrammaticScroll, scrollToBottom]);
+  }, [children, finishHistoryRequest, following, loadingPrevious, maxHeight, scrollToBottom, viewportMinHeight]);
 
   React.useEffect(() => {
     const content = contentRef.current;
@@ -166,13 +201,30 @@ export function MessageFeed({
     const viewport = viewportRef.current;
     if (!viewport || !onLoadPrevious || loadingPrevious) return;
     setHistoryLiveSuppressed(true);
-    historyAnchorRef.current = {
+    const anchor = {
       scrollHeight: viewport.scrollHeight,
       scrollTop: viewport.scrollTop,
       children,
       sawLoading: false,
     };
-    onLoadPrevious();
+    historyAnchorRef.current = anchor;
+    let request;
+    try {
+      request = onLoadPrevious();
+    } catch (error) {
+      finishHistoryRequest(anchor);
+      throw error;
+    }
+    if (request && typeof request.then === 'function') {
+      const settleReturnedRequest = () => {
+        if (historyAnchorRef.current === anchor && !loadingPreviousRef.current) {
+          finishHistoryRequest(anchor);
+        }
+      };
+      Promise.resolve(request).then(settleReturnedRequest, settleReturnedRequest);
+    } else {
+      scheduleNoSignalHistoryFallback(anchor);
+    }
   };
 
   const handleJumpToLatest = (event) => {
@@ -184,7 +236,7 @@ export function MessageFeed({
     onJumpToLatest?.();
   };
 
-  const messageCount = React.Children.count(children);
+  const messageCount = React.Children.toArray(children).length;
   const emptyContent = empty === undefined ? '메시지가 없습니다.' : empty;
   const normalizedUnreadCount = Math.max(0, Math.floor(Number(unreadCount) || 0));
   const showJump = !following || normalizedUnreadCount > 0 || retainJumpFocus;
@@ -247,30 +299,37 @@ export function MessageFeed({
           maxWidth: '100%',
           minWidth: 0,
           maxHeight,
+          minHeight: viewportMinHeight,
           overflowX: 'hidden',
           overflowY: 'auto',
           overscrollBehavior: 'contain',
           scrollbarGutter: 'stable',
-          padding: 'var(--space-4)',
-          border: 'var(--component-card-border)',
-          borderRadius: 'var(--component-card-radius)',
-          background: 'var(--color-semantic-background-elevated-normal)',
-          boxShadow: 'var(--component-card-shadow-sm)',
+          padding: 'var(--space-3) var(--space-2)',
+          border: 0,
+          borderRadius: 0,
+          background: 'transparent',
+          boxShadow: 'none',
           color: 'var(--color-semantic-label-normal)',
-          outlineOffset: 2,
+          outlineOffset: 'var(--space-1)',
         }}
       >
         <div
           ref={contentRef}
           data-message-feed-content
-          style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}
+          style={{
+            display: 'grid',
+            gap: 'var(--space-6)',
+            width: 'min(48rem, 100%)',
+            minWidth: 0,
+            marginInline: 'auto',
+          }}
         >
           {messageCount > 0 ? children : (
             <div
               data-message-feed-empty
               style={{
                 display: 'grid',
-                minHeight: 120,
+                minHeight: 'var(--space-20)',
                 placeItems: 'center',
                 minWidth: 0,
                 padding: 'var(--space-4)',
@@ -292,20 +351,51 @@ export function MessageFeed({
           data-message-feed-jump-control
           style={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}
         >
-          <Button
-            type="button"
-            size="sm"
-            variant="secondary"
-            aria-controls={viewportId}
-            aria-label={jumpAccessibleLabel}
-            data-message-feed-jump
-            onClick={handleJumpToLatest}
-            onBlur={() => setRetainJumpFocus(false)}
-          >
-            {normalizedUnreadCount > 0
-              ? `${jumpToLatestLabel} · ${normalizedUnreadCount}`
-              : jumpToLatestLabel}
-          </Button>
+          {/* Scroll-to-latest reads as the conventional circular down control;
+              the unread count rides as a decorative corner badge because the
+              accessible name already carries it. */}
+          <span style={{ position: 'relative', display: 'inline-flex' }}>
+            <IconButton
+              type="button"
+              size="medium"
+              variant="soft"
+              aria-controls={viewportId}
+              label={jumpAccessibleLabel}
+              data-message-feed-jump
+              onClick={handleJumpToLatest}
+              onBlur={() => setRetainJumpFocus(false)}
+            >
+              <Icon name="arrow-down" size={18} aria-hidden="true" />
+            </IconButton>
+            {normalizedUnreadCount > 0 && (
+              <span
+                aria-hidden="true"
+                data-message-feed-unread
+                style={{
+                  position: 'absolute',
+                  top: 'calc(var(--space-1) * -1)',
+                  right: 'calc(var(--space-1) * -1)',
+                  minWidth: 'var(--space-4)',
+                  height: 'var(--space-4)',
+                  padding: '0 var(--space-1)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxSizing: 'border-box',
+                  background: 'var(--color-semantic-primary-normal)',
+                  color: 'var(--color-semantic-static-white)',
+                  border: 'var(--border-thin) solid var(--color-semantic-background-normal-normal)',
+                  borderRadius: 'var(--radius-pill)',
+                  fontSize: 'var(--caption2-size)',
+                  lineHeight: 1,
+                  fontWeight: 'var(--fw-bold)',
+                  fontVariantNumeric: 'tabular-nums',
+                }}
+              >
+                {normalizedUnreadCount > 99 ? '99+' : normalizedUnreadCount}
+              </span>
+            )}
+          </span>
         </div>
       )}
 

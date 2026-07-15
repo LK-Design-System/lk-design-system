@@ -15,7 +15,10 @@ export type MessageComposerTextareaProps = Omit<
   | "placeholder"
 >;
 
-interface MessageComposerBaseProps {
+interface MessageComposerBaseProps extends Omit<
+  React.FormHTMLAttributes<HTMLFormElement>,
+  'children' | 'onChange' | 'onSubmit' | 'onInput'
+> {
   /** Controlled draft value. MessageComposer never clears it after submit. */
   value: string;
   /** Receives the next controlled value and original textarea change event. */
@@ -30,7 +33,7 @@ interface MessageComposerBaseProps {
   canSubmit?: boolean;
   /** Keep the draft focusable but prevent editing and submission. @default false */
   readOnly?: boolean;
-  /** Visible status text. Defaults to the current non-idle state's neutral label. */
+  /** Visible status text. Defaults to the current non-idle state's neutral label; `null` suppresses it. */
   statusLabel?: React.ReactNode;
   /** Accessible name for the composer form. @default "메시지 작성" */
   formLabel?: string;
@@ -42,16 +45,16 @@ interface MessageComposerBaseProps {
   description?: React.ReactNode;
   /** Native maximum character count and visible counter. */
   maxLength?: number;
-  /** Minimum autosize rows; one row starts at 44px. @default 1 */
+  /** Minimum autosize rows; one row starts at 48px. @default 1 */
   minRows?: number;
   /** Maximum autosize rows before internal scrolling. @default 6 */
   maxRows?: number;
-  /** Attachment preview/list slot rendered before the control row. */
+  /** Attachment preview/list slot rendered inside the composer shell before the control row. */
   attachments?: React.ReactNode;
-  /** 32px attachment utility action. */
-  attachmentAction?: React.ReactNode;
-  /** Additional 32px utility actions. */
-  secondaryActions?: React.ReactNode;
+  /** Actions rendered at the leading edge of the action band below the textarea. */
+  leadingActions?: React.ReactNode;
+  /** Actions rendered at the trailing edge of the action band before the primary send/stop control. */
+  trailingActions?: React.ReactNode;
   /** Accessible name for the 32px submit control. @default "메시지 보내기" */
   submitLabel?: string;
   /** Accessible name for the 32px stop control. @default "응답 중지" */
@@ -78,5 +81,5 @@ export type MessageComposerProps = MessageComposerBaseProps & (
   | MessageComposerDisabledProps
 );
 
-/** Compact controlled message composer for the LK Product communication family. */
+/** LK Product Extension: a product-neutral controlled composer for general conversations. */
 export function MessageComposer(props: MessageComposerProps): React.JSX.Element;

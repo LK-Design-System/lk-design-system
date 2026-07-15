@@ -1,6 +1,15 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Avatar, Button, ConversationMessage, MessageFeed, MessageComposer } from '../src/index.js';
+import {
+  Avatar,
+  Chip,
+  ConversationMessage,
+  Icon,
+  IconButton,
+  MessageComposer,
+  MessageFeed,
+  SourceDisclosure,
+} from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -10,14 +19,14 @@ const meta = {
     storyGuide: {
       storyId: 'lds-product-communication-message--message-overview',
       eyebrow: 'Product / Communication',
-      title: '메시지는 말풍선의 방향보다 보낸 사람과 처리 상태를 먼저 설명합니다',
+      title: 'AI의 긴 답변은 문서처럼 읽고 사람의 짧은 발화는 bubble로 구분합니다',
       description:
-        '사용자·AI·상담원·시스템이 한 대화 안에서 본문과 전송·응답 상태를 분명히 구분해야 할 때 사용합니다. 대화 전체의 스크롤, 새 항목 알림과 입력은 Message Feed와 Message Composer가 소유하며, 지도 주석이나 코치 마크에는 Bubble이 적합합니다.',
+        '일반 AI assistant, 사용자, 상담원과 system event가 한 대화에 함께 있을 때 사용합니다. assistant의 장문·목록·코드·레퍼런스는 borderless document로 열어 두고, 짧은 사용자 발화는 solid primary 버블로, 상담원 발화는 neutral fill 버블로 묶습니다.',
     },
     docs: {
       description: {
         component:
-          '한 건의 대화 항목을 identity → body에서 시작해 response 상태는 evidence보다 먼저, delivery 상태는 payload 뒤에 두고 actions로 마무리하는 LK Product Extension입니다. direction과 authorRole을 서로 추론하지 않으며 개별 메시지는 live region을 만들지 않습니다.',
+          'assistant=borderless document, user=solid primary bubble, human-agent=neutral fill bubble, system=중앙 neutral pill 칩을 기본으로 하며 attachment·source·action은 ReactNode slot으로 조합하는 LK Product Extension입니다.',
       },
     },
   },
@@ -25,135 +34,144 @@ const meta = {
 
 export default meta;
 
-const assistantAvatar = <Avatar name="LK Assistant" size="small" />;
+const assistantAvatar = <Avatar name="AI Assistant" size="small" />;
 const userAvatar = <Avatar name="김서윤" size="small" />;
-const surfaceComparisonContent = '30% 미만 장비만\n보여 주세요.';
+
+// Consumed only through the compact EvidenceBlock, which renders a single-line
+// link chip — so only id/label/href are used. Provenance fields (kind, location,
+// availability, description) render in the card mode and are demonstrated in
+// ContentSourceDisclosure's own stories, not here.
+const answerSources = [
+  {
+    id: 'meeting-notes',
+    label: '업로드된 주간 회의록 · 2026-07-12',
+    href: 'https://example.com/meeting-notes',
+  },
+];
+
+function EvidenceBlock({ long = false }) {
+  return (
+    <SourceDisclosure
+      title="레퍼런스"
+      headingLevel={3}
+      titleVisuallyHidden
+      description={long ? '답변 작성에 사용한 문서와 관측 시점을 확인합니다.' : undefined}
+      sources={answerSources}
+      compact
+    />
+  );
+}
+
+function AttachmentChip({ children = 'weekly-meeting-notes.pdf' }) {
+  return (
+    <Chip size="sm" variant="outlined" leading={<Icon name="attachment" size={14} />}>
+      {children}
+    </Chip>
+  );
+}
+
+// Message quick-actions read as icon-only controls (the AI-chat convention),
+// not text buttons; the accessible name lives on IconButton's `label`.
+function CopyAction() {
+  return (
+    <IconButton label="복사" size="small" round={false} variant="plain">
+      <Icon name="copy" size={16} />
+    </IconButton>
+  );
+}
+
+function CondenseAction() {
+  return (
+    <IconButton label="간단히 보기" size="small" round={false} variant="plain">
+      <Icon name="list" size={16} />
+    </IconButton>
+  );
+}
+
+function AddFileAction(props) {
+  return (
+    <IconButton label="파일 추가" size="small" round={false} variant="plain" {...props}>
+      <Icon name="attachment" size={16} />
+    </IconButton>
+  );
+}
+
+function AssistantAnswer() {
+  return (
+    <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+      <p style={{ margin: 0 }}>
+        회의록에서 이번 주에 결정해야 할 내용을 세 가지로 정리했습니다.
+      </p>
+      <section aria-labelledby="answer-summary-title" style={{ display: 'grid', gap: 'var(--space-2)' }}>
+        <h3 id="answer-summary-title" style={{ margin: 0, fontSize: 'var(--heading4-size)', lineHeight: 'var(--heading4-line)' }}>
+          우선순위
+        </h3>
+        <ol style={{ margin: 0, paddingInlineStart: 'var(--space-5)' }}>
+          <li>금요일까지 사용자 인터뷰 질문지를 확정합니다.</li>
+          <li>다음 배포 범위를 한 페이지로 정리합니다.</li>
+          <li>담당자와 검토 일정을 캘린더에 반영합니다.</li>
+        </ol>
+      </section>
+      <p style={{ margin: 0 }}>
+        원하시면 이 내용을 담당자별 체크리스트로 다시 바꿔 드릴 수 있습니다.
+      </p>
+    </div>
+  );
+}
 
 function assertNoPerMessageLiveRegions(root) {
-  const messages = Array.from(root.querySelectorAll('.lk-conversation-message'));
-  const liveMessage = messages.find((message) => (
+  const invalid = Array.from(root.querySelectorAll('.lk-conversation-message')).find((message) => (
     message.hasAttribute('aria-live')
     || message.getAttribute('role') === 'log'
     || message.querySelector('[aria-live], [role="log"], [role="status"], [role="alert"]')
   ));
-  if (liveMessage) {
-    throw new Error('ConversationMessage must not create a per-message live region.');
-  }
-}
-
-function colorChannels(color) {
-  const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
-  if (!channels || channels.length !== 3) throw new Error(`Could not parse computed color: ${color}`);
-  return channels;
-}
-
-function colorAlpha(color) {
-  const channels = color.match(/[\d.]+/g)?.map(Number) ?? [];
-  return channels.length > 3 ? channels[3] : 1;
-}
-
-function relativeLuminance(color) {
-  const channels = colorChannels(color).map((channel) => {
-    const value = channel / 255;
-    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
-  });
-  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
-}
-
-function assertSurfaceContrast(surface, minimum = 4.5) {
-  const style = getComputedStyle(surface);
-  const foreground = relativeLuminance(style.color);
-  const background = relativeLuminance(style.backgroundColor);
-  const ratio = (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
-  if (ratio < minimum) {
-    throw new Error(`Message surface contrast must be at least ${minimum}:1; received ${ratio.toFixed(2)}:1.`);
-  }
+  if (invalid) throw new Error('ConversationMessage must not create a per-message live region.');
 }
 
 function OverviewFixture() {
   return (
-    <main style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 760 }}>
+    <main data-message-overview style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
       <ConversationMessage
-        direction="inbound"
         authorRole="assistant"
-        author="LK Assistant"
+        author="AI Assistant"
         avatar={assistantAvatar}
         timestamp="오전 10:24"
         dateTime="2026-07-12T10:24:00+09:00"
         lifecycle={{ kind: 'response', state: 'complete' }}
+        sources={<EvidenceBlock />}
+        actions={(
+          <>
+            <CopyAction />
+            <CondenseAction />
+          </>
+        )}
       >
-        로봇 3대의 배터리와 현재 작업을 확인했습니다. 충전이 필요한 장비부터 정리해 드릴까요?
+        <AssistantAnswer />
       </ConversationMessage>
-      <section
-        aria-labelledby="message-surface-comparison-title"
-        data-surface-comparison=""
-        style={{ display: 'grid', gap: 'var(--space-3)' }}
-      >
-        <h2
-          id="message-surface-comparison-title"
-          style={{
-            margin: 0,
-            color: 'var(--color-semantic-label-neutral)',
-            fontSize: 'var(--label1-size)',
-            lineHeight: 'var(--label1-line)',
-            fontWeight: 'var(--fw-semibold)',
-          }}
-        >
-          동일 메시지의 표면 비교
-        </h2>
-        <div data-surface-example="soft" style={{ display: 'grid', gap: 'var(--space-1)' }}>
-          <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
-            Soft · 전체 너비
-          </span>
-          <ConversationMessage
-            direction="outbound"
-            authorRole="user"
-            author="김서윤"
-            avatar={userAvatar}
-            timestamp="오전 10:25"
-            dateTime="2026-07-12T10:25:00+09:00"
-            lifecycle={{ kind: 'delivery', state: 'sent' }}
-          >
-            {surfaceComparisonContent}
-          </ConversationMessage>
-        </div>
-        <div data-surface-example="solid" style={{ display: 'grid', gap: 'var(--space-1)' }}>
-          <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
-            Solid · 내용 너비
-          </span>
-          <ConversationMessage
-            direction="outbound"
-            authorRole="user"
-            variant="solid"
-            author="김서윤"
-            avatar={userAvatar}
-            timestamp="오전 10:25"
-            dateTime="2026-07-12T10:25:00+09:00"
-            lifecycle={{ kind: 'delivery', state: 'sent' }}
-          >
-            {surfaceComparisonContent}
-          </ConversationMessage>
-        </div>
-      </section>
+
       <ConversationMessage
-        direction="system"
-        authorRole="system"
-        variant="solid"
-        author="운영 시스템"
-        timestamp="오전 10:25"
-        dateTime="2026-07-12T10:25:10+09:00"
-      >
-        상담원이 대화에 참여했습니다.
-      </ConversationMessage>
-      <ConversationMessage
-        direction="inbound"
-        authorRole="human-agent"
-        author="운영 지원 · 박지훈"
-        avatar={<Avatar name="박지훈" size="small" />}
+        authorRole="user"
+        author="김서윤"
+        avatar={userAvatar}
         timestamp="오전 10:26"
         dateTime="2026-07-12T10:26:00+09:00"
+        lifecycle={{ kind: 'delivery', state: 'read' }}
       >
-        안녕하세요. 충전 대기열까지 함께 확인하겠습니다.
+        담당자별 체크리스트로 바꿔 주세요.
+      </ConversationMessage>
+
+      <ConversationMessage authorRole="system" author="대화 시스템">
+        상담원이 대화에 참여했습니다.
+      </ConversationMessage>
+
+      <ConversationMessage
+        authorRole="human-agent"
+        author="지원 담당자 · 박지훈"
+        avatar={<Avatar name="박지훈" size="small" />}
+        timestamp="오전 10:27"
+        dateTime="2026-07-12T10:27:00+09:00"
+      >
+        일정 확인이 필요하면 제가 이어서 도와드릴게요.
       </ConversationMessage>
     </main>
   );
@@ -162,143 +180,86 @@ function OverviewFixture() {
 export const MessageOverview = {
   name: '개요',
   parameters: storyDescription(
-    'AI 응답, soft·solid 사용자 전송, 시스템 경계와 상담원 메시지를 한 흐름에서 비교합니다. 같은 user·outbound·content에서 surface 축만 바뀌며, system은 solid를 받아도 avatar나 bubble surface가 생기지 않는지 확인하세요.',
+    '약 760px 읽기 폭에서 assistant 장문 document, user solid primary bubble, system 중앙 pill 칩과 optional human-agent neutral fill bubble을 비교합니다. source는 SourceDisclosure, action은 별도 ReactNode slot으로 조합하며 제품 panel이나 고정 sidebar를 만들지 않습니다.',
   ),
   render: () => <OverviewFixture />,
   play: async ({ canvasElement }) => {
-    const messages = Array.from(canvasElement.querySelectorAll('.lk-conversation-message'));
-    if (messages.length !== 5) throw new Error(`Expected five message examples, found ${messages.length}.`);
-    if (messages.map((message) => message.dataset.authorRole).join(',') !== 'assistant,user,user,system,human-agent') {
-      throw new Error('Message author roles must remain explicit and independent from direction.');
+    const fixture = canvasElement.querySelector('[data-message-overview]');
+    const messages = fixture ? Array.from(fixture.querySelectorAll('.lk-conversation-message')) : [];
+    if (!fixture || messages.length !== 4) throw new Error('The representative message flow is incomplete.');
+    if (messages.map((message) => message.dataset.messagePresentation).join(',') !== 'document,bubble,system,bubble') {
+      throw new Error('Role defaults must resolve to document, bubble, system, and bubble.');
     }
-    const userMessages = messages.filter((message) => message.dataset.authorRole === 'user');
-    const surfaceComparison = canvasElement.querySelector('[data-surface-comparison]');
-    const surfaceLabels = surfaceComparison
-      ? Array.from(surfaceComparison.querySelectorAll('[data-surface-example] > span')).map((label) => label.textContent?.trim())
-      : [];
-    if (surfaceLabels.join(',') !== 'Soft · 전체 너비,Solid · 내용 너비') {
-      throw new Error('The repeated surface examples need visible labels so they cannot be mistaken for duplicate chat messages.');
+    if (messages.map((message) => message.dataset.direction).join(',') !== 'inbound,outbound,system,inbound') {
+      throw new Error('Role defaults must preserve participant placement.');
     }
-    const softUserSurface = userMessages.find((message) => message.dataset.messageVariant === 'soft')?.querySelector('[data-message-surface]');
-    const solidUserSurface = userMessages.find((message) => message.dataset.messageVariant === 'solid')?.querySelector('[data-message-surface]');
-    if (!softUserSurface || !solidUserSurface) throw new Error('The soft/solid user surface comparison is incomplete.');
-    if (solidUserSurface.textContent !== softUserSurface.textContent) {
-      throw new Error('The surface comparison must hold role, direction, and content constant.');
+    const documentBody = messages[0].querySelector('[data-message-part="body"]');
+    const userBody = messages[1].querySelector('[data-message-part="body"]');
+    if (!documentBody || !userBody || documentBody.style.background !== 'transparent') {
+      throw new Error('The assistant answer must use a chrome-free document body.');
     }
-    if (getComputedStyle(solidUserSurface).whiteSpace !== 'pre-wrap'
-      || !solidUserSurface.textContent.includes('\n')) {
-      throw new Error('The solid plain-text surface must preserve Composer line breaks.');
+    if (userBody.style.background === 'transparent' || userBody.getBoundingClientRect().width >= fixture.getBoundingClientRect().width - 1) {
+      throw new Error('The user request must remain a compact primary bubble.');
     }
-    if (solidUserSurface.getBoundingClientRect().width >= softUserSurface.getBoundingClientRect().width) {
-      throw new Error('A short solid chatbot message must shrink-wrap instead of becoming a full-width slab.');
+    if (!messages[0].querySelector('.lk-source-disclosure') || !messages[0].querySelector('[data-message-part="actions"]')) {
+      throw new Error('The rich assistant document must compose source and action slots.');
     }
-    assertSurfaceContrast(solidUserSurface);
-    const system = messages.find((message) => message.dataset.direction === 'system');
-    if (!system || system.querySelector('[data-message-avatar]')) {
+    if (messages[2].querySelector('[data-message-avatar]')) {
       throw new Error('System messages must not render an avatar.');
     }
-    const systemSurface = system.querySelector('[data-message-surface]');
-    if (!systemSurface
-      || systemSurface.dataset.messageSurfaceVariant !== 'system'
-      || getComputedStyle(systemSurface).boxShadow !== 'none'
-      || colorAlpha(getComputedStyle(systemSurface).backgroundColor) !== 0) {
-      throw new Error('System messages must use the neutral line instead of a bubble surface.');
-    }
-    assertNoPerMessageLiveRegions(canvasElement);
+    assertNoPerMessageLiveRegions(fixture);
   },
 };
 
-const deliveryStates = ['queued', 'sending', 'sent', 'failed', 'cancelled'];
+const deliveryStates = ['queued', 'sending', 'sent', 'read', 'failed', 'cancelled'];
 const responseStates = ['pending', 'streaming', 'stopping', 'complete', 'cancelled', 'failed'];
-const deliveryExamples = {
-  queued: '메시지가 전송 순서를 기다리고 있습니다.',
-  sending: '메시지를 전송하고 있습니다.',
-  sent: '메시지가 전달되었습니다.',
-  failed: '메시지를 전송하지 못했습니다.',
-  cancelled: '메시지 전송을 취소했습니다.',
-};
-const responseExamples = {
-  pending: '응답 준비를 시작했습니다.',
-  streaming: '요청한 내용을 정리하고 있습니다.',
-  stopping: '응답 생성을 중지하고 있습니다.',
-  complete: '요청한 안내를 모두 작성했습니다.',
-  cancelled: '응답 생성을 취소했습니다.',
-  failed: '응답을 만들지 못했습니다.',
-};
 
 function LifecycleFixture() {
-  const [callback, setCallback] = React.useState('아직 실행되지 않음');
-
+  const [lastRequest, setLastRequest] = React.useState('없음');
   return (
-    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 980 }}>
-      <section aria-labelledby="delivery-lifecycle-title" style={{ display: 'grid', gap: 'var(--space-3)' }}>
-        <h2 id="delivery-lifecycle-title" style={{ margin: 0, fontSize: 'var(--body1-size)' }}>전송 상태</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-3)' }}>
+    <main style={{ display: 'grid', gap: 'var(--space-7)', width: '100%', maxWidth: 980 }}>
+      <section aria-labelledby="delivery-title" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <h2 id="delivery-title" style={{ margin: 0, fontSize: 'var(--heading4-size)' }}>사용자 전송 상태</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: 'var(--space-4)' }}>
           {deliveryStates.map((state) => (
             <ConversationMessage
               key={state}
-              direction="outbound"
-              authorRole="user"
-              author="김서윤"
               data-lifecycle-example={`delivery-${state}`}
+              authorRole="user"
+              author="사용자"
+              timestamp="오후 2:30"
+              dateTime="2026-07-12T14:30:00+09:00"
               lifecycle={{ kind: 'delivery', state }}
-              attachments={state === 'sent' ? <span data-delivery-order-evidence>전송 payload 근거</span> : undefined}
-              onRetry={state === 'failed' ? () => {} : undefined}
+              attachments={state === 'sending' ? <AttachmentChip>draft-summary.pdf</AttachmentChip> : undefined}
+              onRetry={state === 'failed' ? () => setLastRequest('delivery-retry') : undefined}
+              retryLabel="전송 다시 시도"
             >
-              {deliveryExamples[state]}
+              전송 상태가 {state}인 짧은 사용자 메시지입니다.
             </ConversationMessage>
           ))}
         </div>
       </section>
 
-      <section aria-labelledby="response-lifecycle-title" style={{ display: 'grid', gap: 'var(--space-3)' }}>
-        <h2 id="response-lifecycle-title" style={{ margin: 0, fontSize: 'var(--body1-size)' }}>응답 상태</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-3)' }}>
+      <section aria-labelledby="response-title" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <h2 id="response-title" style={{ margin: 0, fontSize: 'var(--heading4-size)' }}>AI 응답 상태</h2>
+        <div style={{ display: 'grid', gap: 'var(--space-5)' }}>
           {responseStates.map((state) => (
             <ConversationMessage
               key={state}
-              direction="inbound"
-              authorRole="assistant"
-              author="LK Assistant"
               data-lifecycle-example={`response-${state}`}
+              authorRole="assistant"
+              author="AI Assistant"
               lifecycle={{ kind: 'response', state }}
-              onRetry={state === 'failed' ? () => {} : undefined}
-              onStop={['pending', 'streaming', 'stopping'].includes(state) ? () => {} : undefined}
+              sources={state === 'streaming' ? <EvidenceBlock /> : undefined}
+              onRetry={state === 'failed' ? () => setLastRequest('response-retry') : undefined}
+              retryLabel="응답 다시 시도"
             >
-              {responseExamples[state]}
+              {state === 'streaming' ? '긴 답변의 첫 단락을 작성하고 있습니다.' : `응답 상태가 ${state}인 document입니다.`}
             </ConversationMessage>
           ))}
         </div>
       </section>
-
-      <section aria-labelledby="callback-title" style={{ display: 'grid', gap: 'var(--space-3)' }}>
-        <h2 id="callback-title" style={{ margin: 0, fontSize: 'var(--body1-size)' }}>요청 이후 상태 유지</h2>
-        <ConversationMessage
-          data-callback-message="stop"
-          direction="inbound"
-          authorRole="assistant"
-          author="LK Assistant"
-          lifecycle={{ kind: 'response', state: 'streaming' }}
-          onStop={() => setCallback('stop')}
-          stopLabel="생성 중단 요청"
-        >
-          응답을 생성하고 있습니다.
-        </ConversationMessage>
-        <ConversationMessage
-          data-callback-message="retry"
-          direction="outbound"
-          authorRole="user"
-          author="김서윤"
-          lifecycle={{ kind: 'delivery', state: 'failed' }}
-          onRetry={() => setCallback('retry')}
-          retryLabel="전송 다시 요청"
-        >
-          전송하지 못한 메시지입니다.
-        </ConversationMessage>
-        <p hidden data-callback-output>
-          마지막 콜백: {callback}
-        </p>
-      </section>
+      <output hidden data-lifecycle-output>{lastRequest}</output>
     </main>
   );
 }
@@ -306,11 +267,11 @@ function LifecycleFixture() {
 export const LifecycleStates = {
   name: '상호작용 · 전송과 응답 생명주기',
   parameters: storyDescription(
-    'outbound delivery와 inbound response의 상태를 분리해 비교합니다. response의 pending·streaming·stopping만 busy이고 complete는 기본 marker 없이 steady message가 됩니다. 실패에서만 retry, pending·streaming에서만 stop이 나타나며 callback 실행 뒤에도 앱이 새 prop을 주기 전에는 상태가 바뀌지 않습니다.',
+    'delivery와 response lifecycle을 분리합니다. assistant의 pending·streaming·stopping만 busy이고 message에는 stop action을 만들지 않습니다. 실패에서만 retry가 나타나며 callback 뒤 상태 전이는 제품이 갱신합니다.',
   ),
   render: () => <LifecycleFixture />,
   play: async ({ canvasElement }) => {
-    const messages = Array.from(canvasElement.querySelectorAll('.lk-conversation-message'));
+    const messages = Array.from(canvasElement.querySelectorAll('[data-lifecycle-example]'));
     for (const message of messages) {
       const shouldBeBusy = message.dataset.lifecycleKind === 'response'
         && ['pending', 'streaming', 'stopping'].includes(message.dataset.lifecycleState);
@@ -318,274 +279,155 @@ export const LifecycleStates = {
         throw new Error(`aria-busy does not match ${message.dataset.lifecycleKind}:${message.dataset.lifecycleState}.`);
       }
     }
-
-    const stopping = messages.find((message) => message.dataset.lifecycleState === 'stopping');
-    if (stopping?.querySelector('button')) {
-      throw new Error('Stopping must remain busy without exposing a duplicate stop action.');
+    const steady = [
+      canvasElement.querySelector('[data-lifecycle-example="delivery-sent"]'),
+      canvasElement.querySelector('[data-lifecycle-example="response-complete"]'),
+    ];
+    if (steady.some((message) => message?.querySelector('[data-message-part="status"]'))) {
+      throw new Error('Sent and complete steady states must not add a redundant status marker.');
     }
-    const nonFailedRetry = messages.find((message) => (
-      message.dataset.lifecycleState !== 'failed'
-      && Array.from(message.querySelectorAll('button')).some((button) => button.textContent?.includes('다시'))
-    ));
-    if (nonFailedRetry) throw new Error('Retry controls are reserved for failed lifecycle states.');
-    const completeResponse = messages.find((message) => (
-      message.dataset.lifecycleKind === 'response' && message.dataset.lifecycleState === 'complete'
-    ));
-    if (completeResponse?.querySelector('[data-message-part="status"]')) {
-      throw new Error('A completed response must become a steady message without a redundant default marker.');
+    const retryButtons = Array.from(canvasElement.querySelectorAll('[data-lifecycle-example] button'));
+    if (retryButtons.length !== 2) throw new Error('Only failed delivery and response states may expose retry.');
+    await userEvent.click(retryButtons[1]);
+    if (canvasElement.querySelector('[data-lifecycle-output]')?.textContent !== 'response-retry') {
+      throw new Error('Retry must forward a request without inferring a lifecycle transition.');
     }
-    const sentWithEvidence = canvasElement.querySelector('[data-lifecycle-example="delivery-sent"]');
-    const sentParts = sentWithEvidence
-      ? Array.from(sentWithEvidence.querySelectorAll(':scope > [data-message-part]')).map((part) => part.dataset.messagePart)
+    const streaming = canvasElement.querySelector('[data-lifecycle-example="response-streaming"]');
+    const streamingParts = streaming
+      ? Array.from(streaming.querySelectorAll('[data-message-part="content"] > [data-message-part]')).map((part) => part.dataset.messagePart)
       : [];
-    if (sentParts.join(',') !== 'identity,body,attachments,status') {
-      throw new Error(`Delivery status must follow its complete payload; received ${sentParts.join(' → ')}.`);
+    if (streamingParts.join(',') !== 'body,status,sources') {
+      throw new Error(`Active response order must be body → status → sources; received ${streamingParts.join(' → ')}.`);
     }
-
-    const stopMessage = canvasElement.querySelector('[data-callback-message="stop"]');
-    const stopButton = Array.from(stopMessage.querySelectorAll('button'))
-      .find((button) => button.textContent?.trim() === '생성 중단 요청');
-    if (!stopButton) throw new Error('The active response needs its explicit stop label.');
-    await userEvent.click(stopButton);
-    if (!canvasElement.querySelector('[data-callback-output]')?.textContent?.includes('stop')) {
-      throw new Error('The stop callback was not delivered to the product fixture.');
-    }
-    if (stopMessage.dataset.lifecycleState !== 'streaming') {
-      throw new Error('ConversationMessage must not infer transport completion after onStop.');
-    }
-
-    const retryMessage = canvasElement.querySelector('[data-callback-message="retry"]');
-    const retryButton = Array.from(retryMessage.querySelectorAll('button'))
-      .find((button) => button.textContent?.trim() === '전송 다시 요청');
-    if (!retryButton) throw new Error('The failed delivery needs its explicit retry label.');
-    await userEvent.click(retryButton);
-    if (!canvasElement.querySelector('[data-callback-output]')?.textContent?.includes('retry')) {
-      throw new Error('The retry callback was not delivered to the product fixture.');
-    }
-    if (retryMessage.dataset.lifecycleState !== 'failed') {
-      throw new Error('ConversationMessage must not infer delivery success after onRetry.');
-    }
+    if (streaming?.querySelector('button')) throw new Error('Response cancellation belongs to MessageComposer, not the message article.');
     assertNoPerMessageLiveRegions(canvasElement);
   },
 };
 
-const evidenceSources = [
-  {
-    id: 'fleet-policy',
-    label: 'Fleet charging policy / 2026-Q3',
-    kind: '운영 정책',
-    location: 'Fleet operations',
-    availability: 'available',
-    href: 'https://example.com/fleet-policy',
-    actionAriaLabel: 'Fleet charging policy / 2026-Q3: 새 창에서 열기',
-  },
-];
-
-function AttachmentSlot() {
-  return (
-    <ul aria-label="첨부 파일" style={{ display: 'grid', gap: 'var(--space-2)', margin: 0, padding: 0, listStyle: 'none' }}>
-      <li style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0, paddingBlock: 'var(--space-2)', borderBlock: '1px solid var(--color-semantic-line-normal-alternative)' }}>
-        <span style={{ minWidth: 0, overflowWrap: 'anywhere' }}>robot-17-inspection.pdf</span>
-        <a href="https://example.com/inspection" style={{ flexShrink: 0, color: 'var(--color-semantic-primary-normal)' }}>열기</a>
-      </li>
-    </ul>
-  );
-}
-
 export const GroupedMessagesAndSlots = {
-  name: '사용법 · 그룹과 첨부·출처',
+  name: '사용법 · 그룹과 조합 slot',
   parameters: storyDescription(
-    '같은 assistant의 연속 메시지를 first·middle·last로 묶고 첫 항목에 attachment, source, lifecycle과 action을 함께 배치합니다. avatar는 첫 항목에만 보이지만 모든 article에 author identity가 남고, 각 영역의 DOM 순서가 읽기 순서와 일치하는지 확인하세요.',
+    '같은 사용자의 연속 bubble은 identity 반복을 줄이고, 뒤따르는 assistant document는 attachment·SourceDisclosure·action을 독립 slot으로 조합합니다. slot content를 하나의 중첩 card로 다시 감싸지 않는지 확인하세요.',
   ),
   render: () => (
-    <main style={{ display: 'grid', gap: 'var(--space-1)', width: '100%', maxWidth: 760 }}>
+    <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 760 }}>
+      <div style={{ display: 'grid', gap: 'var(--space-1)' }}>
+        {['first', 'middle', 'last'].map((position, index) => (
+          <ConversationMessage
+            key={position}
+            data-group-message={position}
+            authorRole="user"
+            author="김서윤"
+            avatar={index === 0 ? userAvatar : undefined}
+            groupPosition={position}
+          >
+            {['회의록을 요약해 주세요.', '결정 사항과 미결 사항을 나눠 주세요.', '담당자 이름도 유지해 주세요.'][index]}
+          </ConversationMessage>
+        ))}
+      </div>
       <ConversationMessage
-        data-group-message="first"
-        direction="inbound"
+        data-slot-message
         authorRole="assistant"
-        groupPosition="first"
-        author="LK Assistant"
+        author="AI Assistant"
         avatar={assistantAvatar}
-        timestamp="오전 11:02"
-        dateTime="2026-07-12T11:02:00+09:00"
-        lifecycle={{ kind: 'response', state: 'complete' }}
-        attachments={<AttachmentSlot />}
-        sources={evidenceSources}
-        sourcePresentation="compact"
-        actions={<Button size="sm" variant="ghost">답변 복사</Button>}
+        attachments={<AttachmentChip />}
+        sources={<EvidenceBlock />}
+        actions={<CopyAction />}
       >
-        배터리 30% 미만 장비는 robot-17 한 대입니다.
-      </ConversationMessage>
-      <ConversationMessage
-        data-group-message="middle"
-        direction="inbound"
-        authorRole="assistant"
-        groupPosition="middle"
-        author="LK Assistant"
-        timestamp="오전 11:02"
-        dateTime="2026-07-12T11:02:05+09:00"
-      >
-        현재 충전 대기열은 비어 있습니다.
-      </ConversationMessage>
-      <ConversationMessage
-        data-group-message="last"
-        direction="inbound"
-        authorRole="assistant"
-        groupPosition="last"
-        author="LK Assistant"
-        timestamp="오전 11:02"
-        dateTime="2026-07-12T11:02:09+09:00"
-      >
-        점검 문서와 적용한 운영 정책을 함께 첨부했습니다.
+        요청한 기준으로 회의록을 다시 구성했습니다.
       </ConversationMessage>
     </main>
   ),
   play: async ({ canvasElement }) => {
-    const first = canvasElement.querySelector('[data-group-message="first"]');
-    const middle = canvasElement.querySelector('[data-group-message="middle"]');
-    const last = canvasElement.querySelector('[data-group-message="last"]');
-    if (!first || !middle || !last) throw new Error('The grouped message run is incomplete.');
-
-    const partOrder = Array.from(first.querySelectorAll(':scope > [data-message-part]'))
-      .map((part) => part.dataset.messagePart);
-    const expectedOrder = ['identity', 'body', 'attachments', 'sources', 'actions'];
-    if (partOrder.join(',') !== expectedOrder.join(',')) {
-      throw new Error(`Message DOM order must be ${expectedOrder.join(' → ')}, received ${partOrder.join(' → ')}.`);
+    const grouped = ['first', 'middle', 'last'].map((position) => canvasElement.querySelector(`[data-group-message="${position}"]`));
+    if (grouped.some((message) => !message)) throw new Error('The grouped user run is incomplete.');
+    if (!grouped[0].querySelector('[data-message-avatar]') || grouped[1].querySelector('[data-message-avatar]') || grouped[2].querySelector('[data-message-avatar]')) {
+      throw new Error('Only the first grouped message may render its avatar.');
     }
-    const compactSources = first.querySelector('[data-message-sources-disclosure]');
-    const compactSummary = compactSources?.querySelector('summary');
-    if (!compactSources || compactSources.open || compactSummary?.textContent?.trim() !== '근거 1개') {
-      throw new Error('The compact source disclosure must start closed with its source count.');
-    }
-    await userEvent.click(compactSummary);
-    const sourceLink = compactSources.querySelector('a[href="https://example.com/fleet-policy"]');
-    if (!compactSources.open
-      || sourceLink?.getAttribute('aria-label') !== 'Fleet charging policy / 2026-Q3: 새 창에서 열기') {
-      throw new Error('Expanding compact sources must reveal the original provenance link with a new-window label.');
-    }
-    await userEvent.click(compactSummary);
-    if (first.querySelectorAll('[data-message-avatar]').length !== 1
-      || middle.querySelector('[data-message-avatar]')
-      || last.querySelector('[data-message-avatar]')) {
-      throw new Error('Only first/single grouped messages may render the 32px avatar slot.');
-    }
-    for (const grouped of [middle, last]) {
-      const identity = grouped.querySelector('[data-message-part="identity"]');
-      if (identity?.dataset.visuallyHidden !== 'true' || !identity.textContent?.includes('LK Assistant')) {
-        throw new Error('Middle/last messages must retain a visually hidden author identity.');
-      }
-      if (!grouped.getAttribute('aria-labelledby')) {
-        throw new Error('Grouped message articles must remain named by their hidden identity.');
+    for (const message of grouped.slice(1)) {
+      const identity = message.querySelector('[data-message-part="identity"]');
+      if (identity?.dataset.visuallyHidden !== 'true' || !identity.textContent?.includes('김서윤')) {
+        throw new Error('Middle and last messages must retain an accessible hidden identity.');
       }
     }
-    assertNoPerMessageLiveRegions(canvasElement);
+    const groupedContentLefts = grouped.map((message) => message.querySelector('[data-message-part="content"]')?.getBoundingClientRect().left);
+    if (groupedContentLefts.some((left) => left == null)
+      || groupedContentLefts.some((left) => Math.abs(left - groupedContentLefts[0]) > 1)) {
+      throw new Error('Grouped messages must preserve one content column when only the first item receives the avatar prop.');
+    }
+    const assistant = canvasElement.querySelector('[data-slot-message]');
+    const parts = assistant
+      ? Array.from(assistant.querySelectorAll('[data-message-part="content"] > [data-message-part]')).map((part) => part.dataset.messagePart)
+      : [];
+    if (parts.join(',') !== 'body,attachments,sources,actions') {
+      throw new Error(`Composition slots must follow body → attachments → sources → actions; received ${parts.join(' → ')}.`);
+    }
+    if (!assistant?.querySelector('.lk-source-disclosure')) {
+      throw new Error('The sources slot must render the explicit SourceDisclosure component.');
+    }
   },
 };
-
-// ---------------------------------------------------------------------------
-// C4 · Composition
-//
-// A small example of ConversationMessage + MessageFeed + MessageComposer +
-// SourceDisclosure working together. This is intentionally NOT a new component:
-// there is no ChatWindow export and no simulated backend. Transport, streaming,
-// persistence and retrieval stay with the product; the fixture only echoes the
-// user's own submission and clears the controlled composer value.
-// ---------------------------------------------------------------------------
-
-const compositionSources = [
-  {
-    id: 'charging-policy',
-    label: '충전 우선순위 정책 / 2026-Q3',
-    kind: '운영 정책',
-    location: 'Fleet operations',
-    availability: 'available',
-    href: 'https://example.com/charging-policy',
-  },
-];
 
 const compositionSeed = [
   {
     id: 'seed-user',
-    direction: 'outbound',
     authorRole: 'user',
-    variant: 'solid',
     author: '김서윤',
     avatar: userAvatar,
-    timestamp: '오전 9:58',
-    dateTime: '2026-07-12T09:58:00+09:00',
+    body: '업로드한 회의록에서 이번 주 결정 사항을 찾아 주세요.',
     lifecycle: { kind: 'delivery', state: 'sent' },
-    body: '오전 배송 로봇들 상태부터 확인해 주세요.',
   },
   {
     id: 'seed-assistant',
-    direction: 'inbound',
     authorRole: 'assistant',
-    author: 'LK Assistant',
+    author: 'AI Assistant',
     avatar: assistantAvatar,
-    timestamp: '오전 9:59',
-    dateTime: '2026-07-12T09:59:00+09:00',
+    body: <AssistantAnswer />,
     lifecycle: { kind: 'response', state: 'complete' },
-    sources: compositionSources,
-    sourcePresentation: 'compact',
-    body: '배송 로봇 4대 중 robot-17 한 대만 충전이 필요합니다. 적용한 충전 우선순위 정책을 함께 표시했습니다.',
+    sources: <EvidenceBlock />,
   },
   {
     id: 'seed-system',
-    direction: 'system',
     authorRole: 'system',
-    author: '운영 시스템',
-    timestamp: '오전 10:00',
-    dateTime: '2026-07-12T10:00:00+09:00',
-    body: '상담원이 대화에 참여했습니다.',
+    author: '대화 시스템',
+    body: '응답 기준이 업로드된 문서로 설정되었습니다.',
+    lifecycle: { kind: 'static' },
   },
 ];
 
 function CompositionFixture() {
-  const [value, setValue] = React.useState('robot-17을 충전 대기열에 넣어 주세요.');
+  const [value, setValue] = React.useState('담당자별 체크리스트도 만들어 주세요.');
   const [entries, setEntries] = React.useState(compositionSeed);
-  const [submitCount, setSubmitCount] = React.useState(0);
 
-  const handleSubmit = (submitted) => {
-    const text = String(submitted).trim();
-    if (!text) return;
-    // Local echo of the user's own message only. The product would own the
-    // request lifecycle and any assistant response; we do not fake one here.
+  const submit = (submitted) => {
+    const body = submitted.trim();
+    if (!body) return;
     setEntries((current) => [
       ...current,
       {
-        id: `sent-${current.length + 1}`,
-        direction: 'outbound',
+        id: `local-${current.length + 1}`,
         authorRole: 'user',
-        variant: 'solid',
         author: '김서윤',
         avatar: userAvatar,
-        timestamp: '오전 10:02',
-        dateTime: '2026-07-12T10:02:00+09:00',
+        body,
         lifecycle: { kind: 'delivery', state: 'sent' },
-        body: text,
       },
     ]);
     setValue('');
-    setSubmitCount((count) => count + 1);
   };
 
   return (
-    <main data-composition style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 640, minWidth: 0 }}>
-      <MessageFeed ariaLabel="충전 운영 대화" maxHeight={440}>
+    <main data-composition style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 760, minWidth: 0 }}>
+      <MessageFeed ariaLabel="AI 문서 대화" following viewportMinHeight={360} maxHeight={440}>
         {entries.map((entry) => (
           <ConversationMessage
             key={entry.id}
             data-composition-message={entry.id}
-            direction={entry.direction}
             authorRole={entry.authorRole}
-            variant={entry.variant}
             author={entry.author}
             avatar={entry.avatar}
-            timestamp={entry.timestamp}
-            dateTime={entry.dateTime}
             lifecycle={entry.lifecycle}
             sources={entry.sources}
-            sourcePresentation={entry.sourcePresentation}
           >
             {entry.body}
           </ConversationMessage>
@@ -594,15 +436,11 @@ function CompositionFixture() {
       <MessageComposer
         value={value}
         onValueChange={setValue}
-        onSubmit={handleSubmit}
-        inputLabel="충전 운영 대화 입력"
-        placeholder="메시지를 입력하고 보내기를 누르세요."
-        submitLabel="메시지 보내기"
-        description="전송·응답 처리는 제품이 담당합니다. 이 예시는 입력한 메시지만 로컬로 덧붙입니다."
+        onSubmit={submit}
+        inputLabel="AI 대화 입력"
+        placeholder="다음 질문을 입력하세요."
+        leadingActions={<AddFileAction />}
       />
-      <output hidden data-composition-count>
-        보낸 메시지 {submitCount}건
-      </output>
     </main>
   );
 }
@@ -610,225 +448,141 @@ function CompositionFixture() {
 export const ConversationComposition = {
   name: '사용법 · 피드·메시지·작성기 구성',
   parameters: storyDescription(
-    'ConversationMessage, MessageFeed, MessageComposer, SourceDisclosure를 하나의 작은 대화 예시로 조합합니다. 챗봇 문맥의 사용자 발화는 명시적 solid variant로 강하게 식별하고 assistant 응답은 기본 neutral surface를 유지합니다. 완료된 응답은 중복 marker 없이 본문에서 출처로 이어지고, Feed만 log live-region을 소유합니다. Composer 제출은 값을 지우되 전송 성공이나 응답 생성을 대신 연출하지 않습니다. 이 story는 새로운 ChatWindow 컴포넌트가 아니라 조합 예시입니다.',
+    'ConversationMessage, MessageFeed, MessageComposer와 SourceDisclosure를 일반 AI conversation column으로 조합합니다. 완성 화면이나 고정 panel이 아니며, transparent feed 뒤에 elevated composer 하나만 배치합니다.',
   ),
   render: () => <CompositionFixture />,
   play: async ({ canvasElement }) => {
     const composition = canvasElement.querySelector('[data-composition]');
     const log = composition?.querySelector('[role="log"]');
-    if (!composition || !log) throw new Error('The composition must place messages inside a MessageFeed log.');
-
-    // The feed owns the single log live region; the individual messages do not.
-    const messages = Array.from(log.querySelectorAll('.lk-conversation-message'));
-    if (messages.length !== 3) throw new Error(`Expected the three seeded messages, found ${messages.length}.`);
-    if (messages.some((message) => message.hasAttribute('aria-live') || message.getAttribute('role') === 'log')) {
-      throw new Error('Only the feed may own a live region; individual messages must not.');
+    const composer = composition?.querySelector('.lk-message-composer');
+    if (!composition || !log || !composer) throw new Error('The conversation composition is incomplete.');
+    if (log.contains(composer) || !(log.compareDocumentPosition(composer) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('The composer must follow the log as an independent form.');
     }
-
-    // The assistant message discloses its source through SourceDisclosure.
-    const assistant = composition.querySelector('[data-composition-message="seed-assistant"]');
-    const assistantParts = assistant
-      ? Array.from(assistant.querySelectorAll(':scope > [data-message-part]')).map((part) => part.dataset.messagePart)
-      : [];
-    const sourceDetails = assistant?.querySelector('[data-message-sources-disclosure]');
-    const sourceSummary = sourceDetails?.querySelector('summary');
-    if (!assistant?.querySelector('[data-message-part="sources"]') || !sourceDetails || !sourceSummary) {
-      throw new Error('The assistant message must compose SourceDisclosure through its sources slot.');
+    if (getComputedStyle(log).backgroundColor !== 'rgba(0, 0, 0, 0)' || getComputedStyle(log).boxShadow !== 'none') {
+      throw new Error('MessageFeed must remain a transparent chrome-free log.');
     }
-    if (assistantParts.join(',') !== 'identity,body,sources') {
-      throw new Error(`A completed sourced response must read identity → body → sources without a detached completion marker; received ${assistantParts.join(' → ')}.`);
+    const seeded = Array.from(log.querySelectorAll('.lk-conversation-message'));
+    if (seeded.map((message) => message.dataset.messagePresentation).join(',') !== 'bubble,document,system') {
+      throw new Error('The composition must preserve the general-assistant presentation hierarchy.');
     }
-    if (sourceDetails.open || sourceSummary.textContent?.trim() !== '근거 1개') {
-      throw new Error('The chatbot source presentation must start as a compact, named disclosure.');
+    if (!composition.querySelector('[data-composition-message="seed-assistant"] .lk-source-disclosure')) {
+      throw new Error('The assistant source slot must compose SourceDisclosure explicitly.');
     }
-    await userEvent.click(sourceSummary);
-    const expandedSource = sourceDetails.querySelector('.lk-source-disclosure');
-    if (!sourceDetails.open || !expandedSource) {
-      throw new Error('The compact source disclosure must reveal the full provenance component on request.');
-    }
-    const sourceHeading = expandedSource.querySelector('h3');
-    if (!sourceHeading
-      || expandedSource.getAttribute('aria-labelledby') !== sourceHeading.id
-      || getComputedStyle(sourceHeading).position !== 'absolute'
-      || sourceHeading.getBoundingClientRect().width !== 1
-      || sourceHeading.getBoundingClientRect().height !== 1) {
-      throw new Error('The nested source section must keep its accessible name without repeating a visible 출처 heading.');
-    }
-    await userEvent.click(sourceSummary);
-    if (sourceDetails.open) {
-      throw new Error('The compact native disclosure must close from its summary trigger.');
-    }
-
-    // The composer submit echoes the user's message and clears the value.
-    const textarea = composition.querySelector('[data-composer-input]');
-    const sendButton = composition.querySelector('.lk-message-composer button[type="submit"]');
-    if (!textarea || !sendButton) throw new Error('The composition must include the message composer.');
-    await waitFor(() => {
-      if (sendButton.disabled) throw new Error('The controlled composer value has not enabled submission yet.');
-    });
-    await userEvent.click(sendButton);
-
-    const sent = await waitFor(() => {
-      const message = composition.querySelector('[data-composition-message="sent-4"]');
-      if (!message) throw new Error('Submitting through the composer must append the user message to the feed.');
+    const input = composer.querySelector('[data-composer-input]');
+    const submit = composer.querySelector('button[type="submit"]');
+    if (!input || !submit) throw new Error('The controlled composer is missing.');
+    await userEvent.click(submit);
+    const appended = await waitFor(() => {
+      const message = composition.querySelector('[data-composition-message="local-4"]');
+      if (!message) throw new Error('Submitting must append the local user echo.');
       return message;
     });
-    if (!sent || !sent.textContent?.includes('충전 대기열')) {
-      throw new Error('Submitting through the composer must append the user message to the feed.');
-    }
-    if (sent.dataset.messageVariant !== 'solid') {
-      throw new Error('Chatbot user messages must retain the explicit solid identity variant.');
-    }
-    if (textarea.value !== '') {
-      throw new Error('The controlled composer value should be cleared by the product fixture after submit.');
-    }
-    if (canvasElement.querySelector('[data-composition-count]')?.textContent?.replace(/\s/g, '') !== '보낸메시지1건') {
-      throw new Error('The submit callback count did not update.');
-    }
-    const logRect = log.getBoundingClientRect();
-    const clippedMessage = Array.from(log.querySelectorAll('.lk-conversation-message')).find((message) => {
-      const rect = message.getBoundingClientRect();
-      return rect.top < logRect.top - 1 || rect.bottom > logRect.bottom + 1;
-    });
-    if (clippedMessage) {
-      throw new Error('The representative composition must show complete message boundaries instead of starting on a partially clipped item.');
+    if (appended.dataset.messagePresentation !== 'bubble' || appended.dataset.direction !== 'outbound' || input.value !== '') {
+      throw new Error('The product fixture must append a user bubble and clear its controlled draft.');
     }
   },
 };
 
+const narrowSources = [
+  {
+    id: 'long-source',
+    label: 'Quarterly-product-planning-notes-with-a-very-long-file-name-and-revision-history.pdf',
+    kind: '업로드 문서',
+    location: '이 대화의 첨부 파일',
+    availability: 'available',
+    href: 'https://example.com/files/quarterly-product-planning-notes-with-a-very-long-file-name',
+  },
+];
+
 export const NarrowLongContent = {
   name: '반응형 · 320px 긴 콘텐츠',
   parameters: storyDescription(
-    '320px에서 긴 한국어, English identifier, code와 URL을 한 대화에 배치합니다. 메시지 column과 source/attachment 영역이 viewport 밖으로 밀리지 않고, code만 필요한 경우 자체 scroll container 안에서 읽히는지 확인하세요.',
+    '320px에서 긴 assistant document, code, URL, SourceDisclosure와 user bubble을 함께 확인합니다. document는 bubble 안에 갇히지 않고 code처럼 필요한 영역만 자체 overflow를 가집니다.',
   ),
   render: () => (
-    <main data-narrow-message-fixture style={{ display: 'grid', gap: 'var(--space-3)', width: 320, maxWidth: '100%' }}>
+    <main data-narrow-message style={{ display: 'grid', gap: 'var(--space-5)', width: 320, maxWidth: '100%' }}>
       <ConversationMessage
-        direction="inbound"
         authorRole="assistant"
-        author="LK Assistant Operations and Safety Assistant"
-        authorLabel="LK 운영·안전 어시스턴트"
+        author="AI Research and Writing Assistant"
+        authorLabel="AI 연구·작성 어시스턴트"
         avatar={assistantAvatar}
-        timestamp="오후 1:48"
-        dateTime="2026-07-12T13:48:00+09:00"
         lifecycle={{ kind: 'response', state: 'streaming' }}
-        sources={compositionSources}
-        sourcePresentation="compact"
-        onStop={() => {}}
+        sources={<SourceDisclosure title="레퍼런스" headingLevel={3} sources={narrowSources} />}
       >
-        <p style={{ margin: 0 }}>
-          엘리베이터탑승지점과경사구역사이의장거리경로식별자를 확인하고 있습니다.
-        </p>
-        <pre tabIndex={0} aria-label="경로 필터 코드" style={{ maxWidth: '100%', margin: 'var(--space-3) 0 0', padding: 'var(--space-3)', overflow: 'auto', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-inverse-background)', color: 'var(--color-semantic-inverse-label)', fontSize: 'var(--caption1-size)' }}><code>route.waypoints.filter((point) =&gt; point.constraints?.slopePercent &lt;= 8)</code></pre>
-        <a href="https://example.com/fleet/routes/very-long-warehouse-route-identifier-without-shortening" style={{ display: 'inline-block', maxWidth: '100%', marginTop: 'var(--space-3)', color: 'var(--color-semantic-primary-normal)', overflowWrap: 'anywhere' }}>
-          https://example.com/fleet/routes/very-long-warehouse-route-identifier-without-shortening
-        </a>
+        <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+          <p style={{ margin: 0 }}>아래 예시는 긴 식별자를 생략하지 않고 보여 줍니다.</p>
+          <pre tabIndex={0} aria-label="요약 코드" style={{ maxWidth: '100%', margin: 0, padding: 'var(--space-3)', overflow: 'auto', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-fill-normal)', fontSize: 'var(--caption1-size)' }}><code>summaries.filter((item) =&gt; item.reviewStatus === 'needs-human-confirmation')</code></pre>
+          <a href="https://example.com/reports/a-very-long-general-assistant-reference-path-without-shortening" style={{ maxWidth: '100%', color: 'var(--color-semantic-primary-normal)', overflowWrap: 'anywhere' }}>
+            https://example.com/reports/a-very-long-general-assistant-reference-path-without-shortening
+          </a>
+        </div>
       </ConversationMessage>
-      <ConversationMessage
-        direction="outbound"
-        authorRole="human-agent"
-        variant="solid"
-        author="Remote operations specialist with a long display name"
-        timestamp="오후 1:49"
-        dateTime="2026-07-12T13:49:00+09:00"
-        lifecycle={{ kind: 'delivery', state: 'queued' }}
-      >
-        Please keep the original facility-transition-and-slope-restriction identifier visible for audit review.
+      <ConversationMessage authorRole="user" author="A user with a deliberately long display name">
+        원본 식별자를 유지하고 핵심 결론만 두 문장으로 정리해 주세요.
       </ConversationMessage>
     </main>
   ),
   play: async ({ canvasElement }) => {
-    const fixture = canvasElement.querySelector('[data-narrow-message-fixture]');
-    if (!fixture) throw new Error('The 320px fixture is missing.');
+    const fixture = canvasElement.querySelector('[data-narrow-message]');
+    if (!fixture) throw new Error('The narrow message fixture is missing.');
     if (fixture.scrollWidth > fixture.clientWidth + 1) {
       throw new Error('ConversationMessage must not create horizontal overflow at 320px.');
     }
-    const fixtureRect = fixture.getBoundingClientRect();
-    for (const message of fixture.querySelectorAll('.lk-conversation-message')) {
-      const rect = message.getBoundingClientRect();
-      if (rect.left < fixtureRect.left - 1 || rect.right > fixtureRect.right + 1) {
-        throw new Error('A long message escaped the narrow conversation column.');
-      }
-    }
-    const solidOutbound = fixture.querySelector('[data-direction="outbound"][data-message-variant="solid"]');
-    if (!solidOutbound) {
-      throw new Error('The narrow chatbot example must retain the solid outbound identity surface.');
-    }
-    const solidSurface = solidOutbound.querySelector('[data-message-surface]');
-    if (!solidSurface || solidSurface.getBoundingClientRect().right > fixtureRect.right + 1) {
-      throw new Error('The shrink-wrapped solid surface must respect the 320px conversation boundary.');
+    const messages = Array.from(fixture.querySelectorAll('.lk-conversation-message'));
+    if (messages.map((message) => message.dataset.messagePresentation).join(',') !== 'document,bubble') {
+      throw new Error('Narrow content must preserve document and bubble presentations.');
     }
     const pre = fixture.querySelector('pre');
     if (!pre || getComputedStyle(pre).overflowX !== 'auto') {
       throw new Error('Long code must remain in its own horizontal scroll container.');
     }
-    const compactSources = fixture.querySelector('[data-source-presentation="compact"] [data-message-sources-disclosure]');
-    if (!compactSources || compactSources.open || compactSources.getBoundingClientRect().right > fixtureRect.right + 1) {
-      throw new Error('Compact sources must remain collapsed and inside the 320px conversation boundary.');
+    const source = fixture.querySelector('.lk-source-disclosure');
+    if (!source || source.getBoundingClientRect().right > fixture.getBoundingClientRect().right + 1) {
+      throw new Error('SourceDisclosure must remain inside the narrow document column.');
     }
-    const inboundParts = Array.from(fixture.querySelector('[data-direction="inbound"]').querySelectorAll(':scope > [data-message-part]'))
-      .map((part) => part.dataset.messagePart);
-    if (inboundParts.join(',') !== 'identity,body,status,sources,actions') {
-      throw new Error(`An active response must place status before sources and actions; received ${inboundParts.join(' → ')}.`);
-    }
-    assertNoPerMessageLiveRegions(canvasElement);
   },
 };
 
 export const DarkTheme = {
   name: '변형·상태 · 다크 배경',
   parameters: storyDescription(
-    '동일한 inbound·outbound·system 문법을 dark semantic theme 안에서 확인합니다. 별도 inverse prop 없이도 neutral hairline, primary surface, author·timestamp·status의 대비와 system line 계층이 유지되는지 확인하세요.',
+    'dark semantic scope에서 assistant document, user solid primary bubble, human-agent neutral fill bubble와 system 중앙 pill 칩을 비교합니다. 별도 inverse prop 없이 semantic token만으로 위계와 대비가 유지되어야 합니다.',
   ),
   render: () => (
     <main
       data-theme="dark"
-      style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 760, padding: 'var(--space-5)', boxSizing: 'border-box', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-normal-normal)' }}
+      data-dark-messages
+      style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760, padding: 'var(--space-5)', boxSizing: 'border-box', background: 'var(--color-semantic-background-normal-normal)' }}
     >
-      <ConversationMessage
-        direction="inbound"
-        authorRole="assistant"
-        author="LK Assistant"
-        avatar={assistantAvatar}
-        lifecycle={{ kind: 'response', state: 'complete' }}
-      >
-        다크 운영 화면에서도 source와 lifecycle은 본문 아래 같은 읽기 순서를 유지합니다.
+      <ConversationMessage authorRole="assistant" author="AI Assistant" avatar={assistantAvatar}>
+        <AssistantAnswer />
       </ConversationMessage>
-      <ConversationMessage
-        direction="outbound"
-        authorRole="user"
-        variant="solid"
-        author="김서윤"
-        avatar={userAvatar}
-        lifecycle={{ kind: 'delivery', state: 'sending' }}
-      >
-        현재 상태를 계속 확인해 주세요.
+      <ConversationMessage authorRole="user" author="김서윤" avatar={userAvatar} lifecycle={{ kind: 'delivery', state: 'sending' }}>
+        체크리스트를 Markdown으로 만들어 주세요.
       </ConversationMessage>
-      <ConversationMessage direction="system" authorRole="system" author="운영 시스템">
-        네트워크가 복구되었습니다.
+      <ConversationMessage authorRole="human-agent" author="지원 담당자 · 박지훈">
+        검토가 필요한 항목은 제가 확인하겠습니다.
+      </ConversationMessage>
+      <ConversationMessage authorRole="system" author="대화 시스템">
+        상담원이 대화에 참여했습니다.
       </ConversationMessage>
     </main>
   ),
   play: async ({ canvasElement }) => {
-    const theme = canvasElement.querySelector('[data-theme="dark"]');
-    const messages = theme ? Array.from(theme.querySelectorAll('.lk-conversation-message')) : [];
-    if (!theme || messages.length !== 3) throw new Error('The dark message comparison is incomplete.');
-    const inbound = theme.querySelector('[data-direction="inbound"] [data-message-surface]');
-    const outbound = theme.querySelector('[data-direction="outbound"] [data-message-surface]');
-    if (!inbound || !outbound || getComputedStyle(inbound).backgroundColor === getComputedStyle(outbound).backgroundColor) {
-      throw new Error('Inbound neutral elevation and outbound primary surface must remain distinct in dark theme.');
+    const fixture = canvasElement.querySelector('[data-dark-messages]');
+    const messages = fixture ? Array.from(fixture.querySelectorAll('.lk-conversation-message')) : [];
+    if (!fixture || messages.map((message) => message.dataset.messagePresentation).join(',') !== 'document,bubble,bubble,system') {
+      throw new Error('Dark theme must retain the general-assistant hierarchy.');
     }
-    if (outbound.closest('[data-message-variant]')?.dataset.messageVariant !== 'solid') {
-      throw new Error('The dark chatbot comparison must retain the solid outbound identity variant.');
+    const documentBody = fixture.querySelector('[data-message-presentation="document"] [data-message-part="body"]');
+    const bubbles = fixture.querySelectorAll('[data-message-presentation="bubble"] [data-message-part="body"]');
+    if (!documentBody || bubbles.length !== 2 || documentBody.style.background !== 'transparent') {
+      throw new Error('Dark assistant documents must remain chrome-free beside message bubbles.');
     }
-    assertSurfaceContrast(outbound);
-    assertNoPerMessageLiveRegions(theme);
+    if (fixture.scrollWidth > fixture.clientWidth + 1) throw new Error('Dark messages must not overflow their column.');
   },
 };
-
-// LifecycleStates and NarrowLongContent are exported inline above (near their
-// definitions) so their storyDescription() is detected by the Storybook IA
-// description audit; sidebar order is driven by the name-based storySort.
 
 export const MessageFamilyVisualParity = {
   ...DarkTheme,

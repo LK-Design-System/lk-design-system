@@ -29,7 +29,7 @@
 | [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) | Storybook page ownership, role, visibility, naming 계약 |
 | [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) | LK Robotics/Product 도메인 컴포넌트 경계와 상태 의미 |
 | [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | AI가 사용하는 token·composition·copy 규칙 |
-| [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 제품·외부 근거 우선순위 |
+| [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 독립 설계 근거와 제품 coverage mapping |
 
 ## Current registers and coverage
 
@@ -59,7 +59,7 @@
 - `references/quality/`: quality baselines, Storybook IA audit, visual/domain audit
 - `references/product-frontends/`: pinned product repositories and workflow coverage data
 
-Markdown 요약보다 machine-readable audit JSON이 상세 row와 hash의 source of truth다. JSON을 갱신하는 `--update` 명령은 inventory만 동기화하며 사람 검토를 자동 완료하지 않는다.
+Markdown 요약보다 machine-readable audit JSON이 상세 row와 hash의 source of truth다. 단, `references/product-frontends/`의 authority는 source pin, 관찰된 workflow·state, coverage classification과 product-owned seam에 한정된다. component anatomy, visual hierarchy, token, public API와 lifecycle 결정의 source of truth는 해당 LDS/WDS 근거, component contract와 design-owner review이며 product coverage JSON이 이를 대체하지 않는다. JSON을 갱신하는 `--update` 명령은 inventory만 동기화하며 사람 검토를 자동 완료하지 않는다.
 
 ## Source-of-truth order
 

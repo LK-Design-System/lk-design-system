@@ -7,6 +7,7 @@ import {
   TrajectoryOverlay,
   SpatialRegion,
   FacilityTransition,
+  EquipmentStatusCard,
   ConversationMessage,
   MessageFeed,
   MessageComposer,
@@ -82,10 +83,23 @@ export const facilityContract: React.ReactElement = (
   />
 );
 
+export const equipmentStatusContract: React.ReactElement = (
+  <EquipmentStatusCard
+    title="화물 엘리베이터 2호기"
+    description="물류동 동측"
+    status="운행 중"
+    statusTone="positive"
+    details={[
+      { label: '이동', value: '상승 중' },
+      { label: '층', value: '3층' },
+    ]}
+    meta="30초 전에 갱신"
+  />
+);
+
 // Communication family — message, feed, composer.
 export const messageContract: React.ReactElement = (
   <ConversationMessage
-    direction="inbound"
     authorRole="assistant"
     author="LK Assistant"
     lifecycle={{ kind: 'response', state: 'complete' }}
@@ -94,25 +108,28 @@ export const messageContract: React.ReactElement = (
   </ConversationMessage>
 );
 
-export const solidMessageContract: React.ReactElement = (
-  <ConversationMessage direction="outbound" authorRole="user" variant="solid" author="김서윤">
+export const userMessageContract: React.ReactElement = (
+  <ConversationMessage authorRole="user" author="김서윤">
     {'첫 줄\n둘째 줄'}
   </ConversationMessage>
 );
 
-export const richSoftMessageContract: React.ReactElement = (
+export const richDocumentMessageContract: React.ReactElement = (
   <ConversationMessage direction="inbound" authorRole="assistant" author="LK Assistant">
     <a href="https://example.com/source">근거 열기</a>
   </ConversationMessage>
 );
 
-export const compactSourceMessageContract: React.ReactElement = (
+export const composedSourceMessageContract: React.ReactElement = (
   <ConversationMessage
     direction="inbound"
     authorRole="assistant"
     author="LK Assistant"
-    sourcePresentation="compact"
-    sources={[{ id: 'policy', label: '운영 정책', availability: 'available' }]}
+    sources={(
+      <SourceDisclosure
+        sources={[{ id: 'policy', label: '운영 정책', availability: 'available' }]}
+      />
+    )}
   >
     근거가 있는 응답
   </ConversationMessage>
@@ -125,21 +142,27 @@ export const embeddedSourceContract: React.ReactElement = (
   />
 );
 
-export const invalidRichSolidMessageContract: React.ReactElement = (
-  // @ts-expect-error Solid message bodies intentionally reject rich content.
-  <ConversationMessage direction="outbound" authorRole="user" variant="solid" author="김서윤">
+export const richUserMessageContract: React.ReactElement = (
+  <ConversationMessage authorRole="user" author="김서윤">
     <a href="https://example.com/source">근거 열기</a>
   </ConversationMessage>
 );
 
 export const feedContract: React.ReactElement = (
-  <MessageFeed ariaLabel="대화" following={false} onFollowingChange={(next, reason) => `${next}:${reason}`}>
+  <MessageFeed ariaLabel="대화" following onFollowingChange={(next, reason) => `${next}:${reason}`}>
     {messageContract}
   </MessageFeed>
 );
 
 export const composerContract: React.ReactElement = (
-  <MessageComposer value="" onValueChange={(value) => value} onSubmit={(value, reason) => `${value}:${reason}`} />
+  <MessageComposer
+    className="product-composer"
+    value=""
+    leadingActions={<button type="button">첨부</button>}
+    trailingActions={<button type="button">음성</button>}
+    onValueChange={(value) => value}
+    onSubmit={(value, reason) => `${value}:${reason}`}
+  />
 );
 
 // Selection and input — numeric virtual keypad.

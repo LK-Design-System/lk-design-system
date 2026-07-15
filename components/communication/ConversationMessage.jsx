@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '../buttons/Button.jsx';
-import { SourceDisclosure } from '../content/SourceDisclosure.jsx';
 
 const ROLE_LABELS = {
   user: '사용자',
@@ -9,11 +8,31 @@ const ROLE_LABELS = {
   system: '시스템',
 };
 
+// Visible identity badges stay short; ROLE_LABELS keeps the full accessible name.
+const ROLE_BADGE_LABELS = {
+  assistant: 'AI',
+  'human-agent': '상담원',
+};
+
+const ROLE_PRESENTATIONS = {
+  user: 'bubble',
+  assistant: 'document',
+  'human-agent': 'bubble',
+};
+
+const ROLE_DIRECTIONS = {
+  user: 'outbound',
+  assistant: 'inbound',
+  'human-agent': 'inbound',
+  system: 'system',
+};
+
 const LIFECYCLE_LABELS = {
   delivery: {
     queued: '전송 대기 중',
     sending: '전송 중',
     sent: '전송됨',
+    read: '읽음',
     failed: '전송 실패',
     cancelled: '전송 취소',
   },
@@ -39,21 +58,6 @@ const VISUALLY_HIDDEN_STYLE = {
   border: 0,
 };
 
-const COMPACT_SOURCE_SUMMARY_STYLE = {
-  width: 'fit-content',
-  minHeight: 'var(--component-button-height-sm)',
-  padding: 'calc(var(--space-2) - 1px) var(--space-3)',
-  boxSizing: 'border-box',
-  cursor: 'pointer',
-  border: '1px solid var(--color-semantic-line-normal-normal)',
-  borderRadius: 'var(--radius-pill)',
-  background: 'var(--color-semantic-fill-normal)',
-  color: 'var(--color-semantic-label-neutral)',
-  fontSize: 'var(--caption1-size)',
-  lineHeight: 'var(--caption1-line)',
-  fontWeight: 'var(--fw-semibold)',
-};
-
 function normalizeLifecycle(lifecycle) {
   if (lifecycle?.kind === 'delivery' && LIFECYCLE_LABELS.delivery[lifecycle.state]) {
     return lifecycle;
@@ -64,15 +68,20 @@ function normalizeLifecycle(lifecycle) {
   return { kind: 'static' };
 }
 
-function surfaceRadius(groupPosition) {
-  if (groupPosition === 'first') {
-    return 'var(--radius-lg) var(--radius-lg) var(--radius-md) var(--radius-md)';
+// The tight corner sits on the speaker's side so placement stays readable even
+// when color alone cannot carry it. Grouped runs flatten the corners between
+// consecutive bubbles on that same side.
+function bubbleRadius(groupPosition, outbound) {
+  const xl = 'var(--radius-xl)';
+  const sm = 'var(--radius-sm)';
+  if (outbound) {
+    if (groupPosition === 'middle') return `${xl} ${sm} ${sm} ${xl}`;
+    if (groupPosition === 'last') return `${xl} ${sm} ${xl} ${xl}`;
+    return `${xl} ${xl} ${sm} ${xl}`;
   }
-  if (groupPosition === 'middle') return 'var(--radius-md)';
-  if (groupPosition === 'last') {
-    return 'var(--radius-md) var(--radius-md) var(--radius-lg) var(--radius-lg)';
-  }
-  return 'var(--radius-lg)';
+  if (groupPosition === 'middle') return `${sm} ${xl} ${xl} ${sm}`;
+  if (groupPosition === 'last') return `${sm} ${xl} ${xl} ${xl}`;
+  return `${xl} ${xl} ${xl} ${sm}`;
 }
 
 function lifecycleTone(kind, state) {
@@ -86,41 +95,30 @@ function lifecycleTone(kind, state) {
   return 'var(--color-semantic-label-alternative)';
 }
 
-function isPlainTextContent(content) {
-  const nodes = React.Children.toArray(content);
-  const plain = nodes.length > 0 && nodes.every((child) => (
-    typeof child === 'string' || typeof child === 'number'
-  ));
-  return plain && nodes.some((child) => (
-    typeof child === 'number' || child.trim().length > 0
-  ));
-}
-
 /**
- * A single product conversation entry. ConversationMessage renders message
- * identity, content, optional evidence and lifecycle actions, while a parent
- * MessageFeed owns log/live-region behavior and transport state updates.
+ * LK Product Extension for general conversations. ConversationMessage owns a
+ * participant turn's semantic reading order and reusable document/bubble
+ * presentations without taking visual authority from any product surface.
+ * MessageFeed owns ordered log behavior; products own transport and content.
  */
 export function ConversationMessage({
-  direction = 'inbound',
+  direction,
   authorRole = 'assistant',
-  variant = 'soft',
+  presentation,
   groupPosition = 'single',
   lifecycle = { kind: 'static' },
   author,
   authorLabel,
+  roleBadgeLabel,
   avatar,
   timestamp,
   dateTime,
   statusLabel,
   attachments,
   sources,
-  sourcePresentation = 'full',
   actions,
   onRetry,
-  onStop,
   retryLabel = '메시지 다시 보내기',
-  stopLabel = '응답 생성 중단',
   children,
   className,
   style,
@@ -130,100 +128,154 @@ export function ConversationMessage({
 }) {
   const authorId = React.useId();
   const roleId = React.useId();
+  const systemMessage = authorRole === 'system';
+  const resolvedPresentation = systemMessage
+    ? 'system'
+    : presentation === 'document' || presentation === 'bubble'
+      ? presentation
+      : ROLE_PRESENTATIONS[authorRole] ?? 'document';
+  const defaultDirection = ROLE_DIRECTIONS[authorRole] ?? 'inbound';
+  const resolvedDirection = systemMessage
+    ? 'system'
+    : direction === 'outbound' || direction === 'inbound'
+      ? direction
+      : defaultDirection;
+  const outbound = resolvedDirection === 'outbound';
+  const documentPresentation = resolvedPresentation === 'document';
   const resolvedLifecycle = normalizeLifecycle(lifecycle);
   const lifecycleKind = resolvedLifecycle.kind;
   const lifecycleState = lifecycleKind === 'static' ? undefined : resolvedLifecycle.state;
-  const systemDirection = direction === 'system';
-  const outbound = direction === 'outbound';
-  const solidSurface = !systemDirection && variant === 'solid';
-  if (solidSurface && !isPlainTextContent(children)) {
-    throw new Error('ConversationMessage variant="solid" requires non-empty plain string or number children. Use variant="soft" for links, headings, markdown, or other rich content.');
-  }
-  const identityVisible = !systemDirection && (groupPosition === 'single' || groupPosition === 'first');
+  const identityVisible = !systemMessage && (groupPosition === 'single' || groupPosition === 'first');
+  // A grouped run keeps one stable content column even when consumers only
+  // provide the avatar on the first item. Standalone messages without an
+  // avatar do not pay for an empty identity column.
+  const reserveAvatarSlot = !systemMessage && (avatar != null || groupPosition !== 'single');
   const showAvatar = identityVisible && avatar != null;
-  const contentColumn = systemDirection ? '1' : outbound ? '1' : '2';
-  const gridTemplateColumns = systemDirection
+  const gridTemplateColumns = systemMessage || !reserveAvatarSlot
     ? 'minmax(0, 1fr)'
     : outbound
-      ? 'minmax(0, 1fr) 32px'
-      : '32px minmax(0, 1fr)';
+      ? 'minmax(0, 1fr) var(--space-8)'
+      : 'var(--space-8) minmax(0, 1fr)';
+  const contentColumn = systemMessage || !reserveAvatarSlot ? '1' : outbound ? '1' : '2';
   const busy = lifecycleKind === 'response'
     && ['pending', 'streaming', 'stopping'].includes(lifecycleState);
   const canRetry = lifecycleState === 'failed'
     && (lifecycleKind === 'delivery' || lifecycleKind === 'response')
     && typeof onRetry === 'function';
-  const canStop = lifecycleKind === 'response'
-    && ['pending', 'streaming'].includes(lifecycleState)
-    && typeof onStop === 'function';
+  // 'read' surfaces as an explicit receipt in the outbound meta line, so the
+  // generic status label stays silent for it the same way 'sent' does.
   const defaultStatusLabel = lifecycleKind === 'static'
     || (lifecycleKind === 'response' && lifecycleState === 'complete')
+    || (lifecycleKind === 'delivery' && (lifecycleState === 'sent' || lifecycleState === 'read'))
     ? null
     : LIFECYCLE_LABELS[lifecycleKind][lifecycleState];
   const resolvedStatusLabel = statusLabel !== undefined ? statusLabel : defaultStatusLabel;
-  const hasActions = actions != null || canRetry || canStop;
+  const hasActions = actions != null || canRetry;
   const lifecycleColor = lifecycleTone(lifecycleKind, lifecycleState);
   const resolvedAriaLabelledby = ariaLabel || ariaLabelledby
     ? ariaLabelledby
     : `${authorId} ${roleId}`;
+  // The visible badge is decorative next to the hidden full role name; null
+  // suppresses it the same way statusLabel={null} silences lifecycle copy.
+  const resolvedRoleBadge = roleBadgeLabel !== undefined
+    ? roleBadgeLabel
+    : ROLE_BADGE_LABELS[authorRole] ?? null;
 
-  const commonPartStyle = {
+  // The content column always fills its grid track so a grouped run keeps one
+  // stable column even when only the first item carries the avatar. The
+  // document/bubble inside shrink-wraps and aligns to the speaker's side via
+  // justifyItems; reading width is capped on the body, not the column.
+  const clusterStyle = {
     gridColumn: contentColumn,
-    minWidth: 0,
+    display: 'grid',
+    gap: 'var(--space-2)',
+    justifyItems: systemMessage ? 'stretch' : outbound ? 'end' : 'start',
     width: '100%',
-    maxWidth: 'min(42rem, 100%)',
-    justifySelf: systemDirection ? 'stretch' : outbound ? 'end' : 'start',
+    minWidth: 0,
     boxSizing: 'border-box',
   };
 
-  const bodySurfaceStyle = systemDirection
+  const bodyStyle = systemMessage
     ? {
-        ...commonPartStyle,
         display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--space-3)',
-        maxWidth: '100%',
-        color: 'var(--color-semantic-label-neutral)',
+        justifyContent: 'center',
+        width: '100%',
+        minWidth: 0,
         fontSize: 'var(--caption1-size)',
         lineHeight: 'var(--caption1-line)',
         textAlign: 'center',
       }
-    : {
-        ...commonPartStyle,
-        width: solidSurface ? 'fit-content' : commonPartStyle.width,
-        padding: 'var(--space-3) var(--space-4)',
-        whiteSpace: solidSurface ? 'pre-wrap' : undefined,
-        overflowWrap: 'anywhere',
-        wordBreak: 'break-word',
-        color: solidSurface
-          ? 'var(--color-semantic-static-white)'
-          : 'var(--color-semantic-label-normal)',
-        background: solidSurface
-          ? 'var(--color-semantic-primary-heavy)'
-          : outbound
-            ? 'var(--color-semantic-primary-surface-normal)'
-            : 'var(--color-semantic-background-elevated-normal)',
-        border: solidSurface
-          ? '1px solid transparent'
-          : '1px solid var(--color-semantic-line-normal-normal)',
-        borderRadius: surfaceRadius(groupPosition),
-        boxShadow: solidSurface || outbound ? 'none' : 'var(--shadow-xs)',
-        fontSize: 'var(--body2-size)',
-        lineHeight: 'var(--body2-line)',
-      };
+    : documentPresentation
+      ? {
+          width: '100%',
+          maxWidth: 'min(48rem, 100%)',
+          minWidth: 0,
+          paddingBlock: 'var(--space-1)',
+          boxSizing: 'border-box',
+          overflowWrap: 'anywhere',
+          wordBreak: 'break-word',
+          color: 'var(--color-semantic-label-normal)',
+          background: 'transparent',
+          border: 0,
+          borderRadius: 0,
+          boxShadow: 'none',
+          fontSize: 'var(--body1-size)',
+          lineHeight: 'var(--body1-line)',
+        }
+      : outbound
+        ? {
+            // The speaker's own words use the same solid pair as the primary
+            // button, so "my message" reads instantly in both themes.
+            width: 'fit-content',
+            maxWidth: 'min(34rem, 100%)',
+            minWidth: 0,
+            padding: 'var(--space-3) var(--space-4)',
+            boxSizing: 'border-box',
+            whiteSpace: 'pre-wrap',
+            overflowWrap: 'anywhere',
+            wordBreak: 'break-word',
+            color: 'var(--color-semantic-static-white)',
+            // primary-heavy (not -normal) keeps white text at AA in both themes;
+            // -normal drops to 3.39:1 on the lighter dark-mode blue.
+            background: 'var(--color-semantic-primary-heavy)',
+            border: 0,
+            borderRadius: bubbleRadius(groupPosition, true),
+            boxShadow: 'none',
+            fontSize: 'var(--body2-size)',
+            lineHeight: 'var(--body2-line)',
+          }
+        : {
+            width: 'fit-content',
+            maxWidth: 'min(34rem, 100%)',
+            minWidth: 0,
+            padding: 'var(--space-3) var(--space-4)',
+            boxSizing: 'border-box',
+            whiteSpace: 'pre-wrap',
+            overflowWrap: 'anywhere',
+            wordBreak: 'break-word',
+            color: 'var(--color-semantic-label-normal)',
+            // A translucent neutral fill (not white elevated) so the incoming
+            // bubble stays visibly separated from the page in light mode too,
+            // and reads as distinct from the solid-primary outbound bubble.
+            background: 'var(--color-semantic-fill-strong)',
+            border: 0,
+            borderRadius: bubbleRadius(groupPosition, false),
+            boxShadow: 'none',
+            fontSize: 'var(--body2-size)',
+            lineHeight: 'var(--body2-line)',
+          };
 
   const statusPart = resolvedStatusLabel != null ? (
     <p
       data-message-part="status"
       style={{
-        ...commonPartStyle,
         display: 'inline-flex',
         alignItems: 'center',
-        justifyContent: systemDirection ? 'center' : outbound ? 'flex-end' : 'flex-start',
+        justifyContent: systemMessage ? 'center' : outbound ? 'flex-end' : 'flex-start',
         gap: 'var(--space-1)',
+        width: '100%',
+        minWidth: 0,
         margin: 0,
-        // Keep the failure signal on the graphic dot (3:1 non-text contrast is met)
-        // and give the small status text a readable label color: status-negative on
-        // white is only 3.44:1, below the 4.5:1 required for 11px text.
         color: lifecycleState === 'failed'
           ? 'var(--color-semantic-label-normal)'
           : 'var(--color-semantic-label-alternative)',
@@ -234,16 +286,69 @@ export function ConversationMessage({
       <span
         aria-hidden="true"
         style={{
-          // Match the established StatusBadge indicator while expressing
-          // the optical 6px glyph as token-relative component geometry.
-          width: 'calc(var(--space-2) - 2px)',
-          height: 'calc(var(--space-2) - 2px)',
+          width: 'var(--space-1)',
+          height: 'var(--space-1)',
           flexShrink: 0,
           borderRadius: 'var(--radius-pill)',
           background: lifecycleColor,
         }}
       />
       {resolvedStatusLabel}
+    </p>
+  ) : null;
+
+  // The speaker's own bubble carries its send state at its foot: an in-flight or
+  // error label, a read receipt, and the send time — right-aligned under the
+  // bubble so grouped items each keep their own time. Products own the truth of
+  // when a message is read; the component only renders the state it is given.
+  const readReceiptLabel = lifecycleKind === 'delivery' && lifecycleState === 'read'
+    ? LIFECYCLE_LABELS.delivery.read
+    : null;
+  // Gate on outbound (not outbound-bubble) so an outbound document turn still
+  // carries its send time and read receipt in the foot meta.
+  const outboundMeta = outbound
+    && (resolvedStatusLabel != null || readReceiptLabel != null || timestamp != null) ? (
+    <p
+      data-message-part="meta"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        gap: 'var(--space-1)',
+        width: '100%',
+        minWidth: 0,
+        margin: 0,
+        color: lifecycleState === 'failed'
+          ? 'var(--color-semantic-label-normal)'
+          : 'var(--color-semantic-label-alternative)',
+        fontSize: 'var(--caption2-size)',
+        lineHeight: 'var(--caption2-line)',
+      }}
+    >
+      {resolvedStatusLabel != null && (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', minWidth: 0 }}>
+          <span
+            aria-hidden="true"
+            style={{
+              width: 'var(--space-1)',
+              height: 'var(--space-1)',
+              flexShrink: 0,
+              borderRadius: 'var(--radius-pill)',
+              background: lifecycleColor,
+            }}
+          />
+          {resolvedStatusLabel}
+        </span>
+      )}
+      {/* Always render the receipt slot so a sent→read update is a text
+          mutation, not a node insertion — the feed log is additions-only, so
+          this keeps '읽음' from being announced bare without message context. */}
+      <span data-message-read-receipt style={{ fontWeight: 'var(--fw-medium)' }}>{readReceiptLabel}</span>
+      {timestamp != null && (
+        <time dateTime={dateTime} style={{ flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>
+          {timestamp}
+        </time>
+      )}
     </p>
   ) : null;
 
@@ -254,17 +359,16 @@ export function ConversationMessage({
       aria-labelledby={resolvedAriaLabelledby}
       aria-busy={busy || undefined}
       className={['lk-conversation-message', className].filter(Boolean).join(' ')}
-      data-direction={direction}
+      data-direction={resolvedDirection}
       data-author-role={authorRole}
-      data-message-variant={variant}
+      data-message-presentation={resolvedPresentation}
       data-group-position={groupPosition}
       data-lifecycle-kind={lifecycleKind}
       data-lifecycle-state={lifecycleState}
-      data-source-presentation={Array.isArray(sources) && sources.length > 0 ? sourcePresentation : undefined}
       style={{
         display: 'grid',
         gridTemplateColumns,
-        columnGap: systemDirection ? 0 : 'var(--space-2)',
+        columnGap: systemMessage ? 0 : 'var(--space-2)',
         rowGap: 'var(--space-2)',
         width: '100%',
         maxWidth: '100%',
@@ -298,8 +402,8 @@ export function ConversationMessage({
               gridRow: 1,
               display: 'grid',
               placeItems: 'center',
-              width: 32,
-              height: 32,
+              width: 'var(--space-8)',
+              height: 'var(--space-8)',
               overflow: 'hidden',
               borderRadius: 'var(--radius-pill)',
             }}
@@ -310,7 +414,7 @@ export function ConversationMessage({
         <span
           style={identityVisible
             ? {
-                gridColumn: outbound ? '1' : '2',
+                gridColumn: contentColumn,
                 gridRow: 1,
                 display: 'flex',
                 alignItems: 'baseline',
@@ -337,7 +441,28 @@ export function ConversationMessage({
           <span id={roleId} style={VISUALLY_HIDDEN_STYLE}>
             {ROLE_LABELS[authorRole] ?? authorRole}
           </span>
-          {timestamp != null && (
+          {/* Outbound time moves to the bubble-foot meta so every grouped item
+              can carry its own send time; inbound keeps time in the identity row. */}
+          {resolvedRoleBadge != null && (
+            <span
+              aria-hidden="true"
+              data-message-role-badge
+              style={{
+                flexShrink: 0,
+                padding: '0 var(--space-2)',
+                borderRadius: 'var(--radius-pill)',
+                background: 'var(--color-semantic-primary-surface-normal)',
+                color: 'var(--color-semantic-accent-blue-text)',
+                fontSize: 'var(--caption2-size)',
+                lineHeight: 'var(--caption2-line)',
+                fontWeight: 'var(--fw-semibold)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {resolvedRoleBadge}
+            </span>
+          )}
+          {timestamp != null && !outbound && (
             <time
               dateTime={dateTime}
               style={{
@@ -354,74 +479,84 @@ export function ConversationMessage({
         </span>
       </div>
 
-      {systemDirection ? (
-        <div data-message-part="body" data-message-surface data-message-surface-variant="system" style={bodySurfaceStyle}>
-          <span aria-hidden="true" style={{ flex: '1 1 0', minWidth: 'var(--space-4)', height: 1, background: 'var(--color-semantic-line-normal-alternative)' }} />
-          <div style={{ minWidth: 0, maxWidth: 'min(42rem, calc(100% - 64px))', overflowWrap: 'anywhere' }}>
+      <div data-message-part="content" style={clusterStyle}>
+        {systemMessage ? (
+          <div data-message-part="body" data-message-presentation="system" style={bodyStyle}>
+            <div
+              style={{
+                minWidth: 0,
+                maxWidth: 'min(42rem, 100%)',
+                padding: 'var(--space-1) var(--space-4)',
+                boxSizing: 'border-box',
+                borderRadius: 'var(--radius-pill)',
+                // Neutral fill (not the blue tint) so an impersonal system event
+                // is not mistaken for a participant role tag, which owns the
+                // blue pill.
+                background: 'var(--color-semantic-fill-normal)',
+                color: 'var(--color-semantic-label-neutral)',
+                fontWeight: 'var(--fw-medium)',
+                overflowWrap: 'anywhere',
+              }}
+            >
+              {children}
+            </div>
+          </div>
+        ) : (
+          <div data-message-part="body" data-message-presentation={resolvedPresentation} style={bodyStyle}>
             {children}
           </div>
-          <span aria-hidden="true" style={{ flex: '1 1 0', minWidth: 'var(--space-4)', height: 1, background: 'var(--color-semantic-line-normal-alternative)' }} />
-        </div>
-      ) : (
-        <div data-message-part="body" data-message-surface data-message-surface-variant={variant} style={bodySurfaceStyle}>
-          {children}
-        </div>
-      )}
+        )}
 
-      {lifecycleKind === 'response' && statusPart}
+        {lifecycleKind === 'response' && !outbound && statusPart}
 
-      {attachments != null && (
-        <div data-message-part="attachments" style={commonPartStyle}>
-          {attachments}
-        </div>
-      )}
+        {attachments != null && (
+          <div
+            data-message-part="attachments"
+            style={outbound
+              ? { display: 'flex', justifyContent: 'flex-end', width: '100%', minWidth: 0 }
+              : { width: '100%', minWidth: 0 }}
+          >
+            {attachments}
+          </div>
+        )}
 
-      {Array.isArray(sources) && sources.length > 0 && (
-        <div data-message-part="sources" style={commonPartStyle}>
-          {sourcePresentation === 'compact' ? (
-            <details data-message-sources-disclosure="">
-              <summary style={COMPACT_SOURCE_SUMMARY_STYLE}>
-                {`근거 ${sources.length}개`}
-              </summary>
-              <div data-message-sources-panel="" style={{ marginTop: 'var(--space-2)' }}>
-                <SourceDisclosure headingLevel={3} titleVisuallyHidden sources={sources} />
-              </div>
-            </details>
-          ) : (
-            <SourceDisclosure headingLevel={3} sources={sources} />
-          )}
-        </div>
-      )}
+        {sources != null && (
+          <div
+            data-message-part="sources"
+            style={outbound
+              ? { display: 'flex', justifyContent: 'flex-end', width: '100%', minWidth: 0 }
+              : { width: '100%', minWidth: 0 }}
+          >
+            {sources}
+          </div>
+        )}
 
-      {lifecycleKind !== 'response' && statusPart}
+        {outbound ? outboundMeta : (lifecycleKind !== 'response' && statusPart)}
 
-      {hasActions && (
-        <div
-          data-message-part="actions"
-          role="group"
-          aria-label="메시지 동작"
-          style={{
-            ...commonPartStyle,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: systemDirection ? 'center' : outbound ? 'flex-end' : 'flex-start',
-            gap: 'var(--space-2)',
-            flexWrap: 'wrap',
-          }}
-        >
-          {actions}
-          {canRetry && (
-            <Button size="sm" variant="ghost" onClick={() => onRetry()}>
-              {retryLabel}
-            </Button>
-          )}
-          {canStop && (
-            <Button size="sm" variant="ghost" onClick={() => onStop()}>
-              {stopLabel}
-            </Button>
-          )}
-        </div>
-      )}
+        {hasActions && (
+          <div
+            data-message-part="actions"
+            role="group"
+            aria-label="메시지 동작"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: systemMessage ? 'center' : outbound ? 'flex-end' : 'flex-start',
+              gap: 'var(--space-2)',
+              width: '100%',
+              minWidth: 0,
+              flexWrap: 'wrap',
+            }}
+          >
+            {actions}
+            {canRetry && (
+              <Button size="sm" variant="ghost" onClick={() => onRetry()}>
+                {retryLabel}
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
     </article>
   );
 }

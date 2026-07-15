@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextButton } from '../buttons/TextButton.jsx';
 import { Icon } from '../icon/Icon.jsx';
+import { Chip } from '../feedback/Chip.jsx';
 import { StatusBadge } from './StatusBadge.jsx';
 
 const AVAILABILITY_META = {
@@ -59,21 +60,27 @@ export function SourceDisclosure({
   emptyMessage = '표시할 출처가 없습니다.',
   onSourceActivate,
   openLabel = '출처 열기',
+  compact = false,
   className,
   style,
   ...rest
 }) {
   const titleId = React.useId();
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
+  // A standalone provenance panel is a named region landmark; an inline
+  // compact citation is not — otherwise every cited answer projects a repeated
+  // "출처" landmark into the conversation. The visually-hidden heading still
+  // provides the group name and heading-navigation structure either way.
+  const Root = compact ? 'div' : 'section';
 
   return (
-    <section
+    <Root
       {...rest}
       aria-labelledby={titleId}
       className={['lk-source-disclosure', className].filter(Boolean).join(' ')}
       style={{
         display: 'grid',
-        gap: 'var(--space-3)',
+        gap: compact ? 'var(--space-2)' : 'var(--space-3)',
         minWidth: 0,
         containerType: 'inline-size',
         fontFamily: 'var(--font-sans)',
@@ -138,14 +145,22 @@ export function SourceDisclosure({
             id={titleId}
             style={titleVisuallyHidden
               ? VISUALLY_HIDDEN_STYLE
-              : {
-                  margin: 0,
-                  color: 'var(--color-semantic-label-strong)',
-                  fontSize: 'var(--body1-size)',
-                  lineHeight: 'var(--body1-line)',
-                  fontWeight: 'var(--fw-bold)',
-                  letterSpacing: 'var(--body1-spacing)',
-                }}
+              : compact
+                ? {
+                    margin: 0,
+                    color: 'var(--color-semantic-label-neutral)',
+                    fontSize: 'var(--caption1-size)',
+                    lineHeight: 'var(--caption1-line)',
+                    fontWeight: 'var(--fw-semibold)',
+                  }
+                : {
+                    margin: 0,
+                    color: 'var(--color-semantic-label-strong)',
+                    fontSize: 'var(--body1-size)',
+                    lineHeight: 'var(--body1-line)',
+                    fontWeight: 'var(--fw-bold)',
+                    letterSpacing: 'var(--body1-spacing)',
+                  }}
           >
             {title}
           </Heading>
@@ -161,6 +176,39 @@ export function SourceDisclosure({
         <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
           {emptyMessage}
         </p>
+      ) : compact ? (
+        // Compact provenance reads at the weight of an attachment chip: one
+        // line per source, opens the original on activation, no inline
+        // disclosure, availability, or card surface.
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', minWidth: 0 }}>
+          {sources.map((source) => {
+            const chipLink = source.href != null
+              ? { as: 'a', href: source.href, target: '_blank', rel: 'noopener noreferrer' }
+              : typeof onSourceActivate === 'function'
+                ? { as: 'button', type: 'button', onClick: () => onSourceActivate(source) }
+                : {};
+            return (
+              <li key={source.id} style={{ minWidth: 0, maxWidth: '100%' }}>
+                <Chip
+                  size="sm"
+                  variant="outlined"
+                  leading={<Icon name="document-text" size={14} />}
+                  aria-label={source.actionAriaLabel}
+                  className="lk-source-disclosure__chip"
+                  {...chipLink}
+                  style={{ maxWidth: '100%', minWidth: 0 }}
+                >
+                  <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {source.label}
+                  </span>
+                  {source.href != null && (
+                    <Icon name="arrow-up-right" size={12} aria-hidden="true" style={{ flexShrink: 0 }} />
+                  )}
+                </Chip>
+              </li>
+            );
+          })}
+        </ul>
       ) : (
         <ul
           style={{
@@ -302,6 +350,6 @@ export function SourceDisclosure({
           })}
         </ul>
       )}
-    </section>
+    </Root>
   );
 }

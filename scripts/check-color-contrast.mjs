@@ -28,6 +28,10 @@ const pairs = [
   ['status positive text on surface', '--color-semantic-status-positive-text', '--color-semantic-status-positive-surface', 3],
   ['status cautionary text on surface', '--color-semantic-status-cautionary-text', '--color-semantic-status-cautionary-surface', 3],
   ['status negative text on surface', '--color-semantic-status-negative-text', '--color-semantic-status-negative-surface', 3],
+  ['message user bubble', '--color-semantic-static-white', '--color-semantic-primary-heavy', 4.5],
+  ['message role badge', '--color-semantic-accent-blue-text', '--color-semantic-primary-surface-normal', 4.5],
+  ['message system chip', '--color-semantic-label-neutral', '--color-semantic-fill-normal', 4.5],
+  ['message agent bubble', '--color-semantic-label-normal', '--color-semantic-fill-strong', 4.5],
 ];
 
 function parseColor(value) {

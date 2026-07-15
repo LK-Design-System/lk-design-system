@@ -65,11 +65,11 @@
     "hiddenStories": 126,
     "componentDescriptions": 173,
     "pagesWithVisibleCanvasIntroduction": 177,
-    "pagesWithDecisionGuidance": 172,
+    "pagesWithDecisionGuidance": 168,
     "describedPublicStories": 408,
     "reviewedPages": 177,
     "reviewedStories": 534,
-    "staleReviewedPages": 0,
+    "staleReviewedPages": 4,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
@@ -108,14 +108,14 @@
         "stories": 237,
         "public": 203,
         "hidden": 34,
-        "guideReadyPages": 86
+        "guideReadyPages": 83
       },
       "Robotics": {
         "pages": 29,
         "stories": 132,
         "public": 108,
         "hidden": 24,
-        "guideReadyPages": 29
+        "guideReadyPages": 28
       },
       "Theme": {
         "pages": 3,
@@ -6370,7 +6370,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "90b70343311771e296cdef8db677347bddac0368877d0fcf7a1c338dbf6eee82",
+      "sourceSha256": "6c460788fa1c9ae401288dec0ca987d3fd148ccf2f07458319b1f5ecd891bd17",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -6378,8 +6378,11 @@
       "supportingComponents": [
         "Avatar",
         "Button",
+        "Chip",
+        "Icon",
         "MessageComposer",
-        "MessageFeed"
+        "MessageFeed",
+        "SourceDisclosure"
       ],
       "visibility": {
         "public": 6,
@@ -6389,17 +6392,19 @@
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message--message-overview",
         "describedPublicStories": 6,
-        "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": true
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-13",
-      "reviewedSourceSha256": "90b70343311771e296cdef8db677347bddac0368877d0fcf7a1c338dbf6eee82",
+      "reviewedAt": "2026-07-14",
+      "reviewedSourceSha256": "2bed478cd11a1a6f3b83bc1e5c512e4fdc67c791650000d1662a10dcd5a89782",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6422,7 +6427,9 @@
             "ConversationMessage"
           ],
           "supportingComponents": [
-            "Avatar"
+            "Avatar",
+            "Button",
+            "SourceDisclosure"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
@@ -6447,7 +6454,10 @@
             "ConversationMessage"
           ],
           "supportingComponents": [
-            "Button"
+            "Button",
+            "Chip",
+            "Icon",
+            "SourceDisclosure"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
@@ -6472,6 +6482,7 @@
             "ConversationMessage"
           ],
           "supportingComponents": [
+            "Button",
             "MessageComposer",
             "MessageFeed"
           ],
@@ -6513,14 +6524,18 @@
           ],
           "role": "interaction",
           "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
+          "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ConversationMessage"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "Chip",
+            "Icon",
+            "SourceDisclosure"
+          ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
@@ -6543,7 +6558,9 @@
           "ownerComponents": [
             "ConversationMessage"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "SourceDisclosure"
+          ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
@@ -6569,19 +6586,20 @@
           "reviewNote": "2026-07-12 normal, narrow, and dark rendered states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-13 re-reviewed after the soft/solid surface, lifecycle order, compact source hierarchy, and representative composition updates; current source AST plus 19 targeted Communication stories, 17 completed play functions, and Axe were verified."
+      "reviewNote": "2026-07-14 re-reviewed after replacing soft/solid selection with the assistant plain, user tonal, human-agent neutral, and system divider grammar; source AST plus normal, 320px, dark, lifecycle, composition, play, and Axe evidence were verified."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "1404c0a21c61ef555ed571f50b5a47cdfad34080fe2358328dd4dc3fe11dcc4f",
+      "sourceSha256": "f67976d630e68ac8084d0d3b725aeec312687d88886afe58ec693abbefce1f22",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
       ],
       "supportingComponents": [
+        "Button",
         "Chip",
         "Icon",
         "IconButton"
@@ -6595,16 +6613,18 @@
         "storyGuideId": "lds-product-communication-message-composer--message-composer-overview",
         "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-13",
-      "reviewedSourceSha256": "1404c0a21c61ef555ed571f50b5a47cdfad34080fe2358328dd4dc3fe11dcc4f",
+      "reviewedAt": "2026-07-14",
+      "reviewedSourceSha256": "205b001ddd51f31a6c3362d22ffc011cd97d24c816bfb5ecc4d76053fd7a1a62",
       "stories": [
         {
           "id": "lds-product-communication-message-composer--message-composer-overview",
@@ -6652,7 +6672,10 @@
           "ownerComponents": [
             "MessageComposer"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
@@ -6700,7 +6723,10 @@
           "ownerComponents": [
             "MessageComposer"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
@@ -6747,27 +6773,28 @@
             "MessageComposer"
           ],
           "supportingComponents": [
+            "Button",
             "Chip",
-            "Icon",
-            "IconButton"
+            "Icon"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         }
       ],
-      "reviewNote": "2026-07-13 re-reviewed after the 32px primary action, fixed 40×44px slot, parent-stretch isolation, and narrow/dark coverage updates; current source AST plus targeted Communication play/Axe were verified."
+      "reviewNote": "2026-07-14 re-reviewed after moving attachments and the utility/textarea/primary-action row into one composer shell while preserving IME, state, 40×44px slot, 32px action, normal, 320px, dark, play, and Axe contracts."
     },
     {
       "title": "LDS Product/Communication/Message Feed",
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageFeed.stories.jsx",
-      "sourceSha256": "e1006de6e871f02057c92ad00c7fd09d7e55b0e88f0b507404c9bf1800723625",
+      "sourceSha256": "d73c9ac31ca46a85cd88e921148eb88d8795f6f6a220f2364dce72ea5d995746",
       "primaryOwner": "MessageFeed",
       "ownerComponents": [
         "MessageFeed"
       ],
       "supportingComponents": [
         "Button",
+        "ConversationMessage",
         "Spinner"
       ],
       "visibility": {
@@ -6779,16 +6806,18 @@
         "storyGuideId": "lds-product-communication-message-feed--overview",
         "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "e1006de6e871f02057c92ad00c7fd09d7e55b0e88f0b507404c9bf1800723625",
+      "reviewedAt": "2026-07-14",
+      "reviewedSourceSha256": "152d41bf4469ffb87c65a18d10664780030ac082c46a4d453a1616c3d96d90ad",
       "stories": [
         {
           "id": "lds-product-communication-message-feed--overview",
@@ -6810,7 +6839,9 @@
           "ownerComponents": [
             "MessageFeed"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "ConversationMessage"
+          ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
@@ -6833,7 +6864,9 @@
           "ownerComponents": [
             "MessageFeed"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "ConversationMessage"
+          ],
           "reviewNote": "2026-07-12 reviewed against WAI-ARIA log/feed guidance and Carbon AI Chat lifecycle evidence; history live-announcement suppression plus normal, 320px, and dark rendered states were verified."
         },
         {
@@ -6881,7 +6914,9 @@
           "ownerComponents": [
             "MessageFeed"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "ConversationMessage"
+          ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
@@ -6905,7 +6940,8 @@
             "MessageFeed"
           ],
           "supportingComponents": [
-            "Button"
+            "Button",
+            "ConversationMessage"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
@@ -6929,11 +6965,13 @@
           "ownerComponents": [
             "MessageFeed"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "ConversationMessage"
+          ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience naming/description normalization; verified via targeted Storybook play/axe."
+      "reviewNote": "2026-07-14 re-reviewed after replacing temporary rows with real role-presented ConversationMessage entries and removing card chrome; history/follow, normal, 320px, dark, play, and Axe contracts were verified."
     },
     {
       "title": "LDS Product/Content/Bubble",
@@ -17359,12 +17397,14 @@
       "layer": "Robotics",
       "family": "Status",
       "importPath": "./stories/RoboticsEquipment.stories.jsx",
-      "sourceSha256": "768f3033c28ac19c7b4a26dcf756da7c70a5073537b6e5293138566f495cf744",
+      "sourceSha256": "6335d492d697e07c3da8d0b4830d3bb5238a0f59ac7928c5f1794fd66a5d8fcc",
       "primaryOwner": "EquipmentStatusCard",
       "ownerComponents": [
         "EquipmentStatusCard"
       ],
       "supportingComponents": [
+        "Button",
+        "ConnectionBadge",
         "Icon"
       ],
       "visibility": {
@@ -17376,9 +17416,11 @@
         "storyGuideId": null,
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
@@ -17407,6 +17449,8 @@
             "EquipmentStatusCard"
           ],
           "supportingComponents": [
+            "Button",
+            "ConnectionBadge",
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."

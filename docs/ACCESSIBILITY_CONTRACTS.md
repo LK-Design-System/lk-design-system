@@ -5,7 +5,7 @@
 | Type | Stable contract |
 | Status | Current |
 | Owner | Design system owner · Accessibility reviewer |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-14 |
 
 LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제품 팀이 매번 새로 판단하지 않도록 하는 계약입니다. 모든 interactive 컴포넌트는 아래 항목을 Storybook 예시, 코드, 또는 테스트 근거로 증명해야 합니다.
 
@@ -33,7 +33,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시 |
 | SearchableMultiSelect, DataGrid, FileBrowser | stable item name/ID, listbox 또는 row activation, 선택 상태, bulk action 진입 순서, 빈/loading/error announcement를 명시 |
 | Button, ActionArea, ConfirmDialog | product-owned disabled reason과 blocker를 action보다 먼저 읽을 수 있고 pending 중 중복 실행이 차단되어야 함 |
-| StatusBadge, Timeline, ProgressBar, ConnectionBadge | 상태 이름과 시간/freshness/result를 텍스트로 제공하고 live region이 과도하게 반복되지 않아야 함 |
+| StatusBadge, Timeline, ProgressBar, ConnectionBadge, EquipmentStatusCard | 상태 이름과 시간/freshness/result를 텍스트로 제공하고, 설비 카드는 heading → visible status → labeled facts → actions 순서를 유지하며 live region이 과도하게 반복되지 않아야 함 |
 | ManualControlSession | keyboard 입력은 focus 범위 안에서만 처리하고 textarea/input 입력과 단축키가 충돌하지 않아야 함 |
 | Tree, ReorderList | treeitem/listitem은 키보드로 탐색 가능하고 expand/collapse 또는 move action에 accessible name이 있어야 함 |
 | ValidationSummary | 오류·주의를 텍스트로 구분하고 native anchor 또는 명시적 activation으로 원래 field/step에 돌아갈 수 있어야 함 |
@@ -43,8 +43,17 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | CanvasEditorShell, CanvasEditorCommandBar, EditorToolbar, LayerPanel, SelectionInspector, ViewerToolbar | viewport와 toolbar/panel 사이 이동 순서, collapse/restore handle과 keyboard splitter의 accessible name, 방향키 scope, LayerPanel의 단일 roving Tab stop·typeahead·F2 row-action mode, 단축키 충돌, undo/redo 상태, 선택 해제 버튼의 accessible name |
 | Map2DCanvas, Scene3DFrame | viewport region name, keyboard zoom/pan 정책, 앱 캔버스 이벤트와 DS pan interaction 충돌 방지 |
 | WaypointMarker, LaneOverlay, RouteOverlay, TrajectoryOverlay, SpatialRegion, FacilityTransition | SVG fragment의 이름, pointer와 Enter/Space activation parity, disabled Tab 제외, selected/invalid state, zoom과 무관한 hit/stroke, 색 외 pattern·glyph·visible state text, 이름 있는 semantic mirror 목록 |
-| ConversationMessage, MessageFeed, MessageComposer | feed만 role="log" polite live-region을 소유하고 개별 message는 live region이 없음, message는 identity→body→attachments→sources→status→actions DOM 순서와 response pending/streaming/stopping만 aria-busy, composer는 IME 조합 중 Enter 오발송 방지·Shift+Enter 줄바꿈·disabled 시 disabledReason을 control 앞에 두고 aria-describedby로 연결·submit/stop 후 상태 미추론 |
+| ConversationMessage, MessageFeed, MessageComposer | feed만 role="log" polite live-region을 소유하고 개별 message는 live region이 없음, document/bubble presentation과 optional direction은 읽기 의미를 대체하지 않으며 author identity를 텍스트로 유지, message DOM 순서는 identity→body→response status→attachments→sources→delivery/static status→actions, response pending/streaming/stopping만 aria-busy, failed retry만 message에 두고 stop은 composer가 소유, composer는 IME 조합 중 Enter 오발송 방지·Shift+Enter 줄바꿈·disabled 시 disabledReason을 shell/control 앞에 두고 aria-describedby로 연결·submit/stop 후 상태 미추론 |
 | VirtualKeypad | role="group"과 접근 가능한 이름, 각 키의 이름 있는 label과 48px touch target, aria-controls로 대상 input 연결, targetId input이 이미 focus된 경우에만 pointer preventDefault로 focus 보존, min/max는 confirm 유효성에만 적용, document/global keydown·long-press·VirtualKeyboard API 의존 없음 |
+
+## Conversation accessibility contract
+
+- `authorRole`은 user·assistant·human-agent·system의 기본 시각 presentation을 고르지만 작성자 이름과 역할 텍스트를 대체하지 않는다. assistant의 borderless document, user의 solid primary bubble, human-agent의 neutral fill bubble과 alignment·색만으로 발신자를 구분하지 않고 이름·역할 텍스트를 함께 제공한다.
+- `direction`은 non-system message의 선택적 배치 override일 뿐 DOM 순서, 작성자 의미, delivery/response lifecycle을 바꾸지 않는다. system role은 avatar나 bubble 없이 이름 있는 중앙 neutral 칩으로 읽힌다.
+- 한 message article은 identity → body → response status → attachments → sources → delivery/static status → actions 순서로 렌더한다. streaming/error marker는 본문 바로 뒤에 두고 failed retry는 마지막 action에 둔다. response stop은 `MessageComposer` 한 곳이 소유해 중복 control을 만들지 않는다.
+- `MessageFeed` 하나만 이름 있는 `role="log"`, `aria-live="polite"`, `aria-relevant="additions"`를 소유한다. history prepend 중에는 live announcement를 억제하고 scroll anchor 복원 뒤 다시 polite로 전환한다. 무결과·실패·`hasPrevious=false` 경로에서도 억제를 해제한다.
+- `MessageComposer`는 label → description → disabled reason → 한 elevated shell 안 attachments → textarea → 하단 leading actions → trailing actions → send-or-stop → status/counter 순서로 읽힌다. 32px icon action은 이름을 가지며, `disabled` shell의 slot control도 inert subtree에서 focus와 activation이 차단된다. 한글·일본어·중국어 IME 확정 Enter를 submit으로 재처리하지 않는다.
+- 약 760px reading column과 320px narrow, light/dark에서 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, streaming/error, disabled composer를 확인하고 source/action wrapping이 DOM·keyboard 순서를 바꾸지 않는지, bubble·칩·배지 대비가 WCAG AA를 유지하는지 검증한다.
 
 ## Viewer accessibility contract
 

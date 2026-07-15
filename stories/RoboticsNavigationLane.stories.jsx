@@ -2,6 +2,7 @@ import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import { Button, LaneOverlay, Map2DCanvas } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
+import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Navigation/Lane',
@@ -54,7 +55,7 @@ function StoryPage({ title, description, children, maxWidth = 1040 }) {
   );
 }
 
-function LaneMap({ appearance = 'light', label, children, height = 270, testId }) {
+function LaneMap({ appearance = 'light', label, children, height = 270, testId, eyebrow = 'LANE · L1', svgHeight = 250 }) {
   const svgRef = React.useRef(null);
   const [viewportScale, setViewportScale] = React.useState(1);
 
@@ -95,7 +96,7 @@ function LaneMap({ appearance = 'light', label, children, height = 270, testId }
       panEnabled={false}
       wheelZoom={false}
       keyboard={false}
-      grid
+      grid={false}
       defaultViewport={{ x: 0, y: 0, z: 1 }}
       data-testid={testId}
       style={{ width: '100%', minWidth: 0, height }}
@@ -103,14 +104,14 @@ function LaneMap({ appearance = 'light', label, children, height = 270, testId }
       <svg
         ref={svgRef}
         width="520"
-        height="250"
-        viewBox="0 0 520 250"
+        height={svgHeight}
+        viewBox={`0 0 520 ${svgHeight}`}
         data-lane-render-scale={viewportScale}
         role="group"
         aria-label={`${label}의 레인 계층`}
         style={{ display: 'block', width: 'min(520px, calc(100cqw - 32px))', height: 'auto' }}
       >
-        <path d="M24 214 H496 M24 36 H496" stroke="var(--viewer-border)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <NavigationMapStage width={520} height={svgHeight} eyebrow={eyebrow} scaleBar={{ px: 96, label: '4 m' }} />
         {scaledChildren}
       </svg>
     </Map2DCanvas>
@@ -156,7 +157,7 @@ const STATE_LANES = [
       ...BASE_LANE,
       id: 'lane-open',
       label: '통행 가능',
-      points: [{ x: 60, y: 52 }, { x: 460, y: 52 }],
+      points: [{ x: 60, y: 56 }, { x: 460, y: 56 }],
       relation: { kind: 'single' },
     },
     availability: 'available',
@@ -166,7 +167,7 @@ const STATE_LANES = [
       ...BASE_LANE,
       id: 'lane-closed',
       label: '폐쇄',
-      points: [{ x: 60, y: 116 }, { x: 460, y: 116 }],
+      points: [{ x: 60, y: 168 }, { x: 460, y: 168 }],
       entry: { waypointId: 'C', orientation: 'forward', transitionIds: ['transition-door-a'] },
       exit: { waypointId: 'D', orientation: 'backward', transitionIds: ['transition-lift-a', 'transition-lift-b'] },
       relation: { kind: 'single' },
@@ -178,7 +179,7 @@ const STATE_LANES = [
       ...BASE_LANE,
       id: 'lane-unknown-conflict',
       label: '미확인 · 충돌',
-      points: [{ x: 60, y: 186 }, { x: 230, y: 186 }, { x: 320, y: 154 }, { x: 460, y: 154 }],
+      points: [{ x: 60, y: 292 }, { x: 230, y: 292 }, { x: 320, y: 262 }, { x: 460, y: 262 }],
       relation: { kind: 'single' },
     },
     availability: 'unknown',
@@ -197,7 +198,7 @@ export const LaneStatesAndConstraints = {
       description="문이나 엘리베이터의 실시간 상태는 Facility Transition이 소유합니다. 레인은 해당 경계에 전환이 있다는 사실과 개수만 표시하고 종류를 ID에서 추론하지 않습니다."
       maxWidth={780}
     >
-      <LaneMap label="레인 복합 상태 지도" height={280}>
+      <LaneMap label="레인 복합 상태 지도" height={360} svgHeight={340}>
         {STATE_LANES.map(({ lane, availability, conflict }) => (
           <LaneOverlay key={lane.id} lane={lane} availability={availability} conflict={conflict} />
         ))}

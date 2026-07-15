@@ -2,6 +2,7 @@ import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import { Button, Map2DCanvas, WaypointMarker } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
+import { NavigationLegend, NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Navigation/Waypoint',
@@ -260,6 +261,7 @@ function WaypointGraphic({
   height = 260,
   label = '내비게이션 그래프 웨이포인트',
 }) {
+  const mapId = waypoints[0]?.mapId ? `MAP ${waypoints[0].mapId}` : undefined;
   return (
     <svg
       width={width}
@@ -269,24 +271,19 @@ function WaypointGraphic({
       aria-label={label}
       style={{ display: 'block', overflow: 'visible' }}
     >
-      <rect
-        x="20"
-        y="20"
-        width={width - 40}
-        height={height - 40}
-        rx="8"
-        fill="var(--viewer-surface)"
-        stroke="var(--viewer-border)"
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d={`M42 ${height * 0.32} H${width * 0.72} V${height * 0.74} H${width - 42}`}
-        fill="none"
-        stroke="var(--viewer-muted)"
-        strokeWidth="2"
-        strokeDasharray="5 5"
-        vectorEffect="non-scaling-stroke"
-      />
+      <NavigationMapStage width={width} height={height} eyebrow={mapId} north>
+        <path
+          d={`M42 ${height * 0.32} H${width * 0.72} V${height * 0.74} H${width - 42}`}
+          fill="none"
+          stroke="var(--viewer-muted)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="1 9"
+          strokeOpacity="0.7"
+          vectorEffect="non-scaling-stroke"
+        />
+      </NavigationMapStage>
       {waypoints.map((waypoint) => (
         <WaypointMarker
           key={waypoint.id}
@@ -413,7 +410,14 @@ function OverviewFixture() {
         height={300}
         label="1층 웨이포인트 역할 지도"
       />
-      <SemanticWaypointList waypoints={overviewWaypoints} selectedId={selectedId} onSelect={selectWaypoint} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(200px, 260px)', gap: 'var(--space-4)', alignItems: 'start', minWidth: 0 }}>
+        <SemanticWaypointList waypoints={overviewWaypoints} selectedId={selectedId} onSelect={selectWaypoint} />
+        <NavigationLegend
+          roles={['holding', 'passthrough', 'parking', 'charger']}
+          annotations={['dock']}
+          states={['available', 'unknown']}
+        />
+      </div>
       <p data-activation-log style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', fontVariantNumeric: 'tabular-nums' }}>
         마지막 선택: {activation} · activation <span data-activation-count="">{activationCount}</span>회
       </p>
@@ -433,7 +437,7 @@ export const Overview = {
     if (!holding || !passthrough) throw new Error('Waypoint overview markers are incomplete.');
 
     const name = holding.getAttribute('aria-label') || '';
-    if (!name.includes('Hold A') || !name.includes('map L1') || !name.includes('holding point') || !name.includes('availability available')) {
+    if (!name.includes('Hold A') || !name.includes('지도 L1') || !name.includes('대기 지점') || !name.includes('가용성 사용 가능')) {
       throw new Error(`Waypoint accessible name lost identity or semantics: ${name}`);
     }
 
@@ -576,7 +580,7 @@ export const PointerOnlyMapFragment = {
     if (!output().includes('activation 1회')) throw new Error('Pointer-only waypoint accepted keyboard activation.');
 
     const passiveName = passive.getAttribute('aria-label') ?? '';
-    if (passive.getAttribute('role') !== 'img' || !passiveName.includes('focused')) {
+    if (passive.getAttribute('role') !== 'img' || !passiveName.includes('포커스됨')) {
       throw new Error(`Passive focused waypoint name is incomplete: ${passiveName}`);
     }
     if (!passive.querySelector('[data-waypoint-focus-indicator]')) {
@@ -729,7 +733,7 @@ export const CompoundRolesAndStates = {
     const unknownIndicator = unknownInvalid.querySelector('[data-waypoint-unknown-indicator]');
     const invalidIndicator = unknownInvalid.querySelector('[data-waypoint-invalid-indicator]');
     const unknownInvalidName = unknownInvalid.getAttribute('aria-label') ?? '';
-    if (!unknownIndicator || !invalidIndicator || !unknownInvalidName.includes('availability unknown') || !unknownInvalidName.includes('invalid')) {
+    if (!unknownIndicator || !invalidIndicator || !unknownInvalidName.includes('가용성 상태 미확인') || !unknownInvalidName.includes('데이터 오류')) {
       throw new Error(`Unknown + invalid waypoint must preserve both semantics and glyphs: ${unknownInvalidName}`);
     }
     assertWaypointStateGeometry(unknownInvalid, 'unknown', 'Compound unknown waypoint');

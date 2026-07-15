@@ -5,12 +5,12 @@ import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 const AVAILABILITY_PRESENTATION = {
   available: {
     label: '사용 가능',
-    stroke: 'var(--color-semantic-primary-normal)',
+    stroke: 'var(--viewer-accent, var(--color-semantic-primary-normal))',
     dash: undefined,
   },
   unavailable: {
     label: '사용 불가',
-    stroke: 'var(--color-semantic-status-negative-foreground)',
+    stroke: 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))',
     dash: '6 3',
   },
   unknown: {
@@ -178,29 +178,47 @@ function computedAccessibleLabel(transition, availabilityLabel) {
   ].filter(Boolean).join(' · ');
 }
 
-function FacilityGlyph({ kind, stroke }) {
+// Map-pin silhouette: a round head centered at the origin (so the glyph, hit
+// target, rings and state badges all stay centered) tapering to a point that
+// marks the coordinate. Shared by the marker fill AND the shape-following
+// selection/focus outlines, so a selected/focused pin reads as the same pin
+// with a highlight — not a competing circular target ringed around it.
+const PIN_PATH = 'M0 15 Q-6 10 -9.2 5 A10.5 10.5 0 1 1 9.2 5 Q6 10 0 15 Z';
+
+// Filled-silhouette facility glyphs authored for the ~22px map badge (see the
+// icon-audit method): solids survive small sizes and low opacity where the old
+// hairline outlines collapsed. `color` is the knockout fill (white on the
+// state-colored badge); `badge` is the badge color, used to cut the lift's
+// up/down arrows back out of its cab so the metaphor reads as the recognised
+// "cab + up/down arrows" elevator convention (ISO 7001 / Material / AIGA),
+// reduced for small scale by dropping the human figure.
+function FacilityGlyph({ kind, color, badge }) {
   if (kind === 'door') {
+    // Two door leaves with a center gap.
     return (
-      <g fill="none" stroke={stroke} strokeWidth="1.7" strokeLinecap="round">
-        <path d="M-6-7V7M6-7V7" vectorEffect="non-scaling-stroke" />
-        <path d="M-3 0H3" strokeDasharray="2 2" vectorEffect="non-scaling-stroke" />
+      <g fill={color} pointerEvents="none">
+        <rect x="-6" y="-6" width="4.6" height="12" rx="1" />
+        <rect x="1.4" y="-6" width="4.6" height="12" rx="1" />
       </g>
     );
   }
 
   if (kind === 'lift') {
+    // Cab frame (white) with up/down arrows knocked back out in the badge color.
     return (
-      <g fill="none" stroke={stroke} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="-7" y="-7" width="14" height="14" rx="2" vectorEffect="non-scaling-stroke" />
-        <path d="M-3 2V-3M-5-1L-3-3L-1-1M3-2V3M1 1L3 3L5 1" vectorEffect="non-scaling-stroke" />
+      <g pointerEvents="none">
+        <rect x="-5.6" y="-4.8" width="11.2" height="9.6" rx="1.8" fill={color} />
+        <path d="M0 -3.4L2.3 -0.7L-2.3 -0.7Z" fill={badge} />
+        <path d="M0 3.4L2.3 0.7L-2.3 0.7Z" fill={badge} />
       </g>
     );
   }
 
+  // Dock: a downward arrow settling onto a platform bar.
   return (
-    <g fill="none" stroke={stroke} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M-7-6V6H2" vectorEffect="non-scaling-stroke" />
-      <path d="M2-4L7 0L2 4Z" vectorEffect="non-scaling-stroke" />
+    <g fill={color} pointerEvents="none">
+      <path d="M0 3.4L3.2 -0.2L1 -0.2L1 -6L-1 -6L-1 -0.2L-3.2 -0.2Z" />
+      <rect x="-5" y="4.6" width="10" height="1.8" rx="0.9" />
     </g>
   );
 }
@@ -243,7 +261,7 @@ export function FacilityTransition({
   const scale = safeScale(viewportScale);
   const inverseScale = 1 / scale;
   const stroke = invalid
-    ? 'var(--color-semantic-status-negative-foreground)'
+    ? 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))'
     : disabled
       ? 'var(--viewer-muted, var(--color-semantic-label-alternative))'
       : availability.stroke;
@@ -259,10 +277,10 @@ export function FacilityTransition({
   ].filter(Boolean).join(' · ');
   const stateBadges = [
     transition.availability === 'unknown'
-      ? { kind: 'unknown', tone: 'var(--color-semantic-status-cautionary-foreground)' }
+      ? { kind: 'unknown', tone: 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))' }
       : null,
     invalid
-      ? { kind: 'invalid', tone: 'var(--color-semantic-status-negative-foreground)' }
+      ? { kind: 'invalid', tone: 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))' }
       : null,
     stale
       ? { kind: 'stale', tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))', dash: '2 2' }
@@ -351,11 +369,15 @@ export function FacilityTransition({
       }}
     >
       <g transform={`scale(${inverseScale})`} data-transition-screen-space="">
+        {/* Cast shadow + selection/focus outlines all trace the SAME pin
+            silhouette, so every state reads as one marker instead of a pin that
+            grows a mismatched circular ring when selected. */}
+        <path d={PIN_PATH} transform="translate(0 0.8)" fill="var(--color-semantic-static-black)" opacity="0.16" pointerEvents="none" data-transition-shadow="" />
         {activeFocus && (
-          <circle r="16" fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth="4" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-focus-ring="" />
+          <path d={PIN_PATH} transform="scale(1.34)" fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth="2.5" strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-focus-ring="" />
         )}
         {selected && (
-          <circle r="14" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="3" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-selection-ring="" />
+          <path d={PIN_PATH} transform="scale(1.16)" fill="none" stroke="var(--viewer-accent, var(--color-semantic-primary-normal))" strokeWidth="2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-selection-ring="" />
         )}
         <circle
           r="17"
@@ -365,19 +387,20 @@ export function FacilityTransition({
           data-transition-hit-area=""
           data-screen-target-size="24"
         />
-        <circle
-          r="11"
-          fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
-          stroke={stroke}
-          strokeWidth="1.8"
-          strokeDasharray={dash}
+        <path
+          d={PIN_PATH}
+          fill={stroke}
           vectorEffect="non-scaling-stroke"
           data-transition-marker=""
         />
-        <FacilityGlyph kind={transition.kind} stroke={stroke} />
+        <FacilityGlyph
+          kind={transition.kind}
+          color="var(--viewer-surface-elevated, var(--color-semantic-static-white))"
+          badge={stroke}
+        />
 
         {transition.availability === 'unavailable' && (
-          <path d="M-8 8L8-8" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-unavailable-mark="" />
+          <path d="M-6.5 6.5L6.5-6.5" fill="none" stroke="var(--color-semantic-static-white)" strokeWidth="2" strokeLinecap="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-unavailable-mark="" />
         )}
         {stateBadges.length > 0 && (
           <g data-transition-state-slot-layer="" pointerEvents="none">

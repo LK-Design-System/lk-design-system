@@ -44,7 +44,7 @@ Research basis (LK Robotics extension, not WDS parity):
 - [WAI-ARIA Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/) informs keyboard-resizable panel boundaries; [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) informs narrow-screen region navigation.
 - Arbitrary docking graphs, saved workspace layouts, detached windows, and domain workflows are intentionally excluded from this DS shell.
 
-Original `lk_web_viz` workflow mapping:
+Pinned product workflow coverage mapping (not design evidence):
 
 - `TaskCreateScreen`: header + left task form/step sequence + right topology/map picker. It does not need a tool rail, layer tree, inspector, or bottom status bar.
 - `MapEditScreen`: header commands + `objects`/`pgm` tabs + left tool rail + map canvas + persistent right properties/settings panel.

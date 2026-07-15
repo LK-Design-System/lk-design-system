@@ -11,17 +11,19 @@ export interface MessageFeedProps extends Omit<React.HTMLAttributes<HTMLElement>
   empty?: React.ReactNode;
   /** Maximum viewport height in pixels or CSS units. @default 400 */
   maxHeight?: number | string;
+  /** Optional minimum viewport height for persistent conversation panels. */
+  viewportMinHeight?: number | string;
   /** Mark the log as busy while its current contents are being updated. @default false */
   busy?: boolean;
   /** Show the history-loading action before the log. @default false */
   hasPrevious?: boolean;
   /** Disable the history action and mark the log busy while older messages load. @default false */
   loadingPrevious?: boolean;
-  /** Request older messages. The product owns retrieval and prepends the resulting children. */
-  onLoadPrevious?: () => void;
+  /** Request older messages. Return a promise or synchronously set loadingPrevious while retrieval runs; the product prepends the resulting children. */
+  onLoadPrevious?: () => void | Promise<void>;
   /** History action label. @default "이전 메시지 불러오기" */
   loadPreviousLabel?: string;
-  /** Controlled bottom-follow state. */
+  /** Controlled bottom-follow state. The consumer must update it from onFollowingChange. */
   following: boolean;
   /** Called when user scrolling changes the follow state or the latest-message action restores it. */
   onFollowingChange?: (following: boolean, reason: MessageFeedFollowingReason) => void;
@@ -35,5 +37,5 @@ export interface MessageFeedProps extends Omit<React.HTMLAttributes<HTMLElement>
   liveStatus?: React.ReactNode;
 }
 
-/** Accessible, controlled conversation log with history anchoring and bottom-follow behavior. */
+/** LK Product Extension: a chrome-free conversation log with controlled history and follow behavior. */
 export function MessageFeed(props: MessageFeedProps): React.JSX.Element;

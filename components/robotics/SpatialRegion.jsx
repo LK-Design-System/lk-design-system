@@ -204,18 +204,18 @@ function regionKind(region) {
 }
 
 function strokeForRegion(region, { disabled, invalid }) {
-  if (invalid) return 'var(--color-semantic-status-negative-foreground)';
+  if (invalid) return 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))';
   if (disabled) return 'var(--viewer-muted, var(--color-semantic-label-alternative))';
 
   if (region.category === 'behavior') {
-    if (region.rule.kind === 'keep-out') return 'var(--color-semantic-status-negative-foreground)';
-    if (region.rule.kind === 'speed-limit') return 'var(--color-semantic-status-cautionary-foreground)';
-    return 'var(--color-semantic-primary-normal)';
+    if (region.rule.kind === 'keep-out') return 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))';
+    if (region.rule.kind === 'speed-limit') return 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))';
+    return 'var(--viewer-accent, var(--color-semantic-primary-normal))';
   }
 
   if (region.category === 'terrain') {
-    if (region.traversability === 'blocked') return 'var(--color-semantic-status-negative-foreground)';
-    if (region.traversability === 'restricted') return 'var(--color-semantic-status-cautionary-foreground)';
+    if (region.traversability === 'blocked') return 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))';
+    if (region.traversability === 'restricted') return 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))';
     if (region.traversability === 'unknown') return 'var(--viewer-muted, var(--color-semantic-label-alternative))';
   }
 
@@ -394,7 +394,7 @@ export function SpatialRegion({
         <RegionShape
           shape={region.shape}
           fill="none"
-          stroke="var(--color-semantic-primary-normal)"
+          stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
           strokeWidth="3.5"
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
@@ -421,7 +421,7 @@ export function SpatialRegion({
         >
           {invalid && (
             <g transform="translate(0 -18)" data-region-invalid-mark="">
-              <circle r="7" fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--color-semantic-status-negative-foreground)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+              <circle r="7" fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
               <NavigationStateGlyph kind="invalid" size={10.5} color="var(--viewer-foreground, var(--color-semantic-label-strong))" />
             </g>
           )}

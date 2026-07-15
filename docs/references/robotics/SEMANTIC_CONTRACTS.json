@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "metadata": {
+    "type": "Stable robotics semantic contract registry",
+    "status": "active-pilot",
+    "owner": [
+      "Design system owner",
+      "Robotics domain engineering",
+      "Product engineering"
+    ],
+    "lastReviewed": "2026-07-14",
+    "humanContract": "docs/ROBOTICS_PATTERNS.md",
+    "productCoverage": "docs/references/product-frontends/COVERAGE_AUDIT.json"
+  },
+  "principles": [
+    {
+      "id": "SEM-01",
+      "statement": "Transport connectivity does not imply data freshness, equipment health, operability, command eligibility, or control authority."
+    },
+    {
+      "id": "SEM-02",
+      "statement": "Products calculate domain truth; LDS presents named state, evidence, time, reason, and recovery affordance without running the product state machine."
+    },
+    {
+      "id": "SEM-03",
+      "statement": "Unknown is a first-class observation state and must not be normalized to positive, negative, disconnected, or unavailable."
+    },
+    {
+      "id": "SEM-04",
+      "statement": "A retained last-known value must expose freshness or observation time and must not be presented as current truth."
+    },
+    {
+      "id": "SEM-05",
+      "statement": "Semantic state, visual tone, and announcement urgency are separate decisions."
+    },
+    {
+      "id": "SEM-06",
+      "statement": "Stable states and transition states remain distinguishable; transition execution and recovery policy stay product-owned."
+    }
+  ],
+  "visualTones": [
+    "neutral",
+    "signal",
+    "positive",
+    "cautionary",
+    "negative"
+  ],
+  "axes": {
+    "transport": {
+      "definition": "Whether the application has a transport link and the quality of that link.",
+      "productOwns": "Protocol truth, retry, heartbeat, reconnect, resynchronization, and timeout policy.",
+      "ldsOwns": "Named transport presentation, non-color marker, reduced-motion behavior, and accessible name.",
+      "values": [
+        { "id": "unknown", "labelKo": "연결 상태 알 수 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "connecting", "labelKo": "연결 중", "tone": "signal", "kind": "transition" },
+        { "id": "connected", "labelKo": "연결됨", "tone": "positive", "kind": "stable" },
+        { "id": "degraded", "labelKo": "연결 품질 저하", "tone": "cautionary", "kind": "stable" },
+        { "id": "reconnecting", "labelKo": "재연결 중", "tone": "cautionary", "kind": "transition" },
+        { "id": "disconnected", "labelKo": "연결 끊김", "tone": "neutral", "kind": "stable" },
+        { "id": "failed", "labelKo": "연결 실패", "tone": "negative", "kind": "stable" }
+      ]
+    },
+    "freshness": {
+      "definition": "Whether the displayed observation is current enough for its product-defined decision window.",
+      "productOwns": "Clock source, freshness threshold, observation age, cache policy, and resynchronization completion.",
+      "ldsOwns": "Freshness label, observation time placement, retained-value treatment, and non-color stale cue.",
+      "values": [
+        { "id": "unknown", "labelKo": "갱신 상태 알 수 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "live", "labelKo": "실시간", "tone": "signal", "kind": "stable" },
+        { "id": "delayed", "labelKo": "갱신 지연", "tone": "cautionary", "kind": "stable" },
+        { "id": "stale", "labelKo": "오래된 값", "tone": "cautionary", "kind": "stable" }
+      ]
+    },
+    "health": {
+      "definition": "A product-provided diagnostic assessment of the observed entity.",
+      "productOwns": "Diagnosis, thresholds, aggregation, causal evidence, and recovery policy.",
+      "ldsOwns": "Visible health name, semantic tone, supporting evidence placement, and color-independent cue.",
+      "values": [
+        { "id": "unknown", "labelKo": "상태 알 수 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "nominal", "labelKo": "정상", "tone": "positive", "kind": "stable" },
+        { "id": "degraded", "labelKo": "성능 저하", "tone": "cautionary", "kind": "stable" },
+        { "id": "fault", "labelKo": "오류", "tone": "negative", "kind": "stable" }
+      ]
+    },
+    "operability": {
+      "definition": "Whether the user may currently use the entity for the intended product action.",
+      "productOwns": "Admission policy, blockers, permissions, safety gates, and reason ordering.",
+      "ldsOwns": "Availability name, blocker presentation, disabled-reason association, and recovery affordance placement.",
+      "values": [
+        { "id": "unknown", "labelKo": "사용 가능 여부 확인 중", "tone": "neutral", "kind": "stable" },
+        { "id": "available", "labelKo": "사용 가능", "tone": "positive", "kind": "stable" },
+        { "id": "limited", "labelKo": "제한적 사용 가능", "tone": "cautionary", "kind": "stable" },
+        { "id": "unavailable", "labelKo": "사용 불가", "tone": "negative", "kind": "stable" }
+      ]
+    },
+    "authority": {
+      "definition": "Whether the current actor holds the product-defined right to control or approve the target.",
+      "productOwns": "Authorization, lease, takeover, expiry, revocation, and conflict policy.",
+      "ldsOwns": "Authority state presentation, blocking reason, transition message, and re-acquisition affordance placement.",
+      "values": [
+        { "id": "unknown", "labelKo": "제어권 알 수 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "checking", "labelKo": "제어권 확인 중", "tone": "signal", "kind": "transition" },
+        { "id": "granted", "labelKo": "제어권 확보", "tone": "positive", "kind": "stable" },
+        { "id": "denied", "labelKo": "제어권 거부", "tone": "negative", "kind": "stable" },
+        { "id": "revoked", "labelKo": "제어권 회수", "tone": "negative", "kind": "stable" },
+        { "id": "expired", "labelKo": "제어권 만료", "tone": "cautionary", "kind": "stable" }
+      ]
+    },
+    "command": {
+      "definition": "The product-reported lifecycle of a requested external or domain change.",
+      "productOwns": "Eligibility, payload, authorization, idempotency, transport, execution, watcher, and result truth.",
+      "ldsOwns": "Distinct lifecycle labels, progress/result hierarchy, retry affordance placement, and announcement urgency.",
+      "values": [
+        { "id": "unknown", "labelKo": "명령 상태 알 수 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "idle", "labelKo": "요청 전", "tone": "neutral", "kind": "stable" },
+        { "id": "submitting", "labelKo": "전송 중", "tone": "signal", "kind": "transition" },
+        { "id": "accepted", "labelKo": "접수됨", "tone": "signal", "kind": "stable" },
+        { "id": "running", "labelKo": "실행 중", "tone": "signal", "kind": "transition" },
+        { "id": "succeeded", "labelKo": "완료", "tone": "positive", "kind": "stable" },
+        { "id": "failed", "labelKo": "실패", "tone": "negative", "kind": "stable" },
+        { "id": "partial", "labelKo": "부분 완료", "tone": "cautionary", "kind": "stable" },
+        { "id": "timed-out", "labelKo": "시간 초과", "tone": "cautionary", "kind": "stable" },
+        { "id": "cancelled", "labelKo": "취소됨", "tone": "neutral", "kind": "stable" },
+        { "id": "superseded", "labelKo": "새 요청으로 대체됨", "tone": "neutral", "kind": "stable" }
+      ]
+    },
+    "evidence": {
+      "definition": "Whether source material or observed evidence is available and usable for the current claim.",
+      "productOwns": "Source truth, access, retrieval, interpretation, sufficiency, and citation policy.",
+      "ldsOwns": "Availability label, source identity, observation/update time, excerpt hierarchy, and return action.",
+      "values": [
+        { "id": "unknown", "labelKo": "근거 상태 알 수 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "available", "labelKo": "근거 확인 가능", "tone": "positive", "kind": "stable" },
+        { "id": "stale", "labelKo": "오래된 근거", "tone": "cautionary", "kind": "stable" },
+        { "id": "missing", "labelKo": "근거 없음", "tone": "negative", "kind": "stable" },
+        { "id": "restricted", "labelKo": "접근 제한", "tone": "cautionary", "kind": "stable" },
+        { "id": "error", "labelKo": "근거 확인 오류", "tone": "negative", "kind": "stable" }
+      ]
+    },
+    "review": {
+      "definition": "Whether a human decision is required and the product-reported result of that decision.",
+      "productOwns": "Reviewer eligibility, policy, assignment, persistence, override, and final decision truth.",
+      "ldsOwns": "Review state label, evidence grouping, decision control composition, and result presentation.",
+      "values": [
+        { "id": "unknown", "labelKo": "검토 상태 알 수 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "not-required", "labelKo": "검토 불필요", "tone": "neutral", "kind": "stable" },
+        { "id": "required", "labelKo": "검토 필요", "tone": "cautionary", "kind": "stable" },
+        { "id": "in-review", "labelKo": "검토 중", "tone": "signal", "kind": "transition" },
+        { "id": "approved", "labelKo": "승인됨", "tone": "positive", "kind": "stable" },
+        { "id": "rejected", "labelKo": "거절됨", "tone": "negative", "kind": "stable" },
+        { "id": "overridden", "labelKo": "결정 재정의", "tone": "cautionary", "kind": "stable" }
+      ]
+    },
+    "urgency": {
+      "definition": "How urgently a state transition requires user attention; urgency is not the entity state or visual tone.",
+      "productOwns": "Escalation, acknowledgement, suppression, notification channel, and incident policy.",
+      "ldsOwns": "Status versus alert announcement behavior, visible urgency label, and non-color emphasis.",
+      "values": [
+        { "id": "none", "labelKo": "알림 없음", "tone": "neutral", "kind": "stable" },
+        { "id": "informational", "labelKo": "정보", "tone": "signal", "kind": "stable" },
+        { "id": "advisory", "labelKo": "주의 필요", "tone": "signal", "kind": "stable" },
+        { "id": "warning", "labelKo": "경고", "tone": "cautionary", "kind": "stable" },
+        { "id": "critical", "labelKo": "즉시 조치 필요", "tone": "negative", "kind": "stable" }
+      ]
+    }
+  },
+  "componentMappings": [
+    {
+      "component": "ConnectionBadge",
+      "path": "components/robotics/ConnectionBadge.d.ts",
+      "promptPath": "components/robotics/ConnectionBadge.prompt.md",
+      "storyPath": "stories/RoboticsConnectionBadge.stories.jsx",
+      "axes": ["transport"],
+      "typeExport": "ConnectionState",
+      "adoption": "active-pilot",
+      "doesNotOwn": ["freshness", "health", "operability", "authority", "command", "urgency"],
+      "legacyProp": "status",
+      "requiredProductAssets": ["LK Control Full Daedeok", "LK Web Viz", "LK Context Hub"]
+    },
+    {
+      "component": "TelemetryValue",
+      "path": "components/viz/TelemetryValue.d.ts",
+      "axes": ["freshness", "health"],
+      "adoption": "existing-partial",
+      "doesNotOwn": ["transport", "operability", "authority"]
+    },
+    {
+      "component": "ManualControlSession",
+      "path": "components/robotics/ManualControlSession.d.ts",
+      "axes": ["transport", "authority", "operability", "command"],
+      "adoption": "existing-composition",
+      "doesNotOwn": ["freshness", "health", "urgency"]
+    },
+    {
+      "component": "EquipmentStatusCard",
+      "path": "components/robotics/EquipmentStatusCard.d.ts",
+      "axes": ["health", "operability", "freshness"],
+      "adoption": "existing-composition",
+      "doesNotOwn": ["transport", "authority", "command"]
+    },
+    {
+      "component": "SourceDisclosure",
+      "path": "components/content/SourceDisclosure.d.ts",
+      "axes": ["evidence"],
+      "adoption": "existing-contract",
+      "doesNotOwn": ["review", "health", "command"]
+    },
+    {
+      "component": "Timeline",
+      "path": "components/content/Timeline.d.ts",
+      "axes": ["command"],
+      "adoption": "existing-composition",
+      "doesNotOwn": ["operability", "authority", "urgency"]
+    }
+  ],
+  "pilotWorkflows": [
+    { "id": "WF-02", "stage": "verified", "products": ["deviceops", "visionops", "control"], "axes": ["transport", "freshness", "health", "operability"] },
+    { "id": "WF-03", "stage": "verified", "products": ["deviceops", "visionops", "control"], "axes": ["operability", "command", "urgency"] },
+    { "id": "WF-09", "stage": "verified", "products": ["control"], "axes": ["transport", "freshness", "authority", "operability", "command", "urgency"] },
+    { "id": "WF-10", "stage": "verified", "products": ["context-hub"], "axes": ["evidence", "review", "operability"] },
+    { "id": "WF-15", "stage": "wireframed", "products": ["web-viz", "control"], "axes": ["freshness", "health", "operability"] }
+  ],
+  "research": [
+    {
+      "title": "ROS 2 Managed nodes",
+      "url": "https://design.ros2.org/articles/node_lifecycle.html",
+      "conclusion": "Keep stable states distinct from transitions and leave transition execution to a supervisory product layer."
+    },
+    {
+      "title": "Open-RMF RobotState",
+      "url": "https://docs.ros.org/en/humble/p/rmf_fleet_msgs/msg/RobotState.html",
+      "conclusion": "Mode, battery, location, path, task identity, and message sequence are independent evidence; connection alone cannot establish freshness or health."
+    },
+    {
+      "title": "Kubernetes Pod Conditions",
+      "url": "https://kubernetes.io/docs/concepts/workloads/pods/pod-condition/",
+      "conclusion": "Unknown, transition time, machine reason, and human message are explicit condition evidence, and composite readiness depends on multiple conditions."
+    },
+    {
+      "title": "W3C WCAG Technique ARIA19",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA19",
+      "conclusion": "Assertive alerts are disruptive and should be reserved for changes that require immediate attention rather than routine status presentation."
+    }
+  ]
+}

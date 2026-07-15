@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 37,
+  "count": 39,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -419,6 +419,28 @@
       },
       "bytes": 56341,
       "sha256": "9e6bd97e1cd0ccd31e3f4508481f6d140b1ad6dc34a52c270a4bf18e87f146a9"
+    },
+    {
+      "name": "communication-message-family-dark",
+      "id": "lds-product-communication-message--message-family-visual-parity",
+      "query": {},
+      "viewport": {
+        "width": 860,
+        "height": 520
+      },
+      "bytes": 48123,
+      "sha256": "464bc0c943a72b735554b0956b8e79bfeef09c75db49bfd60806941788cd28a8"
+    },
+    {
+      "name": "communication-message-overview-light",
+      "id": "lds-product-communication-message--message-overview",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 820
+      },
+      "bytes": 85606,
+      "sha256": "cf31abe56d5d09a1ce8856aa6b1e9255ab762ca02fde37678738f0623c926ce8"
     }
   ]
 }

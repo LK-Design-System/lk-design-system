@@ -221,3 +221,39 @@ export const NarrowLongProvenance = {
     }
   },
 };
+
+export const CompactCitationChips = {
+  name: '변형·상태 · 컴팩트 인용 chip',
+  parameters: storyDescription(
+    '챗 답변 아래 citation처럼 모든 source가 열람 가능하다고 전제되는 맥락에서는 compact 모드로 각 source를 attachment chip 무게의 한 줄 link chip으로 보여 줍니다. card·펼침·availability 배지 없이 활성화 시 원본을 열고, 320px에서 긴 라벨은 ellipsis로 잘립니다. 여기서는 시각적 heading을 숨겨(titleVisuallyHidden) chip만 남깁니다.',
+  ),
+  args: {
+    title: '레퍼런스',
+    headingLevel: 3,
+    titleVisuallyHidden: true,
+    compact: true,
+    sources: [
+      { id: 'meeting-notes', label: '업로드된 주간 회의록 · 2026-07-12', href: 'https://example.com/meeting-notes' },
+      { id: 'planning', label: 'Quarterly-product-planning-notes-with-a-very-long-file-name-and-revision-history.pdf', href: 'https://example.com/files/quarterly-planning' },
+    ],
+  },
+  render: (args) => (
+    <div style={{ width: 320, maxWidth: '100%' }}>
+      <SourceDisclosure {...args} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('.lk-source-disclosure');
+    const chips = root ? Array.from(root.querySelectorAll('.lk-source-disclosure__chip')) : [];
+    if (!root || chips.length !== 2) throw new Error('Compact mode must render one link chip per source.');
+    if (root.querySelector('.lk-source-disclosure__status') || root.querySelector('details')) {
+      throw new Error('Compact citations must not render an availability badge or a disclosure panel.');
+    }
+    if (chips.some((chip) => chip.tagName !== 'A' || chip.getAttribute('target') !== '_blank')) {
+      throw new Error('Compact citations with an href must open the original source in a new tab.');
+    }
+    if (root.scrollWidth > root.clientWidth + 1) {
+      throw new Error('Compact citations must not create horizontal overflow at 320px.');
+    }
+  },
+};

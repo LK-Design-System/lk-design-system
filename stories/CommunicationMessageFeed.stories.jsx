@@ -1,6 +1,6 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Button, MessageFeed, Spinner } from '../src/index.js';
+import { Button, ConversationMessage, MessageFeed, Spinner } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -11,14 +11,14 @@ const meta = {
     storyGuide: {
       storyId: 'lds-product-communication-message-feed--overview',
       eyebrow: 'Product / Communication',
-      title: '대화의 새 흐름을 알리면서도 사용자가 읽던 위치는 빼앗지 않습니다',
+      title: '대화 기록은 chrome 없이 이어지고 새 메시지가 읽던 위치를 빼앗지 않습니다',
       description:
-        '지원 대화, 운영 메시지, AI 응답처럼 시간순 기록을 읽고 과거 내용을 이어 불러올 때 사용합니다. 한두 줄짜리 상태 알림에는 Message Feed 대신 Banner나 Toast가 적합합니다.',
+        '장문 AI 응답과 짧은 사용자 발화를 시간순으로 읽고 과거 내용을 이어 불러올 때 사용합니다. Feed는 application panel이나 messenger canvas가 아니라 투명한 named log와 history/follow behavior만 제공합니다.',
     },
     docs: {
       description: {
         component:
-          '접근 가능한 log, 과거 기록 위치 복원, controlled bottom-follow와 새 메시지 이동 action을 제공하는 LK Product Extension입니다.',
+          '접근 가능한 transparent log, history prepend anchoring, controlled bottom-follow와 latest action을 제공하는 LK Product Extension입니다.',
       },
     },
   },
@@ -26,64 +26,85 @@ const meta = {
 
 export default meta;
 
-function MessageRow({ id, author, time, children }) {
+function FeedMessage({ id, authorRole, author, time, lifecycle, children, ...rest }) {
+  const resolvedLifecycle = lifecycle ?? (
+    authorRole === 'user'
+      ? { kind: 'delivery', state: 'sent' }
+      : authorRole === 'assistant'
+        ? { kind: 'response', state: 'complete' }
+        : { kind: 'static' }
+  );
+
   return (
-    <article
+    <ConversationMessage
+      {...rest}
       data-message-key={id}
-      style={{
-        display: 'grid',
-        gap: 'var(--space-2)',
-        minWidth: 0,
-        padding: 'var(--space-3) 0',
-        borderBottom: '1px solid var(--color-semantic-line-normal-normal)',
-      }}
+      authorRole={authorRole}
+      author={author}
+      timestamp={time}
+      lifecycle={resolvedLifecycle}
     >
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0 }}>
-        <strong style={{ minWidth: 0, color: 'var(--color-semantic-label-strong)', overflowWrap: 'anywhere' }}>{author}</strong>
-        <time style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)' }}>{time}</time>
-      </div>
-      <p style={{ margin: 0, minWidth: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.65, overflowWrap: 'anywhere', whiteSpace: 'pre-wrap' }}>
-        {children}
-      </p>
-    </article>
+      {children}
+    </ConversationMessage>
   );
 }
 
 function messageData(prefix, count, start = 1) {
   return Array.from({ length: count }, (_, index) => {
     const number = start + index;
+    const authorRole = number % 4 === 0 ? 'human-agent' : number % 2 === 0 ? 'assistant' : 'user';
     return {
       id: `${prefix}-${number}`,
-      author: number % 3 === 0 ? '운영 지원' : number % 2 === 0 ? 'LK Assistant' : '김서윤',
-      time: `10:${String(number).padStart(2, '0')}`,
-      text: `메시지 ${number}입니다. 현재 작업의 진행 상황과 다음 확인 항목을 시간순으로 기록합니다.`,
+      authorRole,
+      author: authorRole === 'human-agent' ? '지원 담당자' : authorRole === 'assistant' ? 'AI Assistant' : '김서윤',
+      time: `10:${String(number % 60).padStart(2, '0')}`,
+      text: authorRole === 'assistant'
+        ? `응답 ${number}: 요청한 문서를 읽고 핵심 결정 사항과 다음 행동을 문장으로 정리했습니다.`
+        : `메시지 ${number}: 이 항목을 더 간단하게 설명해 주세요.`,
     };
   });
 }
 
 function MessageRows({ messages }) {
-  return messages.map((message) => (
-    <MessageRow key={message.id} {...message}>
-      {message.text}
-    </MessageRow>
+  return messages.map(({ text, ...message }) => (
+    <FeedMessage key={message.id} {...message}>
+      {text}
+    </FeedMessage>
   ));
 }
 
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '운영 지원 대화를 시간순으로 읽는 기본 예입니다. 스크롤 영역 자체에 이름이 있고 새 메시지만 정중하게 알려 주는지 확인하세요.',
+    '약 760px에서 assistant document, user solid primary bubble, system 중앙 pill 칩과 human-agent neutral fill bubble을 transparent named log 안에 시간순으로 배치합니다. Feed가 child를 card로 다시 감싸거나 자체 messenger background를 만들지 않는지 확인하세요.',
   ),
   render: () => (
-    <main style={{ width: '100%', maxWidth: 720 }}>
-      <MessageFeed ariaLabel="운영 지원 대화" following maxHeight={360}>
-        <MessageRows messages={messageData('overview', 6)} />
+    <main style={{ width: '100%', maxWidth: 760 }}>
+      <MessageFeed ariaLabel="AI 문서 대화" following viewportMinHeight={360} maxHeight={360}>
+        <FeedMessage id="overview-assistant" authorRole="assistant" author="AI Assistant" time="10:21">
+          <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+            <p style={{ margin: 0 }}>업로드한 문서의 결정 사항을 두 범주로 정리했습니다.</p>
+            <ul style={{ margin: 0, paddingInlineStart: 'var(--space-5)' }}>
+              <li>이번 주에 완료할 항목 3개</li>
+              <li>추가 확인이 필요한 항목 1개</li>
+            </ul>
+          </div>
+        </FeedMessage>
+        <FeedMessage id="overview-user" authorRole="user" author="김서윤" time="10:22">
+          추가 확인 항목만 자세히 알려 주세요.
+        </FeedMessage>
+        <FeedMessage id="overview-system" authorRole="system" author="대화 시스템" time="10:22">
+          상담원이 대화에 참여했습니다.
+        </FeedMessage>
+        <FeedMessage id="overview-agent" authorRole="human-agent" author="지원 담당자 · 박지훈" time="10:23">
+          문서의 날짜와 담당자 이름을 함께 확인하겠습니다.
+        </FeedMessage>
       </MessageFeed>
     </main>
   ),
   play: async ({ canvasElement }) => {
     const log = canvasElement.querySelector('[role="log"]');
-    if (!log || log.getAttribute('aria-label') !== '운영 지원 대화') {
+    if (!log || log.getAttribute('aria-label') !== 'AI 문서 대화') {
       throw new Error('MessageFeed must expose a named log viewport.');
     }
     if (
@@ -94,11 +115,19 @@ export const Overview = {
     ) {
       throw new Error('The log must expose the polite additions-only focus contract.');
     }
-    if (canvasElement.querySelector('[role="feed"]')) {
-      throw new Error('MessageFeed must not opt into the APG feed focus contract.');
+    if (canvasElement.querySelector('[role="feed"]') || log.querySelector('article[tabindex]')) {
+      throw new Error('MessageFeed must not introduce feed semantics or roving article focus.');
     }
-    if (log.querySelector('article[tabindex]')) {
-      throw new Error('Message articles must not receive roving tabindex.');
+    const messages = Array.from(log.querySelectorAll('.lk-conversation-message'));
+    if (messages.map((message) => message.dataset.messagePresentation).join(',') !== 'document,bubble,system,bubble') {
+      throw new Error('The feed must preserve child-owned message presentations.');
+    }
+    const style = getComputedStyle(log);
+    if (style.backgroundColor !== 'rgba(0, 0, 0, 0)' || style.boxShadow !== 'none' || style.borderTopWidth !== '0px') {
+      throw new Error('MessageFeed must remain transparent and chrome-free.');
+    }
+    if (log.hasAttribute('data-message-feed-surface')) {
+      throw new Error('MessageFeed must not expose a product surface axis.');
     }
   },
 };
@@ -119,18 +148,30 @@ function HistoryHarness() {
   };
 
   return (
-    <main data-history-harness style={{ width: '100%', maxWidth: 720 }}>
+    <main data-history-harness style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 720 }}>
       <MessageFeed
         ariaLabel="기록 위치 복원 예제"
         following={false}
         hasPrevious={hasPrevious}
         loadingPrevious={loading}
         onLoadPrevious={loadPrevious}
-        maxHeight={260}
+        maxHeight={280}
         liveStatus={loading ? '이전 메시지를 불러오는 중입니다.' : undefined}
       >
         <MessageRows messages={messages} />
       </MessageFeed>
+      <section data-no-result-history style={{ display: 'grid', gap: 'var(--space-2)' }}>
+        <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)' }}>새 기록이 없는 요청</strong>
+        <MessageFeed
+          ariaLabel="무결과 기록 요청 예제"
+          following={false}
+          hasPrevious
+          onLoadPrevious={() => new Promise((resolve) => window.setTimeout(resolve, 40))}
+          maxHeight={120}
+        >
+          <FeedMessage authorRole="assistant" author="AI Assistant">현재 기록이 가장 오래된 메시지입니다.</FeedMessage>
+        </MessageFeed>
+      </section>
     </main>
   );
 }
@@ -138,7 +179,7 @@ function HistoryHarness() {
 export const HistoryAnchoring = {
   name: '상호작용 · 이전 메시지 위치 유지',
   parameters: storyDescription(
-    '대화 중간을 읽다가 이전 메시지를 불러오는 상황입니다. 새 기록이 위에 추가되어도 기존 메시지의 화면상 위치가 움직이지 않아야 합니다.',
+    '대화 중간을 읽다가 이전 기록을 불러옵니다. 과거 message가 위에 추가되어도 기존 anchor의 viewport 내 위치를 유지하고, prepend된 기록을 새 message로 발표하지 않아야 합니다.',
   ),
   render: () => <HistoryHarness />,
   play: async ({ canvasElement }) => {
@@ -147,14 +188,11 @@ export const HistoryAnchoring = {
     const anchor = canvasElement.querySelector('[data-message-key="current-24"]');
     if (!log || !loadButton || !anchor) throw new Error('History anchoring fixture is incomplete.');
     if (!(loadButton.compareDocumentPosition(log) & Node.DOCUMENT_POSITION_FOLLOWING)) {
-      throw new Error('The previous-history action must precede the log in DOM order.');
+      throw new Error('The previous-history action must precede the log.');
     }
 
-    log.scrollTop = Math.min(96, Math.max(0, log.scrollHeight - log.clientHeight - 48));
+    log.scrollTop = Math.min(120, Math.max(0, log.scrollHeight - log.clientHeight - 64));
     log.dispatchEvent(new Event('scroll', { bubbles: true }));
-    // Measure the anchor position RELATIVE to the log viewport: once history is
-    // exhausted the previous-history control unmounts and shifts the whole log in
-    // absolute page coordinates, which is unrelated to in-viewport restoration.
     const beforeTop = anchor.getBoundingClientRect().top - log.getBoundingClientRect().top;
     const beforeHeight = log.scrollHeight;
     const beforeScrollTop = log.scrollTop;
@@ -163,36 +201,45 @@ export const HistoryAnchoring = {
     await waitFor(() => {
       if (log.getAttribute('aria-busy') !== 'true') throw new Error('History loading must mark the log busy.');
       if (log.getAttribute('aria-live') !== 'off' || log.dataset.historyLiveSuppressed !== 'true') {
-        throw new Error('Prepending old history must temporarily suppress new-message announcements.');
+        throw new Error('History prepend must temporarily suppress announcements.');
       }
     });
     await waitFor(() => {
-      if (!canvasElement.querySelector('[data-message-key="older-13"]')) throw new Error('Older messages have not been prepended.');
+      if (!canvasElement.querySelector('[data-message-key="older-13"]')) throw new Error('Older messages were not prepended.');
       if (log.hasAttribute('aria-busy')) throw new Error('History loading did not finish.');
     });
-
-    // The scroll-anchor restoration runs in a layout effect after the prepend
-    // commits; poll until it settles so headless frame timing cannot race it.
     await waitFor(() => {
       const afterAnchor = canvasElement.querySelector('[data-message-key="current-24"]');
-      const heightDelta = log.scrollHeight - beforeHeight;
-      if (Math.abs(log.scrollTop - (beforeScrollTop + heightDelta)) > 2) {
-        throw new Error('Prepending history must restore scrollTop by the scrollHeight delta.');
+      const expectedTop = beforeScrollTop + (log.scrollHeight - beforeHeight);
+      if (Math.abs(log.scrollTop - expectedTop) > 2) {
+        throw new Error('Prepending history must restore scrollTop by the content-height delta.');
       }
-      const afterTop = afterAnchor
-        ? afterAnchor.getBoundingClientRect().top - log.getBoundingClientRect().top
-        : null;
-      if (afterTop === null || Math.abs(afterTop - beforeTop) > 2) {
-        throw new Error('The previously visible message must stay at the same visual position.');
+      const afterTop = afterAnchor?.getBoundingClientRect().top - log.getBoundingClientRect().top;
+      if (afterTop == null || Math.abs(afterTop - beforeTop) > 2) {
+        throw new Error('The visible anchor must stay at the same viewport position.');
       }
     });
     await waitFor(() => {
       if (log.getAttribute('aria-live') !== 'polite' || log.dataset.historyLiveSuppressed) {
-        throw new Error('The log must restore polite announcements after history anchoring settles.');
+        throw new Error('The log must restore polite announcements after anchoring.');
+      }
+    });
+    const noResult = canvasElement.querySelector('[data-no-result-history]');
+    const noResultLog = noResult?.querySelector('[role="log"]');
+    const noResultButton = noResult?.querySelector('[data-message-feed-history-control] button');
+    if (!noResultLog || !noResultButton) throw new Error('The no-result history fixture is incomplete.');
+    await userEvent.click(noResultButton);
+    await waitFor(() => {
+      if (noResultLog.getAttribute('aria-live') !== 'polite' || noResultLog.dataset.historyLiveSuppressed) {
+        throw new Error('A completed history request with no new rows must restore polite announcements.');
       }
     });
   },
 };
+
+function isNearBottom(viewport) {
+  return viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= 8;
+}
 
 function FollowHarness() {
   const [messages, setMessages] = React.useState(() => messageData('follow', 12));
@@ -206,9 +253,10 @@ function FollowHarness() {
       ...current,
       {
         id: `follow-${current.length + 1}`,
-        author: '운영 지원',
+        authorRole: 'assistant',
+        author: 'AI Assistant',
         time: '10:42',
-        text: '사용자가 이전 기록을 읽는 동안 도착한 새 메시지입니다.',
+        text: '사용자가 이전 기록을 읽는 동안 새 장문 응답이 도착했습니다.',
       },
     ]);
     setUnreadCount((count) => count + 1);
@@ -222,9 +270,7 @@ function FollowHarness() {
       data-jump-count={jumpCount}
       style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 720 }}
     >
-      <div>
-        <Button size="sm" variant="ghost" data-add-message onClick={addMessage}>새 메시지 추가</Button>
-      </div>
+      <div><Button size="sm" variant="ghost" data-add-message onClick={addMessage}>새 응답 추가</Button></div>
       <MessageFeed
         ariaLabel="새 메시지 follow 예제"
         following={following}
@@ -237,7 +283,7 @@ function FollowHarness() {
           setJumpCount((count) => count + 1);
           setUnreadCount(0);
         }}
-        maxHeight={240}
+        maxHeight={260}
       >
         <MessageRows messages={messages} />
       </MessageFeed>
@@ -248,7 +294,7 @@ function FollowHarness() {
 export const FollowAndUnread = {
   name: '상호작용 · 읽기 위치와 새 메시지',
   parameters: storyDescription(
-    '사용자가 위쪽 기록을 읽는 동안 도착한 메시지는 자동으로 화면을 끌어내리지 않습니다. 최신 메시지 action으로만 bottom-follow를 다시 시작합니다.',
+    '사용자가 위쪽 기록을 읽는 동안 새 response가 도착해도 자동으로 bottom으로 끌어내리지 않습니다. latest action으로만 controlled following을 다시 시작합니다.',
   ),
   render: () => <FollowHarness />,
   play: async ({ canvasElement }) => {
@@ -256,71 +302,61 @@ export const FollowAndUnread = {
     const log = canvasElement.querySelector('[role="log"]');
     const addButton = canvasElement.querySelector('[data-add-message]');
     if (!harness || !log || !addButton) throw new Error('Follow fixture is incomplete.');
-
     await waitFor(() => {
-      if (log.scrollHeight <= log.clientHeight || !isNearBottom(log)) throw new Error('Initial follow did not reach the bottom.');
+      if (log.scrollHeight <= log.clientHeight || !isNearBottom(log)) throw new Error('Initial follow must reach the bottom.');
     });
-    // Re-issue the scroll inside waitFor: the initial mount's programmatic
-    // scroll-to-bottom suppresses user-scroll handling for a couple of frames,
-    // so a single dispatch can be swallowed under headless timing.
     await waitFor(() => {
       log.scrollTop = 0;
       log.dispatchEvent(new Event('scroll', { bubbles: true }));
       if (harness.dataset.following !== 'false' || harness.dataset.followingReason !== 'user-scroll') {
-        throw new Error('User scrolling away must disable following with the user-scroll reason.');
+        throw new Error('User scrolling away must disable following.');
       }
     });
-
     const beforeAppendTop = log.scrollTop;
     await userEvent.click(addButton);
     await waitFor(() => {
-      if (!canvasElement.querySelector('[data-message-key="follow-13"]')) throw new Error('The new message was not appended.');
+      if (!canvasElement.querySelector('[data-message-key="follow-13"]')) throw new Error('The new response was not appended.');
     });
     if (Math.abs(log.scrollTop - beforeAppendTop) > 1) {
       throw new Error('Appending while following=false must preserve scrollTop.');
     }
-
     const jumpButton = canvasElement.querySelector('[data-message-feed-jump]');
-    if (!jumpButton) throw new Error('Unread messages must expose the latest-message action.');
+    if (!jumpButton) throw new Error('Unread content must expose the latest-message action.');
     jumpButton.focus();
     await userEvent.click(jumpButton);
     await waitFor(() => {
-      if (
-        harness.dataset.following !== 'true'
+      if (harness.dataset.following !== 'true'
         || harness.dataset.followingReason !== 'jump-to-latest'
         || harness.dataset.jumpCount !== '1'
-      ) {
-        throw new Error('The latest action must report its controlled reason and callback.');
+        || !isNearBottom(log)
+        || document.activeElement !== jumpButton) {
+        throw new Error('The latest action must restore bottom-follow, callback state, and focus.');
       }
-      if (!isNearBottom(log)) throw new Error('The latest action must scroll to the bottom.');
-      if (document.activeElement !== jumpButton) throw new Error('The latest action must retain button focus.');
     });
   },
 };
 
-function isNearBottom(viewport) {
-  return viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= 8;
-}
-
 export const EmptyAndBusy = {
   name: '변형·상태 · 빈 목록과 불러오는 중',
   parameters: storyDescription(
-    '아직 대화가 없을 때와 초기 기록을 불러오는 중일 때의 차이입니다. 빈 문구는 log 안에, 짧은 처리 단계 알림은 log 밖에 둡니다.',
+    '아직 대화가 없을 때와 초기 history를 불러오는 중일 때를 비교합니다. empty content는 log 안에, phase announcement는 log 밖에 둡니다.',
   ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--space-5)', width: '100%', maxWidth: 760 }}>
       <section data-empty-example aria-label="빈 대화">
-        <MessageFeed ariaLabel="빈 지원 대화" following empty="아직 시작된 대화가 없습니다." maxHeight={220} />
+        <MessageFeed ariaLabel="빈 AI 대화" following empty="아직 시작된 대화가 없습니다." maxHeight={220}>
+          {[null, false, undefined]}
+        </MessageFeed>
       </section>
       <section data-busy-example aria-label="불러오는 대화">
         <MessageFeed
-          ariaLabel="불러오는 지원 대화"
+          ariaLabel="불러오는 AI 대화"
           following
           busy
           empty={(
             <span style={{ display: 'inline-grid', justifyItems: 'center', gap: 'var(--space-2)' }}>
               <Spinner size={20} aria-hidden="true" />
-              <span>메시지를 준비하고 있습니다.</span>
+              <span>대화 기록을 준비하고 있습니다.</span>
             </span>
           )}
           liveStatus="대화 기록을 불러오는 중입니다."
@@ -349,29 +385,29 @@ export const EmptyAndBusy = {
 export const DarkTheme = {
   name: '변형·상태 · 다크 테마',
   parameters: storyDescription(
-    '같은 named log, 시간순 행, divider와 scroll surface를 dark semantic theme에서 확인합니다. 별도 inverse prop이나 console형 surface를 만들지 않습니다.',
+    '같은 transparent log와 document/bubble reading flow를 dark semantic scope에서 확인합니다. 별도 inverse prop, soft canvas 또는 console surface를 만들지 않습니다.',
   ),
   render: () => (
     <main
       data-theme="dark"
       data-dark-feed
-      style={{ width: '100%', maxWidth: 720, padding: 'var(--space-5)', boxSizing: 'border-box', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-normal-normal)' }}
+      style={{ width: '100%', maxWidth: 720, padding: 'var(--space-5)', boxSizing: 'border-box', background: 'var(--color-semantic-background-normal-normal)' }}
     >
-      <MessageFeed ariaLabel="다크 운영 지원 대화" following maxHeight={280}>
+      <MessageFeed ariaLabel="다크 AI 대화" following viewportMinHeight={300} maxHeight={300}>
         <MessageRows messages={messageData('dark', 5)} />
       </MessageFeed>
     </main>
   ),
   play: async ({ canvasElement }) => {
-    const theme = canvasElement.querySelector('[data-dark-feed]');
-    const log = theme?.querySelector('[role="log"]');
-    const rows = log ? Array.from(log.querySelectorAll('article')) : [];
-    if (!theme || !log || rows.length !== 5) throw new Error('The dark MessageFeed comparison is incomplete.');
-    if (theme.scrollWidth > theme.clientWidth + 1 || log.scrollWidth > log.clientWidth + 1) {
-      throw new Error('The dark MessageFeed must not create horizontal overflow.');
+    const fixture = canvasElement.querySelector('[data-dark-feed]');
+    const log = fixture?.querySelector('[role="log"]');
+    const messages = log ? Array.from(log.querySelectorAll('.lk-conversation-message')) : [];
+    if (!fixture || !log || messages.length !== 5) throw new Error('The dark feed fixture is incomplete.');
+    if (getComputedStyle(log).backgroundColor !== 'rgba(0, 0, 0, 0)' || getComputedStyle(log).boxShadow !== 'none') {
+      throw new Error('Dark MessageFeed must stay transparent and chrome-free.');
     }
-    if (getComputedStyle(log).backgroundColor === getComputedStyle(theme).backgroundColor) {
-      throw new Error('The elevated log surface must remain distinct from the dark page background.');
+    if (fixture.scrollWidth > fixture.clientWidth + 1 || log.scrollWidth > log.clientWidth + 1) {
+      throw new Error('The dark feed must not create horizontal overflow.');
     }
   },
 };
@@ -379,46 +415,47 @@ export const DarkTheme = {
 export const Narrow320 = {
   name: '반응형 · 320px',
   parameters: storyDescription(
-    '좁은 패널에서 과거 기록, 긴 한글·영문·경로, 새 메시지 action을 함께 확인합니다. action은 기록을 덮지 않고 세로 읽기 순서를 유지합니다.',
+    '320px에서 history action, 긴 assistant document와 user bubble, latest action을 함께 확인합니다. action이 message를 덮지 않고 세로 reading order를 유지해야 합니다.',
   ),
   render: () => (
     <main data-narrow-feed style={{ width: 320, maxWidth: '100%' }}>
       <MessageFeed
-        ariaLabel="좁은 지원 대화"
+        ariaLabel="좁은 AI 대화"
         following={false}
         hasPrevious
         onLoadPrevious={() => {}}
         unreadCount={18}
-        maxHeight={280}
+        viewportMinHeight={300}
+        maxHeight={300}
       >
-        <MessageRow id="narrow-1" author="LK Assistant" time="10:31">
-          긴 주소 https://operations.example.com/robots/fleet-alpha/incidents/navigation-timeout 와 C:\operations\missions\2026\07\12\recovery-plan.json 을 함께 공유합니다.
-        </MessageRow>
-        <MessageRow id="narrow-2" author="운영 지원" time="10:32">
-          엘리베이터 탑승 지점과 경사 구역을 다시 확인한 뒤 다음 경로를 안내하겠습니다.
-        </MessageRow>
+        <FeedMessage id="narrow-1" authorRole="assistant" author="AI Assistant with a long display name" time="10:31">
+          긴 주소 https://example.com/reports/quarterly-planning/very-long-reference-path-without-shortening 를 포함한 문서형 답변입니다.
+        </FeedMessage>
+        <FeedMessage id="narrow-2" authorRole="user" author="김서윤" time="10:32">
+          원본 주소를 유지하고 결론만 간단히 알려 주세요.
+        </FeedMessage>
       </MessageFeed>
     </main>
   ),
   play: async ({ canvasElement }) => {
     const wrapper = canvasElement.querySelector('[data-narrow-feed]');
-    const previousControl = wrapper?.querySelector('[data-message-feed-history-control]');
+    const previous = wrapper?.querySelector('[data-message-feed-history-control]');
     const log = wrapper?.querySelector('[role="log"]');
-    const jumpControl = wrapper?.querySelector('[data-message-feed-jump-control]');
-    if (!wrapper || !previousControl || !log || !jumpControl) {
-      throw new Error('The 320px composition must include both actions and the log.');
+    const latest = wrapper?.querySelector('[data-message-feed-jump-control]');
+    if (!wrapper || !previous || !log || !latest) {
+      throw new Error('The narrow feed must include history, log, and latest controls.');
     }
-    if (
-      !(previousControl.compareDocumentPosition(log) & Node.DOCUMENT_POSITION_FOLLOWING)
-      || !(log.compareDocumentPosition(jumpControl) & Node.DOCUMENT_POSITION_FOLLOWING)
-    ) {
-      throw new Error('Narrow DOM order must be previous action, log, then latest action.');
+    if (!(previous.compareDocumentPosition(log) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(log.compareDocumentPosition(latest) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Narrow DOM order must be history → log → latest.');
     }
     if (wrapper.scrollWidth > wrapper.clientWidth + 1 || log.scrollWidth > log.clientWidth + 1) {
       throw new Error('MessageFeed must not create horizontal overflow at 320px.');
     }
-    if (wrapper.querySelector('[role="feed"]')) {
-      throw new Error('The narrow variant must keep log semantics instead of feed semantics.');
+    const presentations = Array.from(log.querySelectorAll('.lk-conversation-message'))
+      .map((message) => message.dataset.messagePresentation);
+    if (presentations.join(',') !== 'document,bubble') {
+      throw new Error('The narrow feed must preserve assistant document and user bubble presentations.');
     }
   },
 };

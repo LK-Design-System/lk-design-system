@@ -1,41 +1,34 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { ANNOTATION_CODE as ANNOTATION_CODES, ROLE_CODE as ROLE_CODES } from './_navigationEncoding.js';
 
-const ROLE_CODES = {
-  holding: 'H',
-  passthrough: 'T',
-  parking: 'P',
-  charger: 'C',
-};
-
+// Accessible-name copy is Korean to match every sibling navigation overlay
+// (Lane / Region / Route / Trajectory / Facility). A Korean-first product must
+// not announce mixed-language part names in one map (WCAG 3.1.2 Language of
+// Parts). The short on-map visual codes stay language-neutral (H / C / dock).
 const ROLE_LABELS = {
-  holding: 'holding point',
-  passthrough: 'passthrough point',
-  parking: 'parking spot',
-  charger: 'charger',
-};
-
-const ANNOTATION_CODES = {
-  dock: 'dock',
-  cleaning: 'clean',
-  dispenser: 'disp',
-  ingestor: 'ing',
-  'lift-approach': 'lift',
-  'door-approach': 'door',
-  mutex: 'mutex',
-  custom: 'custom',
+  holding: '대기 지점',
+  passthrough: '통과 지점',
+  parking: '주차 지점',
+  charger: '충전 지점',
 };
 
 const ANNOTATION_LABELS = {
-  dock: 'dock',
-  cleaning: 'cleaning',
-  dispenser: 'dispenser',
-  ingestor: 'ingestor',
-  'lift-approach': 'lift approach',
-  'door-approach': 'door approach',
-  mutex: 'mutex',
-  custom: 'custom annotation',
+  dock: '도킹',
+  cleaning: '청소',
+  dispenser: '자재 공급',
+  ingestor: '자재 수거',
+  'lift-approach': '승강기 접근',
+  'door-approach': '문 접근',
+  mutex: '상호 배제',
+  custom: '사용자 정의',
+};
+
+const AVAILABILITY_LABELS = {
+  available: '사용 가능',
+  unavailable: '사용 불가',
+  unknown: '상태 미확인',
 };
 
 function normalizeViewportScale(value) {
@@ -59,20 +52,21 @@ function accessibleName(waypoint, { selected, focused, disabled, invalid, stale 
       const kind = ANNOTATION_LABELS[annotation.kind] || annotation.kind;
       return annotation.label ? `${annotation.label} (${kind})` : kind;
     });
+  const availability = waypoint.availability || 'unknown';
   const states = [
-    `availability ${waypoint.availability || 'unknown'}`,
-    selected && 'selected',
-    focused && 'focused',
-    disabled && 'disabled',
-    invalid && 'invalid',
-    stale && 'stale',
+    `가용성 ${AVAILABILITY_LABELS[availability] || availability}`,
+    selected && '선택됨',
+    focused && '포커스됨',
+    disabled && '선택할 수 없음',
+    invalid && '데이터 오류',
+    stale && '오래된 데이터',
   ].filter(Boolean);
 
   return [
     waypoint.label,
-    `map ${waypoint.mapId}`,
-    roles.length > 0 && `roles ${roles.join(', ')}`,
-    annotations.length > 0 && `annotations ${annotations.join(', ')}`,
+    `지도 ${waypoint.mapId}`,
+    roles.length > 0 && `역할 ${roles.join(', ')}`,
+    annotations.length > 0 && `주석 ${annotations.join(', ')}`,
     ...states,
   ].filter(Boolean).join(', ');
 }
@@ -123,9 +117,9 @@ export function WaypointMarker({
   const muted = 'var(--viewer-muted, var(--color-semantic-label-neutral))';
   const surface = 'var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))';
   const stateColor = invalid || availability === 'unavailable'
-    ? 'var(--color-semantic-status-negative-foreground)'
+    ? 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))'
     : availability === 'unknown'
-      ? 'var(--color-semantic-status-cautionary-foreground)'
+      ? 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))'
       : foreground;
 
   const activate = (event) => {
@@ -191,6 +185,34 @@ export function WaypointMarker({
         transform={`scale(${inverseScale})`}
       >
         {/*
+          Decorative depth + salience layers. They carry their own data hooks,
+          never the measured `data-waypoint-point`, so the 24px hit target and
+          the glyph-in-circle geometry contracts are untouched. The cast shadow
+          lifts every marker off the facility grid; the attention ring gives
+          alarm states (invalid / unavailable) visual weight so an emergency is
+          not painted at the same hairline salience as routine state.
+        */}
+        <circle
+          data-waypoint-shadow=""
+          r="6.5"
+          cy="1.4"
+          fill="var(--color-semantic-static-black)"
+          opacity="0.16"
+          pointerEvents="none"
+        />
+        {(invalid || availability === 'unavailable') && (
+          <circle
+            data-waypoint-attention=""
+            r="10.5"
+            fill="none"
+            stroke={stateColor}
+            strokeWidth="2.5"
+            opacity="0.4"
+            vectorEffect="non-scaling-stroke"
+            pointerEvents="none"
+          />
+        )}
+        {/*
           WCAG 2.2 sets the minimum interactive target at 24 screen px. This
           transparent hit circle lives inside the inverse-scaled screen-space
           group, so its radius is already measured in screen px. A circle must
@@ -206,13 +228,9 @@ export function WaypointMarker({
         />
 
         {focusVisible && (
-          <rect
+          <circle
             data-waypoint-focus-indicator=""
-            x="-11"
-            y="-11"
-            width="22"
-            height="22"
-            rx="4"
+            r="11"
             fill="none"
             stroke="var(--color-semantic-focus-indicator)"
             strokeWidth="2"
@@ -237,7 +255,7 @@ export function WaypointMarker({
             data-waypoint-selected-indicator=""
             r="9"
             fill="none"
-            stroke="var(--color-semantic-primary-normal)"
+            stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
             strokeWidth="2"
             vectorEffect="non-scaling-stroke"
           />
@@ -248,7 +266,7 @@ export function WaypointMarker({
           r="6"
           fill={surface}
           stroke={stateColor}
-          strokeWidth="2"
+          strokeWidth="2.25"
           vectorEffect="non-scaling-stroke"
         />
 
@@ -257,7 +275,7 @@ export function WaypointMarker({
             data-waypoint-unavailable-indicator=""
             d="M-4.5 4.5 L4.5 -4.5"
             fill="none"
-            stroke="var(--color-semantic-status-negative-foreground)"
+            stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))"
             strokeWidth="2"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
@@ -276,7 +294,7 @@ export function WaypointMarker({
                 data-waypoint-state-circle="unknown"
                 r="6.5"
                 fill={surface}
-                stroke="var(--color-semantic-status-cautionary-foreground)"
+                stroke="var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))"
                 strokeWidth="1.5"
                 vectorEffect="non-scaling-stroke"
               />
@@ -302,7 +320,7 @@ export function WaypointMarker({
                 data-waypoint-state-circle="invalid"
                 r="6.5"
                 fill={surface}
-                stroke="var(--color-semantic-status-negative-foreground)"
+                stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))"
                 strokeWidth="1.5"
                 vectorEffect="non-scaling-stroke"
               />

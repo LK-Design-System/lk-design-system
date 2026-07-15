@@ -1,7 +1,8 @@
 "use client";
 import {
   MessageComposer
-} from "../../chunk-S3ADTNNQ.js";
+} from "../../chunk-XWIDD76O.js";
+import "../../chunk-LMQSX5BW.js";
 import "../../chunk-7WDUT67E.js";
 import "../../chunk-VWRGKNOW.js";
 import "../../chunk-W72SCMAK.js";

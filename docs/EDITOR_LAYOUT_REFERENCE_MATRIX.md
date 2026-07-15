@@ -5,21 +5,21 @@
 | Type | Stable domain reference contract |
 | Status | Current |
 | Owner | Robotics component owner · Product engineering |
-| Last reviewed | 2026-07-12 |
-| Product source | `LK-ROBOTICS/lk_web_viz` at the revision recorded below |
+| Last reviewed | 2026-07-14 |
+| Coverage source | `LK-ROBOTICS/lk_web_viz` at the revision recorded below |
 
-이 문서는 `CanvasEditorShell`과 로보틱스 편집 패턴을 변경할 때 적용할 근거 우선순위와 영역 소유권을 정의한다. 일반적인 GIS/3D 에디터 관행은 참고 자료이고, LK 제품 흐름을 설명할 때는 실제 `lk_web_viz` 소스가 우선한다.
+이 문서는 `CanvasEditorShell`과 로보틱스 편집 패턴을 변경할 때 적용할 설계 근거와 영역 소유권을 정의한다. LK 제품 source는 필요한 workflow·region·state와 조합 가능성을 확인하는 coverage 자료이며 editor anatomy, 시각 위계, 치수나 public API의 설계 authority가 아니다.
 
 이 편집기 패턴은 **LK Robotics Extension**이다. 아래 외부 자료는 에디터 카테고리의 해부 구조, 상호작용, 접근성 기대치를 확인하기 위한 근거이며 WDS parity 증거가 아니다. 외부 제품의 스타일이나 완성 화면을 복제하지 않고 LDS 토큰과 기존 컴포넌트 계약으로 번역한다.
 
 ## Evidence priority
 
-1. 현재 제품 소스와 실제 캡처
-2. LDS의 가까운 형제 컴포넌트와 토큰 계약
-3. 공식 제품 문서, 플랫폼 가이드, WAI-ARIA/WCAG 같은 권위 있는 외부 자료
+1. LDS의 가까운 형제 컴포넌트와 토큰 계약
+2. 수락된 WDS evidence와 공식 design-system·platform·domain reference
+3. WAI-ARIA/WCAG 같은 접근성 표준
 4. 일반적인 GIS, 캔버스, 3D 에디터의 보조 시각 자료
 
-일반 레퍼런스가 제품 소스와 다르면 범용 셸 capability로만 남기고, 제품 상태 예시에는 강제로 적용하지 않는다.
+제품 source와 실제 캡처는 위 설계가 필요한 workflow를 빠짐없이 지원하는지 마지막에 검증한다. 차이가 발견되면 먼저 coverage gap과 product-owned composition을 기록하며, 제품의 현재 배치를 LDS 설계로 복사해 차이를 닫지 않는다.
 
 ## Authoritative external references reviewed
 
@@ -51,16 +51,16 @@
 
 ## Storybook boundary
 
-- 제품 소스는 컴포넌트 책임을 결정하는 근거이지, 완성된 제품 화면을 LDS Storybook에 복제하는 근거가 아니다.
+- 제품 소스는 필요한 workflow·state·region과 ownership seam을 확인하는 coverage 근거일 뿐, 컴포넌트 anatomy·API·스타일이나 완성된 제품 화면을 LDS Storybook에 복제하는 근거가 아니다.
 - 공개 Storybook에는 `CanvasEditorShell`의 슬롯/패널 변형과 각 Editor 컴포넌트의 상태만 둔다.
 - 작업 생성, 맵 편집, PGM 편집, PCD 보조 흐름은 이 문서의 제품 소스 매핑과 제품 저장소 테스트에서 검증한다.
 - `LDS Product`와 `LDS Robotics`에 애플리케이션 화면, 템플릿, 워크플로, 데모를 추가하지 않는다.
 
-## Product evidence
+## Product workflow coverage evidence
 
 검토 기준은 `LK-ROBOTICS/lk_web_viz` commit `a984def117c05acd213f494cbb8a42e990595505` (2026-06-24)이다.
 
-| Workflow | Source | Stable layout |
+| Workflow | Source | Observed regions for coverage only |
 | --- | --- | --- |
 | 작업 생성/편집 | `frontend/src/screens/TaskCreateScreen.tsx` | 상단 뒤로가기/제목/저장, 좌측 360px 작업 폼과 단계 목록, 우측 건물 토폴로지와 층별 맵 선택 |
 | 맵 오브젝트 편집 | `frontend/src/screens/MapEditScreen.tsx`, `ZoneEditor.tsx` | 상단 문서 명령, `objects`/`pgm` 탭, 좌측 도구 레일, 중앙 맵, 우측 고정 속성 패널 |
@@ -100,7 +100,7 @@
 
 - QGIS/ArcGIS/Mapbox/RViz의 layer panel은 `LayerPanel`의 구조/visibility를 교차 확인하는 보조 근거다. LK 맵 편집에 layer panel이 있다는 근거는 아니다.
 - CloudCompare/Potree의 point-cloud controls는 PCD panel 내부 viewer control의 보조 시각 자료다. 독립 crop/classification 워크스페이스를 발명하는 근거는 아니다.
-- 기술적·행동적 결정은 위의 공식 제품 문서와 WAI-ARIA/WCAG를 우선하며 갤러리나 커뮤니티 예시는 근거로 승격하지 않는다.
+- 기술적·행동적 결정은 위의 공식 editor 문서와 WAI-ARIA/WCAG를 우선하며 갤러리나 커뮤니티 예시, LK 제품의 현재 화면은 설계 근거로 승격하지 않는다.
 
 ## Disallowed patterns
 

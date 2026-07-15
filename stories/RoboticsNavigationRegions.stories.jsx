@@ -2,6 +2,7 @@ import React from 'react';
 import { userEvent } from 'storybook/test';
 import { Map2DCanvas, SpatialRegion } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
+import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Navigation/Regions',
@@ -95,16 +96,7 @@ const slopeRegion = {
   },
 };
 
-function MapFloor({ width = 480, height = 288 }) {
-  return (
-    <g aria-hidden="true" pointerEvents="none">
-      <rect x="12" y="12" width={width - 24} height={height - 24} rx="8" fill="var(--viewer-surface)" stroke="var(--viewer-border)" vectorEffect="non-scaling-stroke" />
-      <path d={`M24 ${height / 2}H${width - 24}M${width / 2} 24V${height - 24}`} fill="none" stroke="var(--viewer-border)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-    </g>
-  );
-}
-
-function RegionMap({ children, appearance = 'light', width = 480, height = 288, label = '공간 영역 지도', testId }) {
+function RegionMap({ children, appearance = 'light', width = 480, height = 288, label = '공간 영역 지도', testId, eyebrow = 'ZONES · L1' }) {
   return (
     <Map2DCanvas
       data-testid={testId}
@@ -118,7 +110,7 @@ function RegionMap({ children, appearance = 'light', width = 480, height = 288, 
       style={{ width: '100%', maxWidth: width, height: 'auto', aspectRatio: `${width} / ${height}` }}
     >
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="group" style={{ display: 'block', width: '100%', height: 'auto' }} aria-label={label}>
-        <MapFloor width={width} height={height} />
+        <NavigationMapStage width={width} height={height} eyebrow={eyebrow} north />
         {children}
       </svg>
     </Map2DCanvas>

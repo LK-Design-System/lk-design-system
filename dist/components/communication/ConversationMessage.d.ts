@@ -1,18 +1,15 @@
 import * as React from 'react';
-import type { SourceDisclosureItem } from '../content/SourceDisclosure.js';
 
 export type ConversationMessageDirection = 'inbound' | 'outbound' | 'system';
 export type ConversationMessageAuthorRole = 'user' | 'assistant' | 'human-agent' | 'system';
-export type ConversationMessageVariant = 'soft' | 'solid';
+export type ConversationMessagePresentation = 'document' | 'bubble';
 export type ConversationMessageGroupPosition = 'single' | 'first' | 'middle' | 'last';
-type ConversationMessageNonSystemDirection = Exclude<ConversationMessageDirection, 'system'>;
-type ConversationMessagePlainText = string | number | readonly (string | number)[];
 
 export type ConversationMessageLifecycle =
   | { kind: 'static' }
   | {
       kind: 'delivery';
-      state: 'queued' | 'sending' | 'sent' | 'failed' | 'cancelled';
+      state: 'queued' | 'sending' | 'sent' | 'read' | 'failed' | 'cancelled';
     }
   | {
       kind: 'response';
@@ -20,8 +17,6 @@ export type ConversationMessageLifecycle =
     };
 
 interface ConversationMessageBaseProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
-  /** Semantic sender category. It never derives visual direction. */
-  authorRole: ConversationMessageAuthorRole;
   /** Position within a visually grouped run from the same author. @default 'single' */
   groupPosition?: ConversationMessageGroupPosition;
   /** Static content, outbound delivery state, or inbound response generation state. @default { kind: 'static' } */
@@ -30,57 +25,47 @@ interface ConversationMessageBaseProps extends Omit<React.HTMLAttributes<HTMLEle
   author: React.ReactNode;
   /** Accessible author name when author is not plain text. */
   authorLabel?: string;
-  /** Avatar slot. Rendered in a 32px slot for single/first non-system messages only. */
+  /** Visible role badge next to the author name. Defaults to 'AI' for assistant and '상담원' for human-agent; `null` hides it. Decorative — the accessible role name is always announced separately. */
+  roleBadgeLabel?: React.ReactNode;
+  /** Avatar shown for single/first participant messages. Grouped runs reserve the same 32px token column even when later items omit this prop. */
   avatar?: React.ReactNode;
   /** Human-readable timestamp. */
   timestamp?: React.ReactNode;
   /** Machine-readable ISO date/time for the time element. */
   dateTime?: string;
-  /** Optional lifecycle label override. `null` suppresses the marker; response complete is silent by default. */
+  /** Optional lifecycle label override. `null` suppresses it; delivery sent, delivery read, and response complete are silent by default (read surfaces as a bubble-foot receipt instead). */
   statusLabel?: React.ReactNode;
-  /** Attachment row/list supplied by the product. */
+  /** Attachment content rendered after the response status and message body. */
   attachments?: React.ReactNode;
-  /** Provenance rendered with SourceDisclosure below the message body. */
-  sources?: SourceDisclosureItem[];
-  /** Full provenance list by default; compact exposes a count disclosure for product-validated supporting sources before revealing the same list. @default 'full' */
-  sourcePresentation?: 'full' | 'compact';
+  /** Source or provenance content supplied as a composition slot. */
+  sources?: React.ReactNode;
   /** Additional message-level actions. */
   actions?: React.ReactNode;
   /** Called only from failed delivery/response retry controls. No lifecycle transition is inferred. */
   onRetry?: () => void;
-  /** Called only from pending/streaming response stop controls. No completion is inferred. */
-  onStop?: () => void;
   retryLabel?: React.ReactNode;
-  stopLabel?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 type ConversationMessageSystemProps = ConversationMessageBaseProps & {
-  /** System placement always renders a neutral line, regardless of variant. */
-  direction: 'system';
-  variant?: ConversationMessageVariant;
-  children?: React.ReactNode;
+  /** System entries always use a centered tinted chip. */
+  authorRole: 'system';
+  direction?: 'system';
+  presentation?: never;
 };
 
-type ConversationMessageSoftProps = ConversationMessageBaseProps & {
-  /** Visual placement. Soft selects the inbound neutral or outbound tinted branch. */
-  direction: ConversationMessageNonSystemDirection;
-  variant?: 'soft';
-  children?: React.ReactNode;
-};
-
-type ConversationMessageSolidProps = ConversationMessageBaseProps & {
-  /** Visual placement. Solid never derives authorRole. */
-  direction: ConversationMessageNonSystemDirection;
-  /** Explicit shrink-wrapped primary surface with pre-wrapped plain text. */
-  variant: 'solid';
-  /** Required non-empty plain message body. Use soft for links, headings, markdown, or other rich content. */
-  children: ConversationMessagePlainText;
+type ConversationMessageParticipantProps = ConversationMessageBaseProps & {
+  /** Sender category selects default placement and presentation. */
+  authorRole: Exclude<ConversationMessageAuthorRole, 'system'>;
+  /** User defaults outbound; assistant and human-agent default inbound. */
+  direction?: Exclude<ConversationMessageDirection, 'system'>;
+  /** Assistant defaults document; user and human-agent default bubble. */
+  presentation?: ConversationMessagePresentation;
 };
 
 export type ConversationMessageProps =
   | ConversationMessageSystemProps
-  | ConversationMessageSoftProps
-  | ConversationMessageSolidProps;
+  | ConversationMessageParticipantProps;
 
-/** A single conversation article; MessageFeed owns ordered log/live-region behavior. */
+/** LK Product Extension for product-neutral document and bubble conversation turns. */
 export function ConversationMessage(props: ConversationMessageProps): React.JSX.Element;

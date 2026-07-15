@@ -20,6 +20,7 @@
 - 읽기 순서는 source label → kind/location → availability → disclosure cue이며, 펼친 뒤 description/excerpt → 관측·갱신 metadata → 원본 action으로 이어집니다.
 - description, excerpt, timestamp 또는 metadata처럼 선택적인 상세 정보가 있을 때만 native `details/summary`를 사용합니다. action만 있는 source는 불필요한 disclosure를 만들지 않고 source label 자체를 link/button으로 제공합니다.
 - disclosure chevron은 상태를 보조하는 장식 icon이고 `summary` 전체가 trigger입니다. native keyboard/expanded semantics를 유지하며 별도 `aria-expanded`를 중복 구현하지 않습니다.
+- `compact`는 각 source를 attachment chip 무게의 한 줄 link chip으로 렌더합니다(카드 surface·inline disclosure·availability badge 없이, 활성화 시 원본을 엽니다). 열거된 source가 모두 열람 가능하다고 전제되는 맥락 — 예: 챗 답변 아래 citation — 에서 availability가 steady-state 노이즈가 되지 않도록 사용합니다. 펼쳐야 할 provenance(description·excerpt·metadata)가 실제로 있을 때는 기본 card를 유지합니다.
 - availability는 `StatusBadge`의 dot + 명시적 텍스트 한 번으로만 표현합니다. disclosure chevron과 external-link icon은 각각 펼침 상태와 새 창 이동만 설명합니다.
 - `href` action은 새 탭으로 열리고 external-link icon을 표시합니다. 복합 label/action에는 `actionAriaLabel`을 제공합니다.
 - excerpt는 `blockquote`이며 `href`가 있으면 HTML `cite` 속성으로 원본 URL을 연결합니다.

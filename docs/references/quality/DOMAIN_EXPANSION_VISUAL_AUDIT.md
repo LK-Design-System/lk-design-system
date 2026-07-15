@@ -300,8 +300,9 @@ play assertion에는 유용하지만 공개 Storybook에서는 완성된 compone
 
 ## 유지해도 되는 결정
 
-- ConversationMessage 다크 테마는 inbound/outbound/system hierarchy와 본문 대비가 안정적이다.
-- MessageComposer의 trailing send/stop 위치와 feed/message/composer 책임 분리는 Carbon hierarchy와 맞는다.
+- ConversationMessage 다크 테마는 assistant document, user solid primary bubble, human-agent neutral fill bubble,
+  system 중앙 neutral 칩의 역할 위계와 본문 대비가 안정적이다(2026-07-15 하이브리드 C 기준).
+- MessageComposer의 하단 action band에 유지되는 send/stop 위치와 feed/message/composer 책임 분리는 일반 AI chat hierarchy와 맞는다.
 - MessageFeed narrow는 history action → log → latest action의 DOM/시각 순서가 일치하고 8px 간격으로 겹치지 않는다.
 - VirtualKeypad의 1–9, centered 0, edit row, primary confirm 구조와 48px target은 유지 가능하다.
 - Lane/Route/Trajectory의 color + dash/pattern 이중 encoding과 map/list equivalent path 방향은 타당하다.
@@ -314,45 +315,63 @@ play assertion에는 유용하지만 공개 Storybook에서는 완성된 compone
 문자열 계약은 유지했으며, 변경된 공용 disabled/theme 경계는 전체 Storybook 접근성·play 검사로 회귀가
 없음을 확인했다.
 
-## 2026-07-13 Communication 후속 감사
+## 2026-07-14 Communication 제품 중립 재설계
 
-`LDS Product / Communication`의 현재 3페이지 19스토리를 새 정적 Storybook과 공식 category reference로
-다시 비교했다. 이전 감사에서 해결한 busy, icon/chip, public fixture 문제는 재발하지 않았고, 이번에는
-새 `soft`/`solid` surface 비교와 통합 composition의 첫 화면 완성도를 추가로 점검했다.
+> **Superseded by 하이브리드 C (2026-07-15).** 아래 감사는 participant를 하나의 neutral bubble로, system을 divider로 두던 이전 iteration 기록이다. 현재 출고 문법은 user=solid primary bubble(`--color-semantic-primary-heavy`), human-agent=neutral fill bubble(`--color-semantic-fill-strong`), system=중앙 neutral 칩(`--color-semantic-fill-normal`)이며, 이름 옆 role 배지(AI/상담원)와 outbound 전송 시각·`읽음` 리시트를 추가했다. 이 절의 "divider"·"하나의 neutral bubble"·C-F01의 "divider 계약"·"system divider 760px" 측정은 그 이전 상태를 가리키며 현행 스펙이 아니다.
 
-### 일반 레퍼런스 재검색과 비교
+제품 frontend는 필요한 message/source/attachment/history/compose 상태를 찾는 coverage inventory로만 사용했다.
+Context Hub의 blue bubble, source 접힘 geometry, composer 배열이나 local API는 설계 근거에서 제외했다. 사용자가
+제공한 Figma Community kit의 왼쪽 general-assistant 화면은 장문 document와 compact prompt의 상대 위계를 보는
+보조 시각 자료로만 사용하고, 색·asset·app shell은 복제하지 않았다.
+
+### 일반 레퍼런스와 LDS 판정
 
 | 검증 축 | 공식 레퍼런스에서 확인한 기준 | LDS 판정 |
 | --- | --- | --- |
-| 전체 anatomy | [Carbon AI Chat demo](https://chat.carbondesignsystem.com/tag/latest/demo/index.html)는 header/workspace, `Chat messages` 영역, history begin/end focus action, input과 trailing send를 하나의 전체 shell로 제공한다. | Message·Feed·Composer의 읽기 순서와 trailing action은 일치한다. Carbon의 F6 전환, message selection, header/workspace는 `ChatWindow` 제품 계층이므로 LDS primitive에 추가하지 않는다. |
-| 순차 메시지 알림 | [W3C ARIA23](https://www.w3.org/WAI/WCAG21/Techniques/aria/ARIA23)는 끝에 추가되는 chat history container 하나에 named `role="log"`를 적용한다. | `MessageFeed`만 polite log를 소유하고 개별 `ConversationMessage`에는 live region이 없다. 현재 계약과 일치한다. |
-| streaming·stop | [Carbon server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)은 pending/loading, streaming, stop 요청, final state를 분리하고 final response 전까지 stop 상태를 임의 완료하지 않는다. | `ConversationMessage` lifecycle과 `MessageComposer`의 submitting/streaming/stopping을 controlled state로 유지한다. 두 위치에 stop을 동시에 노출할지는 제품이 결정하며 LDS가 중복 action을 추론하지 않는다. |
-| input·focus·IME | [Android Jetchat](https://github.com/android/compose-samples/tree/main/Jetchat)은 conversation `scrollState`, 별도 `UserInput`, focus 관리와 IME padding을 함께 검증한다. | MessageFeed의 읽기 위치와 Composer의 focus·IME Enter 계약은 LDS가 소유한다. navigation bar/IME safe area와 화면 고정은 제품 shell 책임으로 남긴다. |
-| adaptive shell | [Android adaptive chat codelab](https://developer.android.com/codelabs/codelab-adaptive-apps?hl=en)은 폭에 따라 chat list와 chat detail을 한 pane 또는 두 pane으로 전환한다. | LDS는 320px primitive overflow와 읽기 순서만 보장하고, list/detail pane 전환과 route는 제품이 소유한다. |
-| system message | [Fluent 2 handoffs](https://fluent2.microsoft.design/handoffs)는 system message를 짧은 3인칭 완전 문장으로 쓰고 한 줄을 우선한다. | `상담원이 대화에 참여했습니다.` 같은 neutral line은 이 계층과 맞으며 avatar·bubble·별도 CTA를 추가하지 않는다. |
+| message anatomy | [Ant Design X Bubble](https://x.ant.design/components/bubble/)은 role, placement, variant, header/footer와 content renderer를 독립 축으로 둔다. | role 기본값과 content presentation을 분리한다. assistant는 `document`, user/human-agent는 `bubble`, system은 divider이며 participant만 `presentation="document|bubble"`로 명시 override할 수 있다. |
+| composer anatomy | [Ant Design X Sender](https://x.ant.design/components/sender/)와 [Attachments](https://x.ant.design/components/attachments/)는 draft, submit/cancel과 attachment/action extension을 분리한다. | 하나의 elevated shell 안에 attachment → full-width textarea → wrapping action band를 두고 response stop은 Composer 한 곳에 둔다. sticky 위치와 transport는 제품 소유다. |
+| rich response lifecycle | [Carbon AI Chat overview](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Overview.html)와 [server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)은 rich content, partial/final response와 cancel을 분리한다. | message는 controlled lifecycle을 표시하고 source/attachment/action을 generic ReactNode slot으로 받는다. callback 뒤 완료를 추론하지 않는다. |
+| sequential announcement | [WAI-ARIA `log`](https://www.w3.org/TR/wai-aria/#log)는 순서대로 추가되는 chat history를 대표 사례로 든다. | `MessageFeed` 하나만 named polite log를 소유한다. prepend 중 억제한 announcement는 성공·무결과·실패·history 종료 뒤 항상 복원한다. |
 
-### 추가 finding과 해결
+### finding과 해결
 
-| ID | 심각도 | 범위 | 발견 | 해결 |
-| --- | --- | --- | --- | --- |
-| C-F01 | medium | Message overview | 같은 user·content의 soft/solid 예시가 설명 없이 연속되어 중복 메시지처럼 읽힘 | `동일 메시지의 표면 비교`와 `Soft · 전체 너비` / `Solid · 내용 너비` 라벨을 실제 Storybook canvas에 추가하고 play assertion으로 고정 |
-| C-F02 | medium | Message composition | bottom-follow 뒤 첫 메시지가 일부 가려져 대표 composition이 중간 message boundary에서 시작하고 Storybook Axe가 contrast 3개를 `Inconclusive`로 남김 | representative feed 높이를 440px로 조정해 네 메시지의 경계를 모두 보이고, play에서 부분 clipping을 금지 |
+| ID | 심각도 | 발견 | 해결 |
+| --- | --- | --- | --- |
+| C-F01 | high | product-derived soft/solid·accent bubble을 공용 role surface처럼 사용 | `variant`, `sourcePresentation`과 product source schema를 제거하고 document/bubble/divider 계약과 explicit `sources` slot으로 교체 |
+| C-F02 | high | disabled Composer의 slot action이 focus·click 가능 | disabled shell 전체를 inert subtree로 만들고 visible `disabledReason`은 shell 앞에 유지 |
+| C-F03 | medium | 320px의 양쪽 action이 inline textarea 폭을 약 32px까지 잠식 | textarea를 full-width row로 분리하고 여러 leading/trailing action과 send가 하단 band에서 wrap되게 변경 |
+| C-F04 | medium | history callback이 무결과 또는 실패로 끝나면 `aria-live="off"`가 남을 수 있음 | Promise/controlled loading/no-signal/`hasPrevious=false` 종료 경로에서 anchor와 announcement suppression을 정리 |
+| C-F05 | medium | grouped run에서 첫 item에만 avatar를 주면 이후 content column이 이동 | grouped item은 avatar prop 반복 없이도 32px token column을 예약하고 story가 동일 left edge를 검증 |
+| C-F06 | low | 조건부 null/false children을 empty가 아닌 message로 계산하고 Composer의 `statusLabel={null}` 의미가 sibling과 달랐음 | `React.Children.toArray`로 실제 child를 세고, `null`은 status suppress로 통일 |
 
-후속 시각 확인은 Message overview·composition·dark·320px long content, MessageFeed empty/busy·dark·320px,
-MessageComposer request states·dark·320px에서 수행했다. 정상 폭의 identity → body → evidence/status → action,
-system line, bottom-follow, narrow wrapping, code-only horizontal scroll, disabled/read-only 대비와 trailing action 정렬을
-다시 확인했다.
+### 대표 시각 확인
 
-후속 자동 검증:
+1280×720 Storybook iframe에서 직접 확인했다.
 
-- `npm run build:storybook` 통과.
-- `A11Y_STORY_PATTERN=lds-product-communication` 표적 검사: 19 stories, play 17, Axe 19, violation 0,
-  undersized target 0, missing name 0, implicit button type 0, console error 0.
-- 통합 composition의 Storybook Accessibility panel: `Violations 0`, `Inconclusive 0`.
-- `check:types`, `check:type-consumer`, `check:contracts`, `check:prompt-contracts`, `check:story-subjects` 통과.
-- 전체 Storybook build, rendered component style, nested style, public surface(408 public / 126 hidden), tooltip
-  alignment와 37개 visual regression smoke를 통과했다.
-- 이 후속 감사 직후의 전역 `check:storybook`은 Communication 검사에 도달하기 전 repository inventory와
-  IA 문서가 534 implementation / 408 public story 수를 아직 반영하지 않아 중단됐다. 해당 당시 실패는
-  이 historical 감사에 보존하고, 현재 수치와 stale-review 해소 여부는
-  [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](../../STORYBOOK_INFORMATION_ARCHITECTURE.md)와 machine audit을 따른다.
+- Message normal: 760px fixture에서 assistant document content 720px, user bubble 251px, human-agent bubble 327px, system divider 760px. 네 message 모두 horizontal overflow 없음.
+- Message narrow: 실제 320px fixture에서 assistant content 280px, user message 320px이며 code block만 자체 가로 scroll을 유지한다.
+- Message dark: assistant document, user/human-agent bubble, system divider가 한 semantic dark scope에서 별도 inverse prop 없이 읽힌다.
+- Composer normal/dark: shell/input이 각각 720/710px, 680/670px이고 action band는 36px이다. narrow 320px에서는 input 310px를 먼저 확보하고 양쪽 두 text action씩과 send가 36px band 안에서 overflow 없이 정렬된다.
+- Feed/composition: transparent named log, history → log → latest 순서, explicit `SourceDisclosure`, composer action band와 message boundary를 확인한다.
+
+현재 targeted 검증은 communication story 3개 esbuild bundle, `check:types`, direct browser overflow/DOM 측정과
+normal·320px·dark 육안 비교를 포함한다. 전체 정적 Storybook·접근성·repository suite 결과는 최종 checkpoint의
+현재 실행 결과를 기준으로 한다.
+
+## 2026-07-14 EquipmentStatusCard 제품 중립 재설계
+
+`EquipmentStatusCard`는 `LK Robotics Extension`으로 분류한다. Control frontend에서 확인한 문·엘리베이터·리프트·
+게이트웨이는 coverage 대상일 뿐, 기존 ledger row, ring/chip, 38px icon tile, direction/connection state machine과
+motion은 설계 근거로 사용하지 않고 제거했다.
+
+- 내부 sibling: `Card`, `RobotStatusCard`, `StatusBadge`, `ConnectionBadge`. Card의 neutral surface/radius/no-shadow,
+  StatusBadge의 보이는 상태 라벨을 계승하고 RobotStatusCard의 선택·battery·live cluster는 복제하지 않는다.
+- 외부 근거: [Adobe Spectrum Status light](https://spectrum.adobe.com/page/status-light/)의 visible label·비색상 상태,
+  [GOV.UK Summary list](https://design-system.service.gov.uk/components/summary-list/)의 labeled key/value fact 구조를
+  `article → heading/status → dl → meta/actions`에 반영했다.
+- product workflow: LK Control Full Daedeok은 `supported by composition`; LK Web Viz와 LK Context Hub는 독립
+  equipment summary가 없어 구체 이유와 함께 `not applicable`로 기록했다. transport, command, telemetry truth와
+  설비별 state machine은 제품 소유다.
+- 시각 확인: normal 두 카드는 720px에서 header→dl→footer 순서와 overflow 없음. responsive story는 640px normal과
+  300px dark container 내부 268px card를 비교했으며, 긴 heading은 48px/2줄로 wrap되고 card overflow는 없다.
+  좁은 폭에서도 status가 identity 뒤에 오며 labeled facts와 footer가 잘리거나 nested card로 보이지 않는다.

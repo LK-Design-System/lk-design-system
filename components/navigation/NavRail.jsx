@@ -26,7 +26,7 @@ export function NavRail({ items = [], value, defaultValue, onChange, renderLink,
         const itemStyle = {
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5,
           width: 68, height: 60, padding: 0, boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
-          cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textDecoration: 'none',
+          cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textDecoration: 'none', textAlign: 'center',
           background: active ? 'var(--color-semantic-primary-surface-strong)' : 'transparent',
           color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
           transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',

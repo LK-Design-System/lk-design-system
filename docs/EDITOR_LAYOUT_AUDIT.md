@@ -5,12 +5,12 @@
 | Type | Focused audit |
 | Status | Completed |
 | Owner | Robotics component owner |
-| Last reviewed | 2026-07-11 |
+| Last reviewed | 2026-07-14 |
 | Stable decisions | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) |
 
 ## Scope
 
-`CanvasEditorShell`과 Editor 하위 컴포넌트의 공개 Storybook 구성이 다른 LDS 페이지와 같은 문법을 따르는지 재검토했다. 제품 근거는 계속 `LK-ROBOTICS/lk_web_viz` commit `a984def117c05acd213f494cbb8a42e990595505`와 제품 캡처를 사용하지만, 그 근거를 완성된 애플리케이션 화면으로 Storybook에 복제하지 않는다.
+`CanvasEditorShell`과 Editor 하위 컴포넌트의 공개 Storybook 구성이 다른 LDS 페이지와 같은 문법을 따르는지 재검토했다. `LK-ROBOTICS/lk_web_viz` commit `a984def117c05acd213f494cbb8a42e990595505`와 제품 캡처는 필요한 workflow·region·state와 조합 가능성을 확인하는 coverage 자료로만 사용하며, anatomy·API·시각 근거 또는 완성된 애플리케이션 화면으로 Storybook에 복제하지 않는다.
 
 2026-07-11 재설계 검토는 Editor를 **LK Robotics Extension**으로 분류했다. 이는 WDS parity 감사가 아니다. 구현 구조를 정하기 전에 공식 Figma, Unity, Blender, NVIDIA Omniverse 문서와 WAI-ARIA/WCAG 패턴을 검토했으며, 링크와 적용 결론은 `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`에 기록했다.
 
@@ -57,7 +57,7 @@
 | 맵 오브젝트/PGM 편집 | `frontend/src/screens/MapEditScreen.tsx` | 제품 명령과 편집 정책을 포함한 애플리케이션 워크플로 |
 | PCD 3D 보조 | `frontend/src/components/editor/PcdMap3DPanel.tsx` | 맵 편집 내부의 제품 전용 split panel |
 
-세부 소유권과 제품 소스 우선순위는 `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`에 유지한다.
+세부 소유권, 독립 설계 근거와 제품 coverage mapping은 `docs/EDITOR_LAYOUT_REFERENCE_MATRIX.md`에 유지한다.
 
 ## Verification
 

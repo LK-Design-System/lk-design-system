@@ -1,7 +1,7 @@
 "use client";
 import {
   NavRail
-} from "../../chunk-WCOHPJYN.js";
+} from "../../chunk-CIHQGKBL.js";
 export {
   NavRail
 };

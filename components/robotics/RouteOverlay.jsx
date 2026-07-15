@@ -160,20 +160,20 @@ function normalizedProgress(route) {
 }
 
 function statusTone(status) {
-  if (status === 'waiting' || status === 'rerouting') return 'var(--color-semantic-status-cautionary-foreground)';
-  if (status === 'blocked') return 'var(--color-semantic-status-negative-foreground)';
-  if (status === 'completed') return 'var(--color-semantic-status-positive-foreground)';
-  if (status === 'active') return 'var(--color-semantic-primary-normal)';
+  if (status === 'waiting' || status === 'rerouting') return 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))';
+  if (status === 'blocked') return 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))';
+  if (status === 'completed') return 'var(--viewer-positive, var(--color-semantic-status-positive-foreground))';
+  if (status === 'active') return 'var(--viewer-accent, var(--color-semantic-primary-normal))';
   return 'var(--viewer-muted, var(--color-semantic-label-alternative))';
 }
 
 function segmentTone(segment, invalid) {
   if (invalid || segment.condition === 'blocked' || segment.condition === 'conflict') {
-    return 'var(--color-semantic-status-negative-foreground)';
+    return 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))';
   }
-  if (segment.condition === 'waiting') return 'var(--color-semantic-status-cautionary-foreground)';
-  if (segment.phase === 'completed') return 'var(--color-semantic-status-positive-foreground)';
-  if (segment.phase === 'current') return 'var(--color-semantic-primary-normal)';
+  if (segment.condition === 'waiting') return 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))';
+  if (segment.phase === 'completed') return 'var(--viewer-positive, var(--color-semantic-status-positive-foreground))';
+  if (segment.phase === 'current') return 'var(--viewer-accent, var(--color-semantic-primary-normal))';
   return 'var(--viewer-muted, var(--color-semantic-label-alternative))';
 }
 
@@ -298,7 +298,7 @@ export function RouteOverlay({
       state: 'invalid',
       glyphKind: 'invalid',
       point: pointAlong(statusPoints, 0.82),
-      tone: 'var(--color-semantic-status-negative-foreground)',
+      tone: 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))',
     } : null,
     stale ? {
       state: 'stale',
@@ -441,11 +441,24 @@ export function RouteOverlay({
                 data-route-selection-halo=""
                 d={pathData}
                 fill="none"
-                stroke="var(--color-semantic-primary-normal)"
+                stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
                 strokeWidth="8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 opacity="0.24"
+                vectorEffect="non-scaling-stroke"
+                pointerEvents="none"
+              />
+            )}
+            {pathData && !segmentSelected && !segmentFocused && (
+              <path
+                data-route-casing=""
+                d={pathData}
+                fill="none"
+                stroke="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
+                strokeWidth="6.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
                 pointerEvents="none"
               />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
+import { userEvent, waitFor } from 'storybook/test';
 import { Button, Chip, Icon, IconButton, MessageComposer } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -10,14 +10,14 @@ const meta = {
     storyGuide: {
       storyId: 'lds-product-communication-message-composer--message-composer-overview',
       eyebrow: 'Product / Communication',
-      title: '메시지 작성은 초안과 전송 상태를 섞지 않고 다음 행동을 분명하게 보여줍니다',
+      title: '초안과 다음 행동은 하나의 elevated composer shell에 모입니다',
       description:
-        '사람 간 대화와 AI 응답 요청에서 짧은 메시지부터 여러 줄 초안까지 작성할 때 적합합니다. 대화 기록은 Message Feed가, 개별 응답은 Message가 소유하며 Composer는 입력·제출·중지 요청만 담당합니다.',
+        'AI 또는 사람 간 대화에서 짧은 요청부터 여러 줄 초안까지 작성할 때 사용합니다. attachment와 utility는 generic slot으로 조합하고, Composer는 controlled value·submit·stop 요청만 담당합니다.',
     },
     docs: {
       description: {
         component:
-          '44px에서 시작하는 controlled autosize textarea, 명시적인 keyboard submit mode, IME 보호, product-owned request state를 제공하는 LK Product Extension입니다.',
+          'controlled autosize textarea, leading/trailing action slot, explicit keyboard submit mode와 IME 보호를 제공하는 LK Product Extension입니다.',
       },
     },
   },
@@ -38,6 +38,38 @@ function AttachmentChip({ children }) {
   );
 }
 
+function AddFileAction(props) {
+  return (
+    <IconButton label="파일 추가" size="small" round={false} variant="plain" {...props}>
+      <Icon name="attachment" size={16} />
+    </IconButton>
+  );
+}
+
+function MoreOptionsAction() {
+  return (
+    <IconButton label="작성 옵션" size="small" round={false} variant="plain">
+      <Icon name="template" size={16} />
+    </IconButton>
+  );
+}
+
+function ToolsAction() {
+  return (
+    <IconButton label="도구" size="small" round={false} variant="plain">
+      <Icon name="tune" size={16} />
+    </IconButton>
+  );
+}
+
+function VoiceAction() {
+  return (
+    <IconButton label="음성 입력" size="small" round={false} variant="plain">
+      <Icon name="microphone" size={16} />
+    </IconButton>
+  );
+}
+
 function ComposerFixture({ initialValue = '', onSubmit: onSubmitProp, ...props }) {
   const [value, setValue] = React.useState(initialValue);
   const [lastAction, setLastAction] = React.useState('아직 제출하지 않음');
@@ -52,9 +84,7 @@ function ComposerFixture({ initialValue = '', onSubmit: onSubmitProp, ...props }
           onSubmitProp?.(submittedValue, reason);
         }}
       />
-      <output hidden data-last-action="">
-        마지막 행동: {lastAction}
-      </output>
+      <output hidden data-last-action>{lastAction}</output>
     </div>
   );
 }
@@ -62,64 +92,58 @@ function ComposerFixture({ initialValue = '', onSubmit: onSubmitProp, ...props }
 export const MessageComposerOverview = {
   name: '개요',
   parameters: storyDescription(
-    '운영 질문을 작성하면서 파일과 템플릿 action을 같은 control row에 두는 기본 예시입니다. 입력은 한 줄 높이에서 시작해 내용만큼 커지고, 제출 뒤에도 제품이 값을 바꾸기 전까지 초안과 focus를 유지합니다.',
+    '약 720px에서 attachment preview, leading action, autosize draft, trailing action과 primary send를 하나의 elevated shell로 보여 줍니다. slot 이름은 위치만 표현하며 특정 provider나 product tool을 API에 고정하지 않습니다.',
   ),
   render: () => (
     <main style={{ width: '100%', maxWidth: 720 }}>
       <ComposerFixture
-        initialValue="3층 배송 로봇의 현재 경로와 대기 원인을 알려주세요."
+        initialValue="업로드한 회의록에서 결정 사항을 세 문장으로 요약해 주세요."
         description="Enter로 보내고 Shift+Enter로 줄을 바꿉니다."
         maxLength={300}
-        attachmentAction={(
-          <IconButton label="파일 첨부" size="small" round={false} variant="plain">
-            <Icon name="attachment" size={16} />
-          </IconButton>
-        )}
-        secondaryActions={(
-          <IconButton label="응답 템플릿 선택" size="small" round={false} variant="plain">
-            <Icon name="template" size={16} />
-          </IconButton>
-        )}
-        attachments={<AttachmentChip>facility-route-summary.pdf</AttachmentChip>}
+        attachments={<AttachmentChip>weekly-meeting-notes.pdf</AttachmentChip>}
+        leadingActions={<AddFileAction />}
+        trailingActions={<MoreOptionsAction />}
       />
     </main>
   ),
   play: async ({ canvasElement }) => {
-    const textarea = canvasElement.querySelector('[data-composer-input]');
-    const utilityButtons = Array.from(canvasElement.querySelectorAll('[data-composer-utilities] button'));
-    const primaryActionSlot = canvasElement.querySelector('[data-composer-primary-action]');
-    const submitButton = canvasElement.querySelector('button[type="submit"]');
-    if (!textarea || utilityButtons.length !== 2 || !primaryActionSlot || !submitButton) {
+    const form = canvasElement.querySelector('.lk-message-composer');
+    const shell = form?.querySelector('[data-composer-shell]');
+    const attachments = form?.querySelector('[data-composer-attachments]');
+    const row = form?.querySelector('[data-composer-control-row]');
+    const leading = form?.querySelector('[data-composer-leading-actions]');
+    const textarea = form?.querySelector('[data-composer-input]');
+    const trailing = form?.querySelector('[data-composer-trailing-actions]');
+    const primary = form?.querySelector('[data-composer-primary-action]');
+    if (!form || !shell || !attachments || !row || !leading || !textarea || !trailing || !primary) {
       throw new Error('MessageComposer overview anatomy is incomplete.');
     }
-    const textareaHeight = textarea.getBoundingClientRect().height;
-    if (textareaHeight < 44 || textareaHeight > 48) {
-      throw new Error(`The compact textarea must start at 44–48px; received ${textareaHeight}px.`);
+    if (attachments.parentElement !== shell || row.parentElement !== shell
+      || !(attachments.compareDocumentPosition(row) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Attachments and the control row must share one shell in reading order.');
     }
-    for (const utility of utilityButtons) {
-      const rect = utility.getBoundingClientRect();
-      if (Math.abs(rect.width - 32) > 0.5 || Math.abs(rect.height - 32) > 0.5) {
-        throw new Error('Composer utility actions must use the 32px IconButton scale.');
+    if (!(textarea.compareDocumentPosition(leading) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(leading.compareDocumentPosition(trailing) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(trailing.compareDocumentPosition(primary) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Control order must be textarea → leading → trailing → primary action.');
+    }
+    for (const button of row.querySelectorAll('button')) {
+      const rect = button.getBoundingClientRect();
+      if (rect.width < 24 || rect.height < 24) {
+        throw new Error('Composer actions must retain an operable control target.');
       }
     }
-    const slotRect = primaryActionSlot.getBoundingClientRect();
-    const submitRect = submitButton.getBoundingClientRect();
-    if (Math.abs(slotRect.width - 40) > 0.5 || Math.abs(slotRect.height - 44) > 0.5) {
-      throw new Error('Composer primary action must occupy the 40×44px trailing slot.');
-    }
-    if (Math.abs(submitRect.width - 32) > 0.5 || Math.abs(submitRect.height - 32) > 0.5) {
-      throw new Error('Composer submit action must use the 32px Button scale.');
-    }
-    const slotCenterY = slotRect.top + slotRect.height / 2;
-    const submitCenterY = submitRect.top + submitRect.height / 2;
-    if (Math.abs(slotCenterY - submitCenterY) > 0.5) {
-      throw new Error('Composer submit action must be vertically centered in its trailing slot.');
-    }
+    await userEvent.click(textarea);
+    await waitFor(() => {
+      if (shell.dataset.focused !== 'true') throw new Error('Textarea focus must activate the shared shell focus state.');
+    });
+    const send = primary.querySelector('button[type="submit"]');
+    if (!send || send.disabled) throw new Error('A non-empty controlled draft must enable the send action.');
   },
 };
 
 function StateExample({ state, label, ...props }) {
-  const [value, setValue] = React.useState('경로 분석 결과를 요약해 주세요.');
+  const [value, setValue] = React.useState('핵심 결론과 다음 행동을 정리해 주세요.');
   return (
     <section style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0 }}>
       <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)' }}>{label}</strong>
@@ -135,24 +159,34 @@ function StateExample({ state, label, ...props }) {
   );
 }
 
+function DisabledStateExample() {
+  const [actionCount, setActionCount] = React.useState(0);
+  return (
+    <div data-disabled-action-probe data-action-count={actionCount}>
+      <StateExample
+        state="idle"
+        label="비활성 · 이유 포함"
+        disabled
+        disabledReason="현재 연결을 확인할 수 없어 메시지를 보낼 수 없습니다."
+        leadingActions={<AddFileAction onClick={() => setActionCount((count) => count + 1)} />}
+      />
+    </div>
+  );
+}
+
 export const RequestStates = {
   name: '변형·상태 · 전송·스트리밍·중지',
   parameters: storyDescription(
-    'idle, submitting, streaming, stopping과 read-only·disabled를 함께 비교합니다. 상태 prop은 서버 결과를 흉내 내지 않고 현재 제품 상태만 표시하며, stopping에서는 중복 stop 요청이 차단됩니다.',
+    'idle, submitting, streaming, stopping과 read-only·disabled를 비교합니다. non-idle은 성공이나 실패가 아닌 neutral phase이며, stopping에서는 중복 stop 요청을 막습니다.',
   ),
   render: () => (
-    <main data-state-grid="" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 'var(--space-5)', width: '100%', maxWidth: 1040 }}>
+    <main data-state-grid style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 'var(--space-5)', width: '100%', maxWidth: 1040 }}>
       <StateExample state="idle" label="대기" />
       <StateExample state="submitting" label="전송 중" />
       <StateExample state="streaming" label="응답 생성 중" />
       <StateExample state="stopping" label="중지 요청 중" />
       <StateExample state="idle" label="읽기 전용" readOnly description="전송 기록을 확인하는 동안 편집할 수 없습니다." />
-      <StateExample
-        state="idle"
-        label="비활성 · 이유 포함"
-        disabled
-        disabledReason="네트워크 연결이 없어 메시지를 보낼 수 없습니다."
-      />
+      <DisabledStateExample />
     </main>
   ),
   play: async ({ canvasElement }) => {
@@ -161,56 +195,51 @@ export const RequestStates = {
     const row = disabledForm?.querySelector('[data-composer-control-row]');
     const textarea = disabledForm?.querySelector('textarea');
     if (!disabledForm || !reason || !row || !textarea) {
-      throw new Error('Disabled MessageComposer must render a reason and control row.');
+      throw new Error('Disabled MessageComposer must render its reason and controls.');
     }
     if (!(reason.compareDocumentPosition(row) & Node.DOCUMENT_POSITION_FOLLOWING)) {
-      throw new Error('The disabled reason must precede composer controls in DOM order.');
+      throw new Error('The disabled reason must precede composer controls.');
     }
     const describedBy = textarea.getAttribute('aria-describedby')?.split(/\s+/) ?? [];
     if (!reason.id || !describedBy.includes(reason.id)) {
-      throw new Error('The disabled textarea must reference its disabled reason.');
+      throw new Error('The disabled textarea must reference its visible reason.');
+    }
+    const disabledShell = disabledForm.querySelector('[data-composer-shell]');
+    const disabledAction = disabledForm.querySelector('[data-composer-leading-actions] button');
+    const disabledProbe = canvasElement.querySelector('[data-disabled-action-probe]');
+    if (!disabledShell?.hasAttribute('inert') || !disabledAction || !disabledProbe) {
+      throw new Error('The disabled composer must make its complete slot-bearing shell inert.');
+    }
+    disabledAction.click();
+    disabledAction.focus();
+    if (disabledProbe.dataset.actionCount !== '0' || document.activeElement === disabledAction) {
+      throw new Error('Actions composed into a disabled shell must not activate or receive focus.');
     }
     const stopping = canvasElement.querySelector('form[data-state="stopping"]');
     if (!stopping?.querySelector('button[aria-label="응답 중지"]')?.disabled) {
-      throw new Error('Stopping state must prevent a repeated stop request.');
-    }
-    for (const action of canvasElement.querySelectorAll('[data-composer-primary-action] button')) {
-      const rect = action.getBoundingClientRect();
-      if (Math.abs(rect.width - 32) > 0.5 || Math.abs(rect.height - 32) > 0.5) {
-        throw new Error('Every send/stop state must preserve the 32px primary action geometry.');
-      }
+      throw new Error('Stopping must prevent a duplicate stop request.');
     }
     for (const form of canvasElement.querySelectorAll('form[data-state]:not([data-state="idle"])')) {
       if (form.getAttribute('aria-busy') !== 'true') {
-        throw new Error('Every non-idle composer state must expose aria-busy.');
+        throw new Error('Every non-idle composer must expose aria-busy.');
       }
-    }
-    for (const row of canvasElement.querySelectorAll('[data-composer-control-row]')) {
-      const textarea = row.querySelector('[data-composer-input]');
-      const rowStyle = getComputedStyle(row);
-      const expectedHeight = textarea.getBoundingClientRect().height
-        + Number.parseFloat(rowStyle.borderTopWidth)
-        + Number.parseFloat(rowStyle.borderBottomWidth);
-      if (Math.abs(row.getBoundingClientRect().height - expectedHeight) > 0.5) {
-        throw new Error('A parent grid must not stretch a one-line composer control row.');
+      if (!form.querySelector('[data-composer-primary-action] button')) {
+        throw new Error('Every non-idle composer must retain its named primary action.');
       }
     }
   },
 };
 
 function DarkFixture() {
-  const [value, setValue] = React.useState('다크 운영 화면에서도 동일한 semantic token을 사용합니다.');
+  const [value, setValue] = React.useState('다크 테마에서도 같은 semantic input token을 사용합니다.');
   return (
     <MessageComposer
       value={value}
       onValueChange={setValue}
       onSubmit={() => {}}
-      description="별도의 inverse prop 없이 dark theme 안에서 동작합니다."
-      attachmentAction={(
-        <IconButton label="파일 첨부" size="small" round={false} variant="plain">
-          <Icon name="attachment" size={16} />
-        </IconButton>
-      )}
+      description="별도 inverse prop 없이 dark scope 안에서 동작합니다."
+      leadingActions={<AddFileAction />}
+      trailingActions={<MoreOptionsAction />}
     />
   );
 }
@@ -218,16 +247,30 @@ function DarkFixture() {
 export const DarkTheme = {
   name: '변형·상태 · 다크 테마',
   parameters: storyDescription(
-    '같은 input·label·line semantic token이 dark scope에서 전환되는지 확인합니다. 별도 composer palette나 고정된 흰색 surface를 만들지 않습니다.',
+    'elevated shell, input text, focus, helper와 icon action이 dark semantic scope에서 전환되는지 확인합니다. 고정 흰색 surface나 별도 composer palette를 만들지 않습니다.',
   ),
   render: () => (
     <main
       data-theme="dark"
-      style={{ width: '100%', maxWidth: 720, padding: 'var(--space-5)', boxSizing: 'border-box', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-normal-normal)' }}
+      data-dark-composer
+      style={{ width: '100%', maxWidth: 720, padding: 'var(--space-5)', boxSizing: 'border-box', background: 'var(--color-semantic-background-normal-normal)' }}
     >
       <DarkFixture />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-dark-composer]');
+    const shell = fixture?.querySelector('[data-composer-shell]');
+    const input = fixture?.querySelector('[data-composer-input]');
+    if (!fixture || !shell || !input) throw new Error('The dark composer fixture is incomplete.');
+    const style = getComputedStyle(shell);
+    if (style.backgroundColor === 'rgba(0, 0, 0, 0)' || style.borderTopWidth === '0px') {
+      throw new Error('The dark composer must retain its elevated input-shell boundary.');
+    }
+    if (fixture.scrollWidth > fixture.clientWidth + 1 || input.scrollWidth > input.clientWidth + 1) {
+      throw new Error('The dark composer must not create horizontal overflow.');
+    }
+  },
 };
 
 function KeyboardFixture() {
@@ -246,7 +289,7 @@ function KeyboardFixture() {
       </section>
       <section data-keyboard-case="stop" data-stop-count={logs.stop}>
         <MessageComposer
-          value="생성 중인 응답"
+          value="현재 응답 생성을 중지합니다."
           onValueChange={() => {}}
           onSubmit={() => {}}
           state="streaming"
@@ -275,7 +318,7 @@ function dispatchKey(target, init) {
 export const KeyboardAndImeContract = {
   name: '상호작용 · 조합 입력과 제출 방식',
   parameters: storyDescription(
-    'IME 조합 Enter, 일반 Enter, Ctrl·Meta+Enter, button-only, Escape와 명시적 stop을 비교합니다. 제출 callback은 reason만 전달하고 value clear나 transport 완료를 수행하지 않습니다.',
+    'IME 조합 Enter, 일반 Enter, Ctrl·Meta+Enter, button-only와 explicit stop을 비교합니다. submit callback은 reason을 전달하고 value clear나 transport 완료를 수행하지 않습니다.',
   ),
   render: () => <KeyboardFixture />,
   play: async ({ canvasElement }) => {
@@ -339,21 +382,31 @@ export const KeyboardAndImeContract = {
 export const NarrowWidth = {
   name: '반응형 · 320px 좁은 폭',
   parameters: storyDescription(
-    '가상 키보드가 올라와 짧아진 제품 영역을 가정한 320px 예시입니다. 긴 attachment 이름과 utility·submit action이 있어도 composer가 가로로 넘치지 않고 제품 shell이 정한 하단 영역 안에 머무는지 확인합니다.',
+    '320px에서 긴 attachment, 양쪽의 여러 utility, multiline draft와 primary action을 함께 확인합니다. textarea가 전체 폭을 먼저 확보하고 하단 action band만 wrap하며 가로 overflow를 만들지 않아야 합니다.',
   ),
   render: () => (
     <main
-      data-narrow-composer=""
-      style={{ display: 'flex', alignItems: 'flex-end', width: 320, maxWidth: '100%', height: 240, boxSizing: 'border-box', overflow: 'auto' }}
+      data-narrow-composer
+      style={{ display: 'flex', alignItems: 'flex-end', width: 320, maxWidth: '100%', minHeight: 240, boxSizing: 'border-box' }}
     >
       <ComposerFixture
-        initialValue="엘리베이터 탑승 지점과 경사 구역을 함께 확인해 주세요."
-        maxLength={120}
-        attachments={<AttachmentChip>very-long-facility-transition-route-reference-file.pdf</AttachmentChip>}
-        attachmentAction={(
-          <IconButton label="파일 첨부" size="small" round={false} variant="plain">
-            <Icon name="attachment" size={16} />
-          </IconButton>
+        initialValue="긴 문서를 읽고 결정 사항과 다음 행동을 함께 정리해 주세요."
+        maxLength={160}
+        minRows={2}
+        attachments={<AttachmentChip>quarterly-product-planning-notes-with-review-history.pdf</AttachmentChip>}
+        leadingActions={(
+          <>
+            <AddFileAction />
+            <ToolsAction />
+          </>
+        )}
+        trailingActions={(
+          <>
+            <Button type="button" size="sm" variant="ghost">
+              모델 <Icon name="chevron-down-small" size={14} aria-hidden="true" />
+            </Button>
+            <VoiceAction />
+          </>
         )}
       />
     </main>
@@ -361,30 +414,35 @@ export const NarrowWidth = {
   play: async ({ canvasElement }) => {
     const fixture = canvasElement.querySelector('[data-narrow-composer]');
     const composer = fixture?.querySelector('.lk-message-composer');
-    if (!fixture || !composer) throw new Error('The 320px composer fixture is missing.');
+    const row = composer?.querySelector('[data-composer-control-row]');
+    const leading = composer?.querySelector('[data-composer-leading-actions]');
+    const input = composer?.querySelector('[data-composer-input]');
+    const trailing = composer?.querySelector('[data-composer-trailing-actions]');
+    const primary = composer?.querySelector('[data-composer-primary-action]');
+    if (!fixture || !composer || !row || !leading || !input || !trailing || !primary) {
+      throw new Error('The narrow composer anatomy is incomplete.');
+    }
     if (fixture.scrollWidth > fixture.clientWidth + 1 || composer.scrollWidth > composer.clientWidth + 1) {
       throw new Error('MessageComposer must not create horizontal overflow at 320px.');
     }
     const fixtureRect = fixture.getBoundingClientRect();
     const composerRect = composer.getBoundingClientRect();
     if (composerRect.left < fixtureRect.left - 1 || composerRect.right > fixtureRect.right + 1) {
-      throw new Error('MessageComposer escaped the narrow product region.');
+      throw new Error('MessageComposer escaped the narrow conversation column.');
     }
-    const textarea = composer.querySelector('[data-composer-input]');
-    const actionSlot = composer.querySelector('[data-composer-primary-action]');
-    const action = actionSlot?.querySelector('button');
-    if (!textarea || !actionSlot || !action) throw new Error('The narrow composer action geometry is incomplete.');
-    const textareaRect = textarea.getBoundingClientRect();
-    const slotRect = actionSlot.getBoundingClientRect();
-    const actionRect = action.getBoundingClientRect();
-    if (Math.abs(textareaRect.bottom - slotRect.bottom) > 0.5) {
-      throw new Error('The narrow composer action slot must stay in the textarea bottom band.');
+    if (!(input.compareDocumentPosition(leading) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(leading.compareDocumentPosition(trailing) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(trailing.compareDocumentPosition(primary) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Narrow controls must preserve input → leading → trailing → primary order.');
     }
-    if (textareaRect.width < 220) {
-      throw new Error('The 320px composer must preserve enough width for the message draft.');
+    if (input.getBoundingClientRect().width < 240) {
+      throw new Error('The narrow composer must preserve a full-width usable draft row before utility actions.');
     }
-    if (Math.abs((slotRect.top + slotRect.height / 2) - (actionRect.top + actionRect.height / 2)) > 0.5) {
-      throw new Error('The narrow composer action must remain centered inside its bottom slot.');
+    for (const button of row.querySelectorAll('button')) {
+      const rect = button.getBoundingClientRect();
+      if (rect.left < row.getBoundingClientRect().left - 1 || rect.right > row.getBoundingClientRect().right + 1) {
+        throw new Error('A composer action escaped the narrow control row.');
+      }
     }
   },
 };
@@ -392,15 +450,16 @@ export const NarrowWidth = {
 export const ButtonOnlyExample = {
   name: '사용법 · 버튼으로만 제출',
   parameters: storyDescription(
-    '키오스크·다중 줄 작성처럼 Enter를 항상 줄바꿈으로 보존해야 할 때 button-only를 선택합니다. 숨은 keyboard shortcut 없이 이름이 있는 32px 전송 action을 사용합니다.',
+    '여러 줄 작성처럼 Enter를 항상 줄바꿈으로 보존해야 할 때 button-only를 사용합니다. 숨은 shortcut 없이 접근 가능한 이름과 focus를 가진 send action으로만 제출합니다.',
   ),
   render: () => (
     <main style={{ width: '100%', maxWidth: 720 }}>
       <ComposerFixture
-        initialValue={'1층 대기 구역을 확인했습니다.\n다음 작업을 알려주세요.'}
+        initialValue={'첫 번째 문단을 작성했습니다.\n다음 문단을 이어서 작성합니다.'}
         submitMode="button-only"
         minRows={2}
-        maxRows={4}
+        maxRows={5}
+        leadingActions={<AddFileAction />}
       />
     </main>
   ),

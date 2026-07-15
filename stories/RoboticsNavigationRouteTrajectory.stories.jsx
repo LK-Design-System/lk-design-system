@@ -14,6 +14,7 @@ import {
   Map2DCanvas,
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
+import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Navigation/Route and Trajectory',
@@ -81,14 +82,14 @@ const ACTIVE_TRAJECTORY = {
   mapId: 'L1',
   status: 'active',
   samples: [
-    { position: { x: 42, y: 218 }, timeMs: 0, headingRad: 0 },
-    { position: { x: 84, y: 214 }, timeMs: 250, headingRad: -0.08 },
-    { position: { x: 128, y: 204 }, timeMs: 500, headingRad: -0.18 },
-    { position: { x: 170, y: 184 }, timeMs: 750, headingRad: -0.42 },
-    { position: { x: 214, y: 158 }, timeMs: 1000, headingRad: -0.52 },
-    { position: { x: 262, y: 136 }, timeMs: 1250, headingRad: -0.31 },
-    { position: { x: 314, y: 126 }, timeMs: 1500, headingRad: -0.12 },
-    { position: { x: 370, y: 124 }, timeMs: 1750, headingRad: 0 },
+    { position: { x: 42, y: 224 }, timeMs: 0, headingRad: 0 },
+    { position: { x: 84, y: 222 }, timeMs: 250, headingRad: -0.05 },
+    { position: { x: 128, y: 214 }, timeMs: 500, headingRad: -0.14 },
+    { position: { x: 170, y: 200 }, timeMs: 750, headingRad: -0.3 },
+    { position: { x: 214, y: 184 }, timeMs: 1000, headingRad: -0.36 },
+    { position: { x: 262, y: 172 }, timeMs: 1250, headingRad: -0.2 },
+    { position: { x: 314, y: 166 }, timeMs: 1500, headingRad: -0.08 },
+    { position: { x: 370, y: 164 }, timeMs: 1750, headingRad: 0 },
   ],
   currentSampleIndex: 5,
 };
@@ -120,7 +121,7 @@ function StoryPage({ title, description, children, maxWidth = 1040 }) {
   );
 }
 
-function PathMap({ appearance = 'light', label, children, height = 270, svgHeight = 250, testId }) {
+function PathMap({ appearance = 'light', label, children, height = 270, svgHeight = 250, testId, eyebrow = 'ROUTE · L1' }) {
   const svgRef = React.useRef(null);
   const [cssViewBoxScale, setCssViewBoxScale] = React.useState(1);
 
@@ -152,7 +153,7 @@ function PathMap({ appearance = 'light', label, children, height = 270, svgHeigh
       panEnabled={false}
       wheelZoom={false}
       keyboard={false}
-      grid
+      grid={false}
       defaultViewport={{ x: 0, y: 0, z: 1 }}
       data-testid={testId}
       style={{ width: '100%', minWidth: 0, height }}
@@ -167,7 +168,7 @@ function PathMap({ appearance = 'light', label, children, height = 270, svgHeigh
         aria-label={`${label}의 route와 trajectory 계층`}
         style={{ display: 'block', width: 'min(540px, calc(100cqw - 32px))', height: 'auto' }}
       >
-        <path d={`M24 ${svgHeight - 26} H516 M24 28 H516`} stroke="var(--viewer-border)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <NavigationMapStage width={540} height={svgHeight} eyebrow={eyebrow} scaleBar={{ px: 100, label: '5 m' }} />
         {typeof children === 'function' ? children(cssViewBoxScale) : children}
       </svg>
     </Map2DCanvas>
@@ -388,7 +389,7 @@ export const RouteAndTrajectoryOverview = {
     });
     trajectories.forEach((trajectory) => {
       const path = trajectory.querySelector('[data-trajectory-path]');
-      if (!path?.getAttribute('d')?.includes('L 370 124')) throw new Error('Dense trajectory geometry is incomplete.');
+      if (!path?.getAttribute('d')?.includes('L 370 164')) throw new Error('Dense trajectory geometry is incomplete.');
       if (!trajectory.querySelector('[data-trajectory-current-heading]')) throw new Error('Current sample heading marker is missing.');
       assertNavigationStateGlyphGeometry(trajectory, 'Overview Trajectory');
       assertNavigationVectorGeometry(trajectory, 'Overview Trajectory');

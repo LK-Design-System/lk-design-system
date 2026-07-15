@@ -6,7 +6,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'MQTT·rosbridge 링크의 연결 상태를 신호 막대와 라벨로 보여주는 ConnectionBadge 패턴입니다. ready는 다른 제어 게이트와 조합되기 전의 연결 전제조건을 신호색으로 나타내며, 막대 수와 텍스트 라벨이 색과 함께 상태를 구분합니다.',
+        component: 'MQTT·rosbridge transport truth를 신호 막대와 라벨로 보여주는 ConnectionBadge 패턴입니다. 연결, freshness, health, operability, authority를 서로 다른 의미 축으로 유지합니다.',
       },
     },
   },
@@ -20,7 +20,7 @@ export const ConnectionBadges = {
     docs: {
       description: {
         story:
-          'online부터 offline까지 8개 상태를 나란히 봅니다. 색약 사용자도 막대 수·라벨로 상태를 구분할 수 있는지, ready와 online이 혼동되지 않는지 확인하세요.',
+          'unknown부터 failed까지 7개 transport 상태를 나란히 봅니다. connected가 freshness나 command readiness를 암시하지 않는지, 320px에서도 막대와 라벨이 함께 유지되는지 확인하세요.',
       },
     },
   },
@@ -31,26 +31,58 @@ export const ConnectionBadges = {
           Robotics / Connection Badge
         </p>
         <h1 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)' }}>
-          연결 배지는 링크 상태를 제어 전제조건으로 보여 줍니다
+          연결 배지는 transport truth만 보여 줍니다
         </h1>
         <p style={{ margin: 0, maxWidth: 640, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          MQTT·rosbridge 링크가 제어를 허용할 상태인지 판단할 때 적합합니다. ready는 연결 전제조건 충족을,
-          weak·stale·reconnecting은 신뢰할 수 없는 링크를 뜻하며, 신호 막대 수와 텍스트 라벨이 색과 함께 상태를
-          구분합니다. 개별 토픽의 지연 수치에는 이 배지 대신 텔레메트리를 쓰세요.
+          MQTT·rosbridge 연결 사실과 품질만 표시합니다. connected여도 데이터가 stale하거나 장비가 unavailable할 수
+          있으므로 freshness, health, authority와 action eligibility는 별도 컴포넌트와 제품 상태로 조합합니다.
         </p>
       </header>
-      <section style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' }}>
-        <ConnectionBadge status="online" />
-        <ConnectionBadge status="connecting" />
-        <ConnectionBadge status="ready" />
-        <ConnectionBadge status="weak" />
-        <ConnectionBadge status="reconnecting" />
-        <ConnectionBadge status="stale" />
-        <ConnectionBadge status="error" />
-        <ConnectionBadge status="offline" />
+      <section aria-label="Transport 상태" style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' }}>
+        <ConnectionBadge connectionState="unknown" />
+        <ConnectionBadge connectionState="connecting" />
+        <ConnectionBadge connectionState="connected" />
+        <ConnectionBadge connectionState="degraded" />
+        <ConnectionBadge connectionState="reconnecting" />
+        <ConnectionBadge connectionState="disconnected" />
+        <ConnectionBadge connectionState="failed" />
+      </section>
+      <section aria-label="320px 좁은 폭" style={{ display: 'grid', gap: 'var(--space-2)', width: 320, maxWidth: '100%' }}>
+        <strong style={{ color: 'var(--color-semantic-label-strong)' }}>320px narrow</strong>
+        <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', alignItems: 'center' }}>
+          <ConnectionBadge connectionState="connected" />
+          <ConnectionBadge connectionState="degraded" />
+          <ConnectionBadge connectionState="reconnecting" />
+          <ConnectionBadge connectionState="disconnected" />
+        </div>
+        <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center', color: 'var(--color-semantic-label-neutral)', fontSize: 13 }}>
+          <span>Hidden-label contract</span>
+          <ConnectionBadge data-contract="hidden-label" connectionState="connected" showLabel={false} aria-label="로봇 링크 연결됨" />
+        </div>
       </section>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const expected = {
+      unknown: '연결 상태 알 수 없음',
+      connecting: '연결 중',
+      connected: '연결됨',
+      degraded: '연결 품질 저하',
+      reconnecting: '재연결 중',
+      disconnected: '연결 끊김',
+      failed: '연결 실패',
+    };
+    for (const [state, label] of Object.entries(expected)) {
+      const badge = canvasElement.querySelector(`[aria-label="Transport 상태"] [data-connection-state="${state}"]`);
+      if (!badge || !badge.textContent?.includes(label)) {
+        throw new Error(`ConnectionBadge must expose the ${state} transport label.`);
+      }
+    }
+    const hiddenLabel = canvasElement.querySelector('[data-contract="hidden-label"]');
+    if (hiddenLabel?.getAttribute('role') !== 'img' || hiddenLabel.getAttribute('aria-label') !== '로봇 링크 연결됨') {
+      throw new Error('A hidden ConnectionBadge label must remain programmatically named.');
+    }
+  },
 };
 
 export const ConnectionBadgeCard = { ...ConnectionBadgeCardStory, name: 'ConnectionBadge card parity', tags: ['!dev', 'visual-parity'] };

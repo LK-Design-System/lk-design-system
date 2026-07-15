@@ -211,6 +211,43 @@ const targets = [
     match: { importPath: './stories/FormFileUploadQueue.stories.jsx', exportName: 'UploadAndConversion' },
     viewport: { width: 800, height: 720 },
   },
+  {
+    name: 'communication-message-family-dark',
+    match: { importPath: './stories/CommunicationMessage.stories.jsx', exportName: 'MessageFamilyVisualParity' },
+    viewport: { width: 860, height: 520 },
+  },
+  {
+    name: 'communication-message-overview-light',
+    match: { importPath: './stories/CommunicationMessage.stories.jsx', exportName: 'MessageOverview' },
+    viewport: { width: 900, height: 820 },
+  },
+];
+
+const ATOM_ZOOM = 8;
+
+// Per-atom captures. The full-page targets above prove a story RENDERS; these
+// prove the tiny map GLYPHS stay LEGIBLE at their real ~13-22px render size —
+// the exact class of regression the system-level review missed (a bespoke
+// elevator glyph that was unreadable at 22px). Each atom is cropped 1:1 (its
+// true painted size) AND upscaled ATOM_ZOOMx with nearest-neighbour (no
+// smoothing), so a sub-pixel limb loss, mis-centering, or a swapped glyph shows
+// as a pixel diff against the baseline. `clip` is a fixed square centered on the
+// atom so its dimensions stay stable between runs (a varying crop size would
+// fail pixelmatch's dimension check spuriously).
+const atomTargets = [
+  { name: 'atom-facility-lift-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'FacilityTransitionOverview' }, selector: '[data-transition-kind="lift"] [data-transition-marker]', clip: 46, viewport: { width: 900, height: 720 } },
+  { name: 'atom-facility-lift-marker-dark', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="lift"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
+  { name: 'atom-facility-door-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="door"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
+  { name: 'atom-facility-dock-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="dock"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
+  { name: 'atom-waypoint-point', match: { importPath: './stories/RoboticsNavigationWaypoint.stories.jsx', exportName: 'Overview' }, selector: '[data-waypoint-point]', clip: 34, viewport: { width: 900, height: 720 } },
+  { name: 'atom-glyph-unknown', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="unknown"]', clip: 28, viewport: { width: 900, height: 760 } },
+  { name: 'atom-glyph-conflict', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="conflict"]', clip: 28, viewport: { width: 900, height: 760 } },
+  { name: 'atom-glyph-closed', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="closed"]', clip: 28, viewport: { width: 900, height: 760 } },
+  { name: 'atom-glyph-invalid', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="invalid"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-waiting', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="waiting"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-completed', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="completed"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-rerouting', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="rerouting"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-stale', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="stale"]', clip: 28, viewport: { width: 1000, height: 900 } },
 ];
 
 function contentType(filePath) {
@@ -324,6 +361,77 @@ async function compareScreenshot(name, actualPath) {
   return { differentPixels, totalPixels, diffRatio };
 }
 
+function upscaleNearest(buffer, factor) {
+  const src = PNG.sync.read(buffer);
+  const dst = new PNG({ width: src.width * factor, height: src.height * factor });
+  for (let y = 0; y < dst.height; y += 1) {
+    const sourceRow = Math.floor(y / factor);
+    for (let x = 0; x < dst.width; x += 1) {
+      const sourceCol = Math.floor(x / factor);
+      const si = (src.width * sourceRow + sourceCol) << 2;
+      const di = (dst.width * y + x) << 2;
+      dst.data[di] = src.data[si];
+      dst.data[di + 1] = src.data[si + 1];
+      dst.data[di + 2] = src.data[si + 2];
+      dst.data[di + 3] = src.data[si + 3];
+    }
+  }
+  return PNG.sync.write(dst);
+}
+
+async function loadStoryReady(page, url, name, runtimeErrors) {
+  runtimeErrors.length = 0;
+  await page.goto(url, { waitUntil: 'networkidle' });
+  const readinessHandle = await page.waitForFunction(() => {
+    const root = document.querySelector('#storybook-root');
+    const bodyText = document.body?.innerText || '';
+    const hasStoryError = bodyText.includes('The component failed to render properly')
+      || bodyText.includes('Cannot access');
+    if (hasStoryError) return { status: 'error', bodyText: bodyText.slice(0, 600) };
+    if (root?.children.length) return { status: 'ready' };
+    return null;
+  }, undefined, { timeout: 30000 });
+  const readiness = await readinessHandle.jsonValue();
+  if (readiness.status === 'error') {
+    throw new Error(`${name} failed to render: ${readiness.bodyText}`);
+  }
+  await page.evaluate(async () => {
+    if (document.fonts?.ready) await document.fonts.ready;
+  });
+  await page.waitForTimeout(600);
+  if (runtimeErrors.length > 0) {
+    throw new Error(`${name} emitted runtime errors: ${runtimeErrors.join(' | ')}`);
+  }
+}
+
+// Crop a fixed square centered on the atom (true render size), then also emit a
+// nearest-neighbour zoom. Returns the two capture file names.
+async function captureAtom(page, atom, outputDir) {
+  const el = await page.$(atom.selector);
+  if (!el) {
+    throw new Error(`Atom "${atom.name}": selector ${atom.selector} not found. A missing atom must fail loudly, never silently skip the legibility gate.`);
+  }
+  await el.scrollIntoViewIfNeeded();
+  const box = await el.boundingBox();
+  if (!box || box.width < 1 || box.height < 1) {
+    throw new Error(`Atom "${atom.name}": element has no visible bounding box.`);
+  }
+  const clipSize = atom.clip || 40;
+  const centerX = box.x + box.width / 2;
+  const centerY = box.y + box.height / 2;
+  const clip = {
+    x: Math.max(0, Math.round(centerX - clipSize / 2)),
+    y: Math.max(0, Math.round(centerY - clipSize / 2)),
+    width: clipSize,
+    height: clipSize,
+  };
+  const truePath = path.join(outputDir, `${atom.name}.png`);
+  await page.screenshot({ path: truePath, clip, animations: 'disabled' });
+  const zoomName = `${atom.name}@${ATOM_ZOOM}x`;
+  await writeFile(path.join(outputDir, `${zoomName}.png`), upscaleNearest(await readFile(truePath), ATOM_ZOOM));
+  return [atom.name, zoomName];
+}
+
 async function main() {
   const indexPath = path.join(staticDir, 'index.json');
   const index = JSON.parse(await readFile(indexPath, 'utf8'));
@@ -340,7 +448,7 @@ async function main() {
   const manifest = {
     generatedAt: new Date().toISOString(),
     storybookStatic: 'storybook-static',
-    count: targets.length,
+    count: targets.length + atomTargets.length * 2,
     captures: [],
   };
   const regressions = [];
@@ -348,30 +456,9 @@ async function main() {
   try {
     for (const target of targets) {
       const id = findStoryId(index.entries, target);
-      runtimeErrors.length = 0;
       await page.setViewportSize(target.viewport);
       const url = storyUrl(origin, id, target.query);
-      await page.goto(url, { waitUntil: 'networkidle' });
-      const readinessHandle = await page.waitForFunction(() => {
-        const root = document.querySelector('#storybook-root');
-        const bodyText = document.body?.innerText || '';
-        const hasStoryError = bodyText.includes('The component failed to render properly')
-          || bodyText.includes('Cannot access');
-        if (hasStoryError) return { status: 'error', bodyText: bodyText.slice(0, 600) };
-        if (root?.children.length) return { status: 'ready' };
-        return null;
-      }, undefined, { timeout: 30000 });
-      const readiness = await readinessHandle.jsonValue();
-      if (readiness.status === 'error') {
-        throw new Error(`${target.name} failed to render: ${readiness.bodyText}`);
-      }
-      await page.evaluate(async () => {
-        if (document.fonts?.ready) await document.fonts.ready;
-      });
-      await page.waitForTimeout(600);
-      if (runtimeErrors.length > 0) {
-        throw new Error(`${target.name} emitted runtime errors: ${runtimeErrors.join(' | ')}`);
-      }
+      await loadStoryReady(page, url, target.name, runtimeErrors);
 
       const outputPath = path.join(outDir, `${target.name}.png`);
       await page.screenshot({ path: outputPath, fullPage: true, animations: 'disabled' });
@@ -401,6 +488,40 @@ async function main() {
         console.log(`${target.name}: ${percent}% pixel difference`);
         if (comparison.diffRatio > maxDiffRatio) {
           regressions.push(`${target.name} ${percent}% > ${(maxDiffRatio * 100).toFixed(3)}%`);
+        }
+      }
+    }
+
+    for (const atom of atomTargets) {
+      const id = findStoryId(index.entries, atom);
+      await page.setViewportSize(atom.viewport);
+      await loadStoryReady(page, storyUrl(origin, id, atom.query), atom.name, runtimeErrors);
+      const captureNames = await captureAtom(page, atom, outDir);
+      for (const captureName of captureNames) {
+        const capturePath = path.join(outDir, `${captureName}.png`);
+        const fileStat = await stat(capturePath);
+        manifest.captures.push({
+          name: captureName,
+          id,
+          atom: true,
+          selector: atom.selector,
+          query: atom.query || {},
+          viewport: atom.viewport,
+          path: path.relative(root, capturePath).replaceAll('\\', '/'),
+          bytes: fileStat.size,
+          sha256: await sha256(capturePath),
+        });
+        if (updateBaseline) {
+          await mkdir(baselineDir, { recursive: true });
+          await copyFile(capturePath, path.join(baselineDir, `${captureName}.png`));
+        } else if (checkBaseline) {
+          const comparison = await compareScreenshot(captureName, capturePath);
+          manifest.captures.at(-1).comparison = comparison;
+          const percent = (comparison.diffRatio * 100).toFixed(3);
+          console.log(`${captureName}: ${percent}% pixel difference`);
+          if (comparison.diffRatio > maxDiffRatio) {
+            regressions.push(`${captureName} ${percent}% > ${(maxDiffRatio * 100).toFixed(3)}%`);
+          }
         }
       }
     }

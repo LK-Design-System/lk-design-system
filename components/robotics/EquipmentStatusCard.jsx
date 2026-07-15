@@ -1,88 +1,194 @@
 import React from 'react';
-import { ConnectionBadge } from './ConnectionBadge';
-import { Icon } from '../icon/Icon.jsx';
+import { StatusBadge } from '../content/StatusBadge.jsx';
 
-// Tone drives non-text marks only (direction arrow + status dot); the ringLabel
-// text stays on --color-semantic-label-neutral, so these carry the semantic hue, not AA-text duty.
-const TONE = {
-  positive: 'var(--color-semantic-status-positive)',
-  cautionary: 'var(--color-semantic-status-cautionary)',
-  negative: 'var(--color-semantic-status-negative)',
-  signal: 'var(--color-semantic-primary-normal)',
-  neutral: 'var(--color-semantic-label-alternative)',
+const STATUS_TONE = {
+  positive: 'positive',
+  cautionary: 'cautionary',
+  negative: 'negative',
+  signal: 'signal',
+  neutral: 'offline',
 };
-
-function useDimKeyframes() {
-  React.useEffect(() => {
-    if (typeof document === 'undefined' || document.getElementById('lk-equip-dim-kf')) return;
-    const el = document.createElement('style');
-    el.id = 'lk-equip-dim-kf';
-    el.textContent = '@keyframes lk-equip-dim{0%,100%{opacity:1}50%{opacity:.4}}@media (prefers-reduced-motion: reduce){[data-lds-equipment-motion]{animation:none!important}}';
-    document.head.appendChild(el);
-  }, []);
-}
 
 /**
  * LK ROBOTICS — EquipmentStatusCard
- * A facility-equipment status card (door / elevator / stair lift) in the LK
- * ledger idiom — a horizontal row that rhymes with RobotStatusCard: leading
- * icon tile + title on the left, its status conditions as a muted text sub-line
- * underneath, and the headline state on the right as a small tone dot + readable
- * ink label (--color-semantic-label-neutral, WCAG-AA). A moving item swaps the dot for a dim
- * direction arrow so the signal is carried once, not twice; a comms state
- * (`connection`) swaps it for ConnectionBadge signal bars — the system's shared
- * connectivity vocabulary. `icon` takes any node.
+ * Product-neutral equipment summary: identity, a visible primary condition,
+ * labeled supporting facts, and optional metadata/actions. Product transports,
+ * direction state machines, and connection policy remain composition concerns.
  */
-export function EquipmentStatusCard({ icon, title, ringLabel, ringCaption, tone = 'neutral', direction, connection, chips, style, ...rest }) {
-  useDimKeyframes();
-  const c = TONE[tone] || TONE.neutral;
-  const moving = direction != null;
-  const hasChips = chips && chips.length > 0;
+export function EquipmentStatusCard({
+  icon,
+  title,
+  description,
+  status,
+  statusTone = 'neutral',
+  details = [],
+  meta,
+  actions,
+  headingLevel = 3,
+  style,
+  ...rest
+}) {
+  const Heading = `h${headingLevel}`;
+  const hasDetails = details.length > 0;
+  const hasFooter = meta != null || actions != null;
+
   return (
-    <div
+    <article
+      data-equipment-status-tone={statusTone}
       style={{
-        display: 'flex', alignItems: 'center', gap: 14, width: '100%', boxSizing: 'border-box',
-        padding: '14px 16px', background: 'var(--color-semantic-background-elevated-normal)', border: 'var(--component-card-border)',
-        borderRadius: 'var(--component-card-radius)', boxShadow: 'var(--component-card-shadow-sm)', fontFamily: 'var(--font-sans)',
+        display: 'grid',
+        gap: 'var(--space-4)',
+        width: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box',
+        padding: 'var(--space-5)',
+        background: 'var(--color-semantic-background-elevated-normal)',
+        color: 'var(--color-semantic-label-normal)',
+        border: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)',
+        borderRadius: 'var(--component-card-radius)',
+        boxShadow: 'var(--component-card-shadow-none)',
+        fontFamily: 'var(--font-sans)',
         ...style,
       }}
       {...rest}
     >
-      {icon != null && (
-        <span style={{ width: 38, height: 38, borderRadius: 'var(--radius-md)', flexShrink: 0, background: 'var(--color-semantic-fill-strong)',
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-semantic-label-alternative)' }}>
-          {icon}
-        </span>
-      )}
-
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && (
-          <div style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {title}
-          </div>
-        )}
-        {(hasChips || ringCaption != null) && (
-          <div style={{ marginTop: 3, fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-alternative)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {hasChips ? chips.map((ch) => ch.label).join(' · ') : ringCaption}
-          </div>
-        )}
-      </div>
-
-      {ringLabel != null && (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0, whiteSpace: 'nowrap',
-          fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
-          {moving ? (
-            <span data-lds-equipment-motion="" role="img" aria-label={direction === 'up' ? '상승 중' : '하강 중'} style={{ display: 'inline-flex', color: c, animation: 'lk-equip-dim 1.5s var(--ease-in-out) infinite' }}>
-              <Icon name={direction === 'up' ? 'arrow-up' : 'arrow-down'} size={14} aria-hidden="true" />
+      <header
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          gap: 'var(--space-3) var(--space-4)',
+          flexWrap: 'wrap',
+          minWidth: 0,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)', flex: '1 1 16rem', minWidth: 0 }}>
+          {icon != null && (
+            <span
+              aria-hidden="true"
+              style={{ display: 'inline-flex', flexShrink: 0, paddingBlock: 'var(--space-1)', color: 'var(--color-semantic-label-alternative)' }}
+            >
+              {icon}
             </span>
-          ) : connection != null ? (
-            <ConnectionBadge status={connection} showLabel={false} size="sm" style={{ flexShrink: 0 }} />
-          ) : (
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: c, flexShrink: 0 }} />
           )}
-          {ringLabel}
-        </span>
+          <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
+            <Heading
+              style={{
+                margin: 0,
+                color: 'var(--color-semantic-label-strong)',
+                fontSize: 'var(--body1-size)',
+                lineHeight: 'var(--body1-line)',
+                fontWeight: 'var(--fw-bold)',
+                overflowWrap: 'anywhere',
+              }}
+            >
+              {title}
+            </Heading>
+            {description != null && (
+              <div
+                style={{
+                  color: 'var(--color-semantic-label-neutral)',
+                  fontSize: 'var(--label1-size)',
+                  lineHeight: 'var(--label1-line)',
+                  overflowWrap: 'anywhere',
+                }}
+              >
+                {description}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <StatusBadge
+          tone={STATUS_TONE[statusTone] || STATUS_TONE.neutral}
+          style={{
+            flex: '0 1 auto',
+            height: 'auto',
+            minHeight: 20,
+            maxWidth: '100%',
+            paddingBlock: 'var(--space-1)',
+            whiteSpace: 'normal',
+            overflowWrap: 'anywhere',
+          }}
+        >
+          {status}
+        </StatusBadge>
+      </header>
+
+      {hasDetails && (
+        <dl
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(10rem, 100%), 1fr))',
+            gap: 'var(--space-3) var(--space-5)',
+            margin: 0,
+            paddingTop: 'var(--space-4)',
+            borderTop: '1px solid var(--color-semantic-line-normal-normal)',
+          }}
+        >
+          {details.map((detail, index) => (
+            <div key={index} style={{ display: 'grid', alignContent: 'start', gap: 'var(--space-1)', minWidth: 0 }}>
+              <dt
+                style={{
+                  color: 'var(--color-semantic-label-alternative)',
+                  fontSize: 'var(--caption1-size)',
+                  lineHeight: 'var(--caption1-line)',
+                  fontWeight: 'var(--fw-semibold)',
+                }}
+              >
+                {detail.label}
+              </dt>
+              <dd
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2)',
+                  minWidth: 0,
+                  margin: 0,
+                  color: 'var(--color-semantic-label-normal)',
+                  fontSize: 'var(--label1-size)',
+                  lineHeight: 'var(--label1-line)',
+                  fontWeight: 'var(--fw-semibold)',
+                  overflowWrap: 'anywhere',
+                }}
+              >
+                {detail.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
       )}
-    </div>
+
+      {hasFooter && (
+        <footer
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 'var(--space-3) var(--space-4)',
+            flexWrap: 'wrap',
+            minWidth: 0,
+            paddingTop: 'var(--space-3)',
+            borderTop: '1px solid var(--color-semantic-line-normal-normal)',
+          }}
+        >
+          {meta != null && (
+            <div
+              style={{
+                flex: '1 1 12rem',
+                minWidth: 0,
+                color: 'var(--color-semantic-label-alternative)',
+                fontSize: 'var(--caption1-size)',
+                lineHeight: 'var(--caption1-line)',
+                overflowWrap: 'anywhere',
+              }}
+            >
+              {meta}
+            </div>
+          )}
+          {actions != null && <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>{actions}</div>}
+        </footer>
+      )}
+    </article>
   );
 }

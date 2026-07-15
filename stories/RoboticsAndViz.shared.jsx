@@ -46,12 +46,15 @@ export const RoboticsStatus = {
         <RobotStatusCard name="AMR-07" status="online" battery={86} mode="순찰" selected />
         <RobotStatusCard name="Forklift-B2" status="reconnecting" battery={47} mode="수동" />
         <EquipmentStatusCard
-          icon={<Icon name="home" />}
+          headingLevel={2}
+          icon={<Icon name="home" size={20} />}
           title="화물 엘리베이터 2호기"
-          ringLabel="3F"
-          ringCaption="상승 중"
-          direction="up"
-          chips={[{ label: '호출됨', tone: 'signal' }, { label: '정상', tone: 'positive' }]}
+          status="운행 중"
+          statusTone="positive"
+          details={[
+            { label: '이동', value: <><Icon name="arrow-up" size={16} aria-hidden="true" /> 상승 중</> },
+            { label: '층', value: '3층' },
+          ]}
         />
       </section>
 
@@ -119,38 +122,64 @@ export const EquipmentStatusCardCard = {
   name: 'EquipmentStatusCard card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div data-visual-crop-root style={{ width: 480, height: 330, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <EquipmentStatusCard
-          icon={<Icon name="lock" size={16} />}
-          title="정문"
-          ringLabel="연결 끊김"
-          tone="negative"
-          connection="offline"
-          chips={[{ label: '센서 응답 없음', tone: 'negative' }, { label: '통신 끊김', tone: 'negative' }]}
-        />
-        <EquipmentStatusCard
-          icon={<Icon name="signal" size={16} />}
-          title="옥상 게이트웨이"
-          ringLabel="재연결"
-          connection="reconnecting"
-          chips={[{ label: '신호 약함', tone: 'cautionary' }]}
-        />
-        <EquipmentStatusCard
-          icon={<ElevatorGlyph />}
-          title="화물 엘리베이터 2호기"
-          ringLabel="3F"
-          ringCaption="이동중"
-          tone="signal"
-          direction="up"
-        />
-        <EquipmentStatusCard
-          icon={<StairsGlyph />}
-          title="계단리프트 A"
-          ringLabel="STOP"
-          tone="cautionary"
-          chips={[{ label: '점검중', tone: 'cautionary' }]}
-        />
+    <div data-visual-crop-root style={{ width: 900, height: 650, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: 20, alignItems: 'start' }}>
+        <div style={{ display: 'grid', gap: 16 }}>
+          <EquipmentStatusCard
+            headingLevel={2}
+            icon={<ElevatorGlyph />}
+            title="화물 엘리베이터 2호기"
+            description="물류동 동측"
+            status="운행 중"
+            statusTone="positive"
+            details={[
+              { label: '이동', value: <><Icon name="arrow-up" size={16} aria-hidden="true" /> 상승 중</> },
+              { label: '층', value: '3층' },
+              { label: '운전 방식', value: '자동' },
+            ]}
+            meta="30초 전에 갱신"
+          />
+          <EquipmentStatusCard
+            headingLevel={2}
+            icon={<Icon name="signal" size={20} />}
+            title="옥상 게이트웨이"
+            description="로봇 네트워크 중계 장비"
+            status="주의 필요"
+            statusTone="cautionary"
+            details={[
+              { label: '연결', value: <ConnectionBadge status="reconnecting" size="sm" /> },
+              { label: '구역', value: '옥상 서측' },
+            ]}
+            meta="재시도 2/5"
+          />
+        </div>
+
+        <div data-theme="dark" style={{ display: 'grid', gap: 16, padding: 16, borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-normal-normal)' }}>
+          <EquipmentStatusCard
+            headingLevel={2}
+            icon={<Icon name="lock" size={20} />}
+            title="북측 연구동 물류 차량 출입 게이트 12번 원격 제어 장치"
+            description="야외 배송 동선과 연결된 원격 출입 설비"
+            status="센서 응답을 확인해야 함"
+            statusTone="negative"
+            details={[
+              { label: '연결', value: <ConnectionBadge status="offline" size="sm" /> },
+              { label: '마지막 응답', value: '12분 전' },
+            ]}
+            meta="현장 확인 필요"
+          />
+          <EquipmentStatusCard
+            headingLevel={2}
+            icon={<StairsGlyph />}
+            title="계단리프트 A"
+            status="정기 점검 중"
+            statusTone="cautionary"
+            details={[
+              { label: '운행', value: '일시 중지' },
+              { label: '점검 종료', value: '오늘 16:00' },
+            ]}
+          />
+        </div>
       </div>
     </div>
   ),

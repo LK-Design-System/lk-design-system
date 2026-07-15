@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-07-13",
+  "auditedAt": "2026-07-14",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -514,35 +514,35 @@
       "path": "components/editor/CanvasEditorShell.jsx",
       "decision": "separate-audit",
       "workflowIds": [],
-      "reason": "Requires a separate source-first audit against lk_web_viz and editor products before any keep decision."
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
     },
     {
       "name": "CanvasEditorCommandBar",
       "path": "components/editor/CanvasEditorCommandBar.jsx",
       "decision": "separate-audit",
       "workflowIds": [],
-      "reason": "Requires a separate source-first audit against lk_web_viz and editor products before any keep decision."
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
     },
     {
       "name": "LayerPanel",
       "path": "components/editor/LayerPanel.jsx",
       "decision": "separate-audit",
       "workflowIds": [],
-      "reason": "Requires a separate source-first audit against lk_web_viz and editor products before any keep decision."
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
     },
     {
       "name": "SelectionInspector",
       "path": "components/editor/SelectionInspector.jsx",
       "decision": "separate-audit",
       "workflowIds": [],
-      "reason": "Requires a separate source-first audit against lk_web_viz and editor products before any keep decision."
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
     },
     {
       "name": "ViewportStatusBar",
       "path": "components/editor/ViewportStatusBar.jsx",
       "decision": "separate-audit",
       "workflowIds": [],
-      "reason": "Requires a separate source-first audit against lk_web_viz and editor products before any keep decision."
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
     }
   ],
   "repositories": [
@@ -683,6 +683,41 @@
         "visionops",
         "control"
       ],
+      "assetReviews": [
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned supervision source confirms the need to summarize equipment identity, a primary condition, and supporting motion or connection facts. EquipmentStatusCard is independently designed from LDS Card/StatusBadge siblings and official status/summary-list references; Control retains telemetry truth, health diagnosis, recovery, and equipment-specific state machines, and its current ledger row, dimensions, and local prop names are not design authority.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "Pinned map-editor source owns map and floor geometry authoring and does not consume a live equipment identity/condition summary.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/MapEditScreen.tsx",
+              "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "Pinned assistant source owns project/evidence scope and conversation and has no physical-equipment identity, condition, or telemetry surface.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+            }
+          ]
+        }
+      ],
       "states": [
         "connecting",
         "live",
@@ -703,8 +738,8 @@
         "Show the last trustworthy observation and its age.",
         "Resynchronize after reconnection before re-enabling risky actions."
       ],
-      "dsBoundary": "LDS may own freshness semantics, degraded presentation, evidence hierarchy, and action gating; telemetry transport and domain diagnosis remain product-owned.",
-      "designQuestion": "How should a shared truth header and evidence priority work without imposing one dashboard layout?",
+      "dsBoundary": "LDS may own freshness semantics, degraded presentation, evidence hierarchy, action gating, and an independently researched equipment identity/status/labeled-facts card; telemetry transport, domain diagnosis, recovery, and equipment-specific state machines remain product-owned. Product frontend anatomy, dimensions, styling, and local component APIs are coverage evidence only.",
+      "designQuestion": "How should shared truth, equipment identity/status, and evidence priority work without imposing one dashboard or copied product-row layout?",
       "sourceEvidence": [
         {
           "repo": "deviceops",
@@ -728,6 +763,8 @@
       ],
       "implementationEvidence": [
         "components/robotics/ConnectionBadge.jsx",
+        "components/robotics/EquipmentStatusCard.jsx",
+        "components/content/StatusBadge.jsx",
         "components/data/DescriptionList.jsx",
         "components/content/LogViewer.jsx",
         "components/data/LineChart.jsx",
@@ -738,6 +775,7 @@
       ],
       "storyEvidence": [
         "stories/RoboticsConnectionBadge.stories.jsx",
+        "stories/RoboticsEquipment.stories.jsx",
         "stories/DataDescriptionList.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
         "stories/DataLineChart.stories.jsx",
@@ -1295,7 +1333,7 @@
         {
           "repo": "context-hub",
           "classification": "supported by composition",
-          "reason": "Pinned chat panel and chat contract map to explicit message surfaces, message lifecycle, feed, composer, scope/reset composition, and compact citations; retrieval, provider transport, persistence, and citation truth remain product-owned.",
+          "reason": "Pinned chat sources confirm the need for user/assistant turns, rich responses, loading/error handling, source links, and provider/project scope. LDS message, feed, composer, source, tree, and confirmation primitives cover those component types by composition; the product's current bubble geometry, color, citation disclosure, local prop names, transport, retrieval/RAG, persistence, participant-role truth, session policy, and citation truth are not LDS design authority.",
           "sourceEvidence": [
             {
               "path": "src/components/chat/PortalChatPanel.tsx",
@@ -1342,11 +1380,9 @@
         "provider-checking",
         "unavailable",
         "ready",
-        "streaming",
+        "loading",
         "answered",
-        "error",
-        "retrying",
-        "session-reset"
+        "error"
       ],
       "decisions": [
         "Which provider and project scope are actually active?",
@@ -1355,11 +1391,11 @@
       ],
       "failureRecovery": [
         "Disable input when the provider is unavailable and explain why.",
-        "Confirm or clearly communicate session reset on provider or scope change.",
-        "Keep the failed prompt and allow an explicit retry without inventing sources."
+        "Explain whether the scoped conversation remains available after provider or scope changes; the product owns that session policy.",
+        "Keep failed input recoverable without inventing source truth; exact retry transport remains product-owned."
       ],
-      "dsBoundary": "LDS may own explicit message surface variants, message lifecycle anatomy, feed history/follow behavior, IME-safe composition, active-scope disclosure, full or compact source presentation, reset confirmation, and accessible streaming; role-to-surface policy, provider transport, retrieval, scope resolution, persistence, and source truth remain product-owned.",
-      "designQuestion": "Which chat primitives are reusable without promoting the complete Context Hub conversation workflow into one component?",
+      "dsBoundary": "LDS may own independently researched document/bubble message anatomy, optional placement, controlled delivery/response lifecycle presentation, a named chrome-free log with history/follow behavior, a neutral elevated composer shell, generic attachment/source/action slots, active-scope disclosure, reset confirmation, and accessible streaming states. Participant-role truth, routes, provider transport, retrieval/RAG, scope resolution, persistence, session policy, and source truth remain product-owned. Pinned product UI is coverage evidence only and does not select LDS anatomy, geometry, color, tokens, props, or public component lifecycle.",
+      "designQuestion": "Which general assistant conversation primitives are justified by LDS siblings, official AI-chat design-system references, and accessibility standards, and do the pinned products require those component types without defining their design?",
       "sourceEvidence": [
         {
           "repo": "context-hub",

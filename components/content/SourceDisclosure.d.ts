@@ -36,6 +36,8 @@ export interface SourceDisclosureProps extends Omit<React.HTMLAttributes<HTMLEle
   emptyMessage?: React.ReactNode;
   onSourceActivate?: (source: SourceDisclosureItem) => void;
   openLabel?: React.ReactNode;
+  /** Render each source as a single-line chip (opens the original on activation) instead of the bordered disclosure card. Use where a citation should read at the weight of an attachment chip — e.g. references under a chat answer. Drops inline detail disclosure, availability, and the card surface. @default false */
+  compact?: boolean;
 }
 
 /** Product-provided provenance and availability without fetching or interpreting source content. */

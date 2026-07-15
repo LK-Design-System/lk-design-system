@@ -131,10 +131,10 @@ function pointAlong(points, ratio) {
 }
 
 function statusTone(status, invalid) {
-  if (invalid || status === 'blocked') return 'var(--color-semantic-status-negative-foreground)';
-  if (status === 'waiting' || status === 'rerouting') return 'var(--color-semantic-status-cautionary-foreground)';
-  if (status === 'completed') return 'var(--color-semantic-status-positive-foreground)';
-  if (status === 'active') return 'var(--color-semantic-primary-normal)';
+  if (invalid || status === 'blocked') return 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))';
+  if (status === 'waiting' || status === 'rerouting') return 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))';
+  if (status === 'completed') return 'var(--viewer-positive, var(--color-semantic-status-positive-foreground))';
+  if (status === 'active') return 'var(--viewer-accent, var(--color-semantic-primary-normal))';
   return 'var(--viewer-muted, var(--color-semantic-label-alternative))';
 }
 
@@ -229,7 +229,7 @@ export function TrajectoryOverlay({
       state: 'invalid',
       glyphKind: 'invalid',
       point: pointAlong(points, 0.8),
-      tone: 'var(--color-semantic-status-negative-foreground)',
+      tone: 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))',
     } : null,
     stale ? {
       state: 'stale',
@@ -338,11 +338,24 @@ export function TrajectoryOverlay({
           data-trajectory-selected-indicator=""
           d={pathData}
           fill="none"
-          stroke="var(--color-semantic-primary-normal)"
+          stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
           strokeWidth="7"
           strokeLinecap="round"
           strokeLinejoin="round"
           opacity="0.24"
+          vectorEffect="non-scaling-stroke"
+          pointerEvents="none"
+        />
+      )}
+      {pathData && !selected && !focusVisible && (
+        <path
+          data-trajectory-casing=""
+          d={pathData}
+          fill="none"
+          stroke={surface}
+          strokeWidth="5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />

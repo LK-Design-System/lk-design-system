@@ -47,7 +47,7 @@
 
 - `Map2DCanvas`와 `ViewerFrame`을 확인해 viewport/frame ownership을 유지했습니다. 이 컴포넌트는 `<g>` 조각만 반환하며 grid, toolbar, panel, recovery action을 만들지 않습니다.
 - `SpatialRegion`과 같은 map feature 순서 및 `--viewer-*` 역할 token을 사용합니다. facility marker는 region보다 위에서 읽히지만 별도 palette나 shadow를 추가하지 않습니다.
-- `EquipmentStatusCard`는 설비 목록에서 icon tile, 상태 서브라인, trailing 상태를 소유합니다. `FacilityTransition`은 지도 annotation이므로 카드 radius·border·shadow·행 layout을 복제하지 않고 marker + 직접 상태 라벨만 둡니다.
+- `EquipmentStatusCard`는 설비 목록에서 heading identity, 보이는 대표 상태와 labeled facts를 semantic article로 묶습니다. `FacilityTransition`은 지도 annotation이므로 카드 radius·border·description-list layout을 복제하지 않고 marker + 직접 상태 라벨만 둡니다.
 - `DirectionalPad`의 handler/disabled/keyboard 차단을 비교했습니다. 여기서는 제어가 아니라 inspect activation만 제공하므로 press-and-hold, repeat, 명령 상태를 가져오지 않습니다.
 - `assets/icons/question.svg`, `exclamation.svg`, `clock.svg`와 생성된 `Icon` registry를 먼저 확인했습니다. 상태 badge는 `_NavigationStateGlyph.js`에서 이 geometry를 화면 중심 원점에 배치하며, stale은 badge 외곽을 clock perimeter로 사용해 이중 원을 피하고 registry clock의 hands만 축약합니다. 그래서 글꼴별 `?`, `!`, `~` 폭·baseline 차이가 없습니다.
 - 유지한 시각 차이: door의 평행 boundary, lift의 상하 이동 축, dock의 접근 bracket은 공간 전이 종류를 작은 map marker에서 구분하기 위한 기능적 geometry입니다. 작은 지도 라벨에서는 종류명보다 현재 endpoint(`출발/도착/연결`)를 먼저 보여 두 map의 역할을 즉시 구분하고, 종류와 전체 상태는 glyph·접근성 이름·inspector로 보존합니다. availability의 dash/slash/question은 색 외 단서입니다. 그 외 icon set, card chrome, 독자 radius는 도입하지 않았습니다.

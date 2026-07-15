@@ -1,6 +1,7 @@
 import React from 'react';
 import { userEvent } from 'storybook/test';
 import { Map2DCanvas, FacilityTransition, SpatialRegion } from '../src/index.js';
+import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -49,16 +50,7 @@ function assertCenteredStateGlyph(mark, expectedKind) {
   }
 }
 
-function MapFloor({ width = 400, height = 260 }) {
-  return (
-    <g aria-hidden="true" pointerEvents="none">
-      <rect x="12" y="12" width={width - 24} height={height - 24} rx="8" fill="var(--viewer-surface)" stroke="var(--viewer-border)" vectorEffect="non-scaling-stroke" />
-      <path d={`M24 ${height - 70}H${width - 24}M${width - 112} 24V${height - 24}`} fill="none" stroke="var(--viewer-border)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-    </g>
-  );
-}
-
-function TransitionMap({ children, appearance = 'light', width = 400, height = 260, label, testId }) {
+function TransitionMap({ children, appearance = 'light', width = 400, height = 260, label, testId, eyebrow = 'FACILITY · L1' }) {
   const svgRef = React.useRef(null);
   const [viewBoxScale, setViewBoxScale] = React.useState(1);
 
@@ -104,7 +96,7 @@ function TransitionMap({ children, appearance = 'light', width = 400, height = 2
         aria-label={label}
         data-transition-map-scale={viewBoxScale}
       >
-        <MapFloor width={width} height={height} />
+        <NavigationMapStage width={width} height={height} eyebrow={eyebrow} north />
         {typeof children === 'function' ? children({ viewportScale: viewBoxScale }) : children}
       </svg>
     </Map2DCanvas>

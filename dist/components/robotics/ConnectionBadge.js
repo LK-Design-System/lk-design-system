@@ -1,7 +1,7 @@
 "use client";
 import {
   ConnectionBadge
-} from "../../chunk-W2QO5TT2.js";
+} from "../../chunk-ZEWOOOWF.js";
 export {
   ConnectionBadge
 };

@@ -239,15 +239,15 @@ export function LaneOverlay({
       ? '2 5'
       : undefined;
   const baseColor = invalid
-    ? 'var(--color-semantic-status-negative-foreground)'
+    ? 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))'
     : resolvedAvailability === 'available'
-      ? 'var(--color-semantic-primary-normal)'
+      ? 'var(--viewer-accent, var(--color-semantic-primary-normal))'
       : 'var(--viewer-muted, var(--color-semantic-label-alternative))';
   const stateGlyphs = [
     resolvedAvailability === 'closed' ? { state: 'closed', tone: VIEWER_FOREGROUND } : null,
-    resolvedAvailability === 'unknown' ? { state: 'unknown', tone: 'var(--color-semantic-status-cautionary-foreground)' } : null,
-    hasConflict ? { state: 'conflict', tone: 'var(--color-semantic-status-negative-foreground)' } : null,
-    invalid ? { state: 'invalid', tone: 'var(--color-semantic-status-negative-foreground)' } : null,
+    resolvedAvailability === 'unknown' ? { state: 'unknown', tone: 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))' } : null,
+    hasConflict ? { state: 'conflict', tone: 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))' } : null,
+    invalid ? { state: 'invalid', tone: 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))' } : null,
     stale ? { state: 'stale', tone: VIEWER_MUTED } : null,
   ].filter(Boolean);
   const midpointRadians = midpoint.angle * Math.PI / 180;
@@ -371,11 +371,24 @@ export function LaneOverlay({
           data-lane-selection-halo=""
           d={pathData}
           fill="none"
-          stroke="var(--color-semantic-primary-normal)"
+          stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
           strokeWidth="7"
           strokeLinecap="round"
           strokeLinejoin="round"
           opacity="0.24"
+          vectorEffect="non-scaling-stroke"
+          pointerEvents="none"
+        />
+      )}
+      {pathData && !selected && !visibleFocus && (
+        <path
+          data-lane-casing=""
+          d={pathData}
+          fill="none"
+          stroke={VIEWER_SURFACE}
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />
@@ -399,7 +412,7 @@ export function LaneOverlay({
           data-lane-conflict-pattern=""
           d={pathData}
           fill="none"
-          stroke="var(--color-semantic-status-negative-foreground)"
+          stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))"
           strokeWidth="2"
           strokeDasharray="2 7"
           strokeLinecap="round"

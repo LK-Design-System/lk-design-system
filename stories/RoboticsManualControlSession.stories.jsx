@@ -101,8 +101,8 @@ export const AuthorizedSession = {
       throw new Error('ManualControlSession must expose its title as the section heading.');
     }
 
-    const connection = session.querySelector('[role="img"][data-status="ready"]');
-    if (connection?.getAttribute('aria-label') !== '연결 준비됨') {
+    const connection = session.querySelector('[data-status="ready"]');
+    if (connection?.textContent?.trim() !== '연결 준비됨') {
       throw new Error('A ready transport prerequisite must use the non-green ready state.');
     }
     const authorityGranted = Array.from(session.querySelectorAll('span'))
@@ -419,11 +419,11 @@ export const LinkLossRelease = {
     await userEvent.click(linkLossButton);
     await waitFor(() => {
       const output = canvasElement.querySelector('[data-testid="link-loss-release-output"]');
-      const disconnected = session.querySelector('[role="img"][data-status="offline"]');
+      const disconnected = session.querySelector('[data-status="offline"]');
       if (!output?.textContent?.includes('armed: false') || !output.textContent.includes('link-unavailable')) {
         throw new Error('Link loss must disarm and publish its release reason.');
       }
-      if (disconnected?.getAttribute('aria-label') !== '연결 끊김' || !session.querySelector('[data-interaction-enabled="false"]')?.hasAttribute('inert')) {
+      if (disconnected?.textContent?.trim() !== '연결 끊김' || !session.querySelector('[data-interaction-enabled="false"]')?.hasAttribute('inert')) {
         throw new Error('Link loss must update connection state and block controls.');
       }
       if (!session.querySelector('button[aria-pressed="false"]')?.disabled) {
@@ -549,8 +549,8 @@ export const NarrowCompoundStates = {
       throw new Error('The compound fixture must preserve all states at the 320px target width.');
     }
 
-    const stale = cautionary.querySelector('[role="img"][data-status="stale"]');
-    if (stale?.getAttribute('aria-label') !== '연결 정보 오래됨' || !cautionary.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('연결 상태 점검 필요')) {
+    const stale = cautionary.querySelector('[data-status="stale"]');
+    if (stale?.textContent?.trim() !== '연결 정보 오래됨' || !cautionary.querySelector('[data-banner-variant="embedded"]')?.textContent?.includes('연결 상태 점검 필요')) {
       throw new Error('The cautionary fixture must expose stale link and blocking guidance.');
     }
     if (!cautionary.querySelector('[data-interaction-enabled="false"]')?.hasAttribute('inert') || !cautionary.querySelector('button[aria-pressed="false"]')?.disabled) {

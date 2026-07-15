@@ -325,6 +325,24 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
         '--viewer-border': appearance === 'light'
           ? 'var(--component-viewer-light-border)'
           : 'var(--component-viewer-border)',
+        // Appearance-aware state/accent tones for a true dark control-room HUD.
+        // Light keeps the semantic tokens verbatim (no light-theme change); dark
+        // lifts each tone toward white, which RAISES luminance on the dark
+        // viewer surface and therefore only improves non-text contrast (never
+        // drops it). Consumers reference these with a semantic fallback so any
+        // surface that has not opted in is unaffected.
+        '--viewer-accent': appearance === 'light'
+          ? 'var(--color-semantic-primary-normal)'
+          : 'color-mix(in srgb, var(--color-semantic-primary-normal), white 28%)',
+        '--viewer-danger': appearance === 'light'
+          ? 'var(--color-semantic-status-negative-foreground)'
+          : 'color-mix(in srgb, var(--color-semantic-status-negative-foreground), white 22%)',
+        '--viewer-warning': appearance === 'light'
+          ? 'var(--color-semantic-status-cautionary-foreground)'
+          : 'color-mix(in srgb, var(--color-semantic-status-cautionary-foreground), white 20%)',
+        '--viewer-positive': appearance === 'light'
+          ? 'var(--color-semantic-status-positive-foreground)'
+          : 'color-mix(in srgb, var(--color-semantic-status-positive-foreground), white 22%)',
         position: 'relative',
         isolation: 'isolate',
         width: '100%',

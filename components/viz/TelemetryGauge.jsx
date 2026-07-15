@@ -161,17 +161,22 @@ export function TelemetryGauge({
             strokeLinecap="round"
             strokeDasharray={`${arcLength} ${circumference}`}
           />
-          <circle
-            cx={center}
-            cy={center}
-            r={radius}
-            fill="none"
-            stroke={TONE[resolvedTone] || TONE.signal}
-            strokeWidth={thickness}
-            strokeLinecap="round"
-            strokeDasharray={`${arcLength * pct} ${circumference}`}
-            style={{ transition: 'stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)' }}
-          />
+          {/* Round caps read as a filled bulb at a zero-length dash, so an empty
+              gauge (pct=0) would paint a false dot; guard so the value arc only
+              renders once there is a value. A near-empty value keeps the cap. */}
+          {pct > 0 && (
+            <circle
+              cx={center}
+              cy={center}
+              r={radius}
+              fill="none"
+              stroke={TONE[resolvedTone] || TONE.signal}
+              strokeWidth={thickness}
+              strokeLinecap="round"
+              strokeDasharray={`${arcLength * pct} ${circumference}`}
+              style={{ transition: 'stroke-dasharray var(--dur-slow) var(--ease-out), stroke var(--dur-base) var(--ease-out)' }}
+            />
+          )}
         </svg>
         <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', minWidth: 0 }}>
           <strong

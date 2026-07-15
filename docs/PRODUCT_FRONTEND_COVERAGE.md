@@ -5,7 +5,7 @@
 | Type | Product workflow coverage contract and audit summary |
 | Status | Current · LK Web Viz WF-15 wireframe and LDS mapping reviewed |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-07-13 |
+| Last reviewed | 2026-07-14 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
 
 ## 필수 LK 제품 자산 교차 검토
@@ -32,6 +32,8 @@
 판정 값은 `supported`, `supported by composition`, `gap`, `not applicable`로 통일한다. 제품 화면을 Storybook에 복제하거나 route·backend 정책·transport 상태 머신을 공용 컴포넌트에 넣는 것은 커버리지로 인정하지 않는다. 타입, 접근성, Storybook, 픽셀 회귀 검사가 통과하더라도 이 교차 제품 워크플로우 검토를 대신할 수 없다.
 
 이 문서는 LDS가 지원해야 하는 다섯 제품의 워크플로우를 다시 발견하고 검증하기 위한 기준 문서다. 현재 제품 화면이나 기존 LDS 컴포넌트를 정답으로 보지 않는다. Storybook에는 감사표, 와이어프레임, 완성 화면을 추가하지 않으며, 검증된 컴포넌트와 패턴의 실제 상태만 둔다.
+
+여기서 제품 source의 authority는 필요한 component 종류, workflow·state·failure/recovery, 실제 데이터 밀도와 product-owned seam에 한정된다. anatomy, 배치, 치수, 색, token, prop 이름, public API와 LDS component lifecycle은 제품 source에서 도출하지 않는다. 이 설계 결정은 WDS evidence, LDS sibling·token, 공식 외부 category reference와 design-owner review에서 독립적으로 닫은 뒤 제품 source로 조합 가능성만 확인한다.
 
 ## 현재 판정
 
@@ -370,6 +372,14 @@
 - VisionOps의 source/processor/decision, DeviceOps의 connection/service, Control의 robot/facility 계층은 같은 순서를 강제하지 않고 causal order만 공유한다.
 - 복구 후에는 REST/authoritative source로 resync하기 전 위험 action을 다시 켜지 않는다.
 
+`EquipmentStatusCard` 재설계의 필수 자산 검토는 다음과 같다. 이 표는 필요한 정보 종류와 조합 가능성만 판정하며 제품 화면의 ledger row, 치수, `ringLabel`·`chips` 같은 local API를 설계 근거로 사용하지 않는다.
+
+| 제품 자산 | 고정 revision과 관련 source | 판정 | workflow seam |
+| --- | --- | --- | --- |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` | supported by composition | 설비 identity, primary condition, motion·connection 같은 supporting facts의 필요는 확인된다. LDS는 독립적으로 설계한 status label + labeled facts anatomy를 제공하고, telemetry truth·health 판정·recovery와 설비별 state machine은 Control이 소유한다. |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` | not applicable | 고정 source는 map/floor geometry authoring을 소유하며 주변 설비의 live status summary를 소비하지 않는다. |
+| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` | not applicable | 고정 source는 project/evidence scope와 assistant conversation을 소유하며 물리 설비 identity·condition·telemetry surface가 없다. |
+
 ### WF-05 Procedure authoring
 
 핵심은 step 목록 자체가 아니라 목적, target, 순서, 예상 결과를 실행 전에 이해시키는 것이다.
@@ -469,7 +479,7 @@
 
 | 제품 자산 | 고정 revision과 관련 source | 판정 | workflow seam |
 | --- | --- | --- | --- |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` · `docs/chat.md` | supported by composition | user/assistant surface, streaming, compact citation, composer·scope/reset 흐름은 LDS message/feed/composer/source primitive로 조합할 수 있고 retrieval·provider·citation truth는 Context Hub가 소유한다. |
+| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` · `docs/chat.md` | supported by composition | 관찰된 user/assistant turn, rich response, loading/error, source link, provider/project scope는 LDS message/feed/composer/source primitive로 조합할 수 있다. route·retrieval·provider transport·citation truth와 session policy는 Context Hub가 소유하며, 제품의 bubble 색·폭·citation disclosure와 local prop은 LDS 설계 근거가 아니다. |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` · `frontend/src/screens/TaskCreateScreen.tsx` | not applicable | 현재 고정 frontend는 map/floor geometry 편집과 task target authoring을 소유하며 evidence-backed conversation 진입점이 없다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx` | not applicable | 현재 고정 frontend는 supervision·task command·manual control workflow를 소유하며 scoped-knowledge chat 또는 citation UI가 없다. |
 
@@ -497,13 +507,17 @@
 - scope chip을 실제 backend evidence와 무관한 장식으로 쓰지 않는다.
 - 전체 `ScopedConversation`을 한 컴포넌트로 유지하지 않고 message, source disclosure, composer state, reset guard로 분해한다.
 - retrieval, citation truth, persistence, provider bridge는 앱 소유다.
-- 고정된 Context Hub `PortalChatPanel.tsx`는 user를 solid blue + white plain text, assistant를 neutral + rich markdown으로 구분한다. LDS는 이 role mapping을 추론하지 않고 `ConversationMessage`의 명시적 `soft`/`solid` surface 축만 제공하며, Context Hub composition이 user→solid/assistant→soft를 선택한다.
-- 같은 source는 답변 뒤에 `근거 N개`를 먼저 두고 사용자가 펼쳤을 때 citation links를 보여준다. LDS는 독립 provenance 화면의 기본 full `SourceDisclosure`를 유지하면서, 대화 조합만 `ConversationMessage sourcePresentation="compact"`를 명시해 본문보다 출처 card가 더 무거워지는 문제를 피한다.
+- 제품 source는 위 capability의 필요성만 확인한다. message anatomy와 시각은 Ant Design X Bubble/Sender/Attachments, Carbon AI Chat, WAI-ARIA `log`, LDS `Avatar`·`Button`·input·source sibling에서 독립적으로 다시 도출한다.
+- AI assistant 기본은 긴 assistant 응답을 borderless document로 보여 준다. 짧은 발화는 화자별로 구분해 user는 solid primary bubble(`--color-semantic-primary-heavy` + `--color-semantic-static-white`), human-agent는 neutral fill bubble(`--color-semantic-fill-strong`), system은 중앙 neutral 칩(`--color-semantic-fill-normal`)으로 렌더한다. 역할 구분은 색·정렬만이 아니라 이름 옆 role 배지(AI/상담원)로도 전달하며, `presentation="document|bubble"`은 content hierarchy override로 유지한다.
+- `MessageFeed`는 named log·history/follow만 소유하는 투명하고 chrome-free한 영역이다. app header/sidebar와 outer surface는 제품이 제공한다. `MessageComposer`는 attachments → full-width textarea → 하단 leading/trailing action과 send-or-stop의 elevated one-shell을 제공하되 sticky 위치, virtual-keyboard inset과 transport policy는 제품 shell이 소유한다.
+- source는 `ConversationMessage`의 generic React slot에 `SourceDisclosure`를 명시적으로 조합한다. Context Hub의 `근거 N개` 접힘 UI를 공용 `sourcePresentation` API로 승격하지 않는다.
+- 대표 검토는 약 760px reading column과 320px narrow에서 수행하며 dark, 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, streaming/error message, disabled composer를 포함한다. identity·content·source·action이 겹치거나 card-within-card로 읽히지 않아야 한다.
 
 [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)의 Track C 후속 gate는 완료했다.
 `ConversationMessage`, `MessageFeed`, `MessageComposer`가 각각 message anatomy·history/follow·IME-safe compose의
-독립 시각·접근성 계약을 소유한다. role→surface 정책, provider/stream transport, retrieval, persistence와 session
-reset은 계속 product-owned seam이며, 완료된 Product extension을 전체 `ScopedConversation` wrapper로 되돌리지 않는다.
+독립 시각·접근성 계약을 소유한다. general conversation role의 document/bubble 기본값과 optional placement override는 LDS가 소유하고, 정확한
+participant role·provider/stream transport·route·retrieval·RAG·persistence와 session reset은 product-owned seam이다.
+완료된 Product extension을 전체 `ScopedConversation` wrapper로 되돌리지 않는다.
 
 ### WF-11 Sensitive credential handling
 
@@ -664,11 +678,11 @@ reset은 계속 product-owned seam이며, 완료된 Product extension을 전체 
 
 Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTransition의 compound state를 1280px에서, 각 narrow story를 320–360px에서 확인했다. Route의 current-segment label과 progress text 충돌은 분리했고, 모든 narrow surface에서 수평 overflow가 없음을 확인했다. invalid/stale route·trajectory는 `!`/`~` glyph가 남고, point-like interactive geometry는 24×24 CSS square를 포함하는 hit core를 갖는다.
 
-독립 wireframe과 mapping은 닫혔지만 제품 `forbidden` line과 stair/stair-slope semantic renderer가 아직 gap이므로 `implemented`나 `verified`로 승격하지 않는다. 새 public component나 semantic kind 추가는 별도 Robotics source-first audit와 scope 승인을 거친다.
+독립 wireframe과 mapping은 닫혔지만 제품 `forbidden` line과 stair/stair-slope semantic renderer가 아직 gap이므로 `implemented`나 `verified`로 승격하지 않는다. 새 public component나 semantic kind 추가는 독립 Robotics domain·map-symbol reference audit, 제품 coverage 확인과 scope 승인을 거친다.
 
 ## 현재 신규 컴포넌트 disposition
 
-이 표는 현재 구현을 보존하기 위한 목록이 아니다. 새 workflow 계약에 비춰 public component 경계를 다시 판단한 결과다. 현재 화면이나 wireframe에 반복된다는 사실만으로 component를 만들지 않으며, 고유 interaction·accessibility contract 또는 둘 이상의 제품에서 반복되는 상태 문법이 없으면 product-owned composition으로 남긴다.
+이 표는 현재 구현을 보존하기 위한 목록이 아니다. 새 workflow 계약에 비춰 public component 경계를 다시 판단한 당시 결과다. 현재 화면이나 wireframe에 반복된다는 사실만으로 component를 만들지 않으며, 고유 interaction·accessibility contract 또는 둘 이상의 제품에서 반복되는 상태 문법이 없으면 product-owned composition으로 남긴다. 또한 이 표와 `componentDisposition`은 제품 coverage만으로 새 public lifecycle 결정을 승인하지 않는다. 각 keep/redesign/split/remove는 LDS sibling·WDS·권위 있는 외부 근거와 design-owner decision으로 독립 확인해야 하며, 이를 repository-wide checker에서 분리하는 후속 작업은 `DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md` R-04로 추적한다.
 
 | 판정 | 수 | 의미 |
 | --- | ---: | --- |
@@ -676,7 +690,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | redesign | 4 | 개념은 필요하지만 현재 API가 상태 축을 합치거나 화면 구조를 과도하게 소유한다. |
 | split | 6 | 현재 compound component를 제거하고 더 작은 책임으로 다시 도출한다. |
 | remove | 22 | LDS public component로 둘 근거가 없으며 기존 primitives/product renderer 조합으로 돌린다. |
-| separate-audit | 5 | 다섯 제품 workflow와 무관한 Robotics editor 계열로 별도 source-first 감사를 요구한다. |
+| separate-audit | 5 | 다섯 제품 workflow와 무관한 Robotics editor 계열로 별도 LDS·공식 editor-reference 감사를 요구한다. |
 
 ### Keep
 
@@ -745,7 +759,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 
 ### Separate Robotics editor audit
 
-`CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`는 `lk_web_viz` 및 실제 editor 제품 source를 기준으로 별도 감사한다. 다섯 제품 workflow coverage 근거로 사용하지 않는다. 이 격리는 유지 판정이 아니다.
+`CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`는 LDS sibling과 공식 editor·accessibility reference를 기준으로 별도 감사하고, `lk_web_viz`는 workflow coverage만 확인한다. 다섯 제품 workflow coverage 근거로 구현을 정당화하지 않는다. 이 격리는 유지 판정이 아니다.
 
 ## Workflow implementation verification
 
@@ -762,7 +776,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | WF-07 | `SourceDisclosure`, `AnnotatedImage`, `DataGrid`, `ChoiceCard`, `Textarea`, `ActionArea` 조합 | review policy, metric verdict, authorization, persistence, queue navigation |
 | WF-08 | `SourceDisclosure`, `AnnotatedImage`, `LogViewer`, `FileBrowser`, chart/legend의 renderer chrome | Markdown/media decoder, graph layout, artifact access, claim semantics |
 | WF-09 | `ManualControlSession`, `ConnectionBadge`, `Joystick`, `DirectionalPad`의 authority/arm/hold/release 분리 | authority policy, freshness/health 판정, cadence, STOP transport, robot watchdog |
-| WF-10 | `ConversationMessage`, `MessageFeed`, `MessageComposer`, `SourceDisclosure`, `TreePicker`, `ConfirmDialog`의 message/feed/compose/source/scope 계약 | role policy, provider/stream transport, retrieval, scope resolution, persistence, session reset |
+| WF-10 | `ConversationMessage`, `MessageFeed`, `MessageComposer`, `SourceDisclosure`, `TreePicker`, `ConfirmDialog`의 document/bubble message anatomy, chrome-free log, elevated one-shell compose, source/scope 계약 | participant role truth, provider/stream transport, route, retrieval/RAG, scope resolution, persistence, session reset |
 | WF-11 | `SecretField`, `ConfirmDialog`, `Callout`의 masked/reveal/copy/re-auth composition | encryption, permission, audit logging, update/revoke API |
 | WF-12 | `ValidationSummary`, `ConfirmDialog`, `ProgressBar`, `SourceDisclosure`, `ActionArea`의 external-impact/result 조합 | target validation, credential use, upload, outcome schema, external release truth |
 | WF-13 | `DatePicker`, `TimePicker`, `CheckboxGroup`, `ValidationSummary`, `SearchableMultiSelect`, `Button`/`ActionArea` 조합 | recurrence schema, eligibility, conflict calculation, task lookup, persistence, occurrence execution |
@@ -770,9 +784,10 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 
 WF-15는 독립 wireframe, navigation component review, normal/narrow visual review까지 완료했지만 제품 `forbidden` line과 stair/stair-slope renderer gap이 남아 위 verified closure matrix에 포함하지 않는다. 기존 `LaneOverlay`나 generic behavior region으로 의미를 덮지 않으며, 후속 Robotics audit에서 LDS 책임 여부를 먼저 결정한다.
 
-검증은 2026-07-10 기준 다음 범위로 수행했다.
+검증 범위는 2026-07-14 기준 다음과 같다.
 
 - 유지·split·redesign 컴포넌트의 loading/error/empty/blocked/pending/result 등 state story를 실제 Storybook 6006에서 확인한다. product-owned composition은 Storybook에 workflow story를 추가하지 않고 이 문서와 source-pinned audit에서 경계를 검증한다.
+- Communication family는 약 760px reading column과 320px narrow, dark, 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, system 중앙 칩, streaming/error message와 disabled composer에서 role hierarchy, wrapping, DOM order, transparent-feed/outer-shell 경계와 bubble/칩 대비를 확인한다.
 - `ManualControlSession`은 활성 상태에서 link loss를 발생시켜 `link-unavailable` release 요청, armed 해제, control 비활성화를 확인했다.
 - `npm run check:storybook`으로 정적 build, implementation story guard, public/hidden 분류, console error를 검증한다.
 - `npm run check:product-frontends`, `npm run check:wds-alignment`, `npm run check:types`, `npm run check:type-surface`, `npm run check:consumer`, `npm run check:pack`을 통과했다.

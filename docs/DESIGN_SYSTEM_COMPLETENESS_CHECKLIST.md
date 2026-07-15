@@ -53,7 +53,7 @@ workflow가 모두 `verified`이고, `separate-audit` 항목이 완료되거나 
 | 패키지·소비자 계약 | 완료 | React 18/19 type consumer, tarball ESM/CJS/subpath/SSR, package artifact gate | publish 방식 변경 시 정책 재판정 |
 | 사람 중심 디자인 품질 | 부분 | D-track high 14건 해결, medium 23건·low 10건 추적 | medium/low를 수정·수락·기각 중 하나로 닫기 |
 | 제품 workflow coverage | 부분 | 15개 중 14개 `verified`, WF-15 `wireframed` | WF-15 semantic renderer gap과 제품 연결 증거 해결 |
-| Robotics editor 계열 | 완료(별도 audit 범위) | 5개 component를 workflow coverage와 격리하고 [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md)에서 source-first 검토 완료 | 제품 source 또는 editor contract 변경 시 별도 재감사 |
+| Robotics editor 계열 | 완료(별도 audit 범위) | 5개 component를 workflow coverage와 격리하고 [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md)에서 독립 editor-reference 검토 완료 | editor contract 또는 coverage source 변경 시 별도 재감사 |
 | Git·원격 릴리스 반영 | 완료 | full-check change set `3829374`와 이 parity 기록을 `main`에 반영하고 `origin/main` 0/0 확인 | 다음 변경에서도 push 후 fetch·parity 재확인 |
 
 위 수치는 [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md),
@@ -135,9 +135,9 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | --- | --- | --- | --- | --- |
 | G-01 | 제품 source pin | DeviceOps, VisionOps, LK Web Viz, Context Hub, Control, MLOps의 revision과 핵심 source가 고정된다. | `references/product-frontends/COVERAGE_AUDIT.json`, `check:product-frontends` | 완료 |
 | G-02 | canonical workflow | 발견된 workflow마다 진입점, 판단 정보, action, edge state, 완료 조건, 제품 seam이 기록된다. | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | 부분: 14/15 verified |
-| G-03 | WF-15 지도 authoring | `forbidden` line과 stair/stair-slope 의미를 위장하지 않고 LDS renderer 책임 여부를 source-first로 판정한다. | WF-15 section, Robotics audit | 부분: wireframed |
-| G-04 | component disposition | keep 13, redesign 4, split 6, remove 22의 실제 workflow 연결과 대체 경계가 추적된다. | product audit JSON | 부분: Control의 WF-15 component-level mapping은 `unverified` |
-| G-05 | Robotics editor 격리 | `CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`를 product workflow coverage와 분리해 source-first로 판정한다. | [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md), [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md), product coverage `separate-audit` | 완료: 별도 audit 유지 |
+| G-03 | WF-15 지도 authoring | `forbidden` line과 stair/stair-slope 의미를 위장하지 않고 LDS renderer 책임 여부를 독립 도메인·LDS 근거로 판정하고 제품 source로 coverage를 확인한다. | WF-15 section, Robotics audit | 부분: wireframed |
+| G-04 | component disposition | keep/redesign/split/remove 결정이 제품 coverage와 분리된 LDS/WDS·외부 근거·design-owner 결정에 연결되고, product audit은 workflow mapping만 제공한다. | product audit JSON, component prompt/decision record | 부분: 기존 product coverage guard가 lifecycle 결정을 함께 강제해 R-04 분리 필요 |
+| G-05 | Robotics editor 격리 | `CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`를 product workflow coverage와 분리해 LDS·공식 editor reference로 판정한다. | [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md), [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md), product coverage `separate-audit` | 완료: 별도 audit 유지 |
 | G-06 | 채택 판정 | 대상 workflow가 `verified`이고 제품 소유 seam, source revision, 실제 화면 검토가 최신이다. | `check:product-frontends`, 제품별 adoption review | workflow별 조건부 |
 
 ## H. 최종 checkpoint·원격 반영
@@ -154,9 +154,10 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 
 | ID | 우선순위 | 남은 검토 | 완료 증거 | 영향 |
 | --- | --- | --- | --- | --- |
-| R-01 | P1 · 제품 workflow | WF-15의 `forbidden` line과 stair/stair-slope semantic renderer를 LDS가 소유할지 제품 renderer에 남길지 결정한다. | LK Web Viz source-first audit, public contract 또는 명시적 product boundary, WF-15 `verified` 또는 승인된 scope-out | 지도 authoring workflow 완결을 차단; 코어 일반 사용은 차단하지 않음 |
+| R-01 | P1 · 제품 workflow | WF-15의 `forbidden` line과 stair/stair-slope semantic renderer를 LDS가 소유할지 제품 renderer에 남길지 결정한다. | 독립 map-symbol/domain audit, public contract 또는 명시적 product boundary, LK Web Viz coverage 확인, WF-15 `verified` 또는 승인된 scope-out | 지도 authoring workflow 완결을 차단; 코어 일반 사용은 차단하지 않음 |
 | R-02 | P2 · 채택 추적 | LK Control Full Daedeok의 WF-15에 Navigation renderer의 component-level mapping을 직접 연결한다. | pinned Control source row와 component disposition의 양방향 trace, `check:product-frontends` 통과 | Control의 지도·감독 조합 지원 여부를 `unverified`로 제한 |
 | R-03 | P2/P3 · 디자인 품질 | D-track medium 23건과 low 10건을 수정, 근거 있는 수락, 또는 기각으로 닫는다. | finding별 remediation·owner·검증 evidence | 코어 release blocker는 아니지만 디자인 품질 완결을 차단 |
+| R-04 | P1 · gate ownership | `check:product-frontends`의 `componentDisposition` 삭제·export 강제를 coverage 검사에서 분리하고, 독립 design decision/승인 기록을 참조하게 한다. | 50개 disposition 영향 검토, 별도 승인, checker·schema·문서 migration | repository-wide gate 변경이므로 이번 컴포넌트 재설계 범위에는 포함하지 않음 |
 
 ## 점검 실행 순서
 

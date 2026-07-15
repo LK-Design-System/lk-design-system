@@ -40,7 +40,7 @@
 - `Map2DCanvas`는 viewport, pan/zoom, appearance와 renderer slot을 소유합니다. `SpatialRegion`은 그 경계를 유지하기 위해 `<g>` 조각만 반환하고 독립 frame, toolbar, grid를 추가하지 않습니다.
 - `ViewerFrame`의 `--viewer-surface`, `--viewer-foreground`, `--viewer-muted`, `--viewer-border`와 공용 semantic status/focus token만 사용합니다. light/dark용 별도 palette를 만들지 않습니다.
 - `DirectionalPad`에서 pointer와 keyboard activation, handler 부재/disabled 차단 방식을 비교했습니다. region은 momentary control chrome을 복제하지 않고 SVG feature에 동일한 입력 원칙만 적용합니다.
-- `EquipmentStatusCard`의 상태 텍스트 우선순위를 확인했지만 region은 카드가 아닙니다. radius, shadow, icon tile, trailing status 영역을 추가하지 않고 geometry → pattern → label → selection/focus 순서만 유지합니다.
+- `EquipmentStatusCard`의 identity → visible status → labeled facts 우선순위를 확인했지만 region은 카드가 아닙니다. radius, shadow, description-list나 별도 trailing status 영역을 추가하지 않고 geometry → pattern → label → selection/focus 순서만 유지합니다.
 - `assets/icons/exclamation.svg`, `clock.svg`와 생성된 `Icon` registry를 먼저 확인했습니다. 상태 badge는 `_NavigationStateGlyph.js`의 같은 중심 원점·screen-space 크기 계약을 사용하고, clock perimeter는 이미 badge circle이 소유하므로 hands만 축약합니다. font X/tilde의 폭·baseline을 상태 geometry로 사용하지 않습니다.
 - 유지한 시각 차이: category별 pattern은 공간 규칙을 색과 독립적으로 구분하기 위한 기능 차이이고, selection/focus 외곽선은 조작 상태를 보여주기 위한 접근성 차이입니다. 두 상태가 겹칠 때 6.5px focus stroke와 3.5px selection stroke는 바깥쪽에 최소 1.5 CSS px focus band를 보존합니다. 그 외 control size, card border, shadow, 별도 icon language는 도입하지 않았습니다.
 

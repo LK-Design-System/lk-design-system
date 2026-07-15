@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkE4RL7XFRcjs = require('../../chunk-E4RL7XFR.cjs');
+var _chunkLSFIK54Ocjs = require('../../chunk-LSFIK54O.cjs');
 
 
-exports.ConnectionBadge = _chunkE4RL7XFRcjs.ConnectionBadge;
+exports.ConnectionBadge = _chunkLSFIK54Ocjs.ConnectionBadge;
 //# sourceMappingURL=ConnectionBadge.cjs.map
