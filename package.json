@@ -56,6 +56,8 @@
     "check:storybook": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
     "check:pack": "node scripts/check-package-artifact.mjs",
     "check": "node scripts/run-package-scripts.mjs check:fast check:storybook check:pack",
+    "check:storybook-ci": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
+    "check:ci": "node scripts/run-package-scripts.mjs check:fast check:storybook-ci check:pack",
     "report:inventory": "node scripts/report-inventory.mjs",
     "report:storybook-ia": "node scripts/report-storybook-information-architecture.mjs --update",
     "check:storybook-ia": "node scripts/report-storybook-information-architecture.mjs --check",

@@ -46,7 +46,10 @@ jobs:
         run: pnpm exec playwright install chromium
 
       - name: Build, typecheck, Storybook, and pack
-        run: pnpm run check
+        # check:ci == check minus check:storybook-ia. The IA audit gate requires
+        # per-page human review, which can't run in automated CI; it stays a
+        # local/manual curation step (pnpm run check:storybook-ia).
+        run: pnpm run check:ci
 
       - name: Runtime dependency audit
         run: pnpm run check:audit
