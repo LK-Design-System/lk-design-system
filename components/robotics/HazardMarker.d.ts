@@ -9,7 +9,7 @@ import type {
  * `SpatialRegion`; passages the AGV *uses* belong to `FacilityTransition`. The
  * same physical ramp may be a traversable `FacilityTransition` for one fleet
  * and a `ramp` hazard for another — the product owns that classification. */
-export type HazardKind = 'stairs' | 'ramp';
+export type HazardKind = 'stairs' | 'ramp' | 'dropoff';
 
 /** Product-owned avoidance weight; the marker never infers it from kind or position. */
 export type HazardSeverity = 'caution' | 'danger';

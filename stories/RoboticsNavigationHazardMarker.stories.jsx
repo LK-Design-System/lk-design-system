@@ -44,11 +44,31 @@ const RAMP_DANGER = {
   severity: 'danger',
 };
 
+const DROPOFF_CAUTION = {
+  id: 'hz-dropoff-caution',
+  kind: 'dropoff',
+  label: '적재 플랫폼 단차',
+  mapId: STAGE,
+  position: at(28, 26),
+  severity: 'caution',
+};
+
+const DROPOFF_DANGER = {
+  id: 'hz-dropoff-danger',
+  kind: 'dropoff',
+  label: '하역 도크 낙하 지점',
+  mapId: STAGE,
+  position: at(28, 26),
+  severity: 'danger',
+};
+
 const KINDS = [
   { hazard: STAIRS_CAUTION, label: '계단 · 주의(caution)' },
   { hazard: STAIRS_DANGER, label: '계단 · 위험(danger)' },
   { hazard: RAMP_CAUTION, label: '경사로 · 주의(caution)' },
   { hazard: RAMP_DANGER, label: '경사로 · 위험(danger)' },
+  { hazard: DROPOFF_CAUTION, label: '단차·낙하 · 주의(caution)' },
+  { hazard: DROPOFF_DANGER, label: '단차·낙하 · 위험(danger)' },
 ];
 
 const meta = {
@@ -59,7 +79,7 @@ const meta = {
       eyebrow: 'Navigation / Hazard Marker',
       title: 'Hazard 마커는 AGV가 피해야 하는 지점 위험물을 severity 색 핀으로 표시합니다',
       description:
-        'FacilityTransition과 같은 map-pin 실루엣을 공유해 한 지도의 marker가 하나의 패밀리로 읽히되, "여기는 피한다"는 severity 색(주의=cautionary, 위험=negative)과 위험물 knockout 글리프, 접근성 이름이 전달합니다. 계단·경사로 같은 지점 위험물을 제품이 분류한 severity 그대로 보여 주며, 회피 경로를 계획하거나 명령을 내리지 않습니다. 같은 경사로도 fleet에 따라 통과 설비(FacilityTransition)일 수도, 회피 대상(Hazard)일 수도 있으며 그 분류는 제품 소유입니다. 넓은 keep-out 구역은 SpatialRegion 소관입니다.',
+        'FacilityTransition과 같은 map-pin 실루엣을 공유해 한 지도의 marker가 하나의 패밀리로 읽히되, "여기는 피한다"는 severity 색(주의=cautionary, 위험=negative)과 위험물 knockout 글리프, 접근성 이름이 전달합니다. 계단·경사로·단차(낙하) 같은 지점 위험물을 제품이 분류한 severity 그대로 보여 주며, 회피 경로를 계획하거나 명령을 내리지 않습니다. 같은 경사로도 fleet에 따라 통과 설비(FacilityTransition)일 수도, 회피 대상(Hazard)일 수도 있으며 그 분류는 제품 소유입니다. 넓은 keep-out 구역은 SpatialRegion 소관입니다.',
     },
     docs: {
       description: {
@@ -97,7 +117,7 @@ function HazardTile({ hazard, label, props }) {
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '계단·경사로 위험물을 주의(caution)·위험(danger) severity로 비교합니다. severity 색이 설비 핀의 accent와 뚜렷이 구분되고, 핀 안 위험물 글리프가 작은 크기에서도 서로 구분되는지 확인하세요.',
+    '계단·경사로·단차(낙하) 위험물을 주의(caution)·위험(danger) severity로 비교합니다. severity 색이 설비 핀의 accent와 뚜렷이 구분되고, 핀 안 위험물 글리프가 작은 크기에서도 서로 구분되는지 확인하세요.',
   ),
   render: () => (
     <main style={{ width: 'min(560px, 100%)', display: 'grid', gap: 20 }}>
@@ -110,16 +130,16 @@ export const Overview = {
   ),
   play: async ({ canvasElement }) => {
     const markers = Array.from(canvasElement.querySelectorAll('[data-lds-hazard-marker]'));
-    if (markers.length !== 4) throw new Error('Overview must render every kind × severity as real HazardMarker fragments.');
+    if (markers.length !== 6) throw new Error('Overview must render every kind × severity as real HazardMarker fragments.');
     const kinds = new Set(markers.map((m) => m.getAttribute('data-hazard-kind')));
     const severities = new Set(markers.map((m) => m.getAttribute('data-hazard-severity')));
-    if (!kinds.has('stairs') || !kinds.has('ramp')) {
-      throw new Error('Overview must render the stairs and ramp hazard kinds.');
+    if (!kinds.has('stairs') || !kinds.has('ramp') || !kinds.has('dropoff')) {
+      throw new Error('Overview must render the stairs, ramp, and dropoff hazard kinds.');
     }
     if (!severities.has('caution') || !severities.has('danger')) {
       throw new Error('Overview must render caution and danger severities.');
     }
-    const kindLabels = { stairs: '계단 위험', ramp: '경사로 위험' };
+    const kindLabels = { stairs: '계단 위험', ramp: '경사로 위험', dropoff: '단차·낙하 위험' };
     for (const marker of markers) {
       if (marker.getAttribute('role') !== 'img') throw new Error('A passive hazard marker must expose role="img".');
       const expected = kindLabels[marker.getAttribute('data-hazard-kind')];

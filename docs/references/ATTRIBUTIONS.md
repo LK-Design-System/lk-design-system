@@ -35,13 +35,14 @@ Icons used:
 | State · completed | `check` |
 | State · stale | `history` |
 
-The `ramp` and `handoff` glyphs are **not** third-party artwork: Material
-Symbols has no level-change ramp glyph (its `ramp_*` icons are highway on-ramps)
-and no filled transfer glyph (its arrow icons have no fill variant), so both are
-LDS-authored — a ramp incline silhouette and a load-into-box icon — drawn on the
-same `0 -960 960 960` grid. The ramp silhouette is shared by the facility marker
-and the hazard marker so the same physical slope reads as the same object in
-either classification.
+The `ramp`, `handoff`, and `dropoff` glyphs are **not** third-party artwork:
+Material Symbols has no level-change ramp glyph (its `ramp_*` icons are highway
+on-ramps), no filled transfer glyph (its arrow icons have no fill variant), and
+no ledge/fall glyph, so all three are LDS-authored — a ramp incline silhouette,
+a load-into-box icon, and a one-step edge profile with a falling arrow — drawn
+on the same `0 -960 960 960` grid. The ramp silhouette is shared by the facility
+marker and the hazard marker so the same physical slope reads as the same object
+in either classification.
 
 Embedded in:
 

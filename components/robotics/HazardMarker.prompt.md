@@ -20,11 +20,11 @@
 
 ## Contract
 
-- `hazard`는 `kind="stairs" | "ramp"`, `severity="caution" | "danger"`로 구분되는 직렬화 가능한 데이터입니다. `id`·`label`·`mapId`·`position`은 필수이며, renderer 핸들을 저장하지 않습니다.
+- `hazard`는 `kind="stairs" | "ramp" | "dropoff"`, `severity="caution" | "danger"`로 구분되는 직렬화 가능한 데이터입니다. `id`·`label`·`mapId`·`position`은 필수이며, renderer 핸들을 저장하지 않습니다.
 - 같은 물리적 경사로가 fleet 능력(등판 한계·전도 위험)에 따라 어떤 제품에선 통과 설비(`FacilityTransition kind="ramp"`), 다른 제품에선 회피 지점(`HazardMarker kind="ramp"`)입니다. 그 분류는 제품이 소유하고 marker는 추론하지 않으며, 두 컴포넌트는 같은 LDS 경사로 실루엣 글리프를 공유해 어느 층으로 분류돼도 같은 대상으로 읽힙니다.
 - 마커는 FacilityTransition과 **같은 map-pin 실루엣**을 공유해 한 지도의 marker가 하나의 패밀리로 읽힙니다. "피해야 한다"는 의미는 형상이 아니라 severity fill(설비의 accent 파랑 대신 cautionary/negative), 위험물 종류 knockout 글리프, 접근성 이름(`… 위험 · 심각도 …`)이 전달합니다 — 색 하나에만 의존하지 않습니다(WCAG 1.4.1). ISO 7010식 caution 삼각형도 검토했으나 지도 위 marker 패밀리 일관성을 위해 pin을 유지했고, 삼각형 badge가 필요한 제품 맥락은 이 컴포넌트 밖에서 조합합니다.
 - `severity`는 회피 무게의 **시각 축**이며 availability가 아닙니다. `caution`은 cautionary, `danger`는 negative 색을 씁니다. 제품이 분류하고 marker는 kind나 위치에서 추론하지 않습니다.
-- 핀 배지 위 knockout 글리프가 위험물 종류를 나타냅니다. `stairs`는 Material Symbols `stairs_2`(box 없는 계단)를 원본 그대로, `ramp`는 `_FacilityGlyph`의 LDS 경사로 실루엣을 그대로 재사용합니다(`docs/references/ATTRIBUTIONS.md`).
+- 핀 배지 위 knockout 글리프가 위험물 종류를 나타냅니다. `stairs`는 Material Symbols `stairs_2`(box 없는 계단)를 원본 그대로, `ramp`는 `_FacilityGlyph`의 LDS 경사로 실루엣을 그대로 재사용하고, `dropoff`는 Material Symbols에 낙하/단차 글리프가 없어 LDS가 그린 한 단짜리 edge 프로파일 + 낙하 화살표입니다 — 여러 단의 계단 지그재그와 badge 크기에서 구분되도록 의도적으로 한 단만 씁니다(`docs/references/ATTRIBUTIONS.md`).
 - marker와 label은 `viewportScale`의 역수를 적용하고 stroke는 `vector-effect="non-scaling-stroke"`를 사용합니다. 투명 hit circle은 최종 화면에서 핀보다 넓은 24 CSS px 이상 target을 유지합니다(WCAG 2.2 Target Size).
 - `onActivate`는 pointer·Enter·Space로 같은 `onActivate(id, event)`를 호출하는 선택/검사 callback입니다. 회피 경로 생성이나 차단 명령 같은 command API는 의도적으로 없습니다.
 - `disabled`는 활성화를 막고 `aria-disabled`를 노출하며 소비자 `tabIndex`도 `-1`로 덮어씁니다. `selected`·`focused` outline은 핀 형상을 그대로 따라가며 별도 원형 ring을 덧그리지 않습니다. `stale`은 opacity로, `invalid`는 `aria-invalid`로만 최소 표기합니다.
@@ -48,6 +48,6 @@
 
 - 회피 경로 생성, 차단·정지 명령, 권한, 장치 연결, 상태 polling은 제품 runtime 책임입니다.
 - 넓은 keep-out/감속 구역은 `SpatialRegion`, AGV가 통과하는 설비는 `FacilityTransition`, 경로/궤적은 route·trajectory overlay가 소유합니다.
-- 현재 `kind`는 `stairs`·`ramp` 둘입니다. 단차·낙하(dropoff), 충돌 위험물(obstacle) 등은 같은 severity·핀 배지 체계에 추가할 후속 종류이며, 각 knockout 글리프가 정해질 때 편입합니다.
+- 현재 `kind`는 `stairs`·`ramp`·`dropoff` 셋입니다. 충돌 위험물(obstacle) 등은 같은 severity·핀 배지 체계에 추가할 후속 종류이며, 각 knockout 글리프가 정해질 때 편입합니다.
 - SVG marker는 유일한 탐색 경로가 아닙니다. 제품은 같은 identity와 severity를 이름 있는 semantic mirror/선택 inspector에서도 제공해야 합니다.
 - WDS `.fig` component-set 근거가 없는 Robotics 확장이므로 LDS Core 또는 WDS parity로 표현하지 않습니다.
