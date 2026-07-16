@@ -50,6 +50,8 @@ interface ConversationMessageBaseProps extends Omit<React.HTMLAttributes<HTMLEle
   attachments?: React.ReactNode;
   /** Source or provenance content supplied as a composition slot. */
   sources?: React.ReactNode;
+  /** Render the `sources` slot on the same footer row as the action bar (ChatGPT-style) instead of its own row above the actions. The sources node stays a sibling of the `메시지 동작` group — not a member — so it still announces as provenance. Pair with a collapsible `SourceDisclosure` so its resting footprint is a single "출처" toggle. @default false */
+  inlineSources?: boolean;
   /** Additional message-level actions rendered as a composition slot after the built-in action bar. */
   actions?: React.ReactNode;
   /** Primary icon action bar rendered below the body. Each entry becomes an icon-only IconButton; products own the glyph and handlers. Coexists with the `actions` slot. */

@@ -8,7 +8,7 @@ import {
 
 // components/communication/ConversationMessage.jsx
 import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var ROLE_LABELS = {
   user: "\uC0AC\uC6A9\uC790",
   assistant: "AI \uC5B4\uC2DC\uC2A4\uD134\uD2B8",
@@ -105,6 +105,7 @@ function ConversationMessage({
   statusLabel,
   attachments,
   sources,
+  inlineSources = false,
   actions,
   messageActions,
   error,
@@ -139,6 +140,7 @@ function ConversationMessage({
   const resolvedStatusLabel = statusLabel !== void 0 ? statusLabel : error != null ? null : defaultStatusLabel;
   const hasMessageActions = Array.isArray(messageActions) && messageActions.length > 0;
   const hasActions = actions != null || canRetry || hasMessageActions;
+  const inlineFooter = inlineSources && sources != null;
   const lifecycleColor = lifecycleTone(lifecycleKind, lifecycleState);
   const resolvedAriaLabelledby = ariaLabel || ariaLabelledby ? ariaLabelledby : `${authorId} ${roleId}`;
   const resolvedRoleBadge = roleBadgeLabel !== void 0 ? roleBadgeLabel : ROLE_BADGE_LABELS[authorRole] ?? null;
@@ -287,6 +289,35 @@ function ConversationMessage({
       ]
     }
   ) : null;
+  const actionButtons = hasActions ? /* @__PURE__ */ jsxs(Fragment, { children: [
+    canRetry && /* @__PURE__ */ jsx(
+      IconButton,
+      {
+        size: "small",
+        round: false,
+        variant: "plain",
+        label: retryLabel,
+        "data-message-retry": true,
+        onClick: () => onRetry(),
+        children: /* @__PURE__ */ jsx(Icon, { name: "refresh", size: 16, "aria-hidden": "true" })
+      }
+    ),
+    hasMessageActions && messageActions.map((action) => /* @__PURE__ */ jsx(
+      IconButton,
+      {
+        size: "small",
+        round: false,
+        variant: "plain",
+        label: action.label,
+        disabled: action.disabled,
+        "data-message-action": action.key,
+        onClick: action.onClick,
+        children: action.icon
+      },
+      action.key
+    )),
+    actions
+  ] }) : null;
   return /* @__PURE__ */ jsxs(
     "article",
     {
@@ -467,7 +498,7 @@ function ConversationMessage({
               children: attachments
             }
           ),
-          sources != null && /* @__PURE__ */ jsx(
+          sources != null && !inlineFooter && /* @__PURE__ */ jsx(
             "div",
             {
               "data-message-part": "sources",
@@ -476,7 +507,48 @@ function ConversationMessage({
             }
           ),
           outbound ? outboundMeta : lifecycleKind !== "response" && statusPart,
-          hasActions && /* @__PURE__ */ jsxs(
+          inlineFooter ? (
+            // ChatGPT-style footer: the action bar and the (typically collapsed)
+            // provenance share one wrapping row. The sources node keeps its own
+            // data-message-part and accessible name — display:contents makes the
+            // collapsible SourceDisclosure the flex item so it sits beside the
+            // action group when closed and spans the row when open — and stays a
+            // sibling of, not a member of, the 메시지 동작 group.
+            /* @__PURE__ */ jsxs(
+              "div",
+              {
+                "data-message-part": "footer",
+                style: {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: systemMessage ? "center" : outbound ? "flex-end" : "flex-start",
+                  gap: "var(--space-2)",
+                  width: "100%",
+                  minWidth: 0,
+                  flexWrap: "wrap"
+                },
+                children: [
+                  hasActions && /* @__PURE__ */ jsx(
+                    "div",
+                    {
+                      "data-message-part": "actions",
+                      role: "group",
+                      "aria-label": "\uBA54\uC2DC\uC9C0 \uB3D9\uC791",
+                      style: {
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "var(--space-2)",
+                        minWidth: 0,
+                        flexWrap: "wrap"
+                      },
+                      children: actionButtons
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("div", { "data-message-part": "sources", style: { display: "contents" }, children: sources })
+                ]
+              }
+            )
+          ) : hasActions ? /* @__PURE__ */ jsx(
             "div",
             {
               "data-message-part": "actions",
@@ -491,37 +563,9 @@ function ConversationMessage({
                 minWidth: 0,
                 flexWrap: "wrap"
               },
-              children: [
-                canRetry && /* @__PURE__ */ jsx(
-                  IconButton,
-                  {
-                    size: "small",
-                    round: false,
-                    variant: "plain",
-                    label: retryLabel,
-                    "data-message-retry": true,
-                    onClick: () => onRetry(),
-                    children: /* @__PURE__ */ jsx(Icon, { name: "refresh", size: 16, "aria-hidden": "true" })
-                  }
-                ),
-                hasMessageActions && messageActions.map((action) => /* @__PURE__ */ jsx(
-                  IconButton,
-                  {
-                    size: "small",
-                    round: false,
-                    variant: "plain",
-                    label: action.label,
-                    disabled: action.disabled,
-                    "data-message-action": action.key,
-                    onClick: action.onClick,
-                    children: action.icon
-                  },
-                  action.key
-                )),
-                actions
-              ]
+              children: actionButtons
             }
-          )
+          ) : null
         ] })
       ]
     }
@@ -531,4 +575,4 @@ function ConversationMessage({
 export {
   ConversationMessage
 };
-//# sourceMappingURL=chunk-6QQR6TXK.js.map
+//# sourceMappingURL=chunk-D5R6M4JV.js.map

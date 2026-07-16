@@ -117,6 +117,7 @@ export function ConversationMessage({
   statusLabel,
   attachments,
   sources,
+  inlineSources = false,
   actions,
   messageActions,
   error,
@@ -179,6 +180,11 @@ export function ConversationMessage({
       : defaultStatusLabel;
   const hasMessageActions = Array.isArray(messageActions) && messageActions.length > 0;
   const hasActions = actions != null || canRetry || hasMessageActions;
+  // inlineSources drops the (typically collapsed) provenance onto the same
+  // footer row as the action icons — ChatGPT-style — but keeps it a sibling of,
+  // not a member of, the "메시지 동작" group so it still announces as provenance
+  // rather than another action. Its own expanded panel spans the full width.
+  const inlineFooter = inlineSources && sources != null;
   const lifecycleColor = lifecycleTone(lifecycleKind, lifecycleState);
   const resolvedAriaLabelledby = ariaLabel || ariaLabelledby
     ? ariaLabelledby
@@ -358,6 +364,40 @@ export function ConversationMessage({
         </time>
       )}
     </p>
+  ) : null;
+
+  // Shared by the standard bottom action bar and the inlineSources footer so
+  // the icon controls render identically in either layout.
+  const actionButtons = hasActions ? (
+    <>
+      {canRetry && (
+        <IconButton
+          size="small"
+          round={false}
+          variant="plain"
+          label={retryLabel}
+          data-message-retry
+          onClick={() => onRetry()}
+        >
+          <Icon name="refresh" size={16} aria-hidden="true" />
+        </IconButton>
+      )}
+      {hasMessageActions && messageActions.map((action) => (
+        <IconButton
+          key={action.key}
+          size="small"
+          round={false}
+          variant="plain"
+          label={action.label}
+          disabled={action.disabled}
+          data-message-action={action.key}
+          onClick={action.onClick}
+        >
+          {action.icon}
+        </IconButton>
+      ))}
+      {actions}
+    </>
   ) : null;
 
   return (
@@ -542,7 +582,7 @@ export function ConversationMessage({
           </div>
         )}
 
-        {sources != null && (
+        {sources != null && !inlineFooter && (
           <div
             data-message-part="sources"
             style={outbound
@@ -555,7 +595,46 @@ export function ConversationMessage({
 
         {outbound ? outboundMeta : (lifecycleKind !== 'response' && statusPart)}
 
-        {hasActions && (
+        {inlineFooter ? (
+          // ChatGPT-style footer: the action bar and the (typically collapsed)
+          // provenance share one wrapping row. The sources node keeps its own
+          // data-message-part and accessible name — display:contents makes the
+          // collapsible SourceDisclosure the flex item so it sits beside the
+          // action group when closed and spans the row when open — and stays a
+          // sibling of, not a member of, the 메시지 동작 group.
+          <div
+            data-message-part="footer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: systemMessage ? 'center' : outbound ? 'flex-end' : 'flex-start',
+              gap: 'var(--space-2)',
+              width: '100%',
+              minWidth: 0,
+              flexWrap: 'wrap',
+            }}
+          >
+            {hasActions && (
+              <div
+                data-message-part="actions"
+                role="group"
+                aria-label="메시지 동작"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2)',
+                  minWidth: 0,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {actionButtons}
+              </div>
+            )}
+            <div data-message-part="sources" style={{ display: 'contents' }}>
+              {sources}
+            </div>
+          </div>
+        ) : hasActions ? (
           <div
             data-message-part="actions"
             role="group"
@@ -570,35 +649,9 @@ export function ConversationMessage({
               flexWrap: 'wrap',
             }}
           >
-            {canRetry && (
-              <IconButton
-                size="small"
-                round={false}
-                variant="plain"
-                label={retryLabel}
-                data-message-retry
-                onClick={() => onRetry()}
-              >
-                <Icon name="refresh" size={16} aria-hidden="true" />
-              </IconButton>
-            )}
-            {hasMessageActions && messageActions.map((action) => (
-              <IconButton
-                key={action.key}
-                size="small"
-                round={false}
-                variant="plain"
-                label={action.label}
-                disabled={action.disabled}
-                data-message-action={action.key}
-                onClick={action.onClick}
-              >
-                {action.icon}
-              </IconButton>
-            ))}
-            {actions}
+            {actionButtons}
           </div>
-        )}
+        ) : null}
       </div>
     </article>
   );

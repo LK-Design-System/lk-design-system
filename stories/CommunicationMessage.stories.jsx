@@ -21,7 +21,7 @@ const meta = {
       eyebrow: 'Product / Communication',
       title: 'AI의 긴 답변은 문서처럼 읽고 사람의 짧은 발화는 bubble로 구분합니다',
       description:
-        '일반 AI assistant, 사용자, 상담원과 system event가 한 대화에 함께 있을 때 사용합니다. assistant의 장문·목록·코드·레퍼런스는 borderless document로 열어 두고, 짧은 사용자 발화는 solid primary 버블로, 상담원 발화는 neutral fill 버블로 묶습니다. 대화 맥락이 없는 단일 시스템 안내나 폼 오류 표시에는 이 패턴이 적합하지 않으니 Callout·FormField를 사용하세요.',
+        '일반 AI assistant, 사용자, 상담원과 system event가 한 대화에 함께 있을 때 사용합니다. assistant의 장문·목록·코드·출처는 borderless document로 열어 두고, 짧은 사용자 발화는 solid primary 버블로, 상담원 발화는 neutral fill 버블로 묶습니다. 대화 맥락이 없는 단일 시스템 안내나 폼 오류 표시에는 이 패턴이 적합하지 않으니 Callout·FormField를 사용하세요.',
     },
     docs: {
       description: {
@@ -37,29 +37,21 @@ export default meta;
 const assistantAvatar = <Avatar name="AI Assistant" size="small" />;
 const userAvatar = <Avatar name="김서윤" size="small" />;
 
-// Consumed only through the compact EvidenceBlock, which renders a single-line
-// link chip — so only id/label/href are used. Provenance fields (kind, location,
-// availability, description) render in the card mode and are demonstrated in
+// Consumed through EvidenceBlock, which renders the collapsible "출처" toggle +
+// popover — so only id/label/href are used. Provenance fields (kind, location,
+// availability) render in the card mode and are demonstrated in
 // ContentSourceDisclosure's own stories, not here.
 const answerSources = [
-  {
-    id: 'meeting-notes',
-    label: '업로드된 주간 회의록 · 2026-07-12',
-    href: 'https://example.com/meeting-notes',
-  },
+  { id: 'meeting-notes', label: '주간 회의록 · 2026-07-12', href: 'https://example.com/meeting-notes' },
+  { id: 'decision-log', label: '결정 사항 정리 문서', href: 'https://example.com/decision-log' },
+  { id: 'owner-plan', label: '담당자 배정표', href: 'https://example.com/owner-plan' },
 ];
 
-function EvidenceBlock({ long = false }) {
-  return (
-    <SourceDisclosure
-      title="레퍼런스"
-      headingLevel={3}
-      titleVisuallyHidden
-      description={long ? '답변 작성에 사용한 문서와 관측 시점을 확인합니다.' : undefined}
-      sources={answerSources}
-      compact
-    />
-  );
+// One consistent source treatment across every message story: the collapsed
+// "출처" toggle that opens the source list in a Popover. Products pair it with
+// inlineSources on messages that have an action bar so it joins the footer row.
+function EvidenceBlock() {
+  return <SourceDisclosure title="출처" collapsible sources={answerSources} />;
 }
 
 function AttachmentChip({ children = 'weekly-meeting-notes.pdf' }) {
@@ -138,6 +130,7 @@ function OverviewFixture() {
         timestamp="오전 10:24"
         dateTime="2026-07-12T10:24:00+09:00"
         lifecycle={{ kind: 'response', state: 'complete' }}
+        inlineSources
         sources={<EvidenceBlock />}
         actions={(
           <>
@@ -286,7 +279,7 @@ export const LifecycleStates = {
     if (steady.some((message) => message?.querySelector('[data-message-part="status"]'))) {
       throw new Error('Sent and complete steady states must not add a redundant status marker.');
     }
-    const retryButtons = Array.from(canvasElement.querySelectorAll('[data-lifecycle-example] button'));
+    const retryButtons = Array.from(canvasElement.querySelectorAll('[data-lifecycle-example] [data-message-retry]'));
     if (retryButtons.length !== 2) throw new Error('Only failed delivery and response states may expose retry.');
     await userEvent.click(retryButtons[1]);
     if (canvasElement.querySelector('[data-lifecycle-output]')?.textContent !== 'response-retry') {
@@ -299,7 +292,12 @@ export const LifecycleStates = {
     if (streamingParts.join(',') !== 'body,status,sources') {
       throw new Error(`Active response order must be body → status → sources; received ${streamingParts.join(' → ')}.`);
     }
-    if (streaming?.querySelector('button')) throw new Error('Response cancellation belongs to MessageComposer, not the message article.');
+    // The only control allowed on a streaming message is the collapsed 출처
+    // toggle; response cancellation still belongs to MessageComposer, not here.
+    const streamingButtons = streaming ? Array.from(streaming.querySelectorAll('button')) : [];
+    if (streamingButtons.some((button) => !button.classList.contains('lk-source-disclosure__toggle'))) {
+      throw new Error('Response cancellation belongs to MessageComposer, not the message article.');
+    }
     assertNoPerMessageLiveRegions(canvasElement);
   },
 };
@@ -331,6 +329,7 @@ export const GroupedMessagesAndSlots = {
         author="AI Assistant"
         avatar={assistantAvatar}
         attachments={<AttachmentChip />}
+        inlineSources
         sources={<EvidenceBlock />}
         actions={<CopyAction />}
       >
@@ -359,11 +358,13 @@ export const GroupedMessagesAndSlots = {
     const parts = assistant
       ? Array.from(assistant.querySelectorAll('[data-message-part="content"] > [data-message-part]')).map((part) => part.dataset.messagePart)
       : [];
-    if (parts.join(',') !== 'body,attachments,sources,actions') {
-      throw new Error(`Composition slots must follow body → attachments → sources → actions; received ${parts.join(' → ')}.`);
+    if (parts.join(',') !== 'body,attachments,footer') {
+      throw new Error(`Composition slots must follow body → attachments → footer(actions+source); received ${parts.join(' → ')}.`);
     }
-    if (!assistant?.querySelector('.lk-source-disclosure')) {
-      throw new Error('The sources slot must render the explicit SourceDisclosure component.');
+    const slotFooter = assistant?.querySelector('[data-message-part="footer"]');
+    if (!slotFooter?.querySelector('[data-message-part="actions"][role="group"]')
+      || !slotFooter.querySelector('[data-message-part="sources"] .lk-source-disclosure')) {
+      throw new Error('The footer must compose the action group and the collapsible 출처 toggle together.');
     }
   },
 };
@@ -508,7 +509,7 @@ export const NarrowLongContent = {
         authorLabel="AI 연구·작성 어시스턴트"
         avatar={assistantAvatar}
         lifecycle={{ kind: 'response', state: 'streaming' }}
-        sources={<SourceDisclosure title="레퍼런스" headingLevel={3} sources={narrowSources} />}
+        sources={<SourceDisclosure title="출처" collapsible sources={narrowSources} />}
       >
         <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
           <p style={{ margin: 0 }}>아래 예시는 긴 식별자를 생략하지 않고 보여 줍니다.</p>
@@ -614,6 +615,7 @@ function MessageActionBarFixture() {
         timestamp="오전 10:24"
         dateTime="2026-07-12T10:24:00+09:00"
         lifecycle={{ kind: 'response', state: 'complete' }}
+        inlineSources
         sources={<EvidenceBlock />}
         messageActions={answerActions}
       >
@@ -688,5 +690,103 @@ export const MessageActionBar = {
     if (!disabledCopy || !disabledCopy.disabled) throw new Error('disabled 액션은 비활성화돼야 합니다.');
 
     assertNoPerMessageLiveRegions(fixture);
+  },
+};
+
+// ChatGPT식 footer를 단독으로 보여 주는 초점 스토리. 같은 "출처" 토글 처리를
+// Overview·Grouped·ActionBar 등 다른 message 스토리도 공유합니다.
+function InlineSourceFooterFixture() {
+  const [lastAction, setLastAction] = React.useState('없음');
+  const answerActions = [
+    { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', onClick: () => setLastAction('copy') },
+    { key: 'share', icon: <MessageActionGlyph name="share-ios" />, label: '공유', onClick: () => setLastAction('share') },
+    { key: 'regenerate', icon: <MessageActionGlyph name="refresh" />, label: '다시 생성', onClick: () => setLastAction('regenerate') },
+    { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
+  ];
+  return (
+    <main data-inline-source style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
+      <ConversationMessage
+        data-inline-source-message
+        authorRole="assistant"
+        author="AI Assistant"
+        avatar={assistantAvatar}
+        timestamp="오전 10:24"
+        dateTime="2026-07-12T10:24:00+09:00"
+        lifecycle={{ kind: 'response', state: 'complete' }}
+        inlineSources
+        sources={<SourceDisclosure title="출처" collapsible sources={answerSources} />}
+        messageActions={answerActions}
+      >
+        <AssistantAnswer />
+      </ConversationMessage>
+      <output hidden data-inline-source-log>{lastAction}</output>
+    </main>
+  );
+}
+
+export const InlineSourceFooter = {
+  name: '변형·상태 · footer 인라인 출처 토글',
+  parameters: storyDescription(
+    'inlineSources로 접힌 "출처" 토글을 copy·공유·재생성·더보기 아이콘과 같은 footer 행에 나란히 둡니다(ChatGPT식). 출처는 메시지 동작 그룹의 형제로 남아 액션이 아닌 provenance로 announce되고, 누르면 출처 목록이 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않으며 바깥 클릭·Esc로 닫힙니다. 출처를 항상 노출해야 하는 고신뢰 답변에는 inlineSources 없이 기본 출처 행을 유지하세요.',
+  ),
+  render: () => <InlineSourceFooterFixture />,
+  play: async ({ canvasElement }) => {
+    const message = canvasElement.querySelector('[data-inline-source-message]');
+    if (!message) throw new Error('인라인 출처 예시가 없습니다.');
+    const footer = message.querySelector('[data-message-part="footer"]');
+    if (!footer) throw new Error('inlineSources는 action bar와 출처를 하나의 footer 행에 조합해야 합니다.');
+    const actions = footer.querySelector('[data-message-part="actions"][role="group"]');
+    const sources = footer.querySelector('[data-message-part="sources"]');
+    const collapsible = sources?.querySelector('.lk-source-disclosure--collapsible');
+    const toggle = collapsible?.querySelector('button.lk-source-disclosure__toggle');
+    if (!actions || !sources || !toggle) {
+      throw new Error('footer는 action group과 collapsible 출처 토글을 함께 조합해야 합니다.');
+    }
+    // 출처는 메시지 동작 그룹의 형제여야 하며 그룹 안에 들어가면 안 됩니다.
+    if (actions.contains(toggle)) {
+      throw new Error('출처 토글은 메시지 동작 그룹 밖의 형제로 남아야 합니다.');
+    }
+    if (toggle.querySelector('a, button')) {
+      throw new Error('출처 토글에는 중첩 인터랙티브가 없어야 합니다.');
+    }
+    if (toggle.getAttribute('aria-haspopup') !== 'dialog') {
+      throw new Error('출처 토글은 dialog 팝업을 여는 컨트롤이어야 합니다.');
+    }
+    if (!toggle.textContent?.includes('출처')) {
+      throw new Error('접힌 토글은 "출처" 라벨을 보여야 합니다.');
+    }
+    if (toggle.getAttribute('aria-expanded') !== 'false' || collapsible.querySelector('[role="dialog"]')) {
+      throw new Error('inlineSources 출처는 기본적으로 닫혀 있어야 합니다.');
+    }
+    // sources가 본문 위 별도 행으로 중복 렌더되면 안 되고, footer가 마지막 content 파트여야 합니다.
+    const parts = Array.from(message.querySelectorAll('[data-message-part="content"] > [data-message-part]'))
+      .map((part) => part.dataset.messagePart);
+    if (parts[0] !== 'body' || parts[parts.length - 1] !== 'footer' || parts.includes('sources')) {
+      throw new Error(`inlineSources는 sources를 마지막 footer 행으로 이동해야 합니다: ${parts.join(' → ')}`);
+    }
+    // 팝오버는 떠서 열려 레이아웃을 밀지 않아야 합니다: 토글 위치와 article 높이가 유지됩니다.
+    const toggleTopClosed = Math.round(toggle.getBoundingClientRect().top);
+    const messageHeightClosed = Math.round(message.getBoundingClientRect().height);
+    await userEvent.click(toggle);
+    const panel = collapsible.querySelector('[role="dialog"]');
+    if (!panel || toggle.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('토글 활성화는 출처 팝오버를 열어야 합니다.');
+    }
+    if (Math.abs(Math.round(toggle.getBoundingClientRect().top) - toggleTopClosed) > 1) {
+      throw new Error('출처 토글은 팝오버를 열어도 같은 위치에 남아야 합니다.');
+    }
+    if (Math.abs(Math.round(message.getBoundingClientRect().height) - messageHeightClosed) > 1) {
+      throw new Error('플로팅 팝오버는 메시지 레이아웃(높이)을 밀지 않아야 합니다.');
+    }
+    const rows = Array.from(panel.querySelectorAll('.lk-source-disclosure__row'));
+    if (rows.length !== 3) throw new Error('열린 팝오버는 source당 행 하나를 보여야 합니다.');
+    if (rows.some((row) => row.tagName !== 'A' || row.getAttribute('target') !== '_blank')) {
+      throw new Error('href 출처 행은 새 탭 링크여야 합니다.');
+    }
+    await userEvent.keyboard('{Escape}');
+    if (collapsible.querySelector('[role="dialog"]') || toggle.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Escape는 출처 팝오버를 닫아야 합니다.');
+    }
+    assertNoPerMessageLiveRegions(canvasElement);
   },
 };

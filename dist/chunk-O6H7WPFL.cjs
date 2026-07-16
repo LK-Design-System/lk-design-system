@@ -1,6 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
+var _chunkRPO7FLE7cjs = require('./chunk-RPO7FLE7.cjs');
+
+
 var _chunk53XYQH2Kcjs = require('./chunk-53XYQH2K.cjs');
 
 
@@ -50,6 +53,63 @@ function ExternalLinkContent({ children }) {
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "external-link", size: 14, "aria-hidden": "true", style: { flexShrink: 0 } })
   ] });
 }
+function renderSourceChip(source, onSourceActivate) {
+  const chipLink = source.href != null ? { as: "a", href: source.href, target: "_blank", rel: "noopener noreferrer" } : typeof onSourceActivate === "function" ? { as: "button", type: "button", onClick: () => onSourceActivate(source) } : {};
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0, maxWidth: "100%" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    _chunk53XYQH2Kcjs.Chip,
+    {
+      size: "sm",
+      variant: "outlined",
+      leading: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "document-text", size: 14 }),
+      "aria-label": source.actionAriaLabel,
+      className: "lk-source-disclosure__chip",
+      ...chipLink,
+      style: { maxWidth: "100%", minWidth: 0 },
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: source.label }),
+        source.href != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "arrow-up-right", size: 12, "aria-hidden": "true", style: { flexShrink: 0 } })
+      ]
+    }
+  ) }, source.id);
+}
+function renderSourceRow(source, onSourceActivate) {
+  const interactive = source.href != null || typeof onSourceActivate === "function";
+  const Comp = source.href != null ? "a" : typeof onSourceActivate === "function" ? "button" : "span";
+  const linkProps = source.href != null ? { href: source.href, target: "_blank", rel: "noopener noreferrer" } : typeof onSourceActivate === "function" ? { type: "button", onClick: () => onSourceActivate(source) } : {};
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    Comp,
+    {
+      className: "lk-source-disclosure__row",
+      "aria-label": source.actionAriaLabel,
+      ...linkProps,
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "var(--space-2)",
+        width: "100%",
+        minWidth: 0,
+        padding: "var(--space-2)",
+        boxSizing: "border-box",
+        border: 0,
+        borderRadius: "var(--radius-sm)",
+        background: "transparent",
+        color: "var(--color-semantic-label-normal)",
+        fontFamily: "var(--font-sans)",
+        fontSize: "var(--label1-size)",
+        lineHeight: "var(--label1-line)",
+        textAlign: "left",
+        textDecoration: "none",
+        cursor: interactive ? "pointer" : "default",
+        transition: "background var(--dur-fast) var(--ease-out)"
+      },
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "document-text", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: source.label }),
+        source.href != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "arrow-up-right", size: 14, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } })
+      ]
+    }
+  ) }, source.id);
+}
 function SourceDisclosure({
   title = "\uCD9C\uCC98",
   headingLevel = 2,
@@ -60,6 +120,8 @@ function SourceDisclosure({
   onSourceActivate,
   openLabel = "\uCD9C\uCC98 \uC5F4\uAE30",
   compact = false,
+  collapsible = false,
+  defaultOpen = false,
   className,
   style,
   ...rest
@@ -67,6 +129,73 @@ function SourceDisclosure({
   const titleId = _react2.default.useId();
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
   const Root = compact ? "div" : "section";
+  if (collapsible && sources.length > 0) {
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: `.lk-source-disclosure__toggle:hover,
+          .lk-source-disclosure__row:hover {
+            background: var(--color-semantic-fill-alternative);
+          }
+          .lk-source-disclosure__toggle:focus-visible {
+            outline: 2px solid var(--color-semantic-focus-ring);
+            outline-offset: 2px;
+          }
+          .lk-source-disclosure__row:focus-visible {
+            outline: 2px solid var(--color-semantic-focus-ring);
+            outline-offset: -2px;
+          }` }),
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        _chunkRPO7FLE7cjs.Popover,
+        {
+          ...rest,
+          className: ["lk-source-disclosure", "lk-source-disclosure--collapsible", className].filter(Boolean).join(" "),
+          align: "left",
+          width: "max-content",
+          defaultOpen,
+          ariaLabel: typeof title === "string" ? title : "\uCD9C\uCC98",
+          style,
+          trigger: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            "button",
+            {
+              type: "button",
+              className: "lk-source-disclosure__toggle",
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--space-1)",
+                height: "var(--space-8)",
+                minWidth: 0,
+                maxWidth: "100%",
+                padding: "0 var(--space-2)",
+                boxSizing: "border-box",
+                border: 0,
+                borderRadius: "var(--radius-sm)",
+                background: "transparent",
+                color: "var(--color-semantic-label-neutral)",
+                fontFamily: "var(--font-sans)",
+                fontSize: "var(--caption1-size)",
+                lineHeight: "var(--caption1-line)",
+                fontWeight: "var(--fw-medium)",
+                cursor: "pointer",
+                transition: "background var(--dur-fast) var(--ease-out)"
+              },
+              children: [
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "book", size: 16, "aria-hidden": "true", style: { flexShrink: 0 } }),
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { whiteSpace: "nowrap" }, children: title })
+              ]
+            }
+          ),
+          children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            "ul",
+            {
+              className: "lk-source-disclosure__rows",
+              style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-1)", minWidth: 0, maxWidth: 360 },
+              children: sources.map((source) => renderSourceRow(source, onSourceActivate))
+            }
+          )
+        }
+      )
+    ] });
+  }
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Root,
     {
@@ -155,25 +284,7 @@ function SourceDisclosure({
           // Compact provenance reads at the weight of an attachment chip: one
           // line per source, opens the original on activation, no inline
           // disclosure, availability, or card surface.
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", minWidth: 0 }, children: sources.map((source) => {
-            const chipLink = source.href != null ? { as: "a", href: source.href, target: "_blank", rel: "noopener noreferrer" } : typeof onSourceActivate === "function" ? { as: "button", type: "button", onClick: () => onSourceActivate(source) } : {};
-            return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0, maxWidth: "100%" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
-              _chunk53XYQH2Kcjs.Chip,
-              {
-                size: "sm",
-                variant: "outlined",
-                leading: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "document-text", size: 14 }),
-                "aria-label": source.actionAriaLabel,
-                className: "lk-source-disclosure__chip",
-                ...chipLink,
-                style: { maxWidth: "100%", minWidth: 0 },
-                children: [
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: source.label }),
-                  source.href != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "arrow-up-right", size: 12, "aria-hidden": "true", style: { flexShrink: 0 } })
-                ]
-              }
-            ) }, source.id);
-          }) })
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", minWidth: 0 }, children: sources.map((source) => renderSourceChip(source, onSourceActivate)) })
         ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "ul",
           {
@@ -300,4 +411,4 @@ function SourceDisclosure({
 
 
 exports.SourceDisclosure = SourceDisclosure;
-//# sourceMappingURL=chunk-KBVR6JDB.cjs.map
+//# sourceMappingURL=chunk-O6H7WPFL.cjs.map

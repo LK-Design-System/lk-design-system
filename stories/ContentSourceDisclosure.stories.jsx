@@ -257,3 +257,58 @@ export const CompactCitationChips = {
     }
   },
 };
+
+export const CollapsibleCitation = {
+  name: '변형·상태 · 접히는 출처 토글',
+  parameters: storyDescription(
+    '챗 답변 footer처럼 출처를 항상 노출할 필요가 없을 때 collapsible로 compact chip 목록을 "출처" 토글 하나 뒤로 접습니다. 닫힘 상태는 한 줄이고, 누르면 앵커드 Popover(드롭다운)로 목록이 떠서 열려 레이아웃을 밀지 않으며 바깥 클릭·Esc로 닫힙니다. 토글 텍스트가 disclosure의 접근 가능한 이름이라 반복되는 landmark heading을 만들지 않습니다.',
+  ),
+  args: {
+    title: '출처',
+    collapsible: true,
+    sources: [
+      { id: 'catalog', label: 'KT 제품 카탈로그 · 2026', href: 'https://example.com/kt-catalog' },
+      { id: 'spec', label: '에어컨 설치 사양서', href: 'https://example.com/install-spec' },
+      { id: 'as', label: 'A/S 안내 · 대덕 지사', href: 'https://example.com/as-guide' },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('.lk-source-disclosure--collapsible');
+    if (!root) throw new Error('A collapsible citation must render the Popover disclosure.');
+    const toggle = root.querySelector('button.lk-source-disclosure__toggle');
+    if (!toggle) throw new Error('A collapsible citation must render a "출처" toggle.');
+    if (toggle.querySelector('a, button')) {
+      throw new Error('The toggle must not contain nested interactive actions.');
+    }
+    if (toggle.getAttribute('aria-haspopup') !== 'dialog') {
+      throw new Error('The toggle must advertise a dialog popup.');
+    }
+    if (!toggle.textContent?.includes('출처')) {
+      throw new Error('The collapsed toggle must show the 출처 label.');
+    }
+    if (toggle.getAttribute('aria-expanded') !== 'false' || root.querySelector('[role="dialog"]')) {
+      throw new Error('A collapsible citation must start collapsed with no open panel.');
+    }
+    if (canvasElement.querySelector('section.lk-source-disclosure') || root.querySelector('h2, h3, h4, h5, h6')) {
+      throw new Error('A collapsed citation must not project a repeated landmark heading.');
+    }
+    toggle.focus();
+    if (canvasElement.ownerDocument.activeElement !== toggle) {
+      throw new Error('The toggle must accept keyboard focus.');
+    }
+    await userEvent.click(toggle);
+    const panel = root.querySelector('[role="dialog"]');
+    if (!panel || toggle.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('Activating the toggle must open the source popover.');
+    }
+    const rows = Array.from(panel.querySelectorAll('.lk-source-disclosure__row'));
+    if (rows.length !== 3) throw new Error('The open popover must render one row per source.');
+    if (rows.some((row) => row.tagName !== 'A' || row.getAttribute('target') !== '_blank')) {
+      throw new Error('Citations with an href must open the original source in a new tab.');
+    }
+    await userEvent.keyboard('{Escape}');
+    if (root.querySelector('[role="dialog"]') || toggle.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Escape must close the source popover.');
+    }
+  },
+};
