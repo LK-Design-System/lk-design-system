@@ -1,6 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -197,6 +198,7 @@ export function TrajectoryOverlay({
   ...rest
 }) {
   const [hasDomFocus, setHasDomFocus] = React.useState(false);
+  const obstacle = useNavigationObstacles();
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === 'function';
@@ -410,6 +412,7 @@ export function TrajectoryOverlay({
           pointerEvents="none"
         >
           <circle
+            {...obstacle(`trajectory:${trajectory.id}:current`)}
             data-trajectory-marker-badge="current"
             data-navigation-marker-circle=""
             r="8"
@@ -447,6 +450,7 @@ export function TrajectoryOverlay({
           pointerEvents="none"
         >
           <circle
+            {...obstacle(`trajectory:${trajectory.id}:status`)}
             data-trajectory-marker-badge="status"
             data-navigation-marker-circle=""
             r="7"
@@ -477,6 +481,7 @@ export function TrajectoryOverlay({
             pointerEvents="none"
           >
             <circle
+              {...obstacle(`trajectory:${trajectory.id}:state:${item.state}`)}
               data-trajectory-marker-badge={item.state}
               data-navigation-marker-circle=""
               r="7"
@@ -491,29 +496,42 @@ export function TrajectoryOverlay({
         );
       })}
       {showLabel && trajectory?.label && pathData && (
-        <text
-          data-trajectory-label=""
-          data-trajectory-screen-row={trajectoryLabelSlot ? 'label' : undefined}
-          data-trajectory-label-anchor-x={markerPoint.x}
-          data-trajectory-label-anchor-y={markerPoint.y}
-          x="0"
-          y={trajectoryLabelSlot ? 0 : -13}
-          textAnchor="middle"
-          transform={markerTransform(markerPoint, inverseScale, trajectoryLabelSlot)}
-          fill={foreground}
-          stroke={surface}
-          strokeWidth="3"
-          strokeLinejoin="round"
-          paintOrder="stroke"
-          vectorEffect="non-scaling-stroke"
-          fontFamily="var(--font-sans)"
-          fontSize="var(--caption1-size)"
-          fontWeight="var(--fw-bold)"
-          aria-hidden="true"
-          pointerEvents="none"
+        <NavigationAnnotationBlock
+          id={`trajectory:${trajectory.id}:label`}
+          kind="trajectory-label"
+          anchor={markerPoint}
+          nudgeDirection="up"
+          priority={annotationPriority({
+            selected,
+            focused: focusVisible,
+            alarm: invalid || trajectory?.status === 'blocked',
+            emphasized: trajectory?.status === 'active',
+          })}
         >
-          {trajectory.label}
-        </text>
+          <text
+            data-trajectory-label=""
+            data-trajectory-screen-row={trajectoryLabelSlot ? 'label' : undefined}
+            data-trajectory-label-anchor-x={markerPoint.x}
+            data-trajectory-label-anchor-y={markerPoint.y}
+            x="0"
+            y={trajectoryLabelSlot ? 0 : -13}
+            textAnchor="middle"
+            transform={markerTransform(markerPoint, inverseScale, trajectoryLabelSlot)}
+            fill={foreground}
+            stroke={surface}
+            strokeWidth="3"
+            strokeLinejoin="round"
+            paintOrder="stroke"
+            vectorEffect="non-scaling-stroke"
+            fontFamily="var(--font-sans)"
+            fontSize="var(--caption1-size)"
+            fontWeight="var(--fw-bold)"
+            aria-hidden="true"
+            pointerEvents="none"
+          >
+            {trajectory.label}
+          </text>
+        </NavigationAnnotationBlock>
       )}
     </g>
   );

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "00b57d8cae4a52416c83f9dd92fdc3febf38182b9ab7e6895393ef911dce6d76",
+    "storybookIndexSha256": "46809212fa370e0fa67955d3046843c5f6e44a12b2038e601ec1eccc0f4fc033",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,31 +59,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 177,
-    "stories": 534,
-    "publicStories": 408,
-    "hiddenStories": 126,
-    "componentDescriptions": 173,
-    "pagesWithVisibleCanvasIntroduction": 177,
-    "pagesWithDecisionGuidance": 168,
-    "describedPublicStories": 408,
-    "reviewedPages": 177,
-    "reviewedStories": 534,
-    "staleReviewedPages": 4,
+    "pages": 180,
+    "stories": 546,
+    "publicStories": 419,
+    "hiddenStories": 127,
+    "componentDescriptions": 176,
+    "pagesWithVisibleCanvasIntroduction": 180,
+    "pagesWithDecisionGuidance": 170,
+    "describedPublicStories": 419,
+    "reviewedPages": 180,
+    "reviewedStories": 546,
+    "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
-      "overview": 170,
+      "overview": 173,
       "usage": 21,
-      "variants-states": 82,
+      "variants-states": 86,
       "interaction": 48,
-      "responsive": 52,
-      "scenario": 25,
-      "visual-parity": 89,
+      "responsive": 55,
+      "scenario": 26,
+      "visual-parity": 90,
       "internal-contract": 37
     },
     "dispositions": {
-      "keep": 177,
+      "keep": 180,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -105,17 +105,17 @@
       },
       "Product": {
         "pages": 86,
-        "stories": 237,
-        "public": 203,
+        "stories": 239,
+        "public": 205,
         "hidden": 34,
-        "guideReadyPages": 83
+        "guideReadyPages": 86
       },
       "Robotics": {
-        "pages": 29,
-        "stories": 132,
-        "public": 108,
-        "hidden": 24,
-        "guideReadyPages": 28
+        "pages": 32,
+        "stories": 142,
+        "public": 117,
+        "hidden": 25,
+        "guideReadyPages": 27
       },
       "Theme": {
         "pages": 3,
@@ -160,7 +160,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "14cb902da5a982cc71185c00480e93280c3e9b9b66a842d13a82a48afe115641",
       "stories": [
         {
@@ -247,7 +247,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "80591c624b99312949d2478781cf2b6bc49119ad2f766d2b00c704977766f4ab",
       "stories": [
         {
@@ -442,7 +442,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "59dbbd602a30aead9e98891b75ef5bf02ff18e1a293ec331349d505d79d8d99a",
       "stories": [
         {
@@ -526,7 +526,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d98baef6424ccb7de659a146788e47925fd297696696182ff4159d162958a205",
       "stories": [
         {
@@ -608,7 +608,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "dbdb7b82e2adcef7ec6408200ad9af69a8d04356e77a03e5243dcaa1f61da6cb",
       "stories": [
         {
@@ -688,7 +688,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d6535a1fc511467c1e60173970026b8ce13300f990ac38b44c9ce672381c6dda",
       "stories": [
         {
@@ -772,7 +772,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "c0521d04bcbf892c68c2a1e9f467f2697f27bdda6c4a7bb4920c5da31f17793b",
       "stories": [
         {
@@ -881,7 +881,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2bbbb100dec16dbb6aebf19ab62e4e05e943f70aec1f1898caca43f9a7b29dae",
       "stories": [
         {
@@ -1061,7 +1061,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "bad9a0e3c2b12db1a29bc7ec1c405f9fce39a9b2cf6dac1879266c6517750fa0",
       "stories": [
         {
@@ -1144,7 +1144,7 @@
       "dispositionReason": "Kept as one LDS disclosure-pattern page. The accepted local .fig snapshot has no WDS Accordion or Collapsible component-set (only a Folder icon matches); WDS Content defines Icon, Content Badge, Thumbnail, Avatar, List Cell, Card. Accordion and Collapsible are LDS extensions, so promoting them to standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d55224ba3071e5350115e29d4fc46172c86df22a64208a00ad4c1aeab056aaff",
       "stories": [
         {
@@ -1209,7 +1209,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "abd336d91d1c75cc1b3af998880dd2c9485905c6b868dbb12ce16903d17ac456",
       "stories": [
         {
@@ -1318,7 +1318,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d709d2280d61dcdd9a34624b369591bd5b87b63b79ec614842dd0b82e52dc5cf",
       "stories": [
         {
@@ -1398,7 +1398,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d9523cf8e2816fae63679baa75f02250a747863740edb608a82bc3dc5d6ebc81",
       "stories": [
         {
@@ -1458,7 +1458,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "cc24920444c7d5307ad6ca1ba7d0c049ac4d4473003c1ecb0d076924559574f7",
       "stories": [
         {
@@ -1540,7 +1540,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "912d914382a9350418a9e0d36fb6e5a1faca2085c6f713dc8cc08fa96c7fa4f6",
       "stories": [
         {
@@ -1599,7 +1599,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b0f81a128e05cffde70a087b8e35b4398b1eb4cd5e74702c596e7f03693c9d70",
       "stories": [
         {
@@ -1705,7 +1705,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "4247f08947e4875944b7527ca4f46c789d4b5b140a1b4b08fb493efd2e0e8c71",
       "stories": [
         {
@@ -1763,7 +1763,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "9396987f48167bbf4bf63b151468b6d9dd4648326172b4bcf388e4c175d5c814",
       "stories": [
         {
@@ -1888,7 +1888,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "9adfdcd0e2e73333733d82aa821bd349c52704abe0ca237c0e00582538d32e2d",
       "stories": [
         {
@@ -1946,7 +1946,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "36e127783cff3cec1c02a224863599a6b00aca406a3e48ee7524ff369a126a3a",
       "stories": [
         {
@@ -2053,7 +2053,7 @@
       "dispositionReason": "Kept as one LDS layout-utility page. The accepted local .fig snapshot (FIGMA_LOCAL_CONTENT_AUDIT.json) shows WDS \"1 Layout\" defines only Essential, Divider, and Layout; ScrollArea, Center, and VisuallyHidden have no WDS component-set (Center appears only as a Vertical Align variant value, VisuallyHidden is absent, Scroll surfaces only as a Scroll Bar decoration). Promoting them to standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b79485ae8d514a76701fcef0831e539144b34f11f69ded27f53d3151aa1ced10",
       "stories": [
         {
@@ -2161,7 +2161,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "fafe2f866d5076b7636d273d301f2247b901bfac46baa3410c43cca4f1126573",
       "stories": [
         {
@@ -2264,7 +2264,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "9fbee5b732bf21b42bb5dde7c51bd96c1075b20c50cdbaf2cf28aba4f118216d",
       "stories": [
         {
@@ -2320,7 +2320,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "c75bb841fce7673fef5d59ccceb951efa9096fd417a510d85fb93db8fda5f01d",
       "stories": [
         {
@@ -2378,7 +2378,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "32e8e18cdd2530d527cedde6850b1ab64a79182d39514eb9c6bbcd75b8f32907",
       "stories": [
         {
@@ -2459,7 +2459,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "26bad0cd2be164c8a7b2ba98d0563820974a93ac5e79cd8b86f6e94d73ecc756",
       "stories": [
         {
@@ -2540,7 +2540,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "35a623ef226c38374bc66d9167259bceaae728186077016d24f2212c0e40b033",
       "stories": [
         {
@@ -2690,7 +2690,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "31eca56bf05323aa1c18feb622246628fb94bd85cc73b26d160469f41f78f58a",
       "stories": [
         {
@@ -2775,7 +2775,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d4ef934f63162d13953d931242c1f940231bf680184bc36556cf6af11d5de989",
       "stories": [
         {
@@ -2858,7 +2858,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "339cda47f6ef12941793c6c5938cbf0474a419499ff562415f99c06f8fd948dc",
       "stories": [
         {
@@ -2966,7 +2966,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "617919e20e8b0a5b3d32fd19175cd94c24e8fc17af6271b12610052144ed7297",
       "stories": [
         {
@@ -3096,7 +3096,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "97775a764eecb84aa45ebbc4ef0b42818ddfbccbaf34e97ccd2cdda4858a1caf",
       "stories": [
         {
@@ -3155,7 +3155,7 @@
       "dispositionReason": "ToastStack is the placement and aggregation wrapper for the same Toast feedback contract. The public Stack and placement example belongs on the Toast page instead of creating a duplicate owner page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "71fcc941c49a1eaaa5d5de6a60a8555d4f62dcac819d4d03b7e3c6606ebf9ab8",
       "stories": [
         {
@@ -3304,7 +3304,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "6e5e2288597391a63e3ba4b9d1ab6d2855afc08a90161e4bf5719e5780327378",
       "stories": [
         {
@@ -3428,7 +3428,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "54626ea29caf48d6184e18725466da6657a366929641424a7023ba78fb957a93",
       "stories": [
         {
@@ -3552,7 +3552,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "45253035b0858dcf23bdeea88c98ec6c420d2086783671a54384b5e3c4937855",
       "stories": [
         {
@@ -3705,7 +3705,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "3c4de39ead21f055a90572aafd4a1269c2599a249fc6a4f7e79db1e228747b67",
       "stories": [
         {
@@ -3854,7 +3854,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "0b9f2635b2ffcba8a8d5c596c26c6cc995942f066fc87ed8b602491ca241c49d",
       "stories": [
         {
@@ -3978,7 +3978,7 @@
       "dispositionReason": "Kept as one LDS search/autocomplete page. The accepted local .fig snapshot has no WDS Search Field, Autocomplete, Combobox, or Tag Input component-set (only Search and Tag icons match); WDS Selection and Input centers on the single Textinput set. These are LDS extensions of Textinput, so splitting them into standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2b06a85a07ee11c1a9ed591a9c31b985fceee2cd1d16ece159cb22caafc7c509",
       "stories": [
         {
@@ -4128,7 +4128,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "12966f692cf017e9e132806d97929bc9d5f61793876fff81d754dc55af612a63",
       "stories": [
         {
@@ -4249,7 +4249,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "51b1f04436d95398ef8893c8e6b750cf327b50b2760c19d6e51bdf212ef231e2",
       "stories": [
         {
@@ -4371,7 +4371,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "1c1551ca76808ff48a3f12c57a05dad05a2525cbba017e6427b7114bf86ce861",
       "stories": [
         {
@@ -4450,7 +4450,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "44a5f9fb99c3f6ba504a8cb97fd9f6348cbdc4f5e2bb555a7d08d2ae9dfd21aa",
       "stories": [
         {
@@ -4528,7 +4528,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "c57ed6a200b1449d7bce6a04344b37b7f7836fda4afbe5fcf59d8d6024f4a897",
       "stories": [
         {
@@ -4648,7 +4648,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "0de7746c66bba9731b0a509175ca5baff3e91dd25e0e8de3e83c4f321264bb84",
       "stories": [
         {
@@ -4794,7 +4794,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "77db341241072f9fa25e9ae357c44a5fbf0451e5d854aaf31e4dcf2b2b5c976e",
       "stories": [
         {
@@ -4925,7 +4925,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "ddac8251a638407ecacd055a1f61688b6b4150a89ac8e59f70fac70156bdc905",
       "stories": [
         {
@@ -5009,7 +5009,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e0a3feb338697b8a9d2c7b98694e8a8df117ef5ffd9c6cb633d8d207bff6e406",
       "stories": [
         {
@@ -5117,7 +5117,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "71669bfbca8b17ff410d7ddea02a3e1fbd969ee49d112b5f1d33caacb60b36fd",
       "stories": [
         {
@@ -5175,7 +5175,7 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "8acb9d662aa8b57b15ed1fa9d717dfe7a643e6019a6d17e24af174942610af88",
       "stories": [
         {
@@ -5253,7 +5253,7 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "977a8d961f9c121eba2a2b617e1c67b47bddb4c89962daa8ec16abcbdfbc13b2",
       "stories": [
         {
@@ -5331,7 +5331,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b10d0776b73788573194b333e5eabb2843d9237bfedc4e0d6e22328872c4f0e1",
       "stories": [
         {
@@ -5409,7 +5409,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "eee9f8b9051dbdc91544465a14ab87e47a5eda9f12a4b54ceb6d0a4ef61ab363",
       "stories": [
         {
@@ -5465,7 +5465,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "76e7b02b7c5145a2e18ccfe33decee0f7a6065c4451d76fbc49fce09d20861c6",
       "stories": [
         {
@@ -5543,7 +5543,7 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e89350c18e236346021b80169968b1af4ab727b473cdd4870c84cc00d7269658",
       "stories": [
         {
@@ -5601,7 +5601,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "edf93f65ec8c964701daf1323dcbc5de4aa7648a92272b275334631d7050a550",
       "stories": [
         {
@@ -5731,7 +5731,7 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "80d5c564698964e895fd46370ce1e028b02b7f26bf1e6718c78fb8940798fd2b",
       "stories": [
         {
@@ -5789,7 +5789,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d1389a56ce4af1337c02d384bf3690d80fe37256cd38dece9a3197c13ec8a80b",
       "stories": [
         {
@@ -5869,7 +5869,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2edd9e1557474955558faab5686471adc539c7ac52efc754b974014ee6adf7fe",
       "stories": [
         {
@@ -5925,7 +5925,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b886923502de956b22c65f1bc141030dc79b23fbd0c95fe157802d8acae3cea1",
       "stories": [
         {
@@ -5981,7 +5981,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "6e721c131297f91306fab50e3ab441f706ad2ccf9bff30f8d1062e4700525bc9",
       "stories": [
         {
@@ -6082,7 +6082,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "80d7a32e5e9ef08cce809cbcea2f84c50bbe18c480d6179d71954d135a3a4d16",
       "stories": [
         {
@@ -6138,7 +6138,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "fb2510078ab9640ccfc89548a0ec9205b91d9f1bdfb8075449776194b720082a",
       "stories": [
         {
@@ -6194,7 +6194,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d0aeac389ad39a17bbf39b59f69e52e17d97497c749bfdab9fa4e1673cf8cb64",
       "stories": [
         {
@@ -6252,7 +6252,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e2a760a76f264afd2ddab0816b687873fa2382ca26eb37de38239c20147875bf",
       "stories": [
         {
@@ -6312,7 +6312,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "de4d1ffd122a880afdfb9e2591f6d4c410be1969449937af18f1b8317b92d702",
       "stories": [
         {
@@ -6370,41 +6370,39 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "6c460788fa1c9ae401288dec0ca987d3fd148ccf2f07458319b1f5ecd891bd17",
+      "sourceSha256": "06685ae184ba293ec8a7f4bddb6e7594ee78cb257281f5ae1a11cb6fd3d5b61d",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
       ],
       "supportingComponents": [
         "Avatar",
-        "Button",
         "Chip",
         "Icon",
+        "IconButton",
         "MessageComposer",
         "MessageFeed",
         "SourceDisclosure"
       ],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message--message-overview",
-        "describedPublicStories": 6,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-14",
-      "reviewedSourceSha256": "2bed478cd11a1a6f3b83bc1e5c512e4fdc67c791650000d1662a10dcd5a89782",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "06685ae184ba293ec8a7f4bddb6e7594ee78cb257281f5ae1a11cb6fd3d5b61d",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6428,14 +6426,15 @@
           ],
           "supportingComponents": [
             "Avatar",
-            "Button",
+            "Icon",
+            "IconButton",
             "SourceDisclosure"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
           "id": "lds-product-communication-message--grouped-messages-and-slots",
-          "name": "사용법 · 그룹과 첨부·출처",
+          "name": "사용법 · 그룹과 조합 slot",
           "exportName": "GroupedMessagesAndSlots",
           "visibility": "public",
           "tags": [
@@ -6454,9 +6453,9 @@
             "ConversationMessage"
           ],
           "supportingComponents": [
-            "Button",
             "Chip",
             "Icon",
+            "IconButton",
             "SourceDisclosure"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
@@ -6482,7 +6481,8 @@
             "ConversationMessage"
           ],
           "supportingComponents": [
-            "Button",
+            "Icon",
+            "IconButton",
             "MessageComposer",
             "MessageFeed"
           ],
@@ -6510,6 +6510,31 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-communication-message--message-action-bar",
+          "name": "변형·상태 · 아이콘 액션바와 실패 오류",
+          "exportName": "MessageActionBar",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "SourceDisclosure"
+          ]
         },
         {
           "id": "lds-product-communication-message--lifecycle-states",
@@ -6586,14 +6611,14 @@
           "reviewNote": "2026-07-12 normal, narrow, and dark rendered states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-14 re-reviewed after replacing soft/solid selection with the assistant plain, user tonal, human-agent neutral, and system divider grammar; source AST plus normal, 320px, dark, lifecycle, composition, play, and Axe evidence were verified."
+      "reviewNote": "2026-07-16 re-reviewed after synced messageActions/error/IconButton source update; dispositions unchanged, gated by check:a11y play/axe run."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "f67976d630e68ac8084d0d3b725aeec312687d88886afe58ec693abbefce1f22",
+      "sourceSha256": "3e33ed948a2303a456cbed4e8fd5b6473f87c7baa0ab79cc7afd1dc1952fc42a",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -6613,18 +6638,16 @@
         "storyGuideId": "lds-product-communication-message-composer--message-composer-overview",
         "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-14",
-      "reviewedSourceSha256": "205b001ddd51f31a6c3362d22ffc011cd97d24c816bfb5ecc4d76053fd7a1a62",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "3e33ed948a2303a456cbed4e8fd5b6473f87c7baa0ab79cc7afd1dc1952fc42a",
       "stories": [
         {
           "id": "lds-product-communication-message-composer--message-composer-overview",
@@ -6686,6 +6709,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "variants-states",
@@ -6775,19 +6799,20 @@
           "supportingComponents": [
             "Button",
             "Chip",
-            "Icon"
+            "Icon",
+            "IconButton"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         }
       ],
-      "reviewNote": "2026-07-14 re-reviewed after moving attachments and the utility/textarea/primary-action row into one composer shell while preserving IME, state, 40×44px slot, 32px action, normal, 320px, dark, play, and Axe contracts."
+      "reviewNote": "2026-07-16 re-reviewed after upstream merge (play-test hardening or prop additions); dispositions unchanged, gated by check:a11y play/axe run."
     },
     {
       "title": "LDS Product/Communication/Message Feed",
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageFeed.stories.jsx",
-      "sourceSha256": "d73c9ac31ca46a85cd88e921148eb88d8795f6f6a220f2364dce72ea5d995746",
+      "sourceSha256": "e12f4265bf2898ed0d80ec8f396155616e5b6ddb54b5ffcdf01c54aad086dd33",
       "primaryOwner": "MessageFeed",
       "ownerComponents": [
         "MessageFeed"
@@ -6806,18 +6831,16 @@
         "storyGuideId": "lds-product-communication-message-feed--overview",
         "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-14",
-      "reviewedSourceSha256": "152d41bf4469ffb87c65a18d10664780030ac082c46a4d453a1616c3d96d90ad",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "e12f4265bf2898ed0d80ec8f396155616e5b6ddb54b5ffcdf01c54aad086dd33",
       "stories": [
         {
           "id": "lds-product-communication-message-feed--overview",
@@ -6971,7 +6994,7 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         }
       ],
-      "reviewNote": "2026-07-14 re-reviewed after replacing temporary rows with real role-presented ConversationMessage entries and removing card chrome; history/follow, normal, 320px, dark, play, and Axe contracts were verified."
+      "reviewNote": "2026-07-16 re-reviewed after upstream merge (play-test hardening or prop additions); dispositions unchanged, gated by check:a11y play/axe run."
     },
     {
       "title": "LDS Product/Content/Bubble",
@@ -7001,7 +7024,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "a4010d61f2747012c163bad02ab7d41b8ea0affb5551fe5e287b8c50077dd4e7",
       "stories": [
         {
@@ -7057,7 +7080,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2510161e79322f307e6aa51a3464cde6f5226a1ca5878b565416df1c6110f9e0",
       "stories": [
         {
@@ -7137,7 +7160,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "779503ba93c49f538b0038f39add886de55ab33c9540ca99f147ad0c7532c199",
       "stories": [
         {
@@ -7217,7 +7240,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "7ad86af6861466a14fbd5b1ea47b3c1bc07583857fdfd1de3e590b5a921df7ce",
       "stories": [
         {
@@ -7273,7 +7296,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "1f02b1524b3070468b26ca86c99eb990eefc80f975ffc5d5f60de24e2752f50e",
       "stories": [
         {
@@ -7351,7 +7374,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "5ac2821adb37df8916b9a6f1f1e3ba2d3d0cdc7f615cea8465e1d429f769741c",
       "stories": [
         {
@@ -7429,7 +7452,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e208fea1f011754712799323a7d27ed25bdda552c7fd34495b80f03caac37a78",
       "stories": [
         {
@@ -7507,7 +7530,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d326b4fe9c3ce0a47816f857958ceea2e3e8c039b254f5dcb30680b4e3950cf4",
       "stories": [
         {
@@ -7584,20 +7607,20 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "sourceSha256": "2a9fff0904a033ec8f25e5c7f458e89513b41d15c1ef3e63b2415db453100265",
+      "sourceSha256": "1de5c0f3e82a89d246321d07f58b4d108c83f83abb28183a2349be747d216a1b",
       "primaryOwner": "SourceDisclosure",
       "ownerComponents": [
         "SourceDisclosure"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-content-source-disclosure--availability-and-provenance",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -7607,8 +7630,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "2a9fff0904a033ec8f25e5c7f458e89513b41d15c1ef3e63b2415db453100265",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "1de5c0f3e82a89d246321d07f58b4d108c83f83abb28183a2349be747d216a1b",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -7632,6 +7655,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-content-source-disclosure--compact-citation-chips",
+          "name": "변형·상태 · 컴팩트 인용 chip",
+          "exportName": "CompactCitationChips",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SourceDisclosure"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-content-source-disclosure--unresolved-availability",
@@ -7758,7 +7803,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b959130334c502c2e34e436f772ec97d577fe3f244496f4b731b63f231882d65",
       "stories": [
         {
@@ -7841,7 +7886,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d434884d88e1f9717e3351783e6d7d820dd5a02d130f4894b12e35d711c258d8",
       "stories": [
         {
@@ -7930,7 +7975,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "7075a8ae7ebcacaf240c06bbff898fc64d7574bcd585e66acaf8646de5525439",
       "stories": [
         {
@@ -8092,7 +8137,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "bbc9c753df04b47dcd8605146dc5ffbedf24ad2db20d9285641434dd20efcd49",
       "stories": [
         {
@@ -8192,7 +8237,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2f980b3f3561b9e2005a88819c8a7adf9c6dc92543a6fa99f731d62a0b5273c9",
       "stories": [
         {
@@ -8272,7 +8317,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "fb6bd20ece307985b0215d2bdcfb9128245a35f8160e7869f182e95c12a75b81",
       "stories": [
         {
@@ -8334,7 +8379,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "4f3c7162ea211ec6eca2ff7ff7a738b974b55c199e7029a2974b413d5ff58e01",
       "stories": [
         {
@@ -8393,7 +8438,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "05e0dde21f1f6d4b587650163bc2bcba1c2020eae0e0273fa5e2c3727097e235",
       "stories": [
         {
@@ -8453,7 +8498,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "f3e6fbe7c624f6eedb1362560de4f8a1f4a7550ecd4e24a8b8b65b3bef8a6961",
       "stories": [
         {
@@ -8589,7 +8634,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "4506ebc1b32830114f65e58ed1ef1c2f53a80ac8cae8f7ac95d3952be3f9b38b",
       "stories": [
         {
@@ -8680,7 +8725,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "4a21e1bfefada2c55674c217efc2fd44b2d0bbcca4e5fd1d4af5bbfd59436572",
       "stories": [
         {
@@ -8743,7 +8788,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d2c9090738e7a770f1dcffe2baad179373e50f4066bb8fed047d26085bf706c3",
       "stories": [
         {
@@ -8851,7 +8896,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "00c34bda22483890e9e86ebd086c838af3666877ee155f9f6d224e8d5c54aaf2",
       "stories": [
         {
@@ -8964,7 +9009,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "1413384891c6dfed8a8d28c4ce2179d36ff0b4eb656b8c57d2a6dc1de1c42e40",
       "stories": [
         {
@@ -9044,7 +9089,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b5e90bb051c482a6d73a8302917abfd2a68c01eff9ba39a87549601054469251",
       "stories": [
         {
@@ -9147,7 +9192,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "4ea642f8ffcc954333a5060aa047b464203bb374dfc5acf9a9329b368cd67a25",
       "stories": [
         {
@@ -9250,7 +9295,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "4f4c606e5843da60fc32f4326155824985aa8f5fdac126359502261b4c5b60e3",
       "stories": [
         {
@@ -9440,7 +9485,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e05e3616f886bc3b733f5bd4db9c52ecfb7a9b74371fe60c919ccc25edd13b4c",
       "stories": [
         {
@@ -9549,7 +9594,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "311508b619e8048767421c67762430b2b43ab5e7a6c8ee5df6ba117a48347feb",
       "stories": [
         {
@@ -9661,7 +9706,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "0f6bb0f4f802222333c31cb01463d980621abc05a5b8e4e7b6a52bb83254b896",
       "stories": [
         {
@@ -9764,7 +9809,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "03368d84000c9bad4f82d0374b429a9168e59103a861dbf7f8d0b5aa22133b5a",
       "stories": [
         {
@@ -9864,7 +9909,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "75849efb12c38fc02e3afb1c2306d78857b3058dbc8fc8a558ca820b272617eb",
       "stories": [
         {
@@ -9989,7 +10034,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "de68e7a3bf69c4e99dfd34ec444ff7ab642fa9d30612647c37d24ae5976cf333",
       "stories": [
         {
@@ -10092,7 +10137,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "83ff689de7d6da5112d0e919ceb77b174428bf9214e7372cffd3a2ec566ff688",
       "stories": [
         {
@@ -10170,7 +10215,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "597df66e825cb0f2319986deae853924f91e2644b199f1d4163962c8ce060d79",
       "stories": [
         {
@@ -10234,7 +10279,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "41ebafc64dfd4d5d29e3ed038f997ad3ba060bf7b76d72c76d50b1c5c2d26852",
       "stories": [
         {
@@ -10360,7 +10405,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "a6efb79a5aa1aba7838d5a98bd8c1c51a8e1fc5d299def021cdbd8fdeb46d275",
       "stories": [
         {
@@ -10521,7 +10566,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "53db08d9d5470134ee0256c307ede479357aa655b933d74fa3e2ad31f8add469",
       "stories": [
         {
@@ -10586,7 +10631,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "ce04785d2382d7340eadb14f47ad7ccadb33f513842d7721ebc405b9530d43a2",
       "stories": [
         {
@@ -10677,7 +10722,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e85bf952b6180dfc76a374c8e93551c8d5d1acaf4254dd9bffc6b0b797f9a945",
       "stories": [
         {
@@ -10811,7 +10856,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "64aa5b3e8e117196be281aa749e47049b0654c86f3d2b180e06fcc72f436ab11",
       "stories": [
         {
@@ -10868,7 +10913,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2b15b678acae367280e27b00c8974d9bc1e3c65b78ef9feb407bfad39a5fba19",
       "stories": [
         {
@@ -10946,7 +10991,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "f8f9d10d01f30511811f7d194b25f6fe7627a2c4ffb086f2e46c16d661c8d811",
       "stories": [
         {
@@ -11001,7 +11046,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationMenubar.stories.jsx",
-      "sourceSha256": "51c57233c012b215a0c50daa251f872ccbbc48d95ce68bc61ec06c764f287a0f",
+      "sourceSha256": "641d577af99947e3e8884f8d8279c6ba6b3ae1ef039948895e3c0b52da00a188",
       "primaryOwner": "Menubar",
       "ownerComponents": [
         "Menubar"
@@ -11024,8 +11069,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "51c57233c012b215a0c50daa251f872ccbbc48d95ce68bc61ec06c764f287a0f",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "641d577af99947e3e8884f8d8279c6ba6b3ae1ef039948895e3c0b52da00a188",
       "stories": [
         {
           "id": "lds-product-navigation-menubar--menubar-patterns",
@@ -11106,7 +11151,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "a71960c52aed089655d2b02b6266e328243b66c3db2ea89a06bf362f7884f88d",
       "stories": [
         {
@@ -11211,7 +11256,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e3acf98cacb0baa2ea2914e85a37fabf1972d66d0d8cac4acf7630fb185d31f2",
       "stories": [
         {
@@ -11295,7 +11340,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "9f8dd401adfe354aa08496103587a6694ac181b7beb00cea739b63920fdb8b83",
       "stories": [
         {
@@ -11407,7 +11452,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "029aa77a3ab4ca81ad397a3e3bacb8dc5f7e75da13f13c8369280cc2f5db68f6",
       "stories": [
         {
@@ -11464,7 +11509,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "90b8d729b9733135553b8da2aa8bc7ccf54361ad6c6cb3219d2a45b5aae90d68",
       "stories": [
         {
@@ -11523,7 +11568,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "d68f1f83c84f6830f8de33a7ce6177916055a4fcbcb40b6fdcbf707085684c5a",
       "stories": [
         {
@@ -11629,7 +11674,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "16cfe993ba28855683aab5c3f33cd1fa35d75e8ca97dcbea98a425d3e39ec473",
       "stories": [
         {
@@ -11737,7 +11782,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "65d6512b9a867013a6f95523906584b987745f3b05ac9cba277e07b251df7a66",
       "stories": [
         {
@@ -11843,7 +11888,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "26b5d705240fa5c43a730c1274c42cb0e3ecce09e42651e720a0275299afe7cd",
       "stories": [
         {
@@ -11948,7 +11993,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "db76f89f71171029514baf87ce617ebb9eea9fa896b7a1ccf99d92c9e55e8709",
       "stories": [
         {
@@ -12054,7 +12099,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "08a75e48d50f85a8b71de5b5e0ad5f7411acc021d6439373eaf02e8c404a40ce",
       "stories": [
         {
@@ -12159,7 +12204,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b8c5bf283eb28ed2b0428527d8f1f1be6289bbdd9dbdeaf0074c7ec7e207fbb1",
       "stories": [
         {
@@ -12237,7 +12282,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e3039506396916ae3885f98b9e0c7b14d1c8c8912a3528237869924ede9b4c7f",
       "stories": [
         {
@@ -12339,7 +12384,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "0b5a62c0ac7c2ff55ac454bfa786ee33b9b563990baaa1ff5e18a16e5e9f17fe",
       "stories": [
         {
@@ -12421,7 +12466,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "4fd27ea4de2814cff5e309a850414cc3cf3298aa2c544d6f8c7513a0d6c71a82",
       "stories": [
         {
@@ -12526,7 +12571,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "96536355ad9bd2888be560494eaf6b02eab7a21ffd5516f2f43f698bebc08062",
       "stories": [
         {
@@ -12585,7 +12630,7 @@
       "dispositionReason": "File Upload Queue now owns post-selection transfer, processing, failure, and recovery states, while File Upload owns file selection and drop input. The two pages answer distinct user decisions.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "42307c08e4acce32dd99ac31911c6c122e7e6ed4d3a9cdc26fdd8586a24e670f",
       "stories": [
         {
@@ -12689,7 +12734,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "6f6c56f7872b0037efbc1ae4748a9aeb21c58ae5352236b44900cdf72ec2d3f1",
       "stories": [
         {
@@ -12811,7 +12856,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "f6fd45c0be876810318a1d3dec3d8754bd13aca5910e92108ec43f084a6ace2e",
       "stories": [
         {
@@ -12910,7 +12955,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "647194a9e71fabee6c905780747112f935b6d3d489ace645f12365dc15c99974",
       "stories": [
         {
@@ -12968,7 +13013,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "14fe394541853d61b14c6496aed0b70fc11cd96ae607ba16a7a95c1abe53487d",
       "stories": [
         {
@@ -13067,7 +13112,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "845d8656a0fc11e654f9cd774b0da82521e15717036b2eea3b0353439597ea1d",
       "stories": [
         {
@@ -13125,7 +13170,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "5d5ec4d77b2c6a3d65e6516e12c45c1f28c9a76bb61b81f2c3c898d40ed09325",
       "stories": [
         {
@@ -13203,7 +13248,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2c73af4e28ee4286ce906b137377cf75742c59b803287bf510d2e8c978f1c081",
       "stories": [
         {
@@ -13376,7 +13421,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "556842dd113f8f872710680a32f458948f150a4e6e7f0a46311d62e815b2c4a0",
       "stories": [
         {
@@ -13528,7 +13573,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "81b5a2cbcf85e5925cc1a371bc7a20eb2b69018116e7d47eadb0db12c08e7eb2",
       "stories": [
         {
@@ -13588,7 +13633,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "6fe1cefbe7683ff9ffeed949af5ad3d786a872bcc4c9c6f43d489c3167a38596",
       "stories": [
         {
@@ -13692,7 +13737,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "43245ea5372950d22788f4e0cdd2757eabebebe9518dbfde188e575893513a31",
       "stories": [
         {
@@ -13883,7 +13928,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "ffd070df988ad87d5675be6d2b6b0e8370dc5b016106f7876251dff201ea3ed8",
       "stories": [
         {
@@ -14055,7 +14100,7 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "abe07647f72a4dac6bac6a4a2fd78b8b4bfb65ed84e9e2778b8ee2484422532c",
       "stories": [
         {
@@ -14261,7 +14306,7 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "0df6792561f21e200916d0f5e79f37ee727892e2be17e914e13c3260011c624e",
       "stories": [
         {
@@ -14383,7 +14428,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "ee4720535ed874d60e6865abba42f0ae9fc60354b9d401ae914f381cc09edc6a",
       "stories": [
         {
@@ -14440,7 +14485,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b8778f27b8118fc0f298b38504045252567d8509d7d7fa9560442762f0f2f253",
       "stories": [
         {
@@ -14541,7 +14586,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "0e670941b0bf97ec4be50a9477072eb69b4d0d172f4cf589edbdc873a468778d",
       "stories": [
         {
@@ -14597,7 +14642,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "619662ff1e55c82e4f288c8831d60c48a339eb01d7b4d7b2659feb7a8320cc06",
       "stories": [
         {
@@ -14697,7 +14742,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "58e88139f782dd7bb063bddd142299773844a2b5851e9c66f10f86c4c39560d8",
       "stories": [
         {
@@ -14843,7 +14888,7 @@
       "layer": "Robotics",
       "family": "Control",
       "importPath": "./stories/RoboticsManualControlSession.stories.jsx",
-      "sourceSha256": "ea3bda432124d6ac453c8c664b01618bec1f2179bc9efdb24edcc3809677e38c",
+      "sourceSha256": "af94a837fa3eb5e5180519833bfcc3f5f615b387b41850b3b8df996bef819e4a",
       "primaryOwner": "ManualControlSession",
       "ownerComponents": [
         "ManualControlSession"
@@ -14870,8 +14915,8 @@
       "dispositionReason": "Manual Control Session is one safety state machine spanning readiness, active input, stop, and recovery. A separate stop page would fragment the operator sequence rather than clarify ownership.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "ea3bda432124d6ac453c8c664b01618bec1f2179bc9efdb24edcc3809677e38c",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "af94a837fa3eb5e5180519833bfcc3f5f615b387b41850b3b8df996bef819e4a",
       "stories": [
         {
           "id": "lds-robotics-control-manual-control-session--authorized-session",
@@ -15129,7 +15174,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "93b8aa6eb60228276a541c142ca18f1f0c23fd1d446998c1f17cc5f59ffffe48",
       "stories": [
         {
@@ -15209,7 +15254,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "47d21699f58fd4efc7b3380ce24841f4bf53d321472cdaf9ffa2a36966ba6f03",
       "stories": [
         {
@@ -15365,7 +15410,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "05978c186091eb19584e034e89d01802e5ea5df17e63e11bfb1512bf3bd7d8b9",
       "stories": [
         {
@@ -15495,7 +15540,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "df56bf0bb6f6269a4bcd73a3c480d72860bdf4ed8b16c4c2c32cf4b3ec64cb60",
       "stories": [
         {
@@ -15621,7 +15666,7 @@
       "dispositionReason": "HistoryToolbar has its own public API, prompt, and keyboard contract. Command Bar composes it, but composition is not duplicate public ownership.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2a1675322f7f4fba88f59fb4caa9f972aebcdd7c827d6b9102bc7ba51f2b0048",
       "stories": [
         {
@@ -15722,7 +15767,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "338ea6b02ae3c6d747fc7f085a23a053c7b6fbe1ef0e9efac4f14d6f373e9bf4",
       "stories": [
         {
@@ -15891,7 +15936,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "48fac59918f5ae4cf2de0fba1e3da890e3bbbff68693992f987d0d9acef0f494",
       "stories": [
         {
@@ -16060,7 +16105,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "f0fce366278f20c0614e59ed9d07e4143b7c17b8d9d3e006b8b6ff01d764e370",
       "stories": [
         {
@@ -16156,17 +16201,293 @@
       "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Robotics ownership and keep disposition remain valid."
     },
     {
+      "title": "LDS Robotics/Navigation/Annotation Layer",
+      "layer": "Robotics",
+      "family": "Navigation",
+      "importPath": "./stories/RoboticsNavigationAnnotations.stories.jsx",
+      "sourceSha256": "46751f505c9abca3ba6997de6974b54c75e53c92e76d16225c4354e75213171f",
+      "primaryOwner": "NavigationAnnotationLayer",
+      "ownerComponents": [
+        "NavigationAnnotationLayer"
+      ],
+      "supportingComponents": [
+        "FacilityTransition",
+        "LaneOverlay",
+        "Map2DCanvas",
+        "RouteOverlay",
+        "SpatialRegion",
+        "TrajectoryOverlay",
+        "WaypointMarker"
+      ],
+      "visibility": {
+        "public": 5,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-navigation-annotation-layer--annotation-layer-overview",
+        "describedPublicStories": 5,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "46751f505c9abca3ba6997de6974b54c75e53c92e76d16225c4354e75213171f",
+      "stories": [
+        {
+          "id": "lds-robotics-navigation-annotation-layer--annotation-layer-overview",
+          "name": "개요",
+          "exportName": "AnnotationLayerOverview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavigationAnnotationLayer"
+          ],
+          "supportingComponents": [
+            "FacilityTransition",
+            "LaneOverlay",
+            "Map2DCanvas",
+            "RouteOverlay",
+            "SpatialRegion",
+            "TrajectoryOverlay",
+            "WaypointMarker"
+          ]
+        },
+        {
+          "id": "lds-robotics-navigation-annotation-layer--cross-entity-label-collisions",
+          "name": "변형·상태 · 교차 개체 라벨 충돌",
+          "exportName": "CrossEntityLabelCollisions",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavigationAnnotationLayer"
+          ],
+          "supportingComponents": [
+            "FacilityTransition",
+            "Map2DCanvas",
+            "RouteOverlay",
+            "TrajectoryOverlay"
+          ]
+        },
+        {
+          "id": "lds-robotics-navigation-annotation-layer--label-suppression-priority",
+          "name": "변형·상태 · 라벨 숨김 우선순위",
+          "exportName": "LabelSuppressionPriority",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavigationAnnotationLayer"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas",
+            "WaypointMarker"
+          ]
+        },
+        {
+          "id": "lds-robotics-navigation-annotation-layer--narrow-width",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowWidth",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavigationAnnotationLayer"
+          ],
+          "supportingComponents": [
+            "FacilityTransition",
+            "Map2DCanvas"
+          ]
+        },
+        {
+          "id": "lds-robotics-navigation-annotation-layer--navigation-annotation-visual-parity",
+          "name": "Navigation annotation visual parity",
+          "exportName": "NavigationAnnotationVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavigationAnnotationLayer"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-annotation-layer--no-provider-baseline",
+          "name": "Provider 없는 기준선",
+          "exportName": "NoProviderBaseline",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavigationAnnotationLayer"
+          ],
+          "supportingComponents": [
+            "FacilityTransition",
+            "Map2DCanvas",
+            "RouteOverlay",
+            "TrajectoryOverlay"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Navigation/Facility Glyph",
+      "layer": "Robotics",
+      "family": "Navigation",
+      "importPath": "./stories/RoboticsNavigationFacilityGlyph.stories.jsx",
+      "sourceSha256": "68fd57d1009cd67b4ac69546c56ee407692ed3deb1ba48a2bc75a67adee725a7",
+      "primaryOwner": "FacilityTransition",
+      "ownerComponents": [
+        "FacilityTransition"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-navigation-facility-glyph--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "68fd57d1009cd67b4ac69546c56ee407692ed3deb1ba48a2bc75a67adee725a7",
+      "stories": [
+        {
+          "id": "lds-robotics-navigation-facility-glyph--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FacilityTransition"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-facility-glyph--states",
+          "name": "상태 표기",
+          "exportName": "States",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FacilityTransition"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
       "title": "LDS Robotics/Navigation/Facility Transition",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationFacilities.stories.jsx",
-      "sourceSha256": "41f1cf8eb5bcad9adbb0257df25e45a509b956bf2bd91f612015b91208be34f5",
+      "sourceSha256": "20f4c235b17b3a67301823f8f14aee3a34d869944096a8b692c1af958b4d496d",
       "primaryOwner": "FacilityTransition",
       "ownerComponents": [
         "FacilityTransition"
       ],
       "supportingComponents": [
         "Map2DCanvas",
+        "NavigationAnnotationLayer",
         "SpatialRegion"
       ],
       "visibility": {
@@ -16186,8 +16507,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-13",
-      "reviewedSourceSha256": "41f1cf8eb5bcad9adbb0257df25e45a509b956bf2bd91f612015b91208be34f5",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "20f4c235b17b3a67301823f8f14aee3a34d869944096a8b692c1af958b4d496d",
       "stories": [
         {
           "id": "lds-robotics-navigation-facility-transition--facility-transition-overview",
@@ -16286,7 +16607,8 @@
             "FacilityTransition"
           ],
           "supportingComponents": [
-            "Map2DCanvas"
+            "Map2DCanvas",
+            "NavigationAnnotationLayer"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
@@ -16345,7 +16667,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationLane.stories.jsx",
-      "sourceSha256": "4bbbfe0bbef4e917a5ccd909d9a461ef0180298aa846414b15e8775e5b239ae1",
+      "sourceSha256": "4651d4b9418dca576c547fa6cd4038a9ea94d6d590819fc2689db216deb3af17",
       "primaryOwner": "LaneOverlay",
       "ownerComponents": [
         "LaneOverlay"
@@ -16371,8 +16693,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-13",
-      "reviewedSourceSha256": "4bbbfe0bbef4e917a5ccd909d9a461ef0180298aa846414b15e8775e5b239ae1",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "4651d4b9418dca576c547fa6cd4038a9ea94d6d590819fc2689db216deb3af17",
       "stories": [
         {
           "id": "lds-robotics-navigation-lane--lane-overview",
@@ -16581,7 +16903,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRegions.stories.jsx",
-      "sourceSha256": "2853de8b89f4b599c217e3626db3c9845f8eb5b178d36804ae35b1f94385366d",
+      "sourceSha256": "e8c408a40fe6b891530d4a516ca44e5e85b5828b13e9665b0a24a2d7cd393a04",
       "primaryOwner": "SpatialRegion",
       "ownerComponents": [
         "SpatialRegion"
@@ -16606,8 +16928,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-13",
-      "reviewedSourceSha256": "2853de8b89f4b599c217e3626db3c9845f8eb5b178d36804ae35b1f94385366d",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "e8c408a40fe6b891530d4a516ca44e5e85b5828b13e9665b0a24a2d7cd393a04",
       "stories": [
         {
           "id": "lds-robotics-navigation-regions--spatial-region-overview",
@@ -16763,7 +17085,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRouteTrajectory.stories.jsx",
-      "sourceSha256": "b78c813df048503a5e1fad35b0914a43fedbe68f605f77b855da9b62495f1ca8",
+      "sourceSha256": "a5923c2274e1f21b60a2b2f735046163cdbc9b15b783708da1da7fc684e1b5b2",
       "primaryOwner": "RouteOverlay",
       "ownerComponents": [
         "RouteOverlay"
@@ -16775,6 +17097,7 @@
         "LayerPanel",
         "Legend",
         "Map2DCanvas",
+        "NavigationAnnotationLayer",
         "SelectionInspector",
         "SpatialRegion",
         "TrajectoryOverlay",
@@ -16797,8 +17120,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-13",
-      "reviewedSourceSha256": "b78c813df048503a5e1fad35b0914a43fedbe68f605f77b855da9b62495f1ca8",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "a5923c2274e1f21b60a2b2f735046163cdbc9b15b783708da1da7fc684e1b5b2",
       "stories": [
         {
           "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-overview",
@@ -16934,6 +17257,7 @@
           ],
           "supportingComponents": [
             "Map2DCanvas",
+            "NavigationAnnotationLayer",
             "TrajectoryOverlay"
           ],
           "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
@@ -17049,11 +17373,63 @@
       "reviewNote": "2026-07-13 re-reviewed after screen-space marker collision, map-filtered progress, semantic mirror identity, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
+      "title": "LDS Robotics/Navigation/State Badge",
+      "layer": "Robotics",
+      "family": "Navigation",
+      "importPath": "./stories/RoboticsNavigationStateBadge.stories.jsx",
+      "sourceSha256": "1f502b58e0c299373d3876560619705916456b58c0ec34980adcf501fd4dafe9",
+      "primaryOwner": null,
+      "ownerComponents": [],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-navigation-state-badge--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "1f502b58e0c299373d3876560619705916456b58c0ec34980adcf501fd4dafe9",
+      "stories": [
+        {
+          "id": "lds-robotics-navigation-state-badge--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
       "title": "LDS Robotics/Navigation/Waypoint",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationWaypoint.stories.jsx",
-      "sourceSha256": "1c456adf68c2a17d5ebf06be7e6fd6d1905be73038e66d7f5b0a5f9849a99985",
+      "sourceSha256": "022d0529208da0d1528a97a0d12ed96b3ab7916cdb9b7cc7e1dfdbd2396ca6b3",
       "primaryOwner": "WaypointMarker",
       "ownerComponents": [
         "WaypointMarker"
@@ -17079,8 +17455,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-13",
-      "reviewedSourceSha256": "1c456adf68c2a17d5ebf06be7e6fd6d1905be73038e66d7f5b0a5f9849a99985",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "022d0529208da0d1528a97a0d12ed96b3ab7916cdb9b7cc7e1dfdbd2396ca6b3",
       "stories": [
         {
           "id": "lds-robotics-navigation-waypoint--overview",
@@ -17286,7 +17662,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "e0afdc3a36c5a46551be4f5b34346ce4ef81129966aecfc9b2a4359fb4079368",
       "stories": [
         {
@@ -17319,7 +17695,7 @@
       "layer": "Robotics",
       "family": "Status",
       "importPath": "./stories/RoboticsConnectionBadge.stories.jsx",
-      "sourceSha256": "39582630fb90b1153c691208c5289554bbd30c340c77ce72fa25343b8d5d01a4",
+      "sourceSha256": "d4a3a12def63b5530bc2be5964732aa81329f9f4add4c16ee83139f19b6a70a3",
       "primaryOwner": "ConnectionBadge",
       "ownerComponents": [
         "ConnectionBadge"
@@ -17334,16 +17710,18 @@
         "storyGuideId": null,
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "39582630fb90b1153c691208c5289554bbd30c340c77ce72fa25343b8d5d01a4",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "d4a3a12def63b5530bc2be5964732aa81329f9f4add4c16ee83139f19b6a70a3",
       "stories": [
         {
           "id": "lds-robotics-status-connection-badge--connection-badges",
@@ -17353,6 +17731,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -17408,13 +17787,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": null,
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": false
       },
@@ -17426,8 +17805,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
-      "reviewedSourceSha256": "768f3033c28ac19c7b4a26dcf756da7c70a5073537b6e5293138566f495cf744",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "6335d492d697e07c3da8d0b4830d3bb5238a0f59ac7928c5f1794fd66a5d8fcc",
       "stories": [
         {
           "id": "lds-robotics-status-equipment-state--equipment-state",
@@ -17456,6 +17835,31 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-robotics-status-equipment-state--responsive-hierarchy",
+          "name": "반응형 · 다크 · 긴 콘텐츠",
+          "exportName": "ResponsiveHierarchy",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EquipmentStatusCard"
+          ],
+          "supportingComponents": [
+            "Button",
+            "ConnectionBadge",
+            "Icon"
+          ]
+        },
+        {
           "id": "lds-robotics-status-equipment-state--equipment-status-card-card",
           "name": "EquipmentStatusCard card parity",
           "exportName": "EquipmentStatusCardCard",
@@ -17478,7 +17882,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "EquipmentStatusCard 페이지에 주변 설비 가용성 Canvas 서문, 사용/비사용 기준(Robot State와 구분), 스토리 목적을 추가. 잔여 audience-entry-overview는 \"설비 상태\" 이름의 분류기 아티팩트이며 헤더가 진입점 역할을 겸한다. Delegated review, 2026-07-12."
+      "reviewNote": "2026-07-16 re-reviewed after robotics navigation redesign merge: page visually swept in Storybook (overview/state/interaction/narrow, light+dark) during the 2026-07-16 inspection; dispositions unchanged."
     },
     {
       "title": "LDS Robotics/Status/Robot State",
@@ -17508,7 +17912,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "43c5e9606d35702501af4acda287b12e810b032c7827be9002681c78ee20fb77",
       "stories": [
         {
@@ -17586,7 +17990,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "9fa802b504229681eac9323ac073f913fcc2e17146efbbc83222165525f6ea41",
       "stories": [
         {
@@ -17753,7 +18157,7 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "a04f89947a7a910f33571d8cd57686989830cb44cc1459c6c21ca913e26fe095",
       "stories": [
         {
@@ -17855,7 +18259,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "a49417aa0943cf63937705b9b4fd430b3667b04f4e5199f1e78bf760d287bcea",
       "stories": [
         {
@@ -18005,7 +18409,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "840206df8e7118c0b8e5ad39ffc9711cdfcdda0cdf35826c123d6521bbc301bc",
       "stories": [
         {
@@ -18166,7 +18570,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "97933fe48a740d8516e06f28b137ff3150a9e0f324486b6d991eba490ab2a4da",
       "stories": [
         {
@@ -18248,7 +18652,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "33ab912b292a92b791152f3465a0505d2d6bced31ae62bd5e7f66728a4f62838",
       "stories": [
         {
@@ -18387,7 +18791,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "f64001a4351509f69310f831cc2a0961b1e53c64204d4f725cfe21509c6fcb8c",
       "stories": [
         {
@@ -18580,7 +18984,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "b5037663f024a211b644df022e5c4d8483f571a8470c2561e1498d1992b61e6e",
       "stories": [
         {
@@ -18746,7 +19150,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "02f1dfeaceb750042e6b2e8f9e187abacf766f74033876cddc0ae9fb22727042",
       "stories": [
         {
@@ -18826,7 +19230,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "2b61db7ba1291970a9f60307449db951061ee030ec3433da3ecf5d2673909a0f",
       "stories": [
         {
@@ -18904,7 +19308,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-12",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
       "reviewedSourceSha256": "6dcd474af5f8671d198bb1be07b503b039f8068a4d864f9b22bdc81763393180",
       "stories": [
         {

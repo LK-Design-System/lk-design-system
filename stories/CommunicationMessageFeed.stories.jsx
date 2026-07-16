@@ -13,7 +13,7 @@ const meta = {
       eyebrow: 'Product / Communication',
       title: '대화 기록은 chrome 없이 이어지고 새 메시지가 읽던 위치를 빼앗지 않습니다',
       description:
-        '장문 AI 응답과 짧은 사용자 발화를 시간순으로 읽고 과거 내용을 이어 불러올 때 사용합니다. Feed는 application panel이나 messenger canvas가 아니라 투명한 named log와 history/follow behavior만 제공합니다.',
+        '장문 AI 응답과 짧은 사용자 발화를 시간순으로 읽고 과거 내용을 이어 불러올 때 사용합니다. Feed는 application panel이나 messenger canvas가 아니라 투명한 named log와 history/follow behavior만 제공합니다. 정적이거나 시간순이 아닌 목록에는 적합하지 않으니 일반 List·Table을 사용하세요.',
     },
     docs: {
       description: {

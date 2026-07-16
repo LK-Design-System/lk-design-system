@@ -1,6 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -226,6 +227,7 @@ export function RouteOverlay({
 }) {
   const [focusedSegment, setFocusedSegment] = React.useState(null);
   const [hasRootFocus, setHasRootFocus] = React.useState(false);
+  const obstacle = useNavigationObstacles();
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === 'function';
@@ -525,6 +527,7 @@ export function RouteOverlay({
                 pointerEvents="none"
               >
                 <circle
+                  {...obstacle(`route:${route.id}:condition:${segment.id}`)}
                   data-route-marker-badge="condition"
                   data-navigation-marker-circle=""
                   r="8"
@@ -549,6 +552,7 @@ export function RouteOverlay({
                 pointerEvents="none"
               >
                 <circle
+                  {...obstacle(`route:${route.id}:transition:${segment.id}:${transition.kind}`)}
                   r="7"
                   fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
                   stroke="var(--viewer-muted, var(--color-semantic-label-neutral))"
@@ -573,27 +577,40 @@ export function RouteOverlay({
               </g>
             ))}
             {showLabel && segment.label && (
-              <text
-                data-route-segment-label=""
-                data-route-screen-row={segmentLabelSlot ? 'label' : undefined}
-                data-route-label-anchor-x={midpoint.x}
-                data-route-label-anchor-y={midpoint.y}
-                x="0"
-                y={segmentLabelSlot ? 0 : -12}
-                textAnchor="middle"
-                transform={markerTransform(midpoint, inverseScale, segmentLabelSlot)}
-                fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-                stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-                strokeWidth="4"
-                paintOrder="stroke"
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-                style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
-                aria-hidden="true"
-                pointerEvents="none"
+              <NavigationAnnotationBlock
+                id={`route:${route.id}:segment:${segment.id}:label`}
+                kind="route-segment-label"
+                anchor={midpoint}
+                nudgeDirection="up"
+                priority={annotationPriority({
+                  selected: segmentSelected,
+                  focused: segmentFocused,
+                  alarm: invalid || condition === 'blocked' || condition === 'conflict',
+                  emphasized: phase === 'current',
+                })}
               >
-                {segment.label}
-              </text>
+                <text
+                  data-route-segment-label=""
+                  data-route-screen-row={segmentLabelSlot ? 'label' : undefined}
+                  data-route-label-anchor-x={midpoint.x}
+                  data-route-label-anchor-y={midpoint.y}
+                  x="0"
+                  y={segmentLabelSlot ? 0 : -12}
+                  textAnchor="middle"
+                  transform={markerTransform(midpoint, inverseScale, segmentLabelSlot)}
+                  fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+                  stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+                  strokeWidth="4"
+                  paintOrder="stroke"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
+                  aria-hidden="true"
+                  pointerEvents="none"
+                >
+                  {segment.label}
+                </text>
+              </NavigationAnnotationBlock>
             )}
           </g>
         );
@@ -613,6 +630,7 @@ export function RouteOverlay({
             pointerEvents="none"
           >
             <circle
+              {...obstacle(`route:${route.id}:state:${item.state}`)}
               data-route-marker-badge={item.state}
               data-navigation-marker-circle=""
               r="8"
@@ -638,6 +656,7 @@ export function RouteOverlay({
           pointerEvents="none"
         >
           <circle
+            {...obstacle(`route:${route.id}:progress`)}
             data-route-marker-badge="progress"
             data-navigation-marker-circle=""
             r="9"
@@ -652,21 +671,34 @@ export function RouteOverlay({
             color={markerForeground}
           />
           {showLabel && (
-            <text
-              data-route-progress-label=""
-              x="0"
-              y={markerLayout ? 36 : 24}
-              textAnchor="middle"
-              fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-              stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-              strokeWidth="3"
-              paintOrder="stroke"
-              strokeLinejoin="round"
-              vectorEffect="non-scaling-stroke"
-              style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)' }}
+            <NavigationAnnotationBlock
+              id={`route:${route.id}:progress:label`}
+              kind="route-progress-label"
+              anchor={statusPoint}
+              nudgeDirection="down"
+              priority={annotationPriority({
+                selected,
+                focused: focused || hasRootFocus || focusedSegment != null,
+                alarm: invalid,
+                emphasized: route.status === 'active',
+              })}
             >
-              현재 {Math.round(progress.fraction * 100)}%
-            </text>
+              <text
+                data-route-progress-label=""
+                x="0"
+                y={markerLayout ? 36 : 24}
+                textAnchor="middle"
+                fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+                stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+                strokeWidth="3"
+                paintOrder="stroke"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)' }}
+              >
+                현재 {Math.round(progress.fraction * 100)}%
+              </text>
+            </NavigationAnnotationBlock>
           )}
         </g>
       )}
@@ -681,6 +713,7 @@ export function RouteOverlay({
           pointerEvents="none"
         >
           <circle
+            {...obstacle(`route:${route.id}:status`)}
             data-route-marker-badge="progress"
             data-navigation-marker-circle=""
             r="9"

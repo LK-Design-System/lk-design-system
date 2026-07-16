@@ -1,5 +1,8 @@
 "use client";
 import {
+  TelemetryValue
+} from "./chunk-JEB2FJDO.js";
+import {
   VideoStreamTile
 } from "./chunk-7WJDHZJH.js";
 import {
@@ -24,8 +27,8 @@ import {
   TelemetryGauge
 } from "./chunk-ZJ3W27ER.js";
 import {
-  TelemetryValue
-} from "./chunk-JEB2FJDO.js";
+  Stepper
+} from "./chunk-PGZ3KWAG.js";
 import {
   ThemeToggle
 } from "./chunk-QMK4IYEI.js";
@@ -42,11 +45,14 @@ import {
   CircularProgress
 } from "./chunk-E2P3QJNB.js";
 import {
+  TopicTree
+} from "./chunk-QNSGHTCN.js";
+import {
   TrajectoryOverlay
-} from "./chunk-MS3B47YY.js";
+} from "./chunk-7M2UH4HQ.js";
 import {
   WaypointMarker
-} from "./chunk-RBXIT3NB.js";
+} from "./chunk-4SLAPD2T.js";
 import {
   ChoiceCard
 } from "./chunk-D3KCHAI6.js";
@@ -61,33 +67,31 @@ import {
 } from "./chunk-S5XVS73H.js";
 import "./chunk-ULXPFTSH.js";
 import {
-  Stepper
-} from "./chunk-PGZ3KWAG.js";
-import {
   FacilityTransition
-} from "./chunk-BASUBRLS.js";
+} from "./chunk-ZQIXM6AK.js";
 import {
   Joystick
 } from "./chunk-AAG25TPT.js";
 import {
   LaneOverlay
-} from "./chunk-IV55JJU6.js";
+} from "./chunk-TT6MENCH.js";
 import {
   ManualControlSession
 } from "./chunk-CEJK432L.js";
+import {
+  NavigationAnnotationLayer
+} from "./chunk-TFG2DYXJ.js";
 import {
   RobotStatusCard
 } from "./chunk-M3O5QZSP.js";
 import {
   RouteOverlay
-} from "./chunk-YAX6HG3U.js";
+} from "./chunk-4PRDHKCF.js";
 import {
   SpatialRegion
-} from "./chunk-RM2QWMVT.js";
+} from "./chunk-DBC6KZ55.js";
 import "./chunk-HYFL5LBC.js";
-import {
-  TopicTree
-} from "./chunk-QNSGHTCN.js";
+import "./chunk-2VOHTLP5.js";
 import {
   Sheet
 } from "./chunk-GNAODXOV.js";
@@ -560,7 +564,7 @@ import {
 } from "./chunk-VN2RLOVF.js";
 import {
   ConversationMessage
-} from "./chunk-JPIWRMR2.js";
+} from "./chunk-6QQR6TXK.js";
 import {
   IconButton
 } from "./chunk-ODAJPEYM.js";
@@ -736,6 +740,7 @@ export {
   Modal,
   MultiSelectChip,
   NavRail,
+  NavigationAnnotationLayer,
   NewsCard,
   Notification,
   NumberField,

@@ -21,7 +21,7 @@ const meta = {
       eyebrow: 'Product / Communication',
       title: 'AI의 긴 답변은 문서처럼 읽고 사람의 짧은 발화는 bubble로 구분합니다',
       description:
-        '일반 AI assistant, 사용자, 상담원과 system event가 한 대화에 함께 있을 때 사용합니다. assistant의 장문·목록·코드·레퍼런스는 borderless document로 열어 두고, 짧은 사용자 발화는 solid primary 버블로, 상담원 발화는 neutral fill 버블로 묶습니다.',
+        '일반 AI assistant, 사용자, 상담원과 system event가 한 대화에 함께 있을 때 사용합니다. assistant의 장문·목록·코드·레퍼런스는 borderless document로 열어 두고, 짧은 사용자 발화는 solid primary 버블로, 상담원 발화는 neutral fill 버블로 묶습니다. 대화 맥락이 없는 단일 시스템 안내나 폼 오류 표시에는 이 패턴이 적합하지 않으니 Callout·FormField를 사용하세요.',
     },
     docs: {
       description: {
@@ -588,4 +588,105 @@ export const MessageFamilyVisualParity = {
   ...DarkTheme,
   name: 'Conversation message family visual parity',
   tags: ['!dev', 'visual-parity'],
+};
+
+// 메시지 하단 quick-action을 messageActions 아이콘 액션바로 통일하고, 실패 응답은
+// error 본문(무채색 경고 아이콘 + 오류 텍스트)과 자동 retry 아이콘으로 표현하는 정식 예시.
+function MessageActionGlyph({ name, size = 16 }) {
+  return <Icon name={name} size={size} aria-hidden="true" />;
+}
+
+function MessageActionBarFixture() {
+  const [lastAction, setLastAction] = React.useState('없음');
+  const answerActions = [
+    { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', onClick: () => setLastAction('copy') },
+    { key: 'share', icon: <MessageActionGlyph name="share-ios" />, label: '공유', onClick: () => setLastAction('share') },
+    { key: 'regenerate', icon: <MessageActionGlyph name="refresh" />, label: '다시 생성', onClick: () => setLastAction('regenerate') },
+    { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
+  ];
+  return (
+    <main data-icon-action-bar style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
+      <ConversationMessage
+        data-action-message="complete"
+        authorRole="assistant"
+        author="AI Assistant"
+        avatar={assistantAvatar}
+        timestamp="오전 10:24"
+        dateTime="2026-07-12T10:24:00+09:00"
+        lifecycle={{ kind: 'response', state: 'complete' }}
+        sources={<EvidenceBlock />}
+        messageActions={answerActions}
+      >
+        <AssistantAnswer />
+      </ConversationMessage>
+
+      <ConversationMessage
+        data-action-message="failed"
+        authorRole="assistant"
+        author="AI Assistant"
+        avatar={assistantAvatar}
+        lifecycle={{ kind: 'response', state: 'failed' }}
+        error="네트워크 문제로 응답이 중단됐어요."
+        onRetry={() => setLastAction('retry')}
+        retryLabel="다시 시도"
+        messageActions={[
+          { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', onClick: () => setLastAction('copy') },
+          { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
+        ]}
+      />
+
+      <ConversationMessage
+        data-action-message="disabled"
+        authorRole="assistant"
+        author="AI Assistant"
+        messageActions={[
+          { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', disabled: true },
+          { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
+        ]}
+      >
+        아직 복사할 수 없는 응답입니다.
+      </ConversationMessage>
+
+      <output hidden data-action-log>{lastAction}</output>
+    </main>
+  );
+}
+
+export const MessageActionBar = {
+  name: '변형·상태 · 아이콘 액션바와 실패 오류',
+  parameters: storyDescription(
+    '메시지 하단 quick-action을 messageActions 배열로 조합해 복사·공유·재생성·더보기 아이콘 액션바로 통일합니다. 실패 응답은 error 본문에 무채색 경고 아이콘과 오류 텍스트를 두고 별도 상태 뱃지 없이 retry를 재생성(refresh) 아이콘으로 자동 노출합니다. 각 아이콘은 label로 접근 가능한 이름을 가지며 disabled 액션도 지원합니다.',
+  ),
+  render: () => <MessageActionBarFixture />,
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-icon-action-bar]');
+    const complete = fixture?.querySelector('[data-action-message="complete"]');
+    const failed = fixture?.querySelector('[data-action-message="failed"]');
+    const disabled = fixture?.querySelector('[data-action-message="disabled"]');
+    if (!complete || !failed || !disabled) throw new Error('액션바 예시가 불완전합니다.');
+
+    const completeLabels = Array.from(complete.querySelectorAll('[data-message-action]')).map((b) => b.getAttribute('aria-label'));
+    if (completeLabels.join(',') !== '복사,공유,다시 생성,더보기') {
+      throw new Error(`정상 액션바 구성이 다릅니다: ${completeLabels.join(',')}`);
+    }
+    if (complete.querySelector('[data-message-error]')) throw new Error('정상 응답은 오류 표현을 만들지 않아야 합니다.');
+
+    if (!failed.querySelector('[data-message-error]')) throw new Error('실패 응답은 본문에 오류 표현을 가져야 합니다.');
+    if (failed.querySelector('[data-message-part="status"]')) throw new Error('error가 있으면 중복 상태 뱃지를 만들지 않아야 합니다.');
+    const retry = failed.querySelector('[data-message-retry]');
+    if (!retry) throw new Error('실패 응답은 retry 아이콘을 자동 노출해야 합니다.');
+    const failedLabels = Array.from(failed.querySelectorAll('[data-message-part="actions"] button')).map((b) => b.getAttribute('aria-label'));
+    if (failedLabels.join(',') !== '다시 시도,복사,더보기') {
+      throw new Error(`실패 액션바 구성이 다릅니다: ${failedLabels.join(',')}`);
+    }
+    await userEvent.click(retry);
+    if (fixture.querySelector('[data-action-log]').textContent !== 'retry') {
+      throw new Error('retry는 다음 lifecycle을 추론하지 않고 요청만 전달해야 합니다.');
+    }
+
+    const disabledCopy = disabled.querySelector('[data-message-action="copy"]');
+    if (!disabledCopy || !disabledCopy.disabled) throw new Error('disabled 액션은 비활성화돼야 합니다.');
+
+    assertNoPerMessageLiveRegions(fixture);
+  },
 };

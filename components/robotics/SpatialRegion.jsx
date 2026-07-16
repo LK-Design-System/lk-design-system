@@ -1,6 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 
 const CATEGORY_PATTERNS = {
   behavior: 'diagonal',
@@ -285,6 +286,7 @@ export function SpatialRegion({
 }) {
   const reactId = React.useId();
   const [focusVisible, setFocusVisible] = React.useState(false);
+  const obstacle = useNavigationObstacles();
   const kind = regionKind(region);
   const pattern = CATEGORY_PATTERNS[region.category] ?? CATEGORY_PATTERNS.behavior;
   const safeId = `${region.id}-${reactId}`.replace(/[^a-zA-Z0-9_-]/g, '');
@@ -413,6 +415,7 @@ export function SpatialRegion({
 
       {(invalid || stale) && (
         <g
+          {...obstacle(`region:${region.id}:states`)}
           transform={`translate(${anchor.x} ${anchor.y}) scale(${inverseScale})`}
           pointerEvents="none"
           data-region-state-anchor=""
@@ -435,28 +438,39 @@ export function SpatialRegion({
       )}
 
       {showLabel && (
-        <g
-          transform={`translate(${anchor.x} ${anchor.y}) scale(${inverseScale})`}
-          pointerEvents="none"
-          data-region-label=""
-          data-region-anchor-x={anchor.x}
-          data-region-anchor-y={anchor.y}
+        <NavigationAnnotationBlock
+          id={`region:${region.id}:label`}
+          kind="region-label"
+          anchor={anchor}
+          priority={annotationPriority({
+            selected,
+            focused: activeFocus,
+            alarm: invalid,
+          })}
         >
-          <text
-            x="0"
-            y="0"
-            textAnchor="middle"
-            dominantBaseline="central"
-            fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-            stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-            strokeWidth="4"
-            paintOrder="stroke"
-            vectorEffect="non-scaling-stroke"
-            style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
+          <g
+            transform={`translate(${anchor.x} ${anchor.y}) scale(${inverseScale})`}
+            pointerEvents="none"
+            data-region-label=""
+            data-region-anchor-x={anchor.x}
+            data-region-anchor-y={anchor.y}
           >
-            {region.label?.trim() || semanticLabel(region)}
-          </text>
-        </g>
+            <text
+              x="0"
+              y="0"
+              textAnchor="middle"
+              dominantBaseline="central"
+              fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+              stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+              strokeWidth="4"
+              paintOrder="stroke"
+              vectorEffect="non-scaling-stroke"
+              style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
+            >
+              {region.label?.trim() || semanticLabel(region)}
+            </text>
+          </g>
+        </NavigationAnnotationBlock>
       )}
     </g>
   );

@@ -60,7 +60,7 @@
 - [Nav2 Route Server](https://docs.nav2.org/configuration/packages/configuring-route-server.html): route graph의 node/edge와 조밀한 `nav_msgs/Path`, route operation은 다른 층입니다. 이 컴포넌트는 설비 event 상태만 표현하고 route/path geometry와 command 실행을 포함하지 않습니다.
 - [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)은 원형 target의 bounding box가 아니라 실제 shape 안에 24×24 CSS px 정사각형이 들어가야 함을 설명합니다. 따라서 marker보다 넓은 34px 투명 원과 동일 identity의 semantic mirror를 사용합니다.
 - [WCAG 2.2 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html): marker 경계와 선택·포커스·오류·지연처럼 상태를 식별하는 데 필요한 graphical cue는 인접 색과 3:1 이상 대비가 필요합니다. 따라서 opacity만으로 상태를 구분하지 않고 semantic focus/status stroke, dash, slash/question, 독립 badge를 함께 쓰며 각 viewer appearance에서 대비를 검증합니다.
-- [MapLibre Style Specification — Layers](https://maplibre.org/maplibre-style-spec/layers/): symbol collision은 `text/icon-allow-overlap`, placement, sort key 등 map-wide layer 정책이 결정합니다. `FacilityTransition`은 endpoint marker와 직접 라벨만 제공하며, 다른 annotation과의 우선순위·충돌·라벨 숨김은 전체 feature 집합을 아는 제품 renderer가 소유합니다. renderer는 라벨을 숨겨도 marker identity와 semantic mirror 상태를 유지합니다.
+- [MapLibre Style Specification — Layers](https://maplibre.org/maplibre-style-spec/layers/): symbol collision은 `text/icon-allow-overlap`, placement, sort key 등 map-wide layer 정책이 결정합니다. `FacilityTransition`은 endpoint marker와 직접 라벨만 제공하며, 다른 annotation과의 우선순위·충돌·라벨 숨김은 전체 feature 집합을 아는 제품 renderer가 소유합니다. renderer는 라벨을 숨겨도 marker identity와 semantic mirror 상태를 유지합니다. 그 renderer 조각의 reference 구현은 `components/robotics/NavigationAnnotationLayer.jsx`이며, provider 없이 단독 렌더된 marker는 오늘과 동일하게 동작합니다.
 
 ## Intentional exclusions
 

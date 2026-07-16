@@ -9,12 +9,14 @@ import {
   SpatialRegion,
   FacilityTransition,
   LayerPanel,
+  NavigationAnnotationLayer,
   SelectionInspector,
   Legend,
   Map2DCanvas,
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
+import { assertNoLabelCollisions, assertPairwiseNonOverlap } from './RoboticsNavigationCollision.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Navigation/Route and Trajectory',
@@ -573,39 +575,6 @@ const NORMAL_PROGRESS_ROUTE = {
   progress: { segmentId: 'segment-normal-progress-spacing', fraction: 0.3 },
 };
 
-function assertPairwiseNonOverlap(elements, label) {
-  const rectangles = elements.map((element) => ({
-    name: element.getAttribute('data-route-screen-slot')
-      ?? element.getAttribute('data-trajectory-screen-slot')
-      ?? element.getAttribute('data-route-marker-badge')
-      ?? element.getAttribute('data-trajectory-marker-badge')
-      ?? element.getAttribute('data-route-screen-row')
-      ?? element.getAttribute('data-trajectory-screen-row')
-      ?? element.getAttribute('data-route-overlay-state')
-      ?? element.getAttribute('data-trajectory-overlay-state')
-      ?? element.tagName,
-    rect: element.getBoundingClientRect(),
-  }));
-  rectangles.forEach(({ name, rect }) => {
-    if (rect.width <= 0 || rect.height <= 0) {
-      throw new Error(`${label} ${name} marker has no rendered CSS-pixel bounds.`);
-    }
-  });
-  for (let first = 0; first < rectangles.length; first += 1) {
-    for (let second = first + 1; second < rectangles.length; second += 1) {
-      const a = rectangles[first];
-      const b = rectangles[second];
-      const overlaps = a.rect.left < b.rect.right - 0.5
-        && a.rect.right > b.rect.left + 0.5
-        && a.rect.top < b.rect.bottom - 0.5
-        && a.rect.bottom > b.rect.top + 0.5;
-      if (overlaps) {
-        throw new Error(`${label} ${a.name}/${b.name} markers overlap in CSS pixels.`);
-      }
-    }
-  }
-}
-
 function assertProgressTextSpacing(route, label) {
   const badge = route.querySelector('[data-route-marker-badge="progress"]');
   const progressText = route.querySelector('[data-route-progress-label]');
@@ -634,7 +603,7 @@ export const ShortPathCompoundMarkers = {
       >
         <PathMap label="anchor 충돌 route와 trajectory 복합 상태 지도" height={510} svgHeight={480}>
           {(cssViewBoxScale) => (
-            <>
+            <NavigationAnnotationLayer>
               <RouteOverlay
                 route={SHORT_COMPOUND_ROUTE}
                 activeMapId="L1"
@@ -660,7 +629,7 @@ export const ShortPathCompoundMarkers = {
                 activeMapId="L1"
                 viewportScale={cssViewBoxScale}
               />
-            </>
+            </NavigationAnnotationLayer>
           )}
         </PathMap>
       </StoryPage>
@@ -739,6 +708,31 @@ export const ShortPathCompoundMarkers = {
       ]) {
         assertNavigationStateGlyphGeometry(fixture, fixtureLabel);
         assertNavigationVectorGeometry(fixture, fixtureLabel);
+      }
+
+      // Cross-entity contract: coordinated labels never overlap each other or
+      // a registered marker footprint, and the coordinator actually engaged
+      // (the short route's progress label collides naturally with the short
+      // trajectory's label row without it).
+      assertNoLabelCollisions(stress, 'Cross-entity');
+      const progressLabelRect = route.querySelector('[data-route-progress-label]')?.getBoundingClientRect();
+      const trajectoryLabelRect = trajectory.querySelector('[data-trajectory-label]')?.getBoundingClientRect();
+      if (!progressLabelRect || !trajectoryLabelRect) {
+        throw new Error('Cross-entity fixture labels must both render.');
+      }
+      const defectPairOverlaps = progressLabelRect.left < trajectoryLabelRect.right - 0.5
+        && progressLabelRect.right > trajectoryLabelRect.left + 0.5
+        && progressLabelRect.top < trajectoryLabelRect.bottom - 0.5
+        && progressLabelRect.bottom > trajectoryLabelRect.top + 0.5;
+      if (defectPairOverlaps) {
+        throw new Error('Route progress label and trajectory label still overlap across entities.');
+      }
+      if (!stress.querySelector('[data-annotation-displaced="true"], [data-annotation-suppressed="true"]')) {
+        throw new Error('Cross-entity coordination did not engage on the colliding fixtures.');
+      }
+      const normalRouteLabels = normalRoute.querySelectorAll('[data-annotation-displaced="true"], [data-annotation-suppressed="true"]');
+      if (normalRouteLabels.length > 0) {
+        throw new Error('Naturally separated labels must not be displaced or suppressed.');
       }
     });
   },

@@ -7,7 +7,7 @@
   authorRole="assistant"
   author="AI Assistant"
   sources={<SourceDisclosure sources={sources} />}
-  actions={<IconButton label="복사"><Icon name="copy" size={16} /></IconButton>}
+  messageActions={[{ key: 'copy', icon: <Icon name="copy" size={16} />, label: '복사' }]}
 >
   <AssistantAnswer />
 </ConversationMessage>
@@ -23,14 +23,14 @@
 - `authorRole`은 `user | assistant | human-agent | system`입니다. assistant 기본 presentation은 `document`, user와 human-agent는 `bubble`, system은 centered neutral chip입니다. user bubble은 solid primary fill, human-agent bubble은 neutral fill(`--color-semantic-fill-strong`)로 구분합니다.
 - participant는 `presentation="document" | "bubble"`로 표현 방식을 명시할 수 있습니다. presentation은 정보 위계이지 protocol, 권한, 신뢰도 또는 발신자 role을 바꾸지 않습니다.
 - `direction`은 participant 배치만 재정의합니다. user는 기본 outbound, assistant와 human-agent는 기본 inbound이며 system은 항상 system 방향입니다. 시각 정렬 때문에 DOM 순서를 뒤집지 않습니다.
-- `children`은 본문, `attachments`, `sources`, `actions`는 각각 `ReactNode` 조합 slot입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.
+- `children`은 본문, `attachments`, `sources`, `actions`는 각각 `ReactNode` 조합 slot입니다. `messageActions`는 복사·재생성·더보기 같은 하단 quick-action을 배열로 받아 컴포넌트가 icon-only 버튼 액션바로 렌더하며 `actions` slot과 공존합니다. `error`는 실패 응답 본문을 받아 무채색 경고 glyph를 앞에 붙입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.
 - `sources`에는 `SourceDisclosure`, `attachments`에는 `FileUploadQueue`나 제품의 완료된 attachment 표현을 조합합니다. source 개수나 파일 상태에서 presentation을 추론하지 않습니다.
 - `lifecycle`은 static, outbound delivery, inbound response 상태를 구분합니다. delivery는 `queued | sending | sent | read | failed | cancelled`이며, outbound 턴(기본 user bubble)은 하단 meta에 전송 시각과 `read`의 `읽음` 표식을 표시합니다. 읽음 여부의 truth는 제품이 소유하고 component는 주어진 상태만 렌더합니다. response 생성 중에도 message 자체에 stop action을 넣지 않습니다. 중지는 `MessageComposer`의 현재 요청 action이 소유합니다.
-- `onRetry`는 failed lifecycle에서만 나타나는 요청 callback입니다. callback 뒤 성공이나 다음 lifecycle을 추론하지 않습니다.
+- `onRetry`는 failed lifecycle에서만 나타나는 요청 callback이며 `refresh` 아이콘 버튼으로 액션바 앞에 자동 편입됩니다. callback 뒤 성공이나 다음 lifecycle을 추론하지 않습니다.
 - 개별 article은 live region을 만들지 않습니다. chronological announcement는 상위 `MessageFeed`의 named `role="log"` 하나가 소유합니다.
 - semantic DOM과 시각 reading order는 identity(author/timestamp) → body → response status → attachments → sources → delivery/static status → actions입니다. rich content는 document surface 안에서 자연스럽게 길어지고, compact 발화는 bubble로 묶입니다.
 - `groupPosition`은 `single | first | middle | last`이며 grouped run은 `avatar`를 first에만 전달해도 같은 32px identity column을 예약합니다. `authorLabel`은 비문자 author의 접근 가능한 이름, `dateTime`은 `<time>`의 machine-readable 값입니다.
-- `statusLabel={null}`은 기본 lifecycle 문구를 숨깁니다. failed message의 기본 retry button 이름은 `retryLabel`로 현지화합니다.
+- `statusLabel={null}`은 기본 lifecycle 문구를 숨기고, `error`를 지정하면 중복 lifecycle status 문구가 기본 억제됩니다. failed message의 retry 아이콘 접근 이름은 `retryLabel`로 현지화합니다.
 - `roleBadgeLabel`은 이름 옆 역할 배지를 덮어씁니다. assistant 기본 `AI`, human-agent 기본 `상담원`이며 `null`은 배지를 숨깁니다. 배지는 장식이고 접근 가능한 역할명(`ROLE_LABELS`)은 항상 별도로 announce됩니다.
 
 ## 내부 LDS 비교와 visual delta
@@ -87,7 +87,7 @@
 ## intentional exclusions
 
 - Markdown parser와 sanitizer, citation 생성, attachment upload, provider/transport, persistence와 moderation
-- reaction, edit, regenerate, branch/thread, 읽음 판정(read tracking; delivery `read` 상태 표시는 지원하되 읽음 여부 계산은 제품 몫), voice recorder와 tool execution
+- reaction, edit, branch/thread, 읽음 판정(read tracking; delivery `read` 상태 표시는 지원하되 읽음 여부 계산은 제품 몫), voice recorder와 tool execution. 재생성은 컴포넌트가 만들지 않고 제품이 `messageActions` 항목으로 조합합니다.
 - 전체 화면 shell, header/sidebar, sticky composer, scroll anchoring과 unread 계산
 
 이 항목은 제품 또는 `MessageFeed`, `MessageComposer`, `SourceDisclosure`, attachment 전용 component가 소유합니다.

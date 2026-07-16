@@ -169,6 +169,7 @@ export { FacilityTransition } from '../components/robotics/FacilityTransition.js
 export { Joystick } from '../components/robotics/Joystick.jsx';
 export { LaneOverlay } from '../components/robotics/LaneOverlay.jsx';
 export { ManualControlSession } from '../components/robotics/ManualControlSession.jsx';
+export { NavigationAnnotationLayer } from '../components/robotics/NavigationAnnotationLayer.jsx';
 export { RobotStatusCard } from '../components/robotics/RobotStatusCard.jsx';
 export { RouteOverlay } from '../components/robotics/RouteOverlay.jsx';
 export { SpatialRegion } from '../components/robotics/SpatialRegion.jsx';

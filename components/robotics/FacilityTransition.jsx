@@ -2,6 +2,7 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { FacilityGlyph } from './_FacilityGlyph.js';
+import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 
 const AVAILABILITY_PRESENTATION = {
   available: {
@@ -215,6 +216,7 @@ export function FacilityTransition({
   ...rest
 }) {
   const [focusVisible, setFocusVisible] = React.useState(false);
+  const obstacle = useNavigationObstacles();
   const endpoint = endpointForMap(transition, activeMapId);
   const availability = AVAILABILITY_PRESENTATION[transition.availability]
     ?? AVAILABILITY_PRESENTATION.unknown;
@@ -351,6 +353,7 @@ export function FacilityTransition({
           data-screen-target-size="24"
         />
         <path
+          {...obstacle(`facility:${transition.id}:pin`)}
           d={PIN_PATH}
           fill={stroke}
           vectorEffect="non-scaling-stroke"
@@ -371,7 +374,7 @@ export function FacilityTransition({
           </g>
         )}
         {stateBadges.length > 0 && (
-          <g data-transition-state-slot-layer="" pointerEvents="none">
+          <g {...obstacle(`facility:${transition.id}:states`)} data-transition-state-slot-layer="" pointerEvents="none">
             {stateBadges.map((state) => (
               <g
                 key={state.kind}
@@ -400,26 +403,37 @@ export function FacilityTransition({
         )}
 
         {showLabel && (
-          <text
-            x="20"
-            y="-8"
-            textAnchor="start"
-            fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-            stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-            strokeWidth="4"
-            paintOrder="stroke"
-            vectorEffect="non-scaling-stroke"
-            pointerEvents="none"
-            data-transition-label=""
-            style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
+          <NavigationAnnotationBlock
+            id={`facility:${transition.id}:label`}
+            kind="facility-label"
+            anchor={endpoint.position}
+            priority={annotationPriority({
+              selected,
+              focused: activeFocus,
+              alarm: invalid || transition.availability === 'unavailable',
+            })}
           >
-            <tspan x="20" dy="0">{endpointLabel} · {transition.label}</tspan>
-            {rows.map((row, index) => (
-              <tspan key={`${transition.id}-row-${index}`} x="20" dy="13" style={{ fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-semibold)' }}>
-                {row}
-              </tspan>
-            ))}
-          </text>
+            <text
+              x="20"
+              y="-8"
+              textAnchor="start"
+              fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+              stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+              strokeWidth="4"
+              paintOrder="stroke"
+              vectorEffect="non-scaling-stroke"
+              pointerEvents="none"
+              data-transition-label=""
+              style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}
+            >
+              <tspan x="20" dy="0">{endpointLabel} · {transition.label}</tspan>
+              {rows.map((row, index) => (
+                <tspan key={`${transition.id}-row-${index}`} x="20" dy="13" style={{ fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-semibold)' }}>
+                  {row}
+                </tspan>
+              ))}
+            </text>
+          </NavigationAnnotationBlock>
         )}
       </g>
     </g>

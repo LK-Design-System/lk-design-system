@@ -1,8 +1,9 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
-import { Map2DCanvas, FacilityTransition, SpatialRegion } from '../src/index.js';
+import { userEvent, waitFor } from 'storybook/test';
+import { Map2DCanvas, FacilityTransition, NavigationAnnotationLayer, SpatialRegion } from '../src/index.js';
 import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
+import { assertNoLabelCollisions } from './RoboticsNavigationCollision.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Navigation/Facility Transition',
@@ -408,11 +409,15 @@ function InteractionFixture() {
   return (
     <main style={{ display: 'grid', gap: 'var(--space-3)', width: 'min(100%, 680px)' }}>
       <TransitionMap label="설비 전이 상호작용 지도" testId="facility-interaction-map">
-        <FacilityTransition transition={activeDoor} activeMapId="warehouse-1f" onActivate={activate} />
-        <FacilityTransition transition={pointerOnlyDoor} activeMapId="warehouse-1f" aria-hidden="true" onActivate={activate} />
-        <FacilityTransition transition={otherMapLift} activeMapId="warehouse-1f" onActivate={activate} />
-        <FacilityTransition transition={hiddenDock} activeMapId="warehouse-1f" hidden onActivate={activate} />
-        <FacilityTransition transition={disabledLift} activeMapId="warehouse-1f" disabled tabIndex={0} onActivate={activate} />
+        {({ viewportScale }) => (
+          <NavigationAnnotationLayer>
+            <FacilityTransition transition={activeDoor} activeMapId="warehouse-1f" viewportScale={viewportScale} onActivate={activate} />
+            <FacilityTransition transition={pointerOnlyDoor} activeMapId="warehouse-1f" viewportScale={viewportScale} aria-hidden="true" onActivate={activate} />
+            <FacilityTransition transition={otherMapLift} activeMapId="warehouse-1f" viewportScale={viewportScale} onActivate={activate} />
+            <FacilityTransition transition={hiddenDock} activeMapId="warehouse-1f" viewportScale={viewportScale} hidden onActivate={activate} />
+            <FacilityTransition transition={disabledLift} activeMapId="warehouse-1f" viewportScale={viewportScale} disabled tabIndex={0} onActivate={activate} />
+          </NavigationAnnotationLayer>
+        )}
       </TransitionMap>
       <output data-testid="facility-activation" data-activation-count={activation.count}>
         활성화: {activation.id} · {activation.count}회
@@ -497,6 +502,26 @@ export const InteractionAndMapFiltering = {
     disabled.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
     await waitForRender();
     if (output?.dataset.activationCount !== '4') throw new Error('Disabled transition activation must be blocked.');
+
+    // Cross-entity contract: adjacent door labels are coordinated by the
+    // annotation layer — no label overlaps another label or a pin/badge
+    // footprint, and both pins stay rendered at their true anchors.
+    await waitFor(() => {
+      const map = canvasElement.querySelector('[data-testid="facility-interaction-map"]');
+      assertNoLabelCollisions(map, 'Facility');
+      const activeLabel = active.querySelector('[data-transition-label]')?.getBoundingClientRect();
+      const pointerOnlyLabel = pointerOnly.querySelector('[data-transition-label]')?.getBoundingClientRect();
+      if (!activeLabel || !pointerOnlyLabel) throw new Error('Both door labels must render for the collision contract.');
+      const doorLabelsOverlap = activeLabel.left < pointerOnlyLabel.right - 0.5
+        && activeLabel.right > pointerOnlyLabel.left + 0.5
+        && activeLabel.top < pointerOnlyLabel.bottom - 0.5
+        && activeLabel.bottom > pointerOnlyLabel.top + 0.5;
+      if (doorLabelsOverlap) throw new Error('Adjacent door labels still overlap across FacilityTransition instances.');
+      [active, pointerOnly].forEach((instance) => {
+        const pin = instance.querySelector('[data-transition-marker]')?.getBoundingClientRect();
+        if (!pin || pin.width <= 0) throw new Error('Coordinated facility pins must keep rendered bounds.');
+      });
+    });
   },
 };
 

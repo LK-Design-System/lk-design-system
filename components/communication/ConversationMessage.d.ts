@@ -5,6 +5,17 @@ export type ConversationMessageAuthorRole = 'user' | 'assistant' | 'human-agent'
 export type ConversationMessagePresentation = 'document' | 'bubble';
 export type ConversationMessageGroupPosition = 'single' | 'first' | 'middle' | 'last';
 
+export interface ConversationMessageAction {
+  /** Stable identifier used as the React key and the data-message-action hook. */
+  key: string;
+  /** 16px glyph rendered inside an icon-only IconButton. */
+  icon: React.ReactNode;
+  /** Accessible name mapped to the IconButton aria-label. */
+  label: string;
+  onClick?: () => void;
+  disabled?: boolean;
+}
+
 export type ConversationMessageLifecycle =
   | { kind: 'static' }
   | {
@@ -39,8 +50,12 @@ interface ConversationMessageBaseProps extends Omit<React.HTMLAttributes<HTMLEle
   attachments?: React.ReactNode;
   /** Source or provenance content supplied as a composition slot. */
   sources?: React.ReactNode;
-  /** Additional message-level actions. */
+  /** Additional message-level actions rendered as a composition slot after the built-in action bar. */
   actions?: React.ReactNode;
+  /** Primary icon action bar rendered below the body. Each entry becomes an icon-only IconButton; products own the glyph and handlers. Coexists with the `actions` slot. */
+  messageActions?: ConversationMessageAction[];
+  /** Failed-response body content. When set, a muted warning glyph is prefixed and the redundant lifecycle status label is suppressed by default. Not a live region — the MessageFeed log announces it. */
+  error?: React.ReactNode;
   /** Called only from failed delivery/response retry controls. No lifecycle transition is inferred. */
   onRetry?: () => void;
   retryLabel?: React.ReactNode;

@@ -66,7 +66,8 @@ Editor 컴포넌트는 **LK Robotics Extension**이며 WDS parity로 주장하�
 | `RouteOverlay` / `TrajectoryOverlay` | Route는 층별 graph segment의 completed/current/upcoming phase와 normal/waiting/blocked/conflict condition, 명시적 segment progress를 소유한다. Trajectory는 한 map의 조밀한 position/time/heading sample을 소유한다. route와 path를 같은 선 variant로 합치거나 층 사이를 임의 직선으로 연결하지 않는다. |
 | `SpatialRegion` | behavior rule(keep-out, speed limit, preferred, operation), facility area, terrain/traversability를 category·pattern·visible text로 분리한다. slope grade 값·단위·선택적 방향은 source data이며 category 자체를 성공/경고 status color로 취급하지 않는다. |
 | `FacilityTransition` | door/lift/dock endpoint와 availability를 표현하되 실제 제어는 하지 않는다. lift phase, door state, motion, operating mode, session state, current/destination map은 독립 축이며 다른 축이나 marker 위치에서 추론하지 않는다. |
-| Navigation semantic mirror pattern | SVG paint order는 region → lane → route/trajectory → waypoint/facility → selection/focus다. keyboard 탐색 순서는 SVG z-order에 맡기지 않고 이름 있는 목록, `LayerPanel`의 layer visibility, `SelectionInspector`의 선택 요약으로 같은 identity와 state를 제공한다. |
+| `NavigationAnnotationLayer` | 형제 내비게이션 오버레이들의 장식 라벨 블록 간 화면 충돌만 조정한다. 라벨은 수직으로만 밀리고(기본 최대 56 CSS px), 공간이 없으면 우선순위 낮은 라벨만 숨긴다. 마커·상태 badge·접근 가능한 이름·semantic mirror·paint order는 바꾸지 않으며, provider 없이 단독 렌더된 오버레이는 동일하게 동작한다. |
+| Navigation semantic mirror pattern | SVG paint order는 region → lane → route/trajectory → waypoint/facility → selection/focus다. keyboard 탐색 순서는 SVG z-order에 맡기지 않고 이름 있는 목록, `LayerPanel`의 layer visibility, `SelectionInspector`의 선택 요약으로 같은 identity와 state를 제공한다. 교차 개체 label 충돌은 `NavigationAnnotationLayer`가 조정하되 paint order와 keyboard 경로는 그대로다. |
 | `TopicTree` | 기본 Tree와 selection, density, expand affordance를 맞춘다. |
 
 `CanvasEditorShell`은 임의 위치 docking, floating window manager, 사용자 layout 직렬화/복원, 제품별 workflow와 저장 정책을 의도적으로 소유하지 않는다. drag splitter나 reorder가 있으면 키보드 또는 버튼 기반 동등 조작을 함께 제공한다.

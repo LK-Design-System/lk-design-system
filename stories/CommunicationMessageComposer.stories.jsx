@@ -12,7 +12,7 @@ const meta = {
       eyebrow: 'Product / Communication',
       title: '초안과 다음 행동은 하나의 elevated composer shell에 모입니다',
       description:
-        'AI 또는 사람 간 대화에서 짧은 요청부터 여러 줄 초안까지 작성할 때 사용합니다. attachment와 utility는 generic slot으로 조합하고, Composer는 controlled value·submit·stop 요청만 담당합니다.',
+        'AI 또는 사람 간 대화에서 짧은 요청부터 여러 줄 초안까지 작성할 때 사용합니다. attachment와 utility는 generic slot으로 조합하고, Composer는 controlled value·submit·stop 요청만 담당합니다. 단발성 검색어나 폼의 단일 입력에는 적합하지 않으니 SearchField·Textarea를 사용하세요.',
     },
     docs: {
       description: {

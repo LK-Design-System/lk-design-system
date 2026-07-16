@@ -2,6 +2,7 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { ANNOTATION_CODE as ANNOTATION_CODES, ROLE_CODE as ROLE_CODES } from './_navigationEncoding.js';
+import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 
 // Accessible-name copy is Korean to match every sibling navigation overlay
 // (Lane / Region / Route / Trajectory / Facility). A Korean-first product must
@@ -98,6 +99,7 @@ export function WaypointMarker({
   ...rest
 }) {
   const [hasDomFocus, setHasDomFocus] = React.useState(false);
+  const obstacle = useNavigationObstacles();
   const scale = normalizeViewportScale(viewportScale);
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === 'function';
@@ -262,6 +264,7 @@ export function WaypointMarker({
         )}
 
         <circle
+          {...obstacle(`waypoint:${waypoint.id}:point`)}
           data-waypoint-point=""
           r="6"
           fill={surface}
@@ -284,6 +287,7 @@ export function WaypointMarker({
 
         {availability === 'unknown' && (
           <g
+            {...obstacle(`waypoint:${waypoint.id}:unknown`)}
             data-waypoint-unknown-indicator=""
             data-waypoint-state-slot="unknown"
             transform={compoundUnknownInvalid ? 'translate(-8 -8)' : undefined}
@@ -310,6 +314,7 @@ export function WaypointMarker({
 
         {invalid && (
           <g
+            {...obstacle(`waypoint:${waypoint.id}:invalid`)}
             data-waypoint-invalid-indicator=""
             data-waypoint-state-slot="invalid"
             transform={compoundUnknownInvalid ? 'translate(-8 8)' : undefined}
@@ -335,42 +340,53 @@ export function WaypointMarker({
         )}
 
         {showLabel && (
-          <g data-waypoint-label="" data-waypoint-label-offset-x="15" pointerEvents="none" aria-hidden="true">
-            <text
-              data-waypoint-primary-label=""
-              x="15"
-              y={details ? '-1.5' : '3.5'}
-              fill={foreground}
-              stroke={surface}
-              strokeWidth="3"
-              strokeLinejoin="round"
-              paintOrder="stroke"
-              vectorEffect="non-scaling-stroke"
-              fontFamily="var(--font-sans)"
-              fontSize="var(--label2-size)"
-              fontWeight="var(--fw-bold)"
-            >
-              {waypoint.label}
-            </text>
-            {details && (
+          <NavigationAnnotationBlock
+            id={`waypoint:${waypoint.id}:label`}
+            kind="waypoint-label"
+            anchor={waypoint.position}
+            priority={annotationPriority({
+              selected,
+              focused: focusVisible,
+              alarm: invalid || availability === 'unavailable',
+            })}
+          >
+            <g data-waypoint-label="" data-waypoint-label-offset-x="15" pointerEvents="none" aria-hidden="true">
               <text
-                data-waypoint-details=""
+                data-waypoint-primary-label=""
                 x="15"
-                y="10"
-                fill={muted}
+                y={details ? '-1.5' : '3.5'}
+                fill={foreground}
                 stroke={surface}
                 strokeWidth="3"
                 strokeLinejoin="round"
                 paintOrder="stroke"
                 vectorEffect="non-scaling-stroke"
                 fontFamily="var(--font-sans)"
-                fontSize="var(--caption2-size)"
-                fontWeight="var(--fw-semibold)"
+                fontSize="var(--label2-size)"
+                fontWeight="var(--fw-bold)"
               >
-                {details}
+                {waypoint.label}
               </text>
-            )}
-          </g>
+              {details && (
+                <text
+                  data-waypoint-details=""
+                  x="15"
+                  y="10"
+                  fill={muted}
+                  stroke={surface}
+                  strokeWidth="3"
+                  strokeLinejoin="round"
+                  paintOrder="stroke"
+                  vectorEffect="non-scaling-stroke"
+                  fontFamily="var(--font-sans)"
+                  fontSize="var(--caption2-size)"
+                  fontWeight="var(--fw-semibold)"
+                >
+                  {details}
+                </text>
+              )}
+            </g>
+          </NavigationAnnotationBlock>
         )}
       </g>
     </g>

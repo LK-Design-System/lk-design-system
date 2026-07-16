@@ -77,7 +77,7 @@ The marker uses existing viewer and semantic color roles, LDS typography, and th
 ## Intentional exclusions
 
 - lane direction, lane closure, speed restrictions, route progress, trajectory, robot pose, region geometry, facility session/door/lift state;
-- collision resolution, clustering, label placement, overlap avoidance, coordinate projection, bounds fitting, source freshness calculation, and availability inference;
+- collision resolution, clustering, label placement, overlap avoidance, coordinate projection, bounds fitting, source freshness calculation, and availability inference — LDS ships `components/robotics/NavigationAnnotationLayer.jsx` as the reference renderer piece for cross-entity label coordination, and a standalone marker rendered without that provider behaves exactly as before;
 - editing handles, drag movement, context menus, product commands, and application-level keyboard traversal across a full graph;
 - a standalone DOM/SVG root or canvas/Konva-specific public API.
 

@@ -1,8 +1,9 @@
 "use client";
 import {
   SpatialRegion
-} from "../../chunk-RM2QWMVT.js";
+} from "../../chunk-DBC6KZ55.js";
 import "../../chunk-HYFL5LBC.js";
+import "../../chunk-2VOHTLP5.js";
 export {
   SpatialRegion
 };

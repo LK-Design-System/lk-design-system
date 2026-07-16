@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from '../buttons/Button.jsx';
+import { IconButton } from '../buttons/IconButton.jsx';
+import { Icon } from '../icon/Icon.jsx';
 
 const ROLE_LABELS = {
   user: '사용자',
@@ -117,6 +118,8 @@ export function ConversationMessage({
   attachments,
   sources,
   actions,
+  messageActions,
+  error,
   onRetry,
   retryLabel = '메시지 다시 보내기',
   children,
@@ -169,8 +172,13 @@ export function ConversationMessage({
     || (lifecycleKind === 'delivery' && (lifecycleState === 'sent' || lifecycleState === 'read'))
     ? null
     : LIFECYCLE_LABELS[lifecycleKind][lifecycleState];
-  const resolvedStatusLabel = statusLabel !== undefined ? statusLabel : defaultStatusLabel;
-  const hasActions = actions != null || canRetry;
+  const resolvedStatusLabel = statusLabel !== undefined
+    ? statusLabel
+    : error != null
+      ? null
+      : defaultStatusLabel;
+  const hasMessageActions = Array.isArray(messageActions) && messageActions.length > 0;
+  const hasActions = actions != null || canRetry || hasMessageActions;
   const lifecycleColor = lifecycleTone(lifecycleKind, lifecycleState);
   const resolvedAriaLabelledby = ariaLabel || ariaLabelledby
     ? ariaLabelledby
@@ -503,6 +511,20 @@ export function ConversationMessage({
           </div>
         ) : (
           <div data-message-part="body" data-message-presentation={resolvedPresentation} style={bodyStyle}>
+            {error != null && (
+              <span
+                data-message-error
+                style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}
+              >
+                <Icon
+                  name="triangle-exclamation"
+                  size={18}
+                  aria-hidden="true"
+                  style={{ flexShrink: 0, marginTop: '0.1em', color: 'var(--color-semantic-label-alternative)' }}
+                />
+                <span>{error}</span>
+              </span>
+            )}
             {children}
           </div>
         )}
@@ -548,12 +570,33 @@ export function ConversationMessage({
               flexWrap: 'wrap',
             }}
           >
-            {actions}
             {canRetry && (
-              <Button size="sm" variant="ghost" onClick={() => onRetry()}>
-                {retryLabel}
-              </Button>
+              <IconButton
+                size="small"
+                round={false}
+                variant="plain"
+                label={retryLabel}
+                data-message-retry
+                onClick={() => onRetry()}
+              >
+                <Icon name="refresh" size={16} aria-hidden="true" />
+              </IconButton>
             )}
+            {hasMessageActions && messageActions.map((action) => (
+              <IconButton
+                key={action.key}
+                size="small"
+                round={false}
+                variant="plain"
+                label={action.label}
+                disabled={action.disabled}
+                data-message-action={action.key}
+                onClick={action.onClick}
+              >
+                {action.icon}
+              </IconButton>
+            ))}
+            {actions}
           </div>
         )}
       </div>

@@ -1,9 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkI4JCGGDWcjs = require('../../chunk-I4JCGGDW.cjs');
+var _chunkPODYBCKUcjs = require('../../chunk-PODYBCKU.cjs');
 require('../../chunk-QDSVSP6N.cjs');
+require('../../chunk-KB5BQWW4.cjs');
 
 
-exports.WaypointMarker = _chunkI4JCGGDWcjs.WaypointMarker;
+exports.WaypointMarker = _chunkPODYBCKUcjs.WaypointMarker;
 //# sourceMappingURL=WaypointMarker.cjs.map

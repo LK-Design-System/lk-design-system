@@ -68,7 +68,7 @@ N6 semantic mirror가 route 전체 이름만이 아니라 각 `segmentId`, statu
 - [Open-RMF `Graph.hpp` at `39f09e7971c8e666e12c8e9b12199014f631c0bb`](https://github.com/open-rmf/rmf_traffic/blob/39f09e7971c8e666e12c8e9b12199014f631c0bb/rmf_traffic/include/rmf_traffic/agv/Graph.hpp): lane과 event는 graph topology이고 lift 이동은 여러 event의 결합입니다. route renderer는 cross-floor facility 상태를 하나의 선으로 축약하지 않습니다.
 - [Nav2 Route Server at `4a40bb9357f3bd11414be6573522ef1613f1cdd3`](https://github.com/ros-navigation/navigation2/tree/4a40bb9357f3bd11414be6573522ef1613f1cdd3/nav2_route): predefined node/edge route와 upsampled `nav_msgs/Path`는 다른 출력이며 route tracking은 edge 진행을 따릅니다. LDS는 Route와 Trajectory를 독립 계약으로 둡니다.
 - [Nav2 Route Server configuration](https://docs.nav2.org/configuration/packages/configuring-route-server.html): speed operations, collision-blocked edges, rerouting은 서로 다른 runtime 정보입니다. LDS도 route status와 segment condition을 한 enum으로 합치지 않습니다.
-- [MapLibre Style Spec — line and symbol layers](https://maplibre.org/maplibre-style-spec/layers/)는 line paint와 symbol placement·collision priority를 분리합니다. LDS는 한 Route 내부의 서로 충돌하는 badge/label row만 결정하고 다른 layer symbol과의 priority, suppression, paint order는 owning renderer가 실제 density에서 결정하게 합니다.
+- [MapLibre Style Spec — line and symbol layers](https://maplibre.org/maplibre-style-spec/layers/)는 line paint와 symbol placement·collision priority를 분리합니다. LDS는 한 Route 내부의 서로 충돌하는 badge/label row만 결정하고 다른 layer symbol과의 priority, suppression, paint order는 owning renderer가 실제 density에서 결정하게 합니다. 그 renderer 조각의 reference 구현은 `components/robotics/NavigationAnnotationLayer.jsx`이며, provider 없이 단독 렌더된 Route는 오늘과 동일하게 동작합니다.
 - [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)은 target 내부 24×24 CSS px 정사각형과 dense map의 equivalent path를 함께 설명합니다. 각 segment의 midpoint core와 N6 semantic mirror가 이 두 경로를 제공합니다.
 - [WCAG 2.2 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast)는 control·selection·focus와 이해에 필요한 graphical object가 인접색 대비 3:1을 유지하도록 요구합니다. Route의 path, direction, condition/status glyph, selected/focus halo는 semantic foreground와 viewer surface를 조합하고, 작은 text/glyph에는 surface halo를 더합니다. inactive route는 이 기준의 예외지만 LDS의 공용 disabled opacity `0.45`, stale opacity `0.76`을 사용해 sibling과 상태 위계를 맞춥니다.
 
@@ -78,6 +78,6 @@ N6 semantic mirror가 route 전체 이름만이 아니라 각 `segmentId`, statu
 - cross-floor connector 합성, lift/door state와 session, map projection
 - dense sample interpolation, heading/time, robot pose/footprint
 - segment edit/drag, context menu, global keyboard traversal, layer panel
-- 다른 layer와의 label collision, symbol priority, overlap suppression, map layer ordering. Route 내부 badge/label 충돌은 component가 해결하며 `showLabel`은 renderer가 결정할 수 있지만 동일 identity/state의 semantic mirror는 제거할 수 없음
+- 다른 layer와의 label collision, symbol priority, overlap suppression, map layer ordering. Route 내부 badge/label 충돌은 component가 해결하며 `showLabel`은 renderer가 결정할 수 있지만 동일 identity/state의 semantic mirror는 제거할 수 없음. 교차 개체 label 조정이 필요한 합성은 `NavigationAnnotationLayer` 아래에서 구성
 
 이 항목은 planner/runtime, `FacilityTransition`, `TrajectoryOverlay`, owning renderer, Editor/Product pattern의 책임입니다.

@@ -1,6 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 
 const VIEWER_FOREGROUND = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
 const VIEWER_MUTED = 'var(--viewer-muted, var(--color-semantic-label-neutral))';
@@ -214,6 +215,7 @@ export function LaneOverlay({
   ...rest
 }) {
   const [hasFocus, setHasFocus] = React.useState(false);
+  const obstacle = useNavigationObstacles();
   const pointerOnly = ariaHidden === true || ariaHidden === 'true';
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
@@ -460,10 +462,19 @@ export function LaneOverlay({
           pointerEvents="none"
         />
       )}
-      {showEndpoints && endpointMarker(points[0], lane?.entry, 'entry', entryDirection, inverseScale)}
-      {showEndpoints && endpointMarker(points[points.length - 1], lane?.exit, 'exit', exitDirection, inverseScale)}
+      {showEndpoints && (
+        <g {...obstacle(`lane:${lane.id}:endpoint:entry`)}>
+          {endpointMarker(points[0], lane?.entry, 'entry', entryDirection, inverseScale)}
+        </g>
+      )}
+      {showEndpoints && (
+        <g {...obstacle(`lane:${lane.id}:endpoint:exit`)}>
+          {endpointMarker(points[points.length - 1], lane?.exit, 'exit', exitDirection, inverseScale)}
+        </g>
+      )}
       {positionedStateGlyphs.length > 0 && (
         <g
+          {...obstacle(`lane:${lane.id}:states`)}
           data-lane-state-slot-layer=""
           data-viewport-scale={scale}
           data-lane-state-tangent-x={stateTangent.x}
@@ -502,6 +513,16 @@ export function LaneOverlay({
         </g>
       )}
       {showLabel && (lane?.label || metadata) && (
+        <NavigationAnnotationBlock
+          id={`lane:${lane.id}:label`}
+          kind="lane-label"
+          anchor={midpoint}
+          priority={annotationPriority({
+            selected,
+            focused: visibleFocus,
+            alarm: invalid || hasConflict || resolvedAvailability === 'closed',
+          })}
+        >
         <g
           data-lane-label=""
           data-lane-label-normal-x={labelNormal.x}
@@ -551,6 +572,7 @@ export function LaneOverlay({
             </text>
           )}
         </g>
+        </NavigationAnnotationBlock>
       )}
     </g>
   );
