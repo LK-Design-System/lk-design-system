@@ -74,7 +74,7 @@ import {
 } from "./chunk-K6EUGW2H.js";
 import {
   HazardMarker
-} from "./chunk-XPMVFRQG.js";
+} from "./chunk-SP24TPHQ.js";
 import "./chunk-FNB4CNYR.js";
 import {
   Joystick

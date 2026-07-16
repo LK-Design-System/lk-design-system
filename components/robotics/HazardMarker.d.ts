@@ -9,7 +9,11 @@ import type {
  * `SpatialRegion`; passages the AGV *uses* belong to `FacilityTransition`. The
  * same physical ramp may be a traversable `FacilityTransition` for one fleet
  * and a `ramp` hazard for another — the product owns that classification. */
-export type HazardKind = 'stairs' | 'ramp' | 'dropoff';
+/** `obstacle` marks a *static/semi-static* registered collision point (pillar,
+ * protruding equipment, low clearance, standing storage). Dynamic obstacles the
+ * robot senses at runtime (people, forklifts, dropped boxes) are the product's
+ * live perception layers, never this static annotation. */
+export type HazardKind = 'stairs' | 'ramp' | 'dropoff' | 'obstacle';
 
 /** Product-owned avoidance weight; the marker never infers it from kind or position. */
 export type HazardSeverity = 'caution' | 'danger';
