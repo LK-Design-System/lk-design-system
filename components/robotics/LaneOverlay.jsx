@@ -2,6 +2,7 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
 const VIEWER_FOREGROUND = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
 const VIEWER_MUTED = 'var(--viewer-muted, var(--color-semantic-label-neutral))';
@@ -135,7 +136,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
         textAnchor="middle"
         fill={VIEWER_MUTED}
         stroke={VIEWER_SURFACE}
-        strokeWidth="3"
+        strokeWidth={NAV_LABEL_HALO.caption}
         paintOrder="stroke"
         vectorEffect="non-scaling-stroke"
         fontFamily="var(--font-sans)"
@@ -350,7 +351,7 @@ export function LaneOverlay({
       }}
       style={{
         cursor: disabled ? 'not-allowed' : interactive ? 'pointer' : 'default',
-        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
+        opacity: navStateOpacity(disabled, stale),
         outline: 'none',
         ...style,
       }}
@@ -441,7 +442,7 @@ export function LaneOverlay({
             data-screen-target-diameter="35"
             cx={midpoint.x}
             cy={midpoint.y}
-            r={17.5 * inverseScale}
+            r={NAV_HIT.radius * inverseScale}
             fill="transparent"
             pointerEvents="all"
           />
@@ -496,10 +497,10 @@ export function LaneOverlay({
             >
               <circle
                 data-lane-state-circle={state.state}
-                r="7"
+                r={NAV_STATE_BADGE.radius}
                 fill={VIEWER_SURFACE}
                 stroke={state.tone}
-                strokeWidth="1.5"
+                strokeWidth={NAV_STATE_BADGE.strokeWidth}
                 vectorEffect="non-scaling-stroke"
               />
               <NavigationStateGlyph
@@ -541,7 +542,7 @@ export function LaneOverlay({
               textAnchor={primaryLabelAnchor}
               fill={VIEWER_FOREGROUND}
               stroke={VIEWER_SURFACE}
-              strokeWidth="4"
+              strokeWidth={NAV_LABEL_HALO.primary}
               paintOrder="stroke"
               vectorEffect="non-scaling-stroke"
               fontFamily="var(--font-sans)"
@@ -561,7 +562,7 @@ export function LaneOverlay({
               textAnchor={metadataAnchor}
               fill={VIEWER_MUTED}
               stroke={VIEWER_SURFACE}
-              strokeWidth="3"
+              strokeWidth={NAV_LABEL_HALO.secondary}
               paintOrder="stroke"
               vectorEffect="non-scaling-stroke"
               fontFamily="var(--font-sans)"

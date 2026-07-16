@@ -3,6 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { ANNOTATION_CODE as ANNOTATION_CODES, ROLE_CODE as ROLE_CODES } from './_navigationEncoding.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
 // Accessible-name copy is Korean to match every sibling navigation overlay
 // (Lane / Region / Route / Trajectory / Facility). A Korean-first product must
@@ -176,7 +177,7 @@ export function WaypointMarker({
       }}
       style={{
         cursor: disabled ? 'not-allowed' : interactive ? 'pointer' : 'default',
-        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
+        opacity: navStateOpacity(disabled, stale),
         outline: 'none',
         ...style,
       }}
@@ -224,7 +225,7 @@ export function WaypointMarker({
         <circle
           data-waypoint-hit-area=""
           data-screen-target-size="24"
-          r="17.5"
+          r={NAV_HIT.radius}
           fill="transparent"
           pointerEvents={interactive ? 'all' : 'none'}
         />
@@ -247,7 +248,7 @@ export function WaypointMarker({
             fill="none"
             stroke={muted}
             strokeWidth="1.5"
-            strokeDasharray="2.5 2.5"
+            strokeDasharray={NAV_DASH.staleRing}
             vectorEffect="non-scaling-stroke"
           />
         )}
@@ -296,10 +297,10 @@ export function WaypointMarker({
             {compoundUnknownInvalid && (
               <circle
                 data-waypoint-state-circle="unknown"
-                r="6.5"
+                r={NAV_STATE_BADGE.radius}
                 fill={surface}
                 stroke="var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))"
-                strokeWidth="1.5"
+                strokeWidth={NAV_STATE_BADGE.strokeWidth}
                 vectorEffect="non-scaling-stroke"
               />
             )}
@@ -323,10 +324,10 @@ export function WaypointMarker({
             {compoundUnknownInvalid && (
               <circle
                 data-waypoint-state-circle="invalid"
-                r="6.5"
+                r={NAV_STATE_BADGE.radius}
                 fill={surface}
                 stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))"
-                strokeWidth="1.5"
+                strokeWidth={NAV_STATE_BADGE.strokeWidth}
                 vectorEffect="non-scaling-stroke"
               />
             )}
@@ -357,7 +358,7 @@ export function WaypointMarker({
                 y={details ? '-1.5' : '3.5'}
                 fill={foreground}
                 stroke={surface}
-                strokeWidth="3"
+                strokeWidth={NAV_LABEL_HALO.primary}
                 strokeLinejoin="round"
                 paintOrder="stroke"
                 vectorEffect="non-scaling-stroke"
@@ -374,7 +375,7 @@ export function WaypointMarker({
                   y="10"
                   fill={muted}
                   stroke={surface}
-                  strokeWidth="3"
+                  strokeWidth={NAV_LABEL_HALO.secondary}
                   strokeLinejoin="round"
                   paintOrder="stroke"
                   vectorEffect="non-scaling-stroke"

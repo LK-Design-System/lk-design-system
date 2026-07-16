@@ -2,6 +2,7 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_DASH, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -361,7 +362,7 @@ export function RouteOverlay({
         setHasRootFocus(false);
         onBlur?.(event);
       } : undefined}
-      style={{ opacity: disabled ? 0.45 : stale ? 0.76 : 1, outline: 'none', ...style }}
+      style={{ opacity: navStateOpacity(disabled, stale), outline: 'none', ...style }}
     >
       {visibleSegments.map((segment) => {
         const points = (segment.points ?? []).filter(finitePoint);
@@ -530,10 +531,10 @@ export function RouteOverlay({
                   {...obstacle(`route:${route.id}:condition:${segment.id}`)}
                   data-route-marker-badge="condition"
                   data-navigation-marker-circle=""
-                  r="8"
+                  r={NAV_STATE_BADGE.radius}
                   fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
                   stroke={tone}
-                  strokeWidth="1.5"
+                  strokeWidth={NAV_STATE_BADGE.strokeWidth}
                   vectorEffect="non-scaling-stroke"
                 />
                 <NavigationStateGlyph kind={conditionGlyphKind} size={10} color={markerForeground} />
@@ -600,7 +601,7 @@ export function RouteOverlay({
                   transform={markerTransform(midpoint, inverseScale, segmentLabelSlot)}
                   fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
                   stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-                  strokeWidth="4"
+                  strokeWidth={NAV_LABEL_HALO.primary}
                   paintOrder="stroke"
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
@@ -633,11 +634,11 @@ export function RouteOverlay({
               {...obstacle(`route:${route.id}:state:${item.state}`)}
               data-route-marker-badge={item.state}
               data-navigation-marker-circle=""
-              r="8"
+              r={NAV_STATE_BADGE.radius}
               fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
               stroke={item.tone}
-              strokeWidth="1.5"
-              strokeDasharray={item.state === 'stale' ? '2 2' : undefined}
+              strokeWidth={NAV_STATE_BADGE.strokeWidth}
+              strokeDasharray={item.state === 'stale' ? NAV_DASH.staleRing : undefined}
               vectorEffect="non-scaling-stroke"
             />
             <NavigationStateGlyph kind={item.glyphKind} size={10} color={markerForeground} />
@@ -690,7 +691,7 @@ export function RouteOverlay({
                 textAnchor="middle"
                 fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
                 stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-                strokeWidth="3"
+                strokeWidth={NAV_LABEL_HALO.caption}
                 paintOrder="stroke"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"

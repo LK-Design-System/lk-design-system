@@ -3,6 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { FacilityGlyph } from './_FacilityGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_DASH, NAV_PIN, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
 const AVAILABILITY_PRESENTATION = {
   available: {
@@ -197,7 +198,7 @@ function computedAccessibleLabel(transition, availabilityLabel) {
 // marks the coordinate. Shared by the marker fill AND the shape-following
 // selection/focus outlines, so a selected/focused pin reads as the same pin
 // with a highlight — not a competing circular target ringed around it.
-const PIN_PATH = 'M0 15 Q-6 10 -9.2 5 A10.5 10.5 0 1 1 9.2 5 Q6 10 0 15 Z';
+const PIN_PATH = NAV_PIN.path;
 
 /**
  * LK Robotics — FacilityTransition
@@ -260,7 +261,7 @@ export function FacilityTransition({
       ? { kind: 'invalid', tone: 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))' }
       : null,
     stale
-      ? { kind: 'stale', tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))', dash: '2 2' }
+      ? { kind: 'stale', tone: 'var(--viewer-muted, var(--color-semantic-label-alternative))', dash: NAV_DASH.staleRing }
       : null,
   ].filter(Boolean).map((state, index, states) => ({
     ...state,
@@ -340,7 +341,7 @@ export function FacilityTransition({
       }}
       style={{
         cursor: interactive && !disabled ? 'pointer' : disabled ? 'not-allowed' : 'default',
-        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
+        opacity: navStateOpacity(disabled, stale),
         outline: 'none',
         ...style,
       }}
@@ -349,15 +350,15 @@ export function FacilityTransition({
         {/* Cast shadow + selection/focus outlines all trace the SAME pin
             silhouette, so every state reads as one marker instead of a pin that
             grows a mismatched circular ring when selected. */}
-        <path d={PIN_PATH} transform="translate(0 0.8)" fill="var(--color-semantic-static-black)" opacity="0.16" pointerEvents="none" data-transition-shadow="" />
+        <path d={PIN_PATH} transform={NAV_PIN.shadow.transform} fill={NAV_PIN.shadow.fill} opacity={NAV_PIN.shadow.opacity} pointerEvents="none" data-transition-shadow="" />
         {activeFocus && (
-          <path d={PIN_PATH} transform="scale(1.34)" fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth="2.5" strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-focus-ring="" />
+          <path d={PIN_PATH} transform={`scale(${NAV_PIN.focusRing.scale})`} fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth={NAV_PIN.focusRing.strokeWidth} strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-focus-ring="" />
         )}
         {selected && (
-          <path d={PIN_PATH} transform="scale(1.16)" fill="none" stroke="var(--viewer-accent, var(--color-semantic-primary-normal))" strokeWidth="2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-selection-ring="" />
+          <path d={PIN_PATH} transform={`scale(${NAV_PIN.selectionRing.scale})`} fill="none" stroke="var(--viewer-accent, var(--color-semantic-primary-normal))" strokeWidth={NAV_PIN.selectionRing.strokeWidth} strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-transition-selection-ring="" />
         )}
         <circle
-          r="17"
+          r={NAV_HIT.radius}
           fill="transparent"
           stroke="none"
           pointerEvents={interactive ? 'all' : 'none'}
@@ -397,10 +398,10 @@ export function FacilityTransition({
                 data-transition-stale-mark={state.kind === 'stale' ? '' : undefined}
               >
                 <circle
-                  r="7"
+                  r={NAV_STATE_BADGE.radius}
                   fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
                   stroke={state.tone}
-                  strokeWidth="1.5"
+                  strokeWidth={NAV_STATE_BADGE.strokeWidth}
                   strokeDasharray={state.dash}
                   vectorEffect="non-scaling-stroke"
                 />
@@ -431,7 +432,7 @@ export function FacilityTransition({
               textAnchor="start"
               fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
               stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-              strokeWidth="4"
+              strokeWidth={NAV_LABEL_HALO.primary}
               paintOrder="stroke"
               vectorEffect="non-scaling-stroke"
               pointerEvents="none"
