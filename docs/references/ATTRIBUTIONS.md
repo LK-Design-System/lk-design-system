@@ -10,9 +10,9 @@ License, Version 2.0**.
 - License: https://www.apache.org/licenses/LICENSE-2.0
 
 The icon artwork is unmodified: the SVG path data is embedded verbatim from the
-`@material-symbols/svg-400` rounded fill set (native viewBox `0 -960 960 960`) and
-is only re-centered and scaled via an SVG `transform` so it fits each marker's
-badge coordinate space. No runtime dependency is added — the paths are inlined.
+Material Symbols rounded fill set (native viewBox `0 -960 960 960`) and is only
+re-centered and scaled via an SVG `transform` so it fits each marker's badge
+coordinate space. No runtime dependency is added — the paths are inlined.
 
 Icons used:
 
@@ -23,6 +23,7 @@ Icons used:
 | Facility · dock | `home` |
 | Facility · charging | `bolt` |
 | Facility · gate | `shield` |
+| Hazard · stairs | `stairs_2` |
 | State · unknown | `question_mark` |
 | State · invalid | `priority_high` |
 | State · conflict | `warning` |
@@ -34,13 +35,16 @@ Icons used:
 | State · completed | `check` |
 | State · stale | `history` |
 
-The `ramp` and `handoff` facility glyphs are **not** third-party artwork:
-Material Symbols has no level-change ramp glyph (its `ramp_*` icons are highway
-on-ramps) and no filled transfer glyph (its arrow icons have no fill variant), so
-both are LDS-authored — a ramp incline silhouette and a load-into-box icon —
-drawn on the same `0 -960 960 960` grid.
+The `ramp` and `handoff` glyphs are **not** third-party artwork: Material
+Symbols has no level-change ramp glyph (its `ramp_*` icons are highway on-ramps)
+and no filled transfer glyph (its arrow icons have no fill variant), so both are
+LDS-authored — a ramp incline silhouette and a load-into-box icon — drawn on the
+same `0 -960 960 960` grid. The ramp silhouette is shared by the facility marker
+and the hazard marker so the same physical slope reads as the same object in
+either classification.
 
 Embedded in:
 
 - `components/robotics/_FacilityGlyph.js`
 - `components/robotics/_NavigationStateGlyph.js`
+- `components/robotics/HazardMarker.jsx`
