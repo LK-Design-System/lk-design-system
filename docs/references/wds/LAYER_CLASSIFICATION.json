@@ -186,6 +186,7 @@
     "stories/RoboticsJoystick.stories.jsx": "LDS Robotics/Control/Joystick",
     "stories/RoboticsManualControlSession.stories.jsx": "LDS Robotics/Control/Manual Control Session",
     "stories/RoboticsNavigationAnnotations.stories.jsx": "LDS Robotics/Navigation/Annotation Layer",
+    "stories/RoboticsNavigationEncoding.stories.jsx": "LDS Robotics/Navigation/Encoding",
     "stories/RoboticsNavigationFacilities.stories.jsx": "LDS Robotics/Navigation/Facility Transition",
     "stories/RoboticsNavigationFacilityGlyph.stories.jsx": "LDS Robotics/Navigation/Facility Glyph",
     "stories/RoboticsNavigationHazardMarker.stories.jsx": "LDS Robotics/Navigation/Hazard Marker",
