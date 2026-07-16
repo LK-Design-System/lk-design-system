@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Implementation plan |
-| Status | Proposed · awaiting execution |
+| Status | Completed (2026-07-17) |
 | Owner | Design system owner · Robotics domain engineering |
 | Date | 2026-07-16 |
 
@@ -120,3 +120,27 @@ export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 - 공개 export 추가·변경 없음 (entry 재생성 diff가 나오면 잘못된 것).
 - Lane 방향 tick(`'2 7'`), Route 세그먼트 진행률 기하 등 **컴포넌트 고유 인코딩**은 어휘 모듈로 끌어올리지 않는다 — 두 곳 이상에서 쓰일 때만 승격.
 - viewer 토큰(`--viewer-*`) 체계 변경 없음 — 어휘 모듈은 기하·패턴만 소유하고 색은 기존 토큰을 그대로 참조.
+
+## 실행 결과 (2026-07-17)
+
+세 커밋으로 완료. 공개 API 무변(entry diff 없음).
+
+| Phase | 커밋 | 내용 |
+| --- | --- | --- |
+| 1 | `e31f186` | `_navigationVocabulary.js` 신설 + 7개 렌더러 마이그레이션 |
+| 2 | `c3a18b9` | `RoboticsNavigationEncoding.stories.jsx` foundation 카탈로그 |
+| 3 | `9dc0c24` | Route/Trajectory 스토리 페이지 분리 + `.shared.jsx` |
+
+감사(7개 렌더러 병렬 정밀 감사)로 계획을 정교화한 지점:
+
+- **D1 확정**: `2.5 2.5`는 Waypoint stale-indicator 링(badge 링은 이미 `2 2` 통일) → `2 2`.
+- **D2**: Facility/Hazard hit `17 → 17.5`(투명, 시각 무변).
+- **D4 신규**: state-badge 반지름 `6.5`(Waypoint)/`8`(Route) → `7`. Route·Trajectory는 badge가 2개씩이라 형제 badge까지 통일(감사가 놓친 것).
+- **D5**: primary 라벨 halo `3 → 4`(Waypoint·Trajectory).
+- **로컬 유지**: availability-unavailable dash(3-way, 서로 다른 geometry), lane/route/trajectory path dash, 충돌 hatch, 마이크로 halo(Lane `1.5`·Route `2.5`), r=8–9 position marker. Waypoint `--label2-size` 폰트 drift, Facility dead dash const는 별도 정리 대상으로 표기.
+
+시각 회귀: SVG는 결정적이라 CI(Windows)와 일치 → Phase 1의 6개 `atom-glyph` baseline(Route badge 8→7)만 갱신. Phase 3 분리 후 `RouteAndTrajectoryStates`가 byte-identical이라 atom-glyph baseline **제로 diff** 확인. DOM-텍스트 baseline 차이는 로컬 폰트 래스터라이즈 노이즈라 되돌림.
+
+Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께 렌더하므로(순수 단일 subject 스토리 없음), 비교·통합 스토리는 Route 페이지에 그대로 두고 Trajectory 페이지는 전용 focused 스토리(Overview·Statuses·Narrow)를 신설. play-test는 Storybook에서 라이브 검증.
+
+미결(범위 밖): `check:docs`의 Storybook IA 마크다운 최신성은 세션 이전부터 stale한 **사람 리뷰 게이트**로, 날짜 스냅샷 IA 리뷰 패스가 별도로 필요.
