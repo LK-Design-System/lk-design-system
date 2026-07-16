@@ -18,7 +18,11 @@ var h = React.createElement;
 var PATHS = {
   door: "M393.5-459.5Q404-470 404-484t-10.5-24.5Q383-519 369-519t-24.5 10.5Q334-498 334-484t10.5 24.5Q355-449 369-449t24.5-10.5Zm223 0Q627-470 627-484t-10.5-24.5Q606-519 592-519t-24.5 10.5Q557-498 557-484t10.5 24.5Q578-449 592-449t24.5-10.5ZM150-120q-13 0-21.5-8.5T120-150q0-13 8.5-21.5T150-180h16v-600q0-25 17.5-42.5T226-840h239v660h30v-660h239q25 0 42.5 17.5T794-780v600h16q13 0 21.5 8.5T840-150q0 13-8.5 21.5T810-120H150Z",
   lift: "M280-400v140q0 13 8.5 21.5T310-230h60q13 0 21.5-8.5T400-260v-140h10q13 0 21.5-8.5T440-430v-80q0-33-23.5-56.5T360-590h-40q-33 0-56.5 23.5T240-510v80q0 13 8.5 21.5T270-400h10Zm99.5-240.5Q396-657 396-680t-16.5-39.5Q363-736 340-736t-39.5 16.5Q284-703 284-680t16.5 39.5Q317-624 340-624t39.5-16.5ZM542-530h146q9 0 13.5-7.5T701-553l-73-117q-5-7-13-7t-13 7l-73 117q-5 8-.5 15.5T542-530Zm86 240 73-117q5-8 .5-15.5T688-430H542q-9 0-13.5 7.5t.5 15.5l73 117q5 7 13 7t13-7ZM180-120q-24 0-42-18t-18-42v-600q0-23 18-41.5t42-18.5h600q23 0 41.5 18.5T840-780v600q0 24-18.5 42T780-120H180Z",
-  dock: "M160-180v-390q0-14.25 6.38-27 6.37-12.75 17.62-21l260-195q15.68-12 35.84-12Q500-825 516-813l260 195q11.25 8.25 17.63 21 6.37 12.75 6.37 27v390q0 24.75-17.62 42.37Q764.75-120 740-120H590q-12.75 0-21.37-8.63Q560-137.25 560-150v-220q0-12.75-8.62-21.38Q542.75-400 530-400H430q-12.75 0-21.37 8.62Q400-382.75 400-370v220q0 12.75-8.62 21.37Q382.75-120 370-120H220q-24.75 0-42.37-17.63Q160-155.25 160-180Z"
+  dock: "M160-180v-390q0-14.25 6.38-27 6.37-12.75 17.62-21l260-195q15.68-12 35.84-12Q500-825 516-813l260 195q11.25 8.25 17.63 21 6.37 12.75 6.37 27v390q0 24.75-17.62 42.37Q764.75-120 740-120H590q-12.75 0-21.37-8.63Q560-137.25 560-150v-220q0-12.75-8.62-21.38Q542.75-400 530-400H430q-12.75 0-21.37 8.62Q400-382.75 400-370v220q0 12.75-8.62 21.37Q382.75-120 370-120H220q-24.75 0-42.37-17.63Q160-155.25 160-180Z",
+  charging: "M360-360H217q-18 0-26.5-16t2.5-31l338-488q8-11 20-15t24 1q12 5 19 16t5 24l-39 309h176q19 0 27 17t-4 32L388-66q-8 10-20.5 13T344-55q-11-5-17.5-16T322-95l38-265Z",
+  ramp: "M140-280H820V-680H640L140-400Z",
+  gate: "M470.5-85q-4.5-1-9.5-3-139-47-220-168.5T160-523v-196q0-19 11-34.5t28-22.5l260-97q11-4 21-4t21 4l260 97q17 7 28 22.5t11 34.5v196q0 145-81 266.5T499-88q-5 2-9.5 3t-9.5 1q-5 0-9.5-1Z",
+  handoff: "M300-760h360q17 0 28.5 11.5T700-720v70H260v-70q0-17 11.5-28.5T300-760ZM240-590h480q25 0 42.5 17.5T780-530v250q0 25-17.5 42.5T720-220H240q-25 0-42.5-17.5T180-280v-250q0-25 17.5-42.5T240-590Zm240 300 150-150h-90v-90H420v90h-90l150 150Z"
 };
 var FIT = "scale(0.019) translate(-480 480)";
 function FacilityGlyph({ kind, color }) {
@@ -48,7 +52,11 @@ var AVAILABILITY_PRESENTATION = {
 var KIND_LABELS = {
   door: "\uBB38 \uC804\uC774",
   lift: "\uC2B9\uAC15\uAE30 \uC804\uC774",
-  dock: "\uB3C4\uD0B9 \uC804\uC774"
+  dock: "\uB3C4\uD0B9 \uC804\uC774",
+  ramp: "\uACBD\uC0AC\uB85C \uC804\uC774",
+  charging: "\uCDA9\uC804 \uC9C0\uC810",
+  gate: "\uBCF4\uC548 \uAC8C\uC774\uD2B8 \uC804\uC774",
+  handoff: "\uD578\uB4DC\uC624\uD504 \uC9C0\uC810"
 };
 var DOOR_STATE_LABELS = {
   closed: "\uBB38 \uB2EB\uD798",
@@ -143,7 +151,10 @@ function detailRows(transition, availabilityLabel) {
       availabilityLabel
     ].filter(Boolean).join(" \xB7 ")];
   }
-  return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(" \xB7 ")];
+  if (transition.kind === "dock") {
+    return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(" \xB7 ")];
+  }
+  return [availabilityLabel].filter(Boolean);
 }
 function visibleDetailRows(transition, availabilityLabel) {
   if (transition.kind === "lift") {
@@ -163,7 +174,10 @@ function visibleDetailRows(transition, availabilityLabel) {
       availabilityLabel
     ].filter(Boolean).join(" \xB7 ")];
   }
-  return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(" \xB7 ")];
+  if (transition.kind === "dock") {
+    return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(" \xB7 ")];
+  }
+  return [availabilityLabel].filter(Boolean);
 }
 function computedAccessibleLabel(transition, availabilityLabel) {
   const from = transition.from.label ?? transition.from.mapId;
@@ -415,4 +429,4 @@ function FacilityTransition({
 export {
   FacilityTransition
 };
-//# sourceMappingURL=chunk-ZQIXM6AK.js.map
+//# sourceMappingURL=chunk-LFP6YVZ4.js.map

@@ -21,6 +21,8 @@ Icons used:
 | Facility · door | `door_sliding` |
 | Facility · lift | `elevator` |
 | Facility · dock | `home` |
+| Facility · charging | `bolt` |
+| Facility · gate | `shield` |
 | State · unknown | `question_mark` |
 | State · invalid | `priority_high` |
 | State · conflict | `warning` |
@@ -31,6 +33,12 @@ Icons used:
 | State · planned | `radio_button_unchecked` |
 | State · completed | `check` |
 | State · stale | `history` |
+
+The `ramp` and `handoff` facility glyphs are **not** third-party artwork:
+Material Symbols has no level-change ramp glyph (its `ramp_*` icons are highway
+on-ramps) and no filled transfer glyph (its arrow icons have no fill variant), so
+both are LDS-authored — a ramp incline silhouette and a load-into-box icon —
+drawn on the same `0 -960 960 960` grid.
 
 Embedded in:
 

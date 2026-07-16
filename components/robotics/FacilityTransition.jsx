@@ -26,6 +26,10 @@ const KIND_LABELS = {
   door: '문 전이',
   lift: '승강기 전이',
   dock: '도킹 전이',
+  ramp: '경사로 전이',
+  charging: '충전 지점',
+  gate: '보안 게이트 전이',
+  handoff: '핸드오프 지점',
 };
 
 const DOOR_STATE_LABELS = {
@@ -134,7 +138,11 @@ function detailRows(transition, availabilityLabel) {
     ].filter(Boolean).join(' · ')];
   }
 
-  return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(' · ')];
+  if (transition.kind === 'dock') {
+    return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(' · ')];
+  }
+  // ramp, charging: passive facility — no phase/state axes, availability only.
+  return [availabilityLabel].filter(Boolean);
 }
 
 function visibleDetailRows(transition, availabilityLabel) {
@@ -157,7 +165,11 @@ function visibleDetailRows(transition, availabilityLabel) {
     ].filter(Boolean).join(' · ')];
   }
 
-  return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(' · ')];
+  if (transition.kind === 'dock') {
+    return [[DOCK_PHASE_LABELS[transition.phase], availabilityLabel].filter(Boolean).join(' · ')];
+  }
+  // ramp, charging: passive facility — no phase/state axes, availability only.
+  return [availabilityLabel].filter(Boolean);
 }
 
 function computedAccessibleLabel(transition, availabilityLabel) {

@@ -60,10 +60,38 @@ export type DockFacilityTransition = FacilityTransitionBase & {
   readonly phase: DockTransitionPhase;
 };
 
+/** A passive level-change the AGV traverses (a ramp/slope) — no moving parts, so
+ * only `availability` (and the shared selection/focus/error axes) applies. */
+export type RampFacilityTransition = FacilityTransitionBase & {
+  readonly kind: 'ramp';
+};
+
+/** A charging point in the dock family. Only `availability` is modeled here;
+ * finer occupancy/charging detail is a product concern and is not inferred. */
+export type ChargingFacilityTransition = FacilityTransitionBase & {
+  readonly kind: 'charging';
+};
+
+/** An access-controlled passage (security gate / speed gate). Only
+ * `availability` is modeled; open/closed and authorization are product concerns. */
+export type GateFacilityTransition = FacilityTransitionBase & {
+  readonly kind: 'gate';
+};
+
+/** A payload handoff / transfer point (conveyor, P&D station). Only
+ * `availability` is modeled; occupancy and transfer progress are product concerns. */
+export type HandoffFacilityTransition = FacilityTransitionBase & {
+  readonly kind: 'handoff';
+};
+
 export type FacilityTransitionData =
   | DoorFacilityTransition
   | LiftFacilityTransition
-  | DockFacilityTransition;
+  | DockFacilityTransition
+  | RampFacilityTransition
+  | ChargingFacilityTransition
+  | GateFacilityTransition
+  | HandoffFacilityTransition;
 
 export interface FacilityTransitionProps extends NavigationSvgFeatureProps {
   /** Serializable renderer-neutral transition model. */
@@ -76,5 +104,5 @@ export interface FacilityTransitionProps extends NavigationSvgFeatureProps {
   onActivate?: (id: string, event: NavigationActivateEvent) => void;
 }
 
-/** SVG fragment for door, lift, and dock transition state. Must be mounted inside an application-owned svg. */
+/** SVG fragment for door, lift, dock, ramp, charging, gate, and handoff transition state. Must be mounted inside an application-owned svg. */
 export function FacilityTransition(props: FacilityTransitionProps): React.JSX.Element | null;
