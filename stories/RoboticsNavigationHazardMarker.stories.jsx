@@ -95,6 +95,7 @@ const KINDS = [
 
 const meta = {
   title: 'LDS Robotics/Navigation/Hazard Marker',
+  component: HazardMarker,
   parameters: {
     storyGuide: {
       storyId: 'lds-robotics-navigation-hazard-marker--overview',

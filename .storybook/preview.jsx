@@ -104,7 +104,23 @@ export const parameters = {
         'LDS Theme': ['Brand', 'Controls', 'Status'],
         'LDS Product': ['Action', 'Content', 'Data', 'Status', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
-        'LDS Robotics': ['Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer'],
+        'LDS Robotics': ['Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer', 'Navigation'],
+        // Markers (the map features a product composes) first, in point → line →
+        // planned → executed → area → facility → hazard → annotation reading
+        // order; the internal encoding-atom catalogs (not public API) come last.
+        'LDS Robotics/Navigation': [
+          'Waypoint',
+          'Lane',
+          'Route',
+          'Trajectory',
+          'Regions',
+          'Facility Transition',
+          'Hazard Marker',
+          'Annotation Layer',
+          'Encoding',
+          'State Badge',
+          'Facility Glyph',
+        ],
       };
 
       if (a.title === b.title) {
