@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkQCHA4VKKcjs = require('../../chunk-QCHA4VKK.cjs');
+var _chunk362NXACZcjs = require('../../chunk-362NXACZ.cjs');
 require('../../chunk-S7GFPUQY.cjs');
 require('../../chunk-VGM7HVYY.cjs');
 
 
-exports.ConversationMessage = _chunkQCHA4VKKcjs.ConversationMessage;
+exports.ConversationMessage = _chunk362NXACZcjs.ConversationMessage;
 //# sourceMappingURL=ConversationMessage.cjs.map

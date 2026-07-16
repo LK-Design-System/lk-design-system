@@ -188,6 +188,7 @@
     "stories/RoboticsNavigationAnnotations.stories.jsx": "LDS Robotics/Navigation/Annotation Layer",
     "stories/RoboticsNavigationFacilities.stories.jsx": "LDS Robotics/Navigation/Facility Transition",
     "stories/RoboticsNavigationFacilityGlyph.stories.jsx": "LDS Robotics/Navigation/Facility Glyph",
+    "stories/RoboticsNavigationHazardMarker.stories.jsx": "LDS Robotics/Navigation/Hazard Marker",
     "stories/RoboticsNavigationLane.stories.jsx": "LDS Robotics/Navigation/Lane",
     "stories/RoboticsNavigationRegions.stories.jsx": "LDS Robotics/Navigation/Regions",
     "stories/RoboticsNavigationRouteTrajectory.stories.jsx": "LDS Robotics/Navigation/Route and Trajectory",

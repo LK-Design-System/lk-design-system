@@ -571,6 +571,7 @@
       "storyEvidence": [
         "stories/RoboticsNavigationAnnotations.stories.jsx",
         "stories/RoboticsNavigationFacilities.stories.jsx",
+        "stories/RoboticsNavigationHazardMarker.stories.jsx",
         "stories/RoboticsNavigationLane.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
         "stories/RoboticsNavigationRouteTrajectory.stories.jsx",
@@ -578,6 +579,7 @@
       ],
       "exports": [
         "FacilityTransition",
+        "HazardMarker",
         "LaneOverlay",
         "NavigationAnnotationLayer",
         "RouteOverlay",

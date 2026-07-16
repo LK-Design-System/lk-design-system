@@ -2,6 +2,7 @@ import React from 'react';
 import { TextButton } from '../buttons/TextButton.jsx';
 import { Icon } from '../icon/Icon.jsx';
 import { Chip } from '../feedback/Chip.jsx';
+import { Popover } from '../overlay/Popover.jsx';
 import { StatusBadge } from './StatusBadge.jsx';
 
 const AVAILABILITY_META = {
@@ -50,6 +51,88 @@ function ExternalLinkContent({ children }) {
   );
 }
 
+// One source as an attachment-weight link chip. Shared by the flat compact list
+// and the collapsible summary so both stay a single visual language: a document
+// glyph, the label, and a trailing ↗ only when it opens an external original.
+function renderSourceChip(source, onSourceActivate) {
+  const chipLink = source.href != null
+    ? { as: 'a', href: source.href, target: '_blank', rel: 'noopener noreferrer' }
+    : typeof onSourceActivate === 'function'
+      ? { as: 'button', type: 'button', onClick: () => onSourceActivate(source) }
+      : {};
+  return (
+    <li key={source.id} style={{ minWidth: 0, maxWidth: '100%' }}>
+      <Chip
+        size="sm"
+        variant="outlined"
+        leading={<Icon name="document-text" size={14} />}
+        aria-label={source.actionAriaLabel}
+        className="lk-source-disclosure__chip"
+        {...chipLink}
+        style={{ maxWidth: '100%', minWidth: 0 }}
+      >
+        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {source.label}
+        </span>
+        {source.href != null && (
+          <Icon name="arrow-up-right" size={12} aria-hidden="true" style={{ flexShrink: 0 }} />
+        )}
+      </Chip>
+    </li>
+  );
+}
+
+// One source as a borderless menu row for the collapsible Popover. The panel is
+// already an elevated card, so the rows inside carry no border of their own
+// (avoids a card-in-card look) — just an icon, the label, a trailing ↗ for
+// external originals, and a hover fill.
+function renderSourceRow(source, onSourceActivate) {
+  const interactive = source.href != null || typeof onSourceActivate === 'function';
+  const Comp = source.href != null ? 'a' : typeof onSourceActivate === 'function' ? 'button' : 'span';
+  const linkProps = source.href != null
+    ? { href: source.href, target: '_blank', rel: 'noopener noreferrer' }
+    : typeof onSourceActivate === 'function'
+      ? { type: 'button', onClick: () => onSourceActivate(source) }
+      : {};
+  return (
+    <li key={source.id} style={{ minWidth: 0 }}>
+      <Comp
+        className="lk-source-disclosure__row"
+        aria-label={source.actionAriaLabel}
+        {...linkProps}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-2)',
+          width: '100%',
+          minWidth: 0,
+          padding: 'var(--space-2)',
+          boxSizing: 'border-box',
+          border: 0,
+          borderRadius: 'var(--radius-sm)',
+          background: 'transparent',
+          color: 'var(--color-semantic-label-normal)',
+          fontFamily: 'var(--font-sans)',
+          fontSize: 'var(--label1-size)',
+          lineHeight: 'var(--label1-line)',
+          textAlign: 'left',
+          textDecoration: 'none',
+          cursor: interactive ? 'pointer' : 'default',
+          transition: 'background var(--dur-fast) var(--ease-out)',
+        }}
+      >
+        <Icon name="document-text" size={16} aria-hidden="true" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)' }} />
+        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {source.label}
+        </span>
+        {source.href != null && (
+          <Icon name="arrow-up-right" size={14} aria-hidden="true" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)' }} />
+        )}
+      </Comp>
+    </li>
+  );
+}
+
 /** Product-provided provenance and availability for evidence sources. */
 export function SourceDisclosure({
   title = '출처',
@@ -61,6 +144,8 @@ export function SourceDisclosure({
   onSourceActivate,
   openLabel = '출처 열기',
   compact = false,
+  collapsible = false,
+  defaultOpen = false,
   className,
   style,
   ...rest
@@ -72,6 +157,79 @@ export function SourceDisclosure({
   // "출처" landmark into the conversation. The visually-hidden heading still
   // provides the group name and heading-navigation structure either way.
   const Root = compact ? 'div' : 'section';
+
+  // Collapsed provenance: a plain "출처" icon+label toggle (no pill, matching the
+  // footer action controls) that opens the compact source list in an anchored
+  // Popover (dropdown) rather than pushing the message body down. The toggle
+  // stays put beside the action bar; the floating panel closes on outside-press
+  // or Escape and never shifts the surrounding layout. The toggle label is the
+  // disclosure's accessible name, so no repeated landmark heading is projected —
+  // consistent with the inline-citation stance. Popover owns the open state.
+  if (collapsible && sources.length > 0) {
+    return (
+      <>
+        <style>
+          {`.lk-source-disclosure__toggle:hover,
+          .lk-source-disclosure__row:hover {
+            background: var(--color-semantic-fill-alternative);
+          }
+          .lk-source-disclosure__toggle:focus-visible {
+            outline: 2px solid var(--color-semantic-focus-ring);
+            outline-offset: 2px;
+          }
+          .lk-source-disclosure__row:focus-visible {
+            outline: 2px solid var(--color-semantic-focus-ring);
+            outline-offset: -2px;
+          }`}
+        </style>
+        <Popover
+          {...rest}
+          className={['lk-source-disclosure', 'lk-source-disclosure--collapsible', className].filter(Boolean).join(' ')}
+          align="left"
+          width="max-content"
+          defaultOpen={defaultOpen}
+          ariaLabel={typeof title === 'string' ? title : '출처'}
+          style={style}
+          trigger={(
+            <button
+              type="button"
+              className="lk-source-disclosure__toggle"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--space-1)',
+                height: 'var(--space-8)',
+                minWidth: 0,
+                maxWidth: '100%',
+                padding: '0 var(--space-2)',
+                boxSizing: 'border-box',
+                border: 0,
+                borderRadius: 'var(--radius-sm)',
+                background: 'transparent',
+                color: 'var(--color-semantic-label-neutral)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: 'var(--caption1-size)',
+                lineHeight: 'var(--caption1-line)',
+                fontWeight: 'var(--fw-medium)',
+                cursor: 'pointer',
+                transition: 'background var(--dur-fast) var(--ease-out)',
+              }}
+            >
+              <Icon name="book" size={16} aria-hidden="true" style={{ flexShrink: 0 }} />
+              <span style={{ whiteSpace: 'nowrap' }}>{title}</span>
+            </button>
+          )}
+        >
+          <ul
+            className="lk-source-disclosure__rows"
+            style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', minWidth: 0, maxWidth: 360 }}
+          >
+            {sources.map((source) => renderSourceRow(source, onSourceActivate))}
+          </ul>
+        </Popover>
+      </>
+    );
+  }
 
   return (
     <Root
@@ -181,33 +339,7 @@ export function SourceDisclosure({
         // line per source, opens the original on activation, no inline
         // disclosure, availability, or card surface.
         <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', minWidth: 0 }}>
-          {sources.map((source) => {
-            const chipLink = source.href != null
-              ? { as: 'a', href: source.href, target: '_blank', rel: 'noopener noreferrer' }
-              : typeof onSourceActivate === 'function'
-                ? { as: 'button', type: 'button', onClick: () => onSourceActivate(source) }
-                : {};
-            return (
-              <li key={source.id} style={{ minWidth: 0, maxWidth: '100%' }}>
-                <Chip
-                  size="sm"
-                  variant="outlined"
-                  leading={<Icon name="document-text" size={14} />}
-                  aria-label={source.actionAriaLabel}
-                  className="lk-source-disclosure__chip"
-                  {...chipLink}
-                  style={{ maxWidth: '100%', minWidth: 0 }}
-                >
-                  <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {source.label}
-                  </span>
-                  {source.href != null && (
-                    <Icon name="arrow-up-right" size={12} aria-hidden="true" style={{ flexShrink: 0 }} />
-                  )}
-                </Chip>
-              </li>
-            );
-          })}
+          {sources.map((source) => renderSourceChip(source, onSourceActivate))}
         </ul>
       ) : (
         <ul

@@ -46,10 +46,53 @@ const DOCK = {
   phase: 'docking',
 };
 
+// ramp/charging are passive facilities — only availability, no phase/state axes.
+const RAMP = {
+  id: 'glyph-ramp',
+  kind: 'ramp',
+  label: '경사로',
+  facilityId: 'ramp',
+  from: at(28, 30),
+  to: { mapId: STAGE, position: { x: 28, y: 30 } },
+  availability: 'available',
+};
+
+const CHARGING = {
+  id: 'glyph-charging',
+  kind: 'charging',
+  label: '충전소',
+  facilityId: 'charging',
+  from: at(28, 30),
+  availability: 'available',
+};
+
+const GATE = {
+  id: 'glyph-gate',
+  kind: 'gate',
+  label: '보안 게이트',
+  facilityId: 'gate',
+  from: at(28, 30),
+  to: { mapId: STAGE, position: { x: 28, y: 30 } },
+  availability: 'available',
+};
+
+const HANDOFF = {
+  id: 'glyph-handoff',
+  kind: 'handoff',
+  label: '핸드오프',
+  facilityId: 'handoff',
+  from: at(28, 30),
+  availability: 'available',
+};
+
 const KINDS = [
   { transition: DOOR, label: '문 · door' },
   { transition: LIFT, label: '승강기 · lift' },
   { transition: DOCK, label: '도킹 · dock' },
+  { transition: RAMP, label: '경사로 · ramp' },
+  { transition: CHARGING, label: '충전 · charging' },
+  { transition: GATE, label: '보안 게이트 · gate' },
+  { transition: HANDOFF, label: '핸드오프 · handoff' },
 ];
 
 // State treatments come straight from the component's own props, so the dashed
@@ -68,14 +111,14 @@ const meta = {
     storyGuide: {
       storyId: 'lds-robotics-navigation-facility-glyph--overview',
       eyebrow: 'Navigation / Facility Glyph',
-      title: '설비 글리프는 Facility Transition 마커 위에서 문·승강기·도킹을 구분합니다',
+      title: '설비 글리프는 Facility Transition 마커 위에서 문·승강기·도킹·경사로·충전·보안 게이트·핸드오프를 구분합니다',
       description:
-        '문·승강기·도킹 세 종류를 실제 FacilityTransition 마커로 나란히 비교합니다. 배지 도형을 따로 그리지 않고 프로덕션 컴포넌트를 그대로 렌더하므로, 여기 보이는 핀·글리프·상태 표기는 마커에 실제로 나타나는 것과 동일합니다. 종류를 결정하는 knockout 글리프는 Material Symbols(Apache 2.0)에서 가져와 내부 모듈 _FacilityGlyph가 렌더하며, 공개 API가 아닙니다. 글리프 도형 자체를 검토·회귀할 때 적합하며, 제품 지도 구현에는 이 페이지 대신 FacilityTransition을 사용하세요.',
+        '문·승강기·도킹·경사로·충전·보안 게이트·핸드오프 일곱 종류를 실제 FacilityTransition 마커로 나란히 비교합니다. 배지 도형을 따로 그리지 않고 프로덕션 컴포넌트를 그대로 렌더하므로, 여기 보이는 핀·글리프·상태 표기는 마커에 실제로 나타나는 것과 동일합니다. 종류를 결정하는 knockout 글리프는 경사로·핸드오프를 뺀 다섯이 Material Symbols(Apache 2.0)이고, 경사로·핸드오프는 Material Symbols에 층간 경사로·filled transfer 글리프가 없어 LDS가 그린 것이며, 내부 모듈 _FacilityGlyph가 렌더하고 공개 API가 아닙니다. 글리프 도형 자체를 검토·회귀할 때 적합하며, 제품 지도 구현에는 이 페이지 대신 FacilityTransition을 사용하세요.',
     },
     docs: {
       description: {
         component:
-          '실제 FacilityTransition 마커로 문·승강기·도킹 글리프와 그 상태 표기를 문서화·회귀합니다. 글리프 자체는 내부 모듈 _FacilityGlyph 소관이며 공개 API가 아닙니다.',
+          '실제 FacilityTransition 마커로 문·승강기·도킹·경사로·충전·보안 게이트·핸드오프 글리프와 그 상태 표기를 문서화·회귀합니다. 글리프 자체는 내부 모듈 _FacilityGlyph 소관이며 공개 API가 아닙니다.',
       },
     },
   },
@@ -108,7 +151,7 @@ function MarkerTile({ transition, label, props, minHeight = 132 }) {
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '문·승강기·도킹을 실제 마커로 비교합니다. 배지 위 knockout 글리프가 작은 크기에서 서로 뚜렷이 구분되는지 확인하세요.',
+    '문·승강기·도킹·경사로·충전·보안 게이트·핸드오프를 실제 마커로 비교합니다. 배지 위 knockout 글리프가 작은 크기에서 서로 뚜렷이 구분되는지 확인하세요.',
   ),
   render: () => (
     <main style={{ width: 'min(720px, 100%)', display: 'grid', gap: 20 }}>

@@ -166,6 +166,7 @@ export { ConnectionBadge } from '../components/robotics/ConnectionBadge.jsx';
 export { DirectionalPad } from '../components/robotics/DirectionalPad.jsx';
 export { EquipmentStatusCard } from '../components/robotics/EquipmentStatusCard.jsx';
 export { FacilityTransition } from '../components/robotics/FacilityTransition.jsx';
+export { HazardMarker } from '../components/robotics/HazardMarker.jsx';
 export { Joystick } from '../components/robotics/Joystick.jsx';
 export { LaneOverlay } from '../components/robotics/LaneOverlay.jsx';
 export { ManualControlSession } from '../components/robotics/ManualControlSession.jsx';
