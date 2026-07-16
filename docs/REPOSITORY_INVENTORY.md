@@ -44,12 +44,12 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 202개
 - 공개 named export: 210개
-- Storybook 전체 story: 555개
-- Storybook public story: 426개
+- Storybook 전체 story: 559개
+- Storybook public story: 429개
 - Storybook hidden story: 126개
-- 숨김 visual parity story: 92개
-- visual inventory React story: 555개
-- 접근성 guard 검사 대상 implementation story: 555개
+- 숨김 visual parity story: 93개
+- visual inventory React story: 559개
+- 접근성 guard 검사 대상 implementation story: 559개
 
 ## 생성 영역
 

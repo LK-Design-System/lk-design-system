@@ -574,7 +574,8 @@
         "stories/RoboticsNavigationHazardMarker.stories.jsx",
         "stories/RoboticsNavigationLane.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
-        "stories/RoboticsNavigationRouteTrajectory.stories.jsx",
+        "stories/RoboticsNavigationRoute.stories.jsx",
+        "stories/RoboticsNavigationTrajectory.stories.jsx",
         "stories/RoboticsNavigationWaypoint.stories.jsx"
       ],
       "exports": [

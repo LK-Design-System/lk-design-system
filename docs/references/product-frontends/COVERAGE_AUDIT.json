@@ -1849,7 +1849,8 @@
       "storyEvidence": [
         "stories/RoboticsNavigationWaypoint.stories.jsx",
         "stories/RoboticsNavigationLane.stories.jsx",
-        "stories/RoboticsNavigationRouteTrajectory.stories.jsx",
+        "stories/RoboticsNavigationRoute.stories.jsx",
+        "stories/RoboticsNavigationTrajectory.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
         "stories/RoboticsNavigationFacilities.stories.jsx"
       ],
