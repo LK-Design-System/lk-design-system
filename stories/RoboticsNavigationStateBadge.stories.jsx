@@ -28,13 +28,14 @@ const STATES = [
 
 const meta = {
   title: 'LDS Robotics/Navigation/State Badge',
+  component: NavigationStateGlyph,
   parameters: {
     storyGuide: {
       storyId: 'lds-robotics-navigation-state-badge--overview',
       eyebrow: 'Navigation / State Badge',
       title: '상태 글리프는 마커 배지 안에서 진행·오류·가용성을 하나의 도형으로 압축합니다',
       description:
-        '설비·경로·차선·웨이포인트 마커의 모서리 배지에 들어가는 작은 상태 지시자입니다. 내부 모듈 NavigationStateGlyph가 Material Symbols(Apache 2.0)에서 가져온 11종의 상태 글리프를 렌더하며 여러 로보틱스 내비게이션 컴포넌트가 공유합니다. 이 페이지는 그 글리프 자산을 그대로(배지 원은 마커가 그리므로 여기선 생략) 나열해 도형 세트를 검토·회귀합니다. 배지 컨텍스트의 실제 합성은 Facility Glyph의 상태 표기 스토리를 참고하세요. 공개 API가 아닌 내부 모듈입니다.',
+        '설비·경로·차선·웨이포인트 마커의 모서리 배지에 들어가는 작은 상태 지시자입니다. 내부 모듈 NavigationStateGlyph가 Material Symbols(Apache 2.0)에서 가져온 11종의 상태 글리프를 렌더하며 여러 로보틱스 내비게이션 컴포넌트가 공유합니다. 이 페이지는 그 글리프 자산을 그대로(배지 원은 마커가 그리므로 여기선 생략) 나열해 도형 세트를 검토·회귀합니다. 배지 컨텍스트의 실제 합성은 Facility Glyph의 상태 표기 스토리를 참고하세요. 공개 API가 아닌 내부 모듈입니다. 도형 세트의 검토·회귀에 적합하며, 제품 코드에서는 이 모듈 대신 각 내비게이션 오버레이의 상태 prop을 사용하세요.',
     },
     docs: {
       description: {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 39,
+  "count": 65,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -35,8 +35,8 @@
         "width": 1180,
         "height": 860
       },
-      "bytes": 91366,
-      "sha256": "a5a3860ad8ae2969eb82d7403e6f0d2b797bae273a339ee720dbc78e0d0aaedc"
+      "bytes": 91495,
+      "sha256": "3c335648423e207076ec4ac2cbbc02511f23e5295a9182b6cab84b1e52389b48"
     },
     {
       "name": "wds-content-card-patterns",
@@ -46,8 +46,8 @@
         "width": 1180,
         "height": 860
       },
-      "bytes": 99540,
-      "sha256": "dafc5f8fc1e61624eaa26499d70771abee98c916d42539e6ef2a7a480a90382f"
+      "bytes": 99503,
+      "sha256": "5d31c6c6ff22fa5e85d28633142ec2e7279aee4bbae8731b72b998a64917cf40"
     },
     {
       "name": "action-button-matrix",
@@ -57,8 +57,8 @@
         "width": 1180,
         "height": 860
       },
-      "bytes": 32022,
-      "sha256": "ac0705fd1a58c326ae513b4a3f0b5da90c719d6b3216f8ff1204ab250212f43b"
+      "bytes": 32555,
+      "sha256": "e01149cffc0a98efb0e3c49abd5a6b41dcdf52b546475692c5306ff0586a36b3"
     },
     {
       "name": "react-product-content-cards",
@@ -169,8 +169,8 @@
         "width": 1180,
         "height": 920
       },
-      "bytes": 40883,
-      "sha256": "3799a81185ebbe646da462b7676813effb63033456992ee80b20850f12abe15e"
+      "bytes": 43042,
+      "sha256": "3aa45677b4a337aece79adf90cc11ab2ecb3e8e5393c9d7aa8e9e86c0ac54b22"
     },
     {
       "name": "wds-control-states",
@@ -180,8 +180,8 @@
         "width": 1180,
         "height": 920
       },
-      "bytes": 12711,
-      "sha256": "b82e7de810e64ae11c392e52d710c4b9b63ecbc8572d6b082c69d67f140d3743"
+      "bytes": 13010,
+      "sha256": "1261492c6d44c2ce7ff35210061675fbd5de4c1938b42559fa371be4e1e8f8b2"
     },
     {
       "name": "wds-segmented-control-matrix",
@@ -191,8 +191,8 @@
         "width": 980,
         "height": 760
       },
-      "bytes": 10311,
-      "sha256": "c6f99fc94c91841cbeec752379615749363ea2ce3db775e5ef03ceaefe21d540"
+      "bytes": 10718,
+      "sha256": "80f6175ec4030d6a97b5649d19ffe9026115951947e7a927b447480d66c6080a"
     },
     {
       "name": "wds-menu-patterns",
@@ -202,8 +202,8 @@
         "width": 1180,
         "height": 860
       },
-      "bytes": 68622,
-      "sha256": "7eec5b66ce1c9743684acc8bfd864bf65d33d8a0f3f2994233147d5a5d363458"
+      "bytes": 68659,
+      "sha256": "392a68c7a1bc1d6bbccd45510cac7e93a3824eb4298e62dc02efe97cd9d6c90f"
     },
     {
       "name": "wds-menu-patterns-dark",
@@ -215,8 +215,8 @@
         "width": 1180,
         "height": 860
       },
-      "bytes": 73403,
-      "sha256": "5cac9f8c6f498894ab18e0eecea74914c9d6b165ac9423a562bd0ae8f7e1a62d"
+      "bytes": 73811,
+      "sha256": "21a9f5c625324602b61ba52a18c1e14b5014987a91938472343a77481b35f239"
     },
     {
       "name": "wds-tooltip-patterns",
@@ -226,8 +226,8 @@
         "width": 1180,
         "height": 960
       },
-      "bytes": 87379,
-      "sha256": "7236918235473a58a6bc7e7a65f9da2dfda7e0a0b2543b94bba46f32fe56edc6"
+      "bytes": 84850,
+      "sha256": "4a6aa0068f61e090d432b99726295a90f5c73265cd84e91fa63bf96841146896"
     },
     {
       "name": "wds-loading-states",
@@ -272,8 +272,8 @@
         "width": 980,
         "height": 720
       },
-      "bytes": 35956,
-      "sha256": "009d933dddd2acd7aac41f2f6461672a6df92e023909113aaf670c49737a5bca"
+      "bytes": 35718,
+      "sha256": "19a8fb80ec2d4902b8b847ecdade9430e7e718d5bf905281fc8b51b5f13f7df8"
     },
     {
       "name": "react-robotics-viz",
@@ -330,7 +330,7 @@
         "height": 520
       },
       "bytes": 10439,
-      "sha256": "dc5d315946c18b786999e389e2e83d60030baecacb19930dd5d08ecbb3837a51"
+      "sha256": "dc9033a2ecc6ce97a81234a7a40c41fa4c4c4af903599218603325b421c0d487"
     },
     {
       "name": "robotics-viewer-3d-narrow",
@@ -373,8 +373,8 @@
         "width": 320,
         "height": 520
       },
-      "bytes": 18917,
-      "sha256": "efb3795129dee9f017523a77f51b6641309ab885ce0af6f90a19e6ba1aab488d"
+      "bytes": 18845,
+      "sha256": "f0c96d933244e76488b9503ce85e0e723a995fea1d7c622cde6ffc4562ec2811"
     },
     {
       "name": "robotics-viewer-video-compact-states",
@@ -384,8 +384,8 @@
         "width": 240,
         "height": 900
       },
-      "bytes": 114426,
-      "sha256": "138d4ad48223e158e369836a2332f25d9c08e9c335125679ba9c1c093809e847"
+      "bytes": 114357,
+      "sha256": "ba0c1cd95529eb91c48d71272c536fedda1e671b5948885302ecd4064380005d"
     },
     {
       "name": "robotics-viewer-telemetry-compact",
@@ -395,8 +395,8 @@
         "width": 320,
         "height": 900
       },
-      "bytes": 49513,
-      "sha256": "8bfc48c8d47e864563ea70638278fff6c7324aade569608d4d0fe9035c0d3b9e"
+      "bytes": 49579,
+      "sha256": "9f48edc01a352963b19d2a8cc036b5597fb1ffbfd768225d43c3007dc2b141d6"
     },
     {
       "name": "product-validation-summary",
@@ -406,8 +406,8 @@
         "width": 860,
         "height": 520
       },
-      "bytes": 53117,
-      "sha256": "4654b18137ab5eba342d06233c534542473a997ac246d60e6c8ec54c01513e9b"
+      "bytes": 53159,
+      "sha256": "20b4bdc7d0c1909341e45f2c67e67ab5962ab3291698f74081647efe55662842"
     },
     {
       "name": "product-file-upload-queue",
@@ -417,8 +417,8 @@
         "width": 800,
         "height": 720
       },
-      "bytes": 56341,
-      "sha256": "9e6bd97e1cd0ccd31e3f4508481f6d140b1ad6dc34a52c270a4bf18e87f146a9"
+      "bytes": 56086,
+      "sha256": "3663872836e2c2715297b13ef0cd29b568e4760441de07e344fb4a9a7d09a7b2"
     },
     {
       "name": "communication-message-family-dark",
@@ -439,8 +439,294 @@
         "width": 900,
         "height": 820
       },
-      "bytes": 85606,
-      "sha256": "cf31abe56d5d09a1ce8856aa6b1e9255ab762ca02fde37678738f0623c926ce8"
+      "bytes": 94491,
+      "sha256": "4a08580ba87ce609c074b68a313fd64c184980febd83260c120788dc54ea12a7"
+    },
+    {
+      "name": "atom-facility-lift-marker",
+      "id": "lds-robotics-navigation-facility-transition--facility-transition-overview",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 720
+      },
+      "bytes": 2300,
+      "sha256": "0c634280724ccbdf2435258371c8b348080631961a3b7797d2167d219a4f4a54"
+    },
+    {
+      "name": "atom-facility-lift-marker@8x",
+      "id": "lds-robotics-navigation-facility-transition--facility-transition-overview",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 720
+      },
+      "bytes": 5422,
+      "sha256": "a6ebe03568b3cdc77e07fa4eb739605843b1cb73bad15ecc060fd8bc43627b7a"
+    },
+    {
+      "name": "atom-facility-lift-marker-dark",
+      "id": "lds-robotics-navigation-facility-transition--availability-and-source-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 2030,
+      "sha256": "1f1576fa37724b0aa6fc7016cf9977e48407e1502ccf3810554eac79a176d83e"
+    },
+    {
+      "name": "atom-facility-lift-marker-dark@8x",
+      "id": "lds-robotics-navigation-facility-transition--availability-and-source-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 4362,
+      "sha256": "4abe20520692350f7fe085321f17084f7b4391973d595893f0fd4ed205269ccf"
+    },
+    {
+      "name": "atom-facility-door-marker",
+      "id": "lds-robotics-navigation-facility-transition--availability-and-source-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 1819,
+      "sha256": "31eee9023f5c02ff292590e99b9ee3a4160731d3cbf292eb32452db35b83f7a2"
+    },
+    {
+      "name": "atom-facility-door-marker@8x",
+      "id": "lds-robotics-navigation-facility-transition--availability-and-source-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 4686,
+      "sha256": "eac88ac5ac85da4be5b49aead5ea5c747ca28183b5629ac8a35712f917ae593e"
+    },
+    {
+      "name": "atom-facility-dock-marker",
+      "id": "lds-robotics-navigation-facility-transition--availability-and-source-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 1811,
+      "sha256": "8e00ee7ac86c8942b9f029257347700706dafc02849505eb8f4840a7c3ef80d6"
+    },
+    {
+      "name": "atom-facility-dock-marker@8x",
+      "id": "lds-robotics-navigation-facility-transition--availability-and-source-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "bytes": 4958,
+      "sha256": "7a50ccd2e4ea5f9ad3c8891bf72ab0806842719476f96f443cefe4328721c397"
+    },
+    {
+      "name": "atom-waypoint-point",
+      "id": "lds-robotics-navigation-waypoint--overview",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 720
+      },
+      "bytes": 1449,
+      "sha256": "598f3b51c25b3edd91a6e50acdd6258abe74cf4aa3fbbccd9363053405b70e3d"
+    },
+    {
+      "name": "atom-waypoint-point@8x",
+      "id": "lds-robotics-navigation-waypoint--overview",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 720
+      },
+      "bytes": 3197,
+      "sha256": "33004d5cb9a278f9ab05549463b486555e8efb50d13f993dc427314c44b5e32a"
+    },
+    {
+      "name": "atom-glyph-unknown",
+      "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 760
+      },
+      "bytes": 846,
+      "sha256": "c28f6abc74e2b2380c6f7c1709700f633a5392ce5a715de48313789f93058878"
+    },
+    {
+      "name": "atom-glyph-unknown@8x",
+      "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 760
+      },
+      "bytes": 1805,
+      "sha256": "d2838b1e7788e3460f75b85fa8de773ffcbd491d273c1a3b2f5f4519efc4010c"
+    },
+    {
+      "name": "atom-glyph-conflict",
+      "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 760
+      },
+      "bytes": 880,
+      "sha256": "b6b12945d035f4067ae836ce3810a78ad3fe332938cc46a24a8ca4886a9d2969"
+    },
+    {
+      "name": "atom-glyph-conflict@8x",
+      "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 760
+      },
+      "bytes": 1859,
+      "sha256": "f479a91aacccd94717b2cc3abe9edbf433c1ed2efb574f117cd57217e96c9019"
+    },
+    {
+      "name": "atom-glyph-closed",
+      "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 760
+      },
+      "bytes": 645,
+      "sha256": "db2b2680e646e5f413a809aa1cbe9f51fa1b1dd850d6c24e3afe7345fb410e24"
+    },
+    {
+      "name": "atom-glyph-closed@8x",
+      "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 760
+      },
+      "bytes": 1635,
+      "sha256": "0fe32f2630585a8d1d775e8e3ce0c4583ae710c21ca7971b6bfaca67400bfb7c"
+    },
+    {
+      "name": "atom-glyph-invalid",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 774,
+      "sha256": "7ff12f4694c7bcedf1f7cbbf3417cb94165552919a4826a271a6886990799ebd"
+    },
+    {
+      "name": "atom-glyph-invalid@8x",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 1950,
+      "sha256": "5366a10394f5a3cb4fca1a4e6b6de174d94c377f6ad849350b583a49e51b50c5"
+    },
+    {
+      "name": "atom-glyph-waiting",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 976,
+      "sha256": "28219ef3e76124d3ba9c8b9485e47ef9b582e65fec81f41d5de004f51c86ebc3"
+    },
+    {
+      "name": "atom-glyph-waiting@8x",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 2028,
+      "sha256": "edc3ff34b371f0def0e4b0faebc052d71ca68b050d95c6648b4639c6f1dc1bdc"
+    },
+    {
+      "name": "atom-glyph-completed",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 880,
+      "sha256": "f6f93e59fbccd03c88b563e23267aae917a9ca5d1147bed27082aca30573dfa8"
+    },
+    {
+      "name": "atom-glyph-completed@8x",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 1923,
+      "sha256": "a66ee0ff7c39ce9f9039b384600c336c4df42006697a85f64ae94564c3b5d9f3"
+    },
+    {
+      "name": "atom-glyph-rerouting",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 960,
+      "sha256": "7362488d817a969341debf886a57d1edf504758d75ad217eb0d90b8dc2104afd"
+    },
+    {
+      "name": "atom-glyph-rerouting@8x",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 2015,
+      "sha256": "848c29edc7f0064077033ae33b519ec6bfab0dd1f99a6ae53076ec370d3f1050"
+    },
+    {
+      "name": "atom-glyph-stale",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 887,
+      "sha256": "d259543bf1fa7e02250d6e1f6b31025ca07afc8d881d47cb7ec56cc5b99e965e"
+    },
+    {
+      "name": "atom-glyph-stale@8x",
+      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "query": {},
+      "viewport": {
+        "width": 1000,
+        "height": 900
+      },
+      "bytes": 2234,
+      "sha256": "c745810795b07df311366668264cb81fc7bc179e8e6cff39ffe9b0f2dd1cad2a"
     }
   ]
 }

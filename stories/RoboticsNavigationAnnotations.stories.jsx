@@ -23,7 +23,7 @@ const meta = {
       eyebrow: 'Robotics / Navigation / Annotation Layer',
       title: '한 지도의 여러 오버레이 라벨은 한 곳에서 충돌을 조정합니다',
       description:
-        '각 오버레이는 자기 내부 배치만 알고, 서로 다른 개체의 라벨 충돌은 전체를 아는 layer가 조정합니다. 라벨만 수직으로 밀리고, 공간이 없으면 우선순위 낮은 라벨만 숨겨지며, 마커·상태 badge·접근 가능한 이름·semantic mirror는 절대 바뀌지 않습니다. provider 없이 단독 렌더된 오버레이는 오늘과 동일하게 동작합니다.',
+        '여러 내비게이션 오버레이를 한 지도에 합성해 라벨이 서로 겹칠 수 있을 때 적합합니다. 라벨만 수직으로 밀리고, 공간이 없으면 우선순위 낮은 라벨만 숨겨지며, 마커·상태 badge·접근 가능한 이름·semantic mirror는 절대 바뀌지 않습니다. 오버레이 하나만 단독 렌더하거나 제품이 자체 symbol collision 정책을 이미 소유한 지도에는 사용하지 마세요 — provider 없이 렌더된 오버레이는 오늘과 동일하게 동작합니다.',
     },
     docs: {
       description: {
@@ -396,7 +396,7 @@ export const LabelSuppressionPriority = {
 };
 
 export const NoProviderBaseline = {
-  name: 'Provider 없는 기준선',
+  name: '변형·상태 · 조정 없는 기준선',
   parameters: storyDescription(
     '같은 충돌 픽스처를 layer 없이 렌더한 하위 호환 기준선입니다. 오버레이 단독 출력은 조정 이전과 동일해야 하므로 자연 겹침이 그대로 남고, 어떤 조정 증거 속성도 나타나지 않아야 합니다.',
   ),

@@ -569,6 +569,7 @@
       "classification": "robotics-extension",
       "wdsFamily": "Robotics extension",
       "storyEvidence": [
+        "stories/RoboticsNavigationAnnotations.stories.jsx",
         "stories/RoboticsNavigationFacilities.stories.jsx",
         "stories/RoboticsNavigationLane.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
@@ -578,6 +579,7 @@
       "exports": [
         "FacilityTransition",
         "LaneOverlay",
+        "NavigationAnnotationLayer",
         "RouteOverlay",
         "SpatialRegion",
         "TrajectoryOverlay",

@@ -6,7 +6,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'MQTT·rosbridge transport truth를 신호 막대와 라벨로 보여주는 ConnectionBadge 패턴입니다. 연결, freshness, health, operability, authority를 서로 다른 의미 축으로 유지합니다.',
+        component: 'MQTT·rosbridge transport truth를 신호 막대와 라벨로 보여주는 ConnectionBadge 패턴입니다. 연결, freshness, health, operability, authority를 서로 다른 의미 축으로 유지합니다. transport 연결 상태 표시에 적합하며, 데이터 freshness나 장비 건강 상태 표현에는 이 배지를 사용하지 마세요.',
       },
     },
   },

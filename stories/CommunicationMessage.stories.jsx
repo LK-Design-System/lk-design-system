@@ -305,7 +305,7 @@ export const LifecycleStates = {
 };
 
 export const GroupedMessagesAndSlots = {
-  name: '사용법 · 그룹과 조합 slot',
+  name: '사용법 · 그룹과 조합 영역',
   parameters: storyDescription(
     '같은 사용자의 연속 bubble은 identity 반복을 줄이고, 뒤따르는 assistant document는 attachment·SourceDisclosure·action을 독립 slot으로 조합합니다. slot content를 하나의 중첩 card로 다시 감싸지 않는지 확인하세요.',
   ),

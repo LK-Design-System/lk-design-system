@@ -19,12 +19,12 @@ parity gates.
 | Area | Source baseline | Current status |
 | --- | ---: | --- |
 | Runtime export gaps | 0 | No public export gap required by the WDS source |
-| React component entry exports | 202 | Public package component entries covered by checks |
-| Named public exports | 208 | Public package surface covered by type checks |
-| Storybook public stories | 413 | Component and pattern surfaces only |
-| Storybook hidden visual parity stories | 89 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 539 | Current implementation stories checked by the accessibility guard |
-| Accessibility checked implementation stories | 539 | Current implementation stories checked by accessibility guard |
+| React component entry exports | 203 | Public package component entries covered by checks |
+| Named public exports | 209 | Public package surface covered by type checks |
+| Storybook public stories | 419 | Component and pattern surfaces only |
+| Storybook hidden visual parity stories | 90 | Tagged `visual-parity` and `!dev` |
+| Visual inventory React stories | 546 | Current implementation stories checked by the accessibility guard |
+| Accessibility checked implementation stories | 546 | Current implementation stories checked by accessibility guard |
 
 ## Parity source of truth
 

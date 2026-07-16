@@ -12,16 +12,16 @@
 
 ## 현재 기준선
 
-2026-07-13 현재 소스에서 재생성한 정적 빌드 기준으로 177개 페이지와 534개 스토리가 있다.
+2026-07-16 현재 소스에서 재생성한 정적 빌드 기준으로 180개 페이지와 546개 스토리가 있다.
 
-- 공개 스토리: 408개
-- 숨김 스토리: 126개
-- 숨김 visual parity: 89개
+- 공개 스토리: 419개
+- 숨김 스토리: 127개
+- 숨김 visual parity: 90개
 - 숨김 internal contract: 37개
 - 컴포넌트 설명이 있는 페이지: 173개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 177개
 - 사용/비사용 판단 기준이 확인되는 페이지: 172개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 408개
+- 목적 설명이 있는 공개 스토리: 419개
 - Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
 - Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 81/81개
 - Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 203/203개
@@ -34,14 +34,14 @@
 
 ## 전수 감사 판정
 
-177개 페이지와 534개 스토리를 소스 AST와 현재 빌드 인덱스에 대조해 모두 검토했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion 페이지도 같은 role·visibility·description 계약으로 검토했다.
+180개 페이지와 546개 스토리를 소스 AST와 현재 빌드 인덱스에 대조해 모두 검토했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion 페이지도 같은 role·visibility·description 계약으로 검토했다.
 
 - 13개 구조 분리 실행: `Effects and Interaction`, `Action Controls`, `Annotations`, `Anchored Overlay`, `Menu`, `Segmented and Toggle`, `Selection Groups`, `Text Input`, `Loading State`, `Progress`, `Utility Actions`, `File Upload Queue`, `Telemetry`
 - 5개 분리 기각·keep 정정: `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`, `Toast`, `Manual Control Session`
 - 1개 병합 기각·keep 정정: `History Toolbar`
 - 공개 내부 계약 10개를 `!dev`로 전환하고 신규 Communication·VirtualKeypad·Robotics Navigation 실컴포넌트 회귀 표면 7개를 더해 visual parity 89개를 유지
 
-최종 구조에서는 분리된 각 페이지가 독립 소유자를 가지므로 판정은 `keep` 177개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 페이지 177/177개, 스토리 534/534개, 변경 후 stale 검토 0개, 공개·숨김 권고 불일치 0개다. Communication 2페이지와 Navigation 5페이지는 2026-07-13 현재 source hash, 공개 이름, 역할, 표적 play/Axe 결과로 재검토했다.
+최종 구조에서는 분리된 각 페이지가 독립 소유자를 가지므로 판정은 `keep` 177개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 페이지 180/180개, 스토리 546/546개, 변경 후 stale 검토 0개, 공개·숨김 권고 불일치 0개다. Communication 2페이지와 Navigation 5페이지는 2026-07-13 현재 source hash, 공개 이름, 역할, 표적 play/Axe 결과로 재검토했다.
 
 정정 근거는 다음과 같다.
 

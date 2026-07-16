@@ -70,7 +70,7 @@ const meta = {
       eyebrow: 'Navigation / Facility Glyph',
       title: '설비 글리프는 Facility Transition 마커 위에서 문·승강기·도킹을 구분합니다',
       description:
-        '문·승강기·도킹 세 종류를 실제 FacilityTransition 마커로 나란히 비교합니다. 배지 도형을 따로 그리지 않고 프로덕션 컴포넌트를 그대로 렌더하므로, 여기 보이는 핀·글리프·상태 표기는 마커에 실제로 나타나는 것과 동일합니다. 종류를 결정하는 knockout 글리프는 Material Symbols(Apache 2.0)에서 가져와 내부 모듈 _FacilityGlyph가 렌더하며, 공개 API가 아닙니다.',
+        '문·승강기·도킹 세 종류를 실제 FacilityTransition 마커로 나란히 비교합니다. 배지 도형을 따로 그리지 않고 프로덕션 컴포넌트를 그대로 렌더하므로, 여기 보이는 핀·글리프·상태 표기는 마커에 실제로 나타나는 것과 동일합니다. 종류를 결정하는 knockout 글리프는 Material Symbols(Apache 2.0)에서 가져와 내부 모듈 _FacilityGlyph가 렌더하며, 공개 API가 아닙니다. 글리프 도형 자체를 검토·회귀할 때 적합하며, 제품 지도 구현에는 이 페이지 대신 FacilityTransition을 사용하세요.',
     },
     docs: {
       description: {
@@ -122,7 +122,7 @@ export const Overview = {
 };
 
 export const States = {
-  name: '상태 표기',
+  name: '변형·상태 · 상태 표기',
   parameters: storyDescription(
     '같은 승강기 마커가 가용성·오류·지연 상태로 바뀔 때의 실제 표기입니다. 점선 외곽선, 사용 불가 슬래시, unknown·invalid·stale 코너 배지는 모두 컴포넌트가 직접 렌더한 것입니다(문·도킹도 동일하게 동작).',
   ),

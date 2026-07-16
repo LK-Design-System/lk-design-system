@@ -11,7 +11,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '제품 화면에 종속되지 않고 장비 identity, 대표 상태, 라벨이 있는 사실과 후속 동작을 묶는 EquipmentStatusCard 패턴입니다.',
+        component: '제품 화면에 종속되지 않고 장비 identity, 대표 상태, 라벨이 있는 사실과 후속 동작을 묶는 EquipmentStatusCard 패턴입니다. 장비 한 대의 identity와 상태 요약 카드에 적합하며, 실시간 telemetry 스트림이나 지도 위 마커에는 사용하지 마세요.',
       },
     },
   },

@@ -90,7 +90,7 @@ export const AvailabilityAndProvenance = {
 };
 
 export const MissingSource = {
-  name: '시나리오 · 출처 없음',
+  name: '변형·상태 · 출처 없음',
   parameters: storyDescription(
     '참조했던 원본이 삭제되어 세부 정보와 이동 액션을 제공할 수 없는 상황입니다. 존재하지 않는 disclosure나 링크를 만들지 않고 출처 없음 상태를 정적으로 알리는지 확인하세요.',
   ),
@@ -147,7 +147,7 @@ export const UnresolvedAvailability = {
 };
 
 export const DirectSourceLink = {
-  name: '시나리오 · 세부 정보 없는 출처 링크',
+  name: '변형·상태 · 세부 정보 없는 출처 링크',
   parameters: storyDescription(
     '추가 provenance 없이 원본 문서로 바로 이동할 수 있는 상황입니다. 불필요한 disclosure 단계를 만들지 않고 고유한 출처 이름이 안전한 외부 링크가 되는지 확인하세요.',
   ),
@@ -223,7 +223,7 @@ export const NarrowLongProvenance = {
 };
 
 export const CompactCitationChips = {
-  name: '변형·상태 · 컴팩트 인용 chip',
+  name: '반응형 · 컴팩트 인용 칩',
   parameters: storyDescription(
     '챗 답변 아래 citation처럼 모든 source가 열람 가능하다고 전제되는 맥락에서는 compact 모드로 각 source를 attachment chip 무게의 한 줄 link chip으로 보여 줍니다. card·펼침·availability 배지 없이 활성화 시 원본을 열고, 320px에서 긴 라벨은 ellipsis로 잘립니다. 여기서는 시각적 heading을 숨겨(titleVisuallyHidden) chip만 남깁니다.',
   ),

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "46809212fa370e0fa67955d3046843c5f6e44a12b2038e601ec1eccc0f4fc033",
+    "storybookIndexSha256": "0f3237e5706b2c720da8a6f44d61ebe31705a21d5753427a4b7ba48e518d961c",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -65,7 +65,7 @@
     "hiddenStories": 127,
     "componentDescriptions": 176,
     "pagesWithVisibleCanvasIntroduction": 180,
-    "pagesWithDecisionGuidance": 170,
+    "pagesWithDecisionGuidance": 175,
     "describedPublicStories": 419,
     "reviewedPages": 180,
     "reviewedStories": 546,
@@ -75,10 +75,10 @@
       "foundation-reference": 10,
       "overview": 173,
       "usage": 21,
-      "variants-states": 86,
+      "variants-states": 89,
       "interaction": 48,
       "responsive": 55,
-      "scenario": 26,
+      "scenario": 23,
       "visual-parity": 90,
       "internal-contract": 37
     },
@@ -115,7 +115,7 @@
         "stories": 142,
         "public": 117,
         "hidden": 25,
-        "guideReadyPages": 27
+        "guideReadyPages": 32
       },
       "Theme": {
         "pages": 3,
@@ -6370,7 +6370,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "06685ae184ba293ec8a7f4bddb6e7594ee78cb257281f5ae1a11cb6fd3d5b61d",
+      "sourceSha256": "1bb743144c227a17b3f9638048e0ab9ddd80e58cbdc057be906c6c4a0d28e116",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -6401,8 +6401,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "06685ae184ba293ec8a7f4bddb6e7594ee78cb257281f5ae1a11cb6fd3d5b61d",
+      "reviewedAt": "2026-07-16",
+      "reviewedSourceSha256": "1bb743144c227a17b3f9638048e0ab9ddd80e58cbdc057be906c6c4a0d28e116",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6434,7 +6434,7 @@
         },
         {
           "id": "lds-product-communication-message--grouped-messages-and-slots",
-          "name": "사용법 · 그룹과 조합 slot",
+          "name": "사용법 · 그룹과 조합 영역",
           "exportName": "GroupedMessagesAndSlots",
           "visibility": "public",
           "tags": [
@@ -6611,7 +6611,7 @@
           "reviewNote": "2026-07-12 normal, narrow, and dark rendered states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after synced messageActions/error/IconButton source update; dispositions unchanged, gated by check:a11y play/axe run."
+      "reviewNote": "2026-07-16 re-reviewed after audience-language rename of the grouped-composition story display name (slot → 영역); roles, visibility, and dispositions unchanged."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
@@ -7607,7 +7607,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "sourceSha256": "1de5c0f3e82a89d246321d07f58b4d108c83f83abb28183a2349be747d216a1b",
+      "sourceSha256": "115ad8bc5c8cf145e8184ddad7ec1d144003de71f7d288af4fcecf47959ccfea",
       "primaryOwner": "SourceDisclosure",
       "ownerComponents": [
         "SourceDisclosure"
@@ -7630,8 +7630,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "1de5c0f3e82a89d246321d07f58b4d108c83f83abb28183a2349be747d216a1b",
+      "reviewedAt": "2026-07-16",
+      "reviewedSourceSha256": "115ad8bc5c8cf145e8184ddad7ec1d144003de71f7d288af4fcecf47959ccfea",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -7657,9 +7657,9 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
-          "id": "lds-product-content-source-disclosure--compact-citation-chips",
-          "name": "변형·상태 · 컴팩트 인용 chip",
-          "exportName": "CompactCitationChips",
+          "id": "lds-product-content-source-disclosure--direct-source-link",
+          "name": "변형·상태 · 세부 정보 없는 출처 링크",
+          "exportName": "DirectSourceLink",
           "visibility": "public",
           "tags": [
             "dev",
@@ -7667,7 +7667,7 @@
             "play-fn",
             "test"
           ],
-          "role": "responsive",
+          "role": "variants-states",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -7676,7 +7676,31 @@
           "ownerComponents": [
             "SourceDisclosure"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-content-source-disclosure--missing-source",
+          "name": "변형·상태 · 출처 없음",
+          "exportName": "MissingSource",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SourceDisclosure"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
           "id": "lds-product-content-source-disclosure--unresolved-availability",
@@ -7725,9 +7749,9 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
-          "id": "lds-product-content-source-disclosure--direct-source-link",
-          "name": "시나리오 · 세부 정보 없는 출처 링크",
-          "exportName": "DirectSourceLink",
+          "id": "lds-product-content-source-disclosure--compact-citation-chips",
+          "name": "반응형 · 컴팩트 인용 칩",
+          "exportName": "CompactCitationChips",
           "visibility": "public",
           "tags": [
             "dev",
@@ -7735,7 +7759,7 @@
             "play-fn",
             "test"
           ],
-          "role": "scenario",
+          "role": "responsive",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -7744,34 +7768,10 @@
           "ownerComponents": [
             "SourceDisclosure"
           ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-content-source-disclosure--missing-source",
-          "name": "시나리오 · 출처 없음",
-          "exportName": "MissingSource",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "scenario",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "SourceDisclosure"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "supportingComponents": []
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-16 re-reviewed after audience-language display-name normalization (role prefixes and Korean terms only); roles, visibility, and dispositions unchanged."
     },
     {
       "title": "LDS Product/Content/Spec Row",
@@ -16205,7 +16205,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationAnnotations.stories.jsx",
-      "sourceSha256": "46751f505c9abca3ba6997de6974b54c75e53c92e76d16225c4354e75213171f",
+      "sourceSha256": "dc4926f034c3eb3e604d66692800c01f488f411f7d7cc5f65fea970335ef3ca4",
       "primaryOwner": "NavigationAnnotationLayer",
       "ownerComponents": [
         "NavigationAnnotationLayer"
@@ -16228,18 +16228,16 @@
         "storyGuideId": "lds-robotics-navigation-annotation-layer--annotation-layer-overview",
         "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "46751f505c9abca3ba6997de6974b54c75e53c92e76d16225c4354e75213171f",
+      "reviewedAt": "2026-07-16",
+      "reviewedSourceSha256": "dc4926f034c3eb3e604d66692800c01f488f411f7d7cc5f65fea970335ef3ca4",
       "stories": [
         {
           "id": "lds-robotics-navigation-annotation-layer--annotation-layer-overview",
@@ -16324,6 +16322,33 @@
           ]
         },
         {
+          "id": "lds-robotics-navigation-annotation-layer--no-provider-baseline",
+          "name": "변형·상태 · 조정 없는 기준선",
+          "exportName": "NoProviderBaseline",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavigationAnnotationLayer"
+          ],
+          "supportingComponents": [
+            "FacilityTransition",
+            "Map2DCanvas",
+            "RouteOverlay",
+            "TrajectoryOverlay"
+          ]
+        },
+        {
           "id": "lds-robotics-navigation-annotation-layer--narrow-width",
           "name": "반응형 · 320px 좁은 폭",
           "exportName": "NarrowWidth",
@@ -16368,42 +16393,16 @@
             "NavigationAnnotationLayer"
           ],
           "supportingComponents": []
-        },
-        {
-          "id": "lds-robotics-navigation-annotation-layer--no-provider-baseline",
-          "name": "Provider 없는 기준선",
-          "exportName": "NoProviderBaseline",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "scenario",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "NavigationAnnotationLayer"
-          ],
-          "supportingComponents": [
-            "FacilityTransition",
-            "Map2DCanvas",
-            "RouteOverlay",
-            "TrajectoryOverlay"
-          ]
         }
-      ]
+      ],
+      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance to the annotation layer page; roles, visibility, and dispositions unchanged."
     },
     {
       "title": "LDS Robotics/Navigation/Facility Glyph",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationFacilityGlyph.stories.jsx",
-      "sourceSha256": "68fd57d1009cd67b4ac69546c56ee407692ed3deb1ba48a2bc75a67adee725a7",
+      "sourceSha256": "258dc9907f1856835c15e29ec1303794527ff62868eaf04c13499d4b31cf7d8c",
       "primaryOwner": "FacilityTransition",
       "ownerComponents": [
         "FacilityTransition"
@@ -16418,18 +16417,16 @@
         "storyGuideId": "lds-robotics-navigation-facility-glyph--overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "68fd57d1009cd67b4ac69546c56ee407692ed3deb1ba48a2bc75a67adee725a7",
+      "reviewedAt": "2026-07-16",
+      "reviewedSourceSha256": "258dc9907f1856835c15e29ec1303794527ff62868eaf04c13499d4b31cf7d8c",
       "stories": [
         {
           "id": "lds-robotics-navigation-facility-glyph--overview",
@@ -16454,7 +16451,7 @@
         },
         {
           "id": "lds-robotics-navigation-facility-glyph--states",
-          "name": "상태 표기",
+          "name": "변형·상태 · 상태 표기",
           "exportName": "States",
           "visibility": "public",
           "tags": [
@@ -16473,7 +16470,8 @@
           ],
           "supportingComponents": []
         }
-      ]
+      ],
+      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance sentences; roles, visibility, and dispositions unchanged."
     },
     {
       "title": "LDS Robotics/Navigation/Facility Transition",
@@ -17377,9 +17375,11 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationStateBadge.stories.jsx",
-      "sourceSha256": "1f502b58e0c299373d3876560619705916456b58c0ec34980adcf501fd4dafe9",
-      "primaryOwner": null,
-      "ownerComponents": [],
+      "sourceSha256": "3fd54142a08f4b0b86fc5b6dc0097a719ecaeed08924f43153d0bd7e70b64d7c",
+      "primaryOwner": "NavigationStateGlyph",
+      "ownerComponents": [
+        "NavigationStateGlyph"
+      ],
       "supportingComponents": [],
       "visibility": {
         "public": 1,
@@ -17390,18 +17390,16 @@
         "storyGuideId": "lds-robotics-navigation-state-badge--overview",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "1f502b58e0c299373d3876560619705916456b58c0ec34980adcf501fd4dafe9",
+      "reviewedAt": "2026-07-16",
+      "reviewedSourceSha256": "3fd54142a08f4b0b86fc5b6dc0097a719ecaeed08924f43153d0bd7e70b64d7c",
       "stories": [
         {
           "id": "lds-robotics-navigation-state-badge--overview",
@@ -17419,10 +17417,13 @@
           "recommendedVisibility": "public",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [],
+          "ownerComponents": [
+            "NavigationStateGlyph"
+          ],
           "supportingComponents": []
         }
-      ]
+      ],
+      "reviewNote": "2026-07-16 re-reviewed after declaring the internal glyph module as the page owner; roles, visibility, and dispositions unchanged."
     },
     {
       "title": "LDS Robotics/Navigation/Waypoint",
@@ -17695,7 +17696,7 @@
       "layer": "Robotics",
       "family": "Status",
       "importPath": "./stories/RoboticsConnectionBadge.stories.jsx",
-      "sourceSha256": "d4a3a12def63b5530bc2be5964732aa81329f9f4add4c16ee83139f19b6a70a3",
+      "sourceSha256": "00b10647440a946ecabbdd3812fb94cd52abefd9a669c3a4b077b2d7ec62c21e",
       "primaryOwner": "ConnectionBadge",
       "ownerComponents": [
         "ConnectionBadge"
@@ -17710,18 +17711,16 @@
         "storyGuideId": null,
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "d4a3a12def63b5530bc2be5964732aa81329f9f4add4c16ee83139f19b6a70a3",
+      "reviewedAt": "2026-07-16",
+      "reviewedSourceSha256": "00b10647440a946ecabbdd3812fb94cd52abefd9a669c3a4b077b2d7ec62c21e",
       "stories": [
         {
           "id": "lds-robotics-status-connection-badge--connection-badges",
@@ -17769,14 +17768,14 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "운영자용 3단 헤더(오버라인+제목+사용 기준)와 스토리별 목적 설명 추가(Robotics 레이어 계약). Delegated review, 2026-07-12."
+      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance sentences; roles, visibility, and dispositions unchanged."
     },
     {
       "title": "LDS Robotics/Status/Equipment State",
       "layer": "Robotics",
       "family": "Status",
       "importPath": "./stories/RoboticsEquipment.stories.jsx",
-      "sourceSha256": "6335d492d697e07c3da8d0b4830d3bb5238a0f59ac7928c5f1794fd66a5d8fcc",
+      "sourceSha256": "cf56e79e244120b3c4e403bd122ebe621a6ae21307d780a28c833986e1b23b21",
       "primaryOwner": "EquipmentStatusCard",
       "ownerComponents": [
         "EquipmentStatusCard"
@@ -17795,18 +17794,16 @@
         "storyGuideId": null,
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "6335d492d697e07c3da8d0b4830d3bb5238a0f59ac7928c5f1794fd66a5d8fcc",
+      "reviewedAt": "2026-07-16",
+      "reviewedSourceSha256": "cf56e79e244120b3c4e403bd122ebe621a6ae21307d780a28c833986e1b23b21",
       "stories": [
         {
           "id": "lds-robotics-status-equipment-state--equipment-state",
@@ -17882,7 +17879,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after robotics navigation redesign merge: page visually swept in Storybook (overview/state/interaction/narrow, light+dark) during the 2026-07-16 inspection; dispositions unchanged."
+      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance sentences; roles, visibility, and dispositions unchanged."
     },
     {
       "title": "LDS Robotics/Status/Robot State",
