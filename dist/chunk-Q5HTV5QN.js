@@ -1,7 +1,7 @@
 "use client";
 import {
   NavigationStateGlyph
-} from "./chunk-KOZEMOWF.js";
+} from "./chunk-54Q6T6L4.js";
 import {
   NAV_DASH,
   NAV_LABEL_HALO,
@@ -452,4 +452,4 @@ function SpatialRegion({
 export {
   SpatialRegion
 };
-//# sourceMappingURL=chunk-CYI3WVA3.js.map
+//# sourceMappingURL=chunk-Q5HTV5QN.js.map

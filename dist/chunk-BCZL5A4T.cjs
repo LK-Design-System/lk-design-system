@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
-var _chunkHFPBSCJZcjs = require('./chunk-HFPBSCJZ.cjs');
+var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
@@ -396,11 +396,11 @@ function SpatialRegion({
             children: [
               invalid && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: "translate(0 -18)", "data-region-invalid-mark": "", children: [
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkVRML72ABcjs.NAV_STATE_BADGE.radius, fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))", strokeWidth: _chunkVRML72ABcjs.NAV_STATE_BADGE.strokeWidth, vectorEffect: "non-scaling-stroke" }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkHFPBSCJZcjs.NavigationStateGlyph, { kind: "invalid", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkGKSI3QZ5cjs.NavigationStateGlyph, { kind: "invalid", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
               ] }),
               stale && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: `translate(0 ${invalid ? 18 : -18})`, "data-region-stale-mark": "", children: [
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkVRML72ABcjs.NAV_STATE_BADGE.radius, fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-muted, var(--color-semantic-label-alternative))", strokeWidth: _chunkVRML72ABcjs.NAV_STATE_BADGE.strokeWidth, strokeDasharray: _chunkVRML72ABcjs.NAV_DASH.staleRing, vectorEffect: "non-scaling-stroke" }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkHFPBSCJZcjs.NavigationStateGlyph, { kind: "stale", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkGKSI3QZ5cjs.NavigationStateGlyph, { kind: "stale", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
               ] })
             ]
           }
@@ -452,4 +452,4 @@ function SpatialRegion({
 
 
 exports.SpatialRegion = SpatialRegion;
-//# sourceMappingURL=chunk-3MPVTAYS.cjs.map
+//# sourceMappingURL=chunk-BCZL5A4T.cjs.map

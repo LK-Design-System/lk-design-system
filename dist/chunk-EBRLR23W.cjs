@@ -2,7 +2,10 @@
 
 
 
-var _chunkHFPBSCJZcjs = require('./chunk-HFPBSCJZ.cjs');
+var _chunkBD2ARKLHcjs = require('./chunk-BD2ARKLH.cjs');
+
+
+var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
@@ -187,7 +190,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
           "path",
           {
             "data-lane-orientation": endpoint.orientation,
-            d: "M -5 0 H 5 M 2 -3 L 5 0 L 2 3",
+            d: _chunkBD2ARKLHcjs.NAVIGATION_ENDPOINT_ARROW,
             transform: `rotate(${orientation}) translate(10 0)`,
             fill: "none",
             stroke: VIEWER_FOREGROUND,
@@ -457,7 +460,7 @@ function LaneOverlay({
             "data-lane-direction": "entry-to-exit",
             "data-lane-direction-anchor-x": directionPoint.x,
             "data-lane-direction-anchor-y": directionPoint.y,
-            d: _chunkHFPBSCJZcjs.NAVIGATION_DIRECTION_PATH,
+            d: _chunkBD2ARKLHcjs.NAVIGATION_DIRECTION_PATH,
             transform: `translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`,
             fill: baseColor,
             stroke: VIEWER_SURFACE,
@@ -503,7 +506,7 @@ function LaneOverlay({
                     }
                   ),
                   /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                    _chunkHFPBSCJZcjs.NavigationStateGlyph,
+                    _chunkGKSI3QZ5cjs.NavigationStateGlyph,
                     {
                       kind: state.state,
                       size: 10,
@@ -591,4 +594,4 @@ function LaneOverlay({
 
 
 exports.LaneOverlay = LaneOverlay;
-//# sourceMappingURL=chunk-OCBMJLNQ.cjs.map
+//# sourceMappingURL=chunk-EBRLR23W.cjs.map

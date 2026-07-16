@@ -1,8 +1,7 @@
-"use client";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 // components/robotics/_NavigationStateGlyph.js
-import React from "react";
-var NAVIGATION_DIRECTION_PATH = "M -2 -3.4 L 4 0 L -2 3.4 Z";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var KINDS = /* @__PURE__ */ new Set([
   "unknown",
   "conflict",
@@ -31,12 +30,12 @@ var MAT = {
 };
 var MAT_FIT = "scale(0.0095) translate(-480 480)";
 function glyphShapes(kind) {
-  const d = MAT[kind] ?? MAT.unknown;
+  const d = _nullishCoalesce(MAT[kind], () => ( MAT.unknown));
   return [
-    React.createElement(
+    _react2.default.createElement(
       "g",
       { key: "mat", transform: MAT_FIT, fill: "currentColor" },
-      React.createElement("path", { d })
+      _react2.default.createElement("path", { d })
     )
   ];
 }
@@ -49,7 +48,7 @@ function NavigationStateGlyph({
   const resolvedKind = KINDS.has(kind) ? kind : "unknown";
   const resolvedSize = Math.max(10, Number(size) || 10);
   const scale = resolvedSize / 10;
-  return React.createElement(
+  return _react2.default.createElement(
     "g",
     {
       ...rest,
@@ -61,7 +60,7 @@ function NavigationStateGlyph({
       pointerEvents: "none",
       style: { color }
     },
-    React.createElement(
+    _react2.default.createElement(
       "g",
       { transform: scale === 1 ? void 0 : `scale(${scale})` },
       ...glyphShapes(resolvedKind)
@@ -69,8 +68,7 @@ function NavigationStateGlyph({
   );
 }
 
-export {
-  NAVIGATION_DIRECTION_PATH,
-  NavigationStateGlyph
-};
-//# sourceMappingURL=chunk-KOZEMOWF.js.map
+
+
+exports.NavigationStateGlyph = NavigationStateGlyph;
+//# sourceMappingURL=chunk-GKSI3QZ5.cjs.map
