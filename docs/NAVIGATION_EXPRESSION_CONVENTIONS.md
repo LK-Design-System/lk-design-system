@@ -46,7 +46,9 @@ Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원�
 - 보이는 debug readout → hidden 테스트 훅 또는 삭제 — Regions·Trajectory·Facility·Lane·Route.
 - KO/EN enum 카피 → 한국어 — Hazard 캡션, Route 온-맵 세그먼트 라벨, 포인터 전용 지도 라벨.
 - `Button`-as-selection-control → LDS `SegmentedControl` — Route 층 전환.
+- **합성 앱 씬 → Viewer 페이지 이동** — Route 렌더러 페이지에 있던 `SemanticMirror`(이름 목록 + 6-오버레이 지도 + LayerPanel·SelectionInspector·Legend)를 §1에 따라 `LDS Robotics/Viewer/Navigation Viewer` 합성 페이지로 옮겼다. 이동하며 SelectionInspector 필드의 KO/EN(`keep-out`·`lift-a`·`holding`·`passthrough`·`completed`·`current`·`sample`…)을 한국어 어휘로 정정하고, Route에 남은 좁은 폭 스토리의 "아래 semantic mirror" 참조 카피를 접근성 이름 기준으로 다시 썼다([`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) Phase 5).
 
 ## 6. 미결 위반 (규약대로 정리 예정)
 
-- **Route `SemanticMirror` 앱 씬** — 손수 만든 이름 목록(색점+숨김 태그) + 6-오버레이 + LayerPanel + SelectionInspector + Legend + SelectionInspector 필드의 KO/EN. §1에 따라 이는 **제품 합성**이므로 `LDS Robotics/Viewer/Navigation Viewer` 합성 페이지로 이동하고, 목록은 실제 LDS 컴포넌트로 재구성한다([`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) Phase 5).
+- 렌더러 페이지 차원의 미결 위반은 현재 없다. Navigation 렌더러 스토리는 지도 자체에서 pointer-only·접근성 이름 계약을 검증하고, 병렬 컨트롤·선택 리스트·합성 패널은 Viewer 합성 페이지가 소유한다.
+- 남은 개선(위반 아님): Viewer 합성 페이지의 이름 목록은 아직 손수 만든 항목(`SemanticMirrorListItem` 버튼)이다. 전용 LDS 목록/선택 프리미티브가 없어 제품 합성의 일부로 두었으며, 그런 프리미티브가 생기면 교체한다.

@@ -205,6 +205,7 @@
     "stories/RoboticsTelemetryGauge.stories.jsx": "LDS Robotics/Status/Telemetry Gauge",
     "stories/RoboticsTelemetryValue.stories.jsx": "LDS Robotics/Status/Telemetry Value",
     "stories/RoboticsTopicTree.stories.jsx": "LDS Robotics/Data/Topic Tree",
+    "stories/RoboticsViewerNavigationViewer.stories.jsx": "LDS Robotics/Viewer/Navigation Viewer",
     "stories/SelectionChips.stories.jsx": "LDS Core/Components/Selection and Input/Chip",
     "stories/SelectionColorSwatch.stories.jsx": "LDS Product/Selection and Input/Color Swatch",
     "stories/SelectionIconPicker.stories.jsx": "LDS Product/Selection and Input/Icon Picker",
