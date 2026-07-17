@@ -11,6 +11,7 @@ import {
 } from '../components/robotics/_navigationVocabulary.js';
 import { NAVIGATION_DIRECTION_PATH } from '../components/robotics/_navigationVectorGlyph.js';
 import { annotationPriority, KIND_WEIGHT } from '../components/robotics/_navigationAnnotations.js';
+import { WaypointMarker, FacilityTransition, SpatialRegion } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 // This page renders the REAL shared encoding tokens — every dash, opacity, badge,
@@ -383,6 +384,67 @@ function FocusCard() {
   );
 }
 
+// State layering, rendered with the REAL components (not hand-drawn) so the
+// catalog is exactly what ships. Each renderer is shown in four states — base,
+// focused, selected, focused+selected — proving focus (blue silhouette, outer)
+// and selection (accent, inner) are independent axes that compose.
+const SL_MAP = 'sl';
+const SL_WAYPOINT = { id: 'sl-wp', mapId: SL_MAP, position: { x: 24, y: 26 }, roles: ['holding'], availability: 'available' };
+const SL_REGION = { id: 'sl-rg', mapId: SL_MAP, category: 'behavior', rule: { kind: 'speed-limit' }, shape: { kind: 'circle', center: { x: 24, y: 24 }, radius: 13 } };
+const SL_FACILITY = {
+  id: 'sl-fc', kind: 'lift', label: '승강기', facilityId: 'lift',
+  from: { mapId: SL_MAP, position: { x: 28, y: 30 } },
+  availability: 'available', phase: 'approach', doorState: 'closed',
+  motionState: 'stopped', operatingMode: 'agv', sessionState: 'requested',
+  currentMapId: SL_MAP, destinationMapId: SL_MAP,
+};
+
+const SL_STATES = [
+  { key: 'base', label: '기본', props: {} },
+  { key: 'focused', label: '포커스', props: { focused: true } },
+  { key: 'selected', label: '선택', props: { selected: true } },
+  { key: 'both', label: '포커스+선택', props: { focused: true, selected: true } },
+];
+
+const SL_ROWS = [
+  { key: 'waypoint', label: '웨이포인트', viewBox: '2 4 44 44',
+    render: (p) => <WaypointMarker waypoint={SL_WAYPOINT} showLabel={false} {...p} /> },
+  { key: 'facility', label: '핀 (시설·해저드)', viewBox: '0 -14 56 64',
+    render: (p) => <FacilityTransition transition={SL_FACILITY} activeMapId={SL_MAP} showLabel={false} {...p} /> },
+  { key: 'region', label: '영역', viewBox: '0 0 48 48',
+    render: (p) => <SpatialRegion region={SL_REGION} showLabel={false} {...p} /> },
+];
+
+function StateLayerCard() {
+  return (
+    <div data-state-layer style={{ display: 'grid', gap: 12, minWidth: 0 }}>
+      <div style={{ overflowX: 'auto' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(64px, auto) repeat(4, 64px)', gap: 8, alignItems: 'center', width: 'min-content' }}>
+        <span />
+        {SL_STATES.map((s) => (
+          <span key={s.key} style={{ fontSize: 11, fontWeight: 'var(--fw-semibold)', color: MUTED, textAlign: 'center' }}>{s.label}</span>
+        ))}
+        {SL_ROWS.map((row) => (
+          <React.Fragment key={row.key}>
+            <span style={{ fontSize: 12, fontWeight: 'var(--fw-semibold)', color: INK }}>{row.label}</span>
+            {SL_STATES.map((s) => (
+              <figure key={s.key} data-state-cell={`${row.key}:${s.key}`} style={{ margin: 0, display: 'grid', placeItems: 'center', padding: 4, border: `1px solid ${LINE}`, borderRadius: 'var(--radius-sm)', background: SURFACE }}>
+                <svg width={64} height={64} viewBox={row.viewBox} aria-hidden="true" style={{ display: 'block' }}>
+                  {row.render(s.props)}
+                </svg>
+              </figure>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+      </div>
+      <p style={{ margin: 0, fontSize: 11, color: MUTED, lineHeight: 1.6 }}>
+        파랑 = 포커스(실루엣 추적, 바깥) · accent = 선택(피처 강조, 안쪽). 둘은 독립이라 마지막 열처럼 동시에 성립하며, 포커스가 선택보다 바깥/위에 렌더됩니다. 실제 컴포넌트를 그대로 렌더한 것입니다.
+      </p>
+    </div>
+  );
+}
+
 function EncodingCatalog() {
   return (
     <main data-encoding-catalog style={{ width: 'min(880px, 100%)', display: 'grid', gap: 16 }}>
@@ -406,6 +468,9 @@ function EncodingCatalog() {
       </Card>
       <Card title="포커스 인디케이터" hint="키보드 포커스 시 마커가 자기 실루엣을 따라 그리는 focus-indicator 윤곽선. 색과 non-scaling-stroke·outline 억제는 공유 규칙이고, 기하는 렌더러 모양에 맞춰 다릅니다.">
         <FocusCard />
+      </Card>
+      <Card title="상태 계층 · 포커스 vs 선택" hint="포커스(파랑, 실루엣 추적, 바깥)와 선택(accent, 피처 강조, 안쪽)은 독립 축이라 동시에 성립합니다. 실제 컴포넌트를 기본·포커스·선택·포커스+선택으로 렌더합니다 — 손으로 그린 근사가 아닙니다.">
+        <StateLayerCard />
       </Card>
     </main>
   );
@@ -537,6 +602,34 @@ export const Overview = {
         throw new Error('The kind-weight ladder must render in ascending paint-order weight.');
       }
       previousWeight = weight;
+    }
+
+    // State layering — the real components render focus and selection as
+    // independent axes that compose. Verify each renderer's focus/selection
+    // indicator appears exactly in the states that should have it.
+    const SL_INDICATORS = {
+      waypoint: { focus: '[data-waypoint-focus-indicator]', select: '[data-waypoint-selected-indicator]' },
+      facility: { focus: '[data-transition-focus-ring]', select: '[data-transition-selection-ring]' },
+      region: { focus: '[data-region-focus-ring]', select: '[data-region-selection-ring]' },
+    };
+    for (const [renderer, sel] of Object.entries(SL_INDICATORS)) {
+      const cellHas = (state, indicator) => {
+        const cell = root.querySelector(`[data-state-cell="${renderer}:${state}"]`);
+        if (!cell) throw new Error(`State-layer cell ${renderer}:${state} must render.`);
+        return Boolean(cell.querySelector(indicator));
+      };
+      if (cellHas('base', sel.focus) || cellHas('base', sel.select)) {
+        throw new Error(`${renderer} base state must show no focus or selection indicator.`);
+      }
+      if (!cellHas('focused', sel.focus) || cellHas('focused', sel.select)) {
+        throw new Error(`${renderer} focused state must show only the focus indicator.`);
+      }
+      if (!cellHas('selected', sel.select) || cellHas('selected', sel.focus)) {
+        throw new Error(`${renderer} selected state must show only the selection indicator.`);
+      }
+      if (!cellHas('both', sel.focus) || !cellHas('both', sel.select)) {
+        throw new Error(`${renderer} focused+selected state must show BOTH indicators (independent axes).`);
+      }
     }
   },
 };
