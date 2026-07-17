@@ -87,7 +87,9 @@ function UnitTile({ value, unit, label }) {
           </span>
         )}
       </span>
-      <code style={{ fontSize: 11, color: MUTED }}>{attached ? '부착 · 공백 없음' : '분리 · 공백'}</code>
+      <code style={{ fontSize: 11, color: MUTED }}>
+        {normalizedUnit === '' ? '구분자 없음' : attached ? '부착 · 공백 없음' : '분리 · 공백'}
+      </code>
       <span style={{ fontSize: 11, color: INK, textAlign: 'center' }}>{label}</span>
     </div>
   );
