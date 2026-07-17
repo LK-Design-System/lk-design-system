@@ -35,6 +35,7 @@ Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFr
 - Use `toolbarPlacement="top-right"` for 3D/video camera controls and `bottom-right` when a map's scale/status occupies the opposite edge.
 - The `badges` slot is passive and must use an on-dark-compatible badge in dark appearance. Do not repeat the normalized Viewer state with a second connection badge.
 - Appearance parity is checked with equivalent map and 3D stories. A light or dark variant must keep the same slots, state behavior, focus behavior, and control availability.
+- `variant="embedded"`는 이 프레임을 다른 LDS 표면(`CanvasEditorShell`의 캔버스 슬롯, `Card` 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 하나의 연속된 외곽선을 소유하게 합니다. 상태 모델·HUD·toolbar·region role은 그대로 유지되며, 부모 표면 안에서 `style`로 border/radius를 임의로 덮어쓰는 대신 이 variant를 사용합니다. 기본값 `standalone`은 단독 뷰포트로 자체 외곽선을 그립니다.
 
 ## Design basis
 

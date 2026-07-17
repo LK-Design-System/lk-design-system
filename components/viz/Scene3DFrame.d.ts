@@ -30,6 +30,8 @@ export interface Scene3DFrameProps extends Omit<React.HTMLAttributes<HTMLDivElem
   appearance?: 'dark' | 'light';
   /** Accessible region name. @default "3D 뷰포트" */
   label?: string;
+  /** Perimeter ownership. "embedded" drops the viewport's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline. @default "standalone" */
+  variant?: 'standalone' | 'embedded';
 }
 
 /** Renderer-independent 3D viewport preset built on ViewerFrame. */

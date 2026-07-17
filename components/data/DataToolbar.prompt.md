@@ -19,6 +19,7 @@ Classification: **LK Product Extension**. 선택 상태와 bulk action은 `DataG
 - `filters`는 query를 좁히는 chip/menu 슬롯, `actions`는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. 설정 UI와 저장 상태는 제품이 소유하고 `visibleColumnKeys`/`columnOrder`로 DataGrid에 전달합니다.
 - `selectedCount`와 `bulkActions`는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다.
 - Pagination은 DataToolbar 안에 넣지 않습니다. DataGrid 바로 아래에 별도 `Pagination`을 붙이고 page/pageSize/query를 제품이 제어합니다.
+- `variant="embedded"`는 DataToolbar를 부모 표면(감싸는 `section`·`Card`) 안의 헤더로 결합할 때 자체 border·radius를 제거하고 하단 divider만 남깁니다. `DataGrid variant="embedded"`와 함께 collection 패턴을 하나의 연속 외곽선으로 묶으며, `style`로 border/radius를 덮어쓰지 않습니다. 기본값 `standalone`은 페이지 레벨 표면으로 자체 외곽선을 그립니다.
 - [Carbon Data table usage](https://carbondesignsystem.com/components/data-table/usage/)는 기본 table toolbar를 검색·필터·설정·export 같은 global action에, 선택 후 batch action bar를 선택 항목 작업에 사용합니다. LDS도 이 소유권 분리를 따릅니다.
 - [Carbon Pagination usage](https://carbondesignsystem.com/components/pagination/usage/)는 table pagination을 표 아래에 stack되는 별도 component로 정의합니다.
 - [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다.

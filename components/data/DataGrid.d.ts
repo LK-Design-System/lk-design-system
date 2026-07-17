@@ -133,6 +133,8 @@ export interface DataGridProps<Row extends Record<string, unknown> = Record<stri
   stateActions?: React.ReactNode;
   /** @default "md" */
   size?: 'sm' | 'md';
+  /** Perimeter ownership. "embedded" drops the grid's own border and radius so a wrapping surface (a section, Card, or DockPanel) owns one continuous outline. @default "standalone" */
+  variant?: 'standalone' | 'embedded';
 }
 
 /** Controlled sort, stable row IDs, selection, activation, and resource states in a data table. */

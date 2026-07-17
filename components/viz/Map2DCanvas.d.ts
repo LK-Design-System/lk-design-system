@@ -66,6 +66,8 @@ export interface Map2DCanvasProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   stateDescription?: React.ReactNode;
   stateIcon?: React.ReactNode;
   stateAction?: React.ReactNode;
+  /** Perimeter ownership. "embedded" drops the canvas's own border and radius so a parent surface owns one continuous outline. @default "standalone" */
+  variant?: 'standalone' | 'embedded';
   /** Theme-stable viewport presentation shared with the other Viewer presets. @default "light" */
   appearance?: 'light' | 'dark';
   /** 접근성 라벨. @default "2D 맵 캔버스" */
