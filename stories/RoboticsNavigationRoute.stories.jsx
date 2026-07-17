@@ -661,7 +661,7 @@ function PathActivationFixture() {
           </>
         )}
       </PathMap>
-      <output data-testid="path-activation-output">선택: {selected || '없음'} · activation {count}회</output>
+      <output data-testid="path-activation-output" hidden>{selected || '없음'} · activation {count}회</output>
     </StoryPage>
   );
 }
@@ -1547,10 +1547,6 @@ export const RouteAndTrajectoryNarrow320 = {
             </>
           )}
         </PathMap>
-        <ul aria-label="현재 경로 계층 요약" style={{ margin: 0, paddingLeft: 'var(--space-5)', color: 'var(--color-semantic-label-neutral)' }}>
-          <li>배송 경로 17 · 이동 중 · 현재 구간 42%</li>
-          <li>Robot 2 예상 궤적 · sample 8개 · 현재 sample 6</li>
-        </ul>
       </StoryPage>
     </div>
   ),

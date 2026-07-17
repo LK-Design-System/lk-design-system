@@ -1,6 +1,6 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Button, Map2DCanvas, WaypointMarker } from '../src/index.js';
+import { Map2DCanvas, WaypointMarker } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 import { NavigationLegend, NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 import { contrastRatio } from './RoboticsNavigationAssert.shared.jsx';
@@ -266,19 +266,7 @@ function WaypointGraphic({
       aria-label={label}
       style={{ display: 'block', overflow: 'visible' }}
     >
-      <NavigationMapStage width={width} height={height} eyebrow={mapId} north>
-        <path
-          d={`M42 ${height * 0.32} H${width * 0.72} V${height * 0.74} H${width - 42}`}
-          fill="none"
-          stroke="var(--viewer-muted)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeDasharray="1 9"
-          strokeOpacity="0.7"
-          vectorEffect="non-scaling-stroke"
-        />
-      </NavigationMapStage>
+      <NavigationMapStage width={width} height={height} eyebrow={mapId} north />
       {waypoints.map((waypoint) => (
         <WaypointMarker
           key={waypoint.id}
@@ -473,8 +461,8 @@ function WaypointPointerOnlyFixture() {
   const [activations, setActivations] = React.useState(0);
   return (
     <main style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 620 }}>
-      <Map2DCanvas label="Pointer-only waypoint 지도" controls={false} grid={false} style={{ width: '100%', height: 240 }}>
-        <svg width="460" height="210" viewBox="0 0 460 210" role="group" aria-label="Pointer-only waypoint 계층">
+      <Map2DCanvas label="포인터 전용 웨이포인트 지도" controls={false} grid={false} style={{ width: '100%', height: 240 }}>
+        <svg width="460" height="210" viewBox="0 0 460 210" role="group" aria-label="포인터 전용 웨이포인트 계층">
           <WaypointMarker
             waypoint={pointerOnlyWaypoint}
             selected
@@ -486,10 +474,7 @@ function WaypointPointerOnlyFixture() {
           <WaypointMarker waypoint={passiveFocusedWaypoint} focused />
         </svg>
       </Map2DCanvas>
-      <Button type="button" variant="secondary" onClick={() => setActivations((count) => count + 1)}>
-        Pointer-only waypoint semantic mirror
-      </Button>
-      <output data-testid="waypoint-pointer-output">activation {activations}회</output>
+      <output data-testid="waypoint-pointer-output" hidden>activation {activations}회</output>
     </main>
   );
 }
