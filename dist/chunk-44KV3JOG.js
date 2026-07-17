@@ -13,7 +13,7 @@ import {
   NavigationAnnotationBlock,
   annotationPriority,
   useNavigationObstacles
-} from "./chunk-2VOHTLP5.js";
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/HazardMarker.jsx
 import React from "react";
@@ -202,4 +202,4 @@ function HazardMarker({
 export {
   HazardMarker
 };
-//# sourceMappingURL=chunk-AULPKGB4.js.map
+//# sourceMappingURL=chunk-44KV3JOG.js.map

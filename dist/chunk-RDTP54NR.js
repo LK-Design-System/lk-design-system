@@ -19,7 +19,7 @@ import {
   NavigationAnnotationBlock,
   annotationPriority,
   useNavigationObstacles
-} from "./chunk-2VOHTLP5.js";
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/TrajectoryOverlay.jsx
 import React from "react";
@@ -556,4 +556,4 @@ function TrajectoryOverlay({
 export {
   TrajectoryOverlay
 };
-//# sourceMappingURL=chunk-SUVGCEKX.js.map
+//# sourceMappingURL=chunk-RDTP54NR.js.map

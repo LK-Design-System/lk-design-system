@@ -275,4 +275,4 @@ function useNavigationObstacles() {
 
 
 exports.NavigationAnnotationContext = NavigationAnnotationContext; exports.useIsomorphicLayoutEffect = useIsomorphicLayoutEffect; exports.annotationPriority = annotationPriority; exports.createAnnotationStore = createAnnotationStore; exports.NavigationAnnotationBlock = NavigationAnnotationBlock; exports.useNavigationObstacles = useNavigationObstacles;
-//# sourceMappingURL=chunk-KB5BQWW4.cjs.map
+//# sourceMappingURL=chunk-4KWJ7MLT.cjs.map

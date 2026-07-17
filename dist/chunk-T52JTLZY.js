@@ -3,7 +3,7 @@ import {
   NavigationAnnotationContext,
   createAnnotationStore,
   useIsomorphicLayoutEffect
-} from "./chunk-2VOHTLP5.js";
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/NavigationAnnotationLayer.jsx
 import React from "react";
@@ -44,4 +44,4 @@ function NavigationAnnotationLayer({
 export {
   NavigationAnnotationLayer
 };
-//# sourceMappingURL=chunk-TFG2DYXJ.js.map
+//# sourceMappingURL=chunk-T52JTLZY.js.map

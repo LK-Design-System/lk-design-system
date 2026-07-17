@@ -1,23 +1,23 @@
-"use client";
-import {
-  NavigationStateGlyph
-} from "./chunk-54Q6T6L4.js";
-import {
-  NAV_DASH,
-  NAV_HIT,
-  NAV_LABEL_HALO,
-  NAV_STATE_BADGE,
-  isFocusVisibleTarget,
-  navStateOpacity
-} from "./chunk-PHNAKRBB.js";
-import {
-  NavigationAnnotationBlock,
-  annotationPriority,
-  useNavigationObstacles
-} from "./chunk-2VOHTLP5.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
+
+
+
+
+
+
+
+var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
+
+
+
+
+var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
 
 // components/robotics/WaypointMarker.jsx
-import React from "react";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
 // components/robotics/_navigationEncoding.js
 var ROLE_CODE = {
@@ -38,7 +38,7 @@ var ANNOTATION_CODE = {
 };
 
 // components/robotics/WaypointMarker.jsx
-import { jsx, jsxs } from "react/jsx-runtime";
+var _jsxruntime = require('react/jsx-runtime');
 var ROLE_LABELS = {
   holding: "\uB300\uAE30 \uC9C0\uC810",
   passthrough: "\uD1B5\uACFC \uC9C0\uC810",
@@ -113,8 +113,8 @@ function WaypointMarker({
   "aria-hidden": ariaHidden,
   ...rest
 }) {
-  const [hasDomFocus, setHasDomFocus] = React.useState(false);
-  const obstacle = useNavigationObstacles();
+  const [hasDomFocus, setHasDomFocus] = _react2.default.useState(false);
+  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
   const scale = normalizeViewportScale(viewportScale);
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === "function";
@@ -123,13 +123,13 @@ function WaypointMarker({
   const availability = waypoint.availability || "unknown";
   const compoundUnknownInvalid = availability === "unknown" && invalid;
   const details = semanticSummary(waypoint);
-  const label = ariaLabel ?? accessibleName(waypoint, {
+  const label = _nullishCoalesce(ariaLabel, () => ( accessibleName(waypoint, {
     selected,
     focused: focusVisible,
     disabled,
     invalid,
     stale
-  });
+  })));
   const foreground = "var(--viewer-foreground, var(--color-semantic-label-strong))";
   const muted = "var(--viewer-muted, var(--color-semantic-label-neutral))";
   const surface = "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))";
@@ -146,7 +146,7 @@ function WaypointMarker({
     event.preventDefault();
     activate(event);
   };
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "g",
     {
       ...rest,
@@ -162,8 +162,8 @@ function WaypointMarker({
       "data-role-codes": (waypoint.roles || []).map((role2) => ROLE_CODE[role2]).filter(Boolean).join(""),
       "data-annotation-count": (waypoint.annotations || []).length,
       transform: `translate(${waypoint.position.x} ${waypoint.position.y})`,
-      role: pointerOnly ? void 0 : role ?? (interactive ? "button" : "img"),
-      tabIndex: pointerOnly ? void 0 : interactive ? disabled ? -1 : tabIndex ?? 0 : tabIndex,
+      role: pointerOnly ? void 0 : _nullishCoalesce(role, () => ( (interactive ? "button" : "img"))),
+      tabIndex: pointerOnly ? void 0 : interactive ? disabled ? -1 : _nullishCoalesce(tabIndex, () => ( 0)) : tabIndex,
       focusable: pointerOnly ? "false" : interactive && !disabled ? "true" : void 0,
       "aria-hidden": pointerOnly || void 0,
       "aria-label": pointerOnly ? void 0 : label,
@@ -174,30 +174,30 @@ function WaypointMarker({
       onKeyDown: handleKeyDown,
       onMouseDown: (event) => {
         if (pointerOnly) event.preventDefault();
-        onMouseDown?.(event);
+        _optionalChain([onMouseDown, 'optionalCall', _ => _(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasDomFocus(isFocusVisibleTarget(event.currentTarget));
-        onFocus?.(event);
+        if (!pointerOnly) setHasDomFocus(_chunkGCBNKQWDcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        _optionalChain([onFocus, 'optionalCall', _2 => _2(event)]);
       },
       onBlur: (event) => {
         setHasDomFocus(false);
-        onBlur?.(event);
+        _optionalChain([onBlur, 'optionalCall', _3 => _3(event)]);
       },
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: navStateOpacity(disabled, stale),
+        opacity: _chunkGCBNKQWDcjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
-      children: /* @__PURE__ */ jsxs(
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
         "g",
         {
           "data-waypoint-screen-space": "",
           "data-viewport-scale": scale,
           transform: `scale(${inverseScale})`,
           children: [
-            /* @__PURE__ */ jsx(
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "polygon",
               {
                 "data-waypoint-shadow": "",
@@ -208,7 +208,7 @@ function WaypointMarker({
                 pointerEvents: "none"
               }
             ),
-            (invalid || availability === "unavailable") && /* @__PURE__ */ jsx(
+            (invalid || availability === "unavailable") && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "circle",
               {
                 "data-waypoint-attention": "",
@@ -221,17 +221,17 @@ function WaypointMarker({
                 pointerEvents: "none"
               }
             ),
-            /* @__PURE__ */ jsx(
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "circle",
               {
                 "data-waypoint-hit-area": "",
-                "data-screen-target-size": NAV_HIT.screenTargetSize,
-                r: NAV_HIT.radius,
+                "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
+                r: _chunkGCBNKQWDcjs.NAV_HIT.radius,
                 fill: "transparent",
                 pointerEvents: interactive ? "all" : "none"
               }
             ),
-            focusVisible && /* @__PURE__ */ jsx(
+            focusVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "circle",
               {
                 "data-waypoint-focus-indicator": "",
@@ -242,7 +242,7 @@ function WaypointMarker({
                 vectorEffect: "non-scaling-stroke"
               }
             ),
-            stale && /* @__PURE__ */ jsx(
+            stale && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "circle",
               {
                 "data-waypoint-stale-indicator": "",
@@ -250,11 +250,11 @@ function WaypointMarker({
                 fill: "none",
                 stroke: muted,
                 strokeWidth: "1.5",
-                strokeDasharray: NAV_DASH.staleRing,
+                strokeDasharray: _chunkGCBNKQWDcjs.NAV_DASH.staleRing,
                 vectorEffect: "non-scaling-stroke"
               }
             ),
-            /* @__PURE__ */ jsx(
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "polygon",
               {
                 ...obstacle(`waypoint:${waypoint.id}:point`),
@@ -268,7 +268,7 @@ function WaypointMarker({
                 vectorEffect: "non-scaling-stroke"
               }
             ),
-            availability === "unavailable" && /* @__PURE__ */ jsx(
+            availability === "unavailable" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "path",
               {
                 "data-waypoint-unavailable-indicator": "",
@@ -280,7 +280,7 @@ function WaypointMarker({
                 vectorEffect: "non-scaling-stroke"
               }
             ),
-            availability === "unknown" && /* @__PURE__ */ jsxs(
+            availability === "unknown" && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
               "g",
               {
                 ...obstacle(`waypoint:${waypoint.id}:unknown`),
@@ -289,19 +289,19 @@ function WaypointMarker({
                 transform: compoundUnknownInvalid ? "translate(-8 -8)" : void 0,
                 "aria-hidden": "true",
                 children: [
-                  compoundUnknownInvalid && /* @__PURE__ */ jsx(
+                  compoundUnknownInvalid && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "circle",
                     {
                       "data-waypoint-state-circle": "unknown",
-                      r: NAV_STATE_BADGE.radius,
+                      r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
                       fill: surface,
                       stroke: "var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))",
-                      strokeWidth: NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
-                  /* @__PURE__ */ jsx(
-                    NavigationStateGlyph,
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    _chunkGKSI3QZ5cjs.NavigationStateGlyph,
                     {
                       kind: "unknown",
                       size: 10,
@@ -312,7 +312,7 @@ function WaypointMarker({
                 ]
               }
             ),
-            invalid && /* @__PURE__ */ jsxs(
+            invalid && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
               "g",
               {
                 ...obstacle(`waypoint:${waypoint.id}:invalid`),
@@ -321,19 +321,19 @@ function WaypointMarker({
                 transform: compoundUnknownInvalid ? "translate(-8 8)" : void 0,
                 "aria-hidden": "true",
                 children: [
-                  compoundUnknownInvalid && /* @__PURE__ */ jsx(
+                  compoundUnknownInvalid && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "circle",
                     {
                       "data-waypoint-state-circle": "invalid",
-                      r: NAV_STATE_BADGE.radius,
+                      r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
                       fill: surface,
                       stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))",
-                      strokeWidth: NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
-                  /* @__PURE__ */ jsx(
-                    NavigationStateGlyph,
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    _chunkGKSI3QZ5cjs.NavigationStateGlyph,
                     {
                       kind: "invalid",
                       size: 10,
@@ -344,19 +344,19 @@ function WaypointMarker({
                 ]
               }
             ),
-            showLabel && /* @__PURE__ */ jsx(
-              NavigationAnnotationBlock,
+            showLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
               {
                 id: `waypoint:${waypoint.id}:label`,
                 kind: "waypoint-label",
                 anchor: waypoint.position,
-                priority: annotationPriority({
+                priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
                   selected,
                   focused: focusVisible,
                   alarm: invalid || availability === "unavailable"
                 }),
-                children: /* @__PURE__ */ jsxs("g", { "data-waypoint-label": "", "data-waypoint-label-offset-x": "15", pointerEvents: "none", "aria-hidden": "true", children: [
-                  /* @__PURE__ */ jsx(
+                children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { "data-waypoint-label": "", "data-waypoint-label-offset-x": "15", pointerEvents: "none", "aria-hidden": "true", children: [
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "text",
                     {
                       "data-waypoint-primary-label": "",
@@ -364,7 +364,7 @@ function WaypointMarker({
                       y: details ? "-1.5" : "3.5",
                       fill: foreground,
                       stroke: surface,
-                      strokeWidth: NAV_LABEL_HALO.primary,
+                      strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.primary,
                       strokeLinejoin: "round",
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
@@ -374,7 +374,7 @@ function WaypointMarker({
                       children: waypoint.label
                     }
                   ),
-                  details && /* @__PURE__ */ jsx(
+                  details && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "text",
                     {
                       "data-waypoint-details": "",
@@ -382,7 +382,7 @@ function WaypointMarker({
                       y: "10",
                       fill: muted,
                       stroke: surface,
-                      strokeWidth: NAV_LABEL_HALO.secondary,
+                      strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.secondary,
                       strokeLinejoin: "round",
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
@@ -402,7 +402,7 @@ function WaypointMarker({
   );
 }
 
-export {
-  WaypointMarker
-};
-//# sourceMappingURL=chunk-6I5OJO5P.js.map
+
+
+exports.WaypointMarker = WaypointMarker;
+//# sourceMappingURL=chunk-TZWX42E2.cjs.map

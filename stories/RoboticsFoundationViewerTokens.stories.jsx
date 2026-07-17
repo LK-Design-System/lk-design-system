@@ -32,6 +32,20 @@ const APPEARANCES = [
   { value: 'dark', label: '어두운 외관 (dark)' },
 ];
 
+// State/meaning -> tone mapping. Every navigation renderer resolves a mark's
+// color through the SAME rule (RouteOverlay statusTone/segmentTone,
+// SpatialRegion strokeForRegion, HazardMarker severity, FacilityTransition
+// availability), so color is a redundant cue on top of glyph and dash — never
+// the only signal. This lists the five tones with the real states that map to
+// each, sourced from those functions.
+const STATE_TONE_MAP = [
+  { tone: '--viewer-danger', meaning: '위험 · 차단 · 오류', states: ['차단', '충돌', '무효', '진입 금지', '위험'] },
+  { tone: '--viewer-warning', meaning: '주의 · 대기 · 미확인', states: ['대기', '재계산', '속도 제한', '미확인', '주의'] },
+  { tone: '--viewer-positive', meaning: '완료 · 가용', states: ['완료', '사용 가능'] },
+  { tone: '--viewer-accent', meaning: '현재 · 활성 · 선택', states: ['현재', '활성', '선택됨'] },
+  { tone: '--viewer-muted', meaning: '비활성 · 기타', states: ['비활성', '지연'] },
+];
+
 function Card({ title, hint, children }) {
   return (
     <section
@@ -103,6 +117,73 @@ function TokenBoard({ appearance, label, frameHeight }) {
   );
 }
 
+// The state -> tone map, rendered live inside a dark viewer frame so each tone
+// swatch is the real `var(--viewer-*)` a marker would paint. The tone box is
+// decorative; the tone name + meaning + example states are the accessible text.
+function StateToneBoard() {
+  return (
+    <ViewerFrame appearance="dark" label="상태 · 의미별 톤 적용" state="ready" style={{ height: 316 }}>
+      <ul
+        data-state-tone-board
+        style={{
+          height: '100%',
+          boxSizing: 'border-box',
+          margin: 0,
+          padding: 16,
+          listStyle: 'none',
+          display: 'grid',
+          gap: 8,
+          alignContent: 'start',
+        }}
+      >
+        {STATE_TONE_MAP.map((row) => (
+          <li
+            key={row.tone}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '18px minmax(0, 1fr)',
+              gap: 12,
+              alignItems: 'start',
+              padding: '8px 10px',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--viewer-border)',
+              background: 'color-mix(in srgb, var(--viewer-foreground) 5%, transparent)',
+            }}
+          >
+            <span
+              data-state-tone={row.tone}
+              aria-hidden="true"
+              style={{ width: 18, height: 18, borderRadius: '50%', background: `var(${row.tone})`, border: '1px solid var(--viewer-border)' }}
+            />
+            <span style={{ display: 'grid', gap: 4, minWidth: 0 }}>
+              <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+                <code style={{ fontSize: 11, color: 'var(--viewer-foreground)' }}>{row.tone}</code>
+                <span style={{ fontSize: 'var(--caption1-size)', color: 'var(--viewer-foreground)', fontWeight: 'var(--fw-semibold)' }}>{row.meaning}</span>
+              </span>
+              <span style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                {row.states.map((state) => (
+                  <span
+                    key={state}
+                    style={{
+                      fontSize: 10,
+                      color: 'var(--viewer-muted)',
+                      padding: '1px 6px',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--viewer-border)',
+                    }}
+                  >
+                    {state}
+                  </span>
+                ))}
+              </span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </ViewerFrame>
+  );
+}
+
 function ViewerTokenCatalog({ frameHeight = 340 }) {
   return (
     <main data-viewer-token-board style={{ width: 'min(880px, 100%)', display: 'grid', gap: 16 }}>
@@ -119,6 +200,12 @@ function ViewerTokenCatalog({ frameHeight = 340 }) {
           ))}
         </div>
       </Card>
+      <Card
+        title="상태 · 의미 → 톤 적용"
+        hint="마커·선·영역의 색은 의미를 인코딩합니다 — 같은 규칙(statusTone · segmentTone · strokeForRegion · severity · availability)을 모든 렌더러가 공유합니다. 색은 글리프·dash 위에 얹히는 보조 단서이며 색만으로 상태를 전달하지 않습니다. 각 톤 스와치는 뷰어 프레임 안에서 실제 var(--viewer-*)로 풀립니다."
+      >
+        <StateToneBoard />
+      </Card>
     </main>
   );
 }
@@ -131,7 +218,7 @@ const meta = {
       eyebrow: 'Foundation / Viewer Tokens',
       title: '내비게이션 렌더러가 색을 맞추는 --viewer-* 토큰을 외관별로 문서화합니다',
       description:
-        '지도·3D·영상 위의 웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 뷰포트 안에서 하나의 색 시스템으로 읽히도록, 이들이 공유하는 색 토큰 --viewer-surface·--viewer-surface-elevated·--viewer-foreground·--viewer-muted·--viewer-border·--viewer-accent·--viewer-danger·--viewer-warning·--viewer-positive 9종을 뷰어 프레임이 단일 소스로 소유합니다. 이 페이지는 그 9종을 밝은 외관과 어두운 외관 프레임 안에서 실제 색으로 그대로 렌더해, 토큰이 뷰포트 안에서만 그리고 외관에 따라 다르게 풀린다는 계약이 회귀 기준이 되도록 합니다.',
+        '지도·3D·영상 위의 웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 뷰포트 안에서 하나의 색 시스템으로 읽히도록, 이들이 공유하는 색 토큰 --viewer-surface·--viewer-surface-elevated·--viewer-foreground·--viewer-muted·--viewer-border·--viewer-accent·--viewer-danger·--viewer-warning·--viewer-positive 9종을 뷰어 프레임이 단일 소스로 소유합니다. 이 페이지는 그 9종을 밝은 외관과 어두운 외관 프레임 안에서 실제 색으로 그대로 렌더하고, 어떤 상태·의미가 어떤 톤으로 매핑되는지(위험·차단·오류→danger, 주의·대기·미확인→warning, 완료·가용→positive, 현재·활성·선택→accent, 비활성·기타→muted)를 함께 문서화해, 토큰이 뷰포트 안에서만·외관에 따라 다르게 풀린다는 계약과 색-의미 결합이 회귀 기준이 되도록 합니다. 색은 글리프·dash 위의 보조 단서이며 색만으로 상태를 전달하지 않습니다.',
     },
     docs: {
       description: {
@@ -154,8 +241,11 @@ export const Overview = {
     const board = canvasElement.querySelector('[data-viewer-token-board]');
     if (!board) throw new Error('The viewer-token board is missing.');
 
-    // Index the two rendered frames by their declared appearance.
-    const frames = Array.from(board.querySelectorAll('[data-lds-viewer-frame]'));
+    // Index the two palette frames by their declared appearance. The page also
+    // mounts a dark frame for the state->tone board; scope to frames that hold
+    // token swatches so that extra frame does not shadow the dark palette.
+    const frames = Array.from(board.querySelectorAll('[data-lds-viewer-frame]'))
+      .filter((frame) => frame.querySelector('[data-viewer-token]'));
     const framesByAppearance = {};
     for (const frame of frames) {
       framesByAppearance[frame.getAttribute('data-viewer-appearance')] = frame;
@@ -204,6 +294,25 @@ export const Overview = {
     ).backgroundColor;
     if (surfaceLight === surfaceDark) {
       throw new Error('--viewer-surface must resolve differently for light vs dark appearance.');
+    }
+
+    // The state -> tone map renders every tone live inside a dark frame; each
+    // must resolve to a real color, and the semantic tones must stay distinct
+    // (danger != positive) so color can carry meaning at a glance.
+    const toneBoard = board.querySelector('[data-state-tone-board]');
+    if (!toneBoard) throw new Error('The state -> tone board must render.');
+    const toneColor = {};
+    for (const row of STATE_TONE_MAP) {
+      const swatch = toneBoard.querySelector(`[data-state-tone="${row.tone}"]`);
+      if (!swatch) throw new Error(`State-tone swatch ${row.tone} must render.`);
+      const resolved = getComputedStyle(swatch).backgroundColor;
+      if (!isResolvedColor(resolved)) {
+        throw new Error(`State-tone swatch ${row.tone} must resolve to a real color (got "${resolved}").`);
+      }
+      toneColor[row.tone] = resolved;
+    }
+    if (toneColor['--viewer-danger'] === toneColor['--viewer-positive']) {
+      throw new Error('Semantic tones must stay distinct: --viewer-danger and --viewer-positive resolved to the same color.');
     }
   },
 };

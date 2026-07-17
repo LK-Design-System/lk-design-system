@@ -17,7 +17,7 @@ import {
   NavigationAnnotationBlock,
   annotationPriority,
   useNavigationObstacles
-} from "./chunk-2VOHTLP5.js";
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/LaneOverlay.jsx
 import React from "react";
@@ -594,4 +594,4 @@ function LaneOverlay({
 export {
   LaneOverlay
 };
-//# sourceMappingURL=chunk-CVFIQ5T2.js.map
+//# sourceMappingURL=chunk-RSAWTSDN.js.map

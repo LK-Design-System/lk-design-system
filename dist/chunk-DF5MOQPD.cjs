@@ -18,7 +18,7 @@ var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
 
 
 
-var _chunkKB5BQWW4cjs = require('./chunk-KB5BQWW4.cjs');
+var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
 
 // components/robotics/FacilityTransition.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -206,7 +206,7 @@ function FacilityTransition({
   ...rest
 }) {
   const [focusVisible, setFocusVisible] = _react2.default.useState(false);
-  const obstacle = _chunkKB5BQWW4cjs.useNavigationObstacles.call(void 0, );
+  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
   const endpoint = endpointForMap(transition, activeMapId);
   const availability = _nullishCoalesce(AVAILABILITY_PRESENTATION[transition.availability], () => ( AVAILABILITY_PRESENTATION.unknown));
   const interactive = typeof onActivate === "function";
@@ -372,12 +372,12 @@ function FacilityTransition({
           state.kind
         )) }),
         showLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkKB5BQWW4cjs.NavigationAnnotationBlock,
+          _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
           {
             id: `facility:${transition.id}:label`,
             kind: "facility-label",
             anchor: endpoint.position,
-            priority: _chunkKB5BQWW4cjs.annotationPriority.call(void 0, {
+            priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
               selected,
               focused: activeFocus,
               alarm: invalid || transition.availability === "unavailable"
@@ -416,4 +416,4 @@ function FacilityTransition({
 
 
 exports.FacilityTransition = FacilityTransition;
-//# sourceMappingURL=chunk-QJGRTQYK.cjs.map
+//# sourceMappingURL=chunk-DF5MOQPD.cjs.map

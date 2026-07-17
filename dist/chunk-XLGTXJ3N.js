@@ -275,4 +275,4 @@ export {
   NavigationAnnotationBlock,
   useNavigationObstacles
 };
-//# sourceMappingURL=chunk-2VOHTLP5.js.map
+//# sourceMappingURL=chunk-XLGTXJ3N.js.map

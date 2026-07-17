@@ -29,7 +29,7 @@ export function annotationPriority({ selected, focused, alarm, emphasized } = {}
     + (emphasized ? 100 : 0);
 }
 
-const KIND_WEIGHT = {
+export const KIND_WEIGHT = {
   'region-label': 0,
   'lane-label': 1,
   'route-segment-label': 2,

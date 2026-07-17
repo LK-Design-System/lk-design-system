@@ -3,7 +3,7 @@
 
 
 
-var _chunkKB5BQWW4cjs = require('./chunk-KB5BQWW4.cjs');
+var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
 
 // components/robotics/NavigationAnnotationLayer.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -14,9 +14,9 @@ function NavigationAnnotationLayer({
   labelGapPx = 4,
   ...rest
 }) {
-  const [store] = _react2.default.useState(_chunkKB5BQWW4cjs.createAnnotationStore);
+  const [store] = _react2.default.useState(_chunk4KWJ7MLTcjs.createAnnotationStore);
   const hostRef = _react2.default.useRef(null);
-  _chunkKB5BQWW4cjs.useIsomorphicLayoutEffect.call(void 0, () => {
+  _chunk4KWJ7MLTcjs.useIsomorphicLayoutEffect.call(void 0, () => {
     store.setOptions({ maxLabelDisplacementPx, labelGapPx, host: hostRef.current });
     store.flush();
   });
@@ -38,10 +38,10 @@ function NavigationAnnotationLayer({
       _optionalChain([observer, 'optionalAccess', _6 => _6.disconnect, 'call', _7 => _7()]);
     };
   }, [store]);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { ...rest, ref: hostRef, "data-lk-navigation-annotation-layer": "", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkKB5BQWW4cjs.NavigationAnnotationContext.Provider, { value: store, children }) });
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { ...rest, ref: hostRef, "data-lk-navigation-annotation-layer": "", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk4KWJ7MLTcjs.NavigationAnnotationContext.Provider, { value: store, children }) });
 }
 
 
 
 exports.NavigationAnnotationLayer = NavigationAnnotationLayer;
-//# sourceMappingURL=chunk-HPG5AMXZ.cjs.map
+//# sourceMappingURL=chunk-J43DO5P7.cjs.map

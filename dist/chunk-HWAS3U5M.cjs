@@ -13,7 +13,7 @@ var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
 
 
 
-var _chunkKB5BQWW4cjs = require('./chunk-KB5BQWW4.cjs');
+var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
 
 // components/robotics/HazardMarker.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -84,7 +84,7 @@ function HazardMarker({
   ...rest
 }) {
   const [hasDomFocus, setHasDomFocus] = _react2.default.useState(false);
-  const obstacle = _chunkKB5BQWW4cjs.useNavigationObstacles.call(void 0, );
+  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
   const scale = normalizeViewportScale(viewportScale);
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === "function";
@@ -165,12 +165,12 @@ function HazardMarker({
         ),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { fill: surface, pointerEvents: "none", transform: GLYPH_FIT, "data-hazard-glyph": "", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: glyph }) }),
         showLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkKB5BQWW4cjs.NavigationAnnotationBlock,
+          _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
           {
             id: `hazard:${hazard.id}:label`,
             kind: "hazard-label",
             anchor: hazard.position,
-            priority: _chunkKB5BQWW4cjs.annotationPriority.call(void 0, { selected, focused: focusVisible, alarm: hazard.severity === "danger" }),
+            priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, { selected, focused: focusVisible, alarm: hazard.severity === "danger" }),
             children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
               "text",
               {
@@ -202,4 +202,4 @@ function HazardMarker({
 
 
 exports.HazardMarker = HazardMarker;
-//# sourceMappingURL=chunk-QKWTW6FN.cjs.map
+//# sourceMappingURL=chunk-HWAS3U5M.cjs.map

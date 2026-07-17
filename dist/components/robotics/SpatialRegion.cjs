@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk7G5UISRCcjs = require('../../chunk-7G5UISRC.cjs');
+var _chunkXMQPDJL4cjs = require('../../chunk-XMQPDJL4.cjs');
 require('../../chunk-GKSI3QZ5.cjs');
 require('../../chunk-GCBNKQWD.cjs');
-require('../../chunk-KB5BQWW4.cjs');
+require('../../chunk-4KWJ7MLT.cjs');
 
 
-exports.SpatialRegion = _chunk7G5UISRCcjs.SpatialRegion;
+exports.SpatialRegion = _chunkXMQPDJL4cjs.SpatialRegion;
 //# sourceMappingURL=SpatialRegion.cjs.map

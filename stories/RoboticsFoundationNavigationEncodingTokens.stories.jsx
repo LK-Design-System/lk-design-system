@@ -9,6 +9,8 @@ import {
   NAV_STATE_BADGE,
   NAV_LABEL_HALO,
 } from '../components/robotics/_navigationVocabulary.js';
+import { NAVIGATION_DIRECTION_PATH } from '../components/robotics/_navigationVectorGlyph.js';
+import { annotationPriority, KIND_WEIGHT } from '../components/robotics/_navigationAnnotations.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 // This page renders the REAL shared encoding tokens — every dash, opacity, badge,
@@ -211,6 +213,126 @@ function HaloSwatches() {
   );
 }
 
+// Screen-constant markers under zoom. Both panels share one map (grid + path
+// drawn in the same world coordinates); the right panel wraps that map in a
+// scale(2) group so the LINE and GRID grow with the zoom, while the marker is
+// drawn OUTSIDE the zoomed group at a constant size — exactly what every
+// renderer achieves with `transform: scale(1/viewportScale)` +
+// `vector-effect: non-scaling-stroke` on the marker.
+const ZOOM_PANELS = [
+  { z: 1, label: '줌 1×' },
+  { z: 2, label: '줌 2×' },
+];
+
+function ZoomPanel({ z, label }) {
+  const gridLines = [];
+  for (let g = 12; g < 132; g += 24) {
+    gridLines.push(<line key={`v${g}`} x1={g} y1="0" x2={g} y2="96" stroke={LINE} strokeWidth="1" />);
+  }
+  for (let g = 12; g < 96; g += 24) {
+    gridLines.push(<line key={`h${g}`} x1="0" y1={g} x2="132" y2={g} stroke={LINE} strokeWidth="1" />);
+  }
+  return (
+    <figure data-zoom-panel={z} style={{ margin: 0, display: 'grid', gap: 8, justifyItems: 'center' }}>
+      <svg width={132} height={96} viewBox="0 0 132 96" aria-hidden="true" style={{ display: 'block', border: `1px solid ${LINE}`, borderRadius: 'var(--radius-sm)', background: SURFACE }}>
+        <g transform={z === 1 ? undefined : `translate(66 48) scale(${z}) translate(-66 -48)`}>
+          {gridLines}
+          {/* The path scales with the map (no non-scaling-stroke), so it reads
+              thicker and longer at higher zoom. */}
+          <path data-zoom-path="" d="M18 68 L66 48 L114 40" fill="none" stroke={ACCENT} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+        {/* Marker drawn outside the zoomed group → constant screen size. */}
+        <g transform="translate(66 48)">
+          <circle
+            data-zoom-marker=""
+            r={NAV_CURRENT_MARKER.radius}
+            fill={SURFACE}
+            stroke={ACCENT}
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
+            vectorEffect="non-scaling-stroke"
+          />
+          <path d={NAVIGATION_DIRECTION_PATH} transform="rotate(-22)" fill={INK} />
+        </g>
+      </svg>
+      <span style={{ fontSize: 11, color: INK, fontVariantNumeric: 'tabular-nums' }}>{label}</span>
+    </figure>
+  );
+}
+
+function ZoomCard() {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(148px, max-content))', gap: 16, justifyContent: 'center' }}>
+      {ZOOM_PANELS.map((panel) => (
+        <ZoomPanel key={panel.z} z={panel.z} label={panel.label} />
+      ))}
+    </div>
+  );
+}
+
+// Label priority ladder. When two labels contend for one slot, the higher
+// annotationPriority wins; ties break by KIND_WEIGHT (paint order), then id.
+// Both scales are rendered straight from the source functions.
+const STATE_WEIGHTS = [
+  { key: 'selected', label: '선택됨' },
+  { key: 'focused', label: '포커스됨' },
+  { key: 'alarm', label: '경보' },
+  { key: 'emphasized', label: '강조' },
+];
+const KIND_LADDER = [
+  { label: '영역', kind: 'region-label' },
+  { label: '레인', kind: 'lane-label' },
+  { label: '경로', kind: 'route-segment-label' },
+  { label: '궤적', kind: 'trajectory-label' },
+  { label: '웨이포인트', kind: 'waypoint-label' },
+  { label: '설비', kind: 'facility-label' },
+];
+
+function Pill({ children, hook }) {
+  return (
+    <span
+      {...hook}
+      style={{ display: 'inline-flex', alignItems: 'baseline', gap: 6, padding: '3px 9px', borderRadius: 'var(--radius-sm)', border: `1px solid ${LINE}`, background: SURFACE, fontSize: 'var(--caption1-size)', color: INK }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function PriorityLadder() {
+  return (
+    <div style={{ display: 'grid', gap: 14 }}>
+      <div style={{ display: 'grid', gap: 6 }}>
+        <span style={{ fontSize: 11, color: MUTED }}>상태 가중치 · annotationPriority()</span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          {STATE_WEIGHTS.map((state) => (
+            <Pill key={state.key} hook={{ 'data-priority-state': state.key }}>
+              <span>{state.label}</span>
+              <code style={{ fontSize: 11, color: ACCENT, fontVariantNumeric: 'tabular-nums' }}>{annotationPriority({ [state.key]: true })}</code>
+            </Pill>
+          ))}
+        </div>
+      </div>
+      <div style={{ display: 'grid', gap: 6 }}>
+        <span style={{ fontSize: 11, color: MUTED }}>동점 tie-break · KIND_WEIGHT (paint order)</span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6 }}>
+          {KIND_LADDER.map((entry, index) => (
+            <React.Fragment key={entry.kind}>
+              {index > 0 && <span aria-hidden="true" style={{ color: MUTED }}>›</span>}
+              <Pill hook={{ 'data-kind-weight': entry.kind }}>
+                <span>{entry.label}</span>
+                <code style={{ fontSize: 11, color: ACCENT, fontVariantNumeric: 'tabular-nums' }}>{KIND_WEIGHT[entry.kind]}</code>
+              </Pill>
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+      <p style={{ margin: 0, fontSize: 11, color: MUTED, lineHeight: 1.6 }}>
+        최종 규칙: 우선순위 내림차순 → 같으면 KIND_WEIGHT 내림차순(위에 그려지는 점 개체가 라벨을 지킴) → 그래도 같으면 id 오름차순. 마커·배지·핀은 부동 장애물이고 <b style={{ color: INK }}>라벨만</b> 재배치됩니다.
+      </p>
+    </div>
+  );
+}
+
 function EncodingCatalog() {
   return (
     <main data-encoding-catalog style={{ width: 'min(880px, 100%)', display: 'grid', gap: 16 }}>
@@ -226,6 +348,12 @@ function EncodingCatalog() {
       <Card title="라벨 halo 계층" hint="paint-order stroke로 텍스트 뒤에 깔리는 legibility halo. 식별·상세·메타 세 단계를 NAV_LABEL_HALO가 소유합니다.">
         <HaloSwatches />
       </Card>
+      <Card title="화면 고정 크기 · scale(1/viewportScale)" hint="지도를 확대·축소해도 마커·배지·글리프는 화면상 같은 크기를 유지하고 선·도형만 지도와 함께 커집니다. 마커가 scale(1/viewportScale) + non-scaling-stroke로 자기 크기를 되돌리기 때문입니다. 두 패널은 같은 지도를 줌 1×·2×로 보여줍니다 — 격자와 선은 커지고 마커는 그대로입니다.">
+        <ZoomCard />
+      </Card>
+      <Card title="라벨 우선순위 사다리" hint="두 라벨이 한 자리를 다투면 더 중요한 개체의 라벨이 이깁니다. 상태 가중치(annotationPriority)와 동점 tie-break(KIND_WEIGHT)를 소스 함수에서 그대로 렌더합니다. 실제 재배치 동작은 Navigation/Annotation Layer 페이지가 보여줍니다.">
+        <PriorityLadder />
+      </Card>
     </main>
   );
 }
@@ -238,7 +366,7 @@ const meta = {
       eyebrow: 'Foundation / Navigation Encoding Tokens',
       title: '내비게이션 렌더러가 공유하는 인코딩 토큰을 원자 단위로 문서화합니다',
       description:
-        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge와 현재 위치 marker 기하·label halo 계층)을 상수에서 그대로 렌더해, 토큰 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
+        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge와 현재 위치 marker 기하·label halo 계층)을 상수에서 그대로 렌더하고, 줌에도 마커가 화면 크기를 유지하는 화면 고정 메커니즘과 라벨이 자리를 다툴 때의 우선순위 사다리도 소스 함수에서 그대로 보여줘, 토큰과 규칙 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
     },
     docs: {
       description: {
@@ -305,6 +433,47 @@ export const Overview = {
       hit?.getAttribute('data-screen-target-size') !== String(NAV_HIT.screenTargetSize)
     ) {
       throw new Error('The hit-target swatch must render NAV_HIT radius and screen target size.');
+    }
+
+    // Screen-constant marker: the two zoom panels render the SAME marker size on
+    // screen while the map path grows with zoom — proving markers hold their CSS
+    // size across scale.
+    const zoomMarkers = Array.from(root.querySelectorAll('[data-zoom-marker]'));
+    const zoomPaths = Array.from(root.querySelectorAll('[data-zoom-path]'));
+    if (zoomMarkers.length !== 2 || zoomPaths.length !== 2) {
+      throw new Error('The zoom card must render two panels each with a marker and a map path.');
+    }
+    const [markerA, markerB] = zoomMarkers.map((el) => el.getBoundingClientRect().width);
+    if (!(markerA > 0) || Math.abs(markerA - markerB) > 1) {
+      throw new Error(`Markers must hold a constant screen size across zoom: ${markerA} vs ${markerB}.`);
+    }
+    const [pathA, pathB] = zoomPaths.map((el) => el.getBoundingClientRect().width);
+    if (!(pathB > pathA + 1)) {
+      throw new Error(`The map path must grow with zoom (screen-scaled), not stay constant: ${pathA} vs ${pathB}.`);
+    }
+
+    // Priority ladder: state weights and kind weights render straight from the
+    // source functions, so the page is the ladder's regression baseline.
+    for (const state of ['selected', 'focused', 'alarm', 'emphasized']) {
+      const pill = root.querySelector(`[data-priority-state="${state}"]`);
+      if (!pill?.textContent?.includes(String(annotationPriority({ [state]: true })))) {
+        throw new Error(`Priority pill "${state}" must render annotationPriority({${state}: true}).`);
+      }
+    }
+    const kinds = Array.from(root.querySelectorAll('[data-kind-weight]'));
+    if (kinds.length !== KIND_LADDER.length) {
+      throw new Error('The kind-weight ladder must render one pill per rung.');
+    }
+    let previousWeight = -1;
+    for (const pill of kinds) {
+      const weight = KIND_WEIGHT[pill.getAttribute('data-kind-weight')];
+      if (!pill.textContent?.includes(String(weight))) {
+        throw new Error('Each kind-weight pill must render its KIND_WEIGHT value.');
+      }
+      if (weight < previousWeight) {
+        throw new Error('The kind-weight ladder must render in ascending paint-order weight.');
+      }
+      previousWeight = weight;
     }
   },
 };

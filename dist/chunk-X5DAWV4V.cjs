@@ -19,7 +19,7 @@ var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
 
 
 
-var _chunkKB5BQWW4cjs = require('./chunk-KB5BQWW4.cjs');
+var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
 
 // components/robotics/TrajectoryOverlay.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -200,7 +200,7 @@ function TrajectoryOverlay({
   ...rest
 }) {
   const [hasDomFocus, setHasDomFocus] = _react2.default.useState(false);
-  const obstacle = _chunkKB5BQWW4cjs.useNavigationObstacles.call(void 0, );
+  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === "function";
@@ -509,13 +509,13 @@ function TrajectoryOverlay({
           );
         }),
         showLabel && _optionalChain([trajectory, 'optionalAccess', _28 => _28.label]) && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkKB5BQWW4cjs.NavigationAnnotationBlock,
+          _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
           {
             id: `trajectory:${trajectory.id}:label`,
             kind: "trajectory-label",
             anchor: markerPoint,
             nudgeDirection: "up",
-            priority: _chunkKB5BQWW4cjs.annotationPriority.call(void 0, {
+            priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
               selected,
               focused: focusVisible,
               alarm: invalid || _optionalChain([trajectory, 'optionalAccess', _29 => _29.status]) === "blocked",
@@ -556,4 +556,4 @@ function TrajectoryOverlay({
 
 
 exports.TrajectoryOverlay = TrajectoryOverlay;
-//# sourceMappingURL=chunk-KX44NABU.cjs.map
+//# sourceMappingURL=chunk-X5DAWV4V.cjs.map

@@ -18,7 +18,7 @@ import {
   NavigationAnnotationBlock,
   annotationPriority,
   useNavigationObstacles
-} from "./chunk-2VOHTLP5.js";
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/FacilityTransition.jsx
 import React from "react";
@@ -416,4 +416,4 @@ function FacilityTransition({
 export {
   FacilityTransition
 };
-//# sourceMappingURL=chunk-6UHES2EP.js.map
+//# sourceMappingURL=chunk-6B5K2T3G.js.map

@@ -17,7 +17,7 @@ var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
 
 
 
-var _chunkKB5BQWW4cjs = require('./chunk-KB5BQWW4.cjs');
+var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
 
 // components/robotics/LaneOverlay.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -229,7 +229,7 @@ function LaneOverlay({
   ...rest
 }) {
   const [hasFocus, setHasFocus] = _react2.default.useState(false);
-  const obstacle = _chunkKB5BQWW4cjs.useNavigationObstacles.call(void 0, );
+  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
   const pointerOnly = ariaHidden === true || ariaHidden === "true";
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
@@ -521,12 +521,12 @@ function LaneOverlay({
           }
         ),
         showLabel && (_optionalChain([lane, 'optionalAccess', _31 => _31.label]) || metadata) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkKB5BQWW4cjs.NavigationAnnotationBlock,
+          _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
           {
             id: `lane:${lane.id}:label`,
             kind: "lane-label",
             anchor: midpoint,
-            priority: _chunkKB5BQWW4cjs.annotationPriority.call(void 0, {
+            priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
               selected,
               focused: visibleFocus,
               alarm: invalid || hasConflict || resolvedAvailability === "closed"
@@ -594,4 +594,4 @@ function LaneOverlay({
 
 
 exports.LaneOverlay = LaneOverlay;
-//# sourceMappingURL=chunk-DZH7S6L7.cjs.map
+//# sourceMappingURL=chunk-KQLLCW4M.cjs.map
