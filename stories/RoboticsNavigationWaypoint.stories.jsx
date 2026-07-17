@@ -158,12 +158,6 @@ const compoundWaypoints = [
   },
 ];
 
-function semanticsText(waypoint) {
-  const roles = (waypoint.roles || []).map((role) => ROLE_NAMES[role]).join(' · ');
-  const annotations = (waypoint.annotations || []).map((annotation) => annotation.label).join(' · ');
-  return [roles, annotations, `가용성 ${waypoint.availability || 'unknown'}`].filter(Boolean).join(' / ');
-}
-
 function assertWaypointFocusLabelGap(marker, context) {
   const focus = marker?.querySelector('[data-waypoint-focus-indicator]');
   const label = marker?.querySelector('[data-waypoint-label]');
@@ -335,92 +329,26 @@ function MapSurface({
   );
 }
 
-function SemanticWaypointList({ waypoints, selectedId, onSelect, compact = false }) {
-  return (
-    <section aria-labelledby={compact ? 'narrow-waypoint-list' : 'waypoint-list'} style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0 }}>
-      <h2
-        id={compact ? 'narrow-waypoint-list' : 'waypoint-list'}
-        style={{ margin: 0, fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)' }}
-      >
-        같은 순서의 목록 선택
-      </h2>
-      <ul
-        style={{
-          display: 'grid',
-          gridTemplateColumns: compact ? '1fr' : 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))',
-          gap: 'var(--space-2)',
-          margin: 0,
-          padding: 0,
-          listStyle: 'none',
-        }}
-      >
-        {waypoints.map((waypoint) => (
-          <li key={waypoint.id} style={{ minWidth: 0 }}>
-            <Button
-              data-semantic-waypoint={waypoint.id}
-              type="button"
-              variant={selectedId === waypoint.id ? 'secondary' : 'ghost'}
-              size="sm"
-              full
-              aria-pressed={selectedId === waypoint.id}
-              onClick={(event) => onSelect(waypoint.id, event)}
-              style={{ height: 'auto', minHeight: 'var(--control-h-sm)', justifyContent: 'flex-start', textAlign: 'left', whiteSpace: 'normal' }}
-            >
-              <span style={{ display: 'grid', gap: 'var(--space-0)', minWidth: 0 }}>
-                <strong>{waypoint.label} · {waypoint.mapId}</strong>
-                <span style={{
-                  // When selected the item flips to the `secondary` button
-                  // variant, whose fill is a dark graphite (secondary-normal).
-                  // The light-theme neutral label has no contrast on that fill,
-                  // so on selection mute the button's own inverse (white) label
-                  // instead — keeping the subtext legible and below the title.
-                  color: selectedId === waypoint.id
-                    ? 'color-mix(in srgb, var(--color-semantic-inverse-label) 80%, transparent)'
-                    : 'var(--color-semantic-label-neutral)',
-                  fontSize: 'var(--caption1-size)',
-                  lineHeight: 'var(--caption1-line)',
-                }}>
-                  {semanticsText(waypoint)}
-                </span>
-              </span>
-            </Button>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
-function OverviewFixture() {
+function MarkerSelectionFixture() {
   const [selectedId, setSelectedId] = React.useState('wp-holding');
-  const [activation, setActivation] = React.useState('선택 대기');
   const [activationCount, setActivationCount] = React.useState(0);
 
-  const selectWaypoint = (waypointId, event) => {
+  const selectWaypoint = (waypointId) => {
     setSelectedId(waypointId);
-    setActivation(`${waypointId} · ${event.type}`);
     setActivationCount((count) => count + 1);
   };
 
   return (
-    <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 900, minWidth: 0 }}>
+    <main style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 900, minWidth: 0 }}>
       <MapSurface
         waypoints={overviewWaypoints}
         selectedId={selectedId}
         onActivate={selectWaypoint}
         height={300}
-        label="1층 웨이포인트 역할 지도"
+        label="1층 웨이포인트 선택 지도"
       />
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(200px, 260px)', gap: 'var(--space-4)', alignItems: 'start', minWidth: 0 }}>
-        <SemanticWaypointList waypoints={overviewWaypoints} selectedId={selectedId} onSelect={selectWaypoint} />
-        <NavigationLegend
-          roles={['holding', 'passthrough', 'parking', 'charger']}
-          annotations={['dock']}
-          states={['available', 'unknown']}
-        />
-      </div>
       <p data-activation-log style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', fontVariantNumeric: 'tabular-nums' }}>
-        마지막 선택: {activation} · activation <span data-activation-count="">{activationCount}</span>회
+        선택 활성화 <span data-activation-count="">{activationCount}</span>회
       </p>
     </main>
   );
@@ -462,15 +390,15 @@ export const Overview = {
 };
 
 export const SelectionSync = {
-  name: '상호작용 · 지도·목록 선택 동기화',
+  name: '상호작용 · 선택과 활성화',
   parameters: storyDescription(
-    '같은 waypoint를 지도 표식과 동일 순서 목록 어느 쪽에서 선택해도 같은 id가 선택되는지, 그리고 포인터·Enter·Space 활성화와 :focus-visible 미러링, 반복 keydown 억제가 지켜지는지 확인합니다.',
+    '지도 마커를 포인터·키보드로 선택·활성화하는 계약을 확인합니다. 클릭·Enter·Space가 마커를 선택(aria-pressed)하고, :focus-visible 미러링과 반복 keydown 억제가 지켜지며, 선택이 중복 live region을 만들지 않아야 합니다.',
   ),
-  render: () => <OverviewFixture />,
+  render: () => <MarkerSelectionFixture />,
   play: async ({ canvasElement }) => {
     const holding = canvasElement.querySelector('[data-waypoint-id="wp-holding"]');
     const passthrough = canvasElement.querySelector('[data-waypoint-id="wp-passthrough"]');
-    if (!holding || !passthrough) throw new Error('Waypoint selection-sync markers are incomplete.');
+    if (!holding || !passthrough) throw new Error('Waypoint selection markers are incomplete.');
 
     await userEvent.click(passthrough);
     await waitFor(() => {
@@ -507,27 +435,19 @@ export const SelectionSync = {
       if (passthrough.getAttribute('aria-pressed') !== 'true') throw new Error('Space did not activate the focused waypoint.');
     });
 
-    const listChoice = canvasElement.querySelector('[data-semantic-waypoint="wp-charger"]');
-    await userEvent.click(listChoice);
-    await waitFor(() => {
-      const marker = canvasElement.querySelector('[data-waypoint-id="wp-charger"]');
-      if (marker?.getAttribute('aria-pressed') !== 'true') throw new Error('The semantic list did not select the matching map waypoint.');
-      assertWaypointStateGeometry(marker, 'unknown', 'Overview unknown waypoint');
-    });
-
     if (canvasElement.querySelector('[aria-live], [role="status"], [role="alert"]')) {
       throw new Error('Waypoint selection must not create a redundant live region.');
     }
     const activationCount = () => canvasElement.querySelector('[data-activation-count]')?.textContent ?? '';
     await waitFor(() => {
-      if (activationCount() !== '4') throw new Error(`Waypoint activation count is incomplete: ${activationCount()}.`);
+      if (activationCount() !== '3') throw new Error(`Waypoint activation count is incomplete: ${activationCount()}.`);
     });
     holding.focus();
     const view = canvasElement.ownerDocument.defaultView;
     holding.dispatchEvent(new view.KeyboardEvent('keydown', { key: 'Enter', repeat: true, bubbles: true, cancelable: true }));
     holding.dispatchEvent(new view.KeyboardEvent('keydown', { key: ' ', repeat: true, bubbles: true, cancelable: true }));
     await new Promise((resolve) => setTimeout(resolve, 20));
-    if (activationCount() !== '4') throw new Error('Repeated waypoint keydown invoked onActivate.');
+    if (activationCount() !== '3') throw new Error('Repeated waypoint keydown invoked onActivate.');
   },
 };
 
@@ -848,7 +768,6 @@ function NarrowFixture() {
         height={220}
         label="320px 웨이포인트 지도"
       />
-      <SemanticWaypointList compact waypoints={narrowWaypoints} selectedId={selectedId} onSelect={setSelectedId} />
     </div>
   );
 }
@@ -856,7 +775,7 @@ function NarrowFixture() {
 export const NarrowWidth = {
   name: '반응형 · 320px 좁은 폭',
   parameters: storyDescription(
-    '320px 작업 영역에서 지도와 동일 순서의 목록 선택 경로를 세로로 배치합니다. waypoint 라벨과 역할 정보가 가로 overflow를 만들지 않고 지도 표식이 좁아져도 목록에서 같은 항목을 선택할 수 있는지 확인하세요.',
+    '320px 작업 영역에서 웨이포인트 지도가 가로 overflow 없이 접히고, 지도 표식이 좁아져도 포인터로 선택할 수 있는지 확인합니다.',
   ),
   render: () => <NarrowFixture />,
   play: async ({ canvasElement }) => {
@@ -867,11 +786,11 @@ export const NarrowWidth = {
       throw new Error(`Waypoint narrow layout overflowed: ${frame.scrollWidth}px > ${frame.clientWidth}px.`);
     }
 
-    const listChoice = canvasElement.querySelector('[data-semantic-waypoint="wp-charger"]');
-    await userEvent.click(listChoice);
+    const marker = canvasElement.querySelector('[data-waypoint-id="wp-charger"]');
+    if (!marker) throw new Error('Narrow waypoint marker is missing.');
+    await userEvent.click(marker);
     await waitFor(() => {
-      const marker = canvasElement.querySelector('[data-waypoint-id="wp-charger"]');
-      if (marker?.getAttribute('aria-pressed') !== 'true') throw new Error('Narrow semantic selection did not reach the map marker.');
+      if (marker.getAttribute('aria-pressed') !== 'true') throw new Error('Narrow map marker did not select on pointer.');
       assertWaypointFocusLabelGap(marker, '320px waypoint');
       assertWaypointStateGeometry(marker, 'unknown', '320px unknown waypoint');
       assertWaypointCompactText(marker, '320px role/annotation waypoint');
