@@ -83,14 +83,14 @@ const OBSTACLE_DANGER = {
 };
 
 const KINDS = [
-  { hazard: STAIRS_CAUTION, label: '계단 · 주의(caution)' },
-  { hazard: STAIRS_DANGER, label: '계단 · 위험(danger)' },
-  { hazard: RAMP_CAUTION, label: '경사로 · 주의(caution)' },
-  { hazard: RAMP_DANGER, label: '경사로 · 위험(danger)' },
-  { hazard: DROPOFF_CAUTION, label: '단차·낙하 · 주의(caution)' },
-  { hazard: DROPOFF_DANGER, label: '단차·낙하 · 위험(danger)' },
-  { hazard: OBSTACLE_CAUTION, label: '충돌 위험물 · 주의(caution)' },
-  { hazard: OBSTACLE_DANGER, label: '충돌 위험물 · 위험(danger)' },
+  { hazard: STAIRS_CAUTION, label: '계단 · 주의' },
+  { hazard: STAIRS_DANGER, label: '계단 · 위험' },
+  { hazard: RAMP_CAUTION, label: '경사로 · 주의' },
+  { hazard: RAMP_DANGER, label: '경사로 · 위험' },
+  { hazard: DROPOFF_CAUTION, label: '단차·낙하 · 주의' },
+  { hazard: DROPOFF_DANGER, label: '단차·낙하 · 위험' },
+  { hazard: OBSTACLE_CAUTION, label: '충돌 위험물 · 주의' },
+  { hazard: OBSTACLE_DANGER, label: '충돌 위험물 · 위험' },
 ];
 
 const meta = {
@@ -132,7 +132,7 @@ function HazardTile({ hazard, label, props }) {
       <svg width={92} height={100} viewBox="0 0 56 52" aria-hidden="true" style={{ display: 'block' }}>
         <HazardMarker hazard={hazard} showLabel={false} {...props} />
       </svg>
-      <code style={{ fontSize: 12, color: 'var(--color-semantic-label-normal)' }}>{label}</code>
+      <span style={{ fontSize: 12, color: 'var(--color-semantic-label-normal)' }}>{label}</span>
     </div>
   );
 }
@@ -140,7 +140,7 @@ function HazardTile({ hazard, label, props }) {
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '계단·경사로·단차(낙하)·충돌 위험물을 주의(caution)·위험(danger) severity로 비교합니다. severity 색이 설비 핀의 accent와 뚜렷이 구분되고, 핀 안 위험물 글리프가 작은 크기에서도 서로 구분되는지 확인하세요.',
+    '계단·경사로·단차(낙하)·충돌 위험물을 주의·위험 severity로 비교합니다. severity 색이 설비 핀의 accent와 뚜렷이 구분되고, 핀 안 위험물 글리프가 작은 크기에서도 서로 구분되는지 확인하세요.',
   ),
   render: () => (
     <main style={{ width: 'min(560px, 100%)', display: 'grid', gap: 20 }}>

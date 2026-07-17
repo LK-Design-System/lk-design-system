@@ -150,9 +150,6 @@ function OverviewFixture() {
           />
         ))}
       </RegionMap>
-      <output data-testid="selected-region" style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>
-        선택: {selectedId}
-      </output>
     </main>
   );
 }

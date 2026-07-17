@@ -178,9 +178,6 @@ export const NarrowViewport = {
             />
           )}
         </PathMap>
-        <ul aria-label="현재 궤적 요약" style={{ margin: 0, paddingLeft: 'var(--space-5)', color: 'var(--color-semantic-label-neutral)' }}>
-          <li>Robot 2 예상 궤적 · sample 8개 · 현재 sample 6</li>
-        </ul>
       </StoryPage>
     </div>
   ),
