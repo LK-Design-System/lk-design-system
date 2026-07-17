@@ -428,7 +428,7 @@ export function RouteOverlay({
               setFocusedSegment((current) => current === segment.id ? null : current);
               onBlur?.(event);
             } : undefined}
-            style={{ cursor: interactive && !disabled ? 'pointer' : 'default' }}
+            style={{ cursor: interactive && !disabled ? 'pointer' : disabled ? 'not-allowed' : 'default' }}
           >
             {segmentFocused && pathData && (
               <path

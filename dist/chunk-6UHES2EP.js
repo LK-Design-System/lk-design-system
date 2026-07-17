@@ -26,18 +26,15 @@ import { jsx, jsxs } from "react/jsx-runtime";
 var AVAILABILITY_PRESENTATION = {
   available: {
     label: "\uC0AC\uC6A9 \uAC00\uB2A5",
-    stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-    dash: void 0
+    stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))"
   },
   unavailable: {
     label: "\uC0AC\uC6A9 \uBD88\uAC00",
-    stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))",
-    dash: "6 3"
+    stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))"
   },
   unknown: {
     label: "\uAC00\uC6A9\uC131 \uBBF8\uD655\uC778",
-    stroke: "var(--viewer-muted, var(--color-semantic-label-alternative))",
-    dash: NAV_DASH.unknown
+    stroke: "var(--viewer-muted, var(--color-semantic-label-alternative))"
   }
 };
 var KIND_LABELS = {
@@ -218,7 +215,6 @@ function FacilityTransition({
   const scale = safeScale(viewportScale);
   const inverseScale = 1 / scale;
   const stroke = invalid ? "var(--viewer-danger, var(--color-semantic-status-negative-foreground))" : disabled ? "var(--viewer-muted, var(--color-semantic-label-alternative))" : availability.stroke;
-  const dash = invalid ? NAV_DASH.invalid : stale ? NAV_DASH.staleShape : availability.dash;
   const rows = visibleDetailRows(transition, availability.label);
   const computedLabel = [
     computedAccessibleLabel(transition, availability.label),
@@ -420,4 +416,4 @@ function FacilityTransition({
 export {
   FacilityTransition
 };
-//# sourceMappingURL=chunk-I5SGRCCQ.js.map
+//# sourceMappingURL=chunk-6UHES2EP.js.map

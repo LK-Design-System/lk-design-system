@@ -95,8 +95,9 @@ const KINDS = [
   { transition: HANDOFF, label: '핸드오프 · handoff' },
 ];
 
-// State treatments come straight from the component's own props, so the dashed
-// outline, unavailable slash, and corner state badges are the real thing.
+// State treatments come straight from the component's own props: the unavailable
+// slash, the corner state badges, and the stale badge's dashed ring are the real
+// thing. The pin body is fill-only — it has no dashed outline.
 const LIFT_STATES = [
   { key: 'available', label: '사용 가능', transition: LIFT },
   { key: 'unavailable', label: '사용 불가', transition: { ...LIFT, availability: 'unavailable' } },
@@ -167,7 +168,7 @@ export const Overview = {
 export const States = {
   name: '상태 표기',
   parameters: storyDescription(
-    '같은 승강기 마커가 가용성·오류·지연 상태로 바뀔 때의 실제 표기입니다. 점선 외곽선, 사용 불가 슬래시, unknown·invalid·stale 코너 배지는 모두 컴포넌트가 직접 렌더한 것입니다(문·도킹도 동일하게 동작).',
+    '같은 승강기 마커가 가용성·오류·지연 상태로 바뀔 때의 실제 표기입니다. 사용 불가 슬래시와 unknown·invalid·stale 코너 배지(지연은 점선 링)는 모두 컴포넌트가 직접 렌더한 것입니다. 핀 몸통은 채움 전용이라 점선 외곽선은 없습니다(문·도킹도 동일하게 동작).',
   ),
   render: () => (
     <main style={{ width: 'min(760px, 100%)', display: 'grid', gap: 16 }}>
