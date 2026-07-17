@@ -195,10 +195,10 @@ export function WaypointMarker({
           alarm states (invalid / unavailable) visual weight so an emergency is
           not painted at the same hairline salience as routine state.
         */}
-        <circle
+        <polygon
           data-waypoint-shadow=""
-          r="6.5"
-          cy="1.4"
+          points="0,-7.5 7.5,0 0,7.5 -7.5,0"
+          transform="translate(0 1.4)"
           fill="var(--color-semantic-static-black)"
           opacity="0.16"
           pointerEvents="none"
@@ -264,13 +264,14 @@ export function WaypointMarker({
           />
         )}
 
-        <circle
+        <polygon
           {...obstacle(`waypoint:${waypoint.id}:point`)}
           data-waypoint-point=""
-          r="6"
+          points="0,-7 7,0 0,7 -7,0"
           fill={surface}
           stroke={stateColor}
           strokeWidth="2.25"
+          strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
         />
 
