@@ -1,14 +1,14 @@
-"use client";
-import {
-  Icon
-} from "./chunk-LMQSX5BW.js";
-import {
-  Spinner
-} from "./chunk-VWRGKNOW.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkVGM7HVYYcjs = require('./chunk-VGM7HVYY.cjs');
+
+
+var _chunk5BTJQMJBcjs = require('./chunk-5BTJQMJB.cjs');
 
 // components/viz/ViewerFrame.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var VIEWER_STATES = Object.freeze([
   "idle",
   "no-source",
@@ -141,8 +141,8 @@ var TONE_COLOR = {
 };
 function StateMark({ presentation, icon }) {
   if (presentation.busy && icon == null) {
-    return /* @__PURE__ */ jsx(
-      Spinner,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      _chunk5BTJQMJBcjs.Spinner,
       {
         size: 20,
         thickness: 2,
@@ -152,7 +152,7 @@ function StateMark({ presentation, icon }) {
       }
     );
   }
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       "aria-hidden": "true",
@@ -161,13 +161,13 @@ function StateMark({ presentation, icon }) {
         alignItems: "center",
         justifyContent: "center",
         flex: "0 0 auto",
-        color: TONE_COLOR[presentation.tone] ?? TONE_COLOR.neutral
+        color: _nullishCoalesce(TONE_COLOR[presentation.tone], () => ( TONE_COLOR.neutral))
       },
-      children: icon ?? /* @__PURE__ */ jsx(Icon, { name: presentation.icon ?? "circle-info", size: 16 })
+      children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size: 16 })))
     }
   );
 }
-var ViewerFrame = React.forwardRef(function ViewerFrame2({
+var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
   children,
   label,
   source,
@@ -182,29 +182,30 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
   stateIcon,
   stateAction,
   appearance = "dark",
+  variant = "standalone",
   toolbarPlacement = "top-right",
   style,
   tabIndex,
   onFocusCapture,
   ...rest
 }, forwardedRef) {
-  const rootRef = React.useRef(null);
-  const blockingLayerRef = React.useRef(null);
-  const lastFocusWithinRef = React.useRef(null);
-  const focusInsideBlockingLayerRef = React.useRef(false);
-  const returnFocusRef = React.useRef(null);
-  const wasBlockingRef = React.useRef(false);
+  const rootRef = _react2.default.useRef(null);
+  const blockingLayerRef = _react2.default.useRef(null);
+  const lastFocusWithinRef = _react2.default.useRef(null);
+  const focusInsideBlockingLayerRef = _react2.default.useRef(false);
+  const returnFocusRef = _react2.default.useRef(null);
+  const wasBlockingRef = _react2.default.useRef(false);
   const resolvedState = STATE_PRESENTATION[state] ? state : "ready";
   const presentation = STATE_PRESENTATION[resolvedState];
   const blocking = presentation.blocking;
   const busy = Boolean(presentation.busy);
   const blockingStatusRole = ASSERTIVE_BLOCKING_STATES.has(resolvedState) ? "alert" : "status";
-  const labelContent = stateLabel ?? presentation.label;
+  const labelContent = _nullishCoalesce(stateLabel, () => ( presentation.label));
   const descriptionContent = stateDescription === void 0 ? presentation.description : stateDescription;
   const topToolbar = toolbarPlacement === "top-right" ? toolbar : null;
   const bottomToolbar = toolbarPlacement === "bottom-right" ? toolbar : null;
-  React.useImperativeHandle(forwardedRef, () => rootRef.current, []);
-  React.useLayoutEffect(() => {
+  _react2.default.useImperativeHandle(forwardedRef, () => rootRef.current, []);
+  _react2.default.useLayoutEffect(() => {
     if (typeof document === "undefined") return;
     const wasBlocking = wasBlockingRef.current;
     wasBlockingRef.current = blocking;
@@ -212,18 +213,18 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
       const focusNeedsRestore = document.activeElement === document.body || document.activeElement === document.documentElement;
       if (wasBlocking && focusInsideBlockingLayerRef.current && focusNeedsRestore) {
         const exactTarget = returnFocusRef.current;
-        const exactTargetAvailable = exactTarget instanceof HTMLElement && rootRef.current?.contains(exactTarget) && !exactTarget.matches('[disabled], [aria-disabled="true"]') && !exactTarget.closest("[inert]");
-        const restoredTarget = exactTargetAvailable ? exactTarget : rootRef.current?.querySelector(
+        const exactTargetAvailable = exactTarget instanceof HTMLElement && _optionalChain([rootRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.contains, 'call', _3 => _3(exactTarget)]) && !exactTarget.matches('[disabled], [aria-disabled="true"]') && !exactTarget.closest("[inert]");
+        const restoredTarget = exactTargetAvailable ? exactTarget : _nullishCoalesce(_optionalChain([rootRef, 'access', _4 => _4.current, 'optionalAccess', _5 => _5.querySelector, 'call', _6 => _6(
           '[data-viewer-toolbar] [data-lk-viewer-toolbar-item]:not([disabled]):not([aria-disabled="true"])'
-        ) ?? rootRef.current;
-        restoredTarget?.focus?.({ preventScroll: true });
+        )]), () => ( rootRef.current));
+        _optionalChain([restoredTarget, 'optionalAccess', _7 => _7.focus, 'optionalCall', _8 => _8({ preventScroll: true })]);
       }
       focusInsideBlockingLayerRef.current = false;
       returnFocusRef.current = null;
       return;
     }
     const focused = document.activeElement;
-    const blockedRegions = rootRef.current?.querySelectorAll("[data-viewer-blocked-region]") ?? [];
+    const blockedRegions = _nullishCoalesce(_optionalChain([rootRef, 'access', _9 => _9.current, 'optionalAccess', _10 => _10.querySelectorAll, 'call', _11 => _11("[data-viewer-blocked-region]")]), () => ( []));
     const blockedFocusTarget = Array.from(blockedRegions).reduce((target, region) => {
       if (target) return target;
       if (focused instanceof HTMLElement && region.contains(focused)) return focused;
@@ -235,21 +236,21 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
     const focusWasBlocked = blockedFocusTarget != null;
     if (!focusWasBlocked) return;
     returnFocusRef.current = blockedFocusTarget;
-    const focusTarget = blockingLayerRef.current?.querySelector([
+    const focusTarget = _nullishCoalesce(_optionalChain([blockingLayerRef, 'access', _12 => _12.current, 'optionalAccess', _13 => _13.querySelector, 'call', _14 => _14([
       "button:not([disabled])",
       "a[href]",
       "input:not([disabled])",
       "select:not([disabled])",
       "textarea:not([disabled])",
       '[tabindex]:not([tabindex="-1"])'
-    ].join(",")) ?? blockingLayerRef.current;
-    focusTarget?.focus?.({ preventScroll: true });
+    ].join(","))]), () => ( blockingLayerRef.current));
+    _optionalChain([focusTarget, 'optionalAccess', _15 => _15.focus, 'optionalCall', _16 => _16({ preventScroll: true })]);
   }, [blocking, resolvedState]);
-  const stateSummary = /* @__PURE__ */ jsxs(React.Fragment, { children: [
-    /* @__PURE__ */ jsx(StateMark, { presentation, icon: stateIcon }),
-    /* @__PURE__ */ jsxs("span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
-      /* @__PURE__ */ jsx("span", { style: { fontSize: "var(--caption1-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
-      descriptionContent != null && /* @__PURE__ */ jsx(
+  const stateSummary = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StateMark, { presentation, icon: stateIcon }),
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--caption1-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
+      descriptionContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         "span",
         {
           "data-viewer-edge-description": "",
@@ -269,7 +270,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
       )
     ] })
   ] });
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ...rest,
@@ -277,14 +278,15 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
       role: "region",
       "aria-label": label,
       "aria-busy": busy || void 0,
-      tabIndex: tabIndex ?? -1,
+      tabIndex: _nullishCoalesce(tabIndex, () => ( -1)),
       onFocusCapture: (event) => {
         lastFocusWithinRef.current = event.target;
-        focusInsideBlockingLayerRef.current = Boolean(event.target.closest?.("[data-viewer-blocking-state]"));
-        onFocusCapture?.(event);
+        focusInsideBlockingLayerRef.current = Boolean(_optionalChain([event, 'access', _17 => _17.target, 'access', _18 => _18.closest, 'optionalCall', _19 => _19("[data-viewer-blocking-state]")]));
+        _optionalChain([onFocusCapture, 'optionalCall', _20 => _20(event)]);
       },
       "data-lds-viewer-frame": "",
       "data-viewer-appearance": appearance,
+      "data-viewer-variant": variant,
       "data-viewer-state": resolvedState,
       "data-viewer-blocking": blocking ? "" : void 0,
       style: {
@@ -308,8 +310,12 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
         width: "100%",
         overflow: "hidden",
         boxSizing: "border-box",
-        border: "1px solid var(--viewer-border)",
-        borderRadius: "var(--radius-lg)",
+        // variant="embedded" drops the frame's own perimeter so a parent
+        // surface (CanvasEditorShell, Card) owns one continuous outline; every
+        // viewport role — chrome, state model, HUD/toolbar, a11y region — is
+        // otherwise unchanged.
+        border: variant === "embedded" ? 0 : "1px solid var(--viewer-border)",
+        borderRadius: variant === "embedded" ? 0 : "var(--radius-lg)",
         background: "var(--viewer-surface)",
         color: "var(--viewer-foreground)",
         fontFamily: "var(--font-sans)",
@@ -317,7 +323,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
         ...style
       },
       children: [
-        /* @__PURE__ */ jsx("style", { children: `@container (max-width: 240px) {
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: `@container (max-width: 240px) {
           [data-viewer-blocking-state] {
             padding: 8px !important;
           }
@@ -343,7 +349,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
             margin-top: 0 !important;
           }
         }` }),
-        /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-viewer-content": "",
@@ -353,12 +359,12 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
             style: { position: "absolute", inset: 0, zIndex: 0, overflow: "hidden" },
             children: [
               children,
-              overlay != null && /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none" }, children: overlay })
+              overlay != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none" }, children: overlay })
             ]
           }
         ),
-        (source != null || badges != null || hud != null || topToolbar != null || presentation.corner) && /* @__PURE__ */ jsxs(React.Fragment, { children: [
-          /* @__PURE__ */ jsx(
+        (source != null || badges != null || hud != null || topToolbar != null || presentation.corner) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "div",
             {
               "aria-hidden": "true",
@@ -372,7 +378,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
               }
             }
           ),
-          /* @__PURE__ */ jsxs(
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "div",
             {
               "data-viewer-topbar": "",
@@ -390,9 +396,9 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                 pointerEvents: "none"
               },
               children: [
-                /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: 7, minWidth: 0, justifyItems: "start" }, children: [
-                  (source != null || badges != null || presentation.corner) && /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 7, minWidth: 0, maxWidth: "100%" }, children: [
-                    source != null && /* @__PURE__ */ jsx(
+                /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: 7, minWidth: 0, justifyItems: "start" }, children: [
+                  (source != null || badges != null || presentation.corner) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: 7, minWidth: 0, maxWidth: "100%" }, children: [
+                    source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "span",
                       {
                         "data-viewer-source": "",
@@ -409,7 +415,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                         children: source
                       }
                     ),
-                    presentation.corner && /* @__PURE__ */ jsxs(
+                    presentation.corner && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "span",
                       {
                         role: "status",
@@ -431,16 +437,16 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                           fontWeight: "var(--fw-semibold)"
                         },
                         children: [
-                          /* @__PURE__ */ jsx(StateMark, { presentation, icon: stateIcon }),
+                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StateMark, { presentation, icon: stateIcon }),
                           labelContent
                         ]
                       }
                     ),
                     badges
                   ] }),
-                  hud != null && /* @__PURE__ */ jsx("div", { "data-viewer-hud": "", style: { minWidth: 0, maxWidth: "100%", color: "var(--viewer-foreground)" }, children: hud })
+                  hud != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-viewer-hud": "", style: { minWidth: 0, maxWidth: "100%", color: "var(--viewer-foreground)" }, children: hud })
                 ] }),
-                topToolbar != null && /* @__PURE__ */ jsx(
+                topToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "div",
                   {
                     "data-viewer-toolbar": "",
@@ -455,7 +461,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
             }
           )
         ] }),
-        bottomToolbar != null && /* @__PURE__ */ jsx(
+        bottomToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             "data-viewer-toolbar": "",
@@ -472,7 +478,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
             children: bottomToolbar
           }
         ),
-        !blocking && !presentation.edge && status != null && /* @__PURE__ */ jsx(
+        !blocking && !presentation.edge && status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             "data-viewer-status": "",
@@ -500,7 +506,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
             children: status
           }
         ),
-        !blocking && presentation.edge && /* @__PURE__ */ jsxs(
+        !blocking && presentation.edge && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-viewer-edge-state": "",
@@ -520,7 +526,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
               overflow: "hidden"
             },
             children: [
-              /* @__PURE__ */ jsx(
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   role: "status",
@@ -530,7 +536,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                   children: stateSummary
                 }
               ),
-              status != null && /* @__PURE__ */ jsx(
+              status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "span",
                 {
                   "data-viewer-edge-metadata": "",
@@ -549,11 +555,11 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                   children: status
                 }
               ),
-              stateAction != null && /* @__PURE__ */ jsx("div", { style: { flex: "0 0 auto" }, children: stateAction })
+              stateAction != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flex: "0 0 auto" }, children: stateAction })
             ]
           }
         ),
-        blocking && /* @__PURE__ */ jsxs(
+        blocking && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             ref: blockingLayerRef,
@@ -574,7 +580,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
               textAlign: "center"
             },
             children: [
-              source != null && /* @__PURE__ */ jsx(
+              source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   "data-viewer-blocking-source": "",
@@ -593,7 +599,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                   children: source
                 }
               ),
-              /* @__PURE__ */ jsxs(
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   "data-viewer-blocking-body": "",
@@ -607,7 +613,7 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                     minHeight: 0
                   },
                   children: [
-                    /* @__PURE__ */ jsxs(
+                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "div",
                       {
                         "data-viewer-blocking-live": "",
@@ -616,15 +622,15 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
                         "aria-atomic": "true",
                         style: { display: "grid", justifyItems: "center", gap: 10 },
                         children: [
-                          /* @__PURE__ */ jsx("div", { "data-viewer-blocking-icon": "", style: { display: "flex", alignItems: "center", justifyContent: "center", minHeight: 24 }, children: /* @__PURE__ */ jsx(StateMark, { presentation, icon: stateIcon }) }),
-                          /* @__PURE__ */ jsxs("div", { style: { display: "grid", justifyItems: "center", gap: 4 }, children: [
-                            /* @__PURE__ */ jsx("strong", { style: { color: "var(--viewer-foreground)", fontSize: "var(--label1-size)", lineHeight: 1.4 }, children: labelContent }),
-                            descriptionContent != null && /* @__PURE__ */ jsx("span", { "data-viewer-blocking-description": "", style: { color: "var(--viewer-muted)", fontSize: "var(--caption1-size)", lineHeight: 1.55, overflowWrap: "anywhere" }, children: descriptionContent })
+                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-viewer-blocking-icon": "", style: { display: "flex", alignItems: "center", justifyContent: "center", minHeight: 24 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StateMark, { presentation, icon: stateIcon }) }),
+                          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", justifyItems: "center", gap: 4 }, children: [
+                            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--viewer-foreground)", fontSize: "var(--label1-size)", lineHeight: 1.4 }, children: labelContent }),
+                            descriptionContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-viewer-blocking-description": "", style: { color: "var(--viewer-muted)", fontSize: "var(--caption1-size)", lineHeight: 1.55, overflowWrap: "anywhere" }, children: descriptionContent })
                           ] })
                         ]
                       }
                     ),
-                    stateAction != null && /* @__PURE__ */ jsx("div", { "data-viewer-blocking-action": "", style: { marginTop: 4 }, children: stateAction })
+                    stateAction != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-viewer-blocking-action": "", style: { marginTop: 4 }, children: stateAction })
                   ]
                 }
               )
@@ -637,9 +643,9 @@ var ViewerFrame = React.forwardRef(function ViewerFrame2({
 });
 ViewerFrame.displayName = "ViewerFrame";
 
-export {
-  VIEWER_STATES,
-  VIEWER_BLOCKING_STATES,
-  ViewerFrame
-};
-//# sourceMappingURL=chunk-BP6LD47A.js.map
+
+
+
+
+exports.VIEWER_STATES = VIEWER_STATES; exports.VIEWER_BLOCKING_STATES = VIEWER_BLOCKING_STATES; exports.ViewerFrame = ViewerFrame;
+//# sourceMappingURL=chunk-TWWIBWJG.cjs.map

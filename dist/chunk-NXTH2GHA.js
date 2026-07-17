@@ -6,7 +6,7 @@ import {
 import {
   VIEWER_BLOCKING_STATES,
   ViewerFrame
-} from "./chunk-BP6LD47A.js";
+} from "./chunk-YRSIO4FR.js";
 import {
   Icon
 } from "./chunk-LMQSX5BW.js";
@@ -57,6 +57,7 @@ function Map2DCanvas({
   stateIcon,
   stateAction,
   appearance = "light",
+  variant = "standalone",
   label = "2D \uB9F5 \uCE94\uBC84\uC2A4",
   style,
   tabIndex,
@@ -220,6 +221,7 @@ function Map2DCanvas({
       ref: rootRef,
       label,
       appearance,
+      variant,
       source,
       badges,
       hud,
@@ -275,4 +277,4 @@ function Map2DCanvas({
 export {
   Map2DCanvas
 };
-//# sourceMappingURL=chunk-TVYFDIJP.js.map
+//# sourceMappingURL=chunk-NXTH2GHA.js.map

@@ -17,6 +17,7 @@ function DataToolbar({
   filters,
   actions,
   size = "md",
+  variant = "standalone",
   style,
   ...rest
 }) {
@@ -36,8 +37,11 @@ function DataToolbar({
         display: "grid",
         gap: compact ? "var(--space-2)" : "var(--space-3)",
         padding: compact ? "10px 12px" : "14px 16px",
-        border: "1px solid var(--color-semantic-line-solid-normal)",
-        borderRadius: "var(--radius-md)",
+        // variant="embedded" bonds the toolbar as a header inside a parent
+        // surface: it drops its own outer border/radius and keeps only a bottom
+        // divider to the content below (e.g. a DataGrid in the same collection
+        // card), so the parent owns one continuous perimeter.
+        ...variant === "embedded" ? { borderBottom: "1px solid var(--color-semantic-line-solid-normal)" } : { border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)" },
         background: "var(--color-semantic-background-elevated-normal)",
         fontFamily: "var(--font-sans)",
         minWidth: 0,
@@ -80,4 +84,4 @@ function DataToolbar({
 
 
 exports.DataToolbar = DataToolbar;
-//# sourceMappingURL=chunk-66RA4WKL.cjs.map
+//# sourceMappingURL=chunk-NEAZSGLQ.cjs.map

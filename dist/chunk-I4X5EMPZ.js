@@ -1,7 +1,7 @@
 "use client";
 import {
   ViewerFrame
-} from "./chunk-BP6LD47A.js";
+} from "./chunk-YRSIO4FR.js";
 
 // components/viz/VideoStreamTile.jsx
 import React from "react";
@@ -22,6 +22,7 @@ function VideoStreamTile({
   stateDescription,
   stateIcon,
   stateAction,
+  variant = "standalone",
   style,
   ...rest
 }) {
@@ -33,6 +34,7 @@ function VideoStreamTile({
       ...rest,
       label: resolvedAriaLabel,
       source: label,
+      variant,
       badges,
       hud,
       toolbar,
@@ -52,4 +54,4 @@ function VideoStreamTile({
 export {
   VideoStreamTile
 };
-//# sourceMappingURL=chunk-7WJDHZJH.js.map
+//# sourceMappingURL=chunk-I4X5EMPZ.js.map

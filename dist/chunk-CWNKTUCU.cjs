@@ -6,7 +6,7 @@ var _chunk6XBEEQ4Bcjs = require('./chunk-6XBEEQ4B.cjs');
 
 
 
-var _chunkCRJZJFPBcjs = require('./chunk-CRJZJFPB.cjs');
+var _chunkTWWIBWJGcjs = require('./chunk-TWWIBWJG.cjs');
 
 
 var _chunkVGM7HVYYcjs = require('./chunk-VGM7HVYY.cjs');
@@ -57,6 +57,7 @@ function Map2DCanvas({
   stateIcon,
   stateAction,
   appearance = "light",
+  variant = "standalone",
   label = "2D \uB9F5 \uCE94\uBC84\uC2A4",
   style,
   tabIndex,
@@ -78,7 +79,7 @@ function Map2DCanvas({
   const rootRef = _react2.default.useRef(null);
   const dragRef = _react2.default.useRef(null);
   const wheelHandlerRef = _react2.default.useRef(null);
-  const interactionBlocked = _chunkCRJZJFPBcjs.VIEWER_BLOCKING_STATES.includes(state);
+  const interactionBlocked = _chunkTWWIBWJGcjs.VIEWER_BLOCKING_STATES.includes(state);
   viewportRef.current = renderedViewport;
   const clampZoom = (zoom) => Math.max(minZoom, Math.min(maxZoom, zoom));
   const normalizeViewport = (next) => ({
@@ -214,12 +215,13 @@ function Map2DCanvas({
     }
   ) : void 0;
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-    _chunkCRJZJFPBcjs.ViewerFrame,
+    _chunkTWWIBWJGcjs.ViewerFrame,
     {
       ...rootProps,
       ref: rootRef,
       label,
       appearance,
+      variant,
       source,
       badges,
       hud,
@@ -275,4 +277,4 @@ function Map2DCanvas({
 
 
 exports.Map2DCanvas = Map2DCanvas;
-//# sourceMappingURL=chunk-VXI46J26.cjs.map
+//# sourceMappingURL=chunk-CWNKTUCU.cjs.map

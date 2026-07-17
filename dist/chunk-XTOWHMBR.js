@@ -1,7 +1,7 @@
 "use client";
 import {
   ViewerFrame
-} from "./chunk-BP6LD47A.js";
+} from "./chunk-YRSIO4FR.js";
 
 // components/viz/Scene3DFrame.jsx
 import React from "react";
@@ -23,6 +23,7 @@ function Scene3DFrame({
   empty,
   label,
   appearance = "dark",
+  variant = "standalone",
   style,
   ...rest
 }) {
@@ -36,6 +37,7 @@ function Scene3DFrame({
       ...rest,
       label: resolvedLabel,
       appearance,
+      variant,
       source: title,
       badges,
       hud,
@@ -56,4 +58,4 @@ function Scene3DFrame({
 export {
   Scene3DFrame
 };
-//# sourceMappingURL=chunk-X3CTPTFW.js.map
+//# sourceMappingURL=chunk-XTOWHMBR.js.map

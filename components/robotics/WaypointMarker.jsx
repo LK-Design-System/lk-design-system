@@ -235,13 +235,21 @@ export function WaypointMarker({
           pointerEvents={interactive ? 'all' : 'none'}
         />
 
+        {/*
+          Focus traces the point's OWN diamond silhouette (a shell scaled 1.5x)
+          rather than a circle — a round ring around a diamond reads as a shape
+          mismatch (the same reason selection fills the diamond solid below), and
+          it matches how the pin focus scales its silhouette.
+        */}
         {focusVisible && (
-          <circle
+          <polygon
             data-waypoint-focus-indicator=""
-            r="11"
+            points="0,-7 7,0 0,7 -7,0"
+            transform="scale(1.5)"
             fill="none"
             stroke="var(--color-semantic-focus-indicator)"
             strokeWidth="2"
+            strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
           />
         )}

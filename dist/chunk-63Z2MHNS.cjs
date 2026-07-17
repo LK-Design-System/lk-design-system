@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-var _chunkCRJZJFPBcjs = require('./chunk-CRJZJFPB.cjs');
+var _chunkTWWIBWJGcjs = require('./chunk-TWWIBWJG.cjs');
 
 // components/viz/VideoStreamTile.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -22,17 +22,19 @@ function VideoStreamTile({
   stateDescription,
   stateIcon,
   stateAction,
+  variant = "standalone",
   style,
   ...rest
 }) {
   const resolvedState = _nullishCoalesce(_nullishCoalesce(state, () => ( status)), () => ( "idle"));
   const resolvedAriaLabel = _nullishCoalesce(ariaLabel, () => ( (typeof label === "string" && label.trim() ? `${label} \uC601\uC0C1 \uC2A4\uD2B8\uB9BC` : "\uC601\uC0C1 \uC2A4\uD2B8\uB9BC")));
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-    _chunkCRJZJFPBcjs.ViewerFrame,
+    _chunkTWWIBWJGcjs.ViewerFrame,
     {
       ...rest,
       label: resolvedAriaLabel,
       source: label,
+      variant,
       badges,
       hud,
       toolbar,
@@ -52,4 +54,4 @@ function VideoStreamTile({
 
 
 exports.VideoStreamTile = VideoStreamTile;
-//# sourceMappingURL=chunk-PFUFVICM.cjs.map
+//# sourceMappingURL=chunk-63Z2MHNS.cjs.map

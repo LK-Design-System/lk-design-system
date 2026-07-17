@@ -360,10 +360,10 @@ function FocusCard() {
         키보드 포커스를 받은 마커는 자기 실루엣을 따라 <code style={{ color: INK }}>--color-semantic-focus-indicator</code> 윤곽선을 그리고 브라우저 사각 outline은 억제합니다. 모두 non-scaling-stroke이며, 아래처럼 크기·모양은 마커에 맞춰 렌더러마다 다릅니다.
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(112px, max-content))', gap: 16, justifyContent: 'center' }}>
-        <FocusTile label="웨이포인트" geom="원 r11 · stroke 2">
-          {/* the point rides on a diamond; its focus is a circle ring around it */}
-          <rect x="-6" y="-6" width="12" height="12" transform="rotate(45)" fill={ACCENT} />
-          <circle data-encoding-focus-ring="" r="11" fill="none" stroke={FOCUS_INDICATOR} strokeWidth="2" vectorEffect="non-scaling-stroke" />
+        <FocusTile label="웨이포인트" geom="다이아몬드 껍데기 ×1.5">
+          {/* focus traces the diamond silhouette (shell scaled 1.5x), not a circle */}
+          <polygon points="0,-7 7,0 0,7 -7,0" fill={ACCENT} />
+          <polygon data-encoding-focus-ring="" points="0,-7 7,0 0,7 -7,0" transform="scale(1.5)" fill="none" stroke={FOCUS_INDICATOR} strokeWidth="2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
         </FocusTile>
         <FocusTile label="경로 (레인·궤적·루트)" geom="halo stroke 10~11">
           {/* a thick focus-colored halo behind the thin path line */}

@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-var _chunkCRJZJFPBcjs = require('./chunk-CRJZJFPB.cjs');
+var _chunkTWWIBWJGcjs = require('./chunk-TWWIBWJG.cjs');
 
 // components/viz/Scene3DFrame.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -23,6 +23,7 @@ function Scene3DFrame({
   empty,
   label,
   appearance = "dark",
+  variant = "standalone",
   style,
   ...rest
 }) {
@@ -31,11 +32,12 @@ function Scene3DFrame({
   const resolvedStateLabel = _nullishCoalesce(stateLabel, () => ( (usesLegacyEmpty ? empty : void 0)));
   const resolvedLabel = _nullishCoalesce(label, () => ( (typeof title === "string" && title.trim() ? `${title} 3D \uBDF0\uD3EC\uD2B8` : "3D \uBDF0\uD3EC\uD2B8")));
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-    _chunkCRJZJFPBcjs.ViewerFrame,
+    _chunkTWWIBWJGcjs.ViewerFrame,
     {
       ...rest,
       label: resolvedLabel,
       appearance,
+      variant,
       source: title,
       badges,
       hud,
@@ -56,4 +58,4 @@ function Scene3DFrame({
 
 
 exports.Scene3DFrame = Scene3DFrame;
-//# sourceMappingURL=chunk-JRNC2RRR.cjs.map
+//# sourceMappingURL=chunk-4J66IKLI.cjs.map

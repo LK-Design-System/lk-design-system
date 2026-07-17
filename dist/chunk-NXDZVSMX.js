@@ -272,6 +272,7 @@ function DataGrid({
   emptyLabel = "\uD45C\uC2DC\uD560 \uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
   stateActions,
   size = "md",
+  variant = "standalone",
   style,
   ...rest
 }) {
@@ -435,7 +436,7 @@ function DataGrid({
     "div",
     {
       "aria-busy": loading || void 0,
-      style: { overflowX: "auto", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", ...style },
+      style: { overflowX: "auto", ...variant === "embedded" ? null : { border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)" }, ...style },
       ...rest,
       children: /* @__PURE__ */ jsxs(
         "table",
@@ -687,4 +688,4 @@ function DataGrid({
 export {
   DataGrid
 };
-//# sourceMappingURL=chunk-LC4RX6VP.js.map
+//# sourceMappingURL=chunk-NXDZVSMX.js.map
