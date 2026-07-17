@@ -58,7 +58,7 @@
 - **Phase 2 — 역할 라벨 교정(이름만)**: Trajectory 상태→변형·상태, Hazard 재부여+신규 개요, Lane 포인터 전용 개명, (선택)Annotation 접두어. rename마다 storyId churn. 위험 낮음.
 - **Phase 3 — Lane/Facility 계약 강등(숨김 역할)**: Lane 복합·유한점 계약 숨김, Facility 충돌 블록 숨김 분리. sidebar 노출 스토리 감소. 위험 중간(숨김 후에도 CI play 실행 확인).
 - **Phase 4 — Route/Trajectory 분리(핵심 수술)**: 공유 파일 aria/eyebrow 파라미터화 → Trajectory에 사용법·상호작용 추가 → Route에서 trajectory 전면 제거 + meta storyId 개명 + parity 개명. prompt.md trajectory 예시 이관. 위험 **높음**(최대 diff, 다수 베이스라인/IA).
-- **Phase 5 — 합성 씬 이관 + 충돌 재귀속** *(씬 이관 실행 완료 2026-07-17, 나머지 이연)*: `LDS Robotics/Viewer/Navigation Viewer` 신설로 `SemanticMirror` 씬(이름 목록 + 6-오버레이 지도 + LayerPanel·SelectionInspector·Legend)을 Route에서 이관하고 inspector KO/EN을 한국어로 정정했다. storySort는 'LDS Robotics' 순서에 이미 'Viewer'가 있고 Viewer 하위가 알파벳 정렬이라 **편집 불필요**였다. LAYER_CLASSIFICATION·IA census(190페이지)·인벤토리·a11y 정합 완료. **남은 부분(Phase 4 의존, 이연)**: 충돌 계약을 Annotation Layer로 재귀속, Route를 RouteOverlay-only로 축소.
+- **Phase 5 — 합성 씬 이관 + 충돌 재귀속** *(씬 이관 실행 완료 2026-07-17, 나머지 이연)*: `LDS Robotics/Viewer/Navigation Viewer` 신설로 `SemanticMirror` 씬(이름 목록 + 6-오버레이 지도 + LayerPanel·SelectionInspector·Legend)을 Route에서 이관하고 inspector KO/EN을 한국어로 정정했다. storySort는 'LDS Robotics' 순서에 이미 'Viewer'가 있고 Viewer 하위가 알파벳 정렬이라 **편집 불필요**였다. LAYER_CLASSIFICATION·IA census(190페이지)·인벤토리·a11y 정합 완료. 이관 직후 씬을 재합성해 손수 만든 이름 목록을 `LayerPanel` 트리(그룹=레이어, 자식=객체, 선택·표시·잠금 실동작)로 대체하고 지도를 `Map2DCanvas` 전폭 캔버스에 얹었다 — 씬의 모든 표면이 LDS 컴포넌트다. **남은 부분(Phase 4 의존, 이연)**: 충돌 계약을 Annotation Layer로 재귀속, Route를 RouteOverlay-only로 축소.
 
 ## 영향 게이트·산출물
 

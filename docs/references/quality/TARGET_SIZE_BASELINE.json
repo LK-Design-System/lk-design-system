@@ -93,6 +93,16 @@
     "lds-robotics-editor-layer-panel--interactive::button:편집 객체 접기:20x20",
     "lds-robotics-editor-layer-panel--mixed-availability::button:편집 객체 접기:20x20",
     "lds-robotics-editor-layer-panel--visible-status-labels::button:편집 객체 접기:20x20",
-    "lds-robotics-viewer-2d-map--keyboard-and-pointer-contract::input::120x16"
+    "lds-robotics-viewer-2d-map--keyboard-and-pointer-contract::input::120x16",
+    "lds-robotics-viewer-navigation-viewer--narrow-viewport::button:경로·궤적 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--narrow-viewport::button:레인 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--narrow-viewport::button:설비 전이 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--narrow-viewport::button:영역 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--narrow-viewport::button:웨이포인트 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--overview::button:경로·궤적 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--overview::button:레인 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--overview::button:설비 전이 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--overview::button:영역 접기:20x20",
+    "lds-robotics-viewer-navigation-viewer--overview::button:웨이포인트 접기:20x20"
   ]
 }

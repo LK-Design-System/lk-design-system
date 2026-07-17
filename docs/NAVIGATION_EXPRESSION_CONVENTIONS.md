@@ -51,4 +51,4 @@ Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원�
 ## 6. 미결 위반 (규약대로 정리 예정)
 
 - 렌더러 페이지 차원의 미결 위반은 현재 없다. Navigation 렌더러 스토리는 지도 자체에서 pointer-only·접근성 이름 계약을 검증하고, 병렬 컨트롤·선택 리스트·합성 패널은 Viewer 합성 페이지가 소유한다.
-- 남은 개선(위반 아님): Viewer 합성 페이지의 이름 목록은 아직 손수 만든 항목(`SemanticMirrorListItem` 버튼)이다. 전용 LDS 목록/선택 프리미티브가 없어 제품 합성의 일부로 두었으며, 그런 프리미티브가 생기면 교체한다.
+- Viewer 합성 페이지의 손수 만든 이름 목록(`SemanticMirrorListItem` 버튼)도 해소됐다: `LayerPanel` 트리 하나(그룹 = 레이어, 자식 행 = 객체)가 이름 목록·선택·표시·잠금을 모두 소유하고, 지도는 `Map2DCanvas` 위에 전폭으로 합성된다. 씬의 모든 표면이 LDS 컴포넌트다.

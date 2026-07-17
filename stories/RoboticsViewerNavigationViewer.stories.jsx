@@ -1,6 +1,7 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import {
+  Map2DCanvas,
   RouteOverlay,
   TrajectoryOverlay,
   WaypointMarker,
@@ -12,18 +13,20 @@ import {
   Legend,
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
-import { StoryPage, PathMap } from './RoboticsNavigationRouteTrajectory.shared.jsx';
+import { StoryPage } from './RoboticsNavigationRouteTrajectory.shared.jsx';
+import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 
 function nextRender() {
   return new Promise((resolve) => setTimeout(resolve, 20));
 }
 
-// A composed navigation-viewer scene: a single pointer-only map mirrors the same
-// identity and state to a named list, a LayerPanel owns controlled visibility,
-// and a SelectionInspector echoes the selected object. This is a PRODUCT
-// composition — the overlays are the design-system renderers, but the parallel
-// named list / panel / inspector wiring is how a product assembles a viewer — so
-// it lives in the Viewer group, not on a single renderer page. See
+// A composed navigation viewer: one 2D map canvas renders the pointer-only
+// overlay fragments while a single layer/object tree panel owns keyboard and
+// screen-reader selection, per-layer and per-object visibility, and pointer
+// locks. A selection inspector and a legend echo the same identity and state.
+// This is a PRODUCT composition — the overlays are the design-system
+// renderers, and this page shows how a product assembles them into a viewer —
+// so it lives in the Viewer group, not on a renderer page. See
 // docs/NAVIGATION_EXPRESSION_CONVENTIONS.md.
 const MIRROR_MAP_ID = 'ops-1f';
 
@@ -156,18 +159,28 @@ const MIRROR_FACILITY = {
   destinationMapId: 'ops-2f',
 };
 
-// Layer identity shared by the map, the LayerPanel, the named list and the legend.
+// One tone name per layer keeps the tree rows, the map legend, and the
+// LayerPanel tone vocabulary aligned to the same semantic color tokens.
+const TONE_COLOR = {
+  neutral: 'var(--color-semantic-label-neutral)',
+  signal: 'var(--color-semantic-primary-normal)',
+  positive: 'var(--color-semantic-status-positive)',
+  cautionary: 'var(--color-semantic-status-cautionary)',
+};
+
+// Layer identity shared by the map, the layer/object tree, and the legend.
 const MIRROR_LAYERS = [
-  { id: 'regions', label: '영역', description: '동작·시설·지형', color: 'var(--color-semantic-status-cautionary)' },
-  { id: 'lanes', label: '레인', description: '방향 그래프 연결', color: 'var(--color-semantic-primary-normal)' },
-  { id: 'paths', label: '경로·궤적', description: '계획 구간과 조밀 궤적', color: 'var(--color-semantic-status-positive)' },
-  { id: 'waypoints', label: '웨이포인트', description: '그래프 지점', color: 'var(--color-semantic-label-strong)' },
-  { id: 'facilities', label: '설비 전이', description: '문·승강기·도크', color: 'var(--color-semantic-status-informative, var(--color-semantic-primary-normal))' },
+  { id: 'regions', label: '영역', description: '동작·시설·지형', tone: 'cautionary' },
+  { id: 'lanes', label: '레인', description: '방향 그래프 연결', tone: 'signal' },
+  { id: 'paths', label: '경로·궤적', description: '계획 구간과 조밀 궤적', tone: 'positive' },
+  { id: 'waypoints', label: '웨이포인트', description: '그래프 지점', tone: 'neutral' },
+  { id: 'facilities', label: '설비 전이', description: '문·승강기·도크', tone: 'signal' },
 ];
 
-// One registry drives the list, the inspector and the selection identity so the
-// mirror can never drift from what the map renders. Inspector field values use the
-// Korean vocabulary; raw enums/ids stay in the fixture props only.
+// One registry drives the tree panel, the inspector, and the selection
+// identity so the mirror can never drift from what the map renders. Inspector
+// and row values use the Korean vocabulary; raw enums/ids stay in fixture
+// props only.
 const MIRROR_FEATURES = [
   {
     key: 'regions:zone-keepout',
@@ -239,158 +252,264 @@ const MIRROR_FEATURES = [
 ];
 
 const MIRROR_LEGEND_ITEMS = [
-  { id: 'regions', label: '영역', color: 'var(--color-semantic-status-cautionary)', shape: 'square' },
-  { id: 'lanes', label: '레인 (방향선)', color: 'var(--color-semantic-primary-normal)', shape: 'line' },
+  { id: 'regions', label: '영역', color: TONE_COLOR.cautionary, shape: 'square' },
+  { id: 'lanes', label: '레인 (방향선)', color: TONE_COLOR.signal, shape: 'line' },
   { id: 'route', label: '현재 경로 구간 · 대기 (점선)', color: 'var(--color-semantic-status-cautionary-foreground)', shape: 'line', dashed: true },
-  { id: 'trajectory', label: '현재 궤적 · 이동 중 (실선)', color: 'var(--color-semantic-primary-normal)', shape: 'line' },
-  { id: 'waypoints', label: '웨이포인트', color: 'var(--color-semantic-label-strong)', shape: 'dot' },
-  { id: 'facilities', label: '설비 전이', color: 'var(--color-semantic-primary-normal)', shape: 'dot' },
+  { id: 'trajectory', label: '현재 궤적 · 이동 중 (실선)', color: TONE_COLOR.signal, shape: 'line' },
+  { id: 'waypoints', label: '웨이포인트', color: TONE_COLOR.neutral, shape: 'dot' },
+  { id: 'facilities', label: '설비 전이', color: TONE_COLOR.signal, shape: 'dot' },
 ];
 
 function featureByKey(key) {
   return MIRROR_FEATURES.find((feature) => feature.key === key);
 }
 
-function SemanticMirrorListItem({ feature, color, hidden, selected, onSelect }) {
-  const [focused, setFocused] = React.useState(false);
+// LayerPanel tree: 5 layer groups, each carrying its objects as child rows.
+// Rows reuse the panel's own selection, tone dot, status meta, visibility, and
+// lock affordances — the named object list IS the layer panel, not a second
+// hand-rolled list.
+const MIRROR_LAYER_TREE = MIRROR_LAYERS.map((layer) => {
+  const features = MIRROR_FEATURES.filter((feature) => feature.layerId === layer.id);
+  return {
+    id: layer.id,
+    label: layer.label,
+    description: layer.description,
+    tone: layer.tone,
+    count: features.length,
+    children: features.map((feature) => ({
+      id: feature.key,
+      label: feature.listName,
+      tone: layer.tone,
+      status: feature.item.status,
+    })),
+  };
+});
+
+const ALL_VISIBLE_IDS = [
+  ...MIRROR_LAYERS.map((layer) => layer.id),
+  ...MIRROR_FEATURES.map((feature) => feature.key),
+];
+
+// Full-bleed 2D map canvas: the shared navigation stage fills the viewer frame
+// and every overlay fragment receives the measured CSS/viewBox scale so visual
+// glyphs and pointer cores keep their intended screen-space size. The scene is
+// a fixed composition — pan/zoom wiring belongs to the consuming product.
+function ViewerMapCanvas({ children }) {
+  const svgRef = React.useRef(null);
+  const [cssViewBoxScale, setCssViewBoxScale] = React.useState(1);
+
+  React.useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return undefined;
+    const view = svg.ownerDocument.defaultView;
+    const updateScale = () => {
+      const width = svg.getBoundingClientRect().width;
+      if (width <= 0) return;
+      const nextScale = width / 540;
+      setCssViewBoxScale((current) => Math.abs(current - nextScale) > 0.001 ? nextScale : current);
+    };
+    updateScale();
+    const observer = view?.ResizeObserver ? new view.ResizeObserver(updateScale) : null;
+    observer?.observe(svg);
+    view?.addEventListener('resize', updateScale);
+    return () => {
+      observer?.disconnect();
+      view?.removeEventListener('resize', updateScale);
+    };
+  }, []);
 
   return (
-    <button
-      type="button"
-      aria-pressed={selected}
-      data-list-item={feature.key}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      onClick={onSelect}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '10px minmax(0, 1fr) auto',
-        alignItems: 'center',
-        gap: 'var(--space-2)',
-        width: '100%',
-        minWidth: 0,
-        minHeight: 'var(--control-h-md)',
-        padding: 'var(--space-1) var(--space-2)',
-        border: 0,
-        borderRadius: 'var(--radius-sm)',
-        background: selected ? 'var(--color-semantic-fill-normal)' : 'transparent',
-        color: hidden ? 'var(--color-semantic-label-alternative)' : 'var(--color-semantic-label-normal)',
-        boxShadow: focused ? 'inset 0 0 0 2px var(--color-semantic-focus-indicator)' : 'none',
-        outline: 'none',
-        cursor: 'pointer',
-        fontFamily: 'var(--font-sans)',
-        fontSize: 'var(--label2-size)',
-        lineHeight: 'var(--label2-line)',
-        textAlign: 'left',
-      }}
+    <Map2DCanvas
+      appearance="light"
+      label="내비게이션 뷰어 지도"
+      source="1층 작업장"
+      controls={false}
+      panEnabled={false}
+      wheelZoom={false}
+      keyboard={false}
+      grid={false}
+      defaultViewport={{ x: 0, y: 0, z: 1 }}
+      data-testid="mirror-map"
+      style={{ width: '100%', height: 'auto', aspectRatio: '540 / 290' }}
     >
-      <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: color, opacity: hidden ? 0.4 : 1 }} />
-      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{feature.listName}</span>
-      {hidden && (
-        <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-semibold)' }}>
-          숨김
-        </span>
-      )}
-    </button>
+      <svg
+        ref={svgRef}
+        width="540"
+        height="290"
+        viewBox="0 0 540 290"
+        data-css-viewbox-scale={cssViewBoxScale.toFixed(4)}
+        aria-hidden="true"
+        style={{ display: 'block', width: '100cqw', height: 'auto' }}
+      >
+        <NavigationMapStage width={540} height={290} scaleBar={{ px: 100, label: '5 m' }} />
+        {typeof children === 'function' ? children(cssViewBoxScale) : children}
+      </svg>
+    </Map2DCanvas>
   );
 }
 
+const PANEL_CHROME = {
+  minWidth: 0,
+  overflow: 'hidden',
+  border: '1px solid var(--color-semantic-line-normal-normal)',
+  borderRadius: 'var(--radius-lg)',
+  background: 'var(--color-semantic-background-elevated-normal)',
+};
+
 function SemanticMirrorFixture() {
   const [selectedKey, setSelectedKey] = React.useState('');
-  const [visibleLayerIds, setVisibleLayerIds] = React.useState(MIRROR_LAYERS.map((layer) => layer.id));
+  const [visibleIds, setVisibleIds] = React.useState(ALL_VISIBLE_IDS);
+  const [lockedIds, setLockedIds] = React.useState([]);
 
-  const isVisible = (layerId) => visibleLayerIds.includes(layerId);
+  const groupVisible = (layerId) => visibleIds.includes(layerId);
+  const featureVisible = (key) => {
+    const feature = featureByKey(key);
+    return feature != null && groupVisible(feature.layerId) && visibleIds.includes(key);
+  };
+  const featureLocked = (key) => {
+    const feature = featureByKey(key);
+    return feature != null && (lockedIds.includes(key) || lockedIds.includes(feature.layerId));
+  };
+
+  // Pointer selection from the map honors the panel's lock state; panel rows
+  // themselves stay selectable, like locked layers in an editor.
+  const selectFromMap = (key) => {
+    if (featureLocked(key)) return;
+    setSelectedKey(key);
+  };
+
   const selectedFeature = selectedKey ? featureByKey(selectedKey) : undefined;
-  const selectedLayerHidden = selectedFeature ? !isVisible(selectedFeature.layerId) : false;
+  const selectedGroup = !selectedFeature && selectedKey
+    ? MIRROR_LAYERS.find((layer) => layer.id === selectedKey)
+    : undefined;
+  const selectedFeatureHidden = selectedFeature ? !featureVisible(selectedFeature.key) : false;
 
   const selectedRouteSegmentId = selectedFeature?.routeId === MIRROR_ROUTE.id
     ? selectedFeature.segmentId
     : undefined;
-  const layerPanelLayers = MIRROR_LAYERS.map((layer) => ({
-    id: layer.id,
-    label: layer.label,
-    description: layer.description,
-    visible: isVisible(layer.id),
-    tone: 'neutral',
-  }));
 
-  const inspectorItem = selectedFeature
-    ? {
-        ...selectedFeature.item,
-        status: selectedLayerHidden ? '숨김 레이어' : selectedFeature.item.status,
-        statusTone: selectedLayerHidden ? undefined : selectedFeature.item.statusTone,
-      }
-    : undefined;
-  const inspectorSections = selectedFeature
-    ? (selectedLayerHidden
-        ? [{ title: '표시', fields: [{ label: '레이어', value: '숨김', tone: 'cautionary' }] }, ...selectedFeature.sections]
-        : selectedFeature.sections)
-    : [];
+  // Route segments hide honestly by filtering the route data the renderer
+  // receives — a hidden segment is genuinely absent, not painted over.
+  const visibleRouteSegments = MIRROR_ROUTE.segments.filter(
+    (segment) => featureVisible(mirrorRouteSegmentKey(segment.id)),
+  );
+  const routeForRender = {
+    ...MIRROR_ROUTE,
+    segments: visibleRouteSegments,
+    progress: visibleRouteSegments.some((segment) => segment.id === MIRROR_ROUTE.progress.segmentId)
+      ? MIRROR_ROUTE.progress
+      : undefined,
+  };
+
+  let inspectorItem;
+  let inspectorSections = [];
+  if (selectedFeature) {
+    inspectorItem = {
+      ...selectedFeature.item,
+      status: selectedFeatureHidden ? '숨김' : selectedFeature.item.status,
+      statusTone: selectedFeatureHidden ? undefined : selectedFeature.item.statusTone,
+    };
+    inspectorSections = selectedFeatureHidden
+      ? [{ title: '표시', fields: [{ label: '표시 상태', value: '숨김', tone: 'cautionary' }] }, ...selectedFeature.sections]
+      : selectedFeature.sections;
+  } else if (selectedGroup) {
+    const groupFeatures = MIRROR_FEATURES.filter((feature) => feature.layerId === selectedGroup.id);
+    const visible = groupVisible(selectedGroup.id);
+    inspectorItem = {
+      label: selectedGroup.label,
+      kind: '레이어',
+      status: visible ? '표시' : '숨김',
+      statusTone: visible ? 'signal' : undefined,
+    };
+    inspectorSections = [{
+      title: '레이어',
+      fields: [
+        { label: '구성', value: selectedGroup.description },
+        { label: '객체 수', value: groupFeatures.length },
+        { label: '표시 상태', value: visible ? '표시' : '숨김', tone: visible ? undefined : 'cautionary' },
+      ],
+    }];
+  }
+
+  const selectionOutputLabel = selectedFeature?.item.label ?? selectedGroup?.label ?? '없음';
+  const selectionOutputHidden = selectedFeature
+    ? selectedFeatureHidden
+    : selectedGroup != null && !groupVisible(selectedGroup.id);
 
   return (
     <StoryPage
-      title="지도, 이름 있는 목록, 레이어, 선택 요약이 같은 identity와 상태를 공유합니다"
-      description="지도의 도형은 포인터로만 선택되고, aria-hidden 처리로 role·name·tabindex를 제거해 접근성 트리와 포커스 순서에서는 빠집니다. 키보드·스크린 리더 사용자는 오른쪽의 이름 있는 목록으로 같은 객체를 선택하고, LayerPanel은 표시 여부를 제어하며, 선택 요약과 범례는 색뿐 아니라 형태·패턴으로 계층을 구분합니다."
+      title="지도, 레이어·객체 패널, 선택 요약이 하나의 상태를 공유합니다"
+      description="지도 도형은 포인터로만 선택되고 접근성 트리와 포커스 순서에서는 빠집니다. 키보드·스크린 리더 사용자는 레이어·객체 패널에서 같은 객체를 선택하고, 패널의 표시 토글은 지도 조각을, 잠금 토글은 지도 포인터 선택을 제어합니다. 선택 검사기와 범례는 상태를 색뿐 아니라 형태·문자로 전달합니다."
       maxWidth={1120}
     >
       <div
+        className="lk-nvw"
         data-testid="semantic-mirror"
-        style={{
-          display: 'grid',
-          gap: 'var(--space-4)',
-          width: '100%',
-          minWidth: 0,
-        }}
+        style={{ containerType: 'inline-size', width: '100%', minWidth: 0 }}
       >
-        {/* Every map fragment receives the measured CSS/viewBox scale so visual
-            glyphs and pointer cores keep their intended screen-space size. */}
-        <section aria-label="내비게이션 지도" style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>
-          <PathMap label="레이어·목록·선택이 연동된 내비게이션 지도" testId="mirror-map" height={300} svgHeight={290}>
-            {(cssViewBoxScale) => (
-              <>
-                {isVisible('regions') && (
-                  <>
+        <style>{`
+          .lk-nvw__layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(272px, 336px);
+            gap: var(--space-4);
+            align-items: start;
+            min-width: 0;
+          }
+          @container (max-width: 719px) {
+            .lk-nvw__layout {
+              grid-template-columns: minmax(0, 1fr);
+            }
+          }
+        `}</style>
+        <div className="lk-nvw__layout">
+          <section aria-label="내비게이션 지도" style={{ display: 'grid', gap: 'var(--space-3)', alignContent: 'start', minWidth: 0 }}>
+            <ViewerMapCanvas>
+              {(cssViewBoxScale) => (
+                <>
+                  {featureVisible('regions:zone-keepout') && (
                     <SpatialRegion
                       region={MIRROR_KEEPOUT_REGION}
                       viewportScale={cssViewBoxScale}
                       tabIndex={-1} showLabel={false}
                       aria-hidden="true"
                       selected={selectedKey === 'regions:zone-keepout'}
-                      onActivate={() => setSelectedKey('regions:zone-keepout')}
+                      onActivate={() => selectFromMap('regions:zone-keepout')}
                     />
+                  )}
+                  {featureVisible('regions:zone-lift-lobby') && (
                     <SpatialRegion
                       region={MIRROR_LOBBY_REGION}
                       viewportScale={cssViewBoxScale}
                       tabIndex={-1} showLabel={false}
                       aria-hidden="true"
                       selected={selectedKey === 'regions:zone-lift-lobby'}
-                      onActivate={() => setSelectedKey('regions:zone-lift-lobby')}
+                      onActivate={() => selectFromMap('regions:zone-lift-lobby')}
                     />
-                  </>
-                )}
-                {isVisible('lanes') && (
-                  <LaneOverlay
-                    lane={MIRROR_LANE}
-                    viewportScale={cssViewBoxScale}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    showEndpoints={false}
-                    selected={selectedKey === 'lanes:lane-corridor'}
-                    onActivate={() => setSelectedKey('lanes:lane-corridor')}
-                  />
-                )}
-                {isVisible('paths') && (
-                  <>
+                  )}
+                  {featureVisible('lanes:lane-corridor') && (
+                    <LaneOverlay
+                      lane={MIRROR_LANE}
+                      viewportScale={cssViewBoxScale}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      showEndpoints={false}
+                      selected={selectedKey === 'lanes:lane-corridor'}
+                      onActivate={() => selectFromMap('lanes:lane-corridor')}
+                    />
+                  )}
+                  {groupVisible('paths') && visibleRouteSegments.length > 0 && (
                     <RouteOverlay
-                      route={MIRROR_ROUTE}
+                      route={routeForRender}
                       activeMapId={MIRROR_MAP_ID}
                       viewportScale={cssViewBoxScale}
                       tabIndex={-1}
                       aria-hidden="true"
                       showLabel={false}
                       selectedSegmentId={selectedRouteSegmentId}
-                      onActivate={({ segmentId }) => setSelectedKey(mirrorRouteSegmentKey(segmentId))}
+                      onActivate={({ segmentId }) => selectFromMap(mirrorRouteSegmentKey(segmentId))}
                     />
+                  )}
+                  {featureVisible('paths:trajectory-amr-7') && (
                     <TrajectoryOverlay
                       trajectory={MIRROR_TRAJECTORY}
                       viewportScale={cssViewBoxScale}
@@ -398,104 +517,78 @@ function SemanticMirrorFixture() {
                       aria-hidden="true"
                       showLabel={false}
                       selected={selectedKey === 'paths:trajectory-amr-7'}
-                      onActivate={() => setSelectedKey('paths:trajectory-amr-7')}
+                      onActivate={() => selectFromMap('paths:trajectory-amr-7')}
                     />
-                  </>
-                )}
-                {isVisible('waypoints') && (
-                  <>
+                  )}
+                  {featureVisible('waypoints:wp-pick') && (
                     <WaypointMarker
                       waypoint={MIRROR_PICK_WAYPOINT}
                       viewportScale={cssViewBoxScale}
                       tabIndex={-1} showLabel={false}
                       aria-hidden="true"
                       selected={selectedKey === 'waypoints:wp-pick'}
-                      onActivate={() => setSelectedKey('waypoints:wp-pick')}
+                      onActivate={() => selectFromMap('waypoints:wp-pick')}
                     />
+                  )}
+                  {featureVisible('waypoints:wp-lift') && (
                     <WaypointMarker
                       waypoint={MIRROR_LIFT_WAYPOINT}
                       viewportScale={cssViewBoxScale}
                       tabIndex={-1} showLabel={false}
                       aria-hidden="true"
                       selected={selectedKey === 'waypoints:wp-lift'}
-                      onActivate={() => setSelectedKey('waypoints:wp-lift')}
+                      onActivate={() => selectFromMap('waypoints:wp-lift')}
                     />
-                  </>
-                )}
-                {isVisible('facilities') && (
-                  <FacilityTransition
-                    transition={MIRROR_FACILITY}
-                    activeMapId={MIRROR_MAP_ID}
-                    viewportScale={cssViewBoxScale}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    showLabel={false}
-                    selected={selectedKey === 'facilities:facility-lift'}
-                    onActivate={() => setSelectedKey('facilities:facility-lift')}
-                  />
-                )}
-              </>
-            )}
-          </PathMap>
-          <div data-testid="mirror-legend">
-            <Legend items={MIRROR_LEGEND_ITEMS} direction="horizontal" size="sm" aria-label="지도 계층 범례" />
-          </div>
-        </section>
+                  )}
+                  {featureVisible('facilities:facility-lift') && (
+                    <FacilityTransition
+                      transition={MIRROR_FACILITY}
+                      activeMapId={MIRROR_MAP_ID}
+                      viewportScale={cssViewBoxScale}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      showLabel={false}
+                      selected={selectedKey === 'facilities:facility-lift'}
+                      onActivate={() => selectFromMap('facilities:facility-lift')}
+                    />
+                  )}
+                </>
+              )}
+            </ViewerMapCanvas>
+            <div data-testid="mirror-legend">
+              <Legend items={MIRROR_LEGEND_ITEMS} direction="horizontal" size="sm" aria-label="지도 계층 범례" />
+            </div>
+          </section>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
-            gap: 'var(--space-4)',
-            alignItems: 'start',
-            minWidth: 0,
-          }}
-        >
-        <nav aria-label="내비게이션 객체 목록" data-testid="mirror-list" style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>
-          {MIRROR_LAYERS.map((layer) => {
-            const features = MIRROR_FEATURES.filter((feature) => feature.layerId === layer.id);
-            const hidden = !isVisible(layer.id);
-            return (
-              <section key={layer.id} aria-label={layer.label} style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}>
-                  {layer.label}
-                  {hidden && <span data-hidden-tag style={{ padding: '0 var(--space-1)', borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-fill-normal)', color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption2-size)' }}>숨김</span>}
-                </span>
-                {features.map((feature) => (
-                  <SemanticMirrorListItem
-                    key={feature.key}
-                    feature={feature}
-                    color={layer.color}
-                    hidden={hidden}
-                    selected={selectedKey === feature.key}
-                    onSelect={() => setSelectedKey(feature.key)}
-                  />
-                ))}
-              </section>
-            );
-          })}
-        </nav>
-
-        <div style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0 }}>
-          <LayerPanel
-            title="레이어"
-            label="지도 레이어 표시"
-            layers={layerPanelLayers}
-            visibleLayerIds={visibleLayerIds}
-            onVisibleLayerIdsChange={(ids) => setVisibleLayerIds(ids)}
-          />
-          <SelectionInspector
-            item={inspectorItem}
-            sections={inspectorSections}
-            emptyLabel="목록이나 지도에서 객체를 선택하세요"
-            onClearSelection={selectedFeature ? () => setSelectedKey('') : undefined}
-          />
+          <aside aria-label="뷰어 패널" style={{ display: 'grid', gap: 'var(--space-4)', alignContent: 'start', minWidth: 0 }}>
+            <div style={PANEL_CHROME}>
+              <LayerPanel
+                title="레이어와 객체"
+                label="내비게이션 레이어와 객체"
+                layers={MIRROR_LAYER_TREE}
+                activeLayerId={selectedKey}
+                onActiveLayerChange={(id) => setSelectedKey(id)}
+                visibleLayerIds={visibleIds}
+                onVisibleLayerIdsChange={(ids) => setVisibleIds(ids)}
+                lockedLayerIds={lockedIds}
+                onLockedLayerIdsChange={(ids) => setLockedIds(ids)}
+                data-testid="mirror-list"
+              />
+            </div>
+            <div style={PANEL_CHROME}>
+              <SelectionInspector
+                item={inspectorItem}
+                sections={inspectorSections}
+                emptyLabel="패널이나 지도에서 객체를 선택하세요"
+                onClearSelection={inspectorItem ? () => setSelectedKey('') : undefined}
+              />
+            </div>
+          </aside>
         </div>
-        </div>
+        <output hidden data-testid="mirror-selection">
+          선택: {selectionOutputLabel}{selectionOutputHidden ? ' · 숨김' : ''}
+        </output>
       </div>
-      <output hidden data-testid="mirror-selection">
-        선택: {selectedFeature ? selectedFeature.item.label : '없음'}{selectedLayerHidden ? ' · 숨김 레이어' : ''}
-      </output>
     </StoryPage>
   );
 }
@@ -506,14 +599,14 @@ const meta = {
     storyGuide: {
       storyId: 'lds-robotics-viewer-navigation-viewer--overview',
       eyebrow: 'Robotics / Viewer / Navigation Viewer',
-      title: '내비게이션 오버레이를 지도·목록·레이어·선택 요약으로 합성한 뷰어입니다',
+      title: '내비게이션 오버레이를 지도 캔버스와 패널로 합성한 뷰어입니다',
       description:
-        '영역·레인·경로·궤적·웨이포인트·설비 전이 오버레이를 한 지도에 얹고, 같은 선택 identity를 이름 있는 목록·LayerPanel·SelectionInspector가 공유하는 합성 뷰어 씬입니다. 지도 도형은 pointer 전용(aria-hidden)이고 키보드·스크린 리더 탐색은 이름 있는 목록에 위임합니다. 이 병렬 컨트롤·패널 배선은 제품이 뷰어를 조립하는 방식이므로 개별 렌더러 페이지가 아니라 Viewer 그룹에 둡니다. 렌더러의 값·표현 어휘는 Foundation 원자가, 표현/경계 규약은 NAVIGATION_EXPRESSION_CONVENTIONS가 소유합니다.',
+        '영역·레인·경로·궤적·웨이포인트·설비 전이 오버레이를 Map2DCanvas 위에 얹고, LayerPanel 트리 하나가 레이어와 객체의 선택·표시·잠금을, SelectionInspector와 Legend가 선택 상태와 계층 부호를 담당하는 합성 뷰어 씬입니다. 지도 도형은 포인터 전용(aria-hidden)이고 키보드·스크린 리더 탐색은 패널 트리에 위임합니다. 이 합성은 제품이 뷰어를 조립하는 방식의 표준 예시이며, 렌더러의 값·표현 어휘는 Foundation 원자가, 표현/경계 규약은 NAVIGATION_EXPRESSION_CONVENTIONS가 소유합니다.',
     },
     docs: {
       description: {
         component:
-          '내비게이션 오버레이 렌더러들을 지도 + 이름 있는 목록 + 레이어 패널 + 선택 검사기로 합성한 제품형 뷰어 씬입니다. 한 선택 identity·상태를 네 표면이 공유하고, 지도는 pointer 전용이며 접근성 탐색은 이름 목록이 담당합니다.',
+          '내비게이션 오버레이 렌더러들을 2D 지도 캔버스 + 레이어·객체 트리 패널 + 선택 검사기 + 범례로 합성한 제품형 뷰어 씬입니다. 하나의 선택 identity와 표시·잠금 상태를 네 표면이 공유하고, 지도는 포인터 전용이며 키보드·스크린 리더 탐색은 트리 패널이 담당합니다.',
       },
     },
   },
@@ -524,18 +617,19 @@ export default meta;
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '지도, 이름 있는 목록, LayerPanel, SelectionInspector가 하나의 선택 identity와 상태를 공유합니다. 목록에서 객체를 고르면 지도의 data-selected와 선택 요약이 함께 바뀌고, LayerPanel 표시 토글은 해당 계층만 감춥니다. 지도 도형은 pointer로만 선택되고 Tab 순서와 접근성 트리에서는 빠집니다.',
+    '레이어·객체 트리에서 고른 객체가 지도 선택 표식·선택 요약과 함께 바뀌고, 지도 포인터 선택도 같은 트리 행과 검사기에 반영됩니다. 표시 토글은 레이어·객체 단위로 지도 조각을 감추고(경로 구간은 데이터에서 실제로 빠집니다), 잠금 토글은 지도 포인터 선택만 차단합니다. 지도 도형은 포인터로만 선택되고 Tab 순서와 접근성 트리에서는 빠집니다.',
   ),
   render: () => <SemanticMirrorFixture />,
   play: async ({ canvasElement }) => {
     const map = canvasElement.querySelector('[data-testid="mirror-map"]');
-    const list = canvasElement.querySelector('[data-testid="mirror-list"]');
+    const panel = canvasElement.querySelector('[data-testid="mirror-list"]');
     const legend = canvasElement.querySelector('[data-testid="mirror-legend"]');
     const root = canvasElement.querySelector('[data-testid="semantic-mirror"]');
-    if (!map || !list || !legend || !root) throw new Error('Semantic mirror scaffold is incomplete.');
+    const tree = panel?.querySelector('[role="tree"]');
+    if (!map || !panel || !legend || !root || !tree) throw new Error('Navigation viewer scaffold is incomplete.');
 
-    const inspectorHeading = () => canvasElement.querySelector('[data-testid="mirror-selection"]')?.textContent ?? '';
-    const clickListItem = (key) => canvasElement.querySelector(`[data-list-item="${key}"]`)?.click();
+    const selectionOutput = () => canvasElement.querySelector('[data-testid="mirror-selection"]')?.textContent ?? '';
+    const rowFor = (key) => panel.querySelector(`[data-layer-id="${key}"]`);
 
     const legendItems = Array.from(legend.querySelectorAll('li'));
     const routeLegend = legendItems.find((item) => item.textContent?.includes('현재 경로 구간 · 대기'));
@@ -546,8 +640,8 @@ export const Overview = {
       throw new Error('Legend must mirror the current waiting route dash and active trajectory solid encoding.');
     }
 
-    // 1. Selecting from the named list drives the map data-selected and the summary.
-    const listSelections = [
+    // 1. Selecting a tree row drives the map data-selected and the summary.
+    const treeSelections = [
       ['lanes:lane-corridor', '[data-lane-id="lane-corridor"]', '주 통로'],
       [mirrorRouteSegmentKey('route-seg-completed'), '[data-segment-id="route-seg-completed"]', '배송 경로 17 · 픽업 → 교차로'],
       [mirrorRouteSegmentKey(MIRROR_ROUTE_CURRENT_SEGMENT_ID), `[data-segment-id="${MIRROR_ROUTE_CURRENT_SEGMENT_ID}"]`, '배송 경로 17 · 교차로 → 승강기 A'],
@@ -555,21 +649,26 @@ export const Overview = {
       ['waypoints:wp-pick', '[data-waypoint-id="wp-pick"]', '픽업 지점 P1'],
       ['facilities:facility-lift', '[data-lds-facility-transition][data-transition-id="facility-lift"]', '화물 승강기 A'],
     ];
-    for (const [key, mapSelector, name] of listSelections) {
-      clickListItem(key);
+    for (const [key, mapSelector, name] of treeSelections) {
+      const row = rowFor(key);
+      if (!row) throw new Error(`Missing tree row for ${key}.`);
+      row.click();
       await waitFor(() => {
         const feature = map.querySelector(mapSelector);
         if (feature?.getAttribute('data-selected') !== 'true') {
-          throw new Error(`Selecting "${key}" from the list did not mark ${mapSelector} as selected.`);
+          throw new Error(`Selecting "${key}" in the tree did not mark ${mapSelector} as selected.`);
         }
-        if (!inspectorHeading().includes(name)) {
-          throw new Error(`Selection summary did not follow the list selection for ${key}: ${inspectorHeading()}`);
+        if (row.getAttribute('aria-selected') !== 'true') {
+          throw new Error(`Tree row ${key} did not report aria-selected.`);
+        }
+        if (!selectionOutput().includes(name)) {
+          throw new Error(`Selection summary did not follow the tree selection for ${key}: ${selectionOutput()}`);
         }
       });
     }
 
-    // 2. Pointer selection preserves route segment identity, and trajectory
-    // selection works in the reverse map -> list direction as well.
+    // 2. Pointer selection preserves route segment identity, and the reverse
+    // map -> tree direction stays in sync without stealing focus.
     const mapSelections = [
       ['[data-segment-id="route-seg-completed"]', mirrorRouteSegmentKey('route-seg-completed'), '배송 경로 17 · 픽업 → 교차로'],
       [`[data-segment-id="${MIRROR_ROUTE_CURRENT_SEGMENT_ID}"]`, mirrorRouteSegmentKey(MIRROR_ROUTE_CURRENT_SEGMENT_ID), '배송 경로 17 · 교차로 → 승강기 A'],
@@ -584,12 +683,11 @@ export const Overview = {
         throw new Error(`Pointer-only map feature ${mapSelector} became document.activeElement.`);
       }
       await waitFor(() => {
-        const listItem = list.querySelector(`[data-list-item="${key}"]`);
-        if (mapFeature?.getAttribute('data-selected') !== 'true' || listItem?.getAttribute('aria-pressed') !== 'true') {
-          throw new Error(`Selecting ${mapSelector} on the map did not preserve identity in the named list.`);
+        if (mapFeature?.getAttribute('data-selected') !== 'true' || rowFor(key)?.getAttribute('aria-selected') !== 'true') {
+          throw new Error(`Selecting ${mapSelector} on the map did not preserve identity in the tree.`);
         }
-        if (!inspectorHeading().includes(name)) {
-          throw new Error(`Selection summary did not preserve map identity for ${key}: ${inspectorHeading()}`);
+        if (!selectionOutput().includes(name)) {
+          throw new Error(`Selection summary did not preserve map identity for ${key}: ${selectionOutput()}`);
         }
       });
       if (key === mirrorRouteSegmentKey('route-seg-completed')
@@ -602,17 +700,18 @@ export const Overview = {
       }
     }
     const pointerOnlyRoute = map.querySelector('[data-segment-id="route-seg-current"]');
-    const selectionBeforeHiddenKey = inspectorHeading();
+    const selectionBeforeKey = selectionOutput();
     pointerOnlyRoute?.dispatchEvent(new canvasElement.ownerDocument.defaultView.KeyboardEvent('keydown', {
       key: 'Enter', bubbles: true, cancelable: true,
     }));
     await nextRender();
-    if (inspectorHeading() !== selectionBeforeHiddenKey) {
+    if (selectionOutput() !== selectionBeforeKey) {
       throw new Error('aria-hidden pointer-only Route responded to keyboard activation.');
     }
 
-    // 3. Pointer-selectable map identities are counted by stable data identity.
-    const mapSvg = map.querySelector('svg');
+    // 3. Pointer-selectable map identities are mirrored one-to-one by tree
+    // object rows, and every identity defers screen-reader traversal.
+    const mapSvg = map.querySelector('svg[data-css-viewbox-scale]');
     const mapIdentities = [
       ...Array.from(mapSvg?.querySelectorAll('[data-lds-spatial-region]') ?? []),
       mapSvg?.querySelector('[data-lk-lane-overlay]'),
@@ -629,7 +728,7 @@ export const Overview = {
     }
     for (const identity of mapIdentities) {
       if (!identity.closest('[aria-hidden="true"]')) {
-        throw new Error('Every pointer-selectable map identity must defer screen-reader traversal to the named list.');
+        throw new Error('Every pointer-selectable map identity must defer screen-reader traversal to the panel tree.');
       }
     }
     const pointerOnlyPaths = [
@@ -645,20 +744,20 @@ export const Overview = {
         throw new Error('Pointer-only Route/Trajectory must not expose button semantics or focusability.');
       }
     }
-    const listButtons = Array.from(list.querySelectorAll('button[data-list-item]'));
-    if (!listButtons.some((button) => (button.tabIndex ?? 0) >= 0)) {
-      throw new Error('Named list must expose keyboard-focusable controls.');
+    const objectRows = Array.from(panel.querySelectorAll('[role="treeitem"][data-layer-id*=":"]'));
+    if (objectRows.length !== mapIdentities.length) {
+      throw new Error(`Panel tree must mirror every pointer-selectable map identity: map ${mapIdentities.length}, tree ${objectRows.length}.`);
     }
-    if (listButtons.length !== mapIdentities.length) {
-      throw new Error(`Named list must mirror every pointer-selectable map identity: map ${mapIdentities.length}, list ${listButtons.length}.`);
+    const allRows = Array.from(panel.querySelectorAll('[role="treeitem"]'));
+    if (allRows.filter((row) => row.tabIndex === 0).length !== 1) {
+      throw new Error('Panel tree must expose exactly one roving keyboard entry point.');
     }
 
-    // 4. LayerPanel visibility toggle hides only the targeted layer's fragments.
+    // 4. Group visibility toggle hides only that layer's fragments.
     if (!map.querySelector('[data-waypoint-id="wp-pick"]')) throw new Error('Waypoint fragment should start visible.');
-    const visibilityButtons = Array.from(canvasElement.querySelectorAll('[data-layer-action="visibility"]'));
-    const waypointToggle = visibilityButtons.find((button) => (button.getAttribute('aria-label') ?? '').startsWith('웨이포인트'));
-    if (!waypointToggle) throw new Error('LayerPanel waypoint visibility toggle is missing.');
-    waypointToggle.click();
+    const waypointGroupToggle = rowFor('waypoints')?.querySelector('[data-layer-action="visibility"]');
+    if (!waypointGroupToggle) throw new Error('Waypoint layer visibility toggle is missing.');
+    waypointGroupToggle.click();
     await waitFor(() => {
       if (map.querySelector('[data-waypoint-id="wp-pick"]') || map.querySelector('[data-waypoint-id="wp-lift"]')) {
         throw new Error('Hiding the waypoint layer must remove its map fragments.');
@@ -669,26 +768,88 @@ export const Overview = {
     }
 
     // 5. A selection retained on a now-hidden layer is explicitly marked 숨김.
-    clickListItem('waypoints:wp-pick');
+    rowFor('waypoints:wp-pick')?.click();
     await waitFor(() => {
-      if (!inspectorHeading().includes('숨김')) {
-        throw new Error(`Selecting a feature on a hidden layer must surface a 숨김 state: ${inspectorHeading()}`);
+      if (!selectionOutput().includes('숨김')) {
+        throw new Error(`Selecting a feature on a hidden layer must surface a 숨김 state: ${selectionOutput()}`);
       }
     });
-    const hiddenTaggedItem = list.querySelector('[data-list-item="waypoints:wp-pick"]');
-    if (!hiddenTaggedItem?.textContent?.includes('숨김')) {
-      throw new Error('Hidden-layer list items must be labelled 숨김.');
+    if (!rowFor('waypoints')?.getAttribute('aria-label')?.includes('숨김')) {
+      throw new Error('Hidden layer group rows must be labelled 숨김.');
     }
-    waypointToggle.click();
+    waypointGroupToggle.click();
     await waitFor(() => {
       if (!map.querySelector('[data-waypoint-id="wp-pick"]')) {
         throw new Error('Restoring the layer must re-render its fragments.');
       }
     });
 
-    // 6. The composed layout does not create horizontal overflow.
+    // 6. Object-level visibility hides exactly one fragment; a hidden route
+    // segment disappears from the rendered route data, not just its paint.
+    rowFor('waypoints:wp-pick')?.querySelector('[data-layer-action="visibility"]')?.click();
+    await waitFor(() => {
+      if (map.querySelector('[data-waypoint-id="wp-pick"]')) {
+        throw new Error('Hiding one waypoint object must remove exactly that fragment.');
+      }
+      if (!map.querySelector('[data-waypoint-id="wp-lift"]')) {
+        throw new Error('Hiding one waypoint object must not remove its siblings.');
+      }
+    });
+    rowFor('waypoints:wp-pick')?.querySelector('[data-layer-action="visibility"]')?.click();
+    // Wait for the restore to flush before the next toggle: two back-to-back
+    // toggles in one task would let the second compute its visibility set from
+    // a stale render and silently drop the restore.
+    await waitFor(() => {
+      if (!map.querySelector('[data-waypoint-id="wp-pick"]')) {
+        throw new Error('Restoring the waypoint object must re-render its fragment.');
+      }
+    });
+    const completedSegmentKey = mirrorRouteSegmentKey('route-seg-completed');
+    rowFor(completedSegmentKey)?.querySelector('[data-layer-action="visibility"]')?.click();
+    await waitFor(() => {
+      if (map.querySelector('[data-segment-id="route-seg-completed"]')) {
+        throw new Error('Hiding a route segment object must remove that segment from the rendered route.');
+      }
+      if (!map.querySelector(`[data-segment-id="${MIRROR_ROUTE_CURRENT_SEGMENT_ID}"]`)) {
+        throw new Error('Hiding one route segment must keep the remaining segment rendered.');
+      }
+    });
+    rowFor(completedSegmentKey)?.querySelector('[data-layer-action="visibility"]')?.click();
+    await waitFor(() => {
+      if (!map.querySelector('[data-segment-id="route-seg-completed"]')) {
+        throw new Error('Restoring a route segment object must re-render it.');
+      }
+    });
+
+    // 7. A locked object stays selectable in the panel but ignores map pointer
+    // selection until unlocked.
+    rowFor('facilities:facility-lift')?.click();
+    await waitFor(() => {
+      if (!selectionOutput().includes('화물 승강기 A')) {
+        throw new Error('Facility selection did not land before the lock check.');
+      }
+    });
+    const laneLockToggle = rowFor('lanes:lane-corridor')?.querySelector('[data-layer-action="lock"]');
+    if (!laneLockToggle) throw new Error('Lane object lock toggle is missing.');
+    laneLockToggle.click();
+    await nextRender();
+    await userEvent.click(map.querySelector('[data-lane-id="lane-corridor"]'));
+    await nextRender();
+    if (!selectionOutput().includes('화물 승강기 A')) {
+      throw new Error(`Locked lane must ignore map pointer selection: ${selectionOutput()}`);
+    }
+    laneLockToggle.click();
+    await nextRender();
+    await userEvent.click(map.querySelector('[data-lane-id="lane-corridor"]'));
+    await waitFor(() => {
+      if (!selectionOutput().includes('주 통로')) {
+        throw new Error(`Unlocked lane must accept map pointer selection again: ${selectionOutput()}`);
+      }
+    });
+
+    // 8. The composed layout does not create horizontal overflow.
     if (root.scrollWidth > root.clientWidth + 1) {
-      throw new Error(`Semantic mirror overflowed horizontally: ${root.scrollWidth}/${root.clientWidth}.`);
+      throw new Error(`Navigation viewer overflowed horizontally: ${root.scrollWidth}/${root.clientWidth}.`);
     }
   },
 };
@@ -696,7 +857,7 @@ export const Overview = {
 export const NarrowViewport = {
   name: '반응형 · 320px 의미 목록 연동',
   parameters: storyDescription(
-    '320px 폭에서도 모든 지도 fragment가 측정된 CSS/viewBox scale을 받아 pointer core를 24 CSS px로 유지하고, 접근성 탐색은 이름 있는 목록에 위임합니다.',
+    '320px 폭에서 지도 캔버스와 패널이 세로로 쌓이고, 모든 지도 fragment가 측정된 CSS/viewBox scale을 받아 포인터 코어를 24 CSS px로 유지하며, 접근성 탐색은 레이어·객체 패널에 위임합니다.',
   ),
   render: () => (
     <div data-testid="semantic-mirror-narrow" style={{ width: 320, maxWidth: '100%', minWidth: 0 }}>
@@ -707,13 +868,13 @@ export const NarrowViewport = {
     const narrow = canvasElement.querySelector('[data-testid="semantic-mirror-narrow"]');
     const map = narrow?.querySelector('[data-testid="mirror-map"]');
     const root = narrow?.querySelector('[data-testid="semantic-mirror"]');
-    if (!narrow || !map || !root) throw new Error('Narrow semantic mirror scaffold is incomplete.');
+    if (!narrow || !map || !root) throw new Error('Narrow navigation viewer scaffold is incomplete.');
 
     await waitFor(() => {
       const svg = map.querySelector('svg[data-css-viewbox-scale]');
       const cssScale = Number(svg?.getAttribute('data-css-viewbox-scale'));
       if (!svg || !Number.isFinite(cssScale) || cssScale >= 0.95) {
-        throw new Error(`Semantic mirror did not render at a narrow CSS/viewBox scale: ${cssScale}.`);
+        throw new Error(`Navigation viewer did not render at a narrow CSS/viewBox scale: ${cssScale}.`);
       }
 
       for (const selector of ['[data-lk-route-overlay]', '[data-lk-trajectory-overlay]']) {
@@ -759,7 +920,7 @@ export const NarrowViewport = {
       map.querySelector('[data-lds-facility-transition]'),
     ].filter(Boolean);
     if (mapIdentities.length !== 9 || mapIdentities.some((identity) => !identity.closest('[aria-hidden="true"]'))) {
-      throw new Error('Narrow map identities must be aria-hidden and mirrored by the named list.');
+      throw new Error('Narrow map identities must be aria-hidden and mirrored by the panel tree.');
     }
     const pointerOnlyPaths = [
       ...map.querySelectorAll('[data-route-segment]'),
@@ -774,7 +935,7 @@ export const NarrowViewport = {
       throw new Error('Narrow pointer-only Route/Trajectory retained hidden button semantics.');
     }
     if (root.scrollWidth > root.clientWidth + 1 || narrow.scrollWidth > narrow.clientWidth + 1) {
-      throw new Error(`Narrow semantic mirror overflowed: root ${root.scrollWidth}/${root.clientWidth}, wrapper ${narrow.scrollWidth}/${narrow.clientWidth}.`);
+      throw new Error(`Narrow navigation viewer overflowed: root ${root.scrollWidth}/${root.clientWidth}, wrapper ${narrow.scrollWidth}/${narrow.clientWidth}.`);
     }
   },
 };
