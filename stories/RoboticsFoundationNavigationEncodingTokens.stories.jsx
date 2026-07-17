@@ -336,44 +336,49 @@ function PriorityLadder() {
 // Keyboard focus indicator. The SHARED rule: a focused marker draws an
 // indicator that traces its OWN silhouette in --color-semantic-focus-indicator
 // with non-scaling-stroke, and the browser's rectangular outline is suppressed.
-// The geometry (radius / stroke) varies per renderer because it hugs each
-// marker's shape, so this documents the rule + the per-renderer geometry.
-const FOCUS_GEOMETRY = [
-  { renderer: '웨이포인트', geom: '원 r11 · stroke 2' },
-  { renderer: '레인 / 궤적', geom: '경로 halo · stroke 10' },
-  { renderer: '루트', geom: '경로 halo · stroke 11' },
-  { renderer: '영역', geom: '도형 추적 · stroke 6.5' },
-  { renderer: '핀 (시설·해저드)', geom: '실루엣 scale 1.34 · stroke 2.5' },
-];
+// The geometry (radius / stroke) hugs each marker's shape, so the three tiles
+// show the real, visually distinct focus treatments — circle ring, path halo,
+// and shape-tracing outline — rather than one generic ring.
+const FOCUS_INDICATOR = 'var(--color-semantic-focus-indicator)';
+
+function FocusTile({ label, geom, children }) {
+  return (
+    <figure style={{ margin: 0, display: 'grid', gap: 7, justifyItems: 'center', minWidth: 0 }}>
+      <svg width={104} height={76} viewBox="-26 -19 52 38" aria-hidden="true" style={{ display: 'block', border: `1px solid ${LINE}`, borderRadius: 'var(--radius-sm)', background: SURFACE }}>
+        {children}
+      </svg>
+      <span style={{ fontSize: 11, color: INK, fontWeight: 'var(--fw-semibold)', textAlign: 'center' }}>{label}</span>
+      <code style={{ fontSize: 10, color: MUTED, textAlign: 'center' }}>{geom}</code>
+    </figure>
+  );
+}
 
 function FocusCard() {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: 16, alignItems: 'center' }}>
-      <svg width={72} height={72} viewBox="-24 -24 48 48" role="img" aria-label="포커스 인디케이터: 마커 실루엣을 따라 그려진 포커스 링">
-        {/* a representative marker (diamond) with its focus ring traced around it */}
-        <rect x="-9" y="-9" width="18" height="18" rx="3" transform="rotate(45)" fill="var(--color-semantic-fill-normal)" stroke={LINE} strokeWidth="1" vectorEffect="non-scaling-stroke" />
-        <circle
-          data-encoding-focus-ring=""
-          r="11"
-          fill="none"
-          stroke="var(--color-semantic-focus-indicator)"
-          strokeWidth="2"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
-      <div style={{ display: 'grid', gap: 10, minWidth: 0 }}>
-        <p style={{ margin: 0, fontSize: 'var(--caption1-size)', color: MUTED, lineHeight: 1.6 }}>
-          키보드 포커스를 받은 마커는 자기 실루엣을 따라 <code style={{ color: INK }}>--color-semantic-focus-indicator</code> 색 윤곽선을 그리고 브라우저 사각 outline은 억제합니다. 모두 non-scaling-stroke이며, 크기는 마커 모양에 맞춰 렌더러마다 다릅니다.
-        </p>
-        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 4 }}>
-          {FOCUS_GEOMETRY.map((row) => (
-            <li key={row.renderer} style={{ display: 'grid', gridTemplateColumns: 'minmax(96px, auto) 1fr', gap: 'var(--space-3)', fontSize: 'var(--caption1-size)' }}>
-              <span style={{ color: INK, fontWeight: 'var(--fw-semibold)' }}>{row.renderer}</span>
-              <code style={{ color: MUTED }}>{row.geom}</code>
-            </li>
-          ))}
-        </ul>
+    <div style={{ display: 'grid', gap: 14 }}>
+      <p style={{ margin: 0, fontSize: 'var(--caption1-size)', color: MUTED, lineHeight: 1.6 }}>
+        키보드 포커스를 받은 마커는 자기 실루엣을 따라 <code style={{ color: INK }}>--color-semantic-focus-indicator</code> 윤곽선을 그리고 브라우저 사각 outline은 억제합니다. 모두 non-scaling-stroke이며, 아래처럼 크기·모양은 마커에 맞춰 렌더러마다 다릅니다.
+      </p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(112px, max-content))', gap: 16, justifyContent: 'center' }}>
+        <FocusTile label="웨이포인트" geom="원 r11 · stroke 2">
+          {/* the point rides on a diamond; its focus is a circle ring around it */}
+          <rect x="-6" y="-6" width="12" height="12" transform="rotate(45)" fill={ACCENT} />
+          <circle data-encoding-focus-ring="" r="11" fill="none" stroke={FOCUS_INDICATOR} strokeWidth="2" vectorEffect="non-scaling-stroke" />
+        </FocusTile>
+        <FocusTile label="경로 (레인·궤적·루트)" geom="halo stroke 10~11">
+          {/* a thick focus-colored halo behind the thin path line */}
+          <path d="M-19 10 L-1 -2 L19 -9" fill="none" stroke={FOCUS_INDICATOR} strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+          <path d="M-19 10 L-1 -2 L19 -9" fill="none" stroke={ACCENT} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        </FocusTile>
+        <FocusTile label="영역" geom="도형 추적 · stroke 6.5">
+          {/* the focus stroke traces the region silhouette */}
+          <rect x="-19" y="-11" width="38" height="22" rx="3" fill="var(--color-semantic-fill-normal)" stroke={FOCUS_INDICATOR} strokeWidth="6.5" vectorEffect="non-scaling-stroke" />
+          <rect x="-19" y="-11" width="38" height="22" rx="3" fill="none" stroke={INK} strokeWidth="1" vectorEffect="non-scaling-stroke" opacity="0.35" />
+        </FocusTile>
       </div>
+      <p style={{ margin: 0, fontSize: 11, color: MUTED, lineHeight: 1.6 }}>
+        핀(시설·해저드)은 자기 실루엣을 <code style={{ color: INK }}>scale 1.34</code>로 키운 링(stroke 2.5)을 씁니다 — Marker Pin 페이지 참고.
+      </p>
     </div>
   );
 }
