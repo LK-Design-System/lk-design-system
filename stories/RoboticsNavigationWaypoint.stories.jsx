@@ -426,12 +426,29 @@ function OverviewFixture() {
   );
 }
 
+function OverviewMapFixture() {
+  return (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 900, minWidth: 0 }}>
+      <MapSurface
+        waypoints={overviewWaypoints}
+        height={300}
+        label="1층 웨이포인트 역할 지도"
+      />
+      <NavigationLegend
+        roles={['holding', 'passthrough', 'parking', 'charger']}
+        annotations={['dock']}
+        states={['available', 'unknown']}
+      />
+    </main>
+  );
+}
+
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '같은 내비게이션 그래프에서 대기·통과·주차·충전 역할과 중첩 역할을 비교하고 지도 또는 목록에서 선택합니다. 지도 표식과 목록의 순서·이름·상태가 일치하고 어느 입력 경로에서도 같은 waypoint id가 선택되는지 확인하세요.',
+    '같은 내비게이션 그래프에서 대기·통과·주차·충전 역할과 중첩 역할을 한 지도에서 비교하는 대표 뷰입니다. 지도 표식의 이름·역할·상태가 범례와 일치하는지 확인하세요. 지도와 목록의 선택 동기화는 상호작용 스토리에서 다룹니다.',
   ),
-  render: () => <OverviewFixture />,
+  render: () => <OverviewMapFixture />,
   play: async ({ canvasElement }) => {
     const holding = canvasElement.querySelector('[data-waypoint-id="wp-holding"]');
     const passthrough = canvasElement.querySelector('[data-waypoint-id="wp-passthrough"]');
@@ -441,6 +458,19 @@ export const Overview = {
     if (!name.includes('Hold A') || !name.includes('지도 L1') || !name.includes('대기 지점') || !name.includes('가용성 사용 가능')) {
       throw new Error(`Waypoint accessible name lost identity or semantics: ${name}`);
     }
+  },
+};
+
+export const SelectionSync = {
+  name: '상호작용 · 지도·목록 선택 동기화',
+  parameters: storyDescription(
+    '같은 waypoint를 지도 표식과 동일 순서 목록 어느 쪽에서 선택해도 같은 id가 선택되는지, 그리고 포인터·Enter·Space 활성화와 :focus-visible 미러링, 반복 keydown 억제가 지켜지는지 확인합니다.',
+  ),
+  render: () => <OverviewFixture />,
+  play: async ({ canvasElement }) => {
+    const holding = canvasElement.querySelector('[data-waypoint-id="wp-holding"]');
+    const passthrough = canvasElement.querySelector('[data-waypoint-id="wp-passthrough"]');
+    if (!holding || !passthrough) throw new Error('Waypoint selection-sync markers are incomplete.');
 
     await userEvent.click(passthrough);
     await waitFor(() => {

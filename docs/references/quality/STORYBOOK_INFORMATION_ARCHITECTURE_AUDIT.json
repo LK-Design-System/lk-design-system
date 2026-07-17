@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "22105f344921ac7b308e583cf7bd58c3219efbbe52e3bed1b7049f203a055ff7",
+    "storybookIndexSha256": "bc1318e88981dbf4a9ce8ed8c363c4a90b9ee13e3e2828968ad42fc2b42801c4",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -60,23 +60,23 @@
   },
   "summary": {
     "pages": 189,
-    "stories": 577,
-    "publicStories": 441,
+    "stories": 578,
+    "publicStories": 442,
     "hiddenStories": 136,
     "componentDescriptions": 185,
     "pagesWithVisibleCanvasIntroduction": 189,
     "pagesWithDecisionGuidance": 171,
-    "describedPublicStories": 441,
+    "describedPublicStories": 442,
     "reviewedPages": 177,
     "reviewedStories": 534,
-    "staleReviewedPages": 2,
+    "staleReviewedPages": 4,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 182,
       "usage": 21,
       "variants-states": 89,
-      "interaction": 49,
+      "interaction": 50,
       "responsive": 64,
       "scenario": 26,
       "visual-parity": 99,
@@ -112,8 +112,8 @@
       },
       "Robotics": {
         "pages": 41,
-        "stories": 171,
-        "public": 137,
+        "stories": 172,
+        "public": 138,
         "hidden": 34,
         "guideReadyPages": 28
       },
@@ -16765,7 +16765,7 @@
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationUnitFormat.stories.jsx",
-      "sourceSha256": "5830c850f223e68443ad77c9daeff6611fcbbeee36c943d2b36a89a16373799e",
+      "sourceSha256": "889c7a1db173be99faba4278e94bd53094a2325a9f47340fc028f27b19d783bf",
       "primaryOwner": null,
       "ownerComponents": [],
       "supportingComponents": [],
@@ -17554,7 +17554,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationLane.stories.jsx",
-      "sourceSha256": "4651d4b9418dca576c547fa6cd4038a9ea94d6d590819fc2689db216deb3af17",
+      "sourceSha256": "65c1ea4609bdfe990b0c376502379623f3086b6df9916ab67b06824932fda2fe",
       "primaryOwner": "LaneOverlay",
       "ownerComponents": [
         "LaneOverlay"
@@ -18367,7 +18367,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationWaypoint.stories.jsx",
-      "sourceSha256": "022d0529208da0d1528a97a0d12ed96b3ab7916cdb9b7cc7e1dfdbd2396ca6b3",
+      "sourceSha256": "65af8559182e9f06942c6e255a100de37e13eac5eaf6afd4fd016f4c9e2c65ab",
       "primaryOwner": "WaypointMarker",
       "ownerComponents": [
         "WaypointMarker"
@@ -18377,14 +18377,14 @@
         "Map2DCanvas"
       ],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-navigation-waypoint--overview",
-        "describedPublicStories": 6,
-        "publicStoriesWithCanvasGuidance": 1,
+        "describedPublicStories": 7,
+        "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
       "missingGuidance": [],
@@ -18417,7 +18417,6 @@
             "WaypointMarker"
           ],
           "supportingComponents": [
-            "Button",
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
@@ -18471,6 +18470,31 @@
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-robotics-navigation-waypoint--selection-sync",
+          "name": "상호작용 · 지도·목록 선택 동기화",
+          "exportName": "SelectionSync",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "WaypointMarker"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Map2DCanvas"
+          ]
         },
         {
           "id": "lds-robotics-navigation-waypoint--pointer-only-map-fragment",
