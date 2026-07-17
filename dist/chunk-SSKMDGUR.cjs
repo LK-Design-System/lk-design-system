@@ -1,8 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
-
-var _chunkBD2ARKLHcjs = require('./chunk-BD2ARKLH.cjs');
+var _chunk7QQAUH55cjs = require('./chunk-7QQAUH55.cjs');
 
 
 var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
@@ -190,7 +189,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
           "path",
           {
             "data-lane-orientation": endpoint.orientation,
-            d: _chunkBD2ARKLHcjs.NAVIGATION_ENDPOINT_ARROW,
+            d: "M -5 0 H 5 M 2 -3 L 5 0 L 2 3",
             transform: `rotate(${orientation}) translate(10 0)`,
             fill: "none",
             stroke: VIEWER_FOREGROUND,
@@ -460,7 +459,7 @@ function LaneOverlay({
             "data-lane-direction": "entry-to-exit",
             "data-lane-direction-anchor-x": directionPoint.x,
             "data-lane-direction-anchor-y": directionPoint.y,
-            d: _chunkBD2ARKLHcjs.NAVIGATION_DIRECTION_PATH,
+            d: _chunk7QQAUH55cjs.NAVIGATION_DIRECTION_PATH,
             transform: `translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`,
             fill: baseColor,
             stroke: VIEWER_SURFACE,
@@ -594,4 +593,4 @@ function LaneOverlay({
 
 
 exports.LaneOverlay = LaneOverlay;
-//# sourceMappingURL=chunk-EBRLR23W.cjs.map
+//# sourceMappingURL=chunk-SSKMDGUR.cjs.map

@@ -1,7 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
-import { NAVIGATION_DIRECTION_PATH, NAVIGATION_ENDPOINT_ARROW } from './_navigationVectorGlyph.js';
+import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 import { navStateOpacity, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
@@ -178,7 +178,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
       {orientation != null && (
         <path
           data-lane-orientation={endpoint.orientation}
-          d={NAVIGATION_ENDPOINT_ARROW}
+          d="M -5 0 H 5 M 2 -3 L 5 0 L 2 3"
           transform={`rotate(${orientation}) translate(10 0)`}
           fill="none"
           stroke={VIEWER_FOREGROUND}

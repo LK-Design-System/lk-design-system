@@ -1,8 +1,7 @@
 "use client";
 import {
-  NAVIGATION_DIRECTION_PATH,
-  NAVIGATION_ENDPOINT_ARROW
-} from "./chunk-LKPSREO3.js";
+  NAVIGATION_DIRECTION_PATH
+} from "./chunk-K4EWYCV2.js";
 import {
   NavigationStateGlyph
 } from "./chunk-54Q6T6L4.js";
@@ -190,7 +189,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
           "path",
           {
             "data-lane-orientation": endpoint.orientation,
-            d: NAVIGATION_ENDPOINT_ARROW,
+            d: "M -5 0 H 5 M 2 -3 L 5 0 L 2 3",
             transform: `rotate(${orientation}) translate(10 0)`,
             fill: "none",
             stroke: VIEWER_FOREGROUND,
@@ -594,4 +593,4 @@ function LaneOverlay({
 export {
   LaneOverlay
 };
-//# sourceMappingURL=chunk-SK6EMV55.js.map
+//# sourceMappingURL=chunk-4YV6AQ7V.js.map
