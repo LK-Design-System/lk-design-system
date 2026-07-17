@@ -9,9 +9,8 @@ import {
   NAV_STATE_BADGE,
   NAV_LABEL_HALO,
 } from '../components/robotics/_navigationVocabulary.js';
-import { NAVIGATION_DIRECTION_PATH } from '../components/robotics/_navigationVectorGlyph.js';
 import { annotationPriority, KIND_WEIGHT } from '../components/robotics/_navigationAnnotations.js';
-import { WaypointMarker, FacilityTransition, SpatialRegion } from '../src/index.js';
+import { WaypointMarker, FacilityTransition, SpatialRegion, LaneOverlay } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 // This page renders the REAL shared encoding tokens — every dash, opacity, badge,
@@ -214,46 +213,27 @@ function HaloSwatches() {
   );
 }
 
-// Screen-constant markers under zoom. Both panels share one map (grid + path
-// drawn in the same world coordinates); the right panel wraps that map in a
-// scale(2) group so the LINE and GRID grow with the zoom, while the marker is
-// drawn OUTSIDE the zoomed group at a constant size — exactly what every
-// renderer achieves with `transform: scale(1/viewportScale)` +
-// `vector-effect: non-scaling-stroke` on the marker.
+// Screen-constant markers under zoom, shown with the REAL components. Both
+// panels render the same real WaypointMarker and SpatialRegion; only the
+// panel's zoom differs (its viewBox is halved for zoom 2, and each component
+// gets the matching viewportScale). The marker inverse-scales, so it holds the
+// same on-screen size in both, while the region is world geometry, so it grows
+// with the zoom. No hand-drawn simulation — the components do it.
+const ZOOM_MAP = 'zoom';
+const ZOOM_REGION = { id: 'zoom-rg', mapId: ZOOM_MAP, category: 'behavior', rule: { kind: 'speed-limit' }, shape: { kind: 'circle', center: { x: 18, y: 16 }, radius: 8 } };
+const ZOOM_WAYPOINT = { id: 'zoom-wp', mapId: ZOOM_MAP, position: { x: 36, y: 16 }, roles: ['holding'], availability: 'available' };
+
 const ZOOM_PANELS = [
-  { z: 1, label: '줌 1×' },
-  { z: 2, label: '줌 2×' },
+  { z: 1, viewBox: '-24 -16 96 64', label: '줌 1×' },
+  { z: 2, viewBox: '0 0 48 32', label: '줌 2×' },
 ];
 
-function ZoomPanel({ z, label }) {
-  const gridLines = [];
-  for (let g = 12; g < 132; g += 24) {
-    gridLines.push(<line key={`v${g}`} x1={g} y1="0" x2={g} y2="96" stroke={LINE} strokeWidth="1" />);
-  }
-  for (let g = 12; g < 96; g += 24) {
-    gridLines.push(<line key={`h${g}`} x1="0" y1={g} x2="132" y2={g} stroke={LINE} strokeWidth="1" />);
-  }
+function ZoomPanel({ z, viewBox, label }) {
   return (
     <figure data-zoom-panel={z} style={{ margin: 0, display: 'grid', gap: 8, justifyItems: 'center' }}>
-      <svg width={132} height={96} viewBox="0 0 132 96" aria-hidden="true" style={{ display: 'block', border: `1px solid ${LINE}`, borderRadius: 'var(--radius-sm)', background: SURFACE }}>
-        <g transform={z === 1 ? undefined : `translate(66 48) scale(${z}) translate(-66 -48)`}>
-          {gridLines}
-          {/* The path scales with the map (no non-scaling-stroke), so it reads
-              thicker and longer at higher zoom. */}
-          <path data-zoom-path="" d="M18 68 L66 48 L114 40" fill="none" stroke={ACCENT} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        </g>
-        {/* Marker drawn outside the zoomed group → constant screen size. */}
-        <g transform="translate(66 48)">
-          <circle
-            data-zoom-marker=""
-            r={NAV_CURRENT_MARKER.radius}
-            fill={SURFACE}
-            stroke={ACCENT}
-            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
-            vectorEffect="non-scaling-stroke"
-          />
-          <path d={NAVIGATION_DIRECTION_PATH} transform="rotate(-22)" fill={INK} />
-        </g>
+      <svg width={96} height={64} viewBox={viewBox} aria-hidden="true" style={{ display: 'block', border: `1px solid ${LINE}`, borderRadius: 'var(--radius-sm)', background: SURFACE }}>
+        <SpatialRegion region={ZOOM_REGION} viewportScale={z} showLabel={false} />
+        <WaypointMarker waypoint={ZOOM_WAYPOINT} viewportScale={z} showLabel={false} />
       </svg>
       <span style={{ fontSize: 11, color: INK, fontVariantNumeric: 'tabular-nums' }}>{label}</span>
     </figure>
@@ -262,9 +242,9 @@ function ZoomPanel({ z, label }) {
 
 function ZoomCard() {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(148px, max-content))', gap: 16, justifyContent: 'center' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(112px, max-content))', gap: 16, justifyContent: 'center' }}>
       {ZOOM_PANELS.map((panel) => (
-        <ZoomPanel key={panel.z} z={panel.z} label={panel.label} />
+        <ZoomPanel key={panel.z} z={panel.z} viewBox={panel.viewBox} label={panel.label} />
       ))}
     </div>
   );
@@ -334,56 +314,6 @@ function PriorityLadder() {
   );
 }
 
-// Keyboard focus indicator. The SHARED rule: a focused marker draws an
-// indicator that traces its OWN silhouette in --color-semantic-focus-indicator
-// with non-scaling-stroke, and the browser's rectangular outline is suppressed.
-// The geometry (radius / stroke) hugs each marker's shape, so the three tiles
-// show the real, visually distinct focus treatments — circle ring, path halo,
-// and shape-tracing outline — rather than one generic ring.
-const FOCUS_INDICATOR = 'var(--color-semantic-focus-indicator)';
-
-function FocusTile({ label, geom, children }) {
-  return (
-    <figure style={{ margin: 0, display: 'grid', gap: 7, justifyItems: 'center', minWidth: 0 }}>
-      <svg width={104} height={76} viewBox="-26 -19 52 38" aria-hidden="true" style={{ display: 'block', border: `1px solid ${LINE}`, borderRadius: 'var(--radius-sm)', background: SURFACE }}>
-        {children}
-      </svg>
-      <span style={{ fontSize: 11, color: INK, fontWeight: 'var(--fw-semibold)', textAlign: 'center' }}>{label}</span>
-      <code style={{ fontSize: 10, color: MUTED, textAlign: 'center' }}>{geom}</code>
-    </figure>
-  );
-}
-
-function FocusCard() {
-  return (
-    <div style={{ display: 'grid', gap: 14 }}>
-      <p style={{ margin: 0, fontSize: 'var(--caption1-size)', color: MUTED, lineHeight: 1.6 }}>
-        키보드 포커스를 받은 마커는 자기 실루엣을 따라 <code style={{ color: INK }}>--color-semantic-focus-indicator</code> 윤곽선을 그리고 브라우저 사각 outline은 억제합니다. 모두 non-scaling-stroke이며, 아래처럼 크기·모양은 마커에 맞춰 렌더러마다 다릅니다.
-      </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(112px, max-content))', gap: 16, justifyContent: 'center' }}>
-        <FocusTile label="웨이포인트" geom="다이아몬드 껍데기 ×1.5">
-          {/* focus traces the diamond silhouette (shell scaled 1.5x), not a circle */}
-          <polygon points="0,-7 7,0 0,7 -7,0" fill={ACCENT} />
-          <polygon data-encoding-focus-ring="" points="0,-7 7,0 0,7 -7,0" transform="scale(1.5)" fill="none" stroke={FOCUS_INDICATOR} strokeWidth="2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-        </FocusTile>
-        <FocusTile label="경로 (레인·궤적·루트)" geom="halo stroke 10~11">
-          {/* a thick focus-colored halo behind the thin path line */}
-          <path d="M-19 10 L-1 -2 L19 -9" fill="none" stroke={FOCUS_INDICATOR} strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-          <path d="M-19 10 L-1 -2 L19 -9" fill="none" stroke={ACCENT} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        </FocusTile>
-        <FocusTile label="영역" geom="도형 추적 · stroke 6.5">
-          {/* the focus stroke traces the region silhouette */}
-          <rect x="-19" y="-11" width="38" height="22" rx="3" fill="var(--color-semantic-fill-normal)" stroke={FOCUS_INDICATOR} strokeWidth="6.5" vectorEffect="non-scaling-stroke" />
-          <rect x="-19" y="-11" width="38" height="22" rx="3" fill="none" stroke={INK} strokeWidth="1" vectorEffect="non-scaling-stroke" opacity="0.35" />
-        </FocusTile>
-      </div>
-      <p style={{ margin: 0, fontSize: 11, color: MUTED, lineHeight: 1.6 }}>
-        핀(시설·해저드)은 자기 실루엣을 <code style={{ color: INK }}>scale 1.34</code>로 키운 링(stroke 2.5)을 씁니다 — Marker Pin 페이지 참고.
-      </p>
-    </div>
-  );
-}
-
 // State layering, rendered with the REAL components (not hand-drawn) so the
 // catalog is exactly what ships. Each renderer is shown in four states — base,
 // focused, selected, focused+selected — proving focus (blue silhouette, outer)
@@ -398,6 +328,7 @@ const SL_FACILITY = {
   motionState: 'stopped', operatingMode: 'agv', sessionState: 'requested',
   currentMapId: SL_MAP, destinationMapId: SL_MAP,
 };
+const SL_LANE = { id: 'sl-ln', mapId: SL_MAP, label: '차선', points: [{ x: 8, y: 40 }, { x: 24, y: 22 }, { x: 44, y: 12 }], relation: { kind: 'single' }, availability: 'available' };
 
 const SL_STATES = [
   { key: 'base', label: '기본', props: {} },
@@ -413,6 +344,8 @@ const SL_ROWS = [
     render: (p) => <FacilityTransition transition={SL_FACILITY} activeMapId={SL_MAP} showLabel={false} {...p} /> },
   { key: 'region', label: '영역', viewBox: '0 0 48 48',
     render: (p) => <SpatialRegion region={SL_REGION} showLabel={false} {...p} /> },
+  { key: 'lane', label: '경로 (레인·루트·궤적)', viewBox: '0 0 52 52',
+    render: (p) => <LaneOverlay lane={SL_LANE} viewportScale={1} showLabel={false} showEndpoints={false} {...p} /> },
 ];
 
 function StateLayerCard() {
@@ -460,16 +393,13 @@ function EncodingCatalog() {
       <Card title="라벨 halo 계층" hint="paint-order stroke로 텍스트 뒤에 깔리는 legibility halo. 식별·상세·메타 세 단계를 NAV_LABEL_HALO가 소유합니다.">
         <HaloSwatches />
       </Card>
-      <Card title="화면 고정 크기 · scale(1/viewportScale)" hint="지도를 확대·축소해도 마커·배지·글리프는 화면상 같은 크기를 유지하고 선·도형만 지도와 함께 커집니다. 마커가 scale(1/viewportScale) + non-scaling-stroke로 자기 크기를 되돌리기 때문입니다. 두 패널은 같은 지도를 줌 1×·2×로 보여줍니다 — 격자와 선은 커지고 마커는 그대로입니다.">
+      <Card title="화면 고정 크기 · scale(1/viewportScale)" hint="지도를 확대·축소해도 마커·배지·글리프는 화면상 같은 크기를 유지하고, 영역처럼 지도(world) 기하로 그려지는 것은 줌과 함께 커집니다. 마커가 scale(1/viewportScale)로 자기 크기를 되돌리기 때문입니다. 두 패널은 같은 실제 WaypointMarker·SpatialRegion을 줌 1×·2×로 렌더한 것입니다 — 영역은 2배 커지고 마커는 그대로입니다.">
         <ZoomCard />
       </Card>
       <Card title="라벨 우선순위 사다리" hint="두 라벨이 한 자리를 다투면 더 중요한 개체의 라벨이 이깁니다. 상태 가중치(annotationPriority)와 동점 tie-break(KIND_WEIGHT)를 소스 함수에서 그대로 렌더합니다. 실제 재배치 동작은 Navigation/Annotation Layer 페이지가 보여줍니다.">
         <PriorityLadder />
       </Card>
-      <Card title="포커스 인디케이터" hint="키보드 포커스 시 마커가 자기 실루엣을 따라 그리는 focus-indicator 윤곽선. 색과 non-scaling-stroke·outline 억제는 공유 규칙이고, 기하는 렌더러 모양에 맞춰 다릅니다.">
-        <FocusCard />
-      </Card>
-      <Card title="상태 계층 · 포커스 vs 선택" hint="포커스(파랑, 실루엣 추적, 바깥)와 선택(accent, 피처 강조, 안쪽)은 독립 축이라 동시에 성립합니다. 실제 컴포넌트를 기본·포커스·선택·포커스+선택으로 렌더합니다 — 손으로 그린 근사가 아닙니다.">
+      <Card title="상태 계층 · 포커스 vs 선택" hint="포커스(파랑, 실루엣 추적, 바깥)와 선택(accent, 피처 강조, 안쪽)은 독립 축이라 동시에 성립합니다. 실제 컴포넌트를 기본·포커스·선택·포커스+선택으로 렌더합니다 — 손으로 그린 근사가 아닙니다. 기하 값은 NAV_FOCUS·NAV_SELECTION(핀은 NAV_PIN)이 소유합니다.">
         <StateLayerCard />
       </Card>
     </main>
@@ -553,21 +483,24 @@ export const Overview = {
       throw new Error('The hit-target swatch must render NAV_HIT radius and screen target size.');
     }
 
-    // Screen-constant marker: the two zoom panels render the SAME marker size on
-    // screen while the map path grows with zoom — proving markers hold their CSS
-    // size across scale.
-    const zoomMarkers = Array.from(root.querySelectorAll('[data-zoom-marker]'));
-    const zoomPaths = Array.from(root.querySelectorAll('[data-zoom-path]'));
-    if (zoomMarkers.length !== 2 || zoomPaths.length !== 2) {
-      throw new Error('The zoom card must render two panels each with a marker and a map path.');
+    // Screen-constant marker under zoom, proven with the REAL components: both
+    // panels render the same WaypointMarker and SpatialRegion at viewportScale
+    // 1 vs 2, so the marker holds its on-screen size (inverse-scale) while the
+    // region — world geometry — grows with the zoom.
+    const zoomPanels = Array.from(root.querySelectorAll('[data-zoom-panel]'));
+    if (zoomPanels.length !== 2) {
+      throw new Error('The zoom card must render two real-component panels.');
     }
-    const [markerA, markerB] = zoomMarkers.map((el) => el.getBoundingClientRect().width);
-    if (!(markerA > 0) || Math.abs(markerA - markerB) > 1) {
-      throw new Error(`Markers must hold a constant screen size across zoom: ${markerA} vs ${markerB}.`);
+    const zoomMeasure = zoomPanels.map((panel) => ({
+      marker: panel.querySelector('[data-waypoint-point]')?.getBoundingClientRect().width ?? 0,
+      region: panel.querySelector('[data-region-geometry]')?.getBoundingClientRect().width ?? 0,
+    }));
+    const [za, zb] = zoomMeasure;
+    if (!(za.marker > 0) || Math.abs(za.marker - zb.marker) > 1.5) {
+      throw new Error(`Marker must hold a constant screen size across zoom: ${za.marker} vs ${zb.marker}.`);
     }
-    const [pathA, pathB] = zoomPaths.map((el) => el.getBoundingClientRect().width);
-    if (!(pathB > pathA + 1)) {
-      throw new Error(`The map path must grow with zoom (screen-scaled), not stay constant: ${pathA} vs ${pathB}.`);
+    if (!(za.region > 0) || !(zb.region > za.region * 1.6)) {
+      throw new Error(`Region (world geometry) must grow with zoom: ${za.region} vs ${zb.region}.`);
     }
 
     // Priority ladder: state weights and kind weights render straight from the
@@ -578,16 +511,6 @@ export const Overview = {
         throw new Error(`Priority pill "${state}" must render annotationPriority({${state}: true}).`);
       }
     }
-    // Focus indicator: traces the silhouette in the focus-indicator color with
-    // non-scaling-stroke (the shared rule; geometry is per-renderer).
-    const focusRing = root.querySelector('[data-encoding-focus-ring]');
-    if (
-      !focusRing?.getAttribute('stroke')?.includes('focus-indicator') ||
-      focusRing?.getAttribute('vector-effect') !== 'non-scaling-stroke'
-    ) {
-      throw new Error('The focus-indicator swatch must trace with --color-semantic-focus-indicator and non-scaling-stroke.');
-    }
-
     const kinds = Array.from(root.querySelectorAll('[data-kind-weight]'));
     if (kinds.length !== KIND_LADDER.length) {
       throw new Error('The kind-weight ladder must render one pill per rung.');
@@ -611,6 +534,7 @@ export const Overview = {
       waypoint: { focus: '[data-waypoint-focus-indicator]', select: '[data-waypoint-selected-indicator]' },
       facility: { focus: '[data-transition-focus-ring]', select: '[data-transition-selection-ring]' },
       region: { focus: '[data-region-focus-ring]', select: '[data-region-selection-ring]' },
+      lane: { focus: '[data-lane-focus-ring]', select: '[data-lane-selection-halo]' },
     };
     for (const [renderer, sel] of Object.entries(SL_INDICATORS)) {
       const cellHas = (state, indicator) => {
@@ -629,6 +553,17 @@ export const Overview = {
       }
       if (!cellHas('both', sel.focus) || !cellHas('both', sel.select)) {
         throw new Error(`${renderer} focused+selected state must show BOTH indicators (independent axes).`);
+      }
+      // The SHARED focus rule (color + non-scaling-stroke) verified on the REAL
+      // rendered indicator, not a hand-drawn swatch. Geometry differs per shape.
+      const focusEl = root
+        .querySelector(`[data-state-cell="${renderer}:focused"]`)
+        .querySelector(sel.focus);
+      if (
+        !focusEl?.getAttribute('stroke')?.includes('focus-indicator') ||
+        focusEl?.getAttribute('vector-effect') !== 'non-scaling-stroke'
+      ) {
+        throw new Error(`${renderer} focus indicator must trace in --color-semantic-focus-indicator with non-scaling-stroke.`);
       }
     }
   },
