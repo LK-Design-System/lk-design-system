@@ -12,6 +12,7 @@ import {
   NavigationAnnotationLayer,
   SelectionInspector,
   Legend,
+  SegmentedControl,
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 import { assertNoLabelCollisions, assertPairwiseNonOverlap } from './RoboticsNavigationCollision.shared.jsx';
@@ -111,6 +112,11 @@ const ROUTE_STATE_ROWS = [
   ['completed', 'completed', 'normal', 348],
 ];
 
+const PHASE_LABEL_KO = { upcoming: '예정', current: '현재', completed: '완료' };
+const CONDITION_LABEL_KO = { normal: '정상', waiting: '대기', blocked: '차단', conflict: '충돌', stale: '지연' };
+const segmentStateLabel = (phase, condition) =>
+  `${PHASE_LABEL_KO[phase] ?? phase} · ${CONDITION_LABEL_KO[condition] ?? condition}`;
+
 function routeForState(status, phase, condition, y) {
   return {
     id: `route-${status}`,
@@ -119,7 +125,7 @@ function routeForState(status, phase, condition, y) {
     segments: [{
       id: `segment-${status}`,
       mapId: 'L1',
-      label: `${phase} · ${condition}`,
+      label: segmentStateLabel(phase, condition),
       points: [{ x: 48, y }, { x: 220, y }, { x: 310, y: y - 18 }, { x: 488, y: y - 18 }],
       phase,
       condition,
@@ -154,11 +160,11 @@ export const RouteAndTrajectoryStates = {
               route={{
                 ...routeForState('active', 'current', 'normal', 426),
                 id: 'route-invalid-stale',
-                label: 'invalid · stale',
+                label: '무효 · 지연',
                 segments: [{
                   ...routeForState('active', 'current', 'normal', 426).segments[0],
                   id: 'segment-invalid-stale',
-                  label: 'invalid · stale',
+                  label: '무효 · 지연',
                 }],
               }}
               activeMapId="L1"
@@ -450,21 +456,14 @@ function MultiFloorFixture() {
       description="Route는 activeMapId로 segment를 필터합니다. Trajectory는 하나의 map만 소유하므로 renderer가 mapId를 비교해 하나만 마운트합니다. 층 사이 이동은 Lift Facility Transition으로 이어집니다."
       maxWidth={820}
     >
-      <div role="group" aria-label="표시할 층" style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-        {['L1', 'L2'].map((mapId) => (
-          <Button
-            key={mapId}
-            type="button"
-            size="sm"
-            variant={activeMapId === mapId ? 'primary' : 'secondary'}
-            aria-pressed={activeMapId === mapId}
-            onClick={() => setActiveMapId(mapId)}
-            style={{ minWidth: 48 }}
-          >
-            {mapId}
-          </Button>
-        ))}
-      </div>
+      <SegmentedControl
+        options={['L1', 'L2']}
+        value={activeMapId}
+        onChange={setActiveMapId}
+        size="sm"
+        aria-label="표시할 층"
+        style={{ alignSelf: 'start' }}
+      />
       <PathMap label={`${activeMapId} route와 trajectory 지도`} testId="multi-floor-path-map">
         {(cssViewBoxScale) => (
           <>
@@ -509,7 +508,7 @@ function MultiFloorFixture() {
           </>
         )}
       </PathMap>
-      <output data-testid="active-map-output">현재 층: {activeMapId}</output>
+      <output data-testid="active-map-output" hidden>{activeMapId}</output>
     </StoryPage>
   );
 }
@@ -548,7 +547,7 @@ export const MultiFloorFiltering = {
       throw new Error('Route/Trajectory with fewer than two finite points must not leave an invisible control.');
     }
     assertMap('L1', 2, 'trajectory-robot-2-l1', true);
-    canvasElement.querySelector('button[aria-pressed="false"]')?.click();
+    [...canvasElement.querySelectorAll('button')].find((btn) => btn.textContent.trim() === 'L2')?.click();
     await nextRender();
     assertMap('L2', 1, 'trajectory-robot-2-l2', false);
     const l2Path = canvasElement.querySelector('[data-route-path]')?.getAttribute('d') ?? '';
