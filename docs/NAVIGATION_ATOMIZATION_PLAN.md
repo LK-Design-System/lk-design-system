@@ -143,7 +143,7 @@ export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 
 Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께 렌더하므로(순수 단일 subject 스토리 없음), 비교·통합 스토리는 Route 페이지에 그대로 두고 Trajectory 페이지는 전용 focused 스토리(Overview·Statuses·Narrow)를 신설. play-test는 Storybook에서 라이브 검증.
 
-미결(범위 밖): `check:docs`의 Storybook IA 마크다운 최신성은 세션 이전부터 stale한 **사람 리뷰 게이트**로, 날짜 스냅샷 IA 리뷰 패스가 별도로 필요.
+부분 해소: `check:docs`(IA 마크다운 ↔ audit census 정합)는 아래 Marker Pin 커밋에서 census 재생성(180/546→188/574)으로 green화. 단 `check:storybook-ia`의 **사람 disposition 리뷰**는 원자화로 늘어난 신규 11개 페이지·변경 2개 페이지가 미결(검토 완료 177/188)이라, 날짜 스냅샷 리뷰 패스가 여전히 필요.
 
 ## 후속: Robotics/Foundation 계층 확장 (2026-07-17)
 
@@ -153,6 +153,8 @@ Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께
 | --- | --- |
 | `3757bfb` | 방향/벡터 글리프 원자를 `_navigationVectorGlyph`로 추출(+lane endpoint 화살표 hoist). circle-marker 기하는 역할별로 반지름이 달라 **공유 원자 아님**으로 판정(NAV_PIN과 달리)—로컬 유지. |
 | `d33d06c` | `LDS Robotics/Foundation/*` 계층 확립(Core 미러, sidebar 맨 앞). 기존 원자 3개 재배치 + `Encoding`→`Line & State Vocabulary` 오칭 교정(실제로 `_navigationVocabulary` 문서화, `_navigationEncoding` 아님) + 새 원자 페이지 3개(Vector Glyph·Codes·Viewer Tokens, live-from-source + play-test). 원자 페이지 3→6. atom-glyph baseline은 컴포넌트 스토리 기반이라 재배치·신설에 **제로 diff**. |
+| `36c3723` | Vector Glyph를 진짜 공유되는 방향 셰브론(lane·route·trajectory)만으로 좁힘. lane endpoint 화살표는 소비자가 LaneOverlay 하나뿐이라 공용 원자에서 로컬로 환원(over-promotion 취소). |
+| `<pending>` | `Line & State Vocabulary`가 이름과 달리 6개 이질 원자를 섞은 grab-bag이라는 지적을 독립 판정단(4관점 + 종합)으로 검증해 분해: 공유 마커 몸통 `NAV_PIN`은 글리프들이 얹히는 실루엣이라 **Marker Pin** 페이지로 승격(Facility/Hazard 글리프 옆), 잔여 5개 스칼라 토큰(dash·opacity·hit·badge·halo)은 **Navigation Encoding Tokens**로 rename. `NAV_STATE_BADGE`는 State Badge 글리프 세트와 상보적(중복 아님)이라 상호참조만. 원자 페이지 6→8. 세션 이전부터 stale하던 IA census(180/546→188/574)·인벤토리(574/439/98) 재생성·정합화. |
 
 ### 미결 backlog — P2b (Navigation 밖, 별도 PR 시리즈)
 

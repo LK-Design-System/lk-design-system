@@ -1,59 +1,27 @@
 import React from 'react';
-import { FacilityTransition, HazardMarker, WaypointMarker } from '../src/index.js';
 import { NavigationStateGlyph } from '../components/robotics/_NavigationStateGlyph.js';
 import {
   navStateOpacity,
   NAV_STATE_OPACITY,
   NAV_DASH,
-  NAV_PIN,
   NAV_HIT,
   NAV_STATE_BADGE,
   NAV_LABEL_HALO,
 } from '../components/robotics/_navigationVocabulary.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
-// This page renders the REAL shared vocabulary — every dash, opacity, badge,
+// This page renders the REAL shared encoding tokens — every dash, opacity, badge,
 // hit target, and halo swatch is drawn straight from the internal
-// `_navigationVocabulary` constants, and the pin family renders the production
-// marker fragments. So the catalog is not a hand-drawn approximation: it IS the
-// atoms, and the play-test asserts the rendered DOM equals the constants, which
-// makes the vocabulary its own regression baseline.
-const STAGE = 'stage';
-
+// `_navigationVocabulary` constants. So the catalog is not a hand-drawn
+// approximation: it IS the tokens, and the play-test asserts the rendered DOM
+// equals the constants, which makes the vocabulary its own regression baseline.
+// (The shared map-pin BODY, NAV_PIN, is a drawable marker silhouette rather than
+// a scalar token, so it lives on its own Foundation/Marker Pin page.)
 const INK = 'var(--color-semantic-label-strong)';
 const MUTED = 'var(--color-semantic-label-neutral)';
 const LINE = 'var(--color-semantic-line-normal-normal)';
 const SURFACE = 'var(--color-semantic-background-elevated-normal)';
 const ACCENT = 'var(--viewer-accent, var(--color-semantic-primary-normal))';
-
-// The map-pin family (Facility + Hazard share NAV_PIN); the waypoint origin is
-// the contrasting circle marker, not a pin.
-const ORIGIN_WAYPOINT = {
-  id: 'enc-wp',
-  label: '원점',
-  mapId: STAGE,
-  position: { x: 28, y: 26 },
-  roles: ['holding'],
-  availability: 'available',
-};
-const ACCENT_FACILITY = {
-  id: 'enc-fac',
-  kind: 'door',
-  label: '자동문',
-  facilityId: 'door',
-  from: { mapId: STAGE, position: { x: 28, y: 30 } },
-  availability: 'available',
-  event: 'open',
-  doorState: 'moving',
-};
-const HAZARD_PIN = {
-  id: 'enc-hz',
-  kind: 'stairs',
-  label: '계단',
-  mapId: STAGE,
-  position: { x: 28, y: 26 },
-  severity: 'danger',
-};
 
 // The shared, unifiable dash tokens (small ring + region/shape outline). Path
 // dashes stay component-local by design, so they are named here but not owned.
@@ -114,28 +82,6 @@ function Tile({ children, label, mono }) {
       {children}
       {mono ? <code style={{ fontSize: 11, color: MUTED }}>{mono}</code> : null}
       <span style={{ fontSize: 11, color: INK, textAlign: 'center' }}>{label}</span>
-    </div>
-  );
-}
-
-function PinFamily() {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 10 }}>
-      <Tile label="웨이포인트 원점 (원형 마커)" mono="circle">
-        <svg width={88} height={92} viewBox="0 0 56 52" aria-hidden="true" style={{ display: 'block' }}>
-          <WaypointMarker waypoint={ORIGIN_WAYPOINT} showLabel={false} />
-        </svg>
-      </Tile>
-      <Tile label="설비 핀 (accent · NAV_PIN)" mono="NAV_PIN">
-        <svg width={88} height={100} viewBox="0 -14 56 64" aria-hidden="true" style={{ display: 'block' }}>
-          <FacilityTransition transition={ACCENT_FACILITY} activeMapId={STAGE} showLabel={false} />
-        </svg>
-      </Tile>
-      <Tile label="해저드 핀 (severity · NAV_PIN)" mono="NAV_PIN">
-        <svg width={88} height={92} viewBox="0 0 56 52" aria-hidden="true" style={{ display: 'block' }}>
-          <HazardMarker hazard={HAZARD_PIN} showLabel={false} />
-        </svg>
-      </Tile>
     </div>
   );
 }
@@ -254,16 +200,13 @@ function HaloSwatches() {
 function EncodingCatalog() {
   return (
     <main data-encoding-catalog style={{ width: 'min(880px, 100%)', display: 'grid', gap: 16 }}>
-      <Card title="핀 패밀리" hint="설비·해저드 마커는 같은 map-pin 실루엣(NAV_PIN)을 공유하고 accent·severity 색과 knockout 글리프로만 구분됩니다. 웨이포인트 원점은 핀이 아닌 원형 마커입니다.">
-        <PinFamily />
-      </Card>
       <Card title="선(dash) 어휘" hint="작은 링과 구역·설비 외곽선에서 같은 상태는 같은 dash로 읽힙니다. 값은 NAV_DASH에서 그대로 렌더됩니다.">
         <DashSwatches />
       </Card>
       <Card title="상태 opacity" hint="비활성 0.45, 지연 0.76, 기본 1 — navStateOpacity() 한 함수를 일곱 렌더러가 공유합니다.">
         <OpacitySwatches />
       </Card>
-      <Card title="상태 badge · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE)과 투명 WCAG 2.2 타깃(NAV_HIT). 화면 타깃은 data-screen-target-size 계약으로 고정됩니다.">
+      <Card title="상태 badge · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE)과 투명 WCAG 2.2 타깃(NAV_HIT). 화면 타깃은 data-screen-target-size 계약으로 고정됩니다. 배지 안에 들어가는 상태 글리프 11종 세트는 State Badge 페이지를 참고하세요.">
         <BadgeAndHit />
       </Card>
       <Card title="라벨 halo 계층" hint="paint-order stroke로 텍스트 뒤에 깔리는 legibility halo. 식별·상세·메타 세 단계를 NAV_LABEL_HALO가 소유합니다.">
@@ -274,19 +217,19 @@ function EncodingCatalog() {
 }
 
 const meta = {
-  title: 'LDS Robotics/Foundation/Line & State Vocabulary',
+  title: 'LDS Robotics/Foundation/Navigation Encoding Tokens',
   parameters: {
     storyGuide: {
-      storyId: 'lds-robotics-foundation-line-state-vocabulary--overview',
-      eyebrow: 'Foundation / Line & State Vocabulary',
-      title: '내비게이션 렌더러가 공유하는 선·상태 어휘를 원자 단위로 문서화합니다',
+      storyId: 'lds-robotics-foundation-navigation-encoding-tokens--overview',
+      eyebrow: 'Foundation / Navigation Encoding Tokens',
+      title: '내비게이션 렌더러가 공유하는 인코딩 토큰을 원자 단위로 문서화합니다',
       description:
-        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태 인코딩 값을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·map-pin 기하·hit target·상태 badge·label halo 계층)을 프로덕션 조각과 실제 마커로 그대로 렌더해, 어휘 자체가 회귀 기준이 되도록 합니다. path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
+        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge 기하·label halo 계층)을 상수에서 그대로 렌더해, 토큰 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
     },
     docs: {
       description: {
         component:
-          '내비게이션 렌더러들이 공유하는 선·상태 인코딩 값을 내부 모듈 _navigationVocabulary에서 그대로 렌더해 문서화·회귀합니다: 상태 opacity(navStateOpacity), NAV_DASH, NAV_PIN, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO. 공개 API가 아닌 내부 어휘 모듈입니다.',
+          '내비게이션 렌더러들이 공유하는 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary에서 그대로 렌더해 문서화·회귀합니다: 상태 opacity(navStateOpacity), NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO. 공유 map-pin 몸통(NAV_PIN)은 별도 핀 페이지에서, 배지 글리프 세트는 별도 상태 글리프 페이지에서 다룹니다. 공개 API가 아닌 내부 어휘 모듈입니다.',
       },
     },
   },
@@ -297,7 +240,7 @@ export default meta;
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '공유 어휘 원자를 한 페이지에서 비교합니다. 각 swatch는 _navigationVocabulary 상수에서 직접 렌더되고, 핀 패밀리는 실제 마커 조각입니다. play-test가 렌더된 DOM이 상수와 일치함을 단언하므로 이 페이지가 곧 어휘의 회귀 기준입니다.',
+    '공유 인코딩 토큰을 한 페이지에서 비교합니다. 각 swatch는 _navigationVocabulary 상수에서 직접 렌더됩니다. play-test가 렌더된 DOM이 상수와 일치함을 단언하므로 이 페이지가 곧 토큰의 회귀 기준입니다.',
   ),
   render: () => <EncodingCatalog />,
   play: async ({ canvasElement }) => {
@@ -342,23 +285,13 @@ export const Overview = {
     ) {
       throw new Error('The hit-target swatch must render NAV_HIT radius and screen target size.');
     }
-
-    // Pin family — the real hazard marker consumes the shared NAV_PIN silhouette,
-    // and the facility + waypoint markers render alongside it.
-    const hazardSign = root.querySelector('[data-hazard-sign]');
-    if (hazardSign?.getAttribute('d') !== NAV_PIN.path) {
-      throw new Error('The hazard pin must consume the shared NAV_PIN.path silhouette.');
-    }
-    if (!root.querySelector('[data-transition-kind]') || !root.querySelector('[data-waypoint-point]')) {
-      throw new Error('The pin family must render the facility pin and the waypoint origin.');
-    }
   },
 };
 
 export const NarrowViewport = {
   name: '반응형 · 320px 좁은 폭',
   parameters: storyDescription(
-    '320px 뷰포트 폭에서 어휘 카탈로그를 확인합니다. 카드와 swatch 그리드가 좁은 폭에서 접히되 가로 스크롤을 만들지 않아야 합니다.',
+    '320px 뷰포트 폭에서 인코딩 토큰 카탈로그를 확인합니다. 카드와 swatch 그리드가 좁은 폭에서 접히되 가로 스크롤을 만들지 않아야 합니다.',
   ),
   render: () => (
     <div data-encoding-narrow style={{ width: 320, maxWidth: '100%' }}>

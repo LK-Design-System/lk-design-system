@@ -106,11 +106,13 @@ export const parameters = {
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
         'LDS Robotics': ['Foundation', 'Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer', 'Navigation'],
         // Robotics foundation: the internal primitive/atom catalogs (not public
-        // components), mirroring LDS Core/Foundation. Vocabulary first (the
-        // broadest line/state contract), then the glyph/token catalogs.
+        // components), mirroring LDS Core/Foundation. Encoding tokens first (the
+        // broadest shared-scalar contract), then the marker body and glyph/token
+        // catalogs — Marker Pin sits next to the glyphs that ride on it.
         'LDS Robotics/Foundation': [
-          'Line & State Vocabulary',
+          'Navigation Encoding Tokens',
           'State Badge',
+          'Marker Pin',
           'Facility Glyph',
           'Hazard Glyph',
           'Vector Glyph',
