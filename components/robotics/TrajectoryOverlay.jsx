@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_SELECTION_HALO_OPACITY } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -346,7 +346,7 @@ export function TrajectoryOverlay({
           strokeWidth="7"
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity="0.24"
+          opacity={NAV_SELECTION_HALO_OPACITY}
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />

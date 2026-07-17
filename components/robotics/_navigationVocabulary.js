@@ -37,6 +37,15 @@ export function navStateOpacity(disabled, stale) {
 }
 
 /**
+ * Selection-halo opacity. The three path overlays (Lane / Route / Trajectory)
+ * paint a translucent accent-colored halo under a selected path so selection
+ * reads identically across them; only the halo strokeWidth tracks each path's
+ * base width. The point markers use solid selection rings, so this scalar is
+ * specific to the path-overlay halo.
+ */
+export const NAV_SELECTION_HALO_OPACITY = 0.24;
+
+/**
  * State dashes for small marker rings and region/facility SHAPE outlines. These
  * are shared because the same state means the same dash on comparable geometry.
  * Long path-following encodings are NOT here (see the SCOPE RULE above) — this

@@ -7,11 +7,13 @@ import {
 } from "./chunk-54Q6T6L4.js";
 import {
   NAV_DASH,
+  NAV_HIT,
   NAV_LABEL_HALO,
+  NAV_SELECTION_HALO_OPACITY,
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-LTSTEICR.js";
+} from "./chunk-YJ5HIIIH.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -412,7 +414,7 @@ function RouteOverlay({
                     strokeWidth: "8",
                     strokeLinecap: "round",
                     strokeLinejoin: "round",
-                    opacity: "0.24",
+                    opacity: NAV_SELECTION_HALO_OPACITY,
                     vectorEffect: "non-scaling-stroke",
                     pointerEvents: "none"
                   }
@@ -467,7 +469,7 @@ function RouteOverlay({
                       "data-screen-target-size": "24",
                       cx: midpoint.x,
                       cy: midpoint.y,
-                      r: 17 * inverseScale,
+                      r: NAV_HIT.radius * inverseScale,
                       fill: "transparent",
                       pointerEvents: "all"
                     }
@@ -752,4 +754,4 @@ function RouteOverlay({
 export {
   RouteOverlay
 };
-//# sourceMappingURL=chunk-BBAJBQPR.js.map
+//# sourceMappingURL=chunk-ENQPHXIJ.js.map

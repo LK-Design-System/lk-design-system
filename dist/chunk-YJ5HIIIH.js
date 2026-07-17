@@ -1,11 +1,11 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
+"use client";
 
 // components/robotics/_NavigationFocus.js
 function isFocusVisibleTarget(target) {
   if (!target || typeof target.matches !== "function") return true;
   try {
     return target.matches(":focus-visible");
-  } catch (e) {
+  } catch {
     return true;
   }
 }
@@ -15,6 +15,7 @@ var NAV_STATE_OPACITY = { disabled: 0.45, stale: 0.76, default: 1 };
 function navStateOpacity(disabled, stale) {
   return disabled ? NAV_STATE_OPACITY.disabled : stale ? NAV_STATE_OPACITY.stale : NAV_STATE_OPACITY.default;
 }
+var NAV_SELECTION_HALO_OPACITY = 0.24;
 var NAV_DASH = {
   staleRing: "2 2",
   staleShape: "2 4",
@@ -31,13 +32,14 @@ var NAV_HIT = { radius: 17.5, screenTargetSize: 24 };
 var NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 var NAV_LABEL_HALO = { primary: 4, secondary: 3, caption: 3 };
 
-
-
-
-
-
-
-
-
-exports.isFocusVisibleTarget = isFocusVisibleTarget; exports.navStateOpacity = navStateOpacity; exports.NAV_DASH = NAV_DASH; exports.NAV_PIN = NAV_PIN; exports.NAV_HIT = NAV_HIT; exports.NAV_STATE_BADGE = NAV_STATE_BADGE; exports.NAV_LABEL_HALO = NAV_LABEL_HALO;
-//# sourceMappingURL=chunk-VRML72AB.cjs.map
+export {
+  isFocusVisibleTarget,
+  navStateOpacity,
+  NAV_SELECTION_HALO_OPACITY,
+  NAV_DASH,
+  NAV_PIN,
+  NAV_HIT,
+  NAV_STATE_BADGE,
+  NAV_LABEL_HALO
+};
+//# sourceMappingURL=chunk-YJ5HIIIH.js.map

@@ -11,7 +11,8 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkVRML72ABcjs = require('./chunk-VRML72AB.cjs');
+
+var _chunkDRQ76C5Acjs = require('./chunk-DRQ76C5A.cjs');
 
 
 
@@ -141,7 +142,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
             textAnchor: "middle",
             fill: VIEWER_MUTED,
             stroke: VIEWER_SURFACE,
-            strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.caption,
+            strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.caption,
             paintOrder: "stroke",
             vectorEffect: "non-scaling-stroke",
             fontFamily: "var(--font-sans)",
@@ -338,7 +339,7 @@ function LaneOverlay({
         _optionalChain([onMouseDown, 'optionalCall', _26 => _26(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasFocus(_chunkVRML72ABcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setHasFocus(_chunkDRQ76C5Acjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _27 => _27(event)]);
       },
       onBlur: (event) => {
@@ -347,7 +348,7 @@ function LaneOverlay({
       },
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkVRML72ABcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkDRQ76C5Acjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
@@ -376,7 +377,7 @@ function LaneOverlay({
             strokeWidth: "7",
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: "0.24",
+            opacity: _chunkDRQ76C5Acjs.NAV_SELECTION_HALO_OPACITY,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
@@ -447,7 +448,7 @@ function LaneOverlay({
               "data-screen-target-diameter": "35",
               cx: midpoint.x,
               cy: midpoint.y,
-              r: _chunkVRML72ABcjs.NAV_HIT.radius * inverseScale,
+              r: _chunkDRQ76C5Acjs.NAV_HIT.radius * inverseScale,
               fill: "transparent",
               pointerEvents: "all"
             }
@@ -497,10 +498,10 @@ function LaneOverlay({
                     "circle",
                     {
                       "data-lane-state-circle": state.state,
-                      r: _chunkVRML72ABcjs.NAV_STATE_BADGE.radius,
+                      r: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.radius,
                       fill: VIEWER_SURFACE,
                       stroke: state.tone,
-                      strokeWidth: _chunkVRML72ABcjs.NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
@@ -551,7 +552,7 @@ function LaneOverlay({
                       textAnchor: primaryLabelAnchor,
                       fill: VIEWER_FOREGROUND,
                       stroke: VIEWER_SURFACE,
-                      strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.primary,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.primary,
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
                       fontFamily: "var(--font-sans)",
@@ -571,7 +572,7 @@ function LaneOverlay({
                       textAnchor: metadataAnchor,
                       fill: VIEWER_MUTED,
                       stroke: VIEWER_SURFACE,
-                      strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.secondary,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.secondary,
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
                       fontFamily: "var(--font-sans)",
@@ -593,4 +594,4 @@ function LaneOverlay({
 
 
 exports.LaneOverlay = LaneOverlay;
-//# sourceMappingURL=chunk-SSKMDGUR.cjs.map
+//# sourceMappingURL=chunk-WFYZ2VOC.cjs.map

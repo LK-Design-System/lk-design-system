@@ -8,10 +8,11 @@ import {
 import {
   NAV_HIT,
   NAV_LABEL_HALO,
+  NAV_SELECTION_HALO_OPACITY,
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-LTSTEICR.js";
+} from "./chunk-YJ5HIIIH.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -376,7 +377,7 @@ function LaneOverlay({
             strokeWidth: "7",
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: "0.24",
+            opacity: NAV_SELECTION_HALO_OPACITY,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
@@ -593,4 +594,4 @@ function LaneOverlay({
 export {
   LaneOverlay
 };
-//# sourceMappingURL=chunk-4YV6AQ7V.js.map
+//# sourceMappingURL=chunk-YGFNBHYA.js.map

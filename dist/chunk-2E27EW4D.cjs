@@ -8,7 +8,7 @@ var _chunk7QTG7XVGcjs = require('./chunk-7QTG7XVG.cjs');
 
 
 
-var _chunkVRML72ABcjs = require('./chunk-VRML72AB.cjs');
+var _chunkDRQ76C5Acjs = require('./chunk-DRQ76C5A.cjs');
 
 
 
@@ -47,7 +47,7 @@ var SEVERITY_PRESENTATION = {
 };
 var HAZARD_GLYPHS = { ...HAZARD_GLYPH_PATHS, ramp: _chunk7QTG7XVGcjs.FACILITY_GLYPH_PATHS.ramp };
 var GLYPH_FIT = HAZARD_GLYPH_FIT;
-var PIN_PATH = _chunkVRML72ABcjs.NAV_PIN.path;
+var PIN_PATH = _chunkDRQ76C5Acjs.NAV_PIN.path;
 function normalizeViewportScale(value) {
   return Number.isFinite(value) && value > 0 ? value : 1;
 }
@@ -135,7 +135,7 @@ function HazardMarker({
         _optionalChain([onMouseDown, 'optionalCall', _ => _(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasDomFocus(_chunkVRML72ABcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setHasDomFocus(_chunkDRQ76C5Acjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _2 => _2(event)]);
       },
       onBlur: (event) => {
@@ -144,15 +144,15 @@ function HazardMarker({
       },
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkVRML72ABcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkDRQ76C5Acjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
       children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { "data-hazard-screen-space": "", "data-viewport-scale": scale, transform: `scale(${inverseScale})`, children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: _chunkVRML72ABcjs.NAV_PIN.shadow.transform, fill: _chunkVRML72ABcjs.NAV_PIN.shadow.fill, opacity: _chunkVRML72ABcjs.NAV_PIN.shadow.opacity, pointerEvents: "none", "data-hazard-shadow": "" }),
-        focusVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkVRML72ABcjs.NAV_PIN.focusRing.scale})`, fill: "none", stroke: "var(--color-semantic-focus-indicator)", strokeWidth: _chunkVRML72ABcjs.NAV_PIN.focusRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-hazard-focus-ring": "" }),
-        selected && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkVRML72ABcjs.NAV_PIN.selectionRing.scale})`, fill: "none", stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))", strokeWidth: _chunkVRML72ABcjs.NAV_PIN.selectionRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-hazard-selection-ring": "" }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkVRML72ABcjs.NAV_HIT.radius, fill: "transparent", stroke: "none", pointerEvents: interactive ? "all" : "none", "data-hazard-hit-area": "", "data-screen-target-size": "24" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: _chunkDRQ76C5Acjs.NAV_PIN.shadow.transform, fill: _chunkDRQ76C5Acjs.NAV_PIN.shadow.fill, opacity: _chunkDRQ76C5Acjs.NAV_PIN.shadow.opacity, pointerEvents: "none", "data-hazard-shadow": "" }),
+        focusVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkDRQ76C5Acjs.NAV_PIN.focusRing.scale})`, fill: "none", stroke: "var(--color-semantic-focus-indicator)", strokeWidth: _chunkDRQ76C5Acjs.NAV_PIN.focusRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-hazard-focus-ring": "" }),
+        selected && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkDRQ76C5Acjs.NAV_PIN.selectionRing.scale})`, fill: "none", stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))", strokeWidth: _chunkDRQ76C5Acjs.NAV_PIN.selectionRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-hazard-selection-ring": "" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkDRQ76C5Acjs.NAV_HIT.radius, fill: "transparent", stroke: "none", pointerEvents: interactive ? "all" : "none", "data-hazard-hit-area": "", "data-screen-target-size": "24" }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "path",
           {
@@ -179,7 +179,7 @@ function HazardMarker({
                 textAnchor: "start",
                 fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
                 stroke: "var(--viewer-surface, var(--color-semantic-background-normal-normal))",
-                strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.primary,
+                strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.primary,
                 paintOrder: "stroke",
                 vectorEffect: "non-scaling-stroke",
                 pointerEvents: "none",
@@ -202,4 +202,4 @@ function HazardMarker({
 
 
 exports.HazardMarker = HazardMarker;
-//# sourceMappingURL=chunk-XIAPZSQU.cjs.map
+//# sourceMappingURL=chunk-2E27EW4D.cjs.map

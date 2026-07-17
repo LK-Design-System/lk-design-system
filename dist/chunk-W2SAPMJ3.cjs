@@ -11,7 +11,9 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkVRML72ABcjs = require('./chunk-VRML72AB.cjs');
+
+
+var _chunkDRQ76C5Acjs = require('./chunk-DRQ76C5A.cjs');
 
 
 
@@ -324,14 +326,14 @@ function RouteOverlay({
       onPointerDown: pointerOnly || onPointerDown ? handlePointerDown : void 0,
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !interactive && !hiddenFromAccessibility ? (event) => {
-        setHasRootFocus(_chunkVRML72ABcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        setHasRootFocus(_chunkDRQ76C5Acjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _19 => _19(event)]);
       } : void 0,
       onBlur: !interactive && !hiddenFromAccessibility ? (event) => {
         setHasRootFocus(false);
         _optionalChain([onBlur, 'optionalCall', _20 => _20(event)]);
       } : void 0,
-      style: { opacity: _chunkVRML72ABcjs.navStateOpacity.call(void 0, disabled, stale), outline: "none", ...style },
+      style: { opacity: _chunkDRQ76C5Acjs.navStateOpacity.call(void 0, disabled, stale), outline: "none", ...style },
       children: [
         visibleSegments.map((segment) => {
           const points = (_nullishCoalesce(segment.points, () => ( []))).filter(finitePoint);
@@ -379,7 +381,7 @@ function RouteOverlay({
               onClick: interactive ? (event) => activate(segment.id, event) : void 0,
               onKeyDown: interactive && !pointerOnly ? (event) => handleKeyDown(segment.id, event) : void 0,
               onFocus: !pointerOnly ? (event) => {
-                setFocusedSegment(_chunkVRML72ABcjs.isFocusVisibleTarget.call(void 0, event.currentTarget) ? segment.id : null);
+                setFocusedSegment(_chunkDRQ76C5Acjs.isFocusVisibleTarget.call(void 0, event.currentTarget) ? segment.id : null);
                 _optionalChain([onFocus, 'optionalCall', _25 => _25(event)]);
               } : void 0,
               onBlur: !pointerOnly ? (event) => {
@@ -412,7 +414,7 @@ function RouteOverlay({
                     strokeWidth: "8",
                     strokeLinecap: "round",
                     strokeLinejoin: "round",
-                    opacity: "0.24",
+                    opacity: _chunkDRQ76C5Acjs.NAV_SELECTION_HALO_OPACITY,
                     vectorEffect: "non-scaling-stroke",
                     pointerEvents: "none"
                   }
@@ -467,7 +469,7 @@ function RouteOverlay({
                       "data-screen-target-size": "24",
                       cx: midpoint.x,
                       cy: midpoint.y,
-                      r: 17 * inverseScale,
+                      r: _chunkDRQ76C5Acjs.NAV_HIT.radius * inverseScale,
                       fill: "transparent",
                       pointerEvents: "all"
                     }
@@ -505,10 +507,10 @@ function RouteOverlay({
                           ...obstacle(`route:${route.id}:condition:${segment.id}`),
                           "data-route-marker-badge": "condition",
                           "data-navigation-marker-circle": "",
-                          r: _chunkVRML72ABcjs.NAV_STATE_BADGE.radius,
+                          r: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.radius,
                           fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                           stroke: tone,
-                          strokeWidth: _chunkVRML72ABcjs.NAV_STATE_BADGE.strokeWidth,
+                          strokeWidth: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.strokeWidth,
                           vectorEffect: "non-scaling-stroke"
                         }
                       ),
@@ -586,7 +588,7 @@ function RouteOverlay({
                         transform: markerTransform(midpoint, inverseScale, segmentLabelSlot),
                         fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
                         stroke: "var(--viewer-surface, var(--color-semantic-background-normal-normal))",
-                        strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.primary,
+                        strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.primary,
                         paintOrder: "stroke",
                         strokeLinejoin: "round",
                         vectorEffect: "non-scaling-stroke",
@@ -623,11 +625,11 @@ function RouteOverlay({
                     ...obstacle(`route:${route.id}:state:${item.state}`),
                     "data-route-marker-badge": item.state,
                     "data-navigation-marker-circle": "",
-                    r: _chunkVRML72ABcjs.NAV_STATE_BADGE.radius,
+                    r: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.radius,
                     fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                     stroke: item.tone,
-                    strokeWidth: _chunkVRML72ABcjs.NAV_STATE_BADGE.strokeWidth,
-                    strokeDasharray: item.state === "stale" ? _chunkVRML72ABcjs.NAV_DASH.staleRing : void 0,
+                    strokeWidth: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.strokeWidth,
+                    strokeDasharray: item.state === "stale" ? _chunkDRQ76C5Acjs.NAV_DASH.staleRing : void 0,
                     vectorEffect: "non-scaling-stroke"
                   }
                 ),
@@ -692,7 +694,7 @@ function RouteOverlay({
                       textAnchor: "middle",
                       fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
                       stroke: "var(--viewer-surface, var(--color-semantic-background-normal-normal))",
-                      strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.caption,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.caption,
                       paintOrder: "stroke",
                       strokeLinejoin: "round",
                       vectorEffect: "non-scaling-stroke",
@@ -752,4 +754,4 @@ function RouteOverlay({
 
 
 exports.RouteOverlay = RouteOverlay;
-//# sourceMappingURL=chunk-WFZGNMXI.cjs.map
+//# sourceMappingURL=chunk-W2SAPMJ3.cjs.map

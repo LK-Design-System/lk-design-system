@@ -13,7 +13,7 @@ import {
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-LTSTEICR.js";
+} from "./chunk-YJ5HIIIH.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -37,7 +37,7 @@ var AVAILABILITY_PRESENTATION = {
   unknown: {
     label: "\uAC00\uC6A9\uC131 \uBBF8\uD655\uC778",
     stroke: "var(--viewer-muted, var(--color-semantic-label-alternative))",
-    dash: "1 3"
+    dash: NAV_DASH.unknown
   }
 };
 var KIND_LABELS = {
@@ -218,7 +218,7 @@ function FacilityTransition({
   const scale = safeScale(viewportScale);
   const inverseScale = 1 / scale;
   const stroke = invalid ? "var(--viewer-danger, var(--color-semantic-status-negative-foreground))" : disabled ? "var(--viewer-muted, var(--color-semantic-label-alternative))" : availability.stroke;
-  const dash = invalid ? "4 3" : stale ? "2 4" : availability.dash;
+  const dash = invalid ? NAV_DASH.invalid : stale ? NAV_DASH.staleShape : availability.dash;
   const rows = visibleDetailRows(transition, availability.label);
   const computedLabel = [
     computedAccessibleLabel(transition, availability.label),
@@ -420,4 +420,4 @@ function FacilityTransition({
 export {
   FacilityTransition
 };
-//# sourceMappingURL=chunk-NWNRZPCM.js.map
+//# sourceMappingURL=chunk-ZRCFOMXI.js.map

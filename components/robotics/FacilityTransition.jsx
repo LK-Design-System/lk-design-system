@@ -19,7 +19,7 @@ const AVAILABILITY_PRESENTATION = {
   unknown: {
     label: '가용성 미확인',
     stroke: 'var(--viewer-muted, var(--color-semantic-label-alternative))',
-    dash: '1 3',
+    dash: NAV_DASH.unknown,
   },
 };
 
@@ -243,7 +243,7 @@ export function FacilityTransition({
     : disabled
       ? 'var(--viewer-muted, var(--color-semantic-label-alternative))'
       : availability.stroke;
-  const dash = invalid ? '4 3' : stale ? '2 4' : availability.dash;
+  const dash = invalid ? NAV_DASH.invalid : stale ? NAV_DASH.staleShape : availability.dash;
   const rows = visibleDetailRows(transition, availability.label);
   const computedLabel = [
     computedAccessibleLabel(transition, availability.label),

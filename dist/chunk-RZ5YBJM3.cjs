@@ -9,7 +9,7 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkVRML72ABcjs = require('./chunk-VRML72AB.cjs');
+var _chunkDRQ76C5Acjs = require('./chunk-DRQ76C5A.cjs');
 
 
 
@@ -176,7 +176,7 @@ function WaypointMarker({
         _optionalChain([onMouseDown, 'optionalCall', _ => _(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasDomFocus(_chunkVRML72ABcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setHasDomFocus(_chunkDRQ76C5Acjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _2 => _2(event)]);
       },
       onBlur: (event) => {
@@ -185,7 +185,7 @@ function WaypointMarker({
       },
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkVRML72ABcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkDRQ76C5Acjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
@@ -225,7 +225,7 @@ function WaypointMarker({
               {
                 "data-waypoint-hit-area": "",
                 "data-screen-target-size": "24",
-                r: _chunkVRML72ABcjs.NAV_HIT.radius,
+                r: _chunkDRQ76C5Acjs.NAV_HIT.radius,
                 fill: "transparent",
                 pointerEvents: interactive ? "all" : "none"
               }
@@ -249,7 +249,7 @@ function WaypointMarker({
                 fill: "none",
                 stroke: muted,
                 strokeWidth: "1.5",
-                strokeDasharray: _chunkVRML72ABcjs.NAV_DASH.staleRing,
+                strokeDasharray: _chunkDRQ76C5Acjs.NAV_DASH.staleRing,
                 vectorEffect: "non-scaling-stroke"
               }
             ),
@@ -302,10 +302,10 @@ function WaypointMarker({
                     "circle",
                     {
                       "data-waypoint-state-circle": "unknown",
-                      r: _chunkVRML72ABcjs.NAV_STATE_BADGE.radius,
+                      r: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.radius,
                       fill: surface,
                       stroke: "var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))",
-                      strokeWidth: _chunkVRML72ABcjs.NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
@@ -334,10 +334,10 @@ function WaypointMarker({
                     "circle",
                     {
                       "data-waypoint-state-circle": "invalid",
-                      r: _chunkVRML72ABcjs.NAV_STATE_BADGE.radius,
+                      r: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.radius,
                       fill: surface,
                       stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))",
-                      strokeWidth: _chunkVRML72ABcjs.NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
@@ -373,7 +373,7 @@ function WaypointMarker({
                       y: details ? "-1.5" : "3.5",
                       fill: foreground,
                       stroke: surface,
-                      strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.primary,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.primary,
                       strokeLinejoin: "round",
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
@@ -391,7 +391,7 @@ function WaypointMarker({
                       y: "10",
                       fill: muted,
                       stroke: surface,
-                      strokeWidth: _chunkVRML72ABcjs.NAV_LABEL_HALO.secondary,
+                      strokeWidth: _chunkDRQ76C5Acjs.NAV_LABEL_HALO.secondary,
                       strokeLinejoin: "round",
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
@@ -414,4 +414,4 @@ function WaypointMarker({
 
 
 exports.WaypointMarker = WaypointMarker;
-//# sourceMappingURL=chunk-LGK4T5BS.cjs.map
+//# sourceMappingURL=chunk-RZ5YBJM3.cjs.map
