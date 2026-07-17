@@ -52,3 +52,17 @@ Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원�
 
 - 렌더러 페이지 차원의 미결 위반은 현재 없다. Navigation 렌더러 스토리는 지도 자체에서 pointer-only·접근성 이름 계약을 검증하고, 병렬 컨트롤·선택 리스트·합성 패널은 Viewer 합성 페이지가 소유한다.
 - Viewer 합성 페이지의 손수 만든 이름 목록(`SemanticMirrorListItem` 버튼)도 해소됐다: `LayerPanel` 트리 하나(그룹 = 레이어, 자식 행 = 객체)가 이름 목록·선택·표시·잠금을 모두 소유하고, 지도는 `Map2DCanvas` 위에 전폭으로 합성된다. 씬의 모든 표면이 LDS 컴포넌트다.
+
+## 7. 숨은 표현 규약 감사 프로그램 (진행 중)
+
+렌더러가 지도에 그리지만 **어느 Foundation Storybook 페이지에도 먼저 정의되지 않아 소비 페이지에서 갑자기 마주치는** 표현 규약을 전수 조사(2026-07-17)해 별개 규약 **32건**으로 정리했다. 목표는 "정의 없이 튀어나오는" 규약을 Foundation 페이지에서 먼저 보이게 해 검토 가능하게 만드는 것.
+
+**두 가지 처리 결정**
+- **깔끔한 드리프트(둘 이상이 같은 의미로 comparable 기하에 쓰는 값) → `_navigationVocabulary`로 단일 토큰 승격**하고 Foundation 페이지가 그 상수를 그대로 렌더(NAV_CURRENT_MARKER 선례). 예: path casing 폭 6/6.5/5, base/강조 stroke 두께.
+- **렌더러마다 축·의미가 다른 규칙(복합 상태 오프셋 스택, 포커스 링 기하 등) → 단일 상수로 강제하지 않고**, 규칙 자체를 Foundation 프레임(State Badge·Marker Pin)에 문서화하고 렌더러별 축(웨이포인트 ±8 대각 / 레인 18 접선·32 법선 / 시설 16 수평 / 영역 ±18 수직)을 예시로 병기. `_navigationVocabulary`의 SCOPE RULE(같은 의미·comparable 기하만) 준수.
+- **담을 페이지가 없는 계열은 신규 Foundation 페이지 신설**: `Navigation Label Coordination`(라벨 충돌 조정 13규칙), `Navigation Map Stage`(패널 chrome·grid·축척·범례).
+
+**진행(커밋)**
+- 즉시 조치 2건: 시설 핀 dead-dash 문서 버그(C27), Route not-allowed 커서 드리프트(C15).
+- 시스템 규약 3건을 기존 페이지 프레임으로: 상태→톤(C11, Viewer Tokens), 화면고정 마커(C8)·라벨 우선순위 사다리(C9, Encoding Tokens).
+- 남은 우선순위·배치는 감사 콘솔(세션 산출물)이 살아있는 트래커로 유지.
