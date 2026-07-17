@@ -333,6 +333,51 @@ function PriorityLadder() {
   );
 }
 
+// Keyboard focus indicator. The SHARED rule: a focused marker draws an
+// indicator that traces its OWN silhouette in --color-semantic-focus-indicator
+// with non-scaling-stroke, and the browser's rectangular outline is suppressed.
+// The geometry (radius / stroke) varies per renderer because it hugs each
+// marker's shape, so this documents the rule + the per-renderer geometry.
+const FOCUS_GEOMETRY = [
+  { renderer: '웨이포인트', geom: '원 r11 · stroke 2' },
+  { renderer: '레인 / 궤적', geom: '경로 halo · stroke 10' },
+  { renderer: '루트', geom: '경로 halo · stroke 11' },
+  { renderer: '영역', geom: '도형 추적 · stroke 6.5' },
+  { renderer: '핀 (시설·해저드)', geom: '실루엣 scale 1.34 · stroke 2.5' },
+];
+
+function FocusCard() {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: 16, alignItems: 'center' }}>
+      <svg width={72} height={72} viewBox="-24 -24 48 48" role="img" aria-label="포커스 인디케이터: 마커 실루엣을 따라 그려진 포커스 링">
+        {/* a representative marker (diamond) with its focus ring traced around it */}
+        <rect x="-9" y="-9" width="18" height="18" rx="3" transform="rotate(45)" fill="var(--color-semantic-fill-normal)" stroke={LINE} strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <circle
+          data-encoding-focus-ring=""
+          r="11"
+          fill="none"
+          stroke="var(--color-semantic-focus-indicator)"
+          strokeWidth="2"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+      <div style={{ display: 'grid', gap: 10, minWidth: 0 }}>
+        <p style={{ margin: 0, fontSize: 'var(--caption1-size)', color: MUTED, lineHeight: 1.6 }}>
+          키보드 포커스를 받은 마커는 자기 실루엣을 따라 <code style={{ color: INK }}>--color-semantic-focus-indicator</code> 색 윤곽선을 그리고 브라우저 사각 outline은 억제합니다. 모두 non-scaling-stroke이며, 크기는 마커 모양에 맞춰 렌더러마다 다릅니다.
+        </p>
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 4 }}>
+          {FOCUS_GEOMETRY.map((row) => (
+            <li key={row.renderer} style={{ display: 'grid', gridTemplateColumns: 'minmax(96px, auto) 1fr', gap: 'var(--space-3)', fontSize: 'var(--caption1-size)' }}>
+              <span style={{ color: INK, fontWeight: 'var(--fw-semibold)' }}>{row.renderer}</span>
+              <code style={{ color: MUTED }}>{row.geom}</code>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 function EncodingCatalog() {
   return (
     <main data-encoding-catalog style={{ width: 'min(880px, 100%)', display: 'grid', gap: 16 }}>
@@ -354,6 +399,9 @@ function EncodingCatalog() {
       <Card title="라벨 우선순위 사다리" hint="두 라벨이 한 자리를 다투면 더 중요한 개체의 라벨이 이깁니다. 상태 가중치(annotationPriority)와 동점 tie-break(KIND_WEIGHT)를 소스 함수에서 그대로 렌더합니다. 실제 재배치 동작은 Navigation/Annotation Layer 페이지가 보여줍니다.">
         <PriorityLadder />
       </Card>
+      <Card title="포커스 인디케이터" hint="키보드 포커스 시 마커가 자기 실루엣을 따라 그리는 focus-indicator 윤곽선. 색과 non-scaling-stroke·outline 억제는 공유 규칙이고, 기하는 렌더러 모양에 맞춰 다릅니다.">
+        <FocusCard />
+      </Card>
     </main>
   );
 }
@@ -366,7 +414,7 @@ const meta = {
       eyebrow: 'Foundation / Navigation Encoding Tokens',
       title: '내비게이션 렌더러가 공유하는 인코딩 토큰을 원자 단위로 문서화합니다',
       description:
-        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge와 현재 위치 marker 기하·label halo 계층)을 상수에서 그대로 렌더하고, 줌에도 마커가 화면 크기를 유지하는 화면 고정 메커니즘과 라벨이 자리를 다툴 때의 우선순위 사다리도 소스 함수에서 그대로 보여줘, 토큰과 규칙 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
+        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge와 현재 위치 marker 기하·label halo 계층)을 상수에서 그대로 렌더하고, 줌에도 마커가 화면 크기를 유지하는 화면 고정 메커니즘·라벨 우선순위 사다리·키보드 포커스 인디케이터 규칙도 소스에서 그대로 보여줘, 토큰과 규칙 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
     },
     docs: {
       description: {
@@ -460,6 +508,16 @@ export const Overview = {
         throw new Error(`Priority pill "${state}" must render annotationPriority({${state}: true}).`);
       }
     }
+    // Focus indicator: traces the silhouette in the focus-indicator color with
+    // non-scaling-stroke (the shared rule; geometry is per-renderer).
+    const focusRing = root.querySelector('[data-encoding-focus-ring]');
+    if (
+      !focusRing?.getAttribute('stroke')?.includes('focus-indicator') ||
+      focusRing?.getAttribute('vector-effect') !== 'non-scaling-stroke'
+    ) {
+      throw new Error('The focus-indicator swatch must trace with --color-semantic-focus-indicator and non-scaling-stroke.');
+    }
+
     const kinds = Array.from(root.querySelectorAll('[data-kind-weight]'));
     if (kinds.length !== KIND_LADDER.length) {
       throw new Error('The kind-weight ladder must render one pill per rung.');
