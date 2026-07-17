@@ -104,10 +104,20 @@ export const parameters = {
         'LDS Theme': ['Brand', 'Controls', 'Status'],
         'LDS Product': ['Action', 'Content', 'Data', 'Status', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
-        'LDS Robotics': ['Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer', 'Navigation'],
-        // Markers (the map features a product composes) first, in point → line →
-        // planned → executed → area → facility → hazard → annotation reading
-        // order; the internal encoding-atom catalogs (not public API) come last.
+        'LDS Robotics': ['Foundation', 'Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer', 'Navigation'],
+        // Robotics foundation: the internal primitive/atom catalogs (not public
+        // components), mirroring LDS Core/Foundation. Vocabulary first (the
+        // broadest line/state contract), then the glyph/token catalogs.
+        'LDS Robotics/Foundation': [
+          'Line & State Vocabulary',
+          'State Badge',
+          'Facility Glyph',
+          'Vector Glyph',
+          'Codes',
+          'Viewer Tokens',
+        ],
+        // Navigation renderer components, in point → line → planned → executed →
+        // area → facility → hazard → annotation reading order.
         'LDS Robotics/Navigation': [
           'Waypoint',
           'Lane',
@@ -117,9 +127,6 @@ export const parameters = {
           'Facility Transition',
           'Hazard Marker',
           'Annotation Layer',
-          'Encoding',
-          'State Badge',
-          'Facility Glyph',
         ],
       };
 

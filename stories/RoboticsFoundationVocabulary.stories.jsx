@@ -274,11 +274,11 @@ function EncodingCatalog() {
 }
 
 const meta = {
-  title: 'LDS Robotics/Navigation/Encoding',
+  title: 'LDS Robotics/Foundation/Line & State Vocabulary',
   parameters: {
     storyGuide: {
-      storyId: 'lds-robotics-navigation-encoding--overview',
-      eyebrow: 'Navigation / Encoding',
+      storyId: 'lds-robotics-foundation-line-state-vocabulary--overview',
+      eyebrow: 'Foundation / Line & State Vocabulary',
       title: '내비게이션 렌더러가 공유하는 선·상태 어휘를 원자 단위로 문서화합니다',
       description:
         '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태 인코딩 값을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·map-pin 기하·hit target·상태 badge·label halo 계층)을 프로덕션 조각과 실제 마커로 그대로 렌더해, 어휘 자체가 회귀 기준이 되도록 합니다. path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
