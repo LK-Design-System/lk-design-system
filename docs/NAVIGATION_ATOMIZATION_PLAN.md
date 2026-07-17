@@ -144,3 +144,23 @@ export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께 렌더하므로(순수 단일 subject 스토리 없음), 비교·통합 스토리는 Route 페이지에 그대로 두고 Trajectory 페이지는 전용 focused 스토리(Overview·Statuses·Narrow)를 신설. play-test는 Storybook에서 라이브 검증.
 
 미결(범위 밖): `check:docs`의 Storybook IA 마크다운 최신성은 세션 이전부터 stale한 **사람 리뷰 게이트**로, 날짜 스냅샷 IA 리뷰 패스가 별도로 필요.
+
+## 후속: Robotics/Foundation 계층 확장 (2026-07-17)
+
+원자화 완료 후 "원자 페이지가 기본 컴포넌트보다 적다"는 제기로 전 시스템을 감사했다. 결론은 미묘하다 — **비율로는 Robotics(원자 11.4%)가 Core(11.9%)와 동률**이라 구조적으로 부족하지 않으나, 코드에는 있으나 페이지가 없는 "묻힌 원자"와 drift가 실재했다. 시스템 자체 모델(Core의 Foundation 계층)을 미러해 확장:
+
+| 커밋 | 내용 |
+| --- | --- |
+| `3757bfb` | 방향/벡터 글리프 원자를 `_navigationVectorGlyph`로 추출(+lane endpoint 화살표 hoist). circle-marker 기하는 역할별로 반지름이 달라 **공유 원자 아님**으로 판정(NAV_PIN과 달리)—로컬 유지. |
+| `d33d06c` | `LDS Robotics/Foundation/*` 계층 확립(Core 미러, sidebar 맨 앞). 기존 원자 3개 재배치 + `Encoding`→`Line & State Vocabulary` 오칭 교정(실제로 `_navigationVocabulary` 문서화, `_navigationEncoding` 아님) + 새 원자 페이지 3개(Vector Glyph·Codes·Viewer Tokens, live-from-source + play-test). 원자 페이지 3→6. atom-glyph baseline은 컴포넌트 스토리 기반이라 재배치·신설에 **제로 diff**. |
+
+### 미결 backlog — P2b (Navigation 밖, 별도 PR 시리즈)
+
+Navigation 밖 컴포넌트의 미승격 원자. **감사 먼저 → 진짜 동일한 것만 de-dup(다르면 로컬 유지)** 원칙 적용 필요:
+
+- **telemetry tone→color 4중복** (`viz/TelemetryGauge`·`viz/TelemetryValue`·`editor/ViewportStatusBar`·`robotics/EquipmentStatusCard`) → 공유 모듈 + `Foundation/Status Tone` 페이지
+- **unit-format** (`internal/unit-format.js`, Status+Editor 공용) → `Foundation/Unit Format`
+- **connection-state** (`ConnectionBadge` `CONNECTION_CFG`) → `Foundation/Connection State`
+- **viewer-state** (`viz/ViewerFrame` `VIEWER_STATES`/`TONE_COLOR`) → `Foundation/Viewer State`
+
+리스크: 라이브 status/viewer 컴포넌트 리팩터링이라 시각 회귀 노출이 크고, 해당 DOM-heavy baseline은 로컬에서 폰트 노이즈로 깨끗이 검증하기 어렵다 → 정규(CI/Windows) 환경 visual-regression 가드로 순서화. 관찰 종합의 권고와 사용자 결정에 따라 **별도 PR로 연기**.
