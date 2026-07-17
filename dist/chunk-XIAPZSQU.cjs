@@ -17,6 +17,16 @@ var _chunkKB5BQWW4cjs = require('./chunk-KB5BQWW4.cjs');
 
 // components/robotics/HazardMarker.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+
+// components/robotics/_HazardGlyph.js
+var HAZARD_GLYPH_PATHS = {
+  stairs: "M120-200q-17 0-28.5-11.5T80-240q0-17 11.5-28.5T120-280h200v-200q0-17 11.5-28.5T360-520h200v-200q0-17 11.5-28.5T600-760h240q17 0 28.5 11.5T880-720q0 17-11.5 28.5T840-680H640v200q0 17-11.5 28.5T600-440H400v200q0 17-11.5 28.5T360-200H120Z",
+  dropoff: "M140-660H460V-320H820V-240H380V-580H140Z M620-760H700V-520H780L660-380L540-520H620Z",
+  obstacle: "M430-760H530L630-360H330Z M240-320H720V-240H240Z"
+};
+var HAZARD_GLYPH_FIT = "scale(0.016) translate(-480 480)";
+
+// components/robotics/HazardMarker.jsx
 var _jsxruntime = require('react/jsx-runtime');
 var KIND_LABELS = {
   stairs: "\uACC4\uB2E8",
@@ -35,13 +45,8 @@ var SEVERITY_PRESENTATION = {
     fill: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))"
   }
 };
-var HAZARD_GLYPHS = {
-  stairs: "M120-200q-17 0-28.5-11.5T80-240q0-17 11.5-28.5T120-280h200v-200q0-17 11.5-28.5T360-520h200v-200q0-17 11.5-28.5T600-760h240q17 0 28.5 11.5T880-720q0 17-11.5 28.5T840-680H640v200q0 17-11.5 28.5T600-440H400v200q0 17-11.5 28.5T360-200H120Z",
-  ramp: _chunk7QTG7XVGcjs.FACILITY_GLYPH_PATHS.ramp,
-  dropoff: "M140-660H460V-320H820V-240H380V-580H140Z M620-760H700V-520H780L660-380L540-520H620Z",
-  obstacle: "M430-760H530L630-360H330Z M240-320H720V-240H240Z"
-};
-var GLYPH_FIT = "scale(0.016) translate(-480 480)";
+var HAZARD_GLYPHS = { ...HAZARD_GLYPH_PATHS, ramp: _chunk7QTG7XVGcjs.FACILITY_GLYPH_PATHS.ramp };
+var GLYPH_FIT = HAZARD_GLYPH_FIT;
 var PIN_PATH = _chunkVRML72ABcjs.NAV_PIN.path;
 function normalizeViewportScale(value) {
   return Number.isFinite(value) && value > 0 ? value : 1;
@@ -197,4 +202,4 @@ function HazardMarker({
 
 
 exports.HazardMarker = HazardMarker;
-//# sourceMappingURL=chunk-4ANT47KM.cjs.map
+//# sourceMappingURL=chunk-XIAPZSQU.cjs.map

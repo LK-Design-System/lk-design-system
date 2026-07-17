@@ -1,6 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { FACILITY_GLYPH_PATHS } from './_FacilityGlyph.js';
+import { HAZARD_GLYPH_PATHS, HAZARD_GLYPH_FIT } from './_HazardGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 import { navStateOpacity, NAV_PIN, NAV_HIT, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
@@ -28,27 +29,13 @@ const SEVERITY_PRESENTATION = {
   },
 };
 
-// Knockout hazard glyphs, painted white on the severity-colored pin badge.
-// `stairs` is Material Symbols (Google, Apache 2.0) rounded fill `stairs_2` —
-// the unboxed solid staircase — embedded verbatim (viewBox 0 -960 960 960).
-// `ramp` reuses the LDS incline silhouette from _FacilityGlyph so the same
-// physical slope reads as the same object whether a product classifies it as a
-// traversable facility or as a hazard. `dropoff` is LDS-authored on the same
-// 960 grid (Material Symbols has no ledge/fall glyph): a one-step edge profile
-// with a falling arrow over the lower level — deliberately a single step so it
-// stays distinct from the multi-step stairs zigzag at badge size. `obstacle`
-// is an LDS traffic-cone silhouette — the operational symbol for a physical
-// obstruction; Material Symbols' closest fills (fence, dangerous) read as a
-// mushy grid and as a prohibition X at badge size. See
-// docs/references/ATTRIBUTIONS.md. FIT recenters the 960u artwork (center
-// 480,-480) onto the pin-head origin and scales it to the ~21px badge slot.
-const HAZARD_GLYPHS = {
-  stairs: 'M120-200q-17 0-28.5-11.5T80-240q0-17 11.5-28.5T120-280h200v-200q0-17 11.5-28.5T360-520h200v-200q0-17 11.5-28.5T600-760h240q17 0 28.5 11.5T880-720q0 17-11.5 28.5T840-680H640v200q0 17-11.5 28.5T600-440H400v200q0 17-11.5 28.5T360-200H120Z',
-  ramp: FACILITY_GLYPH_PATHS.ramp,
-  dropoff: 'M140-660H460V-320H820V-240H380V-580H140Z M620-760H700V-520H780L660-380L540-520H620Z',
-  obstacle: 'M430-760H530L630-360H330Z M240-320H720V-240H240Z',
-};
-const GLYPH_FIT = 'scale(0.016) translate(-480 480)';
+// Knockout hazard glyphs, painted white on the severity-colored pin badge. The
+// hazard-specific silhouettes (stairs / dropoff / obstacle) live in the shared
+// `_HazardGlyph` atom; `ramp` reuses the LDS incline silhouette from
+// `_FacilityGlyph` so the same physical slope reads as the same object whether a
+// product classifies it as a traversable facility or a hazard.
+const HAZARD_GLYPHS = { ...HAZARD_GLYPH_PATHS, ramp: FACILITY_GLYPH_PATHS.ramp };
+const GLYPH_FIT = HAZARD_GLYPH_FIT;
 
 // The same map-pin silhouette as FacilityTransition, so hazards read as part of
 // the one marker family; what marks them as "avoid" is the severity fill

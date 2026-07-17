@@ -112,6 +112,7 @@ export const parameters = {
           'Line & State Vocabulary',
           'State Badge',
           'Facility Glyph',
+          'Hazard Glyph',
           'Vector Glyph',
           'Codes',
           'Viewer Tokens',

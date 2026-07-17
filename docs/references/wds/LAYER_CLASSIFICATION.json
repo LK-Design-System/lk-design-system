@@ -185,6 +185,7 @@
     "stories/RoboticsEquipment.stories.jsx": "LDS Robotics/Status/Equipment State",
     "stories/RoboticsFoundationCodes.stories.jsx": "LDS Robotics/Foundation/Codes",
     "stories/RoboticsFoundationFacilityGlyph.stories.jsx": "LDS Robotics/Foundation/Facility Glyph",
+    "stories/RoboticsFoundationHazardGlyph.stories.jsx": "LDS Robotics/Foundation/Hazard Glyph",
     "stories/RoboticsFoundationStateBadge.stories.jsx": "LDS Robotics/Foundation/State Badge",
     "stories/RoboticsFoundationVectorGlyph.stories.jsx": "LDS Robotics/Foundation/Vector Glyph",
     "stories/RoboticsFoundationViewerTokens.stories.jsx": "LDS Robotics/Foundation/Viewer Tokens",

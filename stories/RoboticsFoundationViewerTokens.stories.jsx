@@ -162,8 +162,16 @@ export const Overview = {
     }
 
     const isResolvedColor = (value) => {
-      const normalized = String(value ?? '').replace(/\s+/g, '');
-      return normalized !== '' && normalized !== 'rgba(0,0,0,0)';
+      const str = String(value ?? '').trim();
+      if (str === '' || str === 'transparent') return false;
+      // An unresolved token computes to a fully transparent color (alpha 0);
+      // parse the alpha channel rather than hardcoding the transparent literal.
+      const match = str.match(/^rgba?\(([^)]+)\)$/i);
+      if (match) {
+        const alpha = Number(match[1].split(',').map((p) => p.trim())[3] ?? '1');
+        if (Number.isFinite(alpha) && alpha === 0) return false;
+      }
+      return true;
     };
 
     // Every token must resolve to a real color inside BOTH appearance frames —
