@@ -3,6 +3,7 @@ import { userEvent, waitFor } from 'storybook/test';
 import { Button, LaneOverlay, Map2DCanvas } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
+import { contrastRatio } from './RoboticsNavigationAssert.shared.jsx';
 
 const meta = {
   title: 'LDS Robotics/Navigation/Lane',
@@ -240,31 +241,6 @@ export const LaneStatesAndConstraints = {
     }
   },
 };
-
-function colorChannels(value) {
-  const numbers = String(value).match(/[\d.]+/g)?.map(Number) ?? [];
-  if (String(value).startsWith('color(srgb') && numbers.length >= 3) {
-    return numbers.slice(0, 3).map((channel) => channel * 255);
-  }
-  if (numbers.length >= 3) return numbers.slice(0, 3);
-  throw new Error(`Unsupported computed color: ${value}`);
-}
-
-function relativeLuminance(value) {
-  const channels = colorChannels(value).map((channel) => {
-    const normalized = channel / 255;
-    return normalized <= 0.04045
-      ? normalized / 12.92
-      : ((normalized + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
-}
-
-function contrastRatio(foreground, background) {
-  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
-  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
-  return (lighter + 0.05) / (darker + 0.05);
-}
 
 function bboxOverlap(first, second, tolerance = 0.25) {
   const overlapWidth = Math.min(first.right, second.right) - Math.max(first.left, second.left);
@@ -676,7 +652,7 @@ function LanePointerOnlyFixture() {
   const pointerLane = {
     ...BASE_LANE,
     id: 'lane-pointer-only',
-    label: '지도 pointer-only 레인',
+    label: '포인터 전용 지도 레인',
     points: [{ x: 72, y: 72 }, { x: 440, y: 72 }],
   };
   const passiveLane = {
@@ -688,8 +664,8 @@ function LanePointerOnlyFixture() {
 
   return (
     <StoryPage
-      title="Semantic mirror가 키보드를 소유하면 지도 레인은 pointer-only가 됩니다"
-      description="aria-hidden 지도 fragment는 click identity만 전달하고 focus·keyboard·접근성 이름은 아래 ordinary control에 맡깁니다. 유효한 선분이 없는 데이터는 빈 button으로 남지 않습니다."
+      title="포인터 전용 레인은 클릭만 유지하고 포커스·키보드·이름을 넘깁니다"
+      description="aria-hidden 지도 조각은 클릭 identity만 유지하고 focus·keyboard·접근성 이름은 소비 제품의 이름 있는 컨트롤에 넘깁니다. 유효한 선분이 없는 데이터는 빈 button으로 남지 않습니다."
       maxWidth={780}
     >
       <LaneMap label="포인터 전용과 형상 방어 레인 지도">
@@ -707,10 +683,7 @@ function LanePointerOnlyFixture() {
           onActivate={() => setActivations((count) => count + 1)}
         />
       </LaneMap>
-      <Button type="button" variant="secondary" onClick={() => setActivations((count) => count + 1)}>
-        지도 레인의 semantic mirror
-      </Button>
-      <output data-testid="lane-pointer-output">activation {activations}회</output>
+      <output data-testid="lane-pointer-output" hidden>activation {activations}회</output>
     </StoryPage>
   );
 }
@@ -794,8 +767,8 @@ function LaneActivationFixture() {
           onActivate={activate}
         />
       </LaneMap>
-      <output data-testid="lane-activation-output" style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--body2-size)' }}>
-        선택: {selectedId || '없음'} · activation {activations}회
+      <output data-testid="lane-activation-output" hidden>
+        activation {activations}회
       </output>
     </StoryPage>
   );

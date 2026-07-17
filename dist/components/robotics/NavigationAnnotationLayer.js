@@ -1,8 +1,8 @@
 "use client";
 import {
   NavigationAnnotationLayer
-} from "../../chunk-TFG2DYXJ.js";
-import "../../chunk-2VOHTLP5.js";
+} from "../../chunk-T52JTLZY.js";
+import "../../chunk-XLGTXJ3N.js";
 export {
   NavigationAnnotationLayer
 };

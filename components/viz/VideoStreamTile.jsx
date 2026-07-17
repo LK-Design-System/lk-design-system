@@ -22,6 +22,7 @@ export function VideoStreamTile({
   stateDescription,
   stateIcon,
   stateAction,
+  variant = 'standalone',
   style,
   ...rest
 }) {
@@ -34,6 +35,7 @@ export function VideoStreamTile({
       {...rest}
       label={resolvedAriaLabel}
       source={label}
+      variant={variant}
       badges={badges}
       hud={hud}
       toolbar={toolbar}

@@ -1,7 +1,9 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
-import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -24,11 +26,15 @@ const STATUS_GLYPH_KIND = {
 const MARKER_GAP_PX = 4;
 const MARKER_ROW_CLEARANCE_PX = 8;
 const LABEL_ROW_GAP_PX = 12;
+// Outline-inclusive footprints for the screen-slot collision layout — derived
+// from the shared badge tokens (painted radius + half the outline stroke) so
+// the layout can never underestimate what the circles actually paint.
+const STATE_BADGE_FOOTPRINT_PX = NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2;
 const MARKER_RADIUS_PX = {
-  status: 7.75,
-  current: 9,
-  invalid: 7.75,
-  stale: 7.75,
+  status: STATE_BADGE_FOOTPRINT_PX,
+  current: NAV_CURRENT_MARKER.radius + NAV_CURRENT_MARKER.strokeWidth / 2,
+  invalid: STATE_BADGE_FOOTPRINT_PX,
+  stale: STATE_BADGE_FOOTPRINT_PX,
 };
 function finitePoint(point) {
   return point && Number.isFinite(point.x) && Number.isFinite(point.y);
@@ -317,7 +323,7 @@ export function TrajectoryOverlay({
       } : undefined}
       style={{
         cursor: disabled ? 'not-allowed' : interactive ? 'pointer' : 'default',
-        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
+        opacity: navStateOpacity(disabled, stale),
         outline: 'none',
         ...style,
       }}
@@ -328,7 +334,7 @@ export function TrajectoryOverlay({
           d={pathData}
           fill="none"
           stroke="var(--color-semantic-focus-indicator)"
-          strokeWidth="10"
+          strokeWidth={NAV_FOCUS.pathHaloWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
@@ -341,10 +347,10 @@ export function TrajectoryOverlay({
           d={pathData}
           fill="none"
           stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
-          strokeWidth="7"
+          strokeWidth={NAV_SELECTION.pathHaloWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity="0.24"
+          opacity={NAV_SELECTION.haloOpacity}
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />
@@ -380,7 +386,7 @@ export function TrajectoryOverlay({
         <>
           <path
             data-trajectory-hit-target=""
-            data-screen-target-size="24"
+            data-screen-target-size={NAV_HIT.screenTargetSize}
             d={pathData}
             fill="none"
             stroke="transparent"
@@ -391,11 +397,11 @@ export function TrajectoryOverlay({
           <circle
             data-trajectory-hit-target-core=""
             data-trajectory-actual-hit-core=""
-            data-screen-target-size="24"
+            data-screen-target-size={NAV_HIT.screenTargetSize}
             data-screen-target-diameter="35"
             cx={statePoint.x}
             cy={statePoint.y}
-            r={17.5 * inverseScale}
+            r={NAV_HIT.radius * inverseScale}
             fill="transparent"
             pointerEvents="all"
           />
@@ -415,10 +421,10 @@ export function TrajectoryOverlay({
             {...obstacle(`trajectory:${trajectory.id}:current`)}
             data-trajectory-marker-badge="current"
             data-navigation-marker-circle=""
-            r="8"
+            r={NAV_CURRENT_MARKER.radius}
             fill={surface}
             stroke={tone}
-            strokeWidth="2"
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           {headingDegrees == null ? (
@@ -453,10 +459,10 @@ export function TrajectoryOverlay({
             {...obstacle(`trajectory:${trajectory.id}:status`)}
             data-trajectory-marker-badge="status"
             data-navigation-marker-circle=""
-            r="7"
+            r={NAV_STATE_BADGE.radius}
             fill={surface}
             stroke={tone}
-            strokeWidth="1.5"
+            strokeWidth={NAV_STATE_BADGE.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           <NavigationStateGlyph
@@ -484,11 +490,11 @@ export function TrajectoryOverlay({
               {...obstacle(`trajectory:${trajectory.id}:state:${item.state}`)}
               data-trajectory-marker-badge={item.state}
               data-navigation-marker-circle=""
-              r="7"
+              r={NAV_STATE_BADGE.radius}
               fill={surface}
               stroke={item.tone}
-              strokeWidth="1.5"
-              strokeDasharray={item.state === 'stale' ? '2 2' : undefined}
+              strokeWidth={NAV_STATE_BADGE.strokeWidth}
+              strokeDasharray={item.state === 'stale' ? NAV_DASH.staleRing : undefined}
               vectorEffect="non-scaling-stroke"
             />
             <NavigationStateGlyph kind={item.glyphKind} size={10} color={foreground} />
@@ -519,7 +525,7 @@ export function TrajectoryOverlay({
             transform={markerTransform(markerPoint, inverseScale, trajectoryLabelSlot)}
             fill={foreground}
             stroke={surface}
-            strokeWidth="3"
+            strokeWidth={NAV_LABEL_HALO.primary}
             strokeLinejoin="round"
             paintOrder="stroke"
             vectorEffect="non-scaling-stroke"

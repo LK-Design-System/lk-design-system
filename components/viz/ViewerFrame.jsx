@@ -187,6 +187,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
   stateIcon,
   stateAction,
   appearance = 'dark',
+  variant = 'standalone',
   toolbarPlacement = 'top-right',
   style,
   tabIndex,
@@ -307,6 +308,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
       }}
       data-lds-viewer-frame=""
       data-viewer-appearance={appearance}
+      data-viewer-variant={variant}
       data-viewer-state={resolvedState}
       data-viewer-blocking={blocking ? '' : undefined}
       style={{
@@ -348,8 +350,12 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
         width: '100%',
         overflow: 'hidden',
         boxSizing: 'border-box',
-        border: '1px solid var(--viewer-border)',
-        borderRadius: 'var(--radius-lg)',
+        // variant="embedded" drops the frame's own perimeter so a parent
+        // surface (CanvasEditorShell, Card) owns one continuous outline; every
+        // viewport role — chrome, state model, HUD/toolbar, a11y region — is
+        // otherwise unchanged.
+        border: variant === 'embedded' ? 0 : '1px solid var(--viewer-border)',
+        borderRadius: variant === 'embedded' ? 0 : 'var(--radius-lg)',
         background: 'var(--viewer-surface)',
         color: 'var(--viewer-foreground)',
         fontFamily: 'var(--font-sans)',

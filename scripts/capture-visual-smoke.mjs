@@ -243,11 +243,11 @@ const atomTargets = [
   { name: 'atom-glyph-unknown', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="unknown"]', clip: 28, viewport: { width: 900, height: 760 } },
   { name: 'atom-glyph-conflict', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="conflict"]', clip: 28, viewport: { width: 900, height: 760 } },
   { name: 'atom-glyph-closed', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="closed"]', clip: 28, viewport: { width: 900, height: 760 } },
-  { name: 'atom-glyph-invalid', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="invalid"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-waiting', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="waiting"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-completed', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="completed"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-rerouting', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="rerouting"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-stale', match: { importPath: './stories/RoboticsNavigationRouteTrajectory.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="stale"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-invalid', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="invalid"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-waiting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="waiting"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-completed', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="completed"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-rerouting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="rerouting"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-stale', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="stale"]', clip: 28, viewport: { width: 1000, height: 900 } },
 ];
 
 function contentType(filePath) {

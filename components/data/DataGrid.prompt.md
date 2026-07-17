@@ -115,6 +115,7 @@ DataGrid가 소유하는 것:
 ## LDS 시각 delta inventory
 
 - `Table`과 header/body padding, typography, divider, density, radius를 공유하고 `DataToolbar`는 검색·filter·global settings trigger만 소유합니다.
+- `variant="embedded"`는 `DataToolbar` + `DataGrid` + `Pagination`을 하나의 외곽 surface(감싸는 `section`·`Card`·`DockPanel`)로 묶을 때 그리드 자체 border·radius를 생략합니다. 부모가 연속된 외곽선을 소유하고 내부는 divider로만 구분하며, 부모 표면 안에서 `style`로 border/radius를 덮어쓰지 않습니다. 기본값 `standalone`은 자체 외곽선을 그립니다.
 - 기존 DataGrid의 16px checkbox, selected row fill, same-height bulk band, sm/md header 높이를 유지합니다.
 - Pinned cell은 별도 shadow나 inset marker를 만들지 않고 기존 elevated/selected fill과 divider만 사용합니다. Sticky header도 새 surface를 추가하지 않습니다.
 - Expansion은 공용 32px plain `IconButton`, sort priority는 기존 header icon 옆 보조 숫자만 사용합니다. Screen-specific chrome은 추가하지 않습니다.

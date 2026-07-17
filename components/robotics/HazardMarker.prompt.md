@@ -35,7 +35,7 @@
 ## Internal LDS comparison
 
 - `WaypointMarker`: 단일 point 마커의 viewportScale 역스케일, obstacle 등록, focus/selection 표기, 24px hit target 계약을 그대로 계승합니다.
-- `FacilityTransition`: map-pin 실루엣(`PIN_PATH`), 그림자, 형상 따라가는 focus/selection outline 기하를 공유해 hazard가 설비 marker와 한 패밀리로 읽힙니다(구분은 severity fill과 글리프 담당). 역할 경계도 유지합니다 — AGV가 실제로 지나는 설비 전이(door/lift/dock/ramp/charging/gate/handoff)는 FacilityTransition 소유이고, hazard는 전이가 아니라 배리어라서 별도 컴포넌트입니다.
+- `FacilityTransition`: map-pin 실루엣(`PIN_PATH`), 그림자, 형상 따라가는 focus/selection outline 기하를 공유해 hazard가 설비 marker와 한 패밀리로 읽힙니다(구분은 severity fill과 글리프 담당). 이 map-pin 기하(path·shadow·focus/selection ring)는 이제 두 컴포넌트가 내부 `_navigationVocabulary`의 `NAV_PIN`에서 함께 가져오므로, 일치가 수기 약속이 아니라 구조적으로 보장됩니다. 역할 경계도 유지합니다 — AGV가 실제로 지나는 설비 전이(door/lift/dock/ramp/charging/gate/handoff)는 FacilityTransition 소유이고, hazard는 전이가 아니라 배리어라서 별도 컴포넌트입니다.
 - `SpatialRegion`: 넓은 keep-out·감속 **구역**은 region이 소유합니다. Hazard는 계단 같은 **지점** 위험물만 표시합니다.
 - `_NavigationFocus` / `_navigationAnnotations`: focus-visible 판정, obstacle 등록, 라벨 배치 우선순위를 다른 nav overlay와 공유합니다.
 

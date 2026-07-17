@@ -2,6 +2,7 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_DASH, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const CATEGORY_PATTERNS = {
   behavior: 'diagonal',
@@ -306,7 +307,7 @@ export function SpatialRegion({
   ].filter(Boolean).join(' · ');
   const stroke = strokeForRegion(region, { disabled, invalid });
   const unknownTerrain = region.category === 'terrain' && region.traversability === 'unknown';
-  const stateDash = invalid ? '4 3' : stale ? '2 4' : unknownTerrain ? '1 3' : undefined;
+  const stateDash = invalid ? NAV_DASH.invalid : stale ? NAV_DASH.staleShape : unknownTerrain ? NAV_DASH.unknown : undefined;
 
   if (hidden) return null;
 
@@ -364,7 +365,7 @@ export function SpatialRegion({
       }}
       style={{
         cursor: interactive && !disabled ? 'pointer' : disabled ? 'not-allowed' : 'default',
-        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
+        opacity: navStateOpacity(disabled, stale),
         outline: 'none',
         ...style,
       }}
@@ -386,7 +387,7 @@ export function SpatialRegion({
           shape={region.shape}
           fill="none"
           stroke="var(--color-semantic-focus-indicator)"
-          strokeWidth="6.5"
+          strokeWidth={NAV_FOCUS.regionStrokeWidth}
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
           data-region-focus-ring=""
@@ -397,7 +398,7 @@ export function SpatialRegion({
           shape={region.shape}
           fill="none"
           stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
-          strokeWidth="3.5"
+          strokeWidth={NAV_SELECTION.regionStrokeWidth}
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
           data-region-selection-ring=""
@@ -424,13 +425,13 @@ export function SpatialRegion({
         >
           {invalid && (
             <g transform="translate(0 -18)" data-region-invalid-mark="">
-              <circle r="7" fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+              <circle r={NAV_STATE_BADGE.radius} fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))" strokeWidth={NAV_STATE_BADGE.strokeWidth} vectorEffect="non-scaling-stroke" />
               <NavigationStateGlyph kind="invalid" size={10.5} color="var(--viewer-foreground, var(--color-semantic-label-strong))" />
             </g>
           )}
           {stale && (
             <g transform={`translate(0 ${invalid ? 18 : -18})`} data-region-stale-mark="">
-              <circle r="7" fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--viewer-muted, var(--color-semantic-label-alternative))" strokeWidth="1.5" strokeDasharray="2 2" vectorEffect="non-scaling-stroke" />
+              <circle r={NAV_STATE_BADGE.radius} fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--viewer-muted, var(--color-semantic-label-alternative))" strokeWidth={NAV_STATE_BADGE.strokeWidth} strokeDasharray={NAV_DASH.staleRing} vectorEffect="non-scaling-stroke" />
               <NavigationStateGlyph kind="stale" size={10.5} color="var(--viewer-foreground, var(--color-semantic-label-strong))" />
             </g>
           )}
@@ -462,7 +463,7 @@ export function SpatialRegion({
               dominantBaseline="central"
               fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
               stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-              strokeWidth="4"
+              strokeWidth={NAV_LABEL_HALO.primary}
               paintOrder="stroke"
               vectorEffect="non-scaling-stroke"
               style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}

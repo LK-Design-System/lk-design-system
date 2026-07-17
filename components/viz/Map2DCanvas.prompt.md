@@ -25,6 +25,7 @@
 - `overlay`는 passive visual slot이며 포인터 입력을 받지 않습니다. 별도 조작은 viewport-local toolbar 또는 앱 소유 UI로 구성합니다.
 - 공통 `ViewerFrame`을 합성하므로 `state`, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. 지도 전용 loading/error chrome을 별도로 만들지 않습니다.
 - `appearance="light"`가 기본이지만 `appearance="dark"`도 동일한 공개 계약입니다. 지도 renderer와 overlay는 `--viewer-*` 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.
+- `variant="embedded"`는 이 캔버스를 다른 표면(Card, 패널 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. pan/zoom·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 `standalone`은 자체 외곽선을 그립니다.
 
 ## Scope decisions
 

@@ -6,13 +6,7 @@ import {
   normalizeUnit,
   normalizeValueText,
 } from '../internal/unit-format.js';
-
-const STATUS_LABEL = {
-  signal: '정보',
-  positive: '정상',
-  cautionary: '주의',
-  negative: '위험',
-};
+import { TELEMETRY_STATUS_LABEL as STATUS_LABEL } from '../internal/telemetryStatusLabel.js';
 
 /**
  * LK ROBOTICS — TelemetryValue

@@ -21,5 +21,6 @@ Use it for point clouds, digital twins, Three.js, or React Three Fiber output. T
 - Keep orbit, pan, zoom, focus, home, orientation, and display controls in the local `toolbar` slot. Keep document/history commands in `CanvasEditorShell`.
 - Scene hierarchy, selection inspector, transform gizmos, robot commands, and renderer-specific debug panels are intentionally excluded.
 - `loading` and `empty` remain compatibility aliases; new work should use `state` and state-copy props.
+- `CanvasEditorShell` 캔버스 슬롯처럼 다른 표면 안에 뷰포트를 중첩할 때는 `variant="embedded"`로 두어 셸이 최외곽 테두리를 소유하게 합니다. 자체 border·radius만 생략하고 scene identity·HUD·toolbar·상태·접근성 역할은 그대로 유지합니다.
 
 Classification and evidence are documented in [`ViewerFrame.prompt.md`](./ViewerFrame.prompt.md). The structure follows the official [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html) and [Unity Scene view navigation](https://docs.unity3d.com/Manual/SceneViewNavigation.html), while [Unity Scene view draw modes](https://docs.unity3d.com/Manual/GIVis.html) support the conclusion that viewing mode and diagnostic readability—not a permanently dark palette—define the reusable 3D contract. These patterns are adapted to LDS spacing, typography, icons, tokens, and toolbar behavior.

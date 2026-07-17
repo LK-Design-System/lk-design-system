@@ -49,4 +49,4 @@ Embedded in:
 
 - `components/robotics/_FacilityGlyph.js`
 - `components/robotics/_NavigationStateGlyph.js`
-- `components/robotics/HazardMarker.jsx`
+- `components/robotics/_HazardGlyph.js`

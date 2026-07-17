@@ -56,6 +56,7 @@ export function Map2DCanvas({
   stateIcon,
   stateAction,
   appearance = 'light',
+  variant = 'standalone',
   label = '2D 맵 캔버스',
   style,
   tabIndex,
@@ -260,6 +261,7 @@ export function Map2DCanvas({
       ref={rootRef}
       label={label}
       appearance={appearance}
+      variant={variant}
       source={source}
       badges={badges}
       hud={hud}

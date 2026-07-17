@@ -1,7 +1,9 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { FACILITY_GLYPH_PATHS } from './_FacilityGlyph.js';
+import { HAZARD_GLYPH_PATHS, HAZARD_GLYPH_FIT } from './_HazardGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_PIN, NAV_HIT, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
 // Accessible-name copy is Korean to match every sibling navigation overlay
 // (Waypoint / Lane / Region / Route / Trajectory / Facility) so a Korean-first
@@ -27,34 +29,20 @@ const SEVERITY_PRESENTATION = {
   },
 };
 
-// Knockout hazard glyphs, painted white on the severity-colored pin badge.
-// `stairs` is Material Symbols (Google, Apache 2.0) rounded fill `stairs_2` —
-// the unboxed solid staircase — embedded verbatim (viewBox 0 -960 960 960).
-// `ramp` reuses the LDS incline silhouette from _FacilityGlyph so the same
-// physical slope reads as the same object whether a product classifies it as a
-// traversable facility or as a hazard. `dropoff` is LDS-authored on the same
-// 960 grid (Material Symbols has no ledge/fall glyph): a one-step edge profile
-// with a falling arrow over the lower level — deliberately a single step so it
-// stays distinct from the multi-step stairs zigzag at badge size. `obstacle`
-// is an LDS traffic-cone silhouette — the operational symbol for a physical
-// obstruction; Material Symbols' closest fills (fence, dangerous) read as a
-// mushy grid and as a prohibition X at badge size. See
-// docs/references/ATTRIBUTIONS.md. FIT recenters the 960u artwork (center
-// 480,-480) onto the pin-head origin and scales it to the ~21px badge slot.
-const HAZARD_GLYPHS = {
-  stairs: 'M120-200q-17 0-28.5-11.5T80-240q0-17 11.5-28.5T120-280h200v-200q0-17 11.5-28.5T360-520h200v-200q0-17 11.5-28.5T600-760h240q17 0 28.5 11.5T880-720q0 17-11.5 28.5T840-680H640v200q0 17-11.5 28.5T600-440H400v200q0 17-11.5 28.5T360-200H120Z',
-  ramp: FACILITY_GLYPH_PATHS.ramp,
-  dropoff: 'M140-660H460V-320H820V-240H380V-580H140Z M620-760H700V-520H780L660-380L540-520H620Z',
-  obstacle: 'M430-760H530L630-360H330Z M240-320H720V-240H240Z',
-};
-const GLYPH_FIT = 'scale(0.016) translate(-480 480)';
+// Knockout hazard glyphs, painted white on the severity-colored pin badge. The
+// hazard-specific silhouettes (stairs / dropoff / obstacle) live in the shared
+// `_HazardGlyph` atom; `ramp` reuses the LDS incline silhouette from
+// `_FacilityGlyph` so the same physical slope reads as the same object whether a
+// product classifies it as a traversable facility or a hazard.
+const HAZARD_GLYPHS = { ...HAZARD_GLYPH_PATHS, ramp: FACILITY_GLYPH_PATHS.ramp };
+const GLYPH_FIT = HAZARD_GLYPH_FIT;
 
 // The same map-pin silhouette as FacilityTransition, so hazards read as part of
 // the one marker family; what marks them as "avoid" is the severity fill
 // (cautionary/negative instead of the facility accent), the hazard glyph, and
 // the accessible name — not a competing shape. Shared by the fill AND the
 // focus/selection outlines so a selected hazard reads as the same pin.
-const PIN_PATH = 'M0 15 Q-6 10 -9.2 5 A10.5 10.5 0 1 1 9.2 5 Q6 10 0 15 Z';
+const PIN_PATH = NAV_PIN.path;
 
 function normalizeViewportScale(value) {
   return Number.isFinite(value) && value > 0 ? value : 1;
@@ -166,7 +154,7 @@ export function HazardMarker({
       }}
       style={{
         cursor: disabled ? 'not-allowed' : interactive ? 'pointer' : 'default',
-        opacity: disabled ? 0.45 : stale ? 0.76 : 1,
+        opacity: navStateOpacity(disabled, stale),
         outline: 'none',
         ...style,
       }}
@@ -175,16 +163,16 @@ export function HazardMarker({
         {/* Cast shadow + focus/selection outlines all trace the SAME pin
             silhouette (shared with FacilityTransition), so every state reads as
             one marker instead of a pin ringed by a mismatched circle. */}
-        <path d={PIN_PATH} transform="translate(0 0.8)" fill="var(--color-semantic-static-black)" opacity="0.16" pointerEvents="none" data-hazard-shadow="" />
+        <path d={PIN_PATH} transform={NAV_PIN.shadow.transform} fill={NAV_PIN.shadow.fill} opacity={NAV_PIN.shadow.opacity} pointerEvents="none" data-hazard-shadow="" />
         {focusVisible && (
-          <path d={PIN_PATH} transform="scale(1.34)" fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth="2.5" strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-hazard-focus-ring="" />
+          <path d={PIN_PATH} transform={`scale(${NAV_PIN.focusRing.scale})`} fill="none" stroke="var(--color-semantic-focus-indicator)" strokeWidth={NAV_PIN.focusRing.strokeWidth} strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-hazard-focus-ring="" />
         )}
         {selected && (
-          <path d={PIN_PATH} transform="scale(1.16)" fill="none" stroke="var(--viewer-accent, var(--color-semantic-primary-normal))" strokeWidth="2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-hazard-selection-ring="" />
+          <path d={PIN_PATH} transform={`scale(${NAV_PIN.selectionRing.scale})`} fill="none" stroke="var(--viewer-accent, var(--color-semantic-primary-normal))" strokeWidth={NAV_PIN.selectionRing.strokeWidth} strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none" data-hazard-selection-ring="" />
         )}
         {/* WCAG 2.2 minimum target: a transparent 24px-equivalent hit circle in
             screen space, wider than the pin. */}
-        <circle r="17" fill="transparent" stroke="none" pointerEvents={interactive ? 'all' : 'none'} data-hazard-hit-area="" data-screen-target-size="24" />
+        <circle r={NAV_HIT.radius} fill="transparent" stroke="none" pointerEvents={interactive ? 'all' : 'none'} data-hazard-hit-area="" data-screen-target-size={NAV_HIT.screenTargetSize} />
         <path
           {...obstacle(`hazard:${hazard.id}:sign`)}
           d={PIN_PATH}
@@ -209,7 +197,7 @@ export function HazardMarker({
               textAnchor="start"
               fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
               stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-              strokeWidth="4"
+              strokeWidth={NAV_LABEL_HALO.primary}
               paintOrder="stroke"
               vectorEffect="non-scaling-stroke"
               pointerEvents="none"

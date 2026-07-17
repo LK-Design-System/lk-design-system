@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkHPG5AMXZcjs = require('../../chunk-HPG5AMXZ.cjs');
-require('../../chunk-KB5BQWW4.cjs');
+var _chunkJ43DO5P7cjs = require('../../chunk-J43DO5P7.cjs');
+require('../../chunk-4KWJ7MLT.cjs');
 
 
-exports.NavigationAnnotationLayer = _chunkHPG5AMXZcjs.NavigationAnnotationLayer;
+exports.NavigationAnnotationLayer = _chunkJ43DO5P7cjs.NavigationAnnotationLayer;
 //# sourceMappingURL=NavigationAnnotationLayer.cjs.map

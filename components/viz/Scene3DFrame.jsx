@@ -23,6 +23,7 @@ export function Scene3DFrame({
   empty,
   label,
   appearance = 'dark',
+  variant = 'standalone',
   style,
   ...rest
 }) {
@@ -37,6 +38,7 @@ export function Scene3DFrame({
       {...rest}
       label={resolvedLabel}
       appearance={appearance}
+      variant={variant}
       source={title}
       badges={badges}
       hud={hud}

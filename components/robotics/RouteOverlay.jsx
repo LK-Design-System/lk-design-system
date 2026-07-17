@@ -1,7 +1,9 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
-import { NAVIGATION_DIRECTION_PATH, NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
+import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
+import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -45,7 +47,10 @@ const MARKER_ROW_CLEARANCE_PX = 8;
 const LABEL_ROW_GAP_PX = 12;
 const MARKER_RADIUS_PX = {
   condition: 8.75,
-  progress: 10,
+  // Outline-inclusive footprint derived from the shared current-position badge
+  // token (painted radius + half the outline stroke) so the collision layout
+  // tracks the painted geometry if the token changes.
+  progress: NAV_CURRENT_MARKER.radius + NAV_CURRENT_MARKER.strokeWidth / 2,
   invalid: 8.75,
   stale: 8.75,
 };
@@ -361,7 +366,7 @@ export function RouteOverlay({
         setHasRootFocus(false);
         onBlur?.(event);
       } : undefined}
-      style={{ opacity: disabled ? 0.45 : stale ? 0.76 : 1, outline: 'none', ...style }}
+      style={{ opacity: navStateOpacity(disabled, stale), outline: 'none', ...style }}
     >
       {visibleSegments.map((segment) => {
         const points = (segment.points ?? []).filter(finitePoint);
@@ -423,7 +428,7 @@ export function RouteOverlay({
               setFocusedSegment((current) => current === segment.id ? null : current);
               onBlur?.(event);
             } : undefined}
-            style={{ cursor: interactive && !disabled ? 'pointer' : 'default' }}
+            style={{ cursor: interactive && !disabled ? 'pointer' : disabled ? 'not-allowed' : 'default' }}
           >
             {segmentFocused && pathData && (
               <path
@@ -431,7 +436,7 @@ export function RouteOverlay({
                 d={pathData}
                 fill="none"
                 stroke="var(--color-semantic-focus-indicator)"
-                strokeWidth="11"
+                strokeWidth={NAV_FOCUS.routeHaloWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
@@ -444,10 +449,10 @@ export function RouteOverlay({
                 d={pathData}
                 fill="none"
                 stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
-                strokeWidth="8"
+                strokeWidth={NAV_SELECTION.routeHaloWidth}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                opacity="0.24"
+                opacity={NAV_SELECTION.haloOpacity}
                 vectorEffect="non-scaling-stroke"
                 pointerEvents="none"
               />
@@ -483,7 +488,7 @@ export function RouteOverlay({
               <>
                 <path
                   data-route-hit-target=""
-                  data-screen-target-size="24"
+                  data-screen-target-size={NAV_HIT.screenTargetSize}
                   d={pathData}
                   fill="none"
                   stroke="transparent"
@@ -493,10 +498,10 @@ export function RouteOverlay({
                 />
                 <circle
                   data-route-hit-target-core=""
-                  data-screen-target-size="24"
+                  data-screen-target-size={NAV_HIT.screenTargetSize}
                   cx={midpoint.x}
                   cy={midpoint.y}
-                  r={17 * inverseScale}
+                  r={NAV_HIT.radius * inverseScale}
                   fill="transparent"
                   pointerEvents="all"
                 />
@@ -530,10 +535,10 @@ export function RouteOverlay({
                   {...obstacle(`route:${route.id}:condition:${segment.id}`)}
                   data-route-marker-badge="condition"
                   data-navigation-marker-circle=""
-                  r="8"
+                  r={NAV_STATE_BADGE.radius}
                   fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
                   stroke={tone}
-                  strokeWidth="1.5"
+                  strokeWidth={NAV_STATE_BADGE.strokeWidth}
                   vectorEffect="non-scaling-stroke"
                 />
                 <NavigationStateGlyph kind={conditionGlyphKind} size={10} color={markerForeground} />
@@ -600,7 +605,7 @@ export function RouteOverlay({
                   transform={markerTransform(midpoint, inverseScale, segmentLabelSlot)}
                   fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
                   stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-                  strokeWidth="4"
+                  strokeWidth={NAV_LABEL_HALO.primary}
                   paintOrder="stroke"
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
@@ -633,11 +638,11 @@ export function RouteOverlay({
               {...obstacle(`route:${route.id}:state:${item.state}`)}
               data-route-marker-badge={item.state}
               data-navigation-marker-circle=""
-              r="8"
+              r={NAV_STATE_BADGE.radius}
               fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
               stroke={item.tone}
-              strokeWidth="1.5"
-              strokeDasharray={item.state === 'stale' ? '2 2' : undefined}
+              strokeWidth={NAV_STATE_BADGE.strokeWidth}
+              strokeDasharray={item.state === 'stale' ? NAV_DASH.staleRing : undefined}
               vectorEffect="non-scaling-stroke"
             />
             <NavigationStateGlyph kind={item.glyphKind} size={10} color={markerForeground} />
@@ -659,10 +664,10 @@ export function RouteOverlay({
             {...obstacle(`route:${route.id}:progress`)}
             data-route-marker-badge="progress"
             data-navigation-marker-circle=""
-            r="9"
+            r={NAV_CURRENT_MARKER.radius}
             fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
             stroke={statusTone(route.status)}
-            strokeWidth="2"
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           <NavigationStateGlyph
@@ -690,7 +695,7 @@ export function RouteOverlay({
                 textAnchor="middle"
                 fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
                 stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-                strokeWidth="3"
+                strokeWidth={NAV_LABEL_HALO.caption}
                 paintOrder="stroke"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
@@ -716,10 +721,10 @@ export function RouteOverlay({
             {...obstacle(`route:${route.id}:status`)}
             data-route-marker-badge="progress"
             data-navigation-marker-circle=""
-            r="9"
+            r={NAV_CURRENT_MARKER.radius}
             fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
             stroke={statusTone(route.status)}
-            strokeWidth="2"
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           <NavigationStateGlyph

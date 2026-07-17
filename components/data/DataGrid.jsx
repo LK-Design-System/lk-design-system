@@ -300,6 +300,7 @@ export function DataGrid({
   emptyLabel = '표시할 항목이 없습니다.',
   stateActions,
   size = 'md',
+  variant = 'standalone',
   style,
   ...rest
 }) {
@@ -491,7 +492,7 @@ export function DataGrid({
   return (
     <div
       aria-busy={loading || undefined}
-      style={{ overflowX: 'auto', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)', ...style }}
+      style={{ overflowX: 'auto', ...(variant === 'embedded' ? null : { border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)' }), ...style }}
       {...rest}
     >
       <table

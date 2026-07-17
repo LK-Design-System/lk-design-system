@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "0f3237e5706b2c720da8a6f44d61ebe31705a21d5753427a4b7ba48e518d961c",
+    "storybookIndexSha256": "9d1930a99bd060bb0ecd57c50463906f917904faf4b8d83a90d5fa10fcf87e29",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,31 +59,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 180,
-    "stories": 546,
-    "publicStories": 419,
-    "hiddenStories": 127,
-    "componentDescriptions": 176,
-    "pagesWithVisibleCanvasIntroduction": 180,
+    "pages": 190,
+    "stories": 578,
+    "publicStories": 442,
+    "hiddenStories": 136,
+    "componentDescriptions": 186,
+    "pagesWithVisibleCanvasIntroduction": 190,
     "pagesWithDecisionGuidance": 175,
-    "describedPublicStories": 419,
-    "reviewedPages": 180,
-    "reviewedStories": 546,
-    "staleReviewedPages": 0,
+    "describedPublicStories": 442,
+    "reviewedPages": 177,
+    "reviewedStories": 534,
+    "staleReviewedPages": 10,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
-      "overview": 173,
-      "usage": 21,
+      "overview": 183,
+      "usage": 20,
       "variants-states": 89,
-      "interaction": 48,
-      "responsive": 55,
-      "scenario": 23,
-      "visual-parity": 90,
+      "interaction": 50,
+      "responsive": 64,
+      "scenario": 26,
+      "visual-parity": 99,
       "internal-contract": 37
     },
     "dispositions": {
-      "keep": 180,
+      "keep": 190,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -105,16 +105,16 @@
       },
       "Product": {
         "pages": 86,
-        "stories": 239,
-        "public": 205,
+        "stories": 241,
+        "public": 207,
         "hidden": 34,
         "guideReadyPages": 86
       },
       "Robotics": {
-        "pages": 32,
-        "stories": 142,
-        "public": 117,
-        "hidden": 25,
+        "pages": 42,
+        "stories": 172,
+        "public": 138,
+        "hidden": 34,
         "guideReadyPages": 32
       },
       "Theme": {
@@ -6370,7 +6370,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "1bb743144c227a17b3f9638048e0ab9ddd80e58cbdc057be906c6c4a0d28e116",
+      "sourceSha256": "49c4c9e50effae8815b6e6404bd973fcd3356dccc47381ecf0c27c8ab1d427df",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -6385,13 +6385,13 @@
         "SourceDisclosure"
       ],
       "visibility": {
-        "public": 7,
+        "public": 8,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message--message-overview",
-        "describedPublicStories": 7,
+        "describedPublicStories": 8,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -6401,8 +6401,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16",
-      "reviewedSourceSha256": "1bb743144c227a17b3f9638048e0ab9ddd80e58cbdc057be906c6c4a0d28e116",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "06685ae184ba293ec8a7f4bddb6e7594ee78cb257281f5ae1a11cb6fd3d5b61d",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6537,6 +6537,31 @@
           ]
         },
         {
+          "id": "lds-product-communication-message--inline-source-footer",
+          "name": "변형·상태 · footer 인라인 출처 토글",
+          "exportName": "InlineSourceFooter",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "SourceDisclosure"
+          ]
+        },
+        {
           "id": "lds-product-communication-message--lifecycle-states",
           "name": "상호작용 · 전송과 응답 생명주기",
           "exportName": "LifecycleStates",
@@ -6611,7 +6636,7 @@
           "reviewNote": "2026-07-12 normal, narrow, and dark rendered states reviewed; hidden regression evidence confirmed."
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after audience-language rename of the grouped-composition story display name (slot → 영역); roles, visibility, and dispositions unchanged."
+      "reviewNote": "2026-07-16 re-reviewed after synced messageActions/error/IconButton source update; dispositions unchanged, gated by check:a11y play/axe run."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
@@ -7607,20 +7632,20 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "sourceSha256": "115ad8bc5c8cf145e8184ddad7ec1d144003de71f7d288af4fcecf47959ccfea",
+      "sourceSha256": "5f916bc524b44d9960a30bb89bfa6a1b9238db041d9ea834dafebd31861df8d4",
       "primaryOwner": "SourceDisclosure",
       "ownerComponents": [
         "SourceDisclosure"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-content-source-disclosure--availability-and-provenance",
-        "describedPublicStories": 6,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -7630,8 +7655,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16",
-      "reviewedSourceSha256": "115ad8bc5c8cf145e8184ddad7ec1d144003de71f7d288af4fcecf47959ccfea",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "1de5c0f3e82a89d246321d07f58b4d108c83f83abb28183a2349be747d216a1b",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -7667,7 +7692,7 @@
             "play-fn",
             "test"
           ],
-          "role": "variants-states",
+          "role": "scenario",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -7680,6 +7705,28 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-product-content-source-disclosure--collapsible-citation",
+          "name": "변형·상태 · 접히는 출처 토글",
+          "exportName": "CollapsibleCitation",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "SourceDisclosure"
+          ],
+          "supportingComponents": []
+        },
+        {
           "id": "lds-product-content-source-disclosure--missing-source",
           "name": "변형·상태 · 출처 없음",
           "exportName": "MissingSource",
@@ -7690,7 +7737,7 @@
             "play-fn",
             "test"
           ],
-          "role": "variants-states",
+          "role": "scenario",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -7771,7 +7818,7 @@
           "supportingComponents": []
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after audience-language display-name normalization (role prefixes and Korean terms only); roles, visibility, and dispositions unchanged."
+      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
     },
     {
       "title": "LDS Product/Content/Spec Row",
@@ -7947,7 +7994,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataGrid.stories.jsx",
-      "sourceSha256": "7075a8ae7ebcacaf240c06bbff898fc64d7574bcd585e66acaf8646de5525439",
+      "sourceSha256": "d7aa03d66a91b68936004bf7907b6628dc54a33c7ec3c948821f259c3cf91364",
       "primaryOwner": "DataGrid",
       "ownerComponents": [
         "DataGrid"
@@ -16201,6 +16248,814 @@
       "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Robotics ownership and keep disposition remain valid."
     },
     {
+      "title": "LDS Robotics/Foundation/Codes",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationCodes.stories.jsx",
+      "sourceSha256": "40137d9563bf41a4cb15401d04d25af3ed34c7d09f3d97972cff4dd9e92f9add",
+      "primaryOwner": null,
+      "ownerComponents": [],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-codes--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-codes--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-codes--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-codes--codes-visual-parity",
+          "name": "Foundation codes visual parity",
+          "exportName": "CodesVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Facility Glyph",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationFacilityGlyph.stories.jsx",
+      "sourceSha256": "058f691c01cb00d466045db9426ad632ae91a48bf4b75051b201294b7ca177bb",
+      "primaryOwner": "FacilityTransition",
+      "ownerComponents": [
+        "FacilityTransition"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-facility-glyph--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-facility-glyph--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FacilityTransition"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-facility-glyph--states",
+          "name": "변형·상태 · 상태 표기",
+          "exportName": "States",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FacilityTransition"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Hazard Glyph",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationHazardGlyph.stories.jsx",
+      "sourceSha256": "53f69355a9e8888dcbc9ded8f486522b76423cc0315da2bb25c926847619db96",
+      "primaryOwner": null,
+      "ownerComponents": [],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-hazard-glyph--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-hazard-glyph--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-hazard-glyph--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-hazard-glyph--hazard-glyph-visual-parity",
+          "name": "Hazard glyph visual parity",
+          "exportName": "HazardGlyphVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Marker Pin",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationMarkerPin.stories.jsx",
+      "sourceSha256": "0eda10e6693dea608423032bcb0386031af44441bf9c9bec7203d21ab6e09227",
+      "primaryOwner": "FacilityTransition",
+      "ownerComponents": [
+        "FacilityTransition",
+        "HazardMarker",
+        "WaypointMarker"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-marker-pin--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-marker-pin--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FacilityTransition",
+            "HazardMarker",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-marker-pin--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FacilityTransition",
+            "HazardMarker",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-marker-pin--marker-pin-visual-parity",
+          "name": "Marker pin visual parity",
+          "exportName": "MarkerPinVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FacilityTransition",
+            "HazardMarker",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Navigation Encoding Tokens",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationNavigationEncodingTokens.stories.jsx",
+      "sourceSha256": "eeea927169b6e500dce6df1a2882af691dd327683b775be437f649983c9668fb",
+      "primaryOwner": "SpatialRegion",
+      "ownerComponents": [
+        "SpatialRegion",
+        "WaypointMarker"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-navigation-encoding-tokens--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-navigation-encoding-tokens--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "SpatialRegion",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-navigation-encoding-tokens--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "SpatialRegion",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-navigation-encoding-tokens--encoding-visual-parity",
+          "name": "Navigation encoding visual parity",
+          "exportName": "EncodingVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "SpatialRegion",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/State Badge",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationStateBadge.stories.jsx",
+      "sourceSha256": "f149b4f74c0bf06106c7646026e21a7f1d9f33c8119edd8ec816b3a9f60e5c82",
+      "primaryOwner": null,
+      "ownerComponents": [],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-state-badge--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-state-badge--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Unit Format",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationUnitFormat.stories.jsx",
+      "sourceSha256": "889c7a1db173be99faba4278e94bd53094a2325a9f47340fc028f27b19d783bf",
+      "primaryOwner": null,
+      "ownerComponents": [],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-unit-format--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-unit-format--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-unit-format--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-unit-format--unit-format-visual-parity",
+          "name": "Unit format visual parity",
+          "exportName": "UnitFormatVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Vector Glyph",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationVectorGlyph.stories.jsx",
+      "sourceSha256": "8af7edd57f77fd376157013880738e8382da1d1f46eeecf537f1001467df9a8e",
+      "primaryOwner": null,
+      "ownerComponents": [],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-vector-glyph--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-vector-glyph--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-vector-glyph--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-vector-glyph--vector-glyph-visual-parity",
+          "name": "Vector glyph visual parity",
+          "exportName": "VectorGlyphVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Viewer Tokens",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationViewerTokens.stories.jsx",
+      "sourceSha256": "242ccbca86fa76255a2cd6afac44598a1c21420cd0ab95299ec4d82234cc8ebe",
+      "primaryOwner": "ViewerFrame",
+      "ownerComponents": [
+        "ViewerFrame"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-viewer-tokens--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-viewer-tokens--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-viewer-tokens--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-viewer-tokens--viewer-tokens-visual-parity",
+          "name": "Viewer tokens visual parity",
+          "exportName": "ViewerTokensVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
       "title": "LDS Robotics/Navigation/Annotation Layer",
       "layer": "Robotics",
       "family": "Navigation",
@@ -16236,8 +17091,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16",
-      "reviewedSourceSha256": "dc4926f034c3eb3e604d66692800c01f488f411f7d7cc5f65fea970335ef3ca4",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "46751f505c9abca3ba6997de6974b54c75e53c92e76d16225c4354e75213171f",
       "stories": [
         {
           "id": "lds-robotics-navigation-annotation-layer--annotation-layer-overview",
@@ -16332,7 +17187,7 @@
             "play-fn",
             "test"
           ],
-          "role": "variants-states",
+          "role": "scenario",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -16394,91 +17249,14 @@
           ],
           "supportingComponents": []
         }
-      ],
-      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance to the annotation layer page; roles, visibility, and dispositions unchanged."
-    },
-    {
-      "title": "LDS Robotics/Navigation/Facility Glyph",
-      "layer": "Robotics",
-      "family": "Navigation",
-      "importPath": "./stories/RoboticsNavigationFacilityGlyph.stories.jsx",
-      "sourceSha256": "258dc9907f1856835c15e29ec1303794527ff62868eaf04c13499d4b31cf7d8c",
-      "primaryOwner": "FacilityTransition",
-      "ownerComponents": [
-        "FacilityTransition"
-      ],
-      "supportingComponents": [],
-      "visibility": {
-        "public": 2,
-        "hidden": 0
-      },
-      "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-robotics-navigation-facility-glyph--overview",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16",
-      "reviewedSourceSha256": "258dc9907f1856835c15e29ec1303794527ff62868eaf04c13499d4b31cf7d8c",
-      "stories": [
-        {
-          "id": "lds-robotics-navigation-facility-glyph--overview",
-          "name": "개요",
-          "exportName": "Overview",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "FacilityTransition"
-          ],
-          "supportingComponents": []
-        },
-        {
-          "id": "lds-robotics-navigation-facility-glyph--states",
-          "name": "변형·상태 · 상태 표기",
-          "exportName": "States",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "FacilityTransition"
-          ],
-          "supportingComponents": []
-        }
-      ],
-      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance sentences; roles, visibility, and dispositions unchanged."
+      ]
     },
     {
       "title": "LDS Robotics/Navigation/Facility Transition",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationFacilities.stories.jsx",
-      "sourceSha256": "20f4c235b17b3a67301823f8f14aee3a34d869944096a8b692c1af958b4d496d",
+      "sourceSha256": "db4baa65a0ae15aacb04762c19e70fb00e482b0a431b334a64fdd23345c26d1d",
       "primaryOwner": "FacilityTransition",
       "ownerComponents": [
         "FacilityTransition"
@@ -16661,11 +17439,131 @@
       "reviewNote": "2026-07-13 re-reviewed after navigation state glyph, compound state, pointer-only, screen-space focus, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
+      "title": "LDS Robotics/Navigation/Hazard Marker",
+      "layer": "Robotics",
+      "family": "Navigation",
+      "importPath": "./stories/RoboticsNavigationHazardMarker.stories.jsx",
+      "sourceSha256": "fa18fddab3c6a3ddb08c7e77c02b499c2de3998caf2a8ae22fd31a512ebb80da",
+      "primaryOwner": "HazardMarker",
+      "ownerComponents": [
+        "HazardMarker"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 3,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-navigation-hazard-marker--overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-navigation-hazard-marker--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "HazardMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-hazard-marker--states",
+          "name": "상호작용 · 선택과 포커스",
+          "exportName": "States",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "HazardMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-hazard-marker--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "HazardMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-hazard-marker--hazard-marker-visual-parity",
+          "name": "Hazard marker visual parity",
+          "exportName": "HazardMarkerVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "HazardMarker"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
       "title": "LDS Robotics/Navigation/Lane",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationLane.stories.jsx",
-      "sourceSha256": "4651d4b9418dca576c547fa6cd4038a9ea94d6d590819fc2689db216deb3af17",
+      "sourceSha256": "510daf97fd494197e964babe369b7da51ce274ff51b0698921b775abcecdddc1",
       "primaryOwner": "LaneOverlay",
       "ownerComponents": [
         "LaneOverlay"
@@ -16840,7 +17738,6 @@
             "LaneOverlay"
           ],
           "supportingComponents": [
-            "Button",
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
@@ -16901,7 +17798,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRegions.stories.jsx",
-      "sourceSha256": "e8c408a40fe6b891530d4a516ca44e5e85b5828b13e9665b0a24a2d7cd393a04",
+      "sourceSha256": "0682cff8d3ffc443d5206fdce0806744b1a72b28a5e7aa546d0ea6bf57c770a3",
       "primaryOwner": "SpatialRegion",
       "ownerComponents": [
         "SpatialRegion"
@@ -17079,50 +17976,42 @@
       "reviewNote": "2026-07-13 re-reviewed after concave polygon anchoring, compound states, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
-      "title": "LDS Robotics/Navigation/Route and Trajectory",
+      "title": "LDS Robotics/Navigation/Route",
       "layer": "Robotics",
       "family": "Navigation",
-      "importPath": "./stories/RoboticsNavigationRouteTrajectory.stories.jsx",
-      "sourceSha256": "a5923c2274e1f21b60a2b2f735046163cdbc9b15b783708da1da7fc684e1b5b2",
+      "importPath": "./stories/RoboticsNavigationRoute.stories.jsx",
+      "sourceSha256": "0bfa0b2e1c7e0d525a186c0b6ba729318b5062381bde849a20892fb714698717",
       "primaryOwner": "RouteOverlay",
       "ownerComponents": [
         "RouteOverlay"
       ],
       "supportingComponents": [
-        "Button",
-        "FacilityTransition",
-        "LaneOverlay",
-        "LayerPanel",
-        "Legend",
-        "Map2DCanvas",
         "NavigationAnnotationLayer",
-        "SelectionInspector",
-        "SpatialRegion",
-        "TrajectoryOverlay",
-        "WaypointMarker"
+        "SegmentedControl",
+        "TrajectoryOverlay"
       ],
       "visibility": {
-        "public": 8,
+        "public": 6,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
-        "storyGuideId": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-overview",
-        "describedPublicStories": 8,
-        "publicStoriesWithCanvasGuidance": 8,
+        "storyGuideId": "lds-robotics-navigation-route--route-and-trajectory-overview",
+        "describedPublicStories": 6,
+        "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
       "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "a5923c2274e1f21b60a2b2f735046163cdbc9b15b783708da1da7fc684e1b5b2",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
       "stories": [
         {
-          "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-overview",
+          "id": "lds-robotics-navigation-route--route-and-trajectory-overview",
           "name": "개요",
           "exportName": "RouteAndTrajectoryOverview",
           "visibility": "public",
@@ -17136,52 +18025,17 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
-            "Map2DCanvas",
             "TrajectoryOverlay"
-          ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          ]
         },
         {
-          "id": "lds-robotics-navigation-route-and-trajectory--semantic-mirror",
-          "name": "사용법 · 레이어·목록·선택 요약",
-          "exportName": "SemanticMirror",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "usage",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "RouteOverlay"
-          ],
-          "supportingComponents": [
-            "FacilityTransition",
-            "LaneOverlay",
-            "LayerPanel",
-            "Legend",
-            "Map2DCanvas",
-            "SelectionInspector",
-            "SpatialRegion",
-            "TrajectoryOverlay",
-            "WaypointMarker"
-          ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
-        },
-        {
-          "id": "lds-robotics-navigation-route-and-trajectory--multi-floor-filtering",
+          "id": "lds-robotics-navigation-route--multi-floor-filtering",
           "name": "사용법 · 층별 경로",
           "exportName": "MultiFloorFiltering",
           "visibility": "public",
@@ -17193,22 +18047,20 @@
           ],
           "role": "usage",
           "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
+          "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
-            "Button",
-            "Map2DCanvas",
+            "SegmentedControl",
             "TrajectoryOverlay"
-          ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          ]
         },
         {
-          "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+          "id": "lds-robotics-navigation-route--route-and-trajectory-states",
           "name": "변형·상태 · 구간 조건과 궤적 수명주기",
           "exportName": "RouteAndTrajectoryStates",
           "visibility": "public",
@@ -17220,21 +18072,19 @@
           ],
           "role": "variants-states",
           "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
+          "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
-            "Map2DCanvas",
             "TrajectoryOverlay"
-          ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          ]
         },
         {
-          "id": "lds-robotics-navigation-route-and-trajectory--short-path-compound-markers",
+          "id": "lds-robotics-navigation-route--short-path-compound-markers",
           "name": "변형·상태 · 기준점 충돌 복합 표식",
           "exportName": "ShortPathCompoundMarkers",
           "visibility": "public",
@@ -17246,22 +18096,20 @@
           ],
           "role": "variants-states",
           "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
+          "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
-            "Map2DCanvas",
             "NavigationAnnotationLayer",
             "TrajectoryOverlay"
-          ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+          ]
         },
         {
-          "id": "lds-robotics-navigation-route-and-trajectory--path-selection-and-activation",
+          "id": "lds-robotics-navigation-route--path-selection-and-activation",
           "name": "상호작용 · 구간과 궤적 선택",
           "exportName": "PathSelectionAndActivation",
           "visibility": "public",
@@ -17273,54 +18121,19 @@
           ],
           "role": "interaction",
           "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
+          "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
-            "Map2DCanvas",
             "TrajectoryOverlay"
-          ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          ]
         },
         {
-          "id": "lds-robotics-navigation-route-and-trajectory--semantic-mirror-narrow-320",
-          "name": "반응형 · 320px 의미 목록 연동",
-          "exportName": "SemanticMirrorNarrow320",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "responsive",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "RouteOverlay"
-          ],
-          "supportingComponents": [
-            "FacilityTransition",
-            "LaneOverlay",
-            "LayerPanel",
-            "Legend",
-            "Map2DCanvas",
-            "SelectionInspector",
-            "SpatialRegion",
-            "TrajectoryOverlay",
-            "WaypointMarker"
-          ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
-        },
-        {
-          "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-narrow-320",
+          "id": "lds-robotics-navigation-route--route-and-trajectory-narrow-320",
           "name": "반응형 · 320px 좁은 폭",
           "exportName": "RouteAndTrajectoryNarrow320",
           "visibility": "public",
@@ -17332,21 +18145,19 @@
           ],
           "role": "responsive",
           "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
+          "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
-            "Map2DCanvas",
             "TrajectoryOverlay"
-          ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          ]
         },
         {
-          "id": "lds-robotics-navigation-route-and-trajectory--route-trajectory-visual-parity",
+          "id": "lds-robotics-navigation-route--route-trajectory-visual-parity",
           "name": "Route and trajectory visual parity",
           "exportName": "RouteTrajectoryVisualParity",
           "visibility": "hidden",
@@ -17359,94 +18170,158 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "RouteOverlay"
           ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 normal, narrow, progress, invalid, stale, and selection states reviewed; hidden regression evidence confirmed."
+          "supportingComponents": []
         }
-      ],
-      "reviewNote": "2026-07-13 re-reviewed after screen-space marker collision, map-filtered progress, semantic mirror identity, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
+      ]
     },
     {
-      "title": "LDS Robotics/Navigation/State Badge",
+      "title": "LDS Robotics/Navigation/Trajectory",
       "layer": "Robotics",
       "family": "Navigation",
-      "importPath": "./stories/RoboticsNavigationStateBadge.stories.jsx",
-      "sourceSha256": "3fd54142a08f4b0b86fc5b6dc0097a719ecaeed08924f43153d0bd7e70b64d7c",
-      "primaryOwner": "NavigationStateGlyph",
+      "importPath": "./stories/RoboticsNavigationTrajectory.stories.jsx",
+      "sourceSha256": "b0ae2e38884dd8440856918827cf2384c3c9593d2531f116c082a7e8db92f1b0",
+      "primaryOwner": "TrajectoryOverlay",
       "ownerComponents": [
-        "NavigationStateGlyph"
+        "TrajectoryOverlay"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
-        "hidden": 0
+        "public": 3,
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
-        "storyGuideId": "lds-robotics-navigation-state-badge--overview",
-        "describedPublicStories": 1,
+        "storyGuideId": "lds-robotics-navigation-trajectory--overview",
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16",
-      "reviewedSourceSha256": "3fd54142a08f4b0b86fc5b6dc0097a719ecaeed08924f43153d0bd7e70b64d7c",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
       "stories": [
         {
-          "id": "lds-robotics-navigation-state-badge--overview",
+          "id": "lds-robotics-navigation-trajectory--overview",
           "name": "개요",
           "exportName": "Overview",
           "visibility": "public",
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
-            "NavigationStateGlyph"
+            "TrajectoryOverlay"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-trajectory--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "TrajectoryOverlay"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-trajectory--statuses",
+          "name": "상태",
+          "exportName": "Statuses",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "TrajectoryOverlay"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-trajectory--trajectory-visual-parity",
+          "name": "Trajectory visual parity",
+          "exportName": "TrajectoryVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "TrajectoryOverlay"
           ],
           "supportingComponents": []
         }
-      ],
-      "reviewNote": "2026-07-16 re-reviewed after declaring the internal glyph module as the page owner; roles, visibility, and dispositions unchanged."
+      ]
     },
     {
       "title": "LDS Robotics/Navigation/Waypoint",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationWaypoint.stories.jsx",
-      "sourceSha256": "022d0529208da0d1528a97a0d12ed96b3ab7916cdb9b7cc7e1dfdbd2396ca6b3",
+      "sourceSha256": "8d4dc342412baebccc3e5cfe5d6d8f58816764e1e60a0bf7723900d3ea7b1721",
       "primaryOwner": "WaypointMarker",
       "ownerComponents": [
         "WaypointMarker"
       ],
       "supportingComponents": [
-        "Button",
         "Map2DCanvas"
       ],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-navigation-waypoint--overview",
-        "describedPublicStories": 6,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -17480,7 +18355,6 @@
             "WaypointMarker"
           ],
           "supportingComponents": [
-            "Button",
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
@@ -17536,6 +18410,30 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
+          "id": "lds-robotics-navigation-waypoint--selection-sync",
+          "name": "상호작용 · 선택과 활성화",
+          "exportName": "SelectionSync",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "WaypointMarker"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ]
+        },
+        {
           "id": "lds-robotics-navigation-waypoint--pointer-only-map-fragment",
           "name": "상호작용 · 포인터 전용 지도 조각",
           "exportName": "PointerOnlyMapFragment",
@@ -17556,7 +18454,6 @@
             "WaypointMarker"
           ],
           "supportingComponents": [
-            "Button",
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
@@ -17605,7 +18502,6 @@
             "WaypointMarker"
           ],
           "supportingComponents": [
-            "Button",
             "Map2DCanvas"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
@@ -17719,8 +18615,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16",
-      "reviewedSourceSha256": "00b10647440a946ecabbdd3812fb94cd52abefd9a669c3a4b077b2d7ec62c21e",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "d4a3a12def63b5530bc2be5964732aa81329f9f4add4c16ee83139f19b6a70a3",
       "stories": [
         {
           "id": "lds-robotics-status-connection-badge--connection-badges",
@@ -17768,7 +18664,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance sentences; roles, visibility, and dispositions unchanged."
+      "reviewNote": "운영자용 3단 헤더(오버라인+제목+사용 기준)와 스토리별 목적 설명 추가(Robotics 레이어 계약). Delegated review, 2026-07-12."
     },
     {
       "title": "LDS Robotics/Status/Equipment State",
@@ -17802,8 +18698,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16",
-      "reviewedSourceSha256": "cf56e79e244120b3c4e403bd122ebe621a6ae21307d780a28c833986e1b23b21",
+      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedSourceSha256": "6335d492d697e07c3da8d0b4830d3bb5238a0f59ac7928c5f1794fd66a5d8fcc",
       "stories": [
         {
           "id": "lds-robotics-status-equipment-state--equipment-state",
@@ -17879,7 +18775,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after adding when-to-use/when-not-to-use guidance sentences; roles, visibility, and dispositions unchanged."
+      "reviewNote": "2026-07-16 re-reviewed after robotics navigation redesign merge: page visually swept in Storybook (overview/state/interaction/narrow, light+dark) during the 2026-07-16 inspection; dispositions unchanged."
     },
     {
       "title": "LDS Robotics/Status/Robot State",
@@ -18615,6 +19511,112 @@
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Robotics ownership and keep disposition remain valid."
+    },
+    {
+      "title": "LDS Robotics/Viewer/Navigation Viewer",
+      "layer": "Robotics",
+      "family": "Viewer",
+      "importPath": "./stories/RoboticsViewerNavigationViewer.stories.jsx",
+      "sourceSha256": "ae72cb06c409df13b4f3b13b1f582ce8c6f233328e31b1854e572154d2a4580f",
+      "primaryOwner": "SpatialRegion",
+      "ownerComponents": [
+        "FacilityTransition",
+        "LaneOverlay",
+        "LayerPanel",
+        "Legend",
+        "Map2DCanvas",
+        "RouteOverlay",
+        "SelectionInspector",
+        "SpatialRegion",
+        "TrajectoryOverlay",
+        "WaypointMarker"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-viewer-navigation-viewer--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-viewer-navigation-viewer--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FacilityTransition",
+            "LaneOverlay",
+            "LayerPanel",
+            "Legend",
+            "Map2DCanvas",
+            "RouteOverlay",
+            "SelectionInspector",
+            "SpatialRegion",
+            "TrajectoryOverlay",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-viewer-navigation-viewer--narrow-viewport",
+          "name": "반응형 · 320px 의미 목록 연동",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FacilityTransition",
+            "LaneOverlay",
+            "LayerPanel",
+            "Legend",
+            "Map2DCanvas",
+            "RouteOverlay",
+            "SelectionInspector",
+            "SpatialRegion",
+            "TrajectoryOverlay",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        }
+      ]
     },
     {
       "title": "LDS Robotics/Viewer/Toolbar",

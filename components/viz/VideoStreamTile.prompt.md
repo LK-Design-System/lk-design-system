@@ -19,6 +19,7 @@ Pass a `<video>`, WebRTC renderer, iframe, or image as `children`. The DS owns t
 - `no-source`, `unavailable`, `disconnected`, `no-signal`, and `error` are blocking. Child media controls and local toolbar controls become `inert` and `aria-hidden`, while source identity remains visible.
 - A retry/resume control may be supplied through `stateAction`; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked.
 - Use the local toolbar for mute, captions, snapshot, and fullscreen. Recording archives, timelines, playback-session controls, and retry policy are intentionally omitted from this DS component.
+- `variant="embedded"`는 이 타일을 다른 표면 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. source·HUD·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 `standalone`은 자체 외곽선을 그립니다.
 
 Classification: **LK Robotics Extension**. Siblings checked: `ViewerFrame`, `Scene3DFrame`, `AspectRatio`, `IconButton`, `Spinner`, and `StatusBadge`.
 

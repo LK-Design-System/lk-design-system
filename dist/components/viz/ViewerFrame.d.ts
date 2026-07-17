@@ -50,6 +50,8 @@ export interface ViewerFrameProps extends React.HTMLAttributes<HTMLDivElement> {
   stateAction?: React.ReactNode;
   /** Theme-stable viewport presentation shared by map, 3D, and video presets. @default "dark" */
   appearance?: 'dark' | 'light';
+  /** Perimeter ownership. "embedded" drops the frame's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline; viewport chrome, state, and a11y roles are unchanged. @default "standalone" */
+  variant?: 'standalone' | 'embedded';
 }
 
 /** Shared named viewport frame for map, 3D, and video renderer presets. */

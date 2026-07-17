@@ -7,19 +7,13 @@ import {
   normalizeUnit,
   normalizeValueText,
 } from '../internal/unit-format.js';
+import { TELEMETRY_STATUS_LABEL as STATUS_LABEL } from '../internal/telemetryStatusLabel.js';
 
 const TONE = {
   signal: 'var(--color-semantic-status-info-text)',
   positive: 'var(--color-semantic-status-positive-text)',
   cautionary: 'var(--color-semantic-status-cautionary-text)',
   negative: 'var(--color-semantic-status-negative-text)',
-};
-
-const STATUS_LABEL = {
-  signal: '정보',
-  positive: '정상',
-  cautionary: '주의',
-  negative: '위험',
 };
 
 function thresholdTone(percent, thresholds) {

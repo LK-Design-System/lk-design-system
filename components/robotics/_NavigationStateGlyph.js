@@ -1,9 +1,5 @@
 import React from 'react';
 
-// Direction chevron reused by Lane/Route heading markers. Its area centroid is
-// the local origin: (-2 - 2 + 4) / 3 = 0.
-export const NAVIGATION_DIRECTION_PATH = 'M -2 -3.4 L 4 0 L -2 3.4 Z';
-
 const KINDS = new Set([
   'unknown', 'conflict', 'invalid', 'closed', 'blocked',
   'waiting', 'rerouting', 'completed', 'planned', 'active', 'stale',

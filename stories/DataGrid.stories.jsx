@@ -362,7 +362,7 @@ function DashboardCollectionPattern({ narrow = false }) {
               </Button>
             </>
           )}
-          style={{ border: 0, borderBottom: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 0 }}
+          variant="embedded"
         />
         <DataGrid
           data-testid="dashboard-data-grid"
@@ -395,7 +395,8 @@ function DashboardCollectionPattern({ narrow = false }) {
           editingCell={editingCell}
           stickyHeader
           size="sm"
-          style={{ maxHeight: 258, border: 0, borderRadius: 0, background: 'var(--color-semantic-background-elevated-normal)' }}
+          variant="embedded"
+          style={{ maxHeight: 258, background: 'var(--color-semantic-background-elevated-normal)' }}
         />
         <Pagination
           page={page}

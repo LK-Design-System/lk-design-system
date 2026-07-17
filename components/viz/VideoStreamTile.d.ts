@@ -27,6 +27,8 @@ export interface VideoStreamTileProps extends React.HTMLAttributes<HTMLDivElemen
   stateDescription?: React.ReactNode;
   stateIcon?: React.ReactNode;
   stateAction?: React.ReactNode;
+  /** Perimeter ownership. "embedded" drops the tile's own border and radius so a parent surface owns one continuous outline. @default "standalone" */
+  variant?: 'standalone' | 'embedded';
 }
 
 /** Video-source preset built on ViewerFrame. Transport and playback remain application-owned. */

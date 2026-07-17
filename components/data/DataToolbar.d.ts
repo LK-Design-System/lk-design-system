@@ -21,6 +21,8 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   actions?: React.ReactNode;
   /** 밀도. @default "md" */
   size?: 'sm' | 'md';
+  /** 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" */
+  variant?: 'standalone' | 'embedded';
 }
 
 /** DataGrid/Table 상단의 검색, 필터, 결과 수, 액션을 정렬하는 툴바. 선택 bulk action은 DataGrid가 담당합니다. */
