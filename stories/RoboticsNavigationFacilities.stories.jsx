@@ -407,8 +407,8 @@ function InteractionFixture() {
           </NavigationAnnotationLayer>
         )}
       </TransitionMap>
-      <output data-testid="facility-activation" data-activation-count={activation.count}>
-        활성화: {activation.id} · {activation.count}회
+      <output data-testid="facility-activation" data-activation-count={activation.count} hidden>
+        {activation.id} · {activation.count}회
       </output>
     </main>
   );

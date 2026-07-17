@@ -652,7 +652,7 @@ function LanePointerOnlyFixture() {
   const pointerLane = {
     ...BASE_LANE,
     id: 'lane-pointer-only',
-    label: '지도 pointer-only 레인',
+    label: '포인터 전용 지도 레인',
     points: [{ x: 72, y: 72 }, { x: 440, y: 72 }],
   };
   const passiveLane = {
@@ -664,8 +664,8 @@ function LanePointerOnlyFixture() {
 
   return (
     <StoryPage
-      title="Semantic mirror가 키보드를 소유하면 지도 레인은 pointer-only가 됩니다"
-      description="aria-hidden 지도 fragment는 click identity만 전달하고 focus·keyboard·접근성 이름은 아래 ordinary control에 맡깁니다. 유효한 선분이 없는 데이터는 빈 button으로 남지 않습니다."
+      title="포인터 전용 레인은 클릭만 유지하고 포커스·키보드·이름을 넘깁니다"
+      description="aria-hidden 지도 조각은 클릭 identity만 유지하고 focus·keyboard·접근성 이름은 소비 제품의 이름 있는 컨트롤에 넘깁니다. 유효한 선분이 없는 데이터는 빈 button으로 남지 않습니다."
       maxWidth={780}
     >
       <LaneMap label="포인터 전용과 형상 방어 레인 지도">
@@ -683,10 +683,7 @@ function LanePointerOnlyFixture() {
           onActivate={() => setActivations((count) => count + 1)}
         />
       </LaneMap>
-      <Button type="button" variant="secondary" onClick={() => setActivations((count) => count + 1)}>
-        지도 레인의 semantic mirror
-      </Button>
-      <output data-testid="lane-pointer-output">activation {activations}회</output>
+      <output data-testid="lane-pointer-output" hidden>activation {activations}회</output>
     </StoryPage>
   );
 }
@@ -770,8 +767,8 @@ function LaneActivationFixture() {
           onActivate={activate}
         />
       </LaneMap>
-      <output data-testid="lane-activation-output" style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--body2-size)' }}>
-        선택: {selectedId || '없음'} · activation {activations}회
+      <output data-testid="lane-activation-output" hidden>
+        activation {activations}회
       </output>
     </StoryPage>
   );
