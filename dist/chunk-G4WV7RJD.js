@@ -1,7 +1,7 @@
 "use client";
 import {
   Legend
-} from "./chunk-UY2DXC6C.js";
+} from "./chunk-F76K6Z4L.js";
 import {
   VisuallyHidden
 } from "./chunk-LSN3BTKD.js";
@@ -356,4 +356,4 @@ function LineChart({
 export {
   LineChart
 };
-//# sourceMappingURL=chunk-ET5LABDA.js.map
+//# sourceMappingURL=chunk-G4WV7RJD.js.map

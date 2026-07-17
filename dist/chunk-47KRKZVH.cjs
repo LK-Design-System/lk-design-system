@@ -1,8 +1,8 @@
-"use client";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
 
 // components/data/Legend.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var SIZE = {
   sm: {
     fontSize: "var(--caption1-size)",
@@ -33,7 +33,7 @@ function Swatch({ shape = "square", color, dashed = false, disabled = false, siz
   const cfg = SIZE[size] || SIZE.md;
   const opacity = disabled ? 0.45 : 1;
   if (shape === "line") {
-    return /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "span",
       {
         "aria-hidden": "true",
@@ -50,14 +50,17 @@ function Swatch({ shape = "square", color, dashed = false, disabled = false, siz
   }
   const isDot = shape === "dot";
   const boxSize = isDot ? cfg.marker : cfg.square;
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       "aria-hidden": "true",
       style: {
         width: boxSize,
         height: boxSize,
-        borderRadius: isDot ? "50%" : "var(--radius-sm)",
+        // radius-sm (6px) meets or exceeds half of the 10-12px swatch box, which
+        // rounds the square into a circle and collapses the shape vocabulary —
+        // keep the same 2px softening the line swatch uses so square reads square.
+        borderRadius: isDot ? "50%" : 2,
         background: color,
         opacity,
         flexShrink: 0
@@ -77,7 +80,7 @@ function Legend({
   const vertical = direction === "vertical";
   const cfg = SIZE[size] || SIZE.md;
   const hasItems = items.length > 0;
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "ul",
     {
       "aria-label": ariaLabel || "\uBC94\uB840",
@@ -97,7 +100,7 @@ function Legend({
       },
       ...rest,
       children: [
-        !hasItems && emptyLabel != null && /* @__PURE__ */ jsx(
+        !hasItems && emptyLabel != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "li",
           {
             "aria-disabled": "true",
@@ -115,7 +118,7 @@ function Legend({
           const disabled = !!item.disabled;
           const muted = !!item.muted || disabled;
           const itemColor = muted ? "var(--color-semantic-label-alternative)" : "var(--color-semantic-label-neutral)";
-          return /* @__PURE__ */ jsxs(
+          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "li",
             {
               "aria-disabled": disabled ? "true" : void 0,
@@ -133,7 +136,7 @@ function Legend({
                 opacity: 1
               },
               children: [
-                /* @__PURE__ */ jsx(
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   Swatch,
                   {
                     shape: item.shape,
@@ -143,7 +146,7 @@ function Legend({
                     size
                   }
                 ),
-                /* @__PURE__ */ jsx(
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     style: {
@@ -155,7 +158,7 @@ function Legend({
                     children: item.label
                   }
                 ),
-                item.value != null && /* @__PURE__ */ jsx(
+                item.value != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     style: {
@@ -177,7 +180,7 @@ function Legend({
   );
 }
 
-export {
-  Legend
-};
-//# sourceMappingURL=chunk-UY2DXC6C.js.map
+
+
+exports.Legend = Legend;
+//# sourceMappingURL=chunk-47KRKZVH.cjs.map

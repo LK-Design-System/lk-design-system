@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-var _chunkGNN6TXRPcjs = require('./chunk-GNN6TXRP.cjs');
+var _chunk47KRKZVHcjs = require('./chunk-47KRKZVH.cjs');
 
 
 var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
@@ -328,7 +328,7 @@ function LineChart({
           }
         ),
         showLegend && normalized.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkGNN6TXRPcjs.Legend,
+          _chunk47KRKZVHcjs.Legend,
           {
             items: legendItems,
             size: "sm",
@@ -356,4 +356,4 @@ function LineChart({
 
 
 exports.LineChart = LineChart;
-//# sourceMappingURL=chunk-3MRCEATS.cjs.map
+//# sourceMappingURL=chunk-JSWN23CD.cjs.map

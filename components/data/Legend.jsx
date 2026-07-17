@@ -57,7 +57,10 @@ function Swatch({ shape = 'square', color, dashed = false, disabled = false, siz
       style={{
         width: boxSize,
         height: boxSize,
-        borderRadius: isDot ? '50%' : 'var(--radius-sm)',
+        // radius-sm (6px) meets or exceeds half of the 10-12px swatch box, which
+        // rounds the square into a circle and collapses the shape vocabulary —
+        // keep the same 2px softening the line swatch uses so square reads square.
+        borderRadius: isDot ? '50%' : 2,
         background: color,
         opacity,
         flexShrink: 0,
