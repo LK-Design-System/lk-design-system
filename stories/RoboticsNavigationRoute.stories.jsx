@@ -254,7 +254,7 @@ const MID_LENGTH_EXACT_COLLISION_ROUTE = {
     id: 'segment-mid-exact-collision',
     mapId: 'L1',
     label: '중간 길이 충돌 구간',
-    points: [{ x: 54, y: 310 }, { x: 270, y: 310 }, { x: 486, y: 310 }],
+    points: [{ x: 54, y: 334 }, { x: 270, y: 334 }, { x: 486, y: 334 }],
     phase: 'current',
     condition: 'conflict',
   }],
@@ -269,7 +269,7 @@ const NORMAL_PROGRESS_ROUTE = {
     id: 'segment-normal-progress-spacing',
     mapId: 'L1',
     label: '일반 진행 구간',
-    points: [{ x: 54, y: 430 }, { x: 270, y: 430 }, { x: 486, y: 430 }],
+    points: [{ x: 54, y: 454 }, { x: 270, y: 454 }, { x: 486, y: 454 }],
     phase: 'current',
     condition: 'normal',
   }],
@@ -302,7 +302,7 @@ export const ShortPathCompoundMarkers = {
         title="자연 anchor가 충돌하는 독립 상태 badge와 label은 겹치지 않습니다"
         description="각 상태의 실제 path anchor 좌표는 보존하고, 충돌한 경우에만 원 지름과 4px gap으로 계산한 중앙 badge row와 별도 상단 label row를 사용합니다."
       >
-        <PathMap label="anchor 충돌 route와 trajectory 복합 상태 지도" height={510} svgHeight={480}>
+        <PathMap label="anchor 충돌 route와 trajectory 복합 상태 지도" height={510} svgHeight={520}>
           {(cssViewBoxScale) => (
             <NavigationAnnotationLayer>
               <RouteOverlay

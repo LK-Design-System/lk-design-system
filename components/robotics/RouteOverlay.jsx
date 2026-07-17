@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_SELECTION_HALO_OPACITY } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_SELECTION_HALO_OPACITY } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -47,7 +47,10 @@ const MARKER_ROW_CLEARANCE_PX = 8;
 const LABEL_ROW_GAP_PX = 12;
 const MARKER_RADIUS_PX = {
   condition: 8.75,
-  progress: 10,
+  // Outline-inclusive footprint derived from the shared current-position badge
+  // token (painted radius + half the outline stroke) so the collision layout
+  // tracks the painted geometry if the token changes.
+  progress: NAV_CURRENT_MARKER.radius + NAV_CURRENT_MARKER.strokeWidth / 2,
   invalid: 8.75,
   stale: 8.75,
 };
@@ -661,10 +664,10 @@ export function RouteOverlay({
             {...obstacle(`route:${route.id}:progress`)}
             data-route-marker-badge="progress"
             data-navigation-marker-circle=""
-            r="9"
+            r={NAV_CURRENT_MARKER.radius}
             fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
             stroke={statusTone(route.status)}
-            strokeWidth="2"
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           <NavigationStateGlyph
@@ -718,10 +721,10 @@ export function RouteOverlay({
             {...obstacle(`route:${route.id}:status`)}
             data-route-marker-badge="progress"
             data-navigation-marker-circle=""
-            r="9"
+            r={NAV_CURRENT_MARKER.radius}
             fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
             stroke={statusTone(route.status)}
-            strokeWidth="2"
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           <NavigationStateGlyph

@@ -91,6 +91,16 @@ export const NAV_HIT = { radius: 17.5, screenTargetSize: 24 };
 export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 
 /**
+ * Current-position badge on a path. RouteOverlay's explicit progress marker
+ * and TrajectoryOverlay's current-sample marker mean the same thing — "the
+ * now-position on this path" — and share the same anatomy (surface-filled
+ * circle, tone ring, centered glyph), so they share one geometry. Deliberately
+ * larger than NAV_STATE_BADGE so the now-position outranks state chips.
+ * Replaces a hardcoded 9 (route) vs 8 (trajectory) drift.
+ */
+export const NAV_CURRENT_MARKER = { radius: 9, strokeWidth: 2 };
+
+/**
  * Text-label legibility halo — the stroke painted behind readable text via
  * `paint-order: stroke` so a label stays legible over any map content. Tiered
  * by the label's role so the identity label gets the heaviest knockout and

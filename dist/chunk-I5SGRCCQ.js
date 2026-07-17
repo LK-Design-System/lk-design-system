@@ -13,7 +13,7 @@ import {
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-YJ5HIIIH.js";
+} from "./chunk-PHNAKRBB.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -420,4 +420,4 @@ function FacilityTransition({
 export {
   FacilityTransition
 };
-//# sourceMappingURL=chunk-QS35PNHP.js.map
+//# sourceMappingURL=chunk-I5SGRCCQ.js.map

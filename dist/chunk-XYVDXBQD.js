@@ -6,6 +6,7 @@ import {
   NavigationStateGlyph
 } from "./chunk-54Q6T6L4.js";
 import {
+  NAV_CURRENT_MARKER,
   NAV_DASH,
   NAV_HIT,
   NAV_LABEL_HALO,
@@ -13,7 +14,7 @@ import {
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-YJ5HIIIH.js";
+} from "./chunk-PHNAKRBB.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -60,7 +61,10 @@ var MARKER_ROW_CLEARANCE_PX = 8;
 var LABEL_ROW_GAP_PX = 12;
 var MARKER_RADIUS_PX = {
   condition: 8.75,
-  progress: 10,
+  // Outline-inclusive footprint derived from the shared current-position badge
+  // token (painted radius + half the outline stroke) so the collision layout
+  // tracks the painted geometry if the token changes.
+  progress: NAV_CURRENT_MARKER.radius + NAV_CURRENT_MARKER.strokeWidth / 2,
   invalid: 8.75,
   stale: 8.75
 };
@@ -657,10 +661,10 @@ function RouteOverlay({
                   ...obstacle(`route:${route.id}:progress`),
                   "data-route-marker-badge": "progress",
                   "data-navigation-marker-circle": "",
-                  r: "9",
+                  r: NAV_CURRENT_MARKER.radius,
                   fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                   stroke: statusTone(route.status),
-                  strokeWidth: "2",
+                  strokeWidth: NAV_CURRENT_MARKER.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
@@ -728,10 +732,10 @@ function RouteOverlay({
                   ...obstacle(`route:${route.id}:status`),
                   "data-route-marker-badge": "progress",
                   "data-navigation-marker-circle": "",
-                  r: "9",
+                  r: NAV_CURRENT_MARKER.radius,
                   fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                   stroke: statusTone(route.status),
-                  strokeWidth: "2",
+                  strokeWidth: NAV_CURRENT_MARKER.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
@@ -754,4 +758,4 @@ function RouteOverlay({
 export {
   RouteOverlay
 };
-//# sourceMappingURL=chunk-CMMP6KZL.js.map
+//# sourceMappingURL=chunk-XYVDXBQD.js.map

@@ -30,6 +30,7 @@ var NAV_PIN = {
 };
 var NAV_HIT = { radius: 17.5, screenTargetSize: 24 };
 var NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
+var NAV_CURRENT_MARKER = { radius: 9, strokeWidth: 2 };
 var NAV_LABEL_HALO = { primary: 4, secondary: 3, caption: 3 };
 
 export {
@@ -40,6 +41,7 @@ export {
   NAV_PIN,
   NAV_HIT,
   NAV_STATE_BADGE,
+  NAV_CURRENT_MARKER,
   NAV_LABEL_HALO
 };
-//# sourceMappingURL=chunk-YJ5HIIIH.js.map
+//# sourceMappingURL=chunk-PHNAKRBB.js.map

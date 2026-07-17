@@ -89,7 +89,12 @@ const MIRROR_ROUTE = {
       condition: 'waiting',
     },
   ],
-  progress: { segmentId: 'route-seg-current', fraction: 0.42 },
+  // Keep the explicit progress anchor away from the current segment's midpoint
+  // (the condition badge's natural anchor): at ~equal anchors the renderer's
+  // collision rule correctly lifts both badges into a detached screen-slot
+  // row, which is stress-fixture territory — a representative viewer scene
+  // should read with every badge sitting on its own path anchor.
+  progress: { segmentId: 'route-seg-current', fraction: 0.72 },
 };
 
 const MIRROR_ROUTE_CURRENT_SEGMENT_ID = 'route-seg-current';
@@ -219,7 +224,7 @@ const MIRROR_FEATURES = [
     segmentId: MIRROR_ROUTE_CURRENT_SEGMENT_ID,
     listName: '배송 경로 17 · 교차로 → 승강기 A',
     item: { label: '배송 경로 17 · 교차로 → 승강기 A', kind: '계획 경로 구간', status: '현재 · 대기', statusTone: 'cautionary' },
-    sections: [{ title: '구간 identity', fields: [{ label: '경로', value: MIRROR_ROUTE.label }, { label: '구간', value: '교차로 → 승강기 A' }, { label: '단계', value: '현재' }, { label: '조건', value: '대기', tone: 'cautionary' }, { label: '진행률', value: '42%' }] }],
+    sections: [{ title: '구간 identity', fields: [{ label: '경로', value: MIRROR_ROUTE.label }, { label: '구간', value: '교차로 → 승강기 A' }, { label: '단계', value: '현재' }, { label: '조건', value: '대기', tone: 'cautionary' }, { label: '진행률', value: '72%' }] }],
   },
   {
     key: 'paths:trajectory-amr-7',

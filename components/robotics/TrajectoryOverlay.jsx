@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_SELECTION_HALO_OPACITY } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_SELECTION_HALO_OPACITY } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -26,11 +26,15 @@ const STATUS_GLYPH_KIND = {
 const MARKER_GAP_PX = 4;
 const MARKER_ROW_CLEARANCE_PX = 8;
 const LABEL_ROW_GAP_PX = 12;
+// Outline-inclusive footprints for the screen-slot collision layout — derived
+// from the shared badge tokens (painted radius + half the outline stroke) so
+// the layout can never underestimate what the circles actually paint.
+const STATE_BADGE_FOOTPRINT_PX = NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2;
 const MARKER_RADIUS_PX = {
-  status: 7.75,
-  current: 9,
-  invalid: 7.75,
-  stale: 7.75,
+  status: STATE_BADGE_FOOTPRINT_PX,
+  current: NAV_CURRENT_MARKER.radius + NAV_CURRENT_MARKER.strokeWidth / 2,
+  invalid: STATE_BADGE_FOOTPRINT_PX,
+  stale: STATE_BADGE_FOOTPRINT_PX,
 };
 function finitePoint(point) {
   return point && Number.isFinite(point.x) && Number.isFinite(point.y);
@@ -417,10 +421,10 @@ export function TrajectoryOverlay({
             {...obstacle(`trajectory:${trajectory.id}:current`)}
             data-trajectory-marker-badge="current"
             data-navigation-marker-circle=""
-            r="8"
+            r={NAV_CURRENT_MARKER.radius}
             fill={surface}
             stroke={tone}
-            strokeWidth="2"
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           {headingDegrees == null ? (

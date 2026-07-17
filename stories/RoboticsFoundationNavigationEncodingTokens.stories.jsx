@@ -3,6 +3,7 @@ import { NavigationStateGlyph } from '../components/robotics/_NavigationStateGly
 import {
   navStateOpacity,
   NAV_STATE_OPACITY,
+  NAV_CURRENT_MARKER,
   NAV_DASH,
   NAV_HIT,
   NAV_STATE_BADGE,
@@ -152,6 +153,19 @@ function BadgeAndHit() {
           <NavigationStateGlyph kind="unknown" size={10} color={INK} />
         </svg>
       </Tile>
+      <Tile label={`현재 위치 marker · r=${NAV_CURRENT_MARKER.radius}, stroke=${NAV_CURRENT_MARKER.strokeWidth}`} mono="NAV_CURRENT_MARKER">
+        <svg width={44} height={44} viewBox="-16 -16 32 32" aria-hidden="true" style={{ display: 'block' }}>
+          <circle
+            r={NAV_CURRENT_MARKER.radius}
+            fill={SURFACE}
+            stroke={ACCENT}
+            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
+            vectorEffect="non-scaling-stroke"
+            data-encoding-current-marker=""
+          />
+          <circle r="3" fill={INK} />
+        </svg>
+      </Tile>
       <Tile label={`hit target · r=${NAV_HIT.radius}, 최소 ${NAV_HIT.screenTargetSize} CSS px`} mono="NAV_HIT">
         <svg width={60} height={60} viewBox="-26 -26 52 52" aria-hidden="true" style={{ display: 'block' }}>
           <circle
@@ -206,7 +220,7 @@ function EncodingCatalog() {
       <Card title="상태 opacity" hint="비활성 0.45, 지연 0.76, 기본 1 — navStateOpacity() 한 함수를 일곱 렌더러가 공유합니다.">
         <OpacitySwatches />
       </Card>
-      <Card title="상태 badge · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE)과 투명 WCAG 2.2 타깃(NAV_HIT). 화면 타깃은 data-screen-target-size 계약으로 고정됩니다. 배지 안에 들어가는 상태 글리프 11종 세트는 State Badge 페이지를 참고하세요.">
+      <Card title="상태 badge · 현재 위치 marker · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE), 경로·궤적의 현재 위치 badge(NAV_CURRENT_MARKER — 상태 chip보다 한 단계 크게), 투명 WCAG 2.2 타깃(NAV_HIT). 화면 타깃은 data-screen-target-size 계약으로 고정됩니다. 배지 안에 들어가는 상태 글리프 11종 세트는 State Badge 페이지를 참고하세요.">
         <BadgeAndHit />
       </Card>
       <Card title="라벨 halo 계층" hint="paint-order stroke로 텍스트 뒤에 깔리는 legibility halo. 식별·상세·메타 세 단계를 NAV_LABEL_HALO가 소유합니다.">
@@ -224,12 +238,12 @@ const meta = {
       eyebrow: 'Foundation / Navigation Encoding Tokens',
       title: '내비게이션 렌더러가 공유하는 인코딩 토큰을 원자 단위로 문서화합니다',
       description:
-        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge 기하·label halo 계층)을 상수에서 그대로 렌더해, 토큰 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
+        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge와 현재 위치 marker 기하·label halo 계층)을 상수에서 그대로 렌더해, 토큰 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
     },
     docs: {
       description: {
         component:
-          '내비게이션 렌더러들이 공유하는 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary에서 그대로 렌더해 문서화·회귀합니다: 상태 opacity(navStateOpacity), NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO. 공유 map-pin 몸통(NAV_PIN)은 별도 핀 페이지에서, 배지 글리프 세트는 별도 상태 글리프 페이지에서 다룹니다. 공개 API가 아닌 내부 어휘 모듈입니다.',
+          '내비게이션 렌더러들이 공유하는 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary에서 그대로 렌더해 문서화·회귀합니다: 상태 opacity(navStateOpacity), NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_CURRENT_MARKER, NAV_LABEL_HALO. 공유 map-pin 몸통(NAV_PIN)은 별도 핀 페이지에서, 배지 글리프 세트는 별도 상태 글리프 페이지에서 다룹니다. 공개 API가 아닌 내부 어휘 모듈입니다.',
       },
     },
   },
@@ -277,6 +291,13 @@ export const Overview = {
     const badge = root.querySelector('[data-encoding-badge]');
     if (badge?.getAttribute('r') !== String(NAV_STATE_BADGE.radius)) {
       throw new Error('The state-badge swatch must render NAV_STATE_BADGE.radius.');
+    }
+    const currentMarker = root.querySelector('[data-encoding-current-marker]');
+    if (
+      currentMarker?.getAttribute('r') !== String(NAV_CURRENT_MARKER.radius) ||
+      currentMarker?.getAttribute('stroke-width') !== String(NAV_CURRENT_MARKER.strokeWidth)
+    ) {
+      throw new Error('The current-position marker swatch must render NAV_CURRENT_MARKER geometry.');
     }
     const hit = root.querySelector('[data-encoding-hit]');
     if (
