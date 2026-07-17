@@ -189,6 +189,7 @@
     "stories/RoboticsFoundationMarkerPin.stories.jsx": "LDS Robotics/Foundation/Marker Pin",
     "stories/RoboticsFoundationNavigationEncodingTokens.stories.jsx": "LDS Robotics/Foundation/Navigation Encoding Tokens",
     "stories/RoboticsFoundationStateBadge.stories.jsx": "LDS Robotics/Foundation/State Badge",
+    "stories/RoboticsFoundationUnitFormat.stories.jsx": "LDS Robotics/Foundation/Unit Format",
     "stories/RoboticsFoundationVectorGlyph.stories.jsx": "LDS Robotics/Foundation/Vector Glyph",
     "stories/RoboticsFoundationViewerTokens.stories.jsx": "LDS Robotics/Foundation/Viewer Tokens",
     "stories/RoboticsJoystick.stories.jsx": "LDS Robotics/Control/Joystick",

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "e0c151fd1a10116bb7db4bbcdd49ea2bb25bdd940b9f333439890cd8ffea82ca",
+    "storybookIndexSha256": "22105f344921ac7b308e583cf7bd58c3219efbbe52e3bed1b7049f203a055ff7",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,31 +59,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 188,
-    "stories": 574,
-    "publicStories": 439,
-    "hiddenStories": 135,
-    "componentDescriptions": 184,
-    "pagesWithVisibleCanvasIntroduction": 188,
+    "pages": 189,
+    "stories": 577,
+    "publicStories": 441,
+    "hiddenStories": 136,
+    "componentDescriptions": 185,
+    "pagesWithVisibleCanvasIntroduction": 189,
     "pagesWithDecisionGuidance": 171,
-    "describedPublicStories": 439,
+    "describedPublicStories": 441,
     "reviewedPages": 177,
     "reviewedStories": 534,
     "staleReviewedPages": 2,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
-      "overview": 181,
+      "overview": 182,
       "usage": 21,
       "variants-states": 89,
       "interaction": 49,
-      "responsive": 63,
+      "responsive": 64,
       "scenario": 26,
-      "visual-parity": 98,
+      "visual-parity": 99,
       "internal-contract": 37
     },
     "dispositions": {
-      "keep": 188,
+      "keep": 189,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -111,10 +111,10 @@
         "guideReadyPages": 86
       },
       "Robotics": {
-        "pages": 40,
-        "stories": 168,
-        "public": 135,
-        "hidden": 33,
+        "pages": 41,
+        "stories": 171,
+        "public": 137,
+        "hidden": 34,
         "guideReadyPages": 28
       },
       "Theme": {
@@ -16753,6 +16753,98 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Robotics/Foundation/Unit Format",
+      "layer": "Robotics",
+      "family": "Foundation",
+      "importPath": "./stories/RoboticsFoundationUnitFormat.stories.jsx",
+      "sourceSha256": "5830c850f223e68443ad77c9daeff6611fcbbeee36c943d2b36a89a16373799e",
+      "primaryOwner": null,
+      "ownerComponents": [],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-foundation-unit-format--overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-foundation-unit-format--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-unit-format--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-unit-format--unit-format-visual-parity",
+          "name": "Unit format visual parity",
+          "exportName": "UnitFormatVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
           "reviewStatus": "pending",
           "reviewMethod": null,
           "ownerComponents": [],

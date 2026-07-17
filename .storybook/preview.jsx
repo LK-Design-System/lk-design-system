@@ -106,9 +106,10 @@ export const parameters = {
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
         'LDS Robotics': ['Foundation', 'Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer', 'Navigation'],
         // Robotics foundation: the internal primitive/atom catalogs (not public
-        // components), mirroring LDS Core/Foundation. Encoding tokens first (the
-        // broadest shared-scalar contract), then the marker body and glyph/token
-        // catalogs — Marker Pin sits next to the glyphs that ride on it.
+        // components), mirroring LDS Core/Foundation. Navigation atoms first
+        // (encoding tokens, then the marker body and glyph catalogs — Marker Pin
+        // sits next to the glyphs that ride on it), then the cross-area token
+        // pages (Unit Format, Viewer Tokens) consumed beyond Navigation.
         'LDS Robotics/Foundation': [
           'Navigation Encoding Tokens',
           'State Badge',
@@ -117,6 +118,7 @@ export const parameters = {
           'Hazard Glyph',
           'Vector Glyph',
           'Codes',
+          'Unit Format',
           'Viewer Tokens',
         ],
         // Navigation renderer components, in point → line → planned → executed →

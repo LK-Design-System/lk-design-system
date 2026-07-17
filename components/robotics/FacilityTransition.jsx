@@ -363,7 +363,7 @@ export function FacilityTransition({
           stroke="none"
           pointerEvents={interactive ? 'all' : 'none'}
           data-transition-hit-area=""
-          data-screen-target-size="24"
+          data-screen-target-size={NAV_HIT.screenTargetSize}
         />
         <path
           {...obstacle(`facility:${transition.id}:pin`)}

@@ -172,7 +172,7 @@ export function HazardMarker({
         )}
         {/* WCAG 2.2 minimum target: a transparent 24px-equivalent hit circle in
             screen space, wider than the pin. */}
-        <circle r={NAV_HIT.radius} fill="transparent" stroke="none" pointerEvents={interactive ? 'all' : 'none'} data-hazard-hit-area="" data-screen-target-size="24" />
+        <circle r={NAV_HIT.radius} fill="transparent" stroke="none" pointerEvents={interactive ? 'all' : 'none'} data-hazard-hit-area="" data-screen-target-size={NAV_HIT.screenTargetSize} />
         <path
           {...obstacle(`hazard:${hazard.id}:sign`)}
           d={PIN_PATH}

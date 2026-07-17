@@ -428,7 +428,7 @@ export function LaneOverlay({
         <>
           <path
             data-lane-hit-target=""
-            data-screen-target-size="24"
+            data-screen-target-size={NAV_HIT.screenTargetSize}
             d={pathData}
             fill="none"
             stroke="transparent"
@@ -439,7 +439,7 @@ export function LaneOverlay({
           <circle
             data-lane-hit-target-core=""
             data-lane-actual-hit-core=""
-            data-screen-target-size="24"
+            data-screen-target-size={NAV_HIT.screenTargetSize}
             data-screen-target-diameter="35"
             cx={midpoint.x}
             cy={midpoint.y}

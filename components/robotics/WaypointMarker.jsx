@@ -224,7 +224,7 @@ export function WaypointMarker({
         */}
         <circle
           data-waypoint-hit-area=""
-          data-screen-target-size="24"
+          data-screen-target-size={NAV_HIT.screenTargetSize}
           r={NAV_HIT.radius}
           fill="transparent"
           pointerEvents={interactive ? 'all' : 'none'}

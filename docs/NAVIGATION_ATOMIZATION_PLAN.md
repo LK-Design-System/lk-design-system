@@ -156,13 +156,13 @@ Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께
 | `36c3723` | Vector Glyph를 진짜 공유되는 방향 셰브론(lane·route·trajectory)만으로 좁힘. lane endpoint 화살표는 소비자가 LaneOverlay 하나뿐이라 공용 원자에서 로컬로 환원(over-promotion 취소). |
 | `<pending>` | `Line & State Vocabulary`가 이름과 달리 6개 이질 원자를 섞은 grab-bag이라는 지적을 독립 판정단(4관점 + 종합)으로 검증해 분해: 공유 마커 몸통 `NAV_PIN`은 글리프들이 얹히는 실루엣이라 **Marker Pin** 페이지로 승격(Facility/Hazard 글리프 옆), 잔여 5개 스칼라 토큰(dash·opacity·hit·badge·halo)은 **Navigation Encoding Tokens**로 rename. `NAV_STATE_BADGE`는 State Badge 글리프 세트와 상보적(중복 아님)이라 상호참조만. 원자 페이지 6→8. 세션 이전부터 stale하던 IA census(180/546→188/574)·인벤토리(574/439/98) 재생성·정합화. |
 
-### 미결 backlog — P2b (Navigation 밖, 별도 PR 시리즈)
+### P2b — Navigation 밖 원자 감사·해소 (완료)
 
-Navigation 밖 컴포넌트의 미승격 원자. **감사 먼저 → 진짜 동일한 것만 de-dup(다르면 로컬 유지)** 원칙 적용 필요:
+"Foundation이 Navigation 편중(8개 중 7개)이라 '전 시스템 계층' 라벨이 과대표현"이라는 경계 지적을, **감사 먼저 → 진짜 동일한 것만 통합, 다르면 로컬** 원칙으로 검증·처리했다. 초기 후보의 "4중복"은 감사 결과 과장이었다:
 
-- **telemetry tone→color 4중복** (`viz/TelemetryGauge`·`viz/TelemetryValue`·`editor/ViewportStatusBar`·`robotics/EquipmentStatusCard`) → 공유 모듈 + `Foundation/Status Tone` 페이지
-- **unit-format** (`internal/unit-format.js`, Status+Editor 공용) → `Foundation/Unit Format`
-- **connection-state** (`ConnectionBadge` `CONNECTION_CFG`) → `Foundation/Connection State`
-- **viewer-state** (`viz/ViewerFrame` `VIEWER_STATES`/`TONE_COLOR`) → `Foundation/Viewer State`
+- **unit-format** (`internal/unit-format.js`) — Status(viz: TelemetryGauge·TelemetryValue) + Editor(ViewportStatusBar·SelectionInspector) 4개가 공유하는 **진짜 교차영역** 모듈. 이미 모듈이라 컴포넌트 리팩터 0 → **`Foundation/Unit Format`** 페이지로 승격(live-from-source + play-test). Viewer Tokens에 이은 Foundation의 두 번째 명시적 교차영역 페이지.
+- **telemetry STATUS_LABEL** (`{정보·정상·주의·위험}`) — TelemetryGauge·TelemetryValue에 바이트 동일 → `internal/telemetryStatusLabel.js`로 de-dup(값 동일 = 시각·baseline 무변).
+- **telemetry tone→color/badge** — 세 컴포넌트가 서로 다른 형태(TelemetryGauge 색토큰 / ViewportStatusBar `{badge,label}`·signal='활성' / EquipmentStatusCard badge tone)이고 badge 색은 이미 StatusBadge가 소유 → **로컬 유지**.
+- **connection-state**(`ConnectionBadge` `CONNECTION_CFG`), **viewer-state**(`ViewerFrame` `VIEWER_STATES`/`TONE_COLOR`) — 단일 소비자 config → **로컬 유지**([[robotics-foundation-boundary-state]]의 Hazard Glyph·Codes와 같은 부류).
 
-리스크: 라이브 status/viewer 컴포넌트 리팩터링이라 시각 회귀 노출이 크고, 해당 DOM-heavy baseline은 로컬에서 폰트 노이즈로 깨끗이 검증하기 어렵다 → 정규(CI/Windows) 환경 visual-regression 가드로 순서화. 관찰 종합의 권고와 사용자 결정에 따라 **별도 PR로 연기**.
+결과: Foundation에 명시적 교차영역 페이지 2개(Unit Format·Viewer Tokens)를 확보해 "전 Robotics 계층" 라벨이 정직해졌고, 나머지는 감사 결과 divergent/단일소비자라 규칙대로 로컬 유지. 원자 페이지 8→9. 라이브 viz 변경(TelemetryGauge·TelemetryValue)은 값 불변이라 시각 회귀 없음.

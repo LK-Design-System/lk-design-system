@@ -382,7 +382,7 @@ export function TrajectoryOverlay({
         <>
           <path
             data-trajectory-hit-target=""
-            data-screen-target-size="24"
+            data-screen-target-size={NAV_HIT.screenTargetSize}
             d={pathData}
             fill="none"
             stroke="transparent"
@@ -393,7 +393,7 @@ export function TrajectoryOverlay({
           <circle
             data-trajectory-hit-target-core=""
             data-trajectory-actual-hit-core=""
-            data-screen-target-size="24"
+            data-screen-target-size={NAV_HIT.screenTargetSize}
             data-screen-target-diameter="35"
             cx={statePoint.x}
             cy={statePoint.y}

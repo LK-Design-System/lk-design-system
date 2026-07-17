@@ -485,7 +485,7 @@ export function RouteOverlay({
               <>
                 <path
                   data-route-hit-target=""
-                  data-screen-target-size="24"
+                  data-screen-target-size={NAV_HIT.screenTargetSize}
                   d={pathData}
                   fill="none"
                   stroke="transparent"
@@ -495,7 +495,7 @@ export function RouteOverlay({
                 />
                 <circle
                   data-route-hit-target-core=""
-                  data-screen-target-size="24"
+                  data-screen-target-size={NAV_HIT.screenTargetSize}
                   cx={midpoint.x}
                   cy={midpoint.y}
                   r={NAV_HIT.radius * inverseScale}
