@@ -6,13 +6,14 @@ import {
   NavigationStateGlyph
 } from "./chunk-54Q6T6L4.js";
 import {
+  NAV_FOCUS,
   NAV_HIT,
   NAV_LABEL_HALO,
-  NAV_SELECTION_HALO_OPACITY,
+  NAV_SELECTION,
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-PHNAKRBB.js";
+} from "./chunk-TWMG2K5T.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -360,7 +361,7 @@ function LaneOverlay({
             d: pathData,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: "10",
+            strokeWidth: NAV_FOCUS.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
@@ -374,10 +375,10 @@ function LaneOverlay({
             d: pathData,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: "7",
+            strokeWidth: NAV_SELECTION.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: NAV_SELECTION_HALO_OPACITY,
+            opacity: NAV_SELECTION.haloOpacity,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
@@ -594,4 +595,4 @@ function LaneOverlay({
 export {
   LaneOverlay
 };
-//# sourceMappingURL=chunk-RSAWTSDN.js.map
+//# sourceMappingURL=chunk-A3NOWFSV.js.map

@@ -37,13 +37,38 @@ export function navStateOpacity(disabled, stale) {
 }
 
 /**
- * Selection-halo opacity. The three path overlays (Lane / Route / Trajectory)
- * paint a translucent accent-colored halo under a selected path so selection
- * reads identically across them; only the halo strokeWidth tracks each path's
- * base width. The point markers use solid selection rings, so this scalar is
- * specific to the path-overlay halo.
+ * Interaction state layering — the two independent axes every navigation marker
+ * uses. See docs/NAVIGATION_EXPRESSION_CONVENTIONS.md §2.5.
+ *
+ * FOCUS (transient, keyboard): `--color-semantic-focus-indicator`, always traces
+ * the marker's OWN silhouette with non-scaling-stroke, sits OUTSIDE selection.
+ * Geometry hugs each shape, so this holds one named scalar per marker class.
+ * Pin focus lives in `NAV_PIN.focusRing` (silhouette scale). The `path`/`route`
+ * split is real: route segments render one tier wider than lane/trajectory.
  */
-export const NAV_SELECTION_HALO_OPACITY = 0.24;
+export const NAV_FOCUS = {
+  waypointShellScale: 1.5,
+  strokeWidth: 2,
+  regionStrokeWidth: 6.5,
+  pathHaloWidth: 10,
+  routeHaloWidth: 11,
+};
+
+/**
+ * SELECTION (persistent, semantic): `--viewer-accent`, the INNER/tighter cue vs
+ * focus. It never recolors meaning-encoded fills (pin severity, region texture,
+ * path status), so each geometry uses its strongest allowed cue: waypoint solid
+ * fill, pin ring (`NAV_PIN.selectionRing`, 1.16 < focus 1.34), region outline
+ * (thinner than focus), path translucent accent halo (`haloOpacity`, width one
+ * tier wider on route). Path base/emphasis/casing widths belong to the separate
+ * path-stroke set, not here.
+ */
+export const NAV_SELECTION = {
+  regionStrokeWidth: 3.5,
+  haloOpacity: 0.24,
+  pathHaloWidth: 7,
+  routeHaloWidth: 8,
+};
 
 /**
  * State dashes for small marker rings and region/facility SHAPE outlines. These

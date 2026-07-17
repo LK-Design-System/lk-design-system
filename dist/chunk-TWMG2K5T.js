@@ -1,11 +1,11 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
+"use client";
 
 // components/robotics/_NavigationFocus.js
 function isFocusVisibleTarget(target) {
   if (!target || typeof target.matches !== "function") return true;
   try {
     return target.matches(":focus-visible");
-  } catch (e) {
+  } catch {
     return true;
   }
 }
@@ -15,7 +15,19 @@ var NAV_STATE_OPACITY = { disabled: 0.45, stale: 0.76, default: 1 };
 function navStateOpacity(disabled, stale) {
   return disabled ? NAV_STATE_OPACITY.disabled : stale ? NAV_STATE_OPACITY.stale : NAV_STATE_OPACITY.default;
 }
-var NAV_SELECTION_HALO_OPACITY = 0.24;
+var NAV_FOCUS = {
+  waypointShellScale: 1.5,
+  strokeWidth: 2,
+  regionStrokeWidth: 6.5,
+  pathHaloWidth: 10,
+  routeHaloWidth: 11
+};
+var NAV_SELECTION = {
+  regionStrokeWidth: 3.5,
+  haloOpacity: 0.24,
+  pathHaloWidth: 7,
+  routeHaloWidth: 8
+};
 var NAV_DASH = {
   staleRing: "2 2",
   staleShape: "2 4",
@@ -33,15 +45,16 @@ var NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 var NAV_CURRENT_MARKER = { radius: 9, strokeWidth: 2 };
 var NAV_LABEL_HALO = { primary: 4, secondary: 3, caption: 3 };
 
-
-
-
-
-
-
-
-
-
-
-exports.isFocusVisibleTarget = isFocusVisibleTarget; exports.navStateOpacity = navStateOpacity; exports.NAV_SELECTION_HALO_OPACITY = NAV_SELECTION_HALO_OPACITY; exports.NAV_DASH = NAV_DASH; exports.NAV_PIN = NAV_PIN; exports.NAV_HIT = NAV_HIT; exports.NAV_STATE_BADGE = NAV_STATE_BADGE; exports.NAV_CURRENT_MARKER = NAV_CURRENT_MARKER; exports.NAV_LABEL_HALO = NAV_LABEL_HALO;
-//# sourceMappingURL=chunk-GCBNKQWD.cjs.map
+export {
+  isFocusVisibleTarget,
+  navStateOpacity,
+  NAV_FOCUS,
+  NAV_SELECTION,
+  NAV_DASH,
+  NAV_PIN,
+  NAV_HIT,
+  NAV_STATE_BADGE,
+  NAV_CURRENT_MARKER,
+  NAV_LABEL_HALO
+};
+//# sourceMappingURL=chunk-TWMG2K5T.js.map

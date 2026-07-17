@@ -9,7 +9,8 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
+
+var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
 
 
 
@@ -177,7 +178,7 @@ function WaypointMarker({
         _optionalChain([onMouseDown, 'optionalCall', _ => _(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasDomFocus(_chunkGCBNKQWDcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setHasDomFocus(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _2 => _2(event)]);
       },
       onBlur: (event) => {
@@ -186,7 +187,7 @@ function WaypointMarker({
       },
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkGCBNKQWDcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
@@ -225,8 +226,8 @@ function WaypointMarker({
               "circle",
               {
                 "data-waypoint-hit-area": "",
-                "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
-                r: _chunkGCBNKQWDcjs.NAV_HIT.radius,
+                "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
+                r: _chunkMJGVUH3Dcjs.NAV_HIT.radius,
                 fill: "transparent",
                 pointerEvents: interactive ? "all" : "none"
               }
@@ -236,10 +237,10 @@ function WaypointMarker({
               {
                 "data-waypoint-focus-indicator": "",
                 points: "0,-7 7,0 0,7 -7,0",
-                transform: "scale(1.5)",
+                transform: `scale(${_chunkMJGVUH3Dcjs.NAV_FOCUS.waypointShellScale})`,
                 fill: "none",
                 stroke: "var(--color-semantic-focus-indicator)",
-                strokeWidth: "2",
+                strokeWidth: _chunkMJGVUH3Dcjs.NAV_FOCUS.strokeWidth,
                 strokeLinejoin: "round",
                 vectorEffect: "non-scaling-stroke"
               }
@@ -252,7 +253,7 @@ function WaypointMarker({
                 fill: "none",
                 stroke: muted,
                 strokeWidth: "1.5",
-                strokeDasharray: _chunkGCBNKQWDcjs.NAV_DASH.staleRing,
+                strokeDasharray: _chunkMJGVUH3Dcjs.NAV_DASH.staleRing,
                 vectorEffect: "non-scaling-stroke"
               }
             ),
@@ -295,10 +296,10 @@ function WaypointMarker({
                     "circle",
                     {
                       "data-waypoint-state-circle": "unknown",
-                      r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
+                      r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
                       fill: surface,
                       stroke: "var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))",
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
@@ -327,10 +328,10 @@ function WaypointMarker({
                     "circle",
                     {
                       "data-waypoint-state-circle": "invalid",
-                      r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
+                      r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
                       fill: surface,
                       stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))",
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
@@ -366,7 +367,7 @@ function WaypointMarker({
                       y: details ? "-1.5" : "3.5",
                       fill: foreground,
                       stroke: surface,
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.primary,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
                       strokeLinejoin: "round",
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
@@ -384,7 +385,7 @@ function WaypointMarker({
                       y: "10",
                       fill: muted,
                       stroke: surface,
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.secondary,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.secondary,
                       strokeLinejoin: "round",
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
@@ -407,4 +408,4 @@ function WaypointMarker({
 
 
 exports.WaypointMarker = WaypointMarker;
-//# sourceMappingURL=chunk-SJP3NPBK.cjs.map
+//# sourceMappingURL=chunk-KVUKQWAW.cjs.map

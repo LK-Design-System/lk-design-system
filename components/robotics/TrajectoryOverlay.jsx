@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_SELECTION_HALO_OPACITY } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -334,7 +334,7 @@ export function TrajectoryOverlay({
           d={pathData}
           fill="none"
           stroke="var(--color-semantic-focus-indicator)"
-          strokeWidth="10"
+          strokeWidth={NAV_FOCUS.pathHaloWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
@@ -347,10 +347,10 @@ export function TrajectoryOverlay({
           d={pathData}
           fill="none"
           stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
-          strokeWidth="7"
+          strokeWidth={NAV_SELECTION.pathHaloWidth}
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity={NAV_SELECTION_HALO_OPACITY}
+          opacity={NAV_SELECTION.haloOpacity}
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />

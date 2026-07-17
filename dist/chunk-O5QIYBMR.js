@@ -8,13 +8,14 @@ import {
 import {
   NAV_CURRENT_MARKER,
   NAV_DASH,
+  NAV_FOCUS,
   NAV_HIT,
   NAV_LABEL_HALO,
-  NAV_SELECTION_HALO_OPACITY,
+  NAV_SELECTION,
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-PHNAKRBB.js";
+} from "./chunk-TWMG2K5T.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -401,7 +402,7 @@ function RouteOverlay({
                     d: pathData,
                     fill: "none",
                     stroke: "var(--color-semantic-focus-indicator)",
-                    strokeWidth: "11",
+                    strokeWidth: NAV_FOCUS.routeHaloWidth,
                     strokeLinecap: "round",
                     strokeLinejoin: "round",
                     vectorEffect: "non-scaling-stroke",
@@ -415,10 +416,10 @@ function RouteOverlay({
                     d: pathData,
                     fill: "none",
                     stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-                    strokeWidth: "8",
+                    strokeWidth: NAV_SELECTION.routeHaloWidth,
                     strokeLinecap: "round",
                     strokeLinejoin: "round",
-                    opacity: NAV_SELECTION_HALO_OPACITY,
+                    opacity: NAV_SELECTION.haloOpacity,
                     vectorEffect: "non-scaling-stroke",
                     pointerEvents: "none"
                   }
@@ -758,4 +759,4 @@ function RouteOverlay({
 export {
   RouteOverlay
 };
-//# sourceMappingURL=chunk-QB2PO5JF.js.map
+//# sourceMappingURL=chunk-O5QIYBMR.js.map

@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { ANNOTATION_CODE as ANNOTATION_CODES, ROLE_CODE as ROLE_CODES } from './_navigationEncoding.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS } from './_navigationVocabulary.js';
 
 // Accessible-name copy is Korean to match every sibling navigation overlay
 // (Lane / Region / Route / Trajectory / Facility). A Korean-first product must
@@ -245,10 +245,10 @@ export function WaypointMarker({
           <polygon
             data-waypoint-focus-indicator=""
             points="0,-7 7,0 0,7 -7,0"
-            transform="scale(1.5)"
+            transform={`scale(${NAV_FOCUS.waypointShellScale})`}
             fill="none"
             stroke="var(--color-semantic-focus-indicator)"
-            strokeWidth="2"
+            strokeWidth={NAV_FOCUS.strokeWidth}
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
           />

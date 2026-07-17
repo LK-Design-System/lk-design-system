@@ -4,11 +4,13 @@ import {
 } from "./chunk-54Q6T6L4.js";
 import {
   NAV_DASH,
+  NAV_FOCUS,
   NAV_LABEL_HALO,
+  NAV_SELECTION,
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-PHNAKRBB.js";
+} from "./chunk-TWMG2K5T.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -354,7 +356,7 @@ function SpatialRegion({
             shape: region.shape,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: "6.5",
+            strokeWidth: NAV_FOCUS.regionStrokeWidth,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none",
             "data-region-focus-ring": ""
@@ -366,7 +368,7 @@ function SpatialRegion({
             shape: region.shape,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: "3.5",
+            strokeWidth: NAV_SELECTION.regionStrokeWidth,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none",
             "data-region-selection-ring": ""
@@ -452,4 +454,4 @@ function SpatialRegion({
 export {
   SpatialRegion
 };
-//# sourceMappingURL=chunk-7ED6JSJC.js.map
+//# sourceMappingURL=chunk-YJDDGLQA.js.map

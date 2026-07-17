@@ -2,7 +2,7 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const CATEGORY_PATTERNS = {
   behavior: 'diagonal',
@@ -387,7 +387,7 @@ export function SpatialRegion({
           shape={region.shape}
           fill="none"
           stroke="var(--color-semantic-focus-indicator)"
-          strokeWidth="6.5"
+          strokeWidth={NAV_FOCUS.regionStrokeWidth}
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
           data-region-focus-ring=""
@@ -398,7 +398,7 @@ export function SpatialRegion({
           shape={region.shape}
           fill="none"
           stroke="var(--viewer-accent, var(--color-semantic-primary-normal))"
-          strokeWidth="3.5"
+          strokeWidth={NAV_SELECTION.regionStrokeWidth}
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
           data-region-selection-ring=""

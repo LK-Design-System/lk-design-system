@@ -14,7 +14,8 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
+
+var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
 
 
 
@@ -43,10 +44,10 @@ var STATUS_GLYPH_KIND = {
 var MARKER_GAP_PX = 4;
 var MARKER_ROW_CLEARANCE_PX = 8;
 var LABEL_ROW_GAP_PX = 12;
-var STATE_BADGE_FOOTPRINT_PX = _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius + _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth / 2;
+var STATE_BADGE_FOOTPRINT_PX = _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius + _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth / 2;
 var MARKER_RADIUS_PX = {
   status: STATE_BADGE_FOOTPRINT_PX,
-  current: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.radius + _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.strokeWidth / 2,
+  current: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.radius + _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.strokeWidth / 2,
   invalid: STATE_BADGE_FOOTPRINT_PX,
   stale: STATE_BADGE_FOOTPRINT_PX
 };
@@ -296,7 +297,7 @@ function TrajectoryOverlay({
       onPointerDown: pointerOnly || onPointerDown ? handlePointerDown : void 0,
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !hiddenFromAccessibility ? (event) => {
-        setHasDomFocus(_chunkGCBNKQWDcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        setHasDomFocus(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _23 => _23(event)]);
       } : void 0,
       onBlur: !hiddenFromAccessibility ? (event) => {
@@ -305,7 +306,7 @@ function TrajectoryOverlay({
       } : void 0,
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkGCBNKQWDcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
@@ -317,7 +318,7 @@ function TrajectoryOverlay({
             d: pathData,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: "10",
+            strokeWidth: _chunkMJGVUH3Dcjs.NAV_FOCUS.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
@@ -331,10 +332,10 @@ function TrajectoryOverlay({
             d: pathData,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: "7",
+            strokeWidth: _chunkMJGVUH3Dcjs.NAV_SELECTION.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: _chunkGCBNKQWDcjs.NAV_SELECTION_HALO_OPACITY,
+            opacity: _chunkMJGVUH3Dcjs.NAV_SELECTION.haloOpacity,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
@@ -373,7 +374,7 @@ function TrajectoryOverlay({
             "path",
             {
               "data-trajectory-hit-target": "",
-              "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
               d: pathData,
               fill: "none",
               stroke: "transparent",
@@ -387,11 +388,11 @@ function TrajectoryOverlay({
             {
               "data-trajectory-hit-target-core": "",
               "data-trajectory-actual-hit-core": "",
-              "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
               "data-screen-target-diameter": "35",
               cx: statePoint.x,
               cy: statePoint.y,
-              r: _chunkGCBNKQWDcjs.NAV_HIT.radius * inverseScale,
+              r: _chunkMJGVUH3Dcjs.NAV_HIT.radius * inverseScale,
               fill: "transparent",
               pointerEvents: "all"
             }
@@ -414,10 +415,10 @@ function TrajectoryOverlay({
                   ...obstacle(`trajectory:${trajectory.id}:current`),
                   "data-trajectory-marker-badge": "current",
                   "data-navigation-marker-circle": "",
-                  r: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.radius,
+                  r: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.radius,
                   fill: surface,
                   stroke: tone,
-                  strokeWidth: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.strokeWidth,
+                  strokeWidth: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
@@ -456,10 +457,10 @@ function TrajectoryOverlay({
                   ...obstacle(`trajectory:${trajectory.id}:status`),
                   "data-trajectory-marker-badge": "status",
                   "data-navigation-marker-circle": "",
-                  r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
+                  r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
                   fill: surface,
                   stroke: tone,
-                  strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
+                  strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
@@ -494,11 +495,11 @@ function TrajectoryOverlay({
                     ...obstacle(`trajectory:${trajectory.id}:state:${item.state}`),
                     "data-trajectory-marker-badge": item.state,
                     "data-navigation-marker-circle": "",
-                    r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
+                    r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
                     fill: surface,
                     stroke: item.tone,
-                    strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
-                    strokeDasharray: item.state === "stale" ? _chunkGCBNKQWDcjs.NAV_DASH.staleRing : void 0,
+                    strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
+                    strokeDasharray: item.state === "stale" ? _chunkMJGVUH3Dcjs.NAV_DASH.staleRing : void 0,
                     vectorEffect: "non-scaling-stroke"
                   }
                 ),
@@ -534,7 +535,7 @@ function TrajectoryOverlay({
                 transform: markerTransform(markerPoint, inverseScale, trajectoryLabelSlot),
                 fill: foreground,
                 stroke: surface,
-                strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.primary,
+                strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
                 strokeLinejoin: "round",
                 paintOrder: "stroke",
                 vectorEffect: "non-scaling-stroke",
@@ -556,4 +557,4 @@ function TrajectoryOverlay({
 
 
 exports.TrajectoryOverlay = TrajectoryOverlay;
-//# sourceMappingURL=chunk-X5DAWV4V.cjs.map
+//# sourceMappingURL=chunk-JNM3YUQE.cjs.map

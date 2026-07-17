@@ -8,7 +8,9 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
+
+
+var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
 
 
 
@@ -278,7 +280,7 @@ function SpatialRegion({
   ].filter(Boolean).join(" \xB7 ");
   const stroke = strokeForRegion(region, { disabled, invalid });
   const unknownTerrain = region.category === "terrain" && region.traversability === "unknown";
-  const stateDash = invalid ? _chunkGCBNKQWDcjs.NAV_DASH.invalid : stale ? _chunkGCBNKQWDcjs.NAV_DASH.staleShape : unknownTerrain ? _chunkGCBNKQWDcjs.NAV_DASH.unknown : void 0;
+  const stateDash = invalid ? _chunkMJGVUH3Dcjs.NAV_DASH.invalid : stale ? _chunkMJGVUH3Dcjs.NAV_DASH.staleShape : unknownTerrain ? _chunkMJGVUH3Dcjs.NAV_DASH.unknown : void 0;
   if (hidden) return null;
   const activate = (event) => {
     if (disabled || !interactive) return;
@@ -323,7 +325,7 @@ function SpatialRegion({
         _optionalChain([onMouseDown, 'optionalCall', _ => _(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setFocusVisible(_chunkGCBNKQWDcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setFocusVisible(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _2 => _2(event)]);
       },
       onBlur: (event) => {
@@ -332,7 +334,7 @@ function SpatialRegion({
       },
       style: {
         cursor: interactive && !disabled ? "pointer" : disabled ? "not-allowed" : "default",
-        opacity: _chunkGCBNKQWDcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
@@ -354,7 +356,7 @@ function SpatialRegion({
             shape: region.shape,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: "6.5",
+            strokeWidth: _chunkMJGVUH3Dcjs.NAV_FOCUS.regionStrokeWidth,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none",
             "data-region-focus-ring": ""
@@ -366,7 +368,7 @@ function SpatialRegion({
             shape: region.shape,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: "3.5",
+            strokeWidth: _chunkMJGVUH3Dcjs.NAV_SELECTION.regionStrokeWidth,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none",
             "data-region-selection-ring": ""
@@ -395,11 +397,11 @@ function SpatialRegion({
             "data-region-anchor-y": anchor.y,
             children: [
               invalid && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: "translate(0 -18)", "data-region-invalid-mark": "", children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius, fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))", strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth, vectorEffect: "non-scaling-stroke" }),
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius, fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))", strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth, vectorEffect: "non-scaling-stroke" }),
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkGKSI3QZ5cjs.NavigationStateGlyph, { kind: "invalid", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
               ] }),
               stale && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: `translate(0 ${invalid ? 18 : -18})`, "data-region-stale-mark": "", children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius, fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-muted, var(--color-semantic-label-alternative))", strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth, strokeDasharray: _chunkGCBNKQWDcjs.NAV_DASH.staleRing, vectorEffect: "non-scaling-stroke" }),
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius, fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))", stroke: "var(--viewer-muted, var(--color-semantic-label-alternative))", strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth, strokeDasharray: _chunkMJGVUH3Dcjs.NAV_DASH.staleRing, vectorEffect: "non-scaling-stroke" }),
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkGKSI3QZ5cjs.NavigationStateGlyph, { kind: "stale", size: 10.5, color: "var(--viewer-foreground, var(--color-semantic-label-strong))" })
               ] })
             ]
@@ -433,7 +435,7 @@ function SpatialRegion({
                     dominantBaseline: "central",
                     fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
                     stroke: "var(--viewer-surface, var(--color-semantic-background-normal-normal))",
-                    strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.primary,
+                    strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
                     paintOrder: "stroke",
                     vectorEffect: "non-scaling-stroke",
                     style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)" },
@@ -452,4 +454,4 @@ function SpatialRegion({
 
 
 exports.SpatialRegion = SpatialRegion;
-//# sourceMappingURL=chunk-XMQPDJL4.cjs.map
+//# sourceMappingURL=chunk-UHUFFZLZ.cjs.map

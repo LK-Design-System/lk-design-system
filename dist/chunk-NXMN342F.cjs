@@ -14,7 +14,8 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
+
+var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
 
 
 
@@ -64,7 +65,7 @@ var MARKER_RADIUS_PX = {
   // Outline-inclusive footprint derived from the shared current-position badge
   // token (painted radius + half the outline stroke) so the collision layout
   // tracks the painted geometry if the token changes.
-  progress: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.radius + _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.strokeWidth / 2,
+  progress: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.radius + _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.strokeWidth / 2,
   invalid: 8.75,
   stale: 8.75
 };
@@ -330,14 +331,14 @@ function RouteOverlay({
       onPointerDown: pointerOnly || onPointerDown ? handlePointerDown : void 0,
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !interactive && !hiddenFromAccessibility ? (event) => {
-        setHasRootFocus(_chunkGCBNKQWDcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        setHasRootFocus(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _19 => _19(event)]);
       } : void 0,
       onBlur: !interactive && !hiddenFromAccessibility ? (event) => {
         setHasRootFocus(false);
         _optionalChain([onBlur, 'optionalCall', _20 => _20(event)]);
       } : void 0,
-      style: { opacity: _chunkGCBNKQWDcjs.navStateOpacity.call(void 0, disabled, stale), outline: "none", ...style },
+      style: { opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale), outline: "none", ...style },
       children: [
         visibleSegments.map((segment) => {
           const points = (_nullishCoalesce(segment.points, () => ( []))).filter(finitePoint);
@@ -385,7 +386,7 @@ function RouteOverlay({
               onClick: interactive ? (event) => activate(segment.id, event) : void 0,
               onKeyDown: interactive && !pointerOnly ? (event) => handleKeyDown(segment.id, event) : void 0,
               onFocus: !pointerOnly ? (event) => {
-                setFocusedSegment(_chunkGCBNKQWDcjs.isFocusVisibleTarget.call(void 0, event.currentTarget) ? segment.id : null);
+                setFocusedSegment(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget) ? segment.id : null);
                 _optionalChain([onFocus, 'optionalCall', _25 => _25(event)]);
               } : void 0,
               onBlur: !pointerOnly ? (event) => {
@@ -401,7 +402,7 @@ function RouteOverlay({
                     d: pathData,
                     fill: "none",
                     stroke: "var(--color-semantic-focus-indicator)",
-                    strokeWidth: "11",
+                    strokeWidth: _chunkMJGVUH3Dcjs.NAV_FOCUS.routeHaloWidth,
                     strokeLinecap: "round",
                     strokeLinejoin: "round",
                     vectorEffect: "non-scaling-stroke",
@@ -415,10 +416,10 @@ function RouteOverlay({
                     d: pathData,
                     fill: "none",
                     stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-                    strokeWidth: "8",
+                    strokeWidth: _chunkMJGVUH3Dcjs.NAV_SELECTION.routeHaloWidth,
                     strokeLinecap: "round",
                     strokeLinejoin: "round",
-                    opacity: _chunkGCBNKQWDcjs.NAV_SELECTION_HALO_OPACITY,
+                    opacity: _chunkMJGVUH3Dcjs.NAV_SELECTION.haloOpacity,
                     vectorEffect: "non-scaling-stroke",
                     pointerEvents: "none"
                   }
@@ -457,7 +458,7 @@ function RouteOverlay({
                     "path",
                     {
                       "data-route-hit-target": "",
-                      "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
+                      "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
                       d: pathData,
                       fill: "none",
                       stroke: "transparent",
@@ -470,10 +471,10 @@ function RouteOverlay({
                     "circle",
                     {
                       "data-route-hit-target-core": "",
-                      "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
+                      "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
                       cx: midpoint.x,
                       cy: midpoint.y,
-                      r: _chunkGCBNKQWDcjs.NAV_HIT.radius * inverseScale,
+                      r: _chunkMJGVUH3Dcjs.NAV_HIT.radius * inverseScale,
                       fill: "transparent",
                       pointerEvents: "all"
                     }
@@ -511,10 +512,10 @@ function RouteOverlay({
                           ...obstacle(`route:${route.id}:condition:${segment.id}`),
                           "data-route-marker-badge": "condition",
                           "data-navigation-marker-circle": "",
-                          r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
+                          r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
                           fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                           stroke: tone,
-                          strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
+                          strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
                           vectorEffect: "non-scaling-stroke"
                         }
                       ),
@@ -592,7 +593,7 @@ function RouteOverlay({
                         transform: markerTransform(midpoint, inverseScale, segmentLabelSlot),
                         fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
                         stroke: "var(--viewer-surface, var(--color-semantic-background-normal-normal))",
-                        strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.primary,
+                        strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
                         paintOrder: "stroke",
                         strokeLinejoin: "round",
                         vectorEffect: "non-scaling-stroke",
@@ -629,11 +630,11 @@ function RouteOverlay({
                     ...obstacle(`route:${route.id}:state:${item.state}`),
                     "data-route-marker-badge": item.state,
                     "data-navigation-marker-circle": "",
-                    r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
+                    r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
                     fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                     stroke: item.tone,
-                    strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
-                    strokeDasharray: item.state === "stale" ? _chunkGCBNKQWDcjs.NAV_DASH.staleRing : void 0,
+                    strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
+                    strokeDasharray: item.state === "stale" ? _chunkMJGVUH3Dcjs.NAV_DASH.staleRing : void 0,
                     vectorEffect: "non-scaling-stroke"
                   }
                 ),
@@ -661,10 +662,10 @@ function RouteOverlay({
                   ...obstacle(`route:${route.id}:progress`),
                   "data-route-marker-badge": "progress",
                   "data-navigation-marker-circle": "",
-                  r: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.radius,
+                  r: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.radius,
                   fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                   stroke: statusTone(route.status),
-                  strokeWidth: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.strokeWidth,
+                  strokeWidth: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
@@ -698,7 +699,7 @@ function RouteOverlay({
                       textAnchor: "middle",
                       fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
                       stroke: "var(--viewer-surface, var(--color-semantic-background-normal-normal))",
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.caption,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.caption,
                       paintOrder: "stroke",
                       strokeLinejoin: "round",
                       vectorEffect: "non-scaling-stroke",
@@ -732,10 +733,10 @@ function RouteOverlay({
                   ...obstacle(`route:${route.id}:status`),
                   "data-route-marker-badge": "progress",
                   "data-navigation-marker-circle": "",
-                  r: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.radius,
+                  r: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.radius,
                   fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                   stroke: statusTone(route.status),
-                  strokeWidth: _chunkGCBNKQWDcjs.NAV_CURRENT_MARKER.strokeWidth,
+                  strokeWidth: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
@@ -758,4 +759,4 @@ function RouteOverlay({
 
 
 exports.RouteOverlay = RouteOverlay;
-//# sourceMappingURL=chunk-RHMS4AVW.cjs.map
+//# sourceMappingURL=chunk-NXMN342F.cjs.map

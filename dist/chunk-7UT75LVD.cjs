@@ -12,7 +12,8 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkGCBNKQWDcjs = require('./chunk-GCBNKQWD.cjs');
+
+var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
 
 
 
@@ -142,7 +143,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
             textAnchor: "middle",
             fill: VIEWER_MUTED,
             stroke: VIEWER_SURFACE,
-            strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.caption,
+            strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.caption,
             paintOrder: "stroke",
             vectorEffect: "non-scaling-stroke",
             fontFamily: "var(--font-sans)",
@@ -339,7 +340,7 @@ function LaneOverlay({
         _optionalChain([onMouseDown, 'optionalCall', _26 => _26(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasFocus(_chunkGCBNKQWDcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setHasFocus(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _27 => _27(event)]);
       },
       onBlur: (event) => {
@@ -348,7 +349,7 @@ function LaneOverlay({
       },
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkGCBNKQWDcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
@@ -360,7 +361,7 @@ function LaneOverlay({
             d: pathData,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: "10",
+            strokeWidth: _chunkMJGVUH3Dcjs.NAV_FOCUS.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
@@ -374,10 +375,10 @@ function LaneOverlay({
             d: pathData,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: "7",
+            strokeWidth: _chunkMJGVUH3Dcjs.NAV_SELECTION.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: _chunkGCBNKQWDcjs.NAV_SELECTION_HALO_OPACITY,
+            opacity: _chunkMJGVUH3Dcjs.NAV_SELECTION.haloOpacity,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
@@ -430,7 +431,7 @@ function LaneOverlay({
             "path",
             {
               "data-lane-hit-target": "",
-              "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
               d: pathData,
               fill: "none",
               stroke: "transparent",
@@ -444,11 +445,11 @@ function LaneOverlay({
             {
               "data-lane-hit-target-core": "",
               "data-lane-actual-hit-core": "",
-              "data-screen-target-size": _chunkGCBNKQWDcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
               "data-screen-target-diameter": "35",
               cx: midpoint.x,
               cy: midpoint.y,
-              r: _chunkGCBNKQWDcjs.NAV_HIT.radius * inverseScale,
+              r: _chunkMJGVUH3Dcjs.NAV_HIT.radius * inverseScale,
               fill: "transparent",
               pointerEvents: "all"
             }
@@ -498,10 +499,10 @@ function LaneOverlay({
                     "circle",
                     {
                       "data-lane-state-circle": state.state,
-                      r: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.radius,
+                      r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
                       fill: VIEWER_SURFACE,
                       stroke: state.tone,
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
@@ -552,7 +553,7 @@ function LaneOverlay({
                       textAnchor: primaryLabelAnchor,
                       fill: VIEWER_FOREGROUND,
                       stroke: VIEWER_SURFACE,
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.primary,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
                       fontFamily: "var(--font-sans)",
@@ -572,7 +573,7 @@ function LaneOverlay({
                       textAnchor: metadataAnchor,
                       fill: VIEWER_MUTED,
                       stroke: VIEWER_SURFACE,
-                      strokeWidth: _chunkGCBNKQWDcjs.NAV_LABEL_HALO.secondary,
+                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.secondary,
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
                       fontFamily: "var(--font-sans)",
@@ -594,4 +595,4 @@ function LaneOverlay({
 
 
 exports.LaneOverlay = LaneOverlay;
-//# sourceMappingURL=chunk-KQLLCW4M.cjs.map
+//# sourceMappingURL=chunk-7UT75LVD.cjs.map

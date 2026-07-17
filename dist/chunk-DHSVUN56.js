@@ -4,12 +4,13 @@ import {
 } from "./chunk-54Q6T6L4.js";
 import {
   NAV_DASH,
+  NAV_FOCUS,
   NAV_HIT,
   NAV_LABEL_HALO,
   NAV_STATE_BADGE,
   isFocusVisibleTarget,
   navStateOpacity
-} from "./chunk-PHNAKRBB.js";
+} from "./chunk-TWMG2K5T.js";
 import {
   NavigationAnnotationBlock,
   annotationPriority,
@@ -236,10 +237,10 @@ function WaypointMarker({
               {
                 "data-waypoint-focus-indicator": "",
                 points: "0,-7 7,0 0,7 -7,0",
-                transform: "scale(1.5)",
+                transform: `scale(${NAV_FOCUS.waypointShellScale})`,
                 fill: "none",
                 stroke: "var(--color-semantic-focus-indicator)",
-                strokeWidth: "2",
+                strokeWidth: NAV_FOCUS.strokeWidth,
                 strokeLinejoin: "round",
                 vectorEffect: "non-scaling-stroke"
               }
@@ -407,4 +408,4 @@ function WaypointMarker({
 export {
   WaypointMarker
 };
-//# sourceMappingURL=chunk-ZUVANNCO.js.map
+//# sourceMappingURL=chunk-DHSVUN56.js.map

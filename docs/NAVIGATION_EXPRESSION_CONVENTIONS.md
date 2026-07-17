@@ -30,6 +30,17 @@
 - **selected(solid fill) 위 표식**: 다이아몬드가 accent로 채워지면 그 위에 직접 그리는 글리프·슬래시는 `--color-semantic-static-white`로 knockout해 대비를 유지한다(칩이 있는 복합 글리프는 foreground 유지).
 - **색 단독 금지**: availability·상태는 색뿐 아니라 형태(글리프·dash 패턴)와 접근성 이름으로도 전달한다.
 
+### 2.5 상호작용 상태 계층 (포커스 · 선택 · 호버)
+
+상호작용 상태는 **두 독립 축**으로 표현한다 — 색과 역할이 갈린다. (Mapbox의 highlight/select 이원화, GIS의 전용 선택색과 같은 계열이되, 아래처럼 우리 도메인 제약을 반영한다.)
+
+- **포커스 (일시적 · 키보드)**: `--color-semantic-focus-indicator`(파랑). 항상 마커 **자기 실루엣을 추적**한다 — 점=다이아몬드 껍데기(`NAV_FOCUS.waypointShellScale`)·원 링, 핀=실루엣 스케일(`NAV_PIN.focusRing`), 면=도형 윤곽(`NAV_FOCUS.regionStrokeWidth`), 선=경로 halo(`NAV_FOCUS.pathHaloWidth`). 전부 non-scaling-stroke, WCAG 2.4.13대로 ≥2px 둘레. 선택 강조보다 **바깥/위**에 렌더하고, 브라우저 사각 outline은 `tokens/focus.css`에서 억제한다. 원 링으로 다이아몬드를 감싸는 식의 **shape mismatch를 만들지 않는다** — 포커스는 언제나 그 마커의 형태를 따른다.
+- **선택 (지속 · 의미적)**: `--viewer-accent`. 피처 자체를 강조하되 **의미 인코딩을 파괴하지 않는다** — 핀 채움=심각도, 영역 텍스처=카테고리, 경로 색·dash=상태이므로 GIS식 "선택색으로 통째 recolor"를 쓸 수 없다. 대신 각 기하가 허용하는 최강 수단을 쓰되 포커스보다 **안쪽/타이트**하게: 웨이포인트=accent solid 채움(+점 위 표식은 흰 knockout), 핀=실루엣 링(`NAV_PIN.selectionRing`, 1.16 < 포커스 1.34), 영역=accent 윤곽(`NAV_SELECTION.regionStrokeWidth` 3.5 < 포커스 6.5), 경로=반투명 accent halo(`NAV_SELECTION.haloOpacity`).
+- **호버는 상태가 아니다.** 포인터 어포던스는 커서와 투명 히트타깃(`NAV_HIT`)이 소유한다. 지도 클러터와 터치/키보드 우선 운영을 고려한 **의도된 결정**이며, 별도 호버 하이라이트를 렌더하지 않는다(호버가 1급 상태인 Mapbox·GIS와 다른, 명시된 선택).
+- **합성 (포커스 + 선택 동시)**: 두 축은 독립이라 동시에 성립한다. 포커스 인디케이터가 선택 강조의 **바깥/위**에 항상 렌더돼 "지금 여기(포커스) + 선택됨"이 둘 다 읽힌다.
+
+값은 `_navigationVocabulary`의 `NAV_FOCUS`·`NAV_SELECTION`(핀은 `NAV_PIN.focusRing`/`selectionRing`)이 단일 소스로 소유하고, Foundation 페이지가 **실제 컴포넌트로 4상태(기본·포커스·선택·포커스+선택)** 를 렌더해 회귀 고정한다. 경로의 base/강조 stroke·casing 폭은 별개 path-stroke 계열(Encoding Tokens)이 소유한다.
+
 ## 3. 라벨·카피 규약
 
 - **사용자에게 보이는 라벨은 한국어.** raw enum(`available`·`upcoming`·`caution`)과 내부 id(`lift-a`·`segment-…`)는 props·data attribute·code에만 두고, **화면에 그대로 렌더하지 않는다.** 상태 값은 정의된 한국어 어휘(예: 예정·현재·완료 / 정상·대기·차단·충돌·지연 / 주의·위험)로 매핑해 표시한다.
