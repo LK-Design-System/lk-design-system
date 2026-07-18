@@ -119,14 +119,14 @@ function TokenBoard({ appearance, label, frameHeight }) {
 // The state -> tone map, rendered live inside a dark viewer frame so each tone
 // swatch is the real `var(--viewer-*)` a marker would paint. The tone box is
 // decorative; the tone name + meaning + example states are the accessible text.
-function StateToneBoard() {
+function StateToneBoard({ frameHeight = 420 }) {
   return (
     <ViewerFrame
       appearance="dark"
       label="공유 톤의 컴포넌트별 의미 예시"
       state="ready"
       data-state-tone-frame=""
-      style={{ minHeight: 316 }}
+      style={{ height: frameHeight }}
     >
       <ul
         data-state-tone-board
@@ -188,7 +188,7 @@ function StateToneBoard() {
   );
 }
 
-function ViewerTokenCatalog({ frameHeight = 340 }) {
+function ViewerTokenCatalog({ frameHeight = 340, toneFrameHeight = 420 }) {
   return (
     <main data-viewer-token-board style={{ width: 'min(880px, 100%)', display: 'grid', gap: 16 }}>
       <Card
@@ -208,7 +208,7 @@ function ViewerTokenCatalog({ frameHeight = 340 }) {
         title="공유 톤 · 컴포넌트별 의미 예시"
         hint="마커·선·영역은 같은 --viewer-* 톤 어휘를 쓰지만 의미를 톤에 연결하는 규칙은 각 렌더러가 소유합니다. 예를 들어 FacilityTransition의 사용 가능은 accent, FacilityTransition·SpatialRegion의 미확인 몸통·외곽선은 muted, WaypointMarker의 가용성 미확인은 warning입니다. 색은 글리프·dash 위의 보조 단서이며 색만으로 상태를 전달하지 않습니다."
       >
-        <StateToneBoard />
+        <StateToneBoard frameHeight={toneFrameHeight} />
       </Card>
     </main>
   );
@@ -306,8 +306,18 @@ export const Overview = {
     const toneBoard = board.querySelector('[data-state-tone-board]');
     if (!toneBoard) throw new Error('The state -> tone board must render.');
     const toneFrame = toneBoard.closest('[data-state-tone-frame]');
-    if (!toneFrame || toneFrame.scrollHeight > toneFrame.clientHeight + 1) {
-      throw new Error('The state-tone frame must expand to contain every component-qualified row.');
+    const toneContent = toneFrame?.querySelector('[data-viewer-content]');
+    const toneBoardBottom = toneBoard.getBoundingClientRect().bottom;
+    const toneContentBottom = toneContent?.getBoundingClientRect().bottom;
+    if (
+      !toneFrame
+      || !toneContent
+      || toneContent.scrollHeight > toneContent.clientHeight + 1
+      || toneBoardBottom > toneContentBottom + 1
+    ) {
+      throw new Error(
+        `The state-tone frame must contain every component-qualified row (content ${toneContent?.clientHeight}/${toneContent?.scrollHeight}px, bottom ${toneContentBottom}; board bottom ${toneBoardBottom}).`,
+      );
     }
     const toneColor = {};
     for (const row of STATE_TONE_MAP) {
@@ -332,7 +342,7 @@ export const NarrowViewport = {
   ),
   render: () => (
     <div data-viewer-token-narrow style={{ width: 320, maxWidth: '100%' }}>
-      <ViewerTokenCatalog frameHeight={520} />
+      <ViewerTokenCatalog frameHeight={520} toneFrameHeight={640} />
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -342,14 +352,20 @@ export const NarrowViewport = {
       throw new Error('The viewer-token palette must not create horizontal overflow at 320px.');
     }
     const toneFrame = fixture.querySelector('[data-state-tone-frame]');
+    const toneContent = toneFrame?.querySelector('[data-viewer-content]');
     const toneBoard = fixture.querySelector('[data-state-tone-board]');
+    const toneBoardBottom = toneBoard?.getBoundingClientRect().bottom;
+    const toneContentBottom = toneContent?.getBoundingClientRect().bottom;
     if (
       !toneFrame
+      || !toneContent
       || !toneBoard
-      || toneFrame.scrollHeight > toneFrame.clientHeight + 1
-      || toneBoard.scrollHeight > toneBoard.clientHeight + 1
+      || toneContent.scrollHeight > toneContent.clientHeight + 1
+      || toneBoardBottom > toneContentBottom + 1
     ) {
-      throw new Error('The state-tone board must remain fully visible without vertical clipping at 320px.');
+      throw new Error(
+        `The state-tone board must remain fully visible without vertical clipping at 320px (content ${toneContent?.clientHeight}/${toneContent?.scrollHeight}px, bottom ${toneContentBottom}; board bottom ${toneBoardBottom}).`,
+      );
     }
   },
 };
