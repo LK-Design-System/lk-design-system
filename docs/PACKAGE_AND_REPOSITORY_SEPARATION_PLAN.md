@@ -6,7 +6,7 @@
 | Status | In progress — Wave 0 inventory와 의사결정 gate 실행 중 |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
 | Last reviewed | 2026-07-19 |
-| Audit snapshot | `1cf28b1c86182f2853709010792231b6a9ac2c67` (local `main` source observation; clean-main baseline 아님) |
+| Audit snapshot | `c5e0a1afea88520ef9210547287f681f9b187948` (local `main` source observation; clean-main baseline 아님) |
 
 이 계획은 현재 단일 패키지인 `@lk-robotics/design-system-core`를 소비 경계에
 맞는 패키지로 나누고, 검증 결과에 따라 Robotics UI를 별도 저장소로 추출하는
@@ -99,7 +99,7 @@ facade와 단계적 migration 원칙은 유지한다.
   Theme adapter로 분리할지 명시적 Core 예외로 유지할지 owner 승인이 필요하다.
 - aggregate root와 compiled `components/*`가 모든 계층을 한 package에서 노출한다.
 - package smoke와 publish policy가 단일 package의 정확한 합집합을 전제로 한다.
-- CI 설치 정책은 npm으로 고정했고 local `main@1cf28b1`에서 legacy pnpm lockfile이
+- CI 설치 정책은 npm으로 고정했고 local `main@c5e0a1a`에서 legacy pnpm lockfile이
   제거했다. `origin/main` 동기화와 baseline tag는 아직 수행하지 않았다.
 - 현재 consumer smoke는 실제 product stack 전체와 Windows/Linux matrix를 대체하지 않는다.
 - Git tag와 독립 package release 기준점이 아직 없다.
@@ -280,7 +280,7 @@ LK Theme가 제공하는 value layer로 기록한다.
   증거이지 portable package 증거가 아니다.
 - 일곱 consumer evidence report는 Git 추적 상태로 고정해 consumer evidence blocker를
   닫았다. package boundary·artifact contract·Storybook IA·visual atom 보정은 승인에 따라
-  local `main@1cf28b1`까지 통합했다. origin 동기화와 clean main/tag,
+  local `main@c5e0a1a`까지 통합했다. origin 동기화와 clean main/tag,
   full regression evidence와 canonical immutable tarball/LKG capture가 남아 있어 Wave 0
   완료 gate는 계속 `blocked`다. accountable person과 package/CJS/support·brand boundary
   결정은 이후 사용자 승인으로 닫혔다.
