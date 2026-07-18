@@ -41,7 +41,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'NavigationStateGlyph의 상태 글리프 11종을 실제 컴포넌트로 나열합니다. FacilityTransition·RouteOverlay·TrajectoryOverlay·LaneOverlay·WaypointMarker·SpatialRegion이 공유하는 내부 자산이며 공개 API가 아닙니다. 배지 원·톤은 마커가 합성하므로 여기서는 글리프 도형만 보여줍니다.',
+          'NavigationStateGlyph의 상태 글리프 11종을 실제 컴포넌트로 나열합니다. 설비 전이·경로·궤적·차선·웨이포인트·공간 구역 렌더러가 공유하는 내부 자산이며 공개 API가 아닙니다. 배지 원·톤은 마커가 합성하므로 여기서는 글리프 도형만 보여줍니다.',
       },
     },
   },

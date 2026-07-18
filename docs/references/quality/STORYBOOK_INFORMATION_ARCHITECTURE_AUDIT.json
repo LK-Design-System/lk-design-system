@@ -16789,7 +16789,7 @@
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationStateBadge.stories.jsx",
-      "sourceSha256": "97bdb27a58e02a793062b5a5284ed622f90df3238ff86d647bf21ace0544a116",
+      "sourceSha256": "fd648acf8f2b893e6f28810b03679ef275c64c04cd07168e6c8fb6daee00a985",
       "primaryOwner": "Robotics Foundation:State Badge",
       "ownerComponents": [
         "Robotics Foundation:State Badge"
@@ -16812,8 +16812,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-18T23:31:17.902Z",
-      "reviewedSourceSha256": "97bdb27a58e02a793062b5a5284ed622f90df3238ff86d647bf21ace0544a116",
+      "reviewedAt": "2026-07-18T23:54:35.5336221Z",
+      "reviewedSourceSha256": "fd648acf8f2b893e6f28810b03679ef275c64c04cd07168e6c8fb6daee00a985",
       "stories": [
         {
           "id": "lds-robotics-foundation-state-badge--overview",
@@ -16836,10 +16836,10 @@
             "Robotics Foundation:State Badge"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
+          "reviewNote": "2026-07-19 ownership re-review confirmed the internal state-glyph topic and Korean consumer-role wording without claiming another component's public home."
         }
       ],
-      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
+      "reviewNote": "2026-07-19 re-review retained the six real consumer roles in Korean prose, preserved exact source evidence outside the page-home description, and confirmed single-home ownership."
     },
     {
       "title": "LDS Robotics/Foundation/Unit Format",
