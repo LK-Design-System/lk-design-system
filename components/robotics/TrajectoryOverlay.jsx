@@ -318,7 +318,11 @@ export function TrajectoryOverlay({
     } : null,
   ].filter(Boolean);
   const naturalMarkers = [
-    { name: 'status', point: statePoint, radius: MARKER_RADIUS_PX.status },
+    // The default working status draws NO badge — the strong line, progress
+    // head, and robot already say "moving"; badges are exception-state chrome.
+    trajectory?.status !== 'active'
+      ? { name: 'status', point: statePoint, radius: MARKER_RADIUS_PX.status }
+      : null,
     ...trajectoryStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
@@ -535,7 +539,7 @@ export function TrajectoryOverlay({
           dataPrefix="trajectory"
         />
       )}
-      {pathData && (
+      {pathData && trajectory?.status !== 'active' && (
         <g
           data-trajectory-status-marker=""
           data-trajectory-status-glyph={trajectory?.status}

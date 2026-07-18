@@ -145,7 +145,7 @@ function ProgressTriangleSpecimen() {
 // The robot pose atom: a round footprint body + heading nose. The CIRCLE is the
 // differentiator — neither the chevron nor the dart carries a body, so a robot
 // never reads as a path arrow. Rendered here from the same NAV_ROBOT_POSE the
-// RobotMarker renderer uses (surface casing halo under the marker-tone fill).
+// robot-marker renderer uses (surface casing halo under the marker-tone fill).
 function RobotPoseSpecimen() {
   const nose = NAV_ROBOT_POSE.nosePath;
   const r = NAV_ROBOT_POSE.bodyRadius;
@@ -190,7 +190,7 @@ function VectorGlyphCatalog() {
       </Card>
       <Card
         title="로봇 pose — 원형 body + heading 노즈"
-        hint="로봇의 실시간 위치와 방향입니다. 둥근 footprint body에 heading 방향으로 노즈가 돋아나며, 원형 body가 있다는 점이 방향 셰브론·진행 다트와의 결정적 차이라 로봇이 경로 화살표로 읽히지 않습니다. 기하는 NAV_ROBOT_POSE가 소유하고 RobotMarker가 렌더합니다."
+        hint="로봇의 실시간 위치와 방향입니다. 둥근 footprint body에 heading 방향으로 노즈가 돋아나며, 원형 body가 있다는 점이 방향 셰브론·진행 다트와의 결정적 차이라 로봇이 경로 화살표로 읽히지 않습니다. 기하는 NAV_ROBOT_POSE가 소유하고 로봇 마커 렌더러가 그립니다."
       >
         <Frame caption="지도 위 로봇의 현재 위치와 방향" mono="NAV_ROBOT_POSE">
           <RobotPoseSpecimen />
@@ -211,12 +211,12 @@ const meta = {
       eyebrow: 'Foundation / Vector Glyph',
       title: '방향 셰브론·진행 다트·로봇 pose를 원자 단위로 문서화합니다',
       description:
-        '내부 모듈 _navigationVectorGlyph가 소유하는 세 벡터 글리프를 한 페이지에 나란히 문서화합니다. NAV_DIRECTION_CHEVRON은 LaneOverlay가 최장 직선 구간 중점에 배치하는 정적 이동 방향(선을 끊고 선 자체가 열린 V로 꺾임), NAV_PROGRESS_TRIANGLE은 Route·Trajectory의 동적 현재 진행이 선 끝에 결합하는 채움 화살촉, NAV_ROBOT_POSE는 RobotMarker가 그리는 로봇의 실시간 pose(원형 body + heading 노즈)입니다. 셋이 나란히 놓여 방향·진행·로봇이 한 지도에서 절대 혼동되지 않는 "의미당 모양 하나" 계약을 시각적으로 강제합니다. 결합 계약 NAV_PROGRESS_HEAD는 Navigation Encoding Tokens 페이지가 소유합니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
+        '내부 모듈 _navigationVectorGlyph가 소유하는 세 벡터 글리프를 한 페이지에 나란히 문서화합니다. NAV_DIRECTION_CHEVRON은 LaneOverlay가 최장 직선 구간 중점에 배치하는 정적 이동 방향(선을 끊고 선 자체가 열린 V로 꺾임), NAV_PROGRESS_TRIANGLE은 Route·Trajectory의 동적 현재 진행이 선 끝에 결합하는 채움 화살촉, NAV_ROBOT_POSE는 로봇 마커 렌더러가 그리는 로봇의 실시간 pose(원형 body + heading 노즈)입니다. 셋이 나란히 놓여 방향·진행·로봇이 한 지도에서 절대 혼동되지 않는 "의미당 모양 하나" 계약을 시각적으로 강제합니다. 결합 계약 NAV_PROGRESS_HEAD는 Navigation Encoding Tokens 페이지가 소유합니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
     },
     docs: {
       description: {
         component:
-          '내부 모듈 _navigationVectorGlyph의 세 기하를 그대로 렌더해 문서화·회귀합니다: LaneOverlay 정적 방향의 NAV_DIRECTION_CHEVRON(선 절개 + 선 자체의 열린 V), Route·Trajectory 현재 진행의 NAV_PROGRESS_TRIANGLE(채움 화살촉), RobotMarker 로봇 pose의 NAV_ROBOT_POSE(원형 body + heading 노즈). 결합 계약은 Navigation Encoding Tokens가 소유합니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
+          '내부 모듈 _navigationVectorGlyph의 세 기하를 그대로 렌더해 문서화·회귀합니다: LaneOverlay 정적 방향의 NAV_DIRECTION_CHEVRON(선 절개 + 선 자체의 열린 V), Route·Trajectory 현재 진행의 NAV_PROGRESS_TRIANGLE(채움 화살촉), 로봇 실시간 pose의 NAV_ROBOT_POSE(원형 body + heading 노즈). 결합 계약은 Navigation Encoding Tokens가 소유합니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
       },
     },
   },

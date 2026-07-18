@@ -345,7 +345,9 @@ function RouteOverlay({
   ].filter(Boolean);
   const naturalMarkers = statusPoints.length >= 2 ? [
     CONDITION_GLYPH_KIND[statusCondition] ? { name: "condition", point: statusMidpoint, radius: MARKER_RADIUS_PX.condition } : null,
-    { name: "status", point: routeStatusPoint, radius: MARKER_RADIUS_PX.status },
+    // The default working status draws NO badge — the strong line, progress
+    // head, and robot already say "moving"; badges are exception-state chrome.
+    route?.status !== "active" ? { name: "status", point: routeStatusPoint, radius: MARKER_RADIUS_PX.status } : null,
     ...routeStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
@@ -770,7 +772,7 @@ function RouteOverlay({
             dataPrefix: "route"
           }
         ),
-        statusSegment && statusPoints.length >= 2 && /* @__PURE__ */ jsxs(
+        statusSegment && statusPoints.length >= 2 && route?.status !== "active" && /* @__PURE__ */ jsxs(
           "g",
           {
             "data-route-status-marker": "",
@@ -863,4 +865,4 @@ function RouteOverlay({
 export {
   RouteOverlay
 };
-//# sourceMappingURL=chunk-TEPFJK6P.js.map
+//# sourceMappingURL=chunk-FLEE2JWE.js.map

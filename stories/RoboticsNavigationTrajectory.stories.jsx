@@ -62,7 +62,11 @@ export const Overview = {
       const path = trajectory.querySelector('[data-trajectory-path]');
       if (!path?.getAttribute('d')?.includes('L 370 164')) throw new Error('Dense trajectory geometry is incomplete.');
       assertNavigationProgressHead(trajectory, 'Overview Trajectory', 'trajectory');
-      assertNavigationStateGlyphGeometry(trajectory, 'Overview Trajectory');
+      // The active (default) status renders NO badge — the strong line and
+      // progress head already say "moving"; badges are exception-state chrome.
+      if (trajectory.querySelector('[data-trajectory-status-marker]')) {
+        throw new Error('An active trajectory must not render a status badge.');
+      }
     });
   },
 };
@@ -168,10 +172,15 @@ export const Statuses = {
     }
     assertNavigationStateGlyphGeometry(canvasElement, 'Trajectory statuses');
     assertNavigationProgressHead(compound, 'Invalid + stale Trajectory', 'trajectory');
+    // 'active' is deliberately absent: the default working status renders no
+    // badge, so only exception states appear as glyphs.
     const renderedKinds = new Set(Array.from(canvasElement.querySelectorAll('[data-navigation-state-glyph]'))
       .map((glyph) => glyph.getAttribute('data-navigation-state-glyph')));
-    for (const kind of ['planned', 'waiting', 'blocked', 'rerouting', 'completed', 'active', 'invalid', 'stale']) {
+    for (const kind of ['planned', 'waiting', 'blocked', 'rerouting', 'completed', 'invalid', 'stale']) {
       if (!renderedKinds.has(kind)) throw new Error(`Trajectory state glyph mapping is missing ${kind}.`);
+    }
+    if (renderedKinds.has('active')) {
+      throw new Error('The active status must not render a badge glyph; badges are exception-state chrome.');
     }
   },
 };
@@ -222,7 +231,10 @@ export const NarrowViewport = {
       if (!rect || Math.min(rect.width, rect.height) / Math.SQRT2 < 23.9) {
         throw new Error(`Trajectory hit core does not contain a 24×24 CSS px square: ${rect?.width}×${rect?.height}.`);
       }
-      assertNavigationStateGlyphGeometry(trajectory, '320px Trajectory');
+      // The active trajectory carries no badges (exception-state chrome only).
+      if (trajectory.querySelector('[data-trajectory-marker-badge]')) {
+        throw new Error('An active trajectory must not render a status badge at 320px.');
+      }
       assertNavigationProgressHead(trajectory, '320px Trajectory', 'trajectory');
     });
   },

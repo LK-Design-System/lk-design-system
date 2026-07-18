@@ -86,13 +86,22 @@ export const RouteAndTrajectoryOverview = {
         throw new Error('Route must not render recurring direction glyphs; current progress stays on the path-integrated head.');
       }
       assertNavigationProgressHead(route, 'Overview Route', 'route');
+      // The active (default) status renders NO badge — only the exception
+      // condition badge (waiting) remains on the current segment.
+      if (route.querySelector('[data-route-status-marker]')) {
+        throw new Error('An active route must not render a status badge; badges are exception-state chrome.');
+      }
       assertNavigationStateGlyphGeometry(route, 'Overview Route');
     });
     trajectories.forEach((trajectory) => {
       const path = trajectory.querySelector('[data-trajectory-path]');
       if (!path?.getAttribute('d')?.includes('L 370 164')) throw new Error('Dense trajectory geometry is incomplete.');
       assertNavigationProgressHead(trajectory, 'Overview Trajectory', 'trajectory');
-      assertNavigationStateGlyphGeometry(trajectory, 'Overview Trajectory');
+      // An active trajectory with no validation states carries no badges at
+      // all — the strong line and progress head say "moving" on their own.
+      if (trajectory.querySelector('[data-trajectory-status-marker]')) {
+        throw new Error('An active trajectory must not render a status badge; badges are exception-state chrome.');
+      }
     });
   },
 };
@@ -214,10 +223,16 @@ export const RouteAndTrajectoryStates = {
       throw new Error('Route state fixtures must not restore recurring direction glyphs.');
     }
     assertNavigationStateGlyphGeometry(canvasElement, 'Route/Trajectory states');
+    // 'active' is deliberately absent: the default working status renders no
+    // badge (strong line + progress head carry it), so only exception states
+    // appear as glyphs.
     const renderedKinds = new Set(Array.from(canvasElement.querySelectorAll('[data-navigation-state-glyph]'))
       .map((glyph) => glyph.getAttribute('data-navigation-state-glyph')));
-    for (const kind of ['planned', 'active', 'waiting', 'blocked', 'rerouting', 'completed', 'conflict', 'invalid', 'stale']) {
+    for (const kind of ['planned', 'waiting', 'blocked', 'rerouting', 'completed', 'conflict', 'invalid', 'stale']) {
       if (!renderedKinds.has(kind)) throw new Error(`State glyph mapping is missing ${kind}.`);
+    }
+    if (renderedKinds.has('active')) {
+      throw new Error('The active status must not render a badge glyph; badges are exception-state chrome.');
     }
   },
 };
@@ -482,10 +497,12 @@ export const ShortPathCompoundMarkers = {
         }
       }
 
+      // Active fixtures render no status badge (exception-state chrome only):
+      // route = condition + invalid + stale, trajectory = invalid + stale.
       const routeMarkers = Array.from(route.querySelectorAll('[data-route-marker-badge]'));
       const trajectoryMarkers = Array.from(trajectory.querySelectorAll('[data-trajectory-marker-badge]'));
       const midRouteMarkers = Array.from(midRoute.querySelectorAll('[data-route-marker-badge]'));
-      if (routeMarkers.length !== 4 || trajectoryMarkers.length !== 3 || midRouteMarkers.length !== 4) {
+      if (routeMarkers.length !== 3 || trajectoryMarkers.length !== 2 || midRouteMarkers.length !== 3) {
         throw new Error('Short-path compound state is missing a Route or Trajectory marker.');
       }
       const anchoredMarkerGroups = [
@@ -538,7 +555,15 @@ export const ShortPathCompoundMarkers = {
         ['Mid-length Route', midRoute],
         ['Normal Route', normalRoute],
       ]) {
-        assertNavigationStateGlyphGeometry(fixture, fixtureLabel);
+        // The clean active fixture carries no badges at all (active renders no
+        // status badge); the compound fixtures keep their exception badges.
+        if (fixtureLabel === 'Normal Route') {
+          if (fixture.querySelector('[data-route-marker-badge]')) {
+            throw new Error('A clean active route must not render any badge; badges are exception-state chrome.');
+          }
+        } else {
+          assertNavigationStateGlyphGeometry(fixture, fixtureLabel);
+        }
         const role = fixture.hasAttribute('data-lk-trajectory-overlay') ? 'trajectory' : 'route';
         assertNavigationProgressHead(fixture, fixtureLabel, role);
         if (role === 'route' && fixture.querySelector('[data-route-direction]')) {
@@ -965,7 +990,10 @@ export const RouteAndTrajectoryNarrow320 = {
       assertCircleContainsTarget('[data-route-hit-target-core]', 'Route');
       assertCircleContainsTarget('[data-trajectory-hit-target-core]', 'Trajectory');
       assertNavigationStateGlyphGeometry(route, '320px Route');
-      assertNavigationStateGlyphGeometry(trajectory, '320px Trajectory');
+      // The active trajectory carries no badges (exception-state chrome only).
+      if (trajectory.querySelector('[data-trajectory-marker-badge]')) {
+        throw new Error('An active trajectory must not render a status badge at 320px.');
+      }
       assertNavigationProgressHead(route, '320px Route', 'route');
       assertNavigationProgressHead(trajectory, '320px Trajectory', 'trajectory');
     });

@@ -21,7 +21,7 @@ const STATES = [
   { kind: 'blocked', label: '차단됨', note: 'closed와 같은 "×" 도형' },
   { kind: 'waiting', label: '대기 중' },
   { kind: 'rerouting', label: '경로 재계산 중' },
-  { kind: 'active', label: '이동 중' },
+  { kind: 'active', label: '이동 중', note: '지도 배지에선 생략(선·로봇이 전달) — 목록·패널·범례 전용' },
   { kind: 'planned', label: '계획됨' },
   { kind: 'completed', label: '완료됨' },
   { kind: 'stale', label: '오래된 데이터' },

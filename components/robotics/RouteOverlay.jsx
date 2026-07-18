@@ -385,7 +385,11 @@ export function RouteOverlay({
     CONDITION_GLYPH_KIND[statusCondition]
       ? { name: 'condition', point: statusMidpoint, radius: MARKER_RADIUS_PX.condition }
       : null,
-    { name: 'status', point: routeStatusPoint, radius: MARKER_RADIUS_PX.status },
+    // The default working status draws NO badge — the strong line, progress
+    // head, and robot already say "moving"; badges are exception-state chrome.
+    route?.status !== 'active'
+      ? { name: 'status', point: routeStatusPoint, radius: MARKER_RADIUS_PX.status }
+      : null,
     ...routeStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
@@ -783,7 +787,7 @@ export function RouteOverlay({
           dataPrefix="route"
         />
       )}
-      {statusSegment && statusPoints.length >= 2 && (
+      {statusSegment && statusPoints.length >= 2 && route?.status !== 'active' && (
         <g
           data-route-status-marker=""
           data-route-screen-slot={routeMarkerSlot('status') ? 'status' : undefined}

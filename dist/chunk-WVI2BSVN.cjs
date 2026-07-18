@@ -345,7 +345,9 @@ function RouteOverlay({
   ].filter(Boolean);
   const naturalMarkers = statusPoints.length >= 2 ? [
     CONDITION_GLYPH_KIND[statusCondition] ? { name: "condition", point: statusMidpoint, radius: MARKER_RADIUS_PX.condition } : null,
-    { name: "status", point: routeStatusPoint, radius: MARKER_RADIUS_PX.status },
+    // The default working status draws NO badge — the strong line, progress
+    // head, and robot already say "moving"; badges are exception-state chrome.
+    _optionalChain([route, 'optionalAccess', _13 => _13.status]) !== "active" ? { name: "status", point: routeStatusPoint, radius: MARKER_RADIUS_PX.status } : null,
     ...routeStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
@@ -358,7 +360,7 @@ function RouteOverlay({
     radius: _chunkYXXTXTP5cjs.NAV_PROGRESS_HEAD.collisionRadius
   }] : [];
   const markerLayout = markerCollisionLayout(naturalMarkers, scale, fixedProgressMarkers);
-  const routeMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _13 => _13.slots, 'access', _14 => _14[name]]);
+  const routeMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _14 => _14.slots, 'access', _15 => _15[name]]);
   const markerForeground = "var(--viewer-foreground, var(--color-semantic-label-strong))";
   const surface = "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))";
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
@@ -366,16 +368,16 @@ function RouteOverlay({
     {
       ...rest,
       "data-lk-route-overlay": "",
-      "data-route-id": _optionalChain([route, 'optionalAccess', _15 => _15.id]),
+      "data-route-id": _optionalChain([route, 'optionalAccess', _16 => _16.id]),
       "data-active-map-id": activeMapId,
-      "data-route-status": _optionalChain([route, 'optionalAccess', _16 => _16.status]),
+      "data-route-status": _optionalChain([route, 'optionalAccess', _17 => _17.status]),
       "data-visible-segment-count": visibleSegments.length,
       "data-viewport-scale": scale,
-      "data-progress-segment-id": _optionalChain([progress, 'optionalAccess', _17 => _17.segmentId]),
-      "data-progress-fraction": _optionalChain([progress, 'optionalAccess', _18 => _18.fraction]),
-      "data-progress-position-mismatch": _optionalChain([progressGeometry, 'optionalAccess', _19 => _19.positionMismatch]) ? "true" : void 0,
+      "data-progress-segment-id": _optionalChain([progress, 'optionalAccess', _18 => _18.segmentId]),
+      "data-progress-fraction": _optionalChain([progress, 'optionalAccess', _19 => _19.fraction]),
+      "data-progress-position-mismatch": _optionalChain([progressGeometry, 'optionalAccess', _20 => _20.positionMismatch]) ? "true" : void 0,
       "data-route-marker-layout": markerLayout ? "screen-slots" : "path-anchored",
-      "data-route-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _20 => _20.totalWidth]),
+      "data-route-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _21 => _21.totalWidth]),
       "data-pointer-only": pointerOnly ? "true" : void 0,
       "data-selected": selected ? "true" : "false",
       "data-focused": !hiddenFromAccessibility && (focused || hasRootFocus || focusedSegment != null) ? "true" : "false",
@@ -394,11 +396,11 @@ function RouteOverlay({
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !interactive && !hiddenFromAccessibility ? (event) => {
         setHasRootFocus(_chunkYXXTXTP5cjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
-        _optionalChain([onFocus, 'optionalCall', _21 => _21(event)]);
+        _optionalChain([onFocus, 'optionalCall', _22 => _22(event)]);
       } : void 0,
       onBlur: !interactive && !hiddenFromAccessibility ? (event) => {
         setHasRootFocus(false);
-        _optionalChain([onBlur, 'optionalCall', _22 => _22(event)]);
+        _optionalChain([onBlur, 'optionalCall', _23 => _23(event)]);
       } : void 0,
       style: { opacity: _chunkYXXTXTP5cjs.navStateOpacity.call(void 0, disabled, stale), outline: "none", ...style },
       children: [
@@ -413,16 +415,16 @@ function RouteOverlay({
           const normalizedSegment = { ...segment, condition, phase };
           const tone = segmentTone(normalizedSegment, invalid);
           const dash = segmentDash(normalizedSegment);
-          const isProgressSegment = segment.id === _optionalChain([progressSegment, 'optionalAccess', _23 => _23.id]) && Boolean(progressGeometry);
+          const isProgressSegment = segment.id === _optionalChain([progressSegment, 'optionalAccess', _24 => _24.id]) && Boolean(progressGeometry);
           const segmentBodyPath = isProgressSegment && progressHeadVisible ? progressFuturePath : pathData;
           const conditionGlyphKind = CONDITION_GLYPH_KIND[condition];
-          const conditionSlot = segment.id === _optionalChain([statusSegment, 'optionalAccess', _24 => _24.id]) ? routeMarkerSlot("condition") : void 0;
-          const segmentLabelSlot = segment.id === _optionalChain([statusSegment, 'optionalAccess', _25 => _25.id]) ? labelScreenSlot(midpoint, markerLayout, scale) : void 0;
+          const conditionSlot = segment.id === _optionalChain([statusSegment, 'optionalAccess', _25 => _25.id]) ? routeMarkerSlot("condition") : void 0;
+          const segmentLabelSlot = segment.id === _optionalChain([statusSegment, 'optionalAccess', _26 => _26.id]) ? labelScreenSlot(midpoint, markerLayout, scale) : void 0;
           const segmentName = [
             _nullishCoalesce(segment.label, () => ( `\uAD6C\uAC04 ${segment.id}`)),
             PHASE_LABEL[phase],
             CONDITION_LABEL[condition],
-            _optionalChain([segment, 'access', _26 => _26.laneIds, 'optionalAccess', _27 => _27.length]) ? `graph lane ${segment.laneIds.length}\uAC1C` : null,
+            _optionalChain([segment, 'access', _27 => _27.laneIds, 'optionalAccess', _28 => _28.length]) ? `graph lane ${segment.laneIds.length}\uAC1C` : null,
             segment.entryTransitionId ? `\uC9C4\uC785 \uC804\uD658 ${segment.entryTransitionId}` : null,
             segment.exitTransitionId ? `\uC774\uD0C8 \uC804\uD658 ${segment.exitTransitionId}` : null
           ].filter(Boolean).join(", ");
@@ -450,11 +452,11 @@ function RouteOverlay({
               onKeyDown: interactive && !pointerOnly ? (event) => handleKeyDown(segment.id, event) : void 0,
               onFocus: !pointerOnly ? (event) => {
                 setFocusedSegment(_chunkYXXTXTP5cjs.isFocusVisibleTarget.call(void 0, event.currentTarget) ? segment.id : null);
-                _optionalChain([onFocus, 'optionalCall', _28 => _28(event)]);
+                _optionalChain([onFocus, 'optionalCall', _29 => _29(event)]);
               } : void 0,
               onBlur: !pointerOnly ? (event) => {
                 setFocusedSegment((current) => current === segment.id ? null : current);
-                _optionalChain([onBlur, 'optionalCall', _29 => _29(event)]);
+                _optionalChain([onBlur, 'optionalCall', _30 => _30(event)]);
               } : void 0,
               style: { cursor: interactive && !disabled ? "pointer" : disabled ? "not-allowed" : "default" },
               children: [
@@ -770,7 +772,7 @@ function RouteOverlay({
             dataPrefix: "route"
           }
         ),
-        statusSegment && statusPoints.length >= 2 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        statusSegment && statusPoints.length >= 2 && _optionalChain([route, 'optionalAccess', _31 => _31.status]) !== "active" && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "g",
           {
             "data-route-status-marker": "",
@@ -863,4 +865,4 @@ function RouteOverlay({
 
 
 exports.RouteOverlay = RouteOverlay;
-//# sourceMappingURL=chunk-H6MVSQCN.cjs.map
+//# sourceMappingURL=chunk-WVI2BSVN.cjs.map

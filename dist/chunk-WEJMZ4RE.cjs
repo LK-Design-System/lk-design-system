@@ -295,7 +295,9 @@ function TrajectoryOverlay({
     } : null
   ].filter(Boolean);
   const naturalMarkers = [
-    { name: "status", point: statePoint, radius: MARKER_RADIUS_PX.status },
+    // The default working status draws NO badge — the strong line, progress
+    // head, and robot already say "moving"; badges are exception-state chrome.
+    _optionalChain([trajectory, 'optionalAccess', _15 => _15.status]) !== "active" ? { name: "status", point: statePoint, radius: MARKER_RADIUS_PX.status } : null,
     ...trajectoryStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
@@ -308,7 +310,7 @@ function TrajectoryOverlay({
     radius: _chunkYXXTXTP5cjs.NAV_PROGRESS_HEAD.collisionRadius
   }] : [];
   const markerLayout = markerCollisionLayout(naturalMarkers, scale, fixedProgressMarkers);
-  const trajectoryMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _15 => _15.slots, 'access', _16 => _16[name]]);
+  const trajectoryMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _16 => _16.slots, 'access', _17 => _17[name]]);
   const trajectoryLabelSlot = labelScreenSlot(markerPoint, markerLayout, scale);
   const activate = (event) => {
     if (disabled || !interactive) return;
@@ -323,24 +325,24 @@ function TrajectoryOverlay({
   };
   const handlePointerDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onPointerDown, 'optionalCall', _17 => _17(event)]);
+    _optionalChain([onPointerDown, 'optionalCall', _18 => _18(event)]);
   };
   const handleMouseDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onMouseDown, 'optionalCall', _18 => _18(event)]);
+    _optionalChain([onMouseDown, 'optionalCall', _19 => _19(event)]);
   };
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "g",
     {
       ...rest,
       "data-lk-trajectory-overlay": "",
-      "data-trajectory-id": _optionalChain([trajectory, 'optionalAccess', _19 => _19.id]),
-      "data-map-id": _optionalChain([trajectory, 'optionalAccess', _20 => _20.mapId]),
-      "data-trajectory-status": _optionalChain([trajectory, 'optionalAccess', _21 => _21.status]),
+      "data-trajectory-id": _optionalChain([trajectory, 'optionalAccess', _20 => _20.id]),
+      "data-map-id": _optionalChain([trajectory, 'optionalAccess', _21 => _21.mapId]),
+      "data-trajectory-status": _optionalChain([trajectory, 'optionalAccess', _22 => _22.status]),
       "data-current-sample-index": currentIndex,
       "data-viewport-scale": scale,
       "data-trajectory-marker-layout": markerLayout ? "screen-slots" : "path-anchored",
-      "data-trajectory-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _22 => _22.totalWidth]),
+      "data-trajectory-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _23 => _23.totalWidth]),
       "data-pointer-only": pointerOnly ? "true" : void 0,
       "data-selected": selected ? "true" : "false",
       "data-focused": focusVisible ? "true" : "false",
@@ -361,11 +363,11 @@ function TrajectoryOverlay({
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !hiddenFromAccessibility ? (event) => {
         setHasDomFocus(_chunkYXXTXTP5cjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
-        _optionalChain([onFocus, 'optionalCall', _23 => _23(event)]);
+        _optionalChain([onFocus, 'optionalCall', _24 => _24(event)]);
       } : void 0,
       onBlur: !hiddenFromAccessibility ? (event) => {
         setHasDomFocus(false);
-        _optionalChain([onBlur, 'optionalCall', _24 => _24(event)]);
+        _optionalChain([onBlur, 'optionalCall', _25 => _25(event)]);
       } : void 0,
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
@@ -424,7 +426,7 @@ function TrajectoryOverlay({
             d: trajectoryBodyPath,
             fill: "none",
             stroke: tone,
-            strokeWidth: currentProgress ? 2.5 : selected || _optionalChain([trajectory, 'optionalAccess', _25 => _25.status]) === "active" ? 3.5 : 2.5,
+            strokeWidth: currentProgress ? 2.5 : selected || _optionalChain([trajectory, 'optionalAccess', _26 => _26.status]) === "active" ? 3.5 : 2.5,
             strokeDasharray: dash,
             opacity: currentProgress ? _chunkYXXTXTP5cjs.NAV_PROGRESS_HEAD.futureOpacity : void 0,
             strokeLinecap: "round",
@@ -520,11 +522,11 @@ function TrajectoryOverlay({
             dataPrefix: "trajectory"
           }
         ),
-        pathData && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        pathData && _optionalChain([trajectory, 'optionalAccess', _27 => _27.status]) !== "active" && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "g",
           {
             "data-trajectory-status-marker": "",
-            "data-trajectory-status-glyph": _optionalChain([trajectory, 'optionalAccess', _26 => _26.status]),
+            "data-trajectory-status-glyph": _optionalChain([trajectory, 'optionalAccess', _28 => _28.status]),
             "data-trajectory-screen-slot": markerLayout ? "status" : void 0,
             "data-trajectory-anchor-x": statePoint.x,
             "data-trajectory-anchor-y": statePoint.y,
@@ -557,7 +559,7 @@ function TrajectoryOverlay({
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 _chunkGKSI3QZ5cjs.NavigationStateGlyph,
                 {
-                  kind: _nullishCoalesce(STATUS_GLYPH_KIND[_optionalChain([trajectory, 'optionalAccess', _27 => _27.status])], () => ( "unknown")),
+                  kind: _nullishCoalesce(STATUS_GLYPH_KIND[_optionalChain([trajectory, 'optionalAccess', _29 => _29.status])], () => ( "unknown")),
                   size: 10,
                   color: foreground
                 }
@@ -608,7 +610,7 @@ function TrajectoryOverlay({
             item.state
           );
         }),
-        showLabel && _optionalChain([trajectory, 'optionalAccess', _28 => _28.label]) && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showLabel && _optionalChain([trajectory, 'optionalAccess', _30 => _30.label]) && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
           {
             id: `trajectory:${trajectory.id}:label`,
@@ -618,8 +620,8 @@ function TrajectoryOverlay({
             priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
               selected,
               focused: focusVisible,
-              alarm: invalid || _optionalChain([trajectory, 'optionalAccess', _29 => _29.status]) === "blocked",
-              emphasized: _optionalChain([trajectory, 'optionalAccess', _30 => _30.status]) === "active"
+              alarm: invalid || _optionalChain([trajectory, 'optionalAccess', _31 => _31.status]) === "blocked",
+              emphasized: _optionalChain([trajectory, 'optionalAccess', _32 => _32.status]) === "active"
             }),
             children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "text",
@@ -656,4 +658,4 @@ function TrajectoryOverlay({
 
 
 exports.TrajectoryOverlay = TrajectoryOverlay;
-//# sourceMappingURL=chunk-EY4KIGZI.cjs.map
+//# sourceMappingURL=chunk-WEJMZ4RE.cjs.map

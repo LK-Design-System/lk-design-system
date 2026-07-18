@@ -558,6 +558,9 @@ function SemanticMirrorFixture() {
                       tabIndex={-1}
                       aria-hidden="true"
                       showEndpoints={false}
+                      // The LayerPanel row owns the lane's name and metadata in
+                      // this composition — on-map text would only add clutter.
+                      showLabel={false}
                       selected={selectedKey === 'lanes:lane-corridor'}
                       onActivate={() => selectFromMap('lanes:lane-corridor')}
                     />
