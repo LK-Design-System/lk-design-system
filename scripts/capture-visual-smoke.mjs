@@ -14,10 +14,17 @@ const baselineDir = path.join(root, 'visual-baselines', 'smoke');
 const diffDir = path.join(root, 'visual-artifacts', 'smoke-diff');
 const updateBaseline = process.argv.includes('--update-baseline');
 const checkBaseline = process.argv.includes('--check');
+const onlyArguments = process.argv.filter((argument) => argument.startsWith('--only='));
 const maxDiffRatio = Number(process.env.VISUAL_MAX_DIFF_RATIO || 0.01);
 
 if (updateBaseline && checkBaseline) {
   throw new Error('Choose either --update-baseline or --check, not both.');
+}
+if (onlyArguments.length > 1) {
+  throw new Error('Pass at most one comma-separated --only= capture list.');
+}
+if (onlyArguments.length > 0 && !updateBaseline && !checkBaseline) {
+  throw new Error('--only= is supported with --update-baseline or --check.');
 }
 
 const targets = [
@@ -239,16 +246,47 @@ const atomTargets = [
   { name: 'atom-facility-lift-marker-dark', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="lift"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
   { name: 'atom-facility-door-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="door"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
   { name: 'atom-facility-dock-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="dock"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
-  { name: 'atom-waypoint-point', match: { importPath: './stories/RoboticsNavigationWaypoint.stories.jsx', exportName: 'Overview' }, selector: '[data-waypoint-point]', clip: 34, viewport: { width: 900, height: 720 } },
+  { name: 'atom-waypoint-point', match: { importPath: './stories/RoboticsNavigationWaypoint.stories.jsx', exportName: 'Overview' }, selector: '[data-waypoint-id="wp-holding"][data-selected="false"] [data-waypoint-point]', clip: 28, viewport: { width: 900, height: 720 } },
   { name: 'atom-glyph-unknown', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="unknown"]', clip: 28, viewport: { width: 900, height: 760 } },
   { name: 'atom-glyph-conflict', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="conflict"]', clip: 28, viewport: { width: 900, height: 760 } },
   { name: 'atom-glyph-closed', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="closed"]', clip: 28, viewport: { width: 900, height: 760 } },
   { name: 'atom-glyph-invalid', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="invalid"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-waiting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="waiting"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-completed', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="completed"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-rerouting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="rerouting"]', clip: 28, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-waiting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-route-id="route-waiting"] [data-route-condition-glyph="waiting"]', clip: 20, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-completed', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-route-id="route-completed"] [data-route-status-marker]', clip: 20, viewport: { width: 1000, height: 900 } },
+  { name: 'atom-glyph-rerouting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-route-id="route-rerouting"] [data-route-status-marker]', clip: 20, viewport: { width: 1000, height: 900 } },
   { name: 'atom-glyph-stale', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="stale"]', clip: 28, viewport: { width: 1000, height: 900 } },
 ];
+
+const requestedCaptureNames = onlyArguments.length === 0
+  ? null
+  : onlyArguments[0].slice('--only='.length).split(',').map((name) => name.trim()).filter(Boolean);
+const knownCaptureNames = new Set([
+  ...targets.map(({ name }) => name),
+  ...atomTargets.flatMap(({ name }) => [name, `${name}@${ATOM_ZOOM}x`]),
+]);
+const atomCaptureNames = new Set(atomTargets.map(({ name }) => name));
+const selectedCaptureNames = requestedCaptureNames === null
+  ? null
+  : new Set(requestedCaptureNames.flatMap((name) => (
+    atomCaptureNames.has(name) ? [name, `${name}@${ATOM_ZOOM}x`] : [name]
+  )));
+
+if (selectedCaptureNames?.size === 0) {
+  throw new Error('--only= must name at least one capture.');
+}
+for (const name of selectedCaptureNames || []) {
+  if (!knownCaptureNames.has(name)) {
+    throw new Error(`Unknown visual capture in --only=: ${name}`);
+  }
+}
+
+function shouldCapture(name) {
+  return selectedCaptureNames === null || selectedCaptureNames.has(name);
+}
+
+function shouldCaptureAtom(name) {
+  return shouldCapture(name) || shouldCapture(`${name}@${ATOM_ZOOM}x`);
+}
 
 function contentType(filePath) {
   if (filePath.endsWith('.html')) return 'text/html; charset=utf-8';
@@ -436,6 +474,18 @@ async function main() {
   const indexPath = path.join(staticDir, 'index.json');
   const index = JSON.parse(await readFile(indexPath, 'utf8'));
   await mkdir(outDir, { recursive: true });
+  let existingBaselineManifest = null;
+  if (updateBaseline && selectedCaptureNames !== null) {
+    const baselineManifestPath = path.join(baselineDir, 'manifest.json');
+    existingBaselineManifest = JSON.parse(await readFile(baselineManifestPath, 'utf8'));
+    const existingNames = new Set(existingBaselineManifest.captures.map(({ name }) => name));
+    const missingNames = [...selectedCaptureNames].filter((name) => !existingNames.has(name));
+    if (missingNames.length > 0) {
+      throw new Error(
+        `Selective baseline update only replaces existing manifest entries. Missing: ${missingNames.join(', ')}`
+      );
+    }
+  }
 
   const { server, origin } = await startStaticServer();
   const browser = await chromium.launch();
@@ -448,13 +498,14 @@ async function main() {
   const manifest = {
     generatedAt: new Date().toISOString(),
     storybookStatic: 'storybook-static',
-    count: targets.length + atomTargets.length * 2,
+    count: selectedCaptureNames?.size ?? targets.length + atomTargets.length * 2,
     captures: [],
   };
   const regressions = [];
 
   try {
     for (const target of targets) {
+      if (!shouldCapture(target.name)) continue;
       const id = findStoryId(index.entries, target);
       await page.setViewportSize(target.viewport);
       const url = storyUrl(origin, id, target.query);
@@ -493,11 +544,13 @@ async function main() {
     }
 
     for (const atom of atomTargets) {
+      if (!shouldCaptureAtom(atom.name)) continue;
       const id = findStoryId(index.entries, atom);
       await page.setViewportSize(atom.viewport);
       await loadStoryReady(page, storyUrl(origin, id, atom.query), atom.name, runtimeErrors);
       const captureNames = await captureAtom(page, atom, outDir);
       for (const captureName of captureNames) {
+        if (!shouldCapture(captureName)) continue;
         const capturePath = path.join(outDir, `${captureName}.png`);
         const fileStat = await stat(capturePath);
         manifest.captures.push({
@@ -534,25 +587,34 @@ async function main() {
   const manifestPath = path.join(outDir, 'manifest.json');
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   if (updateBaseline) {
-    const baselineManifest = {
-      schemaVersion: 1,
-      count: manifest.captures.length,
-      maxDiffRatio,
-      captures: manifest.captures.map(({ name, id, query, viewport, bytes, sha256 }) => ({
-        name,
-        id,
-        query,
-        viewport,
-        bytes,
-        sha256,
-      })),
-    };
+    const updatedCaptures = manifest.captures.map(({ name, id, query, viewport, bytes, sha256 }) => ({
+      name,
+      id,
+      query,
+      viewport,
+      bytes,
+      sha256,
+    }));
+    const baselineManifest = existingBaselineManifest === null
+      ? {
+          schemaVersion: 1,
+          count: updatedCaptures.length,
+          maxDiffRatio,
+          captures: updatedCaptures,
+        }
+      : {
+          ...existingBaselineManifest,
+          captures: existingBaselineManifest.captures.map((capture) => (
+            updatedCaptures.find(({ name }) => name === capture.name) || capture
+          )),
+        };
     await writeFile(
       path.join(baselineDir, 'manifest.json'),
       `${JSON.stringify(baselineManifest, null, 2)}\n`,
       'utf8'
     );
-    console.log(`Updated ${manifest.captures.length} visual baselines in ${path.relative(root, baselineDir)}.`);
+    const updateKind = selectedCaptureNames === null ? 'visual baselines' : 'selected visual baselines';
+    console.log(`Updated ${manifest.captures.length} ${updateKind} in ${path.relative(root, baselineDir)}.`);
   }
   if (regressions.length > 0) {
     throw new Error(`Visual regressions exceeded the pixel threshold:\n- ${regressions.join('\n- ')}`);

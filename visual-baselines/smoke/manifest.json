@@ -538,8 +538,8 @@
         "width": 900,
         "height": 720
       },
-      "bytes": 1449,
-      "sha256": "598f3b51c25b3edd91a6e50acdd6258abe74cf4aa3fbbccd9363053405b70e3d"
+      "bytes": 541,
+      "sha256": "0fc31a5b7f5c426eadaeec05ce50b4cc15251248edea528b346e84e3daa9168c"
     },
     {
       "name": "atom-waypoint-point@8x",
@@ -549,8 +549,8 @@
         "width": 900,
         "height": 720
       },
-      "bytes": 3197,
-      "sha256": "33004d5cb9a278f9ab05549463b486555e8efb50d13f993dc427314c44b5e32a"
+      "bytes": 1683,
+      "sha256": "3249eb370d0ec1f43305afbd6dec3bf00e3b1ebaeb4e37cc18d54ca6acf54e7b"
     },
     {
       "name": "atom-glyph-unknown",
@@ -642,69 +642,69 @@
     },
     {
       "name": "atom-glyph-waiting",
-      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "id": "lds-robotics-navigation-route--route-and-trajectory-states",
       "query": {},
       "viewport": {
         "width": 1000,
         "height": 900
       },
-      "bytes": 976,
-      "sha256": "28219ef3e76124d3ba9c8b9485e47ef9b582e65fec81f41d5de004f51c86ebc3"
+      "bytes": 712,
+      "sha256": "8caf55e40b222a39cb78e46b4abcfa09fa717d0f1cbc283e92612b8cd126d9a9"
     },
     {
       "name": "atom-glyph-waiting@8x",
-      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "id": "lds-robotics-navigation-route--route-and-trajectory-states",
       "query": {},
       "viewport": {
         "width": 1000,
         "height": 900
       },
-      "bytes": 2028,
-      "sha256": "edc3ff34b371f0def0e4b0faebc052d71ca68b050d95c6648b4639c6f1dc1bdc"
+      "bytes": 1392,
+      "sha256": "12263146f0651fbd6d5a4297ef5e1e73e9faed5d712d289572aee83c93d0916c"
     },
     {
       "name": "atom-glyph-completed",
-      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "id": "lds-robotics-navigation-route--route-and-trajectory-states",
       "query": {},
       "viewport": {
         "width": 1000,
         "height": 900
       },
-      "bytes": 880,
-      "sha256": "f6f93e59fbccd03c88b563e23267aae917a9ca5d1147bed27082aca30573dfa8"
+      "bytes": 672,
+      "sha256": "34b3c2ef5023db48c2856caef99d22313df0a3beee1c8b638c5690106a2def98"
     },
     {
       "name": "atom-glyph-completed@8x",
-      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "id": "lds-robotics-navigation-route--route-and-trajectory-states",
       "query": {},
       "viewport": {
         "width": 1000,
         "height": 900
       },
-      "bytes": 1923,
-      "sha256": "a66ee0ff7c39ce9f9039b384600c336c4df42006697a85f64ae94564c3b5d9f3"
+      "bytes": 1366,
+      "sha256": "5a1eb88472f31ef6d6c5ec6086f305b75e10990587427cfadae88f19546bc309"
     },
     {
       "name": "atom-glyph-rerouting",
-      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "id": "lds-robotics-navigation-route--route-and-trajectory-states",
       "query": {},
       "viewport": {
         "width": 1000,
         "height": 900
       },
-      "bytes": 960,
-      "sha256": "7362488d817a969341debf886a57d1edf504758d75ad217eb0d90b8dc2104afd"
+      "bytes": 696,
+      "sha256": "321d204a949b6da91c41809d7a34cae5b32ea4e47718cfdaea270996b8e267e2"
     },
     {
       "name": "atom-glyph-rerouting@8x",
-      "id": "lds-robotics-navigation-route-and-trajectory--route-and-trajectory-states",
+      "id": "lds-robotics-navigation-route--route-and-trajectory-states",
       "query": {},
       "viewport": {
         "width": 1000,
         "height": 900
       },
-      "bytes": 2015,
-      "sha256": "848c29edc7f0064077033ae33b519ec6bfab0dd1f99a6ae53076ec370d3f1050"
+      "bytes": 1389,
+      "sha256": "f8c51a2f2679c7f9125abc6986be40cd6b15e01ff511de609dbab8a26b2fc3eb"
     },
     {
       "name": "atom-glyph-stale",
