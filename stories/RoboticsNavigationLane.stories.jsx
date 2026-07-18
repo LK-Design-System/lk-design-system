@@ -522,7 +522,7 @@ export const LaneDarkCompoundStates = {
     for (const state of ['unknown', 'conflict', 'invalid']) {
       const marker = compound.querySelector(`[data-lane-state="${state}"]`);
       const glyph = marker?.querySelector('[data-navigation-state-glyph]');
-      const surface = marker?.querySelector('circle');
+      const surface = marker?.querySelector('circle:not([data-marker-shadow])');
       if (!glyph || !surface) throw new Error(`Dark ${state} glyph anatomy is incomplete.`);
       assertCircularStateGeometry(marker, surface, `Dark ${state}`);
       const view = canvasElement.ownerDocument.defaultView;

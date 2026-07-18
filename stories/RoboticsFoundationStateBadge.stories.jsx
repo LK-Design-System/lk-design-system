@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationStateGlyph } from '../components/robotics/_NavigationStateGlyph.js';
-import { NAV_STATE_BADGE } from '../components/robotics/_navigationVocabulary.js';
+import { NAV_MARKER_SHADOW, NAV_STATE_BADGE } from '../components/robotics/_navigationVocabulary.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 // These render the real NavigationStateGlyph — no hand-drawn geometry. In
@@ -88,6 +88,13 @@ const FOREGROUND = 'var(--color-semantic-label-strong)';
 function StateBadgeMark({ kind, tone, transform }) {
   return (
     <g transform={transform} data-compound-badge={kind}>
+      <circle
+        data-marker-shadow=""
+        cy={NAV_MARKER_SHADOW.chipOffsetY}
+        r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2}
+        fill={NAV_MARKER_SHADOW.fill}
+        opacity={NAV_MARKER_SHADOW.opacity}
+      />
       <circle r={NAV_STATE_BADGE.radius} fill={SURFACE} stroke={tone} strokeWidth={NAV_STATE_BADGE.strokeWidth} vectorEffect="non-scaling-stroke" />
       <NavigationStateGlyph kind={kind} size={10} color={FOREGROUND} />
     </g>
@@ -168,9 +175,12 @@ export const Overview = {
     }
     // Each badge renders the shared NAV_STATE_BADGE circle geometry.
     for (const badge of badges) {
-      const circle = badge.querySelector('circle');
+      const circle = badge.querySelector('circle:not([data-marker-shadow])');
       if (circle?.getAttribute('r') !== String(NAV_STATE_BADGE.radius)) {
         throw new Error('Each stacked badge must render the NAV_STATE_BADGE circle.');
+      }
+      if (!badge.querySelector('[data-marker-shadow]')) {
+        throw new Error('Each stacked badge must cast the shared NAV_MARKER_SHADOW.');
       }
     }
   },

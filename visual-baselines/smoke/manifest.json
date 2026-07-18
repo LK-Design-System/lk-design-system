@@ -516,8 +516,8 @@
         "width": 980,
         "height": 760
       },
-      "bytes": 1811,
-      "sha256": "8e00ee7ac86c8942b9f029257347700706dafc02849505eb8f4840a7c3ef80d6"
+      "bytes": 1833,
+      "sha256": "52d32a7e4654e2a37fca626c83b60f83f1ce23812c4664926a82cd31232362f2"
     },
     {
       "name": "atom-facility-dock-marker@8x",
@@ -527,8 +527,8 @@
         "width": 980,
         "height": 760
       },
-      "bytes": 4958,
-      "sha256": "7a50ccd2e4ea5f9ad3c8891bf72ab0806842719476f96f443cefe4328721c397"
+      "bytes": 4967,
+      "sha256": "a5cd34f934e97ae5b8f7c01029ac73625861e2266473cca19e8ef5887f81a599"
     },
     {
       "name": "atom-waypoint-point",
@@ -560,8 +560,8 @@
         "width": 900,
         "height": 760
       },
-      "bytes": 846,
-      "sha256": "c28f6abc74e2b2380c6f7c1709700f633a5392ce5a715de48313789f93058878"
+      "bytes": 918,
+      "sha256": "6fe0959984e97ab82fe62e9667dac1a68454c0564c6d8df1b26c32c67b012899"
     },
     {
       "name": "atom-glyph-unknown@8x",
@@ -571,8 +571,8 @@
         "width": 900,
         "height": 760
       },
-      "bytes": 1805,
-      "sha256": "d2838b1e7788e3460f75b85fa8de773ffcbd491d273c1a3b2f5f4519efc4010c"
+      "bytes": 1911,
+      "sha256": "549428742ddf36cd29eaf3e2c999c62e9d1a76b244d2ce0d8a78bc39812f1a6b"
     },
     {
       "name": "atom-glyph-conflict",
@@ -582,8 +582,8 @@
         "width": 900,
         "height": 760
       },
-      "bytes": 880,
-      "sha256": "b6b12945d035f4067ae836ce3810a78ad3fe332938cc46a24a8ca4886a9d2969"
+      "bytes": 957,
+      "sha256": "8b51fa588758419efc8a94de113e423a5b66950bf6e4a93f22eb79d3510e5c44"
     },
     {
       "name": "atom-glyph-conflict@8x",
@@ -593,8 +593,8 @@
         "width": 900,
         "height": 760
       },
-      "bytes": 1859,
-      "sha256": "f479a91aacccd94717b2cc3abe9edbf433c1ed2efb574f117cd57217e96c9019"
+      "bytes": 1957,
+      "sha256": "1d208f8c37fb5bc797f9ea6a2657cd3bcf5305b188aebbd77b1d7efe70956325"
     },
     {
       "name": "atom-glyph-closed",
@@ -604,8 +604,8 @@
         "width": 900,
         "height": 760
       },
-      "bytes": 645,
-      "sha256": "db2b2680e646e5f413a809aa1cbe9f51fa1b1dd850d6c24e3afe7345fb410e24"
+      "bytes": 730,
+      "sha256": "00f764cc4ec32e0321c161d733bbc77adb08ff8160129ba2e809fcf8d89fc530"
     },
     {
       "name": "atom-glyph-closed@8x",
@@ -615,8 +615,8 @@
         "width": 900,
         "height": 760
       },
-      "bytes": 1635,
-      "sha256": "0fe32f2630585a8d1d775e8e3ce0c4583ae710c21ca7971b6bfaca67400bfb7c"
+      "bytes": 1709,
+      "sha256": "fc8f7a77bed0739dc124e11548c2368baeb7a5a1c6013f9247406c3848e48313"
     },
     {
       "name": "atom-glyph-invalid",
@@ -626,8 +626,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 717,
-      "sha256": "a9876c079760c371fe0134409e0dbeb488d0e8c740c65a7ebd365e02e6d600c9"
+      "bytes": 815,
+      "sha256": "9e538b9198f032500247a3727e0b5d10a743b477934d9cb6407ce4621dc44891"
     },
     {
       "name": "atom-glyph-invalid@8x",
@@ -637,8 +637,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 1919,
-      "sha256": "a3c7fd58be6f4504c3281c498a04abe48004f5ef744e12c91716e61b0db56d47"
+      "bytes": 2061,
+      "sha256": "00b923a46b56022a3944c1523a5b3d6852eb78796cac10e5f88ab1b8bc2cf3b1"
     },
     {
       "name": "atom-glyph-waiting",
@@ -648,8 +648,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 795,
-      "sha256": "405ee4fd50d9094cd76a91f57b3e62733058b92fc8050117e16cca53489747dc"
+      "bytes": 890,
+      "sha256": "5647a11fd9f855f6fecfe00c20c8628a3867467c3ee960b2c842c45a57e01755"
     },
     {
       "name": "atom-glyph-waiting@8x",
@@ -659,8 +659,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 1755,
-      "sha256": "3d153a96fdab9e9edc443875bd33a7988f21c6d6a531b96bbf93e15bc1b1522d"
+      "bytes": 1868,
+      "sha256": "d3d944aaba8563b55892fd3e5c44f54e769fc1c0f17bf96bc06b401e9b45766b"
     },
     {
       "name": "atom-glyph-completed",
@@ -670,8 +670,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 712,
-      "sha256": "333eb98f86be620fe86ec5589dc3ec29f4b4d159a55eb72c1d545000e392b5b4"
+      "bytes": 806,
+      "sha256": "68fe032539acdc94b4f52f5f090d5632aaaa988d431e03991dc39e363820adea"
     },
     {
       "name": "atom-glyph-completed@8x",
@@ -681,8 +681,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 1652,
-      "sha256": "2ba70f91495e86930b2d9def43332e9f6ab989bf626622d025fbf9d620a31cce"
+      "bytes": 1750,
+      "sha256": "883713952a91c538c7cc2efff35901afa9c58346a0c2b364a2e59cdd6f5d0aa4"
     },
     {
       "name": "atom-glyph-rerouting",
@@ -692,8 +692,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 726,
-      "sha256": "7ee782ce93b53dd960968e7a84fdf02f9502d579b5b69aba98d095ce6f41ca8e"
+      "bytes": 826,
+      "sha256": "ecdd616232f1478fb94fcbe539db34a5fe03d39a7f36170201dd6246fb8c7c5e"
     },
     {
       "name": "atom-glyph-rerouting@8x",
@@ -703,8 +703,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 1677,
-      "sha256": "c1bfde2c44bac551d0ce7ec16af0446e5051cb928d82fdb770af10c0662035e5"
+      "bytes": 1790,
+      "sha256": "fc72a03cdc900a4d41690a24c4de07ebcdbbd33217c03f4b45d598cad392fc51"
     },
     {
       "name": "atom-glyph-stale",
@@ -714,8 +714,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 802,
-      "sha256": "ede5f100731bad74575d8c63b300a05992b5452d7fa6f02dd75687860df434e8"
+      "bytes": 872,
+      "sha256": "19091255adb313535d692288b30b2919981fc45826aaf5c1355df98a23ef29f2"
     },
     {
       "name": "atom-glyph-stale@8x",
@@ -725,8 +725,8 @@
         "width": 1000,
         "height": 900
       },
-      "bytes": 2131,
-      "sha256": "c580c93c12fc24afa443ebb7b06817455ec21026b2648cc2f6feffaf35a20a4f"
+      "bytes": 2251,
+      "sha256": "7f5662119261410cb98f1d5f5f770d8026be5585a79baa9081597529ce89edf4"
     }
   ]
 }

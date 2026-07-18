@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { ANNOTATION_CODE as ANNOTATION_CODES, ROLE_CODE as ROLE_CODES } from './_navigationEncoding.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_MARKER_SHADOW, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS } from './_navigationVocabulary.js';
 
 // Accessible-name copy is Korean to match every sibling navigation overlay
 // (Lane / Region / Route / Trajectory / Facility). A Korean-first product must
@@ -203,9 +203,9 @@ export function WaypointMarker({
         <polygon
           data-waypoint-shadow=""
           points="0,-7.5 7.5,0 0,7.5 -7.5,0"
-          transform="translate(0 1.4)"
-          fill="var(--color-semantic-static-black)"
-          opacity="0.16"
+          transform={`translate(0 ${NAV_MARKER_SHADOW.pointOffsetY})`}
+          fill={NAV_MARKER_SHADOW.fill}
+          opacity={NAV_MARKER_SHADOW.opacity}
           pointerEvents="none"
         />
         {(invalid || availability === 'unavailable') && (
@@ -307,6 +307,17 @@ export function WaypointMarker({
           >
             {compoundUnknownInvalid && (
               <circle
+                data-waypoint-state-shadow="unknown"
+                data-marker-shadow=""
+                cy={NAV_MARKER_SHADOW.chipOffsetY}
+                r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2}
+                fill={NAV_MARKER_SHADOW.fill}
+                opacity={NAV_MARKER_SHADOW.opacity}
+                pointerEvents="none"
+              />
+            )}
+            {compoundUnknownInvalid && (
+              <circle
                 data-waypoint-state-circle="unknown"
                 r={NAV_STATE_BADGE.radius}
                 fill={surface}
@@ -332,6 +343,17 @@ export function WaypointMarker({
             transform={compoundUnknownInvalid ? 'translate(-8 8)' : undefined}
             aria-hidden="true"
           >
+            {compoundUnknownInvalid && (
+              <circle
+                data-waypoint-state-shadow="invalid"
+                data-marker-shadow=""
+                cy={NAV_MARKER_SHADOW.chipOffsetY}
+                r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2}
+                fill={NAV_MARKER_SHADOW.fill}
+                opacity={NAV_MARKER_SHADOW.opacity}
+                pointerEvents="none"
+              />
+            )}
             {compoundUnknownInvalid && (
               <circle
                 data-waypoint-state-circle="invalid"

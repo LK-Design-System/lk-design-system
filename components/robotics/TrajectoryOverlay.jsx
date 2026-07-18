@@ -7,7 +7,7 @@ import {
   trajectoryProgressGeometry,
 } from './_navigationProgressHead.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_PROGRESS_HEAD, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_BADGE_LEADER, NAV_MARKER_SHADOW, NAV_PROGRESS_HEAD, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -66,6 +66,45 @@ function badgeNormalSlot(point) {
     y *= -1;
   }
   return { x: x * NAV_STATE_BADGE.pathNormalOffset, y: y * NAV_STATE_BADGE.pathNormalOffset };
+}
+
+// Cast shadow under a badge chip — the shared ground signal every floating
+// chip carries. Never tagged data-navigation-marker-circle so the badge
+// geometry contracts keep resolving the painted badge circle.
+function BadgeShadow(props) {
+  return (
+    <circle
+      {...props}
+      data-marker-shadow=""
+      cy={NAV_MARKER_SHADOW.chipOffsetY}
+      r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2}
+      fill={NAV_MARKER_SHADOW.fill}
+      opacity={NAV_MARKER_SHADOW.opacity}
+      pointerEvents="none"
+    />
+  );
+}
+
+// Leader tick tethering a path-offset badge back to its stroke. Drawn in
+// badge-local space from the badge center toward the path anchor (-slot); the
+// opaque badge fill hides the inner run. Solid even on stale badges, and only
+// for the default normal offset — collision screen-slot rows stay tickless.
+function BadgeLeaderTick({ slot, tone, hook }) {
+  const reach = NAV_BADGE_LEADER.length / NAV_STATE_BADGE.pathNormalOffset;
+  return (
+    <line
+      {...hook}
+      x1="0"
+      y1="0"
+      x2={-slot.x * reach}
+      y2={-slot.y * reach}
+      stroke={tone}
+      strokeWidth={NAV_BADGE_LEADER.strokeWidth}
+      strokeLinecap="round"
+      vectorEffect="non-scaling-stroke"
+      pointerEvents="none"
+    />
+  );
 }
 
 function markerCollisionLayout(markers, scale, fixedMarkers = []) {
@@ -506,6 +545,14 @@ export function TrajectoryOverlay({
           aria-hidden="true"
           pointerEvents="none"
         >
+          {!trajectoryMarkerSlot('status') && (
+            <BadgeLeaderTick
+              slot={badgeNormalSlot(statePoint)}
+              tone={tone}
+              hook={{ 'data-trajectory-badge-leader': 'status' }}
+            />
+          )}
+          <BadgeShadow data-trajectory-badge-shadow="status" />
           <circle
             {...obstacle(`trajectory:${trajectory.id}:status`)}
             data-trajectory-marker-badge="status"
@@ -537,6 +584,14 @@ export function TrajectoryOverlay({
             aria-hidden="true"
             pointerEvents="none"
           >
+            {!stateSlot && (
+              <BadgeLeaderTick
+                slot={badgeNormalSlot(point)}
+                tone={item.tone}
+                hook={{ 'data-trajectory-badge-leader': item.state }}
+              />
+            )}
+            <BadgeShadow data-trajectory-badge-shadow={item.state} />
             <circle
               {...obstacle(`trajectory:${trajectory.id}:state:${item.state}`)}
               data-trajectory-marker-badge={item.state}

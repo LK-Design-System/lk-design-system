@@ -45,7 +45,7 @@ Classification: **LK Robotics Extension**. `TrajectoryOverlay`는 한 지도에 
 
 새 public token, map palette, icon set, card, radius, shadow, animation을 추가하지 않습니다. 내부 `NAV_PROGRESS_HEAD`만 Route와 공유하며 sample마다 badge나 label을 붙이지 않습니다.
 
-`invalid`와 `stale`은 각각 exclamation과 adapted clock-hand screen-space geometry를 추가해 negative color나 opacity만으로 전달하지 않습니다. progress head는 current sample에 고정된 obstacle이고 head와 같은 incoming path tangent로 회전하며 collision row로 이동하지 않습니다. status/invalid/stale badge는 선을 가리지 않도록 자기 path anchor의 위쪽 화면 법선으로 `NAV_STATE_BADGE.pathNormalOffset`만큼 떠 있고(anchor `data-*` 좌표는 실제 path 지점 유지), 실제 CSS 거리로 충돌을 판단하면 screen-space row로 이동합니다. 채움 화살촉은 circle·backing·shadow 없이 elapsed path의 끝에 붙고, 자체 surface 외곽선과 inverse `viewportScale`로 지도 배경 분리와 화면 크기를 유지하며, tip 앞의 미래 선은 간격을 두고 다시 시작합니다.
+`invalid`와 `stale`은 각각 exclamation과 adapted clock-hand screen-space geometry를 추가해 negative color나 opacity만으로 전달하지 않습니다. progress head는 current sample에 고정된 obstacle이고 head와 같은 incoming path tangent로 회전하며 collision row로 이동하지 않습니다. status/invalid/stale badge는 선을 가리지 않도록 자기 path anchor의 위쪽 화면 법선으로 `NAV_STATE_BADGE.pathNormalOffset`만큼 떠 있고(anchor `data-*` 좌표는 실제 path 지점 유지), 기본 오프셋일 때는 badge 링과 같은 톤의 `NAV_BADGE_LEADER` 틱이 badge를 자기 선에 묶으며(stale이어도 틱은 실선, screen-slot row는 틱 없음), badge는 공유 `NAV_MARKER_SHADOW` 캐스트 그림자로 지면에 접지합니다. 실제 CSS 거리로 충돌을 판단하면 screen-space row로 이동합니다. 채움 화살촉은 circle·backing·shadow 없이 elapsed path의 끝에 붙고, 자체 surface 외곽선과 inverse `viewportScale`로 지도 배경 분리와 화면 크기를 유지하며, tip 앞의 미래 선은 간격을 두고 다시 시작합니다.
 
 ## Authoritative research and conclusions
 

@@ -91,6 +91,24 @@ export const NAV_DASH = {
 };
 
 /**
+ * Cast-shadow depth encoding shared by every marker that floats above the map
+ * plane (pins, the waypoint diamond, r≈7 badge/T/count chips, the robot
+ * body): the marker's OWN silhouette shifted straight down in screen space,
+ * static black at 16%. One consistent ground signal is what makes the point
+ * markers read as standing on a common floor instead of floating unrelated —
+ * lines and regions stay flat because they are painted ON the floor. Geometry
+ * stays per-renderer (each traces its own shape); this owns the shared paint
+ * and the per-silhouette-size offset tiers.
+ */
+export const NAV_MARKER_SHADOW = {
+  fill: 'var(--color-semantic-static-black)',
+  opacity: 0.16,
+  chipOffsetY: 1,
+  pointOffsetY: 1.4,
+  pinOffsetY: 0.8,
+};
+
+/**
  * Map-pin marker geometry, shared by FacilityTransition and HazardMarker so a
  * facility pin and a hazard pin read as one marker family — severity fill and
  * knockout glyph (not a different shape) distinguish them. The shadow and the
@@ -99,7 +117,11 @@ export const NAV_DASH = {
  */
 export const NAV_PIN = {
   path: 'M0 15 Q-6 10 -9.2 5 A10.5 10.5 0 1 1 9.2 5 Q6 10 0 15 Z',
-  shadow: { transform: 'translate(0 0.8)', fill: 'var(--color-semantic-static-black)', opacity: 0.16 },
+  shadow: {
+    transform: `translate(0 ${NAV_MARKER_SHADOW.pinOffsetY})`,
+    fill: NAV_MARKER_SHADOW.fill,
+    opacity: NAV_MARKER_SHADOW.opacity,
+  },
   focusRing: { scale: 1.34, strokeWidth: 2.5 },
   selectionRing: { scale: 1.16, strokeWidth: 2 },
 };
@@ -121,6 +143,23 @@ export const NAV_HIT = { radius: 17.5, screenTargetSize: 24 };
  * because its badges share a ladder with labels and metadata.
  */
 export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5, pathNormalOffset: 16 };
+
+/**
+ * Leader tick tethering a path-offset state badge back to the stroke it
+ * annotates — Route·Trajectory path-anchored badges only (Lane keeps its
+ * documented 32px label ladder; collision screen-slot rows stay tickless).
+ * Drawn inside the badge group from the badge center toward the path anchor:
+ * the badge's opaque fill hides the inner run, so the visible tick spans the
+ * badge edge to the annotated line's edge. `length` stops `lineClearance`
+ * short of the anchor so the round cap kisses the stroke without crossing it.
+ * A renderer-local visual, deliberately NOT a NavigationAnnotationLayer
+ * leader line (that layer has none).
+ */
+export const NAV_BADGE_LEADER = {
+  lineClearance: 2,
+  length: NAV_STATE_BADGE.pathNormalOffset - 2,
+  strokeWidth: 1.5,
+};
 
 /**
  * Line-integrated current-progress head shared by RouteOverlay and

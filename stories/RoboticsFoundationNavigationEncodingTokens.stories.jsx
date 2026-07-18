@@ -7,6 +7,8 @@ import {
   NAV_DASH,
   NAV_HIT,
   NAV_STATE_BADGE,
+  NAV_BADGE_LEADER,
+  NAV_MARKER_SHADOW,
   NAV_LABEL_HALO,
 } from '../components/robotics/_navigationVocabulary.js';
 import { NavigationProgressHeadDefs } from '../components/robotics/_navigationProgressHead.js';
@@ -395,6 +397,14 @@ function BadgeAndHit() {
       <Tile label={`상태 badge · r=${NAV_STATE_BADGE.radius}, stroke=${NAV_STATE_BADGE.strokeWidth}`} mono="NAV_STATE_BADGE">
         <svg width={44} height={44} viewBox="-16 -16 32 32" aria-hidden="true" style={{ display: 'block' }}>
           <circle
+            data-encoding-badge-shadow=""
+            data-marker-shadow=""
+            cy={NAV_MARKER_SHADOW.chipOffsetY}
+            r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2}
+            fill={NAV_MARKER_SHADOW.fill}
+            opacity={NAV_MARKER_SHADOW.opacity}
+          />
+          <circle
             r={NAV_STATE_BADGE.radius}
             fill={SURFACE}
             stroke={MUTED}
@@ -403,6 +413,26 @@ function BadgeAndHit() {
             data-encoding-badge=""
           />
           <NavigationStateGlyph kind="unknown" size={10} color={INK} />
+        </svg>
+      </Tile>
+      <Tile label={`badge leader 틱 · ${NAV_BADGE_LEADER.length}px, 폭 ${NAV_BADGE_LEADER.strokeWidth}`} mono="NAV_BADGE_LEADER">
+        <svg width={72} height={52} viewBox="0 0 72 52" aria-hidden="true" style={{ display: 'block' }}>
+          <line x1="8" y1="40" x2="64" y2="40" stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
+          <g transform={`translate(36 ${40 - NAV_STATE_BADGE.pathNormalOffset})`}>
+            <line
+              data-encoding-badge-leader=""
+              x1="0"
+              y1="0"
+              x2="0"
+              y2={NAV_BADGE_LEADER.length}
+              stroke={ACCENT}
+              strokeWidth={NAV_BADGE_LEADER.strokeWidth}
+              strokeLinecap="round"
+            />
+            <circle cy={NAV_MARKER_SHADOW.chipOffsetY} r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2} fill={NAV_MARKER_SHADOW.fill} opacity={NAV_MARKER_SHADOW.opacity} />
+            <circle r={NAV_STATE_BADGE.radius} fill={SURFACE} stroke={ACCENT} strokeWidth={NAV_STATE_BADGE.strokeWidth} />
+            <NavigationStateGlyph kind="waiting" size={10} color={INK} />
+          </g>
         </svg>
       </Tile>
       <Tile label={`현재 진행 head · ${NAV_PROGRESS_HEAD.width}×${NAV_PROGRESS_HEAD.height}px 채움 화살촉`} mono="NAV_PROGRESS_HEAD">
@@ -667,7 +697,7 @@ function EncodingCatalog() {
       <Card title="상태 opacity" hint="비활성 0.45, 지연 0.76, 기본 1 — navStateOpacity() 한 함수를 일곱 렌더러가 공유합니다.">
         <OpacitySwatches />
       </Card>
-      <Card title="상태 badge · 현재 진행 head · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE), 경로·궤적의 선 끝에 결합하는 채움 화살촉 진행 head(NAV_PROGRESS_HEAD), 투명 WCAG 2.2 타깃(NAV_HIT). 진행 head는 pose badge가 아니며 path tangent를 따르고, 화살촉 앞의 미래 선은 간격을 두고 다시 시작합니다.">
+      <Card title="상태 badge · 진행 head · leader 틱 · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE)은 공유 캐스트 그림자(NAV_MARKER_SHADOW)로 지면에 접지하고, 경로에서 띄운 배지는 링과 같은 톤의 leader 틱(NAV_BADGE_LEADER)으로 자기 선에 묶입니다. 진행 head(NAV_PROGRESS_HEAD)는 pose badge가 아니며 path tangent를 따르고, 화살촉 앞의 미래 선은 간격을 두고 다시 시작합니다. 투명 WCAG 2.2 타깃은 NAV_HIT가 소유합니다.">
         <BadgeAndHit />
       </Card>
       <Card title="라벨 halo 계층" hint="paint-order stroke로 텍스트 뒤에 깔리는 legibility halo. 식별·상세·메타 세 단계를 NAV_LABEL_HALO가 소유합니다.">
@@ -747,6 +777,20 @@ export const Overview = {
     const badge = root.querySelector('[data-encoding-badge]');
     if (badge?.getAttribute('r') !== String(NAV_STATE_BADGE.radius)) {
       throw new Error('The state-badge swatch must render NAV_STATE_BADGE.radius.');
+    }
+    const badgeShadow = root.querySelector('[data-encoding-badge-shadow]');
+    if (
+      badgeShadow?.getAttribute('cy') !== String(NAV_MARKER_SHADOW.chipOffsetY)
+      || Number(badgeShadow?.getAttribute('opacity')) !== NAV_MARKER_SHADOW.opacity
+    ) {
+      throw new Error('The badge swatch must cast the shared NAV_MARKER_SHADOW.');
+    }
+    const badgeLeader = root.querySelector('[data-encoding-badge-leader]');
+    if (
+      Number(badgeLeader?.getAttribute('y2')) !== NAV_BADGE_LEADER.length
+      || badgeLeader?.getAttribute('stroke-width') !== String(NAV_BADGE_LEADER.strokeWidth)
+    ) {
+      throw new Error('The badge-leader swatch must render NAV_BADGE_LEADER length and width.');
     }
     const progressHead = root.querySelector('[data-encoding-progress-head]');
     const progressMarker = root.querySelector('#encoding-progress-head');

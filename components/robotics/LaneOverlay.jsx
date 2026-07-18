@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NAV_DIRECTION_CHEVRON } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_HIT, NAV_MARKER_SHADOW, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const VIEWER_FOREGROUND = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
 const VIEWER_MUTED = 'var(--viewer-muted, var(--color-semantic-label-neutral))';
@@ -146,6 +146,15 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
       pointerEvents="none"
     >
       <circle
+        data-lane-endpoint-shadow={kind}
+        data-marker-shadow=""
+        cy={NAV_MARKER_SHADOW.chipOffsetY}
+        r="4.75"
+        fill={NAV_MARKER_SHADOW.fill}
+        opacity={NAV_MARKER_SHADOW.opacity}
+        pointerEvents="none"
+      />
+      <circle
         data-lane-endpoint-point={kind}
         r="4"
         fill={VIEWER_SURFACE}
@@ -171,6 +180,15 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
       </text>
       {transitionCount > 0 && (
         <g data-lane-transition-count={transitionCount} transform="translate(0 16)">
+          <circle
+            data-lane-transition-count-shadow=""
+            data-marker-shadow=""
+            cy={NAV_MARKER_SHADOW.chipOffsetY}
+            r="9.75"
+            fill={NAV_MARKER_SHADOW.fill}
+            opacity={NAV_MARKER_SHADOW.opacity}
+            pointerEvents="none"
+          />
           <circle
             data-lane-transition-count-circle=""
             r="9"
@@ -276,10 +294,14 @@ export function LaneOverlay({
     : resolvedAvailability === 'unknown'
       ? '2 5'
       : undefined;
+  // Static topology stays QUIET: an available lane paints in the muted
+  // infrastructure tone so live state lines (route current, active trajectory,
+  // robot) own the accent/status hues — figure over ground. Selection still
+  // raises the accent halo.
   const baseColor = invalid
     ? 'var(--viewer-danger, var(--color-semantic-status-negative-foreground))'
     : resolvedAvailability === 'available'
-      ? 'var(--viewer-accent, var(--color-semantic-primary-normal))'
+      ? VIEWER_MUTED
       : 'var(--viewer-muted, var(--color-semantic-label-alternative))';
   const stateGlyphs = [
     resolvedAvailability === 'closed' ? { state: 'closed', tone: VIEWER_FOREGROUND } : null,
@@ -572,6 +594,15 @@ export function LaneOverlay({
               data-lane-state-slot-y={state.slot.y}
               transform={`translate(${state.slot.x} ${state.slot.y})`}
             >
+              <circle
+                data-lane-state-shadow={state.state}
+                data-marker-shadow=""
+                cy={NAV_MARKER_SHADOW.chipOffsetY}
+                r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2}
+                fill={NAV_MARKER_SHADOW.fill}
+                opacity={NAV_MARKER_SHADOW.opacity}
+                pointerEvents="none"
+              />
               <circle
                 data-lane-state-circle={state.state}
                 r={NAV_STATE_BADGE.radius}

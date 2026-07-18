@@ -2,7 +2,7 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_MARKER_SHADOW, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const CATEGORY_PATTERNS = {
   behavior: 'diagonal',
@@ -425,12 +425,14 @@ export function SpatialRegion({
         >
           {invalid && (
             <g transform="translate(0 -18)" data-region-invalid-mark="">
+              <circle data-region-badge-shadow="invalid" data-marker-shadow="" cy={NAV_MARKER_SHADOW.chipOffsetY} r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2} fill={NAV_MARKER_SHADOW.fill} opacity={NAV_MARKER_SHADOW.opacity} pointerEvents="none" />
               <circle r={NAV_STATE_BADGE.radius} fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--viewer-danger, var(--color-semantic-status-negative-foreground))" strokeWidth={NAV_STATE_BADGE.strokeWidth} vectorEffect="non-scaling-stroke" />
               <NavigationStateGlyph kind="invalid" size={10.5} color="var(--viewer-foreground, var(--color-semantic-label-strong))" />
             </g>
           )}
           {stale && (
             <g transform={`translate(0 ${invalid ? 18 : -18})`} data-region-stale-mark="">
+              <circle data-region-badge-shadow="stale" data-marker-shadow="" cy={NAV_MARKER_SHADOW.chipOffsetY} r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2} fill={NAV_MARKER_SHADOW.fill} opacity={NAV_MARKER_SHADOW.opacity} pointerEvents="none" />
               <circle r={NAV_STATE_BADGE.radius} fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))" stroke="var(--viewer-muted, var(--color-semantic-label-alternative))" strokeWidth={NAV_STATE_BADGE.strokeWidth} strokeDasharray={NAV_DASH.staleRing} vectorEffect="non-scaling-stroke" />
               <NavigationStateGlyph kind="stale" size={10.5} color="var(--viewer-foreground, var(--color-semantic-label-strong))" />
             </g>

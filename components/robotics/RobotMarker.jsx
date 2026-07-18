@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NAV_ROBOT_POSE } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_LABEL_HALO, NAV_FOCUS } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_LABEL_HALO, NAV_FOCUS, NAV_MARKER_SHADOW } from './_navigationVocabulary.js';
 
 // Korean accessible-name copy to match every sibling navigation overlay
 // (Waypoint / Lane / Region / Route / Trajectory / Facility) — a Korean-first
@@ -200,6 +200,22 @@ export function RobotMarker({
           fill="transparent"
           pointerEvents={interactive ? 'all' : 'none'}
         />
+
+        {/*
+          Shared marker cast shadow: the body silhouette shifted straight down
+          in screen space — the offset stays OUTSIDE the heading rotation so
+          the shadow always falls downward regardless of bearing.
+        */}
+        <g
+          data-robot-shadow=""
+          transform={`translate(0 ${NAV_MARKER_SHADOW.chipOffsetY})`}
+          opacity={NAV_MARKER_SHADOW.opacity}
+          pointerEvents="none"
+        >
+          <g transform={`rotate(${headingDeg})`}>
+            {silhouette(NAV_MARKER_SHADOW.fill, {})}
+          </g>
+        </g>
 
         {stale && (
           <circle

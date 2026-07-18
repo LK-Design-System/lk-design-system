@@ -8,6 +8,7 @@ import {
   LaneOverlay,
   SpatialRegion,
   FacilityTransition,
+  RobotMarker,
   LayerPanel,
   SelectionInspector,
   Legend,
@@ -24,12 +25,12 @@ const meta = {
       eyebrow: 'Robotics / Viewer / Navigation Viewer',
       title: '내비게이션 오버레이를 지도 캔버스와 패널로 합성한 뷰어입니다',
       description:
-        '영역·레인·경로·궤적·웨이포인트·설비 전이 오버레이를 Map2DCanvas 위에 얹고, LayerPanel 트리 하나가 레이어와 객체의 선택·표시·잠금을, SelectionInspector와 Legend가 선택 상태와 계층 부호를 담당하는 합성 뷰어 씬입니다. 지도 도형은 포인터 전용(aria-hidden)이고 키보드·스크린 리더 탐색은 패널 트리에 위임합니다. 이 합성은 제품이 뷰어를 조립하는 방식의 표준 예시이며, 렌더러의 값·표현 어휘는 Foundation 원자가, 표현/경계 규약은 NAVIGATION_EXPRESSION_CONVENTIONS가 소유합니다.',
+        '영역·레인·경로·궤적·웨이포인트·설비 전이·로봇 오버레이를 Map2DCanvas 위에 얹고, LayerPanel 트리 하나가 레이어와 객체의 선택·표시·잠금을, SelectionInspector와 Legend가 선택 상태와 계층 부호를 담당하는 합성 뷰어 씬입니다. 지도 도형은 포인터 전용(aria-hidden)이고 키보드·스크린 리더 탐색은 패널 트리에 위임합니다. 이 합성은 제품이 뷰어를 조립하는 방식의 표준 예시이며, 렌더러의 값·표현 어휘는 Foundation 원자가, 표현/경계 규약은 NAVIGATION_EXPRESSION_CONVENTIONS가 소유합니다.',
     },
     docs: {
       description: {
         component:
-          '내비게이션 오버레이 렌더러들을 2D 지도 캔버스 + 레이어·객체 트리 패널 + 선택 검사기 + 범례로 합성한 제품형 뷰어 씬입니다. 하나의 선택 identity와 표시·잠금 상태를 네 표면이 공유하고, 지도는 포인터 전용이며 키보드·스크린 리더 탐색은 트리 패널이 담당합니다.',
+          '내비게이션 오버레이 렌더러들(로봇 포함)을 2D 지도 캔버스 + 레이어·객체 트리 패널 + 선택 검사기 + 범례로 합성한 제품형 뷰어 씬입니다. 하나의 선택 identity와 표시·잠금 상태를 네 표면이 공유하고, 지도는 포인터 전용이며 키보드·스크린 리더 탐색은 트리 패널이 담당합니다.',
       },
     },
   },
@@ -51,6 +52,9 @@ function nextRender() {
 // docs/NAVIGATION_EXPRESSION_CONVENTIONS.md.
 const MIRROR_MAP_ID = 'ops-1f';
 
+// Nested inside the corridor elbow so the bend visibly detours AROUND the
+// charge zone — every feature earns its place in the floor plan instead of
+// floating in empty grid.
 const MIRROR_KEEPOUT_REGION = {
   id: 'zone-keepout',
   mapId: MIRROR_MAP_ID,
@@ -59,10 +63,13 @@ const MIRROR_KEEPOUT_REGION = {
   rule: { kind: 'keep-out' },
   shape: {
     kind: 'polygon',
-    points: [{ x: 40, y: 26 }, { x: 150, y: 26 }, { x: 150, y: 94 }, { x: 40, y: 94 }],
+    points: [{ x: 148, y: 136 }, { x: 232, y: 136 }, { x: 232, y: 184 }, { x: 148, y: 184 }],
   },
 };
 
+// Fully inside the stage frame (right edge 522 <= 528) and large enough to
+// CONTAIN the lift-approach waypoint, the facility pin, and the corridor/
+// trajectory endpoints — the corridor arrives INTO the lobby.
 const MIRROR_LOBBY_REGION = {
   id: 'zone-lift-lobby',
   mapId: MIRROR_MAP_ID,
@@ -70,7 +77,7 @@ const MIRROR_LOBBY_REGION = {
   category: 'facility',
   kind: 'lift-lobby',
   facilityId: 'lift-a',
-  shape: { kind: 'circle', center: { x: 496, y: 96 }, radius: 40 },
+  shape: { kind: 'circle', center: { x: 476, y: 106 }, radius: 46 },
 };
 
 const MIRROR_LANE = {
@@ -137,6 +144,22 @@ const MIRROR_TRAJECTORY = {
   currentSampleIndex: 3,
 };
 
+// The robot pose is DERIVED from the trajectory's current sample so the two
+// layers can never drift apart: position = current sample, heading = bearing
+// toward the next sample.
+const MIRROR_ROBOT_SAMPLE = MIRROR_TRAJECTORY.samples[MIRROR_TRAJECTORY.currentSampleIndex];
+const MIRROR_ROBOT_NEXT = MIRROR_TRAJECTORY.samples[MIRROR_TRAJECTORY.currentSampleIndex + 1];
+const MIRROR_ROBOT_POSE = {
+  id: 'amr-7',
+  label: 'AMR 7',
+  mapId: MIRROR_MAP_ID,
+  position: MIRROR_ROBOT_SAMPLE.position,
+  headingRad: Math.atan2(
+    MIRROR_ROBOT_NEXT.position.y - MIRROR_ROBOT_SAMPLE.position.y,
+    MIRROR_ROBOT_NEXT.position.x - MIRROR_ROBOT_SAMPLE.position.x,
+  ),
+};
+
 const MIRROR_PICK_WAYPOINT = {
   id: 'wp-pick',
   label: '픽업 지점 P1',
@@ -197,10 +220,11 @@ const TONE_COLOR = {
 // Layer identity shared by the map, the layer/object tree, and the legend.
 const MIRROR_LAYERS = [
   { id: 'regions', label: '영역', description: '동작·시설·지형', tone: 'cautionary' },
-  { id: 'lanes', label: '레인', description: '방향 그래프 연결', tone: 'signal' },
+  { id: 'lanes', label: '레인', description: '방향 그래프 연결', tone: 'neutral' },
   { id: 'paths', label: '경로·궤적', description: '계획 구간과 조밀 궤적', tone: 'positive' },
   { id: 'waypoints', label: '웨이포인트', description: '그래프 지점', tone: 'neutral' },
   { id: 'facilities', label: '설비 전이', description: '문·승강기·도크', tone: 'signal' },
+  { id: 'robots', label: '로봇', description: '실시간 위치·자세', tone: 'signal' },
 ];
 
 // One registry drives the tree panel, the inspector, and the selection
@@ -220,7 +244,7 @@ const MIRROR_FEATURES = [
     layerId: 'regions',
     listName: '승강기 로비',
     item: { label: '승강기 로비', kind: '시설 영역', status: '승강기 A', statusTone: 'signal' },
-    sections: [{ title: '영역', fields: [{ label: '분류', value: '시설 · 승강기 로비' }, { label: '설비', value: '화물 승강기 A' }, { label: '형태', value: '원형 r40' }] }],
+    sections: [{ title: '영역', fields: [{ label: '분류', value: '시설 · 승강기 로비' }, { label: '설비', value: '화물 승강기 A' }, { label: '형태', value: '원형 r46' }] }],
   },
   {
     key: 'lanes:lane-corridor',
@@ -275,15 +299,30 @@ const MIRROR_FEATURES = [
     item: { label: '화물 승강기 A', kind: '설비 전이 · 승강기', status: '접근 중', statusTone: 'signal' },
     sections: [{ title: '독립 상태', fields: [{ label: '단계', value: '접근' }, { label: '문', value: '닫힘' }, { label: '세션', value: '요청됨' }, { label: '운영 모드', value: 'AGV' }] }],
   },
+  {
+    key: 'robots:amr-7',
+    layerId: 'robots',
+    listName: 'AMR 7',
+    item: { label: 'AMR 7', kind: '로봇', status: '이동 중', statusTone: 'signal' },
+    sections: [{
+      title: '로봇',
+      fields: [
+        { label: '위치', value: `${MIRROR_ROBOT_POSE.position.x}, ${MIRROR_ROBOT_POSE.position.y}` },
+        { label: '방향', value: '북동쪽' },
+        { label: '연동 궤적', value: MIRROR_TRAJECTORY.label },
+      ],
+    }],
+  },
 ];
 
 const MIRROR_LEGEND_ITEMS = [
   { id: 'regions', label: '영역', color: TONE_COLOR.cautionary, shape: 'square' },
-  { id: 'lanes', label: '레인 (방향선)', color: TONE_COLOR.signal, shape: 'line' },
+  { id: 'lanes', label: '레인 (방향선)', color: TONE_COLOR.neutral, shape: 'line' },
   { id: 'route', label: '현재 경로 구간 · 대기 (점선)', color: 'var(--color-semantic-status-cautionary-foreground)', shape: 'line', dashed: true },
   { id: 'trajectory', label: '현재 궤적 · 이동 중 (실선)', color: TONE_COLOR.signal, shape: 'line' },
   { id: 'waypoints', label: '웨이포인트', color: TONE_COLOR.neutral, shape: 'dot' },
   { id: 'facilities', label: '설비 전이', color: TONE_COLOR.signal, shape: 'dot' },
+  { id: 'robots', label: '로봇 (실시간 위치)', color: TONE_COLOR.signal, shape: 'dot' },
 ];
 
 function featureByKey(key) {
@@ -578,6 +617,17 @@ function SemanticMirrorFixture() {
                       onActivate={() => selectFromMap('facilities:facility-lift')}
                     />
                   )}
+                  {featureVisible('robots:amr-7') && (
+                    <RobotMarker
+                      pose={MIRROR_ROBOT_POSE}
+                      viewportScale={cssViewBoxScale}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      showLabel={false}
+                      selected={selectedKey === 'robots:amr-7'}
+                      onActivate={() => selectFromMap('robots:amr-7')}
+                    />
+                  )}
                 </>
               )}
             </ViewerMapCanvas>
@@ -653,6 +703,7 @@ export const Overview = {
       ['paths:trajectory-amr-7', '[data-trajectory-id="trajectory-amr-7"]', 'AMR 7 예상 궤적'],
       ['waypoints:wp-pick', '[data-waypoint-id="wp-pick"]', '픽업 지점 P1'],
       ['facilities:facility-lift', '[data-lds-facility-transition][data-transition-id="facility-lift"]', '화물 승강기 A'],
+      ['robots:amr-7', '[data-robot-marker][data-robot-id="amr-7"]', 'AMR 7'],
     ];
     for (const [key, mapSelector, name] of treeSelections) {
       const row = rowFor(key);
@@ -674,15 +725,20 @@ export const Overview = {
 
     // 2. Pointer selection preserves route segment identity, and the reverse
     // map -> tree direction stays in sync without stealing focus.
+    // Pointer clicks target each feature's HIT CORE (the on-line circle) —
+    // clicking a group's bounding-box center is fragile now that badges float
+    // off the line and the robot sits on the corridor bundle.
     const mapSelections = [
-      ['[data-segment-id="route-seg-completed"]', mirrorRouteSegmentKey('route-seg-completed'), '배송 경로 17 · 픽업 → 교차로'],
-      [`[data-segment-id="${MIRROR_ROUTE_CURRENT_SEGMENT_ID}"]`, mirrorRouteSegmentKey(MIRROR_ROUTE_CURRENT_SEGMENT_ID), '배송 경로 17 · 교차로 → 승강기 A'],
-      ['[data-trajectory-id="trajectory-amr-7"]', 'paths:trajectory-amr-7', 'AMR 7 예상 궤적'],
+      ['[data-segment-id="route-seg-completed"] [data-route-hit-target-core]', '[data-segment-id="route-seg-completed"]', mirrorRouteSegmentKey('route-seg-completed'), '배송 경로 17 · 픽업 → 교차로'],
+      [`[data-segment-id="${MIRROR_ROUTE_CURRENT_SEGMENT_ID}"] [data-route-hit-target-core]`, `[data-segment-id="${MIRROR_ROUTE_CURRENT_SEGMENT_ID}"]`, mirrorRouteSegmentKey(MIRROR_ROUTE_CURRENT_SEGMENT_ID), '배송 경로 17 · 교차로 → 승강기 A'],
+      ['[data-trajectory-id="trajectory-amr-7"] [data-trajectory-actual-hit-core]', '[data-trajectory-id="trajectory-amr-7"]', 'paths:trajectory-amr-7', 'AMR 7 예상 궤적'],
+      ['[data-robot-marker][data-robot-id="amr-7"] [data-robot-hit-area]', '[data-robot-marker][data-robot-id="amr-7"]', 'robots:amr-7', 'AMR 7'],
     ];
-    for (const [mapSelector, key, name] of mapSelections) {
+    for (const [clickSelector, mapSelector, key, name] of mapSelections) {
+      const clickTarget = map.querySelector(clickSelector);
       const mapFeature = map.querySelector(mapSelector);
-      if (!mapFeature) throw new Error(`Missing pointer-only map feature ${mapSelector}.`);
-      await userEvent.click(mapFeature);
+      if (!clickTarget || !mapFeature) throw new Error(`Missing pointer-only map feature ${mapSelector}.`);
+      await userEvent.click(clickTarget);
       const activeElement = canvasElement.ownerDocument.activeElement;
       if (activeElement === mapFeature || mapFeature.contains(activeElement)) {
         throw new Error(`Pointer-only map feature ${mapSelector} became document.activeElement.`);
@@ -724,9 +780,10 @@ export const Overview = {
       mapSvg?.querySelector('[data-lk-trajectory-overlay]'),
       ...Array.from(mapSvg?.querySelectorAll('[data-waypoint-id]') ?? []),
       mapSvg?.querySelector('[data-lds-facility-transition]'),
+      mapSvg?.querySelector('[data-robot-marker]'),
     ].filter(Boolean);
-    if (mapIdentities.length !== 9) {
-      throw new Error(`Expected 9 pointer-selectable map identities, received ${mapIdentities.length}.`);
+    if (mapIdentities.length !== 10) {
+      throw new Error(`Expected 10 pointer-selectable map identities, received ${mapIdentities.length}.`);
     }
     if (mapSvg?.querySelector('[data-lane-endpoint]')) {
       throw new Error('Waypoint-owned endpoint identities must not duplicate Lane endpoint chrome in the composed map.');
@@ -895,6 +952,7 @@ export const NarrowViewport = {
         ['Trajectory', '[data-trajectory-actual-hit-core]'],
         ['Waypoint', '[data-waypoint-hit-area]'],
         ['FacilityTransition', '[data-transition-hit-area]'],
+        ['Robot', '[data-robot-hit-area]'],
       ];
       for (const [name, selector] of circleCoreSelectors) {
         const cores = Array.from(map.querySelectorAll(selector));
@@ -923,8 +981,9 @@ export const NarrowViewport = {
       map.querySelector('[data-lk-trajectory-overlay]'),
       ...map.querySelectorAll('[data-waypoint-id]'),
       map.querySelector('[data-lds-facility-transition]'),
+      map.querySelector('[data-robot-marker]'),
     ].filter(Boolean);
-    if (mapIdentities.length !== 9 || mapIdentities.some((identity) => !identity.closest('[aria-hidden="true"]'))) {
+    if (mapIdentities.length !== 10 || mapIdentities.some((identity) => !identity.closest('[aria-hidden="true"]'))) {
       throw new Error('Narrow map identities must be aria-hidden and mirrored by the panel tree.');
     }
     const pointerOnlyPaths = [

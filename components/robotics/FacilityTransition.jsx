@@ -3,7 +3,7 @@ import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { FacilityGlyph } from './_FacilityGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_DASH, NAV_PIN, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_MARKER_SHADOW, NAV_PIN, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO } from './_navigationVocabulary.js';
 
 const AVAILABILITY_PRESENTATION = {
   available: {
@@ -393,6 +393,15 @@ export function FacilityTransition({
                 data-transition-invalid-mark={state.kind === 'invalid' ? '' : undefined}
                 data-transition-stale-mark={state.kind === 'stale' ? '' : undefined}
               >
+                <circle
+                  data-transition-badge-shadow={state.kind}
+                  data-marker-shadow=""
+                  cy={NAV_MARKER_SHADOW.chipOffsetY}
+                  r={NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2}
+                  fill={NAV_MARKER_SHADOW.fill}
+                  opacity={NAV_MARKER_SHADOW.opacity}
+                  pointerEvents="none"
+                />
                 <circle
                   r={NAV_STATE_BADGE.radius}
                   fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"

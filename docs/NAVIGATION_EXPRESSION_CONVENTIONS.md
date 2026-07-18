@@ -30,6 +30,9 @@
 - **selected(solid fill) 위 표식**: 다이아몬드가 accent로 채워지면 그 위에 직접 그리는 글리프·슬래시는 `--color-semantic-static-white`로 knockout해 대비를 유지한다(칩이 있는 복합 글리프는 foreground 유지).
 - **색 단독 금지**: availability·상태는 색뿐 아니라 형태(글리프·dash 패턴)와 접근성 이름으로도 전달한다.
 - **배지는 선 위에 얹지 않는다**: path에 붙는 상태·조건·invalid·stale 배지는 자기 anchor의 **위쪽 화면 법선으로 `NAV_STATE_BADGE.pathNormalOffset`(16px)** 떨어져 떠서 선을 가리지 않는다. anchor 좌표(`data-*-anchor-x/y`)는 실제 path 지점을 유지하고, 충돌 시 screen-slot row가 이 기본 오프셋을 대체한다. Lane은 라벨·메타데이터와 같은 사다리를 쓰므로 자체 32px 법선 축을 유지한다. 조건 배지가 있는 Route 세그먼트의 라벨은 배지 위(-30px)로 올라간다.
+- **떠 있는 배지는 leader 틱으로 자기 선에 묶인다**: 기본 법선 오프셋의 Route·Trajectory 배지는 배지 링과 같은 톤의 `NAV_BADGE_LEADER` 틱(1.5px, 배지 가장자리→선 가장자리)을 그려 소속을 시각적으로 유지한다. stale 배지여도 틱은 실선이다. 충돌 screen-slot row와 Lane 사다리는 틱을 그리지 않으며, 이 틱은 renderer-local 표식으로 `NavigationAnnotationLayer`의 (의도적으로 존재하지 않는) label leader line이 아니다.
+- **부동 마커는 캐스트 그림자로 지면에 접지한다**: 지도 평면 위에 떠 있는 모든 점형 마커 — 핀·웨이포인트 다이아몬드·상태/조건 배지·T/카운트/엔드포인트 칩·로봇 body — 는 자기 실루엣을 화면 아래로 이동한 `NAV_MARKER_SHADOW`(static-black 16%, 칩 1 / 다이아몬드 1.4 / 핀 0.8 오프셋 계층)를 드리운다. 선·영역은 바닥에 그려진 것이므로 평면 그대로다. 그림자 요소는 `data-marker-shadow`를 달고 `data-navigation-marker-circle` 계열 훅·obstacle 등록을 절대 갖지 않는다.
+- **정적 토폴로지는 조용하고, 동적 상태만 크다**: 통행 가능한 레인은 `--viewer-muted` 인프라 톤으로 그린다. accent·상태 톤은 살아있는 것 — 현재 경로 구간, 활성 궤적, 로봇, 선택 강조 — 만 사용한다. 이 주부 위계가 한 지도의 figure/ground를 만든다.
 
 ### 2.5 상호작용 상태 계층 (포커스 · 선택 · 호버)
 
@@ -50,7 +53,7 @@
 - **표식은 부동 장애물.** 방향 셰브론과 진행 헤드는 path-anchored라 이동하지 않는 대신 `NavigationAnnotationLayer` 장애물로 등록되어, 조정되는 라벨이 표식을 덮지 않는다.
 - **표식 의미는 모양이 지킨다.** 번들 위에서 정적 방향(절개 셰브론)과 동적 진행(채움 화살촉)이 가까이 놓여도 기하가 달라 의미가 섞이지 않는다. 같은 모양을 두 의미에 쓰지 않는 것이 이 규약의 전제다.
 - **밀집 완화는 owning renderer 소관.** 활성 경로가 레인 회랑을 완전히 덮는 합성에서 레인의 정적 방향 표식을 감출지는 제품/합성 뷰어가 결정한다(zoom·density 기반 라벨 suppression과 같은 축). 감추더라도 레인 접근성 이름의 진입→이탈 방향은 항상 남는다.
-- **페인트 순서 권고**: 영역 → 레인 → 경로 → 궤적 → 마커·핀 — 정적 topology가 아래, 동적 상태가 위.
+- **페인트 순서 권고**: 영역 → 레인 → 경로 → 궤적 → 마커·핀 → 로봇 — 정적 topology가 아래, 동적 상태가 위.
 
 ## 3. 라벨·카피 규약
 
@@ -71,6 +74,7 @@ Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원�
 - 채움 삼각형 방향 glyph 폐기 — Lane은 공용 open V를 한 번 쓰고, Route는 반복 방향 glyph를 제거했으며, Route·Trajectory의 current progress는 같은 기하를 elapsed prefix 끝에만 결합한다. *(2026-07-18 개정으로 대체됨 — 아래 항목.)*
 - **open V 공유 폐기 → 의미당 모양 하나 (2026-07-18)** — 하나의 열린 V가 Lane 정적 방향과 Route·Trajectory 동적 진행을 겸했으나, Route의 미래 선이 표식 뒤로 이어져 "선이 표식에서 끝난다"는 구분 근거가 화면에서 무너졌고, casing 이중 표식 탓에 Lane chevron이 선에서 떠 보였다. 재분리: 방향 = 선 절개 셰브론(`NAV_DIRECTION_CHEVRON`, 선을 끊고 선 자체가 같은 색·두께의 여는 V로 꺾임, 최장 직선 구간 중점 — 0.64 고정 비율의 코너 걸침 제거), 진행 = 단일 `marker-end` 채움 삼각형(`NAV_PROGRESS_TRIANGLE`, 자체 외곽선이 casing marker 쌍을 대체) + tip 앞 future gap. fraction 0의 합성 16px carrier와 route/trajectory future opacity 드리프트(0.34/0.28→단일 값)도 함께 제거했다.
 - **즉석 로봇 pose placeholder → `RobotMarker` 원자·렌더러 (2026-07-18)** — 여러 스토리(2D Map preview, Map2DCanvas/ViewerToolbar visual-parity 카드)가 로봇 위치·방향을 "원 + 회전 다트"로 손수 그렸다. 이 다트는 진행 다트와 같은 계열이라 "의미당 모양 하나"를 스토리 층에서 깨뜨렸고, 어느 Foundation 페이지에도 정의되지 않은 채 소비 페이지에서 튀어나왔다(§7 유형). 로봇 pose를 정식 원자 `NAV_ROBOT_POSE`(원형 body + heading 노즈, 진행 다트와 모양 분리)와 공개 렌더러 `RobotMarker`(position·heading·footprint, selected/focused/disabled/invalid/stale 어휘, hit target, 접근성 이름)로 승격하고, 모든 즉석 placeholder를 `RobotMarker`로 교체했다. `Vector Glyph` 페이지가 세 글리프를 나란히 문서화한다.
+- **씬 응집 재작업 (2026-07-18)** — 합성 뷰어 씬이 "요소들이 연관 없이 붕 떠 보인다"는 문제를 어휘·씬 양쪽에서 정리했다. 어휘: 모든 부동 칩/실루엣에 공유 캐스트 그림자(`NAV_MARKER_SHADOW`), 경로-오프셋 배지에 leader 틱(`NAV_BADGE_LEADER`), 정적 레인 톤 다운(accent→`--viewer-muted`) — figure/ground 위계 확립. 씬: 승강기 로비 영역을 프레임 안으로 옮겨 회랑 종점·웨이포인트·핀을 품게 하고, keep-out을 회랑 굽이가 우회하는 위치로 옮기고, 궤적 현재 표본에서 파생한 `RobotMarker`(+로봇 레이어·범례 행)를 추가해 씬의 주인공을 세웠다.
 - **합성 앱 씬 → Viewer 페이지 이동** — Route 렌더러 페이지에 있던 `SemanticMirror`(이름 목록 + 6-오버레이 지도 + LayerPanel·SelectionInspector·Legend)를 §1에 따라 `LDS Robotics/Viewer/Navigation Viewer` 합성 페이지로 옮겼다. 이동하며 SelectionInspector 필드의 KO/EN(`keep-out`·`lift-a`·`holding`·`passthrough`·`completed`·`current`·`sample`…)을 한국어 어휘로 정정하고, Route에 남은 좁은 폭 스토리의 "아래 semantic mirror" 참조 카피를 접근성 이름 기준으로 다시 썼다([`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) Phase 5).
 
 ## 6. 미결 위반 (규약대로 정리 예정)

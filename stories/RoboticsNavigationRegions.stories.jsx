@@ -27,7 +27,7 @@ export default meta;
 
 function assertCenteredStateGlyph(mark, expectedKind) {
   const glyph = mark?.querySelector('[data-navigation-state-glyph]');
-  const badge = mark?.querySelector(':scope > circle');
+  const badge = mark?.querySelector(':scope > circle:not([data-marker-shadow])');
   if (!glyph || !badge) throw new Error(`State badge is missing SVG geometry for ${expectedKind}.`);
   if (mark.querySelector('text')) throw new Error(`${expectedKind} state badge must not use a font glyph.`);
   if (glyph.dataset.navigationStateGlyph !== expectedKind || !glyph.dataset.navigationStateGlyphSource?.startsWith('lds-icon:')) {
