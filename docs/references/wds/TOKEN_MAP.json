@@ -6,6 +6,7 @@
     "inspectedAt": "2026-07-07"
   },
   "principle": "Preserve WDS structure and component semantics; replace color values and brand expression with LK ROBOTICS theme values.",
+  "provenanceAuthority": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json#provenanceLegend",
   "collections": {
     "Atomic": {
       "strategy": "Keep WDS neutral and accent roles as a reference scale. LK brand colors may replace the blue/primary decision points but should not rename semantic roles in component contracts."
@@ -196,62 +197,62 @@
     {
       "wds": "Layout/Essential, Divider",
       "lk": "MobileSystemBars, Divider",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
       "lk": "ActionArea, Button, TextButton, IconButton, ToggleIcon, ButtonGroup, SplitButton, Fab",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Textinput/Textfield",
       "lk": "Input, SearchField, PasswordInput, Textarea, FormField, InputGroup, ChoiceCard[presentation=frame]",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Select/Select",
       "lk": "Select, Combobox, AutoComplete, TagInput",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Control/Checkbox, Control/Radio, Switch/Switch",
       "lk": "Checkbox, CheckboxGroup, Radio, RadioGroup, Checkbox[variant=mark], Switch, ToggleButton, ThemeToggle, ChoiceCard[presentation=frame]",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Card/Card, Card/List Card",
       "lk": "Card, ChoiceCard; LK product extensions: MetricCard, FeatureCard, NewsCard, ChecklistItem, ProductCard, SpecRow, Stat",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "List Cell/List Cell",
       "lk": "ListCell, DescriptionList, Table, DataGrid, Tree",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Navigation/Category, Tab, Page Indicator, Pagination",
       "lk": "Category, Tabs, PageIndicator, Pagination",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Toast/Toast, Snackbar/Snackbar, Alert/Alert",
       "lk": "Toast, ToastStack, Snackbar, Notification, Banner, Callout, Alert, ConfirmDialog",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Tooltip/Tooltip, Menu/Menu",
       "lk": "Tooltip, DropdownMenu, Menubar, Popover, HoverCard, CommandPalette",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Skeleton, Circular",
       "lk": "Skeleton, Spinner, ProgressBar, CircularProgress, Meter",
-      "layer": "wds-core"
+      "mappingKind": "wds-family-crosswalk"
     },
     {
       "wds": "Robotics extension",
       "lk": "RobotStatusCard, EquipmentStatusCard, TopicTree, Joystick, Map2DCanvas, Scene3DFrame, TelemetryGauge, TelemetryValue, ViewerToolbar, VideoStreamTile, CanvasEditorCommandBar, CanvasEditorShell",
-      "layer": "lk-robotics-extension"
+      "mappingKind": "lds-extension-crosswalk"
     }
   ]
 }

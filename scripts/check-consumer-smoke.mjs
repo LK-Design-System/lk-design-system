@@ -75,19 +75,24 @@ const indexHtml = `<!doctype html>
 
 const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { Button as RootButton } from '@lk-robotics/design-system-core';
 import {
   Badge,
   Button,
   Card,
   EmptyState,
-  Lockup,
-  RobotStatusCard,
-  Table,
-  ThemeToggle,
   Toast,
+} from '@lk-robotics/design-system-core/core';
+import {
+  Lockup,
+  ThemeToggle,
+} from '@lk-robotics/design-system-core/theme';
+import {
+  Table,
   TopBar,
   TopBarNavItem,
-} from '@lk-robotics/design-system-core';
+} from '@lk-robotics/design-system-core/product';
+import { RobotStatusCard } from '@lk-robotics/design-system-core/robotics';
 import '@lk-robotics/design-system-core/styles.css';
 
 const rows = [
@@ -115,6 +120,7 @@ function App() {
           <h1 style={{ marginTop: 0 }}>LK 디자인 시스템 소비 앱 스모크</h1>
           <p>패키지명 import, styles.css export, React 컴포넌트 조합이 소비 앱 번들에서 동작해야 합니다.</p>
           <Button>운영 화면 열기</Button>
+          <RootButton variant="secondary">Root compatibility</RootButton>
         </Card>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 16 }}>
           <RobotStatusCard name="RB-01" status="online" battery={82} mode="순찰" selected />
@@ -170,7 +176,7 @@ async function main() {
 
   const uniqueConsoleErrors = [...new Set(consoleErrors)].filter((message) => !/ResizeObserver loop/.test(message));
   assert(uniqueConsoleErrors.length === 0, `Consumer smoke emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
-  console.log('Validated consumer smoke: package-name imports, styles.css export, Vite production build, and rendered operational page passed.');
+  console.log('Validated consumer smoke: aggregate compatibility plus Core/Theme/Product/Robotics imports, styles.css, Vite production build, and rendered operational page passed.');
 }
 
 main().catch((error) => {

@@ -10,6 +10,11 @@ generic component families, token hierarchy, and documentation conventions.
 LDS then applies LK ROBOTICS brand decisions and separates additional product or
 robotics work into explicit extension layers.
 
+Runtime ownership (`core`, `theme`, `product`, `robotics`) and design provenance
+are independent axes. `PUBLIC_EXPORT_CLASSIFICATION.json` is authoritative for
+both; WDS provenance does not automatically place an export in the Core package
+or Storybook layer.
+
 The rule is:
 - `WDS Core` is the inherited baseline.
 - `LK Theme Override` is LK's visual identity applied over WDS.
@@ -46,7 +51,10 @@ contract separate so action styling stays consistent across stories:
   including text, section labels, variant-like symbol names, dimensions, and
   visual samples for queued WDS nodes
 - `TOKEN_MAP.json`: machine-readable WDS variable to LK token/CSS mapping
-- `LAYER_CLASSIFICATION.json`: Storybook layer and story title source of truth
+  and family-level crosswalk. Its component-family rows map source families to LDS
+  surfaces; export-level owner/provenance remains authoritative only in
+  `PUBLIC_EXPORT_CLASSIFICATION.json`.
+- `LAYER_CLASSIFICATION.json`: Storybook owner layer, explicit cross-layer evidence exceptions, and story title source of truth
 - `VISUAL_TOKEN_EXCEPTIONS.json`: documented exceptions for provider-owned
   visual values that must not be tokenized
 - `COVERAGE_AUDIT.json`: machine-readable WDS page/section coverage matrix
@@ -63,8 +71,8 @@ contract separate so action styling stays consistent across stories:
   token files, Storybook pages, and LK theme overrides
 - `FIGMA_NODE_AUDIT_QUEUE.json`: exact WDS source nodes, closure criteria, and
   next Figma reads required before `partial` rows can become parity claims
-- `PUBLIC_EXPORT_CLASSIFICATION.json`: every public LDS export classified as
-  WDS core, theme override, product extension, or robotics extension
+- `PUBLIC_EXPORT_CLASSIFICATION.json`: every public LDS export assigned one
+  runtime owner layer and one independent WDS/LK provenance
 - `VARIANT_AUDIT_CHECKLIST.json`: family-level WDS variant/state/slot checks
   with Storybook evidence refs for the next Figma parity pass
 - `COVERAGE_GAPS.md`: WDS concepts found in Figma that need LDS coverage or

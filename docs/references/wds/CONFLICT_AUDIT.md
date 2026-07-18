@@ -175,12 +175,12 @@ being exposed as Storybook pages.
    - Dark value
    - override reason
 
-2. Mark component families as one of:
-   - `wds-core`
-   - `lk-theme-override`
-   - `lk-product-extension`
-   - `lk-robotics-extension`
-   - `example-only`
+2. Record the two classification axes independently:
+   - runtime owner: `core`, `theme`, `product`, or `robotics`
+   - design provenance: `direct-wds`, `wds-adjacent`, `theme-override`,
+     `product-extension`, or `robotics-extension`
+   - non-component examples remain evidence-only and do not receive a package
+     owner
 
 3. Move robotics, viewer, telemetry, map, and editor stories under an explicit
    LK Robotics Extension section.

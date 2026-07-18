@@ -5,7 +5,7 @@
 | Type | Governance policy |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-18 |
 
 디자인 시스템은 컴포넌트 묶음이 아니라 변경을 안전하게 반복하는 운영 체계입니다. 이 문서는 LK 디자인 시스템의 기여, 릴리즈, 마이그레이션 기준을 정의합니다.
 
@@ -19,11 +19,36 @@
 | Tooling | Frontend platform | build, Storybook, checks, package release |
 | Docs | Design system owner | migration guide, release notes, usage guidance |
 
+### Layer ownership contract
+
+모든 public export와 내부 JavaScript 모듈은 `core`, `theme`, `product`,
+`robotics` 중 정확히 하나의 owner layer를 갖습니다. Owner layer는 코드와
+릴리즈 경계이고, `direct-wds`, `wds-adjacent`, `theme-override`,
+`product-extension`, `robotics-extension` provenance는 설계 근거입니다. WDS
+근거가 있다는 사실만으로 Core 소유가 되지 않습니다.
+
+허용 의존 방향은 다음과 같습니다.
+
+- Core → Core
+- Theme → Core, Theme
+- Product → Core, Product
+- Robotics → Core, Product, Robotics
+
+`PUBLIC_EXPORT_CLASSIFICATION.json`이 export와 내부 모듈 소유권의 단일
+machine-readable authority입니다. `npm run check:layers`는 누락·중복·stale
+분류, 금지된 역방향 의존, 계층 순환을 차단합니다. 새 코드는
+`/core`, `/theme`, `/product`, `/robotics` subpath를 사용하며 기존 aggregate
+root와 `components/*`는 호환 표면으로 유지합니다.
+
+이 저장소의 package/type/consumer 검사는 LDS 자체의 경계를 증명합니다.
+작업 중인 제품 저장소의 실제 채택이나 production workflow 지원을 증명하지
+않으며, 제품 검증 전에는 해당 상태를 `unverified` 또는 `deferred`로 유지합니다.
+
 ## Contribution path
 
 1. Problem statement: 제품 업무에서 어떤 반복 문제를 해결하는지 쓴다.
 2. Review plan: `docs/COMPONENT_WORKFLOW.md`의 제품 workflow, icon/asset/map symbol, 설계 근거 gate를 적용한다.
-3. Contract draft: API, states, tokens, accessibility를 표로 쓴다.
+3. Contract draft: API, states, tokens, accessibility와 owner layer/provenance를 표로 쓴다.
 4. Prototype: Storybook public story와 필요한 hidden parity story를 만든다.
 5. Review: design, accessibility, engineering, domain safety, 실제 LK 제품 채택 관점으로 본다.
 6. Release: changelog, migration note, package version을 갱신한다.
@@ -47,12 +72,14 @@
 - component prompt 문서를 갱신했다.
 - Storybook public surface가 너무 넓어지지 않도록 페이지를 분리했다.
 - accessibility contract와 keyboard behavior를 확인했다.
+- public export와 내부 module ownership이 `npm run check:layers`를 통과한다.
 - visual parity 또는 smoke check가 필요한 변경은 검증을 남겼다.
 - breaking/deprecated 변경은 migration note를 남겼다.
 
 ## Release checklist
 
 - `pnpm run check` 또는 동등한 release gate가 통과한다.
+- aggregate root가 네 계층 entrypoint의 정확한 합집합이고 실제 pack에서 ESM/CJS/type subpath가 확인된다.
 - Storybook build 산출물이 생성된다.
 - public story 수와 hidden parity story 수가 의도와 맞다.
 - changed components의 API/state matrix가 갱신됐다.

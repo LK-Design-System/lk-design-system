@@ -5,10 +5,10 @@
 | Type | Current register |
 | Status | Current |
 | Owner | Frontend platform · Design system owner |
-| Last reviewed | 2026-07-13 |
+| Last reviewed | 2026-07-19 |
 | Update | `npm run report:inventory` · `npm run check:inventory` |
 
-Storybook의 578개 스토리 역할·공개 여부·소유 컴포넌트와 189개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
+Storybook의 579개 스토리 역할·공개 여부·소유 컴포넌트와 190개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 패키지 중심의 LK ROBOTICS 핵심 디자인 시스템입니다.
 
@@ -17,10 +17,11 @@ Storybook의 578개 스토리 역할·공개 여부·소유 컴포넌트와 189�
 - 패키지명: `@lk-robotics/design-system-core`
 - React 컴포넌트 소스 파일: 204개
 - 공개 named export: 210개
+- 계층별 export: Core 82개 · Theme 2개 · Product 92개 · Robotics 34개
 - 컴포넌트 그룹: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `layout`, `mlops`, `navigation`, `operations`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
-- 빌드 결과물: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`
+- 빌드 결과물: aggregate `dist/index.*`와 `dist/core.*`, `dist/theme.*`, `dist/product.*`, `dist/robotics.*`
 
 ## 주요 소스 영역
 
@@ -28,7 +29,8 @@ Storybook의 578개 스토리 역할·공개 여부·소유 컴포넌트와 189�
 - `tokens/`: CSS 디자인 토큰, component token, base style, machine-readable `source.json` 토큰 맵
 - `assets/`: 브랜드 SVG, Pretendard 폰트 파일, 제품/산업/기술 이미지
 - `styles.css`: 토큰 import용 최상위 CSS 진입점
-- `src/`: 생성된 패키지 진입 파일
+- `src/`: aggregate root와 Core·Theme·Product·Robotics의 생성된 패키지 진입 파일
+- `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`: public export와 internal module의 owner layer/provenance authority
 - `scripts/`: 패키지 유지보수 스크립트
 - `.storybook/`: Storybook 런타임 설정
 - `stories/`: 인터랙티브 컴포넌트 문서와 시각 예시

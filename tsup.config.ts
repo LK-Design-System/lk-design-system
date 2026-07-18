@@ -4,7 +4,9 @@ import path from 'node:path';
 
 function componentEntries(dir = 'components') {
   const entries: Record<string, string> = {};
-  for (const item of readdirSync(dir, { withFileTypes: true })) {
+  const items = readdirSync(dir, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+  for (const item of items) {
     const fullPath = path.join(dir, item.name);
     if (item.isDirectory()) {
       Object.assign(entries, componentEntries(fullPath));
@@ -19,6 +21,10 @@ function componentEntries(dir = 'components') {
 export default defineConfig({
   entry: {
     index: 'src/index.js',
+    core: 'src/core.js',
+    theme: 'src/theme.js',
+    product: 'src/product.js',
+    robotics: 'src/robotics.js',
     ...componentEntries(),
   },
   format: ['esm', 'cjs'],

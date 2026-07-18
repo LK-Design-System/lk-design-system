@@ -42,9 +42,15 @@ LK ROBOTICS 핵심 디자인 시스템 패키지입니다. 토큰, React 컴포�
 ## 패키지 사용
 
 ```tsx
-import { Button, ProductCard, TopBar } from '@lk-robotics/design-system-core';
+import { Button } from '@lk-robotics/design-system-core/core';
+import { ThemeToggle } from '@lk-robotics/design-system-core/theme';
+import { ProductCard, TopBar } from '@lk-robotics/design-system-core/product';
+import { RobotStatusCard } from '@lk-robotics/design-system-core/robotics';
 import '@lk-robotics/design-system-core/styles.css';
 ```
+
+기존 aggregate root는 네 layer export의 합집합인 호환 진입점으로 유지합니다. 새 코드는
+소유 경계가 드러나는 `/core`, `/theme`, `/product`, `/robotics` subpath를 사용합니다.
 
 패키지 메타데이터:
 
@@ -52,9 +58,8 @@ import '@lk-robotics/design-system-core/styles.css';
 - 배포 정책: 현재 `private: true`로 유지하며 내부 Git 소비를 기본으로 합니다. npm publish 전환 시 GitHub Packages 정책과 함께 명시적으로 변경합니다.
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
-- ESM 진입점: `dist/index.js`
-- CJS 진입점: `dist/index.cjs`
-- 타입 진입점: `dist/index.d.ts`
+- Aggregate 호환 진입점: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`
+- Layer 진입점: `dist/{core,theme,product,robotics}.{js,cjs,d.ts}`
 
 ## 레포 구조
 
@@ -82,6 +87,7 @@ CI는 npm을 기준으로 실행하지만, 패키지 스크립트 내부에서�
 ```powershell
 npm run check:tokens
 npm run check:type-surface
+npm run check:layers
 npm run check:contracts
 npm run check:publish-policy
 npm run check:consumer
@@ -106,7 +112,7 @@ npm run check:ops-release
 npm run generate:entry
 ```
 
-`src/index.js`와 `src/index.d.ts`는 직접 수정하지 마세요.
+`src/index.*`와 `src/{core,theme,product,robotics}.*`는 직접 수정하지 마세요.
 
 ## Storybook
 
