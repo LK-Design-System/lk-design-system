@@ -3,11 +3,11 @@
   "schemaVersion": 1,
   "audit": {
     "status": "wave-0-in-progress",
-    "capturedAt": "2026-07-19T07:33:19.5859000+09:00",
+    "capturedAt": "2026-07-19T08:46:05.3454458+09:00",
     "source": {
       "repository": "LK-ROBOTICS/lk-design-system",
-      "observedBranch": "detached-main-candidate",
-      "observedCommit": "356432581964feb5af101da9688e02cff6e22aa7",
+      "observedBranch": "main",
+      "observedCommit": "1cf28b1c86182f2853709010792231b6a9ac2c67",
       "mainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
       "originMainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
       "packageName": "@lk-robotics/design-system-core",
@@ -21,15 +21,15 @@
       "blockers": [
         {
           "id": "clean-main-baseline",
-          "reason": "The audited candidates are integrated on local main at 626756b, but origin/main remains at 0aa7f8d and no tagged clean-main full-check/artifact baseline exists."
+          "reason": "The approved Wave 0 preparation is integrated on local main at 1cf28b1, but origin/main remains at 0aa7f8d and no immutable clean-main source tag exists."
         },
         {
           "id": "full-regression-baseline",
-          "reason": "The detached candidate npm run check reaches pre-existing main gates: Storybook IA has incomplete human reviews, while check:storybook-ci and a main control run reproduce eight Waypoint/state-glyph visual baseline diffs. No clean-main full pass exists."
+          "reason": "Storybook IA is current at 190/579 and the eight Robotics atom visual baselines are repaired with 65/65 regression parity, but no clean-tagged source commit has a tracked full-check and consumer-matrix attestation."
         },
         {
           "id": "package-artifact-baseline",
-          "reason": "Local check:pack passed, but it used noncanonical Node 24.18.0/npm 11.16.0. A canonical Node 22/npm 10.9.2 immutable artifact and a fresh-checkout reproduction contract have not been captured."
+          "reason": "The canonical Node 22.17.1/npm 10.9.2 capture/verify contract and ordinary package smoke pass, but no clean-tagged source commit has a tracked immutable artifact attestation and byte-for-byte fresh-checkout reproduction."
         }
       ]
     }
@@ -954,12 +954,15 @@
       "commit": null
     },
     "fullCheck": {
-      "status": "failed-on-detached-candidate",
-      "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
-      "command": "npm run check",
-      "firstFailure": "check:storybook-ia: Every page must have a completed human review",
-      "additionalMainReproducibleFailure": "Eight Waypoint/state-glyph visual smoke captures exceed the one-percent threshold on both the candidate and main control.",
-      "requiredBefore": "wave-0-approval"
+      "status": "not-captured",
+      "requiredBefore": "wave-0-approval",
+      "diagnosticObservation": {
+        "sourceCommit": "1cf28b1c86182f2853709010792231b6a9ac2c67",
+        "storybookIa": "passed-190-pages-579-stories-all-reviewed",
+        "visualRegression": "passed-65-of-65",
+        "viewerTokens": "passed-three-play-and-axe-stories-with-direct-content-boundary-checks",
+        "acceptance": "diagnostic-only-until-clean-tagged-full-check-and-consumer-matrix-evidence"
+      }
     },
     "packageArtifacts": {
       "status": "not-captured",
@@ -989,7 +992,7 @@
         "React 18 runtime package smoke",
         "Linux package smoke on Node 22/npm 10.9.2",
         "canonical Windows Node 22/npm 10.9.2 tarball",
-        "green Storybook IA and visual regression gates"
+        "tracked clean-tagged full-check, visual and size matrix evidence"
       ]
     }
   },

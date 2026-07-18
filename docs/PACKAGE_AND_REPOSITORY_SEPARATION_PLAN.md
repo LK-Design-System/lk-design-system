@@ -6,7 +6,7 @@
 | Status | In progress — Wave 0 inventory와 의사결정 gate 실행 중 |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
 | Last reviewed | 2026-07-19 |
-| Audit snapshot | `356432581964feb5af101da9688e02cff6e22aa7` (detached `main` candidate; clean-main baseline 아님) |
+| Audit snapshot | `1cf28b1c86182f2853709010792231b6a9ac2c67` (local `main` source observation; clean-main baseline 아님) |
 
 이 계획은 현재 단일 패키지인 `@lk-robotics/design-system-core`를 소비 경계에
 맞는 패키지로 나누고, 검증 결과에 따라 Robotics UI를 별도 저장소로 추출하는
@@ -99,7 +99,7 @@ facade와 단계적 migration 원칙은 유지한다.
   Theme adapter로 분리할지 명시적 Core 예외로 유지할지 owner 승인이 필요하다.
 - aggregate root와 compiled `components/*`가 모든 계층을 한 package에서 노출한다.
 - package smoke와 publish policy가 단일 package의 정확한 합집합을 전제로 한다.
-- CI 설치 정책은 npm으로 고정했고 local `main@626756b`에서 legacy pnpm lockfile을
+- CI 설치 정책은 npm으로 고정했고 local `main@1cf28b1`에서 legacy pnpm lockfile이
   제거했다. `origin/main` 동기화와 baseline tag는 아직 수행하지 않았다.
 - 현재 consumer smoke는 실제 product stack 전체와 Windows/Linux matrix를 대체하지 않는다.
 - Git tag와 독립 package release 기준점이 아직 없다.
@@ -278,24 +278,19 @@ LK Theme가 제공하는 value layer로 기록한다.
   기록했다. 이 `link:`는 `LK Design System`이라는 로컬 Windows junction을 거쳐
   local `lk-design-system main@626756b`를 가리키는 것을 재확인했다. 이는 현재 상태
   증거이지 portable package 증거가 아니다.
-- 일곱 consumer evidence report는 이 변경에서 Git 추적 상태로 고정해 consumer evidence
-  blocker를 닫았다. RobotMarker 변경을 제외한 layer infrastructure와 Wave 0 candidate는
-  승인에 따라 local `main@626756b`까지 fast-forward했다. origin 동기화와 clean main/tag,
+- 일곱 consumer evidence report는 Git 추적 상태로 고정해 consumer evidence blocker를
+  닫았다. package boundary·artifact contract·Storybook IA·visual atom 보정은 승인에 따라
+  local `main@1cf28b1`까지 통합했다. origin 동기화와 clean main/tag,
   full regression evidence와 canonical immutable tarball/LKG capture가 남아 있어 Wave 0
   완료 gate는 계속 `blocked`다. accountable person과 package/CJS/support·brand boundary
   결정은 이후 사용자 승인으로 닫혔다.
-- local `main@626756b`의 `npm run check:fast`와 `npm run check:pack`은 build, type,
-  layer, migration, consumer 계약과 실제 tarball 설치, ESM/CJS/deep/type,
-  SSR, tree-shaking과 bundle-size 검증을 통과했다. 다만 실행 환경이 canonical
-  Node 22/npm 10.9.2가 아닌 Node 24.18.0/npm 11.16.0이므로 이 tarball은 진단값일 뿐
-  Wave 0 baseline으로 승인하지 않는다.
-- `npm run check`는 기존 Storybook IA human-review 미완료에서 멈췄다.
-  `npm run check:storybook-ci`는 579개 story 접근성 검사를 0 violation으로 통과했지만
-  Waypoint/state glyph 8개 capture가 visual baseline과 달랐다. 같은 8개 diff가 변경 전
-  `main@0aa7f8d`에서도 동일 비율로 재현되고 후보에는 해당 source/baseline diff가 없으므로,
-  package 분리 회귀가 아니라 기존 main 품질 부채로 기록한다. 이후 사용자가 해당 범위를
-  승인했으며, IA review 승격과 visual baseline 갱신은 실제 human/visual review 결과에만
-  근거해 수행한다.
+- exact Windows x64 Node 22.17.1/npm 10.9.2에서 ordinary `npm run check:pack`과
+  lifecycle·schema·path negative test가 통과했다. clean source tag가 없으므로 이 결과는
+  아직 immutable Wave 0 artifact baseline이 아니다.
+- Storybook IA는 190페이지·579스토리 전부 human review와 source hash가 일치한다.
+  Waypoint/state glyph 8개 baseline은 실제 원자 표면으로 다시 잘라 65/65 visual regression을
+  통과했고, Viewer Tokens는 정상 폭과 320px에서 숨김 content 경계를 직접 측정한다.
+  clean-tagged full-check·consumer-matrix JSON은 origin 동기화와 source tag 뒤에 캡처한다.
 
 Wave 0의 artifact baseline은 아직 존재하는 현재 aggregate package 한 개만 대상으로
 한다. 미래의 Core, Theme, Product, Robotics UI, compatibility package 다섯 개를 이 gate에
@@ -563,7 +558,7 @@ proof와 실제 ignored tarball을 다시 읽는다. 따라서 metadata-only 직
 승인을 통과할 수 없다. npm의 frozen install·pack 동작은 공식
 [npm ci](https://docs.npmjs.com/cli/v10/commands/npm-ci/)와
 [npm pack](https://docs.npmjs.com/cli/v10/commands/npm-pack/) 계약을 따른다. Node 22.17.1은
-공식 [Node.js archive](https://nodejs.org/en/download/archive/v22.23.1)에 기록된 npm 10.9.2
+공식 [Node.js archive](https://nodejs.org/en/download/archive/v22.17.1)에 기록된 npm 10.9.2
 동봉 release 중 최신 patch로 선택했다. 실제 baseline JSON과 checksum은 clean-main tag가
 생긴 뒤 해당 source commit에서 capture한다.
 
@@ -573,22 +568,17 @@ command output, consumer pin 또는 rendered evidence를 확인해야 한다. �
 
 ## 10. 바로 다음 작업
 
-Wave 0 원장과 integrity checker는 구현됐다. 다음 순서는 다음과 같다.
+Wave 0 원장, integrity checker, 책임·정책 승인, consumer snapshot, 단일 lockfile,
+artifact 재현 계약, IA human review와 visual atom 보정은 로컬 `main`에 통합됐다. 다음
+순서는 다음과 같다.
 
-1. RobotMarker 시각 변경이 없는 세 candidate를 local `main@626756b`까지 통합했고,
-   LDS3D current-state scan도 해당 main 기준으로 다시 고정했다. 이 증거 변경을 검증·커밋한다.
-2. `Jinhyuk Jang`을 package별 accountable person과 필수 승인 역할로 지정했고,
-   namespace/name, fixed release-set·versioning, support window, CJS, Spinner brand
-   boundary와 conditional repository policy를 승인했다. editor/viewer Product 후보는
-   별도 owner review로 유지한다.
-3. local main에서 `pnpm-lock.yaml` 제거를 확인했으므로 canonical npm frozen install을
-   재현하고, 별도 승인 후 origin/main 동기화 정책을 확정한다.
-4. 기존 main의 IA human-review와 Waypoint/state-glyph visual drift를 승인 범위에서 실제
-   검토한다. clean checkout에서 artifact를 재생성하는 baseline 도구와 schema는 구현됐고,
-   source baseline tag 이후 evidence를 capture한다.
-5. clean-main tag, full check, package tarball/checksum, React 18/19 runtime, SSR,
-   tree-shaking, Windows/Linux와 visual/size baseline을 만든다.
-6. 위 blocker가 모두 닫힌 뒤에만 Wave 1 workspace scaffold를 시작한다.
+1. 로컬 전체 `npm run check`를 exact Node 22.17.1/npm 10.9.2에서 최종 확인한다.
+2. 외부 변경 승인을 확인한 뒤 local `main`을 `origin/main`과 동기화하고 immutable source
+   baseline tag를 만든다.
+3. 그 tag의 clean checkout에서 full-check, consumer matrix, aggregate tarball/checksum,
+   React 18/19 runtime, SSR, tree-shaking, Windows/Linux와 visual/size JSON evidence를 캡처한다.
+4. `npm run check:package-migration:wave0`가 세 evidence blocker를 닫은 뒤에만 Wave 1
+   workspace scaffold를 시작한다.
 
-이 여섯 항목이 닫히기 전에는 source 대량 이동, package rename, 새 repository 생성이나
+이 네 항목이 닫히기 전에는 source 대량 이동, package rename, 새 repository 생성이나
 legacy export 제거를 시작하지 않는다.
