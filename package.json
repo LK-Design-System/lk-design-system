@@ -1,6 +1,7 @@
 {
   "name": "@lk-robotics/design-system-core",
   "version": "0.1.0",
+  "packageManager": "npm@10.9.2",
   "private": true,
   "description": "Layered LK ROBOTICS design system: core, theme, product, and robotics contracts.",
   "type": "module",
@@ -72,7 +73,9 @@
     "check:types": "tsc --noEmit",
     "check:type-consumer": "tsc -p tsconfig.consumer-react19.json && tsc -p tsconfig.consumer-react18.json",
     "check:layers": "node scripts/check-layer-boundaries.mjs",
-    "check:fast": "node scripts/run-package-scripts.mjs build check:tokens check:token-hygiene check:colors check:type-surface check:type-consumer check:layers check:api-drift check:api-grammar check:dimension-literals check:motion-hygiene check:prompt-contracts check:story-coverage check:parity check:foundation-parity check:component-styles check:contracts check:docs check:product-frontends check:wds-alignment check:wds-local-fig check:avatar-duplicates check:story-subjects check:visual-token-drift check:publish-policy check:deprecations check:types check:entry check:generated check:consumer",
+    "check:package-migration": "node scripts/check-package-migration.mjs",
+    "check:package-migration:wave0": "node scripts/check-package-migration.mjs --require-wave=0",
+    "check:fast": "node scripts/run-package-scripts.mjs build check:tokens check:token-hygiene check:colors check:type-surface check:type-consumer check:layers check:package-migration check:api-drift check:api-grammar check:dimension-literals check:motion-hygiene check:prompt-contracts check:story-coverage check:parity check:foundation-parity check:component-styles check:contracts check:docs check:product-frontends check:wds-alignment check:wds-local-fig check:avatar-duplicates check:story-subjects check:visual-token-drift check:publish-policy check:deprecations check:types check:entry check:generated check:consumer",
     "check:inventory": "node scripts/report-inventory.mjs --check-docs",
     "check:storybook": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
     "check:pack": "node scripts/check-package-artifact.mjs",
@@ -171,13 +174,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LK-ROBOTICS/lk-design-system-core.git"
+    "url": "git+https://github.com/LK-ROBOTICS/lk-design-system.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LK-ROBOTICS/lk-design-system-core/issues"
+    "url": "https://github.com/LK-ROBOTICS/lk-design-system/issues"
   },
-  "homepage": "https://github.com/LK-ROBOTICS/lk-design-system-core#readme"
+  "homepage": "https://github.com/LK-ROBOTICS/lk-design-system#readme"
 }

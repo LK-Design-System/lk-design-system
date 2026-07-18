@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.github.io/schemas/lds-package-migration-audit.schema.json",
+  "title": "LDS package and repository migration audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "audit",
+    "verificationContract",
+    "decisions",
+    "packageCatalog",
+    "ownership",
+    "styles",
+    "assets",
+    "consumers",
+    "baselines",
+    "approvals"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./MIGRATION_AUDIT.schema.json"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "audit": {
+      "type": "object",
+      "required": [
+        "status",
+        "capturedAt",
+        "source",
+        "readiness"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "wave-0-in-progress",
+            "wave-0-ready",
+            "wave-0-approved"
+          ]
+        },
+        "capturedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source": {
+          "type": "object"
+        },
+        "readiness": {
+          "type": "object",
+          "required": [
+            "integrityStatus",
+            "wave0Gate",
+            "blockers"
+          ]
+        }
+      }
+    },
+    "verificationContract": {
+      "type": "object"
+    },
+    "decisions": {
+      "type": "object"
+    },
+    "packageCatalog": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "repository",
+          "accountableOwnerRole",
+          "accountableOwner",
+          "ownerAssignmentStatus",
+          "dependsOn",
+          "moduleFormat",
+          "stylesEntry"
+        ]
+      }
+    },
+    "ownership": {
+      "type": "object"
+    },
+    "styles": {
+      "type": "object"
+    },
+    "assets": {
+      "type": "object"
+    },
+    "consumers": {
+      "type": "object"
+    },
+    "baselines": {
+      "type": "object"
+    },
+    "approvals": {
+      "type": "array"
+    }
+  }
+}
