@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "audit": {
     "status": "wave-0-in-progress",
-    "capturedAt": "2026-07-19T01:03:47.9496440+09:00",
+    "capturedAt": "2026-07-19T01:30:08.1978410+09:00",
     "source": {
       "repository": "LK-ROBOTICS/lk-design-system",
       "observedBranch": "detached-main-candidate",
@@ -21,7 +21,7 @@
       "blockers": [
         {
           "id": "clean-main-baseline",
-          "reason": "The audited layer-infrastructure commit is a detached main candidate, not persistent main, and no baseline tag exists."
+          "reason": "The audited candidates are integrated on local main at 626756b, but origin/main remains at 0aa7f8d and no tagged clean-main full-check/artifact baseline exists."
         },
         {
           "id": "owner-assignments",
@@ -80,7 +80,7 @@
       "frozenInstallCommand": "npm ci",
       "ciWorkflow": ".github/workflows/ci.yml",
       "knownSecondaryLockfiles": [],
-      "secondaryLockfileDisposition": "removed-in-detached-main-candidate-pending-main-integration"
+      "secondaryLockfileDisposition": "removed-on-local-main-pending-origin-main-sync"
     },
     "registryVersioning": {
       "approvalStatus": "pending-owner-approval",
@@ -734,13 +734,13 @@
         "branch": "main",
         "headCommit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a",
         "verificationStatus": "verified-tracked-snapshot",
-        "verificationReason": "repository-tracked-volatile-observation-captured-against-d0c64ca-feature-worktree; post-main rescan and portability remain unverified",
+        "verificationReason": "repository-tracked-volatile-observation-rescanned-against-local-main-626756b; sibling-link portability remains unverified",
         "workingTree": {
           "dirty": true,
           "snapshotKind": "volatile-hash-fixed-current-state-observation",
-          "capturedAt": "2026-07-18T14:57:24.344Z",
-          "trackedChanges": 84,
-          "untrackedPaths": 75
+          "capturedAt": "2026-07-18T16:24:12.913Z",
+          "trackedChanges": 86,
+          "untrackedPaths": 78
         },
         "linkDependency": {
           "package": "@lk-robotics/design-system-core",
@@ -751,8 +751,8 @@
           "resolvedPathRelativeToIntegrationRepository": "../lk-design-system",
           "sameAsAuditWorkspace": true,
           "resolvedRepository": "LK-ROBOTICS/lk-design-system",
-          "resolvedCommit": "d0c64ca12a71a00a751c6c12ed6254861eb53a1c",
-          "resolvedBranch": "feat/robot-marker-pose",
+          "resolvedCommit": "626756b14de12c100b18855933886f44e473ae53",
+          "resolvedBranch": "main",
           "portable": false,
           "migrationTarget": "immutable-release-set"
         },
@@ -767,10 +767,10 @@
         },
         "worktreeUsage": {
           "aggregateRootImportFiles": 12,
-          "aggregateRootBindings": 76,
+          "aggregateRootBindings": 86,
           "bindingsByTarget": {
-            "core": 45,
-            "product": 12,
+            "core": 52,
+            "product": 15,
             "robotics-ui": 19
           },
           "componentDeepSpecifiers": 11,
@@ -800,7 +800,7 @@
         ],
         "scanEvidence": {
           "path": "docs/references/package-split/consumers/lds3d-docs.json",
-          "sha256": "32a5bb38bd8c9d9b53880228d2ea203e51aec7e76853c355f12cb4736cccfa63",
+          "sha256": "42a4302705e7db9c2a02152782d149d10b169dd3740370e3fd180ba41141d76c",
           "commit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a"
         },
         "assetPathMigrationTarget": "compatibility-assets-until-direct-package-asset-paths-are-known",
@@ -844,7 +844,7 @@
         "command": "npm run check:pack",
         "status": "passed-on-noncanonical-local-runtime",
         "capturedAt": "2026-07-19",
-        "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
+        "sourceCommit": "626756b14de12c100b18855933886f44e473ae53",
         "runtime": {
           "os": "windows",
           "node": "24.18.0",
@@ -861,6 +861,27 @@
           "ssr": "passed"
         },
         "acceptance": "diagnostic-only-not-wave-0-baseline"
+      },
+      {
+        "id": "local-main-fast-contracts",
+        "command": "npm run check:fast",
+        "status": "passed-on-local-main-with-uncommitted-evidence-only-diff",
+        "capturedAt": "2026-07-19",
+        "sourceCommit": "626756b14de12c100b18855933886f44e473ae53",
+        "runtime": {
+          "os": "windows",
+          "node": "24.18.0",
+          "npm": "11.16.0"
+        },
+        "result": {
+          "build": "passed",
+          "typeSurface": "passed-204-components-210-exports",
+          "react18And19TypeConsumers": "passed",
+          "layerBoundaries": "passed-225-modules-273-edges",
+          "migrationIntegrity": "passed-five-readiness-blockers",
+          "consumerSmoke": "passed"
+        },
+        "acceptance": "diagnostic-only-not-clean-main-full-regression-baseline"
       },
       {
         "id": "full-check-candidate",
@@ -943,7 +964,7 @@
       "lastKnownGoodReleaseSet": null,
       "tarballs": [],
       "diagnosticObservation": {
-        "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
+        "sourceCommit": "626756b14de12c100b18855933886f44e473ae53",
         "runtime": "windows-node-24.18.0-npm-11.16.0",
         "sizeBytes": 8298592,
         "sha256": "42a68a48c9f856cac603618b10cf0b0c73fe0b5a09de6e2f18a0dd42e8949394",

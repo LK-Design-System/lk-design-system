@@ -5,14 +5,14 @@
   "repository": "LK-ROBOTICS/lk-design-system-3d",
   "commit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a",
   "docsRoot": "apps/docs",
-  "capturedAt": "2026-07-18T14:57:24.344Z",
+  "capturedAt": "2026-07-18T16:24:12.913Z",
   "sourceTreeSha256": "fb796731decbf7664289073e198357860949dda12ba4e5f93945b0e0ff7e0c01",
-  "worktreeTreeSha256": "6f2985c089e657a3cc4600335a3e8dc5bd85f7be73e7c08e0ee4c1460f58d328",
-  "worktreeInventorySha256": "6d37ead3d93da146e69956dfd44a8cbb28c2fe47bfe9cb89449085781c190ec5",
+  "worktreeTreeSha256": "2df0cef1b0a8d4bfc4965be3926aab27f228162637ec2779dc315f86c0408960",
+  "worktreeInventorySha256": "ceac8b9b69ef7b0cc0f60a8b4ec274a80a683f48200af924e1d47e2aaaf165fe",
   "workingTree": {
     "dirty": true,
-    "trackedChanges": 84,
-    "untrackedPaths": 75
+    "trackedChanges": 86,
+    "untrackedPaths": 78
   },
   "linkSpecifier": "link:../../../LK Design System",
   "linkResolution": {
@@ -21,8 +21,8 @@
     "resolvedPathRelativeToIntegrationRepository": "../lk-design-system",
     "sameAsScannerWorkspace": true,
     "resolvedRepository": "LK-ROBOTICS/lk-design-system",
-    "resolvedCommit": "d0c64ca12a71a00a751c6c12ed6254861eb53a1c",
-    "resolvedBranch": "feat/robot-marker-pose"
+    "resolvedCommit": "626756b14de12c100b18855933886f44e473ae53",
+    "resolvedBranch": "main"
   },
   "committedHeadUsage": {
     "aggregateRootImportFiles": 7,
@@ -35,10 +35,10 @@
   },
   "worktreeUsage": {
     "aggregateRootImportFiles": 12,
-    "aggregateRootBindings": 76,
+    "aggregateRootBindings": 86,
     "bindingsByTarget": {
-      "core": 45,
-      "product": 12,
+      "core": 52,
+      "product": 15,
       "robotics-ui": 19
     },
     "componentDeepSpecifiers": 11,
@@ -476,7 +476,7 @@
       },
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
-        "line": 16,
+        "line": 26,
         "kind": "esm-from",
         "specifier": "@lk-robotics/design-system-core"
       },
@@ -863,7 +863,31 @@
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
         "line": 2,
+        "imported": "ConfirmDialog",
+        "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
+        "imported": "CopyButton",
+        "packageId": "product"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
+        "imported": "Divider",
+        "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
         "imported": "EditorToolbar",
+        "packageId": "robotics-ui"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
+        "imported": "FloorSelector",
         "packageId": "robotics-ui"
       },
       {
@@ -875,8 +899,20 @@
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
         "line": 2,
-        "imported": "LayerPanel",
-        "packageId": "robotics-ui"
+        "imported": "Input",
+        "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
+        "imported": "Modal",
+        "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
+        "imported": "NumberField",
+        "packageId": "product"
       },
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
@@ -893,14 +929,38 @@
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
         "line": 2,
+        "imported": "Select",
+        "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
         "imported": "SelectionInspector",
         "packageId": "robotics-ui"
       },
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
         "line": 2,
+        "imported": "Stack",
+        "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
         "imported": "StatusBadge",
         "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
+        "imported": "Textarea",
+        "packageId": "core"
+      },
+      {
+        "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
+        "line": 2,
+        "imported": "Tree",
+        "packageId": "product"
       },
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",

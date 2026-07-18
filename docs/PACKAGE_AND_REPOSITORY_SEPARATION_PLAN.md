@@ -99,8 +99,8 @@ facade와 단계적 migration 원칙은 유지한다.
   Theme adapter로 분리할지 명시적 Core 예외로 유지할지 owner 승인이 필요하다.
 - aggregate root와 compiled `components/*`가 모든 계층을 한 package에서 노출한다.
 - package smoke와 publish policy가 단일 package의 정확한 합집합을 전제로 한다.
-- CI 설치 정책은 npm으로 고정했고 detached candidate에서는 legacy pnpm lockfile을
-  제거했다. persistent main 반영은 아직 승인 대기 중이다.
+- CI 설치 정책은 npm으로 고정했고 local `main@626756b`에서 legacy pnpm lockfile을
+  제거했다. `origin/main` 동기화와 baseline tag는 아직 수행하지 않았다.
 - 현재 consumer smoke는 실제 product stack 전체와 Windows/Linux matrix를 대체하지 않는다.
 - Git tag와 독립 package release 기준점이 아직 없다.
 - LDS3D `apps/docs`의 로컬 통합은 현재 sibling `link:`에 의존하므로 portable
@@ -109,7 +109,7 @@ facade와 단계적 migration 원칙은 유지한다.
 LDS3D의 Accepted ADR과 committed architecture는 분리 근거로 사용할 수 있지만,
 현재 local working tree는 안정 release 근거로 사용하지 않는다. 확인 시점의 LDS3D는
 `main` HEAD `a7b4780f68ba4dbe169ef37500246a5eec166c9a` 위에 audit snapshot 당시
-frozen report에 tracked 84개와 untracked file 75개 변경이 있고, committed package
+frozen report에 tracked 86개와 untracked file 78개 변경이 있고, committed package
 6개와 working-tree
 package 8개가 다르다. 이 숫자는 계속 변할 수 있는 local observation이다. `tf`,
 `markers`와 CI가 commit되고 package release group·artifact 검증이 정합해지기 전에는
@@ -270,16 +270,17 @@ LK Theme가 제공하는 value layer로 기록한다.
   LDS/LDS3D dependency·root/subpath/deep/CSS/asset/CJS 사용이 0건이며, migration 완료가
   아니라 아직 `not-adopted` 상태다.
 - LDS3D docs의 hash-fixed volatile observation은 mutable sibling `link:`, aggregate root
-  12개 파일·76개 binding, deep import 11종, CSS 1건, asset filesystem path 1건을
-  기록했다. 이 `link:`는 `LK Design System`이라는 로컬 Windows junction을 거쳐 현재
-  `lk-design-system` worktree를 가리킨다. 이는 현재 상태 증거이지 portable package
-  증거가 아니다.
+  12개 파일·86개 binding, deep import 11종, CSS 1건, asset filesystem path 1건을
+  기록했다. 이 `link:`는 `LK Design System`이라는 로컬 Windows junction을 거쳐
+  local `lk-design-system main@626756b`를 가리키는 것을 재확인했다. 이는 현재 상태
+  증거이지 portable package 증거가 아니다.
 - 일곱 consumer evidence report는 이 변경에서 Git 추적 상태로 고정해 consumer evidence
-  blocker를 닫았다. RobotMarker 변경을 제외한 layer infrastructure는 detached main
-  candidate `3564325`로 검증했지만 persistent main 반영 승인이 남아 있다. clean main/tag,
+  blocker를 닫았다. RobotMarker 변경을 제외한 layer infrastructure와 Wave 0 candidate는
+  승인에 따라 local `main@626756b`까지 fast-forward했다. origin 동기화와 clean main/tag,
   accountable person, package/CJS/support·brand boundary 승인, full regression evidence와
   canonical immutable tarball/LKG가 남아 있어 Wave 0 완료 gate는 계속 `blocked`다.
-- detached candidate의 `npm run check:pack`은 실제 tarball 설치, ESM/CJS/deep/type,
+- local `main@626756b`의 `npm run check:fast`와 `npm run check:pack`은 build, type,
+  layer, migration, consumer 계약과 실제 tarball 설치, ESM/CJS/deep/type,
   SSR, tree-shaking과 bundle-size 검증을 통과했다. 다만 실행 환경이 canonical
   Node 22/npm 10.9.2가 아닌 Node 24.18.0/npm 11.16.0이므로 이 tarball은 진단값일 뿐
   Wave 0 baseline으로 승인하지 않는다.
@@ -548,14 +549,13 @@ command output, consumer pin 또는 rendered evidence를 확인해야 한다. �
 
 Wave 0 원장과 integrity checker는 구현됐다. 다음 순서는 다음과 같다.
 
-1. 명시적 승인 후 RobotMarker 시각 변경이 없는 layer infrastructure candidate
-   `3564325`와 이 main 기준 Wave 0 candidate를 순서대로 persistent main에 통합한다.
-   통합된 main에서 LDS3D current-state scan을 다시 고정한다.
+1. RobotMarker 시각 변경이 없는 세 candidate를 local `main@626756b`까지 통합했고,
+   LDS3D current-state scan도 해당 main 기준으로 다시 고정했다. 이 증거 변경을 검증·커밋한다.
 2. package별 accountable person과 필수 승인 역할을 지정하고, namespace/name, fixed
    release-set·versioning, support window, CJS, Spinner brand boundary와 conditional
    repository policy를 승인한다. editor/viewer Product 후보는 별도 owner review로 유지한다.
-3. detached candidate에서 제거한 `pnpm-lock.yaml`을 main 통합으로 확정하고 canonical
-   npm frozen install을 재현한다.
+3. local main에서 `pnpm-lock.yaml` 제거를 확인했으므로 canonical npm frozen install을
+   재현하고, 별도 승인 후 origin/main 동기화 정책을 확정한다.
 4. 기존 main의 IA human-review와 Waypoint/state-glyph visual drift를 별도 승인 범위에서
    실제 검토한다. 동시에 clean checkout에서 먼저 artifact를 재생성하는 baseline 계약을
    승인한다.
