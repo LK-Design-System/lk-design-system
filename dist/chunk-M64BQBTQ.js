@@ -37,7 +37,7 @@ function StatusValue({ item }) {
     {
       "data-viewport-status-value": "",
       "data-unit-attachment": normalizedUnit === "" ? "none" : attachedUnit ? "attached" : "spaced",
-      style: { display: "inline-block", minWidth: 0, maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ...numericStyle(item.mono) },
+      style: { display: "inline-block", minWidth: 0, maxWidth: "100%", whiteSpace: "nowrap", ...numericStyle(item.mono) },
       children: [
         /* @__PURE__ */ jsx("span", { children: renderedValue }),
         normalizedUnit !== "" && /* @__PURE__ */ jsxs("span", { children: [
@@ -64,8 +64,6 @@ function StatusValue({ item }) {
         display: "inline-block",
         minWidth: 0,
         maxWidth: "100%",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         color: "var(--color-semantic-label-strong)",
         fontWeight: "var(--fw-bold)"
@@ -163,4 +161,4 @@ function ViewportStatusBar({
 export {
   ViewportStatusBar
 };
-//# sourceMappingURL=chunk-7DCW7Y5R.js.map
+//# sourceMappingURL=chunk-M64BQBTQ.js.map

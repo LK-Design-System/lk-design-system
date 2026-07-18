@@ -34,7 +34,11 @@ function StatusValue({ item }) {
     <span
       data-viewport-status-value=""
       data-unit-attachment={normalizedUnit === '' ? 'none' : attachedUnit ? 'attached' : 'spaced'}
-      style={{ display: 'inline-block', minWidth: 0, maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...numericStyle(item.mono) }}
+      // No overflow:hidden here: on an inline-block it moves the baseline to the
+      // box's bottom edge (CSS 2.1 §10.8.1), which breaks the label↔value
+      // baseline alignment. Values are short; the bar/item overflow:hidden
+      // clips the rare over-long readout.
+      style={{ display: 'inline-block', minWidth: 0, maxWidth: '100%', whiteSpace: 'nowrap', ...numericStyle(item.mono) }}
     >
       <span>{renderedValue}</span>
       {normalizedUnit !== '' && <span>{unitSeparator}{normalizedUnit}</span>}
@@ -57,8 +61,6 @@ function StatusValue({ item }) {
         display: 'inline-block',
         minWidth: 0,
         maxWidth: '100%',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         color: 'var(--color-semantic-label-strong)',
         fontWeight: 'var(--fw-bold)',
