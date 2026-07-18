@@ -15,6 +15,7 @@ import {
   StoryPage,
   PathMap,
   nextRender,
+  assertNavigationProgressHead,
   assertNavigationStateGlyphGeometry,
   assertNavigationVectorGeometry,
 } from './RoboticsNavigationRouteTrajectory.shared.jsx';
@@ -53,12 +54,12 @@ function ActivePathLayers({ viewportScale }) {
 export const RouteAndTrajectoryOverview = {
   name: '개요',
   parameters: storyDescription(
-    '같은 이동을 표현하는 planned route와 dense trajectory를 light/dark 지도에서 비교합니다. Route의 segment pattern과 현재 구간 진행 marker, Trajectory의 조밀한 geometry와 현재 heading marker가 서로 다른 의미로 남는지 확인하세요.',
+    '같은 이동을 표현하는 planned route와 dense trajectory를 light/dark 지도에서 비교합니다. 둘 다 현재 지점까지의 선이 open progress head로 끝나지만, Route의 segment phase·condition과 Trajectory의 sample 순서는 별도 의미로 남습니다.',
   ),
   render: () => (
     <StoryPage
       title="Route는 선택된 graph 구간을, Trajectory는 시간 순 sample을 보여줍니다"
-      description="경로의 완료·현재·예정과 대기·차단·충돌은 segment에 속합니다. 궤적은 한 지도 안 sample 순서와 선택적인 현재 heading/time을 보존하며 route 진행률을 대신 계산하지 않습니다."
+      description="경로의 완료·현재·예정과 대기·차단·충돌은 segment에 속합니다. 진행 head는 path tangent를 따르며 robot heading·pose를 대신하지 않습니다."
     >
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(360px, 100%), 1fr))', gap: 'var(--space-4)', minWidth: 0 }}>
         <PathMap label="Light route와 trajectory 지도">
@@ -82,15 +83,15 @@ export const RouteAndTrajectoryOverview = {
       if (!route.querySelector('[data-route-progress-marker][data-current-segment-id="segment-l1-current"]')) {
         throw new Error('Explicit current-segment progress marker is missing.');
       }
+      assertNavigationProgressHead(route, 'Overview Route', 'route');
       assertNavigationStateGlyphGeometry(route, 'Overview Route');
       assertNavigationVectorGeometry(route, 'Overview Route');
     });
     trajectories.forEach((trajectory) => {
       const path = trajectory.querySelector('[data-trajectory-path]');
       if (!path?.getAttribute('d')?.includes('L 370 164')) throw new Error('Dense trajectory geometry is incomplete.');
-      if (!trajectory.querySelector('[data-trajectory-current-heading]')) throw new Error('Current sample heading marker is missing.');
+      assertNavigationProgressHead(trajectory, 'Overview Trajectory', 'trajectory');
       assertNavigationStateGlyphGeometry(trajectory, 'Overview Trajectory');
-      assertNavigationVectorGeometry(trajectory, 'Overview Trajectory');
     });
   },
 };
@@ -273,21 +274,74 @@ const NORMAL_PROGRESS_ROUTE = {
     phase: 'current',
     condition: 'normal',
   }],
-  progress: { segmentId: 'segment-normal-progress-spacing', fraction: 0.3 },
+  progress: {
+    segmentId: 'segment-normal-progress-spacing',
+    fraction: 0.3,
+    position: { x: 185, y: 454.5 },
+  },
+};
+
+const MISMATCHED_PROGRESS_POSITION_ROUTE = {
+  id: 'route-progress-position-mismatch',
+  label: '진행 좌표 불일치 경로',
+  status: 'active',
+  segments: [{
+    id: 'segment-progress-position-mismatch',
+    mapId: 'L1',
+    label: '좌표 불일치 구간',
+    points: [{ x: 54, y: 70 }, { x: 270, y: 70 }, { x: 486, y: 70 }],
+    phase: 'current',
+    condition: 'normal',
+  }],
+  progress: {
+    segmentId: 'segment-progress-position-mismatch',
+    fraction: 0.25,
+    position: { x: 400, y: 70 },
+  },
+};
+
+const VERTICAL_PROGRESS_ROUTE = {
+  id: 'route-progress-obstacle-vertical',
+  label: '수직 진행 경로',
+  status: 'active',
+  segments: [{
+    id: 'segment-progress-obstacle-vertical',
+    mapId: 'L1',
+    label: '수직 구간',
+    points: [{ x: 120, y: 30 }, { x: 120, y: 110 }],
+    phase: 'current',
+    condition: 'normal',
+  }],
+  progress: { segmentId: 'segment-progress-obstacle-vertical', fraction: 0.5 },
+};
+
+const REVERSE_PROGRESS_ROUTE = {
+  id: 'route-progress-obstacle-reverse',
+  label: '역방향 진행 경로',
+  status: 'active',
+  segments: [{
+    id: 'segment-progress-obstacle-reverse',
+    mapId: 'L1',
+    label: '역방향 구간',
+    points: [{ x: 486, y: 100 }, { x: 306, y: 100 }],
+    phase: 'current',
+    condition: 'normal',
+  }],
+  progress: { segmentId: 'segment-progress-obstacle-reverse', fraction: 0.5 },
 };
 
 function assertProgressTextSpacing(route, label) {
-  const badge = route.querySelector('[data-route-marker-badge="progress"]');
+  const headObstacle = route.querySelector('[data-navigation-progress-head-obstacle] rect');
   const progressText = route.querySelector('[data-route-progress-label]');
   const path = route.querySelector('[data-route-path]');
-  if (!badge || !progressText || !path) throw new Error(`${label} progress spacing evidence is incomplete.`);
-  const badgeRect = badge.getBoundingClientRect();
+  if (!headObstacle || !progressText || !path) throw new Error(`${label} progress spacing evidence is incomplete.`);
+  const headRect = headObstacle.getBoundingClientRect();
   const textRect = progressText.getBoundingClientRect();
   const pathRect = path.getBoundingClientRect();
-  const badgeGap = textRect.top - badgeRect.bottom;
+  const headGap = textRect.top - headRect.bottom;
   const pathGap = textRect.top - pathRect.bottom;
-  if (badgeGap < 3.9 || pathGap < 3.9) {
-    throw new Error(`${label} progress text needs 4 CSS px clearance: badge ${badgeGap}, path ${pathGap}.`);
+  if (headGap < 3.9 || pathGap < 3.9) {
+    throw new Error(`${label} progress text needs 4 CSS px clearance: head ${headGap}, path ${pathGap}.`);
   }
 }
 
@@ -333,6 +387,44 @@ export const ShortPathCompoundMarkers = {
             </NavigationAnnotationLayer>
           )}
         </PathMap>
+        <PathMap
+          label="fraction과 explicit position이 불일치하는 route"
+          height={150}
+          svgHeight={130}
+          eyebrow="MISMATCH · FAIL CLOSED"
+        >
+          {(cssViewBoxScale) => (
+            <RouteOverlay
+              route={MISMATCHED_PROGRESS_POSITION_ROUTE}
+              activeMapId="L1"
+              viewportScale={cssViewBoxScale}
+              showLabel={false}
+            />
+          )}
+        </PathMap>
+        <PathMap
+          label="진행 head와 함께 회전하는 충돌 영역"
+          height={160}
+          svgHeight={140}
+          eyebrow="OBSTACLE · PATH TANGENT"
+        >
+          {(cssViewBoxScale) => (
+            <>
+              <RouteOverlay
+                route={VERTICAL_PROGRESS_ROUTE}
+                activeMapId="L1"
+                viewportScale={cssViewBoxScale}
+                showLabel={false}
+              />
+              <RouteOverlay
+                route={REVERSE_PROGRESS_ROUTE}
+                activeMapId="L1"
+                viewportScale={cssViewBoxScale}
+                showLabel={false}
+              />
+            </>
+          )}
+        </PathMap>
       </StoryPage>
     </div>
   ),
@@ -345,6 +437,9 @@ export const ShortPathCompoundMarkers = {
       const trajectory = stress?.querySelector('[data-trajectory-id="trajectory-short-compound"]');
       const midRoute = stress?.querySelector('[data-route-id="route-mid-exact-collision"]');
       const normalRoute = stress?.querySelector('[data-route-id="route-normal-progress-spacing"]');
+      const mismatchRoute = stress?.querySelector('[data-route-id="route-progress-position-mismatch"]');
+      const verticalRoute = stress?.querySelector('[data-route-id="route-progress-obstacle-vertical"]');
+      const reverseRoute = stress?.querySelector('[data-route-id="route-progress-obstacle-reverse"]');
       if (!svg || !Number.isFinite(cssScale) || cssScale >= 0.95) {
         throw new Error(`Short-path stress did not render at a reduced CSS/viewBox scale: ${cssScale}.`);
       }
@@ -353,14 +448,41 @@ export const ShortPathCompoundMarkers = {
         || midRoute?.getAttribute('data-route-marker-layout') !== 'screen-slots') {
         throw new Error('Every colliding Route and Trajectory fixture must opt into screen-space marker slots.');
       }
-      if (normalRoute?.getAttribute('data-route-marker-layout') !== 'path-anchored') {
-        throw new Error('A naturally separated normal progress marker should remain path-anchored.');
+      const normalProgressHead = normalRoute?.querySelector('[data-navigation-progress-head="route"]');
+      if (
+        !normalProgressHead
+        || normalProgressHead.hasAttribute('data-route-screen-slot')
+        || normalProgressHead.getAttribute('data-route-anchor-x') !== String(NORMAL_PROGRESS_ROUTE.progress.position.x)
+        || normalProgressHead.getAttribute('data-route-anchor-y') !== String(NORMAL_PROGRESS_ROUTE.progress.position.y)
+      ) {
+        throw new Error('The progress head must remain at its exact path anchor while colliding status badges use screen slots.');
+      }
+      if (!normalProgressHead.matches('[data-route-progress-carrier="core"]')) {
+        throw new Error('An explicit Route progress position needs a tangent-aligned carrier at the exact source point.');
+      }
+      const mismatchPast = mismatchRoute?.querySelector('[data-route-progress-past]');
+      if (
+        mismatchRoute?.getAttribute('data-progress-position-mismatch') !== 'true'
+        || mismatchPast?.getAttribute('d') !== 'M 54 70 L 162 70'
+        || mismatchRoute.querySelector('[data-navigation-progress-head], [data-route-progress-carrier], [data-navigation-progress-head-obstacle]')
+        || !mismatchRoute.getAttribute('aria-label')?.includes('25%')
+      ) {
+        throw new Error('A mismatched explicit position must fail closed without detaching the progress head from the fraction boundary.');
+      }
+      for (const [fixture, expectedAngle] of [[verticalRoute, 90], [reverseRoute, 180]]) {
+        const headObstacle = fixture?.querySelector('[data-navigation-progress-head-obstacle]');
+        if (
+          headObstacle?.getAttribute('data-progress-head-angle') !== String(expectedAngle)
+          || !headObstacle.getAttribute('transform')?.includes(`rotate(${expectedAngle})`)
+        ) {
+          throw new Error(`The progress-head obstacle must rotate with its ${expectedAngle}deg path tangent.`);
+        }
       }
 
       const routeMarkers = Array.from(route.querySelectorAll('[data-route-marker-badge]'));
       const trajectoryMarkers = Array.from(trajectory.querySelectorAll('[data-trajectory-marker-badge]'));
       const midRouteMarkers = Array.from(midRoute.querySelectorAll('[data-route-marker-badge]'));
-      if (routeMarkers.length !== 4 || trajectoryMarkers.length !== 4 || midRouteMarkers.length !== 4) {
+      if (routeMarkers.length !== 4 || trajectoryMarkers.length !== 3 || midRouteMarkers.length !== 4) {
         throw new Error('Short-path compound state is missing a Route or Trajectory marker.');
       }
       const anchoredMarkerGroups = [
@@ -408,7 +530,9 @@ export const ShortPathCompoundMarkers = {
         ['Normal Route', normalRoute],
       ]) {
         assertNavigationStateGlyphGeometry(fixture, fixtureLabel);
-        assertNavigationVectorGeometry(fixture, fixtureLabel);
+        const role = fixture.hasAttribute('data-lk-trajectory-overlay') ? 'trajectory' : 'route';
+        assertNavigationProgressHead(fixture, fixtureLabel, role);
+        if (role === 'route') assertNavigationVectorGeometry(fixture, fixtureLabel);
       }
 
       // Cross-entity contract: coordinated labels never overlap each other or
@@ -829,7 +953,8 @@ export const RouteAndTrajectoryNarrow320 = {
       assertNavigationStateGlyphGeometry(route, '320px Route');
       assertNavigationStateGlyphGeometry(trajectory, '320px Trajectory');
       assertNavigationVectorGeometry(route, '320px Route');
-      assertNavigationVectorGeometry(trajectory, '320px Trajectory');
+      assertNavigationProgressHead(route, '320px Route', 'route');
+      assertNavigationProgressHead(trajectory, '320px Trajectory', 'trajectory');
     });
   },
 };

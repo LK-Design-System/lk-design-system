@@ -155,7 +155,7 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | ID | 우선순위 | 남은 검토 | 완료 증거 | 영향 |
 | --- | --- | --- | --- | --- |
 | R-01 | P1 · 제품 workflow | WF-15의 `forbidden` line과 stair/stair-slope semantic renderer를 LDS가 소유할지 제품 renderer에 남길지 결정한다. | 독립 map-symbol/domain audit, public contract 또는 명시적 product boundary, LK Web Viz coverage 확인, WF-15 `verified` 또는 승인된 scope-out | 지도 authoring workflow 완결을 차단; 코어 일반 사용은 차단하지 않음 |
-| R-02 | P2 · 채택 추적 | LK Control Full Daedeok의 WF-15에 Navigation renderer의 component-level mapping을 직접 연결한다. | pinned Control source row와 component disposition의 양방향 trace, `check:product-frontends` 통과 | Control의 지도·감독 조합 지원 여부를 `unverified`로 제한 |
+| R-02 | P2 · 채택 추적 | LK Control Full Daedeok의 observed Trajectory mapping은 pinned `InteractiveMap` source로 닫혔다. 나머지 Navigation renderer의 component-level mapping을 직접 연결한다. | 남은 renderer별 pinned Control source row와 component disposition의 양방향 trace, `check:product-frontends` 통과 | Trajectory는 supported by composition; planned Route는 pinned workflow에서 not applicable; 나머지는 unverified 유지 |
 | R-03 | P2/P3 · 디자인 품질 | D-track medium 23건과 low 10건을 수정, 근거 있는 수락, 또는 기각으로 닫는다. | finding별 remediation·owner·검증 evidence | 코어 release blocker는 아니지만 디자인 품질 완결을 차단 |
 | R-04 | P1 · gate ownership | `check:product-frontends`의 `componentDisposition` 삭제·export 강제를 coverage 검사에서 분리하고, 독립 design decision/승인 기록을 참조하게 한다. | 50개 disposition 영향 검토, 별도 승인, checker·schema·문서 migration | repository-wide gate 변경이므로 이번 컴포넌트 재설계 범위에는 포함하지 않음 |
 

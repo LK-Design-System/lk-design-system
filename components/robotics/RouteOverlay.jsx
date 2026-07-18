@@ -2,8 +2,14 @@ import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
+import {
+  NavigationProgressHeadDefs,
+  ProgressHeadObstacle,
+  progressCarrierPath,
+  routeProgressGeometry,
+} from './_navigationProgressHead.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_PROGRESS_HEAD, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -45,12 +51,10 @@ const CONDITION_GLYPH_KIND = {
 const MARKER_GAP_PX = 4;
 const MARKER_ROW_CLEARANCE_PX = 8;
 const LABEL_ROW_GAP_PX = 12;
+const STATE_BADGE_FOOTPRINT_PX = NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2;
 const MARKER_RADIUS_PX = {
   condition: 8.75,
-  // Outline-inclusive footprint derived from the shared current-position badge
-  // token (painted radius + half the outline stroke) so the collision layout
-  // tracks the painted geometry if the token changes.
-  progress: NAV_CURRENT_MARKER.radius + NAV_CURRENT_MARKER.strokeWidth / 2,
+  status: STATE_BADGE_FOOTPRINT_PX,
   invalid: 8.75,
   stale: 8.75,
 };
@@ -69,26 +73,30 @@ function markerTransform(point, inverseScale, screenSlot) {
   return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
 }
 
-function markerCollisionLayout(markers, scale) {
-  if (markers.length < 2) return undefined;
-  const collidingIndexes = new Set();
-  for (let first = 0; first < markers.length; first += 1) {
-    for (let second = first + 1; second < markers.length; second += 1) {
-      const a = markers[first];
-      const b = markers[second];
+function markerCollisionLayout(markers, scale, fixedMarkers = []) {
+  const candidates = [...markers, ...fixedMarkers];
+  if (candidates.length < 2) return undefined;
+  const collisionParticipants = new Set();
+  const collidingMovableIndexes = new Set();
+  for (let first = 0; first < candidates.length; first += 1) {
+    for (let second = first + 1; second < candidates.length; second += 1) {
+      const a = candidates[first];
+      const b = candidates[second];
       const naturalDistance = Math.hypot(
         a.point.x - b.point.x,
         a.point.y - b.point.y,
       ) * scale;
       if (naturalDistance < a.radius + b.radius + MARKER_GAP_PX) {
-        collidingIndexes.add(first);
-        collidingIndexes.add(second);
+        collisionParticipants.add(first);
+        collisionParticipants.add(second);
+        if (first < markers.length) collidingMovableIndexes.add(first);
+        if (second < markers.length) collidingMovableIndexes.add(second);
       }
     }
   }
-  if (collidingIndexes.size === 0) return undefined;
+  if (collidingMovableIndexes.size === 0) return undefined;
 
-  const collisionMarkers = [...collidingIndexes].map((index) => markers[index]);
+  const collisionMarkers = [...collisionParticipants].map((index) => candidates[index]);
   const reference = collisionMarkers.reduce((point, marker) => ({
     x: point.x + marker.point.x / collisionMarkers.length,
     y: point.y + marker.point.y / collisionMarkers.length,
@@ -233,6 +241,7 @@ export function RouteOverlay({
   const [focusedSegment, setFocusedSegment] = React.useState(null);
   const [hasRootFocus, setHasRootFocus] = React.useState(false);
   const obstacle = useNavigationObstacles();
+  const progressHeadId = `lk-route-progress-${React.useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === 'function';
@@ -293,9 +302,16 @@ export function RouteOverlay({
     ?? visibleSegments.find((segment) => segment.phase === 'current')
     ?? visibleSegments[0];
   const statusPoints = statusSegment?.points?.filter(finitePoint) ?? [];
-  const statusPoint = progressSegment && progress?.position
-    ? progress.position
-    : pointAlong(statusPoints, progressSegment ? progress.fraction : 0.18);
+  const progressGeometry = progressSegment
+    ? routeProgressGeometry(statusPoints, progress.fraction, progress.position, scale)
+    : undefined;
+  const progressPoint = progressGeometry?.point;
+  const progressHeadVisible = Number.isFinite(progressGeometry?.angle);
+  const progressPrefixPath = progressGeometry ? pathFromPoints(progressGeometry.prefixPoints) : '';
+  const progressCarrier = progressHeadVisible && progressGeometry?.usesCarrier
+    ? progressCarrierPath(progressGeometry.point, progressGeometry.angle, inverseScale)
+    : '';
+  const routeStatusPoint = pointAlong(statusPoints, 0.18);
   const statusCondition = ['normal', 'waiting', 'blocked', 'conflict'].includes(statusSegment?.condition)
     ? statusSegment.condition
     : 'normal';
@@ -318,16 +334,22 @@ export function RouteOverlay({
     CONDITION_GLYPH_KIND[statusCondition]
       ? { name: 'condition', point: statusMidpoint, radius: MARKER_RADIUS_PX.condition }
       : null,
-    { name: 'progress', point: statusPoint, radius: MARKER_RADIUS_PX.progress },
+    { name: 'status', point: routeStatusPoint, radius: MARKER_RADIUS_PX.status },
     ...routeStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
       radius: MARKER_RADIUS_PX[item.state],
     })),
   ].filter(Boolean) : [];
-  const markerLayout = markerCollisionLayout(naturalMarkers, scale);
+  const fixedProgressMarkers = progressHeadVisible ? [{
+    name: 'progress',
+    point: progressPoint,
+    radius: NAV_PROGRESS_HEAD.collisionRadius,
+  }] : [];
+  const markerLayout = markerCollisionLayout(naturalMarkers, scale, fixedProgressMarkers);
   const routeMarkerSlot = (name) => markerLayout?.slots[name];
   const markerForeground = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
+  const surface = 'var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))';
 
   return (
     <g
@@ -340,6 +362,7 @@ export function RouteOverlay({
       data-viewport-scale={scale}
       data-progress-segment-id={progress?.segmentId}
       data-progress-fraction={progress?.fraction}
+      data-progress-position-mismatch={progressGeometry?.positionMismatch ? 'true' : undefined}
       data-route-marker-layout={markerLayout ? 'screen-slots' : 'path-anchored'}
       data-route-marker-row-width={markerLayout?.totalWidth}
       data-pointer-only={pointerOnly ? 'true' : undefined}
@@ -384,6 +407,7 @@ export function RouteOverlay({
         const normalizedSegment = { ...segment, condition, phase };
         const tone = segmentTone(normalizedSegment, invalid);
         const dash = segmentDash(normalizedSegment);
+        const isProgressSegment = segment.id === progressSegment?.id && Boolean(progressGeometry);
         const conditionGlyphKind = CONDITION_GLYPH_KIND[condition];
         const conditionSlot = segment.id === statusSegment?.id ? routeMarkerSlot('condition') : undefined;
         const segmentLabelSlot = segment.id === statusSegment?.id
@@ -476,13 +500,92 @@ export function RouteOverlay({
                 d={pathData}
                 fill="none"
                 stroke={tone}
-                strokeWidth={phase === 'current' || segmentSelected ? 4 : 3}
+                strokeWidth={isProgressSegment ? 3 : phase === 'current' || segmentSelected ? 4 : 3}
                 strokeDasharray={dash}
+                opacity={isProgressSegment ? NAV_PROGRESS_HEAD.route.futureOpacity : undefined}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
                 pointerEvents="none"
               />
+            )}
+            {isProgressSegment && progressHeadVisible && (
+              <NavigationProgressHeadDefs
+                idPrefix={progressHeadId}
+                tone={tone}
+                surface={surface}
+                inverseScale={inverseScale}
+                role="route"
+              />
+            )}
+            {isProgressSegment && progressPrefixPath && (
+              <>
+                <path
+                  data-route-progress-casing=""
+                  d={progressPrefixPath}
+                  fill="none"
+                  stroke={surface}
+                  strokeWidth={NAV_PROGRESS_HEAD.route.casingWidth}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  markerEnd={progressHeadVisible && !progressCarrier ? `url(#${progressHeadId}-casing)` : undefined}
+                  pointerEvents="none"
+                />
+                <path
+                  data-route-progress-past=""
+                  data-route-progress-marker={progressHeadVisible && !progressCarrier ? '' : undefined}
+                  data-navigation-progress-head={progressHeadVisible && !progressCarrier ? 'route' : undefined}
+                  data-head-rendering={progressHeadVisible && !progressCarrier ? 'marker-end' : undefined}
+                  data-current-segment-id={progressHeadVisible && !progressCarrier ? progressSegment.id : undefined}
+                  data-route-anchor-x={progressHeadVisible && !progressCarrier ? progressPoint.x : undefined}
+                  data-route-anchor-y={progressHeadVisible && !progressCarrier ? progressPoint.y : undefined}
+                  d={progressPrefixPath}
+                  fill="none"
+                  stroke={tone}
+                  strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  markerEnd={progressHeadVisible && !progressCarrier ? `url(#${progressHeadId}-core)` : undefined}
+                  pointerEvents="none"
+                />
+              </>
+            )}
+            {isProgressSegment && progressCarrier && (
+              <>
+                <path
+                  data-route-progress-carrier="casing"
+                  data-route-progress-casing=""
+                  d={progressCarrier}
+                  fill="none"
+                  stroke={surface}
+                  strokeWidth={NAV_PROGRESS_HEAD.route.casingWidth}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  markerEnd={`url(#${progressHeadId}-casing)`}
+                  pointerEvents="none"
+                />
+                <path
+                  data-route-progress-carrier="core"
+                  data-route-progress-marker=""
+                  data-navigation-progress-head="route"
+                  data-head-rendering="marker-end"
+                  data-current-segment-id={progressSegment.id}
+                  data-route-anchor-x={progressPoint.x}
+                  data-route-anchor-y={progressPoint.y}
+                  d={progressCarrier}
+                  fill="none"
+                  stroke={tone}
+                  strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect="non-scaling-stroke"
+                  markerEnd={`url(#${progressHeadId}-core)`}
+                  pointerEvents="none"
+                />
+              </>
             )}
             {pathData && interactive && (
               <>
@@ -649,82 +752,34 @@ export function RouteOverlay({
           </g>
         );
       })}
-      {progressSegment && statusPoints.length >= 2 && (
-        <g
-          data-route-progress-marker=""
-          data-current-segment-id={progressSegment.id}
-          data-route-screen-slot={markerLayout ? 'progress' : undefined}
-          data-route-anchor-x={statusPoint.x}
-          data-route-anchor-y={statusPoint.y}
-          transform={markerTransform(statusPoint, inverseScale, routeMarkerSlot('progress'))}
-          aria-hidden="true"
-          pointerEvents="none"
-        >
-          <circle
-            {...obstacle(`route:${route.id}:progress`)}
-            data-route-marker-badge="progress"
-            data-navigation-marker-circle=""
-            r={NAV_CURRENT_MARKER.radius}
-            fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
-            stroke={statusTone(route.status)}
-            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
-            vectorEffect="non-scaling-stroke"
-          />
-          <NavigationStateGlyph
-            kind={STATUS_GLYPH_KIND[route.status] ?? 'unknown'}
-            size={10}
-            color={markerForeground}
-          />
-          {showLabel && (
-            <NavigationAnnotationBlock
-              id={`route:${route.id}:progress:label`}
-              kind="route-progress-label"
-              anchor={statusPoint}
-              nudgeDirection="down"
-              priority={annotationPriority({
-                selected,
-                focused: focused || hasRootFocus || focusedSegment != null,
-                alarm: invalid,
-                emphasized: route.status === 'active',
-              })}
-            >
-              <text
-                data-route-progress-label=""
-                x="0"
-                y={markerLayout ? 36 : 24}
-                textAnchor="middle"
-                fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
-                stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
-                strokeWidth={NAV_LABEL_HALO.caption}
-                paintOrder="stroke"
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-                style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)' }}
-              >
-                현재 {Math.round(progress.fraction * 100)}%
-              </text>
-            </NavigationAnnotationBlock>
-          )}
-        </g>
+      {progressHeadVisible && (
+        <ProgressHeadObstacle
+          obstacle={obstacle}
+          id={`route:${route.id}:progress-head`}
+          point={progressPoint}
+          angle={progressGeometry.angle}
+          inverseScale={inverseScale}
+          dataPrefix="route"
+        />
       )}
-      {!progressSegment && statusSegment && statusPoints.length >= 2 && (
+      {statusSegment && statusPoints.length >= 2 && (
         <g
           data-route-status-marker=""
-          data-route-screen-slot={markerLayout ? 'progress' : undefined}
-          data-route-anchor-x={statusPoint.x}
-          data-route-anchor-y={statusPoint.y}
-          transform={markerTransform(statusPoint, inverseScale, routeMarkerSlot('progress'))}
+          data-route-screen-slot={routeMarkerSlot('status') ? 'status' : undefined}
+          data-route-anchor-x={routeStatusPoint.x}
+          data-route-anchor-y={routeStatusPoint.y}
+          transform={markerTransform(routeStatusPoint, inverseScale, routeMarkerSlot('status'))}
           aria-hidden="true"
           pointerEvents="none"
         >
           <circle
             {...obstacle(`route:${route.id}:status`)}
-            data-route-marker-badge="progress"
+            data-route-marker-badge="status"
             data-navigation-marker-circle=""
-            r={NAV_CURRENT_MARKER.radius}
-            fill="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
+            r={NAV_STATE_BADGE.radius}
+            fill={surface}
             stroke={statusTone(route.status)}
-            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
+            strokeWidth={NAV_STATE_BADGE.strokeWidth}
             vectorEffect="non-scaling-stroke"
           />
           <NavigationStateGlyph
@@ -733,6 +788,41 @@ export function RouteOverlay({
             color={markerForeground}
           />
         </g>
+      )}
+      {showLabel && progressPoint && (
+        <NavigationAnnotationBlock
+          id={`route:${route.id}:progress:label`}
+          kind="route-progress-label"
+          anchor={progressPoint}
+          nudgeDirection="down"
+          priority={annotationPriority({
+            selected,
+            focused: focused || hasRootFocus || focusedSegment != null,
+            alarm: invalid,
+            emphasized: route.status === 'active',
+          })}
+        >
+          <text
+            data-route-progress-label=""
+            data-route-label-anchor-x={progressPoint.x}
+            data-route-label-anchor-y={progressPoint.y}
+            x="0"
+            y="24"
+            textAnchor="middle"
+            transform={markerTransform(progressPoint, inverseScale)}
+            fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
+            stroke="var(--viewer-surface, var(--color-semantic-background-normal-normal))"
+            strokeWidth={NAV_LABEL_HALO.caption}
+            paintOrder="stroke"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)' }}
+            aria-hidden="true"
+            pointerEvents="none"
+          >
+            현재 {Math.round(progress.fraction * 100)}%
+          </text>
+        </NavigationAnnotationBlock>
       )}
     </g>
   );

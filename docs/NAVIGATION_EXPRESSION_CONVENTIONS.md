@@ -13,7 +13,7 @@
 
 **디자인 시스템(DS) 소관 — 스토리가 표현해도 되는 것**
 - 오버레이/마커 렌더러 자체와, 그 렌더러가 **지도 위에서** 갖는 계약: pointer/keyboard 활성화, `aria-hidden` pointer-only 조각, 접근성 이름, 선택·포커스·상태 표식.
-- Foundation 원자(상태 글리프·dash·opacity·map-pin·hit target·label halo·direction glyph·codes·viewer/unit token). 표현의 **값**은 이 원자가 단일 소스로 소유한다.
+- Foundation 원자(상태 글리프·dash·opacity·map-pin·hit target·label halo·direction glyph·line-integrated progress head·codes·viewer/unit token). 표현의 **값**은 이 원자가 단일 소스로 소유한다.
 
 **제품(consumer) 소관 — 렌더러 스토리가 손수 만들지 않는 것**
 - **병렬 접근성 컨트롤 / "semantic mirror"** — `aria-hidden` SVG 지도에 대응하는 키보드 포커스 가능한 이름 목록/컨트롤. 이것을 어떻게 제공할지는 제품이 결정한다.
@@ -69,7 +69,7 @@ Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원�
 렌더러가 지도에 그리지만 **어느 Foundation Storybook 페이지에도 먼저 정의되지 않아 소비 페이지에서 갑자기 마주치는** 표현 규약을 전수 조사(2026-07-17)해 별개 규약 **32건**으로 정리했다. 목표는 "정의 없이 튀어나오는" 규약을 Foundation 페이지에서 먼저 보이게 해 검토 가능하게 만드는 것.
 
 **두 가지 처리 결정**
-- **깔끔한 드리프트(둘 이상이 같은 의미로 comparable 기하에 쓰는 값) → `_navigationVocabulary`로 단일 토큰 승격**하고 Foundation 페이지가 그 상수를 그대로 렌더(NAV_CURRENT_MARKER 선례). 예: path casing 폭 6/6.5/5, base/강조 stroke 두께.
+- **깔끔한 드리프트(둘 이상이 같은 의미로 comparable 기하에 쓰는 값) → `_navigationVocabulary`로 단일 토큰 승격**하고 Foundation 페이지가 그 상수를 그대로 렌더한다(`NAV_PROGRESS_HEAD` 선례). 예: path casing 폭, base/강조 stroke 두께.
 - **렌더러마다 축·의미가 다른 규칙(복합 상태 오프셋 스택, 포커스 링 기하 등) → 단일 상수로 강제하지 않고**, 규칙 자체를 Foundation 프레임(State Badge·Marker Pin)에 문서화하고 렌더러별 축(웨이포인트 ±8 대각 / 레인 18 접선·32 법선 / 시설 16 수평 / 영역 ±18 수직)을 예시로 병기. `_navigationVocabulary`의 SCOPE RULE(같은 의미·comparable 기하만) 준수.
 - **담을 페이지가 없는 계열은 신규 Foundation 페이지 신설**: `Navigation Label Coordination`(라벨 충돌 조정 13규칙), `Navigation Map Stage`(패널 chrome·grid·축척·범례).
 

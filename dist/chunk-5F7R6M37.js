@@ -1,30 +1,33 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunk7QQAUH55cjs = require('./chunk-7QQAUH55.cjs');
-
-
-var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
-
-
-
-
-
-
-
-
-
-
-var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
-
-
-
-
-var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
+"use client";
+import {
+  NavigationProgressHeadDefs,
+  ProgressHeadObstacle,
+  progressCarrierPath,
+  trajectoryProgressGeometry
+} from "./chunk-7JB54K3S.js";
+import {
+  NavigationStateGlyph
+} from "./chunk-54Q6T6L4.js";
+import {
+  NAV_DASH,
+  NAV_FOCUS,
+  NAV_HIT,
+  NAV_LABEL_HALO,
+  NAV_PROGRESS_HEAD,
+  NAV_SELECTION,
+  NAV_STATE_BADGE,
+  isFocusVisibleTarget,
+  navStateOpacity
+} from "./chunk-3IFGQEHY.js";
+import {
+  NavigationAnnotationBlock,
+  annotationPriority,
+  useNavigationObstacles
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/TrajectoryOverlay.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var STATUS_LABEL = {
   planned: "\uACC4\uD68D\uB428",
   active: "\uC774\uB3D9 \uC911",
@@ -44,10 +47,9 @@ var STATUS_GLYPH_KIND = {
 var MARKER_GAP_PX = 4;
 var MARKER_ROW_CLEARANCE_PX = 8;
 var LABEL_ROW_GAP_PX = 12;
-var STATE_BADGE_FOOTPRINT_PX = _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius + _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth / 2;
+var STATE_BADGE_FOOTPRINT_PX = NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2;
 var MARKER_RADIUS_PX = {
   status: STATE_BADGE_FOOTPRINT_PX,
-  current: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.radius + _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.strokeWidth / 2,
   invalid: STATE_BADGE_FOOTPRINT_PX,
   stale: STATE_BADGE_FOOTPRINT_PX
 };
@@ -62,25 +64,29 @@ function markerTransform(point, inverseScale, screenSlot) {
   const anchor = `translate(${point.x} ${point.y}) scale(${inverseScale})`;
   return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
 }
-function markerCollisionLayout(markers, scale) {
-  if (markers.length < 2) return void 0;
-  const collidingIndexes = /* @__PURE__ */ new Set();
-  for (let first = 0; first < markers.length; first += 1) {
-    for (let second = first + 1; second < markers.length; second += 1) {
-      const a = markers[first];
-      const b = markers[second];
+function markerCollisionLayout(markers, scale, fixedMarkers = []) {
+  const candidates = [...markers, ...fixedMarkers];
+  if (candidates.length < 2) return void 0;
+  const collisionParticipants = /* @__PURE__ */ new Set();
+  const collidingMovableIndexes = /* @__PURE__ */ new Set();
+  for (let first = 0; first < candidates.length; first += 1) {
+    for (let second = first + 1; second < candidates.length; second += 1) {
+      const a = candidates[first];
+      const b = candidates[second];
       const naturalDistance = Math.hypot(
         a.point.x - b.point.x,
         a.point.y - b.point.y
       ) * scale;
       if (naturalDistance < a.radius + b.radius + MARKER_GAP_PX) {
-        collidingIndexes.add(first);
-        collidingIndexes.add(second);
+        collisionParticipants.add(first);
+        collisionParticipants.add(second);
+        if (first < markers.length) collidingMovableIndexes.add(first);
+        if (second < markers.length) collidingMovableIndexes.add(second);
       }
     }
   }
-  if (collidingIndexes.size === 0) return void 0;
-  const collisionMarkers = [...collidingIndexes].map((index) => markers[index]);
+  if (collidingMovableIndexes.size === 0) return void 0;
+  const collisionMarkers = [...collisionParticipants].map((index) => candidates[index]);
   const reference = collisionMarkers.reduce((point, marker) => ({
     x: point.x + marker.point.x / collisionMarkers.length,
     y: point.y + marker.point.y / collisionMarkers.length
@@ -158,16 +164,16 @@ function statusDash(status) {
   return void 0;
 }
 function trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale) {
-  const samples = _nullishCoalesce(_optionalChain([trajectory, 'optionalAccess', _ => _.samples]), () => ( []));
-  const currentIndex = Number.isInteger(_optionalChain([trajectory, 'optionalAccess', _2 => _2.currentSampleIndex])) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
+  const samples = trajectory?.samples ?? [];
+  const currentIndex = Number.isInteger(trajectory?.currentSampleIndex) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
   const timedSamples = samples.filter((sample) => Number.isFinite(sample.timeMs));
-  const firstTime = _optionalChain([timedSamples, 'access', _3 => _3[0], 'optionalAccess', _4 => _4.timeMs]);
-  const lastTime = _optionalChain([timedSamples, 'access', _5 => _5[timedSamples.length - 1], 'optionalAccess', _6 => _6.timeMs]);
-  const currentTime = currentIndex == null ? void 0 : _optionalChain([samples, 'access', _7 => _7[currentIndex], 'optionalAccess', _8 => _8.timeMs]);
+  const firstTime = timedSamples[0]?.timeMs;
+  const lastTime = timedSamples[timedSamples.length - 1]?.timeMs;
+  const currentTime = currentIndex == null ? void 0 : samples[currentIndex]?.timeMs;
   const parts = [
-    _nullishCoalesce(trajectory.label, () => ( `\uADA4\uC801 ${trajectory.id}`)),
+    trajectory.label ?? `\uADA4\uC801 ${trajectory.id}`,
     `\uC9C0\uB3C4 ${trajectory.mapId}`,
-    _nullishCoalesce(STATUS_LABEL[trajectory.status], () => ( trajectory.status)),
+    STATUS_LABEL[trajectory.status] ?? trajectory.status,
     `sample ${samples.length}\uAC1C`
   ];
   if (firstTime != null && lastTime != null) parts.push(`\uC2DC\uAC04 ${firstTime}\uC5D0\uC11C ${lastTime} \uBC00\uB9AC\uCD08`);
@@ -200,25 +206,32 @@ function TrajectoryOverlay({
   style,
   ...rest
 }) {
-  const [hasDomFocus, setHasDomFocus] = _react2.default.useState(false);
-  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
+  const [hasDomFocus, setHasDomFocus] = React.useState(false);
+  const obstacle = useNavigationObstacles();
+  const progressHeadId = `lk-trajectory-progress-${React.useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === "function";
   const hiddenFromAccessibility = ariaHidden === true || ariaHidden === "true";
   const pointerOnly = interactive && hiddenFromAccessibility;
   const focusVisible = !hiddenFromAccessibility && (focused || hasDomFocus);
-  const samples = _nullishCoalesce(_optionalChain([trajectory, 'optionalAccess', _9 => _9.samples]), () => ( []));
-  const points = samples.map((sample) => sample.position).filter(finitePoint);
+  const samples = trajectory?.samples ?? [];
+  const finiteSamples = samples.map((sample, sourceIndex) => ({
+    sourceIndex,
+    point: sample.position
+  })).filter(({ point }) => finitePoint(point));
+  const points = finiteSamples.map(({ point }) => point);
   const pathData = pathFromPoints(points);
   if (points.length < 2) return null;
-  const currentIndex = Number.isInteger(_optionalChain([trajectory, 'optionalAccess', _10 => _10.currentSampleIndex])) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
-  const currentSample = currentIndex == null ? void 0 : samples[currentIndex];
-  const markerPoint = finitePoint(_optionalChain([currentSample, 'optionalAccess', _11 => _11.position])) ? currentSample.position : pointAlong(points, 0.5);
+  const currentIndex = Number.isInteger(trajectory?.currentSampleIndex) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
+  const currentPointIndex = currentIndex == null ? -1 : finiteSamples.findIndex(({ sourceIndex }) => sourceIndex === currentIndex);
+  const currentProgress = trajectoryProgressGeometry(points, currentPointIndex);
+  const markerPoint = currentProgress?.point ?? pointAlong(points, 0.5);
+  const currentPrefixPath = currentProgress ? pathFromPoints(currentProgress.prefixPoints) : "";
+  const currentCarrier = currentProgress?.usesCarrier ? progressCarrierPath(currentProgress.point, currentProgress.angle, inverseScale) : "";
   const statePoint = pointAlong(points, 0.12);
-  const headingDegrees = Number.isFinite(_optionalChain([currentSample, 'optionalAccess', _12 => _12.headingRad])) ? currentSample.headingRad * 180 / Math.PI : void 0;
-  const tone = statusTone(_optionalChain([trajectory, 'optionalAccess', _13 => _13.status]), invalid);
-  const dash = statusDash(_optionalChain([trajectory, 'optionalAccess', _14 => _14.status]));
+  const tone = statusTone(trajectory?.status, invalid);
+  const dash = statusDash(trajectory?.status);
   const foreground = "var(--viewer-foreground, var(--color-semantic-label-strong))";
   const surface = "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))";
   const trajectoryStateMarkers = [
@@ -237,15 +250,19 @@ function TrajectoryOverlay({
   ].filter(Boolean);
   const naturalMarkers = [
     { name: "status", point: statePoint, radius: MARKER_RADIUS_PX.status },
-    currentSample ? { name: "current", point: markerPoint, radius: MARKER_RADIUS_PX.current } : null,
     ...trajectoryStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
       radius: MARKER_RADIUS_PX[item.state]
     }))
   ].filter(Boolean);
-  const markerLayout = markerCollisionLayout(naturalMarkers, scale);
-  const trajectoryMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _15 => _15.slots, 'access', _16 => _16[name]]);
+  const fixedProgressMarkers = currentProgress ? [{
+    name: "current",
+    point: currentProgress.point,
+    radius: NAV_PROGRESS_HEAD.collisionRadius
+  }] : [];
+  const markerLayout = markerCollisionLayout(naturalMarkers, scale, fixedProgressMarkers);
+  const trajectoryMarkerSlot = (name) => markerLayout?.slots[name];
   const trajectoryLabelSlot = labelScreenSlot(markerPoint, markerLayout, scale);
   const activate = (event) => {
     if (disabled || !interactive) return;
@@ -260,24 +277,24 @@ function TrajectoryOverlay({
   };
   const handlePointerDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onPointerDown, 'optionalCall', _17 => _17(event)]);
+    onPointerDown?.(event);
   };
   const handleMouseDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onMouseDown, 'optionalCall', _18 => _18(event)]);
+    onMouseDown?.(event);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "g",
     {
       ...rest,
       "data-lk-trajectory-overlay": "",
-      "data-trajectory-id": _optionalChain([trajectory, 'optionalAccess', _19 => _19.id]),
-      "data-map-id": _optionalChain([trajectory, 'optionalAccess', _20 => _20.mapId]),
-      "data-trajectory-status": _optionalChain([trajectory, 'optionalAccess', _21 => _21.status]),
+      "data-trajectory-id": trajectory?.id,
+      "data-map-id": trajectory?.mapId,
+      "data-trajectory-status": trajectory?.status,
       "data-current-sample-index": currentIndex,
       "data-viewport-scale": scale,
       "data-trajectory-marker-layout": markerLayout ? "screen-slots" : "path-anchored",
-      "data-trajectory-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _22 => _22.totalWidth]),
+      "data-trajectory-marker-row-width": markerLayout?.totalWidth,
       "data-pointer-only": pointerOnly ? "true" : void 0,
       "data-selected": selected ? "true" : "false",
       "data-focused": focusVisible ? "true" : "false",
@@ -285,10 +302,10 @@ function TrajectoryOverlay({
       "data-invalid": invalid ? "true" : "false",
       "data-stale": stale ? "true" : "false",
       role: hiddenFromAccessibility ? void 0 : interactive ? "button" : "img",
-      tabIndex: hiddenFromAccessibility ? void 0 : interactive ? disabled ? -1 : _nullishCoalesce(tabIndex, () => ( 0)) : tabIndex,
+      tabIndex: hiddenFromAccessibility ? void 0 : interactive ? disabled ? -1 : tabIndex ?? 0 : tabIndex,
       focusable: hiddenFromAccessibility ? "false" : interactive ? "true" : void 0,
       "aria-hidden": hiddenFromAccessibility || void 0,
-      "aria-label": hiddenFromAccessibility ? void 0 : _nullishCoalesce(ariaLabel, () => ( trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale))),
+      "aria-label": hiddenFromAccessibility ? void 0 : ariaLabel ?? trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale),
       "aria-pressed": !hiddenFromAccessibility && interactive ? selected : void 0,
       "aria-disabled": !hiddenFromAccessibility && interactive && disabled ? true : void 0,
       "aria-invalid": !hiddenFromAccessibility && invalid ? true : void 0,
@@ -297,50 +314,50 @@ function TrajectoryOverlay({
       onPointerDown: pointerOnly || onPointerDown ? handlePointerDown : void 0,
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !hiddenFromAccessibility ? (event) => {
-        setHasDomFocus(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
-        _optionalChain([onFocus, 'optionalCall', _23 => _23(event)]);
+        setHasDomFocus(isFocusVisibleTarget(event.currentTarget));
+        onFocus?.(event);
       } : void 0,
       onBlur: !hiddenFromAccessibility ? (event) => {
         setHasDomFocus(false);
-        _optionalChain([onBlur, 'optionalCall', _24 => _24(event)]);
+        onBlur?.(event);
       } : void 0,
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: navStateOpacity(disabled, stale),
         outline: "none",
         ...style
       },
       children: [
-        focusVisible && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        focusVisible && pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-focus-indicator": "",
             d: pathData,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: _chunkMJGVUH3Dcjs.NAV_FOCUS.pathHaloWidth,
+            strokeWidth: NAV_FOCUS.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        selected && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        selected && pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-selected-indicator": "",
             d: pathData,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: _chunkMJGVUH3Dcjs.NAV_SELECTION.pathHaloWidth,
+            strokeWidth: NAV_SELECTION.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: _chunkMJGVUH3Dcjs.NAV_SELECTION.haloOpacity,
+            opacity: NAV_SELECTION.haloOpacity,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        pathData && !selected && !focusVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        pathData && !selected && !focusVisible && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-casing": "",
@@ -354,27 +371,115 @@ function TrajectoryOverlay({
             pointerEvents: "none"
           }
         ),
-        pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-path": "",
             d: pathData,
             fill: "none",
             stroke: tone,
-            strokeWidth: selected || _optionalChain([trajectory, 'optionalAccess', _25 => _25.status]) === "active" ? 3.5 : 2.5,
+            strokeWidth: currentProgress ? 2.5 : selected || trajectory?.status === "active" ? 3.5 : 2.5,
             strokeDasharray: dash,
+            opacity: currentProgress ? NAV_PROGRESS_HEAD.trajectory.futureOpacity : void 0,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        pathData && interactive && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        currentProgress && /* @__PURE__ */ jsx(
+          NavigationProgressHeadDefs,
+          {
+            idPrefix: progressHeadId,
+            tone,
+            surface,
+            inverseScale,
+            role: "trajectory"
+          }
+        ),
+        currentProgress && currentPrefixPath && /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx(
+            "path",
+            {
+              "data-trajectory-progress-casing": "",
+              d: currentPrefixPath,
+              fill: "none",
+              stroke: surface,
+              strokeWidth: NAV_PROGRESS_HEAD.trajectory.casingWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              vectorEffect: "non-scaling-stroke",
+              markerEnd: currentCarrier ? void 0 : `url(#${progressHeadId}-casing)`,
+              pointerEvents: "none"
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "path",
+            {
+              "data-trajectory-progress-past": "",
+              "data-trajectory-current-marker": currentCarrier ? void 0 : "",
+              "data-trajectory-progress-marker": currentCarrier ? void 0 : "",
+              "data-navigation-progress-head": currentCarrier ? void 0 : "trajectory",
+              "data-head-rendering": currentCarrier ? void 0 : "marker-end",
+              "data-trajectory-anchor-x": currentCarrier ? void 0 : currentProgress.point.x,
+              "data-trajectory-anchor-y": currentCarrier ? void 0 : currentProgress.point.y,
+              d: currentPrefixPath,
+              fill: "none",
+              stroke: tone,
+              strokeWidth: NAV_PROGRESS_HEAD.trajectory.coreWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              vectorEffect: "non-scaling-stroke",
+              markerEnd: currentCarrier ? void 0 : `url(#${progressHeadId}-core)`,
+              pointerEvents: "none"
+            }
+          )
+        ] }),
+        currentProgress && currentCarrier && /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx(
+            "path",
+            {
+              "data-trajectory-progress-carrier": "casing",
+              "data-trajectory-progress-casing": "",
+              d: currentCarrier,
+              fill: "none",
+              stroke: surface,
+              strokeWidth: NAV_PROGRESS_HEAD.trajectory.casingWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              vectorEffect: "non-scaling-stroke",
+              markerEnd: `url(#${progressHeadId}-casing)`,
+              pointerEvents: "none"
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "path",
+            {
+              "data-trajectory-progress-carrier": "core",
+              "data-trajectory-current-marker": "",
+              "data-trajectory-progress-marker": "",
+              "data-navigation-progress-head": "trajectory",
+              "data-head-rendering": "marker-end",
+              "data-trajectory-anchor-x": currentProgress.point.x,
+              "data-trajectory-anchor-y": currentProgress.point.y,
+              d: currentCarrier,
+              fill: "none",
+              stroke: tone,
+              strokeWidth: NAV_PROGRESS_HEAD.trajectory.coreWidth,
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              vectorEffect: "non-scaling-stroke",
+              markerEnd: `url(#${progressHeadId}-core)`,
+              pointerEvents: "none"
+            }
+          )
+        ] }),
+        pathData && interactive && /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx(
             "path",
             {
               "data-trajectory-hit-target": "",
-              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": NAV_HIT.screenTargetSize,
               d: pathData,
               fill: "none",
               stroke: "transparent",
@@ -383,67 +488,37 @@ function TrajectoryOverlay({
               pointerEvents: "stroke"
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ jsx(
             "circle",
             {
               "data-trajectory-hit-target-core": "",
               "data-trajectory-actual-hit-core": "",
-              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": NAV_HIT.screenTargetSize,
               "data-screen-target-diameter": "35",
               cx: statePoint.x,
               cy: statePoint.y,
-              r: _chunkMJGVUH3Dcjs.NAV_HIT.radius * inverseScale,
+              r: NAV_HIT.radius * inverseScale,
               fill: "transparent",
               pointerEvents: "all"
             }
           )
         ] }),
-        pathData && currentSample && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
-          "g",
+        currentProgress && /* @__PURE__ */ jsx(
+          ProgressHeadObstacle,
           {
-            "data-trajectory-current-marker": "",
-            "data-trajectory-screen-slot": markerLayout ? "current" : void 0,
-            "data-trajectory-anchor-x": markerPoint.x,
-            "data-trajectory-anchor-y": markerPoint.y,
-            transform: markerTransform(markerPoint, inverseScale, trajectoryMarkerSlot("current")),
-            "aria-hidden": "true",
-            pointerEvents: "none",
-            children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                "circle",
-                {
-                  ...obstacle(`trajectory:${trajectory.id}:current`),
-                  "data-trajectory-marker-badge": "current",
-                  "data-navigation-marker-circle": "",
-                  r: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.radius,
-                  fill: surface,
-                  stroke: tone,
-                  strokeWidth: _chunkMJGVUH3Dcjs.NAV_CURRENT_MARKER.strokeWidth,
-                  vectorEffect: "non-scaling-stroke"
-                }
-              ),
-              headingDegrees == null ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { r: "3", fill: foreground }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                "path",
-                {
-                  "data-trajectory-current-heading": "",
-                  "data-navigation-vector-glyph": "heading",
-                  d: _chunk7QQAUH55cjs.NAVIGATION_DIRECTION_PATH,
-                  transform: `rotate(${headingDegrees})`,
-                  fill: foreground,
-                  stroke: surface,
-                  strokeWidth: "1",
-                  strokeLinejoin: "round",
-                  vectorEffect: "non-scaling-stroke"
-                }
-              )
-            ]
+            obstacle,
+            id: `trajectory:${trajectory.id}:progress-head`,
+            point: currentProgress.point,
+            angle: currentProgress.angle,
+            inverseScale,
+            dataPrefix: "trajectory"
           }
         ),
-        pathData && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        pathData && /* @__PURE__ */ jsxs(
           "g",
           {
             "data-trajectory-status-marker": "",
-            "data-trajectory-status-glyph": _optionalChain([trajectory, 'optionalAccess', _26 => _26.status]),
+            "data-trajectory-status-glyph": trajectory?.status,
             "data-trajectory-screen-slot": markerLayout ? "status" : void 0,
             "data-trajectory-anchor-x": statePoint.x,
             "data-trajectory-anchor-y": statePoint.y,
@@ -451,23 +526,23 @@ function TrajectoryOverlay({
             "aria-hidden": "true",
             pointerEvents: "none",
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ jsx(
                 "circle",
                 {
                   ...obstacle(`trajectory:${trajectory.id}:status`),
                   "data-trajectory-marker-badge": "status",
                   "data-navigation-marker-circle": "",
-                  r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
+                  r: NAV_STATE_BADGE.radius,
                   fill: surface,
                   stroke: tone,
-                  strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
+                  strokeWidth: NAV_STATE_BADGE.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                _chunkGKSI3QZ5cjs.NavigationStateGlyph,
+              /* @__PURE__ */ jsx(
+                NavigationStateGlyph,
                 {
-                  kind: _nullishCoalesce(STATUS_GLYPH_KIND[_optionalChain([trajectory, 'optionalAccess', _27 => _27.status])], () => ( "unknown")),
+                  kind: STATUS_GLYPH_KIND[trajectory?.status] ?? "unknown",
                   size: 10,
                   color: foreground
                 }
@@ -478,7 +553,7 @@ function TrajectoryOverlay({
         pathData && trajectoryStateMarkers.map((item) => {
           const point = item.point;
           const stateSlot = trajectoryMarkerSlot(item.state);
-          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          return /* @__PURE__ */ jsxs(
             "g",
             {
               "data-trajectory-overlay-state": item.state,
@@ -489,40 +564,40 @@ function TrajectoryOverlay({
               "aria-hidden": "true",
               pointerEvents: "none",
               children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                /* @__PURE__ */ jsx(
                   "circle",
                   {
                     ...obstacle(`trajectory:${trajectory.id}:state:${item.state}`),
                     "data-trajectory-marker-badge": item.state,
                     "data-navigation-marker-circle": "",
-                    r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
+                    r: NAV_STATE_BADGE.radius,
                     fill: surface,
                     stroke: item.tone,
-                    strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
-                    strokeDasharray: item.state === "stale" ? _chunkMJGVUH3Dcjs.NAV_DASH.staleRing : void 0,
+                    strokeWidth: NAV_STATE_BADGE.strokeWidth,
+                    strokeDasharray: item.state === "stale" ? NAV_DASH.staleRing : void 0,
                     vectorEffect: "non-scaling-stroke"
                   }
                 ),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkGKSI3QZ5cjs.NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: foreground })
+                /* @__PURE__ */ jsx(NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: foreground })
               ]
             },
             item.state
           );
         }),
-        showLabel && _optionalChain([trajectory, 'optionalAccess', _28 => _28.label]) && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
+        showLabel && trajectory?.label && pathData && /* @__PURE__ */ jsx(
+          NavigationAnnotationBlock,
           {
             id: `trajectory:${trajectory.id}:label`,
             kind: "trajectory-label",
             anchor: markerPoint,
             nudgeDirection: "up",
-            priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
+            priority: annotationPriority({
               selected,
               focused: focusVisible,
-              alarm: invalid || _optionalChain([trajectory, 'optionalAccess', _29 => _29.status]) === "blocked",
-              emphasized: _optionalChain([trajectory, 'optionalAccess', _30 => _30.status]) === "active"
+              alarm: invalid || trajectory?.status === "blocked",
+              emphasized: trajectory?.status === "active"
             }),
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ jsx(
               "text",
               {
                 "data-trajectory-label": "",
@@ -535,7 +610,7 @@ function TrajectoryOverlay({
                 transform: markerTransform(markerPoint, inverseScale, trajectoryLabelSlot),
                 fill: foreground,
                 stroke: surface,
-                strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
+                strokeWidth: NAV_LABEL_HALO.primary,
                 strokeLinejoin: "round",
                 paintOrder: "stroke",
                 vectorEffect: "non-scaling-stroke",
@@ -554,7 +629,7 @@ function TrajectoryOverlay({
   );
 }
 
-
-
-exports.TrajectoryOverlay = TrajectoryOverlay;
-//# sourceMappingURL=chunk-JNM3YUQE.cjs.map
+export {
+  TrajectoryOverlay
+};
+//# sourceMappingURL=chunk-5F7R6M37.js.map

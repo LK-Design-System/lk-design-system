@@ -13,7 +13,7 @@ var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
 
 
 
-var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
+var _chunkA43SMF67cjs = require('./chunk-A43SMF67.cjs');
 
 
 
@@ -182,7 +182,7 @@ function computedAccessibleLabel(transition, availabilityLabel) {
     ...detailRows(transition, availabilityLabel)
   ].filter(Boolean).join(" \xB7 ");
 }
-var PIN_PATH = _chunkMJGVUH3Dcjs.NAV_PIN.path;
+var PIN_PATH = _chunkA43SMF67cjs.NAV_PIN.path;
 function FacilityTransition({
   transition,
   activeMapId,
@@ -227,7 +227,7 @@ function FacilityTransition({
   const stateBadges = [
     transition.availability === "unknown" ? { kind: "unknown", tone: "var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))" } : null,
     invalid ? { kind: "invalid", tone: "var(--viewer-danger, var(--color-semantic-status-negative-foreground))" } : null,
-    stale ? { kind: "stale", tone: "var(--viewer-muted, var(--color-semantic-label-alternative))", dash: _chunkMJGVUH3Dcjs.NAV_DASH.staleRing } : null
+    stale ? { kind: "stale", tone: "var(--viewer-muted, var(--color-semantic-label-alternative))", dash: _chunkA43SMF67cjs.NAV_DASH.staleRing } : null
   ].filter(Boolean).map((state, index, states) => ({
     ...state,
     x: (index - (states.length - 1) / 2) * 16
@@ -289,7 +289,7 @@ function FacilityTransition({
         _optionalChain([onMouseDown, 'optionalCall', _5 => _5(event)]);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setFocusVisible(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
+        if (!pointerOnly) setFocusVisible(_chunkA43SMF67cjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
         _optionalChain([onFocus, 'optionalCall', _6 => _6(event)]);
       },
       onBlur: (event) => {
@@ -298,23 +298,23 @@ function FacilityTransition({
       },
       style: {
         cursor: interactive && !disabled ? "pointer" : disabled ? "not-allowed" : "default",
-        opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: _chunkA43SMF67cjs.navStateOpacity.call(void 0, disabled, stale),
         outline: "none",
         ...style
       },
       children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: `scale(${inverseScale})`, "data-transition-screen-space": "", children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: _chunkMJGVUH3Dcjs.NAV_PIN.shadow.transform, fill: _chunkMJGVUH3Dcjs.NAV_PIN.shadow.fill, opacity: _chunkMJGVUH3Dcjs.NAV_PIN.shadow.opacity, pointerEvents: "none", "data-transition-shadow": "" }),
-        activeFocus && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkMJGVUH3Dcjs.NAV_PIN.focusRing.scale})`, fill: "none", stroke: "var(--color-semantic-focus-indicator)", strokeWidth: _chunkMJGVUH3Dcjs.NAV_PIN.focusRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-transition-focus-ring": "" }),
-        selected && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkMJGVUH3Dcjs.NAV_PIN.selectionRing.scale})`, fill: "none", stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))", strokeWidth: _chunkMJGVUH3Dcjs.NAV_PIN.selectionRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-transition-selection-ring": "" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: _chunkA43SMF67cjs.NAV_PIN.shadow.transform, fill: _chunkA43SMF67cjs.NAV_PIN.shadow.fill, opacity: _chunkA43SMF67cjs.NAV_PIN.shadow.opacity, pointerEvents: "none", "data-transition-shadow": "" }),
+        activeFocus && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkA43SMF67cjs.NAV_PIN.focusRing.scale})`, fill: "none", stroke: "var(--color-semantic-focus-indicator)", strokeWidth: _chunkA43SMF67cjs.NAV_PIN.focusRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-transition-focus-ring": "" }),
+        selected && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: PIN_PATH, transform: `scale(${_chunkA43SMF67cjs.NAV_PIN.selectionRing.scale})`, fill: "none", stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))", strokeWidth: _chunkA43SMF67cjs.NAV_PIN.selectionRing.strokeWidth, strokeLinejoin: "round", vectorEffect: "non-scaling-stroke", pointerEvents: "none", "data-transition-selection-ring": "" }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "circle",
           {
-            r: _chunkMJGVUH3Dcjs.NAV_HIT.radius,
+            r: _chunkA43SMF67cjs.NAV_HIT.radius,
             fill: "transparent",
             stroke: "none",
             pointerEvents: interactive ? "all" : "none",
             "data-transition-hit-area": "",
-            "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize
+            "data-screen-target-size": _chunkA43SMF67cjs.NAV_HIT.screenTargetSize
           }
         ),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
@@ -351,10 +351,10 @@ function FacilityTransition({
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "circle",
                 {
-                  r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
+                  r: _chunkA43SMF67cjs.NAV_STATE_BADGE.radius,
                   fill: "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))",
                   stroke: state.tone,
-                  strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
+                  strokeWidth: _chunkA43SMF67cjs.NAV_STATE_BADGE.strokeWidth,
                   strokeDasharray: state.dash,
                   vectorEffect: "non-scaling-stroke"
                 }
@@ -390,7 +390,7 @@ function FacilityTransition({
                 textAnchor: "start",
                 fill: "var(--viewer-foreground, var(--color-semantic-label-strong))",
                 stroke: "var(--viewer-surface, var(--color-semantic-background-normal-normal))",
-                strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
+                strokeWidth: _chunkA43SMF67cjs.NAV_LABEL_HALO.primary,
                 paintOrder: "stroke",
                 vectorEffect: "non-scaling-stroke",
                 pointerEvents: "none",
@@ -416,4 +416,4 @@ function FacilityTransition({
 
 
 exports.FacilityTransition = FacilityTransition;
-//# sourceMappingURL=chunk-FPTN4BA6.cjs.map
+//# sourceMappingURL=chunk-OUMSQCV6.cjs.map

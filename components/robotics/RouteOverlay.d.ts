@@ -26,11 +26,11 @@ export interface RouteSegmentData {
 }
 
 export interface RouteProgressData {
-  /** Segment that owns the current progress marker. */
+  /** Segment that owns the current line-integrated progress head. */
   readonly segmentId: string;
   /** Explicit progress within that segment only, from 0 to 1. */
   readonly fraction: number;
-  /** Optional source-supplied marker position. Otherwise `fraction` is applied to segment geometry. */
+  /** Optional exact head position for the same fraction boundary. A mismatch over 2 CSS px suppresses the head. */
   readonly position?: NavigationPoint;
 }
 

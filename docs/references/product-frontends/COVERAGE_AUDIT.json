@@ -1736,7 +1736,7 @@
         {
           "repo": "web-viz",
           "classification": "supported by composition",
-          "reason": "Pinned map editor, zone editor, and task target sources map to renderer-neutral point, line, route, trajectory, region, facility-transition, and named-mirror contracts; projection, floor topology, editing, persistence, and recovery remain product-owned.",
+          "reason": "Pinned authoring sources map to point, line, region, facility-transition, and named-mirror contracts. Runtime sources separately prove an observed trajectory line plus robot pose, so the path-tangent Trajectory progress head is supported by composition without replacing pose. Planned Route remains a gap because no segment geometry plus segmentId/fraction feed was found; projection, floor topology, editing, persistence, reset, and recovery remain product-owned.",
           "sourceEvidence": [
             {
               "path": "frontend/src/screens/MapEditScreen.tsx",
@@ -1749,25 +1749,37 @@
             {
               "path": "frontend/src/screens/TaskCreateScreen.tsx",
               "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+            },
+            {
+              "path": "frontend/src/App.tsx",
+              "blobSha": "04a15617f1fc3fb0f6ca0c52a19cffed767f934c"
+            },
+            {
+              "path": "frontend/src/screens/TaskRunScreen.tsx",
+              "blobSha": "387061f8047ea707822001695bd4d9cc78f29994"
+            },
+            {
+              "path": "frontend/src/components/Map2DViewer.tsx",
+              "blobSha": "46da3c8cf57db99247c894496301ab35a46f1e47"
             }
           ]
         },
         {
           "repo": "control",
-          "classification": "unverified",
-          "reason": "Pinned robot dashboard and task-command sources show a relevant supervision and map-target seam, but no component-level mapping to the six Robotics Navigation renderers has been closed; no support claim is made.",
+          "classification": "supported by composition",
+          "reason": "Pinned live-monitoring sources separate accumulated path history from the current robot pose and heading, so the Trajectory progress head is supported by composition and must not replace the product-owned pose marker. Planned Route is not applicable in this pinned workflow because no route-segment feed exists; mapping for the remaining Navigation renderers is still unverified.",
           "sourceEvidence": [
             {
-              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
-              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+              "path": "frontend/src/routes/MainRoutes.jsx",
+              "blobSha": "b5d1d3ddf5be834f8a3dd214b87f155c144c90bc"
             },
             {
-              "path": "frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx",
-              "blobSha": "55d79e36d4b8797d3eabd1e35ae64422a9fc38a0"
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx",
+              "blobSha": "6ffb5708603fe75138ce01a2d6639e7a7d4c73f0"
             },
             {
-              "path": "frontend/src/views/task-management/index.jsx",
-              "blobSha": "929f25340a4845248fb80c355841193cac41a51d"
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap/index.jsx",
+              "blobSha": "b395ef598b4262db536e7fd57b0b3bf472a2eacc"
             }
           ]
         },
@@ -1807,7 +1819,8 @@
         "Which map feature or facility endpoint is being inspected or edited?",
         "Is the feature a point, line, region, landmark, or cross-floor facility relationship?",
         "Which floor and map identity own the selected target?",
-        "Can the user distinguish the feature and its state at the current zoom without relying on color alone?"
+        "Can the user distinguish the feature and its state at the current zoom without relying on color alone?",
+        "Does current route or trajectory progress read as an elapsed-path boundary while robot pose, bearing, and footprint remain separate layers?"
       ],
       "failureRecovery": [
         "Keep unsaved edits and the selected feature visible when save fails.",
@@ -1815,7 +1828,7 @@
         "Do not collapse elevator entry, elevator interior, door, stair, and generic waypoint into one ambiguous marker.",
         "Preserve a named list or inspector path when dense map geometry is not reliable for keyboard traversal."
       ],
-      "dsBoundary": "LDS may own renderer-neutral point, line, route, trajectory, region, facility-transition, selection, state, and accessible-mirror contracts; map persistence, editor commands, floor topology, task schema, facility control, and transport remain product-owned.",
+      "dsBoundary": "LDS may own renderer-neutral point, line, route, trajectory, region, facility-transition, selection, state, path-tangent progress-head, and accessible-mirror contracts; robot pose/bearing/footprint, map persistence, editor commands, floor topology, task schema, facility control, and transport remain product-owned.",
       "designQuestion": "Do the navigation components and map symbols provide a coherent, conventional, zoom-stable visual grammar that LK Web Viz can compose without redrawing the same semantics?",
       "sourceEvidence": [
         {
@@ -1832,6 +1845,16 @@
           "repo": "web-viz",
           "path": "frontend/src/screens/TaskCreateScreen.tsx",
           "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/TaskRunScreen.tsx",
+          "blobSha": "387061f8047ea707822001695bd4d9cc78f29994"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/components/Map2DViewer.tsx",
+          "blobSha": "46da3c8cf57db99247c894496301ab35a46f1e47"
         }
       ],
       "stage": "wireframed",

@@ -634,14 +634,14 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 
 ### WF-15 Map navigation and facility authoring
 
-현재 단계는 `wireframed`다. `LK-ROBOTICS/lk_web_viz`의 `MapEditScreen`, `ZoneEditor`, `TaskCreateScreen`을 pin해 point·line·region·landmark·층별 task target을 다시 읽었고, 현재 화면 배치를 복제하지 않은 독립 구조와 LDS mapping을 검토했다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
+현재 단계는 `wireframed`다. `LK-ROBOTICS/lk_web_viz`의 authoring source와 `TaskRunScreen`·`Map2DViewer` runtime source를 함께 pin해 point·line·region·landmark·층별 task target, observed path와 robot pose의 분리를 다시 읽었다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
 
 필수 세 자산의 이번 Robotics Navigation 교차 판정은 다음과 같다. `supported` 계열 판정은 실제 component-level source mapping이 닫힌 경우에만 사용한다.
 
 | 제품 자산 | 고정 revision과 관련 source | 판정 | workflow seam |
 | --- | --- | --- | --- |
-| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` · `frontend/src/components/editor/ZoneEditor.tsx` · `frontend/src/screens/TaskCreateScreen.tsx` | supported by composition | LDS가 point/lane/route/trajectory/region/facility symbol과 named mirror 계약을 제공하고, projection·floor topology·editor command·save/retry는 Web Viz가 소유한다. `forbidden` line과 stair/stair-slope는 아래의 gap으로 남는다. |
-| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx` · `frontend/src/views/task-management/index.jsx` | unverified | robot supervision과 map target의 관련성은 확인했지만 여섯 Navigation renderer와 Control source의 component-level mapping을 닫지 않았다. 따라서 지원을 추정하지 않고 후속 source review 전까지 Control-owned composition으로 남긴다. |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` · `frontend/src/screens/TaskRunScreen.tsx` · `frontend/src/components/Map2DViewer.tsx` | supported by composition | authoring point/line/region/facility와 runtime observed trajectory가 LDS 조합으로 지원된다. runtime은 history line과 robot pose를 분리하므로 progress head는 pose를 대체하지 않는다. planned Route segment geometry·fraction feed, `forbidden` line, stair/stair-slope는 gap이다. |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/routes/MainRoutes.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap/index.jsx` | supported by composition | observed path history와 current robot+heading이 분리되어 Trajectory progress head 조합이 닫혔다. pinned workflow에는 planned Route feed가 없어 Route는 not applicable이며 나머지 Navigation renderer mapping은 계속 unverified다. |
 | LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/projects/page.tsx` · `src/components/scopes/ScopeManager.tsx` · `src/components/chat/PortalChatPanel.tsx` | not applicable | 현재 고정 frontend는 project/evidence scope, document intake, assistance, credential workflow를 소유하며 map·floor·robot navigation 진입점이나 geometry authoring 책임이 없다. |
 
 독립 low-fi의 읽기·키보드 순서는 다음과 같다.
@@ -667,7 +667,8 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 | generic waypoint, goal, charger, POI | supported | `WaypointMarker`가 role·annotation·availability·invalid/stale을 zoom-stable symbol과 accessible name으로 제공한다. 제품 landmark type을 그대로 public enum으로 복제하지 않는다. |
 | navigation graph lane | supported | `LaneOverlay`는 방향·통행 제약·폐쇄·충돌을 가진 graph edge다. facility 실시간 상태는 `FacilityTransition`에 남긴다. |
 | 제품의 `forbidden` line | gap | 현재 제품 line은 금지 경계이고 `LaneOverlay`와 의미가 다르다. 이를 graph lane으로 매핑하지 않으며, 별도 renderer 계약은 후속 Robotics audit에서 판단한다. |
-| route와 observed/predicted trajectory | supported | `RouteOverlay`와 `TrajectoryOverlay`를 분리하고 current segment/sample, invalid, stale을 색상 외 glyph와 text mirror로 전달한다. |
+| observed/predicted trajectory | supported by composition | `TrajectoryOverlay`는 current sample 이전의 strong line, 이후의 recessed line, path-tangent open head를 제공한다. `Map2DViewer`와 `InteractiveMap`의 robot pose/heading/footprint는 제품 layer에 남긴다. |
+| planned route | gap | `RouteOverlay` 계약은 준비되어 있지만 pinned Web Viz/Control source에서 segment geometry와 `segmentId`+`fraction` feed를 찾지 못했다. goal/lane ordinal을 route geometry로 추론하지 않는다. |
 | forbidden/work/speed-limit region | supported by composition | `SpatialRegion`의 behavior-region geometry와 제품 label/value를 조합한다. 속도 값과 편집 정책은 제품 소유다. |
 | stair와 stair-slope region | gap | 현재 public `SpatialRegion` kind가 이 terrain 의미를 소유하지 않는다. generic behavior region으로 위장하지 않고 후속 semantic-kind 검토 대상으로 남긴다. |
 | elevator entry/interior, door, dock | supported by composition | `FacilityTransition` endpoint/state와 `SpatialRegion`의 lift lobby/cabin grammar를 조합한다. 현재 제품의 동일 Material elevator glyph를 복제하지 않고 entry/interior를 관계·label·region으로 구분한다. |

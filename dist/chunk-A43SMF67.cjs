@@ -42,7 +42,18 @@ var NAV_PIN = {
 };
 var NAV_HIT = { radius: 17.5, screenTargetSize: 24 };
 var NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
-var NAV_CURRENT_MARKER = { radius: 9, strokeWidth: 2 };
+var NAV_PROGRESS_HEAD = {
+  path: "M 2 1.5 L 16 8 L 2 14.5",
+  viewBox: "0 0 18 16",
+  refX: 16,
+  refY: 8,
+  width: 18,
+  height: 16,
+  collisionRadius: 20,
+  obstacle: { x: -20, y: -10, width: 24, height: 20 },
+  route: { casingWidth: 7, coreWidth: 4, futureOpacity: 0.34 },
+  trajectory: { casingWidth: 6.5, coreWidth: 3.5, futureOpacity: 0.28 }
+};
 var NAV_LABEL_HALO = { primary: 4, secondary: 3, caption: 3 };
 
 
@@ -56,5 +67,5 @@ var NAV_LABEL_HALO = { primary: 4, secondary: 3, caption: 3 };
 
 
 
-exports.isFocusVisibleTarget = isFocusVisibleTarget; exports.navStateOpacity = navStateOpacity; exports.NAV_FOCUS = NAV_FOCUS; exports.NAV_SELECTION = NAV_SELECTION; exports.NAV_DASH = NAV_DASH; exports.NAV_PIN = NAV_PIN; exports.NAV_HIT = NAV_HIT; exports.NAV_STATE_BADGE = NAV_STATE_BADGE; exports.NAV_CURRENT_MARKER = NAV_CURRENT_MARKER; exports.NAV_LABEL_HALO = NAV_LABEL_HALO;
-//# sourceMappingURL=chunk-MJGVUH3D.cjs.map
+exports.isFocusVisibleTarget = isFocusVisibleTarget; exports.navStateOpacity = navStateOpacity; exports.NAV_FOCUS = NAV_FOCUS; exports.NAV_SELECTION = NAV_SELECTION; exports.NAV_DASH = NAV_DASH; exports.NAV_PIN = NAV_PIN; exports.NAV_HIT = NAV_HIT; exports.NAV_STATE_BADGE = NAV_STATE_BADGE; exports.NAV_PROGRESS_HEAD = NAV_PROGRESS_HEAD; exports.NAV_LABEL_HALO = NAV_LABEL_HALO;
+//# sourceMappingURL=chunk-A43SMF67.cjs.map

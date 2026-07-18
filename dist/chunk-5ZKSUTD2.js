@@ -1,28 +1,28 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunk7QQAUH55cjs = require('./chunk-7QQAUH55.cjs');
-
-
-var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
-
-
-
-
-
-
-
-
-var _chunkMJGVUH3Dcjs = require('./chunk-MJGVUH3D.cjs');
-
-
-
-
-var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
+"use client";
+import {
+  NAVIGATION_DIRECTION_PATH
+} from "./chunk-K4EWYCV2.js";
+import {
+  NavigationStateGlyph
+} from "./chunk-54Q6T6L4.js";
+import {
+  NAV_FOCUS,
+  NAV_HIT,
+  NAV_LABEL_HALO,
+  NAV_SELECTION,
+  NAV_STATE_BADGE,
+  isFocusVisibleTarget,
+  navStateOpacity
+} from "./chunk-3IFGQEHY.js";
+import {
+  NavigationAnnotationBlock,
+  annotationPriority,
+  useNavigationObstacles
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/LaneOverlay.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var VIEWER_FOREGROUND = "var(--viewer-foreground, var(--color-semantic-label-strong))";
 var VIEWER_MUTED = "var(--viewer-muted, var(--color-semantic-label-neutral))";
 var VIEWER_SURFACE = "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))";
@@ -89,18 +89,18 @@ function outwardTextAnchor(horizontalDirection) {
   return "middle";
 }
 function laneAccessibleName(lane, availability, conflict, selected, focused, disabled, invalid, stale) {
-  const entryName = _nullishCoalesce(_optionalChain([lane, 'access', _ => _.entry, 'optionalAccess', _2 => _2.waypointId]), () => ( "\uC9C4\uC785\uC810"));
-  const exitName = _nullishCoalesce(_optionalChain([lane, 'access', _3 => _3.exit, 'optionalAccess', _4 => _4.waypointId]), () => ( "\uC774\uD0C8\uC810"));
+  const entryName = lane.entry?.waypointId ?? "\uC9C4\uC785\uC810";
+  const exitName = lane.exit?.waypointId ?? "\uC774\uD0C8\uC810";
   const parts = [
-    _nullishCoalesce(lane.label, () => ( `\uB808\uC778 ${lane.id}`)),
+    lane.label ?? `\uB808\uC778 ${lane.id}`,
     `${entryName}\uC5D0\uC11C ${exitName} \uBC29\uD5A5`,
     AVAILABILITY_LABEL[availability]
   ];
-  if (_optionalChain([lane, 'access', _5 => _5.relation, 'optionalAccess', _6 => _6.kind]) === "paired") parts.push(`\uBC18\uB300 \uBC29\uD5A5 \uB808\uC778 ${lane.relation.pairedLaneId}\uC640 \uC30D`);
+  if (lane.relation?.kind === "paired") parts.push(`\uBC18\uB300 \uBC29\uD5A5 \uB808\uC778 ${lane.relation.pairedLaneId}\uC640 \uC30D`);
   if (lane.speedLimitMps != null) parts.push(`\uC18D\uB3C4 \uC81C\uD55C ${lane.speedLimitMps} m/s`);
   if (lane.mutexGroupId) parts.push(`\uC0C1\uD638 \uBC30\uC81C \uADF8\uB8F9 ${lane.mutexGroupId}`);
-  if (_optionalChain([lane, 'access', _7 => _7.entry, 'optionalAccess', _8 => _8.transitionIds, 'optionalAccess', _9 => _9.length])) parts.push(`\uC9C4\uC785 \uC804\uD658 ${lane.entry.transitionIds.join(", ")}`);
-  if (_optionalChain([lane, 'access', _10 => _10.exit, 'optionalAccess', _11 => _11.transitionIds, 'optionalAccess', _12 => _12.length])) parts.push(`\uC774\uD0C8 \uC804\uD658 ${lane.exit.transitionIds.join(", ")}`);
+  if (lane.entry?.transitionIds?.length) parts.push(`\uC9C4\uC785 \uC804\uD658 ${lane.entry.transitionIds.join(", ")}`);
+  if (lane.exit?.transitionIds?.length) parts.push(`\uC774\uD0C8 \uC804\uD658 ${lane.exit.transitionIds.join(", ")}`);
   if (conflict) parts.push("\uCDA9\uB3CC \uC788\uC74C");
   if (selected) parts.push("\uC120\uD0DD\uB428");
   if (focused) parts.push("\uD3EC\uCEE4\uC2A4\uB428");
@@ -112,18 +112,18 @@ function laneAccessibleName(lane, availability, conflict, selected, focused, dis
 function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
   if (!point || !endpoint) return null;
   const orientation = orientationAngle(endpoint.orientation, fallbackAngle);
-  const transitionCount = _nullishCoalesce(_optionalChain([endpoint, 'access', _13 => _13.transitionIds, 'optionalAccess', _14 => _14.length]), () => ( 0));
+  const transitionCount = endpoint.transitionIds?.length ?? 0;
   const markerLabel = kind === "entry" ? "\uC9C4\uC785" : "\uC774\uD0C8";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "g",
     {
       "data-lane-endpoint": kind,
-      "data-waypoint-id": _nullishCoalesce(endpoint.waypointId, () => ( void 0)),
+      "data-waypoint-id": endpoint.waypointId ?? void 0,
       transform: `translate(${point.x} ${point.y}) scale(${inverseScale})`,
       "aria-hidden": "true",
       pointerEvents: "none",
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ jsx(
           "circle",
           {
             "data-lane-endpoint-point": kind,
@@ -134,7 +134,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
             vectorEffect: "non-scaling-stroke"
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ jsx(
           "text",
           {
             "data-lane-endpoint-label": kind,
@@ -143,7 +143,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
             textAnchor: "middle",
             fill: VIEWER_MUTED,
             stroke: VIEWER_SURFACE,
-            strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.caption,
+            strokeWidth: NAV_LABEL_HALO.caption,
             paintOrder: "stroke",
             vectorEffect: "non-scaling-stroke",
             fontFamily: "var(--font-sans)",
@@ -152,8 +152,8 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
             children: markerLabel
           }
         ),
-        transitionCount > 0 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { "data-lane-transition-count": transitionCount, transform: "translate(0 16)", children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        transitionCount > 0 && /* @__PURE__ */ jsxs("g", { "data-lane-transition-count": transitionCount, transform: "translate(0 16)", children: [
+          /* @__PURE__ */ jsx(
             "circle",
             {
               "data-lane-transition-count-circle": "",
@@ -164,7 +164,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
               vectorEffect: "non-scaling-stroke"
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          /* @__PURE__ */ jsxs(
             "text",
             {
               "data-lane-transition-count-text": "",
@@ -187,7 +187,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
             }
           )
         ] }),
-        orientation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        orientation != null && /* @__PURE__ */ jsx(
           "path",
           {
             "data-lane-orientation": endpoint.orientation,
@@ -229,14 +229,14 @@ function LaneOverlay({
   style,
   ...rest
 }) {
-  const [hasFocus, setHasFocus] = _react2.default.useState(false);
-  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
+  const [hasFocus, setHasFocus] = React.useState(false);
+  const obstacle = useNavigationObstacles();
   const pointerOnly = ariaHidden === true || ariaHidden === "true";
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const resolvedAvailability = ["available", "closed", "unknown"].includes(availability) ? availability : "available";
   const hasConflict = Boolean(conflict);
-  const points = (_nullishCoalesce(_optionalChain([lane, 'optionalAccess', _15 => _15.points]), () => ( []))).filter(finitePoint);
+  const points = (lane?.points ?? []).filter(finitePoint);
   if (points.length < 2) return null;
   const pathData = pathFromPoints(points);
   const midpoint = pointAlong(points, 0.5);
@@ -245,7 +245,7 @@ function LaneOverlay({
   const exitDirection = pointAlong(points.slice(-2), 0.5).angle;
   const interactive = typeof onActivate === "function";
   const visibleFocus = !pointerOnly && (focused || hasFocus);
-  const relation = _optionalChain([lane, 'optionalAccess', _16 => _16.relation, 'optionalAccess', _17 => _17.kind]) === "paired" ? "paired" : "single";
+  const relation = lane?.relation?.kind === "paired" ? "paired" : "single";
   const availabilityDash = resolvedAvailability === "closed" ? "8 5" : resolvedAvailability === "unknown" ? "2 5" : void 0;
   const baseColor = invalid ? "var(--viewer-danger, var(--color-semantic-status-negative-foreground))" : resolvedAvailability === "available" ? "var(--viewer-accent, var(--color-semantic-primary-normal))" : "var(--viewer-muted, var(--color-semantic-label-alternative))";
   const stateGlyphs = [
@@ -275,15 +275,15 @@ function LaneOverlay({
     y: labelNormal.y * primaryLabelDistance
   };
   const primaryLabelAnchor = outwardTextAnchor(labelNormal.x);
-  const metadataNormalDistance = _optionalChain([lane, 'optionalAccess', _18 => _18.label]) ? -metadataDistance : primaryLabelDistance;
+  const metadataNormalDistance = lane?.label ? -metadataDistance : primaryLabelDistance;
   const metadataPosition = {
     x: labelNormal.x * metadataNormalDistance,
     y: labelNormal.y * metadataNormalDistance
   };
   const metadataAnchor = outwardTextAnchor(labelNormal.x * Math.sign(metadataNormalDistance));
   const metadata = [
-    _optionalChain([lane, 'optionalAccess', _19 => _19.speedLimitMps]) != null ? `\u2264 ${lane.speedLimitMps} m/s` : null,
-    _optionalChain([lane, 'optionalAccess', _20 => _20.mutexGroupId]) ? `mutex ${lane.mutexGroupId}` : null
+    lane?.speedLimitMps != null ? `\u2264 ${lane.speedLimitMps} m/s` : null,
+    lane?.mutexGroupId ? `mutex ${lane.mutexGroupId}` : null
   ].filter(Boolean).join(" \xB7 ");
   const activate = (event) => {
     if (disabled) {
@@ -291,7 +291,7 @@ function LaneOverlay({
       event.stopPropagation();
       return;
     }
-    _optionalChain([onActivate, 'optionalCall', _21 => _21(lane.id, event)]);
+    onActivate?.(lane.id, event);
   };
   const handleKeyDown = (event) => {
     if (!pointerOnly) setHasFocus(true);
@@ -300,27 +300,27 @@ function LaneOverlay({
     event.preventDefault();
     activate(event);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "g",
     {
       ...rest,
       "data-lk-lane-overlay": "",
-      "data-lane-id": _optionalChain([lane, 'optionalAccess', _22 => _22.id]),
-      "data-map-id": _optionalChain([lane, 'optionalAccess', _23 => _23.mapId]),
+      "data-lane-id": lane?.id,
+      "data-map-id": lane?.mapId,
       "data-availability": resolvedAvailability,
       "data-conflict": hasConflict ? "true" : "false",
       "data-relation": relation,
-      "data-paired-lane-id": _optionalChain([lane, 'optionalAccess', _24 => _24.relation, 'optionalAccess', _25 => _25.kind]) === "paired" ? lane.relation.pairedLaneId : void 0,
+      "data-paired-lane-id": lane?.relation?.kind === "paired" ? lane.relation.pairedLaneId : void 0,
       "data-selected": selected ? "true" : "false",
       "data-focused": visibleFocus ? "true" : "false",
       "data-disabled": disabled ? "true" : "false",
       "data-invalid": invalid ? "true" : "false",
       "data-stale": stale ? "true" : "false",
-      role: pointerOnly ? void 0 : _nullishCoalesce(role, () => ( (interactive ? "button" : "img"))),
-      tabIndex: pointerOnly ? void 0 : interactive ? disabled ? -1 : _nullishCoalesce(tabIndex, () => ( 0)) : tabIndex,
+      role: pointerOnly ? void 0 : role ?? (interactive ? "button" : "img"),
+      tabIndex: pointerOnly ? void 0 : interactive ? disabled ? -1 : tabIndex ?? 0 : tabIndex,
       focusable: pointerOnly ? "false" : interactive && !disabled ? "true" : void 0,
       "aria-hidden": pointerOnly || void 0,
-      "aria-label": pointerOnly ? void 0 : _nullishCoalesce(ariaLabel, () => ( laneAccessibleName(
+      "aria-label": pointerOnly ? void 0 : ariaLabel ?? laneAccessibleName(
         lane,
         resolvedAvailability,
         hasConflict,
@@ -329,7 +329,7 @@ function LaneOverlay({
         disabled,
         invalid,
         stale
-      ))),
+      ),
       "aria-pressed": !pointerOnly && interactive ? selected : void 0,
       "aria-disabled": !pointerOnly && interactive && disabled ? true : void 0,
       "aria-invalid": !pointerOnly && invalid ? true : void 0,
@@ -337,53 +337,53 @@ function LaneOverlay({
       onKeyDown: handleKeyDown,
       onMouseDown: (event) => {
         if (pointerOnly) event.preventDefault();
-        _optionalChain([onMouseDown, 'optionalCall', _26 => _26(event)]);
+        onMouseDown?.(event);
       },
       onFocus: (event) => {
-        if (!pointerOnly) setHasFocus(_chunkMJGVUH3Dcjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
-        _optionalChain([onFocus, 'optionalCall', _27 => _27(event)]);
+        if (!pointerOnly) setHasFocus(isFocusVisibleTarget(event.currentTarget));
+        onFocus?.(event);
       },
       onBlur: (event) => {
         setHasFocus(false);
-        _optionalChain([onBlur, 'optionalCall', _28 => _28(event)]);
+        onBlur?.(event);
       },
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkMJGVUH3Dcjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: navStateOpacity(disabled, stale),
         outline: "none",
         ...style
       },
       children: [
-        visibleFocus && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        visibleFocus && pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-lane-focus-ring": "",
             d: pathData,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: _chunkMJGVUH3Dcjs.NAV_FOCUS.pathHaloWidth,
+            strokeWidth: NAV_FOCUS.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        selected && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        selected && pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-lane-selection-halo": "",
             d: pathData,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: _chunkMJGVUH3Dcjs.NAV_SELECTION.pathHaloWidth,
+            strokeWidth: NAV_SELECTION.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: _chunkMJGVUH3Dcjs.NAV_SELECTION.haloOpacity,
+            opacity: NAV_SELECTION.haloOpacity,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        pathData && !selected && !visibleFocus && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        pathData && !selected && !visibleFocus && /* @__PURE__ */ jsx(
           "path",
           {
             "data-lane-casing": "",
@@ -397,7 +397,7 @@ function LaneOverlay({
             pointerEvents: "none"
           }
         ),
-        pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-lane-path": "",
@@ -412,7 +412,7 @@ function LaneOverlay({
             pointerEvents: "none"
           }
         ),
-        hasConflict && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        hasConflict && pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-lane-conflict-pattern": "",
@@ -426,12 +426,12 @@ function LaneOverlay({
             pointerEvents: "none"
           }
         ),
-        pathData && interactive && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        pathData && interactive && /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx(
             "path",
             {
               "data-lane-hit-target": "",
-              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": NAV_HIT.screenTargetSize,
               d: pathData,
               fill: "none",
               stroke: "transparent",
@@ -440,28 +440,28 @@ function LaneOverlay({
               pointerEvents: "stroke"
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ jsx(
             "circle",
             {
               "data-lane-hit-target-core": "",
               "data-lane-actual-hit-core": "",
-              "data-screen-target-size": _chunkMJGVUH3Dcjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": NAV_HIT.screenTargetSize,
               "data-screen-target-diameter": "35",
               cx: midpoint.x,
               cy: midpoint.y,
-              r: _chunkMJGVUH3Dcjs.NAV_HIT.radius * inverseScale,
+              r: NAV_HIT.radius * inverseScale,
               fill: "transparent",
               pointerEvents: "all"
             }
           )
         ] }),
-        pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-lane-direction": "entry-to-exit",
             "data-lane-direction-anchor-x": directionPoint.x,
             "data-lane-direction-anchor-y": directionPoint.y,
-            d: _chunk7QQAUH55cjs.NAVIGATION_DIRECTION_PATH,
+            d: NAVIGATION_DIRECTION_PATH,
             transform: `translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`,
             fill: baseColor,
             stroke: VIEWER_SURFACE,
@@ -471,9 +471,9 @@ function LaneOverlay({
             pointerEvents: "none"
           }
         ),
-        showEndpoints && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { ...obstacle(`lane:${lane.id}:endpoint:entry`), children: endpointMarker(points[0], _optionalChain([lane, 'optionalAccess', _29 => _29.entry]), "entry", entryDirection, inverseScale) }),
-        showEndpoints && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { ...obstacle(`lane:${lane.id}:endpoint:exit`), children: endpointMarker(points[points.length - 1], _optionalChain([lane, 'optionalAccess', _30 => _30.exit]), "exit", exitDirection, inverseScale) }),
-        positionedStateGlyphs.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showEndpoints && /* @__PURE__ */ jsx("g", { ...obstacle(`lane:${lane.id}:endpoint:entry`), children: endpointMarker(points[0], lane?.entry, "entry", entryDirection, inverseScale) }),
+        showEndpoints && /* @__PURE__ */ jsx("g", { ...obstacle(`lane:${lane.id}:endpoint:exit`), children: endpointMarker(points[points.length - 1], lane?.exit, "exit", exitDirection, inverseScale) }),
+        positionedStateGlyphs.length > 0 && /* @__PURE__ */ jsx(
           "g",
           {
             ...obstacle(`lane:${lane.id}:states`),
@@ -486,7 +486,7 @@ function LaneOverlay({
             transform: `translate(${midpoint.x} ${midpoint.y}) scale(${inverseScale})`,
             "aria-hidden": "true",
             pointerEvents: "none",
-            children: positionedStateGlyphs.map((state) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            children: positionedStateGlyphs.map((state) => /* @__PURE__ */ jsxs(
               "g",
               {
                 "data-lane-state-glyph": state.state,
@@ -495,19 +495,19 @@ function LaneOverlay({
                 "data-lane-state-slot-y": state.slot.y,
                 transform: `translate(${state.slot.x} ${state.slot.y})`,
                 children: [
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ jsx(
                     "circle",
                     {
                       "data-lane-state-circle": state.state,
-                      r: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.radius,
+                      r: NAV_STATE_BADGE.radius,
                       fill: VIEWER_SURFACE,
                       stroke: state.tone,
-                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_STATE_BADGE.strokeWidth,
+                      strokeWidth: NAV_STATE_BADGE.strokeWidth,
                       vectorEffect: "non-scaling-stroke"
                     }
                   ),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                    _chunkGKSI3QZ5cjs.NavigationStateGlyph,
+                  /* @__PURE__ */ jsx(
+                    NavigationStateGlyph,
                     {
                       kind: state.state,
                       size: 10,
@@ -521,18 +521,18 @@ function LaneOverlay({
             ))
           }
         ),
-        showLabel && (_optionalChain([lane, 'optionalAccess', _31 => _31.label]) || metadata) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
+        showLabel && (lane?.label || metadata) && /* @__PURE__ */ jsx(
+          NavigationAnnotationBlock,
           {
             id: `lane:${lane.id}:label`,
             kind: "lane-label",
             anchor: midpoint,
-            priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
+            priority: annotationPriority({
               selected,
               focused: visibleFocus,
               alarm: invalid || hasConflict || resolvedAvailability === "closed"
             }),
-            children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            children: /* @__PURE__ */ jsxs(
               "g",
               {
                 "data-lane-label": "",
@@ -542,7 +542,7 @@ function LaneOverlay({
                 "aria-hidden": "true",
                 pointerEvents: "none",
                 children: [
-                  _optionalChain([lane, 'optionalAccess', _32 => _32.label]) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  lane?.label && /* @__PURE__ */ jsx(
                     "text",
                     {
                       "data-lane-primary-label": "",
@@ -553,7 +553,7 @@ function LaneOverlay({
                       textAnchor: primaryLabelAnchor,
                       fill: VIEWER_FOREGROUND,
                       stroke: VIEWER_SURFACE,
-                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.primary,
+                      strokeWidth: NAV_LABEL_HALO.primary,
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
                       fontFamily: "var(--font-sans)",
@@ -562,7 +562,7 @@ function LaneOverlay({
                       children: lane.label
                     }
                   ),
-                  metadata && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  metadata && /* @__PURE__ */ jsx(
                     "text",
                     {
                       "data-lane-metadata": "",
@@ -573,7 +573,7 @@ function LaneOverlay({
                       textAnchor: metadataAnchor,
                       fill: VIEWER_MUTED,
                       stroke: VIEWER_SURFACE,
-                      strokeWidth: _chunkMJGVUH3Dcjs.NAV_LABEL_HALO.secondary,
+                      strokeWidth: NAV_LABEL_HALO.secondary,
                       paintOrder: "stroke",
                       vectorEffect: "non-scaling-stroke",
                       fontFamily: "var(--font-sans)",
@@ -592,7 +592,7 @@ function LaneOverlay({
   );
 }
 
-
-
-exports.LaneOverlay = LaneOverlay;
-//# sourceMappingURL=chunk-7UT75LVD.cjs.map
+export {
+  LaneOverlay
+};
+//# sourceMappingURL=chunk-5ZKSUTD2.js.map

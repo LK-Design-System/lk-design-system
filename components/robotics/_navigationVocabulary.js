@@ -116,14 +116,25 @@ export const NAV_HIT = { radius: 17.5, screenTargetSize: 24 };
 export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 
 /**
- * Current-position badge on a path. RouteOverlay's explicit progress marker
- * and TrajectoryOverlay's current-sample marker mean the same thing — "the
- * now-position on this path" — and share the same anatomy (surface-filled
- * circle, tone ring, centered glyph), so they share one geometry. Deliberately
- * larger than NAV_STATE_BADGE so the now-position outranks state chips.
- * Replaces a hardcoded 9 (route) vs 8 (trajectory) drift.
+ * Line-integrated current-progress head shared by RouteOverlay and
+ * TrajectoryOverlay. The elapsed/current path is the shaft; this open V is
+ * attached with SVG `marker-end` so its tip stays on the source position and
+ * its orientation follows the incoming path tangent. Marker dimensions are
+ * screen-space dimensions after the owning renderer applies viewportScale's
+ * inverse to markerWidth/markerHeight.
  */
-export const NAV_CURRENT_MARKER = { radius: 9, strokeWidth: 2 };
+export const NAV_PROGRESS_HEAD = {
+  path: 'M 2 1.5 L 16 8 L 2 14.5',
+  viewBox: '0 0 18 16',
+  refX: 16,
+  refY: 8,
+  width: 18,
+  height: 16,
+  collisionRadius: 20,
+  obstacle: { x: -20, y: -10, width: 24, height: 20 },
+  route: { casingWidth: 7, coreWidth: 4, futureOpacity: 0.34 },
+  trajectory: { casingWidth: 6.5, coreWidth: 3.5, futureOpacity: 0.28 },
+};
 
 /**
  * Text-label legibility halo — the stroke painted behind readable text via

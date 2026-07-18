@@ -3,12 +3,13 @@ import { NavigationStateGlyph } from '../components/robotics/_NavigationStateGly
 import {
   navStateOpacity,
   NAV_STATE_OPACITY,
-  NAV_CURRENT_MARKER,
+  NAV_PROGRESS_HEAD,
   NAV_DASH,
   NAV_HIT,
   NAV_STATE_BADGE,
   NAV_LABEL_HALO,
 } from '../components/robotics/_navigationVocabulary.js';
+import { NavigationProgressHeadDefs } from '../components/robotics/_navigationProgressHead.js';
 import { annotationPriority, KIND_WEIGHT } from '../components/robotics/_navigationAnnotations.js';
 import { WaypointMarker, FacilityTransition, SpatialRegion, LaneOverlay } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
@@ -155,17 +156,36 @@ function BadgeAndHit() {
           <NavigationStateGlyph kind="unknown" size={10} color={INK} />
         </svg>
       </Tile>
-      <Tile label={`현재 위치 marker · r=${NAV_CURRENT_MARKER.radius}, stroke=${NAV_CURRENT_MARKER.strokeWidth}`} mono="NAV_CURRENT_MARKER">
-        <svg width={44} height={44} viewBox="-16 -16 32 32" aria-hidden="true" style={{ display: 'block' }}>
-          <circle
-            r={NAV_CURRENT_MARKER.radius}
-            fill={SURFACE}
-            stroke={ACCENT}
-            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
-            vectorEffect="non-scaling-stroke"
-            data-encoding-current-marker=""
+      <Tile label={`현재 진행 head · ${NAV_PROGRESS_HEAD.width}×${NAV_PROGRESS_HEAD.height}px open V`} mono="NAV_PROGRESS_HEAD">
+        <svg width={72} height={44} viewBox="0 0 72 44" aria-hidden="true" style={{ display: 'block' }}>
+          <NavigationProgressHeadDefs
+            idPrefix="encoding-progress-head"
+            tone={ACCENT}
+            surface={SURFACE}
+            inverseScale={1}
+            role="route"
           />
-          <circle r="3" fill={INK} />
+          <line
+            x1="8"
+            y1="22"
+            x2="58"
+            y2="22"
+            stroke={SURFACE}
+            strokeWidth={NAV_PROGRESS_HEAD.route.casingWidth}
+            strokeLinecap="round"
+            markerEnd="url(#encoding-progress-head-casing)"
+          />
+          <line
+            data-encoding-progress-head=""
+            x1="8"
+            y1="22"
+            x2="58"
+            y2="22"
+            stroke={ACCENT}
+            strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth}
+            strokeLinecap="round"
+            markerEnd="url(#encoding-progress-head-core)"
+          />
         </svg>
       </Tile>
       <Tile label={`hit target · r=${NAV_HIT.radius}, 최소 ${NAV_HIT.screenTargetSize} CSS px`} mono="NAV_HIT">
@@ -387,7 +407,7 @@ function EncodingCatalog() {
       <Card title="상태 opacity" hint="비활성 0.45, 지연 0.76, 기본 1 — navStateOpacity() 한 함수를 일곱 렌더러가 공유합니다.">
         <OpacitySwatches />
       </Card>
-      <Card title="상태 badge · 현재 위치 marker · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE), 경로·궤적의 현재 위치 badge(NAV_CURRENT_MARKER — 상태 chip보다 한 단계 크게), 투명 WCAG 2.2 타깃(NAV_HIT). 화면 타깃은 data-screen-target-size 계약으로 고정됩니다. 배지 안에 들어가는 상태 글리프 11종 세트는 State Badge 페이지를 참고하세요.">
+      <Card title="상태 badge · 현재 진행 head · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE), 경로·궤적의 선에 결합하는 open progress head(NAV_PROGRESS_HEAD), 투명 WCAG 2.2 타깃(NAV_HIT). 진행 head는 pose badge가 아니며 path tangent를 따릅니다.">
         <BadgeAndHit />
       </Card>
       <Card title="라벨 halo 계층" hint="paint-order stroke로 텍스트 뒤에 깔리는 legibility halo. 식별·상세·메타 세 단계를 NAV_LABEL_HALO가 소유합니다.">
@@ -414,12 +434,12 @@ const meta = {
       eyebrow: 'Foundation / Navigation Encoding Tokens',
       title: '내비게이션 렌더러가 공유하는 인코딩 토큰을 원자 단위로 문서화합니다',
       description:
-        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge와 현재 위치 marker 기하·label halo 계층)을 상수에서 그대로 렌더하고, 줌에도 마커가 화면 크기를 유지하는 화면 고정 메커니즘·라벨 우선순위 사다리·키보드 포커스 인디케이터 규칙도 소스에서 그대로 보여줘, 토큰과 규칙 자체가 회귀 기준이 되도록 합니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 스칼라 토큰이 아니라 그려지는 마커 실루엣이라 Marker Pin 페이지로, path·segment·status dash처럼 component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
+        '웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 지도에서 하나의 시스템으로 읽히도록, 이들이 공유하는 선·상태·상호작용·라벨 인코딩 토큰을 내부 모듈 _navigationVocabulary가 단일 소스로 소유합니다. 이 페이지는 그 값(상태 opacity·dash·hit target·상태 badge·line-integrated progress head·label halo 계층)을 상수에서 그대로 렌더해 회귀 기준으로 삼습니다. 공유되는 map-pin 몸통 기하(NAV_PIN)는 Marker Pin 페이지로, component 고유 encoding은 각 렌더러 로컬로 남습니다. 공개 API가 아닌 내부 모듈입니다.',
     },
     docs: {
       description: {
         component:
-          '내비게이션 렌더러들이 공유하는 인코딩 스칼라 토큰을 내부 모듈 _navigationVocabulary에서 그대로 렌더해 문서화·회귀합니다: 상태 opacity(navStateOpacity), NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_CURRENT_MARKER, NAV_LABEL_HALO. 공유 map-pin 몸통(NAV_PIN)은 별도 핀 페이지에서, 배지 글리프 세트는 별도 상태 글리프 페이지에서 다룹니다. 공개 API가 아닌 내부 어휘 모듈입니다.',
+          '내비게이션 렌더러들이 공유하는 인코딩 토큰을 내부 모듈 _navigationVocabulary에서 그대로 렌더해 문서화·회귀합니다: 상태 opacity(navStateOpacity), NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_PROGRESS_HEAD, NAV_LABEL_HALO. 공개 API가 아닌 내부 어휘 모듈입니다.',
       },
     },
   },
@@ -468,12 +488,13 @@ export const Overview = {
     if (badge?.getAttribute('r') !== String(NAV_STATE_BADGE.radius)) {
       throw new Error('The state-badge swatch must render NAV_STATE_BADGE.radius.');
     }
-    const currentMarker = root.querySelector('[data-encoding-current-marker]');
+    const progressHead = root.querySelector('[data-encoding-progress-head]');
+    const progressMarker = root.querySelector('#encoding-progress-head-core');
     if (
-      currentMarker?.getAttribute('r') !== String(NAV_CURRENT_MARKER.radius) ||
-      currentMarker?.getAttribute('stroke-width') !== String(NAV_CURRENT_MARKER.strokeWidth)
+      progressHead?.getAttribute('stroke-width') !== String(NAV_PROGRESS_HEAD.route.coreWidth) ||
+      progressMarker?.querySelector('[data-navigation-progress-head-definition="core"]')?.getAttribute('d') !== NAV_PROGRESS_HEAD.path
     ) {
-      throw new Error('The current-position marker swatch must render NAV_CURRENT_MARKER geometry.');
+      throw new Error('The progress-head swatch must render NAV_PROGRESS_HEAD geometry.');
     }
     const hit = root.querySelector('[data-encoding-hit]');
     if (

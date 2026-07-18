@@ -1,9 +1,14 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
-import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
+import {
+  NavigationProgressHeadDefs,
+  ProgressHeadObstacle,
+  progressCarrierPath,
+  trajectoryProgressGeometry,
+} from './_navigationProgressHead.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
-import { navStateOpacity, NAV_CURRENT_MARKER, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
+import { navStateOpacity, NAV_DASH, NAV_HIT, NAV_STATE_BADGE, NAV_PROGRESS_HEAD, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
 const STATUS_LABEL = {
   planned: '계획됨',
@@ -32,7 +37,6 @@ const LABEL_ROW_GAP_PX = 12;
 const STATE_BADGE_FOOTPRINT_PX = NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2;
 const MARKER_RADIUS_PX = {
   status: STATE_BADGE_FOOTPRINT_PX,
-  current: NAV_CURRENT_MARKER.radius + NAV_CURRENT_MARKER.strokeWidth / 2,
   invalid: STATE_BADGE_FOOTPRINT_PX,
   stale: STATE_BADGE_FOOTPRINT_PX,
 };
@@ -50,26 +54,30 @@ function markerTransform(point, inverseScale, screenSlot) {
   return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
 }
 
-function markerCollisionLayout(markers, scale) {
-  if (markers.length < 2) return undefined;
-  const collidingIndexes = new Set();
-  for (let first = 0; first < markers.length; first += 1) {
-    for (let second = first + 1; second < markers.length; second += 1) {
-      const a = markers[first];
-      const b = markers[second];
+function markerCollisionLayout(markers, scale, fixedMarkers = []) {
+  const candidates = [...markers, ...fixedMarkers];
+  if (candidates.length < 2) return undefined;
+  const collisionParticipants = new Set();
+  const collidingMovableIndexes = new Set();
+  for (let first = 0; first < candidates.length; first += 1) {
+    for (let second = first + 1; second < candidates.length; second += 1) {
+      const a = candidates[first];
+      const b = candidates[second];
       const naturalDistance = Math.hypot(
         a.point.x - b.point.x,
         a.point.y - b.point.y,
       ) * scale;
       if (naturalDistance < a.radius + b.radius + MARKER_GAP_PX) {
-        collidingIndexes.add(first);
-        collidingIndexes.add(second);
+        collisionParticipants.add(first);
+        collisionParticipants.add(second);
+        if (first < markers.length) collidingMovableIndexes.add(first);
+        if (second < markers.length) collidingMovableIndexes.add(second);
       }
     }
   }
-  if (collidingIndexes.size === 0) return undefined;
+  if (collidingMovableIndexes.size === 0) return undefined;
 
-  const collisionMarkers = [...collidingIndexes].map((index) => markers[index]);
+  const collisionMarkers = [...collisionParticipants].map((index) => candidates[index]);
   const reference = collisionMarkers.reduce((point, marker) => ({
     x: point.x + marker.point.x / collisionMarkers.length,
     y: point.y + marker.point.y / collisionMarkers.length,
@@ -205,6 +213,7 @@ export function TrajectoryOverlay({
 }) {
   const [hasDomFocus, setHasDomFocus] = React.useState(false);
   const obstacle = useNavigationObstacles();
+  const progressHeadId = `lk-trajectory-progress-${React.useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === 'function';
@@ -212,7 +221,11 @@ export function TrajectoryOverlay({
   const pointerOnly = interactive && hiddenFromAccessibility;
   const focusVisible = !hiddenFromAccessibility && (focused || hasDomFocus);
   const samples = trajectory?.samples ?? [];
-  const points = samples.map((sample) => sample.position).filter(finitePoint);
+  const finiteSamples = samples.map((sample, sourceIndex) => ({
+    sourceIndex,
+    point: sample.position,
+  })).filter(({ point }) => finitePoint(point));
+  const points = finiteSamples.map(({ point }) => point);
   const pathData = pathFromPoints(points);
   if (points.length < 2) return null;
   const currentIndex = Number.isInteger(trajectory?.currentSampleIndex)
@@ -220,14 +233,16 @@ export function TrajectoryOverlay({
     && trajectory.currentSampleIndex < samples.length
     ? trajectory.currentSampleIndex
     : undefined;
-  const currentSample = currentIndex == null ? undefined : samples[currentIndex];
-  const markerPoint = finitePoint(currentSample?.position)
-    ? currentSample.position
-    : pointAlong(points, 0.5);
+  const currentPointIndex = currentIndex == null
+    ? -1
+    : finiteSamples.findIndex(({ sourceIndex }) => sourceIndex === currentIndex);
+  const currentProgress = trajectoryProgressGeometry(points, currentPointIndex);
+  const markerPoint = currentProgress?.point ?? pointAlong(points, 0.5);
+  const currentPrefixPath = currentProgress ? pathFromPoints(currentProgress.prefixPoints) : '';
+  const currentCarrier = currentProgress?.usesCarrier
+    ? progressCarrierPath(currentProgress.point, currentProgress.angle, inverseScale)
+    : '';
   const statePoint = pointAlong(points, 0.12);
-  const headingDegrees = Number.isFinite(currentSample?.headingRad)
-    ? currentSample.headingRad * 180 / Math.PI
-    : undefined;
   const tone = statusTone(trajectory?.status, invalid);
   const dash = statusDash(trajectory?.status);
   const foreground = 'var(--viewer-foreground, var(--color-semantic-label-strong))';
@@ -248,14 +263,18 @@ export function TrajectoryOverlay({
   ].filter(Boolean);
   const naturalMarkers = [
     { name: 'status', point: statePoint, radius: MARKER_RADIUS_PX.status },
-    currentSample ? { name: 'current', point: markerPoint, radius: MARKER_RADIUS_PX.current } : null,
     ...trajectoryStateMarkers.map((item) => ({
       name: item.state,
       point: item.point,
       radius: MARKER_RADIUS_PX[item.state],
     })),
   ].filter(Boolean);
-  const markerLayout = markerCollisionLayout(naturalMarkers, scale);
+  const fixedProgressMarkers = currentProgress ? [{
+    name: 'current',
+    point: currentProgress.point,
+    radius: NAV_PROGRESS_HEAD.collisionRadius,
+  }] : [];
+  const markerLayout = markerCollisionLayout(naturalMarkers, scale, fixedProgressMarkers);
   const trajectoryMarkerSlot = (name) => markerLayout?.slots[name];
   const trajectoryLabelSlot = labelScreenSlot(markerPoint, markerLayout, scale);
 
@@ -374,13 +393,92 @@ export function TrajectoryOverlay({
           d={pathData}
           fill="none"
           stroke={tone}
-          strokeWidth={selected || trajectory?.status === 'active' ? 3.5 : 2.5}
+          strokeWidth={currentProgress ? 2.5 : selected || trajectory?.status === 'active' ? 3.5 : 2.5}
           strokeDasharray={dash}
+          opacity={currentProgress ? NAV_PROGRESS_HEAD.trajectory.futureOpacity : undefined}
           strokeLinecap="round"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />
+      )}
+      {currentProgress && (
+        <NavigationProgressHeadDefs
+          idPrefix={progressHeadId}
+          tone={tone}
+          surface={surface}
+          inverseScale={inverseScale}
+          role="trajectory"
+        />
+      )}
+      {currentProgress && currentPrefixPath && (
+        <>
+          <path
+            data-trajectory-progress-casing=""
+            d={currentPrefixPath}
+            fill="none"
+            stroke={surface}
+            strokeWidth={NAV_PROGRESS_HEAD.trajectory.casingWidth}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            markerEnd={currentCarrier ? undefined : `url(#${progressHeadId}-casing)`}
+            pointerEvents="none"
+          />
+          <path
+            data-trajectory-progress-past=""
+            data-trajectory-current-marker={currentCarrier ? undefined : ''}
+            data-trajectory-progress-marker={currentCarrier ? undefined : ''}
+            data-navigation-progress-head={currentCarrier ? undefined : 'trajectory'}
+            data-head-rendering={currentCarrier ? undefined : 'marker-end'}
+            data-trajectory-anchor-x={currentCarrier ? undefined : currentProgress.point.x}
+            data-trajectory-anchor-y={currentCarrier ? undefined : currentProgress.point.y}
+            d={currentPrefixPath}
+            fill="none"
+            stroke={tone}
+            strokeWidth={NAV_PROGRESS_HEAD.trajectory.coreWidth}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            markerEnd={currentCarrier ? undefined : `url(#${progressHeadId}-core)`}
+            pointerEvents="none"
+          />
+        </>
+      )}
+      {currentProgress && currentCarrier && (
+        <>
+          <path
+            data-trajectory-progress-carrier="casing"
+            data-trajectory-progress-casing=""
+            d={currentCarrier}
+            fill="none"
+            stroke={surface}
+            strokeWidth={NAV_PROGRESS_HEAD.trajectory.casingWidth}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            markerEnd={`url(#${progressHeadId}-casing)`}
+            pointerEvents="none"
+          />
+          <path
+            data-trajectory-progress-carrier="core"
+            data-trajectory-current-marker=""
+            data-trajectory-progress-marker=""
+            data-navigation-progress-head="trajectory"
+            data-head-rendering="marker-end"
+            data-trajectory-anchor-x={currentProgress.point.x}
+            data-trajectory-anchor-y={currentProgress.point.y}
+            d={currentCarrier}
+            fill="none"
+            stroke={tone}
+            strokeWidth={NAV_PROGRESS_HEAD.trajectory.coreWidth}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            markerEnd={`url(#${progressHeadId}-core)`}
+            pointerEvents="none"
+          />
+        </>
       )}
       {pathData && interactive && (
         <>
@@ -407,42 +505,15 @@ export function TrajectoryOverlay({
           />
         </>
       )}
-      {pathData && currentSample && (
-        <g
-          data-trajectory-current-marker=""
-          data-trajectory-screen-slot={markerLayout ? 'current' : undefined}
-          data-trajectory-anchor-x={markerPoint.x}
-          data-trajectory-anchor-y={markerPoint.y}
-          transform={markerTransform(markerPoint, inverseScale, trajectoryMarkerSlot('current'))}
-          aria-hidden="true"
-          pointerEvents="none"
-        >
-          <circle
-            {...obstacle(`trajectory:${trajectory.id}:current`)}
-            data-trajectory-marker-badge="current"
-            data-navigation-marker-circle=""
-            r={NAV_CURRENT_MARKER.radius}
-            fill={surface}
-            stroke={tone}
-            strokeWidth={NAV_CURRENT_MARKER.strokeWidth}
-            vectorEffect="non-scaling-stroke"
-          />
-          {headingDegrees == null ? (
-            <circle r="3" fill={foreground} />
-          ) : (
-            <path
-              data-trajectory-current-heading=""
-              data-navigation-vector-glyph="heading"
-              d={NAVIGATION_DIRECTION_PATH}
-              transform={`rotate(${headingDegrees})`}
-              fill={foreground}
-              stroke={surface}
-              strokeWidth="1"
-              strokeLinejoin="round"
-              vectorEffect="non-scaling-stroke"
-            />
-          )}
-        </g>
+      {currentProgress && (
+        <ProgressHeadObstacle
+          obstacle={obstacle}
+          id={`trajectory:${trajectory.id}:progress-head`}
+          point={currentProgress.point}
+          angle={currentProgress.angle}
+          inverseScale={inverseScale}
+          dataPrefix="trajectory"
+        />
       )}
       {pathData && (
         <g

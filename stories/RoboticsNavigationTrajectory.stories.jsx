@@ -7,8 +7,8 @@ import {
   L2_TRAJECTORY,
   StoryPage,
   PathMap,
+  assertNavigationProgressHead,
   assertNavigationStateGlyphGeometry,
-  assertNavigationVectorGeometry,
 } from './RoboticsNavigationRouteTrajectory.shared.jsx';
 
 const meta = {
@@ -20,12 +20,12 @@ const meta = {
       eyebrow: 'Robotics / Navigation / Trajectory',
       title: '조밀한 궤적은 한 지도에서 시간 순서로 이어진 sample의 계층입니다',
       description:
-        'Trajectory는 자유 공간을 지나는 로봇의 조밀한 sample을 시간 순서로 보여주며, 현재 sample의 heading과 상태를 보존합니다. 계획된 graph 구간의 진행률을 대신 계산하지 않고 한 지도(mapId)에만 속합니다.',
+        'Trajectory는 자유 공간을 지나는 로봇의 조밀한 sample을 시간 순서로 보여주며, 현재 sample까지의 선을 path-tangent progress head로 끝냅니다. 로봇 heading·pose는 별도 계층이 소유하고, 계획된 graph 구간의 진행률을 대신 계산하지 않습니다.',
     },
     docs: {
       description: {
         component:
-          '한 지도에 속한 조밀한 시간 순 sample과 현재 heading, 상태를 표현하는 TrajectoryOverlay입니다.',
+          '한 지도에 속한 조밀한 시간 순 sample, line-integrated current progress, lifecycle 상태를 표현하는 TrajectoryOverlay입니다.',
       },
     },
   },
@@ -36,12 +36,12 @@ export default meta;
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '같은 로봇 이동을 light/dark 지도에서 dense trajectory로 표현합니다. 조밀한 sample geometry와 현재 sample의 heading marker가 시간 순 이동 의미로 남는지 확인하세요.',
+    '같은 로봇 이동을 light/dark 지도에서 dense trajectory로 표현합니다. 현재 sample 이전 선은 강하고 이후 선은 약하며, open head가 경로 tangent에 결합되는지 확인하세요.',
   ),
   render: () => (
     <StoryPage
       title="Trajectory는 한 지도의 시간 순 sample을 보여줍니다"
-      description="궤적은 한 지도 안 sample 순서와 선택적인 현재 heading/time을 보존하며 route 진행률을 대신 계산하지 않습니다."
+      description="궤적은 한 지도 안 sample 순서와 선택적인 time을 보존합니다. 현재 진행 head는 path tangent를 따르며 robot heading·pose를 대신하지 않습니다."
     >
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(360px, 100%), 1fr))', gap: 'var(--space-4)', minWidth: 0 }}>
         <PathMap label="Light trajectory 지도" eyebrow="TRAJECTORY · L1">
@@ -61,9 +61,8 @@ export const Overview = {
     trajectories.forEach((trajectory) => {
       const path = trajectory.querySelector('[data-trajectory-path]');
       if (!path?.getAttribute('d')?.includes('L 370 164')) throw new Error('Dense trajectory geometry is incomplete.');
-      if (!trajectory.querySelector('[data-trajectory-current-heading]')) throw new Error('Current sample heading marker is missing.');
+      assertNavigationProgressHead(trajectory, 'Overview Trajectory', 'trajectory');
       assertNavigationStateGlyphGeometry(trajectory, 'Overview Trajectory');
-      assertNavigationVectorGeometry(trajectory, 'Overview Trajectory');
     });
   },
 };
@@ -90,10 +89,10 @@ function trajectoryForStatus(status) {
 // state glyph) changes across the matrix.
 const TRAJECTORY_STATUS_ROWS = [
   { status: 'planned', trajectory: L2_TRAJECTORY },
-  { status: 'waiting', trajectory: trajectoryForStatus('waiting') },
+  { status: 'waiting', trajectory: { ...trajectoryForStatus('waiting'), currentSampleIndex: 0 } },
   { status: 'blocked', trajectory: trajectoryForStatus('blocked') },
   { status: 'rerouting', trajectory: trajectoryForStatus('rerouting') },
-  { status: 'completed', trajectory: trajectoryForStatus('completed') },
+  { status: 'completed', trajectory: { ...trajectoryForStatus('completed'), currentSampleIndex: ACTIVE_TRAJECTORY.samples.length - 1 } },
 ];
 
 const INVALID_STALE_TRAJECTORY = {
@@ -138,6 +137,9 @@ export const Statuses = {
       if (!trajectory.querySelector('[data-trajectory-path]')?.getAttribute('stroke-dasharray')) {
         throw new Error(`${status} trajectory needs a non-color line pattern.`);
       }
+      if (status !== 'planned') {
+        assertNavigationProgressHead(trajectory, `${status} Trajectory`, 'trajectory');
+      }
     }
     const compound = canvasElement.querySelector('[data-trajectory-id="trajectory-invalid-stale"]');
     if (!compound?.querySelector('[data-trajectory-overlay-state="invalid"]') || !compound.querySelector('[data-trajectory-overlay-state="stale"]')) {
@@ -147,7 +149,7 @@ export const Statuses = {
       throw new Error(`Stale Trajectory opacity must match the shared 0.76 contract: ${compound.style.opacity}.`);
     }
     assertNavigationStateGlyphGeometry(canvasElement, 'Trajectory statuses');
-    assertNavigationVectorGeometry(canvasElement, 'Trajectory statuses');
+    assertNavigationProgressHead(compound, 'Invalid + stale Trajectory', 'trajectory');
     const renderedKinds = new Set(Array.from(canvasElement.querySelectorAll('[data-navigation-state-glyph]'))
       .map((glyph) => glyph.getAttribute('data-navigation-state-glyph')));
     for (const kind of ['planned', 'waiting', 'blocked', 'rerouting', 'completed', 'active', 'invalid', 'stale']) {
@@ -203,7 +205,7 @@ export const NarrowViewport = {
         throw new Error(`Trajectory hit core does not contain a 24×24 CSS px square: ${rect?.width}×${rect?.height}.`);
       }
       assertNavigationStateGlyphGeometry(trajectory, '320px Trajectory');
-      assertNavigationVectorGeometry(trajectory, '320px Trajectory');
+      assertNavigationProgressHead(trajectory, '320px Trajectory', 'trajectory');
     });
   },
 };

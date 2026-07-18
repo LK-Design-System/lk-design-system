@@ -9,7 +9,7 @@ import type { RouteStatus } from './RouteOverlay';
 export interface TrajectorySample {
   readonly position: NavigationPoint;
   readonly timeMs?: number;
-  /** Heading in radians in the owning map coordinate system. */
+  /** Source heading in radians. The path progress head follows path tangent; pose renderers may consume this separately. */
   readonly headingRad?: number;
 }
 
@@ -20,6 +20,7 @@ export interface TrajectoryData {
   readonly mapId: string;
   readonly status: RouteStatus;
   readonly samples: readonly TrajectorySample[];
+  /** Explicit sample where the elapsed line ends and the path-tangent progress head is attached. */
   readonly currentSampleIndex?: number;
 }
 

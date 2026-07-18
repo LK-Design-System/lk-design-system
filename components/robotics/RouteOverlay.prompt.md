@@ -25,7 +25,7 @@ Classification: **LK Robotics Extension**. `RouteOverlay`는 graph에서 선택�
 - `status`는 route 전체의 `planned | active | waiting | blocked | rerouting | completed` 수명주기입니다.
 - 각 segment의 `phase` (`completed | current | upcoming`)와 `condition` (`normal | waiting | blocked | conflict`)은 독립입니다. 예를 들어 현재 구간이 waiting이거나 완료 구간이 conflict evidence를 보존할 수 있습니다.
 - `laneIds`는 planned segment가 따르는 static graph lane identity를 보존합니다. `entryTransitionId`와 `exitTransitionId`는 경계의 `FacilityTransition` 중립 참조이며 ID에서 시설 종류나 상태를 추론하지 않습니다.
-- `progress`는 source가 명시한 `{ segmentId, fraction, position? }`입니다. component는 phase, status, segment 개수로 전체 진행률을 계산하지 않습니다. `fraction` label도 **현재 구간 진행**만 뜻합니다. `position`이 있으면 그 좌표를 그대로 쓰고, 없을 때만 해당 segment geometry에서 fraction 위치를 구합니다. `activeMapId` 필터가 그 segment를 제거하면 progress marker, accessible name, `data-progress-*`도 함께 제거합니다.
+- `progress`는 source가 명시한 `{ segmentId, fraction, position? }`입니다. component는 phase, status, segment 개수로 전체 진행률을 계산하지 않습니다. `fraction`까지의 segment는 strong elapsed line, 나머지는 같은 tone의 recessed line으로 그리며 elapsed line 끝에 open `marker-end`를 붙입니다. `position`은 같은 fraction boundary의 정밀 좌표여야 합니다. fraction-derived anchor와의 거리가 화면에서 2 CSS px 이내일 때만 exact tip으로 사용하고, 초과하면 strong/recessed split과 접근성의 fraction은 보존하되 head·carrier·obstacle을 생략하고 `data-progress-position-mismatch="true"`를 남깁니다. 이 fail-closed 규칙은 source 좌표를 투영하거나 임의 연결선을 만들지 않습니다. fraction 0에서 쓰는 16 CSS px carrier는 elapsed distance를 추론한 선이 아니라 head를 시작점에 결합하는 최소 시각 부착부입니다. `activeMapId` 필터가 segment를 제거하면 head, accessible name, `data-progress-*`도 함께 제거합니다.
 - `activeMapId`와 일치하고 finite point가 2개 이상인 segment만 렌더합니다. 다른 층 segment를 필터한 뒤 양 끝을 잇지 않으므로 층간 가상 직선을 만들지 않습니다. 렌더 가능한 segment가 0개면 role/tabindex/name만 남는 invisible control을 만들지 않고 `null`을 반환합니다. lift/door 연결은 `FacilityTransition`에서 설명합니다.
 - `selectedSegmentId`는 route 전체 `selected`와 별개인 segment-level selection identity입니다. 이 prop은 선택 halo와 `aria-pressed`만 바꾸며 route/segment lifecycle이나 progress를 추론하지 않습니다.
 - 색만으로 상태를 전달하지 않습니다. phase와 condition마다 다른 dash pattern을 쓰고 waiting/pause, blocked/close, conflict/exclamation과 route status를 `NavigationStateGlyph` SVG geometry로 함께 표시합니다. 문자 fallback이나 font baseline에 의존하지 않습니다.
@@ -38,7 +38,7 @@ Classification: **LK Robotics Extension**. `RouteOverlay`는 graph에서 선택�
 
 ## Reading order and state evidence
 
-route group 이름 다음에 각 interactive segment가 segment label → phase → condition 순으로 읽힙니다. 시각 paint order는 selection/focus halo → segment path/pattern → direction → condition glyph → explicit progress/status marker입니다. 자연 condition/progress/invalid/stale anchor의 실제 CSS 거리를 outline 포함 반지름 합과 4px gap으로 pairwise 비교하고, 하나라도 부족하면 원 지름+4px gap으로 계산한 compact centered screen-space row를 사용합니다. 따라서 긴 path의 condition과 fraction 0.5 progress가 같은 좌표인 경우나 중간 길이의 invalid/stale도 path 길이와 무관하게 분리됩니다. 각 자연 anchor 좌표는 data evidence로 보존하며 segment label은 badge row보다 위의 별도 screen-space row로 옮깁니다. explicit current-segment fraction은 progress badge와 route path 모두에서 최소 4 CSS px 떨어진 아래쪽 screen-space row에 유지합니다. 상태 glyph는 LDS icon registry 또는 동일한 centered 24-unit map geometry를 사용하는 `NavigationStateGlyph`로 렌더하며 요청 크기는 최소 10 CSS px입니다. 상태 badge 내부에는 상태 `<text>`가 없고 glyph anchor와 painted bbox 중심은 circle 중심에서 각 축 1px 이내, painted geometry는 circle 안쪽에 최소 1px 여백을 둡니다. direction triangle은 active 상태와 같은 `NAVIGATION_DIRECTION_PATH`를 공유하고 면적 중심을 local anchor에 둬 회전 방향과 무관하게 optical anchor가 유지됩니다. condition/validation/progress outline에는 status hue를 남기고 내부 SVG geometry는 appearance-aware viewer foreground를 사용합니다. transition의 `T`는 상태 glyph가 아니라 topology metadata이므로 caption token text로 유지합니다.
+route group 이름 다음에 각 interactive segment가 segment label → phase → condition 순으로 읽힙니다. 시각 paint order는 selection/focus halo → recessed full segment → strong elapsed path + open progress head → direction → condition glyph → 별도 route lifecycle badge입니다. progress head는 path anchor에 고정된 obstacle이며 head와 같은 path tangent로 회전하고 collision row로 이동하지 않습니다. condition/status/invalid/stale badge만 head와의 실제 CSS 거리까지 비교해 compact screen-space row로 이동하고, label은 별도 annotation row가 최소 4 CSS px 여백을 확보합니다. 상태 badge는 최소 10 CSS px `NavigationStateGlyph`를 유지하며 progress head에는 circle, plate, shadow, lifecycle glyph를 넣지 않습니다. transition의 `T`는 상태 glyph가 아니라 topology metadata이므로 caption token text로 유지합니다.
 
 - completed: long dash + positive support color
 - current: solid, thicker path
@@ -56,11 +56,11 @@ N6 semantic mirror가 route 전체 이름만이 아니라 각 `segmentId`, statu
 | Compared sibling | Retained LDS constraint | Intentional delta and reason |
 | --- | --- | --- |
 | `Map2DCanvas` / `ViewerFrame` | viewer color roles, owning-renderer chrome | route는 frame 안 SVG fragment이며 자체 card/toolbar/status panel을 만들지 않음 |
-| `WaypointMarker` / `LaneOverlay` | inverse scale, 24px target, focus/selection vocabulary | route는 segment phase/condition과 명시적 progress marker가 필요함 |
+| `WaypointMarker` / `LaneOverlay` | inverse scale, 24px target, open line-arrow vocabulary, focus/selection | route는 segment phase/condition과 source-owned line-integrated progress head가 필요함 |
 | `ProgressBar` / `Meter` | 진행 의미를 source 값으로 명시 | 전체 task progress chrome을 복제하지 않고 현재 segment fraction만 지도에 표시 |
 | `LayerPanel` / `SelectionInspector` | identity와 상태/속성의 읽기 순서 | segment action과 상세 metadata는 inspector에 남김 |
 
-새 token, map palette, icon family, card, radius, shadow, motion을 추가하지 않습니다. lane closure나 facility state를 route status로 재해석하지 않습니다.
+새 public token, map palette, icon family, card, radius, shadow, motion을 추가하지 않습니다. 내부 `NAV_PROGRESS_HEAD`만 Route/Trajectory의 동일 geometry를 소유합니다. lane closure나 facility state를 route status로 재해석하지 않습니다.
 
 ## Authoritative research and conclusions
 
@@ -68,9 +68,18 @@ N6 semantic mirror가 route 전체 이름만이 아니라 각 `segmentId`, statu
 - [Open-RMF `Graph.hpp` at `39f09e7971c8e666e12c8e9b12199014f631c0bb`](https://github.com/open-rmf/rmf_traffic/blob/39f09e7971c8e666e12c8e9b12199014f631c0bb/rmf_traffic/include/rmf_traffic/agv/Graph.hpp): lane과 event는 graph topology이고 lift 이동은 여러 event의 결합입니다. route renderer는 cross-floor facility 상태를 하나의 선으로 축약하지 않습니다.
 - [Nav2 Route Server at `4a40bb9357f3bd11414be6573522ef1613f1cdd3`](https://github.com/ros-navigation/navigation2/tree/4a40bb9357f3bd11414be6573522ef1613f1cdd3/nav2_route): predefined node/edge route와 upsampled `nav_msgs/Path`는 다른 출력이며 route tracking은 edge 진행을 따릅니다. LDS는 Route와 Trajectory를 독립 계약으로 둡니다.
 - [Nav2 Route Server configuration](https://docs.nav2.org/configuration/packages/configuring-route-server.html): speed operations, collision-blocked edges, rerouting은 서로 다른 runtime 정보입니다. LDS도 route status와 segment condition을 한 enum으로 합치지 않습니다.
+- [Mapbox Navigation Route Arrow](https://docs.mapbox.com/android/navigation/guides/ui-components/route-arrow/)와 [Google Maps polyline symbols](https://developers.google.com/maps/documentation/javascript/symbols)는 방향 표식을 line의 끝/offset에 결합하고 local line direction으로 정렬합니다. LDS는 이를 현재 segment의 elapsed boundary에 적용하되 외부 styling을 복제하지 않습니다.
+- [TomTom route display](https://developer.tomtom.com/navigation/android/guides/map-display/map-display-for-views/routes)는 elapsed route color와 route-bound instruction arrow를 분리합니다. LDS도 progress line과 lifecycle badge를 독립 정보 단위로 유지합니다.
+- [W3C SVG Markers](https://www.w3.org/TR/svg-markers/)의 `marker-end`와 `orient="auto"`가 open V tip을 source position과 incoming tangent에 결합하는 구현 근거입니다.
 - [MapLibre Style Spec — line and symbol layers](https://maplibre.org/maplibre-style-spec/layers/)는 line paint와 symbol placement·collision priority를 분리합니다. LDS는 한 Route 내부의 서로 충돌하는 badge/label row만 결정하고 다른 layer symbol과의 priority, suppression, paint order는 owning renderer가 실제 density에서 결정하게 합니다. 그 renderer 조각의 reference 구현은 `components/robotics/NavigationAnnotationLayer.jsx`이며, provider 없이 단독 렌더된 Route는 오늘과 동일하게 동작합니다.
 - [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)은 target 내부 24×24 CSS px 정사각형과 dense map의 equivalent path를 함께 설명합니다. 각 segment의 midpoint core와 N6 semantic mirror가 이 두 경로를 제공합니다.
 - [WCAG 2.2 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast)는 control·selection·focus와 이해에 필요한 graphical object가 인접색 대비 3:1을 유지하도록 요구합니다. Route의 path, direction, condition/status glyph, selected/focus halo는 semantic foreground와 viewer surface를 조합하고, 작은 text/glyph에는 surface halo를 더합니다. inactive route는 이 기준의 예외지만 LDS의 공용 disabled opacity `0.45`, stale opacity `0.76`을 사용해 sibling과 상태 위계를 맞춥니다. 이 상태 opacity와 stale 상태 badge ring dash, label halo, state badge 값은 이제 내부 공용 `_navigationVocabulary` 모듈에서 가져오므로 sibling renderer와의 일관성은 수동 약속이 아니라 구조적으로 보장됩니다(segment phase/condition path dash와 path 형태의 hit-target은 route 고유로 유지).
+
+## Product workflow review
+
+- LK Web Viz `a984def117c05acd213f494cbb8a42e990595505`: observed trajectory와 robot pose는 분리되어 있지만 `RouteOverlay`가 요구하는 segment geometry·fraction feed는 확인되지 않아 planned Route는 `gap`입니다.
+- LK Control Full Daedeok `93802fc2aa5d29f930380ae58d51dcb68322b5e7`: pinned supervision workflow에는 planned Route feed가 없어 `not applicable`입니다.
+- LK Context Hub `de124084b7e50049350a46f92c4ea4476269c58c`: map/floor/navigation 진입점이 없어 `not applicable`입니다. 상세 source blob과 seam은 `docs/references/product-frontends/COVERAGE_AUDIT.json`이 소유합니다.
 
 ## Intentional exclusions
 

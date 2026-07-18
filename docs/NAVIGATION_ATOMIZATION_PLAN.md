@@ -137,7 +137,7 @@ export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 - **D2**: Facility/Hazard hit `17 → 17.5`(투명, 시각 무변).
 - **D4 신규**: state-badge 반지름 `6.5`(Waypoint)/`8`(Route) → `7`. Route·Trajectory는 badge가 2개씩이라 형제 badge까지 통일(감사가 놓친 것).
 - **D5**: primary 라벨 halo `3 → 4`(Waypoint·Trajectory).
-- **로컬 유지**: availability-unavailable dash(3-way, 서로 다른 geometry), lane/route/trajectory path dash, 충돌 hatch, 마이크로 halo(Lane `1.5`·Route `2.5`), r=8–9 position marker. Waypoint `--label2-size` 폰트 drift, Facility dead dash const는 별도 정리 대상으로 표기.
+- **로컬 유지**: availability-unavailable dash(3-way, 서로 다른 geometry), lane/route/trajectory path dash, 충돌 hatch, 마이크로 halo(Lane `1.5`·Route `2.5`). Route/Trajectory의 r=8–9 position marker는 후속 redesign에서 공용 `NAV_PROGRESS_HEAD`로 교체했다.
 
 시각 회귀: SVG는 결정적이라 CI(Windows)와 일치 → Phase 1의 6개 `atom-glyph` baseline(Route badge 8→7)만 갱신. Phase 3 분리 후 `RouteAndTrajectoryStates`가 byte-identical이라 atom-glyph baseline **제로 diff** 확인. DOM-텍스트 baseline 차이는 로컬 폰트 래스터라이즈 노이즈라 되돌림.
 
@@ -154,7 +154,7 @@ Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께
 | `3757bfb` | 방향/벡터 글리프 원자를 `_navigationVectorGlyph`로 추출(+lane endpoint 화살표 hoist). circle-marker 기하는 역할별로 반지름이 달라 **공유 원자 아님**으로 판정(NAV_PIN과 달리)—로컬 유지. |
 | `d33d06c` | `LDS Robotics/Foundation/*` 계층 확립(Core 미러, sidebar 맨 앞). 기존 원자 3개 재배치 + `Encoding`→`Line & State Vocabulary` 오칭 교정(실제로 `_navigationVocabulary` 문서화, `_navigationEncoding` 아님) + 새 원자 페이지 3개(Vector Glyph·Codes·Viewer Tokens, live-from-source + play-test). 원자 페이지 3→6. atom-glyph baseline은 컴포넌트 스토리 기반이라 재배치·신설에 **제로 diff**. |
 | `36c3723` | Vector Glyph를 진짜 공유되는 방향 셰브론(lane·route·trajectory)만으로 좁힘. lane endpoint 화살표는 소비자가 LaneOverlay 하나뿐이라 공용 원자에서 로컬로 환원(over-promotion 취소). |
-| `<pending>` | `Line & State Vocabulary`가 이름과 달리 6개 이질 원자를 섞은 grab-bag이라는 지적을 독립 판정단(4관점 + 종합)으로 검증해 분해: 공유 마커 몸통 `NAV_PIN`은 글리프들이 얹히는 실루엣이라 **Marker Pin** 페이지로 승격(Facility/Hazard 글리프 옆), 잔여 5개 스칼라 토큰(dash·opacity·hit·badge·halo)은 **Navigation Encoding Tokens**로 rename. `NAV_STATE_BADGE`는 State Badge 글리프 세트와 상보적(중복 아님)이라 상호참조만. 원자 페이지 6→8. 세션 이전부터 stale하던 IA census(180/546→188/574)·인벤토리(574/439/98) 재생성·정합화. |
+| `<pending>` | `Line & State Vocabulary`의 grab-bag을 분해해 공유 마커 몸통 `NAV_PIN`은 **Marker Pin**으로, 잔여 encoding 토큰은 **Navigation Encoding Tokens**로 정리했다. 후속 redesign에서 Route/Trajectory 공용 `NAV_PROGRESS_HEAD` geometry도 이 페이지가 실제 상수에서 렌더한다. |
 
 ### P2b — Navigation 밖 원자 감사·해소 (완료)
 

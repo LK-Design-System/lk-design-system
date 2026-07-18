@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "9d1930a99bd060bb0ecd57c50463906f917904faf4b8d83a90d5fa10fcf87e29",
+    "storybookIndexSha256": "6351e9c59b59551310f16b99356b8380f567c4a6c4b05315c2935459e4ce40c8",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -60,13 +60,13 @@
   },
   "summary": {
     "pages": 190,
-    "stories": 578,
-    "publicStories": 442,
+    "stories": 579,
+    "publicStories": 443,
     "hiddenStories": 136,
     "componentDescriptions": 186,
     "pagesWithVisibleCanvasIntroduction": 190,
-    "pagesWithDecisionGuidance": 175,
-    "describedPublicStories": 442,
+    "pagesWithDecisionGuidance": 176,
+    "describedPublicStories": 443,
     "reviewedPages": 177,
     "reviewedStories": 534,
     "staleReviewedPages": 10,
@@ -78,7 +78,7 @@
       "variants-states": 89,
       "interaction": 50,
       "responsive": 64,
-      "scenario": 26,
+      "scenario": 27,
       "visual-parity": 99,
       "internal-contract": 37
     },
@@ -112,10 +112,10 @@
       },
       "Robotics": {
         "pages": 42,
-        "stories": 172,
-        "public": 138,
+        "stories": 173,
+        "public": 139,
         "hidden": 34,
-        "guideReadyPages": 32
+        "guideReadyPages": 33
       },
       "Theme": {
         "pages": 3,
@@ -16619,7 +16619,7 @@
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationNavigationEncodingTokens.stories.jsx",
-      "sourceSha256": "eeea927169b6e500dce6df1a2882af691dd327683b775be437f649983c9668fb",
+      "sourceSha256": "8d9a65b1b3985c9a8b7c2a3c20546af2f35b40f14995d96e11b4e2bdfd632089",
       "primaryOwner": "SpatialRegion",
       "ownerComponents": [
         "SpatialRegion",
@@ -16868,24 +16868,22 @@
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationVectorGlyph.stories.jsx",
-      "sourceSha256": "8af7edd57f77fd376157013880738e8382da1d1f46eeecf537f1001467df9a8e",
+      "sourceSha256": "e58791c227bf158cab99e25b5de91fbc4ceceec55793669ef36580609a27135f",
       "primaryOwner": null,
       "ownerComponents": [],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-foundation-vector-glyph--overview",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 3,
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
@@ -16926,6 +16924,26 @@
             "test"
           ],
           "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-vector-glyph--current-position-comparison",
+          "name": "현재 진행 방향 · line-integrated",
+          "exportName": "CurrentPositionComparison",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
@@ -17980,7 +17998,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRoute.stories.jsx",
-      "sourceSha256": "0bfa0b2e1c7e0d525a186c0b6ba729318b5062381bde849a20892fb714698717",
+      "sourceSha256": "1fe97b208606e502b8d0f7916f106e2c4214f909d0c90e93f3ef6b4f75cbd231",
       "primaryOwner": "RouteOverlay",
       "ownerComponents": [
         "RouteOverlay"
@@ -18184,7 +18202,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationTrajectory.stories.jsx",
-      "sourceSha256": "b0ae2e38884dd8440856918827cf2384c3c9593d2531f116c082a7e8db92f1b0",
+      "sourceSha256": "6b0db6f6ff3d00c8865142ed179db67ce21c443401b5a641319a4189112b899e",
       "primaryOwner": "TrajectoryOverlay",
       "ownerComponents": [
         "TrajectoryOverlay"

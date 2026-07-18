@@ -1,5 +1,6 @@
 import React from 'react';
 import { Map2DCanvas } from '../src/index.js';
+import { NAV_PROGRESS_HEAD } from '../components/robotics/_navigationVocabulary.js';
 import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 
 export const ACTIVE_ROUTE = {
@@ -141,7 +142,6 @@ export function PathMap({ appearance = 'light', label, children, height = 270, s
 
 export const NAVIGATION_STATE_BADGE_SELECTOR = [
   '[data-route-condition-glyph]',
-  '[data-route-progress-marker]',
   '[data-route-status-marker]',
   '[data-route-overlay-state]',
   '[data-trajectory-status-marker]',
@@ -305,6 +305,65 @@ export function assertNavigationVectorGeometry(root, label) {
       throw new Error(`${label} ${vector.getAttribute('data-navigation-vector-glyph')} geometry failed: centroid ${centroidDelta}, anchor ${badgeAnchorDelta}, margin ${margin}.`);
     }
   });
+}
+
+export function assertNavigationProgressHead(root, label, role) {
+  const head = root.querySelector(`[data-navigation-progress-head="${role}"]`);
+  const casing = Array.from(root.querySelectorAll(`[data-${role}-progress-casing]`))
+    .find((item) => item.hasAttribute('marker-end'));
+  if (!(head instanceof SVGPathElement) || !(casing instanceof SVGPathElement)) {
+    throw new Error(`${label} needs a path-integrated ${role} progress head with casing.`);
+  }
+  if (head.getAttribute('data-head-rendering') !== 'marker-end'
+    || head.hasAttribute(`data-${role}-screen-slot`)) {
+    throw new Error(`${label} progress head must stay attached to its path through marker-end.`);
+  }
+
+  const markerEnd = head.getAttribute('marker-end') ?? '';
+  const casingMarkerEnd = casing.getAttribute('marker-end') ?? '';
+  const markerId = markerEnd.match(/^url\(#(.+)\)$/)?.[1];
+  const casingMarkerId = casingMarkerEnd.match(/^url\(#(.+)\)$/)?.[1];
+  const svg = head.ownerSVGElement;
+  const marker = Array.from(svg?.querySelectorAll('marker') ?? []).find((item) => item.id === markerId);
+  const casingMarker = Array.from(svg?.querySelectorAll('marker') ?? []).find((item) => item.id === casingMarkerId);
+  const definition = marker?.querySelector('[data-navigation-progress-head-definition="core"]');
+  if (!marker || !casingMarker || definition?.getAttribute('d') !== NAV_PROGRESS_HEAD.path
+    || marker.getAttribute('orient') !== 'auto'
+    || marker.getAttribute('markerUnits') !== 'userSpaceOnUse') {
+    throw new Error(`${label} progress head lost the shared open-V marker geometry.`);
+  }
+
+  const coordinates = (head.getAttribute('d') ?? '')
+    .match(/[-+]?(?:\d*\.?\d+)(?:e[-+]?\d+)?/gi)
+    ?.map(Number) ?? [];
+  const anchorX = Number(head.getAttribute(`data-${role}-anchor-x`));
+  const anchorY = Number(head.getAttribute(`data-${role}-anchor-y`));
+  const endpointX = coordinates[coordinates.length - 2];
+  const endpointY = coordinates[coordinates.length - 1];
+  if (!Number.isFinite(anchorX) || !Number.isFinite(anchorY)
+    || Math.abs(endpointX - anchorX) > 0.001
+    || Math.abs(endpointY - anchorY) > 0.001) {
+    throw new Error(`${label} progress-head tip must equal the source current position.`);
+  }
+
+  const expectedWidth = NAV_PROGRESS_HEAD.width / Number(root.getAttribute('data-viewport-scale') || 1);
+  if (Math.abs(Number(marker.getAttribute('markerWidth')) - expectedWidth) > 0.01
+    || Number(head.getAttribute('stroke-width')) !== NAV_PROGRESS_HEAD[role].coreWidth) {
+    throw new Error(`${label} progress head did not preserve its screen-space size and path weight.`);
+  }
+  const futurePath = role === 'route'
+    ? head.closest('[data-route-segment]')?.querySelector('[data-route-path]')
+    : root.querySelector('[data-trajectory-path]');
+  const futureOpacity = Number(futurePath?.getAttribute('opacity'));
+  if (!(futureOpacity > 0 && futureOpacity < 1)) {
+    throw new Error(`${label} needs a recessed future path behind the strong elapsed path.`);
+  }
+  if (role === 'route' && root.querySelector('[data-route-marker-badge="progress"]')) {
+    throw new Error(`${label} must not restore the old circular Route progress badge.`);
+  }
+  if (role === 'trajectory' && root.querySelector('[data-trajectory-marker-badge="current"]')) {
+    throw new Error(`${label} must not restore the old circular Trajectory current badge.`);
+  }
 }
 
 export function nextRender() {
