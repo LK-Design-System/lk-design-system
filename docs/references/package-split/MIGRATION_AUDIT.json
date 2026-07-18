@@ -3,11 +3,11 @@
   "schemaVersion": 1,
   "audit": {
     "status": "wave-0-in-progress",
-    "capturedAt": "2026-07-19T08:51:59.8700189+09:00",
+    "capturedAt": "2026-07-19T08:56:03.5920491+09:00",
     "source": {
       "repository": "LK-ROBOTICS/lk-design-system",
       "observedBranch": "main",
-      "observedCommit": "c5e0a1afea88520ef9210547287f681f9b187948",
+      "observedCommit": "61b437f31e1d8b04e98d21266abebb49ffa67425",
       "mainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
       "originMainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
       "packageName": "@lk-robotics/design-system-core",
@@ -21,7 +21,7 @@
       "blockers": [
         {
           "id": "clean-main-baseline",
-          "reason": "The approved Wave 0 preparation is integrated on local main at c5e0a1a, but origin/main remains at 0aa7f8d and no immutable clean-main source tag exists."
+          "reason": "The approved Wave 0 preparation is integrated on local main at 61b437f, but origin/main remains at 0aa7f8d and no immutable clean-main source tag exists."
         },
         {
           "id": "full-regression-baseline",
@@ -957,7 +957,7 @@
       "status": "not-captured",
       "requiredBefore": "wave-0-approval",
       "diagnosticObservation": {
-        "sourceCommit": "c5e0a1afea88520ef9210547287f681f9b187948",
+        "sourceCommit": "61b437f31e1d8b04e98d21266abebb49ffa67425",
         "storybookIa": "passed-190-pages-579-stories-all-reviewed",
         "visualRegression": "passed-65-of-65",
         "viewerTokens": "passed-three-play-and-axe-stories-with-direct-content-boundary-checks",
