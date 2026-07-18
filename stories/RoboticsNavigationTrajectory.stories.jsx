@@ -20,7 +20,7 @@ const meta = {
       eyebrow: 'Robotics / Navigation / Trajectory',
       title: '조밀한 궤적은 한 지도에서 시간 순서로 이어진 sample의 계층입니다',
       description:
-        'Trajectory는 자유 공간을 지나는 로봇의 조밀한 sample을 시간 순서로 보여주며, 현재 sample까지의 선을 path-tangent progress head로 끝냅니다. 로봇 heading·pose는 별도 계층이 소유하고, 계획된 graph 구간의 진행률을 대신 계산하지 않습니다.',
+        'Trajectory는 자유 공간을 지나는 로봇의 조밀한 sample을 시간 순서로 보여주며, 현재 sample까지의 선을 path-tangent progress head로 끝냅니다. 실제 이동에서 수집한 조밀한 위치 표본과 그 수명주기를 표시할 때 사용합니다. 계획된 graph 경로의 진행률이나 로봇 pose·heading을 대신 표시하는 용도에는 사용하지 마세요. 로봇 heading·pose는 별도 계층이 소유하고, 계획된 graph 구간의 진행률을 대신 계산하지 않습니다.',
     },
     docs: {
       description: {
@@ -103,7 +103,7 @@ const INVALID_STALE_TRAJECTORY = {
 };
 
 export const Statuses = {
-  name: '상태',
+  name: '변형·상태 · 궤적 수명주기와 데이터 상태',
   parameters: storyDescription(
     'trajectory status별 dense layer를 나란히 비교합니다. 각 상태는 색뿐 아니라 다른 dash pattern과 state glyph를 사용하며, invalid·stale는 서로 독립적으로 겹쳐 표시됩니다.',
   ),

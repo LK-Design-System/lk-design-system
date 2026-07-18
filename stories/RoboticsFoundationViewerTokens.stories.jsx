@@ -32,18 +32,17 @@ const APPEARANCES = [
   { value: 'dark', label: '어두운 외관 (dark)' },
 ];
 
-// State/meaning -> tone mapping. Every navigation renderer resolves a mark's
-// color through the SAME rule (RouteOverlay statusTone/segmentTone,
-// SpatialRegion strokeForRegion, HazardMarker severity, FacilityTransition
-// availability), so color is a redundant cue on top of glyph and dash — never
-// the only signal. This lists the five tones with the real states that map to
-// each, sourced from those functions.
+// The tone vocabulary is shared, but each renderer owns its semantic mapping
+// (RouteOverlay statusTone/segmentTone, SpatialRegion strokeForRegion,
+// HazardMarker severity, FacilityTransition availability, and so on). These are
+// component-qualified examples, not one universal state -> tone table. Color is
+// a redundant cue on top of glyph and dash — never the only signal.
 const STATE_TONE_MAP = [
-  { tone: '--viewer-danger', meaning: '위험 · 차단 · 오류', states: ['차단', '충돌', '무효', '진입 금지', '위험'] },
-  { tone: '--viewer-warning', meaning: '주의 · 대기 · 미확인', states: ['대기', '재계산', '속도 제한', '미확인', '주의'] },
-  { tone: '--viewer-positive', meaning: '완료 · 가용', states: ['완료', '사용 가능'] },
-  { tone: '--viewer-accent', meaning: '현재 · 활성 · 선택', states: ['현재', '활성', '선택됨'] },
-  { tone: '--viewer-muted', meaning: '비활성 · 기타', states: ['비활성', '지연'] },
+  { tone: '--viewer-danger', meaning: '대표: 위험 · 차단 · 오류', states: ['해저드 위험', '시설 사용 불가', '경로·궤적 차단', '구역 진입 금지'] },
+  { tone: '--viewer-warning', meaning: '대표: 주의 · 대기 · 제한', states: ['해저드 주의', '경로·궤적 대기·재계산', '구역 속도 제한', '웨이포인트 가용성 미확인'] },
+  { tone: '--viewer-positive', meaning: '대표: 완료', states: ['경로·궤적 완료', '경로 완료 구간'] },
+  { tone: '--viewer-accent', meaning: '대표: 현재 · 활성 · 시설 가용', states: ['시설 사용 가능', '경로·궤적 현재·활성', '선택 표시'] },
+  { tone: '--viewer-muted', meaning: '대표: 미확인 몸통 · 비활성 · 기타', states: ['시설 가용성 미확인 몸통', '구역 통과 미확인 외곽선', '경로·궤적 계획됨', '비활성·지연'] },
 ];
 
 function Card({ title, hint, children }) {
@@ -122,11 +121,16 @@ function TokenBoard({ appearance, label, frameHeight }) {
 // decorative; the tone name + meaning + example states are the accessible text.
 function StateToneBoard() {
   return (
-    <ViewerFrame appearance="dark" label="상태 · 의미별 톤 적용" state="ready" style={{ height: 316 }}>
+    <ViewerFrame
+      appearance="dark"
+      label="공유 톤의 컴포넌트별 의미 예시"
+      state="ready"
+      data-state-tone-frame=""
+      style={{ minHeight: 316 }}
+    >
       <ul
         data-state-tone-board
         style={{
-          height: '100%',
           boxSizing: 'border-box',
           margin: 0,
           padding: 16,
@@ -201,8 +205,8 @@ function ViewerTokenCatalog({ frameHeight = 340 }) {
         </div>
       </Card>
       <Card
-        title="상태 · 의미 → 톤 적용"
-        hint="마커·선·영역의 색은 의미를 인코딩합니다 — 같은 규칙(statusTone · segmentTone · strokeForRegion · severity · availability)을 모든 렌더러가 공유합니다. 색은 글리프·dash 위에 얹히는 보조 단서이며 색만으로 상태를 전달하지 않습니다. 각 톤 스와치는 뷰어 프레임 안에서 실제 var(--viewer-*)로 풀립니다."
+        title="공유 톤 · 컴포넌트별 의미 예시"
+        hint="마커·선·영역은 같은 --viewer-* 톤 어휘를 쓰지만 의미를 톤에 연결하는 규칙은 각 렌더러가 소유합니다. 예를 들어 FacilityTransition의 사용 가능은 accent, FacilityTransition·SpatialRegion의 미확인 몸통·외곽선은 muted, WaypointMarker의 가용성 미확인은 warning입니다. 색은 글리프·dash 위의 보조 단서이며 색만으로 상태를 전달하지 않습니다."
       >
         <StateToneBoard />
       </Card>
@@ -218,12 +222,12 @@ const meta = {
       eyebrow: 'Foundation / Viewer Tokens',
       title: '내비게이션 렌더러가 색을 맞추는 --viewer-* 토큰을 외관별로 문서화합니다',
       description:
-        '지도·3D·영상 위의 웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 뷰포트 안에서 하나의 색 시스템으로 읽히도록, 이들이 공유하는 색 토큰 --viewer-surface·--viewer-surface-elevated·--viewer-foreground·--viewer-muted·--viewer-border·--viewer-accent·--viewer-danger·--viewer-warning·--viewer-positive 9종을 뷰어 프레임이 단일 소스로 소유합니다. 이 페이지는 그 9종을 밝은 외관과 어두운 외관 프레임 안에서 실제 색으로 그대로 렌더하고, 어떤 상태·의미가 어떤 톤으로 매핑되는지(위험·차단·오류→danger, 주의·대기·미확인→warning, 완료·가용→positive, 현재·활성·선택→accent, 비활성·기타→muted)를 함께 문서화해, 토큰이 뷰포트 안에서만·외관에 따라 다르게 풀린다는 계약과 색-의미 결합이 회귀 기준이 되도록 합니다. 색은 글리프·dash 위의 보조 단서이며 색만으로 상태를 전달하지 않습니다.',
+        '지도·3D·영상 위의 웨이포인트·설비·해저드·차선·경로·궤적·구역 렌더러가 한 뷰포트 안에서 하나의 색 시스템으로 읽히도록, 이들이 공유하는 색 토큰 --viewer-surface·--viewer-surface-elevated·--viewer-foreground·--viewer-muted·--viewer-border·--viewer-accent·--viewer-danger·--viewer-warning·--viewer-positive 9종을 뷰어 프레임이 단일 소스로 소유합니다. 뷰어 프레임 안의 오버레이가 밝은·어두운 외관에서 같은 톤 어휘를 공유할 때 사용합니다. 일반 앱 표면의 색을 지정하거나 상태를 색만으로 전달하는 용도에는 사용하지 마세요. 이 페이지는 그 9종을 두 외관에서 실제 색으로 렌더하고 컴포넌트별 의미 연결 예시를 함께 문서화합니다. 톤 어휘는 공유하지만 의미 매핑은 각 렌더러가 소유합니다. 예를 들어 FacilityTransition의 사용 가능은 accent이고 FacilityTransition·SpatialRegion의 미확인 몸통·외곽선은 muted이며, WaypointMarker의 가용성 미확인은 warning입니다. 색은 글리프·dash 위의 보조 단서이며 색만으로 상태를 전달하지 않습니다.',
     },
     docs: {
       description: {
         component:
-          '내비게이션 렌더러들이 뷰포트 안에서 색을 맞추는 기준이 되는 --viewer-* 색 토큰 9종(--viewer-surface·--viewer-surface-elevated·--viewer-foreground·--viewer-muted·--viewer-border·--viewer-accent·--viewer-danger·--viewer-warning·--viewer-positive)을 한자리에 모아, 밝은 외관과 어두운 외관에서 각각 어떤 실제 색으로 풀리는지 살아 있는 스와치로 보여줍니다. 이 토큰들은 뷰어 프레임 안에서만, 그리고 외관에 따라 다르게 해석됩니다.',
+          '내비게이션 렌더러들이 뷰포트 안에서 색을 맞추는 기준이 되는 --viewer-* 색 토큰 9종(--viewer-surface·--viewer-surface-elevated·--viewer-foreground·--viewer-muted·--viewer-border·--viewer-accent·--viewer-danger·--viewer-warning·--viewer-positive)을 한자리에 모아, 밝은 외관과 어두운 외관에서 각각 어떤 실제 색으로 풀리는지 살아 있는 스와치로 보여줍니다. 톤 어휘는 공유하지만 상태·의미를 톤에 연결하는 규칙은 각 렌더러가 소유합니다.',
       },
     },
   },
@@ -296,11 +300,15 @@ export const Overview = {
       throw new Error('--viewer-surface must resolve differently for light vs dark appearance.');
     }
 
-    // The state -> tone map renders every tone live inside a dark frame; each
-    // must resolve to a real color, and the semantic tones must stay distinct
-    // (danger != positive) so color can carry meaning at a glance.
+    // The component-qualified examples render every shared tone live inside a
+    // dark frame; each must resolve to a real color, and the semantic tones must
+    // stay distinct (danger != positive) as a redundant visual cue.
     const toneBoard = board.querySelector('[data-state-tone-board]');
     if (!toneBoard) throw new Error('The state -> tone board must render.');
+    const toneFrame = toneBoard.closest('[data-state-tone-frame]');
+    if (!toneFrame || toneFrame.scrollHeight > toneFrame.clientHeight + 1) {
+      throw new Error('The state-tone frame must expand to contain every component-qualified row.');
+    }
     const toneColor = {};
     for (const row of STATE_TONE_MAP) {
       const swatch = toneBoard.querySelector(`[data-state-tone="${row.tone}"]`);
@@ -332,6 +340,16 @@ export const NarrowViewport = {
     if (!fixture) throw new Error('The narrow viewer-token fixture is missing.');
     if (fixture.scrollWidth > fixture.clientWidth + 1) {
       throw new Error('The viewer-token palette must not create horizontal overflow at 320px.');
+    }
+    const toneFrame = fixture.querySelector('[data-state-tone-frame]');
+    const toneBoard = fixture.querySelector('[data-state-tone-board]');
+    if (
+      !toneFrame
+      || !toneBoard
+      || toneFrame.scrollHeight > toneFrame.clientHeight + 1
+      || toneBoard.scrollHeight > toneBoard.clientHeight + 1
+    ) {
+      throw new Error('The state-tone board must remain fully visible without vertical clipping at 320px.');
     }
   },
 };

@@ -24,7 +24,7 @@ const meta = {
       eyebrow: 'Robotics / Viewer / Navigation Viewer',
       title: '내비게이션 오버레이를 지도 캔버스와 패널로 합성한 뷰어입니다',
       description:
-        '영역·레인·경로·궤적·웨이포인트·설비 전이 오버레이를 Map2DCanvas 위에 얹고, LayerPanel 트리 하나가 레이어와 객체의 선택·표시·잠금을, SelectionInspector와 Legend가 선택 상태와 계층 부호를 담당하는 합성 뷰어 씬입니다. 지도 도형은 포인터 전용(aria-hidden)이고 키보드·스크린 리더 탐색은 패널 트리에 위임합니다. 이 합성은 제품이 뷰어를 조립하는 방식의 표준 예시이며, 렌더러의 값·표현 어휘는 Foundation 원자가, 표현/경계 규약은 NAVIGATION_EXPRESSION_CONVENTIONS가 소유합니다.',
+        '영역·레인·경로·궤적·웨이포인트·설비 전이 오버레이를 Map2DCanvas 위에 얹고, LayerPanel 트리 하나가 레이어와 객체의 선택·표시·잠금을, SelectionInspector와 Legend가 선택 상태와 계층 부호를 담당하는 합성 뷰어 씬입니다. 지도와 패널이 하나의 선택·표시·잠금 상태를 공유하는 제품형 내비게이션 뷰어를 조립할 때 사용합니다. 완성된 제품 화면이나 경로 계획·운영 권한·백엔드 상태를 이 패턴에 넣는 용도에는 사용하지 마세요. 지도 도형은 포인터 전용(aria-hidden)이고 키보드·스크린 리더 탐색은 패널 트리에 위임합니다. 이 합성은 제품이 뷰어를 조립하는 방식의 표준 예시이며, 렌더러의 값·표현 어휘는 Foundation 원자가, 표현/경계 규약은 NAVIGATION_EXPRESSION_CONVENTIONS가 소유합니다.',
     },
     docs: {
       description: {

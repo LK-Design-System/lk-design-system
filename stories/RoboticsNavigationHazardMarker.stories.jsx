@@ -1,6 +1,5 @@
 import React from 'react';
 import { HazardMarker } from '../src/index.js';
-import { userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const STAGE = 'stage';
@@ -177,14 +176,15 @@ export const Overview = {
 };
 
 export const States = {
-  name: '상호작용 · 선택과 포커스',
+  name: '변형·상태 · 선택·포커스·비활성',
   parameters: storyDescription(
     '같은 계단 위험물이 선택·포커스·비활성 상태로 바뀔 때의 표기입니다. 선택/포커스 outline이 핀 형상을 그대로 따라가고, 별도 원형 ring을 덧그리지 않는지 확인하세요.',
   ),
   render: () => {
     const states = [
-      { key: 'base', label: '기본', props: {} },
-      { key: 'selected', label: '선택됨', props: { selected: true } },
+      { key: 'base', label: '기본', props: { onActivate: () => {} } },
+      { key: 'selected', label: '선택됨', props: { selected: true, onActivate: () => {} } },
+      { key: 'focused', label: '포커스됨', props: { focused: true, onActivate: () => {} } },
       { key: 'disabled', label: '선택 불가', props: { disabled: true, onActivate: () => {} } },
     ];
     return (
@@ -200,16 +200,30 @@ export const States = {
     );
   },
   play: async ({ canvasElement }) => {
+    const base = canvasElement.querySelector('[data-hazard-state="base"] [data-lds-hazard-marker]');
     const selected = canvasElement.querySelector('[data-hazard-state="selected"] [data-lds-hazard-marker]');
+    const focused = canvasElement.querySelector('[data-hazard-state="focused"] [data-lds-hazard-marker]');
     const disabled = canvasElement.querySelector('[data-hazard-state="disabled"] [data-lds-hazard-marker]');
-    if (!selected?.querySelector('[data-hazard-selection-ring]')) {
+    if (!base || !selected || !focused || !disabled) {
+      throw new Error('The hazard state matrix must render base, selected, focused, and disabled fixtures.');
+    }
+    if (base.querySelector('[data-hazard-selection-ring], [data-hazard-focus-ring]')) {
+      throw new Error('The base hazard must not render a selection or focus outline.');
+    }
+    if (!selected.querySelector('[data-hazard-selection-ring]') || selected.querySelector('[data-hazard-focus-ring]')) {
       throw new Error('A selected hazard must trace a pin-following selection outline.');
     }
-    if (disabled?.getAttribute('aria-disabled') !== 'true' || disabled.getAttribute('tabindex') !== '-1') {
+    if (
+      focused.getAttribute('data-focused') !== 'true'
+      || !focused.querySelector('[data-hazard-focus-ring]')
+      || focused.querySelector('[data-hazard-selection-ring]')
+      || !focused.getAttribute('aria-label')?.includes('포커스됨')
+    ) {
+      throw new Error('The controlled focused hazard must render only its pin-following focus outline and focused name.');
+    }
+    if (disabled.getAttribute('aria-disabled') !== 'true' || disabled.getAttribute('tabindex') !== '-1') {
       throw new Error('A disabled interactive hazard must block activation and expose aria-disabled.');
     }
-    const base = canvasElement.querySelector('[data-hazard-state="base"] [data-lds-hazard-marker]');
-    base?.focus?.();
   },
 };
 

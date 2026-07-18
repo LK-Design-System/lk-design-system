@@ -362,7 +362,7 @@ function OverviewMapFixture() {
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '같은 내비게이션 그래프에서 대기·통과·주차·충전 역할과 중첩 역할을 한 지도에서 비교하는 대표 뷰입니다. 지도 표식의 이름·역할·상태가 범례와 일치하는지 확인하세요. 지도와 목록의 선택 동기화는 상호작용 스토리에서 다룹니다.',
+    '같은 내비게이션 그래프에서 대기·통과·주차·충전 역할과 중첩 역할을 한 지도에서 비교하는 대표 뷰입니다. 지도 표식의 이름·역할·상태가 범례와 일치하는지 확인하세요. 지도 마커의 선택·활성화와 키보드 계약은 상호작용 스토리에서 다룹니다.',
   ),
   render: () => <OverviewMapFixture />,
   play: async ({ canvasElement }) => {

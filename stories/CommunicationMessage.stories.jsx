@@ -725,7 +725,7 @@ function InlineSourceFooterFixture() {
 }
 
 export const InlineSourceFooter = {
-  name: '변형·상태 · footer 인라인 출처 토글',
+  name: '변형·상태 · 인라인 출처 토글',
   parameters: storyDescription(
     'inlineSources로 접힌 "출처" 토글을 copy·공유·재생성·더보기 아이콘과 같은 footer 행에 나란히 둡니다(ChatGPT식). 출처는 메시지 동작 그룹의 형제로 남아 액션이 아닌 provenance로 announce되고, 누르면 출처 목록이 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않으며 바깥 클릭·Esc로 닫힙니다. 출처를 항상 노출해야 하는 고신뢰 답변에는 inlineSources 없이 기본 출처 행을 유지하세요.',
   ),

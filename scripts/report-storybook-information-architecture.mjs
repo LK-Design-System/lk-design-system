@@ -120,11 +120,21 @@ const PAGE_OWNER_OVERRIDES = {
   'LDS Product/Data/Visualization/Telemetry': ['TelemetryGauge', 'TelemetryValue'],
   'LDS Product/Navigation/Adaptive Navigation': ['NavRail', 'BottomNav'],
   'LDS Robotics/Assets/Icons': ['Icon'],
+  'LDS Robotics/Foundation/Codes': ['Robotics Foundation:Codes'],
+  'LDS Robotics/Foundation/Facility Glyph': ['Robotics Foundation:Facility Glyph'],
+  'LDS Robotics/Foundation/Hazard Glyph': ['Robotics Foundation:Hazard Glyph'],
+  'LDS Robotics/Foundation/Marker Pin': ['Robotics Foundation:Marker Pin'],
+  'LDS Robotics/Foundation/Navigation Encoding Tokens': ['Robotics Foundation:Navigation Encoding Tokens'],
+  'LDS Robotics/Foundation/State Badge': ['Robotics Foundation:State Badge'],
+  'LDS Robotics/Foundation/Unit Format': ['Robotics Foundation:Unit Format'],
+  'LDS Robotics/Foundation/Vector Glyph': ['Robotics Foundation:Vector Glyph'],
+  'LDS Robotics/Foundation/Viewer Tokens': ['Robotics Foundation:Viewer Tokens'],
   'LDS Robotics/Editor/Canvas Shell': ['CanvasEditorShell', 'EditorToolbar', 'HistoryToolbar'],
   'LDS Robotics/Status/Robot State': ['RobotStatusCard'],
   'LDS Robotics/Status/Equipment State': ['EquipmentStatusCard'],
   'LDS Robotics/Viewer/2D Map': ['Map2DCanvas'],
   'LDS Robotics/Viewer/3D Scene': ['Scene3DFrame'],
+  'LDS Robotics/Viewer/Navigation Viewer': ['Robotics Viewer:Navigation Viewer'],
   'LDS Robotics/Viewer/Viewer Frame': ['ViewerFrame'],
 };
 
@@ -418,7 +428,10 @@ async function buildAudit(previous) {
       };
     });
 
-    const subjectOwners = new Set(metaOwner ? [metaOwner] : titleOwners(fileStories[0].title, exportNames));
+    const overriddenOwners = PAGE_OWNER_OVERRIDES[fileStories[0].title];
+    const subjectOwners = new Set(
+      overriddenOwners || (metaOwner ? [metaOwner] : titleOwners(fileStories[0].title, exportNames)),
+    );
     if (subjectOwners.size === 0 && layer === 'Foundation') subjectOwners.add(`Foundation:${fileStories[0].title.split('/').at(-1)}`);
     if (subjectOwners.size === 0 && layer === 'Theme') subjectOwners.add(`Theme:${fileStories[0].title.split('/').at(-1)}`);
     if (subjectOwners.size === 0) {
@@ -441,7 +454,7 @@ async function buildAudit(previous) {
       family: fileStories[0].title.split('/').slice(0, -1).at(-1),
       importPath,
       sourceSha256: sha256(source),
-      primaryOwner: metaOwner || [...subjectOwners][0] || null,
+      primaryOwner: overriddenOwners?.[0] || metaOwner || [...subjectOwners][0] || null,
       ownerComponents: [...subjectOwners].sort(),
       supportingComponents: [...renderedPageComponents].filter((owner) => !subjectOwners.has(owner)).sort(),
       visibility: { public: publicStories.length, hidden: hiddenStories.length },
@@ -488,7 +501,7 @@ async function buildAudit(previous) {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
     source: {
       name: 'LK Design System Storybook information architecture audit',
-      auditedAt: '2026-07-13',
+      auditedAt: '2026-07-19',
       storybookIndex: 'storybook-static/index.json',
       storybookIndexSha256: sha256(indexSource),
       publicExportEntry: 'src/index.js',
