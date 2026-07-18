@@ -22,7 +22,9 @@ async function collect(dirRel, predicate, out = []) {
 }
 
 function extractTitle(source, file) {
-  const match = source.match(/title:\s*(['"])(.*?)\1/);
+  const match = source.match(
+    /(?:^|\r?\n)\s*(?:const\s+meta\s*=\s*|export\s+default\s*)\{\s*(?:id:\s*(?:'[^']*'|"[^"]*"),\s*)?title:\s*(['"])(.*?)\1/,
+  );
   assert(match, `${file} is missing a Storybook meta title.`);
   return match[2];
 }
