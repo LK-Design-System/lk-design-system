@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "audit": {
     "status": "wave-0-in-progress",
-    "capturedAt": "2026-07-19T00:32:54.792+09:00",
+    "capturedAt": "2026-07-19T01:03:47.9496440+09:00",
     "source": {
       "repository": "LK-ROBOTICS/lk-design-system",
       "observedBranch": "detached-main-candidate",
@@ -33,15 +33,11 @@
         },
         {
           "id": "full-regression-baseline",
-          "reason": "Full package, Storybook, visual, SSR, tree-shaking, and size baselines have not been captured on clean main."
+          "reason": "The detached candidate npm run check reaches pre-existing main gates: Storybook IA has incomplete human reviews, while check:storybook-ci and a main control run reproduce eight Waypoint/state-glyph visual baseline diffs. No clean-main full pass exists."
         },
         {
           "id": "package-artifact-baseline",
-          "reason": "No immutable last-known-good release set, tarball size, or SHA-256 baseline has been captured."
-        },
-        {
-          "id": "single-lockfile",
-          "reason": "CI is canonicalized on npm, but the tracked legacy pnpm-lock.yaml still needs an explicit clean-main removal change."
+          "reason": "Local check:pack passed, but it used noncanonical Node 24.18.0/npm 11.16.0. A canonical Node 22/npm 10.9.2 immutable artifact and a fresh-checkout reproduction contract have not been captured."
         }
       ]
     }
@@ -76,17 +72,15 @@
     "registry": "https://npm.pkg.github.com",
     "namingApprovalStatus": "pending-owner-approval",
     "packageManager": {
-      "status": "implemented-pending-secondary-lockfile-removal",
+      "status": "approved-single-lockfile",
       "name": "npm",
       "version": "10.9.2",
       "packageJsonValue": "npm@10.9.2",
       "lockfile": "package-lock.json",
       "frozenInstallCommand": "npm ci",
       "ciWorkflow": ".github/workflows/ci.yml",
-      "knownSecondaryLockfiles": [
-        "pnpm-lock.yaml"
-      ],
-      "secondaryLockfileDisposition": "remove-on-clean-main-before-wave-0-approval"
+      "knownSecondaryLockfiles": [],
+      "secondaryLockfileDisposition": "removed-in-detached-main-candidate-pending-main-integration"
     },
     "registryVersioning": {
       "approvalStatus": "pending-owner-approval",
@@ -844,6 +838,91 @@
         "command": "node scripts/check-publish-policy.mjs",
         "status": "passed-on-audited-worktree",
         "capturedAt": "2026-07-19"
+      },
+      {
+        "id": "aggregate-package-smoke-noncanonical",
+        "command": "npm run check:pack",
+        "status": "passed-on-noncanonical-local-runtime",
+        "capturedAt": "2026-07-19",
+        "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
+        "runtime": {
+          "os": "windows",
+          "node": "24.18.0",
+          "npm": "11.16.0"
+        },
+        "result": {
+          "tarballSizeBytes": 8298592,
+          "tarballSha256": "42a68a48c9f856cac603618b10cf0b0c73fe0b5a09de6e2f18a0dd42e8949394",
+          "rootButtonBundleBytes": 12167,
+          "coreButtonBundleBytes": 12167,
+          "iconAssets": 339,
+          "esm": "passed",
+          "cjs": "passed",
+          "ssr": "passed"
+        },
+        "acceptance": "diagnostic-only-not-wave-0-baseline"
+      },
+      {
+        "id": "full-check-candidate",
+        "command": "npm run check",
+        "status": "failed-on-existing-main-gates",
+        "capturedAt": "2026-07-19",
+        "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
+        "result": {
+          "checkFast": "passed",
+          "firstFailure": "check:storybook-ia: Every page must have a completed human review"
+        }
+      },
+      {
+        "id": "storybook-ci-candidate",
+        "command": "npm run check:storybook-ci",
+        "status": "failed-on-visual-baseline-drift",
+        "capturedAt": "2026-07-19",
+        "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
+        "result": {
+          "storybookBuild": "passed",
+          "renderedComponentStyles": "passed",
+          "nestedStyles": "passed",
+          "inventory": "passed",
+          "tooltipAlignment": "passed",
+          "publicSurface": "passed",
+          "accessibility": "passed-579-stories-zero-violations",
+          "visualRegression": "failed",
+          "visualDiffs": {
+            "atom-waypoint-point": 8.997,
+            "atom-waypoint-point@8x": 16.263,
+            "atom-glyph-waiting": 4.847,
+            "atom-glyph-waiting@8x": 5.357,
+            "atom-glyph-completed": 15.306,
+            "atom-glyph-completed@8x": 25.0,
+            "atom-glyph-rerouting": 16.709,
+            "atom-glyph-rerouting@8x": 24.617
+          }
+        }
+      },
+      {
+        "id": "visual-regression-main-control",
+        "commands": [
+          "npm run build:storybook",
+          "npm run check:visual-regression"
+        ],
+        "status": "failed-with-candidate-identical-visual-diffs",
+        "capturedAt": "2026-07-19",
+        "sourceCommit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
+        "result": {
+          "storybookBuild": "passed",
+          "visualRegression": "failed-identically-to-detached-candidate",
+          "visualDiffs": {
+            "atom-waypoint-point": 8.997,
+            "atom-waypoint-point@8x": 16.263,
+            "atom-glyph-waiting": 4.847,
+            "atom-glyph-waiting@8x": 5.357,
+            "atom-glyph-completed": 15.306,
+            "atom-glyph-completed@8x": 25.0,
+            "atom-glyph-rerouting": 16.709,
+            "atom-glyph-rerouting@8x": 24.617
+          }
+        }
       }
     ],
     "cleanMain": {
@@ -852,13 +931,24 @@
       "commit": null
     },
     "fullCheck": {
-      "status": "not-run-for-wave-0",
+      "status": "failed-on-detached-candidate",
+      "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
+      "command": "npm run check",
+      "firstFailure": "check:storybook-ia: Every page must have a completed human review",
+      "additionalMainReproducibleFailure": "Eight Waypoint/state-glyph visual smoke captures exceed the one-percent threshold on both the candidate and main control.",
       "requiredBefore": "wave-0-approval"
     },
     "packageArtifacts": {
       "status": "not-captured",
       "lastKnownGoodReleaseSet": null,
-      "tarballs": []
+      "tarballs": [],
+      "diagnosticObservation": {
+        "sourceCommit": "952704cdc38f693dd4abb7c48c8641dd33f10a90",
+        "runtime": "windows-node-24.18.0-npm-11.16.0",
+        "sizeBytes": 8298592,
+        "sha256": "42a68a48c9f856cac603618b10cf0b0c73fe0b5a09de6e2f18a0dd42e8949394",
+        "acceptance": "rejected-as-canonical-baseline"
+      }
     },
     "consumerMatrix": {
       "status": "not-captured",
@@ -871,6 +961,12 @@
         "Linux",
         "Storybook visual",
         "tarball and consumer bundle size"
+      ],
+      "knownGaps": [
+        "React 18 runtime package smoke",
+        "Linux package smoke on Node 22/npm 10.9.2",
+        "canonical Windows Node 22/npm 10.9.2 tarball",
+        "green Storybook IA and visual regression gates"
       ]
     }
   },
