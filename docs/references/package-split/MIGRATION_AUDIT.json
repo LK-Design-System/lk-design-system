@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "audit": {
     "status": "wave-0-in-progress",
-    "capturedAt": "2026-07-19T01:30:08.1978410+09:00",
+    "capturedAt": "2026-07-19T07:33:19.5859000+09:00",
     "source": {
       "repository": "LK-ROBOTICS/lk-design-system",
       "observedBranch": "detached-main-candidate",
@@ -22,14 +22,6 @@
         {
           "id": "clean-main-baseline",
           "reason": "The audited candidates are integrated on local main at 626756b, but origin/main remains at 0aa7f8d and no tagged clean-main full-check/artifact baseline exists."
-        },
-        {
-          "id": "owner-assignments",
-          "reason": "Accountable people for each package and the conditional Robotics repository have not been assigned."
-        },
-        {
-          "id": "decision-approvals",
-          "reason": "Package names, fixed release-set policy, CJS disposition, support window, Spinner brand boundary, and conditional repository policy are proposed but not owner-approved."
         },
         {
           "id": "full-regression-baseline",
@@ -70,7 +62,7 @@
   "decisions": {
     "namespace": "@lk-robotics",
     "registry": "https://npm.pkg.github.com",
-    "namingApprovalStatus": "pending-owner-approval",
+    "namingApprovalStatus": "approved",
     "packageManager": {
       "status": "approved-single-lockfile",
       "name": "npm",
@@ -83,12 +75,12 @@
       "secondaryLockfileDisposition": "removed-on-local-main-pending-origin-main-sync"
     },
     "registryVersioning": {
-      "approvalStatus": "pending-owner-approval",
+      "approvalStatus": "approved",
       "strategy": "fixed-release-set-through-wave-2",
       "releaseSetRequirement": "All package candidates in one migration set come from one source commit and record immutable checksums."
     },
     "compatibility": {
-      "approvalStatus": "pending-owner-approval",
+      "approvalStatus": "approved",
       "facadePackage": "@lk-robotics/design-system-core",
       "minimumStableReleases": 2,
       "minimumDays": 90,
@@ -96,7 +88,7 @@
       "deepImports": "preserve-during-support-window-and-ban-for-new-code"
     },
     "repositoryPolicy": {
-      "approvalStatus": "pending-owner-approval",
+      "approvalStatus": "approved",
       "coreThemeProduct": "remain-in-lk-design-system",
       "roboticsUi": "remain-in-lk-design-system-through-wave-3-go-no-go",
       "roboticsRepositoryCandidate": "LK-ROBOTICS/lk-design-system-robotics",
@@ -111,13 +103,13 @@
       "name": "@lk-robotics/lds-core",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "design-system-owner",
-      "accountableOwner": null,
-      "ownerAssignmentStatus": "person-required",
+      "accountableOwner": "Jinhyuk Jang",
+      "ownerAssignmentStatus": "assigned",
       "dependsOn": [],
       "moduleFormat": {
         "esm": "required",
         "types": "required",
-        "cjs": "compatibility-decision-pending-consumer-verification"
+        "cjs": "not-published-use-compatibility-facade"
       },
       "stylesEntry": "@lk-robotics/lds-core/styles.css"
     },
@@ -126,15 +118,15 @@
       "name": "@lk-robotics/lds-theme",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "design-system-owner",
-      "accountableOwner": null,
-      "ownerAssignmentStatus": "person-required",
+      "accountableOwner": "Jinhyuk Jang",
+      "ownerAssignmentStatus": "assigned",
       "dependsOn": [
         "core"
       ],
       "moduleFormat": {
         "esm": "required",
         "types": "required",
-        "cjs": "compatibility-decision-pending-consumer-verification"
+        "cjs": "not-published-use-compatibility-facade"
       },
       "stylesEntry": "@lk-robotics/lds-theme/styles.css"
     },
@@ -143,15 +135,15 @@
       "name": "@lk-robotics/lds-product",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "frontend-platform-owner",
-      "accountableOwner": null,
-      "ownerAssignmentStatus": "person-required",
+      "accountableOwner": "Jinhyuk Jang",
+      "ownerAssignmentStatus": "assigned",
       "dependsOn": [
         "core"
       ],
       "moduleFormat": {
         "esm": "required",
         "types": "required",
-        "cjs": "compatibility-decision-pending-consumer-verification"
+        "cjs": "not-published-use-compatibility-facade"
       },
       "stylesEntry": "@lk-robotics/lds-product/styles.css"
     },
@@ -161,8 +153,8 @@
       "repository": "LK-ROBOTICS/lk-design-system",
       "conditionalRepository": "LK-ROBOTICS/lk-design-system-robotics",
       "accountableOwnerRole": "robotics-domain-owner",
-      "accountableOwner": null,
-      "ownerAssignmentStatus": "person-required",
+      "accountableOwner": "Jinhyuk Jang",
+      "ownerAssignmentStatus": "assigned",
       "dependsOn": [
         "core",
         "product"
@@ -170,7 +162,7 @@
       "moduleFormat": {
         "esm": "required",
         "types": "required",
-        "cjs": "compatibility-decision-pending-consumer-verification"
+        "cjs": "not-published-use-compatibility-facade"
       },
       "stylesEntry": "@lk-robotics/lds-robotics-ui/styles.css"
     },
@@ -179,8 +171,8 @@
       "name": "@lk-robotics/design-system-core",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "frontend-platform-owner",
-      "accountableOwner": null,
-      "ownerAssignmentStatus": "person-required",
+      "accountableOwner": "Jinhyuk Jang",
+      "ownerAssignmentStatus": "assigned",
       "dependsOn": [
         "core",
         "theme",
@@ -341,9 +333,9 @@
     "exceptions": [
       {
         "id": "brand-spinner-core-helper",
-        "status": "accepted-for-compatibility-baseline",
-        "approvalStatus": "pending-owner-approval",
-        "disposition": "pending-theme-adapter-or-explicit-core-compatibility-exception",
+        "status": "approved-transition-decision",
+        "approvalStatus": "approved",
+        "disposition": "move-brand-variant-to-theme-adapter",
         "requiredBefore": "wave-0-approval",
         "module": "components/status/Spinner.jsx",
         "helper": "components/brand/lk-logo-paths.js",
@@ -991,5 +983,30 @@
       ]
     }
   },
-  "approvals": []
+  "approvals": [
+    {
+      "role": "design-system-owner",
+      "approver": "Jinhyuk Jang",
+      "approvedAt": "2026-07-19",
+      "approvalSource": "user-confirmed-all-in-codex-thread"
+    },
+    {
+      "role": "frontend-platform-owner",
+      "approver": "Jinhyuk Jang",
+      "approvedAt": "2026-07-19",
+      "approvalSource": "user-confirmed-all-in-codex-thread"
+    },
+    {
+      "role": "robotics-domain-owner",
+      "approver": "Jinhyuk Jang",
+      "approvedAt": "2026-07-19",
+      "approvalSource": "user-confirmed-all-in-codex-thread"
+    },
+    {
+      "role": "lds3d-maintainer",
+      "approver": "Jinhyuk Jang",
+      "approvedAt": "2026-07-19",
+      "approvalSource": "user-confirmed-all-in-codex-thread"
+    }
+  ]
 }

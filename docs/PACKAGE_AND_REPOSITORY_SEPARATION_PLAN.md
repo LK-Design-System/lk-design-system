@@ -234,23 +234,24 @@ LK Theme가 제공하는 value layer로 기록한다.
 
 작업:
 
-- [ ] package namespace와 최종 package 이름을 승인한다.
-- [ ] Core, Theme, Product, Robotics UI와 LDS3D의 accountable owner를 지정한다.
+- [x] package namespace와 최종 package 이름을 승인한다.
+- [x] Core, Theme, Product, Robotics UI와 LDS3D의 accountable owner를
+      `Jinhyuk Jang`으로 지정한다.
 - [x] 현재 204개 public source module, 210개 public symbol과 총 225개 module의 target
       package를 기록한다.
 - [x] Robotics 31개 public source module을 앞 절의 네 묶음으로 재검토하고, 현재
       target을 `lds-robotics-ui`로 고정한다.
-- [ ] `Spinner variant="brand"`의 LK wordmark helper를 Theme adapter로 분리할지
-      명시적 Core compatibility 예외로 유지할지 승인한다.
+- [x] `Spinner variant="brand"`의 LK wordmark helper를 Theme adapter로 분리하기로
+      승인한다. 실제 API 이동은 Wave 1 compatibility 작업에서 수행한다.
 - [x] 여섯 product repository와 LDS3D docs의 root/subpath/deep/CSS import를 commit
       pin과 함께 inventory한다.
 - [ ] ESM/CJS, React 18/19, SSR, tree-shaking, tarball size와 Storybook visual baseline을
       고정한다.
-- [ ] package별 versioning, registry, support window와 owner 승인 규칙을 정한다.
+- [x] package별 fixed release-set, GitHub Packages registry, 2 stable release/최소 90일
+      compatibility window와 owner 승인 규칙을 정한다.
 - [x] canonical package manager·lockfile·frozen CI 정책을 npm, `package-lock.json`,
       `npm ci`로 정하고 CI에 적용한다.
-- [x] legacy secondary `pnpm-lock.yaml`을 detached main candidate의 별도 변경으로
-      제거한다. persistent main 반영은 명시적 승인을 기다린다.
+- [x] legacy secondary `pnpm-lock.yaml`을 local main에서 제거한다.
 - [ ] clean `main` baseline tag, 현재 aggregate
       `@lk-robotics/design-system-core` tarball checksum과 last-known-good release set을 만든다.
 - [x] 실행 증거 원장 `references/package-split/MIGRATION_AUDIT.json`의 schema와
@@ -266,6 +267,9 @@ LK Theme가 제공하는 value layer로 기록한다.
   Wave 0 evidence로 고정했으며, stable versioned artifact portability 검증은 Wave 2에서
   수행한다.
 - CI의 canonical install을 npm + `package-lock.json` + `npm ci`로 일치시켰다.
+- `Jinhyuk Jang`을 Design System, Frontend Platform, Robotics와 LDS3D maintainer
+  approver로 지정했다. namespace/package names, fixed release-set, compatibility window,
+  CJS facade, conditional Robotics repository와 Theme-owned brand Spinner adapter를 승인했다.
 - 여섯 product pin을 모두 clean checkout에서 동일 scanner로 확인했다. 여섯 제품 모두
   LDS/LDS3D dependency·root/subpath/deep/CSS/asset/CJS 사용이 0건이며, migration 완료가
   아니라 아직 `not-adopted` 상태다.
