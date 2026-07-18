@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "source": {
     "name": "LK Design System Storybook information architecture audit",
-    "auditedAt": "2026-07-13",
+    "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "6351e9c59b59551310f16b99356b8380f567c4a6c4b05315c2935459e4ce40c8",
+    "storybookIndexSha256": "211c05c1f98b1a406bf3c352cefc19ba5b8319e9ac19c96884a35b72c794f128",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -65,20 +65,20 @@
     "hiddenStories": 136,
     "componentDescriptions": 186,
     "pagesWithVisibleCanvasIntroduction": 190,
-    "pagesWithDecisionGuidance": 176,
+    "pagesWithDecisionGuidance": 185,
     "describedPublicStories": 443,
-    "reviewedPages": 177,
-    "reviewedStories": 534,
-    "staleReviewedPages": 10,
+    "reviewedPages": 190,
+    "reviewedStories": 579,
+    "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 183,
       "usage": 20,
-      "variants-states": 89,
-      "interaction": 50,
+      "variants-states": 93,
+      "interaction": 49,
       "responsive": 64,
-      "scenario": 27,
+      "scenario": 24,
       "visual-parity": 99,
       "internal-contract": 37
     },
@@ -115,7 +115,7 @@
         "stories": 173,
         "public": 139,
         "hidden": 34,
-        "guideReadyPages": 33
+        "guideReadyPages": 42
       },
       "Theme": {
         "pages": 3,
@@ -4986,11 +4986,11 @@
       "sourceSha256": "e0a3feb338697b8a9d2c7b98694e8a8df117ef5ffd9c6cb633d8d207bff6e406",
       "primaryOwner": "Banner",
       "ownerComponents": [
-        "Banner"
+        "Banner",
+        "Callout"
       ],
       "supportingComponents": [
-        "Button",
-        "Callout"
+        "Button"
       ],
       "visibility": {
         "public": 2,
@@ -5029,11 +5029,11 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "Banner"
+            "Callout"
           ],
           "supportingComponents": [
-            "Button",
-            "Callout"
+            "Banner",
+            "Button"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         },
@@ -6370,7 +6370,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "49c4c9e50effae8815b6e6404bd973fcd3356dccc47381ecf0c27c8ab1d427df",
+      "sourceSha256": "b8c97d5a842b15dd1ba5864e73968e8518b5d98d33429d0b9bcc918d7d488471",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -6401,8 +6401,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "06685ae184ba293ec8a7f4bddb6e7594ee78cb257281f5ae1a11cb6fd3d5b61d",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "b8c97d5a842b15dd1ba5864e73968e8518b5d98d33429d0b9bcc918d7d488471",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6430,7 +6430,7 @@
             "IconButton",
             "SourceDisclosure"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--grouped-messages-and-slots",
@@ -6458,7 +6458,7 @@
             "IconButton",
             "SourceDisclosure"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--conversation-composition",
@@ -6486,7 +6486,7 @@
             "MessageComposer",
             "MessageFeed"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--dark-theme",
@@ -6509,7 +6509,7 @@
             "ConversationMessage"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--message-action-bar",
@@ -6534,11 +6534,12 @@
           "supportingComponents": [
             "Icon",
             "SourceDisclosure"
-          ]
+          ],
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--inline-source-footer",
-          "name": "변형·상태 · footer 인라인 출처 토글",
+          "name": "변형·상태 · 인라인 출처 토글",
           "exportName": "InlineSourceFooter",
           "visibility": "public",
           "tags": [
@@ -6551,15 +6552,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ConversationMessage"
           ],
           "supportingComponents": [
             "Icon",
             "SourceDisclosure"
-          ]
+          ],
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--lifecycle-states",
@@ -6586,7 +6588,7 @@
             "Icon",
             "SourceDisclosure"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--narrow-long-content",
@@ -6611,7 +6613,7 @@
           "supportingComponents": [
             "SourceDisclosure"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-communication-message--message-family-visual-parity",
@@ -6633,10 +6635,10 @@
             "ConversationMessage"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 normal, narrow, and dark rendered states reviewed; hidden regression evidence confirmed."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after synced messageActions/error/IconButton source update; dispositions unchanged, gated by check:a11y play/axe run."
+      "reviewNote": "2026-07-19 human re-review confirmed fresh Storybook names/order, source roles, focused play contracts, and current normal/narrow examples for the Product and Robotics status pages."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
@@ -7655,8 +7657,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "1de5c0f3e82a89d246321d07f58b4d108c83f83abb28183a2349be747d216a1b",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "5f916bc524b44d9960a30bb89bfa6a1b9238db041d9ea834dafebd31861df8d4",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -7679,7 +7681,7 @@
             "SourceDisclosure"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-content-source-disclosure--direct-source-link",
@@ -7692,7 +7694,7 @@
             "play-fn",
             "test"
           ],
-          "role": "scenario",
+          "role": "variants-states",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -7702,7 +7704,7 @@
             "SourceDisclosure"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-content-source-disclosure--collapsible-citation",
@@ -7719,12 +7721,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "SourceDisclosure"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-content-source-disclosure--missing-source",
@@ -7737,7 +7740,7 @@
             "play-fn",
             "test"
           ],
-          "role": "scenario",
+          "role": "variants-states",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -7747,7 +7750,7 @@
             "SourceDisclosure"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-content-source-disclosure--unresolved-availability",
@@ -7770,7 +7773,7 @@
             "SourceDisclosure"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-content-source-disclosure--narrow-long-provenance",
@@ -7793,7 +7796,7 @@
             "SourceDisclosure"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-content-source-disclosure--compact-citation-chips",
@@ -7815,10 +7818,11 @@
           "ownerComponents": [
             "SourceDisclosure"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-19 human re-review confirmed fresh Storybook names/order, source roles, focused play contracts, and current normal/narrow examples for the Product and Robotics status pages."
     },
     {
       "title": "LDS Product/Content/Spec Row",
@@ -8022,8 +8026,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "7075a8ae7ebcacaf240c06bbff898fc64d7574bcd585e66acaf8646de5525439",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "d7aa03d66a91b68936004bf7907b6628dc54a33c7ec3c948821f259c3cf91364",
       "stories": [
         {
           "id": "lds-product-data-collections-data-grid--selectable-list",
@@ -8047,7 +8051,7 @@
           "supportingComponents": [
             "StatusBadge"
           ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-data-collections-data-grid--row-eligibility-and-interactive-guard",
@@ -8072,7 +8076,7 @@
           "supportingComponents": [
             "Button"
           ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-data-collections-data-grid--controlled-collection-states",
@@ -8095,7 +8099,7 @@
             "DataGrid"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-data-collections-data-grid--dashboard-collection-contracts",
@@ -8123,7 +8127,7 @@
             "Pagination",
             "StatusBadge"
           ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-product-data-collections-data-grid--narrow-pinned-columns",
@@ -8151,10 +8155,10 @@
             "Pagination",
             "StatusBadge"
           ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-19 human re-review confirmed fresh Storybook names/order, source roles, focused play contracts, and current normal/narrow examples for the Product and Robotics status pages."
     },
     {
       "title": "LDS Product/Data/Collections/File Browser",
@@ -10746,10 +10750,10 @@
       "sourceSha256": "e85bf952b6180dfc76a374c8e93551c8d5d1acaf4254dd9bffc6b0b797f9a945",
       "primaryOwner": "NavRail",
       "ownerComponents": [
+        "BottomNav",
         "NavRail"
       ],
       "supportingComponents": [
-        "BottomNav",
         "Icon"
       ],
       "visibility": {
@@ -10790,11 +10794,10 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "BottomNav",
             "NavRail"
           ],
-          "supportingComponents": [
-            "BottomNav"
-          ],
+          "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
@@ -10815,10 +10818,10 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "BottomNav",
             "NavRail"
           ],
           "supportingComponents": [
-            "BottomNav",
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
@@ -10840,10 +10843,9 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "NavRail"
+            "BottomNav"
           ],
           "supportingComponents": [
-            "BottomNav",
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
@@ -10865,11 +10867,10 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "BottomNav",
             "NavRail"
           ],
-          "supportingComponents": [
-            "BottomNav"
-          ],
+          "supportingComponents": [],
           "reviewNote": "Keep the router hook regression/play coverage hidden or move it to integration docs."
         }
       ],
@@ -16252,9 +16253,11 @@
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationCodes.stories.jsx",
-      "sourceSha256": "40137d9563bf41a4cb15401d04d25af3ed34c7d09f3d97972cff4dd9e92f9add",
-      "primaryOwner": null,
-      "ownerComponents": [],
+      "sourceSha256": "df111c17f6b35c4836c8bf064031b214ec4569cfe8c01f9c08ae7ae89075441e",
+      "primaryOwner": "Robotics Foundation:Codes",
+      "ownerComponents": [
+        "Robotics Foundation:Codes"
+      ],
       "supportingComponents": [],
       "visibility": {
         "public": 2,
@@ -16265,18 +16268,16 @@
         "storyGuideId": "lds-robotics-foundation-codes--overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "df111c17f6b35c4836c8bf064031b214ec4569cfe8c01f9c08ae7ae89075441e",
       "stories": [
         {
           "id": "lds-robotics-foundation-codes--overview",
@@ -16293,10 +16294,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Codes"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-codes--narrow-viewport",
@@ -16313,10 +16317,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Codes"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-codes--codes-visual-parity",
@@ -16332,12 +16339,16 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Codes"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/Facility Glyph",
@@ -16345,11 +16356,13 @@
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationFacilityGlyph.stories.jsx",
       "sourceSha256": "058f691c01cb00d466045db9426ad632ae91a48bf4b75051b201294b7ca177bb",
-      "primaryOwner": "FacilityTransition",
+      "primaryOwner": "Robotics Foundation:Facility Glyph",
       "ownerComponents": [
+        "Robotics Foundation:Facility Glyph"
+      ],
+      "supportingComponents": [
         "FacilityTransition"
       ],
-      "supportingComponents": [],
       "visibility": {
         "public": 2,
         "hidden": 0
@@ -16365,10 +16378,10 @@
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "058f691c01cb00d466045db9426ad632ae91a48bf4b75051b201294b7ca177bb",
       "stories": [
         {
           "id": "lds-robotics-foundation-facility-glyph--overview",
@@ -16384,12 +16397,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Facility Glyph"
+          ],
+          "supportingComponents": [
             "FacilityTransition"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-facility-glyph--states",
@@ -16405,23 +16421,29 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Facility Glyph"
+          ],
+          "supportingComponents": [
             "FacilityTransition"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/Hazard Glyph",
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationHazardGlyph.stories.jsx",
-      "sourceSha256": "53f69355a9e8888dcbc9ded8f486522b76423cc0315da2bb25c926847619db96",
-      "primaryOwner": null,
-      "ownerComponents": [],
+      "sourceSha256": "d60f1540abdf656ba6ee7e730ccb5a1e01a1640b97ccc7f31553781691379eca",
+      "primaryOwner": "Robotics Foundation:Hazard Glyph",
+      "ownerComponents": [
+        "Robotics Foundation:Hazard Glyph"
+      ],
       "supportingComponents": [],
       "visibility": {
         "public": 2,
@@ -16432,18 +16454,16 @@
         "storyGuideId": "lds-robotics-foundation-hazard-glyph--overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "d60f1540abdf656ba6ee7e730ccb5a1e01a1640b97ccc7f31553781691379eca",
       "stories": [
         {
           "id": "lds-robotics-foundation-hazard-glyph--overview",
@@ -16460,10 +16480,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Hazard Glyph"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-hazard-glyph--narrow-viewport",
@@ -16480,10 +16503,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Hazard Glyph"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-hazard-glyph--hazard-glyph-visual-parity",
@@ -16499,26 +16525,32 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Hazard Glyph"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/Marker Pin",
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationMarkerPin.stories.jsx",
-      "sourceSha256": "0eda10e6693dea608423032bcb0386031af44441bf9c9bec7203d21ab6e09227",
-      "primaryOwner": "FacilityTransition",
+      "sourceSha256": "bd7a3551859b05a657d4599645e66b11adf9643743b909b0f8b98ea49200123a",
+      "primaryOwner": "Robotics Foundation:Marker Pin",
       "ownerComponents": [
+        "Robotics Foundation:Marker Pin"
+      ],
+      "supportingComponents": [
         "FacilityTransition",
         "HazardMarker",
         "WaypointMarker"
       ],
-      "supportingComponents": [],
       "visibility": {
         "public": 2,
         "hidden": 1
@@ -16528,18 +16560,16 @@
         "storyGuideId": "lds-robotics-foundation-marker-pin--overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "bd7a3551859b05a657d4599645e66b11adf9643743b909b0f8b98ea49200123a",
       "stories": [
         {
           "id": "lds-robotics-foundation-marker-pin--overview",
@@ -16556,14 +16586,17 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Marker Pin"
+          ],
+          "supportingComponents": [
             "FacilityTransition",
             "HazardMarker",
             "WaypointMarker"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-marker-pin--narrow-viewport",
@@ -16580,14 +16613,17 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Marker Pin"
+          ],
+          "supportingComponents": [
             "FacilityTransition",
             "HazardMarker",
             "WaypointMarker"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-marker-pin--marker-pin-visual-parity",
@@ -16603,50 +16639,50 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "FacilityTransition",
-            "HazardMarker",
-            "WaypointMarker"
+            "Robotics Foundation:Marker Pin"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/Navigation Encoding Tokens",
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationNavigationEncodingTokens.stories.jsx",
-      "sourceSha256": "8d9a65b1b3985c9a8b7c2a3c20546af2f35b40f14995d96e11b4e2bdfd632089",
-      "primaryOwner": "SpatialRegion",
+      "sourceSha256": "08c35b81aaec398ac1d15896a82f98e0043d8162c6719d5f0376b8cfa3354a95",
+      "primaryOwner": "Robotics Foundation:Navigation Encoding Tokens",
       "ownerComponents": [
+        "Robotics Foundation:Navigation Encoding Tokens"
+      ],
+      "supportingComponents": [
         "SpatialRegion",
         "WaypointMarker"
       ],
-      "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-foundation-navigation-encoding-tokens--overview",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 3,
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "08c35b81aaec398ac1d15896a82f98e0043d8162c6719d5f0376b8cfa3354a95",
       "stories": [
         {
           "id": "lds-robotics-foundation-navigation-encoding-tokens--overview",
@@ -16663,13 +16699,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Navigation Encoding Tokens"
+          ],
+          "supportingComponents": [
             "SpatialRegion",
             "WaypointMarker"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-navigation-encoding-tokens--narrow-viewport",
@@ -16686,13 +16725,39 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Navigation Encoding Tokens"
+          ],
+          "supportingComponents": [
             "SpatialRegion",
             "WaypointMarker"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
+        },
+        {
+          "id": "lds-robotics-foundation-navigation-encoding-tokens--current-position-comparison",
+          "name": "시나리오 · 경로·궤적 현재 진행 헤드",
+          "exportName": "CurrentPositionComparison",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Navigation Encoding Tokens"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-navigation-encoding-tokens--encoding-visual-parity",
@@ -16708,24 +16773,27 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "SpatialRegion",
-            "WaypointMarker"
+            "Robotics Foundation:Navigation Encoding Tokens"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/State Badge",
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationStateBadge.stories.jsx",
-      "sourceSha256": "f149b4f74c0bf06106c7646026e21a7f1d9f33c8119edd8ec816b3a9f60e5c82",
-      "primaryOwner": null,
-      "ownerComponents": [],
+      "sourceSha256": "97bdb27a58e02a793062b5a5284ed622f90df3238ff86d647bf21ace0544a116",
+      "primaryOwner": "Robotics Foundation:State Badge",
+      "ownerComponents": [
+        "Robotics Foundation:State Badge"
+      ],
       "supportingComponents": [],
       "visibility": {
         "public": 1,
@@ -16736,18 +16804,16 @@
         "storyGuideId": "lds-robotics-foundation-state-badge--overview",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "97bdb27a58e02a793062b5a5284ed622f90df3238ff86d647bf21ace0544a116",
       "stories": [
         {
           "id": "lds-robotics-foundation-state-badge--overview",
@@ -16764,21 +16830,27 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:State Badge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/Unit Format",
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationUnitFormat.stories.jsx",
-      "sourceSha256": "889c7a1db173be99faba4278e94bd53094a2325a9f47340fc028f27b19d783bf",
-      "primaryOwner": null,
-      "ownerComponents": [],
+      "sourceSha256": "46fbf91660a962f627ff5ab5462da745b2b0955bb16a50a74a3f9417ecb03f8d",
+      "primaryOwner": "Robotics Foundation:Unit Format",
+      "ownerComponents": [
+        "Robotics Foundation:Unit Format"
+      ],
       "supportingComponents": [],
       "visibility": {
         "public": 2,
@@ -16789,18 +16861,16 @@
         "storyGuideId": "lds-robotics-foundation-unit-format--overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "46fbf91660a962f627ff5ab5462da745b2b0955bb16a50a74a3f9417ecb03f8d",
       "stories": [
         {
           "id": "lds-robotics-foundation-unit-format--overview",
@@ -16817,10 +16887,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Unit Format"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-unit-format--narrow-viewport",
@@ -16837,10 +16910,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Unit Format"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-unit-format--unit-format-visual-parity",
@@ -16856,41 +16932,47 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Unit Format"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/Vector Glyph",
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationVectorGlyph.stories.jsx",
-      "sourceSha256": "e58791c227bf158cab99e25b5de91fbc4ceceec55793669ef36580609a27135f",
-      "primaryOwner": null,
-      "ownerComponents": [],
+      "sourceSha256": "6bd5e341ee3fe1f674cf70744f4cac871ba2949e592c97b9418eba9a5bc77145",
+      "primaryOwner": "Robotics Foundation:Vector Glyph",
+      "ownerComponents": [
+        "Robotics Foundation:Vector Glyph"
+      ],
       "supportingComponents": [],
       "visibility": {
-        "public": 3,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-foundation-vector-glyph--overview",
-        "describedPublicStories": 3,
-        "publicStoriesWithCanvasGuidance": 3,
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
       "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "6bd5e341ee3fe1f674cf70744f4cac871ba2949e592c97b9418eba9a5bc77145",
       "stories": [
         {
           "id": "lds-robotics-foundation-vector-glyph--overview",
@@ -16907,10 +16989,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Vector Glyph"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-vector-glyph--narrow-viewport",
@@ -16927,30 +17012,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
-        },
-        {
-          "id": "lds-robotics-foundation-vector-glyph--current-position-comparison",
-          "name": "현재 진행 방향 · line-integrated",
-          "exportName": "CurrentPositionComparison",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Vector Glyph"
           ],
-          "role": "scenario",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-foundation-vector-glyph--vector-glyph-visual-parity",
@@ -16966,24 +17034,30 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Robotics Foundation:Vector Glyph"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, real consumers, public role order, use/avoid guidance, normal/320px examples, play contracts, and visual evidence after source-accuracy corrections."
     },
     {
       "title": "LDS Robotics/Foundation/Viewer Tokens",
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationViewerTokens.stories.jsx",
-      "sourceSha256": "242ccbca86fa76255a2cd6afac44598a1c21420cd0ab95299ec4d82234cc8ebe",
-      "primaryOwner": "ViewerFrame",
+      "sourceSha256": "a8a99ed7ca13b75e71073e8d99daf6f0462647431e6ca094ffeb66f2a319c152",
+      "primaryOwner": "Robotics Foundation:Viewer Tokens",
       "ownerComponents": [
+        "Robotics Foundation:Viewer Tokens"
+      ],
+      "supportingComponents": [
         "ViewerFrame"
       ],
-      "supportingComponents": [],
       "visibility": {
         "public": 2,
         "hidden": 1
@@ -16993,18 +17067,16 @@
         "storyGuideId": "lds-robotics-foundation-viewer-tokens--overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:41:47.8726699Z",
+      "reviewedSourceSha256": "a8a99ed7ca13b75e71073e8d99daf6f0462647431e6ca094ffeb66f2a319c152",
       "stories": [
         {
           "id": "lds-robotics-foundation-viewer-tokens--overview",
@@ -17021,12 +17093,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Viewer Tokens"
+          ],
+          "supportingComponents": [
             "ViewerFrame"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed the owner, role, public order, component-qualified tone semantics, content-driven frame sizing, and direct content-boundary play evidence."
         },
         {
           "id": "lds-robotics-foundation-viewer-tokens--narrow-viewport",
@@ -17043,12 +17118,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Foundation:Viewer Tokens"
+          ],
+          "supportingComponents": [
             "ViewerFrame"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed the responsive role and measured the 320px frame with 51px of unclipped content clearance under the direct boundary assertion."
         },
         {
           "id": "lds-robotics-foundation-viewer-tokens--viewer-tokens-visual-parity",
@@ -17064,14 +17142,16 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "ViewerFrame"
+            "Robotics Foundation:Viewer Tokens"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-foundation human review confirmed hidden visual-parity ownership and the same unclipped content-boundary contract as the overview."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed the atom owner, component-qualified tone mappings, public role order, use/avoid guidance, and measured normal/320px rendering after correcting the ViewerFrame overflow false-negative."
     },
     {
       "title": "LDS Robotics/Navigation/Annotation Layer",
@@ -17109,8 +17189,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "46751f505c9abca3ba6997de6974b54c75e53c92e76d16225c4354e75213171f",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "dc4926f034c3eb3e604d66692800c01f488f411f7d7cc5f65fea970335ef3ca4",
       "stories": [
         {
           "id": "lds-robotics-navigation-annotation-layer--annotation-layer-overview",
@@ -17140,7 +17220,8 @@
             "SpatialRegion",
             "TrajectoryOverlay",
             "WaypointMarker"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-annotation-layer--cross-entity-label-collisions",
@@ -17167,7 +17248,8 @@
             "Map2DCanvas",
             "RouteOverlay",
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-annotation-layer--label-suppression-priority",
@@ -17192,7 +17274,8 @@
           "supportingComponents": [
             "Map2DCanvas",
             "WaypointMarker"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-annotation-layer--no-provider-baseline",
@@ -17205,7 +17288,7 @@
             "play-fn",
             "test"
           ],
-          "role": "scenario",
+          "role": "variants-states",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
@@ -17219,7 +17302,8 @@
             "Map2DCanvas",
             "RouteOverlay",
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-annotation-layer--narrow-width",
@@ -17244,7 +17328,8 @@
           "supportingComponents": [
             "FacilityTransition",
             "Map2DCanvas"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-annotation-layer--navigation-annotation-visual-parity",
@@ -17265,9 +17350,11 @@
           "ownerComponents": [
             "NavigationAnnotationLayer"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Navigation/Facility Transition",
@@ -17301,8 +17388,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "20f4c235b17b3a67301823f8f14aee3a34d869944096a8b692c1af958b4d496d",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "db4baa65a0ae15aacb04762c19e70fb00e482b0a431b334a64fdd23345c26d1d",
       "stories": [
         {
           "id": "lds-robotics-navigation-facility-transition--facility-transition-overview",
@@ -17328,7 +17415,7 @@
             "Map2DCanvas",
             "SpatialRegion"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-facility-transition--availability-and-source-states",
@@ -17353,7 +17440,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-facility-transition--validation-and-focus-states",
@@ -17378,7 +17465,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-facility-transition--interaction-and-map-filtering",
@@ -17404,7 +17491,7 @@
             "Map2DCanvas",
             "NavigationAnnotationLayer"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-facility-transition--narrow-width",
@@ -17429,7 +17516,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-facility-transition--facility-transition-visual-parity",
@@ -17451,17 +17538,17 @@
             "FacilityTransition"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 normal, narrow, source, and availability states reviewed; hidden regression evidence confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-13 re-reviewed after navigation state glyph, compound state, pointer-only, screen-space focus, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Navigation/Hazard Marker",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationHazardMarker.stories.jsx",
-      "sourceSha256": "fa18fddab3c6a3ddb08c7e77c02b499c2de3998caf2a8ae22fd31a512ebb80da",
+      "sourceSha256": "ff31cddf02c9c1bff0ef413bc8f2bd47fd8956f160994f5fe2f4c3a276b5c36c",
       "primaryOwner": "HazardMarker",
       "ownerComponents": [
         "HazardMarker"
@@ -17482,10 +17569,10 @@
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "ff31cddf02c9c1bff0ef413bc8f2bd47fd8956f160994f5fe2f4c3a276b5c36c",
       "stories": [
         {
           "id": "lds-robotics-navigation-hazard-marker--overview",
@@ -17502,16 +17589,17 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "HazardMarker"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-hazard-marker--states",
-          "name": "상호작용 · 선택과 포커스",
+          "name": "변형·상태 · 선택·포커스·비활성",
           "exportName": "States",
           "visibility": "public",
           "tags": [
@@ -17520,16 +17608,17 @@
             "play-fn",
             "test"
           ],
-          "role": "interaction",
+          "role": "variants-states",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "HazardMarker"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-hazard-marker--narrow-viewport",
@@ -17546,12 +17635,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "HazardMarker"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-hazard-marker--hazard-marker-visual-parity",
@@ -17567,14 +17657,16 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "HazardMarker"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Navigation/Lane",
@@ -17607,8 +17699,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "4651d4b9418dca576c547fa6cd4038a9ea94d6d590819fc2689db216deb3af17",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "510daf97fd494197e964babe369b7da51ce274ff51b0698921b775abcecdddc1",
       "stories": [
         {
           "id": "lds-robotics-navigation-lane--lane-overview",
@@ -17633,7 +17725,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-dark-compound-states",
@@ -17658,7 +17750,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-short-path-compound-states",
@@ -17683,7 +17775,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-states-and-constraints",
@@ -17708,7 +17800,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-selection-and-activation",
@@ -17733,7 +17825,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-pointer-only-and-geometry-guard",
@@ -17758,7 +17850,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-narrow-320",
@@ -17784,7 +17876,7 @@
             "Button",
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-lane--lane-visual-parity",
@@ -17806,10 +17898,10 @@
             "LaneOverlay"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 normal, narrow, selection, disabled, and constraint states reviewed; hidden regression evidence confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-13 re-reviewed after endpoint composition, screen-normal labels/states, 35px target, pointer-only, invalid geometry, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Navigation/Regions",
@@ -17841,8 +17933,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "e8c408a40fe6b891530d4a516ca44e5e85b5828b13e9665b0a24a2d7cd393a04",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "0682cff8d3ffc443d5206fdce0806744b1a72b28a5e7aa546d0ea6bf57c770a3",
       "stories": [
         {
           "id": "lds-robotics-navigation-regions--spatial-region-overview",
@@ -17867,7 +17959,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-regions--dark-patterns-and-states",
@@ -17891,7 +17983,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-regions--concave-geometry-and-compound-states",
@@ -17916,7 +18008,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-regions--interaction-and-map-filtering",
@@ -17941,7 +18033,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-regions--narrow-width",
@@ -17966,7 +18058,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-regions--spatial-region-visual-parity",
@@ -17988,10 +18080,10 @@
             "SpatialRegion"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 normal, narrow, dark, and pattern states reviewed; hidden regression evidence confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-13 re-reviewed after concave polygon anchoring, compound states, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Navigation/Route",
@@ -18023,10 +18115,10 @@
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "1fe97b208606e502b8d0f7916f106e2c4214f909d0c90e93f3ef6b4f75cbd231",
       "stories": [
         {
           "id": "lds-robotics-navigation-route--route-and-trajectory-overview",
@@ -18043,14 +18135,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-route--multi-floor-filtering",
@@ -18067,15 +18160,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
             "SegmentedControl",
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-route--route-and-trajectory-states",
@@ -18092,14 +18186,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-route--short-path-compound-markers",
@@ -18116,15 +18211,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
             "NavigationAnnotationLayer",
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-route--path-selection-and-activation",
@@ -18141,14 +18237,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-route--route-and-trajectory-narrow-320",
@@ -18165,14 +18262,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "RouteOverlay"
           ],
           "supportingComponents": [
             "TrajectoryOverlay"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-route--route-trajectory-visual-parity",
@@ -18188,21 +18286,23 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "RouteOverlay"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Navigation/Trajectory",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationTrajectory.stories.jsx",
-      "sourceSha256": "6b0db6f6ff3d00c8865142ed179db67ce21c443401b5a641319a4189112b899e",
+      "sourceSha256": "1652cb64d1ae4f2ebf96881ef6f4b155e6e08fae3d2a8f8d665a801e33dc4be9",
       "primaryOwner": "TrajectoryOverlay",
       "ownerComponents": [
         "TrajectoryOverlay"
@@ -18217,18 +18317,16 @@
         "storyGuideId": "lds-robotics-navigation-trajectory--overview",
         "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "1652cb64d1ae4f2ebf96881ef6f4b155e6e08fae3d2a8f8d665a801e33dc4be9",
       "stories": [
         {
           "id": "lds-robotics-navigation-trajectory--overview",
@@ -18245,12 +18343,36 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "TrajectoryOverlay"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
+        },
+        {
+          "id": "lds-robotics-navigation-trajectory--statuses",
+          "name": "변형·상태 · 궤적 수명주기와 데이터 상태",
+          "exportName": "Statuses",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TrajectoryOverlay"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-trajectory--narrow-viewport",
@@ -18267,34 +18389,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "TrajectoryOverlay"
           ],
-          "supportingComponents": []
-        },
-        {
-          "id": "lds-robotics-navigation-trajectory--statuses",
-          "name": "상태",
-          "exportName": "Statuses",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [
-            "TrajectoryOverlay"
-          ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-trajectory--trajectory-visual-parity",
@@ -18310,21 +18411,23 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "TrajectoryOverlay"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Navigation/Waypoint",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationWaypoint.stories.jsx",
-      "sourceSha256": "8d4dc342412baebccc3e5cfe5d6d8f58816764e1e60a0bf7723900d3ea7b1721",
+      "sourceSha256": "0fbb89208b1fc235fc0cd08385d8aff8949e38139fa51df8ab46a77100703ace",
       "primaryOwner": "WaypointMarker",
       "ownerComponents": [
         "WaypointMarker"
@@ -18349,8 +18452,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "022d0529208da0d1528a97a0d12ed96b3ab7916cdb9b7cc7e1dfdbd2396ca6b3",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "0fbb89208b1fc235fc0cd08385d8aff8949e38139fa51df8ab46a77100703ace",
       "stories": [
         {
           "id": "lds-robotics-navigation-waypoint--overview",
@@ -18375,7 +18478,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-waypoint--light-and-dark",
@@ -18400,7 +18503,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-waypoint--compound-roles-and-states",
@@ -18425,7 +18528,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-waypoint--selection-sync",
@@ -18442,14 +18545,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "WaypointMarker"
           ],
           "supportingComponents": [
             "Map2DCanvas"
-          ]
+          ],
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-waypoint--pointer-only-map-fragment",
@@ -18474,7 +18578,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-13 Navigation UI re-review covered SVG state glyph provenance, optical center/inset, compound-state hierarchy, pointer-only semantics, normal/dark/320px rendering, and targeted Storybook play/Axe; public ownership, role, visibility, and keep disposition remain valid."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-waypoint--zoom-and-hit-area",
@@ -18497,7 +18601,7 @@
             "WaypointMarker"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-waypoint--narrow-width",
@@ -18522,7 +18626,7 @@
           "supportingComponents": [
             "Map2DCanvas"
           ],
-          "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-navigation-waypoint--waypoint-visual-parity",
@@ -18544,10 +18648,10 @@
             "WaypointMarker"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 normal, narrow, light/dark, compound, disabled, and hit-area states reviewed; hidden regression evidence confirmed."
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-13 re-reviewed after shared SVG state glyphs, compound unknown/invalid layout, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Status/Battery Gauge",
@@ -18633,8 +18737,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "d4a3a12def63b5530bc2be5964732aa81329f9f4add4c16ee83139f19b6a70a3",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "00b10647440a946ecabbdd3812fb94cd52abefd9a669c3a4b077b2d7ec62c21e",
       "stories": [
         {
           "id": "lds-robotics-status-connection-badge--connection-badges",
@@ -18657,7 +18761,7 @@
             "ConnectionBadge"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-status-connection-badge--connection-badge-card",
@@ -18679,10 +18783,10 @@
             "ConnectionBadge"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "운영자용 3단 헤더(오버라인+제목+사용 기준)와 스토리별 목적 설명 추가(Robotics 레이어 계약). Delegated review, 2026-07-12."
+      "reviewNote": "2026-07-19 human re-review confirmed fresh Storybook names/order, source roles, focused play contracts, and current normal/narrow examples for the Product and Robotics status pages."
     },
     {
       "title": "LDS Robotics/Status/Equipment State",
@@ -18716,8 +18820,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Robotics contract; keep this page and document prerequisites, safety boundaries, and recovery.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "6335d492d697e07c3da8d0b4830d3bb5238a0f59ac7928c5f1794fd66a5d8fcc",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "cf56e79e244120b3c4e403bd122ebe621a6ae21307d780a28c833986e1b23b21",
       "stories": [
         {
           "id": "lds-robotics-status-equipment-state--equipment-state",
@@ -18743,7 +18847,7 @@
             "ConnectionBadge",
             "Icon"
           ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-status-equipment-state--responsive-hierarchy",
@@ -18768,7 +18872,8 @@
             "Button",
             "ConnectionBadge",
             "Icon"
-          ]
+          ],
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-status-equipment-state--equipment-status-card-card",
@@ -18790,10 +18895,10 @@
             "EquipmentStatusCard"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-16 re-reviewed after robotics navigation redesign merge: page visually swept in Storybook (overview/state/interaction/narrow, light+dark) during the 2026-07-16 inspection; dispositions unchanged."
+      "reviewNote": "2026-07-19 human re-review confirmed fresh Storybook names/order, source roles, focused play contracts, and current normal/narrow examples for the Product and Robotics status pages."
     },
     {
       "title": "LDS Robotics/Status/Robot State",
@@ -19535,9 +19640,12 @@
       "layer": "Robotics",
       "family": "Viewer",
       "importPath": "./stories/RoboticsViewerNavigationViewer.stories.jsx",
-      "sourceSha256": "ae72cb06c409df13b4f3b13b1f582ce8c6f233328e31b1854e572154d2a4580f",
-      "primaryOwner": "SpatialRegion",
+      "sourceSha256": "bd9769ca3ddca5f0300620a85a57a16fc9217f4de9ce203b654e1f67981abe43",
+      "primaryOwner": "Robotics Viewer:Navigation Viewer",
       "ownerComponents": [
+        "Robotics Viewer:Navigation Viewer"
+      ],
+      "supportingComponents": [
         "FacilityTransition",
         "LaneOverlay",
         "LayerPanel",
@@ -19549,7 +19657,6 @@
         "TrajectoryOverlay",
         "WaypointMarker"
       ],
-      "supportingComponents": [],
       "visibility": {
         "public": 2,
         "hidden": 0
@@ -19559,18 +19666,16 @@
         "storyGuideId": "lds-robotics-viewer-navigation-viewer--overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-18T23:31:17.902Z",
+      "reviewedSourceSha256": "bd9769ca3ddca5f0300620a85a57a16fc9217f4de9ce203b654e1f67981abe43",
       "stories": [
         {
           "id": "lds-robotics-viewer-navigation-viewer--overview",
@@ -19587,9 +19692,12 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Viewer:Navigation Viewer"
+          ],
+          "supportingComponents": [
             "FacilityTransition",
             "LaneOverlay",
             "LayerPanel",
@@ -19601,7 +19709,7 @@
             "TrajectoryOverlay",
             "WaypointMarker"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
           "id": "lds-robotics-viewer-navigation-viewer--narrow-viewport",
@@ -19618,9 +19726,12 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Robotics Viewer:Navigation Viewer"
+          ],
+          "supportingComponents": [
             "FacilityTransition",
             "LaneOverlay",
             "LayerPanel",
@@ -19632,9 +19743,10 @@
             "TrajectoryOverlay",
             "WaypointMarker"
           ],
-          "supportingComponents": []
+          "reviewNote": "2026-07-19 robotics-navigation human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-19 human re-review confirmed navigation ownership, public role order, normal/320px hierarchy, interaction/play contracts, and current visual evidence after Hazard, Waypoint, Trajectory, and Viewer corrections."
     },
     {
       "title": "LDS Robotics/Viewer/Toolbar",
@@ -20303,11 +20415,13 @@
       "family": "Status",
       "importPath": "./stories/ThemeBrandSpinner.stories.jsx",
       "sourceSha256": "6dcd474af5f8671d198bb1be07b503b039f8068a4d864f9b22bdc81763393180",
-      "primaryOwner": "Spinner",
+      "primaryOwner": "Theme:Brand Spinner",
       "ownerComponents": [
+        "Theme:Brand Spinner"
+      ],
+      "supportingComponents": [
         "Spinner"
       ],
-      "supportingComponents": [],
       "visibility": {
         "public": 1,
         "hidden": 0
@@ -20345,9 +20459,11 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
+            "Theme:Brand Spinner"
+          ],
+          "supportingComponents": [
             "Spinner"
           ],
-          "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         }
       ],
