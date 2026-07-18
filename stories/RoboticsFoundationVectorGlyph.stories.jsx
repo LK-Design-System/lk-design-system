@@ -1,22 +1,23 @@
 import React from 'react';
-import { NAVIGATION_DIRECTION_PATH } from '../components/robotics/_navigationVectorGlyph.js';
-import { NAV_PROGRESS_HEAD } from '../components/robotics/_navigationVocabulary.js';
-import { NavigationProgressHeadDefs } from '../components/robotics/_navigationProgressHead.js';
+import { NAV_DIRECTION_CHEVRON, NAV_PROGRESS_TRIANGLE, NAV_ROBOT_POSE } from '../components/robotics/_navigationVectorGlyph.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
-// Renders the shared direction chevron where it actually appears — on a route's
-// segments, rotated to each segment's travel direction — straight from the
-// _navigationVectorGlyph constant, so the catalog is the atom in context. The
-// play-test asserts every rendered path equals NAVIGATION_DIRECTION_PATH.
-// (The lane endpoint-orientation arrow is LaneOverlay-local, not a shared atom,
-// so it is documented on the lane renderer rather than promoted here.)
+// Documents the three navigation vector-glyph atoms — one shape per meaning,
+// side by side so the contract is self-enforcing: the line-cut direction
+// chevron (static Lane travel direction — the line folds into an open V), the
+// solid progress dart (dynamic Route/Trajectory current position), and the
+// robot pose (round body + heading nose — the circle is what keeps a robot
+// from ever reading as a path arrow). The dart's attachment contract
+// (NAV_PROGRESS_HEAD) stays owned by Navigation Encoding Tokens; this page owns
+// the raw geometry of all three.
 const INK = 'var(--color-semantic-label-strong)';
 const MUTED = 'var(--color-semantic-label-neutral)';
 const LINE = 'var(--color-semantic-line-normal-normal)';
 const SURFACE = 'var(--color-semantic-background-elevated-normal)';
 const ACCENT = 'var(--viewer-accent, var(--color-semantic-primary-normal))';
 const PATHINK = 'var(--color-semantic-label-alternative)';
-const ROUTE_TONE = 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))';
+
+const RETIRED_OPEN_CHEVRON_PATH = 'M -14 -6.5 L 0 0 L -14 6.5';
 
 function Card({ title, hint, children }) {
   return (
@@ -62,269 +63,103 @@ function Frame({ children, caption, mono }) {
   );
 }
 
-// A route that bends through two turns; one filled chevron sits at each segment
-// midpoint rotated to that segment's travel direction — exactly how the route,
-// lane, and trajectory renderers place NAVIGATION_DIRECTION_PATH. Middle segment
-// (120,104)->(196,58) runs about -31 deg.
-function DirectionOnPath() {
+// LaneOverlay cuts the line on the midpoint of the longest straight run and
+// folds it into an open V — the demo path's diagonal: midpoint (158, 81),
+// tangent -31.19°. The specimen mirrors the component exactly: full line +
+// surface cut window + chevron in the line's own tone and width.
+function DirectionChevronOnPath() {
   return (
-    <svg width="100%" viewBox="0 0 316 140" role="img" aria-label="경로 세그먼트 중점의 진행 방향 셰브론" style={{ display: 'block' }}>
-      <path d="M36 104 H120 L196 58 H280" fill="none" stroke={PATHINK} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="36" cy="104" r="4.5" fill={SURFACE} stroke={PATHINK} strokeWidth="2" />
-      <circle cx="280" cy="58" r="4.5" fill={SURFACE} stroke={PATHINK} strokeWidth="2" />
-      <path d={NAVIGATION_DIRECTION_PATH} transform="translate(78 104) scale(1.9)" fill={ACCENT} data-vector-glyph="direction" />
-      <path d={NAVIGATION_DIRECTION_PATH} transform="translate(158 81) rotate(-31) scale(1.9)" fill={ACCENT} data-vector-glyph="direction" />
-      <path d={NAVIGATION_DIRECTION_PATH} transform="translate(238 58) scale(1.9)" fill={ACCENT} data-vector-glyph="direction" />
-    </svg>
-  );
-}
-
-const PROGRESS_HEAD_REFERENCES = [
-  {
-    label: 'Mapbox Navigation · Route arrow',
-    href: 'https://docs.mapbox.com/android/navigation/guides/ui-components/route-arrow/',
-  },
-  {
-    label: 'TomTom · Route progress and instructions',
-    href: 'https://developer.tomtom.com/navigation/android/guides/map-display/map-display-for-views/routes',
-  },
-  {
-    label: 'W3C SVG · Path markers',
-    href: 'https://www.w3.org/TR/svg-markers/',
-  },
-];
-
-const PROGRESS_HEAD_STYLES = {
-  open: {
-    label: 'Line-integrated open progress head',
-    note: 'active path 자체가 shaft이고 끝점에 열린 V만 marker-end로 붙습니다. Route와 Trajectory가 공유하는 확정된 현재 진행 문법입니다.',
-  },
-};
-
-function ProgressHeadMarkerDefs({ idPrefix, scale = 1 }) {
-  return (
-    <>
-      <NavigationProgressHeadDefs idPrefix={`${idPrefix}-route`} tone={ROUTE_TONE} surface={SURFACE} inverseScale={scale} role="route" />
-      <NavigationProgressHeadDefs idPrefix={`${idPrefix}-trajectory`} tone={ACCENT} surface={SURFACE} inverseScale={scale} role="trajectory" />
-    </>
-  );
-}
-
-function ProgressHeadSpecimen({ kind }) {
-  const idPrefix = `progress-specimen-${kind}`;
-  return (
-    <svg
-      width="148"
-      height="52"
-      viewBox="0 0 148 52"
-      role="img"
-      aria-label={`${PROGRESS_HEAD_STYLES[kind].label} 확대 표본`}
-      style={{ display: 'block', flex: '0 0 auto' }}
-    >
-      <ProgressHeadMarkerDefs idPrefix={idPrefix} />
-      <line x1="8" y1="16" x2="66" y2="16" stroke={SURFACE} strokeWidth="7" strokeLinecap="round" markerEnd={`url(#${idPrefix}-route-casing)`} />
-      <line x1="8" y1="16" x2="66" y2="16" stroke={ROUTE_TONE} strokeWidth="4" strokeLinecap="round" markerEnd={`url(#${idPrefix}-route-core)`} />
-      <line x1="76" y1="36" x2="136" y2="36" stroke={SURFACE} strokeWidth="6.5" strokeLinecap="round" markerEnd={`url(#${idPrefix}-trajectory-casing)`} />
-      <line x1="76" y1="36" x2="136" y2="36" stroke={ACCENT} strokeWidth="3.5" strokeLinecap="round" markerEnd={`url(#${idPrefix}-trajectory-core)`} />
-    </svg>
-  );
-}
-
-function ProgressHeadScene({ headStyle }) {
-  const svgRef = React.useRef(null);
-  const [headScale, setHeadScale] = React.useState(1);
-  const gridId = `progress-head-grid-${headStyle}`;
-  const markerId = `progress-scene-${headStyle}`;
-
-  React.useLayoutEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return undefined;
-    const updateHeadScale = () => {
-      const width = svg.getBoundingClientRect().width;
-      if (width > 0) setHeadScale(720 / width);
-    };
-    updateHeadScale();
-    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(updateHeadScale);
-    observer?.observe(svg);
-    window.addEventListener('resize', updateHeadScale);
-    return () => {
-      observer?.disconnect();
-      window.removeEventListener('resize', updateHeadScale);
-    };
-  }, []);
-
-  return (
-    <svg
-      ref={svgRef}
-      width="100%"
-      viewBox="0 0 720 250"
-      role="img"
-      aria-label={`${PROGRESS_HEAD_STYLES[headStyle].label}, active line과 결합한 Route 62% 및 Trajectory 현재 sample`}
-      style={{ display: 'block' }}
-      data-progress-head-scene={headStyle}
-    >
+    <svg width="100%" viewBox="0 0 316 140" role="img" aria-label="레인 최장 직선 구간 중점의 선 절개 이동 방향 셰브론" style={{ display: 'block' }}>
       <defs>
-        <pattern id={gridId} width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M40 0H0V40" fill="none" stroke={LINE} strokeWidth="0.75" opacity="0.55" />
-        </pattern>
+        <mask id="vector-glyph-direction-cut" maskUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="316" height="140" fill="white" />
+          <g transform="translate(158 81) rotate(-31.19)">
+            <rect
+              data-direction-chevron-window=""
+              x={NAV_DIRECTION_CHEVRON.window.from}
+              y={-NAV_DIRECTION_CHEVRON.window.clearWidth / 2}
+              width={NAV_DIRECTION_CHEVRON.window.to - NAV_DIRECTION_CHEVRON.window.from}
+              height={NAV_DIRECTION_CHEVRON.window.clearWidth}
+              fill="black"
+            />
+          </g>
+        </mask>
       </defs>
-      <ProgressHeadMarkerDefs idPrefix={markerId} scale={headScale} />
-      <rect x="0.5" y="0.5" width="719" height="249" rx="12" fill="var(--color-semantic-background-normal-normal)" stroke={LINE} />
-      <rect x="1" y="1" width="718" height="248" rx="12" fill={`url(#${gridId})`} />
-
-      <text x="24" y="32" fill={INK} style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
-        Route / Trajectory · active line + progress head
-      </text>
-
       <path
-        d="M48 176 L192 176 L316 92 L672 68"
+        data-direction-chevron-demo-line=""
+        d="M36 104 H120 L196 58 H280"
         fill="none"
-        stroke={SURFACE}
-        strokeWidth="6.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M48 176 L192 176 L316 92 L672 68"
-        fill="none"
-        stroke={ROUTE_TONE}
-        strokeWidth="3"
-        strokeDasharray="8 6"
-        opacity="0.34"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        data-route-path=""
-      />
-      <path
-        d="M48 176 L192 176 L316 92 L508 79"
-        fill="none"
-        stroke={SURFACE}
-        strokeWidth="7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        markerEnd={`url(#${markerId}-route-casing)`}
-      />
-      <path
-        d="M48 176 L192 176 L316 92 L508 79"
-        fill="none"
-        stroke={ROUTE_TONE}
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        data-route-progress-path=""
-        data-progress-head={headStyle}
-        data-head-role="route"
-        data-screen-fixed="true"
-        data-head-rendering="marker-end"
-        markerEnd={`url(#${markerId}-route-core)`}
-      />
-      <path
-        d="M48 202 C188 202 250 190 346 136 S522 91 672 88"
-        fill="none"
-        stroke={SURFACE}
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-      />
-      <path
-        d="M48 202 C188 202 250 190 346 136 S522 91 672 88"
-        fill="none"
-        stroke={ACCENT}
-        strokeWidth="2.5"
-        opacity="0.28"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        data-trajectory-path=""
-      />
-      <path
-        d="M48 202 C188 202 250 190 346 136"
-        fill="none"
-        stroke={SURFACE}
-        strokeWidth="6.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        markerEnd={`url(#${markerId}-trajectory-casing)`}
-      />
-      <path
-        d="M48 202 C188 202 250 190 346 136"
-        fill="none"
-        stroke={ACCENT}
+        stroke={PATHINK}
         strokeWidth="3.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
-        data-trajectory-progress-path=""
-        data-progress-head={headStyle}
-        data-head-role="trajectory"
-        data-screen-fixed="true"
-        data-head-rendering="marker-end"
-        markerEnd={`url(#${markerId}-trajectory-core)`}
+        mask="url(#vector-glyph-direction-cut)"
       />
-
-      <g transform="translate(24 226)" aria-hidden="true">
-        <line x1="0" y1="0" x2="30" y2="0" stroke={ROUTE_TONE} strokeWidth="4" />
-        <text x="40" y="4" fill={INK} style={{ fontFamily: 'var(--font-sans)', fontSize: 11 }}>Route · 진행 62%</text>
-        <line x1="190" y1="0" x2="220" y2="0" stroke={ACCENT} strokeWidth="3.5" />
-        <text x="230" y="4" fill={INK} style={{ fontFamily: 'var(--font-sans)', fontSize: 11 }}>Trajectory · current sample</text>
+      <circle cx="36" cy="104" r="4.5" fill={SURFACE} stroke={PATHINK} strokeWidth="2" />
+      <circle cx="280" cy="58" r="4.5" fill={SURFACE} stroke={PATHINK} strokeWidth="2" />
+      <g
+        data-direction-chevron-specimen=""
+        data-navigation-direction-chevron="lane-direction"
+        data-anchor-rule="longest-segment-midpoint"
+        transform="translate(158 81) rotate(-31.19)"
+      >
+        <path
+          data-direction-chevron-geometry=""
+          d={NAV_DIRECTION_CHEVRON.path}
+          fill="none"
+          stroke={PATHINK}
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </g>
     </svg>
   );
 }
 
-function ProgressHeadCandidate({ headStyle }) {
-  const style = PROGRESS_HEAD_STYLES[headStyle];
+// The progress triangle atom alone: a solid tip-anchored arrowhead. Its
+// line-attachment contract (marker-end, elapsed shaft, future gap) is owned by
+// Navigation Encoding Tokens as NAV_PROGRESS_HEAD.
+function ProgressTriangleSpecimen() {
   return (
-    <section
-      style={{
-        display: 'grid',
-        gap: 12,
-        padding: 14,
-        border: `1px solid ${LINE}`,
-        borderRadius: 'var(--radius-sm)',
-        background: SURFACE,
-      }}
-    >
-      <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-        <div style={{ minWidth: 0, flex: '1 1 360px' }}>
-          <h3 style={{ margin: 0, color: INK, fontSize: 'var(--body2-size)' }}>{style.label}</h3>
-          <p style={{ margin: '4px 0 0', color: MUTED, fontSize: 11, lineHeight: 1.6 }}>{style.note}</p>
-        </div>
-        <ProgressHeadSpecimen kind={headStyle} />
-      </header>
-      <ProgressHeadScene headStyle={headStyle} />
-    </section>
+    <svg width="100%" viewBox="0 0 316 96" role="img" aria-label="진행 표식용 채움 삼각형 기하" style={{ display: 'block' }}>
+      <path d="M56 48 H180" fill="none" stroke={ACCENT} strokeWidth="4" strokeLinecap="round" />
+      <g
+        data-progress-triangle-specimen=""
+        transform="translate(188 48)"
+      >
+        <path
+          data-progress-triangle-geometry=""
+          d={NAV_PROGRESS_TRIANGLE.path}
+          fill={ACCENT}
+          stroke={SURFACE}
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+      </g>
+      <path d="M214 48 H268" fill="none" stroke={ACCENT} strokeWidth="3" strokeLinecap="round" opacity="0.3" />
+    </svg>
   );
 }
 
-function CurrentPositionComparisonDemo() {
+// The robot pose atom: a round footprint body + heading nose. The CIRCLE is the
+// differentiator — neither the chevron nor the dart carries a body, so a robot
+// never reads as a path arrow. Rendered here from the same NAV_ROBOT_POSE the
+// RobotMarker renderer uses (surface casing halo under the marker-tone fill).
+function RobotPoseSpecimen() {
+  const nose = NAV_ROBOT_POSE.nosePath;
+  const r = NAV_ROBOT_POSE.bodyRadius;
   return (
-    <main data-progress-head-standard style={{ width: 'min(980px, 100%)', display: 'grid', gap: 16 }}>
-      <Card
-        title="현재 진행 방향 · line-integrated standard"
-        hint="별도 puck을 경로 위에 얹지 않습니다. 현재 지점까지의 active line이 local tangent를 따라 open V로 끝나는 확정 문법입니다."
-      >
-        <div style={{ display: 'grid', gap: 14, minWidth: 0 }}>
-          <ProgressHeadCandidate headStyle="open" />
-        </div>
-        <p style={{ margin: 0, color: MUTED, fontSize: 11, lineHeight: 1.6 }}>
-          progress head의 방향은 robot bearing이 아니라 경로 접선입니다. pose가 필요하면 별도 robot/avatar layer가 맡고, 이 표식에는 circle·backing·shadow를 사용하지 않습니다.
-        </p>
-        <nav data-progress-head-references aria-label="경로 진행 화살표 시각 레퍼런스" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 12px' }}>
-          {PROGRESS_HEAD_REFERENCES.map((reference) => (
-            <a key={reference.href} href={reference.href} target="_blank" rel="noreferrer" style={{ color: ACCENT, fontSize: 11, fontWeight: 'var(--fw-semibold)' }}>
-              {reference.label}
-            </a>
-          ))}
-        </nav>
-      </Card>
-    </main>
+    <svg width="100%" viewBox="0 0 316 96" role="img" aria-label="로봇 pose용 원형 body와 heading 노즈 기하" style={{ display: 'block' }}>
+      <g data-robot-pose-specimen="" transform="translate(158 48) scale(2.4) rotate(-25)">
+        {/* casing halo */}
+        <path d={nose} fill={SURFACE} stroke={SURFACE} strokeWidth={NAV_ROBOT_POSE.casingWidth * 2} strokeLinejoin="round" />
+        <circle r={r} fill={SURFACE} stroke={SURFACE} strokeWidth={NAV_ROBOT_POSE.casingWidth * 2} />
+        {/* body tone */}
+        <path data-robot-pose-nose="" d={nose} fill={ACCENT} strokeLinejoin="round" />
+        <circle data-robot-pose-body="" r={r} fill={ACCENT} />
+      </g>
+    </svg>
   );
 }
 
@@ -332,12 +167,37 @@ function VectorGlyphCatalog() {
   return (
     <main data-vector-glyph-catalog style={{ width: 'min(880px, 100%)', display: 'grid', gap: 16 }}>
       <Card
-        title="이동 방향 셰브론 — 경로 위"
-        hint="차선·경로·궤적이 경로 위에 공통으로 얹는 진행(heading) 표식입니다. 무게중심이 로컬 원점이라 회전만으로 각 세그먼트의 방향을 가리키며, 값은 NAVIGATION_DIRECTION_PATH에서 그대로 렌더됩니다."
+        title="선 절개 이동 방향 셰브론 — 레인 위"
+        hint="LaneOverlay가 최장 직선 구간의 중점에 한 번 배치하는 정적 방향 표식입니다. 선을 짧게 끊고 그 자리에서 선 자체가 같은 색·같은 두께의 열린 V로 꺾이므로, 별도 배지나 부풀림 없이 선 그 자체가 화살표로 읽힙니다. 기하는 NAV_DIRECTION_CHEVRON이 단일 소스로 소유합니다."
       >
-        <Frame caption="꺾이는 세그먼트마다 진행 방향" mono="NAVIGATION_DIRECTION_PATH">
-          <DirectionOnPath />
+        <Frame caption="레인 경로에 한 번 나타나는 이동 방향" mono="NAV_DIRECTION_CHEVRON">
+          <DirectionChevronOnPath />
         </Frame>
+        <p style={{ margin: 0, color: MUTED, fontSize: 11, lineHeight: 1.6 }}>
+          사용 기준: 전체 레인의 진입→이탈 방향을 한 번 표시할 때 사용합니다. 현재 진행 위치나 로봇 자세에는 사용하지 않으며, 그 역할은 진행 삼각형과 별도 로봇 레이어가 맡습니다.
+        </p>
+      </Card>
+      <Card
+        title="진행 삼각형 — 선의 끝점"
+        hint="Route·Trajectory의 현재 진행이 선 끝에 결합하는 채움 화살촉입니다. 끝점이 로컬 원점이라 marker-end로 붙으면 tip이 곧 현재 위치가 되고, 표식 앞의 미래 선은 간격을 두고 다시 시작합니다. 결합 계약(NAV_PROGRESS_HEAD)은 Navigation Encoding Tokens가 소유합니다."
+      >
+        <Frame caption="선에 결합된 현재 진행 화살촉" mono="NAV_PROGRESS_TRIANGLE.path">
+          <ProgressTriangleSpecimen />
+        </Frame>
+        <p style={{ margin: 0, color: MUTED, fontSize: 11, lineHeight: 1.6 }}>
+          사용 기준: source가 명시한 현재 진행 지점에만 사용합니다. 방향 셰브론과 모양이 달라 정적 방향과 동적 진행이 지도에서 혼동되지 않습니다.
+        </p>
+      </Card>
+      <Card
+        title="로봇 pose — 원형 body + heading 노즈"
+        hint="로봇의 실시간 위치와 방향입니다. 둥근 footprint body에 heading 방향으로 노즈가 돋아나며, 원형 body가 있다는 점이 방향 셰브론·진행 다트와의 결정적 차이라 로봇이 경로 화살표로 읽히지 않습니다. 기하는 NAV_ROBOT_POSE가 소유하고 RobotMarker가 렌더합니다."
+      >
+        <Frame caption="지도 위 로봇의 현재 위치와 방향" mono="NAV_ROBOT_POSE">
+          <RobotPoseSpecimen />
+        </Frame>
+        <p style={{ margin: 0, color: MUTED, fontSize: 11, lineHeight: 1.6 }}>
+          사용 기준: 로봇의 현재 자세에만 사용합니다. 세 글리프가 나란히 놓여 방향(접힌 선)·진행(다트)·로봇(원+노즈)이 한 지도에서 구분됩니다.
+        </p>
       </Card>
     </main>
   );
@@ -349,14 +209,14 @@ const meta = {
     storyGuide: {
       storyId: 'lds-robotics-foundation-vector-glyph--overview',
       eyebrow: 'Foundation / Vector Glyph',
-      title: '내비게이션 이동 방향 벡터 글리프를 원자 단위로 문서화합니다',
+      title: '방향 셰브론·진행 다트·로봇 pose를 원자 단위로 문서화합니다',
       description:
-        '차선·경로·궤적 렌더러가 경로 위에 공통으로 그리는 이동 방향(heading) 셰브론을 문서화합니다. 이 글리프의 path 기하는 내부 모듈 _navigationVectorGlyph가 단일 소스로 소유하며(NAVIGATION_DIRECTION_PATH), 무게중심이 로컬 원점이라 회전만으로 각 세그먼트의 진행 방향을 가리킵니다. 이 페이지는 그 상수를 실제 쓰임(경로 세그먼트 중점) 위에 그대로 렌더해 방향 지시자로 읽히는지 보이고 play-test로 렌더된 모든 셰브론의 path가 상수와 일치함을 단언합니다. 차선 종점 방향 화살표는 소비자가 차선 렌더러 하나뿐이라 공용 원자로 승격하지 않고 해당 컴포넌트 로컬 geometry로 둡니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
+        '내부 모듈 _navigationVectorGlyph가 소유하는 세 벡터 글리프를 한 페이지에 나란히 문서화합니다. NAV_DIRECTION_CHEVRON은 LaneOverlay가 최장 직선 구간 중점에 배치하는 정적 이동 방향(선을 끊고 선 자체가 열린 V로 꺾임), NAV_PROGRESS_TRIANGLE은 Route·Trajectory의 동적 현재 진행이 선 끝에 결합하는 채움 화살촉, NAV_ROBOT_POSE는 RobotMarker가 그리는 로봇의 실시간 pose(원형 body + heading 노즈)입니다. 셋이 나란히 놓여 방향·진행·로봇이 한 지도에서 절대 혼동되지 않는 "의미당 모양 하나" 계약을 시각적으로 강제합니다. 결합 계약 NAV_PROGRESS_HEAD는 Navigation Encoding Tokens 페이지가 소유합니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
     },
     docs: {
       description: {
         component:
-          '내비게이션 렌더러들이 공유하는 이동 방향 벡터 글리프의 path 기하를 내부 모듈 _navigationVectorGlyph에서 실제 쓰임 위에 그대로 렌더해 문서화·회귀합니다: 채워진 이동 방향 셰브론(NAVIGATION_DIRECTION_PATH, lane·route·trajectory 공유). 차선 종점 방향 화살표는 소비자가 차선 렌더러 하나뿐이라 공용 원자로 올리지 않고 컴포넌트 로컬 geometry로 둡니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
+          '내부 모듈 _navigationVectorGlyph의 세 기하를 그대로 렌더해 문서화·회귀합니다: LaneOverlay 정적 방향의 NAV_DIRECTION_CHEVRON(선 절개 + 선 자체의 열린 V), Route·Trajectory 현재 진행의 NAV_PROGRESS_TRIANGLE(채움 화살촉), RobotMarker 로봇 pose의 NAV_ROBOT_POSE(원형 body + heading 노즈). 결합 계약은 Navigation Encoding Tokens가 소유합니다. 공개 API가 아닌 내부 글리프 모듈입니다.',
       },
     },
   },
@@ -367,19 +227,65 @@ export default meta;
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    '공용 이동 방향 셰브론을 실제 쓰임 위에서 봅니다. 경로가 꺾이는 각 세그먼트 중점에 얹혀 진행 방향을 가리키며, play-test가 렌더된 모든 셰브론의 d가 NAVIGATION_DIRECTION_PATH와 일치함을 단언하므로 이 페이지가 곧 기하의 회귀 기준입니다.',
+    '선 절개 방향 셰브론을 Lane과 같은 연속 경로 위에서, 진행 삼각형을 선 끝 결합 형태로 봅니다. play-test가 절개 창·선과 동일한 셰브론·채움 삼각형 기하를 소스 상수와 대조하고, 폐기된 떠 있는 open chevron과 casing 이중 표식이 돌아오지 않도록 단언합니다.',
   ),
   render: () => <VectorGlyphCatalog />,
   play: async ({ canvasElement }) => {
     const root = canvasElement;
-    const directions = Array.from(root.querySelectorAll('[data-vector-glyph="direction"]'));
-    if (directions.length < 1) {
-      throw new Error('The route illustration must render at least one direction chevron.');
+    const specimen = root.querySelector('[data-direction-chevron-specimen]');
+    const cutWindow = root.querySelector('[data-direction-chevron-window]');
+    const chevron = specimen?.querySelector('[data-direction-chevron-geometry]');
+    const demoPath = root.querySelector('[data-direction-chevron-demo-line]');
+    if (!specimen || !cutWindow || !chevron || !demoPath
+      || specimen.getAttribute('data-anchor-rule') !== 'longest-segment-midpoint') {
+      throw new Error('The Lane-like specimen must render one line-cut direction chevron on the longest-segment midpoint.');
     }
-    for (const el of directions) {
-      if (el.getAttribute('d') !== NAVIGATION_DIRECTION_PATH) {
-        throw new Error('The direction chevron must render NAVIGATION_DIRECTION_PATH.');
-      }
+    const cutMask = cutWindow.closest('mask');
+    if (
+      Number(cutWindow.getAttribute('x')) !== NAV_DIRECTION_CHEVRON.window.from
+      || Number(cutWindow.getAttribute('width')) !== NAV_DIRECTION_CHEVRON.window.to - NAV_DIRECTION_CHEVRON.window.from
+      || Number(cutWindow.getAttribute('height')) !== NAV_DIRECTION_CHEVRON.window.clearWidth
+      || cutWindow.getAttribute('fill') !== 'black'
+      || !cutMask
+      || !demoPath.getAttribute('mask')?.includes(cutMask.id)
+    ) {
+      throw new Error('The cut window must be a self-only mask clearing the NAV_DIRECTION_CHEVRON run.');
+    }
+    const chevronPath = chevron.getAttribute('d') ?? '';
+    if (
+      chevronPath !== NAV_DIRECTION_CHEVRON.path
+      || chevron.getAttribute('fill') !== 'none'
+      || chevron.getAttribute('stroke') !== demoPath?.getAttribute('stroke')
+      || chevron.getAttribute('stroke-width') !== demoPath?.getAttribute('stroke-width')
+      || /z/i.test(chevronPath)
+    ) {
+      throw new Error('The direction chevron must be the line itself folding into the open V — same tone, same width.');
+    }
+    const triangle = root.querySelector('[data-progress-triangle-geometry]');
+    const trianglePath = triangle?.getAttribute('d') ?? '';
+    if (
+      !triangle
+      || trianglePath !== NAV_PROGRESS_TRIANGLE.path
+      || triangle.getAttribute('fill') === 'none'
+      || !/z/i.test(trianglePath)
+    ) {
+      throw new Error('The progress triangle must be the closed, filled NAV_PROGRESS_TRIANGLE geometry.');
+    }
+    if (root.querySelector(`path[d="${RETIRED_OPEN_CHEVRON_PATH}"]`)) {
+      throw new Error('The retired floating open-chevron direction glyph must not return.');
+    }
+    if (root.querySelector('path[d="M -2 -3.4 L 4 0 L -2 3.4 Z"]')) {
+      throw new Error('The retired standalone closed triangular direction glyph must not return.');
+    }
+    // The robot pose atom: a round body (the differentiator) + heading nose.
+    const robotBody = root.querySelector('[data-robot-pose-body]');
+    const robotNose = root.querySelector('[data-robot-pose-nose]');
+    if (
+      !robotBody
+      || Number(robotBody.getAttribute('r')) !== NAV_ROBOT_POSE.bodyRadius
+      || robotNose?.getAttribute('d') !== NAV_ROBOT_POSE.nosePath
+    ) {
+      throw new Error('The robot pose must render the NAV_ROBOT_POSE round body and heading nose.');
     }
   },
 };
@@ -387,7 +293,7 @@ export const Overview = {
 export const NarrowViewport = {
   name: '반응형 · 320px 좁은 폭',
   parameters: storyDescription(
-    '320px 뷰포트 폭에서 벡터 글리프 카탈로그를 확인합니다. 경로 도해가 좁은 폭에 맞춰 줄되 가로 스크롤을 만들지 않아야 합니다.',
+    '320px 뷰포트 폭에서 벡터 글리프 카탈로그를 확인합니다. 도해가 좁은 폭에 맞춰 줄되 가로 스크롤을 만들지 않아야 합니다.',
   ),
   render: () => (
     <div data-vector-glyph-narrow style={{ width: 320, maxWidth: '100%' }}>
@@ -399,56 +305,6 @@ export const NarrowViewport = {
     if (!fixture) throw new Error('The narrow vector-glyph fixture is missing.');
     if (fixture.scrollWidth > fixture.clientWidth + 1) {
       throw new Error('The vector-glyph catalog must not create horizontal overflow at 320px.');
-    }
-  },
-};
-
-export const CurrentPositionComparison = {
-  name: '현재 진행 방향 · line-integrated',
-  parameters: storyDescription(
-    'Route와 Trajectory의 current progress를 별도 puck이 아니라 active line과 결합된 open progress head로 표현합니다. 방향은 robot bearing이 아닌 path local tangent를 사용합니다.',
-  ),
-  render: () => <CurrentPositionComparisonDemo />,
-  play: async ({ canvasElement }) => {
-    const root = canvasElement.querySelector('[data-progress-head-standard]');
-    if (!root) throw new Error('The progress-head standard fixture is missing.');
-
-    const scenes = Array.from(root.querySelectorAll('[data-progress-head-scene]'));
-    if (scenes.length !== 1 || scenes[0].dataset.progressHeadScene !== 'open') {
-      throw new Error('The standard must render only the selected open progress head.');
-    }
-    if (root.scrollWidth > root.clientWidth + 1) {
-      throw new Error('The current-position comparison must not create horizontal overflow.');
-    }
-
-    const routeGeometry = 'M48 176 L192 176 L316 92 L508 79';
-    for (const scene of scenes) {
-      const routeProgressPath = scene.querySelector('[data-route-progress-path]');
-      const heads = Array.from(scene.querySelectorAll('[data-progress-head]'));
-      if (routeProgressPath?.getAttribute('d') !== routeGeometry || routeProgressPath.getAttribute('stroke') !== ROUTE_TONE) {
-        throw new Error('The progress-head standard must keep the approved active route geometry and tone.');
-      }
-      if (
-        heads.length !== 2
-        || heads.some((head) => head.dataset.progressHead !== scene.dataset.progressHeadScene)
-        || heads.some((head) => head.dataset.screenFixed !== 'true')
-        || heads.some((head) => head.dataset.headRendering !== 'marker-end')
-        || heads.some((head) => !head.getAttribute('marker-end')?.startsWith('url(#progress-scene-'))
-        || !heads.some((head) => head.dataset.headRole === 'route')
-        || !heads.some((head) => head.dataset.headRole === 'trajectory')
-      ) {
-        throw new Error('The scene must join the shared marker-end progress head to both active lines.');
-      }
-      const definitions = Array.from(scene.querySelectorAll('[data-navigation-progress-head-definition="core"]'));
-      if (definitions.length !== 2 || definitions.some((definition) => definition.getAttribute('d') !== NAV_PROGRESS_HEAD.path)) {
-        throw new Error('The specimen must render the production NAV_PROGRESS_HEAD geometry.');
-      }
-      if (scene.querySelector('[data-current-position-marker]')) throw new Error('Detached current-position markers must not return.');
-    }
-
-    const references = Array.from(root.querySelectorAll('[data-progress-head-references] a'));
-    if (references.length !== PROGRESS_HEAD_REFERENCES.length || references.some((link) => !link.href.startsWith('https://'))) {
-      throw new Error('The comparison must expose every authoritative reference as an HTTPS link.');
     }
   },
 };

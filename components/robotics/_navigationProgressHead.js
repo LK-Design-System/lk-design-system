@@ -32,21 +32,24 @@ function pointAtFraction(points, fraction) {
   const totalLength = metrics.reduce((sum, segment) => sum + segment.length, 0);
   if (totalLength <= POINT_EPSILON) return undefined;
   const ratio = Math.max(0, Math.min(1, Number(fraction) || 0));
-  let remaining = totalLength * ratio;
+  let traveled = totalLength * ratio;
+  let distance = 0;
   const nonZero = metrics.filter((segment) => segment.length > POINT_EPSILON);
   for (let index = 0; index < nonZero.length; index += 1) {
     const segment = nonZero[index];
-    if (remaining <= segment.length || index === nonZero.length - 1) {
-      const localRatio = Math.max(0, Math.min(1, remaining / segment.length));
+    if (traveled <= segment.length || index === nonZero.length - 1) {
+      const localRatio = Math.max(0, Math.min(1, traveled / segment.length));
       return {
         point: {
           x: segment.start.x + segment.dx * localRatio,
           y: segment.start.y + segment.dy * localRatio,
         },
         segment,
+        distance: distance + segment.length * localRatio,
       };
     }
-    remaining -= segment.length;
+    traveled -= segment.length;
+    distance += segment.length;
   }
   return undefined;
 }
@@ -58,48 +61,147 @@ function prefixThrough(points, segmentIndex, endPoint) {
   return prefix;
 }
 
-/** Resolves a source-owned Route fraction and an optional visually joined exact position. */
+/**
+ * Drops `trimDistance` (path-arc-length units) off the END of a polyline.
+ * Returns [] when the polyline is shorter than the trim. Used to stop the
+ * painted shaft short of the head tip so its round cap hides inside the
+ * triangle body (the marker's refX shift puts the tip back on the anchor).
+ */
+function trimEnd(points, trimDistance) {
+  const metrics = segmentMetrics(points);
+  const totalLength = metrics.reduce((sum, segment) => sum + segment.length, 0);
+  const keepLength = totalLength - trimDistance;
+  if (keepLength <= POINT_EPSILON) return [];
+  const trimmed = [];
+  let accumulated = 0;
+  for (const segment of metrics) {
+    if (segment.length <= POINT_EPSILON) continue;
+    if (trimmed.length === 0) trimmed.push(segment.start);
+    const segmentEnd = accumulated + segment.length;
+    if (segmentEnd >= keepLength) {
+      const local = (keepLength - accumulated) / segment.length;
+      appendDistinct(trimmed, {
+        x: segment.start.x + segment.dx * local,
+        y: segment.start.y + segment.dy * local,
+      });
+      break;
+    }
+    appendDistinct(trimmed, segment.end);
+    accumulated = segmentEnd;
+  }
+  return trimmed.length >= 2 ? trimmed : [];
+}
+
+function polylineLength(points) {
+  return segmentMetrics(points).reduce((sum, segment) => sum + segment.length, 0);
+}
+
+/**
+ * Trims the shaft back so its round cap hides inside the head, but never more
+ * than half the elapsed line — on a short segment (or a zoomed-out map) the
+ * full tipSetback would eat the whole prefix and the head would vanish. Returns
+ * the painted prefix plus the CSS px actually pulled back, so the marker's refX
+ * shift can match and keep the tip on the anchor.
+ */
+function applyTipSetback(fullPrefix, setbackDistance, scale) {
+  if (fullPrefix.length < 2) return { paintedPrefix: fullPrefix, tipSetbackPx: 0 };
+  const effective = Math.min(setbackDistance, polylineLength(fullPrefix) * 0.5);
+  const trimmed = trimEnd(fullPrefix, effective);
+  if (trimmed.length < 2) return { paintedPrefix: fullPrefix, tipSetbackPx: 0 };
+  return { paintedPrefix: trimmed, tipSetbackPx: effective * scale };
+}
+
+/**
+ * Remaining path from `startDistance` (path-arc-length units) to the end.
+ * Returns [] when nothing meaningful remains. This is what puts the visual
+ * gap between the progress-head tip and the resuming future line.
+ */
+function suffixFrom(points, startDistance) {
+  const metrics = segmentMetrics(points);
+  let accumulated = 0;
+  const suffix = [];
+  for (const segment of metrics) {
+    const segmentEnd = accumulated + segment.length;
+    if (segmentEnd > startDistance && segment.length > POINT_EPSILON) {
+      if (suffix.length === 0) {
+        const local = Math.max(0, startDistance - accumulated) / segment.length;
+        suffix.push({
+          x: segment.start.x + segment.dx * local,
+          y: segment.start.y + segment.dy * local,
+        });
+      }
+      appendDistinct(suffix, segment.end);
+    }
+    accumulated = segmentEnd;
+  }
+  return suffix.length >= 2 ? suffix : [];
+}
+
+/**
+ * Resolves a source-owned Route fraction and an optional visually joined exact
+ * position. The head only exists once there is real elapsed line (two distinct
+ * prefix points) — there is no synthetic carrier stub at fraction 0. The
+ * future line resumes `NAV_PROGRESS_HEAD.futureGap` CSS px past the tip.
+ */
 export function routeProgressGeometry(points, fraction, explicitPosition, viewportScale = 1) {
   const fractionResult = pointAtFraction(points, fraction);
   if (!fractionResult) return undefined;
-  const prefixPoints = prefixThrough(points, fractionResult.segment.index, fractionResult.point);
-  if (!explicitPosition) {
-    return {
-      point: fractionResult.point,
-      angle: Math.atan2(fractionResult.segment.dy, fractionResult.segment.dx) * 180 / Math.PI,
-      prefixPoints,
-      usesCarrier: prefixPoints.length < 2,
-    };
-  }
-
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
-  const positionMismatch = Math.sqrt(pointDistanceSquared(explicitPosition, fractionResult.point)) * scale
-    > POSITION_JOIN_TOLERANCE_PX;
-  if (positionMismatch) {
+  const gapDistance = NAV_PROGRESS_HEAD.futureGap / scale;
+  const setbackDistance = NAV_PROGRESS_HEAD.tipSetback / scale;
+  const angle = Math.atan2(fractionResult.segment.dy, fractionResult.segment.dx) * 180 / Math.PI;
+
+  if (explicitPosition) {
+    const positionMismatch = Math.sqrt(pointDistanceSquared(explicitPosition, fractionResult.point)) * scale
+      > POSITION_JOIN_TOLERANCE_PX;
+    if (positionMismatch) {
+      return {
+        point: fractionResult.point,
+        angle: undefined,
+        prefixPoints: prefixThrough(points, fractionResult.segment.index, fractionResult.point),
+        suffixPoints: [],
+        headVisible: false,
+        positionMismatch: true,
+      };
+    }
+    const fullPrefix = prefixThrough(points, fractionResult.segment.index, explicitPosition);
+    const headVisible = fullPrefix.length >= 2;
+    const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, setbackDistance, scale);
     return {
-      point: fractionResult.point,
-      angle: undefined,
-      prefixPoints,
-      usesCarrier: false,
-      positionMismatch: true,
+      point: explicitPosition,
+      angle,
+      prefixPoints: paintedPrefix,
+      suffixPoints: suffixFrom(points, fractionResult.distance + (headVisible ? gapDistance : 0)),
+      headVisible,
+      tipSetbackPx,
+      positionMismatch: false,
     };
   }
 
+  const fullPrefix = prefixThrough(points, fractionResult.segment.index, fractionResult.point);
+  const headVisible = fullPrefix.length >= 2;
+  const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, setbackDistance, scale);
   return {
-    point: explicitPosition,
-    angle: Math.atan2(fractionResult.segment.dy, fractionResult.segment.dx) * 180 / Math.PI,
-    prefixPoints,
-    usesCarrier: true,
+    point: fractionResult.point,
+    angle,
+    prefixPoints: paintedPrefix,
+    suffixPoints: suffixFrom(points, fractionResult.distance + (headVisible ? gapDistance : 0)),
+    headVisible,
+    tipSetbackPx,
     positionMismatch: false,
   };
 }
 
-/** Resolves a finite Trajectory sample without inferring progress from time. */
-export function trajectoryProgressGeometry(points, pointIndex) {
+/**
+ * Resolves a finite Trajectory sample without inferring progress from time.
+ * Same head rules as the route geometry: no head until real elapsed line
+ * exists, and the future line resumes after the shared gap.
+ */
+export function trajectoryProgressGeometry(points, pointIndex, viewportScale = 1) {
   if (!Number.isInteger(pointIndex) || pointIndex < 0 || pointIndex >= points.length) return undefined;
   const point = points[pointIndex];
-  const prefixPoints = [];
-  points.slice(0, pointIndex + 1).forEach((item) => appendDistinct(prefixPoints, item));
+  const fullPrefix = [];
+  points.slice(0, pointIndex + 1).forEach((item) => appendDistinct(fullPrefix, item));
   const incoming = [...segmentMetrics(points.slice(0, pointIndex + 1))]
     .reverse()
     .find((segment) => segment.length > POINT_EPSILON);
@@ -107,53 +209,54 @@ export function trajectoryProgressGeometry(points, pointIndex) {
     .find((segment) => segment.length > POINT_EPSILON);
   const tangent = incoming ?? outgoing;
   if (!tangent) return undefined;
+  const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
+  const tipDistance = polylineLength(fullPrefix);
+  const headVisible = fullPrefix.length >= 2;
+  const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, NAV_PROGRESS_HEAD.tipSetback / scale, scale);
   return {
     point,
     angle: Math.atan2(tangent.dy, tangent.dx) * 180 / Math.PI,
-    prefixPoints,
-    usesCarrier: prefixPoints.length < 2,
+    prefixPoints: paintedPrefix,
+    suffixPoints: suffixFrom(points, tipDistance + (headVisible ? NAV_PROGRESS_HEAD.futureGap / scale : 0)),
+    headVisible,
+    tipSetbackPx,
   };
 }
 
-export function progressCarrierPath(point, angle, inverseScale) {
-  if (!Number.isFinite(angle)) return '';
-  const radians = angle * Math.PI / 180;
-  const length = 16 * inverseScale;
-  return `M ${point.x - Math.cos(radians) * length} ${point.y - Math.sin(radians) * length} L ${point.x} ${point.y}`;
-}
-
+/**
+ * Single solid-triangle progress-head marker. The triangle is filled with the
+ * line tone and outlined once in viewer surface, so the head separates from
+ * busy map content without a second casing marker definition.
+ */
 export function NavigationProgressHeadDefs({
   idPrefix,
   tone,
   surface,
   inverseScale,
-  role,
+  tipSetbackPx = NAV_PROGRESS_HEAD.tipSetback,
 }) {
-  const dimensions = NAV_PROGRESS_HEAD[role];
-  const marker = (layer, stroke, strokeWidth) => React.createElement('marker', {
-    key: layer,
-    id: `${idPrefix}-${layer}`,
-    viewBox: NAV_PROGRESS_HEAD.viewBox,
-    refX: NAV_PROGRESS_HEAD.refX,
-    refY: NAV_PROGRESS_HEAD.refY,
-    markerWidth: NAV_PROGRESS_HEAD.width * inverseScale,
-    markerHeight: NAV_PROGRESS_HEAD.height * inverseScale,
-    markerUnits: 'userSpaceOnUse',
-    orient: 'auto',
-    overflow: 'visible',
-  }, React.createElement('path', {
-    'data-navigation-progress-head-definition': layer,
-    d: NAV_PROGRESS_HEAD.path,
-    fill: 'none',
-    stroke,
-    strokeWidth,
-    strokeLinecap: 'round',
-    strokeLinejoin: 'round',
-  }));
-
   return React.createElement('defs', { 'aria-hidden': 'true' },
-    marker('casing', surface, dimensions.casingWidth),
-    marker('core', tone, dimensions.coreWidth));
+    React.createElement('marker', {
+      id: `${idPrefix}-head`,
+      viewBox: NAV_PROGRESS_HEAD.viewBox,
+      // refX sits behind the tip by the ACTUAL setback the shaft was trimmed
+      // by (clamped on short segments), so the tip paints exactly on the anchor
+      // while the shaft's round cap stays hidden inside the triangle body.
+      refX: NAV_PROGRESS_HEAD.refX - tipSetbackPx,
+      refY: NAV_PROGRESS_HEAD.refY,
+      markerWidth: NAV_PROGRESS_HEAD.width * inverseScale,
+      markerHeight: NAV_PROGRESS_HEAD.height * inverseScale,
+      markerUnits: 'userSpaceOnUse',
+      orient: 'auto',
+      overflow: 'visible',
+    }, React.createElement('path', {
+      'data-navigation-progress-head-definition': 'head',
+      d: NAV_PROGRESS_HEAD.path,
+      fill: tone,
+      stroke: surface,
+      strokeWidth: NAV_PROGRESS_HEAD.outlineWidth,
+      strokeLinejoin: 'round',
+    })));
 }
 
 export function ProgressHeadObstacle({ obstacle, id, point, angle, inverseScale, dataPrefix }) {

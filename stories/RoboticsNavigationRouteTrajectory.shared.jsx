@@ -189,32 +189,6 @@ export function paintedGeometryRect(container) {
   };
 }
 
-export function pathAreaCentroid(path) {
-  const coordinates = (path.getAttribute('d') ?? '')
-    .match(/[-+]?(?:\d*\.?\d+)(?:e[-+]?\d+)?/gi)
-    ?.map(Number) ?? [];
-  if (coordinates.length < 6 || coordinates.length % 2 !== 0) return undefined;
-  const points = [];
-  for (let index = 0; index < coordinates.length; index += 2) {
-    points.push({ x: coordinates[index], y: coordinates[index + 1] });
-  }
-  let twiceArea = 0;
-  let weightedX = 0;
-  let weightedY = 0;
-  points.forEach((point, index) => {
-    const next = points[(index + 1) % points.length];
-    const cross = point.x * next.y - next.x * point.y;
-    twiceArea += cross;
-    weightedX += (point.x + next.x) * cross;
-    weightedY += (point.y + next.y) * cross;
-  });
-  if (Math.abs(twiceArea) < 0.000001) return undefined;
-  return {
-    x: weightedX / (3 * twiceArea),
-    y: weightedY / (3 * twiceArea),
-  };
-}
-
 export function expectedNavigationStateKind(group) {
   return group.getAttribute('data-route-condition-glyph')
     ?? group.getAttribute('data-route-overlay-state')
@@ -270,49 +244,14 @@ export function assertNavigationStateGlyphGeometry(root, label) {
   });
 }
 
-export function assertNavigationVectorGeometry(root, label) {
-  const vectors = Array.from(root.querySelectorAll('[data-navigation-vector-glyph]'));
-  if (vectors.length === 0) throw new Error(`${label} has no navigation vector glyph evidence.`);
-  vectors.forEach((vector) => {
-    const circle = vector.parentElement?.querySelector(':scope > [data-navigation-marker-circle]');
-    const badgeCenter = circle
-      ? screenPoint(circle, Number(circle.getAttribute('cx')) || 0, Number(circle.getAttribute('cy')) || 0)
-      : undefined;
-    const anchor = screenPoint(vector);
-    const localCentroid = pathAreaCentroid(vector);
-    const centroid = localCentroid ? screenPoint(vector, localCentroid.x, localCentroid.y) : undefined;
-    const painted = paintedGeometryRect(vector);
-    const badgeRect = circle?.getBoundingClientRect();
-    if (!anchor || !centroid || !painted || (circle && (!badgeCenter || !badgeRect))) {
-      throw new Error(`${label} vector glyph geometry could not be measured.`);
-    }
-    const centroidDelta = Math.max(
-      Math.abs(centroid.x - anchor.x),
-      Math.abs(centroid.y - anchor.y),
-    );
-    const badgeAnchorDelta = badgeCenter
-      ? Math.max(Math.abs(anchor.x - badgeCenter.x), Math.abs(anchor.y - badgeCenter.y))
-      : 0;
-    const margin = badgeRect
-      ? Math.min(
-        painted.left - badgeRect.left,
-        badgeRect.right - painted.right,
-        painted.top - badgeRect.top,
-        badgeRect.bottom - painted.bottom,
-      )
-      : Number.POSITIVE_INFINITY;
-    if (centroidDelta > 0.25 || badgeAnchorDelta > 0.25 || margin < 0.9) {
-      throw new Error(`${label} ${vector.getAttribute('data-navigation-vector-glyph')} geometry failed: centroid ${centroidDelta}, anchor ${badgeAnchorDelta}, margin ${margin}.`);
-    }
-  });
-}
-
 export function assertNavigationProgressHead(root, label, role) {
   const head = root.querySelector(`[data-navigation-progress-head="${role}"]`);
-  const casing = Array.from(root.querySelectorAll(`[data-${role}-progress-casing]`))
-    .find((item) => item.hasAttribute('marker-end'));
+  const casing = root.querySelector(`[data-${role}-progress-casing]`);
   if (!(head instanceof SVGPathElement) || !(casing instanceof SVGPathElement)) {
     throw new Error(`${label} needs a path-integrated ${role} progress head with casing.`);
+  }
+  if (casing.hasAttribute('marker-end')) {
+    throw new Error(`${label} progress casing must not carry its own marker — the solid head owns its outline.`);
   }
   if (head.getAttribute('data-head-rendering') !== 'marker-end'
     || head.hasAttribute(`data-${role}-screen-slot`)) {
@@ -320,17 +259,15 @@ export function assertNavigationProgressHead(root, label, role) {
   }
 
   const markerEnd = head.getAttribute('marker-end') ?? '';
-  const casingMarkerEnd = casing.getAttribute('marker-end') ?? '';
   const markerId = markerEnd.match(/^url\(#(.+)\)$/)?.[1];
-  const casingMarkerId = casingMarkerEnd.match(/^url\(#(.+)\)$/)?.[1];
   const svg = head.ownerSVGElement;
   const marker = Array.from(svg?.querySelectorAll('marker') ?? []).find((item) => item.id === markerId);
-  const casingMarker = Array.from(svg?.querySelectorAll('marker') ?? []).find((item) => item.id === casingMarkerId);
-  const definition = marker?.querySelector('[data-navigation-progress-head-definition="core"]');
-  if (!marker || !casingMarker || definition?.getAttribute('d') !== NAV_PROGRESS_HEAD.path
+  const definition = marker?.querySelector('[data-navigation-progress-head-definition="head"]');
+  if (!marker || definition?.getAttribute('d') !== NAV_PROGRESS_HEAD.path
+    || definition?.getAttribute('fill') === 'none'
     || marker.getAttribute('orient') !== 'auto'
     || marker.getAttribute('markerUnits') !== 'userSpaceOnUse') {
-    throw new Error(`${label} progress head lost the shared open-V marker geometry.`);
+    throw new Error(`${label} progress head lost the shared solid-triangle marker geometry.`);
   }
 
   const coordinates = (head.getAttribute('d') ?? '')
@@ -340,13 +277,19 @@ export function assertNavigationProgressHead(root, label, role) {
   const anchorY = Number(head.getAttribute(`data-${role}-anchor-y`));
   const endpointX = coordinates[coordinates.length - 2];
   const endpointY = coordinates[coordinates.length - 1];
+  const viewportScale = Number(root.getAttribute('data-viewport-scale') || 1);
+  // The shaft stops up to tipSetback short of the anchor (its round cap hides
+  // in the triangle body) while the marker's refX shift paints the tip on the
+  // anchor. On a short segment the setback is clamped, so allow anything in
+  // (0, tipSetback] — never MORE than the setback.
+  const setbackDistance = Math.hypot(endpointX - anchorX, endpointY - anchorY) * viewportScale;
   if (!Number.isFinite(anchorX) || !Number.isFinite(anchorY)
-    || Math.abs(endpointX - anchorX) > 0.001
-    || Math.abs(endpointY - anchorY) > 0.001) {
-    throw new Error(`${label} progress-head tip must equal the source current position.`);
+    || setbackDistance < 0.25
+    || setbackDistance > NAV_PROGRESS_HEAD.tipSetback + 1) {
+    throw new Error(`${label} shaft must stop up to tipSetback short of the source position so the tip paints on the anchor.`);
   }
 
-  const expectedWidth = NAV_PROGRESS_HEAD.width / Number(root.getAttribute('data-viewport-scale') || 1);
+  const expectedWidth = NAV_PROGRESS_HEAD.width / viewportScale;
   if (Math.abs(Number(marker.getAttribute('markerWidth')) - expectedWidth) > 0.01
     || Number(head.getAttribute('stroke-width')) !== NAV_PROGRESS_HEAD[role].coreWidth) {
     throw new Error(`${label} progress head did not preserve its screen-space size and path weight.`);
@@ -357,6 +300,14 @@ export function assertNavigationProgressHead(root, label, role) {
   const futureOpacity = Number(futurePath?.getAttribute('opacity'));
   if (!(futureOpacity > 0 && futureOpacity < 1)) {
     throw new Error(`${label} needs a recessed future path behind the strong elapsed path.`);
+  }
+  // Gap grammar: the future line resumes past the tip, never at it.
+  const futureCoordinates = (futurePath?.getAttribute('d') ?? '')
+    .match(/[-+]?(?:\d*\.?\d+)(?:e[-+]?\d+)?/gi)
+    ?.map(Number) ?? [];
+  const futureStartDistance = Math.hypot(futureCoordinates[0] - anchorX, futureCoordinates[1] - anchorY);
+  if (!(futureStartDistance > (NAV_PROGRESS_HEAD.futureGap / viewportScale) * 0.5)) {
+    throw new Error(`${label} future path must resume after the gap in front of the progress-head tip.`);
   }
   if (role === 'route' && root.querySelector('[data-route-marker-badge="progress"]')) {
     throw new Error(`${label} must not restore the old circular Route progress badge.`);

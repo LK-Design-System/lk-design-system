@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-13",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "6351e9c59b59551310f16b99356b8380f567c4a6c4b05315c2935459e4ce40c8",
+    "storybookIndexSha256": "906a535262d81d1e7912686e838214cf8e97f891718e7a6ae9d4f7f6ed34524a",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,31 +59,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 190,
-    "stories": 579,
-    "publicStories": 443,
+    "pages": 191,
+    "stories": 583,
+    "publicStories": 447,
     "hiddenStories": 136,
-    "componentDescriptions": 186,
-    "pagesWithVisibleCanvasIntroduction": 190,
-    "pagesWithDecisionGuidance": 176,
-    "describedPublicStories": 443,
+    "componentDescriptions": 187,
+    "pagesWithVisibleCanvasIntroduction": 191,
+    "pagesWithDecisionGuidance": 178,
+    "describedPublicStories": 447,
     "reviewedPages": 177,
     "reviewedStories": 534,
-    "staleReviewedPages": 10,
+    "staleReviewedPages": 11,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
-      "overview": 183,
+      "overview": 184,
       "usage": 20,
       "variants-states": 89,
-      "interaction": 50,
-      "responsive": 64,
+      "interaction": 52,
+      "responsive": 65,
       "scenario": 27,
       "visual-parity": 99,
       "internal-contract": 37
     },
     "dispositions": {
-      "keep": 190,
+      "keep": 191,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -111,11 +111,11 @@
         "guideReadyPages": 86
       },
       "Robotics": {
-        "pages": 42,
-        "stories": 173,
-        "public": 139,
+        "pages": 43,
+        "stories": 177,
+        "public": 143,
         "hidden": 34,
-        "guideReadyPages": 33
+        "guideReadyPages": 35
       },
       "Theme": {
         "pages": 3,
@@ -16619,7 +16619,7 @@
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationNavigationEncodingTokens.stories.jsx",
-      "sourceSha256": "8d9a65b1b3985c9a8b7c2a3c20546af2f35b40f14995d96e11b4e2bdfd632089",
+      "sourceSha256": "347a9137e19e390fe9696eed63b32bc9393782d665496f32a4814428db4b8198",
       "primaryOwner": "SpatialRegion",
       "ownerComponents": [
         "SpatialRegion",
@@ -16627,19 +16627,17 @@
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-foundation-navigation-encoding-tokens--overview",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 2,
-        "decisionGuidance": false
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 3,
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
@@ -16683,6 +16681,29 @@
             "test"
           ],
           "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "SpatialRegion",
+            "WaypointMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-foundation-navigation-encoding-tokens--line-integrated-progress-head",
+          "name": "시나리오 · 경로에 결합된 현재 진행",
+          "exportName": "LineIntegratedProgressHead",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
@@ -16868,19 +16889,19 @@
       "layer": "Robotics",
       "family": "Foundation",
       "importPath": "./stories/RoboticsFoundationVectorGlyph.stories.jsx",
-      "sourceSha256": "e58791c227bf158cab99e25b5de91fbc4ceceec55793669ef36580609a27135f",
+      "sourceSha256": "48f089deb3b04d1f6b0fd23a0cf7f9e5e34a91bf672973255e2dda2a20e25562",
       "primaryOwner": null,
       "ownerComponents": [],
       "supportingComponents": [],
       "visibility": {
-        "public": 3,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-robotics-foundation-vector-glyph--overview",
-        "describedPublicStories": 3,
-        "publicStoriesWithCanvasGuidance": 3,
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
       "missingGuidance": [],
@@ -16924,26 +16945,6 @@
             "test"
           ],
           "role": "responsive",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [],
-          "supportingComponents": []
-        },
-        {
-          "id": "lds-robotics-foundation-vector-glyph--current-position-comparison",
-          "name": "현재 진행 방향 · line-integrated",
-          "exportName": "CurrentPositionComparison",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "scenario",
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
@@ -17581,7 +17582,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationLane.stories.jsx",
-      "sourceSha256": "510daf97fd494197e964babe369b7da51ce274ff51b0698921b775abcecdddc1",
+      "sourceSha256": "58086bc1d37a2fa76d2bdfc9c239f17a8e3d0f6aa6284b89e233e12fcef5778e",
       "primaryOwner": "LaneOverlay",
       "ownerComponents": [
         "LaneOverlay"
@@ -17994,11 +17995,140 @@
       "reviewNote": "2026-07-13 re-reviewed after concave polygon anchoring, compound states, pointer-only interaction, and pointer-to-keyboard focus-visible transition updates; current source AST plus targeted Robotics Navigation play/Axe were verified."
     },
     {
+      "title": "LDS Robotics/Navigation/Robot Marker",
+      "layer": "Robotics",
+      "family": "Navigation",
+      "importPath": "./stories/RoboticsNavigationRobotMarker.stories.jsx",
+      "sourceSha256": "9b5fdcfb698127108bcd313fcf1f3ac27576d4e3af1e11a5692523cfbd5f4a8f",
+      "primaryOwner": "RobotMarker",
+      "ownerComponents": [
+        "RobotMarker"
+      ],
+      "supportingComponents": [
+        "Map2DCanvas"
+      ],
+      "visibility": {
+        "public": 4,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-robotics-navigation-robot-marker--overview",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-robotics-navigation-robot-marker--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "RobotMarker"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ]
+        },
+        {
+          "id": "lds-robotics-navigation-robot-marker--states",
+          "name": "변형·상태 · 실시간·선택·포커스·지연·오류·비활성",
+          "exportName": "States",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "RobotMarker"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-robotics-navigation-robot-marker--selection",
+          "name": "상호작용 · 선택과 활성화",
+          "exportName": "Selection",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "RobotMarker"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ]
+        },
+        {
+          "id": "lds-robotics-navigation-robot-marker--narrow-viewport",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowViewport",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "RobotMarker"
+          ],
+          "supportingComponents": [
+            "Map2DCanvas"
+          ]
+        }
+      ]
+    },
+    {
       "title": "LDS Robotics/Navigation/Route",
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationRoute.stories.jsx",
-      "sourceSha256": "1fe97b208606e502b8d0f7916f106e2c4214f909d0c90e93f3ef6b4f75cbd231",
+      "sourceSha256": "303cdfe58978327862a4bed8fe8be5327b9cf37e7fad6020e4acd92ac31dbcb3",
       "primaryOwner": "RouteOverlay",
       "ownerComponents": [
         "RouteOverlay"
@@ -18202,7 +18332,7 @@
       "layer": "Robotics",
       "family": "Navigation",
       "importPath": "./stories/RoboticsNavigationTrajectory.stories.jsx",
-      "sourceSha256": "6b0db6f6ff3d00c8865142ed179db67ce21c443401b5a641319a4189112b899e",
+      "sourceSha256": "eff0b7a6a87e1bf0dc55a09fedcd461e2d73d503ab37fbab6f1e53ff29d2b9ce",
       "primaryOwner": "TrajectoryOverlay",
       "ownerComponents": [
         "TrajectoryOverlay"
@@ -19147,12 +19277,14 @@
       "layer": "Robotics",
       "family": "Viewer",
       "importPath": "./stories/ViewerMap.stories.jsx",
-      "sourceSha256": "a49417aa0943cf63937705b9b4fd430b3667b04f4e5199f1e78bf760d287bcea",
+      "sourceSha256": "e6109167edb659fffbf6af5cc8c236c463fbf1c8b449a2042093b80f035fbfb7",
       "primaryOwner": "Map2DCanvas",
       "ownerComponents": [
         "Map2DCanvas"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "RobotMarker"
+      ],
       "visibility": {
         "public": 4,
         "hidden": 1
@@ -19193,7 +19325,9 @@
           "ownerComponents": [
             "Map2DCanvas"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "RobotMarker"
+          ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
@@ -19215,7 +19349,9 @@
           "ownerComponents": [
             "Map2DCanvas"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "RobotMarker"
+          ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
@@ -19238,7 +19374,9 @@
           "ownerComponents": [
             "Map2DCanvas"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "RobotMarker"
+          ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
@@ -19260,7 +19398,9 @@
           "ownerComponents": [
             "Map2DCanvas"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "RobotMarker"
+          ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {

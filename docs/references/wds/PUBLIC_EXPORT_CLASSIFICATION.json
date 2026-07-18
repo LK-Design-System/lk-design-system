@@ -3,10 +3,10 @@
   "source": {
     "name": "LK Design System public exports",
     "entrypoint": "src/index.js",
-    "classifiedAt": "2026-07-10",
-    "purpose": "Ensure every public LDS export is explicitly classified as WDS core, LK theme override, LK product extension, or LK robotics extension."
+    "classifiedAt": "2026-07-18",
+    "purpose": "Ensure every public LDS export has one explicit owner layer and one independent WDS/LK provenance classification."
   },
-  "classificationLegend": {
+  "provenanceLegend": {
     "direct-wds": "A public export that directly supports a WDS core family or foundation role.",
     "wds-adjacent": "A generic export that supports a WDS section but still needs Figma node-level confirmation before being treated as direct WDS parity.",
     "theme-override": "A public export that applies LK ROBOTICS brand/theme decisions over WDS structure.",
@@ -16,8 +16,8 @@
   "groups": [
     {
       "name": "Brand theme override",
-      "layer": "lk-theme-override",
-      "classification": "theme-override",
+      "ownerLayer": "theme",
+      "provenance": "theme-override",
       "storyEvidence": [
         "stories/Brand.stories.jsx"
       ],
@@ -27,8 +27,8 @@
     },
     {
       "name": "Platform brand marks",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/BrandPlatform.stories.jsx"
       ],
@@ -39,8 +39,8 @@
     },
     {
       "name": "Theme toggle override",
-      "layer": "lk-theme-override",
-      "classification": "theme-override",
+      "ownerLayer": "theme",
+      "provenance": "theme-override",
       "storyEvidence": [
         "stories/SelectionThemeToggle.stories.jsx"
       ],
@@ -50,8 +50,8 @@
     },
     {
       "name": "WDS action controls",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "wdsFamily": "Action/Action Area, Button/Button, Text Button, Icon Button, Toggle Icon",
       "storyEvidence": [
         "stories/ActionArea.stories.jsx",
@@ -72,8 +72,8 @@
     },
     {
       "name": "Action product extensions",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/ActionButtonGroup.stories.jsx",
         "stories/ActionSplitButton.stories.jsx",
@@ -93,8 +93,8 @@
     },
     {
       "name": "WDS cards and content containers",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "wdsFamily": "Card/Card, Card/List Card",
       "storyEvidence": [
         "stories/Card.stories.jsx",
@@ -108,8 +108,8 @@
     },
     {
       "name": "Product cards and dashboard metrics",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/CardChecklistItem.stories.jsx",
         "stories/CardInfo.stories.jsx",
@@ -130,14 +130,12 @@
     },
     {
       "name": "WDS text, list, media, and disclosure content",
-      "layer": "wds-core",
-      "classification": "wds-adjacent",
+      "ownerLayer": "core",
+      "provenance": "wds-adjacent",
       "wdsFamily": "Card/Card, Card/List Card",
       "storyEvidence": [
         "stories/Content.stories.jsx",
         "stories/ContentTooltip.stories.jsx",
-        "stories/ContentBubble.stories.jsx",
-        "stories/ActionBookmark.stories.jsx",
         "stories/ContentBadgesAnnotations.stories.jsx",
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentListsMedia.stories.jsx",
@@ -149,8 +147,6 @@
       "exports": [
         "Accordion",
         "Blockquote",
-        "Bookmark",
-        "Bubble",
         "Code",
         "Collapsible",
         "ContentBadge",
@@ -166,9 +162,23 @@
       ]
     },
     {
+      "name": "WDS-adjacent product content",
+      "ownerLayer": "product",
+      "provenance": "wds-adjacent",
+      "wdsFamily": "Card/Card, Card/List Card",
+      "storyEvidence": [
+        "stories/ActionBookmark.stories.jsx",
+        "stories/ContentBubble.stories.jsx"
+      ],
+      "exports": [
+        "Bookmark",
+        "Bubble"
+      ]
+    },
+    {
       "name": "Content product extensions",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/ContentEditor.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -184,11 +194,10 @@
     },
     {
       "name": "Data visualization and data workflows",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/ContentCarousel.stories.jsx",
-        "stories/ContentMedia.stories.jsx",
         "stories/DataAnnotatedImage.stories.jsx",
         "stories/DataCalendar.stories.jsx",
         "stories/DataChartFrame.stories.jsx",
@@ -238,8 +247,8 @@
     },
     {
       "name": "Feedback atoms",
-      "layer": "wds-core",
-      "classification": "wds-adjacent",
+      "ownerLayer": "core",
+      "provenance": "wds-adjacent",
       "storyEvidence": [
         "stories/Feedback.stories.jsx",
         "stories/FeedbackBadgesTags.stories.jsx",
@@ -258,8 +267,8 @@
     },
     {
       "name": "Rating extension",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/FeedbackRating.stories.jsx"
       ],
@@ -269,8 +278,8 @@
     },
     {
       "name": "WDS text input and select controls",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "wdsFamily": "Textinput/Textfield",
       "storyEvidence": [
         "stories/FormSearchAutocomplete.stories.jsx",
@@ -278,17 +287,13 @@
         "stories/FormCheckbox.stories.jsx",
         "stories/FormRadio.stories.jsx",
         "stories/FormInput.stories.jsx",
-        "stories/FormTextarea.stories.jsx",
-        "stories/FormPasswordInput.stories.jsx",
-        "stories/FormInputGroup.stories.jsx"
+        "stories/FormTextarea.stories.jsx"
       ],
       "exports": [
         "AutoComplete",
         "Combobox",
         "FormField",
         "Input",
-        "InputGroup",
-        "PasswordInput",
         "SearchField",
         "Select",
         "TagInput",
@@ -296,9 +301,23 @@
       ]
     },
     {
+      "name": "WDS-derived product input composites",
+      "ownerLayer": "product",
+      "provenance": "direct-wds",
+      "wdsFamily": "Textinput/Textfield",
+      "storyEvidence": [
+        "stories/FormInputGroup.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx"
+      ],
+      "exports": [
+        "InputGroup",
+        "PasswordInput"
+      ]
+    },
+    {
       "name": "Selection and input product extensions",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
@@ -337,8 +356,8 @@
     },
     {
       "name": "WDS selection controls",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "wdsFamily": "Control/Checkbox, Control/Radio, Switch/Switch",
       "storyEvidence": [
         "stories/FormSelect.stories.jsx",
@@ -365,8 +384,8 @@
     },
     {
       "name": "WDS icon foundation",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "storyEvidence": [
         "stories/Iconography.stories.jsx"
       ],
@@ -377,8 +396,8 @@
     },
     {
       "name": "WDS layout primitives",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "wdsFamily": "Layout/Essential, Divider",
       "storyEvidence": [
         "stories/Layout.stories.jsx",
@@ -408,8 +427,8 @@
     },
     {
       "name": "Layout product extensions",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/LayoutDashboardGrid.stories.jsx",
         "stories/LayoutDashboardShell.stories.jsx",
@@ -427,8 +446,8 @@
     },
     {
       "name": "WDS navigation",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "wdsFamily": "Navigation/Category, Tab, Page Indicator, Pagination",
       "storyEvidence": [
         "stories/NavigationCategory.stories.jsx",
@@ -445,8 +464,8 @@
     },
     {
       "name": "Navigation product extension",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/Navigation.stories.jsx",
         "stories/NavigationAdaptive.stories.jsx",
@@ -475,20 +494,15 @@
     },
     {
       "name": "WDS overlays and presentation",
-      "layer": "wds-core",
-      "classification": "wds-adjacent",
+      "ownerLayer": "core",
+      "provenance": "wds-adjacent",
       "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
       "storyEvidence": [
         "stories/ContentTooltip.stories.jsx",
-        "stories/ContentBubble.stories.jsx",
-        "stories/ActionBookmark.stories.jsx",
-        "stories/OverlayPopover.stories.jsx",
-        "stories/OverlayHoverCard.stories.jsx",
         "stories/OverlayDropdownMenu.stories.jsx",
         "stories/OverlayConfirmAlert.stories.jsx",
         "stories/OverlayConfirmDialog.stories.jsx",
         "stories/OverlayDimmer.stories.jsx",
-        "stories/NavigationMenubar.stories.jsx",
         "stories/OverlayModal.stories.jsx",
         "stories/OverlaySnackbar.stories.jsx",
         "stories/OverlayToast.stories.jsx"
@@ -498,19 +512,32 @@
         "ConfirmDialog",
         "Dimmer",
         "DropdownMenu",
-        "HoverCard",
-        "Menubar",
         "Modal",
-        "Popover",
         "Snackbar",
         "Toast",
         "ToastStack"
       ]
     },
     {
+      "name": "WDS-adjacent product overlays",
+      "ownerLayer": "product",
+      "provenance": "wds-adjacent",
+      "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
+      "storyEvidence": [
+        "stories/NavigationMenubar.stories.jsx",
+        "stories/OverlayHoverCard.stories.jsx",
+        "stories/OverlayPopover.stories.jsx"
+      ],
+      "exports": [
+        "HoverCard",
+        "Menubar",
+        "Popover"
+      ]
+    },
+    {
       "name": "Overlay product extensions",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/OverlayCommandPalette.stories.jsx",
         "stories/OverlayDrawer.stories.jsx",
@@ -526,32 +553,42 @@
     },
     {
       "name": "WDS status and loading",
-      "layer": "wds-core",
-      "classification": "direct-wds",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
       "wdsFamily": "Skeleton, Circular",
       "storyEvidence": [
         "stories/StatusEmpty.stories.jsx",
         "stories/StatusFeedback.stories.jsx",
         "stories/StatusSkeleton.stories.jsx",
-        "stories/StatusSpinner.stories.jsx",
-        "stories/ProductProgress.stories.jsx",
-        "stories/ProductMeter.stories.jsx"
+        "stories/StatusSpinner.stories.jsx"
       ],
       "exports": [
         "Banner",
         "Callout",
-        "CircularProgress",
         "EmptyState",
-        "Meter",
-        "ProgressBar",
         "Skeleton",
         "Spinner"
       ]
     },
     {
+      "name": "WDS-derived product status indicators",
+      "ownerLayer": "product",
+      "provenance": "direct-wds",
+      "wdsFamily": "Skeleton, Circular",
+      "storyEvidence": [
+        "stories/ProductMeter.stories.jsx",
+        "stories/ProductProgress.stories.jsx"
+      ],
+      "exports": [
+        "CircularProgress",
+        "Meter",
+        "ProgressBar"
+      ]
+    },
+    {
       "name": "Communication product extension",
-      "layer": "lk-product-extension",
-      "classification": "product-extension",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
       "storyEvidence": [
         "stories/CommunicationMessage.stories.jsx",
         "stories/CommunicationMessageComposer.stories.jsx",
@@ -565,8 +602,8 @@
     },
     {
       "name": "Robotics navigation semantics",
-      "layer": "lk-robotics-extension",
-      "classification": "robotics-extension",
+      "ownerLayer": "robotics",
+      "provenance": "robotics-extension",
       "wdsFamily": "Robotics extension",
       "storyEvidence": [
         "stories/RoboticsNavigationAnnotations.stories.jsx",
@@ -574,6 +611,7 @@
         "stories/RoboticsNavigationHazardMarker.stories.jsx",
         "stories/RoboticsNavigationLane.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
+        "stories/RoboticsNavigationRobotMarker.stories.jsx",
         "stories/RoboticsNavigationRoute.stories.jsx",
         "stories/RoboticsNavigationTrajectory.stories.jsx",
         "stories/RoboticsNavigationWaypoint.stories.jsx"
@@ -583,6 +621,7 @@
         "HazardMarker",
         "LaneOverlay",
         "NavigationAnnotationLayer",
+        "RobotMarker",
         "RouteOverlay",
         "SpatialRegion",
         "TrajectoryOverlay",
@@ -591,8 +630,8 @@
     },
     {
       "name": "Robotics and viewer extension",
-      "layer": "lk-robotics-extension",
-      "classification": "robotics-extension",
+      "ownerLayer": "robotics",
+      "provenance": "robotics-extension",
       "wdsFamily": "Robotics extension",
       "storyEvidence": [
         "stories/EditorCommandBar.stories.jsx",
@@ -647,6 +686,92 @@
         "ViewerToolbarButton",
         "ViewportStatusBar"
       ]
+    }
+  ],
+  "internalModules": [
+    {
+      "path": "components/brand/lk-logo-paths.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/data/table-cell-styles.js",
+      "ownerLayer": "product"
+    },
+    {
+      "path": "components/forms/field-shared.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/internal/telemetryStatusLabel.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/internal/unit-format.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/internal/useMenuKeyboard.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/internal/useRovingToolbar.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/overlay/anchored-overlay.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/overlay/anchored-panel-style.js",
+      "ownerLayer": "product"
+    },
+    {
+      "path": "components/overlay/dialog-focus.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/robotics/_FacilityGlyph.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_HazardGlyph.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_navigationAnnotations.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_navigationEncoding.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_navigationProgressHead.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_NavigationFocus.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_NavigationStateGlyph.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_navigationVectorGlyph.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/robotics/_navigationVocabulary.js",
+      "ownerLayer": "robotics"
+    },
+    {
+      "path": "components/selection/pill-chip-style.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/status/status-presentation.js",
+      "ownerLayer": "core"
     }
   ]
 }

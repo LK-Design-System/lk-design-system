@@ -10,6 +10,7 @@ import {
   Joystick,
   Map2DCanvas,
   Popover,
+  RobotMarker,
   RobotStatusCard,
   Scene3DFrame,
   StatusBadge,
@@ -477,10 +478,12 @@ function ParityMapPlaceholder() {
       <path d="M30 150 H150 M150 26 V150 M250 150 V254 M250 200 H410" fill="none" stroke="var(--color-semantic-label-normal)" strokeWidth="3" opacity="0.6" />
       <polyline points="80,210 80,110 200,110 200,70 340,70" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" opacity="0.9" />
       {points.map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="4" fill="var(--color-semantic-primary-normal)" />)}
-      <g transform="translate(80,210)">
-        <circle r="9" fill="var(--color-semantic-primary-normal)" />
-        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="var(--color-semantic-static-white)" transform="rotate(30)" />
-      </g>
+      <RobotMarker
+        pose={{ id: 'amr', mapId: 'preview', position: { x: 80, y: 210 }, headingRad: -Math.PI / 2 }}
+        viewportScale={1}
+        showLabel={false}
+        aria-hidden="true"
+      />
     </svg>
   );
 }
@@ -501,8 +504,22 @@ function ViewerToolbarMapPlaceholder({ layers }) {
       {layers.map && <rect x="20" y="18" width="280" height="164" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
       {layers.map && <path d="M20 110 H120 M120 18 V110 M190 110 V182 M190 140 H300" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
       {layers.path && <polyline points="60,150 60,80 150,80 150,50 250,50" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" />}
-      {layers.robots && <circle cx="60" cy="150" r="6" fill="var(--color-semantic-primary-normal)" />}
-      {layers.robots && <circle cx="250" cy="50" r="6" fill="var(--color-semantic-primary-normal)" />}
+      {layers.robots && (
+        <RobotMarker
+          pose={{ id: 'amr-a', mapId: 'preview', position: { x: 60, y: 150 }, headingRad: -Math.PI / 2 }}
+          viewportScale={1}
+          showLabel={false}
+          aria-hidden="true"
+        />
+      )}
+      {layers.robots && (
+        <RobotMarker
+          pose={{ id: 'amr-b', mapId: 'preview', position: { x: 250, y: 50 }, headingRad: 0 }}
+          viewportScale={1}
+          showLabel={false}
+          aria-hidden="true"
+        />
+      )}
     </svg>
   );
 }

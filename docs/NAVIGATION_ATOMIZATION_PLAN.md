@@ -153,8 +153,10 @@ Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께
 | --- | --- |
 | `3757bfb` | 방향/벡터 글리프 원자를 `_navigationVectorGlyph`로 추출(+lane endpoint 화살표 hoist). circle-marker 기하는 역할별로 반지름이 달라 **공유 원자 아님**으로 판정(NAV_PIN과 달리)—로컬 유지. |
 | `d33d06c` | `LDS Robotics/Foundation/*` 계층 확립(Core 미러, sidebar 맨 앞). 기존 원자 3개 재배치 + `Encoding`→`Line & State Vocabulary` 오칭 교정(실제로 `_navigationVocabulary` 문서화, `_navigationEncoding` 아님) + 새 원자 페이지 3개(Vector Glyph·Codes·Viewer Tokens, live-from-source + play-test). 원자 페이지 3→6. atom-glyph baseline은 컴포넌트 스토리 기반이라 재배치·신설에 **제로 diff**. |
-| `36c3723` | Vector Glyph를 진짜 공유되는 방향 셰브론(lane·route·trajectory)만으로 좁힘. lane endpoint 화살표는 소비자가 LaneOverlay 하나뿐이라 공용 원자에서 로컬로 환원(over-promotion 취소). |
+| `36c3723` | Vector Glyph를 진짜 공유되는 방향 셰브론(lane·route)만으로 좁힘. lane endpoint 화살표는 소비자가 LaneOverlay 하나뿐이라 공용 원자에서 로컬로 환원(over-promotion 취소). Trajectory는 source-owned current sample에 붙는 `NAV_PROGRESS_HEAD`만 사용한다. |
 | `<pending>` | `Line & State Vocabulary`의 grab-bag을 분해해 공유 마커 몸통 `NAV_PIN`은 **Marker Pin**으로, 잔여 encoding 토큰은 **Navigation Encoding Tokens**로 정리했다. 후속 redesign에서 Route/Trajectory 공용 `NAV_PROGRESS_HEAD` geometry도 이 페이지가 실제 상수에서 렌더한다. |
+| `<pending>` | 채움 `NAVIGATION_DIRECTION_PATH`를 폐기하고 tip-anchored `NAVIGATION_OPEN_CHEVRON`으로 교체한다. Vector Glyph는 Lane의 static open-chevron geometry 페이지로 재정의하고 기존 current-position 비교는 Navigation Encoding Tokens의 `LineIntegratedProgressHead`로 통합한다. Lane은 full path 중간의 정적 entry→exit direction으로 한 번 사용하고, Route는 recurring direction을 제거하며, Route·Trajectory의 `NAV_PROGRESS_HEAD`는 같은 기하를 elapsed prefix 끝의 동적 진행 표식으로 사용한다. geometry는 공유하지만 role·placement·data contract는 분리한다. |
+| `<pending>` | **의미당 모양 하나로 재분리(2026-07-18)**: 공유 open V가 화면에서 방향/진행 구분을 잃어(미래 선이 표식 뒤로 이어짐, casing 이중 표식으로 chevron이 선에서 떠 보임) 어휘를 다시 갈랐다. Lane 정적 방향 = `NAV_DIRECTION_CHEVRON`(선 절개 후 선 자체가 같은 색·두께의 여는 V로 꺾임, 최장 직선 구간 중점 — 0.64 고정 비율 폐기), Route·Trajectory 동적 진행 = `NAV_PROGRESS_TRIANGLE` 단일 `marker-end` 채움 화살촉(자체 외곽선이 casing marker 쌍 대체) + tip 앞 `futureGap`. fraction 0 합성 carrier 제거, future opacity 드리프트(0.34/0.28) 단일화. |
 
 ### P2b — Navigation 밖 원자 감사·해소 (완료)
 

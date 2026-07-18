@@ -1,6 +1,15 @@
 import * as React from 'react';
+import { Button as RootButton } from '@lk-robotics/design-system-core';
+import { Button } from '@lk-robotics/design-system-core/core';
+import { ThemeToggle } from '@lk-robotics/design-system-core/theme';
 import {
-  Button,
+  ConversationMessage,
+  MessageFeed,
+  MessageComposer,
+  SourceDisclosure,
+  VirtualKeypad,
+} from '@lk-robotics/design-system-core/product';
+import {
   WaypointMarker,
   LaneOverlay,
   RouteOverlay,
@@ -8,16 +17,17 @@ import {
   SpatialRegion,
   FacilityTransition,
   EquipmentStatusCard,
-  ConversationMessage,
-  MessageFeed,
-  MessageComposer,
-  SourceDisclosure,
-  VirtualKeypad,
-} from '@lk-robotics/design-system-core';
+} from '@lk-robotics/design-system-core/robotics';
+
+// @ts-expect-error Robotics exports must not leak into the Core entrypoint.
+import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-robotics/design-system-core/core';
 
 export const consumerContract: React.ReactElement = <Button variant="primary">확인</Button>;
 
 // Robotics navigation extension — renderer-neutral SVG feature contracts.
+export const rootCompatibilityContract: React.ReactElement = <RootButton>Root compatibility</RootButton>;
+export const themeContract: React.ReactElement = <ThemeToggle target={null} persist={false} />;
+
 export const waypointContract: React.ReactElement = (
   <WaypointMarker
     waypoint={{ id: 'w1', label: '웨이포인트', mapId: 'm1', position: { x: 0, y: 0 }, roles: ['holding'] }}

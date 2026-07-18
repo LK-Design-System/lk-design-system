@@ -26,6 +26,7 @@ const MUTED = 'var(--color-semantic-label-neutral)';
 const LINE = 'var(--color-semantic-line-normal-normal)';
 const SURFACE = 'var(--color-semantic-background-elevated-normal)';
 const ACCENT = 'var(--viewer-accent, var(--color-semantic-primary-normal))';
+const ROUTE_TONE = 'var(--viewer-warning, var(--color-semantic-status-cautionary-foreground))';
 
 // The shared, unifiable dash tokens (small ring + region/shape outline). Path
 // dashes stay component-local by design, so they are named here but not owned.
@@ -48,6 +49,27 @@ const HALO_ROWS = [
   { key: 'caption', label: '메타 라벨 (caption)' },
 ];
 
+const PROGRESS_HEAD_REFERENCES = [
+  {
+    label: 'Mapbox Navigation · Route arrow',
+    href: 'https://docs.mapbox.com/android/navigation/guides/ui-components/route-arrow/',
+  },
+  {
+    label: 'TomTom · Route progress and instructions',
+    href: 'https://developer.tomtom.com/navigation/android/guides/map-display/map-display-for-views/routes',
+  },
+  {
+    label: 'W3C SVG · Path markers',
+    href: 'https://www.w3.org/TR/svg-markers/',
+  },
+];
+
+const PROGRESS_HEAD_STANDARD = {
+  key: 'solid',
+  label: '선에 결합된 채움 현재 진행 화살촉',
+  note: '현재 지점까지의 선 자체가 몸통이고 끝점에 채움 화살촉 하나가 marker-end로 붙습니다. 화살촉 앞의 미래 선은 간격을 두고 다시 시작해 tip이 실제 끝점으로 읽힙니다. Route와 Trajectory가 공유하는 확정된 현재 진행 문법입니다.',
+};
+
 function Card({ title, hint, children }) {
   return (
     <section
@@ -66,6 +88,233 @@ function Card({ title, hint, children }) {
       </header>
       {children}
     </section>
+  );
+}
+
+function ProgressHeadMarkerDefs({ idPrefix, scale = 1 }) {
+  return (
+    <>
+      <NavigationProgressHeadDefs idPrefix={`${idPrefix}-route`} tone={ROUTE_TONE} surface={SURFACE} inverseScale={scale} />
+      <NavigationProgressHeadDefs idPrefix={`${idPrefix}-trajectory`} tone={ACCENT} surface={SURFACE} inverseScale={scale} />
+    </>
+  );
+}
+
+function ProgressHeadSpecimen() {
+  const idPrefix = `progress-specimen-${PROGRESS_HEAD_STANDARD.key}`;
+  return (
+    <svg
+      width="148"
+      height="52"
+      viewBox="0 0 148 52"
+      role="img"
+      aria-label={`${PROGRESS_HEAD_STANDARD.label} 확대 표본`}
+      style={{ display: 'block', flex: '0 0 auto' }}
+    >
+      <ProgressHeadMarkerDefs idPrefix={idPrefix} />
+      <line x1="8" y1="16" x2="66" y2="16" stroke={SURFACE} strokeWidth={NAV_PROGRESS_HEAD.route.casingWidth} strokeLinecap="round" />
+      <line x1="8" y1="16" x2="66" y2="16" stroke={ROUTE_TONE} strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth} strokeLinecap="round" markerEnd={`url(#${idPrefix}-route-head)`} />
+      <line x1="76" y1="36" x2="136" y2="36" stroke={SURFACE} strokeWidth={NAV_PROGRESS_HEAD.trajectory.casingWidth} strokeLinecap="round" />
+      <line x1="76" y1="36" x2="136" y2="36" stroke={ACCENT} strokeWidth={NAV_PROGRESS_HEAD.trajectory.coreWidth} strokeLinecap="round" markerEnd={`url(#${idPrefix}-trajectory-head)`} />
+    </svg>
+  );
+}
+
+function ProgressHeadScene() {
+  const svgRef = React.useRef(null);
+  const [headScale, setHeadScale] = React.useState(1);
+  const headStyle = PROGRESS_HEAD_STANDARD.key;
+  const gridId = `progress-head-grid-${headStyle}`;
+  const markerId = `progress-scene-${headStyle}`;
+
+  React.useLayoutEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return undefined;
+    const updateHeadScale = () => {
+      const width = svg.getBoundingClientRect().width;
+      if (width > 0) setHeadScale(720 / width);
+    };
+    updateHeadScale();
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(updateHeadScale);
+    observer?.observe(svg);
+    window.addEventListener('resize', updateHeadScale);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', updateHeadScale);
+    };
+  }, []);
+
+  return (
+    <svg
+      ref={svgRef}
+      width="100%"
+      viewBox="0 0 720 250"
+      role="img"
+      aria-label={`${PROGRESS_HEAD_STANDARD.label}, 현재 선과 결합한 Route 62% 및 Trajectory 현재 sample`}
+      style={{ display: 'block' }}
+      data-progress-head-scene={headStyle}
+    >
+      <defs>
+        <pattern id={gridId} width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0H0V40" fill="none" stroke={LINE} strokeWidth="0.75" opacity="0.55" />
+        </pattern>
+      </defs>
+      <ProgressHeadMarkerDefs idPrefix={markerId} scale={headScale} />
+      <rect x="0.5" y="0.5" width="719" height="249" rx="12" fill="var(--color-semantic-background-normal-normal)" stroke={LINE} />
+      <rect x="1" y="1" width="718" height="248" rx="12" fill={`url(#${gridId})`} />
+
+      <text x="24" y="32" fill={INK} style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
+        Route / Trajectory · active line + progress head
+      </text>
+
+      <path
+        d="M514 78.6 L672 68"
+        fill="none"
+        stroke={SURFACE}
+        strokeWidth="6.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M514 78.6 L672 68"
+        fill="none"
+        stroke={ROUTE_TONE}
+        strokeWidth="3"
+        strokeDasharray="8 6"
+        opacity={NAV_PROGRESS_HEAD.futureOpacity}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+        data-route-path=""
+        data-route-future-path=""
+      />
+      <path
+        d="M48 176 L192 176 L316 92 L500 79.5"
+        fill="none"
+        stroke={SURFACE}
+        strokeWidth={NAV_PROGRESS_HEAD.route.casingWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M48 176 L192 176 L316 92 L500 79.5"
+        fill="none"
+        stroke={ROUTE_TONE}
+        strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+        data-route-progress-path=""
+        data-progress-head={headStyle}
+        data-head-role="route"
+        data-screen-fixed="true"
+        data-head-rendering="marker-end"
+        markerEnd={`url(#${markerId}-route-head)`}
+      />
+      <path
+        d="M351.2 133.1 C444 84 522 91 672 88"
+        fill="none"
+        stroke={SURFACE}
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M351.2 133.1 C444 84 522 91 672 88"
+        fill="none"
+        stroke={ACCENT}
+        strokeWidth="2.5"
+        opacity={NAV_PROGRESS_HEAD.futureOpacity}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+        data-trajectory-path=""
+        data-trajectory-future-path=""
+      />
+      <path
+        d="M48 202 C188 202 250 190 339 139.9"
+        fill="none"
+        stroke={SURFACE}
+        strokeWidth={NAV_PROGRESS_HEAD.trajectory.casingWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M48 202 C188 202 250 190 339 139.9"
+        fill="none"
+        stroke={ACCENT}
+        strokeWidth={NAV_PROGRESS_HEAD.trajectory.coreWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+        data-trajectory-progress-path=""
+        data-progress-head={headStyle}
+        data-head-role="trajectory"
+        data-screen-fixed="true"
+        data-head-rendering="marker-end"
+        markerEnd={`url(#${markerId}-trajectory-head)`}
+      />
+
+      <g transform="translate(24 226)" aria-hidden="true">
+        <line x1="0" y1="0" x2="30" y2="0" stroke={ROUTE_TONE} strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth} />
+        <text x="40" y="4" fill={INK} style={{ fontFamily: 'var(--font-sans)', fontSize: 11 }}>Route · 진행 62%</text>
+        <line x1="190" y1="0" x2="220" y2="0" stroke={ACCENT} strokeWidth={NAV_PROGRESS_HEAD.trajectory.coreWidth} />
+        <text x="230" y="4" fill={INK} style={{ fontFamily: 'var(--font-sans)', fontSize: 11 }}>Trajectory · current sample</text>
+      </g>
+    </svg>
+  );
+}
+
+function ProgressHeadStandard() {
+  return (
+    <section
+      style={{
+        display: 'grid',
+        gap: 12,
+        padding: 14,
+        border: `1px solid ${LINE}`,
+        borderRadius: 'var(--radius-sm)',
+        background: SURFACE,
+      }}
+    >
+      <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ minWidth: 0, flex: '1 1 360px' }}>
+          <h3 style={{ margin: 0, color: INK, fontSize: 'var(--body2-size)' }}>{PROGRESS_HEAD_STANDARD.label}</h3>
+          <p style={{ margin: '4px 0 0', color: MUTED, fontSize: 11, lineHeight: 1.6 }}>{PROGRESS_HEAD_STANDARD.note}</p>
+        </div>
+        <ProgressHeadSpecimen />
+      </header>
+      <ProgressHeadScene />
+    </section>
+  );
+}
+
+function LineIntegratedProgressHeadDemo() {
+  return (
+    <main data-progress-head-standard style={{ width: 'min(980px, 100%)', display: 'grid', gap: 16 }}>
+      <Card
+        title="선에 결합된 현재 진행 표식 표준"
+        hint="별도 원형 표식을 경로 위에 얹지 않습니다. 현재 지점까지의 선이 경로 접선을 따라 채움 화살촉으로 끝나고, 화살촉 앞의 미래 선은 간격을 두고 다시 시작하는 확정 문법입니다."
+      >
+        <div style={{ display: 'grid', gap: 14, minWidth: 0 }}>
+          <ProgressHeadStandard />
+        </div>
+        <p style={{ margin: 0, color: MUTED, fontSize: 11, lineHeight: 1.6 }}>
+          진행 표식의 방향은 로봇이 바라보는 방향이 아니라 경로 접선입니다. 로봇 자세가 필요하면 별도 로봇 레이어가 맡고, 이 표식에는 원·배경판·그림자를 사용하지 않습니다.
+        </p>
+        <nav data-progress-head-references aria-label="경로 진행 화살표 시각 레퍼런스" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 12px' }}>
+          {PROGRESS_HEAD_REFERENCES.map((reference) => (
+            <a key={reference.href} href={reference.href} target="_blank" rel="noreferrer" style={{ color: ACCENT, fontSize: 11, fontWeight: 'var(--fw-semibold)' }}>
+              {reference.label}
+            </a>
+          ))}
+        </nav>
+      </Card>
+    </main>
   );
 }
 
@@ -156,35 +405,43 @@ function BadgeAndHit() {
           <NavigationStateGlyph kind="unknown" size={10} color={INK} />
         </svg>
       </Tile>
-      <Tile label={`현재 진행 head · ${NAV_PROGRESS_HEAD.width}×${NAV_PROGRESS_HEAD.height}px open V`} mono="NAV_PROGRESS_HEAD">
+      <Tile label={`현재 진행 head · ${NAV_PROGRESS_HEAD.width}×${NAV_PROGRESS_HEAD.height}px 채움 화살촉`} mono="NAV_PROGRESS_HEAD">
         <svg width={72} height={44} viewBox="0 0 72 44" aria-hidden="true" style={{ display: 'block' }}>
           <NavigationProgressHeadDefs
-            idPrefix="encoding-progress-head"
+            idPrefix="encoding-progress"
             tone={ACCENT}
             surface={SURFACE}
             inverseScale={1}
-            role="route"
           />
           <line
             x1="8"
             y1="22"
-            x2="58"
+            x2="46"
             y2="22"
             stroke={SURFACE}
             strokeWidth={NAV_PROGRESS_HEAD.route.casingWidth}
             strokeLinecap="round"
-            markerEnd="url(#encoding-progress-head-casing)"
           />
           <line
             data-encoding-progress-head=""
             x1="8"
             y1="22"
-            x2="58"
+            x2="46"
             y2="22"
             stroke={ACCENT}
             strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth}
             strokeLinecap="round"
-            markerEnd="url(#encoding-progress-head-core)"
+            markerEnd="url(#encoding-progress-head)"
+          />
+          <line
+            x1="60"
+            y1="22"
+            x2="68"
+            y2="22"
+            stroke={ACCENT}
+            strokeWidth="3"
+            strokeLinecap="round"
+            opacity={NAV_PROGRESS_HEAD.futureOpacity}
           />
         </svg>
       </Tile>
@@ -348,7 +605,10 @@ const SL_FACILITY = {
   motionState: 'stopped', operatingMode: 'agv', sessionState: 'requested',
   currentMapId: SL_MAP, destinationMapId: SL_MAP,
 };
-const SL_LANE = { id: 'sl-ln', mapId: SL_MAP, label: '차선', points: [{ x: 8, y: 40 }, { x: 24, y: 22 }, { x: 44, y: 12 }], relation: { kind: 'single' }, availability: 'available' };
+// A straight run long enough for the screen-fixed direction chevron to read
+// as an arrow at cell scale — the subject of this table is focus/selection
+// layering, so the lane must not turn into direction-mark noise.
+const SL_LANE = { id: 'sl-ln', mapId: SL_MAP, label: '차선', points: [{ x: 4, y: 30 }, { x: 48, y: 22 }], relation: { kind: 'single' }, availability: 'available' };
 
 const SL_STATES = [
   { key: 'base', label: '기본', props: {} },
@@ -407,7 +667,7 @@ function EncodingCatalog() {
       <Card title="상태 opacity" hint="비활성 0.45, 지연 0.76, 기본 1 — navStateOpacity() 한 함수를 일곱 렌더러가 공유합니다.">
         <OpacitySwatches />
       </Card>
-      <Card title="상태 badge · 현재 진행 head · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE), 경로·궤적의 선에 결합하는 open progress head(NAV_PROGRESS_HEAD), 투명 WCAG 2.2 타깃(NAV_HIT). 진행 head는 pose badge가 아니며 path tangent를 따릅니다.">
+      <Card title="상태 badge · 현재 진행 head · hit target" hint="상태 글리프 뒤 원형 chip(NAV_STATE_BADGE), 경로·궤적의 선 끝에 결합하는 채움 화살촉 진행 head(NAV_PROGRESS_HEAD), 투명 WCAG 2.2 타깃(NAV_HIT). 진행 head는 pose badge가 아니며 path tangent를 따르고, 화살촉 앞의 미래 선은 간격을 두고 다시 시작합니다.">
         <BadgeAndHit />
       </Card>
       <Card title="라벨 halo 계층" hint="paint-order stroke로 텍스트 뒤에 깔리는 legibility halo. 식별·상세·메타 세 단계를 NAV_LABEL_HALO가 소유합니다.">
@@ -489,12 +749,14 @@ export const Overview = {
       throw new Error('The state-badge swatch must render NAV_STATE_BADGE.radius.');
     }
     const progressHead = root.querySelector('[data-encoding-progress-head]');
-    const progressMarker = root.querySelector('#encoding-progress-head-core');
+    const progressMarker = root.querySelector('#encoding-progress-head');
+    const progressDefinition = progressMarker?.querySelector('[data-navigation-progress-head-definition="head"]');
     if (
       progressHead?.getAttribute('stroke-width') !== String(NAV_PROGRESS_HEAD.route.coreWidth) ||
-      progressMarker?.querySelector('[data-navigation-progress-head-definition="core"]')?.getAttribute('d') !== NAV_PROGRESS_HEAD.path
+      progressDefinition?.getAttribute('d') !== NAV_PROGRESS_HEAD.path ||
+      progressDefinition?.getAttribute('fill') === 'none'
     ) {
-      throw new Error('The progress-head swatch must render NAV_PROGRESS_HEAD geometry.');
+      throw new Error('The progress-head swatch must render the filled NAV_PROGRESS_HEAD geometry.');
     }
     const hit = root.querySelector('[data-encoding-hit]');
     if (
@@ -605,6 +867,72 @@ export const NarrowViewport = {
     if (!fixture) throw new Error('The narrow encoding fixture is missing.');
     if (fixture.scrollWidth > fixture.clientWidth + 1) {
       throw new Error('The encoding catalog must not create horizontal overflow at 320px.');
+    }
+  },
+};
+
+export const LineIntegratedProgressHead = {
+  name: '시나리오 · 경로에 결합된 현재 진행',
+  parameters: storyDescription(
+    'Route와 Trajectory의 현재 진행을 별도 원형 표식이 아니라 현재 지점까지의 선 끝에 결합된 채움 화살촉으로 표현합니다. 화살촉 앞의 미래 선은 간격을 두고 다시 시작하고, 방향은 로봇이 바라보는 방향이 아닌 경로 접선을 사용합니다.',
+  ),
+  render: () => <LineIntegratedProgressHeadDemo />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-progress-head-standard]');
+    if (!root) throw new Error('The progress-head standard fixture is missing.');
+
+    const scenes = Array.from(root.querySelectorAll('[data-progress-head-scene]'));
+    if (scenes.length !== 1 || scenes[0].dataset.progressHeadScene !== PROGRESS_HEAD_STANDARD.key) {
+      throw new Error('The standard must render exactly one solid progress head scene.');
+    }
+    if (root.scrollWidth > root.clientWidth + 1) {
+      throw new Error('The line-integrated progress-head standard must not create horizontal overflow.');
+    }
+
+    const routeGeometry = 'M48 176 L192 176 L316 92 L500 79.5';
+    for (const scene of scenes) {
+      const routeProgressPath = scene.querySelector('[data-route-progress-path]');
+      const heads = Array.from(scene.querySelectorAll('[data-progress-head]'));
+      if (routeProgressPath?.getAttribute('d') !== routeGeometry || routeProgressPath.getAttribute('stroke') !== ROUTE_TONE) {
+        throw new Error('The progress-head standard must keep the approved active route geometry and tone.');
+      }
+      if (
+        heads.length !== 2
+        || heads.some((head) => head.dataset.progressHead !== scene.dataset.progressHeadScene)
+        || heads.some((head) => head.dataset.screenFixed !== 'true')
+        || heads.some((head) => head.dataset.headRendering !== 'marker-end')
+        || heads.some((head) => !head.getAttribute('marker-end')?.startsWith('url(#progress-scene-'))
+        || !heads.some((head) => head.dataset.headRole === 'route')
+        || !heads.some((head) => head.dataset.headRole === 'trajectory')
+      ) {
+        throw new Error('The scene must join the shared marker-end progress head to both active lines.');
+      }
+      const definitions = Array.from(scene.querySelectorAll('[data-navigation-progress-head-definition="head"]'));
+      if (
+        definitions.length !== 2
+        || definitions.some((definition) => definition.getAttribute('d') !== NAV_PROGRESS_HEAD.path)
+        || definitions.some((definition) => definition.getAttribute('fill') === 'none')
+      ) {
+        throw new Error('The specimen must render the production filled NAV_PROGRESS_HEAD geometry.');
+      }
+      // The future lines must resume past the tip (the gap grammar), never
+      // restart at the elapsed line's endpoint.
+      const routeFuture = scene.querySelector('[data-route-future-path]');
+      const trajectoryFuture = scene.querySelector('[data-trajectory-future-path]');
+      if (
+        !routeFuture || !trajectoryFuture
+        || routeFuture.getAttribute('d')?.includes('M48 ')
+        || routeFuture.getAttribute('d')?.startsWith('M508')
+        || trajectoryFuture.getAttribute('d')?.startsWith('M346')
+      ) {
+        throw new Error('The future line must resume after the gap in front of the progress-head tip.');
+      }
+      if (scene.querySelector('[data-current-position-marker]')) throw new Error('Detached current-position markers must not return.');
+    }
+
+    const references = Array.from(root.querySelectorAll('[data-progress-head-references] a'));
+    if (references.length !== PROGRESS_HEAD_REFERENCES.length || references.some((link) => !link.href.startsWith('https://'))) {
+      throw new Error('The standard must expose every authoritative reference as an HTTPS link.');
     }
   },
 };

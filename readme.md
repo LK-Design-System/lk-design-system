@@ -8,8 +8,9 @@ or an unrelated custom system.
 
 The intended relationship is:
 
-- **WDS Core**: keep WDS foundations, generic component structure, interaction
-  expectations, and documentation conventions as the baseline.
+- **LDS Core**: own generic foundations and component contracts. WDS provenance
+  is recorded independently as `direct-wds` or `wds-adjacent`; provenance does
+  not decide the runtime package layer.
 - **LK Theme Override**: replace WDS visual identity with LK ROBOTICS color,
   brand, typography, status, radius, and effect decisions.
 - **LK Product Extension**: add generic LK product components only when they are
@@ -28,6 +29,7 @@ Authoritative references:
 
 - `docs/references/wds/TOKEN_MAP.json`
 - `docs/references/wds/LAYER_CLASSIFICATION.json`
+- `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`
 - `docs/references/wds/CONFLICT_AUDIT.md`
 - `docs/references/wds/VISUAL_TOKEN_EXCEPTIONS.json`
 
@@ -42,9 +44,17 @@ LK ROBOTICS 핵심 디자인 시스템 패키지입니다. 토큰, React 컴포�
 ## 패키지 사용
 
 ```tsx
-import { Button, ProductCard, TopBar } from '@lk-robotics/design-system-core';
+import { Button } from '@lk-robotics/design-system-core/core';
+import { Lockup, ThemeToggle } from '@lk-robotics/design-system-core/theme';
+import { ProductCard, TopBar } from '@lk-robotics/design-system-core/product';
+import { RobotStatusCard } from '@lk-robotics/design-system-core/robotics';
 import '@lk-robotics/design-system-core/styles.css';
 ```
+
+새 코드는 소유 계층의 진입점을 사용합니다. 기존
+`@lk-robotics/design-system-core` aggregate root와 `components/*` deep path는
+호환성을 위해 유지하며, aggregate root는 네 계층 export의 정확한 합집합으로
+자동 생성됩니다.
 
 패키지 메타데이터:
 
@@ -55,6 +65,7 @@ import '@lk-robotics/design-system-core/styles.css';
 - ESM 진입점: `dist/index.js`
 - CJS 진입점: `dist/index.cjs`
 - 타입 진입점: `dist/index.d.ts`
+- 계층 진입점: `core`, `theme`, `product`, `robotics`의 ESM/CJS/타입 subpath
 
 ## 레포 구조
 
@@ -82,6 +93,7 @@ CI는 npm을 기준으로 실행하지만, 패키지 스크립트 내부에서�
 ```powershell
 npm run check:tokens
 npm run check:type-surface
+npm run check:layers
 npm run check:contracts
 npm run check:publish-policy
 npm run check:consumer
@@ -100,7 +112,7 @@ npm run check:audit
 npm run check:ops-release
 ```
 
-패키지 진입 파일은 현재 204개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
+패키지 진입 파일은 현재 205개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
 
 ```powershell
 npm run generate:entry
@@ -121,7 +133,7 @@ npm run build:storybook
 WDS 원천 번호 체계(`1 Theme`, `3 Component / 2 Action` 등)는 public sidebar title이 아니라 `docs/references/wds/`의 근거 데이터에만 남깁니다.
 `LDS Product`와 `LDS Robotics`는 재사용 가능한 확장 컴포넌트/패턴만 다루며, 완성된 앱 화면, 템플릿, 워크플로우, 데모 페이지를 Storybook source of truth로 올리지 않습니다.
 보고/감사/보정표 UI와 운영 문서는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
-WDS 원본 및 실제 확장 컴포넌트 회귀를 비교하기 위한 89개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
+WDS 원본 및 실제 확장 컴포넌트 회귀를 비교하기 위한 99개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
 접근성, 토큰 lifecycle, 컴포넌트 상태 매트릭스, 도메인 컴포넌트 계약, 릴리즈와 ownership 같은 기준은 `docs/` 아래 Markdown 문서에서 관리합니다.
 레포 수치가 바뀌면 `npm run report:inventory`로 현재 값을 확인하고, `npm run check:inventory`로 README/docs/story 표시 수치가 stale하지 않은지 검증합니다.
 

@@ -25,6 +25,12 @@ assert(JSON.stringify(Object.keys(pkg.peerDependencies || {}).sort()) === JSON.s
 assert(!pkg.files?.includes('components'), 'Raw components source must not be published; compiled component subpaths live under dist.');
 assert(pkg.exports?.['./components/*']?.import === './dist/components/*.js', 'Compiled ESM component subpaths must resolve under dist/components.');
 assert(pkg.exports?.['./components/*']?.require === './dist/components/*.cjs', 'Compiled CJS component subpaths must resolve under dist/components.');
+for (const layer of ['core', 'theme', 'product', 'robotics']) {
+  const layerExport = pkg.exports?.[`./${layer}`];
+  assert(layerExport?.types === `./dist/${layer}.d.ts`, `${layer} types must resolve to dist/${layer}.d.ts.`);
+  assert(layerExport?.import === `./dist/${layer}.js`, `${layer} ESM must resolve to dist/${layer}.js.`);
+  assert(layerExport?.require === `./dist/${layer}.cjs`, `${layer} CJS must resolve to dist/${layer}.cjs.`);
+}
 
 for (const expected of ['dist', 'tokens', 'assets', 'styles.css', 'readme.md', 'CHANGELOG.md', 'docs/DEPRECATIONS.md']) {
   assert(pkg.files?.includes(expected), `package.json files must include ${expected}.`);
@@ -33,7 +39,16 @@ for (const expected of ['dist', 'tokens', 'assets', 'styles.css', 'readme.md', '
 assert(changelog.includes(`## ${pkg.version} -`), `CHANGELOG.md must include the current package version ${pkg.version}.`);
 assert(deprecations.includes('# Deprecations'), 'docs/DEPRECATIONS.md must exist as the generated public deprecation register.');
 
-for (const expected of ['./dist/index.cjs', './dist/index.js', './dist/index.d.ts']) {
+for (const expected of [
+  './dist/index.cjs',
+  './dist/index.js',
+  './dist/index.d.ts',
+  ...['core', 'theme', 'product', 'robotics'].flatMap((layer) => [
+    `./dist/${layer}.cjs`,
+    `./dist/${layer}.js`,
+    `./dist/${layer}.d.ts`,
+  ]),
+]) {
   const serialized = JSON.stringify(pkg);
   assert(serialized.includes(expected), `package metadata must reference ${expected}.`);
 }
@@ -43,4 +58,4 @@ for (const expected of ['private: true', '내부 Git 소비', 'npm publish', 'Gi
   assert(policyText.includes(expected), `Docs must state publish policy phrase: ${expected}`);
 }
 
-console.log('Validated publish policy: private Git consumption, empty runtime dependencies, compiled exports, current changelog, deprecation register, and future GitHub Packages intent are documented.');
+console.log('Validated publish policy: private Git consumption, empty runtime dependencies, aggregate/layer/deep compiled exports, current changelog, deprecation register, and future GitHub Packages intent are documented.');

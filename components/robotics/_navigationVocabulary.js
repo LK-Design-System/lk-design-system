@@ -21,6 +21,8 @@
 //     needs a design decision, not a mechanical hoist.
 // See docs/NAVIGATION_ATOMIZATION_PLAN.md.
 
+import { NAV_PROGRESS_TRIANGLE } from './_navigationVectorGlyph.js';
+
 /**
  * State opacity. Every navigation renderer dims a disabled marker and softens
  * stale data by the same amount so one map reads as one system. Byte-identical
@@ -112,28 +114,40 @@ export const NAV_HIT = { radius: 17.5, screenTargetSize: 24 };
 
 /**
  * Small circular status badge sitting behind a NavigationStateGlyph.
+ * `pathNormalOffset` lifts a path-anchored badge off its line along the upper
+ * screen normal (badge radius + line half-width + clear gap), so a badge never
+ * sits ON the stroke it annotates. Route and Trajectory use it for their
+ * status/condition/invalid/stale badges; Lane keeps its own 32px normal axis
+ * because its badges share a ladder with labels and metadata.
  */
-export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
+export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5, pathNormalOffset: 16 };
 
 /**
  * Line-integrated current-progress head shared by RouteOverlay and
- * TrajectoryOverlay. The elapsed/current path is the shaft; this open V is
- * attached with SVG `marker-end` so its tip stays on the source position and
- * its orientation follows the incoming path tangent. Marker dimensions are
- * screen-space dimensions after the owning renderer applies viewportScale's
- * inverse to markerWidth/markerHeight.
+ * TrajectoryOverlay. The elapsed/current path is the shaft; a solid filled
+ * triangle (`NAV_PROGRESS_TRIANGLE`) is attached with SVG `marker-end` so its
+ * tip IS the source position and its orientation follows the incoming path
+ * tangent. The triangle carries its own thin surface outline, so one marker
+ * definition replaces the old casing/core marker pair. The future line resumes
+ * only after `futureGap` CSS px of clear space in front of the tip, so the tip
+ * is a real visual endpoint instead of a decal on a continuing line. Marker
+ * dimensions are screen-space dimensions after the owning renderer applies
+ * viewportScale's inverse to markerWidth/markerHeight.
  */
 export const NAV_PROGRESS_HEAD = {
-  path: 'M 2 1.5 L 16 8 L 2 14.5',
-  viewBox: '0 0 18 16',
-  refX: 16,
-  refY: 8,
-  width: 18,
-  height: 16,
+  ...NAV_PROGRESS_TRIANGLE,
+  outlineWidth: 1.5,
+  // The painted shaft stops `tipSetback` px short of the tip and the marker's
+  // refX shifts by the same amount, so the shaft's round cap hides inside the
+  // triangle body instead of poking past the tip — while the tip itself still
+  // paints exactly on the source anchor.
+  tipSetback: 8,
+  futureGap: 6,
+  futureOpacity: 0.3,
   collisionRadius: 20,
-  obstacle: { x: -20, y: -10, width: 24, height: 20 },
-  route: { casingWidth: 7, coreWidth: 4, futureOpacity: 0.34 },
-  trajectory: { casingWidth: 6.5, coreWidth: 3.5, futureOpacity: 0.28 },
+  obstacle: { x: -16, y: -9, width: 24, height: 18 },
+  route: { casingWidth: 7, coreWidth: 4 },
+  trajectory: { casingWidth: 6.5, coreWidth: 3.5 },
 };
 
 /**

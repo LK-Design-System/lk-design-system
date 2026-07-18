@@ -17,7 +17,6 @@ import {
   nextRender,
   assertNavigationProgressHead,
   assertNavigationStateGlyphGeometry,
-  assertNavigationVectorGeometry,
 } from './RoboticsNavigationRouteTrajectory.shared.jsx';
 
 const meta = {
@@ -83,9 +82,11 @@ export const RouteAndTrajectoryOverview = {
       if (!route.querySelector('[data-route-progress-marker][data-current-segment-id="segment-l1-current"]')) {
         throw new Error('Explicit current-segment progress marker is missing.');
       }
+      if (route.querySelector('[data-route-direction]')) {
+        throw new Error('Route must not render recurring direction glyphs; current progress stays on the path-integrated head.');
+      }
       assertNavigationProgressHead(route, 'Overview Route', 'route');
       assertNavigationStateGlyphGeometry(route, 'Overview Route');
-      assertNavigationVectorGeometry(route, 'Overview Route');
     });
     trajectories.forEach((trajectory) => {
       const path = trajectory.querySelector('[data-trajectory-path]');
@@ -209,8 +210,10 @@ export const RouteAndTrajectoryStates = {
     if (!trajectory.querySelector('[data-trajectory-overlay-state="invalid"]') || !trajectory.querySelector('[data-trajectory-overlay-state="stale"]')) {
       throw new Error('Trajectory invalid + stale needs independent ! and ~ visual evidence.');
     }
+    if (canvasElement.querySelector('[data-route-direction]')) {
+      throw new Error('Route state fixtures must not restore recurring direction glyphs.');
+    }
     assertNavigationStateGlyphGeometry(canvasElement, 'Route/Trajectory states');
-    assertNavigationVectorGeometry(canvasElement, 'Route/Trajectory states');
     const renderedKinds = new Set(Array.from(canvasElement.querySelectorAll('[data-navigation-state-glyph]'))
       .map((glyph) => glyph.getAttribute('data-navigation-state-glyph')));
     for (const kind of ['planned', 'active', 'waiting', 'blocked', 'rerouting', 'completed', 'conflict', 'invalid', 'stale']) {
@@ -457,14 +460,14 @@ export const ShortPathCompoundMarkers = {
       ) {
         throw new Error('The progress head must remain at its exact path anchor while colliding status badges use screen slots.');
       }
-      if (!normalProgressHead.matches('[data-route-progress-carrier="core"]')) {
-        throw new Error('An explicit Route progress position needs a tangent-aligned carrier at the exact source point.');
+      if (!normalProgressHead.matches('[data-route-progress-past]')) {
+        throw new Error('An explicit Route progress position must terminate the elapsed line itself — no synthetic carrier stub.');
       }
       const mismatchPast = mismatchRoute?.querySelector('[data-route-progress-past]');
       if (
         mismatchRoute?.getAttribute('data-progress-position-mismatch') !== 'true'
         || mismatchPast?.getAttribute('d') !== 'M 54 70 L 162 70'
-        || mismatchRoute.querySelector('[data-navigation-progress-head], [data-route-progress-carrier], [data-navigation-progress-head-obstacle]')
+        || mismatchRoute.querySelector('[data-navigation-progress-head], [data-navigation-progress-head-obstacle]')
         || !mismatchRoute.getAttribute('aria-label')?.includes('25%')
       ) {
         throw new Error('A mismatched explicit position must fail closed without detaching the progress head from the fraction boundary.');
@@ -514,10 +517,16 @@ export const ShortPathCompoundMarkers = {
       if (routeStateGlyphs.length < 4 || routeStateGlyphs.some((glyph) => !glyph.style.color)) {
         throw new Error('Route marker outlines must retain status hue while internal SVG glyphs use viewer foreground.');
       }
-      const midPathRect = midRoute.querySelector('[data-route-path]')?.getBoundingClientRect();
+      // The full segment now paints as elapsed prefix + gap + future suffix,
+      // so the length guard measures their union instead of one path element.
+      const midPastRect = midRoute.querySelector('[data-route-progress-past]')?.getBoundingClientRect();
+      const midFutureRect = midRoute.querySelector('[data-route-path]')?.getBoundingClientRect();
+      const midPaintedWidth = midPastRect && midFutureRect
+        ? Math.max(midPastRect.right, midFutureRect.right) - Math.min(midPastRect.left, midFutureRect.left)
+        : 0;
       const midConditionAnchor = Number(midRoute.querySelector('[data-route-condition-glyph]')?.getAttribute('data-route-anchor-x'));
       const midProgressAnchor = Number(midRoute.querySelector('[data-route-progress-marker]')?.getAttribute('data-route-anchor-x'));
-      if (!midPathRect || midPathRect.width < 180 || midConditionAnchor !== midProgressAnchor) {
+      if (midPaintedWidth < 180 || midConditionAnchor !== midProgressAnchor) {
         throw new Error('Medium-length route did not preserve the exact natural condition/progress anchor collision.');
       }
       assertProgressTextSpacing(route, 'Short Route');
@@ -532,7 +541,9 @@ export const ShortPathCompoundMarkers = {
         assertNavigationStateGlyphGeometry(fixture, fixtureLabel);
         const role = fixture.hasAttribute('data-lk-trajectory-overlay') ? 'trajectory' : 'route';
         assertNavigationProgressHead(fixture, fixtureLabel, role);
-        if (role === 'route') assertNavigationVectorGeometry(fixture, fixtureLabel);
+        if (role === 'route' && fixture.querySelector('[data-route-direction]')) {
+          throw new Error(`${fixtureLabel} must not render recurring direction glyphs.`);
+        }
       }
 
       // Cross-entity contract: coordinated labels never overlap each other or
@@ -933,6 +944,9 @@ export const RouteAndTrajectoryNarrow320 = {
     if (!trajectory?.getAttribute('aria-label')?.includes('현재 sample 6')) {
       throw new Error('Hiding visual labels removed current trajectory sample from the accessible name.');
     }
+    if (route.querySelector('[data-route-direction]')) {
+      throw new Error('The 320px Route must not restore recurring direction glyphs.');
+    }
     await waitFor(() => {
       const svg = narrow.querySelector('svg[data-css-viewbox-scale]');
       const cssScale = Number(svg?.getAttribute('data-css-viewbox-scale'));
@@ -952,7 +966,6 @@ export const RouteAndTrajectoryNarrow320 = {
       assertCircleContainsTarget('[data-trajectory-hit-target-core]', 'Trajectory');
       assertNavigationStateGlyphGeometry(route, '320px Route');
       assertNavigationStateGlyphGeometry(trajectory, '320px Trajectory');
-      assertNavigationVectorGeometry(route, '320px Route');
       assertNavigationProgressHead(route, '320px Route', 'route');
       assertNavigationProgressHead(trajectory, '320px Trajectory', 'trajectory');
     });

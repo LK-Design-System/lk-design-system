@@ -99,7 +99,7 @@ Storybook 표면의 LDS 자체 규칙:
 ### 1. 문제, 분류, 중복 여부
 
 1. 어떤 사용자의 어떤 반복 문제와 실제 업무 결정을 지원하는지 한 문장으로 쓴다.
-2. `WDS Core`, `LK Theme Override`, `LK Product Extension`, `LK Robotics Extension` 중 하나로 분류한다.
+2. Runtime owner layer를 `core`, `theme`, `product`, `robotics` 중 하나로 정하고, 설계 provenance를 `direct-wds`, `wds-adjacent`, `theme-override`, `product-extension`, `robotics-extension` 중 하나로 별도 기록한다. WDS 근거와 코드 소유 계층을 같은 축으로 취급하지 않는다.
 3. 같은 family의 기존 component, `.prompt.md`, Storybook story, token, 관련 문서를 조사한다.
 4. 기존 component의 확장 또는 여러 primitive의 composition으로 해결 가능한지 먼저 판단한다.
 5. 새 component가 필요하면 기존 sibling과의 책임·API·시각 차이를 명시한다. 이름이나 제품 영역이 다르다는 이유만으로 새 component를 만들지 않는다.
@@ -139,6 +139,8 @@ Storybook 표면의 LDS 자체 규칙:
 - listener, timer, observer cleanup, async race, stale closure, stable key/ID, SSR hydration을 점검한다.
 - 긴 목록, SVG 지도, 차트, scroll/resize/pointer 처리에서 불필요한 전체 render와 고빈도 계산을 점검한다.
 - React 18/19 declaration, public export, package subpath, `"use client"`, tree-shaking 경계를 확인한다.
+- 새 코드는 소유 계층의 `/core`, `/theme`, `/product`, `/robotics` 진입점으로 공개한다. Aggregate root는 호환용 합집합이며 별도 소유권을 만들지 않는다.
+- Core→Product/Robotics, Product→Robotics와 계층 순환을 만들지 않는다. 내부 helper도 `PUBLIC_EXPORT_CLASSIFICATION.json`에 owner를 등록하고 `npm run check:layers`를 통과한다.
 - 앱 route, 권한 정책, API 호출, transport 상태 머신은 public component contract에 넣지 않는다.
 
 API와 상태 증거는 [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md), 접근성 증거는 [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)에 반영한다.
@@ -237,6 +239,7 @@ Figma Variables export/import, 토큰 lifecycle, deprecation, breaking change �
 
 Storybook은 모든 구현 세부사항이 아니라 실제로 필요한 컴포넌트 상태를 문서화합니다. 원본 카드와 1:1 비교하기 위한 `visual-parity` story는 `!dev` 태그로 sidebar에서 숨기고, public story에는 대표 상태만 남깁니다.
 Public Storybook title은 사용자 탐색 기준입니다. `LDS Core/Foundation`, `LDS Core/Components/<family>`, `LDS Theme/...`, `LDS Product/...`, `LDS Robotics/...`를 사용하고, `1 Theme`, `2 Element`, `3 Component / 2 Action` 같은 WDS 원천 번호 체계는 `docs/references/wds/`의 근거 데이터에만 남깁니다.
+Public export의 canonical Storybook evidence 최상위 prefix는 `ownerLayer`와 일치해야 합니다. `direct-wds` 같은 provenance는 WDS 추적 근거이지 Storybook 또는 package owner를 자동으로 결정하지 않습니다. Core renderer로 Theme variant나 Robotics 전용 asset vocabulary를 설명하는 별도 확장 페이지는 `LAYER_CLASSIFICATION.json`의 `storyLayerExceptions`에 story owner, primary export owner, 구체적 이유를 등록한 경우에만 다른 prefix를 사용할 수 있으며 package export owner를 중복 생성하지 않습니다.
 `LDS Product`와 `LDS Robotics` story는 재사용 가능한 확장 컴포넌트나 패턴이어야 합니다. 완성 앱 화면, 템플릿, 워크플로우, 데모 페이지는 Storybook public surface로 추가하지 않습니다.
 디자인 시스템 계약은 Storybook 문서 페이지가 아니라 `docs/` 아래 Markdown 문서와 검증 스크립트에 둡니다. 도메인별 기준은 별도 결과 화면을 만들지 않고 관련 컴포넌트 story와 `docs/ROBOTICS_PATTERNS.md` 같은 문서 계약에 반영합니다.
 우선순위:

@@ -11,6 +11,10 @@
     "baseUrl": ".",
     "paths": {
       "@lk-robotics/design-system-core": ["src/index.d.ts"],
+      "@lk-robotics/design-system-core/core": ["src/core.d.ts"],
+      "@lk-robotics/design-system-core/theme": ["src/theme.d.ts"],
+      "@lk-robotics/design-system-core/product": ["src/product.d.ts"],
+      "@lk-robotics/design-system-core/robotics": ["src/robotics.d.ts"],
       "react": ["node_modules/@types/react18/index.d.ts"],
       "react/*": ["node_modules/@types/react18/*"]
     },

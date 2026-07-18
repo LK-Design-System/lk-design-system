@@ -1,11 +1,9 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
-import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
 import {
   NavigationProgressHeadDefs,
   ProgressHeadObstacle,
-  progressCarrierPath,
   routeProgressGeometry,
 } from './_navigationProgressHead.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
@@ -71,6 +69,21 @@ function pathFromPoints(points) {
 function markerTransform(point, inverseScale, screenSlot) {
   const anchor = `translate(${point.x} ${point.y}) scale(${inverseScale})`;
   return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
+}
+
+// Badges never sit ON the line they annotate: without a collision slot they
+// float on the upper screen normal of their path anchor (shared
+// NAV_STATE_BADGE.pathNormalOffset). A vertical run uses its left side as the
+// stable tie-breaker, mirroring LaneOverlay's label normal.
+function badgeNormalSlot(point) {
+  const radians = (point.angle ?? 0) * Math.PI / 180;
+  let x = Math.sin(radians);
+  let y = -Math.cos(radians);
+  if (y > 0 || (Math.abs(y) < 0.0001 && x > 0)) {
+    x *= -1;
+    y *= -1;
+  }
+  return { x: x * NAV_STATE_BADGE.pathNormalOffset, y: y * NAV_STATE_BADGE.pathNormalOffset };
 }
 
 function markerCollisionLayout(markers, scale, fixedMarkers = []) {
@@ -306,11 +319,9 @@ export function RouteOverlay({
     ? routeProgressGeometry(statusPoints, progress.fraction, progress.position, scale)
     : undefined;
   const progressPoint = progressGeometry?.point;
-  const progressHeadVisible = Number.isFinite(progressGeometry?.angle);
+  const progressHeadVisible = Boolean(progressGeometry?.headVisible);
   const progressPrefixPath = progressGeometry ? pathFromPoints(progressGeometry.prefixPoints) : '';
-  const progressCarrier = progressHeadVisible && progressGeometry?.usesCarrier
-    ? progressCarrierPath(progressGeometry.point, progressGeometry.angle, inverseScale)
-    : '';
+  const progressFuturePath = progressGeometry ? pathFromPoints(progressGeometry.suffixPoints) : '';
   const routeStatusPoint = pointAlong(statusPoints, 0.18);
   const statusCondition = ['normal', 'waiting', 'blocked', 'conflict'].includes(statusSegment?.condition)
     ? statusSegment.condition
@@ -395,7 +406,6 @@ export function RouteOverlay({
         const points = (segment.points ?? []).filter(finitePoint);
         const pathData = pathFromPoints(points);
         const midpoint = pointAlong(points, 0.5);
-        const directionPoint = pointAlong(points, 0.7);
         const segmentSelected = selected || segment.id === selectedSegmentId;
         const segmentFocused = !pointerOnly && (focused || hasRootFocus || focusedSegment === segment.id);
         const condition = ['normal', 'waiting', 'blocked', 'conflict'].includes(segment.condition)
@@ -408,6 +418,10 @@ export function RouteOverlay({
         const tone = segmentTone(normalizedSegment, invalid);
         const dash = segmentDash(normalizedSegment);
         const isProgressSegment = segment.id === progressSegment?.id && Boolean(progressGeometry);
+        // Once the head is visible, the future line (and its casing) resumes
+        // only after the shared gap in front of the tip — the tip is a real
+        // endpoint, not a decal over a continuing line.
+        const segmentBodyPath = isProgressSegment && progressHeadVisible ? progressFuturePath : pathData;
         const conditionGlyphKind = CONDITION_GLYPH_KIND[condition];
         const conditionSlot = segment.id === statusSegment?.id ? routeMarkerSlot('condition') : undefined;
         const segmentLabelSlot = segment.id === statusSegment?.id
@@ -481,10 +495,10 @@ export function RouteOverlay({
                 pointerEvents="none"
               />
             )}
-            {pathData && !segmentSelected && !segmentFocused && (
+            {segmentBodyPath && !segmentSelected && !segmentFocused && (
               <path
                 data-route-casing=""
-                d={pathData}
+                d={segmentBodyPath}
                 fill="none"
                 stroke="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
                 strokeWidth="6.5"
@@ -494,15 +508,15 @@ export function RouteOverlay({
                 pointerEvents="none"
               />
             )}
-            {pathData && (
+            {segmentBodyPath && (
               <path
                 data-route-path=""
-                d={pathData}
+                d={segmentBodyPath}
                 fill="none"
                 stroke={tone}
                 strokeWidth={isProgressSegment ? 3 : phase === 'current' || segmentSelected ? 4 : 3}
                 strokeDasharray={dash}
-                opacity={isProgressSegment ? NAV_PROGRESS_HEAD.route.futureOpacity : undefined}
+                opacity={isProgressSegment ? NAV_PROGRESS_HEAD.futureOpacity : undefined}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
@@ -515,7 +529,7 @@ export function RouteOverlay({
                 tone={tone}
                 surface={surface}
                 inverseScale={inverseScale}
-                role="route"
+                tipSetbackPx={progressGeometry.tipSetbackPx}
               />
             )}
             {isProgressSegment && progressPrefixPath && (
@@ -529,17 +543,16 @@ export function RouteOverlay({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
-                  markerEnd={progressHeadVisible && !progressCarrier ? `url(#${progressHeadId}-casing)` : undefined}
                   pointerEvents="none"
                 />
                 <path
                   data-route-progress-past=""
-                  data-route-progress-marker={progressHeadVisible && !progressCarrier ? '' : undefined}
-                  data-navigation-progress-head={progressHeadVisible && !progressCarrier ? 'route' : undefined}
-                  data-head-rendering={progressHeadVisible && !progressCarrier ? 'marker-end' : undefined}
-                  data-current-segment-id={progressHeadVisible && !progressCarrier ? progressSegment.id : undefined}
-                  data-route-anchor-x={progressHeadVisible && !progressCarrier ? progressPoint.x : undefined}
-                  data-route-anchor-y={progressHeadVisible && !progressCarrier ? progressPoint.y : undefined}
+                  data-route-progress-marker={progressHeadVisible ? '' : undefined}
+                  data-navigation-progress-head={progressHeadVisible ? 'route' : undefined}
+                  data-head-rendering={progressHeadVisible ? 'marker-end' : undefined}
+                  data-current-segment-id={progressHeadVisible ? progressSegment.id : undefined}
+                  data-route-anchor-x={progressHeadVisible ? progressPoint.x : undefined}
+                  data-route-anchor-y={progressHeadVisible ? progressPoint.y : undefined}
                   d={progressPrefixPath}
                   fill="none"
                   stroke={tone}
@@ -547,42 +560,7 @@ export function RouteOverlay({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   vectorEffect="non-scaling-stroke"
-                  markerEnd={progressHeadVisible && !progressCarrier ? `url(#${progressHeadId}-core)` : undefined}
-                  pointerEvents="none"
-                />
-              </>
-            )}
-            {isProgressSegment && progressCarrier && (
-              <>
-                <path
-                  data-route-progress-carrier="casing"
-                  data-route-progress-casing=""
-                  d={progressCarrier}
-                  fill="none"
-                  stroke={surface}
-                  strokeWidth={NAV_PROGRESS_HEAD.route.casingWidth}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                  markerEnd={`url(#${progressHeadId}-casing)`}
-                  pointerEvents="none"
-                />
-                <path
-                  data-route-progress-carrier="core"
-                  data-route-progress-marker=""
-                  data-navigation-progress-head="route"
-                  data-head-rendering="marker-end"
-                  data-current-segment-id={progressSegment.id}
-                  data-route-anchor-x={progressPoint.x}
-                  data-route-anchor-y={progressPoint.y}
-                  d={progressCarrier}
-                  fill="none"
-                  stroke={tone}
-                  strokeWidth={NAV_PROGRESS_HEAD.route.coreWidth}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                  markerEnd={`url(#${progressHeadId}-core)`}
+                  markerEnd={progressHeadVisible ? `url(#${progressHeadId}-head)` : undefined}
                   pointerEvents="none"
                 />
               </>
@@ -610,27 +588,13 @@ export function RouteOverlay({
                 />
               </>
             )}
-            {pathData && (
-              <path
-                data-route-direction=""
-                data-navigation-vector-glyph="direction"
-                d={NAVIGATION_DIRECTION_PATH}
-                transform={`translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`}
-                fill={tone}
-                stroke="var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))"
-                strokeWidth="1"
-                strokeLinejoin="round"
-                vectorEffect="non-scaling-stroke"
-                pointerEvents="none"
-              />
-            )}
             {conditionGlyphKind && (
               <g
                 data-route-condition-glyph={condition}
                 data-route-screen-slot={conditionSlot ? 'condition' : undefined}
                 data-route-anchor-x={midpoint.x}
                 data-route-anchor-y={midpoint.y}
-                transform={markerTransform(midpoint, inverseScale, conditionSlot)}
+                transform={markerTransform(midpoint, inverseScale, conditionSlot ?? badgeNormalSlot(midpoint))}
                 aria-hidden="true"
                 pointerEvents="none"
               >
@@ -703,7 +667,7 @@ export function RouteOverlay({
                   data-route-label-anchor-x={midpoint.x}
                   data-route-label-anchor-y={midpoint.y}
                   x="0"
-                  y={segmentLabelSlot ? 0 : -12}
+                  y={segmentLabelSlot ? 0 : conditionGlyphKind ? -30 : -12}
                   textAnchor="middle"
                   transform={markerTransform(midpoint, inverseScale, segmentLabelSlot)}
                   fill="var(--viewer-foreground, var(--color-semantic-label-strong))"
@@ -733,7 +697,7 @@ export function RouteOverlay({
             data-route-screen-slot={stateSlot ? item.state : undefined}
             data-route-anchor-x={point.x}
             data-route-anchor-y={point.y}
-            transform={markerTransform(point, inverseScale, stateSlot)}
+            transform={markerTransform(point, inverseScale, stateSlot ?? badgeNormalSlot(point))}
             aria-hidden="true"
             pointerEvents="none"
           >
@@ -768,7 +732,7 @@ export function RouteOverlay({
           data-route-screen-slot={routeMarkerSlot('status') ? 'status' : undefined}
           data-route-anchor-x={routeStatusPoint.x}
           data-route-anchor-y={routeStatusPoint.y}
-          transform={markerTransform(routeStatusPoint, inverseScale, routeMarkerSlot('status'))}
+          transform={markerTransform(routeStatusPoint, inverseScale, routeMarkerSlot('status') ?? badgeNormalSlot(routeStatusPoint))}
           aria-hidden="true"
           pointerEvents="none"
         >

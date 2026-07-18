@@ -1,7 +1,7 @@
 import React from 'react';
 import { isFocusVisibleTarget } from './_NavigationFocus.js';
 import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
-import { NAVIGATION_DIRECTION_PATH } from './_navigationVectorGlyph.js';
+import { NAV_DIRECTION_CHEVRON } from './_navigationVectorGlyph.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
 import { navStateOpacity, NAV_HIT, NAV_STATE_BADGE, NAV_LABEL_HALO, NAV_FOCUS, NAV_SELECTION } from './_navigationVocabulary.js';
 
@@ -14,6 +14,11 @@ const AVAILABILITY_LABEL = {
   closed: '폐쇄',
   unknown: '상태 미확인',
 };
+
+// Endpoint-orientation cue (entry/exit docking pose) — a deliberately distinct
+// closed shaft+head arrow, NOT the travel-direction chevron vocabulary. It
+// annotates one endpoint's orientation constraint, not the lane's flow.
+const LANE_ENDPOINT_ORIENTATION_ARROW = 'M -5 0 H 5 M 2 -3 L 5 0 L 2 3';
 
 function finitePoint(point) {
   return point && Number.isFinite(point.x) && Number.isFinite(point.y);
@@ -56,6 +61,24 @@ function pointAlong(points, ratio) {
   }
 
   return { ...points[points.length - 1], angle: 0 };
+}
+
+// The direction chevron sits on the midpoint of the longest straight run, so
+// it can never straddle a corner or land on an ambiguous elbow the way a
+// fixed path-ratio anchor could.
+function longestSegmentAnchor(points) {
+  let best = { start: points[0], end: points[1], length: -1 };
+  for (let index = 1; index < points.length; index += 1) {
+    const start = points[index - 1];
+    const end = points[index];
+    const length = Math.hypot(end.x - start.x, end.y - start.y);
+    if (length > best.length) best = { start, end, length };
+  }
+  return {
+    x: (best.start.x + best.end.x) / 2,
+    y: (best.start.y + best.end.y) / 2,
+    angle: Math.atan2(best.end.y - best.start.y, best.end.x - best.start.x) * 180 / Math.PI,
+  };
 }
 
 function orientationAngle(orientation, fallbackAngle) {
@@ -178,7 +201,7 @@ function endpointMarker(point, endpoint, kind, fallbackAngle, inverseScale) {
       {orientation != null && (
         <path
           data-lane-orientation={endpoint.orientation}
-          d="M -5 0 H 5 M 2 -3 L 5 0 L 2 3"
+          d={LANE_ENDPOINT_ORIENTATION_ARROW}
           transform={`rotate(${orientation}) translate(10 0)`}
           fill="none"
           stroke={VIEWER_FOREGROUND}
@@ -218,6 +241,7 @@ export function LaneOverlay({
 }) {
   const [hasFocus, setHasFocus] = React.useState(false);
   const obstacle = useNavigationObstacles();
+  const directionMaskId = `lk-lane-direction-${React.useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
   const pointerOnly = ariaHidden === true || ariaHidden === 'true';
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
@@ -230,7 +254,17 @@ export function LaneOverlay({
 
   const pathData = pathFromPoints(points);
   const midpoint = pointAlong(points, 0.5);
-  const directionPoint = pointAlong(points, 0.64);
+  const directionPoint = longestSegmentAnchor(points);
+  // The direction cut is a MASK on the lane's own strokes, never a painted
+  // eraser: coincident overlays (a route or trajectory sharing the corridor)
+  // must keep their lines intact through the lane's chevron window.
+  const maskPad = 24 * inverseScale;
+  const laneBounds = points.reduce((bounds, point) => ({
+    minX: Math.min(bounds.minX, point.x),
+    minY: Math.min(bounds.minY, point.y),
+    maxX: Math.max(bounds.maxX, point.x),
+    maxY: Math.max(bounds.maxY, point.y),
+  }), { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity });
   const entryDirection = pointAlong(points.slice(0, 2), 0.5).angle;
   const exitDirection = pointAlong(points.slice(-2), 0.5).angle;
   const interactive = typeof onActivate === 'function';
@@ -357,6 +391,29 @@ export function LaneOverlay({
         ...style,
       }}
     >
+      {pathData && (
+        <defs aria-hidden="true">
+          <mask id={directionMaskId} maskUnits="userSpaceOnUse">
+            <rect
+              x={laneBounds.minX - maskPad}
+              y={laneBounds.minY - maskPad}
+              width={laneBounds.maxX - laneBounds.minX + maskPad * 2}
+              height={laneBounds.maxY - laneBounds.minY + maskPad * 2}
+              fill="white"
+            />
+            <g transform={`translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`}>
+              <rect
+                data-lane-direction-window=""
+                x={NAV_DIRECTION_CHEVRON.window.from}
+                y={-NAV_DIRECTION_CHEVRON.window.clearWidth / 2}
+                width={NAV_DIRECTION_CHEVRON.window.to - NAV_DIRECTION_CHEVRON.window.from}
+                height={NAV_DIRECTION_CHEVRON.window.clearWidth}
+                fill="black"
+              />
+            </g>
+          </mask>
+        </defs>
+      )}
       {visibleFocus && pathData && (
         <path
           data-lane-focus-ring=""
@@ -394,6 +451,7 @@ export function LaneOverlay({
           strokeLinecap="round"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
+          mask={`url(#${directionMaskId})`}
           pointerEvents="none"
         />
       )}
@@ -408,6 +466,7 @@ export function LaneOverlay({
           strokeLinecap="round"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
+          mask={`url(#${directionMaskId})`}
           pointerEvents="none"
         />
       )}
@@ -421,6 +480,7 @@ export function LaneOverlay({
           strokeDasharray="2 7"
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
+          mask={`url(#${directionMaskId})`}
           pointerEvents="none"
         />
       )}
@@ -450,19 +510,35 @@ export function LaneOverlay({
         </>
       )}
       {pathData && (
-        <path
-          data-lane-direction="entry-to-exit"
-          data-lane-direction-anchor-x={directionPoint.x}
-          data-lane-direction-anchor-y={directionPoint.y}
-          d={NAVIGATION_DIRECTION_PATH}
+        <g
+          data-lane-direction-line-chevron=""
+          data-navigation-direction-chevron="lane-direction"
           transform={`translate(${directionPoint.x} ${directionPoint.y}) rotate(${directionPoint.angle}) scale(${inverseScale})`}
-          fill={baseColor}
-          stroke={VIEWER_SURFACE}
-          strokeWidth="1"
-          strokeLinejoin="round"
-          vectorEffect="non-scaling-stroke"
           pointerEvents="none"
-        />
+        >
+          <rect
+            {...obstacle(`lane:${lane.id}:direction`)}
+            data-lane-direction-obstacle=""
+            x="-8"
+            y="-9"
+            width="16"
+            height="18"
+            fill="transparent"
+            opacity="0"
+          />
+          <path
+            data-lane-direction="entry-to-exit"
+            data-lane-direction-anchor-x={directionPoint.x}
+            data-lane-direction-anchor-y={directionPoint.y}
+            d={NAV_DIRECTION_CHEVRON.path}
+            fill="none"
+            stroke={baseColor}
+            strokeWidth={selected ? 3.5 : 2.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </g>
       )}
       {showEndpoints && (
         <g {...obstacle(`lane:${lane.id}:endpoint:entry`)}>

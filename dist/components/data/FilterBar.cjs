@@ -4,8 +4,8 @@
 var _chunkE6VQGURVcjs = require('../../chunk-E6VQGURV.cjs');
 require('../../chunk-53XYQH2K.cjs');
 require('../../chunk-SXDAFCHS.cjs');
-require('../../chunk-VGM7HVYY.cjs');
 require('../../chunk-5BTJQMJB.cjs');
+require('../../chunk-VGM7HVYY.cjs');
 require('../../chunk-NKOFS67F.cjs');
 
 

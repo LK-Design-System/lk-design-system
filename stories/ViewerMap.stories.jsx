@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map2DCanvas } from '../src/index.js';
+import { Map2DCanvas, RobotMarker } from '../src/index.js';
 import { Map2DCanvasCard as Map2DCanvasCardStory } from './RoboticsAndViz.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -33,10 +33,12 @@ function MapRoutePreview() {
       {[80, 200, 340].map((x, index) => (
         <circle key={x} cx={x} cy={[210, 110, 70][index]} r="4" fill="var(--color-semantic-primary-normal)" />
       ))}
-      <g transform="translate(80,210)">
-        <circle r="9" fill="var(--color-semantic-primary-normal)" />
-        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="var(--color-semantic-static-white)" transform="rotate(30)" />
-      </g>
+      <RobotMarker
+        pose={{ id: 'amr', mapId: 'preview', position: { x: 80, y: 210 }, headingRad: -Math.PI / 2 }}
+        viewportScale={1}
+        showLabel={false}
+        aria-hidden="true"
+      />
     </svg>
   );
 }

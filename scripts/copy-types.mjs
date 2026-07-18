@@ -3,9 +3,12 @@ import path from 'node:path';
 
 const root = process.cwd();
 const distDir = path.join(root, 'dist');
+const entryDeclarationNames = ['index', 'core', 'theme', 'product', 'robotics'];
 
 await mkdir(distDir, { recursive: true });
-await copyFile(path.join(root, 'src', 'index.d.ts'), path.join(distDir, 'index.d.ts'));
+await Promise.all(entryDeclarationNames.map((name) => (
+  copyFile(path.join(root, 'src', `${name}.d.ts`), path.join(distDir, `${name}.d.ts`))
+)));
 
 async function copyDeclarations(sourceDir, targetDir) {
   let copied = 0;
@@ -25,4 +28,7 @@ async function copyDeclarations(sourceDir, targetDir) {
 
 const copiedComponents = await copyDeclarations(path.join(root, 'components'), path.join(distDir, 'components'));
 
-console.log(`Copied src/index.d.ts and ${copiedComponents} component declaration files to dist.`);
+console.log(
+  `Copied ${entryDeclarationNames.length} entry declaration files and `
+    + `${copiedComponents} component declaration files to dist.`,
+);

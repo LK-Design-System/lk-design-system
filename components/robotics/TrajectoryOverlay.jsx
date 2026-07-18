@@ -4,7 +4,6 @@ import { NavigationStateGlyph } from './_NavigationStateGlyph.js';
 import {
   NavigationProgressHeadDefs,
   ProgressHeadObstacle,
-  progressCarrierPath,
   trajectoryProgressGeometry,
 } from './_navigationProgressHead.js';
 import { NavigationAnnotationBlock, annotationPriority, useNavigationObstacles } from './_navigationAnnotations.js';
@@ -52,6 +51,21 @@ function pathFromPoints(points) {
 function markerTransform(point, inverseScale, screenSlot) {
   const anchor = `translate(${point.x} ${point.y}) scale(${inverseScale})`;
   return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
+}
+
+// Badges never sit ON the line they annotate: without a collision slot they
+// float on the upper screen normal of their path anchor (shared
+// NAV_STATE_BADGE.pathNormalOffset). A vertical run uses its left side as the
+// stable tie-breaker, mirroring LaneOverlay's label normal.
+function badgeNormalSlot(point) {
+  const radians = (point.angle ?? 0) * Math.PI / 180;
+  let x = Math.sin(radians);
+  let y = -Math.cos(radians);
+  if (y > 0 || (Math.abs(y) < 0.0001 && x > 0)) {
+    x *= -1;
+    y *= -1;
+  }
+  return { x: x * NAV_STATE_BADGE.pathNormalOffset, y: y * NAV_STATE_BADGE.pathNormalOffset };
 }
 
 function markerCollisionLayout(markers, scale, fixedMarkers = []) {
@@ -236,12 +250,14 @@ export function TrajectoryOverlay({
   const currentPointIndex = currentIndex == null
     ? -1
     : finiteSamples.findIndex(({ sourceIndex }) => sourceIndex === currentIndex);
-  const currentProgress = trajectoryProgressGeometry(points, currentPointIndex);
+  const currentProgress = trajectoryProgressGeometry(points, currentPointIndex, scale);
   const markerPoint = currentProgress?.point ?? pointAlong(points, 0.5);
+  const currentHeadVisible = Boolean(currentProgress?.headVisible);
   const currentPrefixPath = currentProgress ? pathFromPoints(currentProgress.prefixPoints) : '';
-  const currentCarrier = currentProgress?.usesCarrier
-    ? progressCarrierPath(currentProgress.point, currentProgress.angle, inverseScale)
-    : '';
+  const currentFuturePath = currentProgress ? pathFromPoints(currentProgress.suffixPoints) : '';
+  // Once the head is visible, the future line (and its casing) resumes only
+  // after the shared gap in front of the tip.
+  const trajectoryBodyPath = currentHeadVisible ? currentFuturePath : pathData;
   const statePoint = pointAlong(points, 0.12);
   const tone = statusTone(trajectory?.status, invalid);
   const dash = statusDash(trajectory?.status);
@@ -269,7 +285,7 @@ export function TrajectoryOverlay({
       radius: MARKER_RADIUS_PX[item.state],
     })),
   ].filter(Boolean);
-  const fixedProgressMarkers = currentProgress ? [{
+  const fixedProgressMarkers = currentHeadVisible ? [{
     name: 'current',
     point: currentProgress.point,
     radius: NAV_PROGRESS_HEAD.collisionRadius,
@@ -374,10 +390,10 @@ export function TrajectoryOverlay({
           pointerEvents="none"
         />
       )}
-      {pathData && !selected && !focusVisible && (
+      {trajectoryBodyPath && !selected && !focusVisible && (
         <path
           data-trajectory-casing=""
-          d={pathData}
+          d={trajectoryBodyPath}
           fill="none"
           stroke={surface}
           strokeWidth="5"
@@ -387,28 +403,28 @@ export function TrajectoryOverlay({
           pointerEvents="none"
         />
       )}
-      {pathData && (
+      {trajectoryBodyPath && (
         <path
           data-trajectory-path=""
-          d={pathData}
+          d={trajectoryBodyPath}
           fill="none"
           stroke={tone}
           strokeWidth={currentProgress ? 2.5 : selected || trajectory?.status === 'active' ? 3.5 : 2.5}
           strokeDasharray={dash}
-          opacity={currentProgress ? NAV_PROGRESS_HEAD.trajectory.futureOpacity : undefined}
+          opacity={currentProgress ? NAV_PROGRESS_HEAD.futureOpacity : undefined}
           strokeLinecap="round"
           strokeLinejoin="round"
           vectorEffect="non-scaling-stroke"
           pointerEvents="none"
         />
       )}
-      {currentProgress && (
+      {currentHeadVisible && (
         <NavigationProgressHeadDefs
           idPrefix={progressHeadId}
           tone={tone}
           surface={surface}
           inverseScale={inverseScale}
-          role="trajectory"
+          tipSetbackPx={currentProgress.tipSetbackPx}
         />
       )}
       {currentProgress && currentPrefixPath && (
@@ -422,17 +438,16 @@ export function TrajectoryOverlay({
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
-            markerEnd={currentCarrier ? undefined : `url(#${progressHeadId}-casing)`}
             pointerEvents="none"
           />
           <path
             data-trajectory-progress-past=""
-            data-trajectory-current-marker={currentCarrier ? undefined : ''}
-            data-trajectory-progress-marker={currentCarrier ? undefined : ''}
-            data-navigation-progress-head={currentCarrier ? undefined : 'trajectory'}
-            data-head-rendering={currentCarrier ? undefined : 'marker-end'}
-            data-trajectory-anchor-x={currentCarrier ? undefined : currentProgress.point.x}
-            data-trajectory-anchor-y={currentCarrier ? undefined : currentProgress.point.y}
+            data-trajectory-current-marker={currentHeadVisible ? '' : undefined}
+            data-trajectory-progress-marker={currentHeadVisible ? '' : undefined}
+            data-navigation-progress-head={currentHeadVisible ? 'trajectory' : undefined}
+            data-head-rendering={currentHeadVisible ? 'marker-end' : undefined}
+            data-trajectory-anchor-x={currentHeadVisible ? currentProgress.point.x : undefined}
+            data-trajectory-anchor-y={currentHeadVisible ? currentProgress.point.y : undefined}
             d={currentPrefixPath}
             fill="none"
             stroke={tone}
@@ -440,42 +455,7 @@ export function TrajectoryOverlay({
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
-            markerEnd={currentCarrier ? undefined : `url(#${progressHeadId}-core)`}
-            pointerEvents="none"
-          />
-        </>
-      )}
-      {currentProgress && currentCarrier && (
-        <>
-          <path
-            data-trajectory-progress-carrier="casing"
-            data-trajectory-progress-casing=""
-            d={currentCarrier}
-            fill="none"
-            stroke={surface}
-            strokeWidth={NAV_PROGRESS_HEAD.trajectory.casingWidth}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-            markerEnd={`url(#${progressHeadId}-casing)`}
-            pointerEvents="none"
-          />
-          <path
-            data-trajectory-progress-carrier="core"
-            data-trajectory-current-marker=""
-            data-trajectory-progress-marker=""
-            data-navigation-progress-head="trajectory"
-            data-head-rendering="marker-end"
-            data-trajectory-anchor-x={currentProgress.point.x}
-            data-trajectory-anchor-y={currentProgress.point.y}
-            d={currentCarrier}
-            fill="none"
-            stroke={tone}
-            strokeWidth={NAV_PROGRESS_HEAD.trajectory.coreWidth}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-            markerEnd={`url(#${progressHeadId}-core)`}
+            markerEnd={currentHeadVisible ? `url(#${progressHeadId}-head)` : undefined}
             pointerEvents="none"
           />
         </>
@@ -505,7 +485,7 @@ export function TrajectoryOverlay({
           />
         </>
       )}
-      {currentProgress && (
+      {currentHeadVisible && (
         <ProgressHeadObstacle
           obstacle={obstacle}
           id={`trajectory:${trajectory.id}:progress-head`}
@@ -522,7 +502,7 @@ export function TrajectoryOverlay({
           data-trajectory-screen-slot={markerLayout ? 'status' : undefined}
           data-trajectory-anchor-x={statePoint.x}
           data-trajectory-anchor-y={statePoint.y}
-          transform={markerTransform(statePoint, inverseScale, trajectoryMarkerSlot('status'))}
+          transform={markerTransform(statePoint, inverseScale, trajectoryMarkerSlot('status') ?? badgeNormalSlot(statePoint))}
           aria-hidden="true"
           pointerEvents="none"
         >
@@ -553,7 +533,7 @@ export function TrajectoryOverlay({
             data-trajectory-screen-slot={stateSlot ? item.state : undefined}
             data-trajectory-anchor-x={point.x}
             data-trajectory-anchor-y={point.y}
-            transform={markerTransform(point, inverseScale, stateSlot)}
+            transform={markerTransform(point, inverseScale, stateSlot ?? badgeNormalSlot(point))}
             aria-hidden="true"
             pointerEvents="none"
           >

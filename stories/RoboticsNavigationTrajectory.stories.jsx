@@ -134,8 +134,26 @@ export const Statuses = {
       if (!trajectory.querySelector(`[data-navigation-state-glyph="${status}"]`)) {
         throw new Error(`${status} trajectory needs a matching state glyph.`);
       }
+      if (status === 'completed') {
+        // 100% 진행: 전체가 elapsed 선이라 미래 선 조각이 없고 head가 종점에 붙습니다.
+        if (
+          !trajectory.querySelector('[data-trajectory-progress-past]')
+          || !trajectory.querySelector('[data-navigation-progress-head="trajectory"]')
+          || trajectory.querySelector('[data-trajectory-path]')
+        ) {
+          throw new Error('The completed trajectory must render a full elapsed line with a terminal head and no future line.');
+        }
+        continue;
+      }
       if (!trajectory.querySelector('[data-trajectory-path]')?.getAttribute('stroke-dasharray')) {
         throw new Error(`${status} trajectory needs a non-color line pattern.`);
+      }
+      if (status === 'waiting') {
+        // currentSampleIndex 0: elapsed 선이 없으므로 head도 없습니다 — 합성 carrier 꼬리를 만들지 않습니다.
+        if (trajectory.querySelector('[data-navigation-progress-head], [data-navigation-progress-head-obstacle]')) {
+          throw new Error('A trajectory at sample 0 must not synthesize a carrier or render a head.');
+        }
+        continue;
       }
       if (status !== 'planned') {
         assertNavigationProgressHead(trajectory, `${status} Trajectory`, 'trajectory');

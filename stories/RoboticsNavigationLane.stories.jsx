@@ -1,6 +1,7 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import { Button, LaneOverlay, Map2DCanvas } from '../src/index.js';
+import { NAV_DIRECTION_CHEVRON } from '../components/robotics/_navigationVectorGlyph.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 import { contrastRatio } from './RoboticsNavigationAssert.shared.jsx';
@@ -338,30 +339,56 @@ function assertCircularTextGeometry(badge, context) {
 }
 
 function assertDirectionGeometry(lane, context) {
+  const wrapper = lane?.querySelector('[data-lane-direction-line-chevron]');
+  const cutWindow = lane?.querySelector('[data-lane-direction-window]');
   const direction = lane?.querySelector('[data-lane-direction]');
+  const lanePath = lane?.querySelector('[data-lane-path]');
   const localMatrix = direction?.getScreenCTM();
-  const laneMatrix = lane?.querySelector('[data-lane-path]')?.getScreenCTM();
-  if (!direction || !localMatrix || !laneMatrix) throw new Error(`${context} direction geometry is missing.`);
-  const coordinates = direction.getAttribute('d')?.match(/-?\d+(?:\.\d+)?/g)?.map(Number) ?? [];
-  if (coordinates.length !== 6) throw new Error(`${context} direction path is not one centered triangle.`);
-  const points = [
-    { x: coordinates[0], y: coordinates[1] },
-    { x: coordinates[2], y: coordinates[3] },
-    { x: coordinates[4], y: coordinates[5] },
-  ];
-  const centroid = {
-    x: points.reduce((sum, point) => sum + point.x, 0) / points.length,
-    y: points.reduce((sum, point) => sum + point.y, 0) / points.length,
-  };
-  const paintedCentroid = new DOMPoint(centroid.x, centroid.y).matrixTransform(localMatrix);
+  const laneMatrix = lanePath?.getScreenCTM();
+  if (
+    !wrapper
+    || wrapper.getAttribute('data-navigation-direction-chevron') !== 'lane-direction'
+    || !cutWindow
+    || !direction
+    || !localMatrix
+    || !laneMatrix
+  ) {
+    throw new Error(`${context} line-cut direction chevron geometry is missing.`);
+  }
+  // The cut is a MASK on the lane's own strokes — a painted eraser would
+  // knock holes in coincident overlays (route/trajectory sharing the corridor).
+  const cutMask = cutWindow.closest('mask');
+  if (
+    Number(cutWindow.getAttribute('x')) !== NAV_DIRECTION_CHEVRON.window.from
+    || Number(cutWindow.getAttribute('width')) !== NAV_DIRECTION_CHEVRON.window.to - NAV_DIRECTION_CHEVRON.window.from
+    || Number(cutWindow.getAttribute('height')) !== NAV_DIRECTION_CHEVRON.window.clearWidth
+    || cutWindow.getAttribute('fill') !== 'black'
+    || !cutMask
+    || !lanePath.getAttribute('mask')?.includes(cutMask.id)
+  ) {
+    throw new Error(`${context} direction cut must be a self-only mask window on the lane's own strokes.`);
+  }
+  const chevronPath = direction.getAttribute('d') ?? '';
+  if (
+    chevronPath !== NAV_DIRECTION_CHEVRON.path
+    || /z/i.test(chevronPath)
+    || direction.getAttribute('fill') !== 'none'
+    || direction.getAttribute('stroke') !== lanePath.getAttribute('stroke')
+    || direction.getAttribute('stroke-width') !== lanePath.getAttribute('stroke-width')
+    || direction.getAttribute('stroke-linecap') !== 'round'
+    || direction.getAttribute('stroke-linejoin') !== 'round'
+  ) {
+    throw new Error(`${context} direction chevron must be the lane line itself folding into the open V.`);
+  }
+  const paintedCenter = new DOMPoint(0, 0).matrixTransform(localMatrix);
   const declaredAnchor = new DOMPoint(
     Number(direction.getAttribute('data-lane-direction-anchor-x')),
     Number(direction.getAttribute('data-lane-direction-anchor-y')),
   ).matrixTransform(laneMatrix);
-  const centerDeltaX = Math.abs(declaredAnchor.x - paintedCentroid.x);
-  const centerDeltaY = Math.abs(declaredAnchor.y - paintedCentroid.y);
+  const centerDeltaX = Math.abs(declaredAnchor.x - paintedCenter.x);
+  const centerDeltaY = Math.abs(declaredAnchor.y - paintedCenter.y);
   if (centerDeltaX > 1 || centerDeltaY > 1) {
-    throw new Error(`${context} direction area centroid is off-anchor by ${centerDeltaX.toFixed(2)}×${centerDeltaY.toFixed(2)}px.`);
+    throw new Error(`${context} direction chevron is off-anchor by ${centerDeltaX.toFixed(2)}×${centerDeltaY.toFixed(2)}px.`);
   }
 }
 
@@ -602,7 +629,7 @@ export const LaneShortPathCompoundStates = {
       const stateCircles = states.map((state) => lane.querySelector(`[data-lane-state-circle="${state}"]`));
       const endpointPoints = [...lane.querySelectorAll('[data-lane-endpoint-point]')];
       const endpointLabels = [...lane.querySelectorAll('[data-lane-endpoint-label]')];
-      const direction = lane.querySelector('[data-lane-direction]');
+      const direction = lane.querySelector('[data-lane-direction-line-chevron]');
       const primaryLabel = lane.querySelector('[data-lane-primary-label]');
       const metadata = lane.querySelector('[data-lane-metadata]');
       if (

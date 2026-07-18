@@ -10,7 +10,11 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@lk-robotics/design-system-core": ["src/index.d.ts"]
+      "@lk-robotics/design-system-core": ["src/index.d.ts"],
+      "@lk-robotics/design-system-core/core": ["src/core.d.ts"],
+      "@lk-robotics/design-system-core/theme": ["src/theme.d.ts"],
+      "@lk-robotics/design-system-core/product": ["src/product.d.ts"],
+      "@lk-robotics/design-system-core/robotics": ["src/robotics.d.ts"]
     },
     "types": ["react", "react-dom"]
   },

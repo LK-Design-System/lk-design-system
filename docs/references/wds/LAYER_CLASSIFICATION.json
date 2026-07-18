@@ -11,22 +11,27 @@
     "LDS Product/",
     "LDS Robotics/"
   ],
-  "layers": {
-    "wds-core": {
-      "storybookPrefix": "LDS Core",
-      "purpose": "WDS-derived foundations and generic component contracts. Public Storybook titles use Foundation/Components navigation groups; numbered WDS source labels stay in docs/references/wds evidence."
+  "ownerLayers": {
+    "core": "LDS Core",
+    "theme": "LDS Theme",
+    "product": "LDS Product",
+    "robotics": "LDS Robotics"
+  },
+  "provenanceAuthority": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json#provenanceLegend",
+  "storyLayerExceptions": {
+    "stories/RoboticsAssetsIcons.stories.jsx": {
+      "storyOwnerLayer": "robotics",
+      "primaryExport": "Icon",
+      "exportOwnerLayer": "core",
+      "kind": "domain-asset-extension",
+      "reason": "The page inventories the Robotics-only icon vocabulary through the Core Icon renderer; it does not create a second Icon package owner."
     },
-    "lk-theme-override": {
-      "storybookPrefix": "LDS Theme",
-      "purpose": "LK ROBOTICS brand, color, and identity substitutions over the WDS structure."
-    },
-    "lk-product-extension": {
-      "storybookPrefix": "LDS Product",
-      "purpose": "Generic reusable product UI components and patterns that are useful in LK products but are not direct WDS core matches. This layer must not become full application screens, workflows, or demos."
-    },
-    "lk-robotics-extension": {
-      "storybookPrefix": "LDS Robotics",
-      "purpose": "Robotics, viewer, map, telemetry, and editor components that extend the WDS core. This layer must stay component/pattern focused rather than full robotics application screens."
+    "stories/ThemeBrandSpinner.stories.jsx": {
+      "storyOwnerLayer": "theme",
+      "primaryExport": "Spinner",
+      "exportOwnerLayer": "core",
+      "kind": "theme-variant-evidence",
+      "reason": "The page documents the LK brand variant of the Core Spinner; it does not create a second Spinner package owner."
     }
   },
   "wdsComponentSections": [
@@ -199,6 +204,7 @@
     "stories/RoboticsNavigationHazardMarker.stories.jsx": "LDS Robotics/Navigation/Hazard Marker",
     "stories/RoboticsNavigationLane.stories.jsx": "LDS Robotics/Navigation/Lane",
     "stories/RoboticsNavigationRegions.stories.jsx": "LDS Robotics/Navigation/Regions",
+    "stories/RoboticsNavigationRobotMarker.stories.jsx": "LDS Robotics/Navigation/Robot Marker",
     "stories/RoboticsNavigationRoute.stories.jsx": "LDS Robotics/Navigation/Route",
     "stories/RoboticsNavigationTrajectory.stories.jsx": "LDS Robotics/Navigation/Trajectory",
     "stories/RoboticsNavigationWaypoint.stories.jsx": "LDS Robotics/Navigation/Waypoint",

@@ -46,6 +46,7 @@ const componentSourcePdfs = JSON.parse(await read('docs/references/wds/COMPONENT
 const figmaNodeAuditQueue = JSON.parse(await read('docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json'));
 const completionGate = JSON.parse(await read('docs/references/wds/COVERAGE_COMPLETION_GATE.json'));
 const publicExportClassification = JSON.parse(await read('docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'));
+const storybookIaAudit = JSON.parse(await read('docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json'));
 const variantAuditChecklist = JSON.parse(await read('docs/references/wds/VARIANT_AUDIT_CHECKLIST.json'));
 const iconManifest = JSON.parse(await read('assets/icons/manifest.json'));
 const storyFiles = await collect('stories', (rel) => rel.endsWith('.stories.jsx'));
@@ -57,10 +58,53 @@ assert(missing.length === 0, `WDS layer classification is missing story files:\n
 assert(stale.length === 0, `WDS layer classification references missing story files:\n${stale.join('\n')}`);
 
 const allowedPrefixes = classification.allowedTitlePrefixes || [];
+const expectedOwnerLayers = {
+  core: 'LDS Core',
+  theme: 'LDS Theme',
+  product: 'LDS Product',
+  robotics: 'LDS Robotics',
+};
+const configuredOwnerLayers = classification.ownerLayers || {};
+const allowedOwnerLayers = new Set(Object.keys(expectedOwnerLayers));
+const ownerLayerFailures = [];
+const expectedProvenanceAuthority = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json#provenanceLegend';
+const storyLayerExceptions = (
+  classification.storyLayerExceptions
+  && typeof classification.storyLayerExceptions === 'object'
+  && !Array.isArray(classification.storyLayerExceptions)
+) ? classification.storyLayerExceptions : {};
+if (classification.provenanceAuthority !== expectedProvenanceAuthority) {
+  ownerLayerFailures.push(
+    `provenanceAuthority must be "${expectedProvenanceAuthority}"; found "${String(classification.provenanceAuthority)}"`,
+  );
+}
+if (Object.hasOwn(classification, 'layers')) {
+  ownerLayerFailures.push('Legacy layers.* Storybook-prefix mappings conflate provenance with runtime ownership; use ownerLayers and provenanceAuthority.');
+}
+if (classification.storyLayerExceptions !== undefined && storyLayerExceptions !== classification.storyLayerExceptions) {
+  ownerLayerFailures.push('storyLayerExceptions must be an object keyed by Storybook source file.');
+}
+for (const [ownerLayer, storybookPrefix] of Object.entries(expectedOwnerLayers)) {
+  if (configuredOwnerLayers[ownerLayer] !== storybookPrefix) {
+    ownerLayerFailures.push(
+      `${ownerLayer}: expected owner-layer Storybook prefix "${storybookPrefix}", found "${configuredOwnerLayers[ownerLayer]}"`,
+    );
+  }
+  if (!allowedPrefixes.includes(`${storybookPrefix}/`)) {
+    ownerLayerFailures.push(`${ownerLayer}: allowedTitlePrefixes is missing "${storybookPrefix}/"`);
+  }
+}
+for (const ownerLayer of Object.keys(configuredOwnerLayers)) {
+  if (!allowedOwnerLayers.has(ownerLayer)) ownerLayerFailures.push(`Unknown owner layer "${ownerLayer}"`);
+}
+assert(ownerLayerFailures.length === 0, `LDS owner-layer configuration failed:\n${ownerLayerFailures.join('\n')}`);
+
 const titleFailures = [];
+const actualStoryTitles = new Map();
 for (const file of storyFiles) {
   const source = await read(file);
   const actual = extractTitle(source, file);
+  actualStoryTitles.set(file, actual);
   const expected = classification.storyTitles[file];
   if (actual !== expected) titleFailures.push(`${file}: expected "${expected}", found "${actual}"`);
   if (!allowedPrefixes.some((prefix) => actual.startsWith(prefix))) {
@@ -443,9 +487,13 @@ assert(
 
 const allowedDetailStatuses = new Set(Object.keys(coverageDetailAudit.statusLegend || {}));
 const publicIndex = await read('src/index.js');
-const publicExportNames = [...publicIndex.matchAll(/export \{([^}]+)\} from/g)].flatMap((match) =>
-  match[1].split(',').map((part) => part.trim().split(/\s+as\s+/).pop().trim())
+const publicExportRows = [...publicIndex.matchAll(/export\s+\{([^}]+)\}\s+from\s+['"]([^'"]+)['"]/g)].flatMap(
+  (match) => match[1].split(',').map((part) => ({
+    name: part.trim().split(/\s+as\s+/).pop().trim(),
+    source: path.posix.normalize(path.posix.join('src', match[2])),
+  })),
 );
+const publicExportNames = publicExportRows.map((row) => row.name);
 const detailFailures = [];
 for (const family of detailFamilies) {
   if (!allowedDetailStatuses.has(family.status)) {
@@ -488,13 +536,48 @@ assert(
   publicExportClassification.source?.entrypoint === 'src/index.js',
   'WDS public export classification must classify src/index.js.'
 );
-const allowedLayers = new Set(Object.keys(classification.layers));
-const allowedExportClassifications = new Set(Object.keys(publicExportClassification.classificationLegend || {}));
+const expectedProvenances = new Set([
+  'direct-wds',
+  'wds-adjacent',
+  'theme-override',
+  'product-extension',
+  'robotics-extension',
+]);
+const configuredProvenances = new Set(Object.keys(publicExportClassification.provenanceLegend || {}));
+const missingProvenances = [...expectedProvenances].filter((value) => !configuredProvenances.has(value));
+const unknownProvenances = [...configuredProvenances].filter((value) => !expectedProvenances.has(value));
+assert(
+  missingProvenances.length === 0 && unknownProvenances.length === 0,
+  `WDS public export provenance legend is invalid:\nMissing: ${missingProvenances.join(', ') || 'none'}\nUnknown: ${unknownProvenances.join(', ') || 'none'}`,
+);
+const tokenMapProvenanceFailures = [];
+if (tokenMap.provenanceAuthority !== expectedProvenanceAuthority) {
+  tokenMapProvenanceFailures.push(
+    `TOKEN_MAP provenanceAuthority must be "${expectedProvenanceAuthority}"; found "${String(tokenMap.provenanceAuthority)}"`,
+  );
+}
+for (const family of tokenMap.componentFamilies || []) {
+  if (Object.hasOwn(family, 'layer')) {
+    tokenMapProvenanceFailures.push(`${family.wds}: legacy layer field must be replaced by provenance.`);
+  }
+  if (!expectedProvenances.has(family.provenance)) {
+    tokenMapProvenanceFailures.push(`${family.wds}: unknown provenance "${String(family.provenance)}".`);
+  }
+}
+assert(
+  tokenMapProvenanceFailures.length === 0,
+  `WDS TOKEN_MAP provenance classification failed:\n${tokenMapProvenanceFailures.join('\n')}`,
+);
 const exportGroups = publicExportClassification.groups || [];
 assert(exportGroups.length > 0, 'WDS public export classification has no groups.');
 
 const classifiedExportEntries = exportGroups.flatMap((group) =>
-  (group.exports || []).map((name) => ({ name, group: group.name, layer: group.layer }))
+  (group.exports || []).map((name) => ({
+    name,
+    group: group.name,
+    ownerLayer: group.ownerLayer,
+    provenance: group.provenance,
+  }))
 );
 const classifiedExportNames = classifiedExportEntries.map((entry) => entry.name);
 const unclassifiedExports = publicExportNames.filter((name) => !classifiedExportNames.includes(name));
@@ -514,20 +597,45 @@ assert(
 );
 
 const exportClassificationFailures = [];
+const extensionProvenanceOwners = {
+  'theme-override': 'theme',
+  'product-extension': 'product',
+  'robotics-extension': 'robotics',
+};
 for (const group of exportGroups) {
   if (!group.name) exportClassificationFailures.push('Export classification group is missing a name.');
-  if (!allowedLayers.has(group.layer)) {
-    exportClassificationFailures.push(`${group.name}: unknown layer "${group.layer}"`);
+  if (Object.hasOwn(group, 'layer') || Object.hasOwn(group, 'classification')) {
+    exportClassificationFailures.push(`${group.name}: legacy layer/classification fields are not authoritative; use ownerLayer/provenance only`);
   }
-  if (!allowedExportClassifications.has(group.classification)) {
-    exportClassificationFailures.push(`${group.name}: unknown classification "${group.classification}"`);
+  if (!allowedOwnerLayers.has(group.ownerLayer)) {
+    exportClassificationFailures.push(`${group.name}: unknown ownerLayer "${group.ownerLayer}"`);
+  }
+  if (!expectedProvenances.has(group.provenance)) {
+    exportClassificationFailures.push(`${group.name}: unknown provenance "${group.provenance}"`);
+  }
+  const requiredOwner = extensionProvenanceOwners[group.provenance];
+  if (requiredOwner && group.ownerLayer !== requiredOwner) {
+    exportClassificationFailures.push(
+      `${group.name}: provenance "${group.provenance}" requires ownerLayer "${requiredOwner}", found "${group.ownerLayer}"`,
+    );
   }
   if (!Array.isArray(group.exports) || group.exports.length === 0) {
     exportClassificationFailures.push(`${group.name}: no exports listed`);
   }
+  if (!Array.isArray(group.storyEvidence) || group.storyEvidence.length === 0) {
+    exportClassificationFailures.push(`${group.name}: no Storybook evidence listed`);
+  }
   for (const story of group.storyEvidence || []) {
     if (!storyFiles.includes(story)) {
       exportClassificationFailures.push(`${group.name}: story evidence is missing: ${story}`);
+      continue;
+    }
+    const ownerPrefix = configuredOwnerLayers[group.ownerLayer];
+    const actualTitle = actualStoryTitles.get(story);
+    if (ownerPrefix && !actualTitle?.startsWith(`${ownerPrefix}/`)) {
+      exportClassificationFailures.push(
+        `${group.name}: story evidence owner mismatch for ${story}; ownerLayer "${group.ownerLayer}" requires "${ownerPrefix}/", found "${actualTitle}"`,
+      );
     }
   }
   if (group.wdsFamily && !tokenMapFamilies.includes(group.wdsFamily)) {
@@ -537,6 +645,140 @@ for (const group of exportGroups) {
 assert(
   exportClassificationFailures.length === 0,
   `WDS public export classification failed:\n${exportClassificationFailures.join('\n')}`
+);
+
+const exportOwnerByName = new Map(
+  classifiedExportEntries.map(({ name, ownerLayer }) => [name, ownerLayer]),
+);
+const storyLayerFailures = [];
+const iaPageByStory = new Map();
+for (const page of storybookIaAudit.pages || []) {
+  const storyFile = typeof page?.importPath === 'string' ? page.importPath.replace(/^\.\//, '') : '';
+  if (!storyFile) continue;
+  if (iaPageByStory.has(storyFile)) {
+    storyLayerFailures.push(`${storyFile}: Storybook IA contains more than one page for the same story source.`);
+  }
+  iaPageByStory.set(storyFile, page);
+}
+
+for (const [storyFile, exception] of Object.entries(storyLayerExceptions)) {
+  const iaPage = iaPageByStory.get(storyFile);
+  if (!storyFiles.includes(storyFile)) {
+    storyLayerFailures.push(`${storyFile}: story-layer exception references a missing story file.`);
+  }
+  if (!iaPage) {
+    storyLayerFailures.push(`${storyFile}: story-layer exception is missing from the Storybook IA census.`);
+  } else if (iaPage.primaryOwner !== exception?.primaryExport) {
+    storyLayerFailures.push(
+      `${storyFile}: exception primaryExport "${String(exception?.primaryExport)}" does not match IA primaryOwner "${String(iaPage.primaryOwner)}".`,
+    );
+  }
+  if (!allowedOwnerLayers.has(exception?.storyOwnerLayer)) {
+    storyLayerFailures.push(`${storyFile}: exception has invalid storyOwnerLayer "${String(exception?.storyOwnerLayer)}".`);
+  }
+  if (!allowedOwnerLayers.has(exception?.exportOwnerLayer)) {
+    storyLayerFailures.push(`${storyFile}: exception has invalid exportOwnerLayer "${String(exception?.exportOwnerLayer)}".`);
+  }
+  const classifiedOwner = exportOwnerByName.get(exception?.primaryExport);
+  if (classifiedOwner !== exception?.exportOwnerLayer) {
+    storyLayerFailures.push(
+      `${storyFile}: exception exportOwnerLayer "${String(exception?.exportOwnerLayer)}" does not match classified owner "${String(classifiedOwner)}" for ${String(exception?.primaryExport)}.`,
+    );
+  }
+  if (typeof exception?.kind !== 'string' || exception.kind.trim() === '') {
+    storyLayerFailures.push(`${storyFile}: exception kind must be a non-empty string.`);
+  }
+  if (typeof exception?.reason !== 'string' || exception.reason.trim().length < 24) {
+    storyLayerFailures.push(`${storyFile}: exception reason must explain the cross-layer evidence surface.`);
+  }
+}
+
+for (const [storyFile, page] of iaPageByStory) {
+  const exportOwnerLayer = exportOwnerByName.get(page.primaryOwner);
+  if (!exportOwnerLayer) continue;
+  const title = actualStoryTitles.get(storyFile);
+  const storyOwnerLayer = Object.entries(configuredOwnerLayers)
+    .find(([, storybookPrefix]) => title?.startsWith(`${storybookPrefix}/`))?.[0];
+  if (!storyOwnerLayer) {
+    storyLayerFailures.push(`${storyFile}: cannot resolve a Storybook owner layer from title "${String(title)}".`);
+    continue;
+  }
+
+  const exception = storyLayerExceptions[storyFile];
+  if (storyOwnerLayer === exportOwnerLayer) {
+    if (exception) {
+      storyLayerFailures.push(
+        `${storyFile}: story-layer exception is stale because ${page.primaryOwner} and the story both belong to ${storyOwnerLayer}.`,
+      );
+    }
+    continue;
+  }
+  if (!exception) {
+    storyLayerFailures.push(
+      `${storyFile}: IA primary owner ${page.primaryOwner} belongs to ${exportOwnerLayer}, but the story belongs to ${storyOwnerLayer}; register a justified storyLayerExceptions entry or align the title.`,
+    );
+    continue;
+  }
+  if (exception.storyOwnerLayer !== storyOwnerLayer) {
+    storyLayerFailures.push(
+      `${storyFile}: exception storyOwnerLayer "${String(exception.storyOwnerLayer)}" does not match title owner "${storyOwnerLayer}".`,
+    );
+  }
+  if (exception.primaryExport !== page.primaryOwner || exception.exportOwnerLayer !== exportOwnerLayer) {
+    storyLayerFailures.push(
+      `${storyFile}: exception does not match IA/export ownership (${page.primaryOwner}: ${exportOwnerLayer}).`,
+    );
+  }
+}
+assert(
+  storyLayerFailures.length === 0,
+  `Storybook runtime-owner alignment failed:\n${storyLayerFailures.join('\n')}`,
+);
+
+const publicComponentModulePaths = new Set(
+  publicExportRows.map((row) => row.source).filter((source) => source.startsWith('components/')),
+);
+const componentJsModules = await collect('components', (rel) => rel.endsWith('.js'));
+const expectedInternalComponentModules = componentJsModules.filter(
+  (modulePath) => !publicComponentModulePaths.has(modulePath),
+);
+const internalModules = publicExportClassification.internalModules || [];
+const internalModulePaths = internalModules.map((module) => module.path);
+const missingInternalModules = expectedInternalComponentModules.filter(
+  (modulePath) => !internalModulePaths.includes(modulePath),
+);
+const staleInternalModules = internalModulePaths.filter(
+  (modulePath) => typeof modulePath === 'string' && !expectedInternalComponentModules.includes(modulePath),
+);
+const duplicateInternalModules = internalModulePaths.filter(
+  (modulePath, index) => internalModulePaths.indexOf(modulePath) !== index,
+);
+const internalModuleFailures = [];
+if (!Array.isArray(publicExportClassification.internalModules)) {
+  internalModuleFailures.push('internalModules must be an array.');
+}
+for (const module of internalModules) {
+  if (!module || typeof module.path !== 'string' || !module.path.startsWith('components/') || !module.path.endsWith('.js')) {
+    internalModuleFailures.push(`Invalid internal component module path: ${JSON.stringify(module?.path)}`);
+  }
+  if (!allowedOwnerLayers.has(module?.ownerLayer)) {
+    internalModuleFailures.push(`${module?.path || '<missing path>'}: unknown ownerLayer "${module?.ownerLayer}"`);
+  }
+}
+if (missingInternalModules.length > 0) {
+  internalModuleFailures.push(`Unclassified internal component modules:\n${missingInternalModules.join('\n')}`);
+}
+if (staleInternalModules.length > 0) {
+  internalModuleFailures.push(`Stale internal component module classifications:\n${staleInternalModules.join('\n')}`);
+}
+if (duplicateInternalModules.length > 0) {
+  internalModuleFailures.push(
+    `Duplicate internal component module classifications:\n${[...new Set(duplicateInternalModules)].join('\n')}`,
+  );
+}
+assert(
+  internalModuleFailures.length === 0,
+  `WDS internal component module classification failed:\n${internalModuleFailures.join('\n')}`,
 );
 
 assert(
@@ -662,5 +904,5 @@ for (const command of [
 assert(gateFailures.length === 0, `WDS coverage completion gate failed:\n${gateFailures.join('\n')}`);
 
 console.log(
-  `Validated WDS alignment: ${storyFiles.length} story titles, ${cssRefs.length} token map refs, ${tokenMap.componentFamilies.length} component-family mappings, ${coverageRows.length} coverage rows, ${foundationRows.length} foundation rows, ${foundationPdfRows.length} foundation PDF rows, ${componentPdfRows.length} component PDF rows, ${queueRows.length} Figma node queue rows, ${detailFamilies.length} detail families, ${publicExportNames.length} public exports, ${iconNames.length} icons, ${checkIds.length} variant checks, completion gate ${completionGate.claimStatus}.`
+  `Validated WDS alignment: ${storyFiles.length} story titles, ${Object.keys(storyLayerExceptions).length} explicit story-layer exceptions, ${cssRefs.length} token map refs, ${tokenMap.componentFamilies.length} component-family mappings, ${coverageRows.length} coverage rows, ${foundationRows.length} foundation rows, ${foundationPdfRows.length} foundation PDF rows, ${componentPdfRows.length} component PDF rows, ${queueRows.length} Figma node queue rows, ${detailFamilies.length} detail families, ${publicExportNames.length} public exports, ${expectedInternalComponentModules.length} internal component modules, ${iconNames.length} icons, ${checkIds.length} variant checks, completion gate ${completionGate.claimStatus}.`
 );
