@@ -113,7 +113,7 @@ function suffixFrom(points, startDistance) {
   }
   return suffix.length >= 2 ? suffix : [];
 }
-function routeProgressGeometry(points, fraction, explicitPosition, viewportScale = 1) {
+function routeProgressGeometry(points, fraction, explicitPosition, viewportScale = 1, { suppressHead = false } = {}) {
   const fractionResult = pointAtFraction(points, fraction);
   if (!fractionResult) return void 0;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
@@ -133,8 +133,8 @@ function routeProgressGeometry(points, fraction, explicitPosition, viewportScale
       };
     }
     const fullPrefix2 = prefixThrough(points, fractionResult.segment.index, explicitPosition);
-    const headVisible2 = fullPrefix2.length >= 2;
-    const { paintedPrefix: paintedPrefix2, tipSetbackPx: tipSetbackPx2 } = applyTipSetback(fullPrefix2, setbackDistance, scale);
+    const headVisible2 = fullPrefix2.length >= 2 && !suppressHead;
+    const { paintedPrefix: paintedPrefix2, tipSetbackPx: tipSetbackPx2 } = headVisible2 ? applyTipSetback(fullPrefix2, setbackDistance, scale) : { paintedPrefix: fullPrefix2, tipSetbackPx: 0 };
     return {
       point: explicitPosition,
       angle,
@@ -146,8 +146,8 @@ function routeProgressGeometry(points, fraction, explicitPosition, viewportScale
     };
   }
   const fullPrefix = prefixThrough(points, fractionResult.segment.index, fractionResult.point);
-  const headVisible = fullPrefix.length >= 2;
-  const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, setbackDistance, scale);
+  const headVisible = fullPrefix.length >= 2 && !suppressHead;
+  const { paintedPrefix, tipSetbackPx } = headVisible ? applyTipSetback(fullPrefix, setbackDistance, scale) : { paintedPrefix: fullPrefix, tipSetbackPx: 0 };
   return {
     point: fractionResult.point,
     angle,
@@ -158,7 +158,7 @@ function routeProgressGeometry(points, fraction, explicitPosition, viewportScale
     positionMismatch: false
   };
 }
-function trajectoryProgressGeometry(points, pointIndex, viewportScale = 1) {
+function trajectoryProgressGeometry(points, pointIndex, viewportScale = 1, { suppressHead = false } = {}) {
   if (!Number.isInteger(pointIndex) || pointIndex < 0 || pointIndex >= points.length) return void 0;
   const point = points[pointIndex];
   const fullPrefix = [];
@@ -169,8 +169,8 @@ function trajectoryProgressGeometry(points, pointIndex, viewportScale = 1) {
   if (!tangent) return void 0;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const tipDistance = polylineLength(fullPrefix);
-  const headVisible = fullPrefix.length >= 2;
-  const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, NAV_PROGRESS_HEAD.tipSetback / scale, scale);
+  const headVisible = fullPrefix.length >= 2 && !suppressHead;
+  const { paintedPrefix, tipSetbackPx } = headVisible ? applyTipSetback(fullPrefix, NAV_PROGRESS_HEAD.tipSetback / scale, scale) : { paintedPrefix: fullPrefix, tipSetbackPx: 0 };
   return {
     point,
     angle: Math.atan2(tangent.dy, tangent.dx) * 180 / Math.PI,
@@ -242,4 +242,4 @@ export {
   NavigationProgressHeadDefs,
   ProgressHeadObstacle
 };
-//# sourceMappingURL=chunk-XG4AMZLQ.js.map
+//# sourceMappingURL=chunk-OTORPXO6.js.map

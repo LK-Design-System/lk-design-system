@@ -3,7 +3,7 @@
 
 
 
-var _chunkETVYZPQLcjs = require('./chunk-ETVYZPQL.cjs');
+var _chunkUCEWNDPRcjs = require('./chunk-UCEWNDPR.cjs');
 
 
 var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
@@ -264,6 +264,7 @@ function RouteOverlay({
   invalid = false,
   stale = false,
   showLabel = true,
+  showProgressHead = true,
   onActivate,
   "aria-label": ariaLabel,
   "aria-hidden": ariaHidden,
@@ -320,7 +321,7 @@ function RouteOverlay({
   };
   const statusSegment = _nullishCoalesce(_nullishCoalesce(progressSegment, () => ( visibleSegments.find((segment) => segment.phase === "current"))), () => ( visibleSegments[0]));
   const statusPoints = _nullishCoalesce(_optionalChain([statusSegment, 'optionalAccess', _7 => _7.points, 'optionalAccess', _8 => _8.filter, 'call', _9 => _9(finitePoint)]), () => ( []));
-  const progressGeometry = progressSegment ? _chunkETVYZPQLcjs.routeProgressGeometry.call(void 0, statusPoints, progress.fraction, progress.position, scale) : void 0;
+  const progressGeometry = progressSegment ? _chunkUCEWNDPRcjs.routeProgressGeometry.call(void 0, statusPoints, progress.fraction, progress.position, scale, { suppressHead: !showProgressHead }) : void 0;
   const progressPoint = _optionalChain([progressGeometry, 'optionalAccess', _10 => _10.point]);
   const progressHeadVisible = Boolean(_optionalChain([progressGeometry, 'optionalAccess', _11 => _11.headVisible]));
   const progressPrefixPath = progressGeometry ? pathFromPoints(progressGeometry.prefixPoints) : "";
@@ -517,7 +518,7 @@ function RouteOverlay({
                   }
                 ),
                 isProgressSegment && progressHeadVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                  _chunkETVYZPQLcjs.NavigationProgressHeadDefs,
+                  _chunkUCEWNDPRcjs.NavigationProgressHeadDefs,
                   {
                     idPrefix: progressHeadId,
                     tone,
@@ -759,7 +760,7 @@ function RouteOverlay({
           );
         }),
         progressHeadVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkETVYZPQLcjs.ProgressHeadObstacle,
+          _chunkUCEWNDPRcjs.ProgressHeadObstacle,
           {
             obstacle,
             id: `route:${route.id}:progress-head`,
@@ -862,4 +863,4 @@ function RouteOverlay({
 
 
 exports.RouteOverlay = RouteOverlay;
-//# sourceMappingURL=chunk-I7AI42KC.cjs.map
+//# sourceMappingURL=chunk-H6MVSQCN.cjs.map

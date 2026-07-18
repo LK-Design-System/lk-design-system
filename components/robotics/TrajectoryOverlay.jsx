@@ -253,6 +253,7 @@ export function TrajectoryOverlay({
   invalid = false,
   stale = false,
   showLabel = true,
+  showProgressHead = true,
   onActivate,
   tabIndex,
   onFocus,
@@ -289,7 +290,7 @@ export function TrajectoryOverlay({
   const currentPointIndex = currentIndex == null
     ? -1
     : finiteSamples.findIndex(({ sourceIndex }) => sourceIndex === currentIndex);
-  const currentProgress = trajectoryProgressGeometry(points, currentPointIndex, scale);
+  const currentProgress = trajectoryProgressGeometry(points, currentPointIndex, scale, { suppressHead: !showProgressHead });
   const markerPoint = currentProgress?.point ?? pointAlong(points, 0.5);
   const currentHeadVisible = Boolean(currentProgress?.headVisible);
   const currentPrefixPath = currentProgress ? pathFromPoints(currentProgress.prefixPoints) : '';

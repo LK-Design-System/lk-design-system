@@ -1,34 +1,34 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-
-
-var _chunkETVYZPQLcjs = require('./chunk-ETVYZPQL.cjs');
-
-
-var _chunkGKSI3QZ5cjs = require('./chunk-GKSI3QZ5.cjs');
-
-
-
-
-
-
-
-
-
-
-
-
-var _chunkYXXTXTP5cjs = require('./chunk-YXXTXTP5.cjs');
-
-
-
-
-var _chunk4KWJ7MLTcjs = require('./chunk-4KWJ7MLT.cjs');
+"use client";
+import {
+  NavigationProgressHeadDefs,
+  ProgressHeadObstacle,
+  trajectoryProgressGeometry
+} from "./chunk-OTORPXO6.js";
+import {
+  NavigationStateGlyph
+} from "./chunk-54Q6T6L4.js";
+import {
+  NAV_BADGE_LEADER,
+  NAV_DASH,
+  NAV_FOCUS,
+  NAV_HIT,
+  NAV_LABEL_HALO,
+  NAV_MARKER_SHADOW,
+  NAV_PROGRESS_HEAD,
+  NAV_SELECTION,
+  NAV_STATE_BADGE,
+  isFocusVisibleTarget,
+  navStateOpacity
+} from "./chunk-T7OX7DEF.js";
+import {
+  NavigationAnnotationBlock,
+  annotationPriority,
+  useNavigationObstacles
+} from "./chunk-XLGTXJ3N.js";
 
 // components/robotics/TrajectoryOverlay.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var STATUS_LABEL = {
   planned: "\uACC4\uD68D\uB428",
   active: "\uC774\uB3D9 \uC911",
@@ -48,7 +48,7 @@ var STATUS_GLYPH_KIND = {
 var MARKER_GAP_PX = 4;
 var MARKER_ROW_CLEARANCE_PX = 8;
 var LABEL_ROW_GAP_PX = 12;
-var STATE_BADGE_FOOTPRINT_PX = _chunkYXXTXTP5cjs.NAV_STATE_BADGE.radius + _chunkYXXTXTP5cjs.NAV_STATE_BADGE.strokeWidth / 2;
+var STATE_BADGE_FOOTPRINT_PX = NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2;
 var MARKER_RADIUS_PX = {
   status: STATE_BADGE_FOOTPRINT_PX,
   invalid: STATE_BADGE_FOOTPRINT_PX,
@@ -66,32 +66,32 @@ function markerTransform(point, inverseScale, screenSlot) {
   return screenSlot ? `${anchor} translate(${screenSlot.x} ${screenSlot.y})` : anchor;
 }
 function badgeNormalSlot(point) {
-  const radians = (_nullishCoalesce(point.angle, () => ( 0))) * Math.PI / 180;
+  const radians = (point.angle ?? 0) * Math.PI / 180;
   let x = Math.sin(radians);
   let y = -Math.cos(radians);
   if (y > 0 || Math.abs(y) < 1e-4 && x > 0) {
     x *= -1;
     y *= -1;
   }
-  return { x: x * _chunkYXXTXTP5cjs.NAV_STATE_BADGE.pathNormalOffset, y: y * _chunkYXXTXTP5cjs.NAV_STATE_BADGE.pathNormalOffset };
+  return { x: x * NAV_STATE_BADGE.pathNormalOffset, y: y * NAV_STATE_BADGE.pathNormalOffset };
 }
 function BadgeShadow(props) {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ jsx(
     "circle",
     {
       ...props,
       "data-marker-shadow": "",
-      cy: _chunkYXXTXTP5cjs.NAV_MARKER_SHADOW.chipOffsetY,
-      r: _chunkYXXTXTP5cjs.NAV_STATE_BADGE.radius + _chunkYXXTXTP5cjs.NAV_STATE_BADGE.strokeWidth / 2,
-      fill: _chunkYXXTXTP5cjs.NAV_MARKER_SHADOW.fill,
-      opacity: _chunkYXXTXTP5cjs.NAV_MARKER_SHADOW.opacity,
+      cy: NAV_MARKER_SHADOW.chipOffsetY,
+      r: NAV_STATE_BADGE.radius + NAV_STATE_BADGE.strokeWidth / 2,
+      fill: NAV_MARKER_SHADOW.fill,
+      opacity: NAV_MARKER_SHADOW.opacity,
       pointerEvents: "none"
     }
   );
 }
 function BadgeLeaderTick({ slot, tone, hook }) {
-  const reach = _chunkYXXTXTP5cjs.NAV_BADGE_LEADER.length / _chunkYXXTXTP5cjs.NAV_STATE_BADGE.pathNormalOffset;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  const reach = NAV_BADGE_LEADER.length / NAV_STATE_BADGE.pathNormalOffset;
+  return /* @__PURE__ */ jsx(
     "line",
     {
       ...hook,
@@ -100,7 +100,7 @@ function BadgeLeaderTick({ slot, tone, hook }) {
       x2: -slot.x * reach,
       y2: -slot.y * reach,
       stroke: tone,
-      strokeWidth: _chunkYXXTXTP5cjs.NAV_BADGE_LEADER.strokeWidth,
+      strokeWidth: NAV_BADGE_LEADER.strokeWidth,
       strokeLinecap: "round",
       vectorEffect: "non-scaling-stroke",
       pointerEvents: "none"
@@ -207,16 +207,16 @@ function statusDash(status) {
   return void 0;
 }
 function trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale) {
-  const samples = _nullishCoalesce(_optionalChain([trajectory, 'optionalAccess', _ => _.samples]), () => ( []));
-  const currentIndex = Number.isInteger(_optionalChain([trajectory, 'optionalAccess', _2 => _2.currentSampleIndex])) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
+  const samples = trajectory?.samples ?? [];
+  const currentIndex = Number.isInteger(trajectory?.currentSampleIndex) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
   const timedSamples = samples.filter((sample) => Number.isFinite(sample.timeMs));
-  const firstTime = _optionalChain([timedSamples, 'access', _3 => _3[0], 'optionalAccess', _4 => _4.timeMs]);
-  const lastTime = _optionalChain([timedSamples, 'access', _5 => _5[timedSamples.length - 1], 'optionalAccess', _6 => _6.timeMs]);
-  const currentTime = currentIndex == null ? void 0 : _optionalChain([samples, 'access', _7 => _7[currentIndex], 'optionalAccess', _8 => _8.timeMs]);
+  const firstTime = timedSamples[0]?.timeMs;
+  const lastTime = timedSamples[timedSamples.length - 1]?.timeMs;
+  const currentTime = currentIndex == null ? void 0 : samples[currentIndex]?.timeMs;
   const parts = [
-    _nullishCoalesce(trajectory.label, () => ( `\uADA4\uC801 ${trajectory.id}`)),
+    trajectory.label ?? `\uADA4\uC801 ${trajectory.id}`,
     `\uC9C0\uB3C4 ${trajectory.mapId}`,
-    _nullishCoalesce(STATUS_LABEL[trajectory.status], () => ( trajectory.status)),
+    STATUS_LABEL[trajectory.status] ?? trajectory.status,
     `sample ${samples.length}\uAC1C`
   ];
   if (firstTime != null && lastTime != null) parts.push(`\uC2DC\uAC04 ${firstTime}\uC5D0\uC11C ${lastTime} \uBC00\uB9AC\uCD08`);
@@ -238,6 +238,7 @@ function TrajectoryOverlay({
   invalid = false,
   stale = false,
   showLabel = true,
+  showProgressHead = true,
   onActivate,
   tabIndex,
   onFocus,
@@ -249,16 +250,16 @@ function TrajectoryOverlay({
   style,
   ...rest
 }) {
-  const [hasDomFocus, setHasDomFocus] = _react2.default.useState(false);
-  const obstacle = _chunk4KWJ7MLTcjs.useNavigationObstacles.call(void 0, );
-  const progressHeadId = `lk-trajectory-progress-${_react2.default.useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  const [hasDomFocus, setHasDomFocus] = React.useState(false);
+  const obstacle = useNavigationObstacles();
+  const progressHeadId = `lk-trajectory-progress-${React.useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const inverseScale = 1 / scale;
   const interactive = typeof onActivate === "function";
   const hiddenFromAccessibility = ariaHidden === true || ariaHidden === "true";
   const pointerOnly = interactive && hiddenFromAccessibility;
   const focusVisible = !hiddenFromAccessibility && (focused || hasDomFocus);
-  const samples = _nullishCoalesce(_optionalChain([trajectory, 'optionalAccess', _9 => _9.samples]), () => ( []));
+  const samples = trajectory?.samples ?? [];
   const finiteSamples = samples.map((sample, sourceIndex) => ({
     sourceIndex,
     point: sample.position
@@ -266,17 +267,17 @@ function TrajectoryOverlay({
   const points = finiteSamples.map(({ point }) => point);
   const pathData = pathFromPoints(points);
   if (points.length < 2) return null;
-  const currentIndex = Number.isInteger(_optionalChain([trajectory, 'optionalAccess', _10 => _10.currentSampleIndex])) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
+  const currentIndex = Number.isInteger(trajectory?.currentSampleIndex) && trajectory.currentSampleIndex >= 0 && trajectory.currentSampleIndex < samples.length ? trajectory.currentSampleIndex : void 0;
   const currentPointIndex = currentIndex == null ? -1 : finiteSamples.findIndex(({ sourceIndex }) => sourceIndex === currentIndex);
-  const currentProgress = _chunkETVYZPQLcjs.trajectoryProgressGeometry.call(void 0, points, currentPointIndex, scale);
-  const markerPoint = _nullishCoalesce(_optionalChain([currentProgress, 'optionalAccess', _11 => _11.point]), () => ( pointAlong(points, 0.5)));
-  const currentHeadVisible = Boolean(_optionalChain([currentProgress, 'optionalAccess', _12 => _12.headVisible]));
+  const currentProgress = trajectoryProgressGeometry(points, currentPointIndex, scale, { suppressHead: !showProgressHead });
+  const markerPoint = currentProgress?.point ?? pointAlong(points, 0.5);
+  const currentHeadVisible = Boolean(currentProgress?.headVisible);
   const currentPrefixPath = currentProgress ? pathFromPoints(currentProgress.prefixPoints) : "";
   const currentFuturePath = currentProgress ? pathFromPoints(currentProgress.suffixPoints) : "";
   const trajectoryBodyPath = currentHeadVisible ? currentFuturePath : pathData;
   const statePoint = pointAlong(points, 0.12);
-  const tone = statusTone(_optionalChain([trajectory, 'optionalAccess', _13 => _13.status]), invalid);
-  const dash = statusDash(_optionalChain([trajectory, 'optionalAccess', _14 => _14.status]));
+  const tone = statusTone(trajectory?.status, invalid);
+  const dash = statusDash(trajectory?.status);
   const foreground = "var(--viewer-foreground, var(--color-semantic-label-strong))";
   const surface = "var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))";
   const trajectoryStateMarkers = [
@@ -304,10 +305,10 @@ function TrajectoryOverlay({
   const fixedProgressMarkers = currentHeadVisible ? [{
     name: "current",
     point: currentProgress.point,
-    radius: _chunkYXXTXTP5cjs.NAV_PROGRESS_HEAD.collisionRadius
+    radius: NAV_PROGRESS_HEAD.collisionRadius
   }] : [];
   const markerLayout = markerCollisionLayout(naturalMarkers, scale, fixedProgressMarkers);
-  const trajectoryMarkerSlot = (name) => _optionalChain([markerLayout, 'optionalAccess', _15 => _15.slots, 'access', _16 => _16[name]]);
+  const trajectoryMarkerSlot = (name) => markerLayout?.slots[name];
   const trajectoryLabelSlot = labelScreenSlot(markerPoint, markerLayout, scale);
   const activate = (event) => {
     if (disabled || !interactive) return;
@@ -322,24 +323,24 @@ function TrajectoryOverlay({
   };
   const handlePointerDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onPointerDown, 'optionalCall', _17 => _17(event)]);
+    onPointerDown?.(event);
   };
   const handleMouseDown = (event) => {
     if (pointerOnly) event.preventDefault();
-    _optionalChain([onMouseDown, 'optionalCall', _18 => _18(event)]);
+    onMouseDown?.(event);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "g",
     {
       ...rest,
       "data-lk-trajectory-overlay": "",
-      "data-trajectory-id": _optionalChain([trajectory, 'optionalAccess', _19 => _19.id]),
-      "data-map-id": _optionalChain([trajectory, 'optionalAccess', _20 => _20.mapId]),
-      "data-trajectory-status": _optionalChain([trajectory, 'optionalAccess', _21 => _21.status]),
+      "data-trajectory-id": trajectory?.id,
+      "data-map-id": trajectory?.mapId,
+      "data-trajectory-status": trajectory?.status,
       "data-current-sample-index": currentIndex,
       "data-viewport-scale": scale,
       "data-trajectory-marker-layout": markerLayout ? "screen-slots" : "path-anchored",
-      "data-trajectory-marker-row-width": _optionalChain([markerLayout, 'optionalAccess', _22 => _22.totalWidth]),
+      "data-trajectory-marker-row-width": markerLayout?.totalWidth,
       "data-pointer-only": pointerOnly ? "true" : void 0,
       "data-selected": selected ? "true" : "false",
       "data-focused": focusVisible ? "true" : "false",
@@ -347,10 +348,10 @@ function TrajectoryOverlay({
       "data-invalid": invalid ? "true" : "false",
       "data-stale": stale ? "true" : "false",
       role: hiddenFromAccessibility ? void 0 : interactive ? "button" : "img",
-      tabIndex: hiddenFromAccessibility ? void 0 : interactive ? disabled ? -1 : _nullishCoalesce(tabIndex, () => ( 0)) : tabIndex,
+      tabIndex: hiddenFromAccessibility ? void 0 : interactive ? disabled ? -1 : tabIndex ?? 0 : tabIndex,
       focusable: hiddenFromAccessibility ? "false" : interactive ? "true" : void 0,
       "aria-hidden": hiddenFromAccessibility || void 0,
-      "aria-label": hiddenFromAccessibility ? void 0 : _nullishCoalesce(ariaLabel, () => ( trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale))),
+      "aria-label": hiddenFromAccessibility ? void 0 : ariaLabel ?? trajectoryAccessibleName(trajectory, selected, focused, disabled, invalid, stale),
       "aria-pressed": !hiddenFromAccessibility && interactive ? selected : void 0,
       "aria-disabled": !hiddenFromAccessibility && interactive && disabled ? true : void 0,
       "aria-invalid": !hiddenFromAccessibility && invalid ? true : void 0,
@@ -359,50 +360,50 @@ function TrajectoryOverlay({
       onPointerDown: pointerOnly || onPointerDown ? handlePointerDown : void 0,
       onMouseDown: pointerOnly || onMouseDown ? handleMouseDown : void 0,
       onFocus: !hiddenFromAccessibility ? (event) => {
-        setHasDomFocus(_chunkYXXTXTP5cjs.isFocusVisibleTarget.call(void 0, event.currentTarget));
-        _optionalChain([onFocus, 'optionalCall', _23 => _23(event)]);
+        setHasDomFocus(isFocusVisibleTarget(event.currentTarget));
+        onFocus?.(event);
       } : void 0,
       onBlur: !hiddenFromAccessibility ? (event) => {
         setHasDomFocus(false);
-        _optionalChain([onBlur, 'optionalCall', _24 => _24(event)]);
+        onBlur?.(event);
       } : void 0,
       style: {
         cursor: disabled ? "not-allowed" : interactive ? "pointer" : "default",
-        opacity: _chunkYXXTXTP5cjs.navStateOpacity.call(void 0, disabled, stale),
+        opacity: navStateOpacity(disabled, stale),
         outline: "none",
         ...style
       },
       children: [
-        focusVisible && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        focusVisible && pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-focus-indicator": "",
             d: pathData,
             fill: "none",
             stroke: "var(--color-semantic-focus-indicator)",
-            strokeWidth: _chunkYXXTXTP5cjs.NAV_FOCUS.pathHaloWidth,
+            strokeWidth: NAV_FOCUS.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        selected && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        selected && pathData && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-selected-indicator": "",
             d: pathData,
             fill: "none",
             stroke: "var(--viewer-accent, var(--color-semantic-primary-normal))",
-            strokeWidth: _chunkYXXTXTP5cjs.NAV_SELECTION.pathHaloWidth,
+            strokeWidth: NAV_SELECTION.pathHaloWidth,
             strokeLinecap: "round",
             strokeLinejoin: "round",
-            opacity: _chunkYXXTXTP5cjs.NAV_SELECTION.haloOpacity,
+            opacity: NAV_SELECTION.haloOpacity,
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        trajectoryBodyPath && !selected && !focusVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        trajectoryBodyPath && !selected && !focusVisible && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-casing": "",
@@ -416,24 +417,24 @@ function TrajectoryOverlay({
             pointerEvents: "none"
           }
         ),
-        trajectoryBodyPath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        trajectoryBodyPath && /* @__PURE__ */ jsx(
           "path",
           {
             "data-trajectory-path": "",
             d: trajectoryBodyPath,
             fill: "none",
             stroke: tone,
-            strokeWidth: currentProgress ? 2.5 : selected || _optionalChain([trajectory, 'optionalAccess', _25 => _25.status]) === "active" ? 3.5 : 2.5,
+            strokeWidth: currentProgress ? 2.5 : selected || trajectory?.status === "active" ? 3.5 : 2.5,
             strokeDasharray: dash,
-            opacity: currentProgress ? _chunkYXXTXTP5cjs.NAV_PROGRESS_HEAD.futureOpacity : void 0,
+            opacity: currentProgress ? NAV_PROGRESS_HEAD.futureOpacity : void 0,
             strokeLinecap: "round",
             strokeLinejoin: "round",
             vectorEffect: "non-scaling-stroke",
             pointerEvents: "none"
           }
         ),
-        currentHeadVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkETVYZPQLcjs.NavigationProgressHeadDefs,
+        currentHeadVisible && /* @__PURE__ */ jsx(
+          NavigationProgressHeadDefs,
           {
             idPrefix: progressHeadId,
             tone,
@@ -442,22 +443,22 @@ function TrajectoryOverlay({
             tipSetbackPx: currentProgress.tipSetbackPx
           }
         ),
-        currentProgress && currentPrefixPath && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        currentProgress && currentPrefixPath && /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx(
             "path",
             {
               "data-trajectory-progress-casing": "",
               d: currentPrefixPath,
               fill: "none",
               stroke: surface,
-              strokeWidth: _chunkYXXTXTP5cjs.NAV_PROGRESS_HEAD.trajectory.casingWidth,
+              strokeWidth: NAV_PROGRESS_HEAD.trajectory.casingWidth,
               strokeLinecap: "round",
               strokeLinejoin: "round",
               vectorEffect: "non-scaling-stroke",
               pointerEvents: "none"
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ jsx(
             "path",
             {
               "data-trajectory-progress-past": "",
@@ -470,7 +471,7 @@ function TrajectoryOverlay({
               d: currentPrefixPath,
               fill: "none",
               stroke: tone,
-              strokeWidth: _chunkYXXTXTP5cjs.NAV_PROGRESS_HEAD.trajectory.coreWidth,
+              strokeWidth: NAV_PROGRESS_HEAD.trajectory.coreWidth,
               strokeLinecap: "round",
               strokeLinejoin: "round",
               vectorEffect: "non-scaling-stroke",
@@ -479,12 +480,12 @@ function TrajectoryOverlay({
             }
           )
         ] }),
-        pathData && interactive && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        pathData && interactive && /* @__PURE__ */ jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsx(
             "path",
             {
               "data-trajectory-hit-target": "",
-              "data-screen-target-size": _chunkYXXTXTP5cjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": NAV_HIT.screenTargetSize,
               d: pathData,
               fill: "none",
               stroke: "transparent",
@@ -493,23 +494,23 @@ function TrajectoryOverlay({
               pointerEvents: "stroke"
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ jsx(
             "circle",
             {
               "data-trajectory-hit-target-core": "",
               "data-trajectory-actual-hit-core": "",
-              "data-screen-target-size": _chunkYXXTXTP5cjs.NAV_HIT.screenTargetSize,
+              "data-screen-target-size": NAV_HIT.screenTargetSize,
               "data-screen-target-diameter": "35",
               cx: statePoint.x,
               cy: statePoint.y,
-              r: _chunkYXXTXTP5cjs.NAV_HIT.radius * inverseScale,
+              r: NAV_HIT.radius * inverseScale,
               fill: "transparent",
               pointerEvents: "all"
             }
           )
         ] }),
-        currentHeadVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkETVYZPQLcjs.ProgressHeadObstacle,
+        currentHeadVisible && /* @__PURE__ */ jsx(
+          ProgressHeadObstacle,
           {
             obstacle,
             id: `trajectory:${trajectory.id}:progress-head`,
@@ -519,19 +520,19 @@ function TrajectoryOverlay({
             dataPrefix: "trajectory"
           }
         ),
-        pathData && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        pathData && /* @__PURE__ */ jsxs(
           "g",
           {
             "data-trajectory-status-marker": "",
-            "data-trajectory-status-glyph": _optionalChain([trajectory, 'optionalAccess', _26 => _26.status]),
+            "data-trajectory-status-glyph": trajectory?.status,
             "data-trajectory-screen-slot": markerLayout ? "status" : void 0,
             "data-trajectory-anchor-x": statePoint.x,
             "data-trajectory-anchor-y": statePoint.y,
-            transform: markerTransform(statePoint, inverseScale, _nullishCoalesce(trajectoryMarkerSlot("status"), () => ( badgeNormalSlot(statePoint)))),
+            transform: markerTransform(statePoint, inverseScale, trajectoryMarkerSlot("status") ?? badgeNormalSlot(statePoint)),
             "aria-hidden": "true",
             pointerEvents: "none",
             children: [
-              !trajectoryMarkerSlot("status") && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              !trajectoryMarkerSlot("status") && /* @__PURE__ */ jsx(
                 BadgeLeaderTick,
                 {
                   slot: badgeNormalSlot(statePoint),
@@ -539,24 +540,24 @@ function TrajectoryOverlay({
                   hook: { "data-trajectory-badge-leader": "status" }
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, BadgeShadow, { "data-trajectory-badge-shadow": "status" }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ jsx(BadgeShadow, { "data-trajectory-badge-shadow": "status" }),
+              /* @__PURE__ */ jsx(
                 "circle",
                 {
                   ...obstacle(`trajectory:${trajectory.id}:status`),
                   "data-trajectory-marker-badge": "status",
                   "data-navigation-marker-circle": "",
-                  r: _chunkYXXTXTP5cjs.NAV_STATE_BADGE.radius,
+                  r: NAV_STATE_BADGE.radius,
                   fill: surface,
                   stroke: tone,
-                  strokeWidth: _chunkYXXTXTP5cjs.NAV_STATE_BADGE.strokeWidth,
+                  strokeWidth: NAV_STATE_BADGE.strokeWidth,
                   vectorEffect: "non-scaling-stroke"
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                _chunkGKSI3QZ5cjs.NavigationStateGlyph,
+              /* @__PURE__ */ jsx(
+                NavigationStateGlyph,
                 {
-                  kind: _nullishCoalesce(STATUS_GLYPH_KIND[_optionalChain([trajectory, 'optionalAccess', _27 => _27.status])], () => ( "unknown")),
+                  kind: STATUS_GLYPH_KIND[trajectory?.status] ?? "unknown",
                   size: 10,
                   color: foreground
                 }
@@ -567,18 +568,18 @@ function TrajectoryOverlay({
         pathData && trajectoryStateMarkers.map((item) => {
           const point = item.point;
           const stateSlot = trajectoryMarkerSlot(item.state);
-          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          return /* @__PURE__ */ jsxs(
             "g",
             {
               "data-trajectory-overlay-state": item.state,
               "data-trajectory-screen-slot": stateSlot ? item.state : void 0,
               "data-trajectory-anchor-x": point.x,
               "data-trajectory-anchor-y": point.y,
-              transform: markerTransform(point, inverseScale, _nullishCoalesce(stateSlot, () => ( badgeNormalSlot(point)))),
+              transform: markerTransform(point, inverseScale, stateSlot ?? badgeNormalSlot(point)),
               "aria-hidden": "true",
               pointerEvents: "none",
               children: [
-                !stateSlot && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                !stateSlot && /* @__PURE__ */ jsx(
                   BadgeLeaderTick,
                   {
                     slot: badgeNormalSlot(point),
@@ -586,41 +587,41 @@ function TrajectoryOverlay({
                     hook: { "data-trajectory-badge-leader": item.state }
                   }
                 ),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, BadgeShadow, { "data-trajectory-badge-shadow": item.state }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                /* @__PURE__ */ jsx(BadgeShadow, { "data-trajectory-badge-shadow": item.state }),
+                /* @__PURE__ */ jsx(
                   "circle",
                   {
                     ...obstacle(`trajectory:${trajectory.id}:state:${item.state}`),
                     "data-trajectory-marker-badge": item.state,
                     "data-navigation-marker-circle": "",
-                    r: _chunkYXXTXTP5cjs.NAV_STATE_BADGE.radius,
+                    r: NAV_STATE_BADGE.radius,
                     fill: surface,
                     stroke: item.tone,
-                    strokeWidth: _chunkYXXTXTP5cjs.NAV_STATE_BADGE.strokeWidth,
-                    strokeDasharray: item.state === "stale" ? _chunkYXXTXTP5cjs.NAV_DASH.staleRing : void 0,
+                    strokeWidth: NAV_STATE_BADGE.strokeWidth,
+                    strokeDasharray: item.state === "stale" ? NAV_DASH.staleRing : void 0,
                     vectorEffect: "non-scaling-stroke"
                   }
                 ),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkGKSI3QZ5cjs.NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: foreground })
+                /* @__PURE__ */ jsx(NavigationStateGlyph, { kind: item.glyphKind, size: 10, color: foreground })
               ]
             },
             item.state
           );
         }),
-        showLabel && _optionalChain([trajectory, 'optionalAccess', _28 => _28.label]) && pathData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunk4KWJ7MLTcjs.NavigationAnnotationBlock,
+        showLabel && trajectory?.label && pathData && /* @__PURE__ */ jsx(
+          NavigationAnnotationBlock,
           {
             id: `trajectory:${trajectory.id}:label`,
             kind: "trajectory-label",
             anchor: markerPoint,
             nudgeDirection: "up",
-            priority: _chunk4KWJ7MLTcjs.annotationPriority.call(void 0, {
+            priority: annotationPriority({
               selected,
               focused: focusVisible,
-              alarm: invalid || _optionalChain([trajectory, 'optionalAccess', _29 => _29.status]) === "blocked",
-              emphasized: _optionalChain([trajectory, 'optionalAccess', _30 => _30.status]) === "active"
+              alarm: invalid || trajectory?.status === "blocked",
+              emphasized: trajectory?.status === "active"
             }),
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ jsx(
               "text",
               {
                 "data-trajectory-label": "",
@@ -633,7 +634,7 @@ function TrajectoryOverlay({
                 transform: markerTransform(markerPoint, inverseScale, trajectoryLabelSlot),
                 fill: foreground,
                 stroke: surface,
-                strokeWidth: _chunkYXXTXTP5cjs.NAV_LABEL_HALO.primary,
+                strokeWidth: NAV_LABEL_HALO.primary,
                 strokeLinejoin: "round",
                 paintOrder: "stroke",
                 vectorEffect: "non-scaling-stroke",
@@ -652,7 +653,7 @@ function TrajectoryOverlay({
   );
 }
 
-
-
-exports.TrajectoryOverlay = TrajectoryOverlay;
-//# sourceMappingURL=chunk-O4A3OD4U.cjs.map
+export {
+  TrajectoryOverlay
+};
+//# sourceMappingURL=chunk-WEBJCLD2.js.map

@@ -3,7 +3,7 @@ import {
   NavigationProgressHeadDefs,
   ProgressHeadObstacle,
   routeProgressGeometry
-} from "./chunk-XG4AMZLQ.js";
+} from "./chunk-OTORPXO6.js";
 import {
   NavigationStateGlyph
 } from "./chunk-54Q6T6L4.js";
@@ -264,6 +264,7 @@ function RouteOverlay({
   invalid = false,
   stale = false,
   showLabel = true,
+  showProgressHead = true,
   onActivate,
   "aria-label": ariaLabel,
   "aria-hidden": ariaHidden,
@@ -320,7 +321,7 @@ function RouteOverlay({
   };
   const statusSegment = progressSegment ?? visibleSegments.find((segment) => segment.phase === "current") ?? visibleSegments[0];
   const statusPoints = statusSegment?.points?.filter(finitePoint) ?? [];
-  const progressGeometry = progressSegment ? routeProgressGeometry(statusPoints, progress.fraction, progress.position, scale) : void 0;
+  const progressGeometry = progressSegment ? routeProgressGeometry(statusPoints, progress.fraction, progress.position, scale, { suppressHead: !showProgressHead }) : void 0;
   const progressPoint = progressGeometry?.point;
   const progressHeadVisible = Boolean(progressGeometry?.headVisible);
   const progressPrefixPath = progressGeometry ? pathFromPoints(progressGeometry.prefixPoints) : "";
@@ -862,4 +863,4 @@ function RouteOverlay({
 export {
   RouteOverlay
 };
-//# sourceMappingURL=chunk-UHJJSNNV.js.map
+//# sourceMappingURL=chunk-TEPFJK6P.js.map

@@ -26,6 +26,13 @@ export interface TrajectoryData {
 
 export interface TrajectoryOverlayProps extends NavigationSvgFeatureProps {
   trajectory: TrajectoryData;
+  /**
+   * Show the solid progress head at the current sample. Disable in a
+   * composition where a RobotMarker occupies the same position — the
+   * strong/recessed progress split stays; only the arrowhead, its shaft
+   * setback, and the future gap are yielded to the robot. @default true
+   */
+  showProgressHead?: boolean;
   onActivate?: (id: string, event: NavigationActivateEvent) => void;
 }
 

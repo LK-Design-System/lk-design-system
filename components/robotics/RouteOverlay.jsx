@@ -278,6 +278,7 @@ export function RouteOverlay({
   invalid = false,
   stale = false,
   showLabel = true,
+  showProgressHead = true,
   onActivate,
   'aria-label': ariaLabel,
   'aria-hidden': ariaHidden,
@@ -355,7 +356,7 @@ export function RouteOverlay({
     ?? visibleSegments[0];
   const statusPoints = statusSegment?.points?.filter(finitePoint) ?? [];
   const progressGeometry = progressSegment
-    ? routeProgressGeometry(statusPoints, progress.fraction, progress.position, scale)
+    ? routeProgressGeometry(statusPoints, progress.fraction, progress.position, scale, { suppressHead: !showProgressHead })
     : undefined;
   const progressPoint = progressGeometry?.point;
   const progressHeadVisible = Boolean(progressGeometry?.headVisible);

@@ -581,6 +581,10 @@ function SemanticMirrorFixture() {
                       tabIndex={-1}
                       aria-hidden="true"
                       showLabel={false}
+                      // The robot layer occupies the trajectory's current
+                      // sample, so the progress head yields to the robot —
+                      // the strong/recessed split stays (§2.6).
+                      showProgressHead={!featureVisible('robots:amr-7')}
                       selected={selectedKey === 'paths:trajectory-amr-7'}
                       onActivate={() => selectFromMap('paths:trajectory-amr-7')}
                     />
@@ -787,6 +791,15 @@ export const Overview = {
     }
     if (mapSvg?.querySelector('[data-lane-endpoint]')) {
       throw new Error('Waypoint-owned endpoint identities must not duplicate Lane endpoint chrome in the composed map.');
+    }
+    // The robot occupies the trajectory's current sample, so the trajectory
+    // yields its progress head to the robot (§2.6); the route keeps its own
+    // head because no robot occupies its progress position here.
+    if (mapSvg?.querySelector('[data-navigation-progress-head="trajectory"]')) {
+      throw new Error('The trajectory must yield its progress head to the robot occupying its current sample.');
+    }
+    if (!mapSvg?.querySelector('[data-navigation-progress-head="route"]')) {
+      throw new Error('The route must keep its progress head when no robot occupies its progress position.');
     }
     for (const identity of mapIdentities) {
       if (!identity.closest('[aria-hidden="true"]')) {

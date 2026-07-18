@@ -142,8 +142,11 @@ function suffixFrom(points, startDistance) {
  * position. The head only exists once there is real elapsed line (two distinct
  * prefix points) — there is no synthetic carrier stub at fraction 0. The
  * future line resumes `NAV_PROGRESS_HEAD.futureGap` CSS px past the tip.
+ * `suppressHead` keeps the strong/recessed progress split but yields the tip
+ * to whatever composition occupies it (a RobotMarker on the same position):
+ * no marker, no shaft setback, no future gap.
  */
-export function routeProgressGeometry(points, fraction, explicitPosition, viewportScale = 1) {
+export function routeProgressGeometry(points, fraction, explicitPosition, viewportScale = 1, { suppressHead = false } = {}) {
   const fractionResult = pointAtFraction(points, fraction);
   if (!fractionResult) return undefined;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
@@ -165,8 +168,10 @@ export function routeProgressGeometry(points, fraction, explicitPosition, viewpo
       };
     }
     const fullPrefix = prefixThrough(points, fractionResult.segment.index, explicitPosition);
-    const headVisible = fullPrefix.length >= 2;
-    const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, setbackDistance, scale);
+    const headVisible = fullPrefix.length >= 2 && !suppressHead;
+    const { paintedPrefix, tipSetbackPx } = headVisible
+      ? applyTipSetback(fullPrefix, setbackDistance, scale)
+      : { paintedPrefix: fullPrefix, tipSetbackPx: 0 };
     return {
       point: explicitPosition,
       angle,
@@ -179,8 +184,10 @@ export function routeProgressGeometry(points, fraction, explicitPosition, viewpo
   }
 
   const fullPrefix = prefixThrough(points, fractionResult.segment.index, fractionResult.point);
-  const headVisible = fullPrefix.length >= 2;
-  const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, setbackDistance, scale);
+  const headVisible = fullPrefix.length >= 2 && !suppressHead;
+  const { paintedPrefix, tipSetbackPx } = headVisible
+    ? applyTipSetback(fullPrefix, setbackDistance, scale)
+    : { paintedPrefix: fullPrefix, tipSetbackPx: 0 };
   return {
     point: fractionResult.point,
     angle,
@@ -195,9 +202,11 @@ export function routeProgressGeometry(points, fraction, explicitPosition, viewpo
 /**
  * Resolves a finite Trajectory sample without inferring progress from time.
  * Same head rules as the route geometry: no head until real elapsed line
- * exists, and the future line resumes after the shared gap.
+ * exists, and the future line resumes after the shared gap. `suppressHead`
+ * keeps the strong/recessed split but yields the tip to the composition
+ * (a RobotMarker on the current sample): no marker, no setback, no gap.
  */
-export function trajectoryProgressGeometry(points, pointIndex, viewportScale = 1) {
+export function trajectoryProgressGeometry(points, pointIndex, viewportScale = 1, { suppressHead = false } = {}) {
   if (!Number.isInteger(pointIndex) || pointIndex < 0 || pointIndex >= points.length) return undefined;
   const point = points[pointIndex];
   const fullPrefix = [];
@@ -211,8 +220,10 @@ export function trajectoryProgressGeometry(points, pointIndex, viewportScale = 1
   if (!tangent) return undefined;
   const scale = Number.isFinite(viewportScale) && viewportScale > 0 ? viewportScale : 1;
   const tipDistance = polylineLength(fullPrefix);
-  const headVisible = fullPrefix.length >= 2;
-  const { paintedPrefix, tipSetbackPx } = applyTipSetback(fullPrefix, NAV_PROGRESS_HEAD.tipSetback / scale, scale);
+  const headVisible = fullPrefix.length >= 2 && !suppressHead;
+  const { paintedPrefix, tipSetbackPx } = headVisible
+    ? applyTipSetback(fullPrefix, NAV_PROGRESS_HEAD.tipSetback / scale, scale)
+    : { paintedPrefix: fullPrefix, tipSetbackPx: 0 };
   return {
     point,
     angle: Math.atan2(tangent.dy, tangent.dx) * 180 / Math.PI,

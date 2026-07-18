@@ -54,6 +54,13 @@ export interface RouteOverlayProps extends NavigationSvgFeatureProps {
   activeMapId: string;
   /** Optional segment-level selection when the whole route is not selected. */
   selectedSegmentId?: string;
+  /**
+   * Show the solid progress head at the source-owned progress position.
+   * Disable in a composition where a RobotMarker occupies the same position —
+   * the strong/recessed progress split stays; only the arrowhead, its shaft
+   * setback, and the future gap are yielded to the robot. @default true
+   */
+  showProgressHead?: boolean;
   onActivate?: (target: RouteSelection, event: NavigationActivateEvent) => void;
 }
 
