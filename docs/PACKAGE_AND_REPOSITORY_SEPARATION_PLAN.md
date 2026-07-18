@@ -281,8 +281,9 @@ LK Theme가 제공하는 value layer로 기록한다.
 - 일곱 consumer evidence report는 이 변경에서 Git 추적 상태로 고정해 consumer evidence
   blocker를 닫았다. RobotMarker 변경을 제외한 layer infrastructure와 Wave 0 candidate는
   승인에 따라 local `main@626756b`까지 fast-forward했다. origin 동기화와 clean main/tag,
-  accountable person, package/CJS/support·brand boundary 승인, full regression evidence와
-  canonical immutable tarball/LKG가 남아 있어 Wave 0 완료 gate는 계속 `blocked`다.
+  full regression evidence와 canonical immutable tarball/LKG capture가 남아 있어 Wave 0
+  완료 gate는 계속 `blocked`다. accountable person과 package/CJS/support·brand boundary
+  결정은 이후 사용자 승인으로 닫혔다.
 - local `main@626756b`의 `npm run check:fast`와 `npm run check:pack`은 build, type,
   layer, migration, consumer 계약과 실제 tarball 설치, ESM/CJS/deep/type,
   SSR, tree-shaking과 bundle-size 검증을 통과했다. 다만 실행 환경이 canonical
@@ -292,8 +293,9 @@ LK Theme가 제공하는 value layer로 기록한다.
   `npm run check:storybook-ci`는 579개 story 접근성 검사를 0 violation으로 통과했지만
   Waypoint/state glyph 8개 capture가 visual baseline과 달랐다. 같은 8개 diff가 변경 전
   `main@0aa7f8d`에서도 동일 비율로 재현되고 후보에는 해당 source/baseline diff가 없으므로,
-  package 분리 회귀가 아니라 기존 main 품질 부채로 기록한다. IA review 승격이나 visual
-  baseline 갱신은 별도 범위 승인과 실제 human/visual review 없이 수행하지 않는다.
+  package 분리 회귀가 아니라 기존 main 품질 부채로 기록한다. 이후 사용자가 해당 범위를
+  승인했으며, IA review 승격과 visual baseline 갱신은 실제 human/visual review 결과에만
+  근거해 수행한다.
 
 Wave 0의 artifact baseline은 아직 존재하는 현재 aggregate package 한 개만 대상으로
 한다. 미래의 Core, Theme, Product, Robotics UI, compatibility package 다섯 개를 이 gate에
@@ -538,12 +540,32 @@ source commit, command/result, 고정된 React 18/19·SSR·tree-shaking·Windows
 matrix 전 항목을 대조한다. 실제 aggregate artifact는 경로·크기·checksum뿐 아니라 gzip
 tar 형식, 내부 package name/version, 현재 publish manifest와 export/file contents도 확인한다.
 
-현재 artifact 계약은 ready 상태의 clean checkout에서 그대로 닫을 수 없다. tarball은
-ignored `visual-artifacts/`에 생성되지만 `check:package-migration`이 `check:pack`보다 먼저
-실행되어, tracked JSON만으로는 실제 bytes 검증 시점에 artifact가 존재하지 않는다. 현재
-비표준 런타임에서 생성한 8,298,592-byte tarball을 Git에 넣지 않는다. Wave 0 승인 전
-canonical Node 22/npm 10.9.2에서 tarball을 먼저 재생성해 checksum과 비교하는 전용 verifier,
-또는 immutable registry/release asset을 사용하는 계약 중 하나를 별도 승인해 구현한다.
+artifact 재현 계약은 tracked JSON attestation과 ignored tarball 재생성을 분리한다.
+`scripts/check-package-artifact.mjs`의 capture/verify 모드는 정확히 고정한 Windows x64,
+Node 22.17.1, npm 10.9.2에서만 동작한다. capture는
+`references/package-split/baselines/WAVE0_AGGREGATE_ARTIFACT.json`에 source tag/commit,
+release-set ID, lockfile·verifier checksum, tarball byte size/SHA-256과 smoke 결과를 남기고,
+verify는 fresh checkout에서 tarball을 `visual-artifacts/`에 다시 만든 뒤 byte-for-byte로
+대조한다. capture와 canonical verify package lifecycle은 기록된 `npm ci`를 실제로 먼저
+실행하며, baseline mode를 Node script에 직접 전달하는 호출은 authoritative run으로
+인정하지 않는다. Git에는 8MB tarball을 넣지 않는다.
+
+tracked attestation은 Draft 2020-12 schema로 실제 검증한다. schema는 필수 시각·모듈 smoke
+필드와 unknown field 차단, 안전한 단일 tarball 경로, migration 원장의 captured/not-captured
+조건을 포함한다. 구현은 공식 [Ajv JSON Schema 2020-12 지원](https://ajv.js.org/json-schema.html)과
+[ajv-formats 날짜 형식 검증](https://ajv.js.org/guide/formats.html)을 정확한 devDependency로
+고정한다.
+
+`check:pack:baseline`이 성공하면 ignored artifact root에 현재 HEAD, 원장 bytes, tracked
+attestation bytes, verifier와 실제 tarball checksum에 묶인 임시 proof를 쓴다.
+`check:package-migration:wave0`는 반드시 이 verifier를 먼저 실행하며, readiness checker는
+proof와 실제 ignored tarball을 다시 읽는다. 따라서 metadata-only 직접 명령은 Wave 0
+승인을 통과할 수 없다. npm의 frozen install·pack 동작은 공식
+[npm ci](https://docs.npmjs.com/cli/v10/commands/npm-ci/)와
+[npm pack](https://docs.npmjs.com/cli/v10/commands/npm-pack/) 계약을 따른다. Node 22.17.1은
+공식 [Node.js archive](https://nodejs.org/en/download/archive/v22.23.1)에 기록된 npm 10.9.2
+동봉 release 중 최신 patch로 선택했다. 실제 baseline JSON과 checksum은 clean-main tag가
+생긴 뒤 해당 source commit에서 capture한다.
 
 각 Wave를 완료로 표시하려면 작업 목록이 아니라 해당 완료 gate의 실제 artifact,
 command output, consumer pin 또는 rendered evidence를 확인해야 한다. 다음 Wave가
@@ -555,14 +577,15 @@ Wave 0 원장과 integrity checker는 구현됐다. 다음 순서는 다음과 �
 
 1. RobotMarker 시각 변경이 없는 세 candidate를 local `main@626756b`까지 통합했고,
    LDS3D current-state scan도 해당 main 기준으로 다시 고정했다. 이 증거 변경을 검증·커밋한다.
-2. package별 accountable person과 필수 승인 역할을 지정하고, namespace/name, fixed
-   release-set·versioning, support window, CJS, Spinner brand boundary와 conditional
-   repository policy를 승인한다. editor/viewer Product 후보는 별도 owner review로 유지한다.
+2. `Jinhyuk Jang`을 package별 accountable person과 필수 승인 역할로 지정했고,
+   namespace/name, fixed release-set·versioning, support window, CJS, Spinner brand
+   boundary와 conditional repository policy를 승인했다. editor/viewer Product 후보는
+   별도 owner review로 유지한다.
 3. local main에서 `pnpm-lock.yaml` 제거를 확인했으므로 canonical npm frozen install을
    재현하고, 별도 승인 후 origin/main 동기화 정책을 확정한다.
-4. 기존 main의 IA human-review와 Waypoint/state-glyph visual drift를 별도 승인 범위에서
-   실제 검토한다. 동시에 clean checkout에서 먼저 artifact를 재생성하는 baseline 계약을
-   승인한다.
+4. 기존 main의 IA human-review와 Waypoint/state-glyph visual drift를 승인 범위에서 실제
+   검토한다. clean checkout에서 artifact를 재생성하는 baseline 도구와 schema는 구현됐고,
+   source baseline tag 이후 evidence를 capture한다.
 5. clean-main tag, full check, package tarball/checksum, React 18/19 runtime, SSR,
    tree-shaking, Windows/Linux와 visual/size baseline을 만든다.
 6. 위 blocker가 모두 닫힌 뒤에만 Wave 1 workspace scaffold를 시작한다.

@@ -3,10 +3,15 @@ import { execFileSync } from 'node:child_process';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 
 const root = process.cwd();
 const auditPath = 'docs/references/package-split/MIGRATION_AUDIT.json';
 const schemaPath = 'docs/references/package-split/MIGRATION_AUDIT.schema.json';
+const artifactBaselineSchemaPath = 'docs/references/package-split/PACKAGE_ARTIFACT_BASELINE.schema.json';
+const artifactVerifierPath = 'scripts/check-package-artifact.mjs';
+const artifactVerificationSentinelPath = 'visual-artifacts/package-smoke/WAVE0_ARTIFACT_VERIFIED.json';
 const classificationPath = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json';
 const productAuditPath = 'docs/references/product-frontends/COVERAGE_AUDIT.json';
 const requireWave0 = process.argv.includes('--require-wave=0');
@@ -64,6 +69,26 @@ function assert(condition, message) {
 
 function normalizePath(value) {
   return value.replaceAll('\\', '/').replace(/^\.\//, '');
+}
+
+function formatSchemaErrors(errors) {
+  return (errors || [])
+    .map((error) => `${error.instancePath || '/'} ${error.message}`)
+    .join('; ');
+}
+
+function validateJsonSchema(value, schema, label) {
+  const ajv = new Ajv2020({
+    allErrors: true,
+    strict: true,
+    strictRequired: false,
+    allowUnionTypes: true,
+  });
+  addFormats(ajv);
+  const validate = ajv.compile(schema);
+  if (!validate(value)) {
+    throw new Error(`${label} schema validation failed: ${formatSchemaErrors(validate.errors)}`);
+  }
 }
 
 function sha256(value) {
@@ -967,20 +992,62 @@ async function validatePackageManager(audit) {
     'Known secondary lockfiles',
   );
   const ciSource = await readFile(path.join(root, decision.ciWorkflow), 'utf8');
+  const canonicalRuntime = decision.canonicalRuntime;
+  assert(
+    canonicalRuntime?.platform === 'win32' && canonicalRuntime?.arch === 'x64',
+    'Canonical package baseline must use Windows x64.',
+  );
+  assert(
+    canonicalRuntime?.node === '22.17.1' && canonicalRuntime?.npm === decision.version,
+    'Canonical package baseline runtime must be Node 22.17.1 with the approved npm version.',
+  );
   assert(/cache:\s*npm/.test(ciSource), 'CI must cache npm.');
   assert(
-    ciSource.includes(`npm install --global npm@${decision.version}`),
-    `CI must install canonical npm ${decision.version}.`,
+    ciSource.includes(`node-version: ${canonicalRuntime.node}`),
+    `CI must pin Node ${canonicalRuntime.node}.`,
   );
   assert(
     ciSource.includes(`Expected npm ${decision.version}.`),
     `CI must verify canonical npm ${decision.version}.`,
   );
   assert(
+    ciSource.includes(`Expected Node ${canonicalRuntime.node}.`),
+    `CI must verify canonical Node ${canonicalRuntime.node}.`,
+  );
+  assert(
+    !ciSource.includes('npm install --global npm@'),
+    'CI must use the npm bundled with the exact canonical Node release.',
+  );
+  assert(
     /fetch-depth:\s*0/.test(ciSource),
     'CI checkout must fetch full history for migration commit/tag ancestry checks.',
   );
   assert(/run:\s*npm ci\b/.test(ciSource), 'CI must use npm ci.');
+  assert(
+    packageJson.scripts?.['check:ci'] ===
+      'node scripts/run-package-scripts.mjs check:fast check:storybook-ci && npm run check:pack:baseline-if-present',
+    'CI checks must enter the conditional package-baseline npm lifecycle explicitly.',
+  );
+  assert(
+    packageJson.scripts?.['check:package-migration:wave0'] ===
+      'npm run check:pack:baseline && node scripts/check-package-migration.mjs --require-wave=0',
+    'Wave 0 gate must regenerate the canonical artifact before readiness validation.',
+  );
+  assert(
+    packageJson.scripts?.['capture:pack:baseline'] ===
+      'npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --capture-baseline',
+    'Package baseline capture must execute the recorded frozen install before build and capture.',
+  );
+  assert(
+    packageJson.scripts?.['check:pack:baseline'] ===
+      'npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline',
+    'Canonical package baseline verification must start from the recorded frozen install.',
+  );
+  assert(
+    packageJson.scripts?.['check:pack:baseline-if-present'] ===
+      'node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline-if-present',
+    'Conditional baseline verification must rebuild generated package output before packing.',
+  );
   assert(!/pnpm\/action-setup/.test(ciSource), 'CI must not set up pnpm.');
   assert(!/run:\s*pnpm\b/.test(ciSource), 'CI must not execute pnpm.');
   if (secondaryLockfiles.length > 0) {
@@ -993,6 +1060,7 @@ async function validatePackageManager(audit) {
 }
 
 function validateTopLevelSchema(audit, schema) {
+  validateJsonSchema(audit, schema, 'Package migration audit');
   assert(audit.$schema === './MIGRATION_AUDIT.schema.json', 'Audit $schema path mismatch.');
   assert(audit.schemaVersion === 1, 'Audit schemaVersion must be 1.');
   for (const key of schema.required || []) {
@@ -1003,6 +1071,10 @@ function validateTopLevelSchema(audit, schema) {
     assert(allowed.has(key), `Audit has unknown top-level key ${key}.`);
   }
   assert(
+    audit.verificationContract.wave0GateCommand === 'npm run check:package-migration:wave0',
+    'Wave 0 gate command must use the artifact-regenerating package lifecycle.',
+  );
+  assert(
     audit.audit.source.classification === classificationPath,
     'Audit classification source path mismatch.',
   );
@@ -1011,10 +1083,18 @@ function validateTopLevelSchema(audit, schema) {
       'baselines.cleanMain.commit is the tagged source baseline. The ready audit may be committed later on synchronized main/origin-main only when every post-baseline path is an audit or tracked evidence attestation.',
     'Clean-main baseline and attestation relationship drift.',
   );
+  assert(
+    audit.verificationContract.artifactBaselineMeaning ===
+      'Tracked JSON is the immutable artifact attestation; the tarball stays ignored and must be regenerated byte-for-byte before the Wave 0 readiness command validates metadata.',
+    'Package artifact baseline and regeneration relationship drift.',
+  );
   for (const evidenceScript of [
     'scripts/check-package-migration.mjs',
+    artifactVerifierPath,
     'scripts/scan-package-consumer.mjs',
     'scripts/scan-lds3d-integration.mjs',
+    'package-lock.json',
+    artifactBaselineSchemaPath,
   ]) {
     assert(
       audit.verificationContract.authoritativeInputs?.includes(evidenceScript),
@@ -1067,10 +1147,14 @@ function validateSourceObservation(audit) {
 
     const allowedExactPaths = new Set([
       '.github/workflows/ci.yml',
+      '.github/workflows/deploy-storybook-pages.yml',
       'docs/PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md',
       'docs/README.md',
+      artifactBaselineSchemaPath,
       'package.json',
+      'package-lock.json',
       'pnpm-lock.yaml',
+      artifactVerifierPath,
       'scripts/check-package-migration.mjs',
       'scripts/scan-lds3d-integration.mjs',
       'scripts/scan-package-consumer.mjs',
@@ -1260,111 +1344,177 @@ function validLds3dMatchSet(matches, usage, aggregateName, worktree) {
   );
 }
 
-function collectExportTargets(value) {
-  if (typeof value === 'string') return [value];
-  if (Array.isArray(value)) return value.flatMap(collectExportTargets);
-  if (value && typeof value === 'object') {
-    return Object.values(value).flatMap(collectExportTargets);
-  }
-  return [];
-}
-
-function archiveTargetExists(target, archiveEntries) {
-  const archiveTarget = `package/${normalizePath(target)}`;
-  if (!archiveTarget.includes('*')) return archiveEntries.includes(archiveTarget);
-  const pattern = archiveTarget
-    .split('*')
-    .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    .join('.+');
-  const matcher = new RegExp(`^${pattern}$`);
-  return archiveEntries.some((entry) => matcher.test(entry));
-}
-
-async function matchesPackageArtifact(entry) {
-  if (!entry || typeof entry.artifactPath !== 'string' || !hasSha256(entry.sha256)) return false;
-  const relativePath = normalizePath(entry.artifactPath);
+function resolveSafeArtifactPath(value) {
+  if (typeof value !== 'string') return null;
+  const relativePath = normalizePath(value);
+  const segments = relativePath.split('/');
+  const expectedDirectory = path.resolve(root, 'visual-artifacts', 'package-smoke', 'pack');
+  const absolutePath = path.resolve(root, relativePath);
+  const relativeToExpectedDirectory = path.relative(expectedDirectory, absolutePath);
   if (
-    relativePath === '..' ||
-    relativePath.startsWith('../') ||
+    relativePath !== value ||
+    segments.some((segment) => segment === '.' || segment === '..') ||
     path.isAbsolute(relativePath) ||
-    !relativePath.endsWith('.tgz')
+    !/^visual-artifacts\/package-smoke\/pack\/[A-Za-z0-9][A-Za-z0-9._-]*\.tgz$/.test(relativePath) ||
+    !relativeToExpectedDirectory ||
+    relativeToExpectedDirectory.startsWith('..') ||
+    path.isAbsolute(relativeToExpectedDirectory) ||
+    path.dirname(absolutePath) !== expectedDirectory
   ) {
-    return false;
+    return null;
   }
   try {
-    const absolutePath = path.join(root, relativePath);
-    const bytes = await readFile(absolutePath);
-    if (
-      bytes.length !== entry.sizeBytes ||
-      sha256(bytes) !== entry.sha256 ||
-      bytes[0] !== 0x1f ||
-      bytes[1] !== 0x8b
-    ) {
-      return false;
-    }
-    const archiveEntries = execFileSync('tar', ['-tf', absolutePath], {
-      cwd: root,
-      encoding: 'utf8',
-      maxBuffer: 10 * 1024 * 1024,
-    })
-      .split(/\r?\n/)
-      .map((value) => normalizePath(value.trim()))
-      .filter(Boolean);
-    if (
-      !archiveEntries.includes('package/package.json') ||
-      archiveEntries.some((value) => value !== 'package' && !value.startsWith('package/'))
-    ) {
-      return false;
-    }
-    const archivePackageJson = JSON.parse(
-      execFileSync('tar', ['-xOf', absolutePath, 'package/package.json'], {
-        cwd: root,
-        encoding: 'utf8',
-        maxBuffer: 1024 * 1024,
-      }),
-    );
-    const sourcePackageJson = await readJson('package.json');
-    const manifestFields = [
-      'name',
-      'version',
-      'type',
-      'main',
-      'module',
-      'types',
-      'exports',
-      'files',
-      'sideEffects',
-      'peerDependencies',
-      'dependencies',
-      'publishConfig',
-    ];
-    if (
-      archivePackageJson.name !== entry.package ||
-      archivePackageJson.version !== entry.version ||
-      !manifestFields.every((field) =>
-        isDeepStrictEqual(archivePackageJson[field], sourcePackageJson[field]),
-      )
-    ) {
-      return false;
-    }
-    const exportTargets = collectExportTargets(sourcePackageJson.exports);
-    if (!exportTargets.every((target) => archiveTargetExists(target, archiveEntries))) return false;
-    const declaredFilesPresent = (sourcePackageJson.files || []).every((file) => {
-      const archivePath = `package/${normalizePath(file)}`;
-      return (
-        archiveEntries.includes(archivePath) ||
-        archiveEntries.some((candidate) => candidate.startsWith(`${archivePath}/`))
-      );
-    });
-    if (!declaredFilesPresent) return false;
-    const forbiddenEntries = archiveEntries.filter((value) => {
-      const packagePath = value.replace(/^package\//, '');
-      return /^(components|src)\/|\.stories\.|\.prompt\.md$|\.jsx$/.test(packagePath);
-    });
-    return forbiddenEntries.length === 0;
+    gitOutput(['check-ignore', '--quiet', '--', relativePath]);
   } catch {
-    return false;
+    return null;
   }
+  try {
+    gitOutput(['ls-files', '--error-unmatch', '--', relativePath]);
+    return null;
+  } catch {
+    return absolutePath;
+  }
+}
+
+function hasSafeIgnoredArtifactPath(value) {
+  return resolveSafeArtifactPath(value) !== null;
+}
+
+async function validateArtifactVerificationProof(audit) {
+  const failureCountBefore = failures.length;
+  try {
+    const sentinelBytes = await readFile(path.join(root, artifactVerificationSentinelPath));
+    const sentinel = JSON.parse(sentinelBytes.toString('utf8'));
+    assert(
+      sentinel && typeof sentinel === 'object' && !Array.isArray(sentinel),
+      'Wave 0 artifact verification proof must be a JSON object.',
+    );
+    if (!sentinel || typeof sentinel !== 'object' || Array.isArray(sentinel)) return false;
+    sameStringSet(
+      Object.keys(sentinel),
+      [
+        'schemaVersion',
+        'kind',
+        'verifiedAt',
+        'currentCommit',
+        'evidenceSourceCommit',
+        'auditPath',
+        'auditSha256',
+        'evidencePath',
+        'evidenceSha256',
+        'artifactPath',
+        'artifactSizeBytes',
+        'artifactSha256',
+        'verifierPath',
+        'verifierSha256',
+        'lifecycle',
+        'canonicalEnvironment',
+      ],
+      'Wave 0 artifact verification proof keys',
+    );
+    sameStringSet(
+      Object.keys(sentinel.canonicalEnvironment || {}),
+      ['platform', 'arch', 'node', 'npm', 'packageManager'],
+      'Wave 0 artifact verification runtime keys',
+    );
+
+    const packageArtifacts = audit.baselines.packageArtifacts || {};
+    const aggregateTarball = packageArtifacts.tarballs?.[0];
+    const evidencePath = packageArtifacts.evidencePath;
+    assert(
+      typeof evidencePath === 'string',
+      'Wave 0 artifact verification requires a recorded evidence path.',
+    );
+    const auditBytes = await readFile(path.join(root, auditPath));
+    const evidenceBytes = await readFile(path.join(root, normalizePath(evidencePath || '')));
+    const evidence = JSON.parse(evidenceBytes.toString('utf8'));
+    const evidenceTarball = evidence.tarballs?.[0];
+    const absoluteArtifactPath = resolveSafeArtifactPath(sentinel.artifactPath);
+    assert(absoluteArtifactPath, 'Wave 0 verification proof artifact path is unsafe or tracked.');
+    const artifactBytes = absoluteArtifactPath ? await readFile(absoluteArtifactPath) : Buffer.alloc(0);
+    const verifierBytes = await readFile(path.join(root, artifactVerifierPath));
+    const canonicalRuntime = audit.decisions.packageManager?.canonicalRuntime;
+
+    assert(sentinel.schemaVersion === 1, 'Wave 0 artifact verification proof schema drift.');
+    assert(
+      sentinel.kind === 'lds-wave0-artifact-verification',
+      'Wave 0 artifact verification proof kind drift.',
+    );
+    assert(
+      typeof sentinel.verifiedAt === 'string' &&
+        new Date(sentinel.verifiedAt).toISOString() === sentinel.verifiedAt,
+      'Wave 0 artifact verification timestamp must be an ISO date-time.',
+    );
+    assert(
+      sentinel.currentCommit === gitOutput(['rev-parse', 'HEAD']),
+      'Wave 0 artifact verification proof must match the current commit.',
+    );
+    assert(
+      sentinel.evidenceSourceCommit === audit.baselines.cleanMain?.commit &&
+        sentinel.evidenceSourceCommit === evidence.sourceCommit,
+      'Wave 0 artifact verification proof must match the tagged source baseline.',
+    );
+    assert(sentinel.auditPath === auditPath, 'Wave 0 artifact verification audit path drift.');
+    assert(
+      sentinel.auditSha256 === sha256(auditBytes),
+      'Wave 0 artifact verification proof does not match the current audit bytes.',
+    );
+    assert(sentinel.evidencePath === evidencePath, 'Wave 0 artifact verification evidence path drift.');
+    assert(
+      sentinel.evidenceSha256 === sha256(evidenceBytes) &&
+        sentinel.evidenceSha256 === packageArtifacts.evidenceSha256,
+      'Wave 0 artifact verification proof does not match tracked evidence.',
+    );
+    assert(
+      sentinel.artifactPath === aggregateTarball?.artifactPath &&
+        sentinel.artifactPath === evidenceTarball?.artifactPath,
+      'Wave 0 artifact verification proof artifact path drift.',
+    );
+    assert(
+      sentinel.artifactSizeBytes === artifactBytes.byteLength &&
+        sentinel.artifactSizeBytes === aggregateTarball?.sizeBytes &&
+        sentinel.artifactSizeBytes === evidenceTarball?.sizeBytes,
+      'Wave 0 artifact verification proof artifact size drift.',
+    );
+    assert(
+      sentinel.artifactSha256 === sha256(artifactBytes) &&
+        sentinel.artifactSha256 === aggregateTarball?.sha256 &&
+        sentinel.artifactSha256 === evidenceTarball?.sha256,
+      'Wave 0 artifact verification proof artifact checksum drift.',
+    );
+    assert(sentinel.verifierPath === artifactVerifierPath, 'Wave 0 artifact verifier path drift.');
+    assert(
+      sentinel.verifierSha256 === sha256(verifierBytes),
+      'Wave 0 artifact verification proof verifier checksum drift.',
+    );
+    assert(
+      sentinel.lifecycle === 'check:pack:baseline',
+      'Wave 0 artifact verification proof must come from the canonical lifecycle.',
+    );
+    assert(
+      sentinel.canonicalEnvironment?.platform === canonicalRuntime?.platform &&
+        sentinel.canonicalEnvironment?.arch === canonicalRuntime?.arch &&
+        sentinel.canonicalEnvironment?.node === canonicalRuntime?.node &&
+        sentinel.canonicalEnvironment?.npm === canonicalRuntime?.npm &&
+        sentinel.canonicalEnvironment?.packageManager ===
+          audit.decisions.packageManager?.packageJsonValue,
+      'Wave 0 artifact verification proof runtime drift.',
+    );
+    try {
+      gitOutput(['check-ignore', '--quiet', '--', artifactVerificationSentinelPath]);
+    } catch {
+      fail('Wave 0 artifact verification proof must stay ignored.');
+    }
+    try {
+      gitOutput(['ls-files', '--error-unmatch', '--', artifactVerificationSentinelPath]);
+      fail('Wave 0 artifact verification proof must not be tracked.');
+    } catch {
+      // Expected: the proof is transient and regenerated with the tarball.
+    }
+  } catch (error) {
+    fail(`Wave 0 artifact verification proof is missing or invalid: ${error.message}`);
+  }
+  return failures.length === failureCountBefore;
 }
 
 async function validateReadiness(audit, consumerSummary, packageManagerSummary) {
@@ -1372,6 +1522,9 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
   const blockers = readiness?.blockers || [];
   const blockerIds = blockers.map((entry) => entry.id);
   assert(new Set(blockerIds).size === blockerIds.length, 'Readiness blocker ids must be unique.');
+  const artifactVerificationProofValid = requireWave0
+    ? await validateArtifactVerificationProof(audit)
+    : true;
   sameStringSet(
     audit.baselines.consumerMatrix?.required || [],
     requiredWave0MatrixIds,
@@ -1606,6 +1759,8 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
     audit.baselines.packageArtifacts.lastKnownGoodReleaseSet.length > 0 &&
     typeof audit.baselines.packageArtifacts?.evidencePath === 'string' &&
     hasSha256(audit.baselines.packageArtifacts?.evidenceSha256) &&
+    audit.baselines.packageArtifacts?.reproductionCommand ===
+      'npm run check:package-migration:wave0' &&
     tarballs.length === 1 &&
     aggregateTarball?.package === audit.audit.source.packageName &&
     aggregateTarball?.version === audit.audit.source.packageVersion &&
@@ -1621,23 +1776,64 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
       sha256: audit.baselines.packageArtifacts.evidenceSha256,
     });
     const artifactEvidence = artifactEvidenceRecord.json;
+    const artifactBaselineSchema = await readJson(artifactBaselineSchemaPath);
+    validateJsonSchema(artifactEvidence, artifactBaselineSchema, 'Package artifact baseline');
     const evidenceTarballs = artifactEvidence?.tarballs;
     const evidenceTarball = Array.isArray(evidenceTarballs) ? evidenceTarballs[0] : undefined;
+    const canonicalRuntime = audit.decisions.packageManager?.canonicalRuntime;
+    const packageLockBytes = await readFile(path.join(root, audit.decisions.packageManager.lockfile));
+    const artifactVerifierBytes = await readFile(path.join(root, artifactVerifierPath));
+    let artifactSchemaTracked = false;
+    try {
+      gitOutput(['ls-files', '--error-unmatch', artifactBaselineSchemaPath]);
+      artifactSchemaTracked = true;
+    } catch {
+      artifactSchemaTracked = false;
+    }
     packageArtifactsCaptured =
+      artifactVerificationProofValid &&
       artifactEvidenceRecord.tracked &&
-      (await matchesPackageArtifact(aggregateTarball)) &&
+      artifactSchemaTracked &&
+      artifactEvidence?.$schema === '../PACKAGE_ARTIFACT_BASELINE.schema.json' &&
+      artifactEvidence?.schemaVersion === 1 &&
       artifactEvidence?.kind === 'lds-wave0-aggregate-artifact' &&
+      artifactEvidence.repository === audit.audit.source.repository &&
       artifactEvidence.sourceCommit === audit.baselines.cleanMain.commit &&
+      artifactEvidence.sourceTag === audit.baselines.cleanMain.tag &&
       artifactEvidence.lastKnownGoodReleaseSet ===
         audit.baselines.packageArtifacts.lastKnownGoodReleaseSet &&
+      artifactEvidence.canonicalEnvironment?.platform === canonicalRuntime?.platform &&
+      artifactEvidence.canonicalEnvironment?.arch === canonicalRuntime?.arch &&
+      artifactEvidence.canonicalEnvironment?.node === canonicalRuntime?.node &&
+      artifactEvidence.canonicalEnvironment?.npm === canonicalRuntime?.npm &&
+      artifactEvidence.canonicalEnvironment?.packageManager ===
+        audit.decisions.packageManager.packageJsonValue &&
+      artifactEvidence.inputs?.lockfile === audit.decisions.packageManager.lockfile &&
+      artifactEvidence.inputs?.lockfileSha256 === sha256(packageLockBytes) &&
+      artifactEvidence.inputs?.artifactVerifier === artifactVerifierPath &&
+      artifactEvidence.inputs?.artifactVerifierSha256 === sha256(artifactVerifierBytes) &&
+      artifactEvidence.inputs?.installCommand ===
+        audit.decisions.packageManager.frozenInstallCommand &&
+      artifactEvidence.inputs?.buildCommand === 'npm run build' &&
+      artifactEvidence.inputs?.generatedCheckCommand === 'npm run check:generated' &&
+      artifactEvidence.inputs?.packCommand ===
+        'npm pack --json --ignore-scripts --pack-destination visual-artifacts/package-smoke/pack' &&
+      artifactEvidence.verification?.command === 'npm run check:pack:baseline' &&
+      artifactEvidence.verification?.result === 'passed' &&
       Array.isArray(evidenceTarballs) &&
       evidenceTarballs.length === 1 &&
       evidenceTarball?.package === aggregateTarball.package &&
       evidenceTarball?.version === aggregateTarball.version &&
       evidenceTarball?.sourceCommit === aggregateTarball.sourceCommit &&
       evidenceTarball?.artifactPath === aggregateTarball.artifactPath &&
+      evidenceTarball?.storage === 'ignored-regenerated' &&
       evidenceTarball?.sizeBytes === aggregateTarball.sizeBytes &&
-      evidenceTarball?.sha256 === aggregateTarball.sha256;
+      evidenceTarball?.sha256 === aggregateTarball.sha256 &&
+      Number.isInteger(evidenceTarball?.fileCount) &&
+      evidenceTarball.fileCount > 0 &&
+      Number.isInteger(evidenceTarball?.unpackedSizeBytes) &&
+      evidenceTarball.unpackedSizeBytes > 0 &&
+      hasSafeIgnoredArtifactPath(evidenceTarball?.artifactPath);
   }
   const singleLockfile =
     packageManagerSummary.secondaryLockfiles.length === 0 &&

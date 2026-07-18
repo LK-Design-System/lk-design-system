@@ -28,14 +28,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6.4.0
         with:
-          node-version: 22
+          node-version: 22.17.1
           cache: npm
 
-      - name: Setup canonical npm
-        run: npm install --global npm@10.9.2
-
-      - name: Verify package manager
+      - name: Verify canonical runtime
         run: |
+          if ((node --version) -ne 'v22.17.1') {
+            throw 'Expected Node 22.17.1.'
+          }
           if ((npm --version) -ne '10.9.2') {
             throw 'Expected npm 10.9.2.'
           }
@@ -50,7 +50,9 @@ jobs:
       - name: Build, typecheck, Storybook, and pack
         # check:ci == check minus check:storybook-ia. The IA audit gate requires
         # per-page human review, which can't run in automated CI; it stays a
-        # local/manual curation step (npm run check:storybook-ia).
+        # local/manual curation step (npm run check:storybook-ia). Once Wave 0
+        # evidence is tracked, check:pack:baseline-if-present also regenerates
+        # and byte-compares the ignored aggregate tarball.
         run: npm run check:ci
 
       - name: Runtime dependency audit

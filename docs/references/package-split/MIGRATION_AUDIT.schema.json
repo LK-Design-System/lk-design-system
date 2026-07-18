@@ -95,7 +95,164 @@
       "type": "object"
     },
     "baselines": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "cleanMain",
+        "fullCheck",
+        "packageArtifacts",
+        "consumerMatrix"
+      ],
+      "properties": {
+        "packageArtifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "lastKnownGoodReleaseSet",
+            "tarballs"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "not-captured",
+                "captured"
+              ]
+            },
+            "sourceCommit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "lastKnownGoodReleaseSet": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidencePath": {
+              "const": "docs/references/package-split/baselines/WAVE0_AGGREGATE_ARTIFACT.json"
+            },
+            "evidenceSha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "reproductionCommand": {
+              "const": "npm run check:package-migration:wave0"
+            },
+            "tarballs": {
+              "type": "array",
+              "maxItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "package",
+                  "version",
+                  "sourceCommit",
+                  "artifactPath",
+                  "sizeBytes",
+                  "sha256"
+                ],
+                "properties": {
+                  "package": {
+                    "const": "@lk-robotics/design-system-core"
+                  },
+                  "version": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sourceCommit": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "artifactPath": {
+                    "type": "string",
+                    "pattern": "^visual-artifacts/package-smoke/pack/[A-Za-z0-9][A-Za-z0-9._-]*\\.tgz$"
+                  },
+                  "sizeBytes": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "diagnosticObservation": {
+              "type": "object"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "captured"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "then": {
+                "required": [
+                  "sourceCommit",
+                  "evidencePath",
+                  "evidenceSha256",
+                  "reproductionCommand"
+                ],
+                "properties": {
+                  "lastKnownGoodReleaseSet": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tarballs": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "lastKnownGoodReleaseSet": {
+                    "type": "null"
+                  },
+                  "tarballs": {
+                    "type": "array",
+                    "maxItems": 0
+                  }
+                },
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "sourceCommit"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "evidencePath"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "evidenceSha256"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "reproductionCommand"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
     },
     "approvals": {
       "type": "array"
