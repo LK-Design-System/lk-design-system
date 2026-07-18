@@ -5,21 +5,21 @@
 | Type | Current-state pointer |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-14 |
+| Last reviewed | 2026-07-19 |
 | Branch | `main` |
-| Baseline | `43ac938` (documentation reorganization 이전) |
+| Historical baseline | `43ac938` (domain expansion 안정화 기준점) |
 | Remote | `origin` · `LK-ROBOTICS/lk-design-system` |
 
 이 문서는 현재 상태와 최신 상세 handoff를 연결하는 짧은 포인터다. 날짜별 handoff의 HEAD, dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 상태로 해석하지 않는다.
 
 ## Current state
 
-- `main`은 PR #1의 design-system stabilization과 domain expansion 병합 commit `43ac938`을 기준선으로 문서 체계를 재정비했다.
-- public component implementation/type/export는 202개, named public export는 208개다.
-- 현재 Storybook 기준선은 177 pages / 534 stories / 408 public / 126 hidden / 89 visual-parity다.
+- 로컬 `main`에는 PR #1의 stabilization·domain expansion 이후 LDS Core/Theme/Product/Robotics package·repository 분리 Wave 0 준비가 통합돼 있다. 현재 revision은 Git을 직접 확인한다.
+- public component implementation/type/export는 204개, named public export는 210개다.
+- 현재 Storybook 기준선은 190 pages / 579 stories / 443 public / 136 hidden / 99 visual-parity다. 190개 페이지와 579개 스토리의 IA human review가 모두 최신 source hash로 완료됐다.
 - 현재 완성도 판정과 남은 제품·디자인·원격 반영 gate는 [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md)를 따른다. 코어 운영 준비는 완료, 전체 제품 적용은 부분 완료로 판정했다.
-- 2026-07-14 staged change set에서 `npm run check`가 통과했다. 534개 implementation story의 Axe, 215개 play, 37개 visual smoke, 실제 tarball ESM/CJS·compiled subpath·SSR 검증을 포함한다.
-- 검증된 change set은 `main`에 통합해 `origin/main`과 0/0 parity를 확인했다.
+- 2026-07-19 표적 검증에서 Storybook IA 190/579, Viewer Tokens 3개 play/Axe, Robotics atom visual regression 65/65, aggregate package tarball smoke가 통과했다. 현재 인덱스에는 play-tagged story 243개가 있다.
+- 원격 `origin/main`은 아직 이 로컬 Wave 0 준비 commit들과 동기화되지 않았다. clean-main tag, 추적 가능한 full-check·consumer-matrix·artifact baseline이 생기기 전까지 Wave 0 gate는 `blocked`다.
 - 승인된 dark-theme foreground 전수 감사를 완료했다. Button ghost와 `primary-heavy`를 소비하던 21개 component file을 theme-scope semantic foreground로 교정했고, 실제 다크 렌더 기준 Button ghost 15.92:1, selected Chip 13.79:1, active FilterChip/MultiSelectChip 11.99:1을 확인했다. `check:colors`는 이제 light/dark Button ghost, selected Chip, 공통 selected surface의 4.5:1 계약을 포함해 38개 pair를 검사한다.
 - 신규 컴포넌트·재설계·icon/asset/map symbol의 canonical 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)다.
 - 문서 탐색과 source-of-truth 순서는 [`README.md`](README.md)를 따른다.
@@ -50,13 +50,15 @@ npm run check:inventory
 npm run check:contracts
 npm run check:docs
 npm run check:product-frontends
+npm run check:package-migration
 npm run check
+npm run check:package-migration:wave0
 ```
 
-전체 repository gate는 문서와 컴포넌트 보완이 끝난 2026-07-14 checkpoint에서 `npm run check`로 통과했다.
+`npm run check`는 로컬 통합 상태의 전체 회귀 gate다. `check:package-migration:wave0`는 별도 clean-main tag와 재현 가능한 evidence가 있는 경우에만 통과해야 하며, 일반 integrity check를 Wave 0 완료 판정으로 해석하지 않는다.
 
 ## Current next work
 
-1. WF-15 wireframe evidence 다음으로 LK Control Full Daedeok의 관련 workflow에 Navigation component disposition을 직접 연결한다.
-2. 신규 선택·활성 상태는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)의 4.5:1 light/dark foreground 계약과 기존 surface·border·pressed semantics를 재사용한다.
-3. 다음 component 변경에서도 정상 폭과 320~400px 좁은 폭을 함께 렌더하고 `check:colors`와 해당 Storybook play를 표적 실행한다.
+1. 승인된 기준 commit을 `origin/main`과 동기화하고 immutable Wave 0 source tag를 만든다.
+2. 정확히 고정한 Node 22.17.1/npm 10.9.2 환경에서 full-check, consumer matrix, aggregate tarball baseline을 같은 source commit으로 캡처한다.
+3. `npm run check:package-migration:wave0`가 모든 추적 evidence를 검증한 뒤에만 Wave 1 workspace package scaffold를 시작한다.
