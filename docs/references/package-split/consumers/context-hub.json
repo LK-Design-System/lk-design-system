@@ -1,0 +1,31 @@
+{
+  "kind": "lds-consumer-import-scan",
+  "scanner": "scripts/scan-package-consumer.mjs",
+  "scannerVersion": 1,
+  "repository": "LK-ROBOTICS/lk_context_hub",
+  "commit": "de124084b7e50049350a46f92c4ea4476269c58c",
+  "frontendRoot": "src",
+  "sourceTreeEntryCount": 207,
+  "sourceFileCount": 205,
+  "sourceTreeSha256": "cdc85b7b61aae639bd7c18f0e95dc5f2430d841f387efc18a218215d16e7aa50",
+  "currentUsage": {
+    "dependencyDeclarations": 0,
+    "aggregateRootImports": 0,
+    "layerSubpathImports": 0,
+    "componentDeepImports": 0,
+    "stylesheetImports": 0,
+    "assetFilesystemPaths": 0,
+    "lds3dPackageImports": 0,
+    "cjsRequireOccurrences": 0
+  },
+  "matches": {
+    "dependencyDeclarations": [],
+    "aggregateRootImports": [],
+    "layerSubpathImports": [],
+    "componentDeepImports": [],
+    "stylesheetImports": [],
+    "assetFilesystemPaths": [],
+    "lds3dPackageImports": [],
+    "cjsRequireOccurrences": []
+  }
+}

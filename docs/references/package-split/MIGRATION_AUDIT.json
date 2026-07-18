@@ -1,0 +1,876 @@
+{
+  "$schema": "./MIGRATION_AUDIT.schema.json",
+  "schemaVersion": 1,
+  "audit": {
+    "status": "wave-0-in-progress",
+    "capturedAt": "2026-07-19T00:07:20.480+09:00",
+    "source": {
+      "repository": "LK-ROBOTICS/lk-design-system",
+      "observedBranch": "feat/robot-marker-pose",
+      "observedCommit": "d0c64ca12a71a00a751c6c12ed6254861eb53a1c",
+      "mainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
+      "originMainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
+      "packageName": "@lk-robotics/design-system-core",
+      "packageVersion": "0.1.0",
+      "publicEntrypoint": "src/index.js",
+      "classification": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json"
+    },
+    "readiness": {
+      "integrityStatus": "audited",
+      "wave0Gate": "blocked",
+      "blockers": [
+        {
+          "id": "clean-main-baseline",
+          "reason": "The audited commit is on feat/robot-marker-pose, not clean main, and no baseline tag exists."
+        },
+        {
+          "id": "owner-assignments",
+          "reason": "Accountable people for each package and the conditional Robotics repository have not been assigned."
+        },
+        {
+          "id": "decision-approvals",
+          "reason": "Package names, fixed release-set policy, CJS disposition, support window, and conditional repository policy are proposed but not owner-approved."
+        },
+        {
+          "id": "full-regression-baseline",
+          "reason": "Full package, Storybook, visual, SSR, tree-shaking, and size baselines have not been captured on clean main."
+        },
+        {
+          "id": "package-artifact-baseline",
+          "reason": "No immutable last-known-good release set, tarball size, or SHA-256 baseline has been captured."
+        },
+        {
+          "id": "single-lockfile",
+          "reason": "CI is canonicalized on npm, but the tracked legacy pnpm-lock.yaml still needs an explicit clean-main removal change."
+        }
+      ]
+    }
+  },
+  "verificationContract": {
+    "integrityCommand": "node scripts/check-package-migration.mjs",
+    "wave0GateCommand": "node scripts/check-package-migration.mjs --require-wave=0",
+    "integrityMeaning": "The audit exactly describes repository-owned module, CSS, asset, and package-manager inputs and validates the structure of recorded consumer snapshots. It does not rescan external repositories; tracked reproducible current-state consumer evidence is a Wave 0 gate, while versioned portability is Wave 2 work.",
+    "wave0Meaning": "All Wave 0 blockers are closed, approvals are present, current consumer states have tracked scan evidence, and clean-main aggregate-package baselines exist. Versioned consumer migration remains Wave 2 work.",
+    "cleanMainMeaning": "baselines.cleanMain.commit is the tagged source baseline. The ready audit may be committed later on synchronized main/origin-main only when every post-baseline path is an audit or tracked evidence attestation.",
+    "authoritativeInputs": [
+      "src/index.js",
+      "src/core.js",
+      "src/theme.js",
+      "src/product.js",
+      "src/robotics.js",
+      "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json",
+      "docs/references/product-frontends/COVERAGE_AUDIT.json",
+      "scripts/check-package-migration.mjs",
+      "scripts/scan-package-consumer.mjs",
+      "scripts/scan-lds3d-integration.mjs",
+      "tokens/source.json",
+      "tokens/*.css",
+      "styles.css",
+      "assets/**/*",
+      "package.json",
+      ".github/workflows/ci.yml"
+    ]
+  },
+  "decisions": {
+    "namespace": "@lk-robotics",
+    "registry": "https://npm.pkg.github.com",
+    "namingApprovalStatus": "pending-owner-approval",
+    "packageManager": {
+      "status": "implemented-pending-secondary-lockfile-removal",
+      "name": "npm",
+      "version": "10.9.2",
+      "packageJsonValue": "npm@10.9.2",
+      "lockfile": "package-lock.json",
+      "frozenInstallCommand": "npm ci",
+      "ciWorkflow": ".github/workflows/ci.yml",
+      "knownSecondaryLockfiles": [
+        "pnpm-lock.yaml"
+      ],
+      "secondaryLockfileDisposition": "remove-on-clean-main-before-wave-0-approval"
+    },
+    "registryVersioning": {
+      "approvalStatus": "pending-owner-approval",
+      "strategy": "fixed-release-set-through-wave-2",
+      "releaseSetRequirement": "All package candidates in one migration set come from one source commit and record immutable checksums."
+    },
+    "compatibility": {
+      "approvalStatus": "pending-owner-approval",
+      "facadePackage": "@lk-robotics/design-system-core",
+      "minimumStableReleases": 2,
+      "minimumDays": 90,
+      "cjs": "retain-in-facade-until-all-pinned-consumers-are-verified",
+      "deepImports": "preserve-during-support-window-and-ban-for-new-code"
+    },
+    "repositoryPolicy": {
+      "approvalStatus": "pending-owner-approval",
+      "coreThemeProduct": "remain-in-lk-design-system",
+      "roboticsUi": "remain-in-lk-design-system-through-wave-3-go-no-go",
+      "roboticsRepositoryCandidate": "LK-ROBOTICS/lk-design-system-robotics",
+      "lds3d": "remain-independent",
+      "directLdsToLds3dRuntimeDependency": "forbidden",
+      "directLds3dPackageToLdsRuntimeDependency": "forbidden"
+    }
+  },
+  "packageCatalog": [
+    {
+      "id": "core",
+      "name": "@lk-robotics/lds-core",
+      "repository": "LK-ROBOTICS/lk-design-system",
+      "accountableOwnerRole": "design-system-owner",
+      "accountableOwner": null,
+      "ownerAssignmentStatus": "person-required",
+      "dependsOn": [],
+      "moduleFormat": {
+        "esm": "required",
+        "types": "required",
+        "cjs": "compatibility-decision-pending-consumer-verification"
+      },
+      "stylesEntry": "@lk-robotics/lds-core/styles.css"
+    },
+    {
+      "id": "theme",
+      "name": "@lk-robotics/lds-theme",
+      "repository": "LK-ROBOTICS/lk-design-system",
+      "accountableOwnerRole": "design-system-owner",
+      "accountableOwner": null,
+      "ownerAssignmentStatus": "person-required",
+      "dependsOn": [
+        "core"
+      ],
+      "moduleFormat": {
+        "esm": "required",
+        "types": "required",
+        "cjs": "compatibility-decision-pending-consumer-verification"
+      },
+      "stylesEntry": "@lk-robotics/lds-theme/styles.css"
+    },
+    {
+      "id": "product",
+      "name": "@lk-robotics/lds-product",
+      "repository": "LK-ROBOTICS/lk-design-system",
+      "accountableOwnerRole": "frontend-platform-owner",
+      "accountableOwner": null,
+      "ownerAssignmentStatus": "person-required",
+      "dependsOn": [
+        "core"
+      ],
+      "moduleFormat": {
+        "esm": "required",
+        "types": "required",
+        "cjs": "compatibility-decision-pending-consumer-verification"
+      },
+      "stylesEntry": "@lk-robotics/lds-product/styles.css"
+    },
+    {
+      "id": "robotics-ui",
+      "name": "@lk-robotics/lds-robotics-ui",
+      "repository": "LK-ROBOTICS/lk-design-system",
+      "conditionalRepository": "LK-ROBOTICS/lk-design-system-robotics",
+      "accountableOwnerRole": "robotics-domain-owner",
+      "accountableOwner": null,
+      "ownerAssignmentStatus": "person-required",
+      "dependsOn": [
+        "core",
+        "product"
+      ],
+      "moduleFormat": {
+        "esm": "required",
+        "types": "required",
+        "cjs": "compatibility-decision-pending-consumer-verification"
+      },
+      "stylesEntry": "@lk-robotics/lds-robotics-ui/styles.css"
+    },
+    {
+      "id": "compatibility",
+      "name": "@lk-robotics/design-system-core",
+      "repository": "LK-ROBOTICS/lk-design-system",
+      "accountableOwnerRole": "frontend-platform-owner",
+      "accountableOwner": null,
+      "ownerAssignmentStatus": "person-required",
+      "dependsOn": [
+        "core",
+        "theme",
+        "product",
+        "robotics-ui"
+      ],
+      "moduleFormat": {
+        "esm": "required",
+        "types": "required",
+        "cjs": "required-during-support-window"
+      },
+      "stylesEntry": "@lk-robotics/design-system-core/styles.css",
+      "ownsImplementation": false
+    }
+  ],
+  "ownership": {
+    "currentLayerToPackage": {
+      "core": "core",
+      "theme": "theme",
+      "product": "product",
+      "robotics": "robotics-ui"
+    },
+    "compatibilityPackageOwnsNoImplementation": true,
+    "snapshot": {
+      "publicSourceModules": 205,
+      "publicSymbols": 211,
+      "internalModules": 21,
+      "classifiedModules": 226,
+      "assignmentSha256": "31732844611ac7e481451472aff2c405be9717b0b430a8f493c9da041e21b116",
+      "byPackage": {
+        "core": {
+          "publicSourceModules": 81,
+          "publicSymbols": 82,
+          "internalModules": 7,
+          "classifiedModules": 88
+        },
+        "theme": {
+          "publicSourceModules": 2,
+          "publicSymbols": 2,
+          "internalModules": 0,
+          "classifiedModules": 2
+        },
+        "product": {
+          "publicSourceModules": 90,
+          "publicSymbols": 92,
+          "internalModules": 2,
+          "classifiedModules": 92
+        },
+        "robotics-ui": {
+          "publicSourceModules": 32,
+          "publicSymbols": 35,
+          "internalModules": 12,
+          "classifiedModules": 44
+        }
+      }
+    },
+    "compatibilitySurface": {
+      "packageId": "compatibility",
+      "rootSymbols": 211,
+      "layerSymbols": {
+        "core": 82,
+        "theme": 2,
+        "product": 92,
+        "robotics": 35
+      },
+      "publicComponentDeepModules": 205,
+      "tokenWildcardFiles": 12,
+      "assetWildcardFiles": 380,
+      "legacyStylesEntries": 1,
+      "requiredPackageExports": [
+        ".",
+        "./core",
+        "./theme",
+        "./product",
+        "./robotics",
+        "./styles.css",
+        "./tokens/*",
+        "./assets/*",
+        "./components/*"
+      ]
+    },
+    "roboticsReview": {
+      "currentDecision": "All current robotics-layer modules remain Robotics Extension and target robotics-ui. LDS-owned DOM chrome is not LDS3D-owned.",
+      "disposition": "move-to-robotics-ui",
+      "repositoryDisposition": "keep-in-current-repository-through-wave-3",
+      "categories": {
+        "editor-chrome": [
+          "components/editor/CanvasEditorCommandBar.jsx",
+          "components/editor/CanvasEditorShell.jsx",
+          "components/editor/EditorToolbar.jsx",
+          "components/editor/HistoryToolbar.jsx",
+          "components/editor/LayerPanel.jsx",
+          "components/editor/SelectionInspector.jsx",
+          "components/editor/ViewportStatusBar.jsx"
+        ],
+        "viewer-chrome": [
+          "components/navigation/FloorSelector.jsx",
+          "components/viz/Map2DCanvas.jsx",
+          "components/viz/Scene3DFrame.jsx",
+          "components/viz/VideoStreamTile.jsx",
+          "components/viz/ViewerFrame.jsx",
+          "components/viz/ViewerToolbar.jsx"
+        ],
+        "robot-operation-ui": [
+          "components/robotics/BatteryGauge.jsx",
+          "components/robotics/ConnectionBadge.jsx",
+          "components/robotics/DirectionalPad.jsx",
+          "components/robotics/EquipmentStatusCard.jsx",
+          "components/robotics/Joystick.jsx",
+          "components/robotics/ManualControlSession.jsx",
+          "components/robotics/RobotStatusCard.jsx",
+          "components/robotics/TopicTree.jsx",
+          "components/viz/TelemetryGauge.jsx",
+          "components/viz/TelemetryValue.jsx"
+        ],
+        "spatial-2d-ui": [
+          "components/robotics/FacilityTransition.jsx",
+          "components/robotics/HazardMarker.jsx",
+          "components/robotics/LaneOverlay.jsx",
+          "components/robotics/NavigationAnnotationLayer.jsx",
+          "components/robotics/RobotMarker.jsx",
+          "components/robotics/RouteOverlay.jsx",
+          "components/robotics/SpatialRegion.jsx",
+          "components/robotics/TrajectoryOverlay.jsx",
+          "components/robotics/WaypointMarker.jsx"
+        ]
+      },
+      "pendingProductCandidates": {
+        "decisionStatus": "pending-owner-review-and-pinned-cross-domain-evidence",
+        "targetPackageRemains": "robotics-ui",
+        "candidateTargetPackage": "product",
+        "publicModules": [
+          "components/editor/CanvasEditorCommandBar.jsx",
+          "components/editor/CanvasEditorShell.jsx",
+          "components/editor/EditorToolbar.jsx",
+          "components/editor/HistoryToolbar.jsx",
+          "components/editor/LayerPanel.jsx",
+          "components/editor/SelectionInspector.jsx",
+          "components/editor/ViewportStatusBar.jsx",
+          "components/navigation/FloorSelector.jsx",
+          "components/viz/Map2DCanvas.jsx",
+          "components/viz/Scene3DFrame.jsx",
+          "components/viz/VideoStreamTile.jsx",
+          "components/viz/ViewerFrame.jsx",
+          "components/viz/ViewerToolbar.jsx"
+        ],
+        "internalModules": [
+          {
+            "path": "components/internal/useRovingToolbar.js",
+            "candidateTargetPackage": "product"
+          },
+          {
+            "path": "components/internal/unit-format.js",
+            "candidateTargetPackage": "core"
+          }
+        ]
+      }
+    },
+    "exceptions": [
+      {
+        "id": "brand-spinner-core-helper",
+        "status": "accepted-for-compatibility-baseline",
+        "module": "components/status/Spinner.jsx",
+        "helper": "components/brand/lk-logo-paths.js",
+        "reason": "Core Spinner exposes variant=brand and shares the logo path helper with Theme Lockup. Both remain Core-owned during compatibility migration; a pure-Core API split requires a separate deprecation decision."
+      },
+      {
+        "id": "manual-control-product-seam",
+        "status": "required-contract",
+        "module": "components/robotics/ManualControlSession.jsx",
+        "reason": "Robotics UI owns presentation and release interaction only. Transport, authority, watchdog, STOP command, and safety guarantee remain product-owned."
+      }
+    ]
+  },
+  "styles": {
+    "tokenSource": {
+      "path": "tokens/source.json",
+      "repositoryRole": "single-build-authority-with-package-projections",
+      "compatibilityExposure": "@lk-robotics/design-system-core/tokens/source.json",
+      "sha256": "a44711dc3d404bc297a843d113cf68b42d5f4740692c37fed36c1858030b5c80",
+      "runtimeUniqueCustomProperties": 718,
+      "sourceUniqueCssNames": 479,
+      "runtimeOnlyCssNames": 239,
+      "sourceOnlyCssNames": 0,
+      "subtreeAssignments": [
+        { "path": "primitive.space", "packageId": "core" },
+        { "path": "primitive.ratio", "packageId": "core" },
+        { "path": "primitive.radius", "packageId": "core" },
+        { "path": "primitive.typography", "packageId": "theme" },
+        { "path": "primitive.grid", "packageId": "core" },
+        { "path": "primitive.effect", "packageId": "theme" },
+        { "path": "primitive.colorRamps", "packageId": "theme" },
+        { "path": "semantic.action", "packageId": "core" },
+        { "path": "semantic.control", "packageId": "core" },
+        { "path": "semantic.border", "packageId": "core" },
+        { "path": "semantic.surface", "packageId": "core" },
+        { "path": "semantic.text", "packageId": "core" },
+        { "path": "semantic.status", "packageId": "core" },
+        { "path": "semantic.layout", "packageId": "core" },
+        { "path": "semantic.motion", "packageId": "theme" },
+        { "path": "semantic.colorRoles", "packageId": "theme" },
+        { "path": "component.button", "packageId": "core" },
+        { "path": "component.actionArea", "packageId": "core" },
+        { "path": "component.confirmDialog", "packageId": "core" },
+        { "path": "component.toggleIcon", "packageId": "core" },
+        { "path": "component.chip", "packageId": "core" },
+        { "path": "component.divider", "packageId": "core" },
+        { "path": "component.mobileSystemBars", "packageId": "core" },
+        { "path": "component.input", "packageId": "core" },
+        { "path": "component.card", "packageId": "core" },
+        { "path": "component.statusBadge", "packageId": "core" },
+        { "path": "component.badge", "packageId": "core" },
+        { "path": "component.notification", "packageId": "core" },
+        { "path": "modes", "packageId": "theme" }
+      ],
+      "knownProjectionDebt": "239 runtime custom-property names are not represented by a source.json css field; all 12 --component-viewer-* names are in this set. Wave 1 must split files without pretending source.json is already package-complete."
+    },
+    "legacyFacade": {
+      "path": "styles.css",
+      "packageId": "compatibility",
+      "sha256": "7a84ce40464e97e33f1d13243c207daf9e69ab3a3641ffe03ccec77ee1432d47",
+      "importOrder": [
+        "tokens/fonts.css",
+        "tokens/color-atomic.css",
+        "tokens/color-semantic.css",
+        "tokens/color-components.css",
+        "tokens/typography.css",
+        "tokens/spacing.css",
+        "tokens/grid.css",
+        "tokens/effects.css",
+        "tokens/components.css",
+        "tokens/base.css",
+        "tokens/focus.css"
+      ],
+      "artifactRequirement": "Preserve a flattened or physically copied compatibility CSS artifact for consumers whose CSS loader cannot resolve cross-package imports."
+    },
+    "files": [
+      {
+        "path": "tokens/base.css",
+        "defaultPackageId": "theme",
+        "sha256": "4cb8c424e0588658c7c283b8af1064ea10ea041db643d470017db1e50186fe51",
+        "customPropertyDeclarations": 0,
+        "selectorOverrides": [
+          {
+            "packageId": "core",
+            "selectors": [
+              "*, *::before, *::after",
+              "p",
+              "img",
+              ".lk-container",
+              ".lk-read",
+              ".lk-keep",
+              ".lk-nums"
+            ]
+          }
+        ],
+        "declarationOverrides": [
+          {
+            "selector": "html",
+            "property": "-webkit-text-size-adjust",
+            "packageId": "core"
+          }
+        ],
+        "splitRequired": true
+      },
+      { "path": "tokens/color-atomic.css", "defaultPackageId": "theme", "sha256": "32f6b78e14b96974b24acdf9ebb4eecb41f65f6e094c70871fb81fdbda36f5ef", "customPropertyDeclarations": 176 },
+      { "path": "tokens/color-components.css", "defaultPackageId": "theme", "sha256": "57970e11a7c5600c024a6a315dcbc8ccbf9d99b577705a720e1347dac7b8a56c", "customPropertyDeclarations": 63 },
+      { "path": "tokens/color-semantic.css", "defaultPackageId": "theme", "sha256": "017a828e37145bb3ab49c9406c154fc0cabee6ba59a169a1bd74524b1cabbb7c", "customPropertyDeclarations": 336 },
+      {
+        "path": "tokens/components.css",
+        "defaultPackageId": "core",
+        "sha256": "017e8ee6de09348ba78be60bfce118a44492410265abdf0a0e0f9cf196fe9817",
+        "customPropertyDeclarations": 205,
+        "propertyOverrides": [
+          {
+            "prefix": "--component-viewer-",
+            "packageId": "robotics-ui",
+            "declarationCount": 12
+          }
+        ],
+        "splitRequired": true
+      },
+      {
+        "path": "tokens/effects.css",
+        "defaultPackageId": "theme",
+        "sha256": "ebdfd24b58d58e68cf8583504e553399e5c21c365d79118cde711eb30300a512",
+        "customPropertyDeclarations": 85,
+        "contractConsumerPackageIds": ["core"],
+        "ownershipNote": "Theme owns the LK shadow, motion, border, interaction, and effect values. Core components consume the generic token contract without owning these LK value declarations."
+      },
+      {
+        "path": "tokens/focus.css",
+        "defaultPackageId": "core",
+        "sha256": "10117b47a94fac62e3de613cc8ff00dbf7cbcb70991c9adf5dc542d8778c7d01",
+        "customPropertyDeclarations": 0,
+        "selectorOverrides": [
+          {
+            "packageId": "robotics-ui",
+            "dataAttributes": [
+              "data-waypoint-marker",
+              "data-lk-lane-overlay",
+              "data-lk-route-overlay",
+              "data-route-segment",
+              "data-lk-trajectory-overlay",
+              "data-lds-spatial-region",
+              "data-lds-facility-transition"
+            ]
+          }
+        ],
+        "splitRequired": true
+      },
+      { "path": "tokens/fonts.css", "defaultPackageId": "theme", "sha256": "e0b03a70add6584daba4e4a5b1adef82e6fb68a84a822f1f6d1f17d461f2d29a", "customPropertyDeclarations": 4 },
+      { "path": "tokens/grid.css", "defaultPackageId": "core", "sha256": "ef4cb4249c2206c14c12a0beba13e48998b552a9a8c02b9df00ef5556750a2b2", "customPropertyDeclarations": 32 },
+      { "path": "tokens/spacing.css", "defaultPackageId": "core", "sha256": "097de962592deb5ad657de17fb60def3605bc8476c9e766d03de5c391f4f28fb", "customPropertyDeclarations": 74 },
+      { "path": "tokens/typography.css", "defaultPackageId": "theme", "sha256": "768f2218ee1d3803e2620e1abb9273f3453a859d246486b74ea71d0a0e8775f6", "customPropertyDeclarations": 56 }
+    ]
+  },
+  "assets": {
+    "totalFiles": 380,
+    "rules": [
+      { "pathPrefix": "assets/brand/", "packageId": "theme", "role": "brand-runtime", "publish": true, "fileCount": 7, "inventorySha256": "6564184ce3c58282894632dcdbe71b9a7358df1c633be79bb7dff0274bf6e426" },
+      { "pathPrefix": "assets/fonts/", "packageId": "theme", "role": "font-runtime", "publish": true, "fileCount": 5, "inventorySha256": "40baf0de6d22dd9ed3f48d317c90eb88f1776aeef7f5b876a0c7fa522bfb9229" },
+      { "pathPrefix": "assets/icons/", "packageId": "core", "role": "icon-registry-runtime", "publish": true, "fileCount": 341, "inventorySha256": "ca9aacb305fca6341dee7d499805d7b6e77b8dbe0910950b8543e541afd4a3e3" },
+      { "pathPrefix": "assets/industry/", "packageId": "product", "role": "product-content-example", "publish": "review-in-wave-1", "fileCount": 10, "inventorySha256": "f2923f77d7093517ae6cefa47c2622eb8ced8057091f82fd108093229ba888a8" },
+      { "pathPrefix": "assets/products/", "packageId": "product", "role": "product-content-example", "publish": "review-in-wave-1", "fileCount": 5, "inventorySha256": "3a27b2bae5f066ed3352545fcb94e25cbfc76ab96df6507a74a2e5aac351c3bc" },
+      { "pathPrefix": "assets/source/", "packageId": "core", "role": "avatar-runtime-source", "publish": true, "fileCount": 5, "inventorySha256": "18d93b2bbbd111db9405c5dfd5f88a71e591bcc51e10fd225d18cdf02b66963a" },
+      { "pathPrefix": "assets/tech/", "packageId": "product", "role": "product-content-example", "publish": "review-in-wave-1", "fileCount": 7, "inventorySha256": "68ab39508043190d89a91b7b9ed9f917cfeba1fd00b4e499ca5bdab4acaf513f" }
+    ],
+    "roboticsUiCurrentFiles": 0,
+    "lds3dCurrentFiles": 0
+  },
+  "consumers": {
+    "sourceAudit": {
+      "path": "docs/references/product-frontends/COVERAGE_AUDIT.json",
+      "schemaVersion": 2,
+      "auditedAt": "2026-07-14"
+    },
+    "products": [
+      {
+        "id": "deviceops",
+        "repository": "LK-ROBOTICS/lk_deviceops",
+        "repositoryUrl": "https://github.com/LK-ROBOTICS/lk_deviceops",
+        "expectedPin": "41c319eb0ad863f67d73facc64f7dd2a13ab9585",
+        "frontendRoot": "frontend",
+        "framework": "Vite 8, React 19",
+        "verificationStatus": "verified-tracked-snapshot",
+        "verificationReason": "pin-matched-clean-checkout-and-repository-tracked-scan-report",
+        "checkout": {
+          "path": "tmp/package-split-consumers/deviceops",
+          "branch": "detached",
+          "headCommit": "41c319eb0ad863f67d73facc64f7dd2a13ab9585",
+          "pinMatches": true,
+          "dirty": false
+        },
+        "adoptionStatus": "not-adopted",
+        "currentUsage": {
+          "dependencyDeclarations": 0,
+          "aggregateRootImports": 0,
+          "layerSubpathImports": 0,
+          "componentDeepImports": 0,
+          "stylesheetImports": 0,
+          "assetFilesystemPaths": 0,
+          "lds3dPackageImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "scanEvidence": {
+          "path": "docs/references/package-split/consumers/deviceops.json",
+          "sha256": "584ea680a9290fd763f2270a42f028a0f07a6487a3560e8df06caee672177776",
+          "commit": "41c319eb0ad863f67d73facc64f7dd2a13ab9585"
+        },
+        "intendedPackageSet": ["core", "theme", "product"]
+      },
+      {
+        "id": "visionops",
+        "repository": "LK-ROBOTICS/lk_visionops",
+        "repositoryUrl": "https://github.com/LK-ROBOTICS/lk_visionops",
+        "expectedPin": "308da0c0624024ba2497cf05cda2841e4411b522",
+        "frontendRoot": "frontend",
+        "framework": "Next.js 16, React 19",
+        "verificationStatus": "verified-tracked-snapshot",
+        "verificationReason": "pin-matched-clean-checkout-and-repository-tracked-scan-report",
+        "checkout": {
+          "path": "tmp/package-split-consumers/visionops",
+          "branch": "detached",
+          "headCommit": "308da0c0624024ba2497cf05cda2841e4411b522",
+          "pinMatches": true,
+          "dirty": false
+        },
+        "adoptionStatus": "not-adopted",
+        "currentUsage": {
+          "dependencyDeclarations": 0,
+          "aggregateRootImports": 0,
+          "layerSubpathImports": 0,
+          "componentDeepImports": 0,
+          "stylesheetImports": 0,
+          "assetFilesystemPaths": 0,
+          "lds3dPackageImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "scanEvidence": {
+          "path": "docs/references/package-split/consumers/visionops.json",
+          "sha256": "7b56cc06b7ab77e682372674946b08629e04b0edb2983070d67dac0633648b94",
+          "commit": "308da0c0624024ba2497cf05cda2841e4411b522"
+        },
+        "intendedPackageSet": ["core", "theme", "product"]
+      },
+      {
+        "id": "web-viz",
+        "repository": "LK-ROBOTICS/lk_web_viz",
+        "repositoryUrl": "https://github.com/LK-ROBOTICS/lk_web_viz",
+        "expectedPin": "a984def117c05acd213f494cbb8a42e990595505",
+        "frontendRoot": "frontend",
+        "framework": "Vite 6, React 19, react-konva",
+        "verificationStatus": "verified-tracked-snapshot",
+        "verificationReason": "pin-matched-clean-checkout-and-repository-tracked-scan-report",
+        "checkout": {
+          "path": "tmp/lk_web_viz_workflow",
+          "branch": "main",
+          "headCommit": "a984def117c05acd213f494cbb8a42e990595505",
+          "pinMatches": true,
+          "dirty": false
+        },
+        "adoptionStatus": "not-adopted",
+        "currentUsage": {
+          "dependencyDeclarations": 0,
+          "aggregateRootImports": 0,
+          "layerSubpathImports": 0,
+          "componentDeepImports": 0,
+          "stylesheetImports": 0,
+          "assetFilesystemPaths": 0,
+          "lds3dPackageImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "scanEvidence": {
+          "path": "docs/references/package-split/consumers/web-viz.json",
+          "sha256": "402d8080e086414efadd31688c263bafcb452263e5c13532b3f4f544c4550ff1",
+          "commit": "a984def117c05acd213f494cbb8a42e990595505"
+        },
+        "intendedPackageSet": ["core", "theme", "product", "robotics-ui"]
+      },
+      {
+        "id": "context-hub",
+        "repository": "LK-ROBOTICS/lk_context_hub",
+        "repositoryUrl": "https://github.com/LK-ROBOTICS/lk_context_hub",
+        "expectedPin": "de124084b7e50049350a46f92c4ea4476269c58c",
+        "frontendRoot": "src",
+        "framework": "Next.js 16, React 19",
+        "verificationStatus": "verified-tracked-snapshot",
+        "verificationReason": "pin-matched-clean-checkout-and-repository-tracked-scan-report",
+        "checkout": {
+          "path": "tmp/package-split-consumers/context-hub",
+          "branch": "detached",
+          "headCommit": "de124084b7e50049350a46f92c4ea4476269c58c",
+          "pinMatches": true,
+          "dirty": false
+        },
+        "adoptionStatus": "not-adopted",
+        "currentUsage": {
+          "dependencyDeclarations": 0,
+          "aggregateRootImports": 0,
+          "layerSubpathImports": 0,
+          "componentDeepImports": 0,
+          "stylesheetImports": 0,
+          "assetFilesystemPaths": 0,
+          "lds3dPackageImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "scanEvidence": {
+          "path": "docs/references/package-split/consumers/context-hub.json",
+          "sha256": "29071bc29e455fe06de43a752e23cdce869b98bfc4de20a5912753fe2ce413a8",
+          "commit": "de124084b7e50049350a46f92c4ea4476269c58c"
+        },
+        "intendedPackageSet": ["core", "theme", "product"]
+      },
+      {
+        "id": "control",
+        "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+        "repositoryUrl": "https://github.com/LK-ROBOTICS/lkrobotics-control-full-daedeok",
+        "expectedPin": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+        "frontendRoot": "frontend",
+        "framework": "Vite 6, React 18, MUI 6",
+        "verificationStatus": "verified-tracked-snapshot",
+        "verificationReason": "pin-matched-clean-checkout-and-repository-tracked-scan-report",
+        "checkout": {
+          "path": "tmp/package-split-consumers/control",
+          "branch": "detached",
+          "headCommit": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+          "pinMatches": true,
+          "dirty": false
+        },
+        "adoptionStatus": "not-adopted",
+        "currentUsage": {
+          "dependencyDeclarations": 0,
+          "aggregateRootImports": 0,
+          "layerSubpathImports": 0,
+          "componentDeepImports": 0,
+          "stylesheetImports": 0,
+          "assetFilesystemPaths": 0,
+          "lds3dPackageImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "scanEvidence": {
+          "path": "docs/references/package-split/consumers/control.json",
+          "sha256": "21d6711abd6e698045ca0408d3b79364c9d87ddc7ba91cbb261b0a844221a0b6",
+          "commit": "93802fc2aa5d29f930380ae58d51dcb68322b5e7"
+        },
+        "intendedPackageSet": ["core", "theme", "product", "robotics-ui"]
+      },
+      {
+        "id": "mlops",
+        "repository": "LK-ROBOTICS/lk_mlops",
+        "repositoryUrl": "https://github.com/LK-ROBOTICS/lk_mlops",
+        "expectedPin": "0e9f3b03fccd60ab0575b55c18035cc9f9e91521",
+        "frontendRoot": "frontend",
+        "framework": "Vite 8, React 19",
+        "verificationStatus": "verified-tracked-snapshot",
+        "verificationReason": "pin-matched-clean-checkout-and-repository-tracked-scan-report",
+        "checkout": {
+          "path": "tmp/package-split-consumers/mlops",
+          "branch": "detached",
+          "headCommit": "0e9f3b03fccd60ab0575b55c18035cc9f9e91521",
+          "pinMatches": true,
+          "dirty": false
+        },
+        "adoptionStatus": "not-adopted",
+        "currentUsage": {
+          "dependencyDeclarations": 0,
+          "aggregateRootImports": 0,
+          "layerSubpathImports": 0,
+          "componentDeepImports": 0,
+          "stylesheetImports": 0,
+          "assetFilesystemPaths": 0,
+          "lds3dPackageImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "scanEvidence": {
+          "path": "docs/references/package-split/consumers/mlops.json",
+          "sha256": "fa18ac109bf947eee0d21e97e938bdf50e24bacf275b28cb047ffa08b1f8f744",
+          "commit": "0e9f3b03fccd60ab0575b55c18035cc9f9e91521"
+        },
+        "intendedPackageSet": ["core", "theme", "product"]
+      }
+    ],
+    "integrations": [
+      {
+        "id": "lds3d-docs",
+        "repository": "LK-ROBOTICS/lk-design-system-3d",
+        "checkoutPath": "../lk-design-system-3d",
+        "branch": "main",
+        "headCommit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a",
+        "verificationStatus": "verified-tracked-snapshot",
+        "verificationReason": "pinned-head-plus-dirty-worktree-repository-tracked-inventory-scan; portability remains unverified",
+        "workingTree": {
+          "dirty": true,
+          "snapshotKind": "volatile-reproducible-current-state-scan",
+          "capturedAt": "2026-07-18T14:57:24.344Z",
+          "trackedChanges": 84,
+          "untrackedPaths": 75
+        },
+        "linkDependency": {
+          "package": "@lk-robotics/design-system-core",
+          "declaredAt": "apps/docs/package.json",
+          "specifier": "link:../../../LK Design System",
+          "declaredRelativePath": "../../../LK Design System",
+          "observedPathKind": "windows-junction",
+          "resolvedPathRelativeToIntegrationRepository": "../lk-design-system",
+          "sameAsAuditWorkspace": true,
+          "resolvedRepository": "LK-ROBOTICS/lk-design-system",
+          "resolvedCommit": "d0c64ca12a71a00a751c6c12ed6254861eb53a1c",
+          "resolvedBranch": "feat/robot-marker-pose",
+          "portable": false,
+          "migrationTarget": "immutable-release-set"
+        },
+        "committedHeadUsage": {
+          "aggregateRootImportFiles": 7,
+          "componentDeepSpecifiers": 11,
+          "stylesheetImports": 1,
+          "dependencyDeclarations": 1,
+          "assetFilesystemPaths": 1,
+          "layerSubpathImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "worktreeUsage": {
+          "aggregateRootImportFiles": 12,
+          "aggregateRootBindings": 76,
+          "bindingsByTarget": {
+            "core": 45,
+            "product": 12,
+            "robotics-ui": 19
+          },
+          "componentDeepSpecifiers": 11,
+          "deepSpecifiersByTarget": {
+            "core": 5,
+            "product": 1,
+            "robotics-ui": 5
+          },
+          "stylesheetImports": 1,
+          "dependencyDeclarations": 1,
+          "assetFilesystemPaths": 1,
+          "layerSubpathImports": 0,
+          "cjsRequireOccurrences": 0
+        },
+        "deepSpecifiers": [
+          { "specifier": "@lk-robotics/design-system-core/components/buttons/Button", "targetPackageId": "core" },
+          { "specifier": "@lk-robotics/design-system-core/components/content/StatusBadge", "targetPackageId": "core" },
+          { "specifier": "@lk-robotics/design-system-core/components/editor/CanvasEditorShell", "targetPackageId": "robotics-ui" },
+          { "specifier": "@lk-robotics/design-system-core/components/editor/SelectionInspector", "targetPackageId": "robotics-ui" },
+          { "specifier": "@lk-robotics/design-system-core/components/editor/ViewportStatusBar", "targetPackageId": "robotics-ui" },
+          { "specifier": "@lk-robotics/design-system-core/components/icon/Icon", "targetPackageId": "core" },
+          { "specifier": "@lk-robotics/design-system-core/components/layout/Container", "targetPackageId": "core" },
+          { "specifier": "@lk-robotics/design-system-core/components/overlay/Drawer", "targetPackageId": "product" },
+          { "specifier": "@lk-robotics/design-system-core/components/selection/SegmentedControl", "targetPackageId": "core" },
+          { "specifier": "@lk-robotics/design-system-core/components/viz/Scene3DFrame", "targetPackageId": "robotics-ui" },
+          { "specifier": "@lk-robotics/design-system-core/components/viz/ViewerToolbar", "targetPackageId": "robotics-ui" }
+        ],
+        "scanEvidence": {
+          "path": "docs/references/package-split/consumers/lds3d-docs.json",
+          "sha256": "32a5bb38bd8c9d9b53880228d2ea203e51aec7e76853c355f12cb4736cccfa63",
+          "commit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a"
+        },
+        "assetPathMigrationTarget": "compatibility-assets-until-direct-package-asset-paths-are-known",
+        "intendedPackageSet": ["core", "theme", "product", "robotics-ui"]
+      }
+    ],
+    "identityRule": "Use the full repository slug as identity. Do not merge LK-ROBOTICS/lkrobotics-control-full-daedeok with LDS3D evidence for LK-ROBOTICS/lkrobotics-control-full."
+  },
+  "baselines": {
+    "targetedChecks": [
+      {
+        "id": "documentation-system",
+        "command": "node scripts/check-documentation-system.mjs",
+        "status": "passed-on-audited-worktree",
+        "capturedAt": "2026-07-18"
+      },
+      {
+        "id": "layer-boundaries",
+        "command": "node scripts/check-layer-boundaries.mjs",
+        "status": "passed-on-audited-worktree",
+        "capturedAt": "2026-07-18",
+        "result": {
+          "modules": 226,
+          "internalJavaScriptEdges": 278,
+          "crossLayerEdges": {
+            "product-to-core": 115,
+            "robotics-to-core": 31,
+            "robotics-to-product": 1,
+            "theme-to-core": 2
+          }
+        }
+      },
+      {
+        "id": "publish-policy",
+        "command": "node scripts/check-publish-policy.mjs",
+        "status": "passed-on-audited-worktree",
+        "capturedAt": "2026-07-18"
+      }
+    ],
+    "cleanMain": {
+      "status": "not-captured",
+      "tag": null,
+      "commit": null
+    },
+    "fullCheck": {
+      "status": "not-run-for-wave-0",
+      "requiredBefore": "wave-0-approval"
+    },
+    "packageArtifacts": {
+      "status": "not-captured",
+      "lastKnownGoodReleaseSet": null,
+      "tarballs": []
+    },
+    "consumerMatrix": {
+      "status": "not-captured",
+      "required": [
+        "React 18",
+        "React 19",
+        "SSR",
+        "tree-shaking",
+        "Windows",
+        "Linux",
+        "Storybook visual",
+        "tarball and consumer bundle size"
+      ]
+    }
+  },
+  "approvals": []
+}

@@ -1,0 +1,31 @@
+{
+  "kind": "lds-consumer-import-scan",
+  "scanner": "scripts/scan-package-consumer.mjs",
+  "scannerVersion": 1,
+  "repository": "LK-ROBOTICS/lk_visionops",
+  "commit": "308da0c0624024ba2497cf05cda2841e4411b522",
+  "frontendRoot": "frontend",
+  "sourceTreeEntryCount": 57,
+  "sourceFileCount": 46,
+  "sourceTreeSha256": "e2c90f1c6d4461e06668998d3164fa48bb271d7e6076f0d8ff5ba257ba5e28b4",
+  "currentUsage": {
+    "dependencyDeclarations": 0,
+    "aggregateRootImports": 0,
+    "layerSubpathImports": 0,
+    "componentDeepImports": 0,
+    "stylesheetImports": 0,
+    "assetFilesystemPaths": 0,
+    "lds3dPackageImports": 0,
+    "cjsRequireOccurrences": 0
+  },
+  "matches": {
+    "dependencyDeclarations": [],
+    "aggregateRootImports": [],
+    "layerSubpathImports": [],
+    "componentDeepImports": [],
+    "stylesheetImports": [],
+    "assetFilesystemPaths": [],
+    "lds3dPackageImports": [],
+    "cjsRequireOccurrences": []
+  }
+}

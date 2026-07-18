@@ -22,34 +22,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7.0.0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
       - name: Setup Node
         uses: actions/setup-node@v6.4.0
         with:
           node-version: 22
-          cache: pnpm
+          cache: npm
+
+      - name: Setup canonical npm
+        run: npm install --global npm@10.9.2
+
+      - name: Verify package manager
+        run: |
+          if ((npm --version) -ne '10.9.2') {
+            throw 'Expected npm 10.9.2.'
+          }
 
       - name: Install dependencies
-        # The committed lockfile predates the current pnpm and lists hoisted deps
-        # on the root importer, so --frozen-lockfile rejects it. Allow pnpm to
-        # reconcile it in-CI (not committed) until the lockfile is regenerated.
-        run: pnpm install --no-frozen-lockfile
+        run: npm ci
 
       - name: Install Playwright browsers
-        # pnpm does not run dependencies' postinstall scripts, so Playwright's
-        # browser download is skipped; the color-contrast and visual-smoke
-        # checks launch chromium, so install it explicitly.
-        run: pnpm exec playwright install chromium
+        # The color-contrast and visual-smoke checks launch Chromium explicitly.
+        run: npm exec -- playwright install chromium
 
       - name: Build, typecheck, Storybook, and pack
         # check:ci == check minus check:storybook-ia. The IA audit gate requires
         # per-page human review, which can't run in automated CI; it stays a
-        # local/manual curation step (pnpm run check:storybook-ia).
-        run: pnpm run check:ci
+        # local/manual curation step (npm run check:storybook-ia).
+        run: npm run check:ci
 
       - name: Runtime dependency audit
-        run: pnpm run check:audit
+        run: npm run check:audit
