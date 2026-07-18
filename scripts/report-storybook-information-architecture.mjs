@@ -138,6 +138,22 @@ const PAGE_OWNER_OVERRIDES = {
   'LDS Robotics/Viewer/Viewer Frame': ['ViewerFrame'],
 };
 
+// Topic/reference pages can render a representative component without making
+// that component the page owner. Keep this narrower than PAGE_OWNER_OVERRIDES:
+// most component pages still use meta.component as their primary runtime owner.
+const TOPIC_PRIMARY_OWNER_OVERRIDES = new Set([
+  'LDS Robotics/Foundation/Codes',
+  'LDS Robotics/Foundation/Facility Glyph',
+  'LDS Robotics/Foundation/Hazard Glyph',
+  'LDS Robotics/Foundation/Marker Pin',
+  'LDS Robotics/Foundation/Navigation Encoding Tokens',
+  'LDS Robotics/Foundation/State Badge',
+  'LDS Robotics/Foundation/Unit Format',
+  'LDS Robotics/Foundation/Vector Glyph',
+  'LDS Robotics/Foundation/Viewer Tokens',
+  'LDS Robotics/Viewer/Navigation Viewer',
+]);
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -429,6 +445,9 @@ async function buildAudit(previous) {
     });
 
     const overriddenOwners = PAGE_OWNER_OVERRIDES[fileStories[0].title];
+    const primaryOwnerOverride = TOPIC_PRIMARY_OWNER_OVERRIDES.has(fileStories[0].title)
+      ? overriddenOwners?.[0]
+      : null;
     const subjectOwners = new Set(
       overriddenOwners || (metaOwner ? [metaOwner] : titleOwners(fileStories[0].title, exportNames)),
     );
@@ -454,7 +473,7 @@ async function buildAudit(previous) {
       family: fileStories[0].title.split('/').slice(0, -1).at(-1),
       importPath,
       sourceSha256: sha256(source),
-      primaryOwner: overriddenOwners?.[0] || metaOwner || [...subjectOwners][0] || null,
+      primaryOwner: primaryOwnerOverride || metaOwner || [...subjectOwners][0] || null,
       ownerComponents: [...subjectOwners].sort(),
       supportingComponents: [...renderedPageComponents].filter((owner) => !subjectOwners.has(owner)).sort(),
       visibility: { public: publicStories.length, hidden: hiddenStories.length },

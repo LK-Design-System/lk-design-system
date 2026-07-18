@@ -160,7 +160,7 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
+      "reviewedAt": "2026-07-18T23:51:30.7350602Z",
       "reviewedSourceSha256": "14cb902da5a982cc71185c00480e93280c3e9b9b66a842d13a82a48afe115641",
       "stories": [
         {
@@ -185,7 +185,7 @@
           "supportingComponents": [
             "Button"
           ],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-19 ownership re-review confirmed Spinner as the Core runtime export while Theme:Brand Spinner remains the distinct Theme variant topic."
         },
         {
           "id": "lds-core-components-action-action-area--action-area-states",
@@ -20329,7 +20329,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after completing the Theme audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
+      "reviewNote": "2026-07-19 re-review confirmed the cross-layer exception: the page owns the Theme brand-variant topic and renders the Core Spinner without creating a second package owner."
     },
     {
       "title": "LDS Theme/Controls/Theme Toggle",
@@ -20415,7 +20415,7 @@
       "family": "Status",
       "importPath": "./stories/ThemeBrandSpinner.stories.jsx",
       "sourceSha256": "6dcd474af5f8671d198bb1be07b503b039f8068a4d864f9b22bdc81763393180",
-      "primaryOwner": "Theme:Brand Spinner",
+      "primaryOwner": "Spinner",
       "ownerComponents": [
         "Theme:Brand Spinner"
       ],
