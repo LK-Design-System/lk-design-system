@@ -7,6 +7,10 @@ packages/*/dist/
 .vite/
 coverage/
 storybook-static/
+!packages/conformance/fixtures/robotics/storybook-static/
+!packages/conformance/fixtures/robotics/storybook-static/index.json
+!packages/conformance/fixtures/lds3d/storybook-static/
+!packages/conformance/fixtures/lds3d/storybook-static/index.json
 visual-artifacts/
 
 # Logs

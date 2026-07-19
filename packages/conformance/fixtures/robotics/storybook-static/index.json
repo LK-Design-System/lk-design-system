@@ -1,0 +1,11 @@
+{
+  "v": 5,
+  "entries": {
+    "fixture-widget--overview": {
+      "id": "fixture-widget--overview",
+      "title": "Fixture/Widget",
+      "name": "Overview",
+      "type": "story"
+    }
+  }
+}
