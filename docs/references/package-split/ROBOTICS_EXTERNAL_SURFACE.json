@@ -8,6 +8,13 @@
     "repository": "LK-ROBOTICS/lk-design-system-robotics"
   },
   "tokenDependencies": [
+    "--color-semantic-background-band",
+    "--component-viewer-border",
+    "--component-viewer-foreground",
+    "--component-viewer-muted",
+    "--component-viewer-subtle",
+    "--component-viewer-surface",
+    "--component-viewer-surface-elevated",
     "--component-viewer-light-surface",
     "--component-viewer-light-surface-elevated",
     "--component-viewer-light-foreground",

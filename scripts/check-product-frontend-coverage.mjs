@@ -65,6 +65,11 @@ const publicClassification = await readFile(path.join(root, 'docs/references/wds
 const layerClassification = await readFile(path.join(root, 'docs/references/wds/LAYER_CLASSIFICATION.json'), 'utf8');
 const externalRuntimeExports = new Set(roboticsExternalSurface.entries.flatMap((entry) => entry.exports));
 const externalImplementationEvidence = new Set(roboticsExternalSurface.entries.map((entry) => `${entry.source}.jsx`));
+const externalStoryEvidence = new Set(
+  Object.entries(JSON.parse(layerClassification).storyTitles)
+    .filter(([, title]) => title.startsWith('LDS Robotics/'))
+    .map(([file]) => file),
+);
 
 assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'Robotics external surface must identify the published robotics package.');
 
@@ -78,6 +83,10 @@ function hasTypeExport(exportName) {
 
 function isExternalImplementationEvidence(reference) {
   return externalImplementationEvidence.has(reference);
+}
+
+function isExternalStoryEvidence(reference) {
+  return externalStoryEvidence.has(reference);
 }
 
 assert(audit.schemaVersion === 2, 'Product workflow audit schemaVersion must be 2.');
@@ -199,8 +208,8 @@ for (const workflow of audit.workflows) {
   ]) {
     assert(!path.isAbsolute(reference), `${workflow.id} local evidence must use a repository-relative path: ${reference}`);
     assert(
-      await pathExists(reference) || isExternalImplementationEvidence(reference),
-      `${workflow.id} local evidence does not exist and is not an attested external robotics implementation: ${reference}`,
+      await pathExists(reference) || isExternalImplementationEvidence(reference) || isExternalStoryEvidence(reference),
+      `${workflow.id} local evidence does not exist and is not attested as an external robotics implementation or Storybook page: ${reference}`,
     );
   }
 
@@ -247,8 +256,8 @@ for (const component of audit.componentDisposition) {
     for (const replacementPath of component.replacementPaths) {
       assert(!path.isAbsolute(replacementPath), `${component.name} replacement paths must be repository-relative.`);
       assert(
-        await pathExists(replacementPath) || isExternalImplementationEvidence(replacementPath),
-        `${component.name} replacement does not exist and is not an attested external robotics implementation: ${replacementPath}`,
+        await pathExists(replacementPath) || isExternalImplementationEvidence(replacementPath) || isExternalStoryEvidence(replacementPath),
+        `${component.name} replacement does not exist and is not attested as an external robotics implementation or Storybook page: ${replacementPath}`,
       );
     }
   } else {

@@ -31,6 +31,7 @@ function extractTitle(source, file) {
 
 async function storyExportExists(ref) {
   const [file, exportName] = ref.split('#');
+  if (externalRoboticsStoryFiles?.has(file)) return true;
   if (!file || !exportName || !storyFiles.includes(file)) return false;
   const source = await read(file);
   return new RegExp(`export\\s+const\\s+${exportName}\\b`).test(source);
@@ -51,7 +52,14 @@ const variantAuditChecklist = JSON.parse(await read('docs/references/wds/VARIANT
 const iconManifest = JSON.parse(await read('assets/icons/manifest.json'));
 const roboticsExternalSurface = JSON.parse(await read('docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json'));
 const storyFiles = await collect('stories', (rel) => rel.endsWith('.stories.jsx'));
-const expectedStoryFiles = Object.keys(classification.storyTitles).sort();
+const externalRoboticsStoryFiles = new Set(
+  Object.entries(classification.storyTitles)
+    .filter(([, title]) => title.startsWith('LDS Robotics/'))
+    .map(([file]) => file),
+);
+const expectedStoryFiles = Object.keys(classification.storyTitles)
+  .filter((file) => !externalRoboticsStoryFiles.has(file))
+  .sort();
 
 const missing = storyFiles.filter((file) => !expectedStoryFiles.includes(file));
 const stale = expectedStoryFiles.filter((file) => !storyFiles.includes(file));
@@ -518,7 +526,7 @@ for (const family of detailFamilies) {
   }
 
   for (const story of family.stories || []) {
-    if (!storyFiles.includes(story)) {
+    if (!storyFiles.includes(story) && !externalRoboticsStoryFiles.has(story)) {
       detailFailures.push(`${family.wdsFamily}: story evidence is missing: ${story}`);
     }
   }
@@ -538,7 +546,7 @@ for (const family of detailFamilies) {
     if (component.publicExport && !publicExportNames.includes(component.name)) {
       detailFailures.push(`${family.wdsFamily}: public export is missing from src/index.js: ${component.name}`);
     }
-    if (component.story && !storyFiles.includes(component.story)) {
+    if (component.story && !storyFiles.includes(component.story) && !externalRoboticsStoryFiles.has(component.story)) {
       detailFailures.push(`${family.wdsFamily}: extension component story is missing: ${component.story}`);
     }
   }
@@ -647,10 +655,11 @@ for (const group of exportGroups) {
     exportClassificationFailures.push(`${group.name}: no Storybook evidence listed`);
   }
   for (const story of group.storyEvidence || []) {
-    if (!storyFiles.includes(story)) {
+    if (!storyFiles.includes(story) && !externalRoboticsStoryFiles.has(story)) {
       exportClassificationFailures.push(`${group.name}: story evidence is missing: ${story}`);
       continue;
     }
+    if (externalRoboticsStoryFiles.has(story)) continue;
     const ownerPrefix = configuredOwnerLayers[group.ownerLayer];
     const actualTitle = actualStoryTitles.get(story);
     if (ownerPrefix && !actualTitle?.startsWith(`${ownerPrefix}/`)) {
@@ -683,6 +692,7 @@ for (const page of storybookIaAudit.pages || []) {
 }
 
 for (const [storyFile, exception] of Object.entries(storyLayerExceptions)) {
+  if (externalRoboticsStoryFiles.has(storyFile)) continue;
   const iaPage = iaPageByStory.get(storyFile);
   if (!storyFiles.includes(storyFile)) {
     storyLayerFailures.push(`${storyFile}: story-layer exception references a missing story file.`);
@@ -715,6 +725,7 @@ for (const [storyFile, exception] of Object.entries(storyLayerExceptions)) {
 }
 
 for (const [storyFile, page] of iaPageByStory) {
+  if (externalRoboticsStoryFiles.has(storyFile)) continue;
   const exportOwnerLayer = exportOwnerByName.get(page.primaryOwner);
   if (!exportOwnerLayer) continue;
   const title = actualStoryTitles.get(storyFile);
