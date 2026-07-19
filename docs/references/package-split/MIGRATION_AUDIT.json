@@ -2,8 +2,8 @@
   "$schema": "./MIGRATION_AUDIT.schema.json",
   "schemaVersion": 1,
   "audit": {
-    "status": "wave-0-in-progress",
-    "capturedAt": "2026-07-19T09:05:19.5929958+09:00",
+    "status": "wave-0-approved",
+    "capturedAt": "2026-07-19T00:55:26.368Z",
     "source": {
       "repository": "LK-ROBOTICS/lk-design-system",
       "observedBranch": "main",
@@ -16,22 +16,9 @@
       "classification": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json"
     },
     "readiness": {
-      "integrityStatus": "audited",
-      "wave0Gate": "blocked",
-      "blockers": [
-        {
-          "id": "clean-main-baseline",
-          "reason": "The approved Wave 0 preparation and local full-check handoff are integrated on local main at 1078a59, but origin/main remains at 0aa7f8d and no immutable clean-main source tag exists."
-        },
-        {
-          "id": "full-regression-baseline",
-          "reason": "Local main passed npm run check with 579 Axe stories, 259 play functions and 65/65 visual parity, but no clean-tagged source commit has a tracked full-check and consumer-matrix attestation."
-        },
-        {
-          "id": "package-artifact-baseline",
-          "reason": "The canonical Node 22.17.1/npm 10.9.2 capture/verify contract and ordinary package smoke pass, but no clean-tagged source commit has a tracked immutable artifact attestation and byte-for-byte fresh-checkout reproduction."
-        }
-      ]
+      "integrityStatus": "verified",
+      "wave0Gate": "ready",
+      "blockers": []
     }
   },
   "verificationContract": {
@@ -958,39 +945,36 @@
       }
     ],
     "cleanMain": {
-      "status": "not-captured",
-      "tag": null,
-      "commit": null
+      "status": "captured",
+      "tag": "wave0-baseline-2026-07-19-r2",
+      "commit": "679859bc8b5126bcff7146eaedd871bbe9e62891"
     },
     "fullCheck": {
-      "status": "not-captured",
-      "requiredBefore": "wave-0-approval",
-      "diagnosticObservation": {
-        "sourceCommit": "a5a2be3a15d0851e71f39d5d28bb021cd126e3d3",
-        "runtime": "windows-x64-node-22.17.1-npm-10.9.2",
-        "command": "npm run check",
-        "result": "passed",
-        "storybookIa": "passed-190-pages-579-stories-all-reviewed",
-        "accessibility": "passed-579-axe-259-play-zero-violations-and-console-errors",
-        "visualRegression": "passed-65-of-65",
-        "packageArtifactSmoke": "passed-actual-tarball-esm-cjs-types-deep-ssr-and-assets",
-        "acceptance": "diagnostic-only-until-clean-tagged-full-check-and-consumer-matrix-evidence"
-      }
+      "status": "passed-on-clean-main",
+      "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+      "evidencePath": "docs/references/package-split/baselines/WAVE0_FULL_CHECK.json",
+      "evidenceSha256": "b8fb984d5c835165e62fccb61ce771c9a632240d5daec0661a73cff6bc582e6c"
     },
     "packageArtifacts": {
-      "status": "not-captured",
-      "lastKnownGoodReleaseSet": null,
-      "tarballs": [],
-      "diagnosticObservation": {
-        "sourceCommit": "a5a2be3a15d0851e71f39d5d28bb021cd126e3d3",
-        "runtime": "windows-x64-node-22.17.1-npm-10.9.2",
-        "command": "npm run check:pack via npm run check",
-        "result": "passed-actual-tarball-install-and-smoke",
-        "acceptance": "diagnostic-only-until-clean-tagged-immutable-attestation-and-byte-reproduction"
-      }
+      "status": "captured",
+      "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+      "lastKnownGoodReleaseSet": "wave0-aggregate-0.1.0-2026-07-19.2",
+      "evidencePath": "docs/references/package-split/baselines/WAVE0_AGGREGATE_ARTIFACT.json",
+      "evidenceSha256": "2a2081a1e412078ab02052bc6897469848a16e6e7f3f3d6f4bbfe188464c222e",
+      "reproductionCommand": "npm run check:package-migration:wave0",
+      "tarballs": [
+        {
+          "package": "@lk-robotics/design-system-core",
+          "version": "0.1.0",
+          "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+          "artifactPath": "visual-artifacts/package-smoke/pack/lk-robotics-design-system-core-0.1.0.tgz",
+          "sizeBytes": 8298810,
+          "sha256": "05793cf99682a4d36e27d40aba1173666ba84702a8e7187542a7fbc1b876a8b4"
+        }
+      ]
     },
     "consumerMatrix": {
-      "status": "not-captured",
+      "status": "passed",
       "required": [
         "React 18",
         "React 19",
@@ -1001,12 +985,9 @@
         "Storybook visual",
         "tarball and consumer bundle size"
       ],
-      "knownGaps": [
-        "replacement clean-main tag after isolated React consumer tooling is committed",
-        "canonical Windows full-check and aggregate artifact capture from that replacement tag",
-        "React 18/19 isolated tarball consumer reports from canonical Windows and Linux",
-        "tracked clean-tagged full-check, visual, size, and cross-platform matrix evidence"
-      ]
+      "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+      "evidencePath": "docs/references/package-split/baselines/WAVE0_CONSUMER_MATRIX.json",
+      "evidenceSha256": "49a771a2f6ce35a74d22337cc7e619e2759faf3b9cf384a108829675914216a6"
     }
   },
   "approvals": [

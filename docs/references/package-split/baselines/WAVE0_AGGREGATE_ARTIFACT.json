@@ -1,0 +1,53 @@
+{
+  "$schema": "../PACKAGE_ARTIFACT_BASELINE.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-wave0-aggregate-artifact",
+  "capturedAt": "2026-07-19T00:42:06.413Z",
+  "repository": "LK-ROBOTICS/lk-design-system",
+  "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+  "sourceTag": "wave0-baseline-2026-07-19-r2",
+  "lastKnownGoodReleaseSet": "wave0-aggregate-0.1.0-2026-07-19.2",
+  "canonicalEnvironment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "22.17.1",
+    "npm": "10.9.2",
+    "packageManager": "npm@10.9.2"
+  },
+  "inputs": {
+    "lockfile": "package-lock.json",
+    "lockfileSha256": "e6cdbd72854c94bdf078fffed1bc140ef75507b84adaaa4b04310a436a6659b2",
+    "artifactVerifier": "scripts/check-package-artifact.mjs",
+    "artifactVerifierSha256": "64fecd9d2468da3091784cbe7cfddb472cc0c1dc8b259cd56169c70ee2ef7f4d",
+    "installCommand": "npm ci",
+    "buildCommand": "npm run build",
+    "generatedCheckCommand": "npm run check:generated",
+    "packCommand": "npm pack --json --ignore-scripts --pack-destination visual-artifacts/package-smoke/pack"
+  },
+  "tarballs": [
+    {
+      "package": "@lk-robotics/design-system-core",
+      "version": "0.1.0",
+      "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+      "artifactPath": "visual-artifacts/package-smoke/pack/lk-robotics-design-system-core-0.1.0.tgz",
+      "storage": "ignored-regenerated",
+      "sizeBytes": 8298810,
+      "sha256": "05793cf99682a4d36e27d40aba1173666ba84702a8e7187542a7fbc1b876a8b4",
+      "fileCount": 2331,
+      "unpackedSizeBytes": 15053663
+    }
+  ],
+  "smoke": {
+    "rootButtonBundleBytes": 12167,
+    "coreButtonBundleBytes": 12167,
+    "iconAssets": 339,
+    "esm": "passed",
+    "cjs": "passed",
+    "types": "passed",
+    "ssr": "passed"
+  },
+  "verification": {
+    "command": "npm run check:pack:baseline",
+    "result": "passed"
+  }
+}
