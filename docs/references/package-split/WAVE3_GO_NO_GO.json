@@ -1,0 +1,43 @@
+{
+  "$schema": "./WAVE3_GO_NO_GO.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-wave3-robotics-repository-decision",
+  "evaluatedAt": "2026-07-19T03:58:27.8298825Z",
+  "decision": "no-go-keep-robotics-ui-in-lk-design-system",
+  "source": {
+    "plan": "docs/PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md#wave-3--robotics-",
+    "releaseEvidence": "docs/references/package-split/releases/WAVE2_RC_0.1.0-rc.0.json",
+    "lds3dEvidence": "docs/references/package-split/consumers/lds3d-docs-wave2-rc.json"
+  },
+  "criteria": [
+    {
+      "id": "independent-release-cycles",
+      "status": "not-met",
+      "evidence": "Only one prerelease (0.1.0-rc.0, tag next) exists; the required two independent release cycles have not occurred."
+    },
+    {
+      "id": "web-viz-and-control-adoption",
+      "status": "not-met",
+      "evidence": "The pinned Web Viz and Control snapshots in MIGRATION_AUDIT.json record zero LDS dependency and import usage, so they do not yet consume a common robotics-ui release."
+    },
+    {
+      "id": "independent-operations",
+      "status": "not-met",
+      "evidence": "The repository has no .github/CODEOWNERS and no independently operated robotics release/CI surface."
+    },
+    {
+      "id": "artifact-and-lds3d-boundary",
+      "status": "partially-met",
+      "evidence": "The RC release set is immutable and LDS3D docs consume it with zero legacy/local references; independent robotics package CI and cross-repository consumer CI remain absent."
+    }
+  ],
+  "signOff": {
+    "authority": "design-system-owner",
+    "source": "The user explicitly directed end-to-end handoff execution in this Codex task; the plan requires no extraction when any Go criterion is unmet."
+  },
+  "nextReview": [
+    "Publish and operate at least two independent stable release cycles.",
+    "Migrate and verify pinned Web Viz and Control consumers against the same robotics-ui release.",
+    "Establish CODEOWNERS, independent release duty, security owner, and robotics package CI before reconsidering extraction."
+  ]
+}
