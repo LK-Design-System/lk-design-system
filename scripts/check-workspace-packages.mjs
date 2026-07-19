@@ -5,6 +5,7 @@ const root = process.cwd();
 const errors = [];
 const notes = [];
 const sourceOnly = process.argv.includes('--source-only');
+const releaseVersion = '0.1.0-rc.0';
 
 const packages = [
   {
@@ -266,7 +267,7 @@ for (const packageInfo of packages) {
   manifests.set(packageInfo.id, manifest);
 
   if (manifest.name !== packageInfo.name) fail(`packages/${packageInfo.id}: expected name ${packageInfo.name}, found ${manifest.name}.`);
-  if (manifest.version !== '0.1.0') fail(`${packageInfo.name}: expected version 0.1.0, found ${manifest.version}.`);
+  if (manifest.version !== releaseVersion) fail(`${packageInfo.name}: expected release version ${releaseVersion}, found ${manifest.version}.`);
 
   const internalDependencies = Object.keys(manifest.dependencies ?? {}).filter((name) => implementationNames.has(name)).sort();
   const expectedDependencies = [...packageInfo.dependencies].sort();
@@ -274,7 +275,7 @@ for (const packageInfo of packages) {
     fail(`${packageInfo.name}: internal dependency DAG is ${internalDependencies.join(', ') || '(none)'}; expected ${expectedDependencies.join(', ') || '(none)'}.`);
   }
   for (const dependency of expectedDependencies) {
-    if (manifest.dependencies?.[dependency] !== '0.1.0') fail(`${packageInfo.name}: ${dependency} must use version 0.1.0.`);
+    if (manifest.dependencies?.[dependency] !== releaseVersion) fail(`${packageInfo.name}: ${dependency} must use release version ${releaseVersion}.`);
   }
 
   if (packageInfo.id === 'compat') validateCompatExports(manifest);

@@ -31,6 +31,7 @@ const focusCss = await readFile(path.join(tokensRoot, 'focus.css'), 'utf8');
 const componentsCss = await readFile(path.join(tokensRoot, 'components.css'), 'utf8');
 const viewerDeclarations = componentsCss.match(/^\s*--component-viewer-[^;]+;\r?$/gm) || [];
 const coreComponentsCss = componentsCss.replace(/^\s*--component-viewer-[^;]+;\r?$/gm, '');
+const coreFocusCss = `${focusCss.split('/* Map geometry owns')[0].trimEnd()}\n`;
 
 await copyFiles('core', ['spacing.css', 'grid.css']);
 await writeFile(path.join(root, 'packages', 'core', 'tokens', 'components.css'), coreComponentsCss);
@@ -46,7 +47,7 @@ await writeFile(path.join(root, 'packages', 'core', 'tokens', 'base.css'), [
   '.lk-nums { font-variant-numeric: tabular-nums; }',
   '',
 ].join('\n'));
-await writeFile(path.join(root, 'packages', 'core', 'tokens', 'focus.css'), focusCss.split('/* Map geometry owns')[0]);
+await writeFile(path.join(root, 'packages', 'core', 'tokens', 'focus.css'), coreFocusCss);
 await writeFile(path.join(root, 'packages', 'core', 'styles.css'), [
   '@import "./tokens/spacing.css";',
   '@import "./tokens/grid.css";',

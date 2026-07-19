@@ -33,7 +33,9 @@ function assertPeerDependencies(manifest, packageName) {
 
 function assertEntry(manifest, packageInfo) {
   const packageName = packageInfo.name;
-  assert(manifest.private === true, `${packageName}: packages stay private until the explicit Wave 2 publication decision.`);
+  assert(manifest.private !== true, `${packageName}: Wave 2 release packages must be publishable.`);
+  assert(manifest.publishConfig?.registry === 'https://npm.pkg.github.com', `${packageName}: publishConfig must target GitHub Packages.`);
+  assert(manifest.publishConfig?.access === 'restricted', `${packageName}: publishConfig must publish with restricted access.`);
   assert(manifest.type === 'module', `${packageName}: package type must be module.`);
   assert(manifest.types === './dist/index.d.ts', `${packageName}: types must point to dist/index.d.ts.`);
   assert(manifest.files?.includes('dist'), `${packageName}: files must include dist.`);
@@ -47,7 +49,7 @@ function assertEntry(manifest, packageInfo) {
     `${packageName}: workspace dependency list is not the approved package DAG.`,
   );
   for (const dependency of packageInfo.dependencies) {
-    assert(manifest.dependencies[dependency] === '0.1.0', `${packageName}: ${dependency} must be pinned to the Wave 1 workspace version.`);
+    assert(manifest.dependencies[dependency] === rootPackage.version, `${packageName}: ${dependency} must be pinned to the release-set version.`);
   }
 
   const expectedResources = new Set(['styles.css', ...packageInfo.resources]);
@@ -119,4 +121,4 @@ for (const expected of [
   assert(policyText.includes(expected), `Docs must state publish or workspace package policy phrase: ${expected}`);
 }
 
-console.log('Validated workspace publish policy: private package candidates, approved dependency DAG, ESM/types implementation entries, CJS compatibility facade, resource ownership, changelog, deprecations, and package-consumer documentation.');
+console.log('Validated workspace publish policy: publishable GitHub Packages release set, approved dependency DAG, ESM/types implementation entries, CJS compatibility facade, resource ownership, changelog, deprecations, and package-consumer documentation.');

@@ -1,9 +1,8 @@
 {
   "name": "@lk-robotics/lds-product",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.0",
   "description": "Reusable LK product patterns built on LDS Core.",
   "type": "module",
-  "private": true,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,11 +16,15 @@
     "tokens/*.css"
   ],
   "dependencies": {
-    "@lk-robotics/lds-core": "0.1.0"
+    "@lk-robotics/lds-core": "0.1.0-rc.0"
   },
   "peerDependencies": {
     "react": ">=18 <20",
     "react-dom": ">=18 <20"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
   },
   "exports": {
     ".": {
