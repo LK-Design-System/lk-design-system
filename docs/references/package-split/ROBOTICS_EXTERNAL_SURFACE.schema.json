@@ -3,7 +3,7 @@
   "$id": "https://lk-robotics.github.io/schemas/lds-robotics-external-surface.schema.json",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schemaVersion", "kind", "package", "entries"],
+  "required": ["$schema", "schemaVersion", "kind", "package", "tokenDependencies", "entries"],
   "properties": {
     "$schema": { "const": "./ROBOTICS_EXTERNAL_SURFACE.schema.json" },
     "schemaVersion": { "const": 1 },
@@ -17,6 +17,11 @@
         "version": { "const": "0.1.0-rc.1" },
         "repository": { "const": "LK-ROBOTICS/lk-design-system-robotics" }
       }
+    },
+    "tokenDependencies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^--[a-z0-9-]+$" }
     },
     "entries": {
       "type": "array",

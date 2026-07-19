@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const root = process.cwd();
 const baselinePath = path.join(root, 'docs', 'references', 'quality', 'TOKEN_HYGIENE_BASELINE.json');
+const roboticsExternalSurfacePath = path.join(root, 'docs', 'references', 'package-split', 'ROBOTICS_EXTERNAL_SURFACE.json');
 const updateBaseline = process.argv.includes('--update-baseline');
 
 async function collect(dir, predicate, out = []) {
@@ -64,6 +65,14 @@ for (const source of fileSources.values()) {
   for (const match of source.matchAll(/--[a-zA-Z0-9_-]+/g)) {
     occurrenceCounts.set(match[0], (occurrenceCounts.get(match[0]) || 0) + 1);
   }
+}
+
+const roboticsExternalSurface = JSON.parse(await readFile(roboticsExternalSurfacePath, 'utf8'));
+for (const token of roboticsExternalSurface.tokenDependencies ?? []) {
+  if (!definitionCounts.has(token)) {
+    throw new Error(`Robotics external surface declares unknown token dependency ${token}.`);
+  }
+  occurrenceCounts.set(token, (occurrenceCounts.get(token) || 0) + 1);
 }
 
 const source = JSON.parse(await readFile(path.join(root, 'tokens', 'source.json'), 'utf8'));

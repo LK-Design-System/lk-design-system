@@ -6,11 +6,11 @@ const workspacePackages = [
   { id: 'core', name: '@lk-robotics/lds-core', dependencies: [], resources: ['tokens', 'assets'] },
   { id: 'theme', name: '@lk-robotics/lds-theme', dependencies: ['@lk-robotics/lds-core'], resources: ['tokens', 'assets'] },
   { id: 'product', name: '@lk-robotics/lds-product', dependencies: ['@lk-robotics/lds-core'], resources: ['assets'] },
-  { id: 'robotics-ui', name: '@lk-robotics/lds-robotics-ui', dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-product'], resources: ['tokens'] },
   {
     id: 'compat',
     name: '@lk-robotics/design-system-core',
-    dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-theme', '@lk-robotics/lds-product', '@lk-robotics/lds-robotics-ui'],
+    dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-theme', '@lk-robotics/lds-product'],
+    externalDependencies: ['@lk-robotics/lds-robotics-ui'],
     resources: ['tokens', 'assets'],
     compatibility: true,
   },
@@ -45,11 +45,17 @@ function assertEntry(manifest, packageInfo) {
 
   const dependencies = Object.keys(manifest.dependencies ?? {}).sort();
   assert(
-    JSON.stringify(dependencies) === JSON.stringify([...packageInfo.dependencies].sort()),
+    JSON.stringify(dependencies) === JSON.stringify([...(packageInfo.dependencies || []), ...(packageInfo.externalDependencies || [])].sort()),
     `${packageName}: workspace dependency list is not the approved package DAG.`,
   );
   for (const dependency of packageInfo.dependencies) {
     assert(manifest.dependencies[dependency] === rootPackage.version, `${packageName}: ${dependency} must be pinned to the release-set version.`);
+  }
+  for (const dependency of packageInfo.externalDependencies || []) {
+    assert(
+      manifest.dependencies[dependency] === roboticsExternalSurface.package.version,
+      `${packageName}: ${dependency} must be pinned to the approved external Robotics release.`,
+    );
   }
 
   const expectedResources = new Set(['styles.css', ...packageInfo.resources]);
@@ -89,6 +95,7 @@ function assertEntry(manifest, packageInfo) {
 }
 
 const rootPackage = JSON.parse(await read('package.json'));
+const roboticsExternalSurface = JSON.parse(await read('docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json'));
 const readme = await read('readme.md');
 const inventory = await read('docs/REPOSITORY_INVENTORY.md');
 const workflow = await read('docs/COMPONENT_WORKFLOW.md');
@@ -96,6 +103,9 @@ const changelog = await read('CHANGELOG.md');
 const deprecations = await read('docs/DEPRECATIONS.md');
 
 assert(rootPackage.private === true, 'The workspace orchestrator must remain private.');
+assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'External Robotics surface must name the published Robotics package.');
+assert(typeof roboticsExternalSurface.package?.version === 'string' && roboticsExternalSurface.package.version.length > 0, 'External Robotics surface must pin a package version.');
+assert(rootPackage.devDependencies?.[roboticsExternalSurface.package.name] === roboticsExternalSurface.package.version, 'Workspace root must pin the approved external Robotics release for build-time type resolution.');
 assert(!rootPackage.dependencies || Object.keys(rootPackage.dependencies).length === 0, 'Workspace runtime dependencies must remain empty.');
 assertPeerDependencies(rootPackage, 'workspace root');
 assert(changelog.includes(`## ${rootPackage.version} -`), `CHANGELOG.md must include the current workspace version ${rootPackage.version}.`);

@@ -6,6 +6,8 @@ const root = process.cwd();
 const componentsRoot = 'components';
 const classificationPath = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json';
 const publicEntryPath = 'src/index.js';
+const roboticsExternalSurfacePath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json';
+const roboticsExternalPackage = '@lk-robotics/lds-robotics-ui';
 
 const layers = ['core', 'theme', 'product', 'robotics'];
 const layerSet = new Set(layers);
@@ -245,7 +247,7 @@ async function readSource(relativePath) {
   return readFile(path.join(root, relativePath), 'utf8');
 }
 
-async function readPublicExports() {
+async function readPublicExports(externalRoboticsExports) {
   const source = await readSource(publicEntryPath);
   const { sourceFile, failures: parseFailures } = parseJavaScript(publicEntryPath, source);
   const failures = [...parseFailures];
@@ -271,9 +273,17 @@ async function readPublicExports() {
       continue;
     }
     if (!statement.exportClause) {
-      failures.push(
-        `${sourceLocation(sourceFile, statement)}: export-star cannot be mapped to explicit public export ownership`,
-      );
+      if (statement.moduleSpecifier.text !== roboticsExternalPackage) {
+        failures.push(
+          `${sourceLocation(sourceFile, statement)}: export-star cannot be mapped to explicit public export ownership`,
+        );
+        continue;
+      }
+      for (const entry of externalRoboticsExports) {
+        for (const name of entry.exports) {
+          exports.push({ name, source: entry.source, location: sourceLocation(sourceFile, statement), external: true });
+        }
+      }
       continue;
     }
 
@@ -360,6 +370,11 @@ function findLayerCycles(layerGraph) {
 
 async function main() {
   const manifest = await readJson(classificationPath);
+  const roboticsExternalSurface = await readJson(roboticsExternalSurfacePath);
+  const externalRoboticsExports = roboticsExternalSurface.entries ?? [];
+  if (roboticsExternalSurface.package?.name !== roboticsExternalPackage || externalRoboticsExports.length === 0) {
+    throw new Error(`${roboticsExternalSurfacePath} must define the external Robotics public surface.`);
+  }
   const componentModules = await collectModules(componentsRoot);
   const componentModuleSet = new Set(componentModules);
   const ownershipFailures = [];
@@ -399,7 +414,7 @@ async function main() {
     }
   }
 
-  const { exports: publicExports, failures: publicEntryFailures } = await readPublicExports();
+  const { exports: publicExports, failures: publicEntryFailures } = await readPublicExports(externalRoboticsExports);
   ownershipFailures.push(...publicEntryFailures);
   const indexedExports = new Map();
   for (const publicExport of publicExports) {
@@ -433,6 +448,7 @@ async function main() {
 
   const publicSources = new Map();
   for (const publicExport of publicExports) {
+    if (publicExport.external) continue;
     const classifications = classifiedExports.get(publicExport.name) || [];
     if (classifications.length !== 1 || !layerSet.has(classifications[0].ownerLayer)) continue;
     const sourceRows = publicSources.get(publicExport.source) || [];
@@ -479,6 +495,7 @@ async function main() {
       continue;
     }
     if (!componentModuleSet.has(modulePath)) {
+      if (rows[0].ownerLayer === 'robotics') continue;
       ownershipFailures.push(`${modulePath}: stale internal module classification does not match a components/ .js or .jsx file.`);
       continue;
     }

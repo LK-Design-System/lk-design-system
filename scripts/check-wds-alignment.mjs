@@ -49,6 +49,7 @@ const publicExportClassification = JSON.parse(await read('docs/references/wds/PU
 const storybookIaAudit = JSON.parse(await read('docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json'));
 const variantAuditChecklist = JSON.parse(await read('docs/references/wds/VARIANT_AUDIT_CHECKLIST.json'));
 const iconManifest = JSON.parse(await read('assets/icons/manifest.json'));
+const roboticsExternalSurface = JSON.parse(await read('docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json'));
 const storyFiles = await collect('stories', (rel) => rel.endsWith('.stories.jsx'));
 const expectedStoryFiles = Object.keys(classification.storyTitles).sort();
 
@@ -487,12 +488,22 @@ assert(
 
 const allowedDetailStatuses = new Set(Object.keys(coverageDetailAudit.statusLegend || {}));
 const publicIndex = await read('src/index.js');
-const publicExportRows = [...publicIndex.matchAll(/export\s+\{([^}]+)\}\s+from\s+['"]([^'"]+)['"]/g)].flatMap(
+const directPublicExportRows = [...publicIndex.matchAll(/export\s+\{([^}]+)\}\s+from\s+['"]([^'"]+)['"]/g)].flatMap(
   (match) => match[1].split(',').map((part) => ({
     name: part.trim().split(/\s+as\s+/).pop().trim(),
     source: path.posix.normalize(path.posix.join('src', match[2])),
   })),
 );
+assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'Robotics external surface must identify the published robotics package.');
+assert(
+  /export\s+\*\s+from\s+['"]@lk-robotics\/lds-robotics-ui['"]/.test(publicIndex),
+  'src/index.js must re-export the published Robotics package.',
+);
+const externalPublicExportRows = roboticsExternalSurface.entries.flatMap((entry) =>
+  entry.exports.map((name) => ({ name, source: `${entry.source}.jsx` })),
+);
+const externalComponentFiles = new Set(externalPublicExportRows.map((row) => row.source));
+const publicExportRows = [...directPublicExportRows, ...externalPublicExportRows];
 const publicExportNames = publicExportRows.map((row) => row.name);
 const detailFailures = [];
 for (const family of detailFamilies) {
@@ -520,9 +531,11 @@ for (const family of detailFamilies) {
     try {
       await stat(path.join(root, component.file));
     } catch {
-      detailFailures.push(`${family.wdsFamily}: component file is missing: ${component.file}`);
+      if (!externalComponentFiles.has(component.file)) {
+        detailFailures.push(`${family.wdsFamily}: component file is missing: ${component.file}`);
+      }
     }
-    if (component.publicExport && !publicIndex.includes(` ${component.name}`)) {
+    if (component.publicExport && !publicExportNames.includes(component.name)) {
       detailFailures.push(`${family.wdsFamily}: public export is missing from src/index.js: ${component.name}`);
     }
     if (component.story && !storyFiles.includes(component.story)) {
@@ -755,9 +768,13 @@ const internalModulePaths = internalModules.map((module) => module.path);
 const missingInternalModules = expectedInternalComponentModules.filter(
   (modulePath) => !internalModulePaths.includes(modulePath),
 );
-const staleInternalModules = internalModulePaths.filter(
-  (modulePath) => typeof modulePath === 'string' && !expectedInternalComponentModules.includes(modulePath),
-);
+const staleInternalModules = internalModules
+  .filter((module) => (
+    typeof module?.path === 'string'
+    && !expectedInternalComponentModules.includes(module.path)
+    && module.ownerLayer !== 'robotics'
+  ))
+  .map((module) => module.path);
 const duplicateInternalModules = internalModulePaths.filter(
   (modulePath, index) => internalModulePaths.indexOf(modulePath) !== index,
 );

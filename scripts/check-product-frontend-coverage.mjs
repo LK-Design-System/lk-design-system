@@ -4,6 +4,7 @@ import path from 'node:path';
 const root = process.cwd();
 const auditPath = 'docs/references/product-frontends/COVERAGE_AUDIT.json';
 const docPath = 'docs/PRODUCT_FRONTEND_COVERAGE.md';
+const roboticsExternalSurfacePath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json';
 const requiredRepositories = [
   'LK-ROBOTICS/lk_deviceops',
   'LK-ROBOTICS/lk_visionops',
@@ -59,8 +60,25 @@ const audit = JSON.parse(source);
 const documentation = await readFile(path.join(root, docPath), 'utf8');
 const runtimeExports = await readFile(path.join(root, 'src/index.js'), 'utf8');
 const typeExports = await readFile(path.join(root, 'src/index.d.ts'), 'utf8');
+const roboticsExternalSurface = JSON.parse(await readFile(path.join(root, roboticsExternalSurfacePath), 'utf8'));
 const publicClassification = await readFile(path.join(root, 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'), 'utf8');
 const layerClassification = await readFile(path.join(root, 'docs/references/wds/LAYER_CLASSIFICATION.json'), 'utf8');
+const externalRuntimeExports = new Set(roboticsExternalSurface.entries.flatMap((entry) => entry.exports));
+const externalImplementationEvidence = new Set(roboticsExternalSurface.entries.map((entry) => `${entry.source}.jsx`));
+
+assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'Robotics external surface must identify the published robotics package.');
+
+function hasRuntimeExport(exportName) {
+  return hasNamedExport(runtimeExports, exportName) || externalRuntimeExports.has(exportName);
+}
+
+function hasTypeExport(exportName) {
+  return hasNamedExport(typeExports, exportName) || externalRuntimeExports.has(exportName);
+}
+
+function isExternalImplementationEvidence(reference) {
+  return externalImplementationEvidence.has(reference);
+}
 
 assert(audit.schemaVersion === 2, 'Product workflow audit schemaVersion must be 2.');
 assert(/^\d{4}-\d{2}-\d{2}$/.test(audit.auditedAt), 'Product workflow audit auditedAt must use YYYY-MM-DD.');
@@ -156,8 +174,8 @@ for (const workflow of audit.workflows) {
     for (const reference of workflow.implementationEvidence) {
       assert(reference.startsWith('components/') && reference.endsWith('.jsx'), `${workflow.id} implementation evidence must be a component implementation: ${reference}`);
       const exportName = path.basename(reference, '.jsx');
-      assert(hasNamedExport(runtimeExports, exportName), `${workflow.id} implementation evidence is not a runtime export: ${exportName}`);
-      assert(hasNamedExport(typeExports, exportName), `${workflow.id} implementation evidence is not a type export: ${exportName}`);
+      assert(hasRuntimeExport(exportName), `${workflow.id} implementation evidence is not a runtime export: ${exportName}`);
+      assert(hasTypeExport(exportName), `${workflow.id} implementation evidence is not a type export: ${exportName}`);
       assert(publicClassification.includes(`\"${exportName}\"`), `${workflow.id} implementation evidence is not publicly classified: ${exportName}`);
     }
     for (const reference of workflow.storyEvidence) {
@@ -180,7 +198,10 @@ for (const workflow of audit.workflows) {
     ...workflow.verificationEvidence,
   ]) {
     assert(!path.isAbsolute(reference), `${workflow.id} local evidence must use a repository-relative path: ${reference}`);
-    assert(await pathExists(reference), `${workflow.id} local evidence does not exist: ${reference}`);
+    assert(
+      await pathExists(reference) || isExternalImplementationEvidence(reference),
+      `${workflow.id} local evidence does not exist and is not an attested external robotics implementation: ${reference}`,
+    );
   }
 
   counts[workflow.stage] += 1;
@@ -225,10 +246,18 @@ for (const component of audit.componentDisposition) {
     assertStringArray(component.replacementPaths, `${component.name}.replacementPaths`, 1);
     for (const replacementPath of component.replacementPaths) {
       assert(!path.isAbsolute(replacementPath), `${component.name} replacement paths must be repository-relative.`);
-      assert(await pathExists(replacementPath), `${component.name} replacement does not exist: ${replacementPath}`);
+      assert(
+        await pathExists(replacementPath) || isExternalImplementationEvidence(replacementPath),
+        `${component.name} replacement does not exist and is not an attested external robotics implementation: ${replacementPath}`,
+      );
     }
   } else {
-    assert(implementationExists, `${component.name}.path does not exist: ${component.path}`);
+    assert(
+      implementationExists || isExternalImplementationEvidence(component.path),
+      `${component.name}.path does not exist and is not an attested external robotics implementation: ${component.path}`,
+    );
+    assert(hasRuntimeExport(component.name), `${component.name} is not a runtime export.`);
+    assert(hasTypeExport(component.name), `${component.name} is not a type export.`);
   }
 
   assertStringArray(component.workflowIds, `${component.name}.workflowIds`);

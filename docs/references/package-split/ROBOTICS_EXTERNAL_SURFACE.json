@@ -7,6 +7,13 @@
     "version": "0.1.0-rc.1",
     "repository": "LK-ROBOTICS/lk-design-system-robotics"
   },
+  "tokenDependencies": [
+    "--component-viewer-light-surface",
+    "--component-viewer-light-surface-elevated",
+    "--component-viewer-light-foreground",
+    "--component-viewer-light-muted",
+    "--component-viewer-light-border"
+  ],
   "entries": [
     { "source": "components/editor/CanvasEditorCommandBar", "exports": ["CanvasEditorCommandBar"] },
     { "source": "components/editor/CanvasEditorShell", "exports": ["CanvasEditorShell"] },
