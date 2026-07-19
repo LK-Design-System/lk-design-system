@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const root = process.cwd();
 const classification = JSON.parse(await readFile(path.join(root, 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'), 'utf8'));
-const layers = { core: 'core', theme: 'theme', product: 'product', robotics: 'robotics-ui' };
+const layers = { core: 'core', theme: 'theme', product: 'product' };
 
 const owners = new Map();
 for (const group of classification.groups ?? []) for (const name of group.exports ?? []) owners.set(name, group.ownerLayer);
@@ -88,4 +88,4 @@ async function rewriteImports(target, layer, base) {
   await writeFile(target, text);
 }
 
-console.log('Generated workspace implementation sources for core, theme, product, and robotics-ui.');
+console.log('Generated workspace implementation sources for core, theme, and product; Robotics UI is external.');

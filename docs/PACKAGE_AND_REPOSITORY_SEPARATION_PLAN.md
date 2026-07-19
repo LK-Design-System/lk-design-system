@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture and migration plan |
-| Status | In progress — Wave 2 RC and LDS3D docs migration verified; the six pinned product sources are not LDS consumers; Wave 3 decision is no-go (keep Robotics UI in this repository) |
+| Status | In progress — Wave 2 RC and LDS3D docs migration verified; the six pinned product sources are not LDS consumers. The original Wave 3 decision remains no-go, but the design-system owner explicitly approved the repository extraction as a role-boundary exception; see `docs/references/package-split/WAVE3_USER_APPROVED_EXTRACTION.json`. |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
 | Last reviewed | 2026-07-19 |
 | Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859bc8b5126bcff7146eaedd871bbe9e62891` |
@@ -438,7 +438,7 @@ No-go 신호:
 
 ### Wave 4 — Robotics UI 저장소 추출
 
-Wave 3가 Go일 때만 `lk-design-system-robotics`를 만든다.
+The original Wave 3 gate was no-go. The design-system owner subsequently approved the extraction as a documented role-boundary exception in `docs/references/package-split/WAVE3_USER_APPROVED_EXTRACTION.json`; that record does not replace the historical no-go evidence.
 
 작업:
 

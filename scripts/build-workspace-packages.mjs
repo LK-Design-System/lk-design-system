@@ -1,7 +1,7 @@
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 
-const workspacePackages = ['core', 'theme', 'product', 'robotics-ui'];
+const workspacePackages = ['core', 'theme', 'product'];
 const tsupCli = path.join(process.cwd(), 'node_modules', 'tsup', 'dist', 'cli-default.js');
 
 for (const workspacePackage of workspacePackages) {

@@ -2,7 +2,7 @@ import { copyFile, mkdir, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
-const workspacePackages = ['core', 'theme', 'product', 'robotics-ui', 'compat'];
+const workspacePackages = ['core', 'theme', 'product', 'compat'];
 
 async function copyDeclarations(sourceDir, targetDir) {
   for (const entry of await readdir(sourceDir, { withFileTypes: true })) {

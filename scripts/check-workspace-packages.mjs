@@ -6,6 +6,14 @@ const errors = [];
 const notes = [];
 const sourceOnly = process.argv.includes('--source-only');
 const releaseVersion = '0.1.0-rc.0';
+const externalRoboticsVersion = '0.1.0-rc.1';
+const roboticsExternalSurfacePath = path.join(
+  root,
+  'docs',
+  'references',
+  'package-split',
+  'ROBOTICS_EXTERNAL_SURFACE.json',
+);
 
 const packages = [
   {
@@ -35,6 +43,7 @@ const packages = [
     name: '@lk-robotics/lds-robotics-ui',
     dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-product'],
     resources: ['styles.css', 'tokens'],
+    external: true,
   },
   {
     id: 'compat',
@@ -96,6 +105,25 @@ async function readPublicEntry(file, label) {
     rows.push({ names: getExportedNames(match[1]), source: match[2] });
   }
   if (rows.length === 0) fail(`${label}: no public component re-exports found.`);
+  return rows;
+}
+
+async function readExternalPublicEntry(file, label) {
+  const surface = await readJson(file, label);
+  if (!surface) return [];
+  if (surface.package?.name !== '@lk-robotics/lds-robotics-ui' || surface.package?.version !== externalRoboticsVersion) {
+    fail(`${label}: expected @lk-robotics/lds-robotics-ui@${externalRoboticsVersion}.`);
+    return [];
+  }
+  const rows = [];
+  for (const entry of surface.entries ?? []) {
+    if (typeof entry?.source !== 'string' || !Array.isArray(entry.exports) || entry.exports.length === 0) {
+      fail(`${label}: contains an invalid external entry.`);
+      continue;
+    }
+    rows.push({ names: entry.exports, source: `./${entry.source}` });
+  }
+  if (rows.length === 0) fail(`${label}: no external public component re-exports found.`);
   return rows;
 }
 
@@ -261,6 +289,11 @@ const manifests = new Map();
 const ownershipRows = [];
 
 for (const packageInfo of packages) {
+  if (packageInfo.external) {
+    const publicRows = await readExternalPublicEntry(roboticsExternalSurfacePath, `${packageInfo.name} external surface`);
+    for (const row of publicRows) ownershipRows.push({ ...row, owner: packageInfo.layer, packageName: packageInfo.name });
+    continue;
+  }
   const packageRoot = path.join(root, 'packages', packageInfo.id);
   const manifest = await readJson(path.join(packageRoot, 'package.json'), `${packageInfo.name} manifest`);
   if (!manifest) continue;
@@ -275,7 +308,10 @@ for (const packageInfo of packages) {
     fail(`${packageInfo.name}: internal dependency DAG is ${internalDependencies.join(', ') || '(none)'}; expected ${expectedDependencies.join(', ') || '(none)'}.`);
   }
   for (const dependency of expectedDependencies) {
-    if (manifest.dependencies?.[dependency] !== releaseVersion) fail(`${packageInfo.name}: ${dependency} must use release version ${releaseVersion}.`);
+    const expectedVersion = dependency === '@lk-robotics/lds-robotics-ui'
+      ? externalRoboticsVersion
+      : releaseVersion;
+    if (manifest.dependencies?.[dependency] !== expectedVersion) fail(`${packageInfo.name}: ${dependency} must use release version ${expectedVersion}.`);
   }
 
   if (packageInfo.id === 'compat') validateCompatExports(manifest);

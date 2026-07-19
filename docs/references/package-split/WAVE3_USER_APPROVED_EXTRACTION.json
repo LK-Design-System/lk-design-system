@@ -1,0 +1,24 @@
+{
+  "$schema": "./WAVE3_USER_APPROVED_EXTRACTION.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-wave3-user-approved-extraction",
+  "approvedAt": "2026-07-19T12:00:00+09:00",
+  "priorDecision": "docs/references/package-split/WAVE3_GO_NO_GO.json",
+  "approval": {
+    "authority": "design-system-owner",
+    "source": "The user explicitly directed the Robotics repository separation after reviewing why the ordinary Wave 3 gate was no-go.",
+    "rationale": "Keep generic design-system responsibilities small and give Robotics UI an independent domain owner boundary."
+  },
+  "extraction": {
+    "repository": "LK-ROBOTICS/lk-design-system-robotics",
+    "package": "@lk-robotics/lds-robotics-ui",
+    "version": "0.1.0-rc.1",
+    "tag": "next",
+    "sourceSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
+    "publishedIntegrity": "sha512-GCLXO/0ob9AO7nbeni02JgJ5Iuo7KMYOSBjOeoT0spgg2VSCcwFAZzwxXxrohspjy07ipW9x8rp5c12HCWuVeA=="
+  },
+  "remainingConditions": [
+    "The old LDS source tree and Storybook ownership must be removed or moved only after the external compatibility facade and consumer checks pass.",
+    "The original no-go evidence remains valid historical evidence; this record is an owner-approved exception, not a rewrite of it."
+  ]
+}

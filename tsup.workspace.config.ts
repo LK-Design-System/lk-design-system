@@ -3,7 +3,7 @@ import { readdirSync } from 'node:fs';
 import path from 'node:path';
 
 const workspacePackage = process.env.LDS_WORKSPACE_PACKAGE;
-const packageNames = new Set(['core', 'theme', 'product', 'robotics-ui', 'compat']);
+const packageNames = new Set(['core', 'theme', 'product', 'compat']);
 const requestedFormat = process.env.LDS_WORKSPACE_FORMAT;
 
 if (!workspacePackage || !packageNames.has(workspacePackage)) {

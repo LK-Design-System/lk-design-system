@@ -3,11 +3,20 @@ import path from 'node:path';
 
 const root = process.cwd();
 const compatSourceRoot = path.join(root, 'packages', 'compat', 'src');
+const roboticsExternalSurface = JSON.parse(await readFile(
+  path.join(root, 'docs', 'references', 'package-split', 'ROBOTICS_EXTERNAL_SURFACE.json'),
+  'utf8',
+));
 const implementationPackages = [
   { id: 'core', layerEntry: 'core', name: '@lk-robotics/lds-core' },
   { id: 'theme', layerEntry: 'theme', name: '@lk-robotics/lds-theme' },
   { id: 'product', layerEntry: 'product', name: '@lk-robotics/lds-product' },
-  { id: 'robotics-ui', layerEntry: 'robotics', name: '@lk-robotics/lds-robotics-ui' },
+  {
+    id: 'robotics-ui',
+    layerEntry: 'robotics',
+    name: '@lk-robotics/lds-robotics-ui',
+    externalSurface: roboticsExternalSurface,
+  },
 ];
 
 const exportLinePattern = /^export\s+\{([^}]+)\}\s+from\s+'(?:\.\.\/|\.\/)(components\/[^']+)\.jsx';$/;
@@ -39,6 +48,7 @@ async function readPublicEntry(entryPath) {
     if (!line.startsWith('export ')) continue;
     const match = line.match(exportLinePattern);
     if (!match) {
+      if (line === "export * from '@lk-robotics/lds-robotics-ui';") continue;
       throw new Error(`${path.relative(root, entryPath)} contains an unsupported public export: ${line}`);
     }
     const [, exportClause, componentPath] = match;
@@ -71,19 +81,37 @@ function assertSamePublicSurface(expected, actual, label) {
   }
 }
 
+function readExternalSurface(surface, label) {
+  if (surface?.package?.name !== '@lk-robotics/lds-robotics-ui' || !Array.isArray(surface.entries)) {
+    throw new Error(`${label} is invalid.`);
+  }
+  const exportsByComponent = new Map();
+  for (const entry of surface.entries) {
+    if (typeof entry?.source !== 'string' || !Array.isArray(entry.exports) || entry.exports.length === 0) {
+      throw new Error(`${label} has an invalid entry.`);
+    }
+    if (exportsByComponent.has(entry.source)) throw new Error(`${label} duplicates ${entry.source}.`);
+    exportsByComponent.set(entry.source, entry.exports.join(', '));
+  }
+  return exportsByComponent;
+}
+
 const packageSurfaces = [];
 const implementationRootSurface = new Map();
 
 for (const packageInfo of implementationPackages) {
-  const implementationEntry = path.join(root, 'packages', packageInfo.id, 'src', 'index.js');
-  const implementationSurface = await readPublicEntry(implementationEntry);
-  const legacyLayerEntry = path.join(root, 'src', `${packageInfo.layerEntry}.js`);
-  const legacyLayerSurface = await readPublicEntry(legacyLayerEntry);
-  assertSamePublicSurface(
-    legacyLayerSurface,
-    implementationSurface,
-    `${packageInfo.name} against legacy ${packageInfo.layerEntry}`,
-  );
+  const implementationSurface = packageInfo.externalSurface
+    ? readExternalSurface(packageInfo.externalSurface, `${packageInfo.name} external surface`)
+    : await readPublicEntry(path.join(root, 'packages', packageInfo.id, 'src', 'index.js'));
+  if (!packageInfo.externalSurface) {
+    const legacyLayerEntry = path.join(root, 'src', `${packageInfo.layerEntry}.js`);
+    const legacyLayerSurface = await readPublicEntry(legacyLayerEntry);
+    assertSamePublicSurface(
+      legacyLayerSurface,
+      implementationSurface,
+      `${packageInfo.name} against legacy ${packageInfo.layerEntry}`,
+    );
+  }
 
   for (const [componentPath, exportClause] of implementationSurface) {
     if (implementationRootSurface.has(componentPath)) {
@@ -95,6 +123,11 @@ for (const packageInfo of implementationPackages) {
 }
 
 const legacyRootSurface = await readPublicEntry(path.join(root, 'src', 'index.js'));
+for (const packageInfo of packageSurfaces.filter(({ externalSurface }) => externalSurface)) {
+  for (const [componentPath, exportClause] of packageInfo.implementationSurface) {
+    legacyRootSurface.set(componentPath, exportClause);
+  }
+}
 assertSamePublicSurface(legacyRootSurface, implementationRootSurface, 'Compatibility root');
 
 await rm(compatSourceRoot, { recursive: true, force: true });

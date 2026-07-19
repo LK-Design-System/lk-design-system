@@ -1,0 +1,43 @@
+{
+  "$schema": "./ROBOTICS_EXTERNAL_SURFACE.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-robotics-external-public-surface",
+  "package": {
+    "name": "@lk-robotics/lds-robotics-ui",
+    "version": "0.1.0-rc.1",
+    "repository": "LK-ROBOTICS/lk-design-system-robotics"
+  },
+  "entries": [
+    { "source": "components/editor/CanvasEditorCommandBar", "exports": ["CanvasEditorCommandBar"] },
+    { "source": "components/editor/CanvasEditorShell", "exports": ["CanvasEditorShell"] },
+    { "source": "components/editor/EditorToolbar", "exports": ["EditorToolbar"] },
+    { "source": "components/editor/HistoryToolbar", "exports": ["HistoryToolbar"] },
+    { "source": "components/editor/LayerPanel", "exports": ["LayerPanel"] },
+    { "source": "components/editor/SelectionInspector", "exports": ["SelectionInspector"] },
+    { "source": "components/editor/ViewportStatusBar", "exports": ["ViewportStatusBar"] },
+    { "source": "components/navigation/FloorSelector", "exports": ["FloorSelector"] },
+    { "source": "components/robotics/BatteryGauge", "exports": ["BatteryGauge"] },
+    { "source": "components/robotics/ConnectionBadge", "exports": ["ConnectionBadge"] },
+    { "source": "components/robotics/DirectionalPad", "exports": ["DirectionalPad"] },
+    { "source": "components/robotics/EquipmentStatusCard", "exports": ["EquipmentStatusCard"] },
+    { "source": "components/robotics/FacilityTransition", "exports": ["FacilityTransition"] },
+    { "source": "components/robotics/HazardMarker", "exports": ["HazardMarker"] },
+    { "source": "components/robotics/Joystick", "exports": ["Joystick"] },
+    { "source": "components/robotics/LaneOverlay", "exports": ["LaneOverlay"] },
+    { "source": "components/robotics/ManualControlSession", "exports": ["ManualControlSession"] },
+    { "source": "components/robotics/NavigationAnnotationLayer", "exports": ["NavigationAnnotationLayer"] },
+    { "source": "components/robotics/RobotStatusCard", "exports": ["RobotStatusCard"] },
+    { "source": "components/robotics/RouteOverlay", "exports": ["RouteOverlay"] },
+    { "source": "components/robotics/SpatialRegion", "exports": ["SpatialRegion"] },
+    { "source": "components/robotics/TopicTree", "exports": ["TopicTree"] },
+    { "source": "components/robotics/TrajectoryOverlay", "exports": ["TrajectoryOverlay"] },
+    { "source": "components/robotics/WaypointMarker", "exports": ["WaypointMarker"] },
+    { "source": "components/viz/Map2DCanvas", "exports": ["Map2DCanvas"] },
+    { "source": "components/viz/Scene3DFrame", "exports": ["Scene3DFrame"] },
+    { "source": "components/viz/TelemetryGauge", "exports": ["TelemetryGauge"] },
+    { "source": "components/viz/TelemetryValue", "exports": ["TelemetryValue"] },
+    { "source": "components/viz/VideoStreamTile", "exports": ["VideoStreamTile"] },
+    { "source": "components/viz/ViewerFrame", "exports": ["VIEWER_BLOCKING_STATES", "VIEWER_STATES", "ViewerFrame"] },
+    { "source": "components/viz/ViewerToolbar", "exports": ["ViewerToolbar", "ViewerToolbarButton"] }
+  ]
+}

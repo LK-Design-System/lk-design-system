@@ -29,7 +29,6 @@ async function copyAssetDirectories(packageName, directories) {
 const baseCss = await readFile(path.join(tokensRoot, 'base.css'), 'utf8');
 const focusCss = await readFile(path.join(tokensRoot, 'focus.css'), 'utf8');
 const componentsCss = await readFile(path.join(tokensRoot, 'components.css'), 'utf8');
-const viewerDeclarations = componentsCss.match(/^\s*--component-viewer-[^;]+;\r?$/gm) || [];
 const coreComponentsCss = componentsCss.replace(/^\s*--component-viewer-[^;]+;\r?$/gm, '');
 const coreFocusCss = `${focusCss.split('/* Map geometry owns')[0].trimEnd()}\n`;
 
@@ -104,15 +103,6 @@ await writeFile(path.join(root, 'packages', 'theme', 'styles.css'), [
 await recreateDirectory(path.join(root, 'packages', 'product', 'tokens'));
 await writeFile(path.join(root, 'packages', 'product', 'styles.css'), '/* Product currently has no dedicated CSS projection. */\n');
 
-await recreateDirectory(path.join(root, 'packages', 'robotics-ui', 'tokens'));
-await writeFile(path.join(root, 'packages', 'robotics-ui', 'tokens', 'components.css'), `:root {\n${viewerDeclarations.join('\n')}\n}\n`);
-await writeFile(path.join(root, 'packages', 'robotics-ui', 'tokens', 'focus.css'), `/* Map geometry focus slice from tokens/focus.css. */\n/* Map geometry owns${focusCss.split('/* Map geometry owns')[1] || ''}`);
-await writeFile(path.join(root, 'packages', 'robotics-ui', 'styles.css'), [
-  '@import "./tokens/components.css";',
-  '@import "./tokens/focus.css";',
-  '',
-].join('\n'));
-
 await recreateDirectory(path.join(root, 'packages', 'compat', 'tokens'));
 await recreateDirectory(path.join(root, 'packages', 'compat', 'assets'));
 await cp(tokensRoot, path.join(root, 'packages', 'compat', 'tokens'), { recursive: true });
@@ -122,6 +112,5 @@ await cp(path.join(root, 'styles.css'), path.join(root, 'packages', 'compat', 's
 await copyAssetDirectories('core', ['icons', 'source']);
 await copyAssetDirectories('theme', ['brand', 'fonts']);
 await copyAssetDirectories('product', ['industry', 'products', 'tech']);
-await recreateDirectory(path.join(root, 'packages', 'robotics-ui', 'assets'));
 
-console.log('Projected Wave 1 package CSS and asset ownership while preserving the compatibility CSS and asset surface.');
+console.log('Projected Core, Theme, Product, and compatibility CSS/assets; Robotics UI owns its assets in the external repository.');
