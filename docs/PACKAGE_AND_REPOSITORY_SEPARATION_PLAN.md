@@ -461,6 +461,27 @@ The original Wave 3 gate was no-go. The design-system owner subsequently approve
 - 원 저장소 제거 commit 전후 API, CSS와 visual parity가 승인된 차이 없이 일치한다.
 - 이전 package release pin과 source-removal revert commit으로 rollback할 수 있다.
 
+#### Robotics style conformance contract
+
+The first cross-repository style-conformance wave covers LDS Robotics only. LDS3D is
+explicitly excluded while its current work is in progress. The machine-readable source
+of truth is `docs/references/package-split/CROSS_REPOSITORY_STYLE_CONTRACT.json`, with
+the executable implementation under `packages/conformance`.
+
+- LDS owns shared semantic color, typography, spacing, radius, elevation, motion, and
+  common component-token namespaces.
+- LDS Robotics owns the listed `--component-viewer-*` extension tokens, but each value
+  must resolve through an LDS semantic token and must remain byte-equivalent to the
+  temporary LDS compatibility mirror until that mirror is removed in a separate release.
+- Scoped `--viewer-*` and `--map-grid-line` properties are runtime aliases, not shared
+  foundation tokens; their defining files are fixed by the contract.
+- Version 1 blocks shared-token redefinition, raw DOM color regression, undefined custom
+  properties, local dependency links, stylesheet-order drift, public-export drift, and
+  missing representative stories. Existing SVG/map geometry and general numeric layout
+  literals are intentionally outside this first gate rather than silently baselined.
+- The geometry focus override remains allowed only while its named Facility Transition
+  focus story is present in the built Storybook index.
+
 ### Wave 5 — compatibility facade 종료
 
 작업:

@@ -1,0 +1,66 @@
+{
+  "$schema": "./CROSS_REPOSITORY_STYLE_CONTRACT.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-cross-repository-style-contract",
+  "lds": {
+    "repository": "LK-ROBOTICS/lk-design-system",
+    "tokenSources": ["tokens"],
+    "ownedTokenPrefixes": ["--color-", "--space-", "--radius-", "--font-"],
+    "packages": [
+      { "name": "@lk-robotics/lds-core", "version": "0.1.0-rc.0", "workspace": "packages/core" }
+    ]
+  },
+  "profiles": {
+    "robotics-ui": {
+      "repository": "LK-ROBOTICS/lk-design-system-robotics",
+      "package": { "name": "@lk-robotics/lds-robotics-ui", "version": "0.1.0-rc.1" },
+      "externalSurface": "external-surface.json",
+      "configFile": ".lds-conformance.json",
+      "packageDependencies": [
+        { "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "name": "@lk-robotics/lds-theme", "section": "devDependencies", "version": "0.1.0-rc.0" }
+      ],
+      "scanRoots": ["src", "stories", "tokens", ".storybook", "styles.css"],
+      "requiredStyleImports": [
+        "@lk-robotics/lds-core/styles.css",
+        "@lk-robotics/lds-theme/styles.css",
+        "@lk-robotics/lds-product/styles.css",
+        "../styles.css"
+      ],
+      "storybookPreview": ".storybook/preview.jsx",
+      "localTokenDefinitions": {
+        "file": "tokens/components.css",
+        "compatibilityMirror": "tokens/components.css",
+        "allowedReferencePrefixes": ["--color-semantic-"],
+        "names": ["--component-viewer-surface"]
+      },
+      "runtimeCustomProperties": [
+        { "name": "--viewer-surface", "definitionFile": "src/components/ViewerFrame.jsx" },
+        { "name": "--map-grid-line", "definitionFile": "src/components/Map2DCanvas.jsx" }
+      ],
+      "rawColorPolicy": {
+        "forbiddenFormats": ["hex", "rgb", "hsl", "named-white-black"],
+        "allowedZones": [
+          {
+            "file": "src/components/Widget.jsx",
+            "signature": "color-mix(in srgb, var(--color-semantic-primary-normal), white 10%)",
+            "expectedOccurrences": 1,
+            "owner": "Fixture owner",
+            "reason": "Proves that a raw-color allowance is bound to one exact expression.",
+            "reviewDate": "2027-01-31"
+          }
+        ]
+      },
+      "focusOverride": {
+        "file": "tokens/focus.css",
+        "declaration": "outline: none !important",
+        "provingStoryId": "fixture-widget--overview",
+        "evidenceSelector": "[data-map-shape]"
+      },
+      "representativeStories": [
+        { "source": "stories/Widget.stories.jsx", "export": "Overview", "id": "fixture-widget--overview", "viewport": "320x568" }
+      ]
+    }
+  }
+}

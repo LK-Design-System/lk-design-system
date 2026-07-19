@@ -68,7 +68,10 @@ for (const source of fileSources.values()) {
 }
 
 const roboticsExternalSurface = JSON.parse(await readFile(roboticsExternalSurfacePath, 'utf8'));
-for (const token of roboticsExternalSurface.tokenDependencies ?? []) {
+for (const token of [
+  ...(roboticsExternalSurface.upstreamTokenDependencies ?? []),
+  ...(roboticsExternalSurface.localTokenDefinitions ?? []),
+]) {
   if (!definitionCounts.has(token)) {
     throw new Error(`Robotics external surface declares unknown token dependency ${token}.`);
   }

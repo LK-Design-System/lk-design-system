@@ -11,6 +11,22 @@ permissions:
   contents: read
 
 jobs:
+  conformance-linux:
+    name: Conformance fixtures (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+
+      - name: Verify portable Robotics style diagnostics
+        run: node packages/conformance/src/cli.mjs verify-fixtures
+
   design-system:
     name: Design system checks
     # Generated artifacts (src/index ordering via Intl, dist, visual-smoke

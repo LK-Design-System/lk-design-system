@@ -1,0 +1,116 @@
+[
+  {
+    "name": "valid-robotics-extension",
+    "expectedCodes": [],
+    "mutations": []
+  },
+  {
+    "name": "forbidden-semantic-redefinition",
+    "expectedCodes": ["TOKEN_NAMESPACE_REDEFINITION"],
+    "mutations": [
+      { "file": "tokens/components.css", "append": "\n:root { --color-semantic-primary-normal: pink; }\n" }
+    ]
+  },
+  {
+    "name": "forbidden-semantic-redefinition-without-semicolon",
+    "expectedCodes": ["TOKEN_NAMESPACE_REDEFINITION"],
+    "mutations": [
+      { "file": "tokens/components.css", "append": "\n:root { --color-semantic-primary-normal: pink }\n" }
+    ]
+  },
+  {
+    "name": "raw-dom-color",
+    "expectedCodes": ["RAW_COLOR"],
+    "mutations": [
+      { "file": "src/components/Widget.jsx", "append": "\nexport const RawColor = () => <div style={{ color: '#fff' }} />;\n" }
+    ]
+  },
+  {
+    "name": "raw-color-allowance-does-not-broaden",
+    "expectedCodes": ["RAW_COLOR"],
+    "mutations": [
+      { "file": "src/components/Widget.jsx", "append": "\nexport const UnapprovedWhite = () => <div style={{ color: 'white' }} />;\n" }
+    ]
+  },
+  {
+    "name": "undefined-custom-property",
+    "expectedCodes": ["UNDEFINED_CUSTOM_PROPERTY"],
+    "mutations": [
+      { "file": "src/components/Widget.jsx", "append": "\nexport const UnknownToken = () => <div style={{ color: 'var(--missing-token)' }} />;\n" }
+    ]
+  },
+  {
+    "name": "defined-but-undeclared-upstream-token",
+    "expectedCodes": ["UPSTREAM_TOKEN_MANIFEST_DRIFT"],
+    "mutations": [
+      { "file": "src/components/Widget.jsx", "append": "\nexport const UndeclaredUpstream = () => <div style={{ color: 'var(--color-semantic-static-white)' }} />;\n" }
+    ]
+  },
+  {
+    "name": "wrong-dependency-version",
+    "expectedCodes": ["DEPENDENCY_VERSION"],
+    "mutations": [
+      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.0\"", "with": "\"@lk-robotics/lds-core\": \"0.1.0-rc.9\"" }
+    ]
+  },
+  {
+    "name": "local-link-dependency",
+    "expectedCodes": ["LOCAL_DEPENDENCY"],
+    "mutations": [
+      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.0\"", "with": "\"@lk-robotics/lds-core\": \"file:../lds\"" }
+    ]
+  },
+  {
+    "name": "missing-style-import",
+    "expectedCodes": ["STYLE_IMPORT_ORDER"],
+    "mutations": [
+      { "file": ".storybook/preview.jsx", "replace": "import '@lk-robotics/lds-theme/styles.css';\n", "with": "" }
+    ]
+  },
+  {
+    "name": "duplicate-style-import",
+    "expectedCodes": ["STYLE_IMPORT_ORDER"],
+    "mutations": [
+      { "file": ".storybook/preview.jsx", "append": "import '@lk-robotics/lds-core/styles.css';\n" }
+    ]
+  },
+  {
+    "name": "reordered-style-import",
+    "expectedCodes": ["STYLE_IMPORT_ORDER"],
+    "mutations": [
+      {
+        "file": ".storybook/preview.jsx",
+        "replace": "import '@lk-robotics/lds-core/styles.css';\nimport '@lk-robotics/lds-theme/styles.css';",
+        "with": "import '@lk-robotics/lds-theme/styles.css';\nimport '@lk-robotics/lds-core/styles.css';"
+      }
+    ]
+  },
+  {
+    "name": "public-surface-mismatch",
+    "expectedCodes": ["PUBLIC_SURFACE_MISMATCH"],
+    "mutations": [
+      { "file": "src/index.js", "replace": "export { Widget }", "with": "export { OtherWidget }" }
+    ]
+  },
+  {
+    "name": "compatibility-mirror-drift",
+    "expectedCodes": ["TOKEN_MIRROR_DRIFT"],
+    "mutations": [
+      { "file": "tokens/components.css", "replace": "var(--color-semantic-primary-normal)", "with": "color-mix(in srgb, var(--color-semantic-primary-normal), transparent 10%)" }
+    ]
+  },
+  {
+    "name": "representative-story-missing",
+    "expectedCodes": ["REPRESENTATIVE_STORY_MISSING"],
+    "mutations": [
+      { "file": "stories/Widget.stories.jsx", "replace": "export const Overview", "with": "const Overview" }
+    ]
+  },
+  {
+    "name": "built-representative-story-missing",
+    "expectedCodes": ["FOCUS_EVIDENCE_MISSING", "REPRESENTATIVE_STORY_MISSING"],
+    "mutations": [
+      { "file": "storybook-static/index.json", "replace": "fixture-widget--overview", "with": "fixture-widget--missing" }
+    ]
+  }
+]

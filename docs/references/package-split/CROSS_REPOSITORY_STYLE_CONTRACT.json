@@ -1,0 +1,138 @@
+{
+  "$schema": "./CROSS_REPOSITORY_STYLE_CONTRACT.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-cross-repository-style-contract",
+  "lds": {
+    "repository": "LK-ROBOTICS/lk-design-system",
+    "tokenSources": ["tokens"],
+    "ownedTokenPrefixes": [
+      "--color-",
+      "--space-",
+      "--radius-",
+      "--font-",
+      "--fw-",
+      "--shadow-",
+      "--elevation-",
+      "--dur-",
+      "--ease-",
+      "--caption",
+      "--label",
+      "--body",
+      "--title",
+      "--headline",
+      "--display"
+    ],
+    "packages": [
+      { "name": "@lk-robotics/lds-core", "version": "0.1.0-rc.0", "workspace": "packages/core" },
+      { "name": "@lk-robotics/lds-theme", "version": "0.1.0-rc.0", "workspace": "packages/theme" },
+      { "name": "@lk-robotics/lds-product", "version": "0.1.0-rc.0", "workspace": "packages/product" }
+    ]
+  },
+  "profiles": {
+    "robotics-ui": {
+      "repository": "LK-ROBOTICS/lk-design-system-robotics",
+      "package": {
+        "name": "@lk-robotics/lds-robotics-ui",
+        "version": "0.1.0-rc.1"
+      },
+      "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
+      "configFile": ".lds-conformance.json",
+      "packageDependencies": [
+        { "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "name": "@lk-robotics/lds-theme", "section": "devDependencies", "version": "0.1.0-rc.0" }
+      ],
+      "scanRoots": ["src", "stories", "tokens", ".storybook", "styles.css"],
+      "requiredStyleImports": [
+        "@lk-robotics/lds-core/styles.css",
+        "@lk-robotics/lds-theme/styles.css",
+        "@lk-robotics/lds-product/styles.css",
+        "../styles.css"
+      ],
+      "storybookPreview": ".storybook/preview.jsx",
+      "localTokenDefinitions": {
+        "file": "tokens/components.css",
+        "compatibilityMirror": "tokens/components.css",
+        "allowedReferencePrefixes": ["--color-semantic-"],
+        "names": [
+          "--component-viewer-surface",
+          "--component-viewer-surface-elevated",
+          "--component-viewer-foreground",
+          "--component-viewer-muted",
+          "--component-viewer-subtle",
+          "--component-viewer-border",
+          "--component-viewer-overlay",
+          "--component-viewer-light-surface",
+          "--component-viewer-light-surface-elevated",
+          "--component-viewer-light-foreground",
+          "--component-viewer-light-muted",
+          "--component-viewer-light-border"
+        ]
+      },
+      "runtimeCustomProperties": [
+        { "name": "--viewer-surface", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-surface-elevated", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-foreground", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-muted", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-border", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-accent", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-danger", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-warning", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--viewer-positive", "definitionFile": "src/components/viz/ViewerFrame.jsx" },
+        { "name": "--map-grid-line", "definitionFile": "src/components/viz/Map2DCanvas.jsx" }
+      ],
+      "rawColorPolicy": {
+        "forbiddenFormats": ["hex", "rgb", "hsl", "named-white-black"],
+        "allowedZones": [
+          {
+            "file": "src/components/viz/ViewerFrame.jsx",
+            "signature": "color-mix(in srgb, var(--color-semantic-primary-normal), white 28%)",
+            "expectedOccurrences": 1,
+            "owner": "LDS Robotics UI",
+            "reason": "Dark viewer accent raises luminance while preserving the LDS primary semantic source token.",
+            "reviewDate": "2027-01-31"
+          },
+          {
+            "file": "src/components/viz/ViewerFrame.jsx",
+            "signature": "color-mix(in srgb, var(--color-semantic-status-negative-foreground), white 22%)",
+            "expectedOccurrences": 1,
+            "owner": "LDS Robotics UI",
+            "reason": "Dark viewer negative status raises luminance while preserving the LDS negative semantic source token.",
+            "reviewDate": "2027-01-31"
+          },
+          {
+            "file": "src/components/viz/ViewerFrame.jsx",
+            "signature": "color-mix(in srgb, var(--color-semantic-status-cautionary-foreground), white 20%)",
+            "expectedOccurrences": 1,
+            "owner": "LDS Robotics UI",
+            "reason": "Dark viewer cautionary status raises luminance while preserving the LDS cautionary semantic source token.",
+            "reviewDate": "2027-01-31"
+          },
+          {
+            "file": "src/components/viz/ViewerFrame.jsx",
+            "signature": "color-mix(in srgb, var(--color-semantic-status-positive-foreground), white 22%)",
+            "expectedOccurrences": 1,
+            "owner": "LDS Robotics UI",
+            "reason": "Dark viewer positive status raises luminance while preserving the LDS positive semantic source token.",
+            "reviewDate": "2027-01-31"
+          }
+        ]
+      },
+      "focusOverride": {
+        "file": "tokens/focus.css",
+        "declaration": "outline: none !important",
+        "provingStoryId": "lds-robotics-navigation-facility-transition--validation-and-focus-states",
+        "evidenceSelector": "[data-transition-focus-ring]"
+      },
+      "representativeStories": [
+        { "source": "stories/ViewerFrame.stories.jsx", "export": "StatePlacement", "id": "lds-robotics-viewer-shared-viewer-frame--state-placement", "viewport": "1280x720" },
+        { "source": "stories/ViewerFrame.stories.jsx", "export": "NarrowBlockingState", "id": "lds-robotics-viewer-shared-viewer-frame--narrow-blocking-state", "viewport": "320x568" },
+        { "source": "stories/ViewerToolbar.stories.jsx", "export": "AppearanceAndDisabledStates", "id": "lds-robotics-viewer-toolbar--appearance-and-disabled-states", "viewport": "1280x720" },
+        { "source": "stories/RoboticsEquipment.stories.jsx", "export": "ResponsiveHierarchy", "id": "lds-robotics-status-equipment-state--responsive-hierarchy", "viewport": "1280x720" },
+        { "source": "stories/RoboticsNavigationFacilities.stories.jsx", "export": "AvailabilityAndSourceStates", "id": "lds-robotics-navigation-facility-transition--availability-and-source-states", "viewport": "1280x720" },
+        { "source": "stories/RoboticsNavigationFacilities.stories.jsx", "export": "ValidationAndFocusStates", "id": "lds-robotics-navigation-facility-transition--validation-and-focus-states", "viewport": "1280x720" },
+        { "source": "stories/RoboticsNavigationFacilities.stories.jsx", "export": "NarrowWidth", "id": "lds-robotics-navigation-facility-transition--narrow-width", "viewport": "320x568" }
+      ]
+    }
+  }
+}
