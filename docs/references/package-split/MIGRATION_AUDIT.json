@@ -51,10 +51,19 @@
       "docs/references/product-frontends/COVERAGE_AUDIT.json",
       "scripts/check-package-migration.mjs",
       "scripts/check-package-artifact.mjs",
+      "scripts/capture-wave0-full-check.mjs",
+      "scripts/check-wave0-consumer-matrix.mjs",
+      "scripts/assemble-wave0-consumer-matrix.mjs",
       "scripts/scan-package-consumer.mjs",
       "scripts/scan-lds3d-integration.mjs",
       "package-lock.json",
       "docs/references/package-split/PACKAGE_ARTIFACT_BASELINE.schema.json",
+      "docs/references/package-split/WAVE0_FULL_CHECK.schema.json",
+      "docs/references/package-split/WAVE0_CONSUMER_MATRIX.schema.json",
+      "scripts/fixtures/wave0-consumer/react18/package.json",
+      "scripts/fixtures/wave0-consumer/react18/package-lock.json",
+      "scripts/fixtures/wave0-consumer/react19/package.json",
+      "scripts/fixtures/wave0-consumer/react19/package-lock.json",
       "tokens/source.json",
       "tokens/*.css",
       "styles.css",
@@ -993,10 +1002,10 @@
         "tarball and consumer bundle size"
       ],
       "knownGaps": [
-        "React 18 runtime package smoke",
-        "Linux package smoke on Node 22/npm 10.9.2",
-        "canonical Windows Node 22/npm 10.9.2 tarball",
-        "tracked clean-tagged full-check, visual and size matrix evidence"
+        "replacement clean-main tag after isolated React consumer tooling is committed",
+        "canonical Windows full-check and aggregate artifact capture from that replacement tag",
+        "React 18/19 isolated tarball consumer reports from canonical Windows and Linux",
+        "tracked clean-tagged full-check, visual, size, and cross-platform matrix evidence"
       ]
     }
   },

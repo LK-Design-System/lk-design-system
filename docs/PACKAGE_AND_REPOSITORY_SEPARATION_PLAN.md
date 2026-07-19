@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture and migration plan |
-| Status | In progress — Wave 0 inventory와 의사결정 gate 실행 중 |
+| Status | In progress — Wave 0 isolated tarball evidence tooling 추가, replacement baseline capture 대기 |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
 | Last reviewed | 2026-07-19 |
 | Audit snapshot | `1078a59b057dc39372670b4011cef0eff499be35` (local `main` source observation; clean-main baseline 아님) |
@@ -260,6 +260,16 @@ LK Theme가 제공하는 value layer로 기록한다.
 2026-07-19 실행 현황:
 
 - `docs/references/package-split/MIGRATION_AUDIT.json`과 schema를 추가했다.
+- 첫 immutable tag `wave0-baseline-2026-07-19`는 보존한다. 다만 이 tag는 isolated React
+  18/19 tarball consumer와 Linux consumption runner를 추가하기 전에 생성됐으므로 Wave 0
+  ready attestation에는 사용하지 않는다. runner를 포함한 새 clean-main tag를 replacement
+  baseline으로 만들고, 기존 tag는 pre-runner provenance로 남긴다.
+- `scripts/capture-wave0-full-check.mjs`는 canonical Windows Node 22.17.1/npm 10.9.2에서
+  실제 `npm run check`의 output digest와 Storybook/accessibility/consumer/package coverage를
+  tracked evidence로 남긴다. `scripts/check-wave0-consumer-matrix.mjs`는 Windows tarball을
+  React 18.3.1과 React 19.2.3의 고립된 fixture에 설치하고 CJS, SSR, Vite production bundle,
+  tree-shaking, Windows browser runtime을 검증한다. Linux는 그 정확한 Windows tarball만
+  소비해 같은 package/runtime contract를 확인한다.
 - `scripts/check-package-migration.mjs`가 repository-owned module target digest, mixed
   CSS slice, token projection과 380개 asset rule을 직접 검증하고, 여섯 제품 pin과
   LDS3D docs legacy import는 repository-tracked snapshot의 schema·합계·migration target을
@@ -280,7 +290,8 @@ LK Theme가 제공하는 value layer로 기록한다.
   증거이지 portable package 증거가 아니다.
 - 일곱 consumer evidence report는 Git 추적 상태로 고정해 consumer evidence blocker를
   닫았다. package boundary·artifact contract·Storybook IA·visual atom 보정은 승인에 따라
-  local `main@1078a59`까지 통합했다. origin 동기화와 clean main/tag,
+  local `main@1078a59`까지 통합했다. 첫 origin 동기화와 candidate tag는 끝났지만, isolated
+  React/Linux runner 이전 tag는 readiness에 쓰지 않는다. replacement clean main/tag,
   full regression evidence와 canonical immutable tarball/LKG capture가 남아 있어 Wave 0
   완료 gate는 계속 `blocked`다. accountable person과 package/CJS/support·brand boundary
   결정은 이후 사용자 승인으로 닫혔다.
@@ -575,11 +586,13 @@ Wave 0 원장, integrity checker, 책임·정책 승인, consumer snapshot, 단�
 artifact 재현 계약, IA human review와 visual atom 보정은 로컬 `main`에 통합됐다. 다음
 순서는 다음과 같다.
 
-1. 외부 변경 승인을 확인한 뒤 local `main`을 `origin/main`과 동기화하고 immutable source
-   baseline tag를 만든다.
-2. 그 tag의 clean checkout에서 full-check, consumer matrix, aggregate tarball/checksum,
-   React 18/19 runtime, SSR, tree-shaking, Windows/Linux와 visual/size JSON evidence를 캡처한다.
-3. `npm run check:package-migration:wave0`가 세 evidence blocker를 닫은 뒤에만 Wave 1
+1. isolated React 18/19 tarball runner, frozen fixture lockfile, Windows-to-Linux artifact
+   consumer CI와 strict evidence schema를 source baseline 전에 commit한다. 기존 candidate
+   tag는 이동하거나 삭제하지 않는다.
+2. 동기화한 `main`에 새 immutable replacement source baseline tag를 만들고, 그 tag에서
+   canonical Windows full-check/aggregate artifact, Windows browser consumer 및 Linux
+   consumer evidence를 캡처한다.
+3. `npm run check:package-migration:wave0`가 strict evidence blocker를 닫은 뒤에만 Wave 1
    workspace scaffold를 시작한다.
 
 이 세 항목이 닫히기 전에는 source 대량 이동, package rename, 새 repository 생성이나

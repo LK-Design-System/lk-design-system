@@ -10,7 +10,18 @@ const root = process.cwd();
 const auditPath = 'docs/references/package-split/MIGRATION_AUDIT.json';
 const schemaPath = 'docs/references/package-split/MIGRATION_AUDIT.schema.json';
 const artifactBaselineSchemaPath = 'docs/references/package-split/PACKAGE_ARTIFACT_BASELINE.schema.json';
+const fullCheckEvidenceSchemaPath = 'docs/references/package-split/WAVE0_FULL_CHECK.schema.json';
+const consumerMatrixEvidenceSchemaPath = 'docs/references/package-split/WAVE0_CONSUMER_MATRIX.schema.json';
 const artifactVerifierPath = 'scripts/check-package-artifact.mjs';
+const fullCheckCapturePath = 'scripts/capture-wave0-full-check.mjs';
+const consumerMatrixCheckerPath = 'scripts/check-wave0-consumer-matrix.mjs';
+const consumerMatrixAssemblerPath = 'scripts/assemble-wave0-consumer-matrix.mjs';
+const consumerFixturePaths = [
+  'scripts/fixtures/wave0-consumer/react18/package.json',
+  'scripts/fixtures/wave0-consumer/react18/package-lock.json',
+  'scripts/fixtures/wave0-consumer/react19/package.json',
+  'scripts/fixtures/wave0-consumer/react19/package-lock.json',
+];
 const artifactVerificationSentinelPath = 'visual-artifacts/package-smoke/WAVE0_ARTIFACT_VERIFIED.json';
 const classificationPath = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json';
 const productAuditPath = 'docs/references/product-frontends/COVERAGE_AUDIT.json';
@@ -1023,6 +1034,9 @@ async function validatePackageManager(audit) {
     'CI checkout must fetch full history for migration commit/tag ancestry checks.',
   );
   assert(/run:\s*npm ci\b/.test(ciSource), 'CI must use npm ci.');
+  assert(ciSource.includes('consumer-matrix-linux'), 'CI must include an isolated Linux consumer matrix job.');
+  assert(ciSource.includes('ubuntu-latest'), 'CI must execute the Linux consumer matrix on Ubuntu.');
+  assert(ciSource.includes('check:consumer:matrix'), 'CI must execute isolated tarball consumer matrix checks.');
   assert(
     packageJson.scripts?.['check:ci'] ===
       'node scripts/run-package-scripts.mjs check:fast check:storybook-ci && npm run check:pack:baseline-if-present',
@@ -1047,6 +1061,26 @@ async function validatePackageManager(audit) {
     packageJson.scripts?.['check:pack:baseline-if-present'] ===
       'node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline-if-present',
     'Conditional baseline verification must rebuild generated package output before packing.',
+  );
+  assert(
+    packageJson.scripts?.['capture:wave0:full-check'] ===
+      'npm ci && node scripts/capture-wave0-full-check.mjs',
+    'Wave 0 full-check capture must begin with the frozen install lifecycle.',
+  );
+  assert(
+    packageJson.scripts?.['check:consumer:matrix'] ===
+      'node scripts/check-wave0-consumer-matrix.mjs',
+    'Wave 0 consumer matrix check command drift.',
+  );
+  assert(
+    packageJson.scripts?.['capture:consumer:matrix'] ===
+      'node scripts/check-wave0-consumer-matrix.mjs --capture',
+    'Wave 0 consumer matrix capture command drift.',
+  );
+  assert(
+    packageJson.scripts?.['assemble:consumer:matrix'] ===
+      'node scripts/assemble-wave0-consumer-matrix.mjs',
+    'Wave 0 consumer matrix assembly command drift.',
   );
   assert(!/pnpm\/action-setup/.test(ciSource), 'CI must not set up pnpm.');
   assert(!/run:\s*pnpm\b/.test(ciSource), 'CI must not execute pnpm.');
@@ -1091,10 +1125,16 @@ function validateTopLevelSchema(audit, schema) {
   for (const evidenceScript of [
     'scripts/check-package-migration.mjs',
     artifactVerifierPath,
+    fullCheckCapturePath,
+    consumerMatrixCheckerPath,
+    consumerMatrixAssemblerPath,
     'scripts/scan-package-consumer.mjs',
     'scripts/scan-lds3d-integration.mjs',
     'package-lock.json',
     artifactBaselineSchemaPath,
+    fullCheckEvidenceSchemaPath,
+    consumerMatrixEvidenceSchemaPath,
+    ...consumerFixturePaths,
   ]) {
     assert(
       audit.verificationContract.authoritativeInputs?.includes(evidenceScript),
@@ -1155,6 +1195,10 @@ function validateSourceObservation(audit) {
       'package-lock.json',
       'pnpm-lock.yaml',
       artifactVerifierPath,
+      fullCheckCapturePath,
+      consumerMatrixCheckerPath,
+      consumerMatrixAssemblerPath,
+      ...consumerFixturePaths,
       'scripts/check-package-migration.mjs',
       'scripts/scan-lds3d-integration.mjs',
       'scripts/scan-package-consumer.mjs',
@@ -1205,6 +1249,79 @@ async function readJsonEvidence(record) {
   } catch {
     return missing;
   }
+}
+
+function isGitTracked(relativePath) {
+  try {
+    gitOutput(['ls-files', '--error-unmatch', normalizePath(relativePath)]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function validWave0PlatformRun(run, platform, aggregateTarball) {
+  if (
+    run?.schemaVersion !== 1 ||
+    run?.kind !== 'lds-wave0-consumer-platform-run' ||
+    run?.platform !== platform ||
+    run?.arch !== 'x64' ||
+    run?.node !== '22.17.1' ||
+    run?.npm !== '10.9.2' ||
+    run?.command !== 'npm run capture:consumer:matrix' ||
+    run?.status !== 'passed' ||
+    run?.tarball?.package !== aggregateTarball?.package ||
+    run?.tarball?.version !== aggregateTarball?.version ||
+    run?.tarball?.sizeBytes !== aggregateTarball?.sizeBytes ||
+    run?.tarball?.sha256 !== aggregateTarball?.sha256 ||
+    run?.checks?.tarballInstall !== 'passed' ||
+    run?.checks?.ssr !== 'passed' ||
+    run?.checks?.treeShaking !== 'passed' ||
+    run?.checks?.consumerBundle !== 'passed' ||
+    (platform === 'windows' ? run?.checks?.browser !== 'passed' : run?.checks?.browser !== 'not-run')
+  ) {
+    return false;
+  }
+  const expectedVersions = new Map([
+    ['React 18', ['18.3.1', '18.3.1']],
+    ['React 19', ['19.2.3', '19.2.3']],
+  ]);
+  const consumers = run.consumers || [];
+  if (
+    consumers.length !== expectedVersions.size ||
+    new Set(consumers.map((entry) => entry.id)).size !== expectedVersions.size
+  ) {
+    return false;
+  }
+  return consumers.every((consumer) => {
+    const expected = expectedVersions.get(consumer.id);
+    return (
+      expected &&
+      consumer.reactVersion === expected[0] &&
+      consumer.reactDomVersion === expected[1] &&
+      consumer.status === 'passed' &&
+      consumer.cjs === 'passed' &&
+      consumer.ssr === 'passed' &&
+      consumer.viteBuild === 'passed' &&
+      (platform === 'windows' ? consumer.browser === 'passed' : consumer.browser === 'not-run') &&
+      typeof consumer.resolution?.react === 'string' &&
+      consumer.resolution.react.startsWith('node_modules/') &&
+      typeof consumer.resolution?.reactDom === 'string' &&
+      consumer.resolution.reactDom.startsWith('node_modules/') &&
+      typeof consumer.resolution?.package === 'string' &&
+      consumer.resolution.package.startsWith('node_modules/') &&
+      Number.isInteger(consumer.bundles?.selectedButtonBytes) &&
+      consumer.bundles.selectedButtonBytes > 0 &&
+      consumer.bundles.selectedButtonBytes <= 153600 &&
+      Number.isInteger(consumer.bundles?.namespaceBytes) &&
+      consumer.bundles.namespaceBytes > consumer.bundles.selectedButtonBytes &&
+      Number.isInteger(consumer.bundles?.selectedInputCount) &&
+      Number.isInteger(consumer.bundles?.namespaceInputCount) &&
+      consumer.bundles.namespaceInputCount > consumer.bundles.selectedInputCount &&
+      Number.isInteger(consumer.bundles?.consumerJavaScriptBytes) &&
+      consumer.bundles.consumerJavaScriptBytes > 0
+    );
+  });
 }
 
 function uniqueRows(rows) {
@@ -1699,6 +1816,8 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
       cleanMainCaptured = false;
     }
   }
+  const tarballs = audit.baselines.packageArtifacts?.tarballs || [];
+  const aggregateTarball = tarballs[0];
   const fullRegressionMetadata =
     audit.baselines.fullCheck?.status === 'passed-on-clean-main' &&
     audit.baselines.fullCheck?.sourceCommit === audit.baselines.cleanMain?.commit &&
@@ -1722,6 +1841,12 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
     ]);
     const fullCheckEvidence = fullCheckEvidenceRecord.json;
     const consumerMatrixEvidence = consumerMatrixEvidenceRecord.json;
+    const [fullCheckSchema, consumerMatrixSchema] = await Promise.all([
+      readJson(fullCheckEvidenceSchemaPath),
+      readJson(consumerMatrixEvidenceSchemaPath),
+    ]);
+    validateJsonSchema(fullCheckEvidence, fullCheckSchema, 'Wave 0 full-check evidence');
+    validateJsonSchema(consumerMatrixEvidence, consumerMatrixSchema, 'Wave 0 consumer matrix evidence');
     const commands = fullCheckEvidence?.commands;
     const requiredMatrix = requiredWave0MatrixIds;
     const matrixResults = consumerMatrixEvidence?.results;
@@ -1732,26 +1857,67 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
       matrixIds.length === requiredMatrix.length &&
       new Set(matrixIds).size === matrixIds.length &&
       requiredMatrix.every((id) => matrixIds.includes(id));
+    const canonicalEnvironment = fullCheckEvidence?.canonicalEnvironment;
+    const fullCheckCoverage = fullCheckEvidence?.coverage;
+    const platformRuns = consumerMatrixEvidence?.platformRuns || [];
+    const windowsRun = platformRuns.find((entry) => entry.platform === 'windows');
+    const linuxRun = platformRuns.find((entry) => entry.platform === 'linux');
+    const exactPlatformCoverage =
+      platformRuns.length === 2 &&
+      new Set(platformRuns.map((entry) => entry.platform)).size === 2 &&
+      windowsRun &&
+      linuxRun &&
+      platformRuns.every(
+        (entry) =>
+          entry.sourceCommit === audit.baselines.cleanMain.commit &&
+          entry.sourceTag === audit.baselines.cleanMain.tag,
+      );
     fullRegressionCaptured =
       fullCheckEvidenceRecord.tracked &&
       consumerMatrixEvidenceRecord.tracked &&
+      isGitTracked(fullCheckEvidenceSchemaPath) &&
+      isGitTracked(consumerMatrixEvidenceSchemaPath) &&
       fullCheckEvidence?.kind === 'lds-wave0-full-check' &&
+      fullCheckEvidence.repository === audit.audit.source.repository &&
       fullCheckEvidence.sourceCommit === audit.baselines.cleanMain.commit &&
+      fullCheckEvidence.sourceTag === audit.baselines.cleanMain.tag &&
       fullCheckEvidence.status === 'passed' &&
+      canonicalEnvironment?.platform === 'win32' &&
+      canonicalEnvironment?.arch === 'x64' &&
+      canonicalEnvironment?.node === '22.17.1' &&
+      canonicalEnvironment?.npm === '10.9.2' &&
+      canonicalEnvironment?.packageManager === audit.decisions.packageManager?.packageJsonValue &&
       Array.isArray(commands) &&
       commands.length > 0 &&
       commands.every(
         (entry) => typeof entry.command === 'string' && entry.status === 'passed',
       ) &&
       commands.some((entry) => entry.command === 'npm run check') &&
+      fullCheckCoverage?.storybookVisual === 'passed' &&
+      fullCheckCoverage?.accessibility === 'passed' &&
+      fullCheckCoverage?.consumerSmoke === 'passed' &&
+      fullCheckCoverage?.packageArtifact === 'passed' &&
       consumerMatrixEvidence?.kind === 'lds-wave0-consumer-matrix' &&
+      consumerMatrixEvidence.repository === audit.audit.source.repository &&
       consumerMatrixEvidence.sourceCommit === audit.baselines.cleanMain.commit &&
+      consumerMatrixEvidence.sourceTag === audit.baselines.cleanMain.tag &&
       consumerMatrixEvidence.status === 'passed' &&
+      consumerMatrixEvidence.inputs?.fullCheck?.path === audit.baselines.fullCheck.evidencePath &&
+      consumerMatrixEvidence.inputs?.fullCheck?.sha256 === audit.baselines.fullCheck.evidenceSha256 &&
+      consumerMatrixEvidence.inputs?.packageArtifact?.path === audit.baselines.packageArtifacts?.evidencePath &&
+      consumerMatrixEvidence.inputs?.packageArtifact?.sha256 === audit.baselines.packageArtifacts?.evidenceSha256 &&
+      consumerMatrixEvidence.inputs?.packageArtifact?.package === aggregateTarball?.package &&
+      consumerMatrixEvidence.inputs?.packageArtifact?.version === aggregateTarball?.version &&
+      consumerMatrixEvidence.inputs?.packageArtifact?.sizeBytes === aggregateTarball?.sizeBytes &&
+      consumerMatrixEvidence.inputs?.packageArtifact?.tarballSha256 === aggregateTarball?.sha256 &&
+      consumerMatrixEvidence.thresholds?.maxTarballBytes === 8388608 &&
+      consumerMatrixEvidence.thresholds?.maxSelectedButtonBytes === 153600 &&
       exactMatrixCoverage &&
-      matrixResults.every((entry) => entry.status === 'passed');
+      matrixResults.every((entry) => entry.status === 'passed') &&
+      exactPlatformCoverage &&
+      validWave0PlatformRun(windowsRun, 'windows', aggregateTarball) &&
+      validWave0PlatformRun(linuxRun, 'linux', aggregateTarball);
   }
-  const tarballs = audit.baselines.packageArtifacts?.tarballs || [];
-  const aggregateTarball = tarballs[0];
   const packageArtifactsMetadata =
     audit.baselines.packageArtifacts?.status === 'captured' &&
     audit.baselines.packageArtifacts?.sourceCommit === audit.baselines.cleanMain?.commit &&
