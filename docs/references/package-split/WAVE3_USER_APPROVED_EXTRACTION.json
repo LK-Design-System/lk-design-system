@@ -17,8 +17,20 @@
     "sourceSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
     "publishedIntegrity": "sha512-GCLXO/0ob9AO7nbeni02JgJ5Iuo7KMYOSBjOeoT0spgg2VSCcwFAZzwxXxrohspjy07ipW9x8rp5c12HCWuVeA=="
   },
+  "sourceRemoval": {
+    "repository": "LK-ROBOTICS/lk-design-system",
+    "commit": "095290fad4da1c019f8dcda611faf3406a5581df",
+    "removed": "74 Robotics implementation and declaration files, including the former workspace package source and root component implementations.",
+    "legacyConsumer": "The LDS Storybook remains an integration consumer and imports Robotics only from @lk-robotics/lds-robotics-ui."
+  },
+  "verification": [
+    "npm run check:types",
+    "npm run check:workspace-packages",
+    "npm run build",
+    "npm run build:storybook"
+  ],
   "remainingConditions": [
-    "The old LDS source tree and Storybook ownership must be removed or moved only after the external compatibility facade and consumer checks pass.",
+    "The LDS Storybook is a verified integration consumer, not a Robotics implementation owner.",
     "The original no-go evidence remains valid historical evidence; this record is an owner-approved exception, not a rewrite of it."
   ]
 }

@@ -3,7 +3,7 @@
   "$id": "https://lk-robotics.github.io/schemas/lds-wave3-user-approved-extraction.schema.json",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schemaVersion", "kind", "approvedAt", "priorDecision", "approval", "extraction", "remainingConditions"],
+  "required": ["$schema", "schemaVersion", "kind", "approvedAt", "priorDecision", "approval", "extraction", "sourceRemoval", "verification", "remainingConditions"],
   "properties": {
     "$schema": { "const": "./WAVE3_USER_APPROVED_EXTRACTION.schema.json" },
     "schemaVersion": { "const": 1 },
@@ -12,6 +12,18 @@
     "priorDecision": { "const": "docs/references/package-split/WAVE3_GO_NO_GO.json" },
     "approval": { "type": "object" },
     "extraction": { "type": "object" },
+    "sourceRemoval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "removed", "legacyConsumer"],
+      "properties": {
+        "repository": { "const": "LK-ROBOTICS/lk-design-system" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "removed": { "type": "string", "minLength": 1 },
+        "legacyConsumer": { "type": "string", "minLength": 1 }
+      }
+    },
+    "verification": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
     "remainingConditions": { "type": "array", "minItems": 1, "items": { "type": "string" } }
   }
 }
