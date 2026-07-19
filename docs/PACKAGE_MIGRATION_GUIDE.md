@@ -3,15 +3,18 @@
 | Field | Value |
 | --- | --- |
 | Type | Guide |
-| Status | Wave 2 preparation |
+| Status | Wave 2 RC published |
 | Owner | Design system owner · consumer owners |
 | Last reviewed | 2026-07-19 |
 | Source | `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json` |
 
 This guide describes the consumer-side import migration that follows the Wave 1
-workspace split. It does not authorize package publication or consumer-repository
-writes. Use it only after an immutable release set has been published and its
-versions and checksums have been recorded in the package-split audit.
+workspace split. The immutable Wave 2 RC release set is recorded in
+`docs/references/package-split/releases/WAVE2_RC_0.1.0-rc.0.json`; use those
+exact versions and integrity values for consumer migration.
+
+The completed LDS3D docs migration is recorded in
+`docs/references/package-split/consumers/lds3d-docs-wave2-rc.json`.
 
 ## Target packages
 
