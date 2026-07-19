@@ -3,10 +3,11 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture and migration plan |
-| Status | In progress — Wave 0 isolated tarball evidence tooling 추가, replacement baseline capture 대기 |
+| Status | In progress — Wave 0 immutable evidence attested; Wave 1 workspace package split handoff ready |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
 | Last reviewed | 2026-07-19 |
-| Audit snapshot | `1078a59b057dc39372670b4011cef0eff499be35` (local `main` source observation; clean-main baseline 아님) |
+| Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859bc8b5126bcff7146eaedd871bbe9e62891` |
+| Wave 0 attestation | `wave0-attested-2026-07-19` → `f8dd678f32c92798b05d7f97d84449dec916d3a4` |
 
 이 계획은 현재 단일 패키지인 `@lk-robotics/design-system-core`를 소비 경계에
 맞는 패키지로 나누고, 검증 결과에 따라 Robotics UI를 별도 저장소로 추출하는
@@ -99,17 +100,18 @@ facade와 단계적 migration 원칙은 유지한다.
   Theme adapter로 분리할지 명시적 Core 예외로 유지할지 owner 승인이 필요하다.
 - aggregate root와 compiled `components/*`가 모든 계층을 한 package에서 노출한다.
 - package smoke와 publish policy가 단일 package의 정확한 합집합을 전제로 한다.
-- CI 설치 정책은 npm으로 고정했고 local `main@1078a59`에서 legacy pnpm lockfile이
-  제거했다. `origin/main` 동기화와 baseline tag는 아직 수행하지 않았다.
+- CI 설치 정책은 npm과 `package-lock.json`으로 고정했고, Wave 0 source baseline과
+  evidence attestation은 `origin/main`에 push되어 있다.
 - 현재 consumer smoke는 실제 product stack 전체와 Windows/Linux matrix를 대체하지 않는다.
-- Git tag와 독립 package release 기준점이 아직 없다.
+- `wave0-baseline-2026-07-19-r2`와 `wave0-attested-2026-07-19`가 aggregate package의
+  source baseline 및 evidence attestation을 각각 고정한다.
 - LDS3D `apps/docs`의 로컬 통합은 현재 sibling `link:`에 의존하므로 portable
   package compatibility 증거가 아니다.
 
 LDS3D의 Accepted ADR과 committed architecture는 분리 근거로 사용할 수 있지만,
 현재 local working tree는 안정 release 근거로 사용하지 않는다. 확인 시점의 LDS3D는
 `main` HEAD `a7b4780f68ba4dbe169ef37500246a5eec166c9a` 위에 audit snapshot 당시
-frozen report에 tracked 86개와 untracked file 78개 변경이 있고, committed package
+frozen report에 tracked 86개와 untracked file 82개 변경이 있고, committed package
 6개와 working-tree
 package 8개가 다르다. 이 숫자는 계속 변할 수 있는 local observation이다. `tf`,
 `markers`와 CI가 commit되고 package release group·artifact 검증이 정합해지기 전에는
@@ -245,19 +247,22 @@ LK Theme가 제공하는 value layer로 기록한다.
       승인한다. 실제 API 이동은 Wave 1 compatibility 작업에서 수행한다.
 - [x] 여섯 product repository와 LDS3D docs의 root/subpath/deep/CSS import를 commit
       pin과 함께 inventory한다.
-- [ ] ESM/CJS, React 18/19, SSR, tree-shaking, tarball size와 Storybook visual baseline을
+- [x] ESM/CJS, React 18/19, SSR, tree-shaking, tarball size와 Storybook visual baseline을
       고정한다.
 - [x] package별 fixed release-set, GitHub Packages registry, 2 stable release/최소 90일
       compatibility window와 owner 승인 규칙을 정한다.
 - [x] canonical package manager·lockfile·frozen CI 정책을 npm, `package-lock.json`,
       `npm ci`로 정하고 CI에 적용한다.
 - [x] legacy secondary `pnpm-lock.yaml`을 local main에서 제거한다.
-- [ ] clean `main` baseline tag, 현재 aggregate
+- [x] clean `main` baseline tag, 현재 aggregate
       `@lk-robotics/design-system-core` tarball checksum과 last-known-good release set을 만든다.
 - [x] 실행 증거 원장 `references/package-split/MIGRATION_AUDIT.json`의 schema와
       verifier 책임을 정한다.
 
-2026-07-19 실행 현황:
+### Pre-attestation historical notes (2026-07-19)
+
+아래 기록은 replacement baseline을 capture하기 전의 실행 경과다. 현재 판단에는 뒤의
+`Wave 0 closed state`와 machine-readable audit를 우선한다.
 
 - `docs/references/package-split/MIGRATION_AUDIT.json`과 schema를 추가했다.
 - 첫 immutable tag `wave0-baseline-2026-07-19`는 보존한다. 다만 이 tag는 isolated React
@@ -306,16 +311,30 @@ LK Theme가 제공하는 value layer로 기록한다.
   진단값이며, clean-tagged full-check·consumer-matrix JSON은 origin 동기화와 source tag
   뒤에 캡처한다.
 
-Wave 0의 artifact baseline은 아직 존재하는 현재 aggregate package 한 개만 대상으로
+### Wave 0 closed state (2026-07-19)
+
+- authoritative source baseline은 `wave0-baseline-2026-07-19-r2`
+  (`679859bc8b5126bcff7146eaedd871bbe9e62891`)다. 이전 tag는 보존한다.
+- `f8dd678f32c92798b05d7f97d84449dec916d3a4`의
+  `wave0-attested-2026-07-19` tag는 audit와 full-check, aggregate artifact,
+  Windows/Linux consumer-matrix evidence가 함께 tracked된 handoff point다.
+- canonical Windows Node 22.17.1/npm 10.9.2에서 `npm run
+  check:package-migration:wave0`가 passed했고, `main === origin/main`이었다.
+- actual aggregate tarball은 React 18.3.1/React 19.2.3 isolated consumers에서 CJS,
+  SSR, Vite/browser, tree-shaking과 size contract를 통과했다. Linux는 같은 Windows
+  tarball을 소비했다. full check는 579 Axe story, 259 play function, 65/65 visual을
+  기록한다.
+
+Wave 0의 artifact baseline은 당시 존재한 aggregate package 한 개만 대상으로
 한다. 미래의 Core, Theme, Product, Robotics UI, compatibility package 다섯 개를 이 gate에
 요구하면 Wave 1을 시작하기 전에 Wave 1 산출물이 필요해지는 순환 조건이 생긴다. 다섯
 package의 개별 tarball/API/type 검증은 Wave 1 완료 gate에서 추가한다.
 
 `cleanMain.commit`은 full check와 aggregate artifact를 만든 tagged source baseline이다.
 그 SHA를 원장에 기록한 commit은 필연적으로 다른 SHA가 되므로 ready 검사에서 둘을 같은
-commit으로 요구하지 않는다. 대신 attestation HEAD가 clean `main === origin/main`인지,
-baseline tag가 ancestor인지, baseline 이후 변경이 원장과 tracked evidence report뿐인지
-검증한다.
+commit으로 요구하지 않는다. `wave0-attested-2026-07-19`는 그 attestation HEAD를
+고정한다. Wave 1 source 변경 전에는 historical tag/evidence 검증을 current package
+regeneration과 분리해 과거 baseline을 보존한다.
 
 완료 gate:
 
@@ -582,18 +601,15 @@ command output, consumer pin 또는 rendered evidence를 확인해야 한다. �
 
 ## 10. 바로 다음 작업
 
-Wave 0 원장, integrity checker, 책임·정책 승인, consumer snapshot, 단일 lockfile,
-artifact 재현 계약, IA human review와 visual atom 보정은 로컬 `main`에 통합됐다. 다음
-순서는 다음과 같다.
+Wave 0 gate는 닫혔고 immutable source/attestation tag와 evidence는 remote에 있다. Wave
+1을 시작하기 전에 [2026-07-19 handoff](handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md)를
+따라 historical evidence semantics를 먼저 고정한다.
 
-1. isolated React 18/19 tarball runner, frozen fixture lockfile, Windows-to-Linux artifact
-   consumer CI와 strict evidence schema를 source baseline 전에 commit한다. 기존 candidate
-   tag는 이동하거나 삭제하지 않는다.
-2. 동기화한 `main`에 새 immutable replacement source baseline tag를 만들고, 그 tag에서
-   canonical Windows full-check/aggregate artifact, Windows browser consumer 및 Linux
-   consumer evidence를 캡처한다.
-3. `npm run check:package-migration:wave0`가 strict evidence blocker를 닫은 뒤에만 Wave 1
-   workspace scaffold를 시작한다.
-
-이 세 항목이 닫히기 전에는 source 대량 이동, package rename, 새 repository 생성이나
-legacy export 제거를 시작하지 않는다.
+1. Wave 0 verifier가 current source가 아니라 source/attestation tag와 tracked evidence를
+   검증하도록 전환한다. 과거 tag를 이동·삭제하지 않는다.
+2. npm workspace에 `packages/core`, `packages/theme`, `packages/product`,
+   `packages/robotics-ui`, `packages/compat`를 dependency 순서로 만든다.
+3. owner-classified source/declaration, CSS/assets, legacy facade와 package-level
+   boundary/tarball/type/consumer tests를 구현한다.
+4. Wave 1 gate가 실제 package artifact로 닫힌 뒤에만 Wave 2 versioned consumer migration을
+   시작한다. LDS3D `link:` 교체와 Robotics repository go/no-go는 그 이후의 작업이다.

@@ -7,38 +7,40 @@
 | Owner | Design system owner |
 | Last reviewed | 2026-07-19 |
 | Branch | `main` |
-| Historical baseline | `43ac938` (domain expansion 안정화 기준점) |
+| Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859b` |
+| Wave 0 attestation | `wave0-attested-2026-07-19` → `f8dd678` |
 | Remote | `origin` · `LK-ROBOTICS/lk-design-system` |
 
 이 문서는 현재 상태와 최신 상세 handoff를 연결하는 짧은 포인터다. 날짜별 handoff의 HEAD, dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 상태로 해석하지 않는다.
 
 ## Current state
 
-- 로컬 `main`에는 PR #1의 stabilization·domain expansion 이후 LDS Core/Theme/Product/Robotics package·repository 분리 Wave 0 준비가 통합돼 있다. 현재 revision은 Git을 직접 확인한다.
-- public component implementation/type/export는 204개, named public export는 210개다.
-- 현재 Storybook 기준선은 190 pages / 579 stories / 443 public / 136 hidden / 99 visual-parity다. 190개 페이지와 579개 스토리의 IA human review가 모두 최신 source hash로 완료됐다.
-- 현재 완성도 판정과 남은 제품·디자인·원격 반영 gate는 [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md)를 따른다. 코어 운영 준비는 완료, 전체 제품 적용은 부분 완료로 판정했다.
-- 2026-07-19 local `main@a5a2be3`에서 exact Node 22.17.1/npm 10.9.2로 `npm run check`가 통과했다. 579개 implementation story의 Axe, 259개 play, 65/65 visual smoke 0.000%, React 18/19 type consumer와 실제 aggregate tarball ESM/CJS·deep/type·SSR 검증을 포함한다.
-- 원격 `origin/main`은 아직 이 로컬 Wave 0 준비 commit들과 동기화되지 않았다. clean-main tag, 추적 가능한 full-check·consumer-matrix·artifact baseline이 생기기 전까지 Wave 0 gate는 `blocked`다.
-- 승인된 dark-theme foreground 전수 감사를 완료했다. Button ghost와 `primary-heavy`를 소비하던 21개 component file을 theme-scope semantic foreground로 교정했고, 실제 다크 렌더 기준 Button ghost 15.92:1, selected Chip 13.79:1, active FilterChip/MultiSelectChip 11.99:1을 확인했다. `check:colors`는 이제 light/dark Button ghost, selected Chip, 공통 selected surface의 4.5:1 계약을 포함해 38개 pair를 검사한다.
+- `main == origin/main == f8dd678f32c92798b05d7f97d84449dec916d3a4`이며, 이 commit은 Wave 0 evidence attestation이다. 다음 computer에서 `git fetch --prune --tags origin` 뒤 이 상태를 재현할 수 있다.
+- source baseline `wave0-baseline-2026-07-19-r2` (`679859b`)와 attestation tag `wave0-attested-2026-07-19` (`f8dd678`)은 remote에 push됐다. 이전 `wave0-baseline-2026-07-19` tag도 보존했다.
+- Wave 0은 aggregate tarball의 실제 React 18/19 consumer, SSR, tree-shaking, Windows/Linux consumption, Storybook visual/accessibility를 포함해 통과했다. full check는 579 Axe story, 259 play function, visual 65/65을 기록한다.
+- Wave 1의 package source/workspace 파일은 아직 만들지 않았다. 다음 변경은 historical Wave 0 evidence verifier를 current-source regeneration과 분리한 뒤 `packages/core`, `packages/theme`, `packages/product`, `packages/robotics-ui`, `packages/compat`를 만드는 작업이다.
+- LDS3D는 별도 형제 저장소로 유지한다. 현재 docs의 `link:` dependency는 local-only integration이며, `lds-robotics-ui`와 LDS3D 사이 runtime dependency를 추가하지 않는다.
 - 신규 컴포넌트·재설계·icon/asset/map symbol의 canonical 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)다.
 - 문서 탐색과 source-of-truth 순서는 [`README.md`](README.md)를 따른다.
+- 정확한 다음 단계와 이식 명령은 [2026-07-19 Wave 0/Wave 1 handoff](handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md)를 따른다.
 
 현재 revision은 Git을 직접 확인한다. 날짜별 handoff의 commit과 이 문서의 baseline은 변경 전후를 설명하는 기준점이며 현재 branch tip을 뜻하지 않는다.
 
 ## Latest focused handoffs
 
-1. [Documentation system review and reorganization](handoff/2026-07-12-documentation-system-review.md)
+1. [Wave 0 attestation and Wave 1 package split handoff](handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md)
+   - 다른 computer에서 시작할 exact Git state, Wave 0 evidence, LDS3D boundary와 Wave 1 실행 순서
+2. [Documentation system review and reorganization](handoff/2026-07-12-documentation-system-review.md)
    - 공식 문서 인덱스, metadata/status, canonical component review workflow, product coverage와 drift guard 정리
-2. [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
+3. [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
    - Robotics Navigation N1–N6, Communication C1–C4, VirtualKeypad K1 구현·표적 검증 snapshot
-3. [Family stabilization verification](handoff/2026-07-12-family-stabilization-verification.md)
+4. [Family stabilization verification](handoff/2026-07-12-family-stabilization-verification.md)
    - component family consistency, Storybook, accessibility verification snapshot
-4. [Storybook IA execution and guidance](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
+5. [Storybook IA execution and guidance](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
    - page ownership, naming, review ledger 운영 방법
-5. [Quality audit and design review](handoff/2026-07-11-quality-audit-and-design-review.md)
+6. [Quality audit and design review](handoff/2026-07-11-quality-audit-and-design-review.md)
    - quality guard와 D-track finding의 historical evidence
-6. [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md)
+7. [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md)
    - taxonomy 실행 전 계획 snapshot; 결과 판단에는 현재 IA audit를 사용
 
 ## Current verification commands
@@ -55,10 +57,10 @@ npm run check
 npm run check:package-migration:wave0
 ```
 
-`npm run check`는 로컬 통합 상태의 전체 회귀 gate다. `check:package-migration:wave0`는 별도 clean-main tag와 재현 가능한 evidence가 있는 경우에만 통과해야 하며, 일반 integrity check를 Wave 0 완료 판정으로 해석하지 않는다.
+`npm run check`는 로컬 통합 상태의 전체 회귀 gate다. 현재 `check:package-migration:wave0`는 Wave 0 source baseline과 attestation tag를 재현하는 historical check다. Wave 1 source 변경 전, 이 historical evidence 검증을 current package regeneration과 분리해야 한다.
 
 ## Current next work
 
-1. 승인된 기준 commit을 `origin/main`과 동기화하고 immutable Wave 0 source tag를 만든다.
-2. 정확히 고정한 Node 22.17.1/npm 10.9.2 환경에서 full-check, consumer matrix, aggregate tarball baseline을 같은 source commit으로 캡처한다.
-3. `npm run check:package-migration:wave0`가 모든 추적 evidence를 검증한 뒤에만 Wave 1 workspace package scaffold를 시작한다.
+1. Wave 0 historical attestation verifier를 source-baseline/tag 기준으로 고정해 Wave 1 변경이 과거 evidence를 무효화하지 않게 한다.
+2. 한 저장소 안에 `core`, `theme`, `product`, `robotics-ui`, `compat` workspace package를 만든다.
+3. package source/CSS/assets/facade와 package-level artifact·boundary·consumer gates를 구현한 뒤에만 Wave 2 consumer migration을 시작한다.
