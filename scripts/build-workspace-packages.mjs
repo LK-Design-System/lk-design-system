@@ -15,7 +15,6 @@ for (const workspacePackage of workspacePackages) {
     throw new Error(`Workspace package build failed for ${workspacePackage} (exit ${result.status}).`);
   }
 }
-
 for (const compatibilityFormat of ['esm', 'cjs']) {
   const result = spawnSync(process.execPath, [tsupCli, '--config', 'tsup.workspace.config.ts', '--silent'], {
     cwd: process.cwd(),
@@ -31,4 +30,3 @@ for (const compatibilityFormat of ['esm', 'cjs']) {
     throw new Error(`Compatibility ${compatibilityFormat.toUpperCase()} build failed (exit ${result.status}).`);
   }
 }
-

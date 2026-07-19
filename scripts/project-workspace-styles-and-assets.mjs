@@ -124,4 +124,3 @@ await copyAssetDirectories('product', ['industry', 'products', 'tech']);
 await recreateDirectory(path.join(root, 'packages', 'robotics-ui', 'assets'));
 
 console.log('Projected Wave 1 package CSS and asset ownership while preserving the compatibility CSS and asset surface.');
-

@@ -122,4 +122,3 @@ console.log(
   `Generated compatibility facade: 1 root, ${implementationPackages.length} layer entries, `
     + `${componentFacadeCount} component deep-import wrappers (JS and declarations).`,
 );
-

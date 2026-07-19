@@ -89,4 +89,3 @@ async function rewriteImports(target, layer, base) {
 }
 
 console.log('Generated workspace implementation sources for core, theme, product, and robotics-ui.');
-

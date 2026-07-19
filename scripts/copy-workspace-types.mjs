@@ -23,4 +23,3 @@ for (const workspacePackage of workspacePackages) {
 }
 
 console.log(`Copied workspace declarations for ${workspacePackages.join(', ')}.`);
-
