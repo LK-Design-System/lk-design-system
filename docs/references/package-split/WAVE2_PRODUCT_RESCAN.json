@@ -1,0 +1,17 @@
+{
+  "$schema": "./WAVE2_PRODUCT_RESCAN.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-wave2-product-consumer-rescan",
+  "capturedAt": "2026-07-19T04:01:00.000Z",
+  "releaseSetId": "wave2-rc-0.1.0-rc.0-2026-07-19",
+  "command": "node scripts/scan-package-consumer.mjs",
+  "result": "no-pinned-product-currently-consumes-lds",
+  "consumers": [
+    { "id": "context-hub", "repository": "LK-ROBOTICS/lk_context_hub", "commit": "de124084b7e50049350a46f92c4ea4476269c58c", "frontendRoot": "src", "sourceTreeSha256": "cdc85b7b61aae639bd7c18f0e95dc5f2430d841f387efc18a218215d16e7aa50", "sourceFileCount": 205, "ldsUsageTotal": 0 },
+    { "id": "control", "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok", "commit": "93802fc2aa5d29f930380ae58d51dcb68322b5e7", "frontendRoot": "frontend", "sourceTreeSha256": "5d886593cb2f204c0acf15708e7be5a44d8c71a32be63994cf9845892885e886", "sourceFileCount": 176, "ldsUsageTotal": 0 },
+    { "id": "deviceops", "repository": "LK-ROBOTICS/lk_deviceops", "commit": "41c319eb0ad863f67d73facc64f7dd2a13ab9585", "frontendRoot": "frontend", "sourceTreeSha256": "32df87495bca02b6dd8047e89cb9be4dcddb1e2ebcef26d5177f1506648f8529", "sourceFileCount": 36, "ldsUsageTotal": 0 },
+    { "id": "mlops", "repository": "LK-ROBOTICS/lk_mlops", "commit": "0e9f3b03fccd60ab0575b55c18035cc9f9e91521", "frontendRoot": "frontend", "sourceTreeSha256": "b4364bfc4c9194fc7241641cb3d2bb0a5064398cfa7956ef92e5eb8f8840b398", "sourceFileCount": 64, "ldsUsageTotal": 0 },
+    { "id": "visionops", "repository": "LK-ROBOTICS/lk_visionops", "commit": "308da0c0624024ba2497cf05cda2841e4411b522", "frontendRoot": "frontend", "sourceTreeSha256": "e2c90f1c6d4461e06668998d3164fa48bb271d7e6076f0d8ff5ba257ba5e28b4", "sourceFileCount": 46, "ldsUsageTotal": 0 },
+    { "id": "web-viz", "repository": "LK-ROBOTICS/lk_web_viz", "commit": "a984def117c05acd213f494cbb8a42e990595505", "frontendRoot": "frontend", "sourceTreeSha256": "6c794f90cf70332807f5d377c807a6eb04934d20e7597d7aa44d44bb7f536961", "sourceFileCount": 143, "ldsUsageTotal": 0 }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.github.io/schemas/lds-wave2-product-rescan.schema.json",
+  "title": "LDS Wave 2 pinned product consumer rescan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "kind", "capturedAt", "releaseSetId", "command", "result", "consumers"],
+  "properties": {
+    "$schema": { "const": "./WAVE2_PRODUCT_RESCAN.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "kind": { "const": "lds-wave2-product-consumer-rescan" },
+    "capturedAt": { "type": "string", "format": "date-time" },
+    "releaseSetId": { "const": "wave2-rc-0.1.0-rc.0-2026-07-19" },
+    "command": { "const": "node scripts/scan-package-consumer.mjs" },
+    "result": { "const": "no-pinned-product-currently-consumes-lds" },
+    "consumers": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "repository", "commit", "frontendRoot", "sourceTreeSha256", "sourceFileCount", "ldsUsageTotal"],
+        "properties": {
+          "id": { "enum": ["context-hub", "control", "deviceops", "mlops", "visionops", "web-viz"] },
+          "repository": { "type": "string", "pattern": "^LK-ROBOTICS/" },
+          "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+          "frontendRoot": { "type": "string", "minLength": 1 },
+          "sourceTreeSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "sourceFileCount": { "type": "integer", "minimum": 1 },
+          "ldsUsageTotal": { "const": 0 }
+        }
+      }
+    }
+  }
+}

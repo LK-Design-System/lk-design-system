@@ -18,7 +18,7 @@
     {
       "id": "web-viz-and-control-adoption",
       "status": "not-met",
-      "evidence": "The pinned Web Viz and Control snapshots in MIGRATION_AUDIT.json record zero LDS dependency and import usage, so they do not yet consume a common robotics-ui release."
+      "evidence": "WAVE2_PRODUCT_RESCAN.json confirms that the pinned Web Viz and Control source trees both have zero LDS dependency and import usage, so they do not yet consume a common robotics-ui release."
     },
     {
       "id": "independent-operations",

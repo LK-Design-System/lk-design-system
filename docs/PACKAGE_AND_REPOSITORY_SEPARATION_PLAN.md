@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture and migration plan |
-| Status | In progress — Wave 2 RC and LDS3D docs migration verified; Wave 3 decision is no-go (keep Robotics UI in this repository) |
+| Status | In progress — Wave 2 RC and LDS3D docs migration verified; the six pinned product sources are not LDS consumers; Wave 3 decision is no-go (keep Robotics UI in this repository) |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
 | Last reviewed | 2026-07-19 |
 | Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859bc8b5126bcff7146eaedd871bbe9e62891` |
