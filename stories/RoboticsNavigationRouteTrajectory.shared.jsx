@@ -1,6 +1,6 @@
 import React from 'react';
 import { Map2DCanvas } from '../src/index.js';
-import { NAV_PROGRESS_HEAD } from '../components/robotics/_navigationVocabulary.js';
+import { NAV_PROGRESS_HEAD } from '@lk-robotics/lds-robotics-ui/components/robotics/_navigationVocabulary';
 import { NavigationMapStage } from './RoboticsNavigationStage.shared.jsx';
 
 export const ACTIVE_ROUTE = {

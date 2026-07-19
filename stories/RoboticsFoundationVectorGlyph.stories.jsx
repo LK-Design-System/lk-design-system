@@ -1,5 +1,5 @@
 import React from 'react';
-import { NAVIGATION_DIRECTION_PATH } from '../components/robotics/_navigationVectorGlyph.js';
+import { NAVIGATION_DIRECTION_PATH } from '@lk-robotics/lds-robotics-ui/components/robotics/_navigationVectorGlyph';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 // Renders the shared direction chevron where it actually appears — on a route's

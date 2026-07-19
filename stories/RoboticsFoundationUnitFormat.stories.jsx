@@ -5,7 +5,7 @@ import {
   isAttachedUnit,
   normalizeUnit,
   normalizeValueText,
-} from '../components/internal/unit-format.js';
+} from '@lk-robotics/lds-robotics-ui/components/internal/unit-format';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 // Cross-area value/unit lockup rule, shared across the Robotics areas. The

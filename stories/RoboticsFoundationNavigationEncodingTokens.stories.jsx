@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationStateGlyph } from '../components/robotics/_NavigationStateGlyph.js';
+import { NavigationStateGlyph } from '@lk-robotics/lds-robotics-ui/components/robotics/_NavigationStateGlyph';
 import {
   navStateOpacity,
   NAV_STATE_OPACITY,
@@ -8,9 +8,9 @@ import {
   NAV_HIT,
   NAV_STATE_BADGE,
   NAV_LABEL_HALO,
-} from '../components/robotics/_navigationVocabulary.js';
-import { NavigationProgressHeadDefs } from '../components/robotics/_navigationProgressHead.js';
-import { annotationPriority, KIND_WEIGHT } from '../components/robotics/_navigationAnnotations.js';
+} from '@lk-robotics/lds-robotics-ui/components/robotics/_navigationVocabulary';
+import { NavigationProgressHeadDefs } from '@lk-robotics/lds-robotics-ui/components/robotics/_navigationProgressHead';
+import { annotationPriority, KIND_WEIGHT } from '@lk-robotics/lds-robotics-ui/components/robotics/_navigationAnnotations';
 import { WaypointMarker, FacilityTransition, SpatialRegion, LaneOverlay } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 

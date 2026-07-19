@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavigationStateGlyph } from '../components/robotics/_NavigationStateGlyph.js';
-import { ANNOTATION_CODE, ROLE_CODE } from '../components/robotics/_navigationEncoding.js';
+import { NavigationStateGlyph } from '@lk-robotics/lds-robotics-ui/components/robotics/_NavigationStateGlyph';
+import { ANNOTATION_CODE, ROLE_CODE } from '@lk-robotics/lds-robotics-ui/components/robotics/_navigationEncoding';
 
 /**
  * Shared visual foundation for the LDS Robotics / Navigation story groups

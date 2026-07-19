@@ -1,5 +1,5 @@
 import React from 'react';
-import { ROLE_CODE, ANNOTATION_CODE } from '../components/robotics/_navigationEncoding.js';
+import { ROLE_CODE, ANNOTATION_CODE } from '@lk-robotics/lds-robotics-ui/components/robotics/_navigationEncoding';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 // This page renders the REAL on-map code registry — every role letter and
