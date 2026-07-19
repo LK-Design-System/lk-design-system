@@ -18,7 +18,7 @@
 - public component implementation/type/export는 204개, named public export는 210개다.
 - 현재 Storybook 기준선은 190 pages / 579 stories / 443 public / 136 hidden / 99 visual-parity다. 190개 페이지와 579개 스토리의 IA human review가 모두 최신 source hash로 완료됐다.
 - 현재 완성도 판정과 남은 제품·디자인·원격 반영 gate는 [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md)를 따른다. 코어 운영 준비는 완료, 전체 제품 적용은 부분 완료로 판정했다.
-- 2026-07-19 표적 검증에서 Storybook IA 190/579, Viewer Tokens 3개 play/Axe, Robotics atom visual regression 65/65, aggregate package tarball smoke가 통과했다. 현재 인덱스에는 play-tagged story 243개가 있다.
+- 2026-07-19 local `main@a5a2be3`에서 exact Node 22.17.1/npm 10.9.2로 `npm run check`가 통과했다. 579개 implementation story의 Axe, 259개 play, 65/65 visual smoke 0.000%, React 18/19 type consumer와 실제 aggregate tarball ESM/CJS·deep/type·SSR 검증을 포함한다.
 - 원격 `origin/main`은 아직 이 로컬 Wave 0 준비 commit들과 동기화되지 않았다. clean-main tag, 추적 가능한 full-check·consumer-matrix·artifact baseline이 생기기 전까지 Wave 0 gate는 `blocked`다.
 - 승인된 dark-theme foreground 전수 감사를 완료했다. Button ghost와 `primary-heavy`를 소비하던 21개 component file을 theme-scope semantic foreground로 교정했고, 실제 다크 렌더 기준 Button ghost 15.92:1, selected Chip 13.79:1, active FilterChip/MultiSelectChip 11.99:1을 확인했다. `check:colors`는 이제 light/dark Button ghost, selected Chip, 공통 selected surface의 4.5:1 계약을 포함해 38개 pair를 검사한다.
 - 신규 컴포넌트·재설계·icon/asset/map symbol의 canonical 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)다.

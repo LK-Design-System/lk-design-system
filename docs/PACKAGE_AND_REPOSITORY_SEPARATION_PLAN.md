@@ -290,7 +290,10 @@ LK Theme가 제공하는 value layer로 기록한다.
 - Storybook IA는 190페이지·579스토리 전부 human review와 source hash가 일치한다.
   Waypoint/state glyph 8개 baseline은 실제 원자 표면으로 다시 잘라 65/65 visual regression을
   통과했고, Viewer Tokens는 정상 폭과 320px에서 숨김 content 경계를 직접 측정한다.
-  clean-tagged full-check·consumer-matrix JSON은 origin 동기화와 source tag 뒤에 캡처한다.
+- local `main@a5a2be3`의 exact Node 22.17.1/npm 10.9.2 `npm run check`는 579개 Axe,
+  259개 play, 65/65 visual과 실제 aggregate tarball smoke까지 통과했다. 이 로컬 실행은
+  진단값이며, clean-tagged full-check·consumer-matrix JSON은 origin 동기화와 source tag
+  뒤에 캡처한다.
 
 Wave 0의 artifact baseline은 아직 존재하는 현재 aggregate package 한 개만 대상으로
 한다. 미래의 Core, Theme, Product, Robotics UI, compatibility package 다섯 개를 이 gate에
@@ -572,13 +575,12 @@ Wave 0 원장, integrity checker, 책임·정책 승인, consumer snapshot, 단�
 artifact 재현 계약, IA human review와 visual atom 보정은 로컬 `main`에 통합됐다. 다음
 순서는 다음과 같다.
 
-1. 로컬 전체 `npm run check`를 exact Node 22.17.1/npm 10.9.2에서 최종 확인한다.
-2. 외부 변경 승인을 확인한 뒤 local `main`을 `origin/main`과 동기화하고 immutable source
+1. 외부 변경 승인을 확인한 뒤 local `main`을 `origin/main`과 동기화하고 immutable source
    baseline tag를 만든다.
-3. 그 tag의 clean checkout에서 full-check, consumer matrix, aggregate tarball/checksum,
+2. 그 tag의 clean checkout에서 full-check, consumer matrix, aggregate tarball/checksum,
    React 18/19 runtime, SSR, tree-shaking, Windows/Linux와 visual/size JSON evidence를 캡처한다.
-4. `npm run check:package-migration:wave0`가 세 evidence blocker를 닫은 뒤에만 Wave 1
+3. `npm run check:package-migration:wave0`가 세 evidence blocker를 닫은 뒤에만 Wave 1
    workspace scaffold를 시작한다.
 
-이 네 항목이 닫히기 전에는 source 대량 이동, package rename, 새 repository 생성이나
+이 세 항목이 닫히기 전에는 source 대량 이동, package rename, 새 repository 생성이나
 legacy export 제거를 시작하지 않는다.
