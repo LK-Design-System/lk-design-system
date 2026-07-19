@@ -26,6 +26,14 @@ const artifactVerificationSentinelPath = 'visual-artifacts/package-smoke/WAVE0_A
 const classificationPath = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json';
 const productAuditPath = 'docs/references/product-frontends/COVERAGE_AUDIT.json';
 const requireWave0 = process.argv.includes('--require-wave=0');
+const wave0HistoricalBaseline = Object.freeze({
+  tag: 'wave0-baseline-2026-07-19-r2',
+  commit: '679859bc8b5126bcff7146eaedd871bbe9e62891',
+});
+const wave0HistoricalAttestation = Object.freeze({
+  tag: 'wave0-attested-2026-07-19',
+  commit: 'f8dd678f32c92798b05d7f97d84449dec916d3a4',
+});
 const requiredProductUsageKeys = [
   'dependencyDeclarations',
   'aggregateRootImports',
@@ -1042,10 +1050,10 @@ async function validatePackageManager(audit) {
       'node scripts/run-package-scripts.mjs check:fast check:storybook-ci && npm run check:pack:baseline-if-present',
     'CI checks must enter the conditional package-baseline npm lifecycle explicitly.',
   );
-  assert(
-    packageJson.scripts?.['check:package-migration:wave0'] ===
-      'npm run check:pack:baseline && node scripts/check-package-migration.mjs --require-wave=0',
-    'Wave 0 gate must regenerate the canonical artifact before readiness validation.',
+    assert(
+      packageJson.scripts?.['check:package-migration:wave0'] ===
+        'node scripts/check-package-migration.mjs --require-wave=0',
+      'Wave 0 gate must use the immutable historical attestation verifier.',
   );
   assert(
     packageJson.scripts?.['capture:pack:baseline'] ===
@@ -1159,6 +1167,190 @@ function gitOutput(args) {
   }).trim();
 }
 
+function gitBuffer(args) {
+  return execFileSync('git', args, {
+    cwd: root,
+    encoding: null,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+}
+
+function historicalRequire(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function readGitJson(commit, relativePath, label) {
+  const normalizedPath = normalizePath(relativePath);
+  historicalRequire(
+    normalizedPath !== '..' && !normalizedPath.startsWith('../') && !path.isAbsolute(normalizedPath),
+    `${label} path must stay inside the repository: ${relativePath}`,
+  );
+  const bytes = gitBuffer(['show', `${commit}:${normalizedPath}`]);
+  try {
+    return { bytes, json: JSON.parse(bytes.toString('utf8')) };
+  } catch (error) {
+    throw new Error(`${label} at ${commit} is not valid JSON: ${error.message}`);
+  }
+}
+
+function validateWave0HistoricalAttestation() {
+  try {
+    historicalRequire(
+      gitOutput(['rev-parse', `${wave0HistoricalBaseline.tag}^{commit}`]) === wave0HistoricalBaseline.commit,
+      `Wave 0 source tag ${wave0HistoricalBaseline.tag} must resolve to ${wave0HistoricalBaseline.commit}.`,
+    );
+    historicalRequire(
+      gitOutput(['rev-parse', `${wave0HistoricalAttestation.tag}^{commit}`]) === wave0HistoricalAttestation.commit,
+      `Wave 0 attestation tag ${wave0HistoricalAttestation.tag} must resolve to ${wave0HistoricalAttestation.commit}.`,
+    );
+    gitOutput([
+      'merge-base',
+      '--is-ancestor',
+      wave0HistoricalBaseline.commit,
+      wave0HistoricalAttestation.commit,
+    ]);
+
+    const expectedAttestationChanges = new Set([
+      `M\t${auditPath}`,
+      `A\tdocs/references/package-split/baselines/WAVE0_AGGREGATE_ARTIFACT.json`,
+      `A\tdocs/references/package-split/baselines/WAVE0_CONSUMER_MATRIX.json`,
+      `A\tdocs/references/package-split/baselines/WAVE0_FULL_CHECK.json`,
+    ]);
+    const attestationChanges = gitOutput([
+      'diff',
+      '--name-status',
+      wave0HistoricalBaseline.commit,
+      wave0HistoricalAttestation.commit,
+    ])
+      .split(/\r?\n/)
+      .filter(Boolean);
+    historicalRequire(
+      attestationChanges.length === expectedAttestationChanges.size
+        && attestationChanges.every((change) => expectedAttestationChanges.has(change)),
+      `Wave 0 baseline-to-attestation diff drifted: ${attestationChanges.join(', ') || '(empty)'}.`,
+    );
+
+    const historicalAudit = readGitJson(
+      wave0HistoricalAttestation.commit,
+      auditPath,
+      'Wave 0 attestation audit',
+    ).json;
+    const migrationSchema = readGitJson(
+      wave0HistoricalAttestation.commit,
+      schemaPath,
+      'Wave 0 migration schema',
+    ).json;
+    validateTopLevelSchema(historicalAudit, migrationSchema);
+
+    historicalRequire(historicalAudit.audit?.status === 'wave-0-approved', 'Wave 0 attestation audit must be approved.');
+    historicalRequire(historicalAudit.audit?.readiness?.wave0Gate === 'ready', 'Wave 0 attestation audit must be ready.');
+    historicalRequire(
+      Array.isArray(historicalAudit.audit?.readiness?.blockers)
+        && historicalAudit.audit.readiness.blockers.length === 0,
+      'Wave 0 attestation audit must not retain readiness blockers.',
+    );
+    historicalRequire(
+      historicalAudit.baselines?.cleanMain?.tag === wave0HistoricalBaseline.tag
+        && historicalAudit.baselines.cleanMain.commit === wave0HistoricalBaseline.commit,
+      'Wave 0 attestation audit clean-main reference drifted.',
+    );
+
+    const evidenceSpecs = [
+      {
+        label: 'full-check evidence',
+        record: historicalAudit.baselines?.fullCheck,
+        schemaPath: fullCheckEvidenceSchemaPath,
+        expectedStatus: 'passed-on-clean-main',
+      },
+      {
+        label: 'aggregate artifact evidence',
+        record: historicalAudit.baselines?.packageArtifacts,
+        schemaPath: artifactBaselineSchemaPath,
+        expectedStatus: 'captured',
+      },
+      {
+        label: 'consumer matrix evidence',
+        record: historicalAudit.baselines?.consumerMatrix,
+        schemaPath: consumerMatrixEvidenceSchemaPath,
+        expectedStatus: 'passed',
+      },
+    ];
+    const evidence = new Map();
+    for (const spec of evidenceSpecs) {
+      historicalRequire(spec.record?.status === spec.expectedStatus, `${spec.label} status drifted.`);
+      historicalRequire(
+        spec.record?.sourceCommit === wave0HistoricalBaseline.commit,
+        `${spec.label} must remain tied to the Wave 0 source baseline.`,
+      );
+      historicalRequire(
+        typeof spec.record?.evidencePath === 'string' && hasSha256(spec.record?.evidenceSha256),
+        `${spec.label} must retain a path and SHA-256.`,
+      );
+      const record = readGitJson(
+        wave0HistoricalAttestation.commit,
+        spec.record.evidencePath,
+        spec.label,
+      );
+      historicalRequire(
+        sha256(record.bytes) === spec.record.evidenceSha256,
+        `${spec.label} bytes no longer match its attested SHA-256.`,
+      );
+      const evidenceSchema = readGitJson(
+        wave0HistoricalAttestation.commit,
+        spec.schemaPath,
+        `${spec.label} schema`,
+      ).json;
+      validateJsonSchema(record.json, evidenceSchema, spec.label);
+      historicalRequire(
+        record.json.sourceCommit === wave0HistoricalBaseline.commit
+          && record.json.sourceTag === wave0HistoricalBaseline.tag,
+        `${spec.label} source tag or commit drifted.`,
+      );
+      evidence.set(spec.label, record.json);
+    }
+
+    const fullCheck = evidence.get('full-check evidence');
+    const aggregateArtifact = evidence.get('aggregate artifact evidence');
+    const consumerMatrix = evidence.get('consumer matrix evidence');
+    const aggregateTarball = aggregateArtifact?.tarballs?.[0];
+    const attestedTarball = historicalAudit.baselines?.packageArtifacts?.tarballs?.[0];
+
+    historicalRequire(
+      fullCheck?.kind === 'lds-wave0-full-check' && fullCheck.status === 'passed',
+      'Wave 0 full-check evidence must record a passed canonical run.',
+    );
+    historicalRequire(
+      aggregateArtifact?.kind === 'lds-wave0-aggregate-artifact'
+        && aggregateArtifact.verification?.result === 'passed'
+        && aggregateArtifact.verification?.command === 'npm run check:pack:baseline',
+      'Wave 0 aggregate artifact evidence must record the canonical historical verification.',
+    );
+    historicalRequire(
+      aggregateTarball?.package === attestedTarball?.package
+        && aggregateTarball.version === attestedTarball.version
+        && aggregateTarball.sourceCommit === attestedTarball.sourceCommit
+        && aggregateTarball.sizeBytes === attestedTarball.sizeBytes
+        && aggregateTarball.sha256 === attestedTarball.sha256,
+      'Wave 0 aggregate tarball metadata no longer matches the attested audit.',
+    );
+    historicalRequire(
+      consumerMatrix?.kind === 'lds-wave0-consumer-matrix'
+        && consumerMatrix.status === 'passed'
+        && consumerMatrix.inputs?.fullCheck?.path === historicalAudit.baselines.fullCheck.evidencePath
+        && consumerMatrix.inputs?.fullCheck?.sha256 === historicalAudit.baselines.fullCheck.evidenceSha256
+        && consumerMatrix.inputs?.packageArtifact?.path === historicalAudit.baselines.packageArtifacts.evidencePath
+        && consumerMatrix.inputs?.packageArtifact?.sha256 === historicalAudit.baselines.packageArtifacts.evidenceSha256
+        && consumerMatrix.inputs?.packageArtifact?.package === aggregateTarball?.package
+        && consumerMatrix.inputs?.packageArtifact?.version === aggregateTarball?.version
+        && consumerMatrix.inputs?.packageArtifact?.sizeBytes === aggregateTarball?.sizeBytes
+        && consumerMatrix.inputs?.packageArtifact?.tarballSha256 === aggregateTarball?.sha256,
+      'Wave 0 consumer matrix no longer matches the attested full-check and aggregate artifact evidence.',
+    );
+  } catch (error) {
+    fail(`Unable to verify immutable Wave 0 attestation: ${error.message}`);
+  }
+}
+
 function validateSourceObservation(audit) {
   const source = audit.audit?.source || {};
   for (const [label, value] of [
@@ -1188,8 +1380,10 @@ function validateSourceObservation(audit) {
     const allowedExactPaths = new Set([
       '.github/workflows/ci.yml',
       '.github/workflows/deploy-storybook-pages.yml',
+      'docs/HANDOFF.md',
       'docs/PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md',
       'docs/README.md',
+      'docs/handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md',
       artifactBaselineSchemaPath,
       'package.json',
       'package-lock.json',
@@ -1221,7 +1415,7 @@ function validateSourceObservation(audit) {
     const unexpectedPaths = [...new Set(postObservationPaths.filter((value) => !isAllowed(value)))];
     assert(
       unexpectedPaths.length === 0,
-      `Only Wave 0 migration and evidence paths may change after the observed source commit: ${unexpectedPaths.join(', ')}`,
+      `Only approved package-migration and evidence paths may change after the observed source commit: ${unexpectedPaths.join(', ')}`,
     );
   } catch (error) {
     fail(`Unable to verify source observation ancestry and path scope: ${error.message}`);
@@ -2024,59 +2218,7 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
   } else {
     assert(readiness?.wave0Gate === 'ready', 'Closed evidence gates require wave0Gate=ready.');
     assert(audit.audit.status === 'wave-0-approved', 'Ready gate requires wave-0-approved status.');
-    try {
-      assert(gitOutput(['status', '--porcelain']) === '', 'Ready Wave 0 requires a clean worktree.');
-      assert(gitOutput(['branch', '--show-current']) === 'main', 'Ready Wave 0 must run on main.');
-      const headCommit = gitOutput(['rev-parse', 'HEAD']);
-      assert(
-        gitOutput(['rev-parse', 'main']) === headCommit,
-        'Ready Wave 0 HEAD must equal local main.',
-      );
-      assert(
-        gitOutput(['rev-parse', 'origin/main']) === headCommit,
-        'Ready Wave 0 HEAD must equal origin/main.',
-      );
-      assert(
-        gitOutput(['rev-parse', `${audit.baselines.cleanMain.tag}^{commit}`]) ===
-          audit.baselines.cleanMain.commit,
-        'Recorded baseline tag must resolve to the clean-main commit.',
-      );
-      gitOutput([
-        'merge-base',
-        '--is-ancestor',
-        audit.baselines.cleanMain.commit,
-        headCommit,
-      ]);
-      const allowedAttestationPaths = new Set(
-        [
-          auditPath,
-          audit.baselines.fullCheck.evidencePath,
-          audit.baselines.consumerMatrix.evidencePath,
-          audit.baselines.packageArtifacts.evidencePath,
-          ...products.map((entry) => entry.scanEvidence?.path),
-          ...integrations.map((entry) => entry.scanEvidence?.path),
-        ]
-          .filter((value) => typeof value === 'string')
-          .map(normalizePath),
-      );
-      const postBaselinePaths = gitOutput([
-        'diff',
-        '--name-only',
-        `${audit.baselines.cleanMain.commit}..${headCommit}`,
-      ])
-        .split(/\r?\n/)
-        .map(normalizePath)
-        .filter(Boolean);
-      const unexpectedPostBaselinePaths = postBaselinePaths.filter(
-        (value) => !allowedAttestationPaths.has(value),
-      );
-      assert(
-        unexpectedPostBaselinePaths.length === 0,
-        `Only tracked Wave 0 attestation files may change after the baseline commit: ${unexpectedPostBaselinePaths.join(', ')}`,
-      );
-    } catch (error) {
-      fail(`Unable to verify clean main/tag evidence: ${error.message}`);
-    }
+    validateWave0HistoricalAttestation();
   }
   if (requireWave0 && expectedOpenBlockers.length > 0) {
     fail(`Wave 0 gate is blocked; close: ${expectedOpenBlockers.join(', ')}`);
@@ -2085,6 +2227,17 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
 }
 
 async function main() {
+  if (requireWave0) {
+    validateWave0HistoricalAttestation();
+    if (failures.length > 0) {
+      throw new Error(`LDS immutable Wave 0 attestation failed:\n- ${failures.join('\n- ')}`);
+    }
+    console.log(
+      `LDS immutable Wave 0 attestation verified: ${wave0HistoricalBaseline.tag} -> ${wave0HistoricalAttestation.tag}.`,
+    );
+    return;
+  }
+
   const [audit, schema] = await Promise.all([readJson(auditPath), readJson(schemaPath)]);
   validateTopLevelSchema(audit, schema);
   validateSourceObservation(audit);

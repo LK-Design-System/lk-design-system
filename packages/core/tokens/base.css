@@ -1,0 +1,9 @@
+/* Core reset and layout slice from tokens/base.css. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+p { margin: 0; text-wrap: pretty; }
+img { display: block; max-width: 100%; }
+.lk-container { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter-lg); }
+.lk-read { max-width: var(--container-read); margin-inline: auto; padding-inline: var(--gutter); }
+.lk-keep { word-break: keep-all; }
+.lk-nums { font-variant-numeric: tabular-nums; }

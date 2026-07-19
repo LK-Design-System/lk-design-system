@@ -1,68 +1,22 @@
 {
-  "name": "@lk-robotics/design-system-core",
+  "name": "@lk-robotics/lds-workspace",
   "version": "0.1.0",
   "packageManager": "npm@10.9.2",
   "private": true,
-  "description": "Layered LK ROBOTICS design system: core, theme, product, and robotics contracts.",
+  "description": "Private workspace orchestrator for the layered LK ROBOTICS design system.",
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./core": {
-      "types": "./dist/core.d.ts",
-      "import": "./dist/core.js",
-      "require": "./dist/core.cjs"
-    },
-    "./theme": {
-      "types": "./dist/theme.d.ts",
-      "import": "./dist/theme.js",
-      "require": "./dist/theme.cjs"
-    },
-    "./product": {
-      "types": "./dist/product.d.ts",
-      "import": "./dist/product.js",
-      "require": "./dist/product.cjs"
-    },
-    "./robotics": {
-      "types": "./dist/robotics.d.ts",
-      "import": "./dist/robotics.js",
-      "require": "./dist/robotics.cjs"
-    },
-    "./styles.css": "./styles.css",
-    "./tokens/*": "./tokens/*",
-    "./assets/*": "./assets/*",
-    "./components/*": {
-      "types": "./dist/components/*.d.ts",
-      "import": "./dist/components/*.js",
-      "require": "./dist/components/*.cjs"
-    }
-  },
-  "files": [
-    "dist",
-    "tokens",
-    "assets",
-    "styles.css",
-    "readme.md",
-    "CHANGELOG.md",
-    "docs/DEPRECATIONS.md"
-  ],
-  "sideEffects": [
-    "*.css",
-    "styles.css",
-    "tokens/*.css"
-  ],
   "scripts": {
     "generate:colors": "node scripts/generate-lk-color-system.mjs",
     "generate:entry": "node scripts/generate-entry.mjs",
-    "build": "node scripts/generate-lk-color-system.mjs && node scripts/generate-entry.mjs && tsup && node scripts/copy-types.mjs && node scripts/normalize-sourcemaps.mjs",
+    "generate:workspace-sources": "node scripts/generate-workspace-sources.mjs && node scripts/generate-compat-facade.mjs && node scripts/project-workspace-styles-and-assets.mjs",
+    "build:legacy": "node scripts/generate-lk-color-system.mjs && node scripts/generate-entry.mjs && tsup && node scripts/copy-types.mjs && node scripts/normalize-sourcemaps.mjs",
+    "build:workspaces": "npm run generate:workspace-sources && node scripts/build-workspace-packages.mjs && node scripts/copy-workspace-types.mjs",
+    "build": "npm run build:legacy && npm run build:workspaces",
     "check:entry": "node scripts/generate-entry.mjs && git diff --exit-code -- src",
-    "check:generated": "git diff --exit-code -- src dist",
+    "check:generated": "git diff --exit-code -- src dist packages",
     "check:tokens": "node scripts/check-token-source.mjs",
     "check:colors": "node scripts/generate-lk-color-system.mjs --check && node scripts/check-color-layering.mjs && node scripts/check-color-contrast.mjs",
     "check:parity": "node scripts/check-visual-parity.mjs",
@@ -73,8 +27,9 @@
     "check:types": "tsc --noEmit",
     "check:type-consumer": "tsc -p tsconfig.consumer-react19.json && tsc -p tsconfig.consumer-react18.json",
     "check:layers": "node scripts/check-layer-boundaries.mjs",
-    "check:package-migration": "node scripts/check-package-migration.mjs",
-    "check:package-migration:wave0": "npm run check:pack:baseline && node scripts/check-package-migration.mjs --require-wave=0",
+    "check:workspace-packages": "node scripts/check-workspace-packages.mjs",
+    "check:package-migration": "node scripts/run-package-scripts.mjs check:package-migration:wave0 check:workspace-packages",
+    "check:package-migration:wave0": "node scripts/check-package-migration.mjs --require-wave=0",
     "capture:wave0:full-check": "npm ci && node scripts/capture-wave0-full-check.mjs",
     "check:consumer:matrix": "node scripts/check-wave0-consumer-matrix.mjs",
     "capture:consumer:matrix": "node scripts/check-wave0-consumer-matrix.mjs --capture",
@@ -82,7 +37,7 @@
     "check:fast": "node scripts/run-package-scripts.mjs build check:tokens check:token-hygiene check:colors check:type-surface check:type-consumer check:layers check:package-migration check:api-drift check:api-grammar check:dimension-literals check:motion-hygiene check:prompt-contracts check:story-coverage check:parity check:foundation-parity check:component-styles check:contracts check:docs check:product-frontends check:wds-alignment check:wds-local-fig check:avatar-duplicates check:story-subjects check:visual-token-drift check:publish-policy check:deprecations check:types check:entry check:generated check:consumer",
     "check:inventory": "node scripts/report-inventory.mjs --check-docs",
     "check:storybook": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
-    "check:pack": "node scripts/check-package-artifact.mjs",
+    "check:pack": "node scripts/check-workspace-artifacts.mjs",
     "capture:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --capture-baseline",
     "check:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline",
     "check:pack:baseline-if-present": "node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline-if-present",
@@ -107,7 +62,7 @@
     "report:nested-styles": "node scripts/check-wds-nested-styles.mjs",
     "check:nested-styles": "node scripts/check-wds-nested-styles.mjs --check",
     "report:census": "node scripts/census-wds-components.mjs",
-    "check:type-surface": "node scripts/check-type-surface.mjs",
+    "check:type-surface": "node scripts/check-workspace-packages.mjs",
     "check:api-drift": "node scripts/check-api-drift.mjs",
     "update:api-drift-baseline": "node scripts/check-api-drift.mjs --update-baseline",
     "check:api-grammar": "node scripts/check-api-grammar.mjs",

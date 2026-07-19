@@ -1,6 +1,7 @@
 # Local dependency and build output
 node_modules/
 build/
+packages/*/dist/
 .next/
 .nuxt/
 .vite/

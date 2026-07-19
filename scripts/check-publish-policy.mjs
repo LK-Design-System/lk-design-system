@@ -2,60 +2,121 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
+const workspacePackages = [
+  { id: 'core', name: '@lk-robotics/lds-core', dependencies: [], resources: ['tokens', 'assets'] },
+  { id: 'theme', name: '@lk-robotics/lds-theme', dependencies: ['@lk-robotics/lds-core'], resources: ['tokens', 'assets'] },
+  { id: 'product', name: '@lk-robotics/lds-product', dependencies: ['@lk-robotics/lds-core'], resources: ['assets'] },
+  { id: 'robotics-ui', name: '@lk-robotics/lds-robotics-ui', dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-product'], resources: ['tokens'] },
+  {
+    id: 'compat',
+    name: '@lk-robotics/design-system-core',
+    dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-theme', '@lk-robotics/lds-product', '@lk-robotics/lds-robotics-ui'],
+    resources: ['tokens', 'assets'],
+    compatibility: true,
+  },
+];
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-async function read(rel) {
-  return readFile(path.join(root, rel), 'utf8');
+async function read(relativePath) {
+  return readFile(path.join(root, relativePath), 'utf8');
 }
 
-const pkg = JSON.parse(await read('package.json'));
+function assertPeerDependencies(manifest, packageName) {
+  assert(
+    JSON.stringify(Object.keys(manifest.peerDependencies ?? {}).sort()) === JSON.stringify(['react', 'react-dom']),
+    `${packageName}: peerDependencies must contain exactly react and react-dom.`,
+  );
+}
+
+function assertEntry(manifest, packageInfo) {
+  const packageName = packageInfo.name;
+  assert(manifest.private === true, `${packageName}: packages stay private until the explicit Wave 2 publication decision.`);
+  assert(manifest.type === 'module', `${packageName}: package type must be module.`);
+  assert(manifest.types === './dist/index.d.ts', `${packageName}: types must point to dist/index.d.ts.`);
+  assert(manifest.files?.includes('dist'), `${packageName}: files must include dist.`);
+  assert(manifest.files?.includes('styles.css'), `${packageName}: files must include styles.css.`);
+  assert(!manifest.files?.includes('src'), `${packageName}: raw source must not be published.`);
+  assertPeerDependencies(manifest, packageName);
+
+  const dependencies = Object.keys(manifest.dependencies ?? {}).sort();
+  assert(
+    JSON.stringify(dependencies) === JSON.stringify([...packageInfo.dependencies].sort()),
+    `${packageName}: workspace dependency list is not the approved package DAG.`,
+  );
+  for (const dependency of packageInfo.dependencies) {
+    assert(manifest.dependencies[dependency] === '0.1.0', `${packageName}: ${dependency} must be pinned to the Wave 1 workspace version.`);
+  }
+
+  const expectedResources = new Set(['styles.css', ...packageInfo.resources]);
+  for (const resource of ['styles.css', 'tokens', 'assets']) {
+    const fileEntry = resource;
+    const exportEntry = resource === 'styles.css' ? './styles.css' : `./${resource}/*`;
+    const published = expectedResources.has(resource);
+    assert(Boolean(manifest.files?.includes(fileEntry)) === published, `${packageName}: ${resource} files policy is inconsistent with its owner contract.`);
+    assert(Boolean(manifest.exports?.[exportEntry]) === published, `${packageName}: ${resource} export policy is inconsistent with its owner contract.`);
+  }
+
+  const rootExport = manifest.exports?.['.'];
+  const deepExport = manifest.exports?.['./components/*'];
+  for (const [label, entry] of [['.', rootExport], ['./components/*', deepExport]]) {
+    assert(entry?.types && entry?.import, `${packageName}: ${label} must expose ESM and types.`);
+    assert(entry.types.startsWith('./dist/'), `${packageName}: ${label} types must resolve under dist.`);
+    assert(entry.import.startsWith('./dist/'), `${packageName}: ${label} ESM must resolve under dist.`);
+    if (packageInfo.compatibility) {
+      assert(entry.require?.startsWith('./dist/'), `${packageName}: ${label} must preserve its CJS compatibility export.`);
+    } else {
+      assert(!entry.require, `${packageName}: implementation packages must not expose CJS.`);
+    }
+  }
+
+  if (!packageInfo.compatibility) {
+    assert(manifest.main === './dist/index.js' && manifest.module === './dist/index.js', `${packageName}: implementation entrypoints must be ESM.`);
+    return;
+  }
+
+  assert(manifest.main === './dist/index.cjs' && manifest.module === './dist/index.js', `${packageName}: compatibility entrypoints must retain ESM and CJS.`);
+  for (const layer of ['core', 'theme', 'product', 'robotics']) {
+    const entry = manifest.exports?.[`./${layer}`];
+    assert(entry?.types === `./dist/${layer}.d.ts`, `${packageName}: ${layer} types must resolve under dist.`);
+    assert(entry?.import === `./dist/${layer}.js`, `${packageName}: ${layer} ESM must resolve under dist.`);
+    assert(entry?.require === `./dist/${layer}.cjs`, `${packageName}: ${layer} CJS must resolve under dist.`);
+  }
+}
+
+const rootPackage = JSON.parse(await read('package.json'));
 const readme = await read('readme.md');
 const inventory = await read('docs/REPOSITORY_INVENTORY.md');
 const workflow = await read('docs/COMPONENT_WORKFLOW.md');
 const changelog = await read('CHANGELOG.md');
 const deprecations = await read('docs/DEPRECATIONS.md');
 
-assert(pkg.private === true, 'Operational policy is internal Git/package consumption for now: package.json private must remain true until an explicit publish decision.');
-assert(pkg.publishConfig?.registry === 'https://npm.pkg.github.com', 'publishConfig.registry must document the intended future registry.');
-assert(!pkg.dependencies || Object.keys(pkg.dependencies).length === 0, 'Runtime dependencies must remain empty; React belongs in peerDependencies and tooling belongs in devDependencies.');
-assert(JSON.stringify(Object.keys(pkg.peerDependencies || {}).sort()) === JSON.stringify(['react', 'react-dom']), 'peerDependencies must contain exactly react and react-dom.');
-assert(!pkg.files?.includes('components'), 'Raw components source must not be published; compiled component subpaths live under dist.');
-assert(pkg.exports?.['./components/*']?.import === './dist/components/*.js', 'Compiled ESM component subpaths must resolve under dist/components.');
-assert(pkg.exports?.['./components/*']?.require === './dist/components/*.cjs', 'Compiled CJS component subpaths must resolve under dist/components.');
-for (const layer of ['core', 'theme', 'product', 'robotics']) {
-  const layerExport = pkg.exports?.[`./${layer}`];
-  assert(layerExport?.types === `./dist/${layer}.d.ts`, `${layer} types must resolve to dist/${layer}.d.ts.`);
-  assert(layerExport?.import === `./dist/${layer}.js`, `${layer} ESM must resolve to dist/${layer}.js.`);
-  assert(layerExport?.require === `./dist/${layer}.cjs`, `${layer} CJS must resolve to dist/${layer}.cjs.`);
-}
-
-for (const expected of ['dist', 'tokens', 'assets', 'styles.css', 'readme.md', 'CHANGELOG.md', 'docs/DEPRECATIONS.md']) {
-  assert(pkg.files?.includes(expected), `package.json files must include ${expected}.`);
-}
-
-assert(changelog.includes(`## ${pkg.version} -`), `CHANGELOG.md must include the current package version ${pkg.version}.`);
+assert(rootPackage.private === true, 'The workspace orchestrator must remain private.');
+assert(!rootPackage.dependencies || Object.keys(rootPackage.dependencies).length === 0, 'Workspace runtime dependencies must remain empty.');
+assertPeerDependencies(rootPackage, 'workspace root');
+assert(changelog.includes(`## ${rootPackage.version} -`), `CHANGELOG.md must include the current workspace version ${rootPackage.version}.`);
 assert(deprecations.includes('# Deprecations'), 'docs/DEPRECATIONS.md must exist as the generated public deprecation register.');
 
-for (const expected of [
-  './dist/index.cjs',
-  './dist/index.js',
-  './dist/index.d.ts',
-  ...['core', 'theme', 'product', 'robotics'].flatMap((layer) => [
-    `./dist/${layer}.cjs`,
-    `./dist/${layer}.js`,
-    `./dist/${layer}.d.ts`,
-  ]),
-]) {
-  const serialized = JSON.stringify(pkg);
-  assert(serialized.includes(expected), `package metadata must reference ${expected}.`);
+for (const packageInfo of workspacePackages) {
+  const manifest = JSON.parse(await read(`packages/${packageInfo.id}/package.json`));
+  assert(manifest.name === packageInfo.name, `packages/${packageInfo.id}: unexpected package name.`);
+  assert(manifest.version === rootPackage.version, `${packageInfo.name}: Wave 1 packages must share the workspace candidate version.`);
+  assertEntry(manifest, packageInfo);
 }
 
 const policyText = `${readme}\n${inventory}\n${workflow}`;
-for (const expected of ['private: true', '내부 Git 소비', 'npm publish', 'GitHub Packages']) {
-  assert(policyText.includes(expected), `Docs must state publish policy phrase: ${expected}`);
+for (const expected of [
+  'private: true',
+  'npm publish',
+  'GitHub Packages',
+  '@lk-robotics/lds-core',
+  '@lk-robotics/lds-theme',
+  '@lk-robotics/lds-product',
+  '@lk-robotics/lds-robotics-ui',
+]) {
+  assert(policyText.includes(expected), `Docs must state publish or workspace package policy phrase: ${expected}`);
 }
 
-console.log('Validated publish policy: private Git consumption, empty runtime dependencies, aggregate/layer/deep compiled exports, current changelog, deprecation register, and future GitHub Packages intent are documented.');
+console.log('Validated workspace publish policy: private package candidates, approved dependency DAG, ESM/types implementation entries, CJS compatibility facade, resource ownership, changelog, deprecations, and package-consumer documentation.');

@@ -1,0 +1,64 @@
+{
+  "name": "@lk-robotics/design-system-core",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "tokens/*.css"
+  ],
+  "files": [
+    "dist",
+    "styles.css",
+    "tokens",
+    "assets"
+  ],
+  "dependencies": {
+    "@lk-robotics/lds-core": "0.1.0",
+    "@lk-robotics/lds-theme": "0.1.0",
+    "@lk-robotics/lds-product": "0.1.0",
+    "@lk-robotics/lds-robotics-ui": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "import": "./dist/theme.js",
+      "require": "./dist/theme.cjs"
+    },
+    "./product": {
+      "types": "./dist/product.d.ts",
+      "import": "./dist/product.js",
+      "require": "./dist/product.cjs"
+    },
+    "./robotics": {
+      "types": "./dist/robotics.d.ts",
+      "import": "./dist/robotics.js",
+      "require": "./dist/robotics.cjs"
+    },
+    "./styles.css": "./styles.css",
+    "./tokens/*": "./tokens/*",
+    "./assets/*": "./assets/*",
+    "./components/*": {
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.js",
+      "require": "./dist/components/*.cjs"
+    }
+  }
+}

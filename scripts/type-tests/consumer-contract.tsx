@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button as RootButton } from '@lk-robotics/design-system-core';
+import { Button as CompatibilityDeepButton } from '@lk-robotics/design-system-core/components/buttons/Button';
 import { Button } from '@lk-robotics/design-system-core/core';
 import { ThemeToggle } from '@lk-robotics/design-system-core/theme';
 import {
@@ -18,6 +19,10 @@ import {
   FacilityTransition,
   EquipmentStatusCard,
 } from '@lk-robotics/design-system-core/robotics';
+import { Button as CoreDeepButton } from '@lk-robotics/lds-core/components/buttons/Button';
+import { ThemeToggle as ThemeDeepToggle } from '@lk-robotics/lds-theme/components/selection/ThemeToggle';
+import { Table as ProductDeepTable } from '@lk-robotics/lds-product/components/data/Table';
+import { ViewerFrame as RoboticsDeepViewerFrame } from '@lk-robotics/lds-robotics-ui/components/viz/ViewerFrame';
 
 // @ts-expect-error Robotics exports must not leak into the Core entrypoint.
 import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-robotics/design-system-core/core';
@@ -26,6 +31,15 @@ export const consumerContract: React.ReactElement = <Button variant="primary">í™
 
 // Robotics navigation extension â€” renderer-neutral SVG feature contracts.
 export const rootCompatibilityContract: React.ReactElement = <RootButton>Root compatibility</RootButton>;
+export const deepImportContract: React.ReactElement = (
+  <>
+    <CompatibilityDeepButton>Compatibility deep import</CompatibilityDeepButton>
+    <CoreDeepButton>Core deep import</CoreDeepButton>
+    <ThemeDeepToggle target={null} persist={false} />
+    <ProductDeepTable columns={[]} rows={[]} />
+    <RoboticsDeepViewerFrame label="Deep viewer" />
+  </>
+);
 export const themeContract: React.ReactElement = <ThemeToggle target={null} persist={false} />;
 
 export const waypointContract: React.ReactElement = (

@@ -42,15 +42,22 @@ LK ROBOTICS 핵심 디자인 시스템 패키지입니다. 토큰, React 컴포�
 ## 패키지 사용
 
 ```tsx
-import { Button } from '@lk-robotics/design-system-core/core';
-import { ThemeToggle } from '@lk-robotics/design-system-core/theme';
-import { ProductCard, TopBar } from '@lk-robotics/design-system-core/product';
-import { RobotStatusCard } from '@lk-robotics/design-system-core/robotics';
-import '@lk-robotics/design-system-core/styles.css';
+import { Button } from '@lk-robotics/lds-core';
+import { ThemeToggle } from '@lk-robotics/lds-theme';
+import { ProductCard, TopBar } from '@lk-robotics/lds-product';
+import { RobotStatusCard } from '@lk-robotics/lds-robotics-ui';
+
+import '@lk-robotics/lds-core/styles.css';
+import '@lk-robotics/lds-theme/styles.css';
+import '@lk-robotics/lds-product/styles.css';
+import '@lk-robotics/lds-robotics-ui/styles.css';
 ```
 
-기존 aggregate root는 네 layer export의 합집합인 호환 진입점으로 유지합니다. 새 코드는
-소유 경계가 드러나는 `/core`, `/theme`, `/product`, `/robotics` subpath를 사용합니다.
+새 코드는 `@lk-robotics/lds-core`, `@lk-robotics/lds-theme`,
+`@lk-robotics/lds-product`, `@lk-robotics/lds-robotics-ui`의 public export를
+사용합니다. 기존 `@lk-robotics/design-system-core` root, layer subpath,
+`components/*`, CSS, token, asset 경로는 migration support window 동안
+compatibility facade로 유지합니다.
 
 패키지 메타데이터:
 

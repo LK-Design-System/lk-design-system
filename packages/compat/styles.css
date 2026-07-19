@@ -1,0 +1,18 @@
+/* ==========================================================================
+   LK ROBOTICS — Design System · global entry point
+   --------------------------------------------------------------------------
+   Consumers link THIS one file. It is an @import manifest only — every token
+   and @font-face the system ships is reachable from here. Add nothing else.
+   ========================================================================== */
+
+@import url('tokens/fonts.css');
+@import url('tokens/color-atomic.css');
+@import url('tokens/color-semantic.css');
+@import url('tokens/color-components.css');
+@import url('tokens/typography.css');
+@import url('tokens/spacing.css');
+@import url('tokens/grid.css');
+@import url('tokens/effects.css');
+@import url('tokens/components.css');
+@import url('tokens/base.css');
+@import url('tokens/focus.css');

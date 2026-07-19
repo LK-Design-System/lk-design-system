@@ -1,0 +1,185 @@
+/* ==========================================================================
+ LK ROBOTICS — Grid, breakpoints & gap
+ --------------------------------------------------------------------------
+ The layout skeleton: responsive BREAKPOINTS, a
+ centered CONTAINER that steps through the content widths, a 12-column
+ GRID you divide layouts with (spanning), and a semantic GAP scale on the
+ 4px base. Tokens are `--bp-* / --grid-* / --container-* / --gap-*`; the
+ utility classes (`.lk-grid`, `.lk-col`, `.lk-split`, `.lk-section`,
+ `.lk-container-fluid`) carry the media queries inline styles can't.
+
+ Breakpoints (from the kit): xs 0 · sm 768 · md 992 · lg 1200 · xl 1600
+ Content widths: lg 1100 · xl 1440 · page margin 20
+ ========================================================================== */
+
+:root {
+  /* ---- Breakpoints (min-width) ----------------------------------------- */
+  --bp-sm: 768px; /* tablet portrait */
+  --bp-md: 992px; /* tablet landscape */
+  --bp-lg: 1200px; /* desktop */
+  --bp-xl: 1600px; /* desktop large */
+
+  /* ---- Column grid ----------------------------------------------------- */
+  --grid-columns-mobile: 2; /* mobile column grid */
+  --grid-columns-tablet: 3; /* tablet column grid */
+  --grid-columns-desktop: 12; /* desktop column grid */
+  --grid-columns: var(--grid-columns-mobile); /* @kind other */
+  --grid-gutter: 20px; /* space between columns */
+  --grid-margin: 20px; /* page side margin — column-grid offset, flat 20 across breakpoints */
+
+  /* ---- Container tiers (content max-widths) ------------------------ */
+  --container-lg: 1100px; /* content column ≤ lg */
+  --container-xl: 1440px; /* content column @ xl */
+
+  /* ---- Column-grid overlay (design-guide illustration) ----------------
+     Grid marker red — used to visualise column tracks in grid docs. */
+  --grid-overlay-fill: rgba(255, 66, 66, 0.08); /* column-grid fill */
+  --grid-overlay-line: rgba(255, 66, 66, 0.32); /* column edge */
+
+  /* ---- Gap scale (4px base) -------------------------------------------- */
+  --gap-3xs: 4px;
+  --gap-2xs: 8px;
+  --gap-xs: 12px;
+  --gap-sm: 16px;
+  --gap-md: 20px;
+  --gap-lg: 24px;
+  --gap-xl: 32px;
+  --gap-2xl: 40px;
+  --gap-3xl: 48px;
+  --gap-4xl: 64px;
+
+  /* ---- Responsive rhythm ----------------------------------------------- */
+  --gap-normal: 16px; /* "normal" content gap — 16 → 20 on desktop */
+  --gap-section: 56px; /* vertical space between page sections — steps up */
+}
+
+/* Mobile-first breakpoint bumps — mirror the margin / gap modes. */
+@media (min-width: 768px) {
+  :root {
+    --grid-columns: var(--grid-columns-tablet);
+    --gap-section: 80px;
+  }
+}
+@media (min-width: 992px) {
+  :root {
+    --gap-normal: 20px;
+  }
+}
+@media (min-width: 1200px) {
+  :root {
+    --grid-columns: var(--grid-columns-desktop);
+    --gap-section: 100px;
+  }
+}
+@media (min-width: 1600px) {
+  :root {
+    --gap-section: 120px;
+  }
+}
+
+/* ==========================================================================
+ Responsive page container
+ Centered content column: caps at 1100 (through lg), widens to 1440 at xl.
+ ========================================================================== */
+.lk-container-fluid {
+  width: 100%;
+  max-width: var(--container-lg);
+  margin-inline: auto;
+  padding-inline: var(--grid-margin);
+  box-sizing: border-box;
+}
+@media (min-width: 1600px) {
+  .lk-container-fluid {
+    max-width: var(--container-xl);
+  }
+}
+
+/* ==========================================================================
+ 12-column grid — divide a layout
+ Set --cols to change the division; children are <.lk-col> spanning tracks.
+ ========================================================================== */
+.lk-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--cols, var(--grid-columns)),
+    minmax(0, 1fr)
+  );
+  column-gap: var(--col-gap, var(--grid-gutter));
+  row-gap: var(--row-gap, var(--grid-gutter));
+}
+
+/* A grid child that spans N columns, responsively. Only set the breakpoints
+ you need — each falls back to the smaller one, then to a full-width span. */
+.lk-col {
+  min-width: 0;
+  grid-column: span
+    min(var(--col-span, var(--grid-columns)), var(--grid-columns));
+}
+@media (min-width: 768px) {
+  .lk-col {
+    grid-column: span
+      min(
+        var(--col-span-sm, var(--col-span, var(--grid-columns))),
+        var(--grid-columns)
+      );
+  }
+}
+@media (min-width: 992px) {
+  .lk-col {
+    grid-column: span
+      min(
+        var(
+          --col-span-md,
+          var(--col-span-sm, var(--col-span, var(--grid-columns)))
+        ),
+        var(--grid-columns)
+      );
+  }
+}
+@media (min-width: 1200px) {
+  .lk-col {
+    grid-column: span
+      min(
+        var(
+          --col-span-lg,
+          var(
+            --col-span-md,
+            var(--col-span-sm, var(--col-span, var(--grid-columns)))
+          )
+        ),
+        var(--grid-columns)
+      );
+  }
+}
+
+/* ==========================================================================
+ Two-pane split — sidebar + main
+ Stacks on mobile; splits at `at` (md default, or lg). Control the tracks
+ with --split-template (e.g. "280px 1fr", "1fr 320px", "2fr 1fr").
+ ========================================================================== */
+.lk-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--split-gap, var(--gap-lg));
+}
+.lk-split > * {
+  min-width: 0;
+}
+@media (min-width: 992px) {
+  .lk-split:not([data-at="lg"]) {
+    grid-template-columns: var(--split-template, 1fr 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .lk-split[data-at="lg"] {
+    grid-template-columns: var(--split-template, 1fr 1fr);
+  }
+}
+
+/* ==========================================================================
+ Section band — vertical rhythm
+ Full-width band with responsive vertical padding; pair with a container.
+ ========================================================================== */
+.lk-section {
+  padding-block: var(--section-py, var(--gap-section));
+}

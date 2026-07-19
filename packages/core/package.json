@@ -1,0 +1,37 @@
+{
+  "name": "@lk-robotics/lds-core",
+  "version": "0.1.0",
+  "description": "Generic foundation and DOM UI for the LK ROBOTICS design system.",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "styles.css",
+    "tokens",
+    "assets"
+  ],
+  "sideEffects": [
+    "*.css",
+    "tokens/*.css"
+  ],
+  "peerDependencies": {
+    "react": ">=18 <20",
+    "react-dom": ">=18 <20"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components/*": {
+      "types": "./dist/components/*.d.ts",
+      "import": "./dist/components/*.js"
+    },
+    "./styles.css": "./styles.css",
+    "./tokens/*": "./tokens/*",
+    "./assets/*": "./assets/*"
+  }
+}

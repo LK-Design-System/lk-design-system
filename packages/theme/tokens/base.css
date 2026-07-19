@@ -1,0 +1,29 @@
+/* Theme and brand slice from tokens/base.css. */
+html { color-scheme: light; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--color-semantic-label-normal);
+  background: var(--color-semantic-background-normal-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: var(--fw-bold); color: var(--color-semantic-label-strong); word-break: keep-all; text-wrap: balance; }
+h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); }
+h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-h2); }
+h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-h3); }
+h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: var(--ls-h4); }
+h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); letter-spacing: var(--ls-h5); }
+a { color: var(--color-semantic-primary-normal); text-decoration: none; transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
+a:hover { opacity: 0.8; }
+::selection { background: var(--color-semantic-primary-surface-strong); }
+.lk-overline { font-size: var(--fs-caption); font-weight: var(--fw-bold); letter-spacing: var(--ls-overline); text-transform: uppercase; color: var(--color-semantic-label-alternative); }
+.lk-overline--signal { color: var(--color-semantic-primary-normal); }
+.lk-overline--ink { color: var(--color-semantic-label-strong); }
+.lk-overline--on-dark { color: rgba(255,255,255,0.60); }
+.lk-overline--on-dark.lk-overline--signal { color: var(--color-semantic-primary-normal); }
+.lk-overline--on-dark.lk-overline--ink { color: #fff; }

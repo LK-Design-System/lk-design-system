@@ -23,6 +23,7 @@
 | --- | --- |
 | [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md) | 신규·재설계 검토의 canonical workflow와 완료 gate |
 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md) | ownership, change category, release와 migration 운영 |
+| [`PACKAGE_MIGRATION_GUIDE.md`](PACKAGE_MIGRATION_GUIDE.md) | Wave 2 consumer import, CSS, artifact-pin, and rollback guidance |
 | [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) | token source of truth와 변경 정책 |
 | [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | public API grammar와 컴포넌트별 상태 증거 |
 | [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md) | semantic, keyboard, focus, screen-reader 계약 |
@@ -46,7 +47,7 @@
 
 | Document | Status |
 | --- | --- |
-| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | In progress — Wave 0 immutable evidence attested; Wave 1 monorepo package split handoff 준비 완료, 조건부 Robotics 저장소 추출과 LDS3D 호환성 gate |
+| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | In progress — Wave 0 immutable evidence attested; Wave 1 workspace package split verified locally; Wave 2 artifact publication and consumer migration remain |
 | [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | Completed implementation plan; 결과 handoff로 연결 |
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |
 | [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |
