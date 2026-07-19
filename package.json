@@ -40,6 +40,8 @@
     "check:storybook": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
     "check:pack": "node scripts/check-workspace-artifacts.mjs",
     "check:workspace-consumer:matrix": "node scripts/check-workspace-consumer-matrix.mjs",
+    "check:workspace-consumer:windows": "node scripts/check-workspace-consumer-matrix.mjs --platform=windows --package-set=visual-artifacts/workspace-package-set --require-browser",
+    "check:workspace-consumer:linux": "node scripts/check-workspace-consumer-matrix.mjs --platform=linux --package-set=visual-artifacts/workspace-package-set",
     "capture:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --capture-baseline",
     "check:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline",
     "check:pack:baseline-if-present": "node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline-if-present",

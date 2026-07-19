@@ -358,7 +358,14 @@ async function main() {
   invariant(platform === expectedPlatform, `Platform argument ${platform} does not match ${process.platform}.`);
   invariant(process.arch === 'x64', 'Workspace consumer matrix requires x64.');
   if (process.env.npm_lifecycle_event) {
-    invariant(process.env.npm_lifecycle_event === 'check:workspace-consumer:matrix', 'Workspace consumer matrix must run through npm run check:workspace-consumer:matrix.');
+    const allowedLifecycles = new Set([
+      'check:workspace-consumer:matrix',
+      `check:workspace-consumer:${platform}`,
+    ]);
+    invariant(
+      allowedLifecycles.has(process.env.npm_lifecycle_event),
+      `Workspace consumer matrix must run through npm run check:workspace-consumer:${platform}.`,
+    );
     invariant(process.versions.node === '22.17.1', `Workspace consumer matrix requires Node 22.17.1; found ${process.versions.node}.`);
     invariant(runNpm(['--version'], repositoryRoot, { quiet: true }) === '10.9.2', 'Workspace consumer matrix requires npm 10.9.2.');
   }

@@ -80,7 +80,9 @@ jobs:
         run: npm run check:pack -- --output-dir=visual-artifacts/workspace-package-set
 
       - name: Consume workspace package set on Windows
-        run: npm run check:workspace-consumer:matrix -- --platform=windows --package-set=visual-artifacts/workspace-package-set --require-browser
+        # The canonical npm 10 Windows runner did not forward `--platform`
+        # after `--`, so CI uses a fully specified package script.
+        run: npm run check:workspace-consumer:windows
 
       - name: Upload workspace package set
         uses: actions/upload-artifact@v4
@@ -132,7 +134,7 @@ jobs:
           path: visual-artifacts/workspace-package-set
 
       - name: Consume the same workspace package set on Linux
-        run: npm run check:workspace-consumer:matrix -- --platform=linux --package-set=visual-artifacts/workspace-package-set
+        run: npm run check:workspace-consumer:linux
 
       - name: Upload Linux workspace consumer report
         uses: actions/upload-artifact@v4

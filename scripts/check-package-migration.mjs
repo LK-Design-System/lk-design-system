@@ -1014,6 +1014,16 @@ function validateCurrentPackageCi(packageJson, ciSource) {
     'Current workspace consumer matrix command drift.',
   );
   assert(
+    packageJson.scripts?.['check:workspace-consumer:windows'] ===
+      `node scripts/check-workspace-consumer-matrix.mjs --platform=windows --package-set=${packageSetPath} --require-browser`,
+    'Windows workspace consumer command drift.',
+  );
+  assert(
+    packageJson.scripts?.['check:workspace-consumer:linux'] ===
+      `node scripts/check-workspace-consumer-matrix.mjs --platform=linux --package-set=${packageSetPath}`,
+    'Linux workspace consumer command drift.',
+  );
+  assert(
     packageJson.scripts?.['check:package-migration:current-ci'] ===
       'node scripts/check-package-migration.mjs --require-current-ci',
     'Current CI contract gate command drift.',
@@ -1034,7 +1044,7 @@ function validateCurrentPackageCi(packageJson, ciSource) {
     'Windows CI must preserve the verified four-package workspace set.',
   );
   assert(
-    windowsJob.includes(`run: npm run check:workspace-consumer:matrix -- --platform=windows --package-set=${packageSetPath} --require-browser`),
+    windowsJob.includes('run: npm run check:workspace-consumer:windows'),
     'Windows CI must run React 18/19, SSR, Vite, tree-shaking, and browser checks on the package set.',
   );
   assert(windowsJob.includes('name: workspace-package-set-windows'), 'Windows CI must upload the verified package set.');
@@ -1050,7 +1060,7 @@ function validateCurrentPackageCi(packageJson, ciSource) {
   assert(linuxJob.includes('uses: actions/download-artifact@v5'), 'Linux CI must download the Windows package set.');
   assert(linuxJob.includes('name: workspace-package-set-windows'), 'Linux CI must consume the uploaded Windows package set.');
   assert(
-    linuxJob.includes(`run: npm run check:workspace-consumer:matrix -- --platform=linux --package-set=${packageSetPath}`),
+    linuxJob.includes('run: npm run check:workspace-consumer:linux'),
     'Linux CI must consume the exact verified Windows package set.',
   );
 }
