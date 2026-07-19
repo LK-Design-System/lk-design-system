@@ -1009,6 +1009,11 @@ function validateCurrentPackageCi(packageJson, ciSource) {
     'CI checks must run current source and Storybook checks without rebuilding the historical aggregate.',
   );
   assert(
+    packageJson.scripts?.['check:pack:ci'] ===
+      `node scripts/check-workspace-artifacts.mjs --output-dir=${packageSetPath}`,
+    'Current CI workspace package-set command drift.',
+  );
+  assert(
     packageJson.scripts?.['check:workspace-consumer:matrix'] ===
       'node scripts/check-workspace-consumer-matrix.mjs',
     'Current workspace consumer matrix command drift.',
@@ -1040,7 +1045,7 @@ function validateCurrentPackageCi(packageJson, ciSource) {
   assert(windowsJob.includes("Expected npm 10.9.2."), 'Windows package checks must verify npm 10.9.2.');
   assert(windowsJob.includes('run: npm run check:ci'), 'Windows CI must run the current source and Storybook checks.');
   assert(
-    windowsJob.includes(`run: npm run check:pack -- --output-dir=${packageSetPath}`),
+    windowsJob.includes('run: npm run check:pack:ci'),
     'Windows CI must preserve the verified four-package workspace set.',
   );
   assert(

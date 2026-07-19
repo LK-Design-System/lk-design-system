@@ -77,11 +77,11 @@ jobs:
         run: npm run check:audit
 
       - name: Build verified workspace package set
-        run: npm run check:pack -- --output-dir=visual-artifacts/workspace-package-set
+        # The canonical npm 10 runner did not forward CLI arguments after `--`,
+        # so CI uses fully specified package scripts for artifact handoff.
+        run: npm run check:pack:ci
 
       - name: Consume workspace package set on Windows
-        # The canonical npm 10 Windows runner did not forward `--platform`
-        # after `--`, so CI uses a fully specified package script.
         run: npm run check:workspace-consumer:windows
 
       - name: Upload workspace package set
