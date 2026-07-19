@@ -72,6 +72,7 @@
     "check:token-hygiene": "node scripts/check-token-hygiene.mjs",
     "check:conformance": "node scripts/check-cross-repository-style-contract.mjs && node packages/conformance/src/cli.mjs verify-fixtures",
     "check:robotics-storybook-browser": "node scripts/check-robotics-storybook-browser.mjs --root \"../LK Design System Robotics\"",
+    "check:lds3d-storybook-browser": "node scripts/check-lds3d-storybook-browser.mjs --root \"../LK Design System 3D\"",
     "update:token-hygiene-baseline": "node scripts/check-token-hygiene.mjs --update-baseline",
     "check:motion-hygiene": "node scripts/check-motion-hygiene.mjs",
     "update:motion-hygiene-baseline": "node scripts/check-motion-hygiene.mjs --update-baseline",

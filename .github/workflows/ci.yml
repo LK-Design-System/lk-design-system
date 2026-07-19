@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   conformance-linux:
@@ -24,7 +25,7 @@ jobs:
         with:
           node-version: 22.17.1
 
-      - name: Verify portable Robotics style diagnostics
+      - name: Verify portable Robotics and LDS3D style diagnostics
         run: node packages/conformance/src/cli.mjs verify-fixtures
 
   design-system:
@@ -33,6 +34,8 @@ jobs:
     # baselines) are produced on Windows, so run checks on Windows to keep them
     # reproducible. Matches the Storybook Pages deploy workflow.
     runs-on: windows-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ github.token }}
 
     steps:
       - name: Checkout
@@ -92,6 +95,8 @@ jobs:
     name: Linux packed consumer matrix
     needs: design-system
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ github.token }}
 
     steps:
       - name: Checkout

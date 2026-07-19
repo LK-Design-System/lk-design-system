@@ -8,20 +8,21 @@
 | Last reviewed | 2026-07-19 |
 | Update | `npm run report:inventory` · `npm run check:inventory` |
 
-Storybook의 579개 스토리 역할·공개 여부·소유 컴포넌트와 190개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
+Storybook의 406개 스토리 역할·공개 여부·소유 컴포넌트와 190개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 패키지 중심의 LK ROBOTICS 핵심 디자인 시스템입니다.
 
 ## 패키지 범위
 
 - 패키지명: `@lk-robotics/design-system-core`
-- React 컴포넌트 소스 파일: 204개
-- 공개 named export: 210개
-- 계층별 export: Core 82개 · Theme 2개 · Product 92개 · Robotics 34개
-- 컴포넌트 그룹: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `layout`, `mlops`, `navigation`, `operations`, `overlay`, `robotics`, `selection`, `status`, `viz`
+- React 컴포넌트 소스 파일: 173개
+- 공개 named export: 176개
+- 루트 aggregate export: Core 82개 · Theme 2개 · Product 92개 = 176개
+- Robotics compatibility entry: `./robotics`가 별도 `@lk-robotics/lds-robotics-ui`의 34개 export를 재노출하며, 위 aggregate 수치에는 포함하지 않음
+- 컴포넌트 소스 디렉터리 18개: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `internal`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`
-- 빌드 결과물: aggregate `dist/index.*`와 `dist/core.*`, `dist/theme.*`, `dist/product.*`, `dist/robotics.*`
+- 빌드 결과물: aggregate `dist/index.*`, 계층별 `dist/core.*` · `dist/theme.*` · `dist/product.*`, Robotics compatibility shim `dist/robotics.*`
 
 ## 주요 소스 영역
 
@@ -44,14 +45,14 @@ Storybook의 579개 스토리 역할·공개 여부·소유 컴포넌트와 190�
 
 WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`)과 Storybook의 LDS 컴포넌트/패턴 표면입니다. Storybook은 LDS 컴포넌트와 패턴 표면으로 제한하고, visual parity story는 `!dev`와 `visual-parity` 태그로 숨깁니다.
 
-- 현재 React component entry export: 202개
-- 공개 named export: 210개
-- Storybook 전체 story: 579개
-- Storybook public story: 443개
-- Storybook hidden story: 128개
-- 숨김 visual parity story: 99개
-- visual inventory React story: 579개
-- 접근성 guard 검사 대상 implementation story: 579개
+- 현재 React component entry export: 173개
+- 공개 named export: 176개
+- Storybook 전체 story: 406개
+- Storybook public story: 304개
+- Storybook hidden story: 102개
+- 숨김 visual parity story: 73개
+- visual inventory React story: 406개
+- 접근성 guard 검사 대상 implementation story: 406개
 
 ## 생성 영역
 

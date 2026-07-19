@@ -1,4 +1,8 @@
 :root {
+  --color-semantic-background-normal-normal: white;
+  --color-semantic-label-normal: black;
   --color-semantic-primary-normal: blue;
   --color-semantic-static-white: white;
+  --font-sans: system-ui;
+  --space-4: 16px;
 }

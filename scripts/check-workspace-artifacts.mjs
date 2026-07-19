@@ -16,7 +16,6 @@ const workspaces = [
   { id: 'core', name: '@lk-robotics/lds-core', implementation: true },
   { id: 'theme', name: '@lk-robotics/lds-theme', implementation: true },
   { id: 'product', name: '@lk-robotics/lds-product', implementation: true },
-  { id: 'robotics-ui', name: '@lk-robotics/lds-robotics-ui', implementation: true },
   { id: 'compat', name: '@lk-robotics/design-system-core', implementation: false },
 ];
 
@@ -189,6 +188,10 @@ async function smokeConsumer(packed, consumerDirectory) {
     path.join(consumerDirectory, 'package.json'),
     `${JSON.stringify({ name: 'lds-workspace-artifact-smoke', private: true, type: 'module' }, null, 2)}\n`,
   );
+  await writeFile(
+    path.join(consumerDirectory, '.npmrc'),
+    await readFile(path.join(repositoryRoot, '.npmrc'), 'utf8'),
+  );
   await run(
     npmCommand,
     [...npmPrefixArguments, 'install', '--ignore-scripts', '--legacy-peer-deps', ...packed.map(({ tarball }) => tarball)],
@@ -243,7 +246,7 @@ async function main() {
     const packed = [];
     for (const workspace of workspaces) packed.push(await packWorkspace(workspace, tarballDirectory));
     await smokeConsumer(packed, consumerDirectory);
-    console.log('LDS Wave 1 workspace tarballs verified: ESM/types packages, compat ESM+CJS, and isolated consumer smoke passed.');
+    console.log('LDS workspace tarballs verified: Core/Theme/Product ESM+types, compat ESM+CJS, and isolated consumer smoke with the external Robotics package passed.');
   } finally {
     const relative = path.relative(artifactRoot, runDirectory);
     invariant(relative && !relative.startsWith('..') && !path.isAbsolute(relative), 'Refusing to clean an artifact path outside visual-artifacts.');

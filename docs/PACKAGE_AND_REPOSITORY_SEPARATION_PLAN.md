@@ -461,12 +461,13 @@ The original Wave 3 gate was no-go. The design-system owner subsequently approve
 - 원 저장소 제거 commit 전후 API, CSS와 visual parity가 승인된 차이 없이 일치한다.
 - 이전 package release pin과 source-removal revert commit으로 rollback할 수 있다.
 
-#### Robotics style conformance contract
+#### Robotics and LDS3D style conformance contract
 
-The first cross-repository style-conformance wave covers LDS Robotics only. LDS3D is
-explicitly excluded while its current work is in progress. The machine-readable source
-of truth is `docs/references/package-split/CROSS_REPOSITORY_STYLE_CONTRACT.json`, with
-the executable implementation under `packages/conformance`.
+The cross-repository style-conformance gate covers LDS Robotics and the completed LDS3D
+docs-composition seam. The machine-readable source of truth is
+`docs/references/package-split/CROSS_REPOSITORY_STYLE_CONTRACT.json`, with the executable
+implementation under `packages/conformance`. The `lds3d-ui` profile is deliberately a
+monorepo/docs-composition profile, not a generic rewrite of the Robotics profile.
 
 - LDS owns shared semantic color, typography, spacing, radius, elevation, motion, and
   common component-token namespaces.
@@ -479,6 +480,19 @@ the executable implementation under `packages/conformance`.
   properties, local dependency links, stylesheet-order drift, public-export drift, and
   missing representative stories. Existing SVG/map geometry and general numeric layout
   literals are intentionally outside this first gate rather than silently baselined.
+- LDS3D's published `design-system-3d-*` workspaces remain headless with respect to LDS:
+  they may own renderer/material values but must not import LDS packages or styles. Only
+  `apps/docs` composes LDS Core, Theme, Product, Robotics UI, then local styles, all at the
+  exact versions recorded in the contract and lockfile.
+- LDS3D defines no local DOM token namespace. Its only scoped runtime layout property is
+  `--lds3d-inspector-width` in `apps/docs/src/visual-alpha-ui.tsx`; every other DOM custom
+  property reference must appear in the exact upstream-token manifest.
+- Raw-color enforcement is limited to the DOM composition roots. The only allowances are
+  the exact, counted Storybook background literals in `.storybook/preview.ts`; renderer
+  material colors remain valid outside those roots and do not become LDS style tokens.
+- `LDS3D_EXTERNAL_SURFACE.json` pins all eight current workspace package identities and
+  their exact export keys, plus the representative docs stories required in source and in
+  the built Storybook index.
 - The geometry focus override remains allowed only while its named Facility Transition
   focus story is present in the built Storybook index.
 

@@ -101,7 +101,12 @@ export const InteractiveAndDark = {
           </p>
         </div>
       </Card>
-      <Card dark interactive>
+      <Card
+        dark
+        interactive
+        title="Dark Card title"
+        description="Structured dark-card text uses the Card-owned foreground contract."
+      >
         <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
           <h3 style={{ margin: 0, color: 'var(--color-semantic-static-white)', fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
             인터랙티브 dark card

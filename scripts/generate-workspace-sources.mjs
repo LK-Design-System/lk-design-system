@@ -72,9 +72,9 @@ async function copyHelpers(source, base, layer, seen) {
 }
 
 async function rewriteImports(target, layer, base) {
-  let text = await readFile(target, 'utf8');
+  const original = await readFile(target, 'utf8');
   const importRe = /(from\s+['"]|import\s*\(\s*['"])(\.\.?\/[^'"\n]+)(['"])/g;
-  text = text.replace(importRe, (all, prefix, spec, suffix) => {
+  const text = original.replace(importRe, (all, prefix, spec, suffix) => {
     const noExt = spec.replace(/\.(jsx|js)$/, '');
     const sourceRel = path.posix.normalize(path.posix.join(path.posix.dirname(path.relative(path.join(base, 'src'), target).replaceAll('\\', '/')), noExt));
     const rootRel = sourceRel.startsWith('components/') ? sourceRel : `components/${sourceRel.replace(/^\.\//, '')}`;
@@ -85,7 +85,7 @@ async function rewriteImports(target, layer, base) {
     }
     return all;
   });
-  await writeFile(target, text);
+  if (text !== original) await writeFile(target, text);
 }
 
 console.log('Generated workspace implementation sources for core, theme, and product; Robotics UI is external.');

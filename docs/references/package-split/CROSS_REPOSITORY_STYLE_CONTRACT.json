@@ -133,6 +133,71 @@
         { "source": "stories/RoboticsNavigationFacilities.stories.jsx", "export": "ValidationAndFocusStates", "id": "lds-robotics-navigation-facility-transition--validation-and-focus-states", "viewport": "1280x720" },
         { "source": "stories/RoboticsNavigationFacilities.stories.jsx", "export": "NarrowWidth", "id": "lds-robotics-navigation-facility-transition--narrow-width", "viewport": "320x568" }
       ]
+    },
+    "lds3d-ui": {
+      "repository": "LK-ROBOTICS/lk-design-system-3d",
+      "workspacePackage": {
+        "manifest": "package.json",
+        "name": "lk-design-system-3d",
+        "version": "0.1.0-alpha.1"
+      },
+      "compositionManifest": "apps/docs/package.json",
+      "lockfile": "pnpm-lock.yaml",
+      "externalSurface": "docs/references/package-split/LDS3D_EXTERNAL_SURFACE.json",
+      "configFile": ".lds-conformance.json",
+      "packageDependencies": [
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-theme", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-robotics-ui", "section": "dependencies", "version": "0.1.0-rc.1" }
+      ],
+      "scanRoots": ["apps/docs/.storybook", "apps/docs/src", "packages"],
+      "rawColorScanRoots": ["apps/docs/.storybook/preview.ts", "apps/docs/src/styles.css", "apps/docs/src/visual-alpha-ui.tsx"],
+      "requiredStyleImports": [
+        "@lk-robotics/lds-core/styles.css",
+        "@lk-robotics/lds-theme/styles.css",
+        "@lk-robotics/lds-product/styles.css",
+        "@lk-robotics/lds-robotics-ui/styles.css",
+        "../src/styles.css"
+      ],
+      "storybookPreview": "apps/docs/.storybook/preview.ts",
+      "localTokenDefinitions": {
+        "file": null,
+        "compatibilityMirror": null,
+        "allowedReferencePrefixes": [],
+        "names": []
+      },
+      "runtimeCustomProperties": [
+        { "name": "--lds3d-inspector-width", "definitionFile": "apps/docs/src/visual-alpha-ui.tsx" }
+      ],
+      "rawColorPolicy": {
+        "forbiddenFormats": ["hex", "rgb", "hsl", "named-white-black"],
+        "allowedZones": [
+          { "file": "apps/docs/.storybook/preview.ts", "signature": "#101828", "expectedOccurrences": 2, "owner": "LDS3D docs composition", "reason": "Exact Storybook dark-background detection and toolbar background option; renderer colors remain outside the DOM style scan.", "reviewDate": "2027-01-31" },
+          { "file": "apps/docs/.storybook/preview.ts", "signature": "#0e1329", "expectedOccurrences": 1, "owner": "LDS3D docs composition", "reason": "Exact legacy Storybook dark-background detection literal.", "reviewDate": "2027-01-31" },
+          { "file": "apps/docs/.storybook/preview.ts", "signature": "#0a0e1a", "expectedOccurrences": 2, "owner": "LDS3D docs composition", "reason": "Exact Storybook dark-background detection and toolbar background option.", "reviewDate": "2027-01-31" },
+          { "file": "apps/docs/.storybook/preview.ts", "signature": "#151a2b", "expectedOccurrences": 1, "owner": "LDS3D docs composition", "reason": "Exact legacy Storybook dark-background detection literal.", "reviewDate": "2027-01-31" },
+          { "file": "apps/docs/.storybook/preview.ts", "signature": "#f7f8fb", "expectedOccurrences": 1, "owner": "LDS3D docs composition", "reason": "Exact Storybook Base background option.", "reviewDate": "2027-01-31" },
+          { "file": "apps/docs/.storybook/preview.ts", "signature": "#ffffff", "expectedOccurrences": 1, "owner": "LDS3D docs composition", "reason": "Exact Storybook Card background option.", "reviewDate": "2027-01-31" }
+        ]
+      },
+      "headlessPackages": [
+        { "manifest": "packages/assets/package.json", "sourceRoots": ["packages/assets/src"] },
+        { "manifest": "packages/core/package.json", "sourceRoots": ["packages/core/src"] },
+        { "manifest": "packages/markers/package.json", "sourceRoots": ["packages/markers/src"] },
+        { "manifest": "packages/pointcloud/package.json", "sourceRoots": ["packages/pointcloud/src"] },
+        { "manifest": "packages/r3f/package.json", "sourceRoots": ["packages/r3f/src"] },
+        { "manifest": "packages/testing/package.json", "sourceRoots": ["packages/testing/src"] },
+        { "manifest": "packages/tf/package.json", "sourceRoots": ["packages/tf/src"] },
+        { "manifest": "packages/three/package.json", "sourceRoots": ["packages/three/src"] }
+      ],
+      "representativeStories": [
+        { "source": "apps/docs/src/visual-alpha.stories.tsx", "export": "OperationalNeutral", "id": "visual-alpha--operational-neutral", "viewport": "1440x900", "requiresComposition": true },
+        { "source": "apps/docs/src/visual-alpha.stories.tsx", "export": "DiagnosticTechnical", "id": "visual-alpha--diagnostic-technical", "viewport": "1440x900", "requiresComposition": true },
+        { "source": "apps/docs/src/pointcloud.scenarios.stories.tsx", "export": "LdsIntegration", "id": "lds-3d-scenes-point-cloud-foundation--lds-integration", "viewport": "1280x720", "requiresComposition": true },
+        { "source": "apps/docs/src/spatial-authoring.scenarios.stories.tsx", "export": "LdsIntegration", "id": "lds-3d-scenes-spatial-authoring-foundation--lds-integration", "viewport": "1440x900" },
+        { "source": "apps/docs/src/renderer-lifecycle.states.stories.tsx", "export": "Overview", "id": "lds-3d-states-renderer-lifecycle--overview", "viewport": "1280x720", "requiresComposition": true }
+      ]
     }
   }
 }

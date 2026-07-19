@@ -7,7 +7,9 @@
     "tokenSources": ["tokens"],
     "ownedTokenPrefixes": ["--color-", "--space-", "--radius-", "--font-"],
     "packages": [
-      { "name": "@lk-robotics/lds-core", "version": "0.1.0-rc.0", "workspace": "packages/core" }
+      { "name": "@lk-robotics/lds-core", "version": "0.1.0-rc.0", "workspace": "packages/core" },
+      { "name": "@lk-robotics/lds-theme", "version": "0.1.0-rc.0", "workspace": "packages/theme" },
+      { "name": "@lk-robotics/lds-product", "version": "0.1.0-rc.0", "workspace": "packages/product" }
     ]
   },
   "profiles": {
@@ -61,6 +63,32 @@
       "representativeStories": [
         { "source": "stories/Widget.stories.jsx", "export": "Overview", "id": "fixture-widget--overview", "viewport": "320x568" }
       ]
+    },
+    "lds3d-ui": {
+      "repository": "LK-ROBOTICS/lk-design-system-3d",
+      "workspacePackage": { "manifest": "package.json", "name": "lk-design-system-3d", "version": "0.1.0-alpha.1" },
+      "compositionManifest": "apps/docs/package.json",
+      "lockfile": "pnpm-lock.yaml",
+      "externalSurface": "lds3d-external-surface.json",
+      "configFile": ".lds-conformance.json",
+      "packageDependencies": [
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-theme", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.0" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-robotics-ui", "section": "dependencies", "version": "0.1.0-rc.1" }
+      ],
+      "scanRoots": ["apps/docs/.storybook", "apps/docs/src", "packages"],
+      "rawColorScanRoots": ["apps/docs/.storybook/preview.ts", "apps/docs/src/styles.css", "apps/docs/src/visual-alpha-ui.tsx"],
+      "requiredStyleImports": ["@lk-robotics/lds-core/styles.css", "@lk-robotics/lds-theme/styles.css", "@lk-robotics/lds-product/styles.css", "@lk-robotics/lds-robotics-ui/styles.css", "../src/styles.css"],
+      "storybookPreview": "apps/docs/.storybook/preview.ts",
+      "localTokenDefinitions": { "file": null, "compatibilityMirror": null, "allowedReferencePrefixes": [], "names": [] },
+      "runtimeCustomProperties": [{ "name": "--lds3d-inspector-width", "definitionFile": "apps/docs/src/visual-alpha-ui.tsx" }],
+      "rawColorPolicy": {
+        "forbiddenFormats": ["hex", "rgb", "hsl", "named-white-black"],
+        "allowedZones": [{ "file": "apps/docs/.storybook/preview.ts", "signature": "#101828", "expectedOccurrences": 1, "owner": "Fixture owner", "reason": "Proves an exact Storybook-background allowance without allowing renderer colors into the DOM scan.", "reviewDate": "2027-01-31" }]
+      },
+      "headlessPackages": [{ "manifest": "packages/core/package.json", "sourceRoots": ["packages/core/src"] }, { "manifest": "packages/three/package.json", "sourceRoots": ["packages/three/src"] }],
+      "representativeStories": [{ "source": "apps/docs/src/visual-alpha.stories.tsx", "export": "OperationalNeutral", "id": "visual-alpha--operational-neutral", "viewport": "1440x900" }]
     }
   }
 }

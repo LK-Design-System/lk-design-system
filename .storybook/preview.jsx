@@ -97,42 +97,13 @@ export const parameters = {
       const titleA = a.title.trim().split(/\s*\/\s*/);
       const titleB = b.title.trim().split(/\s*\/\s*/);
       const groupOrder = {
-        '': ['LDS Core', 'LDS Theme', 'LDS Product', 'LDS Robotics'],
+        '': ['LDS Core', 'LDS Theme', 'LDS Product'],
         'LDS Core': ['Foundation', 'Components'],
         'LDS Core/Foundation': ['Aspect Ratio', 'Color', 'Typography', 'Spacing', 'Effects', 'Interaction', 'Iconography'],
         'LDS Core/Components': ['Layout', 'Action', 'Selection and Input', 'Content', 'Navigation', 'Status', 'Overlay'],
         'LDS Theme': ['Brand', 'Controls', 'Status'],
         'LDS Product': ['Action', 'Content', 'Data', 'Status', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
-        'LDS Robotics': ['Foundation', 'Assets', 'Control', 'Status', 'Data', 'Editor', 'Viewer', 'Navigation'],
-        // Robotics foundation: the internal primitive/atom catalogs (not public
-        // components), mirroring LDS Core/Foundation. Navigation atoms first
-        // (encoding tokens, then the marker body and glyph catalogs — Marker Pin
-        // sits next to the glyphs that ride on it), then the cross-area token
-        // pages (Unit Format, Viewer Tokens) consumed beyond Navigation.
-        'LDS Robotics/Foundation': [
-          'Navigation Encoding Tokens',
-          'State Badge',
-          'Marker Pin',
-          'Facility Glyph',
-          'Hazard Glyph',
-          'Vector Glyph',
-          'Codes',
-          'Unit Format',
-          'Viewer Tokens',
-        ],
-        // Navigation renderer components, in point → line → planned → executed →
-        // area → facility → hazard → annotation reading order.
-        'LDS Robotics/Navigation': [
-          'Waypoint',
-          'Lane',
-          'Route',
-          'Trajectory',
-          'Regions',
-          'Facility Transition',
-          'Hazard Marker',
-          'Annotation Layer',
-        ],
       };
 
       if (a.title === b.title) {

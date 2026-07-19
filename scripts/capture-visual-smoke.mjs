@@ -153,62 +153,6 @@ const targets = [
     viewport: { width: 980, height: 720 },
   },
   {
-    name: 'react-robotics-viz',
-    match: { importPath: './stories/RoboticsAndViz.stories.jsx', exportName: 'RobotState' },
-    viewport: { width: 1180, height: 820 },
-  },
-  {
-    name: 'robotics-viewer-frame-states',
-    match: { importPath: './stories/ViewerFrame.stories.jsx', exportName: 'StatePlacement' },
-    viewport: { width: 980, height: 720 },
-  },
-  {
-    name: 'robotics-viewer-light-frame-on-dark',
-    match: { importPath: './stories/ViewerFrame.stories.jsx', exportName: 'LightMapFrame' },
-    query: { globals: 'backgrounds.value:Dark' },
-    viewport: { width: 720, height: 520 },
-  },
-  {
-    name: 'robotics-viewer-map',
-    match: { importPath: './stories/ViewerMap.stories.jsx', exportName: 'MapCanvasOverview' },
-    viewport: { width: 900, height: 620 },
-  },
-  {
-    name: 'robotics-viewer-map-narrow',
-    match: { importPath: './stories/ViewerMap.stories.jsx', exportName: 'KeyboardAndPointerContract' },
-    viewport: { width: 320, height: 520 },
-  },
-  {
-    name: 'robotics-viewer-3d-narrow',
-    match: { importPath: './stories/Viewer3D.stories.jsx', exportName: 'NarrowWidth' },
-    viewport: { width: 320, height: 520 },
-  },
-  {
-    name: 'robotics-viewer-toolbar',
-    match: { importPath: './stories/ViewerToolbar.stories.jsx', exportName: 'ViewerToolbarOverview' },
-    viewport: { width: 320, height: 520 },
-  },
-  {
-    name: 'robotics-viewer-video-states',
-    match: { importPath: './stories/ViewerVideo.stories.jsx', exportName: 'VideoStreamOverview' },
-    viewport: { width: 1000, height: 920 },
-  },
-  {
-    name: 'robotics-viewer-video-narrow',
-    match: { importPath: './stories/ViewerVideo.stories.jsx', exportName: 'NarrowWidth' },
-    viewport: { width: 320, height: 520 },
-  },
-  {
-    name: 'robotics-viewer-video-compact-states',
-    match: { importPath: './stories/ViewerVideo.stories.jsx', exportName: 'CommonStateContract' },
-    viewport: { width: 240, height: 900 },
-  },
-  {
-    name: 'robotics-viewer-telemetry-compact',
-    match: { importPath: './stories/RoboticsTelemetryValue.stories.jsx', exportName: 'CompactReadouts' },
-    viewport: { width: 320, height: 900 },
-  },
-  {
     name: 'product-validation-summary',
     match: { importPath: './stories/FormValidationSummary.stories.jsx', exportName: 'ErrorsAndWarnings' },
     viewport: { width: 860, height: 520 },
@@ -230,46 +174,15 @@ const targets = [
   },
 ];
 
-const ATOM_ZOOM = 8;
-
-// Per-atom captures. The full-page targets above prove a story RENDERS; these
-// prove the tiny map GLYPHS stay LEGIBLE at their real ~13-22px render size —
-// the exact class of regression the system-level review missed (a bespoke
-// elevator glyph that was unreadable at 22px). Each atom is cropped 1:1 (its
-// true painted size) AND upscaled ATOM_ZOOMx with nearest-neighbour (no
-// smoothing), so a sub-pixel limb loss, mis-centering, or a swapped glyph shows
-// as a pixel diff against the baseline. `clip` is a fixed square centered on the
-// atom so its dimensions stay stable between runs (a varying crop size would
-// fail pixelmatch's dimension check spuriously).
-const atomTargets = [
-  { name: 'atom-facility-lift-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'FacilityTransitionOverview' }, selector: '[data-transition-kind="lift"] [data-transition-marker]', clip: 46, viewport: { width: 900, height: 720 } },
-  { name: 'atom-facility-lift-marker-dark', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="lift"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
-  { name: 'atom-facility-door-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="door"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
-  { name: 'atom-facility-dock-marker', match: { importPath: './stories/RoboticsNavigationFacilities.stories.jsx', exportName: 'AvailabilityAndSourceStates' }, selector: '[data-transition-kind="dock"] [data-transition-marker]', clip: 46, viewport: { width: 980, height: 760 } },
-  { name: 'atom-waypoint-point', match: { importPath: './stories/RoboticsNavigationWaypoint.stories.jsx', exportName: 'Overview' }, selector: '[data-waypoint-id="wp-holding"][data-selected="false"] [data-waypoint-point]', clip: 28, viewport: { width: 900, height: 720 } },
-  { name: 'atom-glyph-unknown', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="unknown"]', clip: 28, viewport: { width: 900, height: 760 } },
-  { name: 'atom-glyph-conflict', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="conflict"]', clip: 28, viewport: { width: 900, height: 760 } },
-  { name: 'atom-glyph-closed', match: { importPath: './stories/RoboticsNavigationLane.stories.jsx', exportName: 'LaneStatesAndConstraints' }, selector: '[data-navigation-state-glyph="closed"]', clip: 28, viewport: { width: 900, height: 760 } },
-  { name: 'atom-glyph-invalid', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="invalid"]', clip: 28, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-waiting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-route-id="route-waiting"] [data-route-condition-glyph="waiting"]', clip: 20, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-completed', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-route-id="route-completed"] [data-route-status-marker]', clip: 20, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-rerouting', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-route-id="route-rerouting"] [data-route-status-marker]', clip: 20, viewport: { width: 1000, height: 900 } },
-  { name: 'atom-glyph-stale', match: { importPath: './stories/RoboticsNavigationRoute.stories.jsx', exportName: 'RouteAndTrajectoryStates' }, selector: '[data-navigation-state-glyph="stale"]', clip: 28, viewport: { width: 1000, height: 900 } },
-];
-
+// Robotics visual coverage lives in the split repository's representative
+// Storybook browser gate. Keep this root baseline limited to LDS Core/Product.
 const requestedCaptureNames = onlyArguments.length === 0
   ? null
   : onlyArguments[0].slice('--only='.length).split(',').map((name) => name.trim()).filter(Boolean);
-const knownCaptureNames = new Set([
-  ...targets.map(({ name }) => name),
-  ...atomTargets.flatMap(({ name }) => [name, `${name}@${ATOM_ZOOM}x`]),
-]);
-const atomCaptureNames = new Set(atomTargets.map(({ name }) => name));
+const knownCaptureNames = new Set(targets.map(({ name }) => name));
 const selectedCaptureNames = requestedCaptureNames === null
   ? null
-  : new Set(requestedCaptureNames.flatMap((name) => (
-    atomCaptureNames.has(name) ? [name, `${name}@${ATOM_ZOOM}x`] : [name]
-  )));
+  : new Set(requestedCaptureNames);
 
 if (selectedCaptureNames?.size === 0) {
   throw new Error('--only= must name at least one capture.');
@@ -282,10 +195,6 @@ for (const name of selectedCaptureNames || []) {
 
 function shouldCapture(name) {
   return selectedCaptureNames === null || selectedCaptureNames.has(name);
-}
-
-function shouldCaptureAtom(name) {
-  return shouldCapture(name) || shouldCapture(`${name}@${ATOM_ZOOM}x`);
 }
 
 function contentType(filePath) {
@@ -399,24 +308,6 @@ async function compareScreenshot(name, actualPath) {
   return { differentPixels, totalPixels, diffRatio };
 }
 
-function upscaleNearest(buffer, factor) {
-  const src = PNG.sync.read(buffer);
-  const dst = new PNG({ width: src.width * factor, height: src.height * factor });
-  for (let y = 0; y < dst.height; y += 1) {
-    const sourceRow = Math.floor(y / factor);
-    for (let x = 0; x < dst.width; x += 1) {
-      const sourceCol = Math.floor(x / factor);
-      const si = (src.width * sourceRow + sourceCol) << 2;
-      const di = (dst.width * y + x) << 2;
-      dst.data[di] = src.data[si];
-      dst.data[di + 1] = src.data[si + 1];
-      dst.data[di + 2] = src.data[si + 2];
-      dst.data[di + 3] = src.data[si + 3];
-    }
-  }
-  return PNG.sync.write(dst);
-}
-
 async function loadStoryReady(page, url, name, runtimeErrors) {
   runtimeErrors.length = 0;
   await page.goto(url, { waitUntil: 'networkidle' });
@@ -440,34 +331,6 @@ async function loadStoryReady(page, url, name, runtimeErrors) {
   if (runtimeErrors.length > 0) {
     throw new Error(`${name} emitted runtime errors: ${runtimeErrors.join(' | ')}`);
   }
-}
-
-// Crop a fixed square centered on the atom (true render size), then also emit a
-// nearest-neighbour zoom. Returns the two capture file names.
-async function captureAtom(page, atom, outputDir) {
-  const el = await page.$(atom.selector);
-  if (!el) {
-    throw new Error(`Atom "${atom.name}": selector ${atom.selector} not found. A missing atom must fail loudly, never silently skip the legibility gate.`);
-  }
-  await el.scrollIntoViewIfNeeded();
-  const box = await el.boundingBox();
-  if (!box || box.width < 1 || box.height < 1) {
-    throw new Error(`Atom "${atom.name}": element has no visible bounding box.`);
-  }
-  const clipSize = atom.clip || 40;
-  const centerX = box.x + box.width / 2;
-  const centerY = box.y + box.height / 2;
-  const clip = {
-    x: Math.max(0, Math.round(centerX - clipSize / 2)),
-    y: Math.max(0, Math.round(centerY - clipSize / 2)),
-    width: clipSize,
-    height: clipSize,
-  };
-  const truePath = path.join(outputDir, `${atom.name}.png`);
-  await page.screenshot({ path: truePath, clip, animations: 'disabled' });
-  const zoomName = `${atom.name}@${ATOM_ZOOM}x`;
-  await writeFile(path.join(outputDir, `${zoomName}.png`), upscaleNearest(await readFile(truePath), ATOM_ZOOM));
-  return [atom.name, zoomName];
 }
 
 async function main() {
@@ -498,7 +361,7 @@ async function main() {
   const manifest = {
     generatedAt: new Date().toISOString(),
     storybookStatic: 'storybook-static',
-    count: selectedCaptureNames?.size ?? targets.length + atomTargets.length * 2,
+    count: selectedCaptureNames?.size ?? targets.length,
     captures: [],
   };
   const regressions = [];
@@ -543,41 +406,6 @@ async function main() {
       }
     }
 
-    for (const atom of atomTargets) {
-      if (!shouldCaptureAtom(atom.name)) continue;
-      const id = findStoryId(index.entries, atom);
-      await page.setViewportSize(atom.viewport);
-      await loadStoryReady(page, storyUrl(origin, id, atom.query), atom.name, runtimeErrors);
-      const captureNames = await captureAtom(page, atom, outDir);
-      for (const captureName of captureNames) {
-        if (!shouldCapture(captureName)) continue;
-        const capturePath = path.join(outDir, `${captureName}.png`);
-        const fileStat = await stat(capturePath);
-        manifest.captures.push({
-          name: captureName,
-          id,
-          atom: true,
-          selector: atom.selector,
-          query: atom.query || {},
-          viewport: atom.viewport,
-          path: path.relative(root, capturePath).replaceAll('\\', '/'),
-          bytes: fileStat.size,
-          sha256: await sha256(capturePath),
-        });
-        if (updateBaseline) {
-          await mkdir(baselineDir, { recursive: true });
-          await copyFile(capturePath, path.join(baselineDir, `${captureName}.png`));
-        } else if (checkBaseline) {
-          const comparison = await compareScreenshot(captureName, capturePath);
-          manifest.captures.at(-1).comparison = comparison;
-          const percent = (comparison.diffRatio * 100).toFixed(3);
-          console.log(`${captureName}: ${percent}% pixel difference`);
-          if (comparison.diffRatio > maxDiffRatio) {
-            regressions.push(`${captureName} ${percent}% > ${(maxDiffRatio * 100).toFixed(3)}%`);
-          }
-        }
-      }
-    }
   } finally {
     await page.close();
     await browser.close();

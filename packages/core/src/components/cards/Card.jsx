@@ -104,7 +104,7 @@ export function Card({
           {leadingContent != null && <div style={{ flexShrink: 0 }}>{leadingContent}</div>}
           <div style={{ display: 'grid', gap: 4, minWidth: 0, flex: 1 }}>
             {caption != null && <div style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-medium)' }}>{caption}</div>}
-            {title != null && <div style={{ fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', lineHeight: 1.5, color: dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
+            {title != null && <div style={{ fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', lineHeight: 1.5, color: dark ? 'var(--component-card-fg-dark)' : 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</div>}
             {description != null && <div style={{ fontSize: 'var(--label2-size)', lineHeight: 1.5, color: dark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{description}</div>}
             {subCaption != null && <div style={{ fontSize: 'var(--caption1-size)', lineHeight: 1.35, color: 'var(--color-semantic-label-alternative)' }}>{subCaption}</div>}
             {metaCaption != null && <div style={{ fontSize: 'var(--caption2-size)', lineHeight: 1.3, color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{metaCaption}</div>}

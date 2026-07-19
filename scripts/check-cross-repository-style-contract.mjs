@@ -17,16 +17,22 @@ const contractPath = 'docs/references/package-split/CROSS_REPOSITORY_STYLE_CONTR
 const contractSchemaPath = 'docs/references/package-split/CROSS_REPOSITORY_STYLE_CONTRACT.schema.json';
 const surfacePath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json';
 const surfaceSchemaPath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.schema.json';
+const lds3dSurfacePath = 'docs/references/package-split/LDS3D_EXTERNAL_SURFACE.json';
+const lds3dSurfaceSchemaPath = 'docs/references/package-split/LDS3D_EXTERNAL_SURFACE.schema.json';
 const fixtureContractPath = 'packages/conformance/fixtures/contract.json';
 const fixtureSurfacePath = 'packages/conformance/fixtures/lds/external-surface.json';
+const fixtureLds3dSurfacePath = 'packages/conformance/fixtures/lds/lds3d-external-surface.json';
 
-const [contract, contractSchema, surface, surfaceSchema, fixtureContract, fixtureSurface] = await Promise.all([
+const [contract, contractSchema, surface, surfaceSchema, lds3dSurface, lds3dSurfaceSchema, fixtureContract, fixtureSurface, fixtureLds3dSurface] = await Promise.all([
   load(contractPath),
   load(contractSchemaPath),
   load(surfacePath),
   load(surfaceSchemaPath),
+  load(lds3dSurfacePath),
+  load(lds3dSurfaceSchemaPath),
   load(fixtureContractPath),
   load(fixtureSurfacePath),
+  load(fixtureLds3dSurfacePath),
 ]);
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -35,8 +41,10 @@ addFormats(ajv);
 for (const [label, schema, value] of [
   ['cross-repository style contract', contractSchema, contract],
   ['Robotics external surface', surfaceSchema, surface],
+  ['LDS3D external surface', lds3dSurfaceSchema, lds3dSurface],
   ['fixture style contract', contractSchema, fixtureContract],
   ['fixture Robotics external surface', surfaceSchema, fixtureSurface],
+  ['fixture LDS3D external surface', lds3dSurfaceSchema, fixtureLds3dSurface],
 ]) {
   const validate = ajv.compile(schema);
   if (!validate(value)) {
@@ -44,12 +52,65 @@ for (const [label, schema, value] of [
   }
 }
 
-const profile = contract.profiles['robotics-ui'];
-const contractLocal = [...profile.localTokenDefinitions.names].sort();
-const surfaceLocal = [...surface.localTokenDefinitions].sort();
-if (JSON.stringify(contractLocal) !== JSON.stringify(surfaceLocal)) {
-  throw new Error('Robotics local token definitions differ between the style contract and external-surface manifest.');
+function assertSameStrings(label, left, right) {
+  const normalizedLeft = [...left].sort();
+  const normalizedRight = [...right].sort();
+  if (JSON.stringify(normalizedLeft) !== JSON.stringify(normalizedRight)) {
+    throw new Error(`${label} differ between the style contract and external-surface manifest.`);
+  }
 }
+
+function checkRoboticsProfile(styleContract, externalSurface, label) {
+  const profile = styleContract.profiles['robotics-ui'];
+  assertSameStrings(`${label} local token definitions`, profile.localTokenDefinitions.names, externalSurface.localTokenDefinitions);
+}
+
+function checkLds3dProfile(styleContract, externalSurface, label) {
+  const profile = styleContract.profiles['lds3d-ui'];
+  const workspaceIdentity = profile.workspacePackage;
+  if (externalSurface.package.manifest !== workspaceIdentity.manifest
+    || externalSurface.package.name !== workspaceIdentity.name
+    || externalSurface.package.version !== workspaceIdentity.version
+    || externalSurface.package.repository !== profile.repository) {
+    throw new Error(`${label} workspace identity differs between the style contract and external-surface manifest.`);
+  }
+  assertSameStrings(
+    `${label} runtime custom properties`,
+    profile.runtimeCustomProperties.map((entry) => entry.name),
+    externalSurface.runtimeCustomProperties,
+  );
+  assertSameStrings(
+    `${label} headless package manifests`,
+    profile.headlessPackages.map((entry) => entry.manifest),
+    externalSurface.packages.map((entry) => entry.manifest),
+  );
+}
+
+function checkProfileDependencyPins(styleContract, label) {
+  const canonicalVersions = new Map(
+    styleContract.lds.packages.map((entry) => [entry.name, entry.version]),
+  );
+  const roboticsPackage = styleContract.profiles['robotics-ui'].package;
+  canonicalVersions.set(roboticsPackage.name, roboticsPackage.version);
+  for (const [profileName, profile] of Object.entries(styleContract.profiles)) {
+    for (const dependency of profile.packageDependencies) {
+      const expectedVersion = canonicalVersions.get(dependency.name);
+      if (!expectedVersion) {
+        throw new Error(`${label} ${profileName} dependency ${dependency.name} has no canonical package identity.`);
+      }
+      if (dependency.version !== expectedVersion) {
+        throw new Error(`${label} ${profileName} dependency ${dependency.name} must pin ${expectedVersion}; received ${dependency.version}.`);
+      }
+    }
+  }
+}
+
+checkRoboticsProfile(contract, surface, 'Robotics');
+checkLds3dProfile(contract, lds3dSurface, 'LDS3D');
+checkRoboticsProfile(fixtureContract, fixtureSurface, 'Fixture Robotics');
+checkLds3dProfile(fixtureContract, fixtureLds3dSurface, 'Fixture LDS3D');
+checkProfileDependencyPins(contract, 'Production contract');
+checkProfileDependencyPins(fixtureContract, 'Fixture contract');
 
 for (const packageContract of contract.lds.packages) {
   const packageJson = await load(`${packageContract.workspace}/package.json`);
@@ -58,4 +119,4 @@ for (const packageContract of contract.lds.packages) {
   }
 }
 
-console.log(`Cross-repository style contract is valid (schema v${contract.schemaVersion}, Robotics profile).`);
+console.log(`Cross-repository style contract is valid (schema v${contract.schemaVersion}, Robotics + LDS3D profiles).`);
