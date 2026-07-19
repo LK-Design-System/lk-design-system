@@ -3,11 +3,11 @@
   "schemaVersion": 1,
   "audit": {
     "status": "wave-0-in-progress",
-    "capturedAt": "2026-07-19T08:56:03.5920491+09:00",
+    "capturedAt": "2026-07-19T09:05:19.5929958+09:00",
     "source": {
       "repository": "LK-ROBOTICS/lk-design-system",
       "observedBranch": "main",
-      "observedCommit": "61b437f31e1d8b04e98d21266abebb49ffa67425",
+      "observedCommit": "1078a59b057dc39372670b4011cef0eff499be35",
       "mainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
       "originMainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
       "packageName": "@lk-robotics/design-system-core",
@@ -21,11 +21,11 @@
       "blockers": [
         {
           "id": "clean-main-baseline",
-          "reason": "The approved Wave 0 preparation is integrated on local main at 61b437f, but origin/main remains at 0aa7f8d and no immutable clean-main source tag exists."
+          "reason": "The approved Wave 0 preparation and local full-check handoff are integrated on local main at 1078a59, but origin/main remains at 0aa7f8d and no immutable clean-main source tag exists."
         },
         {
           "id": "full-regression-baseline",
-          "reason": "Storybook IA is current at 190/579 and the eight Robotics atom visual baselines are repaired with 65/65 regression parity, but no clean-tagged source commit has a tracked full-check and consumer-matrix attestation."
+          "reason": "Local main passed npm run check with 579 Axe stories, 259 play functions and 65/65 visual parity, but no clean-tagged source commit has a tracked full-check and consumer-matrix attestation."
         },
         {
           "id": "package-artifact-baseline",
@@ -957,10 +957,14 @@
       "status": "not-captured",
       "requiredBefore": "wave-0-approval",
       "diagnosticObservation": {
-        "sourceCommit": "61b437f31e1d8b04e98d21266abebb49ffa67425",
+        "sourceCommit": "a5a2be3a15d0851e71f39d5d28bb021cd126e3d3",
+        "runtime": "windows-x64-node-22.17.1-npm-10.9.2",
+        "command": "npm run check",
+        "result": "passed",
         "storybookIa": "passed-190-pages-579-stories-all-reviewed",
+        "accessibility": "passed-579-axe-259-play-zero-violations-and-console-errors",
         "visualRegression": "passed-65-of-65",
-        "viewerTokens": "passed-three-play-and-axe-stories-with-direct-content-boundary-checks",
+        "packageArtifactSmoke": "passed-actual-tarball-esm-cjs-types-deep-ssr-and-assets",
         "acceptance": "diagnostic-only-until-clean-tagged-full-check-and-consumer-matrix-evidence"
       }
     },
@@ -969,11 +973,11 @@
       "lastKnownGoodReleaseSet": null,
       "tarballs": [],
       "diagnosticObservation": {
-        "sourceCommit": "626756b14de12c100b18855933886f44e473ae53",
-        "runtime": "windows-node-24.18.0-npm-11.16.0",
-        "sizeBytes": 8298592,
-        "sha256": "42a68a48c9f856cac603618b10cf0b0c73fe0b5a09de6e2f18a0dd42e8949394",
-        "acceptance": "rejected-as-canonical-baseline"
+        "sourceCommit": "a5a2be3a15d0851e71f39d5d28bb021cd126e3d3",
+        "runtime": "windows-x64-node-22.17.1-npm-10.9.2",
+        "command": "npm run check:pack via npm run check",
+        "result": "passed-actual-tarball-install-and-smoke",
+        "acceptance": "diagnostic-only-until-clean-tagged-immutable-attestation-and-byte-reproduction"
       }
     },
     "consumerMatrix": {
