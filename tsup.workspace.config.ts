@@ -59,7 +59,9 @@ export default defineConfig({
     ...(compatibilityCjsBuild ? [] : implementationPackageNames),
   ],
   sourcemap: true,
-  splitting: workspacePackage !== 'compat',
+  // CJS facade entries share implementation chunks so root, layer, and deep
+  // compatibility imports retain the same component references.
+  splitting: workspacePackage !== 'compat' || compatibilityCjsBuild,
   clean: !(workspacePackage === 'compat' && requestedFormat === 'cjs'),
   dts: false,
   outDir: path.join(packageRoot, 'dist'),

@@ -26,6 +26,7 @@ const artifactVerificationSentinelPath = 'visual-artifacts/package-smoke/WAVE0_A
 const classificationPath = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json';
 const productAuditPath = 'docs/references/product-frontends/COVERAGE_AUDIT.json';
 const requireWave0 = process.argv.includes('--require-wave=0');
+const requireCurrentCi = process.argv.includes('--require-current-ci');
 const wave0HistoricalBaseline = Object.freeze({
   tag: 'wave0-baseline-2026-07-19-r2',
   commit: '679859bc8b5126bcff7146eaedd871bbe9e62891',
@@ -983,6 +984,77 @@ async function validateConsumers(audit, packageById) {
   };
 }
 
+function workflowJobSource(ciSource, jobId) {
+  const lines = ciSource.split(/\r?\n/);
+  const start = lines.findIndex((line) => line === `  ${jobId}:`);
+  assert(start >= 0, `CI must include the ${jobId} job.`);
+  if (start < 0) return '';
+  let end = start + 1;
+  while (end < lines.length && !/^  [A-Za-z0-9_-]+:\s*$/.test(lines[end])) end += 1;
+  return lines.slice(start, end).join('\n');
+}
+
+function validateCurrentPackageCi(packageJson, ciSource) {
+  const windowsJob = workflowJobSource(ciSource, 'design-system');
+  const linuxJob = workflowJobSource(ciSource, 'workspace-consumer-linux');
+  const packageSetPath = 'visual-artifacts/workspace-package-set';
+
+  assert(ciSource.includes('packages: read'), 'CI must grant read access to GitHub Packages.');
+  assert(!ciSource.includes('check:pack:baseline-if-present'), 'Current CI must not rebuild the historical aggregate baseline.');
+  assert(!ciSource.includes('check:consumer:matrix'), 'Current CI must not run the historical Wave 0 consumer matrix.');
+  assert(!ciSource.includes('wave0-windows-consumer-input'), 'Current CI must not upload the historical aggregate tarball.');
+  assert(
+    packageJson.scripts?.['check:ci'] ===
+      'node scripts/run-package-scripts.mjs check:fast check:storybook-ci',
+    'CI checks must run current source and Storybook checks without rebuilding the historical aggregate.',
+  );
+  assert(
+    packageJson.scripts?.['check:workspace-consumer:matrix'] ===
+      'node scripts/check-workspace-consumer-matrix.mjs',
+    'Current workspace consumer matrix command drift.',
+  );
+  assert(
+    packageJson.scripts?.['check:package-migration:current-ci'] ===
+      'node scripts/check-package-migration.mjs --require-current-ci',
+    'Current CI contract gate command drift.',
+  );
+  assert(
+    packageJson.scripts?.['check:package-migration'] ===
+      'node scripts/run-package-scripts.mjs check:package-migration:wave0 check:package-migration:current-ci check:workspace-packages',
+    'Package migration checks must run both historical and current CI contracts.',
+  );
+
+  assert(windowsJob.includes('runs-on: windows-latest'), 'Current package set must be produced on Windows.');
+  assert(windowsJob.includes('NODE_AUTH_TOKEN: ${{ github.token }}'), 'Windows package checks must authenticate to GitHub Packages.');
+  assert(windowsJob.includes('node-version: 22.17.1'), 'Windows package checks must pin Node 22.17.1.');
+  assert(windowsJob.includes("Expected npm 10.9.2."), 'Windows package checks must verify npm 10.9.2.');
+  assert(windowsJob.includes('run: npm run check:ci'), 'Windows CI must run the current source and Storybook checks.');
+  assert(
+    windowsJob.includes(`run: npm run check:pack -- --output-dir=${packageSetPath}`),
+    'Windows CI must preserve the verified four-package workspace set.',
+  );
+  assert(
+    windowsJob.includes(`run: npm run check:workspace-consumer:matrix -- --platform=windows --package-set=${packageSetPath} --require-browser`),
+    'Windows CI must run React 18/19, SSR, Vite, tree-shaking, and browser checks on the package set.',
+  );
+  assert(windowsJob.includes('name: workspace-package-set-windows'), 'Windows CI must upload the verified package set.');
+  assert(windowsJob.includes(`${packageSetPath}/package-set.json`), 'Windows CI must upload the package-set manifest.');
+  assert(windowsJob.includes(`${packageSetPath}/tarballs/*.tgz`), 'Windows CI must upload all workspace tarballs.');
+
+  assert(linuxJob.includes('needs: design-system'), 'Linux consumption must wait for the Windows package set.');
+  assert(linuxJob.includes('runs-on: ubuntu-latest'), 'Linux package consumption must run on Ubuntu.');
+  assert(linuxJob.includes('NODE_AUTH_TOKEN: ${{ github.token }}'), 'Linux package checks must authenticate to GitHub Packages.');
+  assert(linuxJob.includes('node-version: 22.17.1'), 'Linux package checks must pin Node 22.17.1.');
+  assert(linuxJob.includes("test \"$(npm --version)\" = '10.9.2'"), 'Linux package checks must verify npm 10.9.2.');
+  assert(linuxJob.includes('run: npm ci'), 'Linux package checks must use npm ci.');
+  assert(linuxJob.includes('uses: actions/download-artifact@v5'), 'Linux CI must download the Windows package set.');
+  assert(linuxJob.includes('name: workspace-package-set-windows'), 'Linux CI must consume the uploaded Windows package set.');
+  assert(
+    linuxJob.includes(`run: npm run check:workspace-consumer:matrix -- --platform=linux --package-set=${packageSetPath}`),
+    'Linux CI must consume the exact verified Windows package set.',
+  );
+}
+
 async function validatePackageManager(audit) {
   const packageJson = await readJson('package.json');
   const decision = audit.decisions?.packageManager;
@@ -1042,18 +1114,11 @@ async function validatePackageManager(audit) {
     'CI checkout must fetch full history for migration commit/tag ancestry checks.',
   );
   assert(/run:\s*npm ci\b/.test(ciSource), 'CI must use npm ci.');
-  assert(ciSource.includes('consumer-matrix-linux'), 'CI must include an isolated Linux consumer matrix job.');
-  assert(ciSource.includes('ubuntu-latest'), 'CI must execute the Linux consumer matrix on Ubuntu.');
-  assert(ciSource.includes('check:consumer:matrix'), 'CI must execute isolated tarball consumer matrix checks.');
+  validateCurrentPackageCi(packageJson, ciSource);
   assert(
-    packageJson.scripts?.['check:ci'] ===
-      'node scripts/run-package-scripts.mjs check:fast check:storybook-ci && npm run check:pack:baseline-if-present',
-    'CI checks must enter the conditional package-baseline npm lifecycle explicitly.',
-  );
-    assert(
-      packageJson.scripts?.['check:package-migration:wave0'] ===
-        'node scripts/check-package-migration.mjs --require-wave=0',
-      'Wave 0 gate must use the immutable historical attestation verifier.',
+    packageJson.scripts?.['check:package-migration:wave0'] ===
+      'node scripts/check-package-migration.mjs --require-wave=0',
+    'Wave 0 gate must use the immutable historical attestation verifier.',
   );
   assert(
     packageJson.scripts?.['capture:pack:baseline'] ===
@@ -2227,6 +2292,9 @@ async function validateReadiness(audit, consumerSummary, packageManagerSummary) 
 }
 
 async function main() {
+  if (requireWave0 && requireCurrentCi) {
+    throw new Error('Choose either --require-wave=0 or --require-current-ci.');
+  }
   if (requireWave0) {
     validateWave0HistoricalAttestation();
     if (failures.length > 0) {
@@ -2235,6 +2303,19 @@ async function main() {
     console.log(
       `LDS immutable Wave 0 attestation verified: ${wave0HistoricalBaseline.tag} -> ${wave0HistoricalAttestation.tag}.`,
     );
+    return;
+  }
+
+  if (requireCurrentCi) {
+    const [packageJson, ciSource] = await Promise.all([
+      readJson('package.json'),
+      readFile(path.join(root, '.github/workflows/ci.yml'), 'utf8'),
+    ]);
+    validateCurrentPackageCi(packageJson, ciSource);
+    if (failures.length > 0) {
+      throw new Error(`LDS current package CI contract failed:\n- ${failures.join('\n- ')}`);
+    }
+    console.log('LDS current package CI contract verified: one hashed Windows package set is consumed on Windows and Linux.');
     return;
   }
 

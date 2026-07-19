@@ -1,5 +1,6 @@
-import { access, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +22,28 @@ const workspaces = [
 
 function invariant(condition, message) {
   if (!condition) throw new Error(message);
+}
+
+function optionValue(name) {
+  const direct = process.argv.indexOf(name);
+  if (direct >= 0) {
+    invariant(process.argv[direct + 1] && !process.argv[direct + 1].startsWith('--'), `${name} requires a path.`);
+    return process.argv[direct + 1];
+  }
+  const prefix = `${name}=`;
+  const value = process.argv.find((argument) => argument.startsWith(prefix))?.slice(prefix.length);
+  if (value !== undefined) invariant(value, `${name} requires a path.`);
+  return value;
+}
+
+function strictArtifactDescendant(value) {
+  const absolute = path.resolve(repositoryRoot, value);
+  const relative = path.relative(artifactRoot, absolute);
+  invariant(
+    relative && !relative.startsWith('..') && !path.isAbsolute(relative),
+    `Refusing to use an output path outside or equal to visual-artifacts: ${value}`,
+  );
+  return absolute;
 }
 
 function run(command, args, options = {}) {
@@ -60,6 +83,13 @@ function run(command, args, options = {}) {
 
 async function readJson(file) {
   return JSON.parse(await readFile(file, 'utf8'));
+}
+
+async function sourceCommit() {
+  const { stdout } = await run('git', ['rev-parse', 'HEAD']);
+  const commit = stdout.trim();
+  invariant(/^[a-f0-9]{40}$/.test(commit), `git rev-parse HEAD returned an invalid commit: ${commit}`);
+  return commit;
 }
 
 function normalizeArchivePath(file) {
@@ -194,7 +224,7 @@ async function smokeConsumer(packed, consumerDirectory) {
   );
   await run(
     npmCommand,
-    [...npmPrefixArguments, 'install', '--ignore-scripts', '--legacy-peer-deps', ...packed.map(({ tarball }) => tarball)],
+    [...npmPrefixArguments, 'install', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps', ...packed.map(({ tarball }) => tarball)],
     {
       cwd: consumerDirectory,
       env: { npm_config_cache: path.join(path.dirname(consumerDirectory), 'npm-cache') },
@@ -236,21 +266,61 @@ console.log('workspace artifact consumer smoke passed');
 
 async function main() {
   await mkdir(artifactRoot, { recursive: true });
-  const runDirectory = await mkdtemp(path.join(artifactRoot, 'workspace-artifacts-'));
+  const outputValue = optionValue('--output-dir');
+  const persistent = outputValue !== undefined;
+  const runDirectory = persistent
+    ? strictArtifactDescendant(outputValue)
+    : await mkdtemp(path.join(artifactRoot, 'workspace-artifacts-'));
+  if (persistent) {
+    await rm(runDirectory, { recursive: true, force: true, maxRetries: 3 });
+    await mkdir(runDirectory, { recursive: true });
+  }
   const tarballDirectory = path.join(runDirectory, 'tarballs');
   const consumerDirectory = path.join(runDirectory, 'consumer');
   await mkdir(tarballDirectory, { recursive: true });
   await mkdir(consumerDirectory, { recursive: true });
 
+  let completed = false;
   try {
     const packed = [];
     for (const workspace of workspaces) packed.push(await packWorkspace(workspace, tarballDirectory));
     await smokeConsumer(packed, consumerDirectory);
+    if (persistent) {
+      const packages = [];
+      for (const item of packed) {
+        const bytes = await readFile(item.tarball);
+        packages.push({
+          id: item.id,
+          name: item.name,
+          version: item.manifest.version,
+          file: `tarballs/${path.basename(item.tarball)}`,
+          size: bytes.byteLength,
+          sha256: createHash('sha256').update(bytes).digest('hex'),
+        });
+      }
+      const manifest = {
+        schemaVersion: 1,
+        kind: 'lds-workspace-package-set',
+        sourceCommit: await sourceCommit(),
+        packages,
+      };
+      await writeFile(path.join(runDirectory, 'package-set.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+      await rm(consumerDirectory, { recursive: true, force: true, maxRetries: 3 });
+      await rm(path.join(runDirectory, 'npm-cache'), { recursive: true, force: true, maxRetries: 3 });
+      invariant(
+        JSON.stringify((await readdir(runDirectory)).sort()) === JSON.stringify(['package-set.json', 'tarballs']),
+        'Persistent package-set output must contain only package-set.json and tarballs/.',
+      );
+      console.log(`Preserved verified LDS workspace package set: ${path.relative(repositoryRoot, runDirectory).replaceAll('\\', '/')}`);
+    }
+    completed = true;
     console.log('LDS workspace tarballs verified: Core/Theme/Product ESM+types, compat ESM+CJS, and isolated consumer smoke with the external Robotics package passed.');
   } finally {
-    const relative = path.relative(artifactRoot, runDirectory);
-    invariant(relative && !relative.startsWith('..') && !path.isAbsolute(relative), 'Refusing to clean an artifact path outside visual-artifacts.');
-    await rm(runDirectory, { recursive: true, force: true, maxRetries: 3 });
+    if (!persistent || !completed) {
+      const relative = path.relative(artifactRoot, runDirectory);
+      invariant(relative && !relative.startsWith('..') && !path.isAbsolute(relative), 'Refusing to clean an artifact path outside visual-artifacts.');
+      await rm(runDirectory, { recursive: true, force: true, maxRetries: 3 });
+    }
   }
 }
 
