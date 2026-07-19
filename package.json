@@ -84,7 +84,7 @@
     "check:robotics-semantics": "node scripts/check-robotics-semantic-contracts.mjs",
     "check:docs": "node scripts/check-documentation-system.mjs",
     "check:product-frontends": "node scripts/check-product-frontend-coverage.mjs",
-    "check:wds-alignment": "node scripts/check-wds-alignment.mjs",
+    "check:wds-alignment": "node --test scripts/storybook-order.test.mjs && node scripts/check-wds-alignment.mjs",
     "check:avatar-duplicates": "node scripts/check-avatar-duplicates.mjs",
     "check:story-subjects": "node scripts/check-story-subject-duplicates.mjs",
     "check:visual-token-drift": "node scripts/check-visual-token-drift.mjs",

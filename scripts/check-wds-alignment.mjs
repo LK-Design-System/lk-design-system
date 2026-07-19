@@ -1,5 +1,6 @@
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
+import { assertStorySortRootOrder } from './storybook-order.mjs';
 
 const root = process.cwd();
 
@@ -160,10 +161,13 @@ for (const phrase of ['WDS Core', 'LK Theme Override', 'LK Robotics Extension', 
 }
 
 const preview = await read('.storybook/preview.jsx');
-for (const prefix of classification.allowedTitlePrefixes) {
-  const layer = prefix.replace(/\/$/, '');
-  assert(preview.includes(`'${layer}'`), `.storybook/preview.jsx storySort is missing layer: ${layer}`);
-}
+const localStoryLayers = new Set(
+  [...actualStoryTitles.values()].map((title) => title.split('/')[0]),
+);
+const expectedStorySortRootOrder = allowedPrefixes
+  .map((prefix) => prefix.replace(/\/$/, ''))
+  .filter((layer) => localStoryLayers.has(layer));
+assertStorySortRootOrder(preview, expectedStorySortRootOrder);
 
 assert(
   coverageAudit.source?.figmaFileKey === classification.source?.figmaFileKey,
