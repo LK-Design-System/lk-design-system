@@ -168,6 +168,30 @@ function MessageFeed({
     lastRequestedFollowingRef.current = nextFollowing;
     onFollowingChange?.(nextFollowing, "user-scroll");
   };
+  const handleViewportKeyDown = (event) => {
+    if (event.target !== event.currentTarget || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const viewport = event.currentTarget;
+    const page = Math.max(1, viewport.clientHeight - 32);
+    let nextScrollTop;
+    switch (event.key) {
+      case "Home":
+        nextScrollTop = 0;
+        break;
+      case "End":
+        nextScrollTop = viewport.scrollHeight;
+        break;
+      case "PageUp":
+        nextScrollTop = Math.max(0, viewport.scrollTop - page);
+        break;
+      case "PageDown":
+        nextScrollTop = Math.min(viewport.scrollHeight, viewport.scrollTop + page);
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    viewport.scrollTop = nextScrollTop;
+  };
   const handleLoadPrevious = () => {
     const viewport = viewportRef.current;
     if (!viewport || !onLoadPrevious || loadingPrevious) return;
@@ -261,8 +285,10 @@ function MessageFeed({
             "aria-relevant": "additions",
             "aria-atomic": "false",
             "aria-busy": isBusy ? "true" : void 0,
+            "aria-keyshortcuts": "Home End PageUp PageDown",
             tabIndex: 0,
             onScroll: handleScroll,
+            onKeyDown: handleViewportKeyDown,
             style: {
               boxSizing: "border-box",
               width: "100%",
@@ -387,4 +413,4 @@ function MessageFeed({
 export {
   MessageFeed
 };
-//# sourceMappingURL=chunk-Q45WZZPB.js.map
+//# sourceMappingURL=chunk-OK5XV443.js.map

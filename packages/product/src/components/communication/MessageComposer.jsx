@@ -170,7 +170,7 @@ export function MessageComposer({
     if (composing || event.shiftKey || submitMode === 'button-only') return;
 
     if (submitMode === 'modifier-enter') {
-      if (!event.ctrlKey && !event.metaKey) return;
+      if (event.altKey || (!event.ctrlKey && !event.metaKey)) return;
       event.preventDefault();
       submitValue('modifier-enter');
       return;

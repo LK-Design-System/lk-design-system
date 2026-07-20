@@ -5,47 +5,46 @@
 | Type | Stable contract and current audit summary |
 | Status | Current |
 | Owner | Storybook information-architecture owner |
-| Last reviewed | 2026-07-19 |
+| Last reviewed | 2026-07-21 |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
 이 문서는 Storybook의 페이지 소유권, 스토리 역할, 공개 여부, 설명 순서를 정의한다. 전수 감사 원장은 [`references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`](references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json)에 있으며, 감사·계획·커버리지 화면을 Storybook에 추가하지 않는다.
 
 ## 현재 기준선
 
-2026-07-19 현재 소스에서 재생성한 정적 빌드 기준으로 190개 페이지와 579개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-07-21 현재 소스에서 재생성한 정적 빌드 기준으로 148개 페이지와 408개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 443개
-- 숨김 스토리: 136개
-- 숨김 visual parity: 99개
-- 숨김 internal contract: 37개
-- 검토 완료 페이지 190/190개, 스토리 579/579개
+- 공개 스토리: 306개
+- 숨김 스토리: 102개
+- 숨김 visual parity: 73개
+- 숨김 internal contract: 29개
+- 검토 완료 페이지 148/148개, 스토리 407/408개
 
-2026-07-19 전수 검토에서는 기존 기준선 이후 추가·변경된 Communication, Robotics Foundation, Navigation, Viewer의 23개 페이지를 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·320px 렌더와 대조했다. 이에 따라 현재 190개 페이지와 579개 스토리 전체의 owner, role, visibility, disposition과 source hash가 최신 상태다.
+2026-07-21 검토에서는 Communication 변경분과 현재 활성 스토리를 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·320px 렌더와 대조했다. 현재 148개 페이지와 408개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 
-- 컴포넌트 설명이 있는 페이지: 186개
-- Canvas에서 안내 서문을 직접 보여 주는 페이지: 190개
-- 사용/비사용 판단 기준이 확인되는 페이지: 185개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 443개
+- 컴포넌트 설명이 있는 페이지: 144개
+- Canvas에서 안내 서문을 직접 보여 주는 페이지: 148개
+- 사용/비사용 판단 기준이 확인되는 페이지: 143개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
+- 목적 설명이 있는 공개 스토리: 305개
 - Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
 - Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 83/83개
-- Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 207/207개
-- Robotics 진입 가이드: 42/42페이지, 공개 스토리 설명: 139/139개
+- Product 진입 가이드: 85/86페이지, 공개 스토리 설명: 208/209개
 - Theme 진입 가이드: 3/3페이지, 공개 스토리 설명: 3/3개
-- 공개 스토리 표시명 계약: 443/443개(`개요` 또는 역할 접두어)
+- 공개 스토리 표시명 계약: 305/306개(`개요` 또는 역할 접두어)
 - 이름을 바꾼 페이지의 기존 story id 보존: 5/5페이지
 
 모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 공개 스토리의 Docs 설명에서 상황과 확인 지점을 이어서 볼 수 있다.
 
 ## 전수 감사 판정
 
-현재 검토 패스에서 190개 페이지와 579개 스토리를 소스 AST와 빌드 인덱스에 대조해 모두 검토했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion과 Robotics 원자 페이지도 같은 role·visibility·description 계약으로 검토했다.
+현재 검토 패스에서 148개 페이지와 408개 스토리를 소스 AST와 빌드 인덱스에 대조했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion 페이지도 같은 role·visibility·description 계약으로 검토했다.
 
 - 13개 구조 분리 실행: `Effects and Interaction`, `Action Controls`, `Annotations`, `Anchored Overlay`, `Menu`, `Segmented and Toggle`, `Selection Groups`, `Text Input`, `Loading State`, `Progress`, `Utility Actions`, `File Upload Queue`, `Telemetry`
 - 5개 분리 기각·keep 정정: `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`, `Toast`, `Manual Control Session`
 - 1개 병합 기각·keep 정정: `History Toolbar`
-- 공개 내부 계약 10개를 `!dev`로 전환하고 Communication·VirtualKeypad·Robotics Navigation·Robotics Foundation의 실제 컴포넌트 회귀 표면을 정리해 현재 visual parity는 99개다.
+- 공개 내부 계약 10개를 `!dev`로 전환하고 Communication·VirtualKeypad의 실제 컴포넌트 회귀 표면을 정리해 현재 visual parity는 73개다.
 
-최종 구조에서는 분리된 각 페이지가 독립 소유자를 가지므로 census 판정은 `keep` 190개, `split` 0개, `merge` 0개, `hide` 0개다. 190개 페이지·579개 스토리 모두 검토 완료이며 stale source hash와 공개·숨김 권고 불일치는 각각 0개다. 2026-07-19 추가 검토에서는 Foundation의 실제 consumer 소유권, Navigation 역할 순서, Viewer Tokens의 컴포넌트별 tone 의미와 정상·320px 콘텐츠 경계를 사람이 다시 확인했고, `check:storybook-ia`가 이 상태를 회귀 방지한다.
+최종 구조에서는 분리된 각 페이지가 독립 소유자를 가지므로 census 판정은 `keep` 148개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 수와 stale source hash는 감사 원장의 현재 summary를 기준으로 하며, `check:storybook-ia`가 이 상태를 회귀 방지한다.
 
 정정 근거는 다음과 같다.
 

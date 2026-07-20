@@ -23,7 +23,7 @@ export interface MessageFeedProps extends Omit<React.HTMLAttributes<HTMLElement>
   onLoadPrevious?: () => void | Promise<void>;
   /** History action label. @default "이전 메시지 불러오기" */
   loadPreviousLabel?: string;
-  /** Controlled bottom-follow state. The consumer must update it from onFollowingChange. */
+  /** Controlled bottom-follow state. The consumer must update it from onFollowingChange. The focusable log supports Home, End, Page Up, and Page Down scrolling. */
   following: boolean;
   /** Called when user scrolling changes the follow state or the latest-message action restores it. */
   onFollowingChange?: (following: boolean, reason: MessageFeedFollowingReason) => void;

@@ -77,10 +77,14 @@ export const SelectKeyboardContract = {
   play: async ({ canvasElement }) => {
     const trigger = canvasElement.querySelector('[role="combobox"][aria-label="게시 상태"]');
     if (!trigger) throw new Error('Select must expose its trigger as an accessible combobox.');
+    if (trigger.hasAttribute('aria-controls')) {
+      throw new Error('A closed Select must not reference an unmounted listbox.');
+    }
 
     trigger.focus();
     await userEvent.keyboard('{ArrowDown}');
     const listboxId = trigger.getAttribute('aria-controls');
+    if (!listboxId) throw new Error('An open Select must reference its mounted listbox.');
     const listbox = listboxId ? canvasElement.ownerDocument.getElementById(listboxId) : null;
     if (trigger.getAttribute('aria-expanded') !== 'true' || !listbox || listbox.getAttribute('role') !== 'listbox') {
       throw new Error('ArrowDown must open the controlled listbox.');
@@ -91,6 +95,9 @@ export const SelectKeyboardContract = {
     if (endOption?.textContent?.trim() !== '게시') throw new Error('End must move active focus to the last option.');
 
     await userEvent.keyboard('{Escape}');
+    if (trigger.hasAttribute('aria-controls')) {
+      throw new Error('Closing Select must remove the stale listbox relationship.');
+    }
     if (trigger.getAttribute('aria-expanded') !== 'false' || canvasElement.ownerDocument.activeElement !== trigger || !trigger.textContent?.includes('검토')) {
       throw new Error('Escape must retain the value, close the listbox, and restore trigger focus.');
     }
@@ -154,8 +161,7 @@ export const SelectDisabledOptionContract = {
     if (!trigger || !locked || !toggleOption || !toggleControl || !selectedValue) {
       throw new Error('Select disabled-option contract targets are required.');
     }
-    if (locked.getAttribute('aria-expanded') !== 'false'
-      || canvasElement.ownerDocument.getElementById(locked.getAttribute('aria-controls'))) {
+    if (locked.getAttribute('aria-expanded') !== 'false' || locked.hasAttribute('aria-controls')) {
       throw new Error('A disabled Select must ignore defaultOpen and keep its listbox closed.');
     }
 
@@ -192,7 +198,7 @@ export const SelectDisabledOptionContract = {
     toggleControl.click();
     await waitFor(() => {
       if (!trigger.disabled || trigger.getAttribute('aria-expanded') !== 'false'
-        || canvasElement.ownerDocument.getElementById(trigger.getAttribute('aria-controls'))) {
+        || trigger.hasAttribute('aria-controls')) {
         throw new Error('A Select disabled while open must close immediately and remove the popup.');
       }
     });

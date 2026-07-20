@@ -6,8 +6,14 @@
 <ConversationMessage
   authorRole="assistant"
   author="AI Assistant"
+  inlineSources
   sources={<SourceDisclosure sources={sources} />}
-  messageActions={[{ key: 'copy', icon: <Icon name="copy" size={16} />, label: '복사' }]}
+  messageActions={[
+    { key: 'copy', icon: <Icon name="copy" size={16} />, label: '응답 복사' },
+    { key: 'regenerate', icon: <Icon name="refresh" size={16} />, label: '응답 다시 생성' },
+    { key: 'positive-feedback', icon: <Icon name="like" size={16} />, label: '좋은 응답으로 평가', pressed: feedback === 'positive' },
+    { key: 'negative-feedback', icon: <Icon name="dislike" size={16} />, label: '좋지 않은 응답으로 평가', pressed: feedback === 'negative' },
+  ]}
 >
   <AssistantAnswer />
 </ConversationMessage>
@@ -24,6 +30,7 @@
 - participant는 `presentation="document" | "bubble"`로 표현 방식을 명시할 수 있습니다. presentation은 정보 위계이지 protocol, 권한, 신뢰도 또는 발신자 role을 바꾸지 않습니다.
 - `direction`은 participant 배치만 재정의합니다. user는 기본 outbound, assistant와 human-agent는 기본 inbound이며 system은 항상 system 방향입니다. 시각 정렬 때문에 DOM 순서를 뒤집지 않습니다.
 - `children`은 본문, `attachments`, `sources`, `actions`는 각각 `ReactNode` 조합 slot입니다. `messageActions`는 복사·재생성·더보기 같은 하단 quick-action을 배열로 받아 컴포넌트가 icon-only 버튼 액션바로 렌더하며 `actions` slot과 공존합니다. `error`는 실패 응답 본문을 받아 무채색 경고 glyph를 앞에 붙입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.
+- 완료된 AI 응답의 canonical 제품 조합은 **응답 복사 → 응답 다시 생성 → 긍정 평가 → 부정 평가** 순서이며 provenance가 있으면 `inlineSources`의 접힌 출처 토글을 같은 footer에 형제로 둡니다. 각 icon-only action의 `label`은 대상과 동작을 함께 말해야 합니다. 선택형 평가 action은 제품이 소유한 상태를 `pressed`로 전달해 `aria-pressed`와 primary selected surface를 함께 노출합니다. 생성 중에는 아직 확정되지 않은 결과를 대상으로 하는 네 동작을 비활성화하고, 실패 시에는 불완전한 결과의 액션 대신 `error`와 `onRetry`만 제공합니다. action 실행, clipboard 결과 안내, 재생성 요청, feedback 저장과 선택 상태, transport 및 lifecycle truth는 제품이 소유합니다.
 - `sources`에는 `SourceDisclosure`, `attachments`에는 `FileUploadQueue`나 제품의 완료된 attachment 표현을 조합합니다. source 개수나 파일 상태에서 presentation을 추론하지 않습니다.
 - `inlineSources`는 `sources` 슬롯을 body 아래 별도 행이 아니라 action bar와 같은 footer 행에 배치합니다(ChatGPT식). 접힌 `<SourceDisclosure compact collapsible/>`를 넣으면 resting 상태가 아이콘+`출처` 토글 한 줄이 되어 copy·재생성 아이콘 옆에 나란히 놓이고, 누르면 출처 목록이 `SourceDisclosure`의 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않습니다. 이때 provenance는 `메시지 동작` 그룹의 **형제**로 남아(그룹 **안**이 아니라) 스크린리더에서 액션이 아닌 출처로 announce되며, 팝오버 열림/닫힘과 dismiss는 `SourceDisclosure`(내부 `Popover`)가 소유합니다. 출처를 항상 노출해야 하는 고신뢰 답변에서는 `inlineSources` 없이 기본 `sources` 행(항상 보이는 compact chip 또는 card)을 유지하세요.
 - `lifecycle`은 static, outbound delivery, inbound response 상태를 구분합니다. delivery는 `queued | sending | sent | read | failed | cancelled`이며, outbound 턴(기본 user bubble)은 하단 meta에 전송 시각과 `read`의 `읽음` 표식을 표시합니다. 읽음 여부의 truth는 제품이 소유하고 component는 주어진 상태만 렌더합니다. response 생성 중에도 message 자체에 stop action을 넣지 않습니다. 중지는 `MessageComposer`의 현재 요청 action이 소유합니다.
@@ -60,6 +67,8 @@
 - [Ant Design X Sender](https://x.ant.design/components/sender/)는 draft, submit/cancel과 utility extension을 message content와 분리합니다. 따라서 response 중지는 message action이 아니라 현재 request를 소유한 `MessageComposer`에 둡니다.
 - [Carbon AI Chat overview](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Overview.html)는 streamed/non-streamed response와 확장 가능한 rich content를 하나의 chat surface에서 다룹니다. 그래서 assistant body를 plain text bubble로 제한하지 않습니다.
 - [Carbon AI Chat server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)은 partial, final, cancel과 history를 transport lifecycle로 구분합니다. ConversationMessage는 현재 상태를 표현할 뿐 callback 뒤 전이를 추론하지 않습니다.
+- [Slackbot 사용 안내](https://slack.com/help/articles/202026038-How-to-use-Slackbot)는 생성 중인 AI 응답에 Stop 동작이 필요함을 확인해 줍니다. 문서는 control 위치까지 규정하지 않으므로, 현재 요청을 시작하고 제어하는 `MessageComposer`가 stop을 소유한다는 배치는 LDS의 interaction-boundary 결정입니다. 따라서 ConversationMessage의 완료 응답 액션과 response cancellation을 분리합니다.
+- [ChatGPT 오류 문제 해결](https://help.openai.com/en/articles/7996703)는 실패한 응답에서 오류 복구와 재생성을 제공하는 제품 관습을 설명합니다. LDS는 이를 실패 lifecycle의 명시적 `error`와 제품 소유 `onRetry` callback으로 표현하며, 성공 전이를 컴포넌트가 추론하지 않습니다.
 - [Ant Design X Attachments](https://x.ant.design/components/attachments/)는 file, image, audio, video와 document attachment를 composer와 message content에 조합하는 독립 anatomy로 다룹니다. LDS도 attachment를 schema가 아닌 `ReactNode` slot으로 둡니다.
 - [WAI-ARIA `log`](https://www.w3.org/TR/wai-aria/#log)는 순서대로 추가되는 chat history를 대표 사례로 정의합니다. message마다 live region을 만들지 않고 `MessageFeed` 한 곳에만 둡니다.
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다.
@@ -88,7 +97,7 @@
 ## intentional exclusions
 
 - Markdown parser와 sanitizer, citation 생성, attachment upload, provider/transport, persistence와 moderation
-- reaction, edit, branch/thread, 읽음 판정(read tracking; delivery `read` 상태 표시는 지원하되 읽음 여부 계산은 제품 몫), voice recorder와 tool execution. 재생성은 컴포넌트가 만들지 않고 제품이 `messageActions` 항목으로 조합합니다.
+- feedback 저장·선택 상태, edit, branch/thread, 읽음 판정(read tracking; delivery `read` 상태 표시는 지원하되 읽음 여부 계산은 제품 몫), voice recorder와 tool execution. 긍정·부정 feedback과 재생성 control은 canonical `messageActions` 조합으로 지원하지만 해당 동작과 상태 전이는 제품이 구현합니다.
 - 전체 화면 shell, header/sidebar, sticky composer, scroll anchoring과 unread 계산
 
 이 항목은 제품 또는 `MessageFeed`, `MessageComposer`, `SourceDisclosure`, attachment 전용 component가 소유합니다.

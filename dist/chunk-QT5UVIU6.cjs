@@ -310,6 +310,7 @@ function ConversationMessage({
         variant: "plain",
         label: action.label,
         disabled: action.disabled,
+        "aria-pressed": action.pressed,
         "data-message-action": action.key,
         onClick: action.onClick,
         children: action.icon
@@ -575,4 +576,4 @@ function ConversationMessage({
 
 
 exports.ConversationMessage = ConversationMessage;
-//# sourceMappingURL=chunk-362NXACZ.cjs.map
+//# sourceMappingURL=chunk-QT5UVIU6.cjs.map

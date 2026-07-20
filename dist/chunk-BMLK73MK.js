@@ -1,14 +1,14 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunk3BBCS67Wcjs = require('./chunk-3BBCS67W.cjs');
-
-
-var _chunkVGM7HVYYcjs = require('./chunk-VGM7HVYY.cjs');
+"use client";
+import {
+  Button
+} from "./chunk-7WDUT67E.js";
+import {
+  Icon
+} from "./chunk-LMQSX5BW.js";
 
 // components/communication/MessageComposer.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 var VISUALLY_HIDDEN_STYLE = {
   position: "absolute",
   width: 1,
@@ -31,7 +31,7 @@ var TEXTAREA_VERTICAL_INSET = 24;
 var COMPACT_TEXTAREA_HEIGHT = 48;
 var COMPACT_TEXTAREA_HEIGHT_TOKEN = "var(--space-12)";
 var ACTION_SLOT_SIZE_TOKEN = "var(--component-button-height-sm)";
-var useSafeLayoutEffect = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
+var useSafeLayoutEffect = typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
 function mergeIds(...ids) {
   const merged = ids.flatMap((id) => String(id || "").split(/\s+/)).filter(Boolean);
   return merged.length > 0 ? [...new Set(merged)].join(" ") : void 0;
@@ -69,10 +69,10 @@ function MessageComposer({
   if (disabled && missingDisabledReason) {
     throw new Error("MessageComposer requires disabledReason when disabled is true.");
   }
-  const generatedId = _react2.default.useId();
-  const textareaRef = _react2.default.useRef(null);
-  const compositionSessionRef = _react2.default.useRef(false);
-  const [focused, setFocused] = _react2.default.useState(false);
+  const generatedId = React.useId();
+  const textareaRef = React.useRef(null);
+  const compositionSessionRef = React.useRef(false);
+  const [focused, setFocused] = React.useState(false);
   const {
     id: providedId,
     className: textareaClassName,
@@ -104,10 +104,10 @@ function MessageComposer({
   );
   const nonIdle = state !== "idle";
   const valueCanSubmit = String(value).trim().length > 0;
-  const submitAllowed = !disabled && !readOnly && !nonIdle && (_nullishCoalesce(canSubmit, () => ( valueCanSubmit)));
+  const submitAllowed = !disabled && !readOnly && !nonIdle && (canSubmit ?? valueCanSubmit);
   const stopAllowed = !disabled && (state === "submitting" || state === "streaming") && typeof onStop === "function";
-  const resolvedStatusLabel = statusLabel !== void 0 ? statusLabel : _nullishCoalesce(STATE_LABELS[state], () => ( null));
-  const resizeTextarea = _react2.default.useCallback(() => {
+  const resolvedStatusLabel = statusLabel !== void 0 ? statusLabel : STATE_LABELS[state] ?? null;
+  const resizeTextarea = React.useCallback(() => {
     const textarea = textareaRef.current;
     if (!textarea) return;
     textarea.style.height = "0px";
@@ -118,28 +118,28 @@ function MessageComposer({
   useSafeLayoutEffect(() => {
     resizeTextarea();
   }, [resizeTextarea, value]);
-  const restoreTextareaFocus = _react2.default.useCallback(() => {
+  const restoreTextareaFocus = React.useCallback(() => {
     const textarea = textareaRef.current;
     if (!textarea || disabled) return;
     try {
       textarea.focus({ preventScroll: true });
-    } catch (e) {
+    } catch {
       textarea.focus();
     }
   }, [disabled]);
-  const submitValue = _react2.default.useCallback((reason) => {
+  const submitValue = React.useCallback((reason) => {
     if (!submitAllowed) return;
-    _optionalChain([onSubmit, 'optionalCall', _ => _(value, reason)]);
+    onSubmit?.(value, reason);
     restoreTextareaFocus();
   }, [onSubmit, restoreTextareaFocus, submitAllowed, value]);
   const handleKeyDown = (event) => {
-    _optionalChain([onTextareaKeyDown, 'optionalCall', _2 => _2(event)]);
+    onTextareaKeyDown?.(event);
     if (event.defaultPrevented || event.key !== "Enter") return;
     const nativeEvent = event.nativeEvent || event;
     const composing = compositionSessionRef.current || nativeEvent.isComposing === true || event.isComposing === true || nativeEvent.keyCode === 229;
     if (composing || event.shiftKey || submitMode === "button-only") return;
     if (submitMode === "modifier-enter") {
-      if (!event.ctrlKey && !event.metaKey) return;
+      if (event.altKey || !event.ctrlKey && !event.metaKey) return;
       event.preventDefault();
       submitValue("modifier-enter");
       return;
@@ -156,7 +156,7 @@ function MessageComposer({
     disabledReasonId,
     counterId
   );
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "form",
     {
       ...formProps,
@@ -183,8 +183,8 @@ function MessageComposer({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "label", { htmlFor: textareaId, style: VISUALLY_HIDDEN_STYLE, children: inputLabel }),
-        description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ jsx("label", { htmlFor: textareaId, style: VISUALLY_HIDDEN_STYLE, children: inputLabel }),
+        description != null && /* @__PURE__ */ jsx(
           "p",
           {
             id: descriptionId,
@@ -198,7 +198,7 @@ function MessageComposer({
             children: description
           }
         ),
-        disabled && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        disabled && /* @__PURE__ */ jsx(
           "p",
           {
             id: disabledReasonId,
@@ -212,7 +212,7 @@ function MessageComposer({
             children: disabledReason
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ jsxs(
           "div",
           {
             "data-composer-shell": "",
@@ -237,7 +237,7 @@ function MessageComposer({
               transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
             },
             children: [
-              attachments != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              attachments != null && /* @__PURE__ */ jsx(
                 "div",
                 {
                   "data-composer-attachments": "",
@@ -249,7 +249,7 @@ function MessageComposer({
                   children: attachments
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ jsxs(
                 "div",
                 {
                   "data-composer-control-row": "",
@@ -261,7 +261,7 @@ function MessageComposer({
                     boxSizing: "border-box"
                   },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    /* @__PURE__ */ jsx(
                       "textarea",
                       {
                         ...restTextareaProps,
@@ -275,28 +275,28 @@ function MessageComposer({
                         readOnly,
                         maxLength,
                         placeholder,
-                        enterKeyHint: _nullishCoalesce(providedEnterKeyHint, () => ( (submitMode === "enter" ? "send" : "enter"))),
+                        enterKeyHint: providedEnterKeyHint ?? (submitMode === "enter" ? "send" : "enter"),
                         "aria-describedby": textareaDescriptionIds,
                         onChange: (event) => {
-                          _optionalChain([onValueChange, 'optionalCall', _3 => _3(event.target.value, event)]);
-                          _optionalChain([onTextareaChange, 'optionalCall', _4 => _4(event)]);
+                          onValueChange?.(event.target.value, event);
+                          onTextareaChange?.(event);
                         },
                         onKeyDown: handleKeyDown,
                         onFocus: (event) => {
                           setFocused(true);
-                          _optionalChain([onTextareaFocus, 'optionalCall', _5 => _5(event)]);
+                          onTextareaFocus?.(event);
                         },
                         onBlur: (event) => {
                           setFocused(false);
-                          _optionalChain([onTextareaBlur, 'optionalCall', _6 => _6(event)]);
+                          onTextareaBlur?.(event);
                         },
                         onCompositionStart: (event) => {
                           compositionSessionRef.current = true;
-                          _optionalChain([onTextareaCompositionStart, 'optionalCall', _7 => _7(event)]);
+                          onTextareaCompositionStart?.(event);
                         },
                         onCompositionEnd: (event) => {
                           compositionSessionRef.current = false;
-                          _optionalChain([onTextareaCompositionEnd, 'optionalCall', _8 => _8(event)]);
+                          onTextareaCompositionEnd?.(event);
                         },
                         style: {
                           display: "block",
@@ -324,7 +324,7 @@ function MessageComposer({
                         }
                       }
                     ),
-                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                    /* @__PURE__ */ jsxs(
                       "div",
                       {
                         "data-composer-actions-row": "",
@@ -340,7 +340,7 @@ function MessageComposer({
                           flexWrap: "wrap"
                         },
                         children: [
-                          hasLeadingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                          hasLeadingActions && /* @__PURE__ */ jsx(
                             "div",
                             {
                               role: "group",
@@ -357,8 +357,8 @@ function MessageComposer({
                               children: leadingActions
                             }
                           ),
-                          !hasLeadingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { flex: "1 1 auto" } }),
-                          hasTrailingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                          !hasLeadingActions && /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { flex: "1 1 auto" } }),
+                          hasTrailingActions && /* @__PURE__ */ jsx(
                             "div",
                             {
                               role: "group",
@@ -375,7 +375,7 @@ function MessageComposer({
                               children: trailingActions
                             }
                           ),
-                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                          /* @__PURE__ */ jsx(
                             "div",
                             {
                               "data-composer-primary-action": "",
@@ -388,8 +388,8 @@ function MessageComposer({
                                 minHeight: ACTION_SLOT_SIZE_TOKEN,
                                 boxSizing: "border-box"
                               },
-                              children: nonIdle ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                                _chunk3BBCS67Wcjs.Button,
+                              children: nonIdle ? /* @__PURE__ */ jsx(
+                                Button,
                                 {
                                   type: "button",
                                   size: "sm",
@@ -401,10 +401,10 @@ function MessageComposer({
                                     if (!stopAllowed) return;
                                     onStop();
                                   },
-                                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "square-fill", size: 16, "aria-hidden": "true" })
+                                  children: /* @__PURE__ */ jsx(Icon, { name: "square-fill", size: 16, "aria-hidden": "true" })
                                 }
-                              ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                                _chunk3BBCS67Wcjs.Button,
+                              ) : /* @__PURE__ */ jsx(
+                                Button,
                                 {
                                   type: "submit",
                                   size: "sm",
@@ -412,7 +412,7 @@ function MessageComposer({
                                   iconOnly: true,
                                   "aria-label": submitLabel,
                                   disabled: !submitAllowed,
-                                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "send-fill", size: 18, "aria-hidden": "true" })
+                                  children: /* @__PURE__ */ jsx(Icon, { name: "send-fill", size: 18, "aria-hidden": "true" })
                                 }
                               )
                             }
@@ -426,7 +426,7 @@ function MessageComposer({
             ]
           }
         ),
-        (resolvedStatusLabel != null || maxLength != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        (resolvedStatusLabel != null || maxLength != null) && /* @__PURE__ */ jsxs(
           "div",
           {
             style: {
@@ -439,8 +439,8 @@ function MessageComposer({
               lineHeight: "var(--caption2-line)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: statusId, role: resolvedStatusLabel != null ? "status" : void 0, children: resolvedStatusLabel }),
-              maxLength != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { id: counterId, "data-composer-counter": "", style: { marginInlineStart: "auto", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+              /* @__PURE__ */ jsx("span", { id: statusId, role: resolvedStatusLabel != null ? "status" : void 0, children: resolvedStatusLabel }),
+              maxLength != null && /* @__PURE__ */ jsxs("span", { id: counterId, "data-composer-counter": "", style: { marginInlineStart: "auto", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
                 String(value).length,
                 "/",
                 maxLength
@@ -453,7 +453,7 @@ function MessageComposer({
   );
 }
 
-
-
-exports.MessageComposer = MessageComposer;
-//# sourceMappingURL=chunk-GNR7XEL3.cjs.map
+export {
+  MessageComposer
+};
+//# sourceMappingURL=chunk-BMLK73MK.js.map

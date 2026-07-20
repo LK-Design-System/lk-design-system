@@ -33,11 +33,20 @@
 ## keyboard와 IME
 
 - `submitMode="enter"`: modifier 없는 Enter로 제출하고 Shift+Enter는 줄바꿈입니다.
-- `submitMode="modifier-enter"`: Ctrl+Enter 또는 Meta+Enter만 제출합니다.
+- `submitMode="modifier-enter"`: Alt가 없는 Ctrl+Enter 또는 Meta+Enter만 제출합니다. Ctrl+Alt/AltGr와 Option+Command 조합은 문자 입력 충돌을 피하기 위해 제출하지 않습니다.
 - `submitMode="button-only"`: Enter를 항상 줄바꿈으로 남기고 button만 제출합니다.
-- composition session과 `KeyboardEvent.isComposing`을 확인해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다.
+- 이 세 모드는 제품이 명시적으로 선택하는 계약이며 사용자 환경을 추측해 런타임에 전환하지 않습니다. `enterKeyHint`는 `enter` 모드에서 `send`, 나머지 모드에서 `enter`를 기본값으로 제공합니다.
+- composition session과 `KeyboardEvent.isComposing`을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다.
 - Escape는 암묵적 stop shortcut이 아닙니다. stop은 접근 가능한 이름과 visible focus를 가진 primary action으로 요청합니다.
 - submit 뒤 textarea focus를 복귀시키되 value clear, loading 종료와 response 완료는 수행하지 않습니다.
+
+## read-only와 disabled 결정
+
+- `readOnly`는 textarea를 tab order에 남겨 내용을 읽고 선택·복사할 수 있게 하되 send를 비활성화합니다. unavailable reason을 전달하는 용도로 사용하지 않습니다.
+- `disabled`는 native textarea `disabled`, form/shell의 `aria-disabled`, shell의 `inert`를 함께 사용합니다. native control의 비활성 동작과 slot으로 들어온 button/link의 focus·activation 차단을 모두 충족하기 위한 조합입니다.
+- `aria-disabled`만으로는 동작이 차단되지 않으므로 단독 사용하지 않습니다. 반대로 form의 disabled 상태가 보조 기술에도 명확하도록 `aria-disabled="true"`를 유지합니다.
+- `disabledReason`은 `disabled=true`일 때 빈 값이 아닌 visible content로 필수이며 controls보다 먼저 렌더링합니다. 생성한 id를 textarea의 `aria-describedby`에 합쳐 이용 불가 이유를 입력과 직접 연결합니다.
+- 비활성 상태를 placeholder, tooltip, 색상 변화만으로 설명하지 않습니다. slot content는 shell 전체의 `inert` 경계 안에 둡니다.
 
 ## 내부 LDS 비교와 visual delta
 
@@ -61,6 +70,10 @@
 
 ## authoritative external review
 
+- [Slack — Set your Enter key preference](https://slack.com/help/articles/115005523006-Set-your-Enter-key-preference)는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 `enter`와 `modifier-enter` 계약에 반영했고, 긴 형식 작성에는 더 명시적인 `button-only`도 제공합니다.
+- [Slack — Use Slack with a screen reader](https://slack.com/help/articles/360000411963-Use-Slack-with-a-screen-reader)는 conversation 진입 시 message composer에 focus가 놓이고 Tab으로 primary action toolbar에 접근하며, 입력 후 Enter로 보내는 흐름을 설명합니다. 이에 따라 form/textarea/action에 각각 명시적 accessible name을 제공하고 제출 뒤 textarea focus를 복귀시키며, slot action을 DOM reading order에 유지합니다.
+- [MDN — `disabled` HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled)는 native form control의 focus·interaction·form submission 차단 semantics를 정의합니다. 내부 textarea는 실제 `disabled` attribute를 사용합니다.
+- [MDN — `aria-disabled`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-disabled)는 상태만 보조 기술에 노출하며 기능을 자동으로 차단하지 않는다고 명시합니다. 그래서 composer는 `aria-disabled`를 상태 전달에 사용하되, slot subtree의 실제 차단은 `inert`와 event guard로 구현하고 visible `disabledReason`을 별도로 제공합니다.
 - [Ant Design X Sender](https://x.ant.design/components/sender/)는 autosize input, submit/cancel, prefix/header/footer와 speech/action extension을 독립 composition slot으로 다룹니다. LDS의 controlled input과 leading/trailing slot 구분에 반영했습니다.
 - [Ant Design X Attachments](https://x.ant.design/components/attachments/)는 drag/drop과 file/image/audio/video/document attachment를 Sender와 별도 anatomy로 구성합니다. composer가 upload schema를 소유하지 않는 근거입니다.
 - [Ant Design X Bubble](https://x.ant.design/components/bubble/)은 response content와 input action을 분리합니다. Composer는 document/bubble presentation이나 message-level action을 소유하지 않습니다.
@@ -87,7 +100,7 @@
 - 약 760px: attachment → draft → 하단 leading/trailing action → send/stop의 hierarchy와 elevated one-shell focus를 확인합니다.
 - 320px: 긴 attachment와 multiline draft가 전체 입력 폭을 먼저 확보하고 하단 action band만 wrap하며 horizontal overflow를 만들지 않는지 확인합니다.
 - dark: shell border/fill/focus, placeholder, disabled reason, counter와 icon action contrast를 확인합니다.
-- interaction: enter/modifier-enter/button-only, IME 확정 Enter, submit focus return과 explicit streaming stop을 확인합니다.
+- interaction: enter/modifier-enter/button-only, Shift+Enter, Ctrl+Alt/AltGr 차단, Ctrl/Meta+Enter, IME 확정 Enter, submit focus return과 explicit streaming stop을 확인합니다.
 - compound: long assistant response 아래에서도 composer가 별도 app footer card나 fixed product shell로 보이지 않아야 합니다.
 
 ## intentional exclusions

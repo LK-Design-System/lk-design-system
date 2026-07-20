@@ -27,7 +27,7 @@ interface MessageComposerBaseProps extends Omit<
   onSubmit: (value: string, reason: MessageComposerSubmitReason) => void;
   /** Product-owned request/response lifecycle. @default "idle" */
   state?: MessageComposerState;
-  /** Keyboard submission rule. @default "enter" */
+  /** Keyboard submission rule. modifier-enter accepts Alt-free Ctrl/Meta+Enter only. @default "enter" */
   submitMode?: MessageComposerSubmitMode;
   /** Explicit submit eligibility. Defaults to whether the trimmed value is non-empty. */
   canSubmit?: boolean;

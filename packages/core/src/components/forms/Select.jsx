@@ -235,7 +235,7 @@ export function Select({
           disabled={disabledState}
           aria-haspopup="listbox"
           aria-expanded={visualOpen}
-          aria-controls={listboxId}
+          aria-controls={visualOpen ? listboxId : undefined}
           aria-activedescendant={visualOpen && activeIndex >= 0 && !norm[activeIndex]?.disabled ? `${selId}-option-${activeIndex}` : undefined}
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy ?? (!ariaLabel && label ? labelId : undefined)}

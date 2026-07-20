@@ -14,6 +14,8 @@ export interface ConversationMessageAction {
   label: string;
   onClick?: () => void;
   disabled?: boolean;
+  /** Controlled toggle state for feedback or other persistent actions. Maps to aria-pressed and a selected visual treatment; omit for momentary actions. */
+  pressed?: boolean;
 }
 
 export type ConversationMessageLifecycle =

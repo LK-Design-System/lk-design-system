@@ -1,13 +1,101 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Button, ConversationMessage, MessageFeed, Spinner } from '../src/index.js';
+import { Button, ConversationMessage, Divider, MessageFeed, Spinner } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Communication/Message Feed',
   component: MessageFeed,
+  argTypes: {
+    ariaLabel: {
+      control: 'text',
+      description: '포커스 가능한 대화 log의 접근 가능한 이름입니다.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: '메시지 내역' } },
+    },
+    children: {
+      control: false,
+      description: '시간순 DOM 순서로 배치하는 메시지와 날짜·미읽음 구분선입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    empty: {
+      control: false,
+      description: 'children이 비어 있을 때 log 안에 표시할 콘텐츠입니다.',
+      table: { type: { summary: 'ReactNode' }, defaultValue: { summary: '메시지가 없습니다.' } },
+    },
+    maxHeight: {
+      control: 'text',
+      description: '스크롤 viewport의 최대 높이입니다. 숫자 또는 CSS 길이를 받습니다.',
+      table: { type: { summary: 'number | string' }, defaultValue: { summary: '400' } },
+    },
+    viewportMinHeight: {
+      control: 'text',
+      description: '고정형 대화 영역을 조합할 때 사용하는 viewport 최소 높이입니다.',
+      table: { type: { summary: 'number | string' } },
+    },
+    busy: {
+      control: 'boolean',
+      description: '현재 log 콘텐츠를 갱신하는 동안 aria-busy를 설정합니다.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    hasPrevious: {
+      control: 'boolean',
+      description: 'log 앞에 이전 메시지 불러오기 action을 표시합니다.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    loadingPrevious: {
+      control: 'boolean',
+      description: '이전 기록 action을 loading 상태로 두고 log를 busy로 표시합니다.',
+      table: { type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+    },
+    onLoadPrevious: {
+      control: false,
+      description: '이전 기록을 요청합니다. Promise를 반환하거나 조회 중 loadingPrevious를 갱신합니다.',
+      table: { type: { summary: '() => void | Promise<void>' } },
+    },
+    loadPreviousLabel: {
+      control: 'text',
+      description: '이전 메시지 불러오기 action의 현지화된 레이블입니다.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: '이전 메시지 불러오기' } },
+    },
+    following: {
+      control: 'boolean',
+      description: '새 콘텐츠와 크기 변경을 따라 viewport를 아래에 유지하는 controlled 상태입니다.',
+      table: { type: { summary: 'boolean' } },
+    },
+    onFollowingChange: {
+      control: false,
+      description: '사용자 스크롤 또는 최신 메시지 action으로 following이 바뀔 때 호출됩니다.',
+      table: { type: { summary: '(following, reason) => void' } },
+    },
+    unreadCount: {
+      control: { type: 'number', min: 0, step: 1 },
+      description: '최신 메시지 action에 표시하고 접근 가능한 이름에 포함할 제품 소유 미읽음 수입니다.',
+      table: { type: { summary: 'number' }, defaultValue: { summary: '0' } },
+    },
+    jumpToLatestLabel: {
+      control: 'text',
+      description: '최신 메시지로 이동하는 action의 현지화된 레이블입니다.',
+      table: { type: { summary: 'string' }, defaultValue: { summary: '최신 메시지로 이동' } },
+    },
+    onJumpToLatest: {
+      control: false,
+      description: '최신 메시지 action이 viewport를 아래로 이동한 뒤 호출됩니다.',
+      table: { type: { summary: '() => void' } },
+    },
+    liveStatus: {
+      control: 'text',
+      description: '메시지 token과 분리해 알릴 짧은 phase-level 상태입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    style: {
+      control: 'object',
+      description: 'MessageFeed 바깥 section에 병합할 인라인 스타일입니다.',
+      table: { type: { summary: 'CSSProperties' } },
+    },
+  },
   parameters: {
     layout: 'padded',
+    controls: { disable: true },
     storyGuide: {
       storyId: 'lds-product-communication-message-feed--overview',
       eyebrow: 'Product / Communication',
@@ -75,12 +163,27 @@ function MessageRows({ messages }) {
 
 export const Overview = {
   name: '개요',
-  parameters: storyDescription(
-    '약 760px에서 assistant document, user solid primary bubble, system 중앙 pill 칩과 human-agent neutral fill bubble을 transparent named log 안에 시간순으로 배치합니다. Feed가 child를 card로 다시 감싸거나 자체 messenger background를 만들지 않는지 확인하세요.',
-  ),
-  render: () => (
+  parameters: {
+    ...storyDescription(
+      '약 760px에서 assistant document, user solid primary bubble, system 중앙 pill 칩과 human-agent neutral fill bubble을 transparent named log 안에 시간순으로 배치합니다. Feed가 child를 card로 다시 감싸거나 자체 messenger background를 만들지 않는지 확인하세요. Controls는 이 개요의 실제 log props에 연결됩니다.',
+    ),
+    controls: { disable: false },
+  },
+  args: {
+    ariaLabel: 'AI 문서 대화',
+    following: true,
+    viewportMinHeight: 360,
+    maxHeight: 360,
+    busy: false,
+    hasPrevious: false,
+    loadingPrevious: false,
+    unreadCount: 0,
+    loadPreviousLabel: '이전 메시지 불러오기',
+    jumpToLatestLabel: '최신 메시지로 이동',
+  },
+  render: (args) => (
     <main style={{ width: '100%', maxWidth: 760 }}>
-      <MessageFeed ariaLabel="AI 문서 대화" following viewportMinHeight={360} maxHeight={360}>
+      <MessageFeed {...args}>
         <FeedMessage id="overview-assistant" authorRole="assistant" author="AI Assistant" time="10:21">
           <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
             <p style={{ margin: 0 }}>업로드한 문서의 결정 사항을 두 범주로 정리했습니다.</p>
@@ -128,6 +231,105 @@ export const Overview = {
     }
     if (log.hasAttribute('data-message-feed-surface')) {
       throw new Error('MessageFeed must not expose a product surface axis.');
+    }
+  },
+};
+
+export const ChronologyBoundaries = {
+  name: '사용법 · 날짜와 첫 미읽음 구분',
+  parameters: storyDescription(
+    '날짜가 바뀌는 지점과 첫 미읽음 메시지 앞에 비상호작용 separator를 둡니다. log에 직접 포커스하면 Home·End·Page Up·Page Down으로 viewport를 이동하고, message 안의 action이 포커스를 가질 때는 해당 키를 가로채지 않습니다.',
+  ),
+  render: () => (
+    <main style={{ width: '100%', maxWidth: 720 }}>
+      <MessageFeed ariaLabel="구분선과 키보드 탐색 예제" following={false} viewportMinHeight={280} maxHeight={280}>
+        <Divider
+          data-message-feed-separator="date"
+          aria-label="2026년 7월 20일"
+          label={<time dateTime="2026-07-20">2026년 7월 20일</time>}
+        />
+        <MessageRows messages={messageData('boundary-read', 6, 1)} />
+        <Divider
+          data-message-feed-separator="date"
+          aria-label="2026년 7월 21일"
+          label={<time dateTime="2026-07-21">오늘</time>}
+        />
+        <FeedMessage id="boundary-read-today" authorRole="user" author="김서윤" time="09:41">
+          어제부터 이어진 결정 사항을 다시 확인해 주세요.
+        </FeedMessage>
+        <Divider
+          data-message-feed-separator="unread"
+          aria-label="여기부터 읽지 않은 메시지"
+          label="여기부터 읽지 않은 메시지"
+        />
+        <FeedMessage id="boundary-unread-1" authorRole="assistant" author="AI Assistant" time="09:42">
+          <div style={{ display: 'grid', gap: 'var(--space-3)', justifyItems: 'start' }}>
+            <span>첫 번째 미읽음 응답입니다. 이전 날짜의 기록과 이어서 읽을 수 있습니다.</span>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              data-message-action
+            >
+              응답 세부 정보
+            </Button>
+          </div>
+        </FeedMessage>
+        <MessageRows messages={messageData('boundary-unread', 5, 8)} />
+      </MessageFeed>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const log = canvasElement.querySelector('[role="log"]');
+    const dateSeparators = Array.from(canvasElement.querySelectorAll('[data-message-feed-separator="date"]'));
+    const unreadSeparator = canvasElement.querySelector('[data-message-feed-separator="unread"]');
+    const descendantAction = canvasElement.querySelector('[data-message-action]');
+    if (!log || dateSeparators.length !== 2 || !unreadSeparator || !descendantAction) {
+      throw new Error('The chronology-boundary fixture is incomplete.');
+    }
+    if (
+      dateSeparators.some((separator) => separator.getAttribute('role') !== 'separator' || separator.tabIndex !== -1)
+      || unreadSeparator.getAttribute('role') !== 'separator'
+      || unreadSeparator.getAttribute('aria-label') !== '여기부터 읽지 않은 메시지'
+      || dateSeparators[1].getAttribute('aria-label') !== '2026년 7월 21일'
+      || dateSeparators[1].querySelector('time')?.getAttribute('datetime') !== '2026-07-21'
+    ) {
+      throw new Error('Date and unread boundaries must remain named, non-interactive separators.');
+    }
+    if (log.getAttribute('aria-keyshortcuts') !== 'Home End PageUp PageDown') {
+      throw new Error('The focusable log must document its viewport keyboard shortcuts.');
+    }
+
+    log.focus();
+    await userEvent.keyboard('{End}');
+    if (!isNearBottom(log)) throw new Error('End must move the focused log to its bottom.');
+    const bottom = log.scrollTop;
+    await userEvent.keyboard('{PageUp}');
+    if (!(log.scrollTop < bottom)) throw new Error('Page Up must move the focused log upward.');
+    const afterPageUp = log.scrollTop;
+    await userEvent.keyboard('{PageDown}');
+    if (!(log.scrollTop > afterPageUp)) throw new Error('Page Down must move the focused log downward.');
+    await userEvent.keyboard('{Home}');
+    if (log.scrollTop !== 0) throw new Error('Home must move the focused log to its top.');
+
+    descendantAction.focus();
+    let descendantKey;
+    const captureDescendantKey = (event) => {
+      descendantKey = event.key;
+    };
+    descendantAction.addEventListener('keydown', captureDescendantKey, { once: true });
+    const KeyboardEventConstructor = canvasElement.ownerDocument.defaultView.KeyboardEvent;
+    const keyWasNotCanceled = descendantAction.dispatchEvent(new KeyboardEventConstructor('keydown', {
+      key: 'End',
+      bubbles: true,
+      cancelable: true,
+    }));
+    if (
+      descendantKey !== 'End'
+      || !keyWasNotCanceled
+      || document.activeElement !== descendantAction
+    ) {
+      throw new Error('MessageFeed must not intercept navigation keys from focused descendants.');
     }
   },
 };

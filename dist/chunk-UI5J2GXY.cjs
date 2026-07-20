@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
 
 
-var _chunkEVEUL3JFcjs = require('./chunk-EVEUL3JF.cjs');
+var _chunk4T56M57Dcjs = require('./chunk-4T56M57D.cjs');
 
 
 var _chunk3BBCS67Wcjs = require('./chunk-3BBCS67W.cjs');
@@ -60,7 +60,7 @@ function RefreshControl({
           }
         ),
         Array.isArray(autoRefreshOptions) && autoRefreshOptions.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkEVEUL3JFcjs.Select,
+          _chunk4T56M57Dcjs.Select,
           {
             value: autoRefreshValue,
             onChange: onAutoRefreshChange,
@@ -88,4 +88,4 @@ function RefreshControl({
 
 
 exports.RefreshControl = RefreshControl;
-//# sourceMappingURL=chunk-3XIIYUP4.cjs.map
+//# sourceMappingURL=chunk-UI5J2GXY.cjs.map

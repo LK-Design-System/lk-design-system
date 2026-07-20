@@ -15,7 +15,139 @@ import { storyDescription } from './StoryGuide.shared.jsx';
 const meta = {
   title: 'LDS Product/Communication/Message',
   component: ConversationMessage,
+  argTypes: {
+    direction: {
+      control: 'inline-radio',
+      options: ['inbound', 'outbound'],
+      description: '참여자 메시지의 시각적 배치를 재정의합니다. system 역할에는 적용되지 않습니다.',
+      table: { type: { summary: "'inbound' | 'outbound'" } },
+    },
+    authorRole: {
+      control: 'select',
+      options: ['user', 'assistant', 'human-agent', 'system'],
+      description: '작성자 역할이며 기본 presentation, direction, 접근 가능한 역할명을 결정합니다.',
+      table: { defaultValue: { summary: 'assistant' }, type: { summary: "'user' | 'assistant' | 'human-agent' | 'system'" } },
+    },
+    presentation: {
+      control: 'inline-radio',
+      options: ['document', 'bubble'],
+      description: '참여자 본문의 표현 방식입니다. 역할이나 신뢰도는 바꾸지 않습니다.',
+      table: { type: { summary: "'document' | 'bubble'" } },
+    },
+    groupPosition: {
+      control: 'inline-radio',
+      options: ['single', 'first', 'middle', 'last'],
+      description: '같은 작성자의 연속 메시지에서 identity 반복과 bubble 모서리 연결을 조정합니다.',
+      table: { defaultValue: { summary: 'single' }, type: { summary: "'single' | 'first' | 'middle' | 'last'" } },
+    },
+    lifecycle: {
+      control: 'object',
+      description: '제품이 소유한 전송 또는 AI 응답 상태를 표현합니다. 컴포넌트는 상태 전이를 추론하지 않습니다.',
+      table: { defaultValue: { summary: "{ kind: 'static' }" }, type: { summary: 'MessageLifecycle' } },
+    },
+    author: {
+      control: 'text',
+      description: '화면에 표시할 작성자 이름입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    authorLabel: {
+      control: 'text',
+      description: '비문자 author를 위한 접근 가능한 작성자 이름입니다.',
+      table: { type: { summary: 'string' } },
+    },
+    roleBadgeLabel: {
+      control: 'text',
+      description: '이름 옆 장식 역할 배지를 재정의합니다. null이면 배지를 숨깁니다.',
+      table: { type: { summary: 'ReactNode | null' } },
+    },
+    avatar: {
+      control: false,
+      description: '참여자 identity에 조합할 Avatar 등의 시각 요소입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    timestamp: {
+      control: 'text',
+      description: '사용자에게 표시할 전송 또는 응답 시각입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    dateTime: {
+      control: 'text',
+      description: 'timestamp에 대응하는 machine-readable 날짜·시각 값입니다.',
+      table: { type: { summary: 'string' } },
+    },
+    statusLabel: {
+      control: 'text',
+      description: '기본 lifecycle 문구를 덮어씁니다. null이면 상태 문구를 숨깁니다.',
+      table: { type: { summary: 'ReactNode | null' } },
+    },
+    attachments: {
+      control: false,
+      description: '본문 다음에 배치할 완료된 첨부 표현 또는 attachment 컴포넌트 slot입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    sources: {
+      control: false,
+      description: '출처와 provenance를 표현하는 SourceDisclosure 등의 slot입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    inlineSources: {
+      control: 'boolean',
+      description: 'sources를 별도 행 대신 메시지 액션 그룹과 같은 footer의 형제로 배치합니다.',
+      table: { defaultValue: { summary: false }, type: { summary: 'boolean' } },
+    },
+    actions: {
+      control: false,
+      description: '제품이 직접 조합하는 추가 메시지 동작 ReactNode slot입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    messageActions: {
+      control: 'object',
+      description: '접근 가능한 label을 가진 icon-only quick action 목록입니다. 제품이 실행, disabled와 선택형 action의 pressed 상태를 소유합니다.',
+      table: { type: { summary: 'Array<{ key, icon, label, disabled?, pressed?, onClick? }>' } },
+    },
+    error: {
+      control: 'text',
+      description: '실패한 메시지 본문에 경고 glyph와 함께 표시할 오류 내용입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    onRetry: {
+      control: false,
+      description: 'failed lifecycle에서만 재시도 아이콘을 노출하는 요청 callback입니다.',
+      table: { type: { summary: '() => void' } },
+    },
+    retryLabel: {
+      control: 'text',
+      description: '재시도 아이콘 버튼의 접근 가능한 이름입니다.',
+      table: { defaultValue: { summary: '메시지 다시 보내기' }, type: { summary: 'ReactNode' } },
+    },
+    children: {
+      control: false,
+      description: '메시지의 주 본문 콘텐츠입니다.',
+      table: { type: { summary: 'ReactNode' } },
+    },
+    className: {
+      control: 'text',
+      description: '최상위 article에 추가할 class 이름입니다.',
+      table: { type: { summary: 'string' } },
+    },
+    style: {
+      control: 'object',
+      description: '최상위 article에 병합할 인라인 스타일입니다.',
+      table: { type: { summary: 'CSSProperties' } },
+    },
+    'aria-label': {
+      control: 'text',
+      description: 'article의 직접 접근 가능한 이름입니다. 지정하면 기본 author 기반 labelledby를 대체합니다.',
+      table: { type: { summary: 'string' } },
+    },
+    'aria-labelledby': {
+      control: 'text',
+      description: 'article의 접근 가능한 이름을 제공하는 요소 ID 목록입니다.',
+      table: { type: { summary: 'string' } },
+    },
+  },
   parameters: {
+    controls: { disable: true },
     storyGuide: {
       storyId: 'lds-product-communication-message--message-overview',
       eyebrow: 'Product / Communication',
@@ -120,17 +252,12 @@ function assertNoPerMessageLiveRegions(root) {
   if (invalid) throw new Error('ConversationMessage must not create a per-message live region.');
 }
 
-function OverviewFixture() {
+function OverviewFixture(messageArgs) {
   return (
     <main data-message-overview style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
       <ConversationMessage
-        authorRole="assistant"
-        author="AI Assistant"
+        {...messageArgs}
         avatar={assistantAvatar}
-        timestamp="오전 10:24"
-        dateTime="2026-07-12T10:24:00+09:00"
-        lifecycle={{ kind: 'response', state: 'complete' }}
-        inlineSources
         sources={<EvidenceBlock />}
         actions={(
           <>
@@ -172,10 +299,22 @@ function OverviewFixture() {
 
 export const MessageOverview = {
   name: '개요',
-  parameters: storyDescription(
-    '약 760px 읽기 폭에서 assistant 장문 document, user solid primary bubble, system 중앙 pill 칩과 optional human-agent neutral fill bubble을 비교합니다. source는 SourceDisclosure, action은 별도 ReactNode slot으로 조합하며 제품 panel이나 고정 sidebar를 만들지 않습니다.',
-  ),
-  render: () => <OverviewFixture />,
+  parameters: {
+    ...storyDescription(
+      '약 760px 읽기 폭에서 assistant 장문 document, user solid primary bubble, system 중앙 pill 칩과 optional human-agent neutral fill bubble을 비교합니다. source는 SourceDisclosure, action은 별도 ReactNode slot으로 조합하며 제품 panel이나 고정 sidebar를 만들지 않습니다. Controls는 첫 번째 assistant message의 실제 props에 연결됩니다.',
+    ),
+    controls: { disable: false },
+  },
+  args: {
+    authorRole: 'assistant',
+    author: 'AI Assistant',
+    timestamp: '오전 10:24',
+    dateTime: '2026-07-12T10:24:00+09:00',
+    lifecycle: { kind: 'response', state: 'complete' },
+    groupPosition: 'single',
+    inlineSources: true,
+  },
+  render: (args) => <OverviewFixture {...args} />,
   play: async ({ canvasElement }) => {
     const fixture = canvasElement.querySelector('[data-message-overview]');
     const messages = fixture ? Array.from(fixture.querySelectorAll('.lk-conversation-message')) : [];
@@ -591,19 +730,39 @@ export const MessageFamilyVisualParity = {
   tags: ['!dev', 'visual-parity'],
 };
 
-// 메시지 하단 quick-action을 messageActions 아이콘 액션바로 통일하고, 실패 응답은
-// error 본문(무채색 경고 아이콘 + 오류 텍스트)과 자동 retry 아이콘으로 표현하는 정식 예시.
+// 완성된 AI 응답의 canonical action recipe. Transport와 lifecycle truth는 제품이
+// 소유하고 ConversationMessage는 전달받은 action, disabled, error 상태만 표현합니다.
 function MessageActionGlyph({ name, size = 16 }) {
   return <Icon name={name} size={size} aria-hidden="true" />;
 }
 
 function MessageActionBarFixture() {
-  const [lastAction, setLastAction] = React.useState('없음');
+  const [actionLog, setActionLog] = React.useState([]);
+  const [feedback, setFeedback] = React.useState(null);
+  const recordAction = (action) => setActionLog((current) => [...current, action]);
   const answerActions = [
-    { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', onClick: () => setLastAction('copy') },
-    { key: 'share', icon: <MessageActionGlyph name="share-ios" />, label: '공유', onClick: () => setLastAction('share') },
-    { key: 'regenerate', icon: <MessageActionGlyph name="refresh" />, label: '다시 생성', onClick: () => setLastAction('regenerate') },
-    { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
+    { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '응답 복사', onClick: () => recordAction('copy') },
+    { key: 'regenerate', icon: <MessageActionGlyph name="refresh" />, label: '응답 다시 생성', onClick: () => recordAction('regenerate') },
+    {
+      key: 'positive-feedback',
+      icon: <MessageActionGlyph name="like" />,
+      label: '좋은 응답으로 평가',
+      pressed: feedback === 'positive',
+      onClick: () => {
+        recordAction('positive-feedback');
+        setFeedback('positive');
+      },
+    },
+    {
+      key: 'negative-feedback',
+      icon: <MessageActionGlyph name="dislike" />,
+      label: '좋지 않은 응답으로 평가',
+      pressed: feedback === 'negative',
+      onClick: () => {
+        recordAction('negative-feedback');
+        setFeedback('negative');
+      },
+    },
   ];
   return (
     <main data-icon-action-bar style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
@@ -623,71 +782,118 @@ function MessageActionBarFixture() {
       </ConversationMessage>
 
       <ConversationMessage
+        data-action-message="busy"
+        authorRole="assistant"
+        author="AI Assistant"
+        avatar={assistantAvatar}
+        lifecycle={{ kind: 'response', state: 'streaming' }}
+        messageActions={answerActions.map((action) => ({
+          ...action,
+          onClick: undefined,
+          disabled: true,
+          pressed: action.pressed === undefined ? undefined : false,
+        }))}
+      >
+        응답을 생성하고 있습니다. 완료되면 복사, 재생성, 평가 동작을 사용할 수 있습니다.
+      </ConversationMessage>
+
+      <ConversationMessage
         data-action-message="failed"
         authorRole="assistant"
         author="AI Assistant"
         avatar={assistantAvatar}
         lifecycle={{ kind: 'response', state: 'failed' }}
         error="네트워크 문제로 응답이 중단됐어요."
-        onRetry={() => setLastAction('retry')}
-        retryLabel="다시 시도"
-        messageActions={[
-          { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', onClick: () => setLastAction('copy') },
-          { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
-        ]}
+        onRetry={() => recordAction('retry')}
+        retryLabel="응답 다시 시도"
       />
 
-      <ConversationMessage
-        data-action-message="disabled"
-        authorRole="assistant"
-        author="AI Assistant"
-        messageActions={[
-          { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', disabled: true },
-          { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
-        ]}
-      >
-        아직 복사할 수 없는 응답입니다.
-      </ConversationMessage>
-
-      <output hidden data-action-log>{lastAction}</output>
+      <output hidden data-action-log>{actionLog.join(',')}</output>
     </main>
   );
 }
 
 export const MessageActionBar = {
-  name: '변형·상태 · 아이콘 액션바와 실패 오류',
+  name: '사용법 · AI 응답 액션과 피드백',
   parameters: storyDescription(
-    '메시지 하단 quick-action을 messageActions 배열로 조합해 복사·공유·재생성·더보기 아이콘 액션바로 통일합니다. 실패 응답은 error 본문에 무채색 경고 아이콘과 오류 텍스트를 두고 별도 상태 뱃지 없이 retry를 재생성(refresh) 아이콘으로 자동 노출합니다. 각 아이콘은 label로 접근 가능한 이름을 가지며 disabled 액션도 지원합니다.',
+    '완료된 AI 응답에는 출처와 함께 응답 복사·응답 다시 생성·긍정 평가·부정 평가를 canonical icon action으로 제공합니다. 각 버튼은 동작 대상을 포함한 접근 가능한 이름을 가지며, 생성 중에는 결과 대상 동작을 비활성화하고 실패 시에는 불완전한 결과의 액션 대신 오류와 응답 다시 시도만 제공합니다. 실행, 피드백 저장, 재생성 transport와 lifecycle 전이는 제품이 소유합니다.',
   ),
   render: () => <MessageActionBarFixture />,
   play: async ({ canvasElement }) => {
     const fixture = canvasElement.querySelector('[data-icon-action-bar]');
     const complete = fixture?.querySelector('[data-action-message="complete"]');
+    const busy = fixture?.querySelector('[data-action-message="busy"]');
     const failed = fixture?.querySelector('[data-action-message="failed"]');
-    const disabled = fixture?.querySelector('[data-action-message="disabled"]');
-    if (!complete || !failed || !disabled) throw new Error('액션바 예시가 불완전합니다.');
+    if (!complete || !busy || !failed) throw new Error('AI 응답 액션 상태 예시가 불완전합니다.');
 
-    const completeLabels = Array.from(complete.querySelectorAll('[data-message-action]')).map((b) => b.getAttribute('aria-label'));
-    if (completeLabels.join(',') !== '복사,공유,다시 생성,더보기') {
+    const completeActions = Array.from(complete.querySelectorAll('[data-message-action]'));
+    const completeLabels = completeActions.map((button) => button.getAttribute('aria-label'));
+    if (completeLabels.join(',') !== '응답 복사,응답 다시 생성,좋은 응답으로 평가,좋지 않은 응답으로 평가') {
       throw new Error(`정상 액션바 구성이 다릅니다: ${completeLabels.join(',')}`);
     }
     if (complete.querySelector('[data-message-error]')) throw new Error('정상 응답은 오류 표현을 만들지 않아야 합니다.');
+    const footer = complete.querySelector('[data-message-part="footer"]');
+    const actionGroup = footer?.querySelector('[data-message-part="actions"][role="group"]');
+    const sourceToggle = footer?.querySelector('[data-message-part="sources"] .lk-source-disclosure__toggle');
+    if (!actionGroup || !sourceToggle || actionGroup.contains(sourceToggle)) {
+      throw new Error('canonical AI footer는 액션 그룹과 인라인 출처를 형제로 구성해야 합니다.');
+    }
+    if (
+      completeActions[2].getAttribute('aria-pressed') !== 'false'
+      || completeActions[3].getAttribute('aria-pressed') !== 'false'
+    ) {
+      throw new Error('평가 action은 제품이 전달한 초기 미선택 상태를 aria-pressed로 노출해야 합니다.');
+    }
+    await userEvent.click(completeActions[0]);
+    await userEvent.click(completeActions[1]);
+    await userEvent.click(completeActions[2]);
+    await waitFor(() => {
+      if (
+        complete.querySelector('[data-message-action="positive-feedback"]')?.getAttribute('aria-pressed') !== 'true'
+        || complete.querySelector('[data-message-action="negative-feedback"]')?.getAttribute('aria-pressed') !== 'false'
+      ) throw new Error('긍정 평가는 선택 상태를 aria-pressed로 반영해야 합니다.');
+    });
+    await userEvent.click(completeActions[3]);
+    await waitFor(() => {
+      const log = fixture.querySelector('[data-action-log]')?.textContent;
+      if (log !== 'copy,regenerate,positive-feedback,negative-feedback') {
+        throw new Error(`AI 액션 callback 전달 순서가 다릅니다: ${log}`);
+      }
+      if (
+        complete.querySelector('[data-message-action="positive-feedback"]')?.getAttribute('aria-pressed') !== 'false'
+        || complete.querySelector('[data-message-action="negative-feedback"]')?.getAttribute('aria-pressed') !== 'true'
+      ) throw new Error('부정 평가는 반대 평가를 해제하고 선택 상태를 aria-pressed로 반영해야 합니다.');
+      const positiveFeedback = complete.querySelector('[data-message-action="positive-feedback"]');
+      const negativeFeedback = complete.querySelector('[data-message-action="negative-feedback"]');
+      if (
+        positiveFeedback?.dataset.selected !== 'false'
+        || negativeFeedback?.dataset.selected !== 'true'
+        || window.getComputedStyle(positiveFeedback).backgroundColor === window.getComputedStyle(negativeFeedback).backgroundColor
+      ) throw new Error('선택된 평가는 미선택 평가와 구분되는 persistent selected surface를 가져야 합니다.');
+    });
+
+    if (busy.getAttribute('aria-busy') !== 'true') throw new Error('streaming 응답은 aria-busy여야 합니다.');
+    const busyActions = Array.from(busy.querySelectorAll('[data-message-action]'));
+    if (
+      busyActions.length !== 4
+      || busyActions.some((button) => !button.disabled)
+      || busyActions.slice(2).some((button) => button.getAttribute('aria-pressed') !== 'false')
+    ) {
+      throw new Error('생성 중에는 결과를 대상으로 하는 네 가지 AI 액션이 모두 비활성화돼야 합니다.');
+    }
 
     if (!failed.querySelector('[data-message-error]')) throw new Error('실패 응답은 본문에 오류 표현을 가져야 합니다.');
     if (failed.querySelector('[data-message-part="status"]')) throw new Error('error가 있으면 중복 상태 뱃지를 만들지 않아야 합니다.');
     const retry = failed.querySelector('[data-message-retry]');
     if (!retry) throw new Error('실패 응답은 retry 아이콘을 자동 노출해야 합니다.');
     const failedLabels = Array.from(failed.querySelectorAll('[data-message-part="actions"] button')).map((b) => b.getAttribute('aria-label'));
-    if (failedLabels.join(',') !== '다시 시도,복사,더보기') {
+    if (failedLabels.join(',') !== '응답 다시 시도') {
       throw new Error(`실패 액션바 구성이 다릅니다: ${failedLabels.join(',')}`);
     }
     await userEvent.click(retry);
-    if (fixture.querySelector('[data-action-log]').textContent !== 'retry') {
+    if (!fixture.querySelector('[data-action-log]').textContent.endsWith(',retry')) {
       throw new Error('retry는 다음 lifecycle을 추론하지 않고 요청만 전달해야 합니다.');
     }
-
-    const disabledCopy = disabled.querySelector('[data-message-action="copy"]');
-    if (!disabledCopy || !disabledCopy.disabled) throw new Error('disabled 액션은 비활성화돼야 합니다.');
 
     assertNoPerMessageLiveRegions(fixture);
   },
@@ -697,11 +903,30 @@ export const MessageActionBar = {
 // Overview·Grouped·ActionBar 등 다른 message 스토리도 공유합니다.
 function InlineSourceFooterFixture() {
   const [lastAction, setLastAction] = React.useState('없음');
+  const [feedback, setFeedback] = React.useState(null);
   const answerActions = [
-    { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '복사', onClick: () => setLastAction('copy') },
-    { key: 'share', icon: <MessageActionGlyph name="share-ios" />, label: '공유', onClick: () => setLastAction('share') },
-    { key: 'regenerate', icon: <MessageActionGlyph name="refresh" />, label: '다시 생성', onClick: () => setLastAction('regenerate') },
-    { key: 'more', icon: <MessageActionGlyph name="more-horizontal" />, label: '더보기', onClick: () => setLastAction('more') },
+    { key: 'copy', icon: <MessageActionGlyph name="copy" />, label: '응답 복사', onClick: () => setLastAction('copy') },
+    { key: 'regenerate', icon: <MessageActionGlyph name="refresh" />, label: '응답 다시 생성', onClick: () => setLastAction('regenerate') },
+    {
+      key: 'positive-feedback',
+      icon: <MessageActionGlyph name="like" />,
+      label: '좋은 응답으로 평가',
+      pressed: feedback === 'positive',
+      onClick: () => {
+        setLastAction('positive-feedback');
+        setFeedback('positive');
+      },
+    },
+    {
+      key: 'negative-feedback',
+      icon: <MessageActionGlyph name="dislike" />,
+      label: '좋지 않은 응답으로 평가',
+      pressed: feedback === 'negative',
+      onClick: () => {
+        setLastAction('negative-feedback');
+        setFeedback('negative');
+      },
+    },
   ];
   return (
     <main data-inline-source style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
@@ -727,7 +952,7 @@ function InlineSourceFooterFixture() {
 export const InlineSourceFooter = {
   name: '변형·상태 · 인라인 출처 토글',
   parameters: storyDescription(
-    'inlineSources로 접힌 "출처" 토글을 copy·공유·재생성·더보기 아이콘과 같은 footer 행에 나란히 둡니다(ChatGPT식). 출처는 메시지 동작 그룹의 형제로 남아 액션이 아닌 provenance로 announce되고, 누르면 출처 목록이 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않으며 바깥 클릭·Esc로 닫힙니다. 출처를 항상 노출해야 하는 고신뢰 답변에는 inlineSources 없이 기본 출처 행을 유지하세요.',
+    'inlineSources로 접힌 "출처" 토글을 canonical 복사·재생성·긍정/부정 평가 아이콘과 같은 footer 행에 나란히 둡니다(ChatGPT식). 출처는 메시지 동작 그룹의 형제로 남아 액션이 아닌 provenance로 announce되고, 누르면 출처 목록이 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않으며 바깥 클릭·Esc로 닫힙니다. 출처를 항상 노출해야 하는 고신뢰 답변에는 inlineSources 없이 기본 출처 행을 유지하세요.',
   ),
   render: () => <InlineSourceFooterFixture />,
   play: async ({ canvasElement }) => {
@@ -741,6 +966,11 @@ export const InlineSourceFooter = {
     const toggle = collapsible?.querySelector('button.lk-source-disclosure__toggle');
     if (!actions || !sources || !toggle) {
       throw new Error('footer는 action group과 collapsible 출처 토글을 함께 조합해야 합니다.');
+    }
+    const actionLabels = Array.from(actions.querySelectorAll('[data-message-action]'))
+      .map((action) => action.getAttribute('aria-label'));
+    if (actionLabels.join(',') !== '응답 복사,응답 다시 생성,좋은 응답으로 평가,좋지 않은 응답으로 평가') {
+      throw new Error(`인라인 출처 예시도 canonical AI action 순서를 유지해야 합니다: ${actionLabels.join(',')}`);
     }
     // 출처는 메시지 동작 그룹의 형제여야 하며 그룹 안에 들어가면 안 됩니다.
     if (actions.contains(toggle)) {

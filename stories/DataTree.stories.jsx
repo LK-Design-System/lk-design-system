@@ -1,4 +1,6 @@
+import React from 'react';
 import {
+  Button,
   Icon,
   StatusBadge,
   Tree,
@@ -99,5 +101,85 @@ export const TreeInteractionStates = {
     if (document.activeElement !== root) throw new Error('Home must focus the first tree item.');
     await userEvent.keyboard('{ArrowLeft}');
     if (root?.getAttribute('aria-expanded') !== 'false') throw new Error('Left Arrow must collapse an open branch.');
+  },
+};
+
+function ControlledTreeFixture() {
+  const [selectedId, setSelectedId] = React.useState('workspace');
+  const treeRef = React.useRef(null);
+  return (
+    <main style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 420 }}>
+      <Button size="sm" variant="ghost" data-contract="focus-hidden-item" onClick={() => treeRef.current?.focusItem('buttons')}>
+        Focus buttons without reveal
+      </Button>
+      <Button size="sm" variant="ghost" data-contract="focus-nested-item" onClick={() => treeRef.current?.focusItem('buttons', { reveal: true })}>
+        Reveal and focus buttons
+      </Button>
+      <output data-contract="selected-tree-id">{selectedId}</output>
+      <Tree
+        ref={treeRef}
+        ariaLabel="Controlled hierarchy"
+        nodes={hierarchyNodes}
+        selectedId={selectedId}
+        onSelectedIdChange={setSelectedId}
+      />
+    </main>
+  );
+}
+
+export const TreeSelectionContract = {
+  name: '상호작용 · 선택과 초점 이동',
+  parameters: storyDescription(
+    '제어된 선택 상태와 키보드 초점이 독립적으로 이동하고, 숨겨진 하위 항목을 명령형 API로 드러내어 초점을 옮기는 계약을 검증합니다.',
+  ),
+  render: () => <ControlledTreeFixture />,
+  play: async ({ canvasElement }) => {
+    const tree = canvasElement.querySelector('[role="tree"][aria-label="Controlled hierarchy"]');
+    const focusHiddenButton = canvasElement.querySelector('[data-contract="focus-hidden-item"]');
+    const revealButton = canvasElement.querySelector('[data-contract="focus-nested-item"]');
+    const selectedOutput = canvasElement.querySelector('[data-contract="selected-tree-id"]');
+    const root = tree?.querySelector('[data-tree-key="workspace"]');
+    if (!tree || !focusHiddenButton || !revealButton || !selectedOutput || !root) {
+      throw new Error('Tree selection contract targets are required.');
+    }
+    if (root.getAttribute('aria-selected') !== 'true') {
+      throw new Error('A controlled selectedId must expose aria-selected on the matching row.');
+    }
+
+    await userEvent.click(focusHiddenButton);
+    root.focus();
+    await userEvent.keyboard('{ArrowRight}{ArrowRight}{ArrowRight}');
+    await waitFor(() => {
+      if (document.activeElement?.dataset.treeKey !== 'components') {
+        throw new Error('focusItem without reveal must not defer focus for a hidden row.');
+      }
+    });
+    await userEvent.keyboard('{Home}{ArrowLeft}');
+
+    root.focus();
+    await userEvent.keyboard('{ArrowRight}{End}{Enter}');
+    await waitFor(() => {
+      const selected = tree.querySelector('[data-tree-key="tokens"]');
+      if (selectedOutput.textContent?.trim() !== 'tokens' || selected?.getAttribute('aria-selected') !== 'true') {
+        throw new Error('Activation must request and render controlled selection.');
+      }
+    });
+
+    await userEvent.keyboard('{Home}');
+    if (document.activeElement !== root || root.getAttribute('aria-selected') !== 'false'
+      || tree.querySelector('[data-tree-key="tokens"]')?.getAttribute('aria-selected') !== 'true') {
+      throw new Error('Roving focus must move independently from persistent selection.');
+    }
+
+    await userEvent.click(revealButton);
+    await waitFor(() => {
+      const nested = tree.querySelector('[data-tree-key="buttons"]');
+      if (!nested || document.activeElement !== nested) {
+        throw new Error('focusItem(id, { reveal: true }) must expand ancestors and focus the requested row.');
+      }
+      if (nested.getAttribute('aria-selected') !== 'false' || selectedOutput.textContent?.trim() !== 'tokens') {
+        throw new Error('Imperative focus must not change controlled selection.');
+      }
+    });
   },
 };

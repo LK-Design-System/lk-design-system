@@ -514,7 +514,7 @@
 - 대표 검토는 약 760px reading column과 320px narrow에서 수행하며 dark, 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, streaming/error message, disabled composer를 포함한다. identity·content·source·action이 겹치거나 card-within-card로 읽히지 않아야 한다.
 
 [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)의 Track C 후속 gate는 완료했다.
-`ConversationMessage`, `MessageFeed`, `MessageComposer`가 각각 message anatomy·history/follow·IME-safe compose의
+`ConversationMessage`, `MessageFeed`, `MessageComposer`가 각각 canonical AI source/action anatomy·history/follow와 날짜/첫 미읽음 경계·IME-safe compose의
 독립 시각·접근성 계약을 소유한다. general conversation role의 document/bubble 기본값과 optional placement override는 LDS가 소유하고, 정확한
 participant role·provider/stream transport·route·retrieval·RAG·persistence와 session reset은 product-owned seam이다.
 완료된 Product extension을 전체 `ScopedConversation` wrapper로 되돌리지 않는다.
@@ -777,7 +777,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | WF-07 | `SourceDisclosure`, `AnnotatedImage`, `DataGrid`, `ChoiceCard`, `Textarea`, `ActionArea` 조합 | review policy, metric verdict, authorization, persistence, queue navigation |
 | WF-08 | `SourceDisclosure`, `AnnotatedImage`, `LogViewer`, `FileBrowser`, chart/legend의 renderer chrome | Markdown/media decoder, graph layout, artifact access, claim semantics |
 | WF-09 | `ManualControlSession`, `ConnectionBadge`, `Joystick`, `DirectionalPad`의 authority/arm/hold/release 분리 | authority policy, freshness/health 판정, cadence, STOP transport, robot watchdog |
-| WF-10 | `ConversationMessage`, `MessageFeed`, `MessageComposer`, `SourceDisclosure`, `TreePicker`, `ConfirmDialog`의 document/bubble message anatomy, chrome-free log, elevated one-shell compose, source/scope 계약 | participant role truth, provider/stream transport, route, retrieval/RAG, scope resolution, persistence, session reset |
+| WF-10 | `ConversationMessage`, `MessageFeed`, `MessageComposer`, `SourceDisclosure`, `TreePicker`, `ConfirmDialog`의 document/bubble message anatomy, completed/streaming/failed AI action recipe, chrome-free log, 날짜/첫 미읽음 separator, 읽기 위치와 viewport keyboard 이동, elevated one-shell compose, source/scope 계약 | participant role truth, provider/stream transport, route, retrieval/RAG, unread/date truth, scope resolution, persistence, session reset |
 | WF-11 | `SecretField`, `ConfirmDialog`, `Callout`의 masked/reveal/copy/re-auth composition | encryption, permission, audit logging, update/revoke API |
 | WF-12 | `ValidationSummary`, `ConfirmDialog`, `ProgressBar`, `SourceDisclosure`, `ActionArea`의 external-impact/result 조합 | target validation, credential use, upload, outcome schema, external release truth |
 | WF-13 | `DatePicker`, `TimePicker`, `CheckboxGroup`, `ValidationSummary`, `SearchableMultiSelect`, `Button`/`ActionArea` 조합 | recurrence schema, eligibility, conflict calculation, task lookup, persistence, occurrence execution |
@@ -788,7 +788,7 @@ WF-15는 독립 wireframe, navigation component review, normal/narrow visual rev
 검증 범위는 2026-07-14 기준 다음과 같다.
 
 - 유지·split·redesign 컴포넌트의 loading/error/empty/blocked/pending/result 등 state story를 실제 Storybook 6006에서 확인한다. product-owned composition은 Storybook에 workflow story를 추가하지 않고 이 문서와 source-pinned audit에서 경계를 검증한다.
-- Communication family는 약 760px reading column과 320px narrow, dark, 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, system 중앙 칩, streaming/error message와 disabled composer에서 role hierarchy, wrapping, DOM order, transparent-feed/outer-shell 경계와 bubble/칩 대비를 확인한다.
+- Communication family는 약 760px reading column과 320px narrow, dark, 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, system 중앙 칩, completed/streaming/failed AI action recipe, 날짜/첫 미읽음 separator, viewport keyboard 이동과 disabled composer에서 role hierarchy, wrapping, DOM order, transparent-feed/outer-shell 경계와 bubble/칩 대비를 확인한다.
 - `ManualControlSession`은 활성 상태에서 link loss를 발생시켜 `link-unavailable` release 요청, armed 해제, control 비활성화를 확인했다.
 - `npm run check:storybook`으로 정적 build, implementation story guard, public/hidden 분류, console error를 검증한다.
 - `npm run check:product-frontends`, `npm run check:wds-alignment`, `npm run check:types`, `npm run check:type-surface`, `npm run check:consumer`, `npm run check:pack`을 통과했다.
