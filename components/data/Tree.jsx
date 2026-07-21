@@ -11,11 +11,62 @@ function focusTreeItem(item, setFocusKey) {
   item.focus();
 }
 
-function findNodePath(nodes, targetKey, ancestors = []) {
+function nodeId(node) {
+  return node.id == null ? null : String(node.id);
+}
+
+function internalNodeKey(node, path) {
+  const id = nodeId(node);
+  return id == null ? `path:${path.join('.')}` : `id:${id}`;
+}
+
+function legacyExpansionValue(node) {
+  const id = nodeId(node);
+  if (id != null) return id;
+  if (typeof node.label === 'string' || typeof node.label === 'number') return String(node.label);
+  return null;
+}
+
+function initialExpandedKeys(nodes, defaultExpanded) {
+  const requested = new Set(defaultExpanded.map(String));
+  const keys = [];
+  const visit = (items, parentPath = []) => {
+    for (const [index, node] of items.entries()) {
+      const path = [...parentPath, index];
+      const focusKey = internalNodeKey(node, path);
+      const legacyValue = legacyExpansionValue(node);
+      if (legacyValue != null && requested.has(legacyValue)) keys.push(focusKey);
+      visit(node.children ?? [], path);
+    }
+  };
+  visit(nodes);
+  return keys;
+}
+
+function assertUniqueNodeIds(nodes, seen = new Set()) {
   for (const node of nodes) {
-    const key = String(node.id != null ? node.id : node.label);
-    if (key === targetKey) return { key, ancestors };
-    const childPath = findNodePath(node.children ?? [], targetKey, [...ancestors, key]);
+    const id = nodeId(node);
+    if (id != null) {
+      if (seen.has(id)) {
+        throw new Error(`Tree node IDs must be unique. Duplicate ID: "${id}".`);
+      }
+      seen.add(id);
+    }
+    assertUniqueNodeIds(node.children ?? [], seen);
+  }
+}
+
+function findNodePath(nodes, targetId, ancestors = [], parentPath = []) {
+  for (const [index, node] of nodes.entries()) {
+    const path = [...parentPath, index];
+    const focusKey = internalNodeKey(node, path);
+    if (nodeId(node) === targetId) return { focusKey, ancestors };
+    const childPath = findNodePath(
+      node.children ?? [],
+      targetId,
+      [...ancestors, focusKey],
+      path,
+    );
     if (childPath) return childPath;
   }
   return null;
@@ -23,8 +74,9 @@ function findNodePath(nodes, targetKey, ancestors = []) {
 
 function TreeNode({
   node,
+  path,
   level,
-  parentKey,
+  parentFocusKey,
   expandedSet,
   previewSet,
   setPreviewKey,
@@ -37,16 +89,17 @@ function TreeNode({
   focusKey,
   setFocusKey,
 }) {
-  const key = String(node.id != null ? node.id : node.label);
+  const key = internalNodeKey(node, path);
+  const id = nodeId(node);
   const has = Boolean(node.children?.length);
   const open = has && (expandedSet.has(key) || previewSet.has(key));
   const [hovered, setHovered] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
-  const selected = selectedKey === key;
+  const selected = id != null && selectedKey === id;
   const activate = () => {
     setFocusKey(key);
     if (has) toggle(key);
-    select(key);
+    if (id != null) select(id);
     onSelect?.(node);
   };
   const onKeyDown = (event) => {
@@ -73,7 +126,7 @@ function TreeNode({
         toggle(key);
         return;
       }
-      if (parentKey != null) target = items.find((item) => item.dataset.treeKey === String(parentKey));
+      if (parentFocusKey != null) target = items.find((item) => item.dataset.treeKey === parentFocusKey);
     }
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -94,7 +147,8 @@ function TreeNode({
       aria-level={level + 1}
       tabIndex={focusKey === key ? 0 : -1}
       data-tree-key={key}
-      data-parent-key={parentKey == null ? undefined : String(parentKey)}
+      data-tree-id={id ?? undefined}
+      data-parent-key={parentFocusKey ?? undefined}
       onClick={(event) => {
         event.stopPropagation();
         activate();
@@ -154,10 +208,11 @@ function TreeNode({
         <div role="group">
           {node.children.map((child, index) => (
             <TreeNode
-              key={child.id ?? `${key}-${index}`}
+              key={internalNodeKey(child, [...path, index])}
               node={child}
+              path={[...path, index]}
               level={level + 1}
-              parentKey={key}
+              parentFocusKey={key}
               expandedSet={expandedSet}
               previewSet={previewSet}
               setPreviewKey={setPreviewKey}
@@ -194,9 +249,10 @@ export const Tree = React.forwardRef(function Tree({
   style,
   ...rest
 }, forwardedRef) {
-  const [expanded, setExpanded] = React.useState(() => new Set(defaultExpanded.map(String)));
+  assertUniqueNodeIds(nodes);
+  const [expanded, setExpanded] = React.useState(() => new Set(initialExpandedKeys(nodes, defaultExpanded)));
   const [preview, setPreview] = React.useState(() => new Set());
-  const [focusKey, setFocusKey] = React.useState(() => String(nodes[0]?.id ?? nodes[0]?.label ?? ''));
+  const [focusKey, setFocusKey] = React.useState(() => nodes.length ? internalNodeKey(nodes[0], [0]) : '');
   const [internalSelectedKey, setInternalSelectedKey] = React.useState(() => defaultSelectedId == null ? null : String(defaultSelectedId));
   const [pendingFocusKey, setPendingFocusKey] = React.useState(null);
   const treeRef = React.useRef(null);
@@ -227,29 +283,29 @@ export const Tree = React.forwardRef(function Tree({
     if (!items.some((item) => item.dataset.treeKey === focusKey)) {
       setFocusKey(items[0]?.dataset.treeKey ?? '');
     }
-  }, [expanded, focusKey, nodes.length]);
+  }, [expanded, focusKey, nodes]);
 
   React.useEffect(() => {
     if (pendingFocusKey == null) return;
+    setPendingFocusKey(null);
     const item = visibleItems(treeRef.current)
       .find((candidate) => candidate.dataset.treeKey === pendingFocusKey);
-    if (!item) return;
     focusTreeItem(item, setFocusKey);
-    setPendingFocusKey(null);
   }, [expanded, nodes, pendingFocusKey]);
 
   React.useImperativeHandle(forwardedRef, () => ({
     focusItem(id, { reveal = false } = {}) {
-      const targetKey = String(id);
-      const path = findNodePath(nodes, targetKey);
+      setPendingFocusKey(null);
+      const targetId = String(id);
+      const path = findNodePath(nodes, targetId);
       if (!path) return;
       if (reveal) {
         setExpanded((previous) => new Set([...previous, ...path.ancestors]));
-        setPendingFocusKey(targetKey);
+        setPendingFocusKey(path.focusKey);
         return;
       }
       const visibleItem = visibleItems(treeRef.current)
-        .find((candidate) => candidate.dataset.treeKey === targetKey);
+        .find((candidate) => candidate.dataset.treeKey === path.focusKey);
       focusTreeItem(visibleItem, setFocusKey);
     },
   }), [nodes]);
@@ -264,10 +320,11 @@ export const Tree = React.forwardRef(function Tree({
     >
       {nodes.map((node, index) => (
         <TreeNode
-          key={node.id ?? index}
+          key={internalNodeKey(node, [index])}
           node={node}
+          path={[index]}
           level={0}
-          parentKey={null}
+          parentFocusKey={null}
           expandedSet={expanded}
           previewSet={preview}
           setPreviewKey={setPreviewKey}

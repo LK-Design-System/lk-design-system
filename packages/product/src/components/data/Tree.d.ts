@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 export interface TreeNodeData {
-  id?: string;
+  /** Stable unique ID required by selection state and `focusItem`. */
+  id?: string | number;
   label: React.ReactNode;
   icon?: React.ReactNode;
   children?: TreeNodeData[];
@@ -9,13 +10,13 @@ export interface TreeNodeData {
 
 export interface TreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   nodes: TreeNodeData[];
-  /** 마운트 시 펼쳐진 키(id 또는 label). */
-  defaultExpanded?: string[];
-  /** Controlled ID of the single selected node. */
-  selectedId?: string | null;
-  /** Initial ID of the single selected node when uncontrolled. */
-  defaultSelectedId?: string | null;
-  /** Called when a node is activated by click, Enter, or Space. */
+  /** Node IDs, or primitive labels for legacy nodes without an ID, expanded initially. */
+  defaultExpanded?: Array<string | number>;
+  /** Controlled ID of the single selected node. IDs are normalized to strings. */
+  selectedId?: string | number | null;
+  /** Initial ID of the single selected node when uncontrolled. IDs are normalized to strings. */
+  defaultSelectedId?: string | number | null;
+  /** Called with the normalized ID when a node with an ID is activated. */
   onSelectedIdChange?: (selectedId: string) => void;
   /** Opens branch children while the branch is hovered or keyboard-focused. */
   openOnHover?: boolean;
@@ -25,9 +26,9 @@ export interface TreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
 }
 
 export interface TreeHandle {
-  /** Focuses a node. With `reveal`, collapsed ancestors are expanded first. */
-  focusItem(id: string, options?: { reveal?: boolean }): void;
+  /** Focuses the node with this unique ID. With `reveal`, collapsed ancestors are expanded first. */
+  focusItem(id: string | number, options?: { reveal?: boolean }): void;
 }
 
-/** 펼칠 수 있는 계층 — 회전 캐럿 + 레벨별 들여쓰기. */
+/** Expandable hierarchy with roving keyboard focus and optional single selection. */
 export const Tree: React.ForwardRefExoticComponent<TreeProps & React.RefAttributes<TreeHandle>>;

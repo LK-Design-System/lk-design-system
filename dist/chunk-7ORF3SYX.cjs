@@ -311,8 +311,14 @@ function ConversationMessage({
         label: action.label,
         disabled: action.disabled,
         "aria-pressed": action.pressed,
+        "data-selected": typeof action.pressed === "boolean" ? String(action.pressed) : void 0,
         "data-message-action": action.key,
         onClick: action.onClick,
+        style: action.pressed ? {
+          color: "var(--color-semantic-primary-normal)",
+          background: "var(--color-semantic-primary-surface-strong)",
+          border: "var(--border-thin) solid var(--color-semantic-primary-normal)"
+        } : void 0,
         children: action.icon
       },
       action.key
@@ -576,4 +582,4 @@ function ConversationMessage({
 
 
 exports.ConversationMessage = ConversationMessage;
-//# sourceMappingURL=chunk-QT5UVIU6.cjs.map
+//# sourceMappingURL=chunk-7ORF3SYX.cjs.map

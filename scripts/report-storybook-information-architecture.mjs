@@ -35,7 +35,6 @@ const PAGE_TITLE_RENAMES = {
   'LDS Core/Components/Content/Media': 'LDS Core/Components/Content/Media Patterns',
   'LDS Core/Components/Layout/Essential': 'LDS Core/Components/Layout/Mobile System Bars',
   'LDS Product/Content/Platform Marks': 'LDS Product/Content/Platform Logos',
-  'LDS Robotics/Viewer/Shared Viewer Frame': 'LDS Robotics/Viewer/Viewer Frame',
 };
 
 const ALLOWED_LATIN_STORY_TOKENS = new Set([

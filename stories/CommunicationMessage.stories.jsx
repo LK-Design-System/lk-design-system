@@ -814,7 +814,7 @@ function MessageActionBarFixture() {
 }
 
 export const MessageActionBar = {
-  name: '사용법 · AI 응답 액션과 피드백',
+  name: '사용법 · 응답 액션과 피드백',
   parameters: storyDescription(
     '완료된 AI 응답에는 출처와 함께 응답 복사·응답 다시 생성·긍정 평가·부정 평가를 canonical icon action으로 제공합니다. 각 버튼은 동작 대상을 포함한 접근 가능한 이름을 가지며, 생성 중에는 결과 대상 동작을 비활성화하고 실패 시에는 불완전한 결과의 액션 대신 오류와 응답 다시 시도만 제공합니다. 실행, 피드백 저장, 재생성 transport와 lifecycle 전이는 제품이 소유합니다.',
   ),

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "2996c6163555359bf1ba96c21c7a510f0a3e68273a4b5d50a739e7ff84072989",
+    "storybookIndexSha256": "7e1903a678485b75cc5272a7f25b8cda77f8aac22bf7500b1e77177f7e891422",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -53,8 +53,7 @@
       "LDS Core/Components/Content/Text": "LDS Core/Components/Content/Text Primitives",
       "LDS Core/Components/Content/Media": "LDS Core/Components/Content/Media Patterns",
       "LDS Core/Components/Layout/Essential": "LDS Core/Components/Layout/Mobile System Bars",
-      "LDS Product/Content/Platform Marks": "LDS Product/Content/Platform Logos",
-      "LDS Robotics/Viewer/Shared Viewer Frame": "LDS Robotics/Viewer/Viewer Frame"
+      "LDS Product/Content/Platform Marks": "LDS Product/Content/Platform Logos"
     },
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
@@ -66,16 +65,16 @@
     "componentDescriptions": 144,
     "pagesWithVisibleCanvasIntroduction": 148,
     "pagesWithDecisionGuidance": 143,
-    "describedPublicStories": 305,
+    "describedPublicStories": 306,
     "reviewedPages": 148,
-    "reviewedStories": 407,
-    "staleReviewedPages": 2,
+    "reviewedStories": 408,
+    "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 141,
-      "usage": 19,
-      "variants-states": 54,
+      "usage": 20,
+      "variants-states": 53,
       "interaction": 32,
       "responsive": 34,
       "scenario": 16,
@@ -108,7 +107,7 @@
         "stories": 243,
         "public": 209,
         "hidden": 34,
-        "guideReadyPages": 85
+        "guideReadyPages": 86
       },
       "Theme": {
         "pages": 3,
@@ -4242,8 +4241,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "51b1f04436d95398ef8893c8e6b750cf327b50b2760c19d6e51bdf212ef231e2",
+      "reviewedAt": "2026-07-21T00:00:00.000Z",
+      "reviewedSourceSha256": "5f20c2a2c560fa6dc745f1812b28f48a83a6d1e437d9f6d3eb8c385c6b740530",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-select--selects",
@@ -6363,7 +6362,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "47e2b4ab3c360f8a524490b6d70ea4ff5ecffa204b0870ed9c4efa01b255ced0",
+      "sourceSha256": "c979eb45d6804b9f6a64d3a816a82ef15177c28508d7da7ba4d65901a9d0ce93",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -6395,7 +6394,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-21T00:00:00.000Z",
-      "reviewedSourceSha256": "47e2b4ab3c360f8a524490b6d70ea4ff5ecffa204b0870ed9c4efa01b255ced0",
+      "reviewedSourceSha256": "c979eb45d6804b9f6a64d3a816a82ef15177c28508d7da7ba4d65901a9d0ce93",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -6454,6 +6453,32 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
+          "id": "lds-product-communication-message--message-action-bar",
+          "name": "사용법 · 응답 액션과 피드백",
+          "exportName": "MessageActionBar",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "SourceDisclosure"
+          ],
+          "reviewNote": "2026-07-21 human review confirmed the AI response action bar is usage guidance, matching its public name and order; owner, visibility, description, play, and render evidence remain valid."
+        },
+        {
           "id": "lds-product-communication-message--conversation-composition",
           "name": "사용법 · 피드·메시지·작성기 구성",
           "exportName": "ConversationComposition",
@@ -6478,32 +6503,6 @@
             "IconButton",
             "MessageComposer",
             "MessageFeed"
-          ],
-          "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
-        },
-        {
-          "id": "lds-product-communication-message--message-action-bar",
-          "name": "사용법 · AI 응답 액션과 피드백",
-          "exportName": "MessageActionBar",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "ConversationMessage"
-          ],
-          "supportingComponents": [
-            "Icon",
-            "SourceDisclosure"
           ],
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
@@ -6631,7 +6630,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-19 human re-review confirmed fresh Storybook names/order, source roles, focused play contracts, and current normal/narrow examples for the Product and Robotics status pages."
+      "reviewNote": "2026-07-21 re-reviewed the response action-bar role and audience-facing name against the final Storybook index; ownership, public ordering, descriptions, play contracts, and normal/narrow examples remain valid."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
@@ -8364,12 +8363,13 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTree.stories.jsx",
-      "sourceSha256": "29c7c90e73a5b398c2dc24cc2111276f04f01b9c9332a8db4af94cc419a1afc8",
+      "sourceSha256": "4a1025c4475cd1771e03a20ab21b22f10efd0e6f4896a342a82a14438b57faef",
       "primaryOwner": "Tree",
       "ownerComponents": [
         "Tree"
       ],
       "supportingComponents": [
+        "Button",
         "StatusBadge"
       ],
       "visibility": {
@@ -8379,20 +8379,18 @@
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-collections-tree--tree-interaction-states",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
-      "missingGuidance": [
-        "per-story-purpose"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "fb6bd20ece307985b0215d2bdcfb9128245a35f8160e7869f182e95c12a75b81",
+      "reviewedAt": "2026-07-21T00:00:00.000Z",
+      "reviewedSourceSha256": "4a1025c4475cd1771e03a20ab21b22f10efd0e6f4896a342a82a14438b57faef",
       "stories": [
         {
           "id": "lds-product-data-collections-tree--tree-interaction-states",
@@ -8421,7 +8419,7 @@
         },
         {
           "id": "lds-product-data-collections-tree--tree-selection-contract",
-          "name": "Selection and focus contract",
+          "name": "상호작용 · 선택과 초점 이동",
           "exportName": "TreeSelectionContract",
           "visibility": "public",
           "tags": [
@@ -8431,18 +8429,21 @@
             "test"
           ],
           "role": "interaction",
-          "hasStoryDescription": false,
+          "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Tree"
           ],
-          "supportingComponents": []
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-21 verified controlled and uncontrolled selection, callback parity, label-independent identity, independent expansion, last-call-wins imperative focus, stable nested reorder identity, same-length focus repair, public naming, description, and pointer target sizing."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-21 re-reviewed after stable node identity, nested reorder and replacement recovery, controlled and uncontrolled selection, independent expansion, and imperative focus ordering updates; Product ownership and keep disposition remain valid."
     },
     {
       "title": "LDS Product/Data/Display/Carousel",
