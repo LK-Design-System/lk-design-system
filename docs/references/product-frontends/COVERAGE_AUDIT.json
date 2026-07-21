@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-07-14",
+  "auditedAt": "2026-07-21",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -18,7 +18,7 @@
   "summary": {
     "discovered": 0,
     "wireframed": 1,
-    "implemented": 0,
+    "implemented": 1,
     "verified": 14
   },
   "componentDispositionSummary": {
@@ -681,6 +681,7 @@
       "consumers": [
         "deviceops",
         "visionops",
+        "web-viz",
         "control"
       ],
       "assetReviews": [
@@ -697,12 +698,12 @@
         },
         {
           "repo": "web-viz",
-          "classification": "not applicable",
-          "reason": "Pinned map-editor source owns map and floor geometry authoring and does not consume a live equipment identity/condition summary.",
+          "classification": "supported by composition",
+          "reason": "Pinned DashboardScreen renders the selected robot, independently refreshed ROS Bridge, control-server, and MQTT connection truth, last-updated time, and explicit connect/disconnect recovery. LDS status, freshness, labeled-fact, resource-state, and action primitives support the presentation by composition; Web Viz retains polling, endpoint configuration, robot selection, health interpretation, reconnect execution, and authoritative resynchronization.",
           "sourceEvidence": [
             {
-              "path": "frontend/src/screens/MapEditScreen.tsx",
-              "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
             }
           ]
         },
@@ -750,6 +751,11 @@
           "repo": "visionops",
           "path": "frontend/src/components/modules/ModuleDetailPage.tsx",
           "blobSha": "8d21f7126b3f3d45fceaba1c386617fa653a3c73"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/DashboardScreen.tsx",
+          "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
         },
         {
           "repo": "control",
@@ -1879,6 +1885,160 @@
       ],
       "verificationEvidence": [
         "scripts/check-api-drift.mjs",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-16",
+      "name": "Dashboard shell and navigation composition",
+      "userGoal": "Move between top-level destinations while keeping product identity, global utilities, current location, and the highest-priority content clear across wide and narrow product workspaces.",
+      "trigger": "The user enters or navigates within a dashboard-like LK product workspace.",
+      "consumers": [
+        "web-viz",
+        "control",
+        "context-hub"
+      ],
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "Pinned DashboardScreen uses a real product logo, header utilities, a current-robot card, three connection-status surfaces, and a card launcher. TopBar, Card, status/freshness, and action primitives cover this flat header-first composition. SideNav, KPI/MetricCard, DataGrid, and chart composition are not applicable to this source because it exposes neither hierarchical side navigation nor KPI, table, or chart decisions; routes, robot switching, connection execution, status refresh, and map launch remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned MainLayout and Sidebar establish a fixed header plus permanent/persistent/temporary left navigation, while RobotDashboard composes live monitoring, robot collection, equipment status, charts, and table-like collections. DashboardShell, SideNav, TopBar, ResourceState, ChartFrame, and DataGrid can support the reusable shell and data surfaces by composition. A fully verified narrow drawer handoff remains a gap until overlay focus, Escape, and focus restoration are tested; map/video renderers, telemetry truth, facility state machines, commands, queries, routes, and authorization remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/index.jsx",
+              "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+            },
+            {
+              "path": "frontend/src/layout/MainLayout/Sidebar/index.jsx",
+              "blobSha": "749805a966552f957a61359c1b892a44f06af0a4"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "supported by composition",
+          "reason": "Pinned Sidebar and AuthShell establish a full-height 256px product-identity navigation beside an offset main region; the home source composes destination cards and a project collection. DashboardShell, docked SideNav, DashboardGrid, Card, and collection primitives support this side-first workspace by composition. The pinned source has no adaptive narrow navigation, so collapse/drawer behavior remains a product-integration gap; project ranking, attention truth, routes, permissions, chat placement, queries, and data-source policy remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/layout/Sidebar.tsx",
+              "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+            },
+            {
+              "path": "src/components/layout/AuthShell.tsx",
+              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+            },
+            {
+              "path": "src/app/page.tsx",
+              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+            }
+          ]
+        }
+      ],
+      "states": [
+        "wide-docked",
+        "wide-collapsed",
+        "narrow-overlay",
+        "active-destination",
+        "loading",
+        "empty",
+        "error",
+        "stale",
+        "restricted"
+      ],
+      "decisions": [
+        "Which single shell region owns product identity, and which utilities remain globally available without duplicating brand or product paths?",
+        "Is the destination hierarchy flat enough for a header/card launcher or does it require a docked SideNav with at most two navigation levels?",
+        "What is the highest-priority status, attention item, or task at this moment, independent of whether the product has KPI metrics?",
+        "How does narrow navigation open, close, restore focus, and return the user to unchanged main-content context?"
+      ],
+      "failureRecovery": [
+        "Keep the main-content destination and reading context stable when wide navigation collapses or becomes a narrow overlay.",
+        "Do not duplicate product identity or primary destinations between TopBar and SideNav.",
+        "Restore focus to a persistent navigation control when Escape or outside interaction closes an overlay.",
+        "Represent loading, empty, error, stale, and restricted data inside the owning content surface instead of turning the shell into a workflow state machine."
+      ],
+      "dsBoundary": "LDS may own shell landmarks and skip navigation, wide/narrow navigation slot handoff, docked versus floating SideNav presentation, explicit collapse and overlay focus behavior, brand/utility composition rules, responsive grid containment, and reusable status/chart/table surfaces. Products own brand copy and assets, destination hierarchy, routes, permissions, queries, KPI formulas and thresholds, telemetry and freshness truth, map/video renderers, commands, side effects, and complete dashboard screens. The three pinned products provide no shared requirement for a KPI row, so MetricCard remains an optional composition rather than DashboardShell anatomy.",
+      "designQuestion": "Can Web Viz, Control, and Context Hub compose coherent dashboard-like workspaces without copying one product screen, forcing SideNav on a flat launcher, or making KPI cards mandatory?",
+      "sourceEvidence": [
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/DashboardScreen.tsx",
+          "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/layout/MainLayout/index.jsx",
+          "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/layout/MainLayout/Sidebar/index.jsx",
+          "blobSha": "749805a966552f957a61359c1b892a44f06af0a4"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+          "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/components/layout/Sidebar.tsx",
+          "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/components/layout/AuthShell.tsx",
+          "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/app/page.tsx",
+          "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+        }
+      ],
+      "stage": "implemented",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-16-dashboard-shell-and-navigation-composition"
+      ],
+      "implementationEvidence": [
+        "components/layout/DashboardShell.jsx",
+        "components/layout/DashboardGrid.jsx",
+        "components/navigation/TopBar.jsx",
+        "components/navigation/SideNav.jsx",
+        "components/layout/PageHeader.jsx",
+        "components/cards/MetricCard.jsx",
+        "components/data/ChartFrame.jsx",
+        "components/data/DataGrid.jsx",
+        "components/data/ResourceState.jsx"
+      ],
+      "storyEvidence": [
+        "stories/LayoutDashboardShell.stories.jsx",
+        "stories/LayoutDashboardGrid.stories.jsx",
+        "stories/Navigation.stories.jsx",
+        "stories/NavigationSideNav.stories.jsx",
+        "stories/LayoutPageHeader.stories.jsx",
+        "stories/DataAndStatus.stories.jsx",
+        "stories/DataChartFrame.stories.jsx",
+        "stories/DataGrid.stories.jsx",
+        "stories/DataResourceState.stories.jsx"
+      ],
+      "verificationEvidence": [
         "scripts/check-product-frontend-coverage.mjs",
         "scripts/check-storybook-accessibility.mjs"
       ]

@@ -18,8 +18,9 @@ const Chevron = ({ open }) => (
 export function SideNav({
   items = [], value, defaultValue, onChange,
   header, headerCollapsed, footer, width = 240,
+  surface = 'floating',
   collapsible = false, collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
-  renderLink, style, onBlur, ...rest
+  renderLink, style, onBlur, onFocus, ...rest
 }) {
   const isControlled = value !== undefined;
   const flat = [];
@@ -37,11 +38,13 @@ export function SideNav({
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
   const peekT = React.useRef(null);
   const pointerInside = React.useRef(false);
+  const restoringFocus = React.useRef(false);
   const collapseAndRestoreFocus = () => {
     clearTimeout(peekT.current);
     const activeElement = document.activeElement;
     const activeControl = navRef.current?.contains(activeElement) ? activeElement?.closest?.('[data-sidenav-value]') : null;
     const restoreValue = activeControl?.dataset.sidenavParent || activeControl?.dataset.sidenavValue;
+    restoringFocus.current = !!activeControl;
     setCol(true);
     if (!activeControl) return;
     requestAnimationFrame(() => {
@@ -53,6 +56,7 @@ export function SideNav({
         || (activeControl.isConnected ? activeControl : null)
         || navRef.current?.querySelector('.lk-sidenav__scroll [data-sidenav-value]:not(:disabled):not([aria-disabled="true"])');
       target?.focus();
+      requestAnimationFrame(() => { restoringFocus.current = false; });
     });
   };
   const peek = (expand) => {
@@ -81,6 +85,20 @@ export function SideNav({
     items.forEach((i) => { if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true; });
     return o;
   });
+
+  React.useEffect(() => {
+    const activeParent = items.find((item) => (
+      item
+      && !item.heading
+      && item.children?.some((child) => child.value === val)
+    ));
+    if (!activeParent) return;
+    setOpen((current) => (
+      current[activeParent.value]
+        ? current
+        : { ...current, [activeParent.value]: true }
+    ));
+  }, [items, val]);
 
   const [hovKey, setHovKey] = React.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
@@ -138,7 +156,9 @@ export function SideNav({
 
   const brand = col ? (headerCollapsed != null ? headerCollapsed : header) : header;
 
-  const shell = { display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
+  const resolvedSurface = surface === 'docked' ? 'docked' : 'floating';
+  const docked = resolvedSurface === 'docked';
+  const shell = { display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--radius-xl)', boxShadow: docked ? 'none' : undefined, padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const inner = (
     <React.Fragment>
       <style>{`.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}`}</style>
@@ -237,10 +257,17 @@ export function SideNav({
     <nav ref={navRef} onClick={overlay && col ? (e) => { if (!e.target.closest('[data-sidenav-value], button')) setCol(false); } : undefined}
       onMouseEnter={overlay ? () => { pointerInside.current = true; peek(true); } : undefined}
       onMouseLeave={overlay ? () => { pointerInside.current = false; peek(false); } : undefined}
+      onFocus={overlay ? (e) => {
+        onFocus?.(e);
+        if (col && !restoringFocus.current && !e.currentTarget.contains(e.relatedTarget)) {
+          clearTimeout(peekT.current);
+          setCol(false);
+        }
+      } : onFocus}
       onBlur={overlay ? (e) => { onBlur?.(e); if (!pointerInside.current && !e.currentTarget.contains(e.relatedTarget)) peek(false); } : onBlur}
-      style={overlay ? { position: 'relative', width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style }} {...rest}>
+      style={overlay ? { position: 'relative', width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style }} {...rest} data-surface={resolvedSurface}>
       {overlay ? (
-        <div style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : 'var(--shadow-lg)' }}>{inner}</div>
+        <div style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: docked || col ? 'none' : 'var(--shadow-lg)' }}>{inner}</div>
       ) : inner}
     </nav>
   );

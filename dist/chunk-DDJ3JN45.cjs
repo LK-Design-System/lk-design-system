@@ -1,23 +1,23 @@
-"use client";
-import {
-  Banner
-} from "./chunk-A25AGPST.js";
-import {
-  EmptyState
-} from "./chunk-76EKP7FV.js";
-import {
-  VisuallyHidden
-} from "./chunk-LSN3BTKD.js";
-import {
-  Skeleton
-} from "./chunk-D3D5ODOC.js";
-import {
-  Icon
-} from "./chunk-LMQSX5BW.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+
+
+var _chunkKUMT7S4Kcjs = require('./chunk-KUMT7S4K.cjs');
+
+
+var _chunkMROKAQIXcjs = require('./chunk-MROKAQIX.cjs');
+
+
+var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
+
+
+var _chunkA53UKC2Rcjs = require('./chunk-A53UKC2R.cjs');
+
+
+var _chunkVGM7HVYYcjs = require('./chunk-VGM7HVYY.cjs');
 
 // components/data/ResourceState.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var STATE_PRESENTATION = {
   ready: {
     title: null,
@@ -72,7 +72,7 @@ var PRESERVED_DATA_STATES = /* @__PURE__ */ new Set(["refreshing", "error", "sta
 var BLOCKING_STATES = /* @__PURE__ */ new Set(["empty", "restricted"]);
 var ASSERTIVE_BLOCKING_STATES = /* @__PURE__ */ new Set(["error", "offline"]);
 function DefaultLoadingContent() {
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       "data-resource-state-skeleton": true,
@@ -83,9 +83,9 @@ function DefaultLoadingContent() {
         padding: "var(--space-6) var(--space-5)"
       },
       children: [
-        /* @__PURE__ */ jsx(Skeleton, { variant: "text", width: "42%", height: 16 }),
-        /* @__PURE__ */ jsx(Skeleton, { variant: "text", width: "100%", lines: 3 }),
-        /* @__PURE__ */ jsx(Skeleton, { variant: "rect", width: "100%", height: 104 })
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkA53UKC2Rcjs.Skeleton, { variant: "text", width: "42%", height: 16 }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkA53UKC2Rcjs.Skeleton, { variant: "text", width: "100%", lines: 3 }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkA53UKC2Rcjs.Skeleton, { variant: "rect", width: "100%", height: 104 })
       ]
     }
   );
@@ -105,16 +105,16 @@ function ResourceState({
 }) {
   const resolvedState = STATE_PRESENTATION[state] ? state : "ready";
   const presentation = STATE_PRESENTATION[resolvedState];
-  const resolvedTitle = title ?? presentation.title;
-  const resolvedDescription = description ?? presentation.description;
-  const hasContent = React.Children.count(children) > 0;
+  const resolvedTitle = _nullishCoalesce(title, () => ( presentation.title));
+  const resolvedDescription = _nullishCoalesce(description, () => ( presentation.description));
+  const hasContent = _react2.default.Children.toArray(children).length > 0;
   const isLoading = resolvedState === "loading" || resolvedState === "refreshing" && !hasContent;
   const isBlocking = BLOCKING_STATES.has(resolvedState) || !hasContent && !isLoading && resolvedState !== "ready";
   const preservesContent = hasContent && PRESERVED_DATA_STATES.has(resolvedState);
   const assertive = isBlocking && ASSERTIVE_BLOCKING_STATES.has(resolvedState);
   const statusRole = assertive ? "alert" : "status";
   const statusLive = statusRole === "alert" ? "assertive" : "polite";
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "section",
     {
       "data-resource-state": resolvedState,
@@ -130,8 +130,8 @@ function ResourceState({
       },
       ...rest,
       children: [
-        preservesContent && /* @__PURE__ */ jsx(
-          Banner,
+        preservesContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          _chunkKUMT7S4Kcjs.Banner,
           {
             role: statusRole,
             "aria-live": statusLive,
@@ -143,24 +143,24 @@ function ResourceState({
             children: resolvedDescription
           }
         ),
-        isLoading && /* @__PURE__ */ jsxs("div", { role: "status", "aria-live": "polite", style: { minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs(VisuallyHidden, { children: [
+        isLoading && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { role: "status", "aria-live": "polite", style: { minWidth: 0 }, children: [
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { children: [
             resolvedTitle,
             resolvedDescription ? `. ${resolvedDescription}` : ""
           ] }),
-          loadingContent ?? /* @__PURE__ */ jsx(DefaultLoadingContent, {})
+          _nullishCoalesce(loadingContent, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, DefaultLoadingContent, {})))
         ] }),
-        isBlocking && /* @__PURE__ */ jsx("div", { role: statusRole, "aria-live": statusLive, style: { minWidth: 0 }, children: /* @__PURE__ */ jsx(
-          EmptyState,
+        isBlocking && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: statusRole, "aria-live": statusLive, style: { minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          _chunkMROKAQIXcjs.EmptyState,
           {
-            icon: /* @__PURE__ */ jsx(Icon, { name: presentation.icon, size: 26, "aria-hidden": "true" }),
+            icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: presentation.icon, size: 26, "aria-hidden": "true" }),
             title: resolvedTitle,
             description: resolvedDescription,
             action
           }
         ) }),
         !isLoading && !isBlocking && children,
-        !isLoading && !isBlocking && lastUpdated != null && /* @__PURE__ */ jsxs(
+        !isLoading && !isBlocking && lastUpdated != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-resource-state-freshness": true,
@@ -176,8 +176,8 @@ function ResourceState({
               lineHeight: "var(--caption1-line)"
             },
             children: [
-              /* @__PURE__ */ jsx(Icon, { name: "history", size: 16, "aria-hidden": "true", style: { flexShrink: 0 } }),
-              /* @__PURE__ */ jsxs("span", { style: { minWidth: 0, overflowWrap: "anywhere" }, children: [
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "history", size: 16, "aria-hidden": "true", style: { flexShrink: 0 } }),
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { minWidth: 0, overflowWrap: "anywhere" }, children: [
                 lastUpdatedLabel,
                 ": ",
                 lastUpdated
@@ -190,7 +190,7 @@ function ResourceState({
   );
 }
 
-export {
-  ResourceState
-};
-//# sourceMappingURL=chunk-OHX7L43Z.js.map
+
+
+exports.ResourceState = ResourceState;
+//# sourceMappingURL=chunk-DDJ3JN45.cjs.map

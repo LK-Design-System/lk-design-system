@@ -1,7 +1,7 @@
 "use client";
 import {
   ResourceState
-} from "./chunk-OHX7L43Z.js";
+} from "./chunk-KCHJT4EA.js";
 
 // components/data/ChartFrame.jsx
 import React from "react";
@@ -18,6 +18,7 @@ function ChartFrame({
   stateAction,
   lastUpdated,
   loadingContent,
+  headingLevel = 3,
   children,
   bodyStyle,
   style,
@@ -25,8 +26,10 @@ function ChartFrame({
 }) {
   const titleId = React.useId();
   const descriptionId = React.useId();
-  const hasContent = React.Children.count(children) > 0;
+  const hasContent = React.Children.toArray(children).length > 0;
   const preservesData = hasContent && ["refreshing", "stale", "offline", "error"].includes(resourceState);
+  const resolvedHeadingLevel = Math.min(6, Math.max(1, headingLevel));
+  const Heading = `h${resolvedHeadingLevel}`;
   return /* @__PURE__ */ jsxs(
     "section",
     {
@@ -38,7 +41,7 @@ function ChartFrame({
         overflow: "hidden",
         border: "var(--component-card-border)",
         borderRadius: "var(--component-card-radius)",
-        background: "var(--color-semantic-background-elevated-normal)",
+        background: "var(--component-card-bg)",
         boxShadow: "var(--component-card-shadow-sm)",
         fontFamily: "var(--font-sans)",
         ...style
@@ -47,7 +50,7 @@ function ChartFrame({
       children: [
         /* @__PURE__ */ jsxs("header", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-3)", minWidth: 0, padding: "var(--space-4) var(--space-5)", borderBottom: preservesData ? "none" : "1px solid var(--color-semantic-line-normal-normal)", flexWrap: "wrap" }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: "var(--space-1)", flex: "1 1 240px", minWidth: 0 }, children: [
-            /* @__PURE__ */ jsx("h3", { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)", overflowWrap: "anywhere" }, children: title }),
+            /* @__PURE__ */ jsx(Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)", overflowWrap: "anywhere" }, children: title }),
             description != null && /* @__PURE__ */ jsx("p", { id: descriptionId, style: { margin: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", overflowWrap: "anywhere" }, children: description }),
             meta != null && /* @__PURE__ */ jsx("div", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: meta })
           ] }),
@@ -63,7 +66,7 @@ function ChartFrame({
             lastUpdated,
             loadingContent,
             messageVariant: "embedded",
-            children: children != null && /* @__PURE__ */ jsxs("div", { "data-chart-frame-body": true, style: { display: "grid", gap: "var(--space-4)", minWidth: 0, padding: "var(--space-4) var(--space-5)", ...bodyStyle }, children: [
+            children: hasContent && /* @__PURE__ */ jsxs("div", { "data-chart-frame-body": true, style: { display: "grid", gap: "var(--space-4)", minWidth: 0, padding: "var(--space-4) var(--space-5)", ...bodyStyle }, children: [
               /* @__PURE__ */ jsx("div", { style: { minWidth: 0 }, children }),
               legend != null && /* @__PURE__ */ jsx("div", { "data-chart-frame-legend": true, style: { minWidth: 0 }, children: legend })
             ] })
@@ -77,4 +80,4 @@ function ChartFrame({
 export {
   ChartFrame
 };
-//# sourceMappingURL=chunk-3WWHZ3HX.js.map
+//# sourceMappingURL=chunk-BOTKZHXY.js.map

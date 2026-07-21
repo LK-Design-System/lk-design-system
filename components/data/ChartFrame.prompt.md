@@ -19,6 +19,8 @@
 - `ResourceState`를 embedded로 조합해 initial loading은 Skeleton으로 대체하고, refreshing/stale/error는 마지막 정상 chart와 legend를 유지합니다.
 - 한 개의 card surface만 만듭니다. 차트나 상태 안에 추가 card를 넣지 않습니다.
 - frame region은 title과 description에 연결됩니다. 차트는 별도의 `aria-label`, description, deterministic summary를 계속 제공해야 합니다.
+- 제목은 기본 `headingLevel={3}`이며, 합성되는 페이지·섹션의 실제 heading 구조에 맞춰 1~6 중 인접한 단계를 명시합니다.
+- 조건부 chart가 `false`, `null`, `undefined`인 상태는 보존 데이터로 간주하지 않습니다. error/offline에서 마지막 정상 chart를 유지하려면 실제 chart 노드를 children으로 전달합니다.
 - fetch, threshold, tooltip data, drill-down route는 제품과 chart component가 소유합니다.
 - action과 legend는 좁은 폭에서 DOM 순서를 유지하며 줄바꿈됩니다.
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { userEvent } from 'storybook/test';
-import { Icon, Lockup, SideNav, UserMenu } from '../src/index.js';
+import { Button, Icon, Lockup, SideNav, UserMenu } from '../src/index.js';
 import { SideNavUserMenuCard as SideNavUserMenuCardStory } from './NavigationFull.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -184,6 +184,36 @@ function SideNavLinkFixture() {
   );
 }
 
+function DockedSideNavFixture() {
+  const [value, setValue] = React.useState('overview');
+
+  return (
+    <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+      <Button
+        data-testid="activate-docked-child"
+        variant="secondary"
+        onClick={() => setValue('missions-queued')}
+      >
+        하위 경로 활성화
+      </Button>
+      <SideNav
+        data-testid="docked-side-nav"
+        aria-label="고정형 운영 탐색"
+        items={navigationItems}
+        value={value}
+        onChange={setValue}
+        surface="docked"
+        collapsible
+        width={252}
+        collapsedWidth={64}
+        header={<Lockup variant="inline" height={22} />}
+        headerCollapsed={<Lockup variant="mark" height={22} />}
+        style={{ height: 420 }}
+      />
+    </div>
+  );
+}
+
 export const LinkDestinations = {
   name: '개요',
   parameters: storyDescription(
@@ -195,8 +225,8 @@ export const LinkDestinations = {
     const overview = nav?.querySelector('a[href="#overview"]');
     const group = nav?.querySelector('button[aria-expanded]');
     const disabled = nav?.querySelector('a[aria-disabled="true"]');
-    if (!nav || !overview || !group || !disabled || disabled.hasAttribute('href') || disabled.tabIndex !== -1) {
-      throw new Error('SideNav must render leaf destinations as anchors, groups as disclosure buttons, and disabled links as non-navigable.');
+    if (!nav || nav.dataset.surface !== 'floating' || !overview || !group || !disabled || disabled.hasAttribute('href') || disabled.tabIndex !== -1) {
+      throw new Error('SideNav must preserve the floating default, render leaf destinations as anchors, groups as disclosure buttons, and disabled links as non-navigable.');
     }
     await userEvent.click(group);
     const queued = nav.querySelector('a[href="#missions-queued"]');
@@ -208,6 +238,89 @@ export const LinkDestinations = {
     await userEvent.keyboard('{Enter}');
     if (!canvasElement.querySelector('[data-testid="sidenav-linked-value"]')?.textContent?.includes('missions-queued') || queued.getAttribute('aria-current') !== 'page') {
       throw new Error('Keyboard link activation must update SideNav selection and aria-current.');
+    }
+  },
+};
+
+export const DockedSurface = {
+  name: '변형·상태 · 셸 고정형 표면',
+  parameters: storyDescription(
+    '제품 셸에 붙는 docked 표면과 명시적인 접기 버튼을 검증합니다. 외곽 카드 장식 없이 콘텐츠 쪽 divider만 남고 항목의 간격과 활성 표현은 floating과 같습니다.',
+  ),
+  render: () => <DockedSideNavFixture />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('[data-testid="docked-side-nav"]');
+    const styles = nav ? getComputedStyle(nav) : null;
+    const inlineEndWidth = styles?.getPropertyValue('border-inline-end-width');
+    if (!nav || nav.dataset.surface !== 'docked' || !styles
+      || styles.borderTopWidth !== '0px'
+      || styles.borderBottomWidth !== '0px'
+      || !(parseFloat(inlineEndWidth) > 0)
+      || styles.borderRadius !== '0px'
+      || styles.boxShadow !== 'none') {
+      throw new Error('Docked SideNav must remove the floating outline, radius, and shadow while retaining one logical end divider.');
+    }
+
+    const activateChild = canvasElement.querySelector('[data-testid="activate-docked-child"]');
+    if (!activateChild) throw new Error('The controlled child-route fixture must expose an external route change.');
+    await userEvent.click(activateChild);
+    const activeChild = nav.querySelector('[data-sidenav-value="missions-queued"]');
+    const activeParent = nav.querySelector('[data-sidenav-value="missions"]');
+    if (!activeChild || activeChild.getAttribute('aria-current') !== 'page' || activeParent?.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('A controlled child route must reveal its parent group and expose the active destination.');
+    }
+
+    const collapse = nav.querySelector('button[aria-label="접기"]');
+    if (!collapse) throw new Error('A collapsible docked SideNav must expose an explicit collapse control.');
+    await userEvent.click(collapse);
+    await waitForWidth(nav, 64);
+    const expand = nav.querySelector('button[aria-label="펼치기"]');
+    if (!expand) throw new Error('The explicit control must remain available in the collapsed rail.');
+    await userEvent.click(expand);
+    await waitForWidth(nav, 252);
+  },
+};
+
+export const OverlayKeyboardEntry = {
+  name: '상호작용 · 겹침형 키보드 진입과 복귀',
+  parameters: storyDescription(
+    '포인터 없이 접힌 overlay 레일에 초점이 진입하면 전체 패널이 열리고, 초점 이탈이나 Escape 뒤에는 레일과 지속되는 부모 항목으로 안전하게 돌아갑니다.',
+  ),
+  render: () => <SideNavFixture />,
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-testid="overlay-fixture"]');
+    const nav = canvasElement.querySelector('nav[aria-label="운영 탐색"]');
+    const panel = nav?.firstElementChild;
+    const firstControl = nav?.querySelector('.lk-sidenav__scroll [data-sidenav-value]:not(:disabled):not([aria-disabled="true"])');
+    if (!fixture || !nav || !panel || !firstControl || Math.round(panel.getBoundingClientRect().width) !== 64) {
+      throw new Error('Keyboard entry fixture must start with a focusable collapsed overlay rail.');
+    }
+
+    firstControl.focus();
+    await waitForWidth(panel, 252);
+    if (canvasElement.ownerDocument.activeElement !== firstControl) {
+      throw new Error('Focus entry must expand the overlay without moving keyboard focus.');
+    }
+
+    const activeChild = Array.from(nav.querySelectorAll('[data-sidenav-parent="missions"]'))
+      .find((control) => control.getAttribute('aria-current') === 'page');
+    if (!activeChild) throw new Error('Keyboard expansion must expose the active child destination.');
+    activeChild.focus();
+    activeChild.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+    await waitForWidth(panel, 64);
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    if (canvasElement.ownerDocument.activeElement?.dataset.sidenavValue !== 'missions'
+      || Math.abs(panel.getBoundingClientRect().width - 64) >= 1) {
+      throw new Error('Escape must collapse without immediately reopening and restore child focus to its persistent parent.');
+    }
+
+    fixture.focus();
+    firstControl.focus();
+    await waitForWidth(panel, 252);
+    fixture.focus();
+    await waitForWidth(panel, 64);
+    if (nav.contains(canvasElement.ownerDocument.activeElement)) {
+      throw new Error('Leaving both pointer and focus must collapse the overlay without stealing focus back.');
     }
   },
 };

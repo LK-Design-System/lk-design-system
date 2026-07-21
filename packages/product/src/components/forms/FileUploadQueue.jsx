@@ -2,8 +2,8 @@ import React from 'react';
 import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
 import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
 import { ProgressBar } from '../status/ProgressBar.jsx';
-import { statusToneStyle } from '../status/status-presentation.js';
 
 const STATUS_META = {
   queued: { label: '대기', tone: 'offline' },
@@ -78,19 +78,17 @@ export function FileUploadQueue({
       <header style={{ padding: 'var(--space-4)', borderBottom: '1px solid var(--color-semantic-line-normal-normal)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '36px minmax(0, 1fr)', gap: 'var(--space-3)', alignItems: 'center' }}>
           <Icon name="document" size={22} color="var(--color-semantic-label-neutral)" aria-hidden="true" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
+          <div style={{ minWidth: 0 }}>
             <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)' }}>{title}</strong>
-            <span
+            <VisuallyHidden
+              className="lk-file-upload-queue__live-summary"
               role="status"
               aria-live="polite"
               aria-atomic="true"
               aria-label={summaryLabel}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', flexWrap: 'wrap' }}
             >
-              {summary.length > 0
-                ? summary.map((group) => <StatusBadge key={group.key} tone={group.tone}>{group.label} {group.count}</StatusBadge>)
-                : <StatusBadge tone="offline">0개</StatusBadge>}
-            </span>
+              {summaryLabel}
+            </VisuallyHidden>
           </div>
         </div>
       </header>
@@ -103,7 +101,6 @@ export function FileUploadQueue({
         <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
           {items.map((item, index) => {
             const meta = STATUS_META[item.status] || STATUS_META.queued;
-            const itemTone = statusToneStyle(meta.tone);
             const busy = item.status === 'uploading' || item.status === 'processing';
             const progressPercent = item.progress != null
               ? Math.max(0, Math.min(100, Math.round(item.progress)))
@@ -130,7 +127,7 @@ export function FileUploadQueue({
                   borderTop: index > 0 ? '1px solid var(--color-semantic-line-normal-alternative)' : 'none',
                 }}
               >
-                <span aria-hidden="true" style={{ alignSelf: 'start', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, borderRadius: 'var(--radius-md)', color: itemTone.foreground, background: itemTone.surface }}>
+                <span className="lk-file-upload-queue__file-icon" aria-hidden="true" style={{ alignSelf: 'start', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 36, height: 36, borderRadius: 'var(--radius-md)', color: 'var(--color-semantic-label-neutral)', background: 'var(--color-semantic-fill-normal)' }}>
                   <Icon name="document" size={18} aria-hidden="true" />
                 </span>
                 <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>

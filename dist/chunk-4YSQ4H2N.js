@@ -3,11 +3,11 @@ import {
   ProgressBar
 } from "./chunk-FEOT7H4A.js";
 import {
-  statusToneStyle
-} from "./chunk-WXLIZEH2.js";
-import {
   StatusBadge
 } from "./chunk-BNPFEXZC.js";
+import {
+  VisuallyHidden
+} from "./chunk-LSN3BTKD.js";
 import {
   Button
 } from "./chunk-7WDUT67E.js";
@@ -82,28 +82,23 @@ function FileUploadQueue({
         }` }),
         /* @__PURE__ */ jsx("header", { style: { padding: "var(--space-4)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)" }, children: /* @__PURE__ */ jsxs("div", { style: { display: "grid", gridTemplateColumns: "36px minmax(0, 1fr)", gap: "var(--space-3)", alignItems: "center" }, children: [
           /* @__PURE__ */ jsx(Icon, { name: "document", size: 22, color: "var(--color-semantic-label-neutral)", "aria-hidden": "true" }),
-          /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsxs("div", { style: { minWidth: 0 }, children: [
             /* @__PURE__ */ jsx("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)" }, children: title }),
             /* @__PURE__ */ jsx(
-              "span",
+              VisuallyHidden,
               {
+                className: "lk-file-upload-queue__live-summary",
                 role: "status",
                 "aria-live": "polite",
                 "aria-atomic": "true",
                 "aria-label": summaryLabel,
-                style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", flexWrap: "wrap" },
-                children: summary.length > 0 ? summary.map((group) => /* @__PURE__ */ jsxs(StatusBadge, { tone: group.tone, children: [
-                  group.label,
-                  " ",
-                  group.count
-                ] }, group.key)) : /* @__PURE__ */ jsx(StatusBadge, { tone: "offline", children: "0\uAC1C" })
+                children: summaryLabel
               }
             )
           ] })
         ] }) }),
         items.length === 0 ? /* @__PURE__ */ jsx("div", { role: "status", style: { padding: "var(--space-6) var(--space-4)", color: "var(--color-semantic-label-neutral)", textAlign: "center", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: emptyLabel }) : /* @__PURE__ */ jsx("ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: items.map((item, index) => {
           const meta = STATUS_META[item.status] || STATUS_META.queued;
-          const itemTone = statusToneStyle(meta.tone);
           const busy = item.status === "uploading" || item.status === "processing";
           const progressPercent = item.progress != null ? Math.max(0, Math.min(100, Math.round(item.progress))) : null;
           const canRemove = !busy && typeof onRemove === "function";
@@ -124,7 +119,7 @@ function FileUploadQueue({
                 borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none"
               },
               children: [
-                /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { alignSelf: "start", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: "var(--radius-md)", color: itemTone.foreground, background: itemTone.surface }, children: /* @__PURE__ */ jsx(Icon, { name: "document", size: 18, "aria-hidden": "true" }) }),
+                /* @__PURE__ */ jsx("span", { className: "lk-file-upload-queue__file-icon", "aria-hidden": "true", style: { alignSelf: "start", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: "var(--radius-md)", color: "var(--color-semantic-label-neutral)", background: "var(--color-semantic-fill-normal)" }, children: /* @__PURE__ */ jsx(Icon, { name: "document", size: 18, "aria-hidden": "true" }) }),
                 /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
                   /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
                     /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, flexWrap: "wrap" }, children: [
@@ -170,4 +165,4 @@ function FileUploadQueue({
 export {
   FileUploadQueue
 };
-//# sourceMappingURL=chunk-QJKSR4DN.js.map
+//# sourceMappingURL=chunk-4YSQ4H2N.js.map

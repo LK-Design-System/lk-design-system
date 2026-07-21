@@ -33,7 +33,11 @@ const DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell__navigation{grid-column:1;grid-row:2;min-width:0;min-height:0;z-index:20}
 .lk-dashboard-shell__main{grid-column:2;grid-row:2;min-width:0;min-height:0;width:100%;max-width:100%;box-sizing:border-box}
 .lk-dashboard-shell__narrow-navigation{display:none;min-width:0;z-index:40;background:var(--color-semantic-background-elevated-normal)}
+.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__header{grid-column:2;grid-row:1}
+.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__navigation{grid-column:1;grid-row:1/-1}
+.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__main{grid-column:2;grid-row:2}
 .lk-dashboard-shell[data-layout="narrow"]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+.lk-dashboard-shell[data-layout="narrow"] .lk-dashboard-shell__header{grid-column:1;grid-row:1}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__navigation{display:none}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__narrow-navigation{display:block;grid-column:1;grid-row:3;position:sticky;bottom:0;padding-bottom:var(--mobile-safe-area-bottom)}
@@ -42,6 +46,7 @@ const DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"] .lk-dashboard-shell__main{grid-column:1;grid-row:3}
 @media(max-width:767px){
   .lk-dashboard-shell[data-layout="auto"]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+  .lk-dashboard-shell[data-layout="auto"] .lk-dashboard-shell__header{grid-column:1;grid-row:1}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__navigation{display:none}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__narrow-navigation{display:block;grid-column:1;grid-row:3;position:sticky;bottom:0;padding-bottom:var(--mobile-safe-area-bottom)}
@@ -63,9 +68,10 @@ function withNavigationLabel(node, label) {
  *
  * Landmark and responsive composition contract for dashboard products. The
  * header and navigation slots keep ownership of their visual surfaces; the
- * shell only orders them, provides one main landmark, and switches the wide
- * and narrow navigation regions. `header` is expected to own its header/banner
- * landmark (TopBar is the canonical LDS slot component).
+ * shell only orders them, provides one main landmark, switches the wide and
+ * narrow navigation regions, and supports header-first or side-first desktop
+ * topology. `header` is expected to own its header/banner landmark (TopBar is
+ * the canonical LDS slot component).
  */
 export function DashboardShell({
   header,
@@ -73,6 +79,7 @@ export function DashboardShell({
   narrowNavigation,
   children,
   layout = 'auto',
+  topology = 'header-first',
   mainId,
   mainLabel,
   mainClassName,
@@ -86,11 +93,13 @@ export function DashboardShell({
 }) {
   const generatedId = React.useId().replace(/:/g, '');
   const resolvedMainId = mainId || `lk-dashboard-main-${generatedId}`;
+  const resolvedTopology = topology === 'side-first' ? 'side-first' : 'header-first';
 
   return (
     <div
       className={['lk-dashboard-shell', className].filter(Boolean).join(' ')}
       data-layout={layout}
+      data-topology={resolvedTopology}
       data-has-narrow-navigation={narrowNavigation != null ? 'true' : 'false'}
       style={{
         minHeight: '100dvh',

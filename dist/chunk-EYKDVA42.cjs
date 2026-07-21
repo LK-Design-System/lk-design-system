@@ -4,10 +4,10 @@
 var _chunkY7MCM2H3cjs = require('./chunk-Y7MCM2H3.cjs');
 
 
-var _chunk3UPIIXAKcjs = require('./chunk-3UPIIXAK.cjs');
-
-
 var _chunk3ECMDGKZcjs = require('./chunk-3ECMDGKZ.cjs');
+
+
+var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
 
 
 var _chunk3BBCS67Wcjs = require('./chunk-3BBCS67W.cjs');
@@ -82,28 +82,23 @@ function FileUploadQueue({
         }` }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "header", { style: { padding: "var(--space-4)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gridTemplateColumns: "36px minmax(0, 1fr)", gap: "var(--space-3)", alignItems: "center" }, children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "document", size: 22, color: "var(--color-semantic-label-neutral)", "aria-hidden": "true" }),
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { minWidth: 0 }, children: [
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)" }, children: title }),
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-              "span",
+              _chunk677EM4M2cjs.VisuallyHidden,
               {
+                className: "lk-file-upload-queue__live-summary",
                 role: "status",
                 "aria-live": "polite",
                 "aria-atomic": "true",
                 "aria-label": summaryLabel,
-                style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", flexWrap: "wrap" },
-                children: summary.length > 0 ? summary.map((group) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunk3ECMDGKZcjs.StatusBadge, { tone: group.tone, children: [
-                  group.label,
-                  " ",
-                  group.count
-                ] }, group.key)) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ECMDGKZcjs.StatusBadge, { tone: "offline", children: "0\uAC1C" })
+                children: summaryLabel
               }
             )
           ] })
         ] }) }),
         items.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "status", style: { padding: "var(--space-6) var(--space-4)", color: "var(--color-semantic-label-neutral)", textAlign: "center", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: emptyLabel }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: items.map((item, index) => {
           const meta = STATUS_META[item.status] || STATUS_META.queued;
-          const itemTone = _chunk3UPIIXAKcjs.statusToneStyle.call(void 0, meta.tone);
           const busy = item.status === "uploading" || item.status === "processing";
           const progressPercent = item.progress != null ? Math.max(0, Math.min(100, Math.round(item.progress))) : null;
           const canRemove = !busy && typeof onRemove === "function";
@@ -124,7 +119,7 @@ function FileUploadQueue({
                 borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none"
               },
               children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { alignSelf: "start", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: "var(--radius-md)", color: itemTone.foreground, background: itemTone.surface }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "document", size: 18, "aria-hidden": "true" }) }),
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { className: "lk-file-upload-queue__file-icon", "aria-hidden": "true", style: { alignSelf: "start", display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: "var(--radius-md)", color: "var(--color-semantic-label-neutral)", background: "var(--color-semantic-fill-normal)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "document", size: 18, "aria-hidden": "true" }) }),
                 /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
                   /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
                     /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, flexWrap: "wrap" }, children: [
@@ -170,4 +165,4 @@ function FileUploadQueue({
 
 
 exports.FileUploadQueue = FileUploadQueue;
-//# sourceMappingURL=chunk-Z6WWZRFI.cjs.map
+//# sourceMappingURL=chunk-EYKDVA42.cjs.map

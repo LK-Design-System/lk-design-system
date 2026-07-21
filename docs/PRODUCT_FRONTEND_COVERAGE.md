@@ -3,9 +3,9 @@
 | Field | Value |
 | --- | --- |
 | Type | Product workflow coverage contract and audit summary |
-| Status | Current · LK Web Viz WF-15 wireframe and LDS mapping reviewed |
+| Status | Current · WF-16 dashboard shell/navigation composition implemented |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-07-14 |
+| Last reviewed | 2026-07-21 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
 
 ## 필수 LK 제품 자산 교차 검토
@@ -16,9 +16,9 @@
 
 | 제품 자산 | 기준 소스 | 현재 증거 상태 |
 | --- | --- | --- |
-| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend` | source pin, WF-15 독립 wireframe, LDS mapping 완료 · renderer gap 추적 중 |
-| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` | `docs/references/product-frontends/COVERAGE_AUDIT.json`의 pinned revision 재사용 또는 최신화 |
-| LK Context Hub | `LK-ROBOTICS/lk_context_hub` | `docs/references/product-frontends/COVERAGE_AUDIT.json`의 pinned revision 재사용 또는 최신화 |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend` | WF-15 navigation과 WF-16 flat header-first dashboard composition 확인 · `DashboardScreen.tsx`의 live connection truth를 WF-02에 반영 |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend` | WF-16 fixed header + wide/temporary SideNav + supervision composition 확인 · narrow drawer focus handoff gap 추적 중 |
+| LK Context Hub | `LK-ROBOTICS/lk_context_hub` · `de124084b7e50049350a46f92c4ea4476269c58c` · `src` | WF-16 full-height SideNav + offset main + card/collection composition 확인 · narrow navigation gap 추적 중 |
 
 각 컴포넌트 리뷰에는 아래 내용을 남긴다.
 
@@ -43,7 +43,7 @@
 | --- | ---: | --- |
 | discovered | 0 | source만 확보하고 독립 wireframe을 만들지 않은 항목이다. |
 | wireframed | 1 | 독립 low-fi와 source mapping은 닫혔지만 LDS renderer gap 때문에 구현 단계로 승격하지 않은 항목이다. |
-| implemented | 0 | 컴포넌트와 state story는 있으나 전체 trace가 닫히지 않은 항목이다. |
+| implemented | 1 | 컴포넌트와 state story는 있으나 전체 trace가 닫히지 않은 항목이다. |
 | verified | 14 | source requirement, 독립 wireframe, 작은 LDS 책임, state story, 검증 근거가 연결됐다. |
 
 여기서 `verified`는 디자인 시스템의 shared responsibility와 product-owned seam이 추적 가능하다는 뜻이다. 여섯 제품이 이 패키지를 실제로 통합했거나 production workflow가 end-to-end 검증됐다는 뜻은 아니다.
@@ -99,6 +99,7 @@
 
 ### LK Web Viz
 
+- dashboard connection triage: 실제 제품 로고와 utility header 아래에서 선택 로봇, ROS Bridge·관제서버·MQTT의 개별 연결 truth, 마지막 갱신, reconnect action을 확인한 뒤 map·task·history 진입점을 고른다.
 - map object authoring: point, line, polygon region과 landmark를 선택·생성·수정하고 저장 실패 시 작업 문맥을 유지한다.
 - facility semantics: elevator entry/interior, door, stair, waypoint, charger, generic POI를 같은 점 glyph로 축약하지 않고 의미와 상태를 구분한다.
 - zoom-stable inspection: 작은 zoom에서도 point·line·region·label의 위계와 selection이 유지되고, 조밀한 geometry는 inspector나 이름 있는 목록으로 보완한다.
@@ -107,6 +108,7 @@
 
 ### Context Hub
 
+- workspace orientation: full-height 제품 identity SideNav에서 현재 목적지를 확인하고 home의 destination card와 project collection으로 이동한다. pinned source에는 narrow navigation 전환이 없다.
 - scope configuration: workspace/system/domain과 repo/space/HF/board 관계를 검색·선택하고 dirty change를 저장하거나 폐기한다.
 - evidence-backed briefing: attention item에서 project, GitHub, Confluence, report evidence로 이동하고 근거의 출처와 freshness를 유지한다.
 - document intake and sync: 파일 선택, 변환, 검증, 동기화를 거치며 파일별 결과와 부분 실패를 복구한다.
@@ -115,6 +117,7 @@
 
 ### Control
 
+- dashboard shell navigation: fixed utility header와 wide/temporary SideNav 사이에서 현재 목적지를 유지하고 supervision main으로 이동한다. narrow drawer의 focus/Escape/restore는 LDS 통합 단계에서 별도로 닫아야 한다.
 - robot supervision: 로봇을 선택하고 map/video/status/facility/event를 같은 시점의 truth로 읽는다.
 - manual control session: target과 연결을 확인하고 control authority를 획득한 뒤 hold/release, focus loss, connection loss, emergency stop을 안전하게 처리한다.
 - procedure authoring: 목적·로봇·map target을 정하고 순서형 step을 작성·검증·미리보기·template 저장 후 명시적으로 전송한다.
@@ -151,6 +154,7 @@
 | WF-13 | Schedule automation | recurrence·timezone·conflict와 개별 run 상태를 구분하는가? | wireframed |
 | WF-14 | Approval transition | review completion, approval, external release를 서로 다른 truth로 다루는가? | wireframed |
 | WF-15 | Map navigation and facility authoring | point·line·region·facility와 층 identity가 일반 관례와 실제 LK workflow에서 구분되는가? | wireframed |
+| WF-16 | Dashboard shell and navigation composition | 제품 identity·utility·현재 위치·우선 콘텐츠가 wide/narrow shell에서 중복 없이 유지되는가? | implemented |
 
 ## 독립 설계 원칙
 
@@ -165,6 +169,49 @@
 ## 1차 독립 wireframe 계약
 
 아래 wireframe은 현재 제품 화면의 panel 배치를 옮긴 것이 아니다. 여러 제품에서 동일하게 발생하는 판단 순서를 기준으로 정보의 선후 관계만 고정한다. 구체적인 page, modal, drawer 배치는 소비 제품이 결정한다.
+
+### WF-16 Dashboard shell and navigation composition
+
+핵심은 하나의 “표준 대시보드 화면”을 만드는 것이 아니라 제품 identity, utility, 목적지, 현재 위치와 우선 콘텐츠의 소유권을 분리하는 것이다.
+
+```text
+wide · hierarchical
+┌ Product identity ───────────────┬ Global utilities ───────────────┐
+├ Docked destinations ────────────┼ Page title · primary action ───┤
+│ active path · max 2 levels      │ highest-priority status/task   │
+│ explicit collapse              │ analysis or stable collection  │
+└─────────────────────────────────┴─────────────────────────────────┘
+
+wide · flat launcher
+┌ Product identity ───────────────┬ Global utilities ───────────────┐
+├ Current entity and live truth ───────────────────────────────────┤
+├ Destination cards / status composition ─────────────────────────┤
+└──────────────────────────────────────────────────────────────────┘
+
+narrow
+┌ Utility bar · explicit navigation trigger ───────────────────────┐
+├ Temporary destinations ─ open / Escape / focus restore ─────────┤
+├ Unchanged main-content destination and reading context ─────────┤
+└──────────────────────────────────────────────────────────────────┘
+```
+
+설계 결정:
+
+- 제품 identity는 TopBar 또는 SideNav 중 한 곳만 소유한다. SideNav가 로고·제품명을 가지면 TopBar에는 workspace, search, notification, help, account 같은 utility만 둔다.
+- `DashboardShell topology="header-first"`는 전폭 header 아래에 navigation/main을 두는 호환 기본값이고, `topology="side-first"`는 wide 화면에서 full-height navigation 옆에 utility header/main을 둔다. 두 topology는 narrow에서 동일한 단일 열 navigation handoff로 수렴한다.
+- 계층형 desktop navigation은 `SideNav surface="docked"`를 기본 조합으로 삼고, 기존 카드형 표면은 명시적인 `surface="floating"`으로 보존한다. 접기/펼치기는 보이는 control이 정식 진입점이며 hover overlay는 보조 기능이다.
+- 작은 화면에서는 wide SideNav를 그대로 축소하지 않는다. temporary navigation이 닫힐 때 현재 main 문맥을 유지하고 persistent trigger로 focus를 복구한다.
+- `DashboardGrid`는 동급 요약이나 destination 반복을 배치할 뿐 중요도와 의미를 만들지 않는다. 서로 다른 우선순위는 section heading과 명시적인 span 조합으로 표현한다.
+- 세 pinned 제품에서 공통 KPI 요구는 확인되지 않았다. `MetricCard`는 선택적 composition이고 `DashboardShell`의 필수 anatomy가 아니다.
+- loading, empty, error, stale, offline, restricted는 데이터를 소유한 Card, `ResourceState`, `ChartFrame`, `DataGrid`에 남긴다. shell이 제품 workflow state machine이나 screen-sized template이 되어서는 안 된다.
+
+필수 세 자산의 source-backed 판정은 다음과 같다.
+
+| 제품 자산 | 고정 revision과 source blob | 판정 | workflow seam |
+| --- | --- | --- | --- |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | supported by composition | 실제 logo + TopBar utility + current robot Card + ROS Bridge/관제서버/MQTT Status + destination Card launcher를 조합한다. 계층형 SideNav, KPI, table, chart는 이 pinned 화면에 없으므로 not applicable이다. robot switching, poll/reconnect, map launch와 route는 제품 소유다. |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) · `MainLayout/Sidebar/index.jsx` (`749805a966552f957a61359c1b892a44f06af0a4`) · `RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | supported by composition | fixed TopBar, permanent/persistent/temporary SideNav, status·chart·table-like collection을 LDS 조합으로 지원한다. narrow drawer의 focus/Escape/restore 검증은 gap이며 map/video renderer, telemetry truth, facility state machine, command와 action eligibility는 제품 소유다. |
+| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/layout/Sidebar.tsx` (`6f8be361287aada76ff3b2e4f6ca4022706b3b87`) · `AuthShell.tsx` (`b525cdd54dfbf73eeec9d8867cd23a3d07c1630b`) · `src/app/page.tsx` (`e5fde4ba50eb52a826c6df8016196d410f2d1d99`) | supported by composition | full-height product SideNav, offset main, destination Card와 project collection을 조합한다. pinned source에는 narrow navigation이 없어 adaptive collapse/drawer가 gap이다. project ranking, attention truth, routes, permissions, chat 위치와 query는 제품 소유다. |
 
 ### WF-03 Guarded remote action
 
@@ -377,7 +424,7 @@
 | 제품 자산 | 고정 revision과 관련 source | 판정 | workflow seam |
 | --- | --- | --- | --- |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` | supported by composition | 설비 identity, primary condition, motion·connection 같은 supporting facts의 필요는 확인된다. LDS는 독립적으로 설계한 status label + labeled facts anatomy를 제공하고, telemetry truth·health 판정·recovery와 설비별 state machine은 Control이 소유한다. |
-| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` | not applicable | 고정 source는 map/floor geometry authoring을 소유하며 주변 설비의 live status summary를 소비하지 않는다. |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` | supported by composition | 선택 로봇과 ROS Bridge·관제서버·MQTT의 개별 truth, last-updated, connect/disconnect recovery가 실제로 존재한다. LDS status/freshness/labeled facts/action 조합을 사용하되 polling, endpoint 설정, health 판정, reconnect와 authoritative resync는 Web Viz가 소유한다. |
 | LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` | not applicable | 고정 source는 project/evidence scope와 assistant conversation을 소유하며 물리 설비 identity·condition·telemetry surface가 없다. |
 
 ### WF-05 Procedure authoring
@@ -784,6 +831,8 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | WF-14 | `DataGrid`, `SourceDisclosure`, `ValidationSummary`, `DescriptionList`, `Textarea`, `ActionArea` 조합으로 eligibility/approval/release를 구분 | metric verdict policy, authorization, persistence, external release evidence |
 
 WF-15는 독립 wireframe, navigation component review, normal/narrow visual review까지 완료했지만 제품 `forbidden` line과 stair/stair-slope renderer gap이 남아 위 verified closure matrix에 포함하지 않는다. 기존 `LaneOverlay`나 generic behavior region으로 의미를 덮지 않으며, 후속 Robotics audit에서 LDS 책임 여부를 먼저 결정한다.
+
+WF-16은 세 필수 제품의 pinned shell/navigation source, 독립 anatomy, 기존 LDS component/state story의 mapping까지 연결한 `implemented` 단계다. `SideNav`의 docked/floating 시각과 explicit collapse, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow, TopBar overflow, 한 개의 `main`·`h1`·banner landmark를 함께 검증하기 전에는 `verified`로 승격하지 않는다. 제품 route, dashboard query, KPI 수식, telemetry와 action policy를 LDS story로 복제하는 것은 이 closure에 포함하지 않는다.
 
 검증 범위는 2026-07-14 기준 다음과 같다.
 

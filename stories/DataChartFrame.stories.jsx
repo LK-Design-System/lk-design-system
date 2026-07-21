@@ -44,6 +44,7 @@ export const ChartSurface = {
   render: () => (
     <main style={{ width: 'min(100%, 720px)' }}>
       <ChartFrame
+        headingLevel={2}
         title="로봇 가용 상태"
         description="현재 fleet의 운행 가능 여부를 비교합니다."
         meta="전체 24대"
@@ -61,6 +62,9 @@ export const ChartSurface = {
     if (!frame || !frame.getAttribute('aria-labelledby') || !chart || !legend) {
       throw new Error('ChartFrame must name the region while retaining the chart and legend accessibility contracts.');
     }
+    if (!canvasElement.querySelector('[data-story-guide] > h1') || !frame.querySelector('h2')) {
+      throw new Error('The overview guide and ChartFrame title must preserve adjacent heading levels.');
+    }
   },
 };
 
@@ -72,6 +76,7 @@ export const NarrowStaleData = {
   render: () => (
     <main data-testid="narrow-chart-frame" style={{ width: 320, maxWidth: '100%' }}>
       <ChartFrame
+        headingLevel={1}
         title="현장 전체 로봇의 긴 상태 구성 제목"
         description="좁은 화면에서도 마지막 정상 데이터와 복구 action을 유지합니다."
         resourceState="stale"
@@ -105,8 +110,18 @@ export const LoadingAndError = {
   ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--space-5)', width: 'min(100%, 680px)' }}>
-      <ChartFrame title="처리량" resourceState="loading" />
-      <ChartFrame title="실패율" resourceState="error" stateAction={<Button size="sm" variant="secondary">다시 시도</Button>} />
+      <h1 style={{ gridColumn: '1 / -1', margin: 0, fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>차트 리소스 상태</h1>
+      <ChartFrame headingLevel={2} title="처리량" resourceState="loading" />
+      <ChartFrame headingLevel={2} title="실패율" resourceState="error" stateAction={<Button size="sm" variant="secondary">다시 시도</Button>}>{false}</ChartFrame>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const errorFrame = canvasElement.querySelector('[data-chart-frame-state="error"]');
+    if (!errorFrame?.querySelector('[role="alert"]') || errorFrame.querySelector('[data-chart-frame-body]')) {
+      throw new Error('A false conditional child must render a blocking error state instead of preserved chart data.');
+    }
+    if (canvasElement.querySelectorAll('main h1').length !== 1 || canvasElement.querySelectorAll('main h2').length !== 2) {
+      throw new Error('Resource-state comparisons must preserve one page heading followed by card headings.');
+    }
+  },
 };

@@ -18,6 +18,7 @@
 - `loading`: 콘텐츠를 Skeleton으로 대체하고 `aria-busy`와 polite 상태 알림을 제공합니다.
 - `refreshing`: 이미 표시한 콘텐츠가 있으면 그대로 유지하며 상태 메시지를 먼저 표시합니다. 콘텐츠가 없으면 loading처럼 동작합니다.
 - `stale`, `offline`, `error`: 마지막 정상 콘텐츠가 있으면 **상태 메시지 → 기존 콘텐츠 → 마지막 업데이트 시각** 순서를 유지합니다. 콘텐츠가 없으면 `EmptyState`로 차단 상태를 표현합니다.
+- 조건식 결과가 `false`, `null`, `undefined`인 children은 마지막 정상 콘텐츠로 간주하지 않습니다.
 - `empty`, `restricted`: 자식 대신 `EmptyState`를 표시합니다.
 - live-region 긴급도는 상태 이름만이 아니라 **콘텐츠 가용성**으로 결정합니다. 마지막 정상 콘텐츠를
   유지하는 `error`·`offline`은 작업을 중단하지 않으므로 `status`/polite이고, 콘텐츠가 없어
