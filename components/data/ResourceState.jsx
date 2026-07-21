@@ -101,7 +101,7 @@ export function ResourceState({
   const presentation = STATE_PRESENTATION[resolvedState];
   const resolvedTitle = title ?? presentation.title;
   const resolvedDescription = description ?? presentation.description;
-  const hasContent = React.Children.count(children) > 0;
+  const hasContent = React.Children.toArray(children).length > 0;
   const isLoading = resolvedState === 'loading' || (resolvedState === 'refreshing' && !hasContent);
   const isBlocking = BLOCKING_STATES.has(resolvedState)
     || (!hasContent && !isLoading && resolvedState !== 'ready');

@@ -19,6 +19,8 @@ export interface PageHeaderProps extends Omit<React.HTMLAttributes<HTMLElement>,
   align?: 'start' | 'center';
   /** 제목 크기. @default "md" */
   size?: 'sm' | 'md';
+  /** 제목의 문서 heading 단계. @default 1 */
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 /** 앱 화면의 제목, 설명, 상태, primary action을 일관되게 배치하는 페이지 헤더. */

@@ -253,10 +253,15 @@
 }
 
 /* Component aliases declared at :root otherwise keep their light computed
-   value when inherited into a nested dark scope. Re-declare the two
-   theme-adaptive foreground contracts at the scope that owns the dark
-   semantic values. */
+   value when inherited into a nested dark scope. Re-declare theme-adaptive
+   contracts at the scope that owns the dark semantic values. */
 :where([data-theme='dark'], .theme-dark) {
   --component-button-ghost-fg: var(--color-semantic-label-normal);
   --component-chip-fg-active: var(--color-semantic-label-normal);
+}
+
+:where([data-theme='light'], .theme-light, [data-theme='dark'], .theme-dark, [data-theme='auto'], .theme-auto) {
+  --component-card-bg: var(--color-semantic-background-elevated-normal);
+  --component-card-fg: var(--color-semantic-label-normal);
+  --component-card-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
 }

@@ -36,7 +36,11 @@ var DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell__navigation{grid-column:1;grid-row:2;min-width:0;min-height:0;z-index:20}
 .lk-dashboard-shell__main{grid-column:2;grid-row:2;min-width:0;min-height:0;width:100%;max-width:100%;box-sizing:border-box}
 .lk-dashboard-shell__narrow-navigation{display:none;min-width:0;z-index:40;background:var(--color-semantic-background-elevated-normal)}
+.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__header{grid-column:2;grid-row:1}
+.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__navigation{grid-column:1;grid-row:1/-1}
+.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__main{grid-column:2;grid-row:2}
 .lk-dashboard-shell[data-layout="narrow"]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+.lk-dashboard-shell[data-layout="narrow"] .lk-dashboard-shell__header{grid-column:1;grid-row:1}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__navigation{display:none}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__narrow-navigation{display:block;grid-column:1;grid-row:3;position:sticky;bottom:0;padding-bottom:var(--mobile-safe-area-bottom)}
@@ -45,6 +49,7 @@ var DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"] .lk-dashboard-shell__main{grid-column:1;grid-row:3}
 @media(max-width:767px){
   .lk-dashboard-shell[data-layout="auto"]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+  .lk-dashboard-shell[data-layout="auto"] .lk-dashboard-shell__header{grid-column:1;grid-row:1}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__navigation{display:none}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__narrow-navigation{display:block;grid-column:1;grid-row:3;position:sticky;bottom:0;padding-bottom:var(--mobile-safe-area-bottom)}
@@ -65,6 +70,7 @@ function DashboardShell({
   narrowNavigation,
   children,
   layout = "auto",
+  topology = "header-first",
   mainId,
   mainLabel,
   mainClassName,
@@ -78,11 +84,13 @@ function DashboardShell({
 }) {
   const generatedId = _react2.default.useId().replace(/:/g, "");
   const resolvedMainId = mainId || `lk-dashboard-main-${generatedId}`;
+  const resolvedTopology = topology === "side-first" ? "side-first" : "header-first";
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       className: ["lk-dashboard-shell", className].filter(Boolean).join(" "),
       "data-layout": layout,
+      "data-topology": resolvedTopology,
       "data-has-narrow-navigation": narrowNavigation != null ? "true" : "false",
       style: {
         minHeight: "100dvh",
@@ -121,4 +129,4 @@ function DashboardShell({
 
 
 exports.DashboardShell = DashboardShell;
-//# sourceMappingURL=chunk-3AKOERD6.cjs.map
+//# sourceMappingURL=chunk-JCOLRRO2.cjs.map

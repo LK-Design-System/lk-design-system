@@ -35,6 +35,7 @@ export const PageHeaderPattern = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1040 }}>
       <PageHeader
+        headingLevel={2}
         breadcrumb={<Breadcrumb items={[{ label: '관리' }, { label: '사용자' }]} />}
         title="사용자 관리"
         status={<StatusBadge tone="signal">검토 중</StatusBadge>}
@@ -44,6 +45,7 @@ export const PageHeaderPattern = {
       />
       <div style={{ maxWidth: 360, border: '1px dashed var(--color-semantic-line-normal-alternative)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
         <PageHeader
+          headingLevel={2}
           size="sm"
           eyebrow="필터 설정"
           title="목록 조건"
@@ -52,6 +54,7 @@ export const PageHeaderPattern = {
         />
       </div>
       <PageHeader
+        headingLevel={2}
         size="sm"
         eyebrow="시설 모니터링"
         title="층별 현황"
@@ -60,4 +63,54 @@ export const PageHeaderPattern = {
       />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const guideHeading = canvasElement.querySelector('[data-story-guide] > h1');
+    const specimenHeadings = canvasElement.querySelectorAll('main h2');
+    if (!guideHeading || specimenHeadings.length !== 3 || canvasElement.querySelector('main h1')) {
+      throw new Error('The overview guide and repeated PageHeader specimens must form one h1 followed by sibling h2 headings.');
+    }
+  },
+};
+
+export const NarrowLongTitleAndActions = {
+  name: '반응형 · 긴 제목과 복수 액션',
+  parameters: storyDescription(
+    '좁은 컨테이너에서 긴 페이지 제목과 상태를 먼저 읽고, 복수 액션이 다음 행으로 내려가며 어느 내용도 가로로 잘리지 않는지 확인합니다.',
+  ),
+  render: () => (
+    <main style={{ width: 'min(360px, 100%)', minWidth: 0 }}>
+      <PageHeader
+        aria-label="좁은 폭 페이지 헤더"
+        eyebrow="시설 모니터링"
+        title="AMR-FLEET-SUPERVISION-OPERATIONS 장비 운영 현황"
+        status={<StatusBadge tone="neutral">동기화됨</StatusBadge>}
+        description="긴 제품명과 설명이 있는 화면에서도 제목, 상태, 설명, 액션의 읽기 순서를 유지합니다."
+        meta={<span>마지막 업데이트 10:42 KST</span>}
+        actions={<><Button variant="ghost">변경 이력</Button><Button variant="signal">장비 추가</Button></>}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const pageHeader = canvasElement.querySelector('header[aria-label="좁은 폭 페이지 헤더"]');
+    const content = pageHeader?.querySelector('[data-page-header-content]');
+    const actions = pageHeader?.querySelector('[data-page-header-actions]');
+    const title = pageHeader?.querySelector('h1');
+    if (!pageHeader || !content || !actions || !title) {
+      throw new Error('Narrow PageHeader fixture is incomplete.');
+    }
+    if (pageHeader.querySelectorAll('h1').length !== 1) {
+      throw new Error('PageHeader must expose exactly one page-level h1.');
+    }
+
+    const headerRect = pageHeader.getBoundingClientRect();
+    const contentRect = content.getBoundingClientRect();
+    const actionsRect = actions.getBoundingClientRect();
+    const titleRect = title.getBoundingClientRect();
+    if (actionsRect.top < contentRect.bottom - 1) {
+      throw new Error('Narrow PageHeader actions must wrap below the content.');
+    }
+    if (actionsRect.right > headerRect.right + 1 || titleRect.right > headerRect.right + 1) {
+      throw new Error('Narrow PageHeader content and actions must stay inside the container.');
+    }
+  },
 };

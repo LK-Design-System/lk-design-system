@@ -86,7 +86,7 @@ function UploadAndConversionExample() {
 export const UploadAndConversion = {
   name: '개요',
   parameters: storyDescription(
-    '새 파일을 선택해 queue에 추가하고 성공·처리 중·실패 항목의 복구 action을 검증합니다. header 요약과 각 행의 progress·message·action이 같은 처리 상태를 설명하는지 확인하세요.',
+    '새 파일을 선택해 queue에 추가하고 성공·처리 중·실패 항목의 복구 action을 검증합니다. 간결한 header 아래에서 각 행의 badge·progress·message·action이 처리 상태를 설명하는지 확인하세요.',
   ),
   render: () => <UploadAndConversionExample />,
   play: async ({ canvasElement }) => {
@@ -98,15 +98,12 @@ export const UploadAndConversion = {
       throw new Error('FileUploadQueue header must keep its queue title.');
     }
 
-    const summary = header.querySelector('[role="status"]');
-    if (summary?.getAttribute('aria-label') !== '진행 1개, 완료 1개, 실패 1개') {
-      throw new Error('FileUploadQueue header must expose the current state summary.');
-    }
-    const stateBadges = Array.from(summary.querySelectorAll('span'))
-      .map((badge) => badge.textContent?.trim())
-      .filter((label) => label === '진행 1' || label === '완료 1' || label === '실패 1');
-    if (stateBadges.length !== 3) {
-      throw new Error('FileUploadQueue header must render one badge for every present queue state.');
+    const liveSummary = header.querySelector('.lk-file-upload-queue__live-summary[role="status"]');
+    const liveSummaryStyle = liveSummary ? getComputedStyle(liveSummary) : null;
+    if (liveSummary?.getAttribute('aria-label') !== '진행 1개, 완료 1개, 실패 1개'
+      || liveSummaryStyle?.width !== '1px'
+      || liveSummaryStyle?.height !== '1px') {
+      throw new Error('Queue counts must remain available to assistive technology without visible header badges.');
     }
 
     const fileNames = Array.from(queue.querySelectorAll('.lk-file-upload-queue__item strong'))
@@ -115,6 +112,15 @@ export const UploadAndConversion = {
       if (!fileNames.includes(expectedName)) {
         throw new Error(`FileUploadQueue must keep the file name visible: ${expectedName}`);
       }
+    }
+
+    const fileIcons = Array.from(queue.querySelectorAll('.lk-file-upload-queue__file-icon'));
+    const iconTreatments = new Set(fileIcons.map((icon) => {
+      const computed = getComputedStyle(icon);
+      return `${computed.color}|${computed.backgroundColor}`;
+    }));
+    if (fileIcons.length !== fileNames.length || iconTreatments.size !== 1) {
+      throw new Error('File identity icons must keep one neutral treatment across queue states.');
     }
 
     const progress = queue.querySelector('[role="progressbar"][aria-label="operations-guide.docx 처리 중"]');

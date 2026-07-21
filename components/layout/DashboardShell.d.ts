@@ -10,6 +10,8 @@ export interface DashboardShellProps extends Omit<React.HTMLAttributes<HTMLDivEl
   children?: React.ReactNode;
   /** auto는 768px 미만에서 좁은 구성을 사용합니다. @default "auto" */
   layout?: 'auto' | 'wide' | 'narrow';
+  /** header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default "header-first" */
+  topology?: 'header-first' | 'side-first';
   /** main landmark id. 생략하면 인스턴스별 id를 생성합니다. */
   mainId?: string;
   /** main landmark의 접근 가능한 이름. */
@@ -24,5 +26,5 @@ export interface DashboardShellProps extends Omit<React.HTMLAttributes<HTMLDivEl
   narrowNavigationLabel?: string;
 }
 
-/** header/navigation/main landmark와 넓은·좁은 탐색 전환을 조합하는 제품 대시보드 셸. */
+/** header/navigation/main landmark, desktop topology, 넓은·좁은 탐색 전환을 조합하는 제품 대시보드 셸. */
 export function DashboardShell(props: DashboardShellProps): React.JSX.Element;

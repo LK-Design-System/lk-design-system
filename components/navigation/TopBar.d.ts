@@ -7,6 +7,8 @@ export interface TopBarProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
   /** 오른쪽 정렬 액션(버튼, 아이콘 버튼, 아바타). */
   actions?: React.ReactNode;
+  /** children으로 만든 navigation landmark의 접근 가능한 이름. @default "주 탐색" */
+  navigationLabel?: string;
   /** 내비 정렬. @default "start" */
   navAlign?: 'start' | 'center';
   /** 프로스티드 블러로 상단 고정. @default false */
@@ -33,10 +35,12 @@ export interface TopBarNavItemProps extends React.HTMLAttributes<HTMLSpanElement
   children?: React.ReactNode;
   /** 활성 상태. */
   active?: boolean;
-  /** 링크로 렌더링할 때의 href. 없으면 button으로 렌더링. */
+  /** 링크 목적지. menuItems와 함께 제공해도 링크는 이동 의미를 유지하고 별도 disclosure button이 메뉴를 엽니다. */
   href?: string;
-  /** hover/focus 시 표시되는 드롭다운 항목. */
+  /** hover/focus/disclosure로 표시되는 native link/button 드롭다운 항목. */
   menuItems?: TopBarNavItemMenuItem[];
+  /** href와 menuItems를 함께 쓸 때 생성되는 disclosure button의 접근 가능한 이름. */
+  menuTriggerLabel?: string;
   /** 드롭다운 메뉴의 명시 테마. @default "light" */
   menuTheme?: 'light' | 'dark';
   onClick?: React.MouseEventHandler<HTMLElement>;

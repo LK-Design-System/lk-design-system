@@ -16,6 +16,7 @@ function SideNav({
   headerCollapsed,
   footer,
   width = 240,
+  surface = "floating",
   collapsible = false,
   collapsed,
   defaultCollapsed = false,
@@ -25,6 +26,7 @@ function SideNav({
   renderLink,
   style,
   onBlur,
+  onFocus,
   ...rest
 }) {
   const isControlled = value !== void 0;
@@ -52,11 +54,13 @@ function SideNav({
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
   const peekT = _react2.default.useRef(null);
   const pointerInside = _react2.default.useRef(false);
+  const restoringFocus = _react2.default.useRef(false);
   const collapseAndRestoreFocus = () => {
     clearTimeout(peekT.current);
     const activeElement = document.activeElement;
     const activeControl = _optionalChain([navRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.contains, 'call', _3 => _3(activeElement)]) ? _optionalChain([activeElement, 'optionalAccess', _4 => _4.closest, 'optionalCall', _5 => _5("[data-sidenav-value]")]) : null;
     const restoreValue = _optionalChain([activeControl, 'optionalAccess', _6 => _6.dataset, 'access', _7 => _7.sidenavParent]) || _optionalChain([activeControl, 'optionalAccess', _8 => _8.dataset, 'access', _9 => _9.sidenavValue]);
+    restoringFocus.current = !!activeControl;
     setCol(true);
     if (!activeControl) return;
     requestAnimationFrame(() => {
@@ -64,6 +68,9 @@ function SideNav({
       const matchingButton = restoreValue ? candidates.find((button) => button.dataset.sidenavValue === restoreValue) : null;
       const target = matchingButton || (activeControl.isConnected ? activeControl : null) || _optionalChain([navRef, 'access', _13 => _13.current, 'optionalAccess', _14 => _14.querySelector, 'call', _15 => _15('.lk-sidenav__scroll [data-sidenav-value]:not(:disabled):not([aria-disabled="true"])')]);
       _optionalChain([target, 'optionalAccess', _16 => _16.focus, 'call', _17 => _17()]);
+      requestAnimationFrame(() => {
+        restoringFocus.current = false;
+      });
     });
   };
   const peek = (expand) => {
@@ -99,6 +106,11 @@ function SideNav({
     });
     return o;
   });
+  _react2.default.useEffect(() => {
+    const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _21 => _21.children, 'optionalAccess', _22 => _22.some, 'call', _23 => _23((child) => child.value === val)]));
+    if (!activeParent) return;
+    setOpen((current) => current[activeParent.value] ? current : { ...current, [activeParent.value]: true });
+  }, [items, val]);
   const [hovKey, setHovKey] = _react2.default.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
   const row = (active, disabled, extra, hovered) => ({
@@ -133,7 +145,7 @@ function SideNav({
         return;
       }
       pick(item.value);
-      _optionalChain([item, 'access', _21 => _21.onClick, 'optionalCall', _22 => _22(event)]);
+      _optionalChain([item, 'access', _24 => _24.onClick, 'optionalCall', _25 => _25(event)]);
     };
     const commonProps = {
       "data-sidenav-value": item.value,
@@ -160,7 +172,9 @@ function SideNav({
     return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "button", { type: "button", disabled, ...commonProps });
   };
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
-  const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-xl)", padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
+  const resolvedSurface = surface === "docked" ? "docked" : "floating";
+  const docked = resolvedSurface === "docked";
+  const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: docked ? "none" : "1px solid var(--color-semantic-line-solid-normal)", borderInlineEnd: docked ? "1px solid var(--color-semantic-line-solid-normal)" : void 0, borderRadius: docked ? 0 : "var(--radius-xl)", boxShadow: docked ? "none" : void 0, padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
   const inner = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}` }),
     (brand != null || collapsible) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 24, padding: col ? "14px 10px 10px" : "14px 10px 18px" }, children: [
@@ -262,13 +276,21 @@ function SideNav({
         pointerInside.current = false;
         peek(false);
       } : void 0,
+      onFocus: overlay ? (e) => {
+        _optionalChain([onFocus, 'optionalCall', _26 => _26(e)]);
+        if (col && !restoringFocus.current && !e.currentTarget.contains(e.relatedTarget)) {
+          clearTimeout(peekT.current);
+          setCol(false);
+        }
+      } : onFocus,
       onBlur: overlay ? (e) => {
-        _optionalChain([onBlur, 'optionalCall', _23 => _23(e)]);
+        _optionalChain([onBlur, 'optionalCall', _27 => _27(e)]);
         if (!pointerInside.current && !e.currentTarget.contains(e.relatedTarget)) peek(false);
       } : onBlur,
       style: overlay ? { position: "relative", width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style },
       ...rest,
-      children: overlay ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: col ? "none" : "var(--shadow-lg)" }, children: inner }) : inner
+      "data-surface": resolvedSurface,
+      children: overlay ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: docked || col ? "none" : "var(--shadow-lg)" }, children: inner }) : inner
     }
   );
 }
@@ -276,4 +298,4 @@ function SideNav({
 
 
 exports.SideNav = SideNav;
-//# sourceMappingURL=chunk-JQCIZHQW.cjs.map
+//# sourceMappingURL=chunk-FSKTW3FL.cjs.map

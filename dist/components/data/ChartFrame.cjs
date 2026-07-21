@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkJZZN3ODUcjs = require('../../chunk-JZZN3ODU.cjs');
-require('../../chunk-AWOVCMZM.cjs');
+var _chunkA2IBVSIVcjs = require('../../chunk-A2IBVSIV.cjs');
+require('../../chunk-DDJ3JN45.cjs');
 require('../../chunk-KUMT7S4K.cjs');
 require('../../chunk-MROKAQIX.cjs');
 require('../../chunk-3UPIIXAK.cjs');
@@ -11,5 +11,5 @@ require('../../chunk-A53UKC2R.cjs');
 require('../../chunk-VGM7HVYY.cjs');
 
 
-exports.ChartFrame = _chunkJZZN3ODUcjs.ChartFrame;
+exports.ChartFrame = _chunkA2IBVSIVcjs.ChartFrame;
 //# sourceMappingURL=ChartFrame.cjs.map

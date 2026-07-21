@@ -13,6 +13,8 @@ export interface ChartFrameProps extends Omit<React.HTMLAttributes<HTMLElement>,
   stateAction?: React.ReactNode;
   lastUpdated?: React.ReactNode;
   loadingContent?: React.ReactNode;
+  /** 주변 문서 구조에 맞춘 제목 단계. @default 3 */
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   children?: React.ReactNode;
   bodyStyle?: React.CSSProperties;
 }

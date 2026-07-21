@@ -2,7 +2,7 @@ import React from 'react';
 
 export function StoryGuide({ eyebrow, title, description, maxWidth = 760 }) {
   return (
-    <header data-story-guide style={{ display: 'grid', gap: 'var(--space-2)' }}>
+    <div data-story-guide style={{ display: 'grid', gap: 'var(--space-2)' }}>
       <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>
         {eyebrow}
       </p>
@@ -26,7 +26,7 @@ export function StoryGuide({ eyebrow, title, description, maxWidth = 760 }) {
       >
         {description}
       </p>
-    </header>
+    </div>
   );
 }
 

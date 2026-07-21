@@ -36,6 +36,7 @@ DOM과 시각 순서는 동일합니다. 긴 label·caption·metadata는 좁은 
 ## Internal LDS comparison and retained deltas
 
 - `Card`의 component surface, border, radius, shadow와 22–24px content rhythm을 유지합니다. MetricCard 안에 Card/EmptyState를 중첩하지 않습니다.
+- 표면과 경계선은 현재 light/dark semantic theme에서 직접 해석되어야 하며, 다크 scope 안에 라이트 카드 배경을 고정하지 않습니다.
 - `Stat`의 큰 tabular numeral과 label 대비를 따르되 dashboard metric에 필요한 unit, comparison, freshness, action만 추가합니다.
 - `StatusBadge`의 non-color stale label과 `Skeleton`의 reduced-motion loading을 그대로 조합합니다.
 - 기존 uppercase caption label, title1 value, legacy delta color는 호환합니다. 새 footer divider는 freshness/action을 본문 변화값과 분리하기 위해서만 추가했습니다.

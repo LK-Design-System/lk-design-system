@@ -18,6 +18,7 @@ export function ChartFrame({
   stateAction,
   lastUpdated,
   loadingContent,
+  headingLevel = 3,
   children,
   bodyStyle,
   style,
@@ -25,8 +26,10 @@ export function ChartFrame({
 }) {
   const titleId = React.useId();
   const descriptionId = React.useId();
-  const hasContent = React.Children.count(children) > 0;
+  const hasContent = React.Children.toArray(children).length > 0;
   const preservesData = hasContent && ['refreshing', 'stale', 'offline', 'error'].includes(resourceState);
+  const resolvedHeadingLevel = Math.min(6, Math.max(1, headingLevel));
+  const Heading = `h${resolvedHeadingLevel}`;
 
   return (
     <section
@@ -38,7 +41,7 @@ export function ChartFrame({
         overflow: 'hidden',
         border: 'var(--component-card-border)',
         borderRadius: 'var(--component-card-radius)',
-        background: 'var(--color-semantic-background-elevated-normal)',
+        background: 'var(--component-card-bg)',
         boxShadow: 'var(--component-card-shadow-sm)',
         fontFamily: 'var(--font-sans)',
         ...style,
@@ -47,9 +50,9 @@ export function ChartFrame({
     >
       <header style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0, padding: 'var(--space-4) var(--space-5)', borderBottom: preservesData ? 'none' : '1px solid var(--color-semantic-line-normal-normal)', flexWrap: 'wrap' }}>
         <div style={{ display: 'grid', gap: 'var(--space-1)', flex: '1 1 240px', minWidth: 0 }}>
-          <h3 id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere' }}>
+          <Heading id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere' }}>
             {title}
-          </h3>
+          </Heading>
           {description != null && (
             <p id={descriptionId} style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', overflowWrap: 'anywhere' }}>
               {description}
@@ -77,7 +80,7 @@ export function ChartFrame({
         loadingContent={loadingContent}
         messageVariant="embedded"
       >
-        {children != null && (
+        {hasContent && (
           <div data-chart-frame-body style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0, padding: 'var(--space-4) var(--space-5)', ...bodyStyle }}>
             <div style={{ minWidth: 0 }}>{children}</div>
             {legend != null && <div data-chart-frame-legend style={{ minWidth: 0 }}>{legend}</div>}

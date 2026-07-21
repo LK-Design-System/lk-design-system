@@ -12,32 +12,32 @@
 
 ## 현재 기준선
 
-2026-07-21 현재 소스에서 재생성한 정적 빌드 기준으로 148개 페이지와 408개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-07-21 현재 소스에서 재생성한 정적 빌드 기준으로 148개 페이지와 415개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 306개
+- 공개 스토리: 313개
 - 숨김 스토리: 102개
 - 숨김 visual parity: 73개
 - 숨김 internal contract: 29개
-- 검토 완료 페이지 148/148개, 스토리 408/408개
+- 검토 완료 페이지 148/148개, 스토리 415/415개
 
-2026-07-21 검토에서는 Communication·Tree·Select 변경분과 현재 활성 스토리를 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·320px 렌더와 대조했다. 현재 148개 페이지와 408개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
+2026-07-21 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·320px·다크 렌더와 대조했다. 현재 148개 페이지와 415개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 
 - 컴포넌트 설명이 있는 페이지: 144개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 148개
 - 사용/비사용 판단 기준이 확인되는 페이지: 143개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 306개
+- 목적 설명이 있는 공개 스토리: 313개
 - Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
 - Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 83/83개
-- Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 209/209개
+- Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 216/216개
 - Theme 진입 가이드: 3/3페이지, 공개 스토리 설명: 3/3개
-- 공개 스토리 표시명 계약: 306/306개(`개요` 또는 역할 접두어)
+- 공개 스토리 표시명 계약: 313/313개(`개요` 또는 역할 접두어)
 - 이름을 바꾼 페이지의 기존 story id 보존: 4/4페이지
 
 모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 공개 스토리의 Docs 설명에서 상황과 확인 지점을 이어서 볼 수 있다.
 
 ## 전수 감사 판정
 
-현재 검토 패스에서 148개 페이지와 408개 스토리를 소스 AST와 빌드 인덱스에 대조했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion 페이지도 같은 role·visibility·description 계약으로 검토했다.
+현재 검토 패스에서 148개 페이지와 415개 스토리를 소스 AST와 빌드 인덱스에 대조했다. 최초 후보 18개 분리와 1개 병합은 `.fig`의 각 COMPONENT_SET 정의, LDS 공개 API, 스토리 상호작용 계약을 다시 확인한 뒤 다음처럼 수습했고, 후속 domain expansion 페이지도 같은 role·visibility·description 계약으로 검토했다.
 
 - 13개 구조 분리 실행: `Effects and Interaction`, `Action Controls`, `Annotations`, `Anchored Overlay`, `Menu`, `Segmented and Toggle`, `Selection Groups`, `Text Input`, `Loading State`, `Progress`, `Utility Actions`, `File Upload Queue`, `Telemetry`
 - 5개 분리 기각·keep 정정: `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`, `Toast`, `Manual Control Session`

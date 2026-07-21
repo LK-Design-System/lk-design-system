@@ -132,12 +132,12 @@ warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadg
 | 단일 메시지 표면 | `Callout`, `Banner variant="standalone"` | 전체 tinted surface + 같은 tone의 hairline border |
 | 부모 표면 결합 상태 | `Banner variant="embedded"` (LDS composition extension) | 부모 안의 edge-to-edge tinted band + 상·하단 tone hairline. 외곽 border·radius·shadow는 부모가 소유 |
 | 제출/검증 결과 요약 | `ValidationSummary` | 중립 목록 본문 + severity 구역 heading band(tone surface/border) + 최고 심각도의 외곽 hairline |
-| 진행형 작업 목록 | `FileUploadQueue` | 카드 외곽·헤더는 항상 중립. 상태는 행 단위 `StatusBadge`·아이콘·텍스트로만 표현 |
+| 진행형 작업 목록 | `FileUploadQueue` | 카드 외곽·헤더와 파일 정체성 아이콘은 항상 중립. 상태는 행 단위 `StatusBadge`·진행 바·텍스트로 표현 |
 
 - 색은 semantic `status-*` 토큰(또는 그 alias인 `component-banner/callout-*`)만 사용합니다. severity 색을 새로 정의하지 않습니다.
 - severity 글리프는 `Icon` registry + `statusToneStyle` 매핑(`signal=circle-info-fill`, `positive=circle-check-fill`, `cautionary=triangle-exclamation-fill`, `negative=circle-close-fill`)으로 고정합니다. 인라인 SVG로 다시 그리지 않습니다.
-- 카운트 문법: 심각도별로 그룹핑된 요약은 구역 band heading에 카운트를 표시하고, 상태가 섞인 단일 목록은 헤더의 `StatusBadge` 칩으로 요약합니다. 두 방식을 한 컴포넌트에서 함께 쓰지 않습니다.
-- 행 목록의 리딩 아이콘은 **36px 둥근 사각(`radius-md`) tinted 타일**로 통일합니다 — `ListCell`·`FeatureCard`·`StepList`·`DataGrid`에 걸쳐 서명된 LK icon-tile 패턴이며(`docs/references/wds/COMPONENT_STYLE_PARITY.md` 참조), severity가 있으면 타일 wash를 tone surface/전경으로 칠합니다(`FileUploadQueue`, `Notification`). 원형 등 새 chip 모양을 만들지 않습니다.
+- 카운트 문법: 심각도별로 그룹핑된 독립 요약은 구역 band heading에 카운트를 표시합니다. 상태가 섞인 목록이 바로 보이는 `FileUploadQueue`는 헤더에 같은 개수를 반복하지 않고, 보조 기술용 집계만 `VisuallyHidden` live region으로 제공합니다. 긴 목록이 접히거나 페이지로 나뉘어 별도 요약이 필요하면 제품 화면에서 조합합니다.
+- 행 목록의 리딩 아이콘은 **36px 둥근 사각(`radius-md`) 타일**로 통일합니다 — `ListCell`·`FeatureCard`·`StepList`·`DataGrid`에 걸쳐 서명된 LK icon-tile 패턴이며(`docs/references/wds/COMPONENT_STYLE_PARITY.md` 참조), 아이콘 자체가 severity를 뜻하면 타일 wash를 tone surface/전경으로 칠합니다(`Notification`). `FileUploadQueue`의 문서 아이콘처럼 콘텐츠 정체성을 뜻하고 상태가 별도로 표시되는 경우에는 중립 타일을 사용합니다. 원형 등 새 chip 모양을 만들지 않습니다.
 - 색만으로 의미를 전달하지 않습니다. tint에는 항상 아이콘 또는 명시적 상태 문구가 동반되어야 합니다.
 - tone 어휘의 canonical 형태는 `positive · cautionary · negative · signal`(+중립)입니다. 새 컴포넌트는 이 어휘만 받고, 기존 호환용 별칭(`success/warning/error/info` 등)은 Toast처럼 내부에서 canonical로 정규화합니다. 새 별칭을 만들지 않습니다.
 - severity 글리프는 손으로 그리지 않습니다. Toast·Snackbar·Banner처럼 공통 `Icon` registry + `statusToneStyle` 매핑을 사용합니다. 체브런·체크·닫기 같은 기능성 마이크로 글리프도 registry에 대응 아이콘이 있으면 반드시 사용하며, 대응 아이콘이 없고 컴포넌트 prompt에 예외를 기록한 경우에만 인라인 SVG를 허용합니다.
