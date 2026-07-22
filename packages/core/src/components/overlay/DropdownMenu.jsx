@@ -1,8 +1,8 @@
 import React from "react";
-import { createPortal } from "react-dom";
 import { Icon } from "../icon/Icon.jsx";
 import { Button } from '../buttons/Button.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useSubmenuBranch } from '../internal/useSubmenuBranch.jsx';
 import { useFloatingPosition } from './anchored-overlay.js';
 
 const ACTION_CONTROL_SELECTOR = [
@@ -177,7 +177,7 @@ function MenuItemContent({ item, variant, checked, disabled, description, traili
   );
 }
 
-function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect }) {
+function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect, trailing, haspopup, onTriggerKeyDown }) {
   const [hover, setHover] = React.useState(false);
   const cell = normalizeCellPadding(cellPadding);
   const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
@@ -197,6 +197,7 @@ function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect 
       }
       aria-checked={variant === "normal" ? undefined : checked}
       aria-current={variant === "normal" && active ? true : undefined}
+      aria-haspopup={haspopup}
       tabIndex={-1}
       disabled={disabled}
       onClick={() => {
@@ -204,116 +205,114 @@ function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect 
         item.onClick?.();
         onSelect?.(item);
       }}
+      onKeyDown={onTriggerKeyDown}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={menuItemVisualStyle({ active, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
     >
-      <MenuItemContent item={item} variant={variant} checked={checked} disabled={disabled} description={description} />
+      <MenuItemContent item={item} variant={variant} checked={checked} disabled={disabled} description={description} trailing={trailing} />
     </button>
   );
 }
 
+const SUBMENU_CHEVRON = (
+  <Icon name="chevron-right-small" size={16} aria-hidden="true" style={{ flexShrink: 0, color: "var(--color-semantic-label-alternative)" }} />
+);
+
+function DrillHeader({ title, onBack }) {
+  return (
+    <button
+      type="button"
+      aria-label={`뒤로 (${typeof title === "string" ? title : "상위 메뉴"})`}
+      onClick={onBack}
+      onKeyDown={(event) => { if (event.key === "ArrowLeft") { event.preventDefault(); onBack(); } }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        width: "100%",
+        padding: "8px 10px",
+        marginBottom: 4,
+        border: "none",
+        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+        background: "transparent",
+        cursor: "pointer",
+        textAlign: "left",
+        fontFamily: "var(--font-sans)",
+        fontSize: "var(--label2-size)",
+        fontWeight: "var(--fw-bold)",
+        color: "var(--color-semantic-label-neutral)",
+      }}
+    >
+      <Icon name="chevron-left-small" size={16} aria-hidden="true" />
+      <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{title}</span>
+    </button>
+  );
+}
+
+function renderDrillItems(items, ctx) {
+  return items.map((item, index) => {
+    if (item.divider) {
+      return (
+        <div
+          key={index}
+          role="separator"
+          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+        />
+      );
+    }
+    if (item.items && item.items.length) {
+      return (
+        <MenuItemButton
+          key={index}
+          item={item}
+          variant={item.variant || ctx.variant}
+          cellPadding={ctx.cellPadding}
+          verticalPadding={ctx.verticalPadding}
+          haspopup="menu"
+          trailing={SUBMENU_CHEVRON}
+          onSelect={() => ctx.drillIn(item)}
+          onTriggerKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); ctx.drillIn(item); } }}
+        />
+      );
+    }
+    return (
+      <MenuItemButton
+        key={index}
+        item={item}
+        variant={item.variant || ctx.variant}
+        cellPadding={ctx.cellPadding}
+        verticalPadding={ctx.verticalPadding}
+        onSelect={ctx.closeAll}
+      />
+    );
+  });
+}
+
 function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
-  const [open, setOpen] = React.useState(false);
   const [hover, setHover] = React.useState(false);
-  const [subPos, setSubPos] = React.useState(null);
-  const triggerRef = React.useRef(null);
-  const panelRef = React.useRef(null);
-  const hoverTimer = React.useRef(null);
   const cell = normalizeCellPadding(cellPadding);
   const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
   const disabled = Boolean(item.disabled || item.disable);
   const description = item.description ?? item.captionContent;
-
-  const { menuRef, requestItemFocus, handleMenuKeyDown } = useMenuKeyboard({
-    open,
-    onClose: () => setOpen(false),
-    getTrigger: () => triggerRef.current,
-  });
-
-  const clearTimer = () => { if (hoverTimer.current) { clearTimeout(hoverTimer.current); hoverTimer.current = null; } };
-  React.useEffect(() => () => clearTimer(), []);
-
-  // The submenu panel is portaled to <body> so it escapes the parent menu's
-  // scroll/overflow clip; position it beside the trigger, flipping to the left
-  // edge when the right side lacks room.
-  React.useLayoutEffect(() => {
-    if (!open) { setSubPos(null); return; }
-    const anchor = triggerRef.current?.getBoundingClientRect();
-    const view = triggerRef.current?.ownerDocument?.defaultView;
-    if (!anchor || !view) return;
-    const panelWidth = panelRef.current?.offsetWidth || 200;
-    const panelHeight = panelRef.current?.offsetHeight || 0;
-    const openLeft = view.innerWidth - anchor.right < panelWidth + 12 && anchor.left > panelWidth + 12;
-    let top = anchor.top - 6;
-    if (panelHeight && top + panelHeight > view.innerHeight - 8) {
-      top = Math.max(8, view.innerHeight - 8 - panelHeight);
-    }
-    setSubPos({ top, left: openLeft ? anchor.left - panelWidth - 4 : anchor.right + 4 });
-  }, [open]);
-
-  const openSub = (focusFirst) => { if (focusFirst) requestItemFocus("first"); setOpen(true); };
-  const closeSub = ({ restoreFocus } = {}) => { setOpen(false); if (restoreFocus) triggerRef.current?.focus({ preventScroll: true }); };
-
-  const portalTarget = triggerRef.current?.ownerDocument?.body || (typeof document !== "undefined" ? document.body : null);
-  const subPanel = open && portalTarget
-    ? createPortal(
-        <div
-          ref={panelRef}
-          data-menu-portal=""
-          onMouseEnter={clearTimer}
-          onMouseLeave={() => { clearTimer(); hoverTimer.current = setTimeout(() => setOpen(false), 180); }}
-          style={{
-            position: "fixed",
-            top: subPos?.top ?? -9999,
-            left: subPos?.left ?? -9999,
-            zIndex: 41,
-            width: "max-content",
-            minWidth: 200,
-            maxWidth: "calc(100vw - var(--space-8))",
-            visibility: subPos ? "visible" : "hidden",
-            ...MENU_PANEL_STYLE,
-          }}
-        >
-          <div
-            ref={menuRef}
-            role="menu"
-            aria-label={typeof item.label === "string" ? item.label : undefined}
-            onKeyDown={(event) => {
-              if (event.key === "ArrowLeft") { event.preventDefault(); closeSub({ restoreFocus: true }); return; }
-              handleMenuKeyDown(event);
-            }}
-            style={{ display: "flex", flexDirection: "column", gap: 4 }}
-          >
-            {renderMenuItems(item.items || [], { variant, cellPadding, verticalPadding, closeAll })}
-          </div>
-        </div>,
-        portalTarget,
-      )
-    : null;
+  const sub = useSubmenuBranch({ disabled });
 
   return (
     <div
       style={{ position: "relative" }}
-      onMouseEnter={() => { setHover(true); if (!disabled) { clearTimer(); hoverTimer.current = setTimeout(() => setOpen(true), 120); } }}
-      onMouseLeave={() => { setHover(false); clearTimer(); hoverTimer.current = setTimeout(() => setOpen(false), 180); }}
+      onMouseEnter={() => { setHover(true); sub.containerHandlers.onMouseEnter(); }}
+      onMouseLeave={() => { setHover(false); sub.containerHandlers.onMouseLeave(); }}
     >
       <button
-        ref={triggerRef}
+        ref={sub.triggerRef}
         type="button"
         role="menuitem"
         aria-haspopup="menu"
-        aria-expanded={open}
+        aria-expanded={sub.open}
         tabIndex={-1}
         disabled={disabled}
-        onClick={() => { if (disabled) return; if (open) closeSub(); else openSub(false); }}
-        onKeyDown={(event) => {
-          if (event.key === "ArrowRight" || event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openSub(true);
-          }
-        }}
-        style={menuItemVisualStyle({ active: open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
+        {...sub.triggerHandlers}
+        style={menuItemVisualStyle({ active: sub.open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
       >
         <MenuItemContent
           item={item}
@@ -324,7 +323,18 @@ function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
           trailing={<Icon name="chevron-right-small" size={16} aria-hidden="true" style={{ flexShrink: 0, color: "var(--color-semantic-label-alternative)" }} />}
         />
       </button>
-      {subPanel}
+      {sub.renderPanel(
+        <div
+          ref={sub.menuRef}
+          role="menu"
+          aria-label={typeof item.label === "string" ? item.label : undefined}
+          onKeyDown={sub.menuKeyDown}
+          style={{ display: "flex", flexDirection: "column", gap: 4 }}
+        >
+          {renderMenuItems(item.items || [], { variant, cellPadding, verticalPadding, closeAll })}
+        </div>,
+        MENU_PANEL_STYLE,
+      )}
     </div>
   );
 }
@@ -375,6 +385,7 @@ export function DropdownMenu({
   items = [],
   align = "left",
   variant = "normal",
+  submenuMode = "flyout",
   cellPadding = "12px",
   verticalPadding,
   menuActionArea = false,
@@ -392,8 +403,10 @@ export function DropdownMenu({
   ...rest
 }) {
   const controlled = open !== undefined;
+  const drill = submenuMode === "drill";
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
+  const [drillPath, setDrillPath] = React.useState([]);
   const ref = React.useRef(null);
   const panelRef = React.useRef(null);
   const actionAreaRef = React.useRef(null);
@@ -404,10 +417,16 @@ export function DropdownMenu({
     if (!controlled) setInternalOpen(next);
     onOpenChange?.(next);
   };
+  React.useEffect(() => { if (!visible) setDrillPath([]); }, [visible]);
+  const drillLevel = drillPath.length ? drillPath[drillPath.length - 1] : null;
+  const drillItems = drillLevel ? (drillLevel.items || []) : items;
+  const drillIn = (item) => setDrillPath((path) => [...path, item]);
+  const drillBack = () => setDrillPath((path) => path.slice(0, -1));
   const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
     open: visible,
     onClose: () => setVisible(false),
     getTrigger: () => ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]'),
+    menuKey: drill ? drillPath.length : 0,
   });
 
   const toggleMenu = (event) => {
@@ -467,6 +486,11 @@ export function DropdownMenu({
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
 
   const handleMenuRegionKeyDown = (event) => {
+    if (drill && event.key === 'ArrowLeft' && drillPath.length > 0) {
+      event.preventDefault();
+      drillBack();
+      return;
+    }
     if (event.key === 'Tab' && !event.shiftKey) {
       const firstAction = focusableActionControls(actionAreaRef.current)[0];
       if (firstAction) {
@@ -565,12 +589,25 @@ export function DropdownMenu({
             onKeyDown={handleMenuRegionKeyDown}
             style={{ display: "flex", flexDirection: "column", gap: 4, minHeight: 0, overflowY: panelMaxHeight != null ? 'auto' : undefined }}
           >
-            {renderMenuItems(items, {
-              variant,
-              cellPadding,
-              verticalPadding,
-              closeAll: () => closeMenu({ restoreFocus: true }),
-            })}
+            {drill ? (
+              <>
+                {drillLevel && <DrillHeader title={drillLevel.label} onBack={drillBack} />}
+                {renderDrillItems(drillItems, {
+                  variant,
+                  cellPadding,
+                  verticalPadding,
+                  closeAll: () => closeMenu({ restoreFocus: true }),
+                  drillIn,
+                })}
+              </>
+            ) : (
+              renderMenuItems(items, {
+                variant,
+                cellPadding,
+                verticalPadding,
+                closeAll: () => closeMenu({ restoreFocus: true }),
+              })
+            )}
           </div>
           {showActionArea && (
             <div

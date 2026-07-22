@@ -1,6 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
+var _chunkHXVVS4ZWcjs = require('./chunk-HXVVS4ZW.cjs');
+
+
 var _chunkUMSSUFMTcjs = require('./chunk-UMSSUFMT.cjs');
 
 
@@ -14,7 +17,6 @@ var _chunkVGM7HVYYcjs = require('./chunk-VGM7HVYY.cjs');
 
 // components/overlay/DropdownMenu.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _reactdom = require('react-dom');
 var _jsxruntime = require('react/jsx-runtime');
 var ACTION_CONTROL_SELECTOR = [
   "button:not(:disabled)",
@@ -165,7 +167,7 @@ function MenuItemContent({ item, variant, checked, disabled, description, traili
     )
   ] });
 }
-function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect }) {
+function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect, trailing, haspopup, onTriggerKeyDown }) {
   const [hover, setHover] = _react2.default.useState(false);
   const cell = normalizeCellPadding(cellPadding);
   const vertical = normalizeCellPadding(_nullishCoalesce(verticalPadding, () => ( cellPadding)));
@@ -180,6 +182,7 @@ function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect 
       role: variant === "normal" ? "menuitem" : variant === "radio" ? "menuitemradio" : "menuitemcheckbox",
       "aria-checked": variant === "normal" ? void 0 : checked,
       "aria-current": variant === "normal" && active ? true : void 0,
+      "aria-haspopup": haspopup,
       tabIndex: -1,
       disabled,
       onClick: () => {
@@ -187,145 +190,130 @@ function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect 
         _optionalChain([item, 'access', _5 => _5.onClick, 'optionalCall', _6 => _6()]);
         _optionalChain([onSelect, 'optionalCall', _7 => _7(item)]);
       },
+      onKeyDown: onTriggerKeyDown,
       onMouseEnter: () => setHover(true),
       onMouseLeave: () => setHover(false),
       style: menuItemVisualStyle({ active, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical }),
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, MenuItemContent, { item, variant, checked, disabled, description })
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, MenuItemContent, { item, variant, checked, disabled, description, trailing })
     }
   );
 }
+var SUBMENU_CHEVRON = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "chevron-right-small", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } });
+function DrillHeader({ title, onBack }) {
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    "button",
+    {
+      type: "button",
+      "aria-label": `\uB4A4\uB85C (${typeof title === "string" ? title : "\uC0C1\uC704 \uBA54\uB274"})`,
+      onClick: onBack,
+      onKeyDown: (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          onBack();
+        }
+      },
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        width: "100%",
+        padding: "8px 10px",
+        marginBottom: 4,
+        border: "none",
+        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+        background: "transparent",
+        cursor: "pointer",
+        textAlign: "left",
+        fontFamily: "var(--font-sans)",
+        fontSize: "var(--label2-size)",
+        fontWeight: "var(--fw-bold)",
+        color: "var(--color-semantic-label-neutral)"
+      },
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkVGM7HVYYcjs.Icon, { name: "chevron-left-small", size: 16, "aria-hidden": "true" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title })
+      ]
+    }
+  );
+}
+function renderDrillItems(items, ctx) {
+  return items.map((item, index) => {
+    if (item.divider) {
+      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        "div",
+        {
+          role: "separator",
+          style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }
+        },
+        index
+      );
+    }
+    if (item.items && item.items.length) {
+      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        MenuItemButton,
+        {
+          item,
+          variant: item.variant || ctx.variant,
+          cellPadding: ctx.cellPadding,
+          verticalPadding: ctx.verticalPadding,
+          haspopup: "menu",
+          trailing: SUBMENU_CHEVRON,
+          onSelect: () => ctx.drillIn(item),
+          onTriggerKeyDown: (event) => {
+            if (event.key === "ArrowRight") {
+              event.preventDefault();
+              ctx.drillIn(item);
+            }
+          }
+        },
+        index
+      );
+    }
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      MenuItemButton,
+      {
+        item,
+        variant: item.variant || ctx.variant,
+        cellPadding: ctx.cellPadding,
+        verticalPadding: ctx.verticalPadding,
+        onSelect: ctx.closeAll
+      },
+      index
+    );
+  });
+}
 function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
-  const [open, setOpen] = _react2.default.useState(false);
   const [hover, setHover] = _react2.default.useState(false);
-  const [subPos, setSubPos] = _react2.default.useState(null);
-  const triggerRef = _react2.default.useRef(null);
-  const panelRef = _react2.default.useRef(null);
-  const hoverTimer = _react2.default.useRef(null);
   const cell = normalizeCellPadding(cellPadding);
   const vertical = normalizeCellPadding(_nullishCoalesce(verticalPadding, () => ( cellPadding)));
   const disabled = Boolean(item.disabled || item.disable);
   const description = _nullishCoalesce(item.description, () => ( item.captionContent));
-  const { menuRef, requestItemFocus, handleMenuKeyDown } = _chunkUMSSUFMTcjs.useMenuKeyboard.call(void 0, {
-    open,
-    onClose: () => setOpen(false),
-    getTrigger: () => triggerRef.current
-  });
-  const clearTimer = () => {
-    if (hoverTimer.current) {
-      clearTimeout(hoverTimer.current);
-      hoverTimer.current = null;
-    }
-  };
-  _react2.default.useEffect(() => () => clearTimer(), []);
-  _react2.default.useLayoutEffect(() => {
-    if (!open) {
-      setSubPos(null);
-      return;
-    }
-    const anchor = _optionalChain([triggerRef, 'access', _8 => _8.current, 'optionalAccess', _9 => _9.getBoundingClientRect, 'call', _10 => _10()]);
-    const view = _optionalChain([triggerRef, 'access', _11 => _11.current, 'optionalAccess', _12 => _12.ownerDocument, 'optionalAccess', _13 => _13.defaultView]);
-    if (!anchor || !view) return;
-    const panelWidth = _optionalChain([panelRef, 'access', _14 => _14.current, 'optionalAccess', _15 => _15.offsetWidth]) || 200;
-    const panelHeight = _optionalChain([panelRef, 'access', _16 => _16.current, 'optionalAccess', _17 => _17.offsetHeight]) || 0;
-    const openLeft = view.innerWidth - anchor.right < panelWidth + 12 && anchor.left > panelWidth + 12;
-    let top = anchor.top - 6;
-    if (panelHeight && top + panelHeight > view.innerHeight - 8) {
-      top = Math.max(8, view.innerHeight - 8 - panelHeight);
-    }
-    setSubPos({ top, left: openLeft ? anchor.left - panelWidth - 4 : anchor.right + 4 });
-  }, [open]);
-  const openSub = (focusFirst) => {
-    if (focusFirst) requestItemFocus("first");
-    setOpen(true);
-  };
-  const closeSub = ({ restoreFocus } = {}) => {
-    setOpen(false);
-    if (restoreFocus) _optionalChain([triggerRef, 'access', _18 => _18.current, 'optionalAccess', _19 => _19.focus, 'call', _20 => _20({ preventScroll: true })]);
-  };
-  const portalTarget = _optionalChain([triggerRef, 'access', _21 => _21.current, 'optionalAccess', _22 => _22.ownerDocument, 'optionalAccess', _23 => _23.body]) || (typeof document !== "undefined" ? document.body : null);
-  const subPanel = open && portalTarget ? _reactdom.createPortal.call(void 0, 
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-      "div",
-      {
-        ref: panelRef,
-        "data-menu-portal": "",
-        onMouseEnter: clearTimer,
-        onMouseLeave: () => {
-          clearTimer();
-          hoverTimer.current = setTimeout(() => setOpen(false), 180);
-        },
-        style: {
-          position: "fixed",
-          top: _nullishCoalesce(_optionalChain([subPos, 'optionalAccess', _24 => _24.top]), () => ( -9999)),
-          left: _nullishCoalesce(_optionalChain([subPos, 'optionalAccess', _25 => _25.left]), () => ( -9999)),
-          zIndex: 41,
-          width: "max-content",
-          minWidth: 200,
-          maxWidth: "calc(100vw - var(--space-8))",
-          visibility: subPos ? "visible" : "hidden",
-          ...MENU_PANEL_STYLE
-        },
-        children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          "div",
-          {
-            ref: menuRef,
-            role: "menu",
-            "aria-label": typeof item.label === "string" ? item.label : void 0,
-            onKeyDown: (event) => {
-              if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                closeSub({ restoreFocus: true });
-                return;
-              }
-              handleMenuKeyDown(event);
-            },
-            style: { display: "flex", flexDirection: "column", gap: 4 },
-            children: renderMenuItems(item.items || [], { variant, cellPadding, verticalPadding, closeAll })
-          }
-        )
-      }
-    ),
-    portalTarget
-  ) : null;
+  const sub = _chunkHXVVS4ZWcjs.useSubmenuBranch.call(void 0, { disabled });
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       style: { position: "relative" },
       onMouseEnter: () => {
         setHover(true);
-        if (!disabled) {
-          clearTimer();
-          hoverTimer.current = setTimeout(() => setOpen(true), 120);
-        }
+        sub.containerHandlers.onMouseEnter();
       },
       onMouseLeave: () => {
         setHover(false);
-        clearTimer();
-        hoverTimer.current = setTimeout(() => setOpen(false), 180);
+        sub.containerHandlers.onMouseLeave();
       },
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "button",
           {
-            ref: triggerRef,
+            ref: sub.triggerRef,
             type: "button",
             role: "menuitem",
             "aria-haspopup": "menu",
-            "aria-expanded": open,
+            "aria-expanded": sub.open,
             tabIndex: -1,
             disabled,
-            onClick: () => {
-              if (disabled) return;
-              if (open) closeSub();
-              else openSub(false);
-            },
-            onKeyDown: (event) => {
-              if (event.key === "ArrowRight" || event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                openSub(true);
-              }
-            },
-            style: menuItemVisualStyle({ active: open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical }),
+            ...sub.triggerHandlers,
+            style: menuItemVisualStyle({ active: sub.open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical }),
             children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               MenuItemContent,
               {
@@ -339,7 +327,20 @@ function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
             )
           }
         ),
-        subPanel
+        sub.renderPanel(
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            "div",
+            {
+              ref: sub.menuRef,
+              role: "menu",
+              "aria-label": typeof item.label === "string" ? item.label : void 0,
+              onKeyDown: sub.menuKeyDown,
+              style: { display: "flex", flexDirection: "column", gap: 4 },
+              children: renderMenuItems(item.items || [], { variant, cellPadding, verticalPadding, closeAll })
+            }
+          ),
+          MENU_PANEL_STYLE
+        )
       ]
     }
   );
@@ -387,6 +388,7 @@ function DropdownMenu({
   items = [],
   align = "left",
   variant = "normal",
+  submenuMode = "flyout",
   cellPadding = "12px",
   verticalPadding,
   menuActionArea = false,
@@ -404,26 +406,36 @@ function DropdownMenu({
   ...rest
 }) {
   const controlled = open !== void 0;
+  const drill = submenuMode === "drill";
   const [internalOpen, setInternalOpen] = _react2.default.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
+  const [drillPath, setDrillPath] = _react2.default.useState([]);
   const ref = _react2.default.useRef(null);
   const panelRef = _react2.default.useRef(null);
   const actionAreaRef = _react2.default.useRef(null);
   const menuId = _react2.default.useId();
   const generatedTriggerId = _react2.default.useId();
-  const triggerId = _nullishCoalesce(_optionalChain([trigger, 'optionalAccess', _26 => _26.props, 'optionalAccess', _27 => _27.id]), () => ( generatedTriggerId));
+  const triggerId = _nullishCoalesce(_optionalChain([trigger, 'optionalAccess', _8 => _8.props, 'optionalAccess', _9 => _9.id]), () => ( generatedTriggerId));
   const setVisible = (next) => {
     if (!controlled) setInternalOpen(next);
-    _optionalChain([onOpenChange, 'optionalCall', _28 => _28(next)]);
+    _optionalChain([onOpenChange, 'optionalCall', _10 => _10(next)]);
   };
+  _react2.default.useEffect(() => {
+    if (!visible) setDrillPath([]);
+  }, [visible]);
+  const drillLevel = drillPath.length ? drillPath[drillPath.length - 1] : null;
+  const drillItems = drillLevel ? drillLevel.items || [] : items;
+  const drillIn = (item) => setDrillPath((path) => [...path, item]);
+  const drillBack = () => setDrillPath((path) => path.slice(0, -1));
   const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = _chunkUMSSUFMTcjs.useMenuKeyboard.call(void 0, {
     open: visible,
     onClose: () => setVisible(false),
-    getTrigger: () => _optionalChain([ref, 'access', _29 => _29.current, 'optionalAccess', _30 => _30.querySelector, 'call', _31 => _31('[aria-haspopup="menu"], button, [role="button"], a[href]')])
+    getTrigger: () => _optionalChain([ref, 'access', _11 => _11.current, 'optionalAccess', _12 => _12.querySelector, 'call', _13 => _13('[aria-haspopup="menu"], button, [role="button"], a[href]')]),
+    menuKey: drill ? drillPath.length : 0
   });
   const toggleMenu = (event) => {
-    _optionalChain([trigger, 'optionalAccess', _32 => _32.props, 'optionalAccess', _33 => _33.onClick, 'optionalCall', _34 => _34(event)]);
-    if (_optionalChain([event, 'optionalAccess', _35 => _35.defaultPrevented])) return;
+    _optionalChain([trigger, 'optionalAccess', _14 => _14.props, 'optionalAccess', _15 => _15.onClick, 'optionalCall', _16 => _16(event)]);
+    if (_optionalChain([event, 'optionalAccess', _17 => _17.defaultPrevented])) return;
     if (visible) setVisible(false);
     else {
       requestItemFocus("first");
@@ -431,7 +443,7 @@ function DropdownMenu({
     }
   };
   const handleTriggerKeyDown = (event) => {
-    _optionalChain([trigger, 'optionalAccess', _36 => _36.props, 'optionalAccess', _37 => _37.onKeyDown, 'optionalCall', _38 => _38(event)]);
+    _optionalChain([trigger, 'optionalAccess', _18 => _18.props, 'optionalAccess', _19 => _19.onKeyDown, 'optionalCall', _20 => _20(event)]);
     if (event.defaultPrevented) return;
     if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -474,6 +486,11 @@ function DropdownMenu({
   const showActionArea = Boolean(action || showGeneratedActionArea);
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
   const handleMenuRegionKeyDown = (event) => {
+    if (drill && event.key === "ArrowLeft" && drillPath.length > 0) {
+      event.preventDefault();
+      drillBack();
+      return;
+    }
     if (event.key === "Tab" && !event.shiftKey) {
       const firstAction = focusableActionControls(actionAreaRef.current)[0];
       if (firstAction) {
@@ -491,7 +508,7 @@ function DropdownMenu({
       return;
     }
     const controls = focusableActionControls(actionAreaRef.current);
-    const currentControl = _optionalChain([event, 'access', _39 => _39.target, 'access', _40 => _40.closest, 'optionalCall', _41 => _41(ACTION_CONTROL_SELECTOR)]);
+    const currentControl = _optionalChain([event, 'access', _21 => _21.target, 'access', _22 => _22.closest, 'optionalCall', _23 => _23(ACTION_CONTROL_SELECTOR)]);
     const currentIndex = controls.indexOf(currentControl);
     if (event.key === "ArrowUp" || event.key === "Tab" && event.shiftKey && currentIndex === 0) {
       const lastItem = availableMenuItems(menuRef.current).at(-1);
@@ -507,13 +524,13 @@ function DropdownMenu({
     }
   };
   const finishAction = (callback) => {
-    _optionalChain([callback, 'optionalCall', _42 => _42()]);
+    _optionalChain([callback, 'optionalCall', _24 => _24()]);
     closeMenu({ restoreFocus: true });
   };
   _react2.default.useEffect(() => {
     if (!visible) return void 0;
     const onDoc = (e) => {
-      if (ref.current && !ref.current.contains(e.target) && !_optionalChain([e, 'access', _43 => _43.target, 'access', _44 => _44.closest, 'optionalCall', _45 => _45("[data-menu-portal]")])) {
+      if (ref.current && !ref.current.contains(e.target) && !_optionalChain([e, 'access', _25 => _25.target, 'access', _26 => _26.closest, 'optionalCall', _27 => _27("[data-menu-portal]")])) {
         setVisible(false);
       }
     };
@@ -572,7 +589,16 @@ function DropdownMenu({
                   "aria-labelledby": triggerId,
                   onKeyDown: handleMenuRegionKeyDown,
                   style: { display: "flex", flexDirection: "column", gap: 4, minHeight: 0, overflowY: panelMaxHeight != null ? "auto" : void 0 },
-                  children: renderMenuItems(items, {
+                  children: drill ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+                    drillLevel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, DrillHeader, { title: drillLevel.label, onBack: drillBack }),
+                    renderDrillItems(drillItems, {
+                      variant,
+                      cellPadding,
+                      verticalPadding,
+                      closeAll: () => closeMenu({ restoreFocus: true }),
+                      drillIn
+                    })
+                  ] }) : renderMenuItems(items, {
                     variant,
                     cellPadding,
                     verticalPadding,
@@ -612,4 +638,4 @@ function DropdownMenu({
 
 
 exports.DropdownMenu = DropdownMenu;
-//# sourceMappingURL=chunk-VDZQTIPL.cjs.map
+//# sourceMappingURL=chunk-NQUZGJP2.cjs.map

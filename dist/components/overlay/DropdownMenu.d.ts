@@ -28,6 +28,8 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> 
   align?: "left" | "right";
   /** menu variant axis. @default "normal" */
   variant?: "normal" | "radio" | "checkbox";
+  /** 중첩 서브메뉴 표현 방식. `flyout`은 부모 옆으로 겹겹이 뜨고(데스크톱 표준), `drill`은 같은 패널이 하위 목록으로 전환되며 상단에 뒤로 컨트롤을 둡니다(폭 고정·터치 친화). @default "flyout" */
+  submenuMode?: "flyout" | "drill";
   /** menu cell padding axis. @default "12px" */
   cellPadding?: 8 | 12 | "8px" | "12px" | "small" | "medium";
   /** menu vertical padding axis. Defaults to `cellPadding`. */

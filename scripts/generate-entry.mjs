@@ -223,13 +223,17 @@ function createEntryLines(files, declaration = false, externalSpecifiers = []) {
 const files = await listComponentFiles();
 const exportsByFile = [];
 
+const classification = JSON.parse(await readFile(classificationPath, 'utf8'));
+const internalModulePaths = new Set(
+  (classification.internalModules ?? []).map((module) => module.path),
+);
+
 for (const file of files) {
+  if (internalModulePaths.has(formatFile(file))) continue;
   const names = await getNamedExports(file);
   if (names.length === 0) continue;
   exportsByFile.push({ ...file, names });
 }
-
-const classification = JSON.parse(await readFile(classificationPath, 'utf8'));
 const roboticsExternalSurface = JSON.parse(await readFile(roboticsExternalSurfacePath, 'utf8'));
 const roboticsExternalExports = new Set(
   (roboticsExternalSurface.entries ?? []).flatMap((entry) => entry.exports ?? []),

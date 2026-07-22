@@ -1,7 +1,8 @@
 "use client";
 import {
   Menubar
-} from "../../chunk-QQT46X4S.js";
+} from "../../chunk-CKSWF35X.js";
+import "../../chunk-SCMUEUQ7.js";
 import "../../chunk-XL7GJE5S.js";
 import "../../chunk-FVVTUKMD.js";
 import "../../chunk-7WDUT67E.js";
