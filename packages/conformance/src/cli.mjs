@@ -494,7 +494,10 @@ function yamlScalar(lines, key) {
 }
 
 function isLdsPackage(name) {
-  return name === '@lk-robotics/design-system-core' || name.startsWith('@lk-robotics/lds-');
+  // LDS DOM UI packages only; the renamed @lk-robotics/lds-3d-* renderer
+  // family shares the prefix but is not an LDS dependency.
+  return name === '@lk-robotics/design-system-core'
+    || (name.startsWith('@lk-robotics/lds-') && !name.startsWith('@lk-robotics/lds-3d'));
 }
 
 function sourceLdsImports(source) {
@@ -686,6 +689,7 @@ async function runLds3dCheck(options) {
       const relativeFile = slash(path.relative(root, absolute));
       const source = await readFile(absolute, 'utf8');
       for (const imported of sourceLdsImports(source)) {
+        if (!isLdsPackage(imported.name.split('/').slice(0, 2).join('/'))) continue;
         diagnostics.push(diagnostic('HEADLESS_LDS_DEPENDENCY', relativeFile, `Headless source imports ${imported.name}.`, lineAt(source, imported.index)));
       }
     }

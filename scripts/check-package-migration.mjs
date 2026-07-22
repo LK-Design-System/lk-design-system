@@ -1040,7 +1040,7 @@ function validateCurrentPackageCi(packageJson, ciSource) {
   );
 
   assert(windowsJob.includes('runs-on: windows-latest'), 'Current package set must be produced on Windows.');
-  assert(windowsJob.includes('NODE_AUTH_TOKEN: ${{ github.token }}'), 'Windows package checks must authenticate to GitHub Packages.');
+  assert(windowsJob.includes('NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}'), 'Windows package checks must authenticate to GitHub Packages.');
   assert(windowsJob.includes('node-version: 22.17.1'), 'Windows package checks must pin Node 22.17.1.');
   assert(windowsJob.includes("Expected npm 10.9.2."), 'Windows package checks must verify npm 10.9.2.');
   assert(windowsJob.includes('run: npm run check:ci'), 'Windows CI must run the current source and Storybook checks.');
@@ -1058,7 +1058,7 @@ function validateCurrentPackageCi(packageJson, ciSource) {
 
   assert(linuxJob.includes('needs: design-system'), 'Linux consumption must wait for the Windows package set.');
   assert(linuxJob.includes('runs-on: ubuntu-latest'), 'Linux package consumption must run on Ubuntu.');
-  assert(linuxJob.includes('NODE_AUTH_TOKEN: ${{ github.token }}'), 'Linux package checks must authenticate to GitHub Packages.');
+  assert(linuxJob.includes('NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}'), 'Linux package checks must authenticate to GitHub Packages.');
   assert(linuxJob.includes('node-version: 22.17.1'), 'Linux package checks must pin Node 22.17.1.');
   assert(linuxJob.includes("test \"$(npm --version)\" = '10.9.2'"), 'Linux package checks must verify npm 10.9.2.');
   assert(linuxJob.includes('run: npm ci'), 'Linux package checks must use npm ci.');
