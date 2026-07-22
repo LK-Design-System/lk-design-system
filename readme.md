@@ -20,13 +20,32 @@ The intended relationship is:
   evidence without treating them as product UI components.
 
 In short: **LDS should read as WDS structure recolored and extended for LK, not
-as arbitrary screens designed beside WDS.** New work should either map to WDS
-Core, be documented as an LK override, or live in an explicit LK extension
-layer.
+as arbitrary screens designed beside WDS.**
+
+### Reference models and graduation
+
+WDS is the **bootstrap scaffold, not a permanent parity target.** LDS's identity
+center is the **LK operational domain** — dense, status-first, safety- and
+recovery-aware operations surfaces. WDS supplies structure and conventions to
+start from; LDS graduates from WDS wherever the operational domain needs a
+different answer. Parity evidence exists to make divergence **deliberate and
+traceable**, not to hold LDS to a consumer-web design center.
+
+shadcn/ui is a **second selective mirror**, not a migration target: a
+developer/operational primitive system closer to LDS's domain. LDS absorbs its
+structural lessons (declarative nesting, group structure) while keeping LDS
+governance — enforced accessibility, API grammar ratchet, and token layering.
+See [`docs/references/quality/BENCHMARK_SHADCN.md`](docs/references/quality/BENCHMARK_SHADCN.md)
+and [`docs/API_OPENNESS_POLICY.md`](docs/API_OPENNESS_POLICY.md).
+
+New work should either map to a reference-model structure, be documented as an LK
+override, or live in an explicit LK extension layer. **Where the operational
+domain and a reference model conflict, the operational domain wins.**
 
 Authoritative references:
 
 - `DESIGN.md` — LK Operations Dashboard scope, design principles, and layer ownership
+- `docs/references/quality/BENCHMARK_SHADCN.md` — shadcn/ui selective-mirror benchmark
 - `docs/references/wds/TOKEN_MAP.json`
 - `docs/references/wds/LAYER_CLASSIFICATION.json`
 - `docs/references/wds/CONFLICT_AUDIT.md`
