@@ -1,6 +1,6 @@
 **DashboardGrid** — 지표·요약·상태 카드를 읽기 가능한 최소 폭에 맞춰 자동 배치하는 LK Product 패턴입니다.
 
-Classification: **LK Product Extension**. WDS의 새로운 Grid 축이 아닙니다. 기존 `Grid`/`Columns`가 임의의 컬럼과 span을 제공하는 기반이라면, `DashboardGrid`는 대시보드 카드 반복에 필요한 기본값만 고정합니다.
+Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN.md`의 Operations Dashboard 계약을 따르며 WDS의 새로운 Grid 축이나 별도 디자인 시스템이 아닙니다. 기존 `Grid`/`Columns`가 임의의 컬럼과 span을 제공하는 기반이라면, `DashboardGrid`는 운영 요약 카드 반복에 필요한 기본값만 고정합니다.
 
 ```jsx
 <DashboardGrid minCardWidth={220}>

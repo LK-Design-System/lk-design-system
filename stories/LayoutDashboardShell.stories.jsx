@@ -24,6 +24,28 @@ import { storyDescription } from './StoryGuide.shared.jsx';
 
 const preventNavigation = (event) => event.preventDefault();
 
+function resolveColor(element, value) {
+  const probe = element.ownerDocument.createElement('span');
+  probe.setAttribute('aria-hidden', 'true');
+  probe.style.position = 'absolute';
+  probe.style.pointerEvents = 'none';
+  probe.style.opacity = '0';
+  probe.style.color = value;
+  element.appendChild(probe);
+  const resolved = getComputedStyle(probe).color;
+  probe.remove();
+  return resolved;
+}
+
+async function waitForWidth(element, expectedWidth, timeoutMs = 5000) {
+  const startedAt = Date.now();
+  while (Date.now() - startedAt < timeoutMs) {
+    if (Math.abs(element.getBoundingClientRect().width - expectedWidth) < 1) return;
+    await new Promise((resolve) => setTimeout(resolve, 25));
+  }
+  throw new Error(`Timed out waiting for the dashboard SideNav width to become ${expectedWidth}px.`);
+}
+
 const wideItems = [
   { heading: '작업 공간' },
   { value: 'overview', label: '운영 현황', href: '#overview', icon: <Icon name="home" size={18} />, onClick: preventNavigation },
@@ -41,9 +63,8 @@ const wideItems = [
 
 const narrowItems = [
   { value: 'overview', label: '현황', href: '#overview', icon: <Icon name="home" size={20} />, onClick: preventNavigation },
-  { value: 'resources', label: '전체 리소스와 상태', href: '#resources', icon: <Icon name="layers" size={20} />, onClick: preventNavigation },
+  { value: 'resources', label: '전체 리소스와 상태 관리', href: '#resources', icon: <Icon name="layers" size={20} />, onClick: preventNavigation },
   { value: 'activity', label: '기록', href: '#activity', icon: <Icon name="history" size={20} />, onClick: preventNavigation },
-  { value: 'account', label: '계정', href: '#account', icon: <Icon name="person" size={20} />, onClick: preventNavigation },
 ];
 
 const chartData = [
@@ -181,13 +202,14 @@ function SideFirstShell({ headingLevel = 1 }) {
 }
 
 const meta = {
-  title: 'LDS Product/Layout/Dashboard Shell',
+  title: 'LDS Product/Operations Dashboard/Dashboard Shell',
+  id: 'lds-product-layout-dashboard-shell',
   component: DashboardShell,
   parameters: {
     layout: 'fullscreen',
     storyGuide: {
       storyId: 'lds-product-layout-dashboard-shell--normal-width',
-      eyebrow: 'Product / Dashboard Shell',
+      eyebrow: 'Product / Operations Dashboard / Dashboard Shell',
       title: '브랜드·탐색·전역 도구·본문을 제품 셸의 한 계약으로 조합합니다',
       description:
         'side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓은·좁은 화면 탐색 전환을 검증합니다. 본문 fixture는 제품 화면 템플릿이 아니라 실제 LDS 표면의 간격·위계·overflow를 확인하기 위한 최소 조합입니다.',
@@ -237,7 +259,7 @@ export const NormalWidth = {
   ),
   render: () => <SideFirstShell headingLevel={2} />,
   play: async ({ canvasElement }) => {
-    const { skip, header, wideRegion } = assertShellContract(canvasElement, { layout: 'wide', topology: 'side-first' });
+    const { shell, skip, header, main, wideRegion } = assertShellContract(canvasElement, { layout: 'wide', topology: 'side-first' });
     const navigation = wideRegion.querySelector('nav[data-surface="docked"]');
     const current = wideRegion.querySelector('a[aria-current="page"]');
     if (!navigation || !current || current.getAttribute('href') !== '#overview') {
@@ -253,6 +275,31 @@ export const NormalWidth = {
     if (canvasElement.ownerDocument.activeElement !== skip) {
       throw new Error('The skip link must be the first keyboard destination in the shell.');
     }
+    const collapse = navigation.querySelector('button[data-sidenav-collapse-toggle]');
+    const expandedNavRect = navigation.getBoundingClientRect();
+    const expandedControlRect = collapse?.getBoundingClientRect();
+    if (!collapse || collapse.getAttribute('aria-label') !== '사이드바 접기'
+      || Math.abs(expandedNavRect.width - 244) >= 1
+      || expandedControlRect.right > expandedNavRect.right + 0.5
+      || expandedControlRect.left < expandedNavRect.left - 0.5
+      || expandedControlRect.right > header.getBoundingClientRect().left + 0.5) {
+      throw new Error('The wide dashboard must keep a contained 244px SideNav boundary control outside the header and main regions.');
+    }
+    await userEvent.click(collapse);
+    await waitForWidth(navigation, 64);
+    const collapsedNavRect = navigation.getBoundingClientRect();
+    const collapsedControlRect = collapse.getBoundingClientRect();
+    if (collapse.getAttribute('aria-label') !== '사이드바 펼치기'
+      || collapsedControlRect.right > collapsedNavRect.right + 0.5
+      || collapsedControlRect.left < collapsedNavRect.left - 0.5
+      || Math.abs(collapsedNavRect.right - header.getBoundingClientRect().left) > 1
+      || shell.scrollWidth > shell.clientWidth + 1
+      || main.scrollWidth > main.clientWidth + 1) {
+      throw new Error('Collapsing the dashboard SideNav must reflow the shell to a contained 64px rail without horizontal overflow.');
+    }
+    await userEvent.click(collapse);
+    await waitForWidth(navigation, 244);
+    collapse.blur();
   },
 };
 
@@ -281,16 +328,23 @@ export const DarkSurface = {
     if (!themeScope || themeScope.getAttribute('data-theme') !== 'dark' || !metric || !chart) {
       throw new Error('The dark dashboard fixture must render its complete shell and data surfaces inside a dark theme scope.');
     }
-    if (getComputedStyle(metric).backgroundColor === 'rgb(255, 255, 255)' || getComputedStyle(chart).backgroundColor === 'rgb(255, 255, 255)') {
+    const darkMetricSurface = resolveColor(metric, 'var(--component-card-bg)');
+    const darkChartSurface = resolveColor(chart, 'var(--component-card-bg)');
+    if (getComputedStyle(metric).backgroundColor !== darkMetricSurface || getComputedStyle(chart).backgroundColor !== darkChartSurface) {
       throw new Error('Dashboard data surfaces must use the active semantic theme instead of retaining a light-only background.');
     }
-    metric.style.setProperty('--component-card-bg', 'rgb(9, 23, 37)');
-    chart.style.setProperty('--component-card-border', '3px solid rgb(12, 180, 220)');
+    const cardBackgroundOverride = 'var(--color-semantic-background-normal-alternative)';
+    const cardBorderOverride = 'calc(var(--border-thick) + var(--border-thin)) solid var(--color-semantic-primary-normal)';
+    metric.style.setProperty('--component-card-bg', cardBackgroundOverride);
+    chart.style.setProperty('--component-card-border', cardBorderOverride);
     const chartOverrideStyle = getComputedStyle(chart);
+    const expectedMetricOverride = resolveColor(metric, cardBackgroundOverride);
+    const expectedChartBorder = resolveColor(chart, 'var(--color-semantic-primary-normal)');
     if (
-      getComputedStyle(metric).backgroundColor !== 'rgb(9, 23, 37)'
-      || chartOverrideStyle.getPropertyValue('--component-card-border').trim() !== '3px solid rgb(12, 180, 220)'
-      || chartOverrideStyle.borderTopColor !== 'rgb(12, 180, 220)'
+      getComputedStyle(metric).backgroundColor !== expectedMetricOverride
+      || expectedMetricOverride === darkMetricSurface
+      || chart.style.getPropertyValue('--component-card-border').trim() !== cardBorderOverride
+      || chartOverrideStyle.borderTopColor !== expectedChartBorder
       || Number.parseFloat(chartOverrideStyle.borderTopWidth) < 2.5
     ) {
       throw new Error('Dashboard data surfaces must preserve public component-card token overrides.');
@@ -299,7 +353,8 @@ export const DarkSurface = {
     chart.style.removeProperty('--component-card-border');
     metric.setAttribute('data-theme', 'light');
     metric.classList.add('theme-light');
-    if (getComputedStyle(metric).backgroundColor !== 'rgb(255, 255, 255)') {
+    const lightMetricSurface = resolveColor(metric, 'var(--component-card-bg)');
+    if (getComputedStyle(metric).backgroundColor !== lightMetricSurface || lightMetricSurface === darkMetricSurface) {
       throw new Error('A light theme island inside a dark dashboard must rebind the component-card surface token.');
     }
     metric.removeAttribute('data-theme');
@@ -355,17 +410,20 @@ export const Narrow320 = {
     </div>
   ),
   play: async ({ canvasElement }) => {
-    const { shell, header, narrowRegion } = assertShellContract(canvasElement, { layout: 'narrow', topology: 'side-first' });
+    const { shell, header, wideRegion, narrowRegion } = assertShellContract(canvasElement, { layout: 'narrow', topology: 'side-first' });
     if (Math.round(shell.getBoundingClientRect().width) !== 320 || getComputedStyle(header.parentElement).gridColumnStart !== '1') {
       throw new Error('The narrow topology contract must render as a 320px single-column shell.');
     }
     const links = narrowRegion.querySelectorAll('a[href]');
-    const longLabel = Array.from(narrowRegion.querySelectorAll('span')).find((node) => node.textContent === '전체 리소스와 상태');
+    const longLabel = Array.from(narrowRegion.querySelectorAll('span')).find((node) => node.textContent === '전체 리소스와 상태 관리');
     if (links.length !== narrowItems.length || !longLabel || getComputedStyle(longLabel).textOverflow !== 'ellipsis' || longLabel.scrollWidth <= longLabel.clientWidth) {
       throw new Error('Narrow navigation must keep native links and truncate a stressed long label.');
     }
     if (getComputedStyle(narrowRegion).position !== 'sticky' || shell.scrollWidth > shell.clientWidth + 1) {
       throw new Error('Narrow navigation must remain sticky without creating page overflow.');
+    }
+    if (getComputedStyle(wideRegion).display !== 'none' || narrowRegion.querySelector('[data-sidenav-collapse-toggle]')) {
+      throw new Error('The narrow navigation surface must not expose the desktop SideNav collapse control.');
     }
   },
 };

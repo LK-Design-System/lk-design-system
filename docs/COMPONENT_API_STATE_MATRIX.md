@@ -35,13 +35,13 @@
 | 맥락 | 기본 조합 | 경계 |
 | --- | --- | --- |
 | 랜딩·콘텐츠 사이트 | `TopBar` + 전체형 `Footer` | TopBar가 전역 탐색을 맡고 Footer는 정보·정책 링크를 제공한다. |
-| 계층형 대시보드 | `DashboardShell` + `SideNav surface="docked"` + `UserMenu` | SideNav가 제품 identity와 목적지를 소유하면 TopBar에는 utility만 두고 로고·제품 경로를 중복하지 않는다. `surface="floating"`은 독립 panel/secondary navigation에서 명시적으로 선택한다. |
-| 평면형 대시보드·런처 | `DashboardShell` + `TopBar` + `Card`/status composition | 계층형 SideNav나 KPI row를 강제하지 않는다. 제품 identity는 TopBar가 한 번만 소유하고 destination card는 route·permission을 판단하지 않는다. |
+| 계층형 운영 대시보드 | `DashboardShell` + `SideNav surface="docked"` + `UserMenu` | SideNav가 제품 identity와 목적지를 소유하면 TopBar에는 utility만 두고 로고·제품 경로를 중복하지 않는다. `surface="floating"`은 독립 panel/secondary navigation에서 명시적으로 선택한다. |
+| 평면형 운영 런처 | `DashboardShell` + `TopBar` + `Card`/status composition | 계층형 SideNav나 KPI row를 강제하지 않는다. 제품 identity는 TopBar가 한 번만 소유하고 destination card는 route·permission을 판단하지 않는다. |
 | 평면형 반응형 앱 | 데스크톱 `NavRail` ↔ 모바일 `BottomNav` | 동일한 주요 목적지 3–5개를 공유하며 `SideNav`와 동시에 쓰지 않는다. |
 | 현재 위치와 페이지 목차 | `Breadcrumb` + 필요 시 `Anchor` | 각각 로컬 경로와 페이지 내 섹션을 보조하며 주 탐색을 대신하지 않는다. |
 | 순서형 워크플로 | 표시 전용 `Steps` 또는 제어 포함 `Wizard` | 사이트·제품 탐색과 분리한다. |
 
-Dashboard shell은 landmark, responsive navigation handoff와 layout containment만 소유한다. `MetricCard`, `ChartFrame`, `DataGrid`, `ResourceState`는 필요할 때 조합하는 독립 표면이며, 세 필수 LK 제품에서 공통 KPI row 요구는 확인되지 않았다. destination hierarchy, route, permission, query, KPI 수식·threshold, telemetry/freshness truth, map/video renderer와 side effect는 제품이 소유한다.
+Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 landmark, responsive navigation handoff와 layout containment만 소유한다. `MetricCard`, `ChartFrame`, `DataGrid`, `ResourceState`는 필요할 때 조합하는 독립 표면이며, 세 필수 LK 제품에서 공통 KPI row 요구는 확인되지 않았다. destination hierarchy, route, permission, query, KPI 수식·threshold, telemetry/freshness truth, map/video renderer와 side effect는 제품이 소유한다.
 
 ## Initial state matrix
 
@@ -52,7 +52,7 @@ Dashboard shell은 landmark, responsive navigation handoff와 layout containment
 | ChoiceCard | checked, unchecked, disabled, focus, keyboard selection | selection story, radio/checkbox semantics |
 | Banner | standalone, LDS embedded composition extension, signal/positive/cautionary/negative, title/body, action, close | status semantics, registry icons, embedded parent-surface seam story |
 | Callout | signal, positive, cautionary, negative, navy | tone default icon always present, custom icon size normalization, non-color label |
-| SideNav | `surface="floating|docked"` (`floating` compatibility default), expanded/collapsed controlled or uncontrolled state, explicit `collapsible` toggle, optional overlay peek, selected, nested group, overflow | floating outline/radius/shadow compatibility; docked logical-end divider without outer radius/shadow; explicit toggle; collapsed keyboard focus auto-open; pointer+focus delayed close; outside click/Escape close and persistent-parent focus restore; normal/narrow/long-label stories |
+| SideNav | `surface="floating|docked"` (`floating` compatibility default), expanded/collapsed controlled or uncontrolled state, persistent 36px logical-end collapse control, optional overlay inline control/peek, selected, nested group, overflow | floating outline/radius/shadow compatibility; docked logical-end divider without outer radius/shadow; stable contained toggle geometry; `사이드바 접기/펼치기` tooltip·`aria-expanded`·`aria-controls`; focus retention; parent-owned persistence; reduced motion; overlay pointer+focus delayed close, outside click/Escape close and persistent-parent focus restore; expanded/collapsed/controlled/hierarchy/overlay stories |
 | TopBar | non-shrinking brand, optional named horizontal navigation (`navigationLabel`), utility actions, long/overflowing destinations, dropdown open/close | navigation yields or scrolls between brand/actions; repeated landmarks have unique names; dropdown uses a viewport-clamped top layer and cannot be clipped by header/nav overflow; keyboard name/focus/Escape and narrow story |
 | DashboardShell | `topology="header-first|side-first"` (`header-first` compatibility default), skip link, header/nav/main landmarks, wide/narrow/auto navigation slots, omitted-narrow fallback, safe-area, single main, 320px no-overflow; docked or floating navigation is an explicit child composition | both desktop topologies, narrow single-column convergence, auto fallback, docked SideNav composition, one product-identity owner, one `main`/banner and 320px shell stories |
 | DashboardGrid | auto-fit repeated peer cards, configurable minimum width/gap, min-width containment, one-column narrow flow; no built-in KPI, priority, query, or card-surface semantics | actual component subjects at normal and 320px; unequal hierarchy uses explicit section/span composition instead of DashboardGrid inference |

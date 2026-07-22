@@ -2,10 +2,24 @@ import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
-const visualValuePattern = /#[0-9A-Fa-f]{3,8}|rgba?\([^)]*\)|0\s+\d+px\s+\d+px\s+rgba?\([^)]*\)/g;
+// Hex colors must end at a CSS-token boundary so fragments such as `#account`
+// are not misread as the three-digit color `#acc`.
+const visualValuePattern = /#(?:[0-9A-Fa-f]{8}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{3})(?![0-9A-Za-z_-])|rgba?\([^)]*\)|0\s+\d+px\s+\d+px\s+rgba?\([^)]*\)/g;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
+}
+
+for (const [name, source, expected] of [
+  ['anchor fragment', "href: '#account'", []],
+  ['three-digit hex', "color: '#acc'", ['#acc']],
+  ['four-digit hex', "color: '#accf'", ['#accf']],
+  ['six-digit hex', "color: '#aabbcc'", ['#aabbcc']],
+  ['eight-digit hex', "color: '#aabbccff'", ['#aabbccff']],
+  ['identifier suffix', "href: '#abcdef-route'", []],
+]) {
+  const actual = source.match(visualValuePattern) || [];
+  assert(JSON.stringify(actual) === JSON.stringify(expected), `Visual token matcher regression: ${name}.`);
 }
 
 async function read(rel) {

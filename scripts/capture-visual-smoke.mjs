@@ -172,6 +172,33 @@ const targets = [
     match: { importPath: './stories/CommunicationMessage.stories.jsx', exportName: 'MessageOverview' },
     viewport: { width: 900, height: 820 },
   },
+  {
+    name: 'product-sidenav-docked-expanded',
+    match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedSurface' },
+    viewport: { width: 900, height: 620 },
+  },
+  {
+    name: 'product-sidenav-docked-collapsed',
+    match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedCollapsed' },
+    viewport: { width: 900, height: 620 },
+  },
+  {
+    name: 'product-sidenav-docked-reduced-motion',
+    match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedCollapsed' },
+    viewport: { width: 900, height: 620 },
+    reducedMotion: 'reduce',
+    reducedMotionSelectors: ['.lk-sidenav__surface', '.lk-sidenav__collapse-control .lk-iconbtn'],
+  },
+  {
+    name: 'product-dashboard-shell-normal',
+    match: { importPath: './stories/LayoutDashboardShell.stories.jsx', exportName: 'NormalWidth' },
+    viewport: { width: 1280, height: 820 },
+  },
+  {
+    name: 'product-dashboard-shell-dark',
+    match: { importPath: './stories/LayoutDashboardShell.stories.jsx', exportName: 'DarkSurface' },
+    viewport: { width: 1280, height: 820 },
+  },
 ];
 
 // Robotics visual coverage lives in the split repository's representative
@@ -341,13 +368,6 @@ async function main() {
   if (updateBaseline && selectedCaptureNames !== null) {
     const baselineManifestPath = path.join(baselineDir, 'manifest.json');
     existingBaselineManifest = JSON.parse(await readFile(baselineManifestPath, 'utf8'));
-    const existingNames = new Set(existingBaselineManifest.captures.map(({ name }) => name));
-    const missingNames = [...selectedCaptureNames].filter((name) => !existingNames.has(name));
-    if (missingNames.length > 0) {
-      throw new Error(
-        `Selective baseline update only replaces existing manifest entries. Missing: ${missingNames.join(', ')}`
-      );
-    }
   }
 
   const { server, origin } = await startStaticServer();
@@ -371,8 +391,30 @@ async function main() {
       if (!shouldCapture(target.name)) continue;
       const id = findStoryId(index.entries, target);
       await page.setViewportSize(target.viewport);
+      await page.emulateMedia({ reducedMotion: target.reducedMotion || 'no-preference' });
       const url = storyUrl(origin, id, target.query);
       await loadStoryReady(page, url, target.name, runtimeErrors);
+
+      if (target.reducedMotionSelectors?.length) {
+        const transitionEvidence = await page.evaluate((selectors) => selectors.map((selector) => {
+          const element = document.querySelector(selector);
+          if (!element) return { selector, missing: true };
+          const styles = getComputedStyle(element);
+          return {
+            selector,
+            transitionDuration: styles.transitionDuration,
+            animationDuration: styles.animationDuration,
+          };
+        }), target.reducedMotionSelectors);
+        const nonZeroEvidence = transitionEvidence.filter((entry) => (
+          entry.missing
+          || entry.transitionDuration.split(',').some((value) => Number.parseFloat(value) > 0)
+          || entry.animationDuration.split(',').some((value) => Number.parseFloat(value) > 0)
+        ));
+        if (nonZeroEvidence.length > 0) {
+          throw new Error(`${target.name} did not disable motion: ${JSON.stringify(nonZeroEvidence)}`);
+        }
+      }
 
       const outputPath = path.join(outDir, `${target.name}.png`);
       await page.screenshot({ path: outputPath, fullPage: true, animations: 'disabled' });
@@ -387,6 +429,7 @@ async function main() {
         id,
         query: target.query || {},
         viewport: target.viewport,
+        reducedMotion: target.reducedMotion || 'no-preference',
         path: path.relative(root, outputPath).replaceAll('\\', '/'),
         bytes: fileStat.size,
         sha256: await sha256(outputPath),
@@ -415,11 +458,12 @@ async function main() {
   const manifestPath = path.join(outDir, 'manifest.json');
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   if (updateBaseline) {
-    const updatedCaptures = manifest.captures.map(({ name, id, query, viewport, bytes, sha256 }) => ({
+    const updatedCaptures = manifest.captures.map(({ name, id, query, viewport, reducedMotion, bytes, sha256 }) => ({
       name,
       id,
       query,
       viewport,
+      reducedMotion,
       bytes,
       sha256,
     }));
@@ -430,12 +474,20 @@ async function main() {
           maxDiffRatio,
           captures: updatedCaptures,
         }
-      : {
-          ...existingBaselineManifest,
-          captures: existingBaselineManifest.captures.map((capture) => (
-            updatedCaptures.find(({ name }) => name === capture.name) || capture
-          )),
-        };
+      : (() => {
+          const updatedByName = new Map(updatedCaptures.map((capture) => [capture.name, capture]));
+          const existingNames = new Set(existingBaselineManifest.captures.map(({ name }) => name));
+          const replaced = existingBaselineManifest.captures.map((capture) => updatedByName.get(capture.name) || capture);
+          const appended = targets
+            .filter(({ name }) => selectedCaptureNames.has(name) && !existingNames.has(name))
+            .map(({ name }) => updatedByName.get(name));
+          const captures = [...replaced, ...appended];
+          return {
+            ...existingBaselineManifest,
+            count: captures.length,
+            captures,
+          };
+        })();
     await writeFile(
       path.join(baselineDir, 'manifest.json'),
       `${JSON.stringify(baselineManifest, null, 2)}\n`,

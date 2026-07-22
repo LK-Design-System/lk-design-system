@@ -81,6 +81,36 @@ async function waitForWidth(element, expectedWidth, timeoutMs = 5000) {
   throw new Error(`Timed out waiting for the SideNav width to become ${expectedWidth}px.`);
 }
 
+function collapseControlContract(nav) {
+  const control = nav?.querySelector('button[data-sidenav-collapse-toggle]');
+  const panelId = control?.getAttribute('aria-controls');
+  const panel = panelId ? canvasDocument(nav).getElementById(panelId) : null;
+  if (!nav || !control || !panel) {
+    throw new Error('A persistent collapsible SideNav must expose one collapse control and its controlled panel.');
+  }
+  const navRect = nav.getBoundingClientRect();
+  const controlRect = control.getBoundingClientRect();
+  const rtl = getComputedStyle(nav).direction === 'rtl';
+  const inlineEndOffset = rtl
+    ? controlRect.left - navRect.left
+    : navRect.right - controlRect.right;
+  const contained = controlRect.left >= navRect.left - 0.5
+    && controlRect.right <= navRect.right + 0.5;
+  return {
+    control,
+    panel,
+    inlineEndOffset,
+    contained,
+    centerY: controlRect.top + (controlRect.height / 2),
+    width: controlRect.width,
+    height: controlRect.height,
+  };
+}
+
+function canvasDocument(node) {
+  return node?.ownerDocument || document;
+}
+
 /* SideNav overlay는 160/480ms 타이머로 확장·축소한다. 백그라운드 탭에서는
    Chromium이 타이머를 1초 단위로 스로틀해 단계가 뒤엉키므로(접근성 가드는
    스로틀링을 끄고 실행), 포인터 이벤트는 네이티브 mouseover/mouseout으로
@@ -92,7 +122,7 @@ function unhoverNav(nav) {
   nav.dispatchEvent(new MouseEvent('mouseout', { bubbles: true, cancelable: true, relatedTarget: document.body }));
 }
 
-function SideNavFixture() {
+function SideNavFixture({ collapsible = false } = {}) {
   const [value, setValue] = React.useState('missions-live');
   const [collapsed, setCollapsed] = React.useState(true);
 
@@ -120,6 +150,7 @@ function SideNavFixture() {
         collapsed={collapsed}
         onCollapsedChange={setCollapsed}
         overlay
+        collapsible={collapsible}
         header={<Lockup variant="inline" height={22} />}
         headerCollapsed={<Lockup variant="mark" height={22} />}
         footer={(
@@ -184,8 +215,8 @@ function SideNavLinkFixture() {
   );
 }
 
-function DockedSideNavFixture() {
-  const [value, setValue] = React.useState('overview');
+function DockedSideNavFixture({ defaultCollapsed = false, initialValue = 'overview' } = {}) {
+  const [value, setValue] = React.useState(initialValue);
 
   return (
     <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
@@ -204,6 +235,74 @@ function DockedSideNavFixture() {
         onChange={setValue}
         surface="docked"
         collapsible
+        defaultCollapsed={defaultCollapsed}
+        width={252}
+        collapsedWidth={64}
+        header={<Lockup variant="inline" height={22} />}
+        headerCollapsed={<Lockup variant="mark" height={22} />}
+        style={{ height: 420 }}
+      />
+    </div>
+  );
+}
+
+function ControlledCollapseFixture() {
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [requested, setRequested] = React.useState(null);
+  const [requests, setRequests] = React.useState(0);
+
+  return (
+    <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+      <Button
+        data-testid="apply-controlled-collapse"
+        variant="secondary"
+        disabled={requested == null}
+        onClick={() => {
+          setCollapsed(requested);
+          setRequested(null);
+        }}
+      >
+        부모 상태 적용
+      </Button>
+      <output data-testid="controlled-collapse-output">
+        요청 {requests}회 · 다음 {requested == null ? '없음' : String(requested)} · 현재 {String(collapsed)}
+      </output>
+      <SideNav
+        data-testid="controlled-side-nav"
+        aria-label="제어형 운영 탐색"
+        items={navigationItems}
+        defaultValue="overview"
+        surface="docked"
+        collapsible
+        collapsed={collapsed}
+        onCollapsedChange={(next) => {
+          setRequests((count) => count + 1);
+          setRequested(next);
+        }}
+        width={252}
+        collapsedWidth={64}
+        header={<Lockup variant="inline" height={22} />}
+        headerCollapsed={<Lockup variant="mark" height={22} />}
+        style={{ height: 420 }}
+      />
+    </div>
+  );
+}
+
+function CollapsedParentFixture() {
+  const [value, setValue] = React.useState('overview');
+  return (
+    <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+      <output data-testid="collapsed-parent-output">선택: {value}</output>
+      <SideNav
+        data-testid="collapsed-parent-side-nav"
+        aria-label="접힌 계층 탐색"
+        items={navigationItems}
+        value={value}
+        onChange={setValue}
+        surface="docked"
+        collapsible
+        defaultCollapsed
         width={252}
         collapsedWidth={64}
         header={<Lockup variant="inline" height={22} />}
@@ -245,7 +344,7 @@ export const LinkDestinations = {
 export const DockedSurface = {
   name: '변형·상태 · 셸 고정형 표면',
   parameters: storyDescription(
-    '제품 셸에 붙는 docked 표면과 명시적인 접기 버튼을 검증합니다. 외곽 카드 장식 없이 콘텐츠 쪽 divider만 남고 항목의 간격과 활성 표현은 floating과 같습니다.',
+    '제품 셸에 붙는 docked 표면과 패널 경계 안쪽에 고정된 접기 버튼을 검증합니다. 브랜드 액션과 분리된 같은 버튼이 펼침·접힘 상태를 오가며 위치와 초점을 유지합니다.',
   ),
   render: () => <DockedSideNavFixture />,
   play: async ({ canvasElement }) => {
@@ -270,14 +369,163 @@ export const DockedSurface = {
       throw new Error('A controlled child route must reveal its parent group and expose the active destination.');
     }
 
-    const collapse = nav.querySelector('button[aria-label="접기"]');
-    if (!collapse) throw new Error('A collapsible docked SideNav must expose an explicit collapse control.');
+    const expandedContract = collapseControlContract(nav);
+    const { control: collapse, panel, inlineEndOffset, centerY } = expandedContract;
+    const describedBy = collapse.getAttribute('aria-describedby');
+    const tooltip = describedBy ? canvasElement.ownerDocument.getElementById(describedBy) : null;
+    if (collapse.getAttribute('aria-label') !== '사이드바 접기'
+      || collapse.getAttribute('aria-expanded') !== 'true'
+      || panel.dataset.collapsed !== 'false'
+      || collapse.closest('.lk-sidenav__brand')
+      || !expandedContract.contained
+      || inlineEndOffset < -0.5
+      || inlineEndOffset > 8
+      || expandedContract.width < 36
+      || expandedContract.height < 36
+      || tooltip?.textContent !== '사이드바 접기') {
+      throw new Error('The docked collapse control must be a 36px stateful boundary control with a matching tooltip and controlled panel.');
+    }
     await userEvent.click(collapse);
     await waitForWidth(nav, 64);
-    const expand = nav.querySelector('button[aria-label="펼치기"]');
-    if (!expand) throw new Error('The explicit control must remain available in the collapsed rail.');
+    const collapsedContract = collapseControlContract(nav);
+    const expand = collapsedContract.control;
+    if (expand !== collapse
+      || expand.getAttribute('aria-label') !== '사이드바 펼치기'
+      || expand.getAttribute('aria-expanded') !== 'false'
+      || collapsedContract.panel !== panel
+      || panel.dataset.collapsed !== 'true'
+      || !collapsedContract.contained
+      || collapsedContract.inlineEndOffset < -0.5
+      || collapsedContract.inlineEndOffset > 8
+      || Math.abs(collapsedContract.inlineEndOffset - inlineEndOffset) > 1
+      || Math.abs(collapsedContract.centerY - centerY) > 1
+      || canvasElement.ownerDocument.activeElement !== collapse) {
+      throw new Error('The same focused control must follow the SideNav edge without moving vertically in the collapsed rail.');
+    }
     await userEvent.click(expand);
     await waitForWidth(nav, 252);
+    if (nav.querySelector('button[data-sidenav-collapse-toggle]') !== collapse
+      || collapse.getAttribute('aria-label') !== '사이드바 접기') {
+      throw new Error('The expanded visual story must finish in its named state with the original control node.');
+    }
+    collapse.blur();
+  },
+};
+
+export const DockedCollapsed = {
+  name: '변형·상태 · 접힌 아이콘 레일',
+  parameters: storyDescription(
+    '64px 레일에서 브랜드 마크, 활성 부모 표시, 목적지 아이콘, 경계 안쪽 펼치기 버튼이 충돌 없이 남는 상태입니다.',
+  ),
+  render: () => <DockedSideNavFixture defaultCollapsed initialValue="missions-queued" />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('[data-testid="docked-side-nav"]');
+    await waitForWidth(nav, 64);
+    const initial = collapseControlContract(nav);
+    const activeParent = nav.querySelector('[data-sidenav-value="missions"]');
+    if (initial.control.getAttribute('aria-label') !== '사이드바 펼치기'
+      || initial.panel.dataset.collapsed !== 'true'
+      || !activeParent
+      || nav.querySelector('[data-sidenav-parent="missions"]')) {
+      throw new Error('The collapsed visual story must retain the active parent while hiding its child rows.');
+    }
+    await userEvent.click(initial.control);
+    await waitForWidth(nav, 252);
+    await userEvent.click(initial.control);
+    await waitForWidth(nav, 64);
+    if (initial.control.getAttribute('aria-label') !== '사이드바 펼치기') {
+      throw new Error('The collapsed visual story must finish in its named state.');
+    }
+    initial.control.blur();
+  },
+};
+
+export const ControlledCollapse = {
+  name: '상호작용 · 제어 상태',
+  parameters: storyDescription(
+    '제품이 collapsed 상태를 소유할 때 키보드 요청은 한 번만 전달되고, 부모가 prop을 갱신하기 전에는 SideNav 폭이 임의로 바뀌지 않습니다.',
+  ),
+  render: () => <ControlledCollapseFixture />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('[data-testid="controlled-side-nav"]');
+    const apply = canvasElement.querySelector('[data-testid="apply-controlled-collapse"]');
+    const output = canvasElement.querySelector('[data-testid="controlled-collapse-output"]');
+    const control = nav?.querySelector('button[data-sidenav-collapse-toggle]');
+    if (!nav || !apply || !output || !control) throw new Error('Controlled collapse fixtures must expose their state evidence.');
+
+    control.focus();
+    await userEvent.keyboard('{Enter}');
+    if (!output.textContent.includes('요청 1회')
+      || !output.textContent.includes('다음 true')
+      || Math.abs(nav.getBoundingClientRect().width - 252) >= 1
+      || control.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('A controlled collapse request must fire once without changing visual state before the parent update.');
+    }
+    await userEvent.click(apply);
+    await waitForWidth(nav, 64);
+    control.focus();
+    await userEvent.keyboard(' ');
+    if (!output.textContent.includes('요청 2회')
+      || !output.textContent.includes('다음 false')
+      || Math.abs(nav.getBoundingClientRect().width - 64) >= 1
+      || control.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Space must emit one controlled expand request while the parent-owned rail remains collapsed.');
+    }
+  },
+};
+
+export const CollapsedParentExpansion = {
+  name: '상호작용 · 접힌 그룹 펼치기',
+  parameters: storyDescription(
+    '접힌 레일에서 자식이 있는 부모를 선택하면 목적지 이동 없이 패널과 해당 그룹만 열리고 키보드 초점은 같은 부모에 남습니다.',
+  ),
+  render: () => <CollapsedParentFixture />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('[data-testid="collapsed-parent-side-nav"]');
+    const parent = nav?.querySelector('[data-sidenav-value="missions"]');
+    const output = canvasElement.querySelector('[data-testid="collapsed-parent-output"]');
+    if (!nav || !parent || !output) throw new Error('Collapsed hierarchy fixtures must expose their parent and selection evidence.');
+    parent.focus();
+    await userEvent.keyboard('{Enter}');
+    await waitForWidth(nav, 252);
+    if (parent.getAttribute('aria-expanded') !== 'true'
+      || canvasElement.ownerDocument.activeElement !== parent
+      || !nav.querySelector('[data-sidenav-parent="missions"]')
+      || !output.textContent.includes('overview')) {
+      throw new Error('A rail parent must expand and reveal its group without selecting a leaf or moving focus.');
+    }
+  },
+};
+
+export const OverlayCollapsibleRegression = {
+  name: '상호작용 · 겹침형 명시적 토글',
+  parameters: storyDescription(
+    'overlay와 collapsible을 함께 사용한 기존 조합은 64px 예약 폭과 inline 토글을 유지하며 persistent 경계 컨트롤 구조를 상속하지 않습니다.',
+  ),
+  render: () => <SideNavFixture collapsible />,
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-testid="overlay-fixture"]');
+    const nav = canvasElement.querySelector('nav[aria-label="운영 탐색"]');
+    const surface = nav?.firstElementChild;
+    const control = nav?.querySelector('button[data-sidenav-collapse-toggle]');
+    if (!fixture || !nav || !surface || !control
+      || Math.round(nav.getBoundingClientRect().width) !== 64
+      || Math.round(surface.getBoundingClientRect().width) !== 64
+      || control.closest('.lk-sidenav__collapse-control')
+      || control.getBoundingClientRect().width !== 28) {
+      throw new Error('Overlay plus collapsible must keep the existing inline control and reserved rail width.');
+    }
+    control.focus();
+    await waitForWidth(surface, 252);
+    if (control.getAttribute('aria-label') !== '사이드바 접기') {
+      throw new Error('Focusing the overlay control must reveal the full panel with the stateful label.');
+    }
+    await userEvent.keyboard('{Enter}');
+    await waitForWidth(surface, 64);
+    if (canvasElement.ownerDocument.activeElement !== control
+      || control.getAttribute('aria-label') !== '사이드바 펼치기') {
+      throw new Error('The overlay inline control must collapse without losing focus.');
+    }
   },
 };
 

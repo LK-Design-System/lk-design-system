@@ -6,12 +6,13 @@ import { storyDescription } from './StoryGuide.shared.jsx';
 // Avoid when a dominant analysis surface or fixed spans require an explicit Columns/Col composition.
 
 const meta = {
-  title: 'LDS Product/Layout/Dashboard Grid',
+  title: 'LDS Product/Operations Dashboard/Dashboard Grid',
+  id: 'lds-product-layout-dashboard-grid',
   component: DashboardGrid,
   parameters: {
     storyGuide: {
       storyId: 'lds-product-layout-dashboard-grid--responsive-card-flow',
-      eyebrow: 'Product / Dashboard Grid',
+      eyebrow: 'Product / Operations Dashboard / Dashboard Grid',
       title: '동급의 반복 정보 표면을 컨테이너 폭에 맞춰 배치합니다',
       description:
         'DashboardGrid는 동급인 요약 카드의 최소 폭과 간격만 관리합니다. 중요도가 다른 분석 표면이나 고정 span이 필요하면 Columns/Col을 사용하고, 표면·상태·본문 위계는 실제 카드 컴포넌트가 소유합니다.',

@@ -144,9 +144,9 @@ warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadg
 - keyboard focus는 `tokens/focus.css`의 전역 `:focus-visible` 링이 기본입니다. 컴포넌트가 focus 시각을 더할 때는 두 형태만 허용합니다 — 입력형 필드의 soft glow `0 0 0 4px var(--color-semantic-focus-ring)`, 클리핑되는 행·셀의 `inset 0 0 0 2px var(--color-semantic-focus-indicator)`. 다른 두께·색 조합을 만들지 않습니다.
 - disabled 표현은 `label-disable` 계열 색 교체가 기본입니다. 아이콘·스와치처럼 색 교체가 어려운 요소에만 opacity를 쓰되 값은 **0.45** 하나로 통일합니다.
 
-## 대시보드 조합 계약
+## 운영 대시보드 조합 계약
 
-대시보드는 한 개의 화면형 컴포넌트가 아니라 아래의 작은 책임을 조합합니다. Storybook에는 실제 컴포넌트·패턴의 상태만 두고, 특정 제품의 완성 대시보드·workflow·template을 추가하지 않습니다.
+Operations Dashboard는 별도 디자인 시스템이나 화면형 컴포넌트가 아니라 LDS Product 안에서 아래의 작은 책임을 조합하는 패턴군입니다. 범위와 소유권의 기준은 루트 `DESIGN.md`입니다. Storybook에는 실제 컴포넌트·패턴의 상태만 두고, 특정 제품의 완성 대시보드·workflow·template을 추가하지 않습니다.
 
 | 책임 | 기본 조합 | 지켜야 할 경계 |
 | --- | --- | --- |

@@ -1,5 +1,11 @@
 "use client";
 import {
+  Tooltip
+} from "./chunk-UUAJNYHQ.js";
+import {
+  IconButton
+} from "./chunk-ODAJPEYM.js";
+import {
   Icon
 } from "./chunk-LMQSX5BW.js";
 
@@ -24,6 +30,7 @@ function SideNav({
   collapsedWidth = 64,
   overlay = false,
   renderLink,
+  className,
   style,
   onBlur,
   onFocus,
@@ -50,6 +57,8 @@ function SideNav({
     if (!colControlled) setColInternal(c);
     onCollapsedChange && onCollapsedChange(c);
   };
+  const generatedPanelId = React.useId().replace(/:/g, "");
+  const panelId = `lk-sidenav-panel-${generatedPanelId}`;
   const navRef = React.useRef(null);
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
   const peekT = React.useRef(null);
@@ -174,22 +183,45 @@ function SideNav({
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
   const resolvedSurface = surface === "docked" ? "docked" : "floating";
   const docked = resolvedSurface === "docked";
-  const shell = { display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: docked ? "none" : "1px solid var(--color-semantic-line-solid-normal)", borderInlineEnd: docked ? "1px solid var(--color-semantic-line-solid-normal)" : void 0, borderRadius: docked ? 0 : "var(--radius-xl)", boxShadow: docked ? "none" : void 0, padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
-  const inner = /* @__PURE__ */ jsxs(React.Fragment, { children: [
-    /* @__PURE__ */ jsx("style", { children: `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}` }),
-    (brand != null || collapsible) && /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 24, padding: col ? "14px 10px 10px" : "14px 10px 18px" }, children: [
+  const persistentCollapse = collapsible && !overlay;
+  const inlineCollapse = collapsible && overlay;
+  const collapseLabel = col ? "\uC0AC\uC774\uB4DC\uBC14 \uD3BC\uCE58\uAE30" : "\uC0AC\uC774\uB4DC\uBC14 \uC811\uAE30";
+  const shell = { position: "relative", display: "flex", flexDirection: "column", width: col ? collapsedWidth : width, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: docked ? "none" : "1px solid var(--color-semantic-line-solid-normal)", borderInlineEnd: docked ? "1px solid var(--color-semantic-line-solid-normal)" : void 0, borderRadius: docked ? 0 : "var(--radius-xl)", boxShadow: docked ? "none" : void 0, padding: 10, transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
+  const sideNavStyles = `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}.lk-sidenav__collapse-control{position:absolute;inset-block-start:10px;inset-inline-end:0;z-index:2;display:inline-flex;line-height:0}@media(prefers-reduced-motion:reduce){.lk-sidenav__surface,.lk-sidenav__collapse-control,.lk-sidenav__collapse-control .lk-iconbtn,.lk-sidenav__collapse-control svg{transition-duration:0s!important;animation-duration:0s!important}}`;
+  const persistentCollapseControl = persistentCollapse ? /* @__PURE__ */ jsx("div", { className: "lk-sidenav__collapse-control", children: /* @__PURE__ */ jsx(Tooltip, { content: collapseLabel, placement: "right", size: "small", children: /* @__PURE__ */ jsx(
+    IconButton,
+    {
+      className: "lk-sidenav__collapse-button",
+      "data-sidenav-collapse-toggle": "",
+      variant: "ghost",
+      size: 36,
+      round: false,
+      label: collapseLabel,
+      title: collapseLabel,
+      "aria-expanded": !col,
+      "aria-controls": panelId,
+      onClick: () => setCol(!col),
+      children: /* @__PURE__ */ jsx(Icon, { name: col ? "chevron-right" : "chevron-left", size: 16, "aria-hidden": "true" })
+    }
+  ) }) }) : null;
+  const inlineCollapseControl = inlineCollapse ? /* @__PURE__ */ jsx(
+    "button",
+    {
+      type: "button",
+      "data-sidenav-collapse-toggle": "",
+      onClick: () => setCol(!col),
+      title: collapseLabel,
+      "aria-label": collapseLabel,
+      style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: "var(--radius-8)", background: "transparent", color: "var(--color-semantic-label-neutral)", cursor: "pointer" },
+      children: /* @__PURE__ */ jsx(Icon, { name: "left-side", size: 16, "aria-hidden": "true", style: { transform: col ? "rotate(180deg)" : "none" } })
+    }
+  ) : null;
+  const brandRegionStyle = persistentCollapse ? { position: "relative", display: "flex", alignItems: "center", justifyContent: col ? "center" : "flex-start", gap: 8, width: "calc(100% + 20px)", minHeight: 36, marginInline: -10, padding: col ? "54px 4px 14px" : "10px 44px 14px 4px", boxSizing: "border-box" } : { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 24, padding: col ? "14px 10px 10px" : "14px 10px 18px" };
+  const panelContent = /* @__PURE__ */ jsxs("div", { id: panelId, className: "lk-sidenav__panel-content", "data-collapsed": col ? "true" : "false", style: { display: "flex", flexDirection: "column", flex: "1 1 auto", minHeight: 0 }, children: [
+    /* @__PURE__ */ jsx("style", { children: sideNavStyles }),
+    (brand != null || collapsible) && /* @__PURE__ */ jsxs("div", { className: "lk-sidenav__brand", style: brandRegionStyle, children: [
       brand,
-      collapsible && /* @__PURE__ */ jsx(
-        "button",
-        {
-          type: "button",
-          onClick: () => setCol(!col),
-          title: col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
-          "aria-label": col ? "\uD3BC\uCE58\uAE30" : "\uC811\uAE30",
-          style: { position: col ? "static" : "absolute", right: col ? "auto" : 2, top: col ? "auto" : 12, display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, padding: 0, border: "none", borderRadius: "var(--radius-8)", background: "transparent", color: "var(--color-semantic-label-neutral)", cursor: "pointer" },
-          children: /* @__PURE__ */ jsx(Icon, { name: "left-side", size: 16, "aria-hidden": "true", style: { transform: col ? "rotate(180deg)" : "none" } })
-        }
-      )
+      inlineCollapseControl
     ] }),
     /* @__PURE__ */ jsx("div", { className: "lk-sidenav__scroll", style: { display: "flex", flexDirection: "column", gap: 2, flex: "1 1 auto", minHeight: 0, overflowX: "hidden", overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none" }, children: items.map((o, i) => {
       if (o.heading) return col ? /* @__PURE__ */ jsx("div", { style: { height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px" } }, "h" + i) : /* @__PURE__ */ jsx("div", { style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)", padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px" }, children: o.heading }, "h" + i);
@@ -287,10 +319,14 @@ function SideNav({
         onBlur?.(e);
         if (!pointerInside.current && !e.currentTarget.contains(e.relatedTarget)) peek(false);
       } : onBlur,
+      className: ["lk-sidenav", !overlay && "lk-sidenav__surface", className].filter(Boolean).join(" "),
       style: overlay ? { position: "relative", width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style },
       ...rest,
       "data-surface": resolvedSurface,
-      children: overlay ? /* @__PURE__ */ jsx("div", { style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: docked || col ? "none" : "var(--shadow-lg)" }, children: inner }) : inner
+      children: overlay ? /* @__PURE__ */ jsx("div", { className: "lk-sidenav__surface", style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: docked || col ? "none" : "var(--shadow-lg)" }, children: panelContent }) : /* @__PURE__ */ jsxs(React.Fragment, { children: [
+        panelContent,
+        persistentCollapseControl
+      ] })
     }
   );
 }
@@ -298,4 +334,4 @@ function SideNav({
 export {
   SideNav
 };
-//# sourceMappingURL=chunk-AV5OWNY4.js.map
+//# sourceMappingURL=chunk-L67VV3N7.js.map

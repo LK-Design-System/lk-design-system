@@ -51,14 +51,15 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   width?: number | string;
   /** 외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating' */
   surface?: 'floating' | 'docked';
-  /** 헤더에 접기/펼치기 토글(패널 아이콘) 표시. @default false */
+  /** persistent 표면은 논리적 끝 경계 안쪽에, overlay 표면은 기존 헤더 흐름에 명시적 접기/펼치기 토글을 표시합니다. @default false */
   collapsible?: boolean;
-  /** 제어되는 접힘 상태. */
+  /** 제어되는 접힘 상태. 상태 영속화는 SideNav가 아니라 소비 제품이 소유합니다. */
   collapsed?: boolean;
   /** 비제어 시 초기 접힘. @default false */
   defaultCollapsed?: boolean;
+  /** 다음 접힘 상태 요청. controlled 사용 시 부모가 collapsed를 갱신하기 전에는 시각 상태가 바뀌지 않습니다. */
   onCollapsedChange?: (collapsed: boolean) => void;
-  /** 접힌(아이콘 레일) 폭. @default 64 */
+  /** 접힌 아이콘 레일 폭. 기본 64px에서도 브랜드 마크와 경계 토글을 유지합니다. @default 64 */
   collapsedWidth?: number;
   /** 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜨고, 마우스 아웃과 초점 이탈·바깥 클릭·Esc로 접힘. 시작은 접힘. @default false */
   overlay?: boolean;

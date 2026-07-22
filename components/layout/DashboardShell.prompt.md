@@ -1,6 +1,6 @@
 **DashboardShell** — 제품 대시보드의 상단 바, 넓은 화면 탐색, 본문, 좁은 화면 탐색을 한 개의 landmark·반응형 계약으로 조합합니다.
 
-Classification: **LK Product Extension**. WDS Core 축이 아니며 제품 셸 조합입니다. 화면별 데이터 fetching이나 앱 라우팅을 포함하지 않습니다.
+Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN.md`의 Operations Dashboard 계약을 따르며 WDS Core 축이나 별도 디자인 시스템이 아닙니다. 화면별 데이터 fetching이나 앱 라우팅을 포함하지 않습니다.
 
 ```jsx
 <DashboardShell

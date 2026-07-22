@@ -1,4 +1,6 @@
 import React from 'react';
+import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
+import { Tooltip } from '@lk-robotics/lds-core/components/content/Tooltip';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
 
 const Chevron = ({ open }) => (
@@ -20,7 +22,7 @@ export function SideNav({
   header, headerCollapsed, footer, width = 240,
   surface = 'floating',
   collapsible = false, collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
-  renderLink, style, onBlur, onFocus, ...rest
+  renderLink, className, style, onBlur, onFocus, ...rest
 }) {
   const isControlled = value !== undefined;
   const flat = [];
@@ -33,6 +35,8 @@ export function SideNav({
   const [colInternal, setColInternal] = React.useState(defaultCollapsed || overlay);
   const col = colControlled ? collapsed : colInternal;
   const setCol = (c) => { if (!colControlled) setColInternal(c); onCollapsedChange && onCollapsedChange(c); };
+  const generatedPanelId = React.useId().replace(/:/g, '');
+  const panelId = `lk-sidenav-panel-${generatedPanelId}`;
 
   const navRef = React.useRef(null);
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
@@ -158,19 +162,47 @@ export function SideNav({
 
   const resolvedSurface = surface === 'docked' ? 'docked' : 'floating';
   const docked = resolvedSurface === 'docked';
-  const shell = { display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--radius-xl)', boxShadow: docked ? 'none' : undefined, padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
-  const inner = (
-    <React.Fragment>
-      <style>{`.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}`}</style>
+  const persistentCollapse = collapsible && !overlay;
+  const inlineCollapse = collapsible && overlay;
+  const collapseLabel = col ? '사이드바 펼치기' : '사이드바 접기';
+  const shell = { position: 'relative', display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--radius-xl)', boxShadow: docked ? 'none' : undefined, padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
+  const sideNavStyles = `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}.lk-sidenav__collapse-control{position:absolute;inset-block-start:10px;inset-inline-end:0;z-index:2;display:inline-flex;line-height:0}@media(prefers-reduced-motion:reduce){.lk-sidenav__surface,.lk-sidenav__collapse-control,.lk-sidenav__collapse-control .lk-iconbtn,.lk-sidenav__collapse-control svg{transition-duration:0s!important;animation-duration:0s!important}}`;
+  const persistentCollapseControl = persistentCollapse ? (
+    <div className="lk-sidenav__collapse-control">
+      <Tooltip content={collapseLabel} placement="right" size="small">
+        <IconButton
+          className="lk-sidenav__collapse-button"
+          data-sidenav-collapse-toggle=""
+          variant="ghost"
+          size={36}
+          round={false}
+          label={collapseLabel}
+          title={collapseLabel}
+          aria-expanded={!col}
+          aria-controls={panelId}
+          onClick={() => setCol(!col)}
+        >
+          <Icon name={col ? 'chevron-right' : 'chevron-left'} size={16} aria-hidden="true" />
+        </IconButton>
+      </Tooltip>
+    </div>
+  ) : null;
+  const inlineCollapseControl = inlineCollapse ? (
+    <button type="button" data-sidenav-collapse-toggle="" onClick={() => setCol(!col)} title={collapseLabel} aria-label={collapseLabel}
+      style={{ position: col ? 'static' : 'absolute', right: col ? 'auto' : 2, top: col ? 'auto' : 12, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, padding: 0, border: 'none', borderRadius: 'var(--radius-8)', background: 'transparent', color: 'var(--color-semantic-label-neutral)', cursor: 'pointer' }}>
+      <Icon name="left-side" size={16} aria-hidden="true" style={{ transform: col ? 'rotate(180deg)' : 'none' }} />
+    </button>
+  ) : null;
+  const brandRegionStyle = persistentCollapse
+    ? { position: 'relative', display: 'flex', alignItems: 'center', justifyContent: col ? 'center' : 'flex-start', gap: 8, width: 'calc(100% + 20px)', minHeight: 36, marginInline: -10, padding: col ? '54px 4px 14px' : '10px 44px 14px 4px', boxSizing: 'border-box' }
+    : { position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 24, padding: col ? '14px 10px 10px' : '14px 10px 18px' };
+  const panelContent = (
+    <div id={panelId} className="lk-sidenav__panel-content" data-collapsed={col ? 'true' : 'false'} style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: 0 }}>
+      <style>{sideNavStyles}</style>
       {(brand != null || collapsible) && (
-        <div style={{ position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 24, padding: col ? '14px 10px 10px' : '14px 10px 18px' }}>
+        <div className="lk-sidenav__brand" style={brandRegionStyle}>
           {brand}
-          {collapsible && (
-            <button type="button" onClick={() => setCol(!col)} title={col ? '펼치기' : '접기'} aria-label={col ? '펼치기' : '접기'}
-              style={{ position: col ? 'static' : 'absolute', right: col ? 'auto' : 2, top: col ? 'auto' : 12, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, padding: 0, border: 'none', borderRadius: 'var(--radius-8)', background: 'transparent', color: 'var(--color-semantic-label-neutral)', cursor: 'pointer' }}>
-              <Icon name="left-side" size={16} aria-hidden="true" style={{ transform: col ? 'rotate(180deg)' : 'none' }} />
-            </button>
-          )}
+          {inlineCollapseControl}
         </div>
       )}
       <div className="lk-sidenav__scroll" style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: '1 1 auto', minHeight: 0, overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -251,7 +283,7 @@ export function SideNav({
           <div style={{ paddingTop: 10, marginLeft: 2, marginRight: 2, borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
         )}
       </div>
-    </React.Fragment>
+    </div>
   );
   return (
     <nav ref={navRef} onClick={overlay && col ? (e) => { if (!e.target.closest('[data-sidenav-value], button')) setCol(false); } : undefined}
@@ -265,10 +297,16 @@ export function SideNav({
         }
       } : onFocus}
       onBlur={overlay ? (e) => { onBlur?.(e); if (!pointerInside.current && !e.currentTarget.contains(e.relatedTarget)) peek(false); } : onBlur}
+      className={['lk-sidenav', !overlay && 'lk-sidenav__surface', className].filter(Boolean).join(' ')}
       style={overlay ? { position: 'relative', width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style }} {...rest} data-surface={resolvedSurface}>
       {overlay ? (
-        <div style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: docked || col ? 'none' : 'var(--shadow-lg)' }}>{inner}</div>
-      ) : inner}
+        <div className="lk-sidenav__surface" style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: docked || col ? 'none' : 'var(--shadow-lg)' }}>{panelContent}</div>
+      ) : (
+        <React.Fragment>
+          {panelContent}
+          {persistentCollapseControl}
+        </React.Fragment>
+      )}
     </nav>
   );
 }

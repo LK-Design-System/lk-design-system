@@ -172,6 +172,8 @@
 
 ### WF-16 Dashboard shell and navigation composition
 
+이 workflow의 재사용 가능한 결과는 루트 `DESIGN.md`에서 **Operations Dashboard** 패턴군으로 관리한다. 기존 `DashboardShell`·`DashboardGrid` API는 유지하며, 일반 어드민 템플릿이나 별도 디자인 시스템으로 범위를 넓히지 않는다.
+
 핵심은 하나의 “표준 대시보드 화면”을 만드는 것이 아니라 제품 identity, utility, 목적지, 현재 위치와 우선 콘텐츠의 소유권을 분리하는 것이다.
 
 ```text
@@ -199,7 +201,7 @@ narrow
 
 - 제품 identity는 TopBar 또는 SideNav 중 한 곳만 소유한다. SideNav가 로고·제품명을 가지면 TopBar에는 workspace, search, notification, help, account 같은 utility만 둔다.
 - `DashboardShell topology="header-first"`는 전폭 header 아래에 navigation/main을 두는 호환 기본값이고, `topology="side-first"`는 wide 화면에서 full-height navigation 옆에 utility header/main을 둔다. 두 topology는 narrow에서 동일한 단일 열 navigation handoff로 수렴한다.
-- 계층형 desktop navigation은 `SideNav surface="docked"`를 기본 조합으로 삼고, 기존 카드형 표면은 명시적인 `surface="floating"`으로 보존한다. 접기/펼치기는 보이는 control이 정식 진입점이며 hover overlay는 보조 기능이다.
+- 계층형 desktop navigation은 `SideNav surface="docked"`를 기본 조합으로 삼고, 기존 카드형 표면은 명시적인 `surface="floating"`으로 보존한다. persistent 접기/펼치기는 브랜드와 분리되어 논리적 끝 divider 안쪽 같은 위치를 유지하는 36px control이 정식 진입점이다. 64px rail에서도 control·브랜드·현재 부모 맥락을 유지하고, hover overlay와 overlay inline control은 별도 보조 기능으로 다룬다. 접힘 영속화는 제품이 controlled state로 소유한다.
 - 작은 화면에서는 wide SideNav를 그대로 축소하지 않는다. temporary navigation이 닫힐 때 현재 main 문맥을 유지하고 persistent trigger로 focus를 복구한다.
 - `DashboardGrid`는 동급 요약이나 destination 반복을 배치할 뿐 중요도와 의미를 만들지 않는다. 서로 다른 우선순위는 section heading과 명시적인 span 조합으로 표현한다.
 - 세 pinned 제품에서 공통 KPI 요구는 확인되지 않았다. `MetricCard`는 선택적 composition이고 `DashboardShell`의 필수 anatomy가 아니다.
@@ -832,7 +834,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 
 WF-15는 독립 wireframe, navigation component review, normal/narrow visual review까지 완료했지만 제품 `forbidden` line과 stair/stair-slope renderer gap이 남아 위 verified closure matrix에 포함하지 않는다. 기존 `LaneOverlay`나 generic behavior region으로 의미를 덮지 않으며, 후속 Robotics audit에서 LDS 책임 여부를 먼저 결정한다.
 
-WF-16은 세 필수 제품의 pinned shell/navigation source, 독립 anatomy, 기존 LDS component/state story의 mapping까지 연결한 `implemented` 단계다. `SideNav`의 docked/floating 시각과 explicit collapse, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow, TopBar overflow, 한 개의 `main`·`h1`·banner landmark를 함께 검증하기 전에는 `verified`로 승격하지 않는다. 제품 route, dashboard query, KPI 수식, telemetry와 action policy를 LDS story로 복제하는 것은 이 closure에 포함하지 않는다.
+WF-16은 세 필수 제품의 pinned shell/navigation source, 독립 anatomy, 기존 LDS component/state story의 mapping까지 연결한 `implemented` 단계다. `SideNav`의 docked/floating 시각, stable 36px boundary collapse, controlled/uncontrolled state, collapsed parent expansion, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow, TopBar overflow, 한 개의 `main`·`h1`·banner landmark를 함께 검증하기 전에는 `verified`로 승격하지 않는다. 제품 route, dashboard query, KPI 수식, telemetry와 action policy를 LDS story로 복제하는 것은 이 closure에 포함하지 않는다.
 
 검증 범위는 2026-07-14 기준 다음과 같다.
 
