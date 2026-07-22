@@ -2825,7 +2825,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
-      "sourceSha256": "eb89cb80988821949e01926c717a78f9926dd23a3ff489aaad8c56fc52ce669d",
+      "sourceSha256": "fa9b64884434baba961dd522893bb0c5b1279cbedb87fa7e8009f39d9218a630",
       "primaryOwner": "DropdownMenu",
       "ownerComponents": [
         "DropdownMenu"
@@ -2851,8 +2851,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-22T11:33:33.476Z",
-      "reviewedSourceSha256": "eb89cb80988821949e01926c717a78f9926dd23a3ff489aaad8c56fc52ce669d",
+      "reviewedAt": "2026-07-22T15:52:38.373Z",
+      "reviewedSourceSha256": "fa9b64884434baba961dd522893bb0c5b1279cbedb87fa7e8009f39d9218a630",
       "stories": [
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
@@ -2979,7 +2979,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 post-split source and Core layer review: keep. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the two added submenu interaction stories (flyout and drill), each reviewed at story level against the accessibility and API-openness contracts."
+      "reviewNote": "2026-07-12 post-split source and Core layer review: keep. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the two added submenu interaction stories (flyout and drill), each reviewed at story level against the accessibility and API-openness contracts. || 2026-07-23 re-review (owner-delegated, Claude): the submenu plays sent follow-up keys and asserted document.activeElement before the roving-focus engine settled, failing race-dependently on slower runners (Windows CI hit the drill re-entry; a local Linux run hit the branch-trigger assertion). Every focus-dependent assertion after a keyboard event now waits for focus to settle, matching the roving contract. Verified with a targeted local a11y run of the dropdown and menubar stories."
     },
     {
       "title": "LDS Core/Components/Overlay/Modal",
@@ -11191,7 +11191,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationMenubar.stories.jsx",
-      "sourceSha256": "7e92876e9bdeb74d555325a13ab01a387a5d582a2e195bc17a9ff918d0dc4f3a",
+      "sourceSha256": "dfeae9fc0cc225fa90f9db64d31ff50d0fff6832a889d7bec4c91eb391e0aba1",
       "primaryOwner": "Menubar",
       "ownerComponents": [
         "Menubar"
@@ -11214,8 +11214,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-22T11:33:33.476Z",
-      "reviewedSourceSha256": "7e92876e9bdeb74d555325a13ab01a387a5d582a2e195bc17a9ff918d0dc4f3a",
+      "reviewedAt": "2026-07-22T15:52:38.374Z",
+      "reviewedSourceSha256": "dfeae9fc0cc225fa90f9db64d31ff50d0fff6832a889d7bec4c91eb391e0aba1",
       "stories": [
         {
           "id": "lds-product-navigation-menubar--menubar-patterns",
@@ -11309,7 +11309,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 post-split source and Product layer review: keep. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the two added submenu interaction stories sharing the useSubmenuBranch contract, reviewed at story level."
+      "reviewNote": "2026-07-12 post-split source and Product layer review: keep. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the two added submenu interaction stories sharing the useSubmenuBranch contract, reviewed at story level. || 2026-07-23 re-review (owner-delegated, Claude): the submenu plays sent follow-up keys and asserted document.activeElement before the roving-focus engine settled, failing race-dependently on slower runners (Windows CI hit the drill re-entry; a local Linux run hit the branch-trigger assertion). Every focus-dependent assertion after a keyboard event now waits for focus to settle, matching the roving contract. Verified with a targeted local a11y run of the dropdown and menubar stories."
     },
     {
       "title": "LDS Product/Navigation/Side Nav",

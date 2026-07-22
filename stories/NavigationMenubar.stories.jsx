@@ -291,8 +291,11 @@ export const DrillSubmenus = {
       if (doc.activeElement?.textContent?.trim() !== '새로 만들기') throw new Error('메뉴가 열리면 첫 항목에 포커스해야 합니다.');
     });
     await userEvent.keyboard('{ArrowDown}'); // 내보내기(서브 트리거)
-    const branch = doc.activeElement;
-    if (branch.getAttribute('aria-haspopup') !== 'menu') throw new Error('내보내기는 서브메뉴 트리거여야 합니다.');
+    let branch;
+    await waitFor(() => {
+      branch = doc.activeElement;
+      if (branch?.getAttribute('aria-haspopup') !== 'menu') throw new Error('내보내기는 서브메뉴 트리거여야 합니다.');
+    });
     const widthBefore = bar.querySelector('[role="menu"]')?.getBoundingClientRect().width;
 
     await userEvent.keyboard('{ArrowRight}'); // drill in (같은 패널 전환)
@@ -328,10 +331,13 @@ export const NestedSubmenus = {
       if (doc.activeElement?.textContent?.trim() !== '새로 만들기') throw new Error('메뉴가 열리면 첫 항목에 포커스해야 합니다.');
     });
     await userEvent.keyboard('{ArrowDown}'); // 새로 만들기 → 내보내기(서브 트리거)
-    const branchTrigger = doc.activeElement;
-    if (branchTrigger.getAttribute('aria-haspopup') !== 'menu' || branchTrigger.getAttribute('aria-expanded') !== 'false') {
-      throw new Error('내보내기는 닫힌 서브메뉴 트리거(aria-haspopup="menu")여야 합니다.');
-    }
+    let branchTrigger;
+    await waitFor(() => {
+      branchTrigger = doc.activeElement;
+      if (branchTrigger?.getAttribute('aria-haspopup') !== 'menu' || branchTrigger.getAttribute('aria-expanded') !== 'false') {
+        throw new Error('내보내기는 닫힌 서브메뉴 트리거(aria-haspopup="menu")여야 합니다.');
+      }
+    });
 
     await userEvent.keyboard('{ArrowRight}');
     await waitFor(() => {

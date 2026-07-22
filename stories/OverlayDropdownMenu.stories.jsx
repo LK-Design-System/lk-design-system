@@ -244,11 +244,17 @@ export const NestedSubmenus = {
 
     trigger.focus();
     await userEvent.keyboard('{ArrowDown}'); // 열고 첫 항목(이름 바꾸기)
+    await waitFor(() => {
+      if (doc.activeElement?.textContent?.trim() !== '이름 바꾸기') throw new Error('메뉴가 열리면 첫 항목에 포커스해야 합니다.');
+    });
     await userEvent.keyboard('{ArrowDown}'); // 내보내기(서브 트리거)로 이동
-    const branchTrigger = doc.activeElement;
-    if (branchTrigger.getAttribute('aria-haspopup') !== 'menu' || branchTrigger.getAttribute('aria-expanded') !== 'false') {
-      throw new Error('서브메뉴 트리거는 aria-haspopup="menu"와 닫힌 aria-expanded를 가져야 합니다.');
-    }
+    let branchTrigger;
+    await waitFor(() => {
+      branchTrigger = doc.activeElement;
+      if (branchTrigger?.getAttribute('aria-haspopup') !== 'menu' || branchTrigger.getAttribute('aria-expanded') !== 'false') {
+        throw new Error('서브메뉴 트리거는 aria-haspopup="menu"와 닫힌 aria-expanded를 가져야 합니다.');
+      }
+    });
 
     await userEvent.keyboard('{ArrowRight}'); // 서브 열고 첫 항목 진입
     await waitFor(() => {
@@ -329,8 +335,11 @@ export const DrillSubmenus = {
       if (doc.activeElement?.textContent?.trim() !== '이름 바꾸기') throw new Error('메뉴가 열리면 첫 항목에 포커스해야 합니다.');
     });
     await userEvent.keyboard('{ArrowDown}'); // 내보내기(서브 트리거)
-    const branch = doc.activeElement;
-    if (branch.getAttribute('aria-haspopup') !== 'menu') throw new Error('내보내기는 서브메뉴 트리거여야 합니다.');
+    let branch;
+    await waitFor(() => {
+      branch = doc.activeElement;
+      if (branch?.getAttribute('aria-haspopup') !== 'menu') throw new Error('내보내기는 서브메뉴 트리거여야 합니다.');
+    });
     const panelWidthBefore = canvasElement.querySelector('[data-contract="drill"] [role="menu"]')?.getBoundingClientRect().width;
 
     await userEvent.keyboard('{ArrowRight}'); // 하위 목록으로 drill in (같은 패널 전환)
@@ -347,6 +356,9 @@ export const DrillSubmenus = {
     await userEvent.keyboard('{ArrowLeft}'); // 상위로 복귀
     await waitFor(() => {
       if (canvasElement.querySelector('[data-contract="drill"] button[aria-label^="뒤로"]')) throw new Error('왼쪽 화살표로 상위 레벨에 복귀해야 합니다.');
+      // roving 엔진이 상위 첫 항목에 포커스를 되돌린 뒤에만 키 입력을 이어간다
+      // (포커스 정착 전에 ArrowDown을 보내면 재진입이 레이스로 실패한다).
+      if (doc.activeElement?.textContent?.trim() !== '이름 바꾸기') throw new Error('drill 복귀 후 상위 첫 항목에 포커스해야 합니다.');
     });
 
     await userEvent.keyboard('{ArrowDown}'); // 내보내기로 다시 이동
