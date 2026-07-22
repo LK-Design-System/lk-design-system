@@ -191,7 +191,14 @@ function normalize(record) {
     .map(([key, value]) => [key, [...new Set(value)].sort()]));
 }
 
-const jsxFiles = await collect(path.join(root, 'components'), '.jsx');
+const classification = JSON.parse(
+  await readFile(path.join(root, 'docs', 'references', 'wds', 'PUBLIC_EXPORT_CLASSIFICATION.json'), 'utf8'),
+);
+const internalModulePaths = new Set(
+  (classification.internalModules ?? []).map((module) => path.normalize(path.join(root, module.path))),
+);
+const jsxFiles = (await collect(path.join(root, 'components'), '.jsx'))
+  .filter((file) => !internalModulePaths.has(path.normalize(file)));
 const dtsFiles = await collect(path.join(root, 'components'), '.d.ts');
 const typeRegistry = new Map();
 for (const dtsPath of dtsFiles) {

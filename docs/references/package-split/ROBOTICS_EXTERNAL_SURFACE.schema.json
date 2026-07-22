@@ -15,7 +15,7 @@
       "properties": {
         "name": { "const": "@lk-robotics/lds-robotics-ui" },
         "version": { "const": "0.1.0-rc.2" },
-        "repository": { "const": "LK-ROBOTICS/lk-design-system-robotics" }
+        "repository": { "const": "LK-Design-System/lk-design-system-robotics" }
       }
     },
     "upstreamTokenDependencies": {

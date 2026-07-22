@@ -27,7 +27,15 @@ const findings = {
   visualParityGaps: [],
 };
 
-for (const jsxPath of await collect(path.join(root, 'components'), '.jsx')) {
+const classification = JSON.parse(
+  await readFile(path.join(root, 'docs', 'references', 'wds', 'PUBLIC_EXPORT_CLASSIFICATION.json'), 'utf8'),
+);
+const internalModulePaths = new Set(
+  (classification.internalModules ?? []).map((module) => path.normalize(path.join(root, module.path))),
+);
+
+for (const jsxPath of (await collect(path.join(root, 'components'), '.jsx'))
+  .filter((file) => !internalModulePaths.has(path.normalize(file)))) {
   const rel = path.relative(root, jsxPath).replaceAll('\\', '/');
   const source = await readFile(jsxPath, 'utf8');
   const declarationSource = await readFile(jsxPath.replace(/\.jsx$/, '.d.ts'), 'utf8').catch(() => source);

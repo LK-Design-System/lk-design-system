@@ -5,8 +5,8 @@ const root = process.cwd();
 const errors = [];
 const notes = [];
 const sourceOnly = process.argv.includes('--source-only');
-const releaseVersion = '0.1.0-rc.0';
-const externalRoboticsVersion = '0.1.0-rc.1';
+const releaseVersion = '0.1.0-rc.1';
+const externalRoboticsVersion = '0.1.0-rc.2';
 const roboticsExternalSurfacePath = path.join(
   root,
   'docs',

@@ -15,7 +15,15 @@ async function collect(dir, suffix, out = []) {
 }
 
 const findings = { missingExample: [], missingSections: [], missingComponentInExample: [], brokenPaths: [] };
-for (const jsxPath of await collect(path.join(root, 'components'), '.jsx')) {
+const classification = JSON.parse(
+  await readFile(path.join(root, 'docs', 'references', 'wds', 'PUBLIC_EXPORT_CLASSIFICATION.json'), 'utf8'),
+);
+const internalModulePaths = new Set(
+  (classification.internalModules ?? []).map((module) => path.normalize(path.join(root, module.path))),
+);
+
+for (const jsxPath of (await collect(path.join(root, 'components'), '.jsx'))
+  .filter((file) => !internalModulePaths.has(path.normalize(file)))) {
   const rel = path.relative(root, jsxPath).replaceAll('\\', '/');
   const promptPath = jsxPath.slice(0, -4) + '.prompt.md';
   const promptRel = path.relative(root, promptPath).replaceAll('\\', '/');

@@ -30,10 +30,10 @@
   },
   "profiles": {
     "robotics-ui": {
-      "repository": "LK-ROBOTICS/lk-design-system-robotics",
+      "repository": "LK-Design-System/lk-design-system-robotics",
       "package": {
         "name": "@lk-robotics/lds-robotics-ui",
-        "version": "0.1.0-rc.1"
+        "version": "0.1.0-rc.2"
       },
       "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
       "configFile": ".lds-conformance.json",
