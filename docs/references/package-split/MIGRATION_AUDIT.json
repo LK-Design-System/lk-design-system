@@ -727,7 +727,7 @@
     "integrations": [
       {
         "id": "lds3d-docs",
-        "repository": "LK-ROBOTICS/lk-design-system-3d",
+        "repository": "LK-Design-System/lk-design-system-3d",
         "checkoutPath": "../lk-design-system-3d",
         "branch": "main",
         "headCommit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a",

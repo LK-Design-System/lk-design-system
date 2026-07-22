@@ -2,7 +2,7 @@
   "kind": "lds-consumer-import-scan",
   "scanner": "scripts/scan-lds3d-integration.mjs",
   "scannerVersion": 1,
-  "repository": "LK-ROBOTICS/lk-design-system-3d",
+  "repository": "LK-Design-System/lk-design-system-3d",
   "commit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a",
   "docsRoot": "apps/docs",
   "capturedAt": "2026-07-18T16:24:12.913Z",

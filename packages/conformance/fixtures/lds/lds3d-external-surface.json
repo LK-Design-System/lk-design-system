@@ -2,11 +2,11 @@
   "$schema": "./LDS3D_EXTERNAL_SURFACE.schema.json",
   "schemaVersion": 1,
   "kind": "lds3d-external-public-surface",
-  "package": { "manifest": "package.json", "name": "lk-design-system-3d", "version": "0.1.0-alpha.1", "repository": "LK-ROBOTICS/lk-design-system-3d" },
+  "package": { "manifest": "package.json", "name": "@lk-robotics/lds-3d", "version": "0.1.0-alpha.1", "repository": "LK-Design-System/lk-design-system-3d" },
   "upstreamTokenDependencies": ["--color-semantic-background-normal-normal", "--color-semantic-label-normal", "--font-sans", "--space-4"],
   "runtimeCustomProperties": ["--lds3d-inspector-width"],
   "packages": [
-    { "manifest": "packages/core/package.json", "name": "@lk-robotics/design-system-3d-core", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./package.json"] },
-    { "manifest": "packages/three/package.json", "name": "@lk-robotics/design-system-3d-three", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] }
+    { "manifest": "packages/core/package.json", "name": "@lk-robotics/lds-3d-core", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./package.json"] },
+    { "manifest": "packages/three/package.json", "name": "@lk-robotics/lds-3d-three", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] }
   ]
 }

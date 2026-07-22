@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "capturedAt": "2026-07-19T03:56:03.193Z",
   "consumer": {
-    "repository": "LK-ROBOTICS/lk-design-system-3d",
+    "repository": "LK-Design-System/lk-design-system-3d",
     "baseCommit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a",
     "branch": "main",
     "docsRoot": "apps/docs",

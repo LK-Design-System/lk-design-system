@@ -43,7 +43,7 @@ lk-design-system-robotics               # Wave 4 gate 통과 시에만 신설
   @lk-robotics/lds-robotics-ui          # Robotics DOM·SVG·2D domain UI
 
 lk-design-system-3d                     # 기존 형제 저장소 유지
-  @lk-robotics/design-system-3d-*        # 좌표·scene·asset·renderer package
+  @lk-robotics/lds-3d-*        # 좌표·scene·asset·renderer package
 
 product repositories
   LDS package + Robotics UI + LDS3D를 필요한 조합으로 소비
@@ -127,7 +127,7 @@ working tree 그래프를 지원 계약으로 인용하지 않는다.
 | Theme | `lds-theme` | LK color, typography, font, brand asset, theme mapping | generic component anatomy, product state |
 | Product | `lds-product` | 여러 LK 제품에서 반복되는 generic application pattern | robot-specific semantics, route와 backend policy |
 | Robotics UI | `lds-robotics-ui` | robot status/control, telemetry presentation, DOM/SVG 2D robotics visualization | WebGL lifecycle, coordinate math, ROS transport, complete screen |
-| LDS3D | 기존 `design-system-3d-*` | coordinate, frame, pose, camera, picking, GLB, WebGL, renderer lifecycle | DOM chrome, LDS component CSS, product command |
+| LDS3D | 기존 `lds-3d-*` | coordinate, frame, pose, camera, picking, GLB, WebGL, renderer lifecycle | DOM chrome, LDS component CSS, product command |
 | Product | 각 제품 저장소 | route, store, transport, permission, command, persistence, final composition | reusable DS contract의 복사본 |
 
 ### 허용 의존 방향
@@ -480,7 +480,7 @@ monorepo/docs-composition profile, not a generic rewrite of the Robotics profile
   properties, local dependency links, stylesheet-order drift, public-export drift, and
   missing representative stories. Existing SVG/map geometry and general numeric layout
   literals are intentionally outside this first gate rather than silently baselined.
-- LDS3D's published `design-system-3d-*` workspaces remain headless with respect to LDS:
+- LDS3D's published `lds-3d-*` workspaces remain headless with respect to LDS:
   they may own renderer/material values but must not import LDS packages or styles. Only
   `apps/docs` composes LDS Core, Theme, Product, Robotics UI, then local styles, all at the
   exact versions recorded in the contract and lockfile.
