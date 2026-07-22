@@ -2,6 +2,7 @@ import React from "react";
 import { Icon } from "../icon/Icon.jsx";
 import { Button } from '../buttons/Button.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useSubmenuBranch } from '../internal/useSubmenuBranch.jsx';
 import { useFloatingPosition } from './anchored-overlay.js';
 
 const ACTION_CONTROL_SELECTOR = [
@@ -98,88 +99,54 @@ function normalizeCellPadding(cellPadding) {
   return "12px";
 }
 
-function MenuItemButton({
-  item,
-  variant,
-  cellPadding,
-  verticalPadding,
-  onSelect,
-}) {
-  const [hover, setHover] = React.useState(false);
-  const cell = normalizeCellPadding(cellPadding);
-  const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
+function menuItemVisualStyle({ active, hovered, disabled, danger, hasDescription, cell, vertical }) {
   const denseCell = cell === "8px";
   const denseVertical = vertical === "8px";
-  const disabled = Boolean(item.disabled || item.disable);
-  const checked = Boolean(item.checked || item.active);
-  const active = checked || Boolean(item.active);
-  const description = item.description ?? item.captionContent;
-  const minHeight = description
-    ? denseVertical
-      ? 62
-      : 70
-    : denseVertical
-      ? 40
-      : 48;
+  return {
+    width: "100%",
+    minHeight: hasDescription ? (denseVertical ? 62 : 70) : denseVertical ? 40 : 48,
+    display: "flex",
+    alignItems: hasDescription ? "flex-start" : "center",
+    gap: 10,
+    padding: `${vertical} ${denseCell ? 8 : 10}px`,
+    border: "none",
+    background: active || (hovered && !disabled) ? "var(--component-menu-item-hover-bg)" : "transparent",
+    cursor: disabled ? "not-allowed" : "pointer",
+    borderRadius: "var(--radius-md)",
+    textAlign: "left",
+    fontFamily: "var(--font-sans)",
+    fontSize: "var(--body1-size)",
+    fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
+    letterSpacing: 0,
+    color: danger
+      ? "var(--color-semantic-status-negative-text)"
+      : disabled
+        ? "var(--color-semantic-label-disable)"
+        : "var(--color-semantic-label-normal)",
+    opacity: disabled ? 0.45 : 1,
+  };
+}
+
+const MENU_PANEL_STYLE = {
+  background: "var(--color-semantic-background-elevated-normal)",
+  border: "1px solid var(--color-semantic-line-solid-normal)",
+  borderRadius: "var(--component-menu-radius)",
+  boxShadow: "var(--shadow-md)",
+  padding: "var(--component-menu-padding-x)",
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+  gap: 4,
+};
+
+function MenuItemContent({ item, variant, checked, disabled, description, trailing }) {
   return (
-    <button
-      type="button"
-      role={
-        variant === "normal"
-          ? "menuitem"
-          : variant === "radio"
-            ? "menuitemradio"
-            : "menuitemcheckbox"
-      }
-      aria-checked={variant === "normal" ? undefined : checked}
-      aria-current={variant === "normal" && active ? true : undefined}
-      tabIndex={-1}
-      disabled={disabled}
-      onClick={() => {
-        if (disabled) return;
-        item.onClick?.();
-        onSelect?.(item);
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        width: "100%",
-        minHeight,
-        display: "flex",
-        alignItems: description ? "flex-start" : "center",
-        gap: 10,
-        padding: `${vertical} ${denseCell ? 8 : 10}px`,
-        border: "none",
-        background:
-          active || (hover && !disabled)
-            ? "var(--component-menu-item-hover-bg)"
-            : "transparent",
-        cursor: disabled ? "not-allowed" : "pointer",
-        borderRadius: "var(--radius-md)",
-        textAlign: "left",
-        fontFamily: "var(--font-sans)",
-        fontSize: "var(--body1-size)",
-        fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
-        letterSpacing: 0,
-        color: item.danger
-          ? "var(--color-semantic-status-negative-text)"
-          : disabled
-            ? "var(--color-semantic-label-disable)"
-            : "var(--color-semantic-label-normal)",
-        opacity: disabled ? 0.45 : 1,
-      }}
-    >
+    <>
       {item.icon || (
         <CheckMark variant={variant} checked={checked} disabled={disabled} />
       )}
       <span style={{ display: "grid", gap: 4, minWidth: 0, flex: 1 }}>
-        <span
-          style={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-        >
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {item.label}
         </span>
         {description && (
@@ -194,6 +161,7 @@ function MenuItemButton({
           </span>
         )}
       </span>
+      {trailing}
       {item.shortcut && (
         <span
           style={{
@@ -205,8 +173,206 @@ function MenuItemButton({
           {item.shortcut}
         </span>
       )}
+    </>
+  );
+}
+
+function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect, trailing, haspopup, onTriggerKeyDown }) {
+  const [hover, setHover] = React.useState(false);
+  const cell = normalizeCellPadding(cellPadding);
+  const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
+  const disabled = Boolean(item.disabled || item.disable);
+  const checked = Boolean(item.checked || item.active);
+  const active = checked || Boolean(item.active);
+  const description = item.description ?? item.captionContent;
+  return (
+    <button
+      type="button"
+      role={
+        variant === "normal"
+          ? "menuitem"
+          : variant === "radio"
+            ? "menuitemradio"
+            : "menuitemcheckbox"
+      }
+      aria-checked={variant === "normal" ? undefined : checked}
+      aria-current={variant === "normal" && active ? true : undefined}
+      aria-haspopup={haspopup}
+      tabIndex={-1}
+      disabled={disabled}
+      onClick={() => {
+        if (disabled) return;
+        item.onClick?.();
+        onSelect?.(item);
+      }}
+      onKeyDown={onTriggerKeyDown}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={menuItemVisualStyle({ active, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
+    >
+      <MenuItemContent item={item} variant={variant} checked={checked} disabled={disabled} description={description} trailing={trailing} />
     </button>
   );
+}
+
+const SUBMENU_CHEVRON = (
+  <Icon name="chevron-right-small" size={16} aria-hidden="true" style={{ flexShrink: 0, color: "var(--color-semantic-label-alternative)" }} />
+);
+
+function DrillHeader({ title, onBack }) {
+  return (
+    <button
+      type="button"
+      aria-label={`뒤로 (${typeof title === "string" ? title : "상위 메뉴"})`}
+      onClick={onBack}
+      onKeyDown={(event) => { if (event.key === "ArrowLeft") { event.preventDefault(); onBack(); } }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        width: "100%",
+        padding: "8px 10px",
+        marginBottom: 4,
+        border: "none",
+        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+        background: "transparent",
+        cursor: "pointer",
+        textAlign: "left",
+        fontFamily: "var(--font-sans)",
+        fontSize: "var(--label2-size)",
+        fontWeight: "var(--fw-bold)",
+        color: "var(--color-semantic-label-neutral)",
+      }}
+    >
+      <Icon name="chevron-left-small" size={16} aria-hidden="true" />
+      <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{title}</span>
+    </button>
+  );
+}
+
+function renderDrillItems(items, ctx) {
+  return items.map((item, index) => {
+    if (item.divider) {
+      return (
+        <div
+          key={index}
+          role="separator"
+          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+        />
+      );
+    }
+    if (item.items && item.items.length) {
+      return (
+        <MenuItemButton
+          key={index}
+          item={item}
+          variant={item.variant || ctx.variant}
+          cellPadding={ctx.cellPadding}
+          verticalPadding={ctx.verticalPadding}
+          haspopup="menu"
+          trailing={SUBMENU_CHEVRON}
+          onSelect={() => ctx.drillIn(item)}
+          onTriggerKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); ctx.drillIn(item); } }}
+        />
+      );
+    }
+    return (
+      <MenuItemButton
+        key={index}
+        item={item}
+        variant={item.variant || ctx.variant}
+        cellPadding={ctx.cellPadding}
+        verticalPadding={ctx.verticalPadding}
+        onSelect={ctx.closeAll}
+      />
+    );
+  });
+}
+
+function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
+  const [hover, setHover] = React.useState(false);
+  const cell = normalizeCellPadding(cellPadding);
+  const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
+  const disabled = Boolean(item.disabled || item.disable);
+  const description = item.description ?? item.captionContent;
+  const sub = useSubmenuBranch({ disabled });
+
+  return (
+    <div
+      style={{ position: "relative" }}
+      onMouseEnter={() => { setHover(true); sub.containerHandlers.onMouseEnter(); }}
+      onMouseLeave={() => { setHover(false); sub.containerHandlers.onMouseLeave(); }}
+    >
+      <button
+        ref={sub.triggerRef}
+        type="button"
+        role="menuitem"
+        aria-haspopup="menu"
+        aria-expanded={sub.open}
+        tabIndex={-1}
+        disabled={disabled}
+        {...sub.triggerHandlers}
+        style={menuItemVisualStyle({ active: sub.open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
+      >
+        <MenuItemContent
+          item={item}
+          variant="normal"
+          checked={false}
+          disabled={disabled}
+          description={description}
+          trailing={<Icon name="chevron-right-small" size={16} aria-hidden="true" style={{ flexShrink: 0, color: "var(--color-semantic-label-alternative)" }} />}
+        />
+      </button>
+      {sub.renderPanel(
+        <div
+          ref={sub.menuRef}
+          role="menu"
+          aria-label={typeof item.label === "string" ? item.label : undefined}
+          onKeyDown={sub.menuKeyDown}
+          style={{ display: "flex", flexDirection: "column", gap: 4 }}
+        >
+          {renderMenuItems(item.items || [], { variant, cellPadding, verticalPadding, closeAll })}
+        </div>,
+        MENU_PANEL_STYLE,
+      )}
+    </div>
+  );
+}
+
+function renderMenuItems(items, ctx) {
+  return items.map((item, index) => {
+    if (item.divider) {
+      return (
+        <div
+          key={index}
+          role="separator"
+          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+        />
+      );
+    }
+    if (item.items && item.items.length) {
+      return (
+        <MenuBranch
+          key={index}
+          item={item}
+          variant={item.variant || ctx.variant}
+          cellPadding={ctx.cellPadding}
+          verticalPadding={ctx.verticalPadding}
+          closeAll={ctx.closeAll}
+        />
+      );
+    }
+    return (
+      <MenuItemButton
+        key={index}
+        item={item}
+        variant={item.variant || ctx.variant}
+        cellPadding={ctx.cellPadding}
+        verticalPadding={ctx.verticalPadding}
+        onSelect={ctx.closeAll}
+      />
+    );
+  });
 }
 
 /**
@@ -219,6 +385,7 @@ export function DropdownMenu({
   items = [],
   align = "left",
   variant = "normal",
+  submenuMode = "flyout",
   cellPadding = "12px",
   verticalPadding,
   menuActionArea = false,
@@ -236,8 +403,10 @@ export function DropdownMenu({
   ...rest
 }) {
   const controlled = open !== undefined;
+  const drill = submenuMode === "drill";
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
+  const [drillPath, setDrillPath] = React.useState([]);
   const ref = React.useRef(null);
   const panelRef = React.useRef(null);
   const actionAreaRef = React.useRef(null);
@@ -248,10 +417,16 @@ export function DropdownMenu({
     if (!controlled) setInternalOpen(next);
     onOpenChange?.(next);
   };
+  React.useEffect(() => { if (!visible) setDrillPath([]); }, [visible]);
+  const drillLevel = drillPath.length ? drillPath[drillPath.length - 1] : null;
+  const drillItems = drillLevel ? (drillLevel.items || []) : items;
+  const drillIn = (item) => setDrillPath((path) => [...path, item]);
+  const drillBack = () => setDrillPath((path) => path.slice(0, -1));
   const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
     open: visible,
     onClose: () => setVisible(false),
     getTrigger: () => ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]'),
+    menuKey: drill ? drillPath.length : 0,
   });
 
   const toggleMenu = (event) => {
@@ -311,6 +486,11 @@ export function DropdownMenu({
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
 
   const handleMenuRegionKeyDown = (event) => {
+    if (drill && event.key === 'ArrowLeft' && drillPath.length > 0) {
+      event.preventDefault();
+      drillBack();
+      return;
+    }
     if (event.key === 'Tab' && !event.shiftKey) {
       const firstAction = focusableActionControls(actionAreaRef.current)[0];
       if (firstAction) {
@@ -354,7 +534,9 @@ export function DropdownMenu({
   React.useEffect(() => {
     if (!visible) return undefined;
     const onDoc = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setVisible(false);
+      if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.("[data-menu-portal]")) {
+        setVisible(false);
+      }
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
@@ -407,27 +589,24 @@ export function DropdownMenu({
             onKeyDown={handleMenuRegionKeyDown}
             style={{ display: "flex", flexDirection: "column", gap: 4, minHeight: 0, overflowY: panelMaxHeight != null ? 'auto' : undefined }}
           >
-            {items.map((item, index) =>
-              item.divider ? (
-                <div
-                  key={index}
-                  role="separator"
-                  style={{
-                    height: 1,
-                    background: "var(--color-semantic-line-solid-normal)",
-                    margin: "6px 4px",
-                  }}
-                />
-              ) : (
-                <MenuItemButton
-                  key={index}
-                  item={item}
-                  variant={item.variant || variant}
-                  cellPadding={cellPadding}
-                  verticalPadding={verticalPadding}
-                  onSelect={() => closeMenu({ restoreFocus: true })}
-                />
-              ),
+            {drill ? (
+              <>
+                {drillLevel && <DrillHeader title={drillLevel.label} onBack={drillBack} />}
+                {renderDrillItems(drillItems, {
+                  variant,
+                  cellPadding,
+                  verticalPadding,
+                  closeAll: () => closeMenu({ restoreFocus: true }),
+                  drillIn,
+                })}
+              </>
+            ) : (
+              renderMenuItems(items, {
+                variant,
+                cellPadding,
+                verticalPadding,
+                closeAll: () => closeMenu({ restoreFocus: true }),
+              })
             )}
           </div>
           {showActionArea && (

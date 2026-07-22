@@ -13,6 +13,8 @@ export interface MenubarMenuItem {
   danger?: boolean;
   checked?: boolean;
   variant?: "normal" | "radio" | "checkbox";
+  /** 중첩 서브메뉴 항목. 있으면 이 항목은 서브메뉴를 여는 트리거가 되고(오른쪽 chevron·`aria-haspopup`), hover·클릭·오른쪽 화살표로 펼쳐집니다. */
+  items?: MenubarMenuItem[];
 }
 
 export interface MenubarMenu {
@@ -34,6 +36,8 @@ export interface MenubarProps extends React.HTMLAttributes<HTMLDivElement> {
   menus: MenubarMenu[];
   /** menu variant axis. @default "normal" */
   variant?: "normal" | "radio" | "checkbox";
+  /** 중첩 서브메뉴 표현 방식. `flyout`은 부모 옆으로 겹겹이 뜨고(데스크톱 표준), `drill`은 같은 패널이 하위 목록으로 전환되며 상단에 뒤로 컨트롤을 둡니다(폭 고정·터치 친화). @default "flyout" */
+  submenuMode?: "flyout" | "drill";
   /** Show generated action controls for menus with apply/cancel callbacks. @default false */
   menuActionArea?: boolean;
   /** Fallback apply callback for menus without a per-menu callback. */

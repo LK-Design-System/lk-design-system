@@ -68,7 +68,7 @@
     "describedPublicStories": 321,
     "reviewedPages": 148,
     "reviewedStories": 419,
-    "staleReviewedPages": 5,
+    "staleReviewedPages": 7,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
@@ -2825,7 +2825,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
-      "sourceSha256": "339cda47f6ef12941793c6c5938cbf0474a419499ff562415f99c06f8fd948dc",
+      "sourceSha256": "eb89cb80988821949e01926c717a78f9926dd23a3ff489aaad8c56fc52ce669d",
       "primaryOwner": "DropdownMenu",
       "ownerComponents": [
         "DropdownMenu"
@@ -11134,7 +11134,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationMenubar.stories.jsx",
-      "sourceSha256": "641d577af99947e3e8884f8d8279c6ba6b3ae1ef039948895e3c0b52da00a188",
+      "sourceSha256": "7e92876e9bdeb74d555325a13ab01a387a5d582a2e195bc17a9ff918d0dc4f3a",
       "primaryOwner": "Menubar",
       "ownerComponents": [
         "Menubar"

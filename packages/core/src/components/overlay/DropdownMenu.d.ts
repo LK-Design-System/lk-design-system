@@ -18,6 +18,8 @@ export interface DropdownMenuItem {
   caption?: boolean;
   captionContent?: React.ReactNode;
   variant?: "normal" | "radio" | "checkbox";
+  /** 중첩 서브메뉴 항목. 있으면 이 항목은 서브메뉴를 여는 트리거가 되고(오른쪽 chevron·`aria-haspopup`), hover·클릭·오른쪽 화살표로 펼쳐집니다. */
+  items?: DropdownMenuItem[];
 }
 
 export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {

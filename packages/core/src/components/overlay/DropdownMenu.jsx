@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import { Icon } from "../icon/Icon.jsx";
 import { Button } from '../buttons/Button.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
@@ -98,29 +99,92 @@ function normalizeCellPadding(cellPadding) {
   return "12px";
 }
 
-function MenuItemButton({
-  item,
-  variant,
-  cellPadding,
-  verticalPadding,
-  onSelect,
-}) {
+function menuItemVisualStyle({ active, hovered, disabled, danger, hasDescription, cell, vertical }) {
+  const denseCell = cell === "8px";
+  const denseVertical = vertical === "8px";
+  return {
+    width: "100%",
+    minHeight: hasDescription ? (denseVertical ? 62 : 70) : denseVertical ? 40 : 48,
+    display: "flex",
+    alignItems: hasDescription ? "flex-start" : "center",
+    gap: 10,
+    padding: `${vertical} ${denseCell ? 8 : 10}px`,
+    border: "none",
+    background: active || (hovered && !disabled) ? "var(--component-menu-item-hover-bg)" : "transparent",
+    cursor: disabled ? "not-allowed" : "pointer",
+    borderRadius: "var(--radius-md)",
+    textAlign: "left",
+    fontFamily: "var(--font-sans)",
+    fontSize: "var(--body1-size)",
+    fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
+    letterSpacing: 0,
+    color: danger
+      ? "var(--color-semantic-status-negative-text)"
+      : disabled
+        ? "var(--color-semantic-label-disable)"
+        : "var(--color-semantic-label-normal)",
+    opacity: disabled ? 0.45 : 1,
+  };
+}
+
+const MENU_PANEL_STYLE = {
+  background: "var(--color-semantic-background-elevated-normal)",
+  border: "1px solid var(--color-semantic-line-solid-normal)",
+  borderRadius: "var(--component-menu-radius)",
+  boxShadow: "var(--shadow-md)",
+  padding: "var(--component-menu-padding-x)",
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+  gap: 4,
+};
+
+function MenuItemContent({ item, variant, checked, disabled, description, trailing }) {
+  return (
+    <>
+      {item.icon || (
+        <CheckMark variant={variant} checked={checked} disabled={disabled} />
+      )}
+      <span style={{ display: "grid", gap: 4, minWidth: 0, flex: 1 }}>
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {item.label}
+        </span>
+        {description && (
+          <span
+            style={{
+              fontSize: "var(--label2-size)",
+              color: "var(--color-semantic-label-alternative)",
+              fontWeight: "var(--fw-medium)",
+            }}
+          >
+            {description}
+          </span>
+        )}
+      </span>
+      {trailing}
+      {item.shortcut && (
+        <span
+          style={{
+            fontSize: "var(--caption1-size)",
+            color: "var(--color-semantic-label-alternative)",
+            flexShrink: 0,
+          }}
+        >
+          {item.shortcut}
+        </span>
+      )}
+    </>
+  );
+}
+
+function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect }) {
   const [hover, setHover] = React.useState(false);
   const cell = normalizeCellPadding(cellPadding);
   const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
-  const denseCell = cell === "8px";
-  const denseVertical = vertical === "8px";
   const disabled = Boolean(item.disabled || item.disable);
   const checked = Boolean(item.checked || item.active);
   const active = checked || Boolean(item.active);
   const description = item.description ?? item.captionContent;
-  const minHeight = description
-    ? denseVertical
-      ? 62
-      : 70
-    : denseVertical
-      ? 40
-      : 48;
   return (
     <button
       type="button"
@@ -142,71 +206,163 @@ function MenuItemButton({
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={{
-        width: "100%",
-        minHeight,
-        display: "flex",
-        alignItems: description ? "flex-start" : "center",
-        gap: 10,
-        padding: `${vertical} ${denseCell ? 8 : 10}px`,
-        border: "none",
-        background:
-          active || (hover && !disabled)
-            ? "var(--component-menu-item-hover-bg)"
-            : "transparent",
-        cursor: disabled ? "not-allowed" : "pointer",
-        borderRadius: "var(--radius-md)",
-        textAlign: "left",
-        fontFamily: "var(--font-sans)",
-        fontSize: "var(--body1-size)",
-        fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
-        letterSpacing: 0,
-        color: item.danger
-          ? "var(--color-semantic-status-negative-text)"
-          : disabled
-            ? "var(--color-semantic-label-disable)"
-            : "var(--color-semantic-label-normal)",
-        opacity: disabled ? 0.45 : 1,
-      }}
+      style={menuItemVisualStyle({ active, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
     >
-      {item.icon || (
-        <CheckMark variant={variant} checked={checked} disabled={disabled} />
-      )}
-      <span style={{ display: "grid", gap: 4, minWidth: 0, flex: 1 }}>
-        <span
-          style={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {item.label}
-        </span>
-        {description && (
-          <span
-            style={{
-              fontSize: "var(--label2-size)",
-              color: "var(--color-semantic-label-alternative)",
-              fontWeight: "var(--fw-medium)",
-            }}
-          >
-            {description}
-          </span>
-        )}
-      </span>
-      {item.shortcut && (
-        <span
-          style={{
-            fontSize: "var(--caption1-size)",
-            color: "var(--color-semantic-label-alternative)",
-            flexShrink: 0,
-          }}
-        >
-          {item.shortcut}
-        </span>
-      )}
+      <MenuItemContent item={item} variant={variant} checked={checked} disabled={disabled} description={description} />
     </button>
   );
+}
+
+function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
+  const [open, setOpen] = React.useState(false);
+  const [hover, setHover] = React.useState(false);
+  const [subPos, setSubPos] = React.useState(null);
+  const triggerRef = React.useRef(null);
+  const panelRef = React.useRef(null);
+  const hoverTimer = React.useRef(null);
+  const cell = normalizeCellPadding(cellPadding);
+  const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
+  const disabled = Boolean(item.disabled || item.disable);
+  const description = item.description ?? item.captionContent;
+
+  const { menuRef, requestItemFocus, handleMenuKeyDown } = useMenuKeyboard({
+    open,
+    onClose: () => setOpen(false),
+    getTrigger: () => triggerRef.current,
+  });
+
+  const clearTimer = () => { if (hoverTimer.current) { clearTimeout(hoverTimer.current); hoverTimer.current = null; } };
+  React.useEffect(() => () => clearTimer(), []);
+
+  // The submenu panel is portaled to <body> so it escapes the parent menu's
+  // scroll/overflow clip; position it beside the trigger, flipping to the left
+  // edge when the right side lacks room.
+  React.useLayoutEffect(() => {
+    if (!open) { setSubPos(null); return; }
+    const anchor = triggerRef.current?.getBoundingClientRect();
+    const view = triggerRef.current?.ownerDocument?.defaultView;
+    if (!anchor || !view) return;
+    const panelWidth = panelRef.current?.offsetWidth || 200;
+    const panelHeight = panelRef.current?.offsetHeight || 0;
+    const openLeft = view.innerWidth - anchor.right < panelWidth + 12 && anchor.left > panelWidth + 12;
+    let top = anchor.top - 6;
+    if (panelHeight && top + panelHeight > view.innerHeight - 8) {
+      top = Math.max(8, view.innerHeight - 8 - panelHeight);
+    }
+    setSubPos({ top, left: openLeft ? anchor.left - panelWidth - 4 : anchor.right + 4 });
+  }, [open]);
+
+  const openSub = (focusFirst) => { if (focusFirst) requestItemFocus("first"); setOpen(true); };
+  const closeSub = ({ restoreFocus } = {}) => { setOpen(false); if (restoreFocus) triggerRef.current?.focus({ preventScroll: true }); };
+
+  const portalTarget = triggerRef.current?.ownerDocument?.body || (typeof document !== "undefined" ? document.body : null);
+  const subPanel = open && portalTarget
+    ? createPortal(
+        <div
+          ref={panelRef}
+          data-menu-portal=""
+          onMouseEnter={clearTimer}
+          onMouseLeave={() => { clearTimer(); hoverTimer.current = setTimeout(() => setOpen(false), 180); }}
+          style={{
+            position: "fixed",
+            top: subPos?.top ?? -9999,
+            left: subPos?.left ?? -9999,
+            zIndex: 41,
+            width: "max-content",
+            minWidth: 200,
+            maxWidth: "calc(100vw - var(--space-8))",
+            visibility: subPos ? "visible" : "hidden",
+            ...MENU_PANEL_STYLE,
+          }}
+        >
+          <div
+            ref={menuRef}
+            role="menu"
+            aria-label={typeof item.label === "string" ? item.label : undefined}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowLeft") { event.preventDefault(); closeSub({ restoreFocus: true }); return; }
+              handleMenuKeyDown(event);
+            }}
+            style={{ display: "flex", flexDirection: "column", gap: 4 }}
+          >
+            {renderMenuItems(item.items || [], { variant, cellPadding, verticalPadding, closeAll })}
+          </div>
+        </div>,
+        portalTarget,
+      )
+    : null;
+
+  return (
+    <div
+      style={{ position: "relative" }}
+      onMouseEnter={() => { setHover(true); if (!disabled) { clearTimer(); hoverTimer.current = setTimeout(() => setOpen(true), 120); } }}
+      onMouseLeave={() => { setHover(false); clearTimer(); hoverTimer.current = setTimeout(() => setOpen(false), 180); }}
+    >
+      <button
+        ref={triggerRef}
+        type="button"
+        role="menuitem"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        tabIndex={-1}
+        disabled={disabled}
+        onClick={() => { if (disabled) return; if (open) closeSub(); else openSub(false); }}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowRight" || event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openSub(true);
+          }
+        }}
+        style={menuItemVisualStyle({ active: open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
+      >
+        <MenuItemContent
+          item={item}
+          variant="normal"
+          checked={false}
+          disabled={disabled}
+          description={description}
+          trailing={<Icon name="chevron-right-small" size={16} aria-hidden="true" style={{ flexShrink: 0, color: "var(--color-semantic-label-alternative)" }} />}
+        />
+      </button>
+      {subPanel}
+    </div>
+  );
+}
+
+function renderMenuItems(items, ctx) {
+  return items.map((item, index) => {
+    if (item.divider) {
+      return (
+        <div
+          key={index}
+          role="separator"
+          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+        />
+      );
+    }
+    if (item.items && item.items.length) {
+      return (
+        <MenuBranch
+          key={index}
+          item={item}
+          variant={item.variant || ctx.variant}
+          cellPadding={ctx.cellPadding}
+          verticalPadding={ctx.verticalPadding}
+          closeAll={ctx.closeAll}
+        />
+      );
+    }
+    return (
+      <MenuItemButton
+        key={index}
+        item={item}
+        variant={item.variant || ctx.variant}
+        cellPadding={ctx.cellPadding}
+        verticalPadding={ctx.verticalPadding}
+        onSelect={ctx.closeAll}
+      />
+    );
+  });
 }
 
 /**
@@ -354,7 +510,9 @@ export function DropdownMenu({
   React.useEffect(() => {
     if (!visible) return undefined;
     const onDoc = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setVisible(false);
+      if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.("[data-menu-portal]")) {
+        setVisible(false);
+      }
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
@@ -407,28 +565,12 @@ export function DropdownMenu({
             onKeyDown={handleMenuRegionKeyDown}
             style={{ display: "flex", flexDirection: "column", gap: 4, minHeight: 0, overflowY: panelMaxHeight != null ? 'auto' : undefined }}
           >
-            {items.map((item, index) =>
-              item.divider ? (
-                <div
-                  key={index}
-                  role="separator"
-                  style={{
-                    height: 1,
-                    background: "var(--color-semantic-line-solid-normal)",
-                    margin: "6px 4px",
-                  }}
-                />
-              ) : (
-                <MenuItemButton
-                  key={index}
-                  item={item}
-                  variant={item.variant || variant}
-                  cellPadding={cellPadding}
-                  verticalPadding={verticalPadding}
-                  onSelect={() => closeMenu({ restoreFocus: true })}
-                />
-              ),
-            )}
+            {renderMenuItems(items, {
+              variant,
+              cellPadding,
+              verticalPadding,
+              closeAll: () => closeMenu({ restoreFocus: true }),
+            })}
           </div>
           {showActionArea && (
             <div

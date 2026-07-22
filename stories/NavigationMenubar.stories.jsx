@@ -215,3 +215,146 @@ export const MenubarKeyboardContract = {
     });
   },
 };
+
+function MenubarNestedDemo() {
+  const [picked, setPicked] = React.useState('선택 전');
+  return (
+    <main style={{ minHeight: 360, display: 'grid', alignContent: 'start', justifyItems: 'start', gap: 'var(--space-4)', padding: 24 }}>
+      <Menubar
+        data-testid="nested-bar"
+        menus={[
+          {
+            label: '파일',
+            items: [
+              { label: '새로 만들기' },
+              {
+                label: '내보내기',
+                items: [
+                  { label: 'PDF로 내보내기', onClick: () => setPicked('PDF') },
+                  {
+                    label: '고급 형식',
+                    items: [{ label: 'SVG로 내보내기', onClick: () => setPicked('SVG') }],
+                  },
+                ],
+              },
+            ],
+          },
+        ]}
+      />
+      <p data-picked aria-live="polite" style={{ margin: 0 }}>{picked}</p>
+    </main>
+  );
+}
+
+function MenubarDrillDemo() {
+  const [picked, setPicked] = React.useState('선택 전');
+  return (
+    <main style={{ minHeight: 360, display: 'grid', alignContent: 'start', justifyItems: 'start', gap: 'var(--space-4)', padding: 24 }}>
+      <Menubar
+        data-testid="drill-bar"
+        submenuMode="drill"
+        menus={[
+          {
+            label: '파일',
+            items: [
+              { label: '새로 만들기' },
+              {
+                label: '내보내기',
+                items: [
+                  { label: 'PDF로 내보내기', onClick: () => setPicked('PDF') },
+                  { label: '고급 형식', items: [{ label: 'SVG로 내보내기', onClick: () => setPicked('SVG') }] },
+                ],
+              },
+            ],
+          },
+        ]}
+      />
+      <p data-picked aria-live="polite" style={{ margin: 0 }}>{picked}</p>
+    </main>
+  );
+}
+
+export const DrillSubmenus = {
+  name: '상호작용 · 드릴인 서브메뉴',
+  parameters: storyDescription(
+    'Menubar 드롭다운에서 서브메뉴를 옆으로 펼치는 대신 같은 패널이 하위 목록으로 전환되는 drill 모드입니다. 폭이 고정되어 깊은 계층에서도 가로로 늘어나지 않고, 상단 뒤로 컨트롤·왼쪽 화살표로 상위에 복귀합니다.',
+  ),
+  render: () => <MenubarDrillDemo />,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const bar = canvasElement.querySelector('[data-testid="drill-bar"]');
+    const fileTrigger = bar?.querySelector('[role="menuitem"]');
+    if (!fileTrigger) throw new Error('drill Menubar 스토리에는 최상위 트리거가 필요합니다.');
+
+    await openSubmenu(fileTrigger, bar, '파일 메뉴가 열려야 합니다.');
+    await waitFor(() => {
+      if (doc.activeElement?.textContent?.trim() !== '새로 만들기') throw new Error('메뉴가 열리면 첫 항목에 포커스해야 합니다.');
+    });
+    await userEvent.keyboard('{ArrowDown}'); // 내보내기(서브 트리거)
+    const branch = doc.activeElement;
+    if (branch.getAttribute('aria-haspopup') !== 'menu') throw new Error('내보내기는 서브메뉴 트리거여야 합니다.');
+    const widthBefore = bar.querySelector('[role="menu"]')?.getBoundingClientRect().width;
+
+    await userEvent.keyboard('{ArrowRight}'); // drill in (같은 패널 전환)
+    await waitFor(() => {
+      if (doc.activeElement?.textContent?.trim() !== 'PDF로 내보내기') throw new Error('drill in 후 하위 첫 항목에 포커스해야 합니다.');
+    });
+    if (doc.querySelector('[data-menu-portal]')) throw new Error('drill 모드는 별도 서브 패널을 띄우지 않아야 합니다.');
+    if (!bar.querySelector('button[aria-label^="뒤로"]')) throw new Error('drill 하위 레벨에는 뒤로 컨트롤이 있어야 합니다.');
+    const widthAfter = bar.querySelector('[role="menu"]')?.getBoundingClientRect().width;
+    if (Math.abs(widthAfter - widthBefore) > 1) throw new Error('drill 전환은 패널 폭을 늘리지 않아야 합니다.');
+
+    await userEvent.keyboard('{ArrowLeft}'); // 상위 복귀
+    await waitFor(() => {
+      if (bar.querySelector('button[aria-label^="뒤로"]')) throw new Error('왼쪽 화살표로 상위 레벨에 복귀해야 합니다.');
+    });
+  },
+};
+
+export const NestedSubmenus = {
+  name: '상호작용 · 중첩 서브메뉴',
+  parameters: storyDescription(
+    '메뉴 항목에 하위 명령이 있을 때 서브메뉴로 계층을 표현하는 상황입니다. "내보내기"가 오른쪽 화살표·hover로 펼쳐지고 "고급 형식"이 다시 서브메뉴를 엽니다. 오른쪽 화살표로 진입·왼쪽 화살표로 복귀하고, 하위 명령을 고르면 전체 메뉴가 닫히는지 확인하세요.',
+  ),
+  render: () => <MenubarNestedDemo />,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const bar = canvasElement.querySelector('[data-testid="nested-bar"]');
+    const fileTrigger = bar?.querySelector('[role="menuitem"]');
+    if (!fileTrigger) throw new Error('Menubar 서브메뉴 스토리에는 최상위 트리거가 필요합니다.');
+
+    await openSubmenu(fileTrigger, bar, '파일 메뉴가 열려야 합니다.');
+    await waitFor(() => {
+      if (doc.activeElement?.textContent?.trim() !== '새로 만들기') throw new Error('메뉴가 열리면 첫 항목에 포커스해야 합니다.');
+    });
+    await userEvent.keyboard('{ArrowDown}'); // 새로 만들기 → 내보내기(서브 트리거)
+    const branchTrigger = doc.activeElement;
+    if (branchTrigger.getAttribute('aria-haspopup') !== 'menu' || branchTrigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('내보내기는 닫힌 서브메뉴 트리거(aria-haspopup="menu")여야 합니다.');
+    }
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitFor(() => {
+      if (branchTrigger.getAttribute('aria-expanded') !== 'true') throw new Error('오른쪽 화살표로 서브메뉴가 열려야 합니다.');
+      if (doc.activeElement?.textContent?.trim() !== 'PDF로 내보내기') throw new Error('서브 진입 시 첫 항목에 포커스해야 합니다.');
+    });
+    const submenu = [...doc.querySelectorAll('[data-menu-portal] [role="menu"]')].find((menu) => menu.getAttribute('aria-label') === '내보내기');
+    if (!submenu) throw new Error('서브메뉴는 트리거 라벨로 이름 붙은 role="menu"여야 합니다.');
+
+    await userEvent.keyboard('{ArrowLeft}');
+    await waitFor(() => {
+      if (branchTrigger.getAttribute('aria-expanded') !== 'false') throw new Error('왼쪽 화살표로 서브메뉴가 닫혀야 합니다.');
+      if (doc.activeElement !== branchTrigger) throw new Error('서브메뉴를 닫으면 부모 트리거로 포커스가 복귀해야 합니다.');
+    });
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitFor(() => {
+      if (doc.activeElement?.textContent?.trim() !== 'PDF로 내보내기') throw new Error('서브메뉴가 다시 열려야 합니다.');
+    });
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      if (canvasElement.querySelector('[data-picked]')?.textContent !== 'PDF') throw new Error('하위 명령 선택이 onClick을 호출해야 합니다.');
+      if (doc.querySelector('[role="menu"]')) throw new Error('하위 명령 선택은 최상위·서브 메뉴를 모두 닫아야 합니다.');
+    });
+  },
+};

@@ -716,6 +716,10 @@
       "ownerLayer": "robotics"
     },
     {
+      "path": "components/internal/useSubmenuBranch.jsx",
+      "ownerLayer": "core"
+    },
+    {
       "path": "components/overlay/anchored-overlay.js",
       "ownerLayer": "core"
     },

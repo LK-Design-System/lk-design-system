@@ -6,6 +6,8 @@
 
 - Use for command groups. Menu items support normal, radio, checkbox, disabled, danger, divider, description, and shortcut states.
 - WDS axes: `variant`, `menuActionArea`, and scroll via `maxHeight`.
+- **중첩 서브메뉴** — 드롭다운 항목에 `items`(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다(오른쪽 chevron·`aria-haspopup="menu"`). Arrow Right로 진입, Arrow Left로 복귀하고 하위 명령을 고르면 전체 메뉴가 닫힙니다. Menubar 고유의 34px compact 항목 시각은 유지합니다.
+- **submenuMode** — 서브메뉴 표현 방식(`flyout` 기본, `drill`). `flyout`은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 `<body>`로 portal, 겹침 없이 배치, hover 120ms), `drill`은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(`aria-label="뒤로 …"`)이 붙어 폭이 고정됩니다(꼬리물기 없음). DropdownMenu와 동일한 `useSubmenuBranch`(flyout) 및 drill 계약을 공유합니다.
 - 키보드 계약: top-level은 Left/Right와 Home/End로 이동하고 Enter/Space/Arrow Down은 첫 submenu
   항목, Arrow Up은 마지막 항목으로 엽니다. submenu는 Up/Down·Home/End·문자 탐색을 지원하며
   Left/Right는 이웃 메뉴로 전환합니다. Escape는 닫고 원래 top-level item으로 돌아갑니다.

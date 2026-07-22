@@ -13,6 +13,10 @@
 
 - Use for trigger-bound command menus. Use `Menubar` for a horizontal application menu.
 - WDS axes: `variant` (`normal`, `radio`, `checkbox`), `menuActionArea`, and scroll via `maxHeight`.
+- **중첩 서브메뉴** — item에 `items`(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다: 오른쪽 chevron과 `aria-haspopup="menu"`를 갖고 Arrow Right로 진입, Arrow Left로 복귀합니다. 하위 명령을 고르면 전체 메뉴가 닫히고 최상위 trigger로 focus가 돌아옵니다.
+- **submenuMode** — 서브메뉴 표현 방식(`flyout` 기본, `drill`).
+  - `flyout` — 서브 패널이 부모 옆으로 겹겹이 뜹니다(데스크톱 표준, 얕은 1~2단계에 적합). hover(120ms)·클릭·Arrow Right로 열리고 `role="menu"`(부모 라벨로 `aria-label`)이며, 부모 메뉴의 scroll/overflow에 잘리지 않도록 `<body>`로 portal되어 부모 패널 옆에 겹치지 않게 뜨고 오른쪽 공간이 부족하면 왼쪽으로 flip합니다. Escape는 최상단 서브메뉴부터 한 단계씩 닫습니다.
+  - `drill` — 같은 패널이 하위 목록으로 전환되고 상단에 뒤로 컨트롤(`aria-label="뒤로 …"`)이 붙습니다. 폭이 고정되어 깊은 계층에서도 가로로 늘어나지 않아(꼬리물기 없음) 좁은 패널·터치·깊은 중첩에 적합합니다. Arrow Left/뒤로 버튼으로 상위에 복귀하며, 전환마다 하위 첫 항목에 focus가 이동합니다.
 - trigger는 `aria-haspopup`·`aria-expanded`·`aria-controls`를 받습니다. Enter/Space/Arrow Down은
   첫 항목, Arrow Up은 마지막 항목으로 열고, 열린 메뉴는 Up/Down·Home/End·문자 탐색과 Escape
   focus 복원을 지원합니다. menu는 trigger id를 `aria-labelledby`로 참조합니다. Tab은 메뉴를 닫고

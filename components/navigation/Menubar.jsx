@@ -2,7 +2,19 @@ import React from "react";
 import { Button } from '../buttons/Button.jsx';
 import { Icon } from '../icon/Icon.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
+import { useSubmenuBranch } from '../internal/useSubmenuBranch.jsx';
 import { useFloatingPosition } from '../overlay/anchored-overlay.js';
+
+const MENUBAR_PANEL_STYLE = {
+  background: "var(--color-semantic-background-elevated-normal)",
+  border: "1px solid var(--color-semantic-line-solid-normal)",
+  borderRadius: "var(--radius-lg)",
+  boxShadow: "var(--shadow-md)",
+  padding: 6,
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+};
 
 const ACTION_CONTROL_SELECTOR = [
   'button:not(:disabled)',
@@ -92,12 +104,15 @@ function MenuItemMark({ variant, checked, disabled }) {
   );
 }
 
-function MenuItem({ item, variant, close }) {
+function MenuItem({ item, variant, close, trailing, haspopup, expanded, buttonRef, onTriggerClick, onTriggerKeyDown, activeOverride }) {
   const [hover, setHover] = React.useState(false);
   const checked = Boolean(item.checked);
   const disabled = Boolean(item.disabled || item.disable);
+  const isTrigger = Boolean(haspopup);
+  const active = (hover && !disabled) || Boolean(activeOverride);
   return (
     <button
+      ref={buttonRef}
       type="button"
       role={
         variant === "normal"
@@ -107,13 +122,16 @@ function MenuItem({ item, variant, close }) {
             : "menuitemcheckbox"
       }
       aria-checked={variant === "normal" ? undefined : checked}
+      aria-haspopup={haspopup}
+      aria-expanded={expanded}
       tabIndex={-1}
       disabled={disabled}
-      onClick={() => {
+      onClick={isTrigger ? onTriggerClick : () => {
         if (disabled) return;
         item.onClick?.();
         close();
       }}
+      onKeyDown={onTriggerKeyDown}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
@@ -125,8 +143,7 @@ function MenuItem({ item, variant, close }) {
         minHeight: item.description ? 44 : 34,
         padding: "7px 10px",
         border: "none",
-        background:
-          hover && !disabled ? "var(--color-semantic-fill-normal)" : "transparent",
+        background: active ? "var(--color-semantic-fill-normal)" : "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
         borderRadius: "var(--radius-md)",
         textAlign: "left",
@@ -172,7 +189,7 @@ function MenuItem({ item, variant, close }) {
           )}
         </span>
       </span>
-      {item.shortcut && (
+      {trailing || (item.shortcut ? (
         <span
           style={{
             fontSize: "var(--caption1-size)",
@@ -182,9 +199,124 @@ function MenuItem({ item, variant, close }) {
         >
           {item.shortcut}
         </span>
-      )}
+      ) : null)}
     </button>
   );
+}
+
+const MENUBAR_CHEVRON = (
+  <Icon name="chevron-right-small" size={16} aria-hidden="true" style={{ flexShrink: 0, color: "var(--color-semantic-label-alternative)" }} />
+);
+
+function MenubarDrillHeader({ title, onBack }) {
+  return (
+    <button
+      type="button"
+      aria-label={`뒤로 (${typeof title === "string" ? title : "상위 메뉴"})`}
+      onClick={onBack}
+      onKeyDown={(event) => { if (event.key === "ArrowLeft") { event.preventDefault(); onBack(); } }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        width: "100%",
+        padding: "7px 10px",
+        marginBottom: 4,
+        border: "none",
+        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+        background: "transparent",
+        cursor: "pointer",
+        textAlign: "left",
+        fontFamily: "var(--font-sans)",
+        fontSize: "var(--label2-size)",
+        fontWeight: "var(--fw-bold)",
+        color: "var(--color-semantic-label-neutral)",
+      }}
+    >
+      <Icon name="chevron-left-small" size={16} aria-hidden="true" />
+      <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{title}</span>
+    </button>
+  );
+}
+
+function MenubarBranch({ item, variant, close }) {
+  const disabled = Boolean(item.disabled || item.disable);
+  const sub = useSubmenuBranch({ disabled });
+  return (
+    <div style={{ position: "relative" }} onMouseEnter={sub.containerHandlers.onMouseEnter} onMouseLeave={sub.containerHandlers.onMouseLeave}>
+      <MenuItem
+        item={item}
+        variant={variant}
+        close={close}
+        buttonRef={sub.triggerRef}
+        haspopup="menu"
+        expanded={sub.open}
+        activeOverride={sub.open}
+        trailing={MENUBAR_CHEVRON}
+        onTriggerClick={sub.triggerHandlers.onClick}
+        onTriggerKeyDown={sub.triggerHandlers.onKeyDown}
+      />
+      {sub.renderPanel(
+        <div
+          ref={sub.menuRef}
+          role="menu"
+          aria-label={typeof item.label === "string" ? item.label : undefined}
+          onKeyDown={sub.menuKeyDown}
+          style={{ minHeight: 0 }}
+        >
+          {renderMenubarItems(item.items || [], { variant, close })}
+        </div>,
+        MENUBAR_PANEL_STYLE,
+      )}
+    </div>
+  );
+}
+
+function renderMenubarDrillItems(items, ctx) {
+  return items.map((item, index) => {
+    if (item.divider) {
+      return (
+        <div
+          key={index}
+          role="separator"
+          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+        />
+      );
+    }
+    if (item.items && item.items.length) {
+      return (
+        <MenuItem
+          key={index}
+          item={item}
+          variant={item.variant || ctx.variant}
+          close={ctx.close}
+          haspopup="menu"
+          trailing={MENUBAR_CHEVRON}
+          onTriggerClick={() => ctx.drillIn(item)}
+          onTriggerKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); ctx.drillIn(item); } }}
+        />
+      );
+    }
+    return <MenuItem key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
+  });
+}
+
+function renderMenubarItems(items, ctx) {
+  return items.map((item, index) => {
+    if (item.divider) {
+      return (
+        <div
+          key={index}
+          role="separator"
+          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+        />
+      );
+    }
+    if (item.items && item.items.length) {
+      return <MenubarBranch key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
+    }
+    return <MenuItem key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
+  });
 }
 
 /**
@@ -194,6 +326,7 @@ function MenuItem({ item, variant, close }) {
 export function Menubar({
   menus = [],
   variant = "normal",
+  submenuMode = "flyout",
   menuActionArea = false,
   onApply,
   onCancel,
@@ -204,19 +337,25 @@ export function Menubar({
   style,
   ...rest
 }) {
+  const drill = submenuMode === "drill";
   const [open, setOpen] = React.useState(-1);
   const [activeTop, setActiveTop] = React.useState(0);
+  const [drillPath, setDrillPath] = React.useState([]);
   const ref = React.useRef(null);
   const triggerRefs = React.useRef([]);
   const floatingAnchorRef = React.useRef(null);
   const panelRef = React.useRef(null);
   const actionAreaRef = React.useRef(null);
   const menuIdBase = React.useId();
+  React.useEffect(() => { setDrillPath([]); }, [open]);
+  const drillLevel = drillPath.length ? drillPath[drillPath.length - 1] : null;
+  const drillIn = (item) => setDrillPath((path) => [...path, item]);
+  const drillBack = () => setDrillPath((path) => path.slice(0, -1));
   const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
     open: open >= 0,
     onClose: () => setOpen(-1),
     getTrigger: () => triggerRefs.current[open],
-    menuKey: open,
+    menuKey: drill ? open * 1000 + drillPath.length : open,
   });
   const position = useFloatingPosition({
     open: open >= 0,
@@ -228,7 +367,9 @@ export function Menubar({
   React.useEffect(() => {
     if (open < 0) return undefined;
     const onDoc = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(-1);
+      if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.("[data-menu-portal]")) {
+        setOpen(-1);
+      }
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
@@ -271,6 +412,13 @@ export function Menubar({
     }
   };
   const handleSubmenuKeyDown = (event) => {
+    // A submenu trigger (flyout open, or drill in) has already consumed the key.
+    if (event.defaultPrevented) return;
+    if (drill && event.key === 'ArrowLeft' && drillPath.length > 0) {
+      event.preventDefault();
+      drillBack();
+      return;
+    }
     if (event.key === 'Tab' && !event.shiftKey) {
       const actionControl = actionAreaRef.current?.querySelector('button, [href], [tabindex]:not([tabindex="-1"])');
       if (actionControl) {
@@ -413,25 +561,20 @@ export function Menubar({
                 onKeyDown={handleSubmenuKeyDown}
                 style={{ minHeight: 0, overflowY: panelMaxHeight != null ? 'auto' : undefined }}
               >
-                {(menu.items || []).map((item, itemIndex) =>
-                  item.divider ? (
-                    <div
-                      key={itemIndex}
-                      role="separator"
-                      style={{
-                        height: 1,
-                        background: "var(--color-semantic-line-solid-normal)",
-                        margin: "6px 4px",
-                      }}
-                    />
-                  ) : (
-                    <MenuItem
-                      key={itemIndex}
-                      item={item}
-                      variant={item.variant || menu.variant || variant}
-                      close={() => closeMenu({ restoreFocus: true })}
-                    />
-                  ),
+                {drill ? (
+                  <>
+                    {drillLevel && <MenubarDrillHeader title={drillLevel.label} onBack={drillBack} />}
+                    {renderMenubarDrillItems((drillLevel ? drillLevel.items : menu.items) || [], {
+                      variant: menu.variant || variant,
+                      close: () => closeMenu({ restoreFocus: true }),
+                      drillIn,
+                    })}
+                  </>
+                ) : (
+                  renderMenubarItems(menu.items || [], {
+                    variant: menu.variant || variant,
+                    close: () => closeMenu({ restoreFocus: true }),
+                  })
                 )}
               </div>
               {showActionArea && (
