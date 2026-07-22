@@ -58,8 +58,14 @@ async function getStorybookCounts() {
 }
 
 async function getCounts() {
-  const componentJsx = await collect('components', (rel) => rel.endsWith('.jsx'));
-  const componentDts = await collect('components', (rel) => rel.endsWith('.d.ts'));
+  const classification = JSON.parse(await read('docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'));
+  const internalModulePaths = new Set((classification.internalModules || []).map((row) => row.path));
+  const componentJsx = (await collect('components', (rel) => rel.endsWith('.jsx'))).filter(
+    (rel) => !internalModulePaths.has(rel),
+  );
+  const componentDts = (await collect('components', (rel) => rel.endsWith('.d.ts'))).filter(
+    (rel) => !internalModulePaths.has(rel.replace(/\.d\.ts$/, '.jsx')),
+  );
   const groups = await readdir(path.join(root, 'components'), { withFileTypes: true });
   const srcIndex = await read('src/index.js');
   const entryExports = srcIndex.split('\n').filter((line) => line.startsWith('export {'));

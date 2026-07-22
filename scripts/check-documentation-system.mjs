@@ -76,6 +76,18 @@ for (const file of markdownFiles) {
   }
 }
 
+const design = await read('DESIGN.md');
+const designComponentsSection = design.split(/^## Components$/m)[1]?.split(/^## /m)[0] ?? '';
+assert(designComponentsSection.length > 0, 'DESIGN.md must contain a "## Components" section.');
+const publicClassification = JSON.parse(await read('docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'));
+const classifiedExportNames = new Set((publicClassification.groups || []).flatMap((group) => group.exports || []));
+for (const match of designComponentsSection.matchAll(/`([A-Z][A-Za-z0-9]+)`/g)) {
+  assert(
+    classifiedExportNames.has(match[1]),
+    `DESIGN.md Components section references a component that is not a classified public export: ${match[1]}`,
+  );
+}
+
 const audit = JSON.parse(await read('docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json'));
 const ia = await read('docs/STORYBOOK_INFORMATION_ARCHITECTURE.md');
 const { summary } = audit;
