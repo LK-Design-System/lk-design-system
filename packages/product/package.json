@@ -1,6 +1,6 @@
 {
   "name": "@lk-robotics/lds-product",
-  "version": "0.1.0-rc.0",
+  "version": "0.1.0-rc.1",
   "description": "Reusable LK product patterns built on LDS Core.",
   "type": "module",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
     "tokens/*.css"
   ],
   "dependencies": {
-    "@lk-robotics/lds-core": "0.1.0-rc.0"
+    "@lk-robotics/lds-core": "0.1.0-rc.1"
   },
   "peerDependencies": {
     "react": ">=18 <20",

@@ -1,6 +1,6 @@
 {
   "name": "@lk-robotics/design-system-core",
-  "version": "0.1.0-rc.0",
+  "version": "0.1.0-rc.1",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -16,10 +16,10 @@
     "assets"
   ],
   "dependencies": {
-    "@lk-robotics/lds-core": "0.1.0-rc.0",
-    "@lk-robotics/lds-theme": "0.1.0-rc.0",
-    "@lk-robotics/lds-product": "0.1.0-rc.0",
-    "@lk-robotics/lds-robotics-ui": "0.1.0-rc.1"
+    "@lk-robotics/lds-core": "0.1.0-rc.1",
+    "@lk-robotics/lds-theme": "0.1.0-rc.1",
+    "@lk-robotics/lds-product": "0.1.0-rc.1",
+    "@lk-robotics/lds-robotics-ui": "0.1.0-rc.2"
   },
   "peerDependencies": {
     "react": ">=18 <20",

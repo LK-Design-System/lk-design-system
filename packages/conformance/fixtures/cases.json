@@ -50,14 +50,14 @@
     "name": "wrong-dependency-version",
     "expectedCodes": ["DEPENDENCY_VERSION"],
     "mutations": [
-      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.0\"", "with": "\"@lk-robotics/lds-core\": \"0.1.0-rc.9\"" }
+      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.1\"", "with": "\"@lk-robotics/lds-core\": \"0.1.0-rc.9\"" }
     ]
   },
   {
     "name": "local-link-dependency",
     "expectedCodes": ["LOCAL_DEPENDENCY"],
     "mutations": [
-      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.0\"", "with": "\"@lk-robotics/lds-core\": \"file:../lds\"" }
+      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.1\"", "with": "\"@lk-robotics/lds-core\": \"file:../lds\"" }
     ]
   },
   {

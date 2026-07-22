@@ -3,14 +3,14 @@ importers:
   apps/docs:
     dependencies:
       '@lk-robotics/lds-core':
-        specifier: 0.1.0-rc.0
-        version: 0.1.0-rc.0
-      '@lk-robotics/lds-theme':
-        specifier: 0.1.0-rc.0
-        version: 0.1.0-rc.0
-      '@lk-robotics/lds-product':
-        specifier: 0.1.0-rc.0
-        version: 0.1.0-rc.0
-      '@lk-robotics/lds-robotics-ui':
         specifier: 0.1.0-rc.1
         version: 0.1.0-rc.1
+      '@lk-robotics/lds-theme':
+        specifier: 0.1.0-rc.1
+        version: 0.1.0-rc.1
+      '@lk-robotics/lds-product':
+        specifier: 0.1.0-rc.1
+        version: 0.1.0-rc.1
+      '@lk-robotics/lds-robotics-ui':
+        specifier: 0.1.0-rc.2
+        version: 0.1.0-rc.2
