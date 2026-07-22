@@ -13,6 +13,11 @@
 
 - Use for trigger-bound command menus. Use `Menubar` for a horizontal application menu.
 - WDS axes: `variant` (`normal`, `radio`, `checkbox`), `menuActionArea`, and scroll via `maxHeight`.
+- **선택 상태 표시** — radio·checkbox의 checked는 glyph와 medium weight로만 표시하며, 배경
+  하이라이트는 hover/focus·열린 서브메뉴 trigger 전용입니다(여러 항목이 checked여도 포인터·focus
+  위치가 구분됩니다). `variant="normal"`의 `active`(aria-current) 항목만 glyph가 없으므로 hover보다
+  옅은 `--component-menu-item-selected-bg`(fill-alternative) 상시 배경을 가집니다. Menubar와 같은
+  계약입니다.
 - **중첩 서브메뉴** — item에 `items`(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다: 오른쪽 chevron과 `aria-haspopup="menu"`를 갖고 Arrow Right로 진입, Arrow Left로 복귀합니다. 하위 명령을 고르면 전체 메뉴가 닫히고 최상위 trigger로 focus가 돌아옵니다.
 - **submenuMode** — 서브메뉴 표현 방식(`flyout` 기본, `drill`).
   - `flyout` — 서브 패널이 부모 옆으로 겹겹이 뜹니다(데스크톱 표준, 얕은 1~2단계에 적합). hover(120ms)·클릭·Arrow Right로 열리고 `role="menu"`(부모 라벨로 `aria-label`)이며, 부모 메뉴의 scroll/overflow에 잘리지 않도록 `<body>`로 portal되어 부모 패널 옆에 겹치지 않게 뜨고 오른쪽 공간이 부족하면 왼쪽으로 flip합니다. Escape는 최상단 서브메뉴부터 한 단계씩 닫습니다.

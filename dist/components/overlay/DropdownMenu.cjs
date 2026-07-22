@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkNQUZGJP2cjs = require('../../chunk-NQUZGJP2.cjs');
+var _chunkEYUXOG7Xcjs = require('../../chunk-EYUXOG7X.cjs');
 require('../../chunk-HXVVS4ZW.cjs');
 require('../../chunk-UMSSUFMT.cjs');
 require('../../chunk-BTI7KWGX.cjs');
@@ -11,5 +11,5 @@ require('../../chunk-VGM7HVYY.cjs');
 require('../../chunk-NKOFS67F.cjs');
 
 
-exports.DropdownMenu = _chunkNQUZGJP2cjs.DropdownMenu;
+exports.DropdownMenu = _chunkEYUXOG7Xcjs.DropdownMenu;
 //# sourceMappingURL=DropdownMenu.cjs.map

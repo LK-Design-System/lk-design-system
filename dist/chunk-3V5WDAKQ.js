@@ -3,7 +3,11 @@
 // components/cards/ProductCard.jsx
 import React from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-var PC_FADE = "linear-gradient(180deg, var(--color-semantic-static-black) 46%, transparent 96%)";
+var PC_FADE = "linear-gradient(180deg, var(--color-semantic-static-black) 58%, transparent 97%)";
+var PC_GRADE = [
+  "linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--color-semantic-brand-stage-to) 5%, transparent) 50%, color-mix(in srgb, var(--color-semantic-brand-stage-to) 28%, transparent) 100%)",
+  "linear-gradient(180deg, transparent 34%, color-mix(in srgb, var(--scrim-dark) 55%, transparent) 88%)"
+].join(", ");
 function ProductCard({
   id,
   category,
@@ -65,21 +69,22 @@ function ProductCard({
                     objectFit: "cover",
                     objectPosition: imagePosition,
                     display: "block",
+                    filter: "brightness(1.06)",
                     transform: hover ? "scale(1.05)" : "scale(1)",
                     transition: "transform 600ms var(--ease-out)"
                   }
                 }
               ),
-              /* @__PURE__ */ jsx("div", { style: { position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 34%, var(--scrim-dark) 88%)" } })
+              /* @__PURE__ */ jsx("div", { style: { position: "absolute", inset: 0, background: PC_GRADE } })
             ]
           }
         ),
         /* @__PURE__ */ jsxs("div", { style: { position: "relative", padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9 }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
-            category && /* @__PURE__ */ jsx("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-primary-normal)" }, children: category }),
-            /* @__PURE__ */ jsx("h3", { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: 800, letterSpacing: "var(--ls-h5)", color: "var(--color-semantic-inverse-label)", whiteSpace: "nowrap" }, children: id })
+            category && /* @__PURE__ */ jsx("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-inverse-primary)" }, children: category }),
+            /* @__PURE__ */ jsx("h3", { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: "var(--fw-extra)", letterSpacing: "var(--ls-h5)", color: "var(--color-semantic-inverse-label)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: id })
           ] }),
-          description && /* @__PURE__ */ jsx("p", { style: { margin: 0, fontSize: "var(--label1-size)", lineHeight: 1.62, color: "var(--color-semantic-inverse-label)", wordBreak: "keep-all" }, children: description }),
+          description && /* @__PURE__ */ jsx("p", { style: { margin: 0, fontSize: "var(--label1-size)", lineHeight: "var(--label1-reading-line)", color: "var(--color-semantic-inverse-label)", wordBreak: "keep-all", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2, overflow: "hidden" }, children: description }),
           cta && /* @__PURE__ */ jsx("span", { style: {
             alignSelf: "flex-end",
             marginTop: 4,
@@ -101,4 +106,4 @@ function ProductCard({
 export {
   ProductCard
 };
-//# sourceMappingURL=chunk-NJMXHGWE.js.map
+//# sourceMappingURL=chunk-3V5WDAKQ.js.map

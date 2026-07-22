@@ -99,7 +99,14 @@ function normalizeCellPadding(cellPadding) {
   return "12px";
 }
 
-function menuItemVisualStyle({ active, hovered, disabled, danger, hasDescription, cell, vertical }) {
+// State model (shared contract with Menubar): the hover background is reserved
+// for hover/focus and an open submenu trigger (`active`); checked radio/checkbox
+// items read from their glyph + medium weight alone so the pointer/focus row
+// stays distinguishable when several items are checked. Only a normal-variant
+// current item (`selected`, aria-current) keeps a persistent fill — it has no
+// glyph to carry the state — and it uses the weaker selected token so hover
+// still reads above it.
+function menuItemVisualStyle({ active, selected, checked, hovered, disabled, danger, hasDescription, cell, vertical }) {
   const denseCell = cell === "8px";
   const denseVertical = vertical === "8px";
   return {
@@ -110,13 +117,17 @@ function menuItemVisualStyle({ active, hovered, disabled, danger, hasDescription
     gap: 10,
     padding: `${vertical} ${denseCell ? 8 : 10}px`,
     border: "none",
-    background: active || (hovered && !disabled) ? "var(--component-menu-item-hover-bg)" : "transparent",
+    background: active || (hovered && !disabled)
+      ? "var(--component-menu-item-hover-bg)"
+      : selected
+        ? "var(--component-menu-item-selected-bg)"
+        : "transparent",
     cursor: disabled ? "not-allowed" : "pointer",
     borderRadius: "var(--radius-md)",
     textAlign: "left",
     fontFamily: "var(--font-sans)",
     fontSize: "var(--body1-size)",
-    fontWeight: active ? "var(--fw-medium)" : "var(--fw-regular)",
+    fontWeight: active || selected || checked ? "var(--fw-medium)" : "var(--fw-regular)",
     letterSpacing: 0,
     color: danger
       ? "var(--color-semantic-status-negative-text)"
@@ -183,7 +194,7 @@ function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect,
   const vertical = normalizeCellPadding(verticalPadding ?? cellPadding);
   const disabled = Boolean(item.disabled || item.disable);
   const checked = Boolean(item.checked || item.active);
-  const active = checked || Boolean(item.active);
+  const current = variant === "normal" && checked;
   const description = item.description ?? item.captionContent;
   return (
     <button
@@ -196,7 +207,7 @@ function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect,
             : "menuitemcheckbox"
       }
       aria-checked={variant === "normal" ? undefined : checked}
-      aria-current={variant === "normal" && active ? true : undefined}
+      aria-current={current ? true : undefined}
       aria-haspopup={haspopup}
       tabIndex={-1}
       disabled={disabled}
@@ -208,7 +219,7 @@ function MenuItemButton({ item, variant, cellPadding, verticalPadding, onSelect,
       onKeyDown={onTriggerKeyDown}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={menuItemVisualStyle({ active, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
+      style={menuItemVisualStyle({ selected: current, checked, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), cell, vertical })}
     >
       <MenuItemContent item={item} variant={variant} checked={checked} disabled={disabled} description={description} trailing={trailing} />
     </button>

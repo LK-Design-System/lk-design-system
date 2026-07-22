@@ -30,14 +30,17 @@ export const ProductCards = {
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)', maxWidth: 760 }}>
       <ProductCard
-        id="Core Kit"
-        category="Component Bundle"
-        description="토큰, 컴포넌트, 문서 예제를 하나의 패키지로 제공합니다."
+        id="LKR-T1"
+        category="Inspection AMR"
+        image="./assets/products/lkr-t1.webp"
+        description="설비 구역을 자율 순찰하며 계기와 밸브 상태를 점검하는 2륜 AMR입니다."
       />
       <ProductCard
-        id="Docs Kit"
-        category="Documentation"
-        description="가이드와 예제를 함께 제공하는 문서 카드입니다."
+        id="LKR-VisionX"
+        category="Vision Module"
+        image="./assets/products/lkr-visionx.webp"
+        imagePosition="50% 38%"
+        description="주야간 감시용 PTZ 비전 헤드를 갖춘 인식 확장 모듈입니다."
       />
     </main>
   ),

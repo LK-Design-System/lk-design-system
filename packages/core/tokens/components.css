@@ -170,6 +170,10 @@
   --component-menu-padding-y: 8px;
   --component-menu-padding-x: 20px;
   --component-menu-item-hover-bg: var(--color-semantic-fill-normal);
+  /* Persistent selection fill for aria-current menu items (WDS List Cell
+     Selected axis). Weaker than hover-bg so the pointer/focus row reads above
+     selected rows; checked radio/checkbox items use their glyph instead. */
+  --component-menu-item-selected-bg: var(--color-semantic-fill-alternative);
 
   /* ---- Dialog ------------------------------------------------------------ */
   --component-dialog-radius: var(--radius-3xl);

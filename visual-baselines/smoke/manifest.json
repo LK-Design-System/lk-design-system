@@ -74,8 +74,8 @@
         "height": 760
       },
       "reducedMotion": "no-preference",
-      "bytes": 61367,
-      "sha256": "047d3097caf7399654bb7c01fd95139e0beed03d7cce0336de974db0c824d4cf"
+      "bytes": 359223,
+      "sha256": "38a77f7b6a47697f22478d10f0635198f1de29c25ad82d5b9f16f642fe87d8b9"
     },
     {
       "name": "react-topbar",
@@ -220,8 +220,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 68659,
-      "sha256": "392a68c7a1bc1d6bbccd45510cac7e93a3824eb4298e62dc02efe97cd9d6c90f"
+      "bytes": 68167,
+      "sha256": "9636d750f4fe82414a18765a1c9f6ff9de35435c1a500dd210539bb08df74f89"
     },
     {
       "name": "wds-menu-patterns-dark",
@@ -234,8 +234,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 73811,
-      "sha256": "21a9f5c625324602b61ba52a18c1e14b5014987a91938472343a77481b35f239"
+      "bytes": 73148,
+      "sha256": "900341ea1fd04e2e6b0929a653b5ad8367d740e46c9896a1c2a957ff1f8b5124"
     },
     {
       "name": "wds-tooltip-patterns",
@@ -392,8 +392,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 118632,
-      "sha256": "923f06d75134ef25a633bbea2bf4eb885ce18a43cd8a1c0ee7fd779b24d8ba47"
+      "bytes": 118596,
+      "sha256": "d34315fec87cd0acd25433ece9411e70f02f20af6922bd6b02b7d81165eaa154"
     },
     {
       "name": "product-dashboard-shell-dark",
@@ -404,8 +404,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 76063,
-      "sha256": "11ced8e329886eef11d3c5082c474e5ebbe51a2b43743ea441ab2ae5284d2fee"
+      "bytes": 76031,
+      "sha256": "afb3ae72c72bf054b1c2e831241add2ac8da50706115070e3f590ccf6322d94c"
     },
     {
       "name": "product-navigation-dashboard-fixed",

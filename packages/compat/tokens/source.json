@@ -3157,6 +3157,18 @@
         }
       }
     },
+    "menu": {
+      "component": "components/overlay/DropdownMenu.jsx",
+      "tokens": {
+        "itemSelectedBg": {
+          "$type": "color",
+          "$value": "var(--component-menu-item-selected-bg)",
+          "css": "--component-menu-item-selected-bg",
+          "ref": "semantic.colorRoles.fill-alternative",
+          "source": "List Cell/List Cell"
+        }
+      }
+    },
     "mobileSystemBars": {
       "component": "components/layout/MobileSystemBars.jsx",
       "tokens": {

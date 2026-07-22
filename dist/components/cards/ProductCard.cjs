@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkAVHMPRZ7cjs = require('../../chunk-AVHMPRZ7.cjs');
+var _chunk6DPJVHZFcjs = require('../../chunk-6DPJVHZF.cjs');
 
 
-exports.ProductCard = _chunkAVHMPRZ7cjs.ProductCard;
+exports.ProductCard = _chunk6DPJVHZFcjs.ProductCard;
 //# sourceMappingURL=ProductCard.cjs.map

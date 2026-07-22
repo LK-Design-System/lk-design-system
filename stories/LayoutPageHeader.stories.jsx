@@ -7,6 +7,15 @@ import {
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
+function Section({ title, children }) {
+  return (
+    <section style={{ display: 'grid', gap: 12 }}>
+      <h2 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-normal)' }}>{title}</h2>
+      {children}
+    </section>
+  );
+}
+
 const meta = {
   title: 'LDS Product/Layout/Page Header',
   parameters: {
@@ -34,40 +43,47 @@ export const PageHeaderPattern = {
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1040 }}>
-      <PageHeader
-        headingLevel={2}
-        breadcrumb={<Breadcrumb items={[{ label: '관리' }, { label: '사용자' }]} />}
-        title="사용자 관리"
-        status={<StatusBadge tone="signal">검토 중</StatusBadge>}
-        description="계정 상태, 권한, 최근 변경 이력을 확인하는 앱 화면의 상단 계약입니다."
-        meta={<><span>마지막 업데이트 10:42 KST</span><span>관리자</span></>}
-        actions={<><Button variant="ghost">변경 이력</Button><Button variant="signal">사용자 추가</Button></>}
-      />
-      <div style={{ maxWidth: 360, border: '1px dashed var(--color-semantic-line-normal-alternative)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
+      <Section title="관리 화면 헤더">
         <PageHeader
-          headingLevel={2}
-          size="sm"
-          eyebrow="필터 설정"
-          title="목록 조건"
-          description="작은 화면이나 도구 패널에서는 compact 크기로 제목과 설명만 유지합니다."
-          actions={<Button variant="secondary" size="sm">저장</Button>}
+          headingLevel={3}
+          breadcrumb={<Breadcrumb items={[{ label: '관리' }, { label: '사용자' }]} />}
+          title="사용자 관리"
+          status={<StatusBadge tone="signal">검토 중</StatusBadge>}
+          description="계정 상태, 권한, 최근 변경 이력을 확인하는 앱 화면의 상단 계약입니다."
+          meta={<><span>마지막 업데이트 10:42 KST</span><span aria-hidden="true">·</span><span>관리자</span></>}
+          actions={<><Button variant="ghost">변경 이력</Button><Button variant="signal">사용자 추가</Button></>}
         />
-      </div>
-      <PageHeader
-        headingLevel={2}
-        size="sm"
-        eyebrow="시설 모니터링"
-        title="층별 현황"
-        description="화면 범위를 바꾸는 전환 컨트롤은 가로형 SegmentedControl을 헤더 액세서리로 배치합니다. 세로형 FloorSelector는 맵·뷰어 옆 오버레이 전용입니다."
-        actions={<SegmentedControl size="sm" options={['B1', '1F', '2F', '3F']} defaultValue="2F" />}
-      />
+      </Section>
+      <Section title="Compact 패널 헤더">
+        <div style={{ maxWidth: 360, border: '1px dashed var(--color-semantic-line-normal-alternative)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-4)' }}>
+          <PageHeader
+            headingLevel={3}
+            size="sm"
+            eyebrow="필터 설정"
+            title="목록 조건"
+            description="작은 화면이나 도구 패널에서는 compact 크기로 제목과 설명만 유지합니다."
+            actions={<Button variant="secondary" size="sm">저장</Button>}
+          />
+        </div>
+      </Section>
+      <Section title="범위 전환 액세서리">
+        <PageHeader
+          headingLevel={3}
+          size="sm"
+          eyebrow="시설 모니터링"
+          title="층별 현황"
+          description="화면 범위를 바꾸는 전환 컨트롤은 가로형 SegmentedControl을 헤더 액세서리로 배치합니다. 세로형 FloorSelector는 맵·뷰어 옆 오버레이 전용입니다."
+          actions={<SegmentedControl size="sm" options={['B1', '1F', '2F', '3F']} defaultValue="2F" />}
+        />
+      </Section>
     </main>
   ),
   play: async ({ canvasElement }) => {
     const guideHeading = canvasElement.querySelector('[data-story-guide] > h1');
-    const specimenHeadings = canvasElement.querySelectorAll('main h2');
-    if (!guideHeading || specimenHeadings.length !== 3 || canvasElement.querySelector('main h1')) {
-      throw new Error('The overview guide and repeated PageHeader specimens must form one h1 followed by sibling h2 headings.');
+    const sectionHeadings = canvasElement.querySelectorAll('main section > h2');
+    const specimenHeadings = canvasElement.querySelectorAll('main h3');
+    if (!guideHeading || sectionHeadings.length !== 3 || specimenHeadings.length !== 3 || canvasElement.querySelector('main h1')) {
+      throw new Error('The overview guide and labeled PageHeader specimens must form one h1, three section h2 labels, and three specimen h3 headings.');
     }
   },
 };
