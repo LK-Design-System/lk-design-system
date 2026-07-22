@@ -6,6 +6,11 @@ on:
       - main
   pull_request:
   workflow_dispatch:
+    inputs:
+      export_dist:
+        description: Build on Windows and upload the canonical generated artifacts.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -27,6 +32,41 @@ jobs:
 
       - name: Verify portable Robotics and LDS3D style diagnostics
         run: node packages/conformance/src/cli.mjs verify-fixtures
+
+  export-canonical-dist:
+    name: Export canonical Windows generated artifacts
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.export_dist == true }}
+    runs-on: windows-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build generated artifacts on the canonical platform
+        run: npm run build
+
+      - name: Upload canonical generated artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: canonical-windows-generated
+          path: |
+            dist
+            src
+            packages/core/src
+            packages/theme/src
+            packages/product/src
+            packages/compat/src
+          if-no-files-found: error
 
   design-system:
     name: Design system checks
