@@ -774,7 +774,7 @@ assert(
 const publicComponentModulePaths = new Set(
   publicExportRows.map((row) => row.source).filter((source) => source.startsWith('components/')),
 );
-const componentJsModules = await collect('components', (rel) => rel.endsWith('.js'));
+const componentJsModules = await collect('components', (rel) => rel.endsWith('.js') || rel.endsWith('.jsx'));
 const expectedInternalComponentModules = componentJsModules.filter(
   (modulePath) => !publicComponentModulePaths.has(modulePath),
 );
@@ -798,7 +798,7 @@ if (!Array.isArray(publicExportClassification.internalModules)) {
   internalModuleFailures.push('internalModules must be an array.');
 }
 for (const module of internalModules) {
-  if (!module || typeof module.path !== 'string' || !module.path.startsWith('components/') || !module.path.endsWith('.js')) {
+  if (!module || typeof module.path !== 'string' || !module.path.startsWith('components/') || !/\.jsx?$/.test(module.path)) {
     internalModuleFailures.push(`Invalid internal component module path: ${JSON.stringify(module?.path)}`);
   }
   if (!allowedOwnerLayers.has(module?.ownerLayer)) {
