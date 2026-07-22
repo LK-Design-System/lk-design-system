@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "2edd90f261d9e417db5bbad6412f02e6f02dfb4361b6a6f3a123db25e967ba23",
+    "storybookIndexSha256": "275d223e61107c37b40c9708c385384244fd58f13929e14bf309fb4b1b7542a9",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,13 +59,13 @@
   },
   "summary": {
     "pages": 149,
-    "stories": 423,
-    "publicStories": 321,
+    "stories": 429,
+    "publicStories": 327,
     "hiddenStories": 102,
     "componentDescriptions": 145,
     "pagesWithVisibleCanvasIntroduction": 149,
     "pagesWithDecisionGuidance": 144,
-    "describedPublicStories": 321,
+    "describedPublicStories": 327,
     "reviewedPages": 148,
     "reviewedStories": 419,
     "staleReviewedPages": 7,
@@ -74,8 +74,8 @@
       "foundation-reference": 10,
       "overview": 142,
       "usage": 20,
-      "variants-states": 59,
-      "interaction": 37,
+      "variants-states": 61,
+      "interaction": 41,
       "responsive": 37,
       "scenario": 16,
       "visual-parity": 73,
@@ -90,8 +90,8 @@
     "layers": {
       "Core": {
         "pages": 52,
-        "stories": 148,
-        "public": 83,
+        "stories": 150,
+        "public": 85,
         "hidden": 65,
         "guideReadyPages": 52
       },
@@ -104,8 +104,8 @@
       },
       "Product": {
         "pages": 87,
-        "stories": 258,
-        "public": 224,
+        "stories": 262,
+        "public": 228,
         "hidden": 34,
         "guideReadyPages": 87
       },
@@ -2835,13 +2835,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 2,
+        "public": 4,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
-        "describedPublicStories": 2,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -2878,6 +2878,56 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-overlay-dropdown-menu--drill-submenus",
+          "name": "상호작용 · 드릴인 서브메뉴",
+          "exportName": "DrillSubmenus",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DropdownMenu"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon"
+          ]
+        },
+        {
+          "id": "lds-core-components-overlay-dropdown-menu--nested-submenus",
+          "name": "상호작용 · 중첩 서브메뉴",
+          "exportName": "NestedSubmenus",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DropdownMenu"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon"
+          ]
         },
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-keyboard-contract",
@@ -11141,13 +11191,13 @@
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 4,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-navigation-menubar--menubar-patterns",
-        "describedPublicStories": 2,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -11181,6 +11231,50 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-navigation-menubar--drill-submenus",
+          "name": "상호작용 · 드릴인 서브메뉴",
+          "exportName": "DrillSubmenus",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Menubar"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-navigation-menubar--nested-submenus",
+          "name": "상호작용 · 중첩 서브메뉴",
+          "exportName": "NestedSubmenus",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Menubar"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-navigation-menubar--menubar-keyboard-contract",
@@ -12776,13 +12870,13 @@
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-calendar--calendar-pattern",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12816,6 +12910,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-calendar--blocked-dates",
+          "name": "변형·상태 · 예약 불가일",
+          "exportName": "BlockedDates",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Calendar"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-selection-and-input-calendar--calendar-card",
@@ -12956,13 +13072,13 @@
         "FormField"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-date-picker--date-input",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12998,6 +13114,30 @@
             "FormField"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-date-picker--blocked-dates",
+          "name": "변형·상태 · 예약 불가일",
+          "exportName": "BlockedDates",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DatePicker"
+          ],
+          "supportingComponents": [
+            "FormField"
+          ]
         },
         {
           "id": "lds-product-selection-and-input-date-picker--date-picker-card",

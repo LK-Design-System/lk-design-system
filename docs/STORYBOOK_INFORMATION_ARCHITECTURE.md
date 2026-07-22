@@ -16,20 +16,20 @@
 
 ## 현재 기준선
 
-2026-07-22 현재 소스에서 재생성한 정적 빌드 기준으로 148개 페이지와 419개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-07-22 현재 소스에서 재생성한 정적 빌드 기준으로 149개 페이지와 429개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 317개
+- 공개 스토리: 327개
 - 숨김 스토리: 102개
 - 숨김 visual parity: 73개
 - 숨김 internal contract: 29개
-- 검토 완료 페이지 148/148개, 스토리 419/419개
+- 검토 완료 페이지 148/149개, 스토리 419/429개. 신규 `LDS Product/Navigation/Dashboard Navigation` 페이지(스토리 10개)는 검토 대기 상태다.
 
-2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 148개 페이지와 419개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
+2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 149개 페이지와 429개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 
 - 컴포넌트 설명이 있는 페이지: 144개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 148개
 - 사용/비사용 판단 기준이 확인되는 페이지: 143개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 317개
+- 목적 설명이 있는 공개 스토리: 327개
 - Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
 - Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 83/83개
 - Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 220/220개
