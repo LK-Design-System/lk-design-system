@@ -22,7 +22,7 @@ jobs:
     if: vars.ENABLE_GITHUB_PAGES == 'true' && github.ref == 'refs/heads/main'
     runs-on: windows-latest
     env:
-      NODE_AUTH_TOKEN: ${{ github.token }}
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
 
     steps:
       - name: Checkout

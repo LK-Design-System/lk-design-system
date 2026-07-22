@@ -35,7 +35,7 @@ jobs:
     # reproducible. Matches the Storybook Pages deploy workflow.
     runs-on: windows-latest
     env:
-      NODE_AUTH_TOKEN: ${{ github.token }}
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
 
     steps:
       - name: Checkout
@@ -105,7 +105,7 @@ jobs:
     needs: design-system
     runs-on: ubuntu-latest
     env:
-      NODE_AUTH_TOKEN: ${{ github.token }}
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
 
     steps:
       - name: Checkout
