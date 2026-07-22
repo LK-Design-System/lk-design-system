@@ -41,7 +41,7 @@ function ReadyMetrics() {
 export const ResponsiveCardFlow = {
   name: '개요',
   parameters: storyDescription(
-    '실제 MetricCard를 사용해 normal과 320px 컨테이너의 반복 흐름을 비교합니다. 카드가 같은 위계와 표면을 유지하고, 좁은 폭에서 텍스트나 수치가 컨테이너를 밀어내지 않는지 확인하세요.',
+    '실제 MetricCard를 사용해 normal과 320px 컨테이너의 반복 흐름을 비교합니다. 카드가 같은 위계와 표면을 유지하고, 좁은 폭에서 텍스트나 수치가 컨테이너를 밀어내지 않는지 확인하세요. 마지막 520px fixture는 fillLastRow가 중간 폭에서 감긴 카드의 빈 트랙을 제거하는 동작을 검증합니다.',
   ),
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', boxSizing: 'border-box' }}>
@@ -54,13 +54,20 @@ export const ResponsiveCardFlow = {
           <MetricCard label="최근 동기화" value="2" unit="분 전" stale staleLabel="업데이트 지연" lastUpdated="오늘 14:21" />
         </DashboardGrid>
       </div>
+      <div style={{ width: 520, maxWidth: '100%' }}>
+        <DashboardGrid data-testid="grid-fill" minCardWidth={190} fillLastRow>
+          <MetricCard label="진행 중" value="24" unit="건" period="현재" />
+          <MetricCard label="확인 필요" value="3" unit="건" period="현재" />
+          <MetricCard label="완료율" value="92" unit="%" period="최근 24시간" />
+        </DashboardGrid>
+      </div>
     </div>
   ),
   play: async ({ canvasElement }) => {
     const normal = canvasElement.querySelector('[data-testid="grid-normal"]');
     const narrow = canvasElement.querySelector('[data-testid="grid-narrow"]');
     const metrics = canvasElement.querySelectorAll('[data-metric-state]');
-    if (!normal || !narrow || metrics.length !== 6 || normal.scrollWidth > normal.clientWidth + 1 || narrow.scrollWidth > narrow.clientWidth + 1) {
+    if (!normal || !narrow || metrics.length !== 9 || normal.scrollWidth > normal.clientWidth + 1 || narrow.scrollWidth > narrow.clientWidth + 1) {
       throw new Error('DashboardGrid must arrange real MetricCard surfaces inside normal and narrow containers.');
     }
     if (getComputedStyle(narrow).gridTemplateColumns.trim().split(' ').length !== 1) {
@@ -68,6 +75,13 @@ export const ResponsiveCardFlow = {
     }
     if (!narrow.querySelector('[data-metric-state="stale"]')) {
       throw new Error('The narrow fixture must retain the card-owned stale state.');
+    }
+    const fill = canvasElement.querySelector('[data-testid="grid-fill"]');
+    const fillCards = [...fill.querySelectorAll('[data-metric-state]')];
+    const fillRect = fill.getBoundingClientRect();
+    const lastRect = fillCards[fillCards.length - 1].getBoundingClientRect();
+    if (fill.scrollWidth > fill.clientWidth + 1 || Math.abs(lastRect.right - fillRect.right) > 1) {
+      throw new Error('fillLastRow must stretch the wrapped remainder card to the end of the container without overflow.');
     }
   },
 };

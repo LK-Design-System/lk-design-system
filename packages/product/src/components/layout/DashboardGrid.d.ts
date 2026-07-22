@@ -5,6 +5,8 @@ export interface DashboardGridProps extends React.HTMLAttributes<HTMLDivElement>
   minCardWidth?: number | string;
   /** 카드 사이 간격. @default "var(--grid-gutter)" */
   gap?: number | string;
+  /** 중간 폭에서 감긴 마지막 행의 카드가 남은 폭을 채우도록 확장합니다. 열 정렬이 필요한 스캔 비교보다 빈 트랙 제거가 중요할 때만 켭니다. @default false */
+  fillLastRow?: boolean;
   children?: React.ReactNode;
 }
 

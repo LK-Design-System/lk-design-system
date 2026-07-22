@@ -8,3 +8,4 @@
 ```
 
 - **items** — `{ title, content }[]`. **multiple** — 여러 개 동시 열기 허용. **defaultOpen** — 마운트 시 열려 있는 인덱스.
+- 접근성: 각 트리거는 `aria-expanded` + `aria-controls`로 자신의 패널을 가리키고, 패널은 `role="region"` + `aria-labelledby`로 트리거와 연결됩니다. 접힌 패널은 `inert`로 접근성 트리·탭 포커스 순서에서 제거되어 `aria-expanded=false`와 상태가 일치합니다(시각 리빌 전환은 유지). `Collapsible`도 같은 계약을 공유합니다.

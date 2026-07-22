@@ -9,6 +9,7 @@ import { Icon } from '../icon/Icon.jsx';
  */
 export function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...rest }) {
   const [open, setOpen] = React.useState(() => new Set(defaultOpen));
+  const rawId = React.useId();
   const toggle = (i) => setOpen((prev) => {
     const next = new Set(multiple ? prev : []);
     if (prev.has(i)) next.delete(i); else next.add(i);
@@ -18,11 +19,15 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], styl
     <div style={{ borderTop: '1px solid var(--color-semantic-line-solid-normal)', ...style }} {...rest}>
       {items.map((it, i) => {
         const isOpen = open.has(i);
+        const triggerId = `${rawId}-${i}-trigger`;
+        const panelId = `${rawId}-${i}-panel`;
         return (
           <div key={i} style={{ borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <button
               type="button"
+              id={triggerId}
               aria-expanded={isOpen}
+              aria-controls={panelId}
               onClick={() => toggle(i)}
               style={{
                 width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
@@ -35,7 +40,7 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], styl
               <span style={{ wordBreak: 'keep-all' }}>{it.title}</span>
               <Icon name="chevron-down-small" size={20} aria-hidden="true" style={{ flexShrink: 0, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)' }} />
             </button>
-            <div style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
+            <div id={panelId} role="region" aria-labelledby={triggerId} inert={isOpen ? undefined : true} style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
               <div style={{ overflow: 'hidden' }}>
                 <div style={{ padding: '0 4px 20px', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
                   {it.content}

@@ -37,15 +37,6 @@ function resolveColor(element, value) {
   return resolved;
 }
 
-async function waitForWidth(element, expectedWidth, timeoutMs = 5000) {
-  const startedAt = Date.now();
-  while (Date.now() - startedAt < timeoutMs) {
-    if (Math.abs(element.getBoundingClientRect().width - expectedWidth) < 1) return;
-    await new Promise((resolve) => setTimeout(resolve, 25));
-  }
-  throw new Error(`Timed out waiting for the dashboard SideNav width to become ${expectedWidth}px.`);
-}
-
 const wideItems = [
   { heading: '작업 공간' },
   { value: 'overview', label: '운영 현황', href: '#overview', icon: <Icon name="home" size={18} />, onClick: preventNavigation },
@@ -109,9 +100,9 @@ function HeaderSlot({ compact = false, branded = false }) {
       brand={context}
       actions={(
         <React.Fragment>
-          <IconButton variant="ghost" label="전역 검색" size={36}><Icon name="search" size={18} aria-hidden="true" /></IconButton>
-          {!compact && <IconButton variant="ghost" label="알림" size={36}><Icon name="bell" size={18} aria-hidden="true" /></IconButton>}
-          {!compact && <Button size="sm" variant="ghost">도움말</Button>}
+          <IconButton variant="plain" label="전역 검색" size={36}><Icon name="search" size={18} aria-hidden="true" /></IconButton>
+          {!compact && <IconButton variant="plain" label="알림" size={36}><Icon name="bell" size={18} aria-hidden="true" /></IconButton>}
+          {!compact && <IconButton variant="plain" label="도움말" size={36}><Icon name="circle-question" size={18} aria-hidden="true" /></IconButton>}
         </React.Fragment>
       )}
     />
@@ -126,7 +117,6 @@ function NavigationSlot({ docked = true, branded = true }) {
       items={wideItems}
       defaultValue="overview"
       width={244}
-      collapsible
       header={branded ? <ProductIdentity /> : undefined}
       headerCollapsed={branded ? <Lockup variant="mark" height={21} decorative /> : undefined}
       footer={(
@@ -155,10 +145,10 @@ function ShellContent({ headingLevel = 1 }) {
         actions={<Button size="sm" variant="outlined"><Icon name="refresh" size={16} aria-hidden="true" />새로고침</Button>}
       />
 
-      <DashboardGrid minCardWidth={190} data-testid="shell-dashboard-grid">
-        <MetricCard label="진행 중" value="24" unit="건" period="현재" caption="처리 중인 작업" />
-        <MetricCard label="확인 필요" value="3" unit="건" period="현재" caption="사용자 판단이 필요한 항목" />
-        <MetricCard label="완료율" value="92" unit="%" period="최근 24시간" baseline="90%" />
+      <DashboardGrid minCardWidth={190} fillLastRow data-testid="shell-dashboard-grid">
+        <MetricCard label="진행 중" value="24" unit="건" delta={9.1} period="현재" baseline="어제" caption="처리 중인 작업" />
+        <MetricCard label="확인 필요" value="3" unit="건" delta={-25} changeTone="positive" period="현재" baseline="어제" caption="사용자 판단이 필요한 항목" />
+        <MetricCard label="완료율" value="92" unit="%" delta={2.2} period="최근 24시간" baseline="90%" />
       </DashboardGrid>
 
       <section aria-labelledby="dashboard-analysis-title" style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>
@@ -212,7 +202,7 @@ const meta = {
       eyebrow: 'Product / Operations Dashboard / Dashboard Shell',
       title: '브랜드·탐색·전역 도구·본문을 제품 셸의 한 계약으로 조합합니다',
       description:
-        'side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓은·좁은 화면 탐색 전환을 검증합니다. 본문 fixture는 제품 화면 템플릿이 아니라 실제 LDS 표면의 간격·위계·overflow를 확인하기 위한 최소 조합입니다.',
+        'side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓은·좁은 화면 탐색 전환을 검증합니다. 본문 fixture는 제품 화면 템플릿이 아니라 실제 LDS 표면의 간격·위계·overflow를 확인하기 위한 최소 조합입니다. 주 탐색 구성(고정·호버 확장 레일·접기)의 선택 기준은 Navigation의 Dashboard Navigation 페이지를 참조하세요.',
     },
     docs: {
       description: {
@@ -255,11 +245,11 @@ function assertShellContract(canvasElement, { layout, topology }) {
 export const NormalWidth = {
   name: '개요',
   parameters: storyDescription(
-    '전체 높이의 docked Side Nav가 브랜드와 로컬 목적지를 소유하고, Top Bar가 현재 workspace와 전역 utility를 소유하는 구성입니다. 표면이 떠 있는 카드처럼 보이지 않고 본문 위계와 분리되는지 확인하세요.',
+    '전체 높이의 고정 docked Side Nav가 브랜드와 로컬 목적지를 소유하고, Top Bar가 현재 workspace와 전역 utility를 소유하는 구성입니다. 목적지가 얕은 대시보드는 접기 컨트롤 없이 안정된 244px 탐색 폭을 유지하고, 표면이 떠 있는 카드처럼 보이지 않고 본문 위계와 분리되는지 확인하세요.',
   ),
   render: () => <SideFirstShell headingLevel={2} />,
   play: async ({ canvasElement }) => {
-    const { shell, skip, header, main, wideRegion } = assertShellContract(canvasElement, { layout: 'wide', topology: 'side-first' });
+    const { skip, header, wideRegion } = assertShellContract(canvasElement, { layout: 'wide', topology: 'side-first' });
     const navigation = wideRegion.querySelector('nav[data-surface="docked"]');
     const current = wideRegion.querySelector('a[aria-current="page"]');
     if (!navigation || !current || current.getAttribute('href') !== '#overview') {
@@ -275,31 +265,12 @@ export const NormalWidth = {
     if (canvasElement.ownerDocument.activeElement !== skip) {
       throw new Error('The skip link must be the first keyboard destination in the shell.');
     }
-    const collapse = navigation.querySelector('button[data-sidenav-collapse-toggle]');
-    const expandedNavRect = navigation.getBoundingClientRect();
-    const expandedControlRect = collapse?.getBoundingClientRect();
-    if (!collapse || collapse.getAttribute('aria-label') !== '사이드바 접기'
-      || Math.abs(expandedNavRect.width - 244) >= 1
-      || expandedControlRect.right > expandedNavRect.right + 0.5
-      || expandedControlRect.left < expandedNavRect.left - 0.5
-      || expandedControlRect.right > header.getBoundingClientRect().left + 0.5) {
-      throw new Error('The wide dashboard must keep a contained 244px SideNav boundary control outside the header and main regions.');
+    const navRect = navigation.getBoundingClientRect();
+    if (navigation.querySelector('button[data-sidenav-collapse-toggle]')
+      || Math.abs(navRect.width - 244) >= 1
+      || navRect.right > header.getBoundingClientRect().left + 0.5) {
+      throw new Error('The representative shallow-navigation dashboard must keep a fixed 244px SideNav without a collapse control.');
     }
-    await userEvent.click(collapse);
-    await waitForWidth(navigation, 64);
-    const collapsedNavRect = navigation.getBoundingClientRect();
-    const collapsedControlRect = collapse.getBoundingClientRect();
-    if (collapse.getAttribute('aria-label') !== '사이드바 펼치기'
-      || collapsedControlRect.right > collapsedNavRect.right + 0.5
-      || collapsedControlRect.left < collapsedNavRect.left - 0.5
-      || Math.abs(collapsedNavRect.right - header.getBoundingClientRect().left) > 1
-      || shell.scrollWidth > shell.clientWidth + 1
-      || main.scrollWidth > main.clientWidth + 1) {
-      throw new Error('Collapsing the dashboard SideNav must reflow the shell to a contained 64px rail without horizontal overflow.');
-    }
-    await userEvent.click(collapse);
-    await waitForWidth(navigation, 244);
-    collapse.blur();
   },
 };
 

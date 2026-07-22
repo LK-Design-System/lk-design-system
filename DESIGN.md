@@ -48,7 +48,8 @@
 
 - Primary navigation:
   - Product identity belongs to either `TopBar` or `SideNav`, never both.
-  - Hierarchical destinations use a docked `SideNav` on wide screens. Its persistent 36px collapse control stays inside the logical end divider while the panel changes between the expanded width and a 64px icon rail.
+  - Hierarchical destinations use a docked `SideNav` on wide screens. A shallow destination set keeps a fixed-width panel without a collapse control; that fixed panel is the representative dashboard configuration.
+  - Width recovery for data-dense or space-constrained surfaces is opt-in: either an explicit collapse toggle placed at the start of the top bar that drives the side panel through its controlled collapse state (the panel changes between the expanded width and a 64px icon rail), or the overlay peek rail (a reserved 64px rail whose full panel floats over content on hover, keyboard focus, or click and retracts on exit, outside click, or Escape). The collapse toggle lives in the top bar, never inside the side panel; the legacy in-panel boundary control remains only for compatibility. Neither mode is mandatory for a dashboard.
   - Global utilities such as workspace, search, notifications, help, and account remain separate from product destinations.
   - Narrow layouts replace wide navigation with an explicit temporary or compact navigation surface and restore focus when it closes.
 - Core routes/screens: overview or launcher, resource/status collection, monitoring or analysis, primary-detail investigation, history, and product-owned configuration/action flows.

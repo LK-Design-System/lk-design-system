@@ -8,11 +8,37 @@ function DashboardGrid({
   children,
   minCardWidth = 220,
   gap = "var(--grid-gutter)",
+  fillLastRow = false,
   className,
   style,
   ...rest
 }) {
   const minimum = toLength(minCardWidth);
+  if (fillLastRow) {
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      "div",
+      {
+        className: ["lk-dashboard-grid", "lk-dashboard-grid-fill", className].filter(Boolean).join(" "),
+        style: {
+          "--dashboard-grid-min-card-width": minimum,
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "stretch",
+          gap,
+          width: "100%",
+          maxWidth: "100%",
+          minWidth: 0,
+          boxSizing: "border-box",
+          ...style
+        },
+        ...rest,
+        children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: `.lk-dashboard-grid-fill > *:not(style){min-width:0;flex:1 1 min(100%, var(--dashboard-grid-min-card-width))}` }),
+          children
+        ]
+      }
+    );
+  }
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
@@ -41,4 +67,4 @@ function DashboardGrid({
 
 
 exports.DashboardGrid = DashboardGrid;
-//# sourceMappingURL=chunk-WTOSHLBX.cjs.map
+//# sourceMappingURL=chunk-LWWFRFYP.cjs.map

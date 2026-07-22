@@ -199,6 +199,21 @@ const targets = [
     match: { importPath: './stories/LayoutDashboardShell.stories.jsx', exportName: 'DarkSurface' },
     viewport: { width: 1280, height: 820 },
   },
+  {
+    name: 'product-navigation-dashboard-fixed',
+    match: { importPath: './stories/NavigationDashboard.stories.jsx', exportName: 'Overview' },
+    viewport: { width: 1280, height: 820 },
+  },
+  {
+    name: 'product-navigation-dashboard-overlay-rail',
+    match: { importPath: './stories/NavigationDashboard.stories.jsx', exportName: 'OverlayPeekRail' },
+    viewport: { width: 1280, height: 820 },
+  },
+  {
+    name: 'product-navigation-dashboard-topbar-toggle',
+    match: { importPath: './stories/NavigationDashboard.stories.jsx', exportName: 'TopBarToggle' },
+    viewport: { width: 1280, height: 820 },
+  },
 ];
 
 // Robotics visual coverage lives in the split repository's representative

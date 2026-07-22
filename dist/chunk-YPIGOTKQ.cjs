@@ -129,6 +129,7 @@ function SideNav({
     justifyContent: col ? "center" : "flex-start",
     gap: 11,
     width: "100%",
+    minHeight: col ? void 0 : 44,
     padding: col ? "11px 0" : "10px 12px",
     boxSizing: "border-box",
     border: "none",
@@ -138,6 +139,8 @@ function SideNav({
     textAlign: "left",
     textDecoration: "none",
     fontFamily: "var(--font-sans)",
+    fontSize: "var(--label1-size)",
+    lineHeight: "var(--label1-line)",
     background: active ? "var(--color-semantic-primary-surface-strong)" : hovered && !disabled ? "var(--color-semantic-primary-surface-normal)" : "transparent",
     color: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)",
     transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
@@ -323,7 +326,7 @@ function SideNav({
       style: overlay ? { position: "relative", width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style },
       ...rest,
       "data-surface": resolvedSurface,
-      children: overlay ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-sidenav__surface", style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: docked || col ? "none" : "var(--shadow-lg)" }, children: panelContent }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+      children: overlay ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-sidenav__surface", style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: col ? "none" : "var(--shadow-lg)", clipPath: col || !docked ? void 0 : "inset(0 -120px 0 0)" }, children: panelContent }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
         panelContent,
         persistentCollapseControl
       ] })
@@ -334,4 +337,4 @@ function SideNav({
 
 
 exports.SideNav = SideNav;
-//# sourceMappingURL=chunk-FCYSVAD7.cjs.map
+//# sourceMappingURL=chunk-YPIGOTKQ.cjs.map

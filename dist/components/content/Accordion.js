@@ -1,7 +1,7 @@
 "use client";
 import {
   Accordion
-} from "../../chunk-5U5E7TJE.js";
+} from "../../chunk-L5FYC6KT.js";
 import "../../chunk-LMQSX5BW.js";
 export {
   Accordion

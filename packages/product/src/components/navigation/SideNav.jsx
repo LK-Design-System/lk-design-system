@@ -108,8 +108,9 @@ export function SideNav({
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
   const row = (active, disabled, extra, hovered) => ({
     position: 'relative', display: 'flex', alignItems: 'center', justifyContent: col ? 'center' : 'flex-start', gap: 11,
-    width: '100%', padding: col ? '11px 0' : '10px 12px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
+    width: '100%', minHeight: col ? undefined : 44, padding: col ? '11px 0' : '10px 12px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
     cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textAlign: 'left', textDecoration: 'none', fontFamily: 'var(--font-sans)',
+    fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)',
     background: active ? 'var(--color-semantic-primary-surface-strong)' : hovered && !disabled ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
     transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra,
   });
@@ -300,7 +301,7 @@ export function SideNav({
       className={['lk-sidenav', !overlay && 'lk-sidenav__surface', className].filter(Boolean).join(' ')}
       style={overlay ? { position: 'relative', width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style }} {...rest} data-surface={resolvedSurface}>
       {overlay ? (
-        <div className="lk-sidenav__surface" style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: docked || col ? 'none' : 'var(--shadow-lg)' }}>{panelContent}</div>
+        <div className="lk-sidenav__surface" style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : 'var(--shadow-lg)', clipPath: col || !docked ? undefined : 'inset(0 -120px 0 0)' }}>{panelContent}</div>
       ) : (
         <React.Fragment>
           {panelContent}

@@ -159,6 +159,7 @@
     "stories/NavigationBreadcrumb.stories.jsx": "LDS Product/Navigation/Breadcrumb",
     "stories/NavigationCategory.stories.jsx": "LDS Core/Components/Navigation/Category",
     "stories/NavigationCompact.stories.jsx": "LDS Core/Components/Navigation/Pagination",
+    "stories/NavigationDashboard.stories.jsx": "LDS Product/Navigation/Dashboard Navigation",
     "stories/NavigationFooter.stories.jsx": "LDS Product/Navigation/Footer",
     "stories/NavigationMenubar.stories.jsx": "LDS Product/Navigation/Menubar",
     "stories/NavigationPageIndicator.stories.jsx": "LDS Core/Components/Navigation/Page Indicator",

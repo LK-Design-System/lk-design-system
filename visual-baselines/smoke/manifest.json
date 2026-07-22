@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 33,
+  "count": 36,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -11,6 +11,7 @@
         "width": 980,
         "height": 620
       },
+      "reducedMotion": "no-preference",
       "bytes": 18641,
       "sha256": "55d6ca13bbb09402d1a63c390c46a2903a683dfb3f664a9f5b3d73cd5cf0dae1"
     },
@@ -22,6 +23,7 @@
         "width": 980,
         "height": 520
       },
+      "reducedMotion": "no-preference",
       "bytes": 31938,
       "sha256": "3b93231d96ede621e8f0831c2df9e1a4d8044cd73751910ad85771c2806c8084"
     },
@@ -47,6 +49,7 @@
         "width": 1180,
         "height": 860
       },
+      "reducedMotion": "no-preference",
       "bytes": 99503,
       "sha256": "5d31c6c6ff22fa5e85d28633142ec2e7279aee4bbae8731b72b998a64917cf40"
     },
@@ -58,6 +61,7 @@
         "width": 1180,
         "height": 860
       },
+      "reducedMotion": "no-preference",
       "bytes": 32555,
       "sha256": "e01149cffc0a98efb0e3c49abd5a6b41dcdf52b546475692c5306ff0586a36b3"
     },
@@ -69,6 +73,7 @@
         "width": 1120,
         "height": 760
       },
+      "reducedMotion": "no-preference",
       "bytes": 61367,
       "sha256": "047d3097caf7399654bb7c01fd95139e0beed03d7cce0336de974db0c824d4cf"
     },
@@ -80,8 +85,9 @@
         "width": 1120,
         "height": 520
       },
-      "bytes": 56601,
-      "sha256": "79576d19302fdd5bd09822554abedd035d99de8a796904dbab737ac972601b70"
+      "reducedMotion": "no-preference",
+      "bytes": 56862,
+      "sha256": "7cc59701624e66bdcc6c1a55316e93dd9a1b30d1a39a56ed9beebb1471fcd157"
     },
     {
       "name": "react-topbar-dark",
@@ -93,8 +99,9 @@
         "width": 1120,
         "height": 520
       },
-      "bytes": 58195,
-      "sha256": "dc8a7cf2d19cd4490e8c2a8f4dc8441fa07aeced4f0a4602b85bf76555d1aa8f"
+      "reducedMotion": "no-preference",
+      "bytes": 58440,
+      "sha256": "2ffba2c800cc006ba9c0010da0a63ff7583a90c1e35db18108cc6fff82c26176"
     },
     {
       "name": "react-forms",
@@ -104,6 +111,7 @@
         "width": 1120,
         "height": 760
       },
+      "reducedMotion": "no-preference",
       "bytes": 33723,
       "sha256": "0eedcae4aac9fd987a7a7ae761e38809b8da8699cd6e6a6d3416dc3fd3091884"
     },
@@ -115,6 +123,7 @@
         "width": 320,
         "height": 900
       },
+      "reducedMotion": "no-preference",
       "bytes": 31330,
       "sha256": "a47f252d8b33be8bfe73e05e4338bc890a160d76b7abfd396b9f87a099780018"
     },
@@ -126,6 +135,7 @@
         "width": 980,
         "height": 760
       },
+      "reducedMotion": "no-preference",
       "bytes": 36313,
       "sha256": "846939eb4d179c1e8941d57e071bb06f0f04f96cbbc224c12bb07d99054f5609"
     },
@@ -137,6 +147,7 @@
         "width": 320,
         "height": 900
       },
+      "reducedMotion": "no-preference",
       "bytes": 35047,
       "sha256": "e413454ee2cee804e776a36c1c63a9d22f7a5c3b8c71950781d827bc8913ca13"
     },
@@ -148,6 +159,7 @@
         "width": 980,
         "height": 900
       },
+      "reducedMotion": "no-preference",
       "bytes": 71762,
       "sha256": "55f6e8950b56a6a2c0eeb49e44e26f0fcfcc64a5ce56b51dcebcbe079d3bceeb"
     },
@@ -159,6 +171,7 @@
         "width": 320,
         "height": 900
       },
+      "reducedMotion": "no-preference",
       "bytes": 58101,
       "sha256": "dd8c2286724b066d235e3449145b94a59880c535642c145a07f1e53bf6351dfb"
     },
@@ -170,6 +183,7 @@
         "width": 1180,
         "height": 920
       },
+      "reducedMotion": "no-preference",
       "bytes": 43042,
       "sha256": "3aa45677b4a337aece79adf90cc11ab2ecb3e8e5393c9d7aa8e9e86c0ac54b22"
     },
@@ -181,6 +195,7 @@
         "width": 1180,
         "height": 920
       },
+      "reducedMotion": "no-preference",
       "bytes": 13010,
       "sha256": "1261492c6d44c2ce7ff35210061675fbd5de4c1938b42559fa371be4e1e8f8b2"
     },
@@ -192,6 +207,7 @@
         "width": 980,
         "height": 760
       },
+      "reducedMotion": "no-preference",
       "bytes": 10718,
       "sha256": "80f6175ec4030d6a97b5649d19ffe9026115951947e7a927b447480d66c6080a"
     },
@@ -203,6 +219,7 @@
         "width": 1180,
         "height": 860
       },
+      "reducedMotion": "no-preference",
       "bytes": 68659,
       "sha256": "392a68c7a1bc1d6bbccd45510cac7e93a3824eb4298e62dc02efe97cd9d6c90f"
     },
@@ -216,6 +233,7 @@
         "width": 1180,
         "height": 860
       },
+      "reducedMotion": "no-preference",
       "bytes": 73811,
       "sha256": "21a9f5c625324602b61ba52a18c1e14b5014987a91938472343a77481b35f239"
     },
@@ -227,6 +245,7 @@
         "width": 1180,
         "height": 960
       },
+      "reducedMotion": "no-preference",
       "bytes": 84850,
       "sha256": "4a6aa0068f61e090d432b99726295a90f5c73265cd84e91fa63bf96841146896"
     },
@@ -238,6 +257,7 @@
         "width": 1120,
         "height": 860
       },
+      "reducedMotion": "no-preference",
       "bytes": 65131,
       "sha256": "471aab892495e29f4dd2354a871e09ca11d587a4ce6124c58f6213075dcfa7d8"
     },
@@ -249,6 +269,7 @@
         "width": 1120,
         "height": 700
       },
+      "reducedMotion": "no-preference",
       "bytes": 43566,
       "sha256": "2091d6683e5ac43019ff570fe9f7c9e06963648994052f7c7d45af6431ad054b"
     },
@@ -262,6 +283,7 @@
         "width": 1120,
         "height": 700
       },
+      "reducedMotion": "no-preference",
       "bytes": 56907,
       "sha256": "2fac651bb4757a3a4560845d5d60a8ed5cd5d4a878d05434ae7ce5fa0f94c05d"
     },
@@ -273,6 +295,7 @@
         "width": 980,
         "height": 720
       },
+      "reducedMotion": "no-preference",
       "bytes": 35718,
       "sha256": "19a8fb80ec2d4902b8b847ecdade9430e7e718d5bf905281fc8b51b5f13f7df8"
     },
@@ -284,6 +307,7 @@
         "width": 860,
         "height": 520
       },
+      "reducedMotion": "no-preference",
       "bytes": 53159,
       "sha256": "20b4bdc7d0c1909341e45f2c67e67ab5962ab3291698f74081647efe55662842"
     },
@@ -307,6 +331,7 @@
         "width": 860,
         "height": 520
       },
+      "reducedMotion": "no-preference",
       "bytes": 48123,
       "sha256": "464bc0c943a72b735554b0956b8e79bfeef09c75db49bfd60806941788cd28a8"
     },
@@ -318,6 +343,7 @@
         "width": 900,
         "height": 820
       },
+      "reducedMotion": "no-preference",
       "bytes": 90974,
       "sha256": "58076b1c292ee1796615e0c159e62f889e6857b03413d909430e48f10dba18b7"
     },
@@ -330,8 +356,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 23482,
-      "sha256": "bdedd19be48e8b2a6a71a57834228cf1c9d97470247276ac9420dd2ede9739df"
+      "bytes": 22066,
+      "sha256": "e38a08c00b340b19d6d48791e4c6790098845ec6f34b509b6a09da9474af412f"
     },
     {
       "name": "product-sidenav-docked-collapsed",
@@ -366,8 +392,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 101752,
-      "sha256": "dc824ba21a6af2e9081f697e26f3d337c97e8fecf58341ae96933511938f64e6"
+      "bytes": 118632,
+      "sha256": "923f06d75134ef25a633bbea2bf4eb885ce18a43cd8a1c0ee7fd779b24d8ba47"
     },
     {
       "name": "product-dashboard-shell-dark",
@@ -378,8 +404,44 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 73876,
-      "sha256": "ba2d4c8f77cb24a4668ca43902aa3bbfb93f770a22790116930ebeafb1c3e01d"
+      "bytes": 76063,
+      "sha256": "11ced8e329886eef11d3c5082c474e5ebbe51a2b43743ea441ab2ae5284d2fee"
+    },
+    {
+      "name": "product-navigation-dashboard-fixed",
+      "id": "lds-product-navigation-dashboard-navigation--overview",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 63051,
+      "sha256": "7c1fe17f40c205b8cd07fa708ae4bbc09eee6dcbe096b9ff7a2b6de4b5366d8b"
+    },
+    {
+      "name": "product-navigation-dashboard-overlay-rail",
+      "id": "lds-product-navigation-dashboard-navigation--overlay-peek-rail",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 18423,
+      "sha256": "22ad2eaf9a8bf4164528b811748410b9541380cc6de86c1a5c9c30589706e7fd"
+    },
+    {
+      "name": "product-navigation-dashboard-topbar-toggle",
+      "id": "lds-product-navigation-dashboard-navigation--top-bar-toggle",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 19306,
+      "sha256": "b784ad6f646190f67c7c7643ea390ed27dc18bf1d67fd9be6d0ca9a86e9d2c86"
     }
   ]
 }

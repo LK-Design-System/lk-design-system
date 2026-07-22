@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "38571dee3aa2e00ccec11671e58527e3c77106812a0f471bb92cd66cdd95f1c0",
+    "storybookIndexSha256": "1f337f2ef01c878600aedf9ca6f8991bfc515d4fd31f5b8ac51c1ce3014a6e47",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -58,31 +58,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 148,
-    "stories": 419,
-    "publicStories": 317,
+    "pages": 149,
+    "stories": 423,
+    "publicStories": 321,
     "hiddenStories": 102,
-    "componentDescriptions": 144,
-    "pagesWithVisibleCanvasIntroduction": 148,
-    "pagesWithDecisionGuidance": 143,
-    "describedPublicStories": 317,
+    "componentDescriptions": 145,
+    "pagesWithVisibleCanvasIntroduction": 149,
+    "pagesWithDecisionGuidance": 144,
+    "describedPublicStories": 321,
     "reviewedPages": 148,
     "reviewedStories": 419,
-    "staleReviewedPages": 0,
+    "staleReviewedPages": 2,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
-      "overview": 141,
+      "overview": 142,
       "usage": 20,
-      "variants-states": 57,
+      "variants-states": 59,
       "interaction": 37,
-      "responsive": 36,
+      "responsive": 37,
       "scenario": 16,
       "visual-parity": 73,
       "internal-contract": 29
     },
     "dispositions": {
-      "keep": 148,
+      "keep": 149,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -103,11 +103,11 @@
         "guideReadyPages": 7
       },
       "Product": {
-        "pages": 86,
-        "stories": 254,
-        "public": 220,
+        "pages": 87,
+        "stories": 258,
+        "public": 224,
         "hidden": 34,
-        "guideReadyPages": 86
+        "guideReadyPages": 87
       },
       "Theme": {
         "pages": 3,
@@ -10898,6 +10898,164 @@
       "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
     },
     {
+      "title": "LDS Product/Navigation/Dashboard Navigation",
+      "layer": "Product",
+      "family": "Navigation",
+      "importPath": "./stories/NavigationDashboard.stories.jsx",
+      "sourceSha256": "babb6bfe2d64899c7c4c99a47aefd1b6131910101f5dffbe3f2fcfeda4b1cf32",
+      "primaryOwner": "DashboardShell",
+      "ownerComponents": [
+        "DashboardShell"
+      ],
+      "supportingComponents": [
+        "BottomNav",
+        "Button",
+        "Icon",
+        "IconButton",
+        "Lockup",
+        "SideNav",
+        "TopBar"
+      ],
+      "visibility": {
+        "public": 4,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-navigation-dashboard-navigation--overview",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-product-navigation-dashboard-navigation--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon",
+            "IconButton",
+            "Lockup",
+            "SideNav",
+            "TopBar"
+          ]
+        },
+        {
+          "id": "lds-product-navigation-dashboard-navigation--top-bar-toggle",
+          "name": "변형·상태 · 탑바 접기 토글",
+          "exportName": "TopBarToggle",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon",
+            "IconButton",
+            "Lockup",
+            "SideNav",
+            "TopBar"
+          ]
+        },
+        {
+          "id": "lds-product-navigation-dashboard-navigation--overlay-peek-rail",
+          "name": "변형·상태 · 호버 확장 레일",
+          "exportName": "OverlayPeekRail",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon",
+            "IconButton",
+            "Lockup",
+            "SideNav",
+            "TopBar"
+          ]
+        },
+        {
+          "id": "lds-product-navigation-dashboard-navigation--narrow-320",
+          "name": "반응형 · 320px 전환 결정",
+          "exportName": "Narrow320",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "BottomNav",
+            "Button",
+            "Icon",
+            "IconButton",
+            "Lockup",
+            "SideNav",
+            "TopBar"
+          ]
+        }
+      ]
+    },
+    {
       "title": "LDS Product/Navigation/Footer",
       "layer": "Product",
       "family": "Navigation",
@@ -11685,7 +11843,7 @@
       "layer": "Product",
       "family": "Operations Dashboard",
       "importPath": "./stories/LayoutDashboardGrid.stories.jsx",
-      "sourceSha256": "a2a7fa9d865b872bb763918d2366247726a22ebc14dd532fc41edca89456dc28",
+      "sourceSha256": "ecd76cae43000024fced278d56e1488aae5acd233df363001e1267c009365aea",
       "primaryOwner": "DashboardGrid",
       "ownerComponents": [
         "DashboardGrid"
@@ -11746,7 +11904,7 @@
       "layer": "Product",
       "family": "Operations Dashboard",
       "importPath": "./stories/LayoutDashboardShell.stories.jsx",
-      "sourceSha256": "6c708dd660d564db81641ba2561bd72dc4878495e4af0412fa39d439666b9098",
+      "sourceSha256": "7f32a76fd9845f19274bba18e18eb44e2018420beeb6eae4c43ccaf1d0fff344",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"

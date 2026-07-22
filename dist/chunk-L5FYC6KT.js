@@ -8,6 +8,7 @@ import React from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
 function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...rest }) {
   const [open, setOpen] = React.useState(() => new Set(defaultOpen));
+  const rawId = React.useId();
   const toggle = (i) => setOpen((prev) => {
     const next = new Set(multiple ? prev : []);
     if (prev.has(i)) next.delete(i);
@@ -16,12 +17,16 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
   });
   return /* @__PURE__ */ jsx("div", { style: { borderTop: "1px solid var(--color-semantic-line-solid-normal)", ...style }, ...rest, children: items.map((it, i) => {
     const isOpen = open.has(i);
+    const triggerId = `${rawId}-${i}-trigger`;
+    const panelId = `${rawId}-${i}-panel`;
     return /* @__PURE__ */ jsxs("div", { style: { borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
       /* @__PURE__ */ jsxs(
         "button",
         {
           type: "button",
+          id: triggerId,
           "aria-expanded": isOpen,
+          "aria-controls": panelId,
           onClick: () => toggle(i),
           style: {
             width: "100%",
@@ -47,7 +52,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
           ]
         }
       ),
-      /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateRows: isOpen ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ jsx("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ jsx("div", { style: { padding: "0 4px 20px", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: it.content }) }) })
+      /* @__PURE__ */ jsx("div", { id: panelId, role: "region", "aria-labelledby": triggerId, inert: isOpen ? void 0 : true, style: { display: "grid", gridTemplateRows: isOpen ? "1fr" : "0fr", transition: "grid-template-rows var(--dur-base) var(--ease-out)" }, children: /* @__PURE__ */ jsx("div", { style: { overflow: "hidden" }, children: /* @__PURE__ */ jsx("div", { style: { padding: "0 4px 20px", fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: it.content }) }) })
     ] }, i);
   }) });
 }
@@ -55,4 +60,4 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], style, ...r
 export {
   Accordion
 };
-//# sourceMappingURL=chunk-5U5E7TJE.js.map
+//# sourceMappingURL=chunk-L5FYC6KT.js.map

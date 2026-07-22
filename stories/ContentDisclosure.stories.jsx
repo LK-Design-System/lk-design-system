@@ -1,3 +1,4 @@
+import { userEvent } from 'storybook/test';
 import {
   Accordion,
   Code,
@@ -44,4 +45,29 @@ export const Disclosure = {
       </Collapsible>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const triggers = [...canvasElement.querySelectorAll('button[aria-expanded]')].filter((b) => b.getAttribute('aria-controls'));
+    if (triggers.length !== 3) {
+      throw new Error('Disclosure 트리거는 aria-controls로 각자의 패널을 가리켜야 합니다(Accordion 2 + Collapsible 1).');
+    }
+    for (const trigger of triggers) {
+      const panel = doc.getElementById(trigger.getAttribute('aria-controls'));
+      if (!panel) {
+        throw new Error('트리거 aria-controls가 존재하는 패널 id와 연결되지 않았습니다.');
+      }
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      const inert = panel.hasAttribute('inert');
+      if (expanded === inert) {
+        throw new Error('접힌 패널만 inert여야 합니다 — 열린 패널은 inert가 없고, 접힌 패널은 inert로 접근성 트리·탭 순서에서 제거되어야 합니다.');
+      }
+    }
+    const collapsibleTrigger = triggers.find((t) => t.textContent.includes('상세 로그'));
+    await userEvent.click(collapsibleTrigger);
+    const collapsedPanel = doc.getElementById(collapsibleTrigger.getAttribute('aria-controls'));
+    if (collapsibleTrigger.getAttribute('aria-expanded') !== 'false' || !collapsedPanel.hasAttribute('inert')) {
+      throw new Error('접은 뒤 패널은 inert가 되어 탭 포커스·스크린리더에서 빠져야 합니다.');
+    }
+    await userEvent.click(collapsibleTrigger);
+  },
 };

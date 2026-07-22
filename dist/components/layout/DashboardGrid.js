@@ -1,7 +1,7 @@
 "use client";
 import {
   DashboardGrid
-} from "../../chunk-GRTWUVSN.js";
+} from "../../chunk-7L7QHIE6.js";
 export {
   DashboardGrid
 };

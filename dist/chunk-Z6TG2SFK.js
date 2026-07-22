@@ -1,8 +1,8 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+"use client";
 
 // components/layout/DashboardShell.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 var DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell{
   display:grid;
@@ -37,7 +37,7 @@ var DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell__main{grid-column:2;grid-row:2;min-width:0;min-height:0;width:100%;max-width:100%;box-sizing:border-box}
 .lk-dashboard-shell__narrow-navigation{display:none;min-width:0;z-index:40;background:var(--color-semantic-background-elevated-normal)}
 .lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__header{grid-column:2;grid-row:1}
-.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__navigation{grid-column:1;grid-row:1/-1}
+.lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__navigation{grid-column:1;grid-row:1/-1;z-index:60}
 .lk-dashboard-shell[data-topology="side-first"] .lk-dashboard-shell__main{grid-column:2;grid-row:2}
 .lk-dashboard-shell[data-layout="narrow"]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
 .lk-dashboard-shell[data-layout="narrow"] .lk-dashboard-shell__header{grid-column:1;grid-row:1}
@@ -59,9 +59,9 @@ var DASHBOARD_SHELL_STYLES = `
 }
 `;
 function withNavigationLabel(node, label) {
-  if (!_react2.default.isValidElement(node)) return node;
-  return _react2.default.cloneElement(node, {
-    "aria-label": _nullishCoalesce(node.props["aria-label"], () => ( label))
+  if (!React.isValidElement(node)) return node;
+  return React.cloneElement(node, {
+    "aria-label": node.props["aria-label"] ?? label
   });
 }
 function DashboardShell({
@@ -82,10 +82,10 @@ function DashboardShell({
   style,
   ...rest
 }) {
-  const generatedId = _react2.default.useId().replace(/:/g, "");
+  const generatedId = React.useId().replace(/:/g, "");
   const resolvedMainId = mainId || `lk-dashboard-main-${generatedId}`;
   const resolvedTopology = topology === "side-first" ? "side-first" : "header-first";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       className: ["lk-dashboard-shell", className].filter(Boolean).join(" "),
@@ -105,11 +105,11 @@ function DashboardShell({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "a", { className: "lk-dashboard-shell__skip", href: `#${resolvedMainId}`, children: skipLabel }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: DASHBOARD_SHELL_STYLES }),
-        header != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__header", children: header }),
-        navigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__navigation", children: withNavigationLabel(navigation, navigationLabel) }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ jsx("a", { className: "lk-dashboard-shell__skip", href: `#${resolvedMainId}`, children: skipLabel }),
+        /* @__PURE__ */ jsx("style", { children: DASHBOARD_SHELL_STYLES }),
+        header != null && /* @__PURE__ */ jsx("div", { className: "lk-dashboard-shell__header", children: header }),
+        navigation != null && /* @__PURE__ */ jsx("div", { className: "lk-dashboard-shell__navigation", children: withNavigationLabel(navigation, navigationLabel) }),
+        /* @__PURE__ */ jsx(
           "main",
           {
             id: resolvedMainId,
@@ -120,13 +120,13 @@ function DashboardShell({
             children
           }
         ),
-        narrowNavigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__narrow-navigation", children: withNavigationLabel(narrowNavigation, narrowNavigationLabel) })
+        narrowNavigation != null && /* @__PURE__ */ jsx("div", { className: "lk-dashboard-shell__narrow-navigation", children: withNavigationLabel(narrowNavigation, narrowNavigationLabel) })
       ]
     }
   );
 }
 
-
-
-exports.DashboardShell = DashboardShell;
-//# sourceMappingURL=chunk-JCOLRRO2.cjs.map
+export {
+  DashboardShell
+};
+//# sourceMappingURL=chunk-Z6TG2SFK.js.map
