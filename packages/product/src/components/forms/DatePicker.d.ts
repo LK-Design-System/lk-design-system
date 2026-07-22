@@ -4,6 +4,12 @@ export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   value?: Date | string | null;
   defaultValue?: Date | string | null;
   onChange?: (date: Date) => void;
+  /** 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다. */
+  isDateDisabled?: (date: Date) => boolean;
+  /** 이 날짜 이전(당일 제외)은 선택 불가. Date 또는 ISO 문자열. */
+  minDate?: Date | string;
+  /** 이 날짜 이후(당일 제외)는 선택 불가. Date 또는 ISO 문자열. */
+  maxDate?: Date | string;
   placeholder?: string;
   /** @default "md" */
   size?: 'sm' | 'md';

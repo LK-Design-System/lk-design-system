@@ -32,12 +32,15 @@ function formatDateLabel(date) {
     weekday: "long"
   }).format(date);
 }
-function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDown, onPick }) {
+function toDayNumber(date) {
+  return date.getFullYear() * 1e4 + date.getMonth() * 100 + date.getDate();
+}
+function DayCell({ date, selected, today, disabled, tabIndex, buttonRef, onFocus, onKeyDown, onPick }) {
   const [hovered, setHovered] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const dayOfWeek = date.getDay();
-  const background = selected ? "var(--color-semantic-primary-normal)" : hovered ? "var(--color-semantic-fill-normal)" : "transparent";
-  const color = selected ? "var(--color-semantic-static-white)" : dayOfWeek === 0 ? "var(--color-semantic-accent-foreground-red)" : dayOfWeek === 6 ? "var(--color-semantic-accent-foreground-blue)" : "var(--color-semantic-label-normal)";
+  const background = selected && !disabled ? "var(--color-semantic-primary-normal)" : hovered && !disabled ? "var(--color-semantic-fill-normal)" : "transparent";
+  const color = disabled ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-static-white)" : dayOfWeek === 0 ? "var(--color-semantic-accent-foreground-red)" : dayOfWeek === 6 ? "var(--color-semantic-accent-foreground-blue)" : "var(--color-semantic-label-normal)";
   return /* @__PURE__ */ jsx(
     "button",
     {
@@ -46,7 +49,10 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
       tabIndex,
       "aria-label": formatDateLabel(date),
       "aria-current": today ? "date" : void 0,
-      onClick: () => onPick(date),
+      "aria-disabled": disabled || void 0,
+      onClick: () => {
+        if (!disabled) onPick(date);
+      },
       onFocus: () => {
         setFocused(true);
         onFocus();
@@ -59,8 +65,8 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
         width: "100%",
         height: 38,
         borderRadius: "var(--radius-md)",
-        cursor: "pointer",
-        border: today && !selected ? "1px solid var(--color-semantic-primary-normal)" : "1px solid transparent",
+        cursor: disabled ? "not-allowed" : "pointer",
+        border: today && !selected && !disabled ? "1px solid var(--color-semantic-primary-normal)" : "1px solid transparent",
         outline: "none",
         boxShadow: focused ? "var(--component-input-focus-shadow)" : "none",
         background,
@@ -69,17 +75,32 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
         fontSize: "var(--label1-size)",
         fontWeight: selected ? "var(--fw-bold)" : "var(--fw-medium)",
         fontVariantNumeric: "tabular-nums",
+        textDecoration: disabled ? "line-through" : "none",
         transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
       },
       children: date.getDate()
     }
   );
 }
-function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...rest }) {
+function Calendar({ value, defaultValue, onChange, isDateDisabled, minDate, maxDate, autoFocus = false, style, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React.useState(() => parseDate(defaultValue));
   const selected = isControlled ? parseDate(value) : internal;
   const today = React.useMemo(() => /* @__PURE__ */ new Date(), []);
+  const minDay = React.useMemo(() => {
+    const d = parseDate(minDate);
+    return d ? toDayNumber(d) : null;
+  }, [minDate]);
+  const maxDay = React.useMemo(() => {
+    const d = parseDate(maxDate);
+    return d ? toDayNumber(d) : null;
+  }, [maxDate]);
+  const isUnavailable = React.useCallback((date) => {
+    const day = toDayNumber(date);
+    if (minDay != null && day < minDay) return true;
+    if (maxDay != null && day > maxDay) return true;
+    return isDateDisabled ? Boolean(isDateDisabled(date)) : false;
+  }, [minDay, maxDay, isDateDisabled]);
   const initialDate = selected ?? today;
   const [view, setView] = React.useState(() => new Date(initialDate.getFullYear(), initialDate.getMonth(), 1));
   const [focusDate, setFocusDate] = React.useState(initialDate);
@@ -115,6 +136,7 @@ function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...
     }
   };
   const pick = (date) => {
+    if (isUnavailable(date)) return;
     if (!isControlled) setInternal(date);
     onChange?.(date);
   };
@@ -179,6 +201,7 @@ function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...
               date,
               selected: Boolean(selected && ymd(selected) === ymd(date)),
               today: ymd(today) === ymd(date),
+              disabled: isUnavailable(date),
               tabIndex: ymd(focusDate) === ymd(date) ? 0 : -1,
               buttonRef: (node) => {
                 if (node) dayRefs.current.set(ymd(date), node);
@@ -214,4 +237,4 @@ function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...
 export {
   Calendar
 };
-//# sourceMappingURL=chunk-44LSU4TB.js.map
+//# sourceMappingURL=chunk-TDBMKKFN.js.map

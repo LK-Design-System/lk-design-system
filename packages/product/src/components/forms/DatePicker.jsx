@@ -8,7 +8,7 @@ import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
  * component). Controlled (`value`) or uncontrolled (`defaultValue`); closes on
  * outside-click and on selection.
  */
-export function DatePicker({ value, defaultValue, onChange, placeholder = '날짜를 선택해 주세요.', size = 'md', disabled = false, full = false, style, 'aria-label': ariaLabel, onKeyDown, ...rest }) {
+export function DatePicker({ value, defaultValue, onChange, isDateDisabled, minDate, maxDate, placeholder = '날짜를 선택해 주세요.', size = 'md', disabled = false, full = false, style, 'aria-label': ariaLabel, onKeyDown, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue || null);
   const sel = isControlled ? value : internal;
@@ -70,7 +70,7 @@ export function DatePicker({ value, defaultValue, onChange, placeholder = '날�
       </button>
       {expanded && (
         <div id={popupId} role="dialog" aria-label={ariaLabel ?? placeholder} style={{ position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 40 }}>
-          <Calendar value={sel || undefined} onChange={pick} autoFocus />
+          <Calendar value={sel || undefined} onChange={pick} isDateDisabled={isDateDisabled} minDate={minDate} maxDate={maxDate} autoFocus />
         </div>
       )}
     </div>

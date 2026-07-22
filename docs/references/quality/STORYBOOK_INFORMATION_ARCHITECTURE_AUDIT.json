@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "1f337f2ef01c878600aedf9ca6f8991bfc515d4fd31f5b8ac51c1ce3014a6e47",
+    "storybookIndexSha256": "2edd90f261d9e417db5bbad6412f02e6f02dfb4361b6a6f3a123db25e967ba23",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -68,7 +68,7 @@
     "describedPublicStories": 321,
     "reviewedPages": 148,
     "reviewedStories": 419,
-    "staleReviewedPages": 2,
+    "staleReviewedPages": 5,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
@@ -1110,7 +1110,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentDisclosure.stories.jsx",
-      "sourceSha256": "d55224ba3071e5350115e29d4fc46172c86df22a64208a00ad4c1aeab056aaff",
+      "sourceSha256": "8198cd93ffb453d94ea21d0c89bfa7acc67771f98928db52eb97824dd057919f",
       "primaryOwner": "Accordion",
       "ownerComponents": [
         "Accordion",
@@ -1147,6 +1147,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -10902,14 +10903,13 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationDashboard.stories.jsx",
-      "sourceSha256": "babb6bfe2d64899c7c4c99a47aefd1b6131910101f5dffbe3f2fcfeda4b1cf32",
+      "sourceSha256": "dfabec31411afb4d00dd129a05a01c0e43a82a269e1cd6ce354f1a2b2862c169",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"
       ],
       "supportingComponents": [
         "BottomNav",
-        "Button",
         "Icon",
         "IconButton",
         "Lockup",
@@ -10957,7 +10957,6 @@
             "DashboardShell"
           ],
           "supportingComponents": [
-            "Button",
             "Icon",
             "IconButton",
             "Lockup",
@@ -10986,7 +10985,6 @@
             "DashboardShell"
           ],
           "supportingComponents": [
-            "Button",
             "Icon",
             "IconButton",
             "Lockup",
@@ -11015,7 +11013,6 @@
             "DashboardShell"
           ],
           "supportingComponents": [
-            "Button",
             "Icon",
             "IconButton",
             "Lockup",
@@ -11045,7 +11042,6 @@
           ],
           "supportingComponents": [
             "BottomNav",
-            "Button",
             "Icon",
             "IconButton",
             "Lockup",
@@ -11904,7 +11900,7 @@
       "layer": "Product",
       "family": "Operations Dashboard",
       "importPath": "./stories/LayoutDashboardShell.stories.jsx",
-      "sourceSha256": "7f32a76fd9845f19274bba18e18eb44e2018420beeb6eae4c43ccaf1d0fff344",
+      "sourceSha256": "e0229c68ec3aae279b5c6479096530a6aa3bf9548f1918a7b82e8d400998807e",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"
@@ -12773,7 +12769,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/DataCalendar.stories.jsx",
-      "sourceSha256": "b8c5bf283eb28ed2b0428527d8f1f1be6289bbdd9dbdeaf0074c7ec7e207fbb1",
+      "sourceSha256": "4d7784195f26a08e49ba1c3187611f3d935a4b1d9038eef4f66a1d1d7d6f6524",
       "primaryOwner": "Calendar",
       "ownerComponents": [
         "Calendar"
@@ -12951,7 +12947,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormDateTime.stories.jsx",
-      "sourceSha256": "0b5a62c0ac7c2ff55ac454bfa786ee33b9b563990baaa1ff5e18a16e5e9f17fe",
+      "sourceSha256": "308b3f50722b52370aebb7f1ef0705d242f47349e6bb4af234323d1e457e8e6c",
       "primaryOwner": "DatePicker",
       "ownerComponents": [
         "DatePicker"

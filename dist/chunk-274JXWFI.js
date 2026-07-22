@@ -1,7 +1,7 @@
 "use client";
 import {
   Calendar
-} from "./chunk-44LSU4TB.js";
+} from "./chunk-TDBMKKFN.js";
 import {
   Icon
 } from "./chunk-LMQSX5BW.js";
@@ -9,7 +9,7 @@ import {
 // components/forms/DatePicker.jsx
 import React from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC\uB97C \uC120\uD0DD\uD574 \uC8FC\uC138\uC694.", size = "md", disabled = false, full = false, style, "aria-label": ariaLabel, onKeyDown, ...rest }) {
+function DatePicker({ value, defaultValue, onChange, isDateDisabled, minDate, maxDate, placeholder = "\uB0A0\uC9DC\uB97C \uC120\uD0DD\uD574 \uC8FC\uC138\uC694.", size = "md", disabled = false, full = false, style, "aria-label": ariaLabel, onKeyDown, ...rest }) {
   const isControlled = value !== void 0;
   const [internal, setInternal] = React.useState(defaultValue || null);
   const sel = isControlled ? value : internal;
@@ -80,7 +80,7 @@ function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC
             ]
           }
         ),
-        expanded && /* @__PURE__ */ jsx("div", { id: popupId, role: "dialog", "aria-label": ariaLabel ?? placeholder, style: { position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 40 }, children: /* @__PURE__ */ jsx(Calendar, { value: sel || void 0, onChange: pick, autoFocus: true }) })
+        expanded && /* @__PURE__ */ jsx("div", { id: popupId, role: "dialog", "aria-label": ariaLabel ?? placeholder, style: { position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 40 }, children: /* @__PURE__ */ jsx(Calendar, { value: sel || void 0, onChange: pick, isDateDisabled, minDate, maxDate, autoFocus: true }) })
       ]
     }
   );
@@ -89,4 +89,4 @@ function DatePicker({ value, defaultValue, onChange, placeholder = "\uB0A0\uC9DC
 export {
   DatePicker
 };
-//# sourceMappingURL=chunk-HEXIHWLT.js.map
+//# sourceMappingURL=chunk-274JXWFI.js.map

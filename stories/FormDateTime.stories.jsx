@@ -1,3 +1,4 @@
+import { userEvent } from 'storybook/test';
 import {
   DatePicker,
   FormField,
@@ -38,6 +39,37 @@ export const DateInput = {
       </FormField>
     </main>
   ),
+};
+
+export const BlockedDates = {
+  name: '변형·상태 · 예약 불가일',
+  parameters: storyDescription(
+    '실사 희망일 필드에서 지난 날짜(minDate 이전)와 마감일(7월 20·21일)을 선택 불가로 막는 구성입니다. 트리거를 열면 Calendar 팝오버로 비활성 날짜가 그대로 전달되어 흐리게 표시되고 선택되지 않는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
+      <FormField label="실사 희망일">
+        <DatePicker
+          aria-label="실사 희망일"
+          defaultValue="2026-07-15"
+          minDate="2026-07-10"
+          isDateDisabled={(date) => date.getMonth() === 6 && [20, 21].includes(date.getDate())}
+        />
+      </FormField>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector('button[aria-haspopup="dialog"]');
+    if (!trigger) throw new Error('DatePicker 트리거가 렌더되어야 합니다.');
+    await userEvent.click(trigger);
+    const grid = canvasElement.querySelector('[role="dialog"] [role="grid"]');
+    if (!grid) throw new Error('트리거를 열면 Calendar 팝오버가 나타나야 합니다.');
+    const disabled = grid.querySelectorAll('button[aria-disabled="true"]');
+    if (disabled.length < 3) {
+      throw new Error('DatePicker의 minDate·isDateDisabled가 Calendar 팝오버로 전달되어 비활성 날짜로 표시되어야 합니다.');
+    }
+    await userEvent.keyboard('{Escape}');
+  },
 };
 
 export const DatePickerCard = { ...DatePickerCardStory, name: 'DatePicker card parity', tags: ['!dev', 'visual-parity'] };

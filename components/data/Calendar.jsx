@@ -34,22 +34,28 @@ function formatDateLabel(date) {
   }).format(date);
 }
 
-function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDown, onPick }) {
+function toDayNumber(date) {
+  return date.getFullYear() * 10000 + date.getMonth() * 100 + date.getDate();
+}
+
+function DayCell({ date, selected, today, disabled, tabIndex, buttonRef, onFocus, onKeyDown, onPick }) {
   const [hovered, setHovered] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const dayOfWeek = date.getDay();
-  const background = selected
+  const background = selected && !disabled
     ? 'var(--color-semantic-primary-normal)'
-    : hovered
+    : hovered && !disabled
       ? 'var(--color-semantic-fill-normal)'
       : 'transparent';
-  const color = selected
-    ? 'var(--color-semantic-static-white)'
-    : dayOfWeek === 0
-      ? 'var(--color-semantic-accent-foreground-red)'
-      : dayOfWeek === 6
-        ? 'var(--color-semantic-accent-foreground-blue)'
-        : 'var(--color-semantic-label-normal)';
+  const color = disabled
+    ? 'var(--color-semantic-label-disable)'
+    : selected
+      ? 'var(--color-semantic-static-white)'
+      : dayOfWeek === 0
+        ? 'var(--color-semantic-accent-foreground-red)'
+        : dayOfWeek === 6
+          ? 'var(--color-semantic-accent-foreground-blue)'
+          : 'var(--color-semantic-label-normal)';
 
   return (
     <button
@@ -58,7 +64,8 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
       tabIndex={tabIndex}
       aria-label={formatDateLabel(date)}
       aria-current={today ? 'date' : undefined}
-      onClick={() => onPick(date)}
+      aria-disabled={disabled || undefined}
+      onClick={() => { if (!disabled) onPick(date); }}
       onFocus={() => { setFocused(true); onFocus(); }}
       onBlur={() => setFocused(false)}
       onKeyDown={onKeyDown}
@@ -68,8 +75,8 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
         width: '100%',
         height: 38,
         borderRadius: 'var(--radius-md)',
-        cursor: 'pointer',
-        border: today && !selected ? '1px solid var(--color-semantic-primary-normal)' : '1px solid transparent',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        border: today && !selected && !disabled ? '1px solid var(--color-semantic-primary-normal)' : '1px solid transparent',
         outline: 'none',
         boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none',
         background,
@@ -78,6 +85,7 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
         fontSize: 'var(--label1-size)',
         fontWeight: selected ? 'var(--fw-bold)' : 'var(--fw-medium)',
         fontVariantNumeric: 'tabular-nums',
+        textDecoration: disabled ? 'line-through' : 'none',
         transition: 'background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
       }}
     >
@@ -87,11 +95,19 @@ function DayCell({ date, selected, today, tabIndex, buttonRef, onFocus, onKeyDow
 }
 
 /** Month calendar with one roving day focus and grid keyboard navigation. */
-export function Calendar({ value, defaultValue, onChange, autoFocus = false, style, ...rest }) {
+export function Calendar({ value, defaultValue, onChange, isDateDisabled, minDate, maxDate, autoFocus = false, style, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(() => parseDate(defaultValue));
   const selected = isControlled ? parseDate(value) : internal;
   const today = React.useMemo(() => new Date(), []);
+  const minDay = React.useMemo(() => { const d = parseDate(minDate); return d ? toDayNumber(d) : null; }, [minDate]);
+  const maxDay = React.useMemo(() => { const d = parseDate(maxDate); return d ? toDayNumber(d) : null; }, [maxDate]);
+  const isUnavailable = React.useCallback((date) => {
+    const day = toDayNumber(date);
+    if (minDay != null && day < minDay) return true;
+    if (maxDay != null && day > maxDay) return true;
+    return isDateDisabled ? Boolean(isDateDisabled(date)) : false;
+  }, [minDay, maxDay, isDateDisabled]);
   const initialDate = selected ?? today;
   const [view, setView] = React.useState(() => new Date(initialDate.getFullYear(), initialDate.getMonth(), 1));
   const [focusDate, setFocusDate] = React.useState(initialDate);
@@ -132,6 +148,7 @@ export function Calendar({ value, defaultValue, onChange, autoFocus = false, sty
   };
 
   const pick = (date) => {
+    if (isUnavailable(date)) return;
     if (!isControlled) setInternal(date);
     onChange?.(date);
   };
@@ -209,6 +226,7 @@ export function Calendar({ value, defaultValue, onChange, autoFocus = false, sty
                     date={date}
                     selected={Boolean(selected && ymd(selected) === ymd(date))}
                     today={ymd(today) === ymd(date)}
+                    disabled={isUnavailable(date)}
                     tabIndex={ymd(focusDate) === ymd(date) ? 0 : -1}
                     buttonRef={(node) => {
                       if (node) dayRefs.current.set(ymd(date), node);
