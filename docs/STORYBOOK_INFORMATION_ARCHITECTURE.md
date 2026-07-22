@@ -22,7 +22,7 @@
 - 숨김 스토리: 102개
 - 숨김 visual parity: 73개
 - 숨김 internal contract: 29개
-- 검토 완료 페이지 148/149개, 스토리 419/429개. 신규 `LDS Product/Navigation/Dashboard Navigation` 페이지(스토리 10개)는 검토 대기 상태다.
+- 검토 완료 페이지 149/149개, 스토리 429/429개. 신규 `LDS Product/Navigation/Dashboard Navigation` 페이지와 feat(menu) 추가 스토리 10개, stale 7개 페이지는 2026-07-22 owner 위임 검토(Claude 수행, 감사 원장 reviewNote에 근거 기록)로 완료했다.
 
 2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 149개 페이지와 429개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 

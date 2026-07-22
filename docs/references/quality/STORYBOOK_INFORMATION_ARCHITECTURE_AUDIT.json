@@ -66,9 +66,9 @@
     "pagesWithVisibleCanvasIntroduction": 149,
     "pagesWithDecisionGuidance": 144,
     "describedPublicStories": 327,
-    "reviewedPages": 148,
-    "reviewedStories": 419,
-    "staleReviewedPages": 7,
+    "reviewedPages": 149,
+    "reviewedStories": 429,
+    "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
@@ -1136,8 +1136,8 @@
       "dispositionReason": "Kept as one LDS disclosure-pattern page. The accepted local .fig snapshot has no WDS Accordion or Collapsible component-set (only a Folder icon matches); WDS Content defines Icon, Content Badge, Thumbnail, Avatar, List Cell, Card. Accordion and Collapsible are LDS extensions, so promoting them to standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "d55224ba3071e5350115e29d4fc46172c86df22a64208a00ad4c1aeab056aaff",
+      "reviewedAt": "2026-07-22T11:33:33.476Z",
+      "reviewedSourceSha256": "8198cd93ffb453d94ea21d0c89bfa7acc67771f98928db52eb97824dd057919f",
       "stories": [
         {
           "id": "lds-core-components-content-disclosure--disclosure",
@@ -1166,7 +1166,7 @@
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
+      "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the added play test verifies the collapsed-content accessibility repair — every trigger links its panel via aria-controls and collapsed panels carry inert (removed from the accessibility tree and tab order) while open panels do not, toggled and asserted in both directions. Closes the benchmark-flagged Accordion/Collapsible defect."
     },
     {
       "title": "LDS Core/Components/Content/Lists",
@@ -2851,8 +2851,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "339cda47f6ef12941793c6c5938cbf0474a419499ff562415f99c06f8fd948dc",
+      "reviewedAt": "2026-07-22T11:33:33.476Z",
+      "reviewedSourceSha256": "eb89cb80988821949e01926c717a78f9926dd23a3ff489aaad8c56fc52ce669d",
       "stories": [
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
@@ -2894,15 +2894,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DropdownMenu"
           ],
           "supportingComponents": [
             "Button",
             "Icon"
-          ]
+          ],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Drill mode swaps the same panel instead of opening a flyout. Play asserts no submenu portal exists, a back control is present at child levels, the panel width stays fixed across drill transitions, and ArrowLeft returns to the parent level."
         },
         {
           "id": "lds-core-components-overlay-dropdown-menu--nested-submenus",
@@ -2919,15 +2920,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DropdownMenu"
           ],
           "supportingComponents": [
             "Button",
             "Icon"
-          ]
+          ],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Flyout submenu via recursive declarative items (API openness T1). Play asserts aria-haspopup=\"menu\" and aria-expanded toggling on the branch trigger, ArrowRight entry focusing the first child, ArrowLeft closing with focus returned to the parent trigger, a body-portaled role=\"menu\" named by the trigger label, and leaf selection closing every level with focus restored to the root trigger."
         },
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-keyboard-contract",
@@ -2977,7 +2979,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 post-split source and Core layer review: keep."
+      "reviewNote": "2026-07-12 post-split source and Core layer review: keep. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the two added submenu interaction stories (flyout and drill), each reviewed at story level against the accessibility and API-openness contracts."
     },
     {
       "title": "LDS Core/Components/Overlay/Modal",
@@ -10981,10 +10983,10 @@
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-22T11:30:29.029Z",
+      "reviewedSourceSha256": "dfabec31411afb4d00dd129a05a01c0e43a82a269e1cd6ce354f1a2b2862c169",
       "stories": [
         {
           "id": "lds-product-navigation-dashboard-navigation--overview",
@@ -11001,8 +11003,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DashboardShell"
           ],
@@ -11012,7 +11014,8 @@
             "Lockup",
             "SideNav",
             "TopBar"
-          ]
+          ],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Representative fixed 244px docked panel per the DESIGN.md navigation contract; play asserts no collapse control, fixed width, and no horizontal overflow. Reviewed together with the page-level review."
         },
         {
           "id": "lds-product-navigation-dashboard-navigation--top-bar-toggle",
@@ -11029,8 +11032,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DashboardShell"
           ],
@@ -11040,7 +11043,8 @@
             "Lockup",
             "SideNav",
             "TopBar"
-          ]
+          ],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Opt-in top-bar collapse toggle per DESIGN.md: play asserts the toggle lives in the header (never inside the side panel), swaps its accessible label across collapse/expand, stays beside the 64px rail when collapsed, and causes no horizontal overflow."
         },
         {
           "id": "lds-product-navigation-dashboard-navigation--overlay-peek-rail",
@@ -11057,8 +11061,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DashboardShell"
           ],
@@ -11068,7 +11072,8 @@
             "Lockup",
             "SideNav",
             "TopBar"
-          ]
+          ],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Opt-in overlay peek rail per DESIGN.md: play asserts a reserved 64px column, hover expansion floating above content and header without reflowing the main landmark, and retraction on exit. Keyboard-focus/Escape expansion is exercised on the SideNav component page."
         },
         {
           "id": "lds-product-navigation-dashboard-navigation--narrow-320",
@@ -11085,8 +11090,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DashboardShell"
           ],
@@ -11097,9 +11102,11 @@
             "Lockup",
             "SideNav",
             "TopBar"
-          ]
+          ],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). 320px narrow fallback per DESIGN.md: play asserts the side panel yields to BottomNav, native links are preserved, the desktop collapse control is not inherited, and no horizontal overflow occurs."
         }
-      ]
+      ],
+      "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Verified all four stories against the DESIGN.md navigation contract: representative fixed 244px docked panel with no collapse control and no horizontal overflow; opt-in top-bar collapse toggle at the start of the header that never lives inside the side panel, swaps its accessible label, and stays beside the 64px rail when collapsed; overlay peek rail that reserves 64px, floats the full panel above content and header without reflowing the main landmark, and retracts on exit; 320px narrow fallback that yields to BottomNav native links without inheriting the desktop collapse control. Product identity appears once (SideNav Lockup; the top bar carries workspace scope). Play assertions cover each contract point; visual smoke baselines exist for all three configurations. Noted limitation: keyboard-focus/Escape expansion of the overlay rail is exercised on the SideNav component page, not here."
     },
     {
       "title": "LDS Product/Navigation/Footer",
@@ -11207,8 +11214,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "641d577af99947e3e8884f8d8279c6ba6b3ae1ef039948895e3c0b52da00a188",
+      "reviewedAt": "2026-07-22T11:33:33.476Z",
+      "reviewedSourceSha256": "7e92876e9bdeb74d555325a13ab01a387a5d582a2e195bc17a9ff918d0dc4f3a",
       "stories": [
         {
           "id": "lds-product-navigation-menubar--menubar-patterns",
@@ -11247,12 +11254,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Menubar"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Same contract family as the Dropdown Menu drill story through the shared useSubmenuBranch hook; play assertions cover same-panel swap, back control, fixed width, and ArrowLeft return."
         },
         {
           "id": "lds-product-navigation-menubar--nested-submenus",
@@ -11269,12 +11277,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Menubar"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Same contract family as the Dropdown Menu flyout story through the shared useSubmenuBranch hook; play assertions cover the same aria-haspopup/aria-expanded, arrow-key entry/return, portal naming, and full-close-on-selection contract points."
         },
         {
           "id": "lds-product-navigation-menubar--menubar-keyboard-contract",
@@ -11300,7 +11309,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 post-split source and Product layer review: keep."
+      "reviewNote": "2026-07-12 post-split source and Product layer review: keep. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the two added submenu interaction stories sharing the useSubmenuBranch contract, reviewed at story level."
     },
     {
       "title": "LDS Product/Navigation/Side Nav",
@@ -11958,8 +11967,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-21T00:00:00.000Z",
-      "reviewedSourceSha256": "a2a7fa9d865b872bb763918d2366247726a22ebc14dd532fc41edca89456dc28",
+      "reviewedAt": "2026-07-22T11:33:33.476Z",
+      "reviewedSourceSha256": "ecd76cae43000024fced278d56e1488aae5acd233df363001e1267c009365aea",
       "stories": [
         {
           "id": "lds-product-layout-dashboard-grid--responsive-card-flow",
@@ -11987,7 +11996,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the added 520px fillLastRow fixture asserts the wrapped remainder card stretches to the container end without overflow; layout-mechanics addition consistent with the peer-surface grid contract."
     },
     {
       "title": "LDS Product/Operations Dashboard/Dashboard Shell",
@@ -12031,8 +12040,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-22T00:00:00.000Z",
-      "reviewedSourceSha256": "6c708dd660d564db81641ba2561bd72dc4878495e4af0412fa39d439666b9098",
+      "reviewedAt": "2026-07-22T11:33:33.476Z",
+      "reviewedSourceSha256": "e0229c68ec3aae279b5c6479096530a6aa3bf9548f1918a7b82e8d400998807e",
       "stories": [
         {
           "id": "lds-product-layout-dashboard-shell--normal-width",
@@ -12218,7 +12227,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-22 reviewed the dashboard shell taxonomy, docked sidebar behavior, dark surface, narrow fallback, accessibility, and visual baselines; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-22 reviewed the dashboard shell taxonomy, docked sidebar behavior, dark surface, narrow fallback, accessibility, and visual baselines; Product ownership and keep disposition remain valid. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the in-panel collapse demo moved to the Dashboard Navigation pattern page per the updated DESIGN.md navigation contract (fixed panel is representative; in-panel boundary control is legacy); header actions moved from ghost to plain per the recorded benchmark visual decision; the shell grid adopts fillLastRow."
     },
     {
       "title": "LDS Product/Overlay/Command Palette",
@@ -12886,8 +12895,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "b8c5bf283eb28ed2b0428527d8f1f1be6289bbdd9dbdeaf0074c7ec7e207fbb1",
+      "reviewedAt": "2026-07-22T11:33:33.476Z",
+      "reviewedSourceSha256": "4d7784195f26a08e49ba1c3187611f3d935a4b1d9038eef4f66a1d1d7d6f6524",
       "stories": [
         {
           "id": "lds-product-selection-and-input-calendar--calendar-pattern",
@@ -12926,12 +12935,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Calendar"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Closes the benchmark-flagged disabled-dates gap. Play asserts minDate and isDateDisabled cells expose aria-disabled=\"true\" while remaining focus-traversable, and that clicking a disabled cell does not change the selection."
         },
         {
           "id": "lds-product-selection-and-input-calendar--calendar-card",
@@ -12956,7 +12966,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the added blocked-dates story, reviewed at story level (aria-disabled cells remain focus-traversable, selection blocked)."
     },
     {
       "title": "LDS Product/Selection and Input/Color Swatch",
@@ -13088,8 +13098,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "0b5a62c0ac7c2ff55ac454bfa786ee33b9b563990baaa1ff5e18a16e5e9f17fe",
+      "reviewedAt": "2026-07-22T11:33:33.476Z",
+      "reviewedSourceSha256": "308b3f50722b52370aebb7f1ef0705d242f47349e6bb4af234323d1e457e8e6c",
       "stories": [
         {
           "id": "lds-product-selection-and-input-date-picker--date-input",
@@ -13130,14 +13140,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DatePicker"
           ],
           "supportingComponents": [
             "FormField"
-          ]
+          ],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). DatePicker passes minDate/isDateDisabled through to the popover Calendar; the story verifies disabled dates render dimmed and cannot be selected, consistent with the Calendar story contract."
         },
         {
           "id": "lds-product-selection-and-input-date-picker--date-picker-card",
@@ -13162,7 +13173,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid. || 2026-07-22 owner-delegated re-review (performed by Claude on the design-system owner's instruction): the source delta is the added blocked-dates story passing minDate/isDateDisabled through the popover, reviewed at story level."
     },
     {
       "title": "LDS Product/Selection and Input/Date Range",
