@@ -5,12 +5,12 @@ import { storyDescription } from './StoryGuide.shared.jsx';
 const evidenceImage = './assets/industry/ind-construction-hazard-patrol.webp';
 
 const regions = [
-  { id: 'worker', label: '작업자', score: 0.96, x: 0.18, y: 0.19, width: 0.18, height: 0.57 },
-  { id: 'helmet', label: '안전모', score: 0.91, x: 0.2, y: 0.13, width: 0.11, height: 0.12, tone: 'positive' },
+  { id: 'safety-net', label: '안전 방호망', score: 0.93, x: 0.14, y: 0.27, width: 0.2, height: 0.5, tone: 'positive' },
+  { id: 'excavator', label: '굴착기 작업 구역', score: 0.97, x: 0.6, y: 0.28, width: 0.23, height: 0.27, tone: 'cautionary' },
 ];
 
 const points = [
-  { id: 'heat', label: '모터 온도', value: 71, unit: '℃', x: 0.77, y: 0.67, tone: 'cautionary' },
+  { id: 'heat', label: '모터 온도', value: 71, unit: '℃', x: 0.42, y: 0.69, tone: 'cautionary' },
 ];
 
 const annotationArgs = {
@@ -163,8 +163,8 @@ export const MismatchedAspectRatio = {
     aspectRatio: '1 / 1',
     objectFit: 'contain',
     caption: 'letterbox가 있어도 annotation은 실제 이미지 영역을 기준으로 배치됩니다.',
-    regions: [{ id: 'worker', label: '작업자', x: 0.18, y: 0.19, width: 0.18, height: 0.57 }],
-    points: [{ id: 'heat', label: '모터 온도', value: 71, unit: '℃', x: 0.77, y: 0.67 }],
+    regions: [{ id: 'safety-net', label: '안전 방호망', x: 0.14, y: 0.27, width: 0.2, height: 0.5 }],
+    points: [{ id: 'heat', label: '모터 온도', value: 71, unit: '℃', x: 0.42, y: 0.69 }],
   },
 };
 
