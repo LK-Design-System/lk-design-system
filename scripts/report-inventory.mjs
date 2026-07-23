@@ -59,12 +59,17 @@ async function getStorybookCounts() {
 
 async function getCounts() {
   const classification = JSON.parse(await read('docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'));
-  const internalModulePaths = new Set((classification.internalModules || []).map((row) => row.path));
+  // Internal engine modules (components/internal/*, overlay/forms shared engines)
+  // carry their own .d.ts contracts but are not public components, so exclude
+  // them by stem: the classification lists both .js and .jsx internal modules.
+  const internalModuleStems = new Set(
+    (classification.internalModules || []).map((row) => row.path.replace(/\.(jsx|js)$/, '')),
+  );
   const componentJsx = (await collect('components', (rel) => rel.endsWith('.jsx'))).filter(
-    (rel) => !internalModulePaths.has(rel),
+    (rel) => !internalModuleStems.has(rel.replace(/\.jsx$/, '')),
   );
   const componentDts = (await collect('components', (rel) => rel.endsWith('.d.ts'))).filter(
-    (rel) => !internalModulePaths.has(rel.replace(/\.d\.ts$/, '.jsx')),
+    (rel) => !internalModuleStems.has(rel.replace(/\.d\.ts$/, '')),
   );
   const groups = await readdir(path.join(root, 'components'), { withFileTypes: true });
   const srcIndex = await read('src/index.js');

@@ -5,7 +5,7 @@
 | Type | Canonical workflow |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-24 |
 
 Storybook 페이지 소유권, 공개/숨김 역할, 영역별 설명 순서는 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md)를 따른다. 전수 판정 원장은 `docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`에서 관리한다.
 
@@ -82,6 +82,33 @@ Storybook 표면의 LDS 자체 규칙:
   컴포넌트의 홈 페이지입니다. 다른 페이지에서 같은 컴포넌트를 지칭할 때는 한국어
   일반명사(예: "상단 바", "데이터 표")를 씁니다. 홈 중복은
   `npm run check:story-subjects`가 차단합니다.
+
+## 행동 엔진 사용 규칙
+
+이 저장소에는 계약(`.d.ts` + `.prompt.md`)과 전용 테스트를 가진 headless 행동 엔진 계층이 있다.
+새 컴포넌트는 아래 행동을 **손으로 재구현하지 않고** 해당 엔진을 사용한다. 이 규율은 리뷰가
+아니라 게이트로 지킨다: `npm run check:engine-reuse`가 엔진을 우회한 시그니처 패턴(수동 roving
+menu, 자체 focus trap, document 수준 outside-dismiss listener, 조건부 마운트 `aria-live`, 수동
+필드 메타데이터 배선)을 감지하며, 기존 위반은
+`docs/references/quality/ENGINE_REUSE_BASELINE.json` 래칫에 잠겨 있고 새 위반만 실패한다.
+엔진 계약 자체는 `npm run check:engine-contracts`(Playwright 하네스,
+`scripts/check-engine-contracts.mjs`)가 소비자 없이 검증한다.
+
+| 행동 | 엔진 | 계약 문서 |
+| --- | --- | --- |
+| 메뉴 roving focus·typeahead·Escape 스택 | `components/internal/useMenuKeyboard.js` | [`useMenuKeyboard.prompt.md`](../components/internal/useMenuKeyboard.prompt.md) |
+| 서브메뉴(드릴) 브랜치·포탈 배치 | `components/internal/useSubmenuBranch.jsx` | [`useSubmenuBranch.prompt.md`](../components/internal/useSubmenuBranch.prompt.md) |
+| light dismiss(바깥 클릭·최상단 Escape·재오픈 래치)·anchored 배치·열림 triad | `components/overlay/anchored-overlay.js` | [`anchored-overlay.prompt.md`](../components/overlay/anchored-overlay.prompt.md) |
+| 모달 초점 트랩·복원·오버레이 스택·스크롤 잠금 | `components/overlay/dialog-focus.js` | [`dialog-focus.prompt.md`](../components/overlay/dialog-focus.prompt.md) |
+| 폼 필드 라벨·메시지·`aria-describedby` 메타데이터와 상태 토큰 | `components/forms/field-shared.js` | [`field-shared.prompt.md`](../components/forms/field-shared.prompt.md) |
+
+- 엔진 구현을 바꾸면 모든 소비자가 함께 바뀐다. 동작 수정은 엔진의 `.prompt.md` 계약·전용
+  테스트와 함께 진행하고, 특정 소비자만을 위한 분기를 엔진에 넣지 않는다.
+- 엔진이 계약상 소유하지 않는 요구(예: 포탈된 앵커드 패널의 light dismiss)는 우회 구현 대신
+  엔진 확장으로 해결하고, 불가피한 예외는 `--update-baseline`으로 래칫에 기록하며 사유를 PR에
+  남긴다.
+- 엔진은 내부 계층이다: public export로 승격하지 않고 `PUBLIC_EXPORT_CLASSIFICATION.json`의
+  `internalModules` 등록을 유지한다(`npm run check:layers`).
 
 ## 컴포넌트 추가 및 재설계 검토
 

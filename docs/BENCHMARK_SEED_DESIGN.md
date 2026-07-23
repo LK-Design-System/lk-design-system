@@ -33,7 +33,7 @@ seed가 앞선 축은 전부 인프라·제품화 축이다. 컴포넌트 단위
 
 ## 채택 결정
 
-### 1단계 — 내부 엔진의 계층 승격 (마감 직후, 소규모)
+### 1단계 — 내부 엔진의 계층 승격 (완료, 2026-07-24)
 
 seed의 headless 층에 해당하는 배아가 이미 있다: `components/internal/useMenuKeyboard`,
 `components/overlay/anchored-overlay.js`(useLightDismiss·useFloatingPosition),
@@ -41,11 +41,17 @@ seed의 headless 층에 해당하는 배아가 이미 있다: `components/intern
 HoverCard의 Escape 재오픈을 엔진 한 곳에서 고쳐 Tooltip·Popover가 함께 나은 것이 이 층의
 가치 증명이다.
 
-- 이 엔진들에 `.d.ts`와 `.prompt.md` 계약, 전용 테스트를 부여해 내부 구현이 아닌 정식
-  계층으로 만든다.
-- "새 컴포넌트는 포커스·dismiss·roving·필드 메타데이터 로직을 손으로 재구현하지 않고 이
+- [x] 이 엔진들에 `.d.ts`와 `.prompt.md` 계약, 전용 테스트를 부여해 내부 구현이 아닌 정식
+  계층으로 만든다. — 엔진 5종(useMenuKeyboard, useSubmenuBranch, anchored-overlay,
+  dialog-focus, field-shared)에 `.d.ts`·`.prompt.md`를 부여했고, 소비자 없는 Playwright 계약
+  하네스 `scripts/check-engine-contracts.mjs`(`npm run check:engine-contracts`)가 roving
+  focus·typeahead·entry focus 취소·Escape 래치·초점 트랩·스크롤 잠금·필드 메타데이터 계약을
+  검증한다.
+- [x] "새 컴포넌트는 포커스·dismiss·roving·필드 메타데이터 로직을 손으로 재구현하지 않고 이
   엔진을 사용한다"를 검사로 강제한다. 아키텍처 규율을 리뷰가 아니라 게이트로 지키는 것이
-  이 저장소의 방식이다.
+  이 저장소의 방식이다. — `npm run check:engine-reuse`가 우회 시그니처를 감지하고 기존 위반은
+  `docs/references/quality/ENGINE_REUSE_BASELINE.json` 래칫에 잠갔다. 사용 규칙은
+  [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)의 "행동 엔진 사용 규칙" 절이 소유한다.
 
 ### 2단계 — 스트랭글러 방식 행동/외형 분리 (상시, 트리거: 파일을 여는 김에)
 
