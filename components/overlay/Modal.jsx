@@ -24,6 +24,7 @@ export function Modal({
   ...rest
 }) {
   const titleId = React.useId();
+  const descriptionId = React.useId();
   const { dialogRef, zIndex } = useDialogFocus({
     open,
     onDismiss: onClose,
@@ -44,6 +45,7 @@ export function Modal({
         aria-modal="true"
         aria-labelledby={title != null ? titleId : undefined}
         aria-label={title == null ? ariaLabel : undefined}
+        aria-describedby={children != null ? descriptionId : undefined}
         tabIndex={-1}
         style={{ width: '100%', maxWidth: width, maxHeight: '86vh', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', borderRadius: 'var(--component-dialog-radius)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', overflow: 'hidden', ...style }}
         {...rest}
@@ -58,7 +60,7 @@ export function Modal({
             )}
           </div>
         )}
-        <div style={{ padding: 'var(--space-5) var(--space-6)', overflow: 'auto', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
+        <div id={descriptionId} style={{ padding: 'var(--space-5) var(--space-6)', overflow: 'auto', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         {footer != null && (
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)', padding: 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
         )}

@@ -4,6 +4,12 @@ import React from "react";
  * Action Area
  * Bottom action container for primary/secondary actions, optional summaries,
  * captions, sticky placement, and safe-area padding.
+ *
+ * Element contract: a plain `div` by default. An unnamed `<section>` conveys
+ * nothing to assistive tech (it is not even exposed as a landmark), so the
+ * generic wrapper is the honest default. When the consumer names the area with
+ * `aria-label` / `aria-labelledby` it renders as a `<section>` instead, which
+ * becomes a real named `region` landmark.
  */
 export function ActionArea({
   children,
@@ -17,8 +23,10 @@ export function ActionArea({
   style,
   ...rest
 }) {
+  const named = rest["aria-label"] != null || rest["aria-labelledby"] != null;
+  const Root = named ? "section" : "div";
   return (
-    <section
+    <Root
       className="lk-action-area"
       style={{
         display: "grid",
@@ -82,6 +90,6 @@ export function ActionArea({
           {caption}
         </p>
       )}
-    </section>
+    </Root>
   );
 }

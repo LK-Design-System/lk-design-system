@@ -82,6 +82,7 @@ export function ChartFrame({
         lastUpdated={lastUpdated}
         loadingContent={loadingContent}
         messageVariant="embedded"
+        headingLevel={Math.min(6, resolvedHeadingLevel + 1)}
       >
         {hasContent && (
           <div data-chart-frame-body style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0, padding: 'var(--space-4) var(--space-5)', ...bodyStyle }}>

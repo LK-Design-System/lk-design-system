@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { VisuallyHidden } from '../layout/VisuallyHidden.jsx';
 import { StatusBadge } from './StatusBadge.jsx';
 
 /**
@@ -7,6 +8,14 @@ import { StatusBadge } from './StatusBadge.jsx';
  * Monospace log / console stream. Lines are {time, level, source, text};
  * `level` (debug/info/warn/error) drives the accent. Includes level filters,
  * search, tail pause/resume, latest jump, visible clear, and per-line copy.
+ *
+ * Accessibility — terminal convention: quiet while parked, announcing only
+ * while following. The scroll viewport is a named `role="log"` region with
+ * `tabIndex=0` so the stream is readable with the keyboard (WCAG 2.1.1), but it
+ * is NOT itself a live region: virtualization inserts and removes rows on every
+ * scroll, which would announce the whole viewport line by line. A separate
+ * always-mounted polite status region announces only newly arrived lines while
+ * the viewer is following the tail (and copy confirmations).
  */
 const LEVELS = {
   debug: { c: 'var(--color-semantic-label-assistive)', log: 'var(--color-semantic-inverse-label-neutral-soft)', label: 'DEBUG' },
@@ -93,6 +102,8 @@ export function LogViewer({
   streamStatus,
   lastUpdatedAt,
   droppedCount = 0,
+  announceNewLines = true,
+  'aria-label': ariaLabel = '로그 스트림',
   onExport,
   onClear,
   onCopyLine,
@@ -109,19 +120,23 @@ export function LogViewer({
   const [viewportHeight, setViewportHeight] = React.useState(height);
   const [tailLocked, setTailLocked] = React.useState(true);
   const [unreadCount, setUnreadCount] = React.useState(0);
+  const [announcement, setAnnouncement] = React.useState('');
   const boxRef = React.useRef(null);
+  const rowFocusRef = React.useRef(null);
   const previousLineCountRef = React.useRef(lines.length);
   const metrics = DENSITY[density] || DENSITY.comfortable;
   const normalizedQuery = query.trim().toLowerCase();
 
-  const currentLines = React.useMemo(() => lines.slice(clearedUntil), [lines, clearedUntil]);
-  const sourceLines = paused ? pausedLines : currentLines;
-  const shown = React.useMemo(() => sourceLines.filter((line) => {
+  const matchesFilters = React.useCallback((line) => {
     const level = line.level || 'info';
     if (!active.has(level)) return false;
     if (!normalizedQuery) return true;
     return formatLine(line).toLowerCase().includes(normalizedQuery);
-  }), [active, normalizedQuery, sourceLines]);
+  }, [active, normalizedQuery]);
+
+  const currentLines = React.useMemo(() => lines.slice(clearedUntil), [lines, clearedUntil]);
+  const sourceLines = paused ? pausedLines : currentLines;
+  const shown = React.useMemo(() => sourceLines.filter(matchesFilters), [matchesFilters, sourceLines]);
 
   const pausedCount = paused ? Math.max(0, currentLines.length - pausedLines.length) : 0;
   const latestCount = paused ? pausedCount : unreadCount;
@@ -163,13 +178,26 @@ export function LogViewer({
     if (clearedUntil > lines.length) setClearedUntil(0);
   }, [clearedUntil, lines.length]);
 
+  // Terminal convention — the viewer is "following" only while it is not paused
+  // and still parked at the tail. Parked-away or paused viewers stay silent and
+  // surface the backlog through the visible +N badge instead.
+  const following = !paused && tailLocked;
   React.useEffect(() => {
     const previous = previousLineCountRef.current;
     const added = Math.max(0, lines.length - previous);
-    if (lines.length < previous) setUnreadCount(0);
-    if (added > 0 && (paused || !tailLocked)) setUnreadCount((count) => Math.min(999, count + added));
     previousLineCountRef.current = lines.length;
-  }, [lines.length, paused, tailLocked]);
+    if (lines.length < previous) setUnreadCount(0);
+    if (added === 0) return;
+    if (!following) {
+      setUnreadCount((count) => Math.min(999, count + added));
+      return;
+    }
+    if (!announceNewLines) return;
+    const arrivals = lines.slice(lines.length - added).filter(matchesFilters);
+    if (arrivals.length === 0) return;
+    const latest = formatLine(arrivals[arrivals.length - 1]);
+    setAnnouncement(arrivals.length === 1 ? latest : `새 로그 ${arrivals.length}줄, 마지막 ${latest}`);
+  }, [lines, announceNewLines, following, matchesFilters]);
 
   React.useEffect(() => {
     if (!paused && autoScroll && tailLocked) {
@@ -180,6 +208,20 @@ export function LogViewer({
   React.useLayoutEffect(() => {
     updateScrollState();
   }, [height, density, virtualActive, shown.length, updateScrollState]);
+
+  // Virtualization removes the row a per-line control lives on once it leaves
+  // the viewport. Without this, focus would fall back to <body>; move it to the
+  // log region instead so keyboard reading continues where it left off.
+  React.useLayoutEffect(() => {
+    const focused = rowFocusRef.current;
+    const box = boxRef.current;
+    if (!focused || !box || typeof document === 'undefined') return;
+    if (document.contains(focused)) return;
+    rowFocusRef.current = null;
+    if (document.activeElement == null || document.activeElement === document.body) {
+      box.focus({ preventScroll: true });
+    }
+  });
 
   const toggle = (lvl) => setActive((s) => { const n = new Set(s); n.has(lvl) ? n.delete(lvl) : n.add(lvl); return n; });
   const jumpToLatest = () => {
@@ -211,9 +253,13 @@ export function LogViewer({
     try {
       await navigator.clipboard?.writeText(text);
       setCopiedIndex(index);
+      // The copied state is an aria-hidden icon swap, so the confirmation is
+      // published as text on the shared status region instead.
+      setAnnouncement(`로그 라인 복사됨: ${text}`);
       window.setTimeout(() => setCopiedIndex((value) => (value === index ? null : value)), 1200);
     } catch {
       setCopiedIndex(null);
+      setAnnouncement('로그 라인을 복사하지 못했습니다.');
     }
   };
 
@@ -255,7 +301,9 @@ export function LogViewer({
                 onChange={(e) => setQuery(e.target.value)}
                 aria-label="로그 검색"
                 placeholder="검색"
-                style={{ minWidth: 0, flex: 1, border: 'none', outline: 'none', background: 'transparent', color: 'var(--color-semantic-label-normal)', fontFamily: 'inherit', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}
+                /* 텍스트 높이(16px)가 아니라 필드 안쪽 높이를 그대로 채워
+                   포인터 타깃이 24px 아래로 내려가지 않게 한다 (WCAG 2.5.8). */
+                style={{ minWidth: 0, flex: 1, alignSelf: 'stretch', border: 'none', outline: 'none', background: 'transparent', color: 'var(--color-semantic-label-normal)', fontFamily: 'inherit', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}
               />
               {query && (
                 <button type="button" aria-label="검색어 지우기" onClick={() => setQuery('')} style={{ width: 18, height: 18, border: 'none', background: 'transparent', color: 'var(--color-semantic-label-assistive)', cursor: 'pointer', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -267,7 +315,7 @@ export function LogViewer({
           {tools && (
             <div role="group" aria-label="로그 도구" style={{ display: 'inline-flex', gap: 6, flex: '0 0 auto' }}>
               <IconButton label={paused ? '로그 tail 재개' : '로그 tail 일시정지'} icon={paused ? 'play' : 'pause'} active={paused} onClick={togglePause} />
-              <IconButton label="최신 로그로 이동" icon="arrow-down" rail onClick={jumpToLatest}>
+              <IconButton label={latestCount > 0 ? `최신 로그로 이동, 새 로그 ${latestCount > 99 ? '99+' : latestCount}줄` : '최신 로그로 이동'} icon="arrow-down" rail onClick={jumpToLatest}>
                 {latestCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -5, right: -5, minWidth: 16, height: 16, padding: '0 4px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-status-negative)', color: 'var(--color-semantic-static-white)', fontSize: 'var(--caption2-size)', lineHeight: '16px', fontWeight: 'var(--fw-bold)' }}>{latestCount > 99 ? '99+' : `+${latestCount}`}</span>}
               </IconButton>
               <IconButton label="표시 로그 지우기" icon="trash" disabled={currentLines.length === 0} onClick={clearVisible} />
@@ -276,7 +324,8 @@ export function LogViewer({
           )}
         </div>
       )}
-      <div ref={boxRef} role="log" aria-live={paused ? 'off' : 'polite'} aria-label="로그 스트림" onScroll={updateScrollState} style={{ height, overflow: 'auto', scrollbarGutter: 'stable', padding: metrics.panelPadding, borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--color-semantic-inverse-line-normal)', fontFamily: 'var(--font-mono)', fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }}>
+      <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">{announcement}</VisuallyHidden>
+      <div ref={boxRef} role="log" aria-live="off" aria-label={ariaLabel} tabIndex={0} onScroll={updateScrollState} style={{ height, overflow: 'auto', scrollbarGutter: 'stable', padding: metrics.panelPadding, borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-inverse-background)', border: '1px solid var(--color-semantic-inverse-line-normal)', fontFamily: 'var(--font-mono)', fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }}>
         {shown.length === 0 && (
           <div style={{ minHeight: '100%', display: 'grid', placeItems: 'center', color: 'var(--color-semantic-inverse-label-neutral-soft)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
             {normalizedQuery ? '검색 결과 없음' : '로그 없음'}
@@ -298,6 +347,14 @@ export function LogViewer({
                   type="button"
                   aria-label="로그 라인 복사"
                   title="로그 라인 복사"
+                  onFocus={(event) => { rowFocusRef.current = event.target; }}
+                  onBlur={(event) => {
+                    // A row unmounted by virtualization can emit focusout while
+                    // already detached — keep the reference so the layout effect
+                    // can recover focus instead of losing it to <body>.
+                    const node = event.target;
+                    if (rowFocusRef.current === node && node.isConnected) rowFocusRef.current = null;
+                  }}
                   onClick={() => copyLine(line, index)}
                   style={{ width: 24, height: 24, border: 'none', borderRadius: 'var(--radius-sm)', background: copied ? 'var(--color-semantic-inverse-fill-strong)' : 'transparent', color: copied ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-inverse-label-neutral-soft)', cursor: 'pointer', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}
                 >

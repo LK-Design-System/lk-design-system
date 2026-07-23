@@ -16,8 +16,9 @@
 
 - 기본 범위는 현재 페이지, 선택 항목, 전체 검색 결과를 구분합니다. 제품은 필요하면 `scopeOptions`를 완전히 제어합니다.
 - 선택 수나 제품 제공 옵션이 바뀌어 현재 형식·범위가 사라지면 각각 첫 번째 유효 옵션으로 즉시 정규화합니다. 따라서 uncontrolled 사용에서도 제거된 format이나 `selected` 범위가 export 요청으로 전달되지 않습니다.
-- `state="processing"`은 중복 실행을 막고 determinate/indeterminate `ProgressBar`를 표시합니다. success/error는 각각 status/alert로 알립니다.
-- `allowed`는 제품 RBAC 판정 결과입니다. 기본은 disabled control과 보이는 이유이며, 보안상 action 자체를 노출하면 안 될 때만 `unavailableBehavior="hidden"`을 씁니다.
+- `state="processing"`은 중복 실행을 막고 determinate/indeterminate `ProgressBar`를 표시합니다. success/error는 각각 status/alert 라이브 리전으로 알립니다. 두 리전은 idle 상태에서도 빈 채로 계속 마운트되어 있고 텍스트만 바뀝니다. 메시지와 함께 새로 삽입된 리전은 낭독이 누락되기 때문이며, 보이는 완료 문구는 표현만 담당합니다(`ToastStack`의 상시 리전과 같은 계약).
+- `allowed`는 제품 RBAC 판정 결과입니다. 기본은 실행이 막힌 control과 보이는 이유이며, 보안상 action 자체를 노출하면 안 될 때만 `unavailableBehavior="hidden"`을 씁니다.
+- 실행할 수 없는 export action은 native `disabled` 대신 `aria-disabled`로 표시해 계속 포커스 가능한 상태를 유지합니다. 권한이 회수되는 순간 포커스가 `<body>`로 떨어지는 것을 막고, Tab으로 이동하는 사용자가 `aria-describedby`로 연결된 사유를 발견할 수 있게 하기 위해서입니다(`Button.jsx`의 loading focusable-disabled 선례, 아래 Fluent Button 지침).
 - 행 단위 export가 아니라 dataset global action이므로 `DataToolbar.actions`에 배치합니다. 선택 행 작업은 DataGrid bulk band가 계속 소유합니다.
 - 별도 카드나 modal을 만들지 않으며 좁은 폭에서는 format, scope, action이 순서대로 줄바꿈됩니다.
 - 내부 ghost export action은 active light/dark scope의 semantic foreground를 직접 사용하고, callback·유효 format·유효 scope가 없으면 no-op button 대신 비활성 상태가 됩니다.

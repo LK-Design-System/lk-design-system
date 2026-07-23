@@ -1,4 +1,4 @@
-import { userEvent } from 'storybook/test';
+import { userEvent, waitFor } from 'storybook/test';
 import {
   DatePicker,
   FormField,
@@ -59,16 +59,62 @@ export const BlockedDates = {
     </main>
   ),
   play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
     const trigger = canvasElement.querySelector('button[aria-haspopup="dialog"]');
     if (!trigger) throw new Error('DatePicker 트리거가 렌더되어야 합니다.');
+    const popover = () => canvasElement.querySelector('[role="dialog"]');
+    const popoverMonth = () => canvasElement.querySelector('[role="dialog"] [role="grid"]')?.getAttribute('aria-label');
+
     await userEvent.click(trigger);
     const grid = canvasElement.querySelector('[role="dialog"] [role="grid"]');
     if (!grid) throw new Error('트리거를 열면 Calendar 팝오버가 나타나야 합니다.');
+    if (trigger.getAttribute('aria-expanded') !== 'true' || trigger.getAttribute('aria-controls') !== popover().id) {
+      throw new Error('열린 trigger는 aria-expanded와 aria-controls로 팝오버를 가리켜야 합니다.');
+    }
     const disabled = grid.querySelectorAll('button[aria-disabled="true"]');
     if (disabled.length < 3) {
       throw new Error('DatePicker의 minDate·isDateDisabled가 Calendar 팝오버로 전달되어 비활성 날짜로 표시되어야 합니다.');
     }
+    await waitFor(() => {
+      if (!doc.activeElement?.getAttribute('aria-label')?.includes('7월 15일')) {
+        throw new Error('팝오버가 열리면 선택 날짜로 초점이 이동해야 합니다.');
+      }
+    });
+
+    // 값이 있는 팝오버에서도 월 이동이 가능해야 한다(Calendar view 스냅백 회귀 가드).
+    await userEvent.keyboard('{PageDown}');
+    await waitFor(() => {
+      if (popoverMonth() !== '2026년 8월') {
+        throw new Error(`선택 값이 있는 팝오버에서도 PageDown으로 달을 옮길 수 있어야 합니다. (현재: ${popoverMonth()})`);
+      }
+    });
+    await userEvent.keyboard('{PageUp}');
+    await waitFor(() => {
+      if (popoverMonth() !== '2026년 7월') throw new Error('PageUp으로 이전 달에 돌아와야 합니다.');
+    });
+
+    // Escape는 팝오버를 닫고 초점을 trigger로 돌려준다.
     await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (popover()) throw new Error('Escape는 팝오버를 닫아야 합니다.');
+      if (doc.activeElement !== trigger) throw new Error('Escape 뒤 초점은 trigger로 돌아와야 합니다.');
+    });
+
+    // 선택도 팝오버를 닫고 초점을 돌려준다. 이름난 상태를 지키려고 같은 날짜를 다시 고른다.
+    await userEvent.click(trigger);
+    const selectedDay = canvasElement.querySelector('[role="dialog"] button[aria-label*="7월 15일"]');
+    if (!selectedDay) throw new Error('선택된 날짜 셀이 팝오버에 있어야 합니다.');
+    await userEvent.click(selectedDay);
+    await waitFor(() => {
+      if (popover()) throw new Error('날짜를 선택하면 팝오버가 닫혀야 합니다.');
+      if (doc.activeElement !== trigger) throw new Error('선택 뒤 초점은 trigger로 돌아와야 합니다.');
+    });
+    if (!trigger.getAttribute('aria-label')?.includes('2026. 07. 15')) {
+      throw new Error('trigger의 accessible name에 선택 값이 포함되어야 합니다.');
+    }
+
+    // 이름난 상태로 복귀: 닫힌 팝오버, 초점 없음.
+    trigger.blur();
   },
 };
 

@@ -60,6 +60,34 @@ export const ContentBadgePatterns = {
   ),
 };
 
+const SOLID_TONES = ['neutral', 'accent', 'navy', 'positive', 'cautionary', 'negative'];
+
+export const ContentBadgeSolidTones = {
+  name: '변형·상태 · 채움 배지 톤 대비',
+  parameters: storyDescription(
+    'solid 변형을 모든 톤으로 펼쳐 반전 텍스트의 대비를 검토하는 상황입니다. 채도가 높은 상태 색을 그대로 채우면 흰 글자가 AA(4.5:1)에 미달하므로, 상태 톤은 AA 텍스트 토큰을 채움색으로 씁니다. 라이트·다크 배경 모두에서 라벨이 또렷하게 읽히는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
+      <section style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+        {SOLID_TONES.map((tone) => (
+          <ContentBadge key={tone} variant="solid" tone={tone}>{tone}</ContentBadge>
+        ))}
+      </section>
+      <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        {SOLID_TONES.map((tone) => (
+          <div key={tone} style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+            <span style={{ minWidth: 92, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)' }}>{tone}</span>
+            <ContentBadge variant="solid" tone={tone} leading={<Icon name="square" />}>solid</ContentBadge>
+            <ContentBadge tone={tone} leading={<Icon name="square" />}>default</ContentBadge>
+            <ContentBadge variant="outlined" tone={tone} leading={<Icon name="square" />}>outlined</ContentBadge>
+          </div>
+        ))}
+      </section>
+    </main>
+  ),
+};
+
 export const ContentBadgeStatusBadgeCard = {
   ...ContentBadgeStatusBadgeCardStory,
   name: 'ContentBadge · StatusBadge card parity',

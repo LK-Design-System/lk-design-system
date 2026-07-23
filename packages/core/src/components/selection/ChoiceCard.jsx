@@ -23,7 +23,20 @@ const shadowMap = {
   lg: 'var(--shadow-lg)',
 };
 
-/** Selectable option card. Interactive cards use a native radio or checkbox. */
+function joinIds(...ids) {
+  const merged = ids.filter(Boolean).join(' ').trim();
+  return merged || undefined;
+}
+
+/**
+ * Selectable option card. Interactive cards use a native radio or checkbox.
+ *
+ * Naming — the native input previously forced `aria-label={title}`, which
+ * overrode the wrapping `<label>` and dropped `description` from both the name
+ * and the description. Now the title element names the input (`aria-labelledby`)
+ * and the description is attached as a hint (`aria-describedby`, the GOV.UK
+ * hint convention), so both are announced and neither is duplicated.
+ */
 export function ChoiceCard({
   children,
   selected = false,
@@ -70,6 +83,10 @@ export function ChoiceCard({
   const activeFocus = focused || interaction === 'focused';
   const interactive = nativeChoice || customInteractive;
   const Root = nativeChoice ? 'label' : 'div';
+  const showsText = !isFrame;
+  const titleId = showsText && title != null ? `${inputId}-title` : undefined;
+  const descriptionId = showsText && description != null ? `${inputId}-description` : undefined;
+  const explicitName = ariaLabel ?? inputProps['aria-label'];
 
   const choiceBorder = disabled
     ? 'var(--color-semantic-line-normal-neutral)'
@@ -165,6 +182,12 @@ export function ChoiceCard({
       aria-selected={resolvedRole && ['option', 'tab', 'row', 'gridcell', 'treeitem'].includes(resolvedRole) ? selected || undefined : undefined}
       aria-disabled={!nativeChoice && disabled ? true : undefined}
       aria-label={!nativeChoice ? ariaLabel : undefined}
+      aria-labelledby={!nativeChoice && resolvedRole
+        ? (rootProps['aria-labelledby'] ?? (ariaLabel ? undefined : titleId))
+        : rootProps['aria-labelledby']}
+      aria-describedby={!nativeChoice && resolvedRole
+        ? joinIds(rootProps['aria-describedby'], descriptionId)
+        : rootProps['aria-describedby']}
       data-presentation={presentation}
       data-selected={selected ? '' : undefined}
       data-disabled={disabled ? '' : undefined}
@@ -195,7 +218,11 @@ export function ChoiceCard({
           checked={selected}
           disabled={disabled}
           tabIndex={tabIndex ?? inputProps.tabIndex}
-          aria-label={ariaLabel ?? inputProps['aria-label'] ?? (typeof title === 'string' ? title : undefined)}
+          aria-label={explicitName}
+          // The title element names the control; the wrapping <label> keeps that
+          // job only when there is no title (e.g. a children-only card).
+          aria-labelledby={explicitName ? undefined : (inputProps['aria-labelledby'] ?? titleId)}
+          aria-describedby={joinIds(inputProps['aria-describedby'], descriptionId)}
           onChange={(event) => {
             inputProps.onChange?.(event);
             if (!event.defaultPrevented) onSelect(multiple ? event.target.checked : true);
@@ -240,12 +267,12 @@ export function ChoiceCard({
       )}
       <div style={isFrame ? undefined : { flex: 1, minWidth: 0 }}>
         {!isFrame && title != null && (
-          <div style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>
+          <div id={titleId} style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>
             {title}
           </div>
         )}
         {!isFrame && description != null && (
-          <div style={{ marginTop: 3, fontSize: 'var(--label2-size)', lineHeight: 1.55, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
+          <div id={descriptionId} style={{ marginTop: 3, fontSize: 'var(--label2-size)', lineHeight: 1.55, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
             {description}
           </div>
         )}

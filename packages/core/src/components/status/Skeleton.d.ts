@@ -25,5 +25,12 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLSpanElement> {
   opacity?: number | string;
 }
 
-/** Shimmering loading placeholder with rect, text, and circle shapes. */
+/**
+ * Shimmering loading placeholder with rect, text, and circle shapes.
+ *
+ * The placeholder is always `aria-hidden`, so announcement is owned by the
+ * surrounding pending region: mark that container `aria-busy="true"` and add
+ * `role="status"` / `aria-live="polite"` with a short text label when the wait
+ * must be announced.
+ */
 export function Skeleton(props: SkeletonProps): React.JSX.Element;

@@ -35,6 +35,11 @@ const meta = {
 
 export default meta;
 
+/** interactive 카드가 실제로 활성화됐는지 play 테스트에서 확인하기 위한 표식. */
+const markActivated = (event) => {
+  event.currentTarget.dataset.activated = 'true';
+};
+
 export const Playground = {
   name: '개요',
   parameters: storyDescription(
@@ -91,7 +96,7 @@ export const InteractiveAndDark = {
   },
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-5)', maxWidth: 760 }}>
-      <Card interactive>
+      <Card interactive onClick={markActivated}>
         <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
           <h3 style={{ margin: 0, fontSize: 'var(--heading2-size)', lineHeight: 'var(--heading2-line)' }}>
             인터랙티브 light card
@@ -104,6 +109,8 @@ export const InteractiveAndDark = {
       <Card
         dark
         interactive
+        onClick={markActivated}
+        headingLevel={false}
         title="Dark Card title"
         description="Structured dark-card text uses the Card-owned foreground contract."
       >
@@ -118,6 +125,28 @@ export const InteractiveAndDark = {
       </Card>
     </div>
   ),
+  play: async ({ canvasElement }) => {
+    const cards = [...canvasElement.querySelectorAll('[role="button"]')];
+    if (cards.length !== 2) {
+      throw new Error('interactive 카드는 role="button"으로 노출되어야 합니다(카드 전체가 클릭 대상).');
+    }
+    for (const card of cards) {
+      if (card.getAttribute('tabindex') !== '0') {
+        throw new Error('interactive 카드는 Tab으로 도달할 수 있어야 합니다(WCAG 2.1.1).');
+      }
+      if (card.querySelector('button, a[href], input, select, textarea, [tabindex]')) {
+        throw new Error('interactive 카드 안에는 포커스 가능한 중첩 요소를 두지 않습니다(nested interactive).');
+      }
+    }
+    for (const key of ['Enter', ' ']) {
+      const card = cards[key === 'Enter' ? 0 : 1];
+      delete card.dataset.activated;
+      card.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+      if (card.dataset.activated !== 'true') {
+        throw new Error(`interactive 카드는 ${key === ' ' ? 'Space' : 'Enter'} 키로 활성화되어야 합니다.`);
+      }
+    }
+  },
 };
 
 export const ContentCardPatterns = {
@@ -174,6 +203,14 @@ export const ContentCardPatterns = {
       </section>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const headings = [...canvasElement.querySelectorAll('h3')].map((h) => h.textContent);
+    for (const title of ['콘텐츠 카드', '모바일 콘텐츠 카드']) {
+      if (!headings.includes(title)) {
+        throw new Error(`구조화 카드의 title은 실제 heading으로 렌더링되어야 합니다(WCAG 1.3.1): ${title}`);
+      }
+    }
+  },
 };
 
 export const CardAffordances = {

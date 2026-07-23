@@ -18,7 +18,9 @@ export function Collapsible({ title, children, defaultOpen = false, style, ...re
         <span>{title}</span>
         <Icon name="chevron-down-small" size={18} color="var(--color-semantic-label-alternative)" aria-hidden="true" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)', flexShrink: 0 }} />
       </button>
-      <div id={panelId} inert={open ? undefined : true} style={{ display: 'grid', gridTemplateRows: open ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
+      {/* Same disclosure contract as Accordion — the panel is a labelled region
+          so the two components stay internally consistent (optional in APG). */}
+      <div id={panelId} role="region" aria-labelledby={triggerId} inert={open ? undefined : true} style={{ display: 'grid', gridTemplateRows: open ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
         <div style={{ overflow: 'hidden' }}>
           <div style={{ padding: '0 4px 14px', fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         </div>

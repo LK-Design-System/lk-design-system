@@ -20,12 +20,20 @@
   계약입니다.
 - **중첩 서브메뉴** — item에 `items`(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다: 오른쪽 chevron과 `aria-haspopup="menu"`를 갖고 Arrow Right로 진입, Arrow Left로 복귀합니다. 하위 명령을 고르면 전체 메뉴가 닫히고 최상위 trigger로 focus가 돌아옵니다.
 - **submenuMode** — 서브메뉴 표현 방식(`flyout` 기본, `drill`).
-  - `flyout` — 서브 패널이 부모 옆으로 겹겹이 뜹니다(데스크톱 표준, 얕은 1~2단계에 적합). hover(120ms)·클릭·Arrow Right로 열리고 `role="menu"`(부모 라벨로 `aria-label`)이며, 부모 메뉴의 scroll/overflow에 잘리지 않도록 `<body>`로 portal되어 부모 패널 옆에 겹치지 않게 뜨고 오른쪽 공간이 부족하면 왼쪽으로 flip합니다. Escape는 최상단 서브메뉴부터 한 단계씩 닫습니다.
+  - `flyout` — 서브 패널이 부모 옆으로 겹겹이 뜹니다(데스크톱 표준, 얕은 1~2단계에 적합). hover(120ms)·클릭·Arrow Right로 열리고 `role="menu"`(부모 라벨로 `aria-label`)이며, 부모 메뉴의 scroll/overflow에 잘리지 않도록 `<body>`로 portal되어 부모 패널 옆에 겹치지 않게 뜨고 오른쪽 공간이 부족하면 왼쪽으로 flip합니다. Escape는 최상단 서브메뉴부터 한 단계씩 닫습니다. 서브 트리거도 최상위 trigger와 같은 ARIA 3종(`aria-haspopup="menu"`·`aria-expanded`·열렸을 때 `aria-controls`)을 갖고, portal된 패널의 `role="menu"`가 그 id를 소유합니다.
   - `drill` — 같은 패널이 하위 목록으로 전환되고 상단에 뒤로 컨트롤(`aria-label="뒤로 …"`)이 붙습니다. 폭이 고정되어 깊은 계층에서도 가로로 늘어나지 않아(꼬리물기 없음) 좁은 패널·터치·깊은 중첩에 적합합니다. Arrow Left/뒤로 버튼으로 상위에 복귀하며, 전환마다 하위 첫 항목에 focus가 이동합니다.
+    - 뒤로 컨트롤은 `role="menu"`의 직계 자식이므로 **`role="menuitem"`을 갖고 roving 대상에 포함**됩니다
+      (ARIA menu required-children 위반과 포인터 전용 컨트롤을 동시에 없앱니다). Arrow Up/Down으로 다른
+      항목처럼 도달하고, `data-menu-back` 표시 덕분에 레벨 진입 focus만 첫 *명령*으로 건너뜁니다.
+      Menubar의 `data-menubar-drill-back`과 같은 계약입니다.
 - trigger는 `aria-haspopup`·`aria-expanded`·`aria-controls`를 받습니다. Enter/Space/Arrow Down은
   첫 항목, Arrow Up은 마지막 항목으로 열고, 열린 메뉴는 Up/Down·Home/End·문자 탐색과 Escape
   focus 복원을 지원합니다. menu는 trigger id를 `aria-labelledby`로 참조합니다. Tab은 메뉴를 닫고
   정상 문서 순서로 이동합니다.
+- **문자 탐색(typeahead)** — 연속으로 입력한 문자는 하나의 검색어로 누적되고 500ms 동안 입력이 없으면
+  버퍼가 비워집니다. 한 글자만 입력하면 현재 항목 *다음*부터 찾아 같은 초성 항목을 순환하고, 두 글자
+  이상이면 현재 항목부터 다시 좁혀 찾습니다(APG typeahead). Space는 검색어가 진행 중일 때만 검색어에
+  포함되고, 그렇지 않으면 focus된 항목을 활성화합니다. 이 엔진은 `SplitButton`·`Menubar`와 공유합니다.
 - 선호 `width`는 viewport 안에서 clamp되고 아래 공간이 부족하면 위로 flip합니다. WDS Menu의
   r16·8px/20px shell과 shadow-md는 유지하며, r12·16px padding인 Popover와 시각 역할을 합치지 않습니다.
 - `menuActionArea`는 `onCancel`·`onApply` 중 제공된 실제 동작만 Cancel/Apply 버튼으로 만듭니다.

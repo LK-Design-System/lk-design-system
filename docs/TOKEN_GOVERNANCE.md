@@ -61,6 +61,13 @@ Color usage rules:
   combination of semantic roles.
 - Status is a four-role family: `foreground`, `surface`, `border`, and `text`.
   Do not reuse one status value for all four jobs.
+- `--color-semantic-status-*`의 기본값은 **신호용 선명색**이며 텍스트 대비를
+  만족하지 않는다(흰 배경 기준 positive `#13BE4C` 2.47:1, cautionary `#EB9C33`
+  2.25:1, negative `#EE5656` 3.44:1). 점·아이콘·테두리 등 비텍스트 요소에만 쓰고,
+  텍스트와 텍스트 배경에는 AA를 만족하는 `--color-semantic-status-*-text`
+  (5.47:1 / 7.48:1 / 7.04:1)를 쓴다. 선명색을 배경으로 채우고 흰 글자를 올리는
+  solid 변형은 같은 대비값이 그대로 적용되므로 금지한다 — `*-surface` + `*-text`
+  쌍을 쓰거나 배경을 더 어둡게 재정의한다.
 - Data visualization uses `--color-semantic-data-viz-series-*`. A chart series
   must not use positive, cautionary, or negative unless that series actually
   communicates that status.
@@ -89,6 +96,38 @@ may be added without an explicit product migration decision.
 
 Deprecation notes must state the replacement token, affected components, and
 the planned removal timing.
+
+### Deprecated · `--interaction-*` (2026-07)
+
+`tokens/effects.css`의 Decorate / Interaction 블록(`--interaction-layer-*`,
+`--interaction-opacity-*`)은 **deprecated** 상태다. 다음 minor 사이클 이후
+`tokens/source.json`과 함께 제거를 검토한다.
+
+- 영향 컴포넌트: **없음**. `components/` 전체에서 이 토큰을 참조하는 코드가 0건이다.
+  소비처가 없으므로 제품 마이그레이션 부담도 없다.
+- 폐기 사유: 모든 인터랙션 상태를 하나의 불투명도 램프로 모델링한 초기 WDS 매핑
+  시도였으나, 실제 시스템은 hover/pressed를 컴포넌트 계열별 semantic token으로,
+  focus는 링으로만 표현한다. 특히 `--interaction-opacity-focused: 0.84`가 전제하는
+  "불투명도로 포커스를 표현한다"는 모델은 `tokens/focus.css`의 포커스 링 계약과
+  충돌하며 WCAG 2.4.7 / 2.4.11을 만족할 수 없다. 재도입 불가.
+- 대체 토큰:
+
+  | 폐기 토큰 | 대체 |
+  | --- | --- |
+  | `--interaction-layer-normal` | 없음 — 상태 배경을 지정하지 않는다 |
+  | `--interaction-layer-light` | `--color-semantic-fill-alternative` (동일 값) |
+  | `--interaction-layer-default` | `--color-semantic-fill-normal` (동일 값) |
+  | `--interaction-layer-strong` | `--color-semantic-fill-strong` (0.16, 근사값) |
+  | `--interaction-opacity-normal` | 없음 — 상태를 불투명도로 표현하지 않는다 |
+  | `--interaction-opacity-hovered` | 계열별 hover 표현 (Fill · Elevation · Ring) |
+  | `--interaction-opacity-focused` | `tokens/focus.css`의 전역 포커스 링 계약 |
+  | `--interaction-opacity-pressed` | 계열별 pressed 표현 (Fill · Elevation · Ring) |
+
+- 기준 문서: `stories/FoundationInteraction.stories.jsx`가 실제 인터랙션 계약
+  (공통 상태 축 · 전역 포커스 링 · 계열별 hover/pressed 표현)을 기술한다.
+- 값 자체는 `tokens/effects.css`와 `tokens/source.json`에 그대로 남아 있다.
+  `tokens/source.json`이 색상·토큰의 단일 원본이므로, 런타임 CSS만 먼저 지우면
+  생성물 드리프트가 발생한다. 제거는 source 계약과 함께 한 번에 진행한다.
 
 ## Figma sync contract
 

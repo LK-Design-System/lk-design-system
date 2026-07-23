@@ -11,6 +11,10 @@
   링크·버튼·입력을 넣지 않습니다. 조작이 필요하면 `Popover`, 짧은 한 줄 힌트면 `Tooltip`을 씁니다.
 - hover는 `openDelay` 뒤 열리고 `closeDelay` 뒤 닫히지만 keyboard focus는 즉시 엽니다.
   `Escape`는 포인터나 초점을 옮기지 않고 닫습니다. trigger는 `aria-describedby`로 preview를 참조합니다.
+- **Escape로 닫은 trigger는 닫힌 상태를 유지합니다.** 초점이 trigger에 남아 있는 동안에는 focus로
+  다시 열리지 않고, 포인터가 나갔다 다시 들어오거나 초점이 앵커를 떠났다 Tab으로 돌아오면 평소대로
+  다시 엽니다. 초점 복원이 곧바로 hover/focus 열림 규칙을 재발화해 카드가 되살아나면 키보드
+  사용자에게는 닫을 방법이 없어지기 때문입니다.
 - `open · defaultOpen · onOpenChange` triad와 `align · width`를 지원합니다. viewport 경계에서는
   위/아래를 flip하고 좌우를 clamp하며, trigger와 카드 사이를 포인터가 이동해도 유지됩니다.
 - 표준 `style`은 `HTMLAttributes<HTMLSpanElement>` 계약대로 루트 앵커에 적용합니다. 떠 있는

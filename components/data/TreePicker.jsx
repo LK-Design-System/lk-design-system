@@ -1,7 +1,12 @@
 import React from 'react';
-import { Checkbox } from '../forms/Checkbox.jsx';
 import { Input } from '../forms/Input.jsx';
 import { Icon } from '../icon/Icon.jsx';
+
+/* treeitem이 aria-checked를 소유하므로 행의 체크 표시는 순수 장식이다. 포커스 가능한
+   컨트롤을 aria-hidden 안에 두지 않도록 Checkbox를 마운트하지 않고 md `box` Checkbox의
+   시각 치수(18px 박스 / 16px 체크)만 그대로 재현한다. */
+const CHECK_INDICATOR_SIZE = 18;
+const CHECK_INDICATOR_MARK_SIZE = 16;
 
 function nodeText(node) {
   if (node.searchText != null) return String(node.searchText);
@@ -90,7 +95,9 @@ function PickerNode({
   const actionableSelectionIds = selectionIds(node, selectionBehavior, nodeDisabled, false);
   const selectable = nodeDisabled ? visibleSelectionIds.length > 0 : actionableSelectionIds.length > 0;
   const state = selectionState(actionableSelectionIds.length > 0 ? actionableSelectionIds : visibleSelectionIds, selectedSet);
-  const label = nodeText(node);
+  const indicatorDisabled = nodeDisabled || actionableSelectionIds.length === 0;
+  const indicatorOn = state.checked || state.mixed;
+  const indicatorMarkColor = indicatorDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)';
 
   const toggleSelection = () => {
     if (!nodeDisabled && actionableSelectionIds.length > 0) onToggleSelection(actionableSelectionIds, state.checked);
@@ -186,18 +193,33 @@ function PickerNode({
 
       {selectable ? (
         <span
-          onClick={(event) => event.stopPropagation()}
+          aria-hidden="true"
+          data-tree-picker-check=""
+          data-tree-picker-check-state={state.mixed ? 'mixed' : state.checked ? 'checked' : 'unchecked'}
           style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 0 }}
         >
-          <Checkbox
-            checked={state.checked}
-            indeterminate={state.mixed}
-            disabled={nodeDisabled || actionableSelectionIds.length === 0}
-            onChange={toggleSelection}
-            aria-label={`${label} 선택`}
-            aria-hidden="true"
-            tabIndex={-1}
-          />
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: CHECK_INDICATOR_SIZE,
+              height: CHECK_INDICATOR_SIZE,
+              flexShrink: 0,
+              boxSizing: 'border-box',
+              background: indicatorDisabled
+                ? (indicatorOn ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)')
+                : indicatorOn ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)',
+              border: `1.5px solid ${indicatorDisabled
+                ? 'var(--color-semantic-line-normal-neutral)'
+                : indicatorOn ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`,
+              borderRadius: 'var(--radius-5)',
+              transition: 'background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)',
+            }}
+          >
+            {state.mixed && <span style={{ width: CHECK_INDICATOR_SIZE - 8, height: 2, borderRadius: 'var(--radius-pill)', background: indicatorMarkColor }} />}
+            {!state.mixed && state.checked && <Icon name="check" size={CHECK_INDICATOR_MARK_SIZE} color={indicatorMarkColor} aria-hidden="true" />}
+          </span>
         </span>
       ) : <span aria-hidden="true" />}
 

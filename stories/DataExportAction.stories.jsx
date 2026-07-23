@@ -69,11 +69,97 @@ export const NarrowProgressAndPermission = {
     const wrapper = canvasElement.querySelector('[data-testid="narrow-operations"]');
     const progress = canvasElement.querySelector('[role="progressbar"]');
     const restricted = canvasElement.querySelector('[data-unavailable-reason]');
-    const disabledButtons = [...canvasElement.querySelectorAll('button:disabled')];
+    const groups = [...canvasElement.querySelectorAll('[role="group"][aria-label="데이터 내보내기"]')];
     if (!wrapper || wrapper.scrollWidth > wrapper.clientWidth + 1) throw new Error('Export actions must wrap without horizontal overflow at 320px.');
-    if (progress?.getAttribute('aria-valuenow') !== '42' || !restricted || disabledButtons.length < 1) {
-      throw new Error('Processing and permission-restricted actions must expose progress, reason and disabled semantics.');
+    if (progress?.getAttribute('aria-valuenow') !== '42' || !restricted || groups.length !== 2) {
+      throw new Error('Processing and permission-restricted actions must expose progress, reason and a named action group.');
     }
+    if (groups[0].querySelectorAll('[role="combobox"][disabled]').length !== 2) {
+      throw new Error('처리 중에는 형식과 범위 선택이 잠겨야 합니다.');
+    }
+
+    const restrictedGroup = groups[1];
+    const exportButton = [...restrictedGroup.querySelectorAll('button')].find((button) => button.textContent?.includes('내보내기'));
+    if (!exportButton) throw new Error('Export action must expose a named trigger.');
+    if (exportButton.hasAttribute('disabled')) {
+      throw new Error('권한이 없는 export action에 native disabled를 쓰면 Tab으로 사유에 도달할 수 없고, 권한이 회수되는 순간 포커스가 <body>로 떨어집니다.');
+    }
+    if (exportButton.getAttribute('aria-disabled') !== 'true') {
+      throw new Error('실행할 수 없는 export action은 aria-disabled로 활성화를 차단해야 합니다.');
+    }
+    const describedBy = exportButton.getAttribute('aria-describedby');
+    if (!describedBy || canvasElement.ownerDocument.getElementById(describedBy) !== restricted) {
+      throw new Error('사용할 수 없는 이유는 aria-describedby로 action에 연결되어야 합니다(Fluent Button 지침).');
+    }
+    exportButton.focus();
+    if (canvasElement.ownerDocument.activeElement !== exportButton) {
+      throw new Error('사용할 수 없는 export action도 포커스를 받아 사유를 발견할 수 있어야 합니다.');
+    }
+    exportButton.blur();
+  },
+};
+
+function ExportStatusDemo() {
+  const [state, setState] = React.useState('idle');
+  return (
+    <main data-testid="export-status" style={{ display: 'grid', gap: 'var(--space-4)', width: 'min(100%, 520px)' }}>
+      <span style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+        <button type="button" onClick={() => setState('success')}>완료 상태</button>
+        <button type="button" onClick={() => setState('error')}>실패 상태</button>
+        <button type="button" onClick={() => setState('idle')}>초기 상태</button>
+      </span>
+      <DataExportAction state={state} totalCount={128} onExport={() => {}} />
+    </main>
+  );
+}
+
+export const ExportStatusRegionContract = {
+  name: '완료·실패 알림 리전 계약',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '내보내기 완료와 실패 알림의 라이브 리전 수명 계약입니다. status와 alert 리전이 idle에서도 이미 마운트되어 있고, 상태가 바뀔 때 새로 삽입되는 대신 같은 노드의 텍스트만 갱신되는지 확인합니다.',
+  ),
+  render: () => <ExportStatusDemo />,
+  play: async ({ canvasElement }) => {
+    const press = async (label) => {
+      const trigger = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === label);
+      if (!trigger) throw new Error(`Fixture control "${label}" must exist.`);
+      await userEvent.click(trigger);
+    };
+    const polite = canvasElement.querySelector('[data-export-live="polite"]');
+    const assertive = canvasElement.querySelector('[data-export-live="assertive"]');
+    if (polite?.getAttribute('role') !== 'status' || assertive?.getAttribute('role') !== 'alert') {
+      throw new Error('완료는 status, 실패는 alert 리전이 담당해야 합니다.');
+    }
+    if (polite.textContent?.trim() !== '' || assertive.textContent?.trim() !== '') {
+      throw new Error('idle 상태에서 두 리전은 비어 있는 채로 미리 마운트되어 있어야 합니다.');
+    }
+
+    await press('완료 상태');
+    if (canvasElement.querySelector('[data-export-live="polite"]') !== polite) {
+      throw new Error('상태가 바뀔 때 라이브 리전이 새로 마운트되면 낭독이 누락됩니다. 같은 노드의 텍스트만 바뀌어야 합니다.');
+    }
+    if (polite.textContent?.trim() !== '내보내기를 준비했습니다.' || assertive.textContent?.trim() !== '') {
+      throw new Error('완료 메시지는 polite status 리전에만 실려야 합니다.');
+    }
+    const visibleSuccess = canvasElement.querySelector('[data-export-status="success"]');
+    if (!visibleSuccess || visibleSuccess.hasAttribute('role')) {
+      throw new Error('보이는 완료 문구는 남아 있되 표현만 담당해야 하며 두 번째 라이브 리전이 되면 안 됩니다.');
+    }
+
+    await press('실패 상태');
+    if (canvasElement.querySelector('[data-export-live="assertive"]') !== assertive) {
+      throw new Error('실패 전환에서도 alert 리전은 같은 노드여야 합니다.');
+    }
+    if (assertive.textContent?.trim() !== '내보내기를 완료하지 못했습니다.' || polite.textContent?.trim() !== '') {
+      throw new Error('실패 메시지는 assertive alert 리전에만 실려야 합니다.');
+    }
+
+    await press('초기 상태');
+    if (polite.textContent?.trim() !== '' || assertive.textContent?.trim() !== '') {
+      throw new Error('상태를 되돌리면 두 리전의 텍스트도 비워져야 합니다.');
+    }
+    canvasElement.ownerDocument.activeElement?.blur?.();
   },
 };
 

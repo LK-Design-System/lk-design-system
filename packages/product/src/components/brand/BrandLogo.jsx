@@ -20,6 +20,14 @@ export const BRAND_LOGO_NAMES = ["apple","facebook","google","github","huggingfa
  * Full-colour platform brand marks (Apple · Facebook · Google · GitHub · Hugging Face · LinkedIn · X · YouTube). They keep
  * their own brand colours (not currentColor) — use for sign-in buttons, platform
  * indicators, store badges. Monochrome UI glyphs live in `Icon`.
+ *
+ * Accessibility: brand marks are DECORATIVE by default (`aria-hidden="true"`,
+ * no role), the same default `Icon` uses. A logo almost always sits next to the
+ * platform name that the control already carries, so an informative mark would
+ * make "Google로 계속하기" announce as "google logo Google로 계속하기". Pass an
+ * explicit `title` (or `aria-label`) to promote the mark to `role="img"` with
+ * that name — never let the registry key stand in for a name. `decorative`
+ * forces the hidden treatment even when a name is present.
  */
 // Monochrome silhouette paths (currentColor) for marks whose colour body is multi-fill.
 const MONO = {
@@ -31,21 +39,45 @@ const MONO = {
 };
 
 export function BrandLogo({ name, size = 24, title, mono = false, decorative = false, style, ...rest }) {
+  const {
+    'aria-label': ariaLabelProp,
+    'aria-hidden': ariaHiddenProp,
+    role: roleProp,
+    ...domProps
+  } = rest;
+  const explicitName = ariaLabelProp != null ? ariaLabelProp : title;
+  const hiddenRequested =
+    decorative === true || ariaHiddenProp === true || ariaHiddenProp === 'true';
+  const informative = explicitName != null && !hiddenRequested;
+  const a11y = informative
+    ? {
+        role: roleProp != null ? roleProp : 'img',
+        'aria-label': explicitName,
+        'aria-hidden': undefined,
+      }
+    : {
+        role: roleProp,
+        'aria-label': undefined,
+        'aria-hidden': ariaHiddenProp !== undefined ? ariaHiddenProp : 'true',
+      };
   const g = LOGOS[name];
-  if (!g) return React.createElement('svg', { width: size, height: size, viewBox: '0 0 24 24', style, ...rest });
+  if (!g) {
+    return React.createElement('svg', {
+      width: size, height: size, viewBox: '0 0 24 24', style, ...domProps, ...a11y,
+    });
+  }
   let body = g.body;
   if (mono) {
     body = MONO[name]
       ? '<path d="' + MONO[name] + '" fill="currentColor"/>'
       : g.body.replace(/fill="(#[0-9A-Fa-f]{3,8}|rgb\([^)]*\))"/g, 'fill="currentColor"');
   }
-  const a11y = decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': title || (name + ' logo') };
   return React.createElement('svg', {
     width: size, height: size, viewBox: g.viewBox,
-    ...a11y,
     style: { display: 'block', flexShrink: 0, ...style },
     dangerouslySetInnerHTML: { __html: body },
-    ...rest,
+    ...domProps,
+    ...a11y,
   });
 }
 

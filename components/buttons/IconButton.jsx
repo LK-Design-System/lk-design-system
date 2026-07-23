@@ -1,5 +1,25 @@
 import React from 'react';
 
+/* Development-only guard: an icon-only control with no accessible name is
+   invisible to assistive tech and the failure is silent at runtime. Bundlers
+   replace `process.env.NODE_ENV` at build time — the same contract React itself
+   relies on — so this branch disappears from production builds. The try/catch
+   keeps it inert in environments that never define `process` at all. */
+function isDevelopmentBuild() {
+  try {
+    return process.env.NODE_ENV !== 'production';
+  } catch {
+    return false;
+  }
+}
+
+function useMissingNameWarning(shouldWarn, message) {
+  React.useEffect(() => {
+    if (!shouldWarn || !isDevelopmentBuild()) return;
+    console.warn(message);
+  }, [shouldWarn, message]);
+}
+
 /**
  * LK ROBOTICS — IconButton
  * Circular control wrapping a single icon glyph (source-model icon buttons are always
@@ -35,6 +55,10 @@ export function IconButton({
 }) {
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
+  useMissingNameWarning(
+    !label && rest['aria-labelledby'] == null,
+    '[LDS] IconButton: label은 아이콘 전용 컨트롤의 접근 가능한 이름입니다. label(또는 aria-labelledby)을 전달하세요.',
+  );
   const resolvedSize = typeof size === 'number'
     ? size
     : ({

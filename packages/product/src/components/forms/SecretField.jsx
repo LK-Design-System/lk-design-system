@@ -123,8 +123,13 @@ export function SecretField({
       {copyable && <IconButton variant="plain" round={false} size="sm" disabled={disabled || !hasValue} aria-controls={inputId} onClick={copy} label={copyActionLabel} style={copyTone ? { color: copyTone } : undefined}><Icon name={copyState === 'success' ? 'circle-check' : copyState === 'error' ? 'circle-close' : 'copy'} size={16} aria-hidden="true" /></IconButton>}
     </span>
   ) : undefined;
+  const autoHideNotice = show && revealDurationMs > 0
+    ? `${Math.ceil(revealDurationMs / 1000)}초 후 자동으로 숨깁니다.`
+    : '';
   return (
-    <div style={{ display: 'grid', gap: 'var(--space-1)', ...style }}>
+    // `position: relative` anchors the sr-only announcer below to this field
+    // instead of the document body.
+    <div style={{ position: 'relative', display: 'grid', gap: 'var(--space-1)', ...style }}>
       <Input
         {...rest}
         id={inputId}
@@ -136,7 +141,7 @@ export function SecretField({
         invalid={invalid}
         error={error}
         size={size}
-        helper={helper ?? (show && revealDurationMs > 0 ? `${Math.ceil(revealDurationMs / 1000)}초 후 자동으로 숨깁니다.` : undefined)}
+        helper={helper ?? (autoHideNotice || undefined)}
         actionRight={actions}
         autoComplete="off"
         autoCapitalize="off"
@@ -144,7 +149,9 @@ export function SecretField({
         spellCheck={false}
       />
       <span role="status" aria-live="polite" style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
-        {copyState === 'success' || copyState === 'error' ? copyActionLabel : ''}
+        {copyState === 'success' || copyState === 'error'
+          ? copyActionLabel
+          : autoHideNotice /* WCAG 2.2.1: the reveal time limit must be announced, not only shown as helper text. */}
       </span>
     </div>
   );

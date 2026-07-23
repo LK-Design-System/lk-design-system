@@ -118,6 +118,7 @@ function DropdownMenuKeyboardDemo() {
           { label: '열기' },
           { label: '사용 불가', disabled: true },
           { label: '복제' },
+          { label: '복사본 만들기' },
           { label: '삭제', danger: true },
         ]}
         menuActionArea
@@ -157,6 +158,26 @@ export const DropdownMenuKeyboardContract = {
     if (ownerDocument.activeElement?.textContent?.trim() !== '복제') throw new Error('DropdownMenu must skip disabled items.');
     await userEvent.keyboard('{End}');
     if (ownerDocument.activeElement?.textContent?.trim() !== '삭제') throw new Error('DropdownMenu End must focus the last item.');
+
+    // APG typeahead: characters typed in one burst accumulate into a single
+    // search string. "복" alone can only reach 복제; the second character has to
+    // narrow the match to 복사본 만들기.
+    const flushTypeahead = () => new Promise((resolve) => { setTimeout(resolve, 600); });
+    await userEvent.keyboard('복사');
+    await waitFor(() => {
+      if (ownerDocument.activeElement?.textContent?.trim() !== '복사본 만들기') {
+        throw new Error('Multi-character typeahead must narrow the match past the first 복 item.');
+      }
+    });
+    // After the idle timeout the buffer starts over, so a single 복 matches again.
+    await flushTypeahead();
+    await userEvent.keyboard('복');
+    await waitFor(() => {
+      if (ownerDocument.activeElement?.textContent?.trim() !== '복제') {
+        throw new Error('The typeahead buffer must reset after its timeout.');
+      }
+    });
+
     await userEvent.tab();
     if (ownerDocument.activeElement?.textContent?.trim() !== '취소' || ownerDocument.activeElement.closest('[role="menu"]')) {
       throw new Error('DropdownMenu action area must be reachable outside menu semantics.');
@@ -264,6 +285,10 @@ export const NestedSubmenus = {
     // 서브메뉴는 <body>로 portal되므로 document 기준으로 조회합니다.
     const submenu = [...doc.querySelectorAll('[data-menu-portal] [role="menu"]')].find((menu) => menu.getAttribute('aria-label') === '내보내기');
     if (!submenu) throw new Error('서브메뉴는 트리거 라벨로 이름 붙은 role="menu"여야 합니다.');
+    // 서브 트리거도 최상위 trigger와 같은 ARIA 3종을 갖습니다.
+    if (!submenu.id || branchTrigger.getAttribute('aria-controls') !== submenu.id) {
+      throw new Error('서브메뉴 트리거는 열린 패널을 aria-controls로 가리켜야 합니다.');
+    }
 
     await userEvent.keyboard('{ArrowLeft}'); // 서브 닫고 트리거로 복귀
     await waitFor(() => {
@@ -350,8 +375,31 @@ export const DrillSubmenus = {
     if (doc.querySelector('[data-menu-portal]')) throw new Error('drill 모드는 별도 서브 패널을 띄우지 않아야 합니다.');
     const back = canvasElement.querySelector('[data-contract="drill"] button[aria-label^="뒤로"]');
     if (!back) throw new Error('drill 하위 레벨에는 뒤로 컨트롤이 있어야 합니다.');
-    const panelWidthAfter = canvasElement.querySelector('[data-contract="drill"] [role="menu"]')?.getBoundingClientRect().width;
+    // 뒤로 컨트롤은 role="menu"의 직계 자식이므로 menuitem 계열 role을 가져야 하고
+    // (ARIA required children), roving 대상에 포함되어 키보드로 도달할 수 있어야 합니다.
+    if (back.getAttribute('role') !== 'menuitem') {
+      throw new Error('drill 뒤로 컨트롤은 role="menuitem"이어야 합니다.');
+    }
+    const drillMenu = canvasElement.querySelector('[data-contract="drill"] [role="menu"]');
+    const nonMenuChildren = [...drillMenu.children].filter((child) => {
+      const role = child.getAttribute('role');
+      return role !== 'menuitem' && role !== 'menuitemradio' && role !== 'menuitemcheckbox' && role !== 'separator' && role !== 'none' && role !== 'presentation' && role !== 'group';
+    });
+    if (nonMenuChildren.length > 0) {
+      throw new Error('role="menu"의 직계 자식은 모두 menuitem 계열이어야 합니다.');
+    }
+    const panelWidthAfter = drillMenu?.getBoundingClientRect().width;
     if (Math.abs(panelWidthAfter - panelWidthBefore) > 1) throw new Error('drill 전환은 패널 폭을 늘리지 않아야 합니다.');
+
+    // Arrow Up으로 뒤로 컨트롤에 도달(포인터 전용이 아님) 후 다시 첫 명령으로 복귀합니다.
+    await userEvent.keyboard('{ArrowUp}');
+    await waitFor(() => {
+      if (doc.activeElement !== back) throw new Error('Arrow Up으로 뒤로 컨트롤에 도달할 수 있어야 합니다.');
+    });
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => {
+      if (doc.activeElement?.textContent?.trim() !== 'PDF로 내보내기') throw new Error('뒤로 컨트롤에서 Arrow Down으로 첫 명령에 돌아와야 합니다.');
+    });
 
     await userEvent.keyboard('{ArrowLeft}'); // 상위로 복귀
     await waitFor(() => {

@@ -27,6 +27,11 @@ function moveEnabled(options, currentIndex, direction) {
   return [...enabled].reverse().find((index) => index < currentIndex) ?? currentIndex;
 }
 
+function optionText(option) {
+  if (typeof option.label === 'string' || typeof option.label === 'number') return String(option.label);
+  return String(option.value);
+}
+
 function nearestEnabled(options, preferredIndex) {
   if (options[preferredIndex] && !options[preferredIndex].disabled) return preferredIndex;
   const after = enabledIndices(options).find((index) => index > preferredIndex);
@@ -174,6 +179,37 @@ export function Select({
     else openList();
   };
 
+  // ── APG printable-character typeahead ─────────────────────────────────────
+  const typeahead = React.useRef({ buffer: '', timer: null });
+  React.useEffect(() => () => clearTimeout(typeahead.current.timer), []);
+
+  const runTypeahead = (char) => {
+    clearTimeout(typeahead.current.timer);
+    typeahead.current.buffer += char.toLowerCase();
+    typeahead.current.timer = setTimeout(() => { typeahead.current.buffer = ''; }, 500);
+
+    const buffer = typeahead.current.buffer;
+    // Repeating the same character cycles through the options starting with it.
+    const cycling = buffer.length > 1 && [...buffer].every((c) => c === buffer[0]);
+    const search = cycling ? buffer[0] : buffer;
+    // A growing multi-character buffer re-matches from the current option;
+    // a single character (or a cycle) advances to the next match.
+    const offset = buffer.length > 1 && !cycling ? 0 : 1;
+    const from = visualOpen ? activeIndex : selectedIndex;
+    const total = norm.length;
+    if (!total) return;
+    let match = -1;
+    for (let i = 0; i < total; i += 1) {
+      const index = ((from < 0 ? -1 : from) + offset + i + total) % total;
+      const option = norm[index];
+      if (!option || option.disabled) continue;
+      if (optionText(option).toLowerCase().startsWith(search)) { match = index; break; }
+    }
+    if (match < 0) return;
+    if (visualOpen) setActiveIndex(match);
+    else pick(match);
+  };
+
   const handleTriggerKeyDown = (event) => {
     onTriggerKeyDown?.(event);
     if (event.defaultPrevented || disabledState || readOnly) return;
@@ -201,8 +237,19 @@ export function Select({
         if (!visualOpen) openList(lastEnabled);
         else setActiveIndex(lastEnabled);
         break;
-      case 'Enter':
       case ' ':
+        // APG: Space extends an in-progress typeahead buffer instead of
+        // committing, so option labels containing a space stay reachable.
+        if (typeahead.current.buffer) {
+          event.preventDefault();
+          runTypeahead(' ');
+          break;
+        }
+        event.preventDefault();
+        if (!visualOpen) openList();
+        else if (activeIndex >= 0) pick(activeIndex);
+        break;
+      case 'Enter':
         event.preventDefault();
         if (!visualOpen) openList();
         else if (activeIndex >= 0) pick(activeIndex);
@@ -218,6 +265,10 @@ export function Select({
         if (visualOpen) closeList();
         break;
       default:
+        if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+          event.preventDefault();
+          runTypeahead(event.key);
+        }
         break;
     }
   };

@@ -77,8 +77,21 @@ export const NarrowInvalidRange = {
     const wrapper = canvasElement.querySelector('[data-testid="narrow-date-range"]');
     const group = canvasElement.querySelector('[role="group"][aria-label="기간 선택"]');
     const alert = canvasElement.querySelector('[role="alert"]');
-    if (!group || group.getAttribute('aria-invalid') !== 'true' || !alert) {
-      throw new Error('A reversed date range must expose group invalid state and a visible alert.');
+    if (!group || group.dataset.dateRangeInvalid !== 'true' || !alert) {
+      throw new Error('A reversed date range must expose the invalid range state and a visible alert.');
+    }
+    if (group.hasAttribute('aria-invalid')) {
+      throw new Error('role="group" does not support aria-invalid in ARIA 1.2; the date fields must carry it.');
+    }
+    if (group.getAttribute('aria-describedby') !== alert.id) {
+      throw new Error('The range group must be described by the order-error alert.');
+    }
+    const triggers = [...canvasElement.querySelectorAll('button[aria-haspopup="dialog"]')];
+    if (triggers.length !== 2 || triggers.some((trigger) => trigger.getAttribute('aria-invalid') !== 'true')) {
+      throw new Error('Both date triggers must expose aria-invalid so the error reaches a role that supports it.');
+    }
+    if (triggers.some((trigger) => trigger.getAttribute('aria-describedby') !== alert.id)) {
+      throw new Error('Each invalid date trigger must be described by the range error message.');
     }
     if (!wrapper || wrapper.scrollWidth > wrapper.clientWidth + 1) {
       throw new Error('DateRangeField must stack without horizontal overflow at 320px.');

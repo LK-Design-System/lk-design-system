@@ -1,6 +1,14 @@
 import React from "react";
 import { Icon } from "../icon/Icon.jsx";
 import { normalizeStatusTone, statusToneStyle } from "../status/status-presentation.js";
+import { ToastLiveRegionContext } from "./ToastStack.jsx";
+
+/**
+ * Documented policy duration for an action-free confirmation toast (7s).
+ * Kept module-local: the generated public entry classifies component exports,
+ * so this stays a documented literal instead of a new package export.
+ */
+const POLICY_DURATION = 7000;
 
 // Glyphs come from the shared Icon registry (statusToneStyle grammar); the
 // colours stay Toast-specific because vivid status hues read best on the
@@ -43,6 +51,11 @@ export function Toast({
   closeLabel = "닫기",
   leadingIcon = true,
   icon,
+  duration = null,
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+  onBlur,
   style,
   ...rest
 }) {
@@ -50,10 +63,69 @@ export function Toast({
   const normalized = normalizeTone(variant || tone);
   const t = ICONS[normalized] || ICONS.normal;
   const urgent = normalized === "negative";
+
+  const announce = React.useContext(ToastLiveRegionContext);
+  const hosted = typeof announce === "function";
+  const messageRef = React.useRef(null);
+  const announcedRef = React.useRef(null);
+
+  // Hosted in a ToastStack: the stack owns the persistent live regions, so this
+  // surface must not double as one. Standalone: keep the inline live region.
+  React.useEffect(() => {
+    if (!hosted) return;
+    const message = messageRef.current?.textContent?.trim() ?? "";
+    if (!message || message === announcedRef.current) return;
+    announcedRef.current = message;
+    announce(message, urgent);
+  });
+
+  // WCAG 2.2.1: a toast the user has to act on must never time out. An action
+  // button makes the toast actionable, so auto-dismiss is refused outright
+  // rather than merely defaulting off.
+  const actionable = action != null;
+  // `duration` accepts the policy shorthand `true` (7s), an explicit ms number,
+  // or null/false for "stays until dismissed".
+  const requestedDuration = duration === true ? POLICY_DURATION : duration;
+  const autoDismissMs = actionable || typeof onClose !== "function" || !(requestedDuration > 0)
+    ? null
+    : requestedDuration;
+  const [paused, setPaused] = React.useState(false);
+  const remainingRef = React.useRef(autoDismissMs);
+  const closeRef = React.useRef(onClose);
+  closeRef.current = onClose;
+
+  React.useEffect(() => { remainingRef.current = autoDismissMs; }, [autoDismissMs]);
+
+  React.useEffect(() => {
+    if (autoDismissMs == null || paused) return undefined;
+    // Pause keeps the remaining time instead of restarting the full duration,
+    // so a hover never resets what the reader has already been given.
+    const startedAt = Date.now();
+    const wait = remainingRef.current ?? autoDismissMs;
+    const timer = setTimeout(() => {
+      remainingRef.current = null;
+      closeRef.current?.();
+    }, Math.max(0, wait));
+    return () => {
+      clearTimeout(timer);
+      if (remainingRef.current != null) {
+        remainingRef.current = Math.max(0, remainingRef.current - (Date.now() - startedAt));
+      }
+    };
+  }, [autoDismissMs, paused]);
+
+  const pause = () => setPaused(true);
+  const resume = () => setPaused(false);
+
   return (
     <div
-      role={urgent ? "alert" : "status"}
-      aria-live={urgent ? "assertive" : "polite"}
+      role={hosted ? undefined : (urgent ? "alert" : "status")}
+      aria-live={hosted ? undefined : (urgent ? "assertive" : "polite")}
+      data-toast-paused={autoDismissMs != null && paused ? "" : undefined}
+      onMouseEnter={(event) => { pause(); onMouseEnter?.(event); }}
+      onMouseLeave={(event) => { resume(); onMouseLeave?.(event); }}
+      onFocus={(event) => { pause(); onFocus?.(event); }}
+      onBlur={(event) => { resume(); onBlur?.(event); }}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -81,6 +153,7 @@ export function Toast({
         </span>
       )}
       <span
+        ref={messageRef}
         style={{
           flex: 1,
           minWidth: 0,

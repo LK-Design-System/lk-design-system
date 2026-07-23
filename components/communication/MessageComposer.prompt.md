@@ -26,6 +26,8 @@
 - idle은 send, submitting/streaming은 stop을 같은 primary-action 위치에 둡니다. stopping은 중복 stop 요청을 막습니다.
 - `canSubmit`을 생략하면 trim한 값이 있을 때만 submit할 수 있습니다. `readOnly`는 focus와 copy를 유지하되 편집·submit을 막습니다.
 - `statusLabel={null}`은 기본 lifecycle 문구를 숨깁니다. `undefined`일 때만 non-idle 기본 문구를 사용합니다.
+- status live region은 내용이 있을 때 mount하지 않고 **composer 수명 내내 비어 있는 상태로 상시 mount**한 뒤 텍스트만 교체합니다. 텍스트와 함께 삽입된 status node는 기존 live region의 변경이 아니어서 첫 idle→submitting 알림이 누락되기 때문입니다. 보이는 status 문구는 같은 내용을 중복 발표하지 않도록 `aria-hidden` 장식으로 둡니다.
+- stop 버튼은 `stopping`에서도 native `disabled`가 되지 않고 `aria-disabled`로 중복 요청만 거부합니다. native disabled는 방금 누른 사용자의 초점을 `<body>`로 떨어뜨립니다. 요청이 끝나 idle로 돌아갈 때 primary action이 초점을 잃으면 submit 뒤와 같은 규칙으로 textarea에 초점을 되돌립니다.
 - `disabled: true`는 visible `disabledReason`을 요구하며 textarea의 description에 연결합니다. shell 전체를 inert subtree로 만들어 slot으로 조합한 button/link도 focus와 activation에서 제외합니다.
 - `formLabel`과 `inputLabel`은 form/textarea의 접근 가능한 이름, `submitLabel`과 `stopLabel`은 icon-only primary action 이름을 현지화합니다.
 - `maxLength`는 native 제한과 visible counter를 함께 제공하고, `textareaProps`는 controlled value·rows·disabled 같은 소유 prop을 제외한 native textarea 속성/이벤트를 전달합니다.

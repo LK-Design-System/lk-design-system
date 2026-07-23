@@ -1,5 +1,11 @@
 import React from 'react';
 
+/* A drum commits when it stops, not while it is spinning: committing every
+   intermediate scroll frame fights the activeIndex → scrollTop sync and drags
+   momentum scrolling back. */
+const SCROLL_SETTLE_MS = 120;
+const TYPEAHEAD_RESET_MS = 700;
+
 function normalizeOption(option) {
   if (option && typeof option === 'object') {
     return {
@@ -79,6 +85,23 @@ function findNearestEnabled(options, index, direction = 1) {
   return -1;
 }
 
+function optionSearchText(option) {
+  return typeof option.label === 'string' || typeof option.label === 'number'
+    ? String(option.label)
+    : String(option.value);
+}
+
+function findByPrefix(options, query, startIndex) {
+  const count = options.length;
+  for (let offset = 0; offset < count; offset += 1) {
+    const index = (((startIndex + offset) % count) + count) % count;
+    const option = options[index];
+    if (option.disabled) continue;
+    if (optionSearchText(option).toLowerCase().startsWith(query)) return index;
+  }
+  return -1;
+}
+
 /**
  * LDS Product Selection and Input — WheelPicker
  * iOS-style drum / wheel selector — a scroll-snap listbox with a highlighted
@@ -113,6 +136,9 @@ export function WheelPicker({
   const selectedIndex = opts.findIndex((option) => option.value === current);
   const activeIndex = selectedIndex >= 0 ? selectedIndex : firstEnabledIndex;
   const listRef = React.useRef(null);
+  const scrollSettleTimer = React.useRef(null);
+  const programmaticScroll = React.useRef(false);
+  const typeahead = React.useRef({ query: '', at: 0 });
   const listId = React.useId();
   const rows = getVisibleRows(visible);
   const rowHeight = getItemHeight(itemHeight);
@@ -133,8 +159,15 @@ export function WheelPicker({
 
   React.useEffect(() => {
     if (!listRef.current || activeIndex < 0) return;
-    listRef.current.scrollTop = activeIndex * rowHeight;
+    const target = activeIndex * rowHeight;
+    if (Math.abs(listRef.current.scrollTop - target) < 1) return;
+    programmaticScroll.current = true;
+    listRef.current.scrollTop = target;
   }, [activeIndex, rowHeight]);
+
+  React.useEffect(() => () => {
+    if (scrollSettleTimer.current) clearTimeout(scrollSettleTimer.current);
+  }, []);
 
   const pickIndex = (index) => {
     if (locked) return;
@@ -153,8 +186,32 @@ export function WheelPicker({
 
   const handleScroll = () => {
     if (locked || !listRef.current) return;
-    const nextIndex = Math.round(listRef.current.scrollTop / rowHeight);
-    pickIndex(nextIndex);
+    if (programmaticScroll.current) {
+      programmaticScroll.current = false;
+      return;
+    }
+    const list = listRef.current;
+    if (scrollSettleTimer.current) clearTimeout(scrollSettleTimer.current);
+    scrollSettleTimer.current = setTimeout(() => {
+      scrollSettleTimer.current = null;
+      pickIndex(Math.round(list.scrollTop / rowHeight));
+    }, SCROLL_SETTLE_MS);
+  };
+
+  const handleTypeahead = (event) => {
+    const now = Date.now();
+    const continuing = now - typeahead.current.at < TYPEAHEAD_RESET_MS;
+    if (event.key === ' ' && !continuing) return false;
+    const query = `${continuing ? typeahead.current.query : ''}${event.key.toLowerCase()}`;
+    typeahead.current = { query, at: now };
+    // A repeated single character steps through the options starting with it;
+    // any other query keeps refining the match under the current row.
+    const repeated = query.length > 1 && [...query].every((character) => character === query[0]);
+    const search = repeated ? query[0] : query;
+    const matched = findByPrefix(opts, search, search.length > 1 ? activeIndex : activeIndex + 1);
+    if (matched < 0) return false;
+    pickIndex(matched);
+    return true;
   };
 
   const handleKeyDown = (event) => {
@@ -178,6 +235,8 @@ export function WheelPicker({
     } else if (event.key === 'PageDown') {
       event.preventDefault();
       pickIndex(activeIndex + pad);
+    } else if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+      if (handleTypeahead(event)) event.preventDefault();
     }
   };
 

@@ -21,6 +21,8 @@ Classification: **LK Product Extension**. WDS Core variant parity를 주장하�
 
 - `value`와 `onChange`는 완전 제어형입니다. 컴포넌트는 선택한 ID만 전달하며 보기 적용, 서버 저장, 로컬 저장, URL 동기화, 충돌 해결을 수행하지 않습니다.
 - `onChange`가 없으면 조작 가능한 no-op select를 노출하지 않고 disabled read-only 표현으로 전환합니다. 빈 `views`도 같은 비활성 계약과 `emptyLabel`을 사용합니다.
+- `dirty`/`saving` 상태의 낭독은 select 옆의 보이는 배지·스피너가 아니라 상시 마운트된 polite 라이브 리전이 담당합니다. 메시지와 함께 새로 삽입된 리전은 낭독이 누락되므로, 리전은 상태가 없을 때도 빈 채로 남아 있고 텍스트만 바뀝니다(`ToastStack`의 상시 리전과 같은 계약). 보이는 배지와 스피너는 표현만 담당하며 자체 status role을 갖지 않습니다.
+- 같은 리전이 select의 `aria-describedby` 대상이기도 합니다. 그래야 select에 포커스한 사용자가 현재 보기에 저장되지 않은 변경이 있다는 사실을 알 수 있습니다.
 - 액션은 슬롯입니다. 수정/삭제 권한, 삭제 확인, 이름 입력, 실패 메시지, 저장 중 비활성화 정책은 제품이 결정합니다.
 - 작은 화면에서는 선택, 상태, 액션이 DOM 순서를 유지한 채 줄바꿈됩니다. 별도 카드 표면이나 중첩 메뉴 chrome을 만들지 않습니다.
 

@@ -21,7 +21,10 @@ function useKeyframes(id, css) {
  * Circular loading indicator with an optional visible label.
  */
 export function Spinner({ size, thickness, color = 'var(--color-semantic-primary-normal)', label, variant = 'circular', style, ...rest }) {
-  useKeyframes('lk-spin-kf', '@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none}}');
+  /* The ring animation is applied as an inline style, so the reduced-motion
+     override needs `!important` to win over it — same as the brand wave below
+     (WCAG 2.3.3). */
+  useKeyframes('lk-spin-kf', '@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none!important}}');
   // Two amplitudes: ROBOTICS carries an extra 3.9x group scale, so its local
   // translate is 1/3.9 of LK's to bob by the same on-screen amount.
   useKeyframes('lk-brand-wave-kf', '@keyframes lk-brand-wave-lk{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(300px)}}@keyframes lk-brand-wave-robo{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(77px)}}@media (prefers-reduced-motion: reduce){[data-wave]{animation:none!important}}');

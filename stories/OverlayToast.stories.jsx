@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import { Button, Toast, ToastStack } from '../src/index.js';
 import {
   ToastCard as ToastCardStory,
@@ -35,50 +36,42 @@ function Section({ title, children }) {
   );
 }
 
+/* The auto-dismiss policy value is 7초; the fixture shortens it so the timing
+   contract can be demonstrated and asserted without a 7 second wait. */
+const DEMO_DURATION = 1500;
+
 function DurationPolicyDemo() {
   const [visible, setVisible] = React.useState(true);
-  const timerRef = React.useRef(null);
-  const stopTimer = React.useCallback(() => clearTimeout(timerRef.current), []);
-  const startTimer = React.useCallback(() => {
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setVisible(false), 7000);
-  }, []);
-
-  React.useEffect(() => {
-    if (visible) startTimer();
-    return stopTimer;
-  }, [startTimer, stopTimer, visible]);
-
   return (
     <main style={{ display: 'grid', gap: 'var(--space-4)', justifyItems: 'start', maxWidth: 680 }}>
       <Button
+        data-testid="toast-replay"
         variant="outlined"
         color="assistive"
-        onClick={() => {
-          setVisible(true);
-          startTimer();
-        }}
+        onClick={() => setVisible(true)}
       >
-        7초 Toast 다시 표시
+        자동 닫힘 Toast 다시 표시
       </Button>
-      {visible && (
-        <Toast
-          variant="positive"
-          onClose={() => setVisible(false)}
-          onMouseEnter={stopTimer}
-          onMouseLeave={startTimer}
-          onFocus={stopTimer}
-          onBlur={startTimer}
-        >
-          저장되었습니다. 포인터나 초점이 머무는 동안 자동 닫힘이 멈춥니다.
-        </Toast>
-      )}
-      <Toast variant="cautionary" action="검토" onAction={() => {}} onClose={() => {}}>
+      <div data-testid="auto-slot" style={{ minHeight: 46 }}>
+        {visible && (
+          <Toast
+            data-testid="auto-toast"
+            variant="positive"
+            duration={DEMO_DURATION}
+            onClose={() => setVisible(false)}
+          >
+            저장되었습니다. 포인터나 초점이 머무는 동안 자동 닫힘이 멈춥니다.
+          </Toast>
+        )}
+      </div>
+      <Toast data-testid="actionable-toast" variant="cautionary" duration={DEMO_DURATION} action="검토" onAction={() => {}} onClose={() => {}}>
         검토할 항목이 있어 이 Toast는 자동으로 닫히지 않습니다.
       </Toast>
     </main>
   );
 }
+
+const wait = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
 
 export const ToastNotifications = {
   name: '개요',
@@ -90,7 +83,8 @@ export const ToastNotifications = {
       <Section title="Toast 심각도와 아이콘 축">
         <div style={{ display: 'grid', gap: 10, justifyItems: 'start' }}>
           <Toast variant="normal">임시 저장되었습니다.</Toast>
-          <Toast variant="positive" action="실행 취소">변경 사항이 게시되었습니다.</Toast>
+          {/* action 문구는 언제나 실제 핸들러와 함께 둡니다(무동작 버튼 금지). */}
+          <Toast variant="positive" action="실행 취소" onAction={() => {}}>변경 사항이 게시되었습니다.</Toast>
           <Toast variant="cautionary">일부 필드는 검토가 필요합니다.</Toast>
           <Toast variant="negative" onClose={() => {}}>업로드에 실패했습니다.</Toast>
           <Toast variant="positive" leadingIcon={false}>리딩 아이콘을 끈 상태입니다.</Toast>
@@ -119,18 +113,82 @@ export const StackAndPlacement = {
     >
       <ToastStack position="bottom-right" style={{ position: 'absolute' }}>
         <Toast variant="positive">변경 사항이 저장되었습니다.</Toast>
-        <Toast variant="cautionary" action="검토">확인이 필요한 항목이 있습니다.</Toast>
+        <Toast variant="cautionary" action="검토" onAction={() => {}}>확인이 필요한 항목이 있습니다.</Toast>
+        <Toast variant="negative" onClose={() => {}}>업로드에 실패했습니다.</Toast>
       </ToastStack>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    // The stack owns persistent live regions; hosted toasts announce into them
+    // instead of each being a live region inserted together with its own text.
+    const polite = canvasElement.querySelector('[data-toast-live="polite"]');
+    const assertive = canvasElement.querySelector('[data-toast-live="assertive"]');
+    if (!polite || !assertive) throw new Error('ToastStack must mount persistent polite and assertive live regions.');
+    if (polite.getAttribute('aria-live') !== 'polite' || assertive.getAttribute('aria-live') !== 'assertive') {
+      throw new Error('ToastStack live regions must declare their politeness.');
+    }
+
+    const strayLiveRegions = [...canvasElement.querySelectorAll('[aria-live]')]
+      .filter((node) => node !== polite && node !== assertive);
+    if (strayLiveRegions.length > 0) {
+      throw new Error('A hosted Toast must not duplicate the stack live region.');
+    }
+
+    await waitFor(() => {
+      if (!polite.textContent?.trim()) throw new Error('Polite toasts must announce through the stack live region.');
+      if (!assertive.textContent?.includes('업로드에 실패했습니다')) {
+        throw new Error('A negative Toast must announce through the assertive region.');
+      }
+    });
+  },
 };
 
 export const DurationPolicy = {
   name: '시나리오 · 지속시간과 일시정지',
   parameters: storyDescription(
-    '행동 없는 성공 Toast는 7초 뒤 닫히고 hover·focus 동안 타이머를 멈추며, 행동이 있는 주의 Toast는 사용자가 처리할 때까지 유지하는 상황입니다.',
+    '행동 없는 성공 Toast는 `duration` 뒤 스스로 닫히고 hover·focus 동안 남은 시간을 보존한 채 멈추며, 행동이 있는 주의 Toast는 duration을 줘도 사용자가 처리할 때까지 유지되는 상황입니다(WCAG 2.2.1). 정책값은 7초이지만 이 예시는 타이밍을 관찰할 수 있도록 1.5초로 줄였습니다.',
   ),
   render: () => <DurationPolicyDemo />,
+  play: async ({ canvasElement }) => {
+    const autoToast = () => canvasElement.querySelector('[data-testid="auto-toast"]');
+    const replay = canvasElement.querySelector('[data-testid="toast-replay"]');
+    const actionable = canvasElement.querySelector('[data-testid="actionable-toast"]');
+    if (!autoToast() || !replay || !actionable) throw new Error('The duration fixture requires both toasts and a replay control.');
+
+    // 1) Hover pauses the timer: well past the duration, the toast is still up.
+    await userEvent.hover(autoToast());
+    await waitFor(() => {
+      if (!autoToast()?.hasAttribute('data-toast-paused')) throw new Error('Hovering a Toast must pause its auto-dismiss timer.');
+    });
+    await wait(DEMO_DURATION + 600);
+    if (!autoToast()) throw new Error('A hovered Toast must not auto-dismiss.');
+
+    // 2) Leaving resumes it, and the toast closes on its own.
+    await userEvent.unhover(autoToast());
+    await waitFor(() => {
+      if (autoToast()) throw new Error('Toast must auto-dismiss once the pointer leaves.');
+    }, { timeout: DEMO_DURATION * 3 });
+
+    // 3) Keyboard focus inside the toast pauses it just like hover.
+    await userEvent.click(replay);
+    await waitFor(() => {
+      if (!autoToast()) throw new Error('The replay control must bring the Toast back.');
+    });
+    autoToast().querySelector('button')?.focus();
+    await waitFor(() => {
+      if (!autoToast()?.hasAttribute('data-toast-paused')) throw new Error('Focus inside a Toast must pause its auto-dismiss timer.');
+    });
+    await wait(DEMO_DURATION + 600);
+    if (!autoToast()) throw new Error('A Toast holding keyboard focus must not auto-dismiss.');
+
+    // 4) WCAG 2.2.1: an actionable toast refuses auto-dismiss outright.
+    if (!canvasElement.querySelector('[data-testid="actionable-toast"]')) {
+      throw new Error('A Toast with an action must never auto-dismiss, even with a duration.');
+    }
+    if (actionable.hasAttribute('data-toast-paused')) {
+      throw new Error('An actionable Toast has no timer to pause.');
+    }
+  },
 };
 
 export const ToastCard = { ...ToastCardStory, name: 'Toast card parity', tags: ['!dev', 'visual-parity'] };

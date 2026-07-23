@@ -24,6 +24,12 @@ const meta = {
 
 export default meta;
 
+/* openDelay/closeDelay가 0이어도 상태 반영은 다음 frame에 걸릴 수 있으므로
+   "열리지 않았다"를 단언하기 전에 한 박자 기다린다. */
+const settle = () => new Promise((resolve) => {
+  setTimeout(() => requestAnimationFrame(() => resolve()), 50);
+});
+
 export const HoverCardOverview = {
   name: '개요',
   parameters: storyDescription(
@@ -89,9 +95,34 @@ export const HoverCardInteractionContract = {
       if (canvasElement.querySelector('[role="tooltip"]')) throw new Error('Escape must close HoverCard.');
       if (ownerDocument.activeElement !== trigger) throw new Error('Escape must preserve the HoverCard trigger focus.');
     });
+
+    /* Escape로 닫은 카드는 닫힌 채로 있어야 한다. 초점 복원이 focus 열림 규칙을
+       다시 발화해 카드가 되살아나면 키보드 사용자에게는 닫을 방법이 없다. */
+    trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await settle();
+    if (canvasElement.querySelector('[role="tooltip"]')) {
+      throw new Error('Escape로 닫은 HoverCard가 trigger 초점만으로 다시 열리면 안 됩니다.');
+    }
+
+    /* 포인터가 다시 들어오면 평소대로 열린다 — 억제는 초점 복원에만 걸린다. */
     await userEvent.hover(trigger);
     await waitFor(() => {
       if (!canvasElement.querySelector('[role="tooltip"]')) throw new Error('Pointer hover must reopen HoverCard.');
+    });
+
+    /* 초점이 앵커를 떠났다가 돌아오면 억제가 풀리고 focus로 다시 열린다. */
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (canvasElement.querySelector('[role="tooltip"]')) throw new Error('Escape must close HoverCard again.');
+    });
+    trigger.blur();
+    trigger.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: canvasElement }));
+    trigger.focus();
+    trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await waitFor(() => {
+      if (!canvasElement.querySelector('[role="tooltip"]')) {
+        throw new Error('초점이 앵커를 떠났다 돌아오면 HoverCard가 다시 열려야 합니다.');
+      }
     });
   },
 };

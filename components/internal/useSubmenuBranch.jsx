@@ -12,6 +12,9 @@ import { useMenuKeyboard } from './useMenuKeyboard.js';
 export function useSubmenuBranch({ disabled = false } = {}) {
   const [open, setOpen] = React.useState(false);
   const [subPos, setSubPos] = React.useState(null);
+  // Stable id for the portaled panel so the trigger can point `aria-controls`
+  // at the submenu it owns — same contract as a top-level menu trigger.
+  const menuId = React.useId();
   const triggerRef = React.useRef(null);
   const panelRef = React.useRef(null);
   const hoverTimer = React.useRef(null);
@@ -99,5 +102,13 @@ export function useSubmenuBranch({ disabled = false } = {}) {
     );
   };
 
-  return { open, triggerRef, menuRef, containerHandlers, triggerHandlers, menuKeyDown, renderPanel };
+  // `triggerAria` carries the ARIA wiring a submenu trigger must expose; spread
+  // it on the trigger and put `menuId` on the panel's `role="menu"` node.
+  const triggerAria = {
+    'aria-haspopup': 'menu',
+    'aria-expanded': open,
+    'aria-controls': open ? menuId : undefined,
+  };
+
+  return { open, menuId, triggerAria, triggerRef, menuRef, containerHandlers, triggerHandlers, menuKeyDown, renderPanel };
 }

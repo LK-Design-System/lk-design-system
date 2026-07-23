@@ -102,7 +102,9 @@ export function Alert({
   if (!open) return null;
 
   const p = platformStyle[platform] || platformStyle.web;
-  const primary = primaryLabel ?? confirmLabel ?? "Confirm";
+  // Every other default label in the system is Korean (확인 / 취소); the primary
+  // action default follows the same locale instead of falling back to English.
+  const primary = primaryLabel ?? confirmLabel ?? "확인";
   const secondary = secondaryLabel ?? cancelLabel;
   const normalizedVariant = normalizeVariant(variant ?? tone);
   const accent = variantColor[normalizedVariant] || variantColor.normal;
@@ -146,7 +148,14 @@ export function Alert({
     >
       <div
         ref={setDialogRef}
-        role="dialog"
+        /* APG Alert Dialog: Alert always interrupts the flow and always renders
+         * a response (confirm, or confirm + cancel), which is exactly the
+         * alertdialog contract — the role makes assistive tech announce the
+         * title and description on entry instead of just naming a dialog. The
+         * rule is unconditional on purpose: the announcement behaviour must not
+         * depend on the `variant` colour axis. Non-blocking, response-free
+         * messages belong in Toast / Snackbar / Banner, not in Alert. */
+        role="alertdialog"
         aria-modal="true"
         aria-labelledby={hasVisibleTitle ? titleId : undefined}
         aria-label={!hasVisibleTitle ? (typeof title === 'string' ? title : ariaLabel) : undefined}

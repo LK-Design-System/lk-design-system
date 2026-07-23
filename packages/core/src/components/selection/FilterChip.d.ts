@@ -5,8 +5,16 @@ export interface FilterChipProps extends Omit<React.ButtonHTMLAttributes<HTMLBut
   active?: boolean;
   /** 선택적 끝 카운트. */
   count?: number;
-  /** 드롭다운 캐럿 표시(메뉴를 여는 필터용). @default false */
+  /**
+   * 드롭다운 캐럿 표시(메뉴를 여는 필터용). `caret`이면 토글이 아니라 disclosure로
+   * 취급되어 `aria-pressed` 대신 `aria-haspopup` + `aria-expanded`를 노출합니다.
+   * @default false
+   */
   caret?: boolean;
+  /** disclosure(`caret`) 칩의 팝업 열림 상태. 생략하면 `active`를 사용합니다. */
+  expanded?: boolean;
+  /** disclosure(`caret`) 칩이 여는 팝업의 종류. @default "menu" */
+  haspopup?: 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog' | true;
   disabled?: boolean;
   /** 밀도. sm은 소형 컨트롤 높이(32)에 맞춰 툴바에서 버튼/입력과 정렬됩니다. @default "md" */
   size?: 'sm' | 'md';

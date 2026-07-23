@@ -13,6 +13,8 @@
 
 - **series** `{id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[]` · **width/height** · **xTicks/yTicks** · **xDomain/yDomain** · **includeZero** · **showGrid/showLegend/showPoints** · **referenceLines** `{y,label,color?,dashed?}[]` · **emptyLabel** · **formatX/formatY**.
 - **description / summary** — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 `accessibleLabel`로 요약 이름을 고정합니다.
+- `referenceLines`는 자동 요약에도 포함됩니다. y domain 안에 그려진 기준선만 대상이며 `기준선 N개.` 뒤에 각 선의 이름·값과 그 선을 넘긴 시리즈 이름(없으면 `초과한 시리즈 없음`)이 이어집니다. 임계선은 `role="img"` SVG 안 텍스트로만 존재하면 보조기술에 전혀 닿지 않으므로, 임계 이탈 판단을 시각 표시에만 맡기지 않습니다. `summary`를 직접 넘기면 기준선 문장도 그 값으로 대체되므로 필요한 내용을 직접 포함시키세요.
+- 다중 시리즈를 **색상만으로 구분하지 않습니다**(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 `dashed`(선 패턴)나 `showPoints`(마커)를 함께 켜서 색 외 단서를 남기세요.
 - Compare against common line chart expectations before changing it: bounded domains, axis ticks and labels, grid option, multiple series, legend handoff, reference lines, empty state, responsive SVG, and predictable formatting hooks.
 - Layer: LDS Product Data extension. This is a lightweight presentational chart pattern, not a full analytics/charting engine or WDS component-set parity claim.
 - 기본은 responsive SVG입니다. `width`/`height`는 viewBox 기준 크기이며, 실제 렌더는 부모 너비 안에서 줄어듭니다.

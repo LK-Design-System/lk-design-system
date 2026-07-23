@@ -31,6 +31,7 @@ export function SocialButton({
   onMouseLeave,
   onMouseDown,
   onMouseUp,
+  onClick,
   type,
   ...rest
 }) {
@@ -82,19 +83,28 @@ export function SocialButton({
   };
 
   const Comp = as;
+  const isNativeButton = as === 'button';
   const label = typeof children === 'string' ? children : labels[provider];
   return (
     <Comp
       className={`lk-social-btn lk-social-btn--${provider}`}
       style={composed}
-      disabled={as === 'button' ? disabled : undefined}
-      type={as === 'button' ? (type ?? 'button') : undefined}
+      // Only a native button understands `disabled`. Link-rendered ("as='a'")
+      // buttons would otherwise look dimmed but stay fully operable, so the
+      // inactive state is carried by aria-disabled plus a blocked activation.
+      disabled={isNativeButton ? disabled : undefined}
+      aria-disabled={!isNativeButton && disabled ? true : undefined}
+      type={isNativeButton ? (type ?? 'button') : undefined}
       aria-label={iconOnly ? label : undefined}
       title={iconOnly ? label : undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); onMouseLeave && onMouseLeave(e); }}
       onMouseDown={(e) => { onMouseDown && onMouseDown(e); }}
       onMouseUp={(e) => { onMouseUp && onMouseUp(e); }}
+      onClick={(e) => {
+        if (disabled) { e.preventDefault(); e.stopPropagation(); return; }
+        onClick && onClick(e);
+      }}
       {...rest}
     >
       <BrandLogo name={provider} size={iconOnly ? 22 : 20} mono={p.mono} decorative style={{ flexShrink: 0 }} />

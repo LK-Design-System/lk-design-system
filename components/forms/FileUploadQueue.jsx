@@ -80,12 +80,16 @@ export function FileUploadQueue({
           <Icon name="document" size={22} color="var(--color-semantic-label-neutral)" aria-hidden="true" />
           <div style={{ minWidth: 0 }}>
             <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)' }}>{title}</strong>
+            {/*
+              A live announcement is built from the region's text content, so an
+              aria-label here would only be a second, silently ignored copy of
+              the same sentence.
+            */}
             <VisuallyHidden
               className="lk-file-upload-queue__live-summary"
               role="status"
               aria-live="polite"
               aria-atomic="true"
-              aria-label={summaryLabel}
             >
               {summaryLabel}
             </VisuallyHidden>

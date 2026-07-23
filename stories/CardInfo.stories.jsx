@@ -1,3 +1,5 @@
+import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import {
   FeatureCard,
   Icon,
@@ -44,6 +46,65 @@ export const FeatureCards = {
       </section>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const headings = Array.from(canvasElement.querySelectorAll('h4'));
+    if (headings.length !== 2) {
+      throw new Error('FeatureCard 제목은 실제 heading(기본 h4)으로 렌더되어야 합니다(WCAG 1.3.1).');
+    }
+    if (canvasElement.querySelector('[role="button"], button, a')) {
+      throw new Error('onClick 없는 기능 셀은 인터랙티브 요소를 만들지 않아야 합니다.');
+    }
+  },
+};
+
+function ActivatableFeatureCard() {
+  const [count, setCount] = React.useState(0);
+  return (
+    <div style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 420 }}>
+      <FeatureCard
+        boxed
+        data-contract="activatable"
+        headingLevel={2}
+        tone="signal"
+        icon={<Icon name="layers" size={22} />}
+        title="카드 전체가 행동"
+        onClick={() => setCount((value) => value + 1)}
+      >
+        onClick을 주면 카드 루트가 버튼이 되고 Enter/Space로 활성화됩니다.
+      </FeatureCard>
+      <p data-contract="count" style={{ margin: 0 }}>{count}</p>
+    </div>
+  );
+}
+
+export const FeatureCardActivationContract = {
+  name: 'FeatureCard 활성화 계약',
+  tags: ['!dev'],
+  render: () => <ActivatableFeatureCard />,
+  play: async ({ canvasElement }) => {
+    const card = canvasElement.querySelector('[data-contract="activatable"]');
+    const count = canvasElement.querySelector('[data-contract="count"]');
+    if (!card || !count) throw new Error('활성화 계약 픽스처가 필요합니다.');
+    if (card.getAttribute('role') !== 'button' || card.getAttribute('tabindex') !== '0') {
+      throw new Error('클릭 대상 카드는 role="button" + tabIndex=0이어야 합니다(WCAG 2.1.1).');
+    }
+    if (!card.querySelector('h2')) {
+      throw new Error('headingLevel은 제목의 heading 레벨을 제어해야 합니다.');
+    }
+    if (card.querySelector('a, button, input, [tabindex]')) {
+      throw new Error('활성화 가능한 카드 안에는 포커스 가능한 요소를 두면 안 됩니다.');
+    }
+    card.focus();
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      if (count.textContent !== '1') throw new Error('Enter로 카드를 활성화할 수 있어야 합니다.');
+    });
+    await userEvent.keyboard(' ');
+    await waitFor(() => {
+      if (count.textContent !== '2') throw new Error('Space로 카드를 활성화할 수 있어야 합니다.');
+    });
+    card.blur();
+  },
 };
 
 export const FeatureCardCard = { ...FeatureCardCardStory, name: 'FeatureCard card parity', tags: ['!dev', 'visual-parity'] };

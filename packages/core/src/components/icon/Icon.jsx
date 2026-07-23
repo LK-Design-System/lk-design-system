@@ -1794,6 +1794,15 @@ const ICON_SVG = {
 
 /**
  * Icon renders an LDS glyph. Most icons inherit color through currentColor.
+ *
+ * Accessibility: icons are DECORATIVE by default (`aria-hidden="true"`, no
+ * role), because a glyph almost always repeats meaning that visible text or the
+ * wrapping control already carries. Never let the registry key leak into the
+ * accessibility tree — "chevron-right" is a file name, not a name for a user.
+ * Pass an explicit `aria-label` (or `title`) to promote the glyph to an
+ * informative image; it then renders as `role="img"` with that accessible name.
+ * Icon-only controls should get their name from the control (IconButton /
+ * Button / Fab `label`), not from the glyph.
  */
 export function Icon({
   name,
@@ -1805,7 +1814,27 @@ export function Icon({
   ...rest
 }) {
   const icon = ICON_SVG[name];
-  const ariaLabel = rest["aria-label"] || title || name;
+  const {
+    "aria-label": ariaLabelProp,
+    "aria-hidden": ariaHiddenProp,
+    role: roleProp,
+    ...domProps
+  } = rest;
+  const explicitName = ariaLabelProp != null ? ariaLabelProp : title;
+  const hiddenRequested =
+    ariaHiddenProp === true || ariaHiddenProp === "true";
+  const informative = explicitName != null && !hiddenRequested;
+  const a11y = informative
+    ? {
+        role: roleProp != null ? roleProp : "img",
+        "aria-label": explicitName,
+        "aria-hidden": undefined,
+      }
+    : {
+        role: roleProp,
+        "aria-label": undefined,
+        "aria-hidden": ariaHiddenProp !== undefined ? ariaHiddenProp : "true",
+      };
   if (!icon) {
     return React.createElement("svg", {
       width: size,
@@ -1813,7 +1842,8 @@ export function Icon({
       viewBox: "0 0 24 24",
       style,
       className,
-      ...rest,
+      ...domProps,
+      ...a11y,
     });
   }
 
@@ -1821,12 +1851,11 @@ export function Icon({
     width: size,
     height: size,
     viewBox: icon.viewBox,
-    role: rest["aria-hidden"] ? undefined : "img",
-    "aria-label": rest["aria-hidden"] ? undefined : ariaLabel,
     className,
     style: { display: "block", color, flexShrink: 0, ...style },
     dangerouslySetInnerHTML: { __html: icon.body },
-    ...rest,
+    ...domProps,
+    ...a11y,
   });
 }
 

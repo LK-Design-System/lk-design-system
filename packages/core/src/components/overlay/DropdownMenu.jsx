@@ -230,10 +230,17 @@ const SUBMENU_CHEVRON = (
   <Icon name="chevron-right-small" size={16} aria-hidden="true" style={{ flexShrink: 0, color: "var(--color-semantic-label-alternative)" }} />
 );
 
+// The drill-up control lives inside `role="menu"`, so it must carry a
+// menuitem-family role (ARIA required-children) and join the roving collection
+// instead of being pointer-only. `data-menu-back` keeps the shared engine from
+// treating it as the entry item of a level. Same contract as Menubar.
 function DrillHeader({ title, onBack }) {
   return (
     <button
       type="button"
+      role="menuitem"
+      data-menu-back=""
+      tabIndex={-1}
       aria-label={`뒤로 (${typeof title === "string" ? title : "상위 메뉴"})`}
       onClick={onBack}
       onKeyDown={(event) => { if (event.key === "ArrowLeft") { event.preventDefault(); onBack(); } }}
@@ -318,8 +325,7 @@ function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
         ref={sub.triggerRef}
         type="button"
         role="menuitem"
-        aria-haspopup="menu"
-        aria-expanded={sub.open}
+        {...sub.triggerAria}
         tabIndex={-1}
         disabled={disabled}
         {...sub.triggerHandlers}
@@ -337,6 +343,7 @@ function MenuBranch({ item, variant, cellPadding, verticalPadding, closeAll }) {
       {sub.renderPanel(
         <div
           ref={sub.menuRef}
+          id={sub.menuId}
           role="menu"
           aria-label={typeof item.label === "string" ? item.label : undefined}
           onKeyDown={sub.menuKeyDown}
@@ -497,6 +504,9 @@ export function DropdownMenu({
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
 
   const handleMenuRegionKeyDown = (event) => {
+    // The drill-up control and submenu triggers consume their own keys; without
+    // this guard ArrowLeft on the back control would drill up twice.
+    if (event.defaultPrevented) return;
     if (drill && event.key === 'ArrowLeft' && drillPath.length > 0) {
       event.preventDefault();
       drillBack();

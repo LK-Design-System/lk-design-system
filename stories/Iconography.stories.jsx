@@ -50,7 +50,7 @@ const meta = {
       eyebrow: 'Foundation / Iconography',
       title: '아이콘은 익숙한 의미를 짧게 보조하고 텍스트를 임의로 대신하지 않습니다',
       description:
-        '행동이나 상태를 빠르게 식별할 때 LDS registry의 정해진 이름과 크기를 사용하세요. 의미가 모호한 단독 아이콘에는 접근 가능한 이름이나 보이는 라벨이 필요하며, 임의 SVG와 장식용 색상으로 새 의미를 만들지 않습니다.',
+        '행동이나 상태를 빠르게 식별할 때 LDS registry의 정해진 이름과 크기를 사용하세요. Icon의 기본값은 장식(aria-hidden)이므로 이름은 감싸는 컨트롤이 제공하고, 글리프 자체가 유일한 정보일 때만 aria-label·title로 이름을 붙입니다. 임의 SVG와 장식용 색상으로 새 의미를 만들지 않습니다.',
     },
     docs: {
       description: {
@@ -99,26 +99,90 @@ function IconTile({ name, compact = false }) {
   );
 }
 
+const a11yPanelStyle = {
+  border: '1px solid var(--color-semantic-line-normal-normal)',
+  borderRadius: 'var(--radius-lg)',
+  background: 'var(--color-semantic-background-elevated-normal)',
+  padding: 'var(--space-5)',
+  display: 'grid',
+  gap: 'var(--space-3)',
+};
+
+const a11yCodeStyle = { fontSize: 12, color: 'var(--color-semantic-label-alternative)', wordBreak: 'break-word' };
+
+const a11yRows = [
+  [
+    '보이는 텍스트 옆의 보조 글리프',
+    '<Icon name="download" />',
+    'aria-hidden="true" · 접근성 트리에서 제외',
+  ],
+  [
+    '라벨이 있는 아이콘 전용 컨트롤',
+    '<IconButton label="내보내기" icon="download" />',
+    '이름은 버튼이 제공 · 글리프는 장식 그대로',
+  ],
+  [
+    '글리프 자체가 유일한 정보',
+    '<Icon name="circle-check" aria-label="검증 완료" />',
+    'role="img" + 해당 이름으로 승격',
+  ],
+];
+
 export const IconSizingAndColor = {
   name: '개요',
   parameters: storyDescription(
-    '기본 아이콘 크기와 semantic 색상 적용 방식을 비교합니다. 주변 텍스트·컨트롤의 크기에 맞춰 아이콘을 선택하고, 상태 색상은 같은 의미의 semantic token으로만 전달하세요.',
+    '기본 아이콘 크기와 semantic 색상 적용 방식, 그리고 접근성 기본값을 함께 봅니다. 주변 텍스트·컨트롤의 크기에 맞춰 아이콘을 선택하고, 상태 색상은 같은 의미의 semantic token으로만 전달하세요.',
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: 'min(760px, 100%)' }}>
       <section style={{ display: 'flex', gap: 'var(--space-5)', alignItems: 'center', flexWrap: 'wrap', color: 'var(--color-semantic-label-normal)' }}>
         {[16, 20, 24, 32, 40].map((size) => (
           <span key={size} style={{ display: 'inline-grid', gap: 6, justifyItems: 'center', color: 'var(--color-semantic-label-neutral)' }}>
-            <Icon name="square" size={size} aria-hidden="true" />
+            <Icon name="square" size={size} />
             <code style={{ fontSize: 11 }}>{size}</code>
           </span>
         ))}
       </section>
       <section style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center', flexWrap: 'wrap' }}>
-        <span style={{ color: 'var(--color-semantic-label-normal)' }}><Icon name="document" size={24} aria-hidden="true" /></span>
-        <span style={{ color: 'var(--color-semantic-primary-normal)' }}><Icon name="bookmark" size={24} aria-hidden="true" /></span>
-        <span style={{ color: 'var(--color-semantic-status-positive)' }}><Icon name="circle-check" size={24} aria-hidden="true" /></span>
-        <span style={{ color: 'var(--color-semantic-status-negative)' }}><Icon name="triangle-exclamation" size={24} aria-hidden="true" /></span>
+        <span style={{ color: 'var(--color-semantic-label-normal)' }}><Icon name="document" size={24} /></span>
+        <span style={{ color: 'var(--color-semantic-primary-normal)' }}><Icon name="bookmark" size={24} /></span>
+        <span style={{ color: 'var(--color-semantic-status-positive)' }}><Icon name="circle-check" size={24} /></span>
+        <span style={{ color: 'var(--color-semantic-status-negative)' }}><Icon name="triangle-exclamation" size={24} /></span>
+      </section>
+
+      <section style={a11yPanelStyle}>
+        <h2 style={{ margin: 0, fontSize: 18, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-strong)' }}>
+          접근성 · 장식용이 기본값입니다
+        </h2>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+          <code style={a11yCodeStyle}>Icon</code>은 별도 지정이 없으면 <code style={a11yCodeStyle}>aria-hidden=&quot;true&quot;</code>로
+          렌더되고 <code style={a11yCodeStyle}>role</code>을 붙이지 않습니다. registry key(<code style={a11yCodeStyle}>chevron-right</code>,{' '}
+          <code style={a11yCodeStyle}>square</code>)는 접근 가능한 이름으로 노출되지 않습니다 — 파일 이름은 사용자에게 읽어 줄 이름이
+          아니기 때문입니다. 위 예시들이 <code style={a11yCodeStyle}>aria-hidden</code>을 적지 않아도 되는 이유입니다.
+        </p>
+        <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+          {a11yRows.map(([situation, code, result]) => (
+            <div
+              key={situation}
+              style={{
+                display: 'grid',
+                gap: 4,
+                paddingTop: 'var(--space-2)',
+                borderTop: '1px solid var(--color-semantic-line-normal-alternative)',
+              }}
+            >
+              <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 14 }}>{situation}</strong>
+              <code style={a11yCodeStyle}>{code}</code>
+              <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 13 }}>{result}</span>
+            </div>
+          ))}
+        </div>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7, fontSize: 13 }}>
+          아이콘이 옆의 텍스트를 반복한다면 이름을 붙이지 마세요 — 스크린리더가 같은 내용을 두 번 읽습니다. 아이콘 전용
+          컨트롤의 이름은 <code style={a11yCodeStyle}>IconButton</code>·<code style={a11yCodeStyle}>Button</code>·
+          <code style={a11yCodeStyle}>Fab</code>의 <code style={a11yCodeStyle}>label</code>이 담당합니다. 이름을 붙일 때는 모양이 아니라
+          의미를 적습니다(&ldquo;삼각형 느낌표&rdquo;가 아니라 &ldquo;주의&rdquo;).
+        </p>
       </section>
     </main>
   ),

@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import { PropertyField } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -95,6 +96,135 @@ export const PropertyFields = {
         />
       </PropertyPanel>
     );
+  },
+};
+
+function PropertyFieldContractFixture() {
+  const [values, setValues] = React.useState({ frame: 'odom', recover: false, vel: 12 });
+  const apply = (key) => (value) => setValues((state) => ({ ...state, [key]: value }));
+  return (
+    <PropertyPanel>
+      <PropertyField
+        data-testid="text-property"
+        label="global_frame"
+        type="text"
+        value={values.frame}
+        onApply={apply('frame')}
+      />
+      <PropertyField
+        data-testid="toggle-property"
+        label="자동 복구"
+        hint="실패 후 재시도"
+        type="toggle"
+        value={values.recover}
+        onApply={apply('recover')}
+      />
+      <PropertyField
+        data-testid="node-property"
+        label={<span>max<code>_vel</code></span>}
+        type="number"
+        unit="m/s"
+        value={values.vel}
+        onApply={apply('vel')}
+      />
+    </PropertyPanel>
+  );
+}
+
+export const KeyboardAndLabelContract = {
+  name: '키보드 적용과 라벨 연결 계약',
+  tags: ['!dev'],
+  render: () => <PropertyFieldContractFixture />,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const textRow = canvasElement.querySelector('[data-testid="text-property"]');
+    const toggleRow = canvasElement.querySelector('[data-testid="toggle-property"]');
+    const nodeRow = canvasElement.querySelector('[data-testid="node-property"]');
+    if (!textRow || !toggleRow || !nodeRow) throw new Error('The PropertyField contract fixture is incomplete.');
+
+    /* 이름은 보이는 label 하나에서만 나와야 한다 — aria-label이 htmlFor 연결을 덮지 않는다. */
+    const textInput = textRow.querySelector('input');
+    if (textInput.getAttribute('aria-label') != null) {
+      throw new Error('A labelled text editor must not override its native label with aria-label.');
+    }
+    if (textInput.labels?.length !== 1 || !textInput.labels[0].textContent.includes('global_frame')) {
+      throw new Error('A text editor must be associated with exactly one visible label element.');
+    }
+
+    /* Enter 적용 전에 Escape가 draft를 baseline으로 되돌려야 한다. */
+    await userEvent.type(textInput, '2');
+    await waitFor(() => {
+      if (textInput.value !== 'odom2') throw new Error('Typing must update the draft value.');
+      const describedBy = textInput.getAttribute('aria-describedby') ?? '';
+      if (!describedBy.split(/\s+/).some((id) => doc.getElementById(id)?.textContent === '변경됨')) {
+        throw new Error('A dirty row must expose 변경됨 as a description, not inside the accessible name.');
+      }
+      if (textInput.getAttribute('aria-label') != null) {
+        throw new Error('The accessible name must stay fixed while the row is dirty.');
+      }
+    });
+    const dot = textRow.querySelector('[title="변경됨"]');
+    if (!dot || dot.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('The dirty dot must be a decorative marker, not an ARIA-labelled static span.');
+    }
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (textInput.value !== 'odom') throw new Error('Escape must revert the draft to the committed baseline.');
+    });
+
+    await userEvent.type(textInput, '2');
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      const applyButton = textRow.querySelector('button');
+      if (textInput.value !== 'odom2' || !applyButton.disabled) {
+        throw new Error('Enter must commit the draft and settle the row back to a clean state.');
+      }
+    });
+
+    /* toggle의 보이는 label은 두 번째 label 요소를 만들지 않고 aria-labelledby로 연결된다. */
+    const switchInput = toggleRow.querySelector('input[role="switch"]');
+    const labelledBy = switchInput.getAttribute('aria-labelledby');
+    if (switchInput.getAttribute('aria-label') != null || !labelledBy) {
+      throw new Error('A toggle row must name its Switch from the visible label, not a duplicated string.');
+    }
+    if (doc.getElementById(labelledBy)?.textContent?.includes('자동 복구') !== true) {
+      throw new Error('aria-labelledby must resolve to the visible property label.');
+    }
+    if (switchInput.labels?.length !== 1) {
+      throw new Error('A toggle row must not produce a second label element for the same control.');
+    }
+
+    await userEvent.click(doc.getElementById(labelledBy));
+    await waitFor(() => {
+      if (!switchInput.checked) throw new Error('Clicking the visible toggle label must flip the switch.');
+    });
+    await userEvent.click(doc.getElementById(labelledBy));
+    await waitFor(() => {
+      if (switchInput.checked) throw new Error('The toggle must be restored to its named state.');
+    });
+
+    /* ReactNode label도 접근 가능 이름이 범용어 "속성"으로 붕괴하지 않아야 한다. */
+    const nodeInput = nodeRow.querySelector('input');
+    const nodeApply = nodeRow.querySelector('button');
+    if (nodeInput.labels?.[0]?.textContent.replace(/\s+/g, '') !== 'max_vel') {
+      throw new Error('A ReactNode label must still name its editor with the visible text.');
+    }
+    if (nodeApply.getAttribute('aria-label') !== 'max_vel 적용') {
+      throw new Error('The per-row Apply button must be named with the extracted label text, not "속성".');
+    }
+
+    /* 시각 스냅샷은 play 종료 상태를 캡처하므로 스토리의 이름난 상태로 복구한다. */
+    await userEvent.clear(textInput);
+    await userEvent.type(textInput, 'odom');
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      const applyButton = textRow.querySelector('button');
+      if (textInput.value !== 'odom' || !applyButton.disabled) {
+        throw new Error('The text row must finish in its named committed state.');
+      }
+    });
+    doc.activeElement?.blur();
   },
 };
 

@@ -19,7 +19,10 @@
 - **value / defaultValue / onChange**는 단일 선택일 때 문자열, `multiple`일
   때 `string[]`입니다. 기존 `multiple` API는 호환 유지합니다.
 - **size**는 Button family와 같은 `sm/md/lg` = 32/40/48px이며, 이 값은 자식 버튼이 아니라 그룹 전체 외곽 높이입니다. 단일 모드의 SegmentedControl border와 복수 모드의 연결 border가 높이에 더해지지 않습니다.
-- 그룹의 목적을 설명하는 `aria-label` 또는 `aria-labelledby`를 제공하세요.
+- 그룹의 목적을 설명하는 `aria-label` 또는 `aria-labelledby`를 **반드시** 제공하세요.
+  범용 기본 이름은 제공하지 않습니다 — 라벨이 없으면 개발 빌드에서 콘솔 경고가
+  나고(프로덕션 번들에서는 제거됨), 단일 모드는 `SegmentedControl`의 기본 이름으로
+  떨어집니다. 조용히 의미 없는 이름을 얻는 것보다 누락을 드러내는 쪽이 낫습니다.
   전체 `disabled`와 option별 `disabled`를 지원합니다.
 - 단일 선택의 keyboard/DOM 계약은 `SegmentedControl`이 소유합니다.
   multiple 모드는 WAI-ARIA toggle button group이므로 각 버튼이 Tab stop이고

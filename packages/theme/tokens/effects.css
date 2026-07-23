@@ -86,15 +86,31 @@
   --decorate-mask-fade-bottom: linear-gradient(0deg, #000 0%, transparent 100%);
   --decorate-mask-fade-left: linear-gradient(90deg, #000 0%, transparent 100%);
 
-  /* ---- Decorate / Interaction ------------------------------------- */
-  --interaction-layer-normal: transparent;
-  --interaction-layer-default: rgba(112, 115, 124, 0.08);
-  --interaction-layer-light: rgba(112, 115, 124, 0.05);
-  --interaction-layer-strong: rgba(112, 115, 124, 0.14);
-  --interaction-opacity-normal: 1;
-  --interaction-opacity-hovered: 0.92;
-  --interaction-opacity-focused: 0.84;
-  --interaction-opacity-pressed: 0.76;
+  /* ---- Decorate / Interaction — DEPRECATED (2026-07) ---------------------
+   No component consumes these. They were an early WDS mapping attempt that
+   modelled every interaction state as one opacity ramp; the shipped system
+   instead expresses hover/pressed per component family and expresses focus
+   ONLY as a ring (see tokens/focus.css). `--interaction-opacity-focused`
+   in particular contradicts that focus contract and cannot satisfy
+   WCAG 2.4.7 / 2.4.11, so it must not be reintroduced.
+
+   Kept for one minor cycle per docs/TOKEN_GOVERNANCE.md ("deprecated").
+   Do not use in new code. Migration:
+     --interaction-layer-normal   -> no background layer at all
+     --interaction-layer-light    -> --color-semantic-fill-alternative (same value)
+     --interaction-layer-default  -> --color-semantic-fill-normal      (same value)
+     --interaction-layer-strong   -> --color-semantic-fill-strong      (0.16, near)
+     --interaction-opacity-*      -> per-family expression + the focus ring;
+                                     see stories/FoundationInteraction.stories.jsx
+   ---------------------------------------------------------------------- */
+  --interaction-layer-normal: transparent; /* @deprecated */
+  --interaction-layer-default: rgba(112, 115, 124, 0.08); /* @deprecated */
+  --interaction-layer-light: rgba(112, 115, 124, 0.05); /* @deprecated */
+  --interaction-layer-strong: rgba(112, 115, 124, 0.14); /* @deprecated */
+  --interaction-opacity-normal: 1; /* @deprecated */
+  --interaction-opacity-hovered: 0.92; /* @deprecated */
+  --interaction-opacity-focused: 0.84; /* @deprecated */
+  --interaction-opacity-pressed: 0.76; /* @deprecated */
 
   /* ---- Motion (timings + easing) ------- */
   --ease-out: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */

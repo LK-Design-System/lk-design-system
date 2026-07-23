@@ -142,6 +142,22 @@ export function LineChart({
   const summaryId = `${rawId}-summary`;
   const chartLabel = ariaLabel || (yLabel ? `${yLabel} 라인 차트` : '라인 차트');
   const emptyText = nodeText(emptyLabel) || '데이터가 없습니다.';
+  const visibleReferenceLines = referenceLines
+    .filter((line) => isFiniteNumber(line.y) && Number(line.y) >= yMin && Number(line.y) <= yMax);
+  /* Reference lines are threshold annotations, not decoration: they only exist
+     inside the `role="img"` SVG, so screen-reader users never learn the
+     threshold — nor which series crossed it — unless the text alternative says
+     so. Same rule Carbon/Highcharts apply to annotations. */
+  const referenceSummary = visibleReferenceLines
+    .map((line, index) => {
+      const y = Number(line.y);
+      const name = nodeText(line.label) || `기준선 ${index + 1}`;
+      const crossed = normalized
+        .filter((item) => item.points.some((point) => point.y > y))
+        .map((item, itemIndex) => item.accessibleLabel || nodeText(item.name) || `시리즈 ${itemIndex + 1}`);
+      return `${name} ${formattedText(fy, y)}: ${crossed.length ? `${crossed.join(', ')} 초과` : '초과한 시리즈 없음'}.`;
+    })
+    .join(' ');
   const automaticSummary = hasData
     ? normalized.map((item, index) => {
       const label = item.accessibleLabel || nodeText(item.name) || `시리즈 ${index + 1}`;
@@ -151,7 +167,7 @@ export function LineChart({
       const minimum = item.points.reduce((current, point) => (point.y < current.y ? point : current), first);
       const maximum = item.points.reduce((current, point) => (point.y > current.y ? point : current), first);
       return `${label}: ${item.points.length}개 점. 시작 ${formattedText(fx, first.x)}에서 ${formattedText(fy, first.y)}, 최저 ${formattedText(fy, minimum.y)}, 최고 ${formattedText(fy, maximum.y)}, 마지막 ${formattedText(fx, last.x)}에서 ${formattedText(fy, last.y)}.`;
-    }).join(' ')
+    }).concat(referenceSummary ? [`기준선 ${visibleReferenceLines.length}개. ${referenceSummary}`] : []).join(' ')
     : emptyText;
   const resolvedSummary = summary ?? automaticSummary;
   const legendItems = normalized.map((item, index) => ({
@@ -270,8 +286,7 @@ export function LineChart({
           </text>
         )}
 
-        {referenceLines
-          .filter((line) => isFiniteNumber(line.y) && Number(line.y) >= yMin && Number(line.y) <= yMax)
+        {visibleReferenceLines
           .map((line, index) => {
             const y = sy(Number(line.y));
             const color = line.color || 'var(--color-semantic-data-viz-series-5)';

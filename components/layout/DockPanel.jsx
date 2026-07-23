@@ -129,7 +129,20 @@ export function DockPanel({
     setIsResizing(false);
   };
 
+  // Escape collapses from anywhere inside the open panel *and* from the resize
+  // separator, which is a sibling of <aside> and therefore never reached the
+  // panel's own keydown handler. `defaultPrevented` lets a nested overlay
+  // (popover, menu) consume its own Escape first instead of collapsing the dock.
+  const collapseOnEscape = (event) => {
+    if (event.defaultPrevented || !closeOnEscape || event.key !== 'Escape') return false;
+    event.stopPropagation();
+    setOpen(false);
+    focusHandle();
+    return true;
+  };
+
   const handleResizeKeyDown = (event) => {
+    if (collapseOnEscape(event)) return;
     if (!canResize || activeNumericWidth === undefined) return;
     const step = (event.shiftKey ? resizeStep * 4 : resizeStep) || DEFAULT_RESIZE_STEP;
     if (event.key === 'Home') {
@@ -149,10 +162,7 @@ export function DockPanel({
   };
 
   const handlePanelKeyDown = (event) => {
-    if (!closeOnEscape || event.key !== 'Escape') return;
-    event.stopPropagation();
-    setOpen(false);
-    focusHandle();
+    collapseOnEscape(event);
   };
 
   const panelName = titleText || ariaLabel || '도킹 패널';

@@ -262,7 +262,7 @@ export const SwitchCard = {
     <div data-visual-crop-root style={{ width: 480, height: 120, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <Switch defaultChecked label="변경 알림" />
-        <Switch size="sm" defaultChecked />
+        <Switch size="sm" defaultChecked aria-label="작은 크기 알림" />
         <Switch label="준비 중" disabled />
       </div>
     </div>

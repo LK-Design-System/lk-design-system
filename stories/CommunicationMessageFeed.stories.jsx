@@ -581,6 +581,12 @@ export const EmptyAndBusy = {
     if (!phaseStatus || phaseStatus.getAttribute('role') !== 'status' || busyLog.contains(phaseStatus)) {
       throw new Error('Phase announcements must use a separate status region outside the log.');
     }
+    /* 문구와 함께 삽입된 status node는 기존 live region의 변경이 아니라서 첫 알림이
+       누락된다. region은 비어 있는 채로 상시 mount하고 텍스트만 교체해야 한다. */
+    const idleStatus = canvasElement.querySelector('[data-empty-example] [data-message-feed-live-status]');
+    if (!idleStatus || idleStatus.textContent !== '') {
+      throw new Error('The phase status region must stay mounted and empty until a phase message arrives.');
+    }
   },
 };
 

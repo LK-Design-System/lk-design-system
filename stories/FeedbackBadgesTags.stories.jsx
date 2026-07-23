@@ -42,18 +42,53 @@ export const BadgeTagPatterns = {
       <section style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center', flexWrap: 'wrap' }}>
         <Badge>12</Badge>
         <Badge tone="amber">점검</Badge>
-        <Badge tone="red" dot>장애</Badge>
+        <Badge data-testid="badge-dot-labelled" tone="red" dot>장애</Badge>
+        <Badge data-testid="badge-count-clamped" tone="navy">128</Badge>
         <Tag>ROBOTICS</Tag>
         <Tag tone="amber" solid>주의</Tag>
       </section>
 
       <section style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center', flexWrap: 'wrap' }}>
-        <PushBadge count={7}>
-          <IconButton variant="ghost" label="알림"><Icon name="bell" /></IconButton>
+        <PushBadge data-testid="push-badge-count" count={7}>
+          <IconButton data-testid="push-badge-control" variant="ghost" label="알림"><Icon name="bell" /></IconButton>
         </PushBadge>
       </section>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    // WCAG 1.4.1 — the dot must never be the only carrier of meaning.
+    const dotBadge = canvasElement.querySelector('[data-testid="badge-dot-labelled"]');
+    if (!dotBadge) throw new Error('Badge dot contract target is required.');
+    if (dotBadge.textContent.trim() !== '장애') {
+      throw new Error('A Badge with `dot` and children must keep its text visible next to the coloured dot.');
+    }
+    if (dotBadge.getAttribute('aria-hidden') === 'true') {
+      throw new Error('A labelled dot Badge must stay exposed to assistive technology.');
+    }
+    const marker = dotBadge.querySelector('[aria-hidden="true"]');
+    if (!marker || getComputedStyle(marker).borderRadius === '0px') {
+      throw new Error('The dot itself must remain a decorative marker beside the label.');
+    }
+
+    // Count overflow clamps like PushBadge.
+    const clamped = canvasElement.querySelector('[data-testid="badge-count-clamped"]');
+    if (!clamped || clamped.textContent.trim() !== '99+') {
+      throw new Error('A numeric Badge above `max` must clamp to "99+".');
+    }
+
+    // The unread count must reach the control's accessible name.
+    const control = canvasElement.querySelector('[data-testid="push-badge-control"]');
+    const pushBadge = canvasElement.querySelector('[data-testid="push-badge-count"]');
+    if (!control || !pushBadge) throw new Error('PushBadge contract targets are required.');
+    const name = control.getAttribute('aria-label') || '';
+    if (!name.startsWith('알림') || !name.includes('7')) {
+      throw new Error(`PushBadge must fold the count into the control's accessible name (got "${name}").`);
+    }
+    const overlay = Array.from(pushBadge.querySelectorAll('span')).find((node) => node.textContent.trim() === '7');
+    if (!overlay || overlay.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('The visual count overlay must be decorative so the count is not announced twice.');
+    }
+  },
 };
 
 export const BadgeCard = { ...BadgeCardStory, name: 'Badge card parity', tags: ['!dev', 'visual-parity'] };

@@ -66,7 +66,7 @@ function ControlledCategoryDemo() {
 }
 
 export const RadioGroupSemantics = {
-  name: '라디오그룹 시맨틱 · 제어형과 초기 선택 시드',
+  name: '사용법 · 라디오그룹 시맨틱과 초기 선택',
   parameters: storyDescription(
     '제어형 예시와 item.active 초기 선택 시드를 함께 보여줍니다. Arrow 키가 포커스 이동과 동시에 선택하는지, 그룹마다 aria-checked가 정확히 하나인지, 비활성 칩을 건너뛰는지 확인하세요.',
   ),

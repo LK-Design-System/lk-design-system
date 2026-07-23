@@ -11,4 +11,6 @@
 - **thickness / color** control the circular ring geometry and active arc.
 - **label** adds visible status text and lets assistive tech announce the loading state.
 - Use `ProgressBar` or `CircularProgress` when a value or completion percentage is known.
-- Motion respects `prefers-reduced-motion`.
+- Motion respects `prefers-reduced-motion`. circular ring과 brand wave 모두 inline
+  style로 animation이 붙으므로 reduced-motion 규칙은 `animation:none!important`로
+  선언되어 사용자 설정이 항상 이깁니다.

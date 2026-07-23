@@ -31,7 +31,7 @@ function ButtonGroupDemo() {
 
   return (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 640 }}>
-      <ButtonGroup options={['목록', '카드', '지도']} value={view} onChange={setView} />
+      <ButtonGroup aria-label="결과 보기 방식" options={['목록', '카드', '지도']} value={view} onChange={setView} />
       <p aria-live="polite" style={{ margin: 0, color: 'var(--color-semantic-label-neutral)' }}>
         현재 보기: <strong style={{ color: 'var(--color-semantic-label-strong)' }}>{view}</strong>
       </p>
@@ -99,6 +99,7 @@ export const SelectionContracts = {
     const multiple = canvasElement.querySelector('[data-contract="multiple"]');
     if (!single || !multiple) throw new Error('ButtonGroup contract targets are required.');
     if (single.getAttribute('role') !== 'radiogroup') throw new Error('Single ButtonGroup must compose the SegmentedControl radio contract.');
+    if (single.getAttribute('aria-label') !== '결과 보기') throw new Error('명시한 aria-label이 범용 기본 이름으로 대체되면 안 됩니다.');
     const radios = Array.from(single.querySelectorAll('[role="radio"]'));
     radios[0].focus();
     await userEvent.keyboard('{ArrowRight}');

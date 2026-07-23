@@ -26,10 +26,91 @@ const colors = [
   ['Ink', 'var(--color-semantic-brand-ink)'],
   ['Slate', 'var(--color-semantic-brand-surface-raised)'],
   ['Border', 'var(--color-semantic-line-solid-normal)'],
-  ['Green', 'var(--color-semantic-status-positive)'],
-  ['Amber', 'var(--color-semantic-status-cautionary)'],
-  ['Red', 'var(--color-semantic-status-negative)'],
+  ['Green (vivid)', 'var(--color-semantic-status-positive)'],
+  ['Amber (vivid)', 'var(--color-semantic-status-cautionary)'],
+  ['Red (vivid)', 'var(--color-semantic-status-negative)'],
 ];
+
+/* 상태색은 "선명한 신호색"과 "AA를 만족하는 텍스트색"이 분리되어 있습니다.
+   흰 배경 기준 대비는 tokens/color-semantic.css의 실제 값으로 계산한 값입니다. */
+const VIVID_STATUS_RULES = [
+  {
+    role: 'positive',
+    vivid: ['--color-semantic-status-positive', '#13BE4C', '2.47:1'],
+    text: ['--color-semantic-status-positive-text', '#087A32', '5.47:1'],
+  },
+  {
+    role: 'cautionary',
+    vivid: ['--color-semantic-status-cautionary', '#EB9C33', '2.25:1'],
+    text: ['--color-semantic-status-cautionary-text', '#7A4A00', '7.48:1'],
+  },
+  {
+    role: 'negative',
+    vivid: ['--color-semantic-status-negative', '#EE5656', '3.44:1'],
+    text: ['--color-semantic-status-negative-text', '#A82727', '7.04:1'],
+  },
+];
+
+function VividStatusWarning() {
+  return (
+    <section
+      style={{
+        display: 'grid',
+        gap: 12,
+        padding: 20,
+        borderRadius: 'var(--radius-lg)',
+        background: 'var(--color-semantic-status-cautionary-surface)',
+        border: '1px solid var(--color-semantic-status-cautionary-border)',
+      }}
+    >
+      <h2 style={{ margin: 0, fontSize: 18, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-strong)' }}>
+        선명한 상태색은 텍스트·텍스트 배경으로 쓰지 않습니다
+      </h2>
+      <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+        <code style={{ fontSize: 12 }}>--color-semantic-status-*</code>의 기본값(위 Green · Amber · Red)은 <strong>신호용
+        선명색</strong>입니다. 점·아이콘·테두리·진행 표시처럼 <em>텍스트가 아닌</em> 요소에만 쓰세요. 흰 배경 기준 대비가
+        모두 4.5:1 아래이므로, 이 색으로 본문을 찍거나 이 색을 배경 삼아 흰 글자를 올리면 WCAG AA(1.4.3)를 만족하지 못합니다.
+        같은 의미의 텍스트에는 <code style={{ fontSize: 12 }}>--color-semantic-status-*-text</code>를 사용하세요.
+      </p>
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 520, fontSize: 13 }}>
+          <thead>
+            <tr style={{ textAlign: 'left', color: 'var(--color-semantic-label-alternative)' }}>
+              <th style={{ padding: '6px 8px', fontWeight: 'var(--fw-medium)' }}>역할</th>
+              <th style={{ padding: '6px 8px', fontWeight: 'var(--fw-medium)' }}>신호색 · 텍스트 금지</th>
+              <th style={{ padding: '6px 8px', fontWeight: 'var(--fw-medium)' }}>텍스트색 · AA 통과</th>
+            </tr>
+          </thead>
+          <tbody>
+            {VIVID_STATUS_RULES.map(({ role, vivid, text }) => (
+              <tr key={role} style={{ borderTop: '1px solid var(--color-semantic-line-normal-alternative)' }}>
+                <td style={{ padding: '6px 8px', color: 'var(--color-semantic-label-strong)' }}>{role}</td>
+                <td style={{ padding: '6px 8px' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <span aria-hidden="true" style={{ width: 14, height: 14, borderRadius: 3, background: `var(${vivid[0]})`, flexShrink: 0 }} />
+                    <span style={{ color: 'var(--color-semantic-label-neutral)' }}>{vivid[1]} · 흰 배경 {vivid[2]}</span>
+                  </span>
+                </td>
+                <td style={{ padding: '6px 8px' }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <span aria-hidden="true" style={{ width: 14, height: 14, borderRadius: 3, background: `var(${text[0]})`, flexShrink: 0 }} />
+                    <span style={{ color: 'var(--color-semantic-label-neutral)' }}>{text[1]} · 흰 배경 {text[2]}</span>
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7, fontSize: 13 }}>
+        solid/강조 배지처럼 상태색을 배경으로 채우는 변형은 특히 주의하세요. 선명색 배경 + 흰 글자 조합은 위 표의 대비값이
+        그대로 적용되어 AA에 미달합니다. 이때는 <code style={{ fontSize: 12 }}>--color-semantic-status-*-surface</code> 배경과{' '}
+        <code style={{ fontSize: 12 }}>--color-semantic-status-*-text</code> 글자를 쌍으로 쓰거나, 배경을 더 어둡게
+        재정의해야 합니다. 선명색은 같은 배지의 테두리·점 표시로 남깁니다.
+      </p>
+    </section>
+  );
+}
 
 const spacings = [
   ['--space-1', '4px', '미세 간격'],
@@ -65,8 +146,63 @@ export const Color = {
           ))}
         </div>
       </section>
+      <VividStatusWarning />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    /* 이 표는 토큰의 원시 값을 문서 내용으로 싣는다. 값이 토큰과 어긋나면 문서가
+       거짓말을 하므로, 실제로 해석된 토큰과 대조해 드리프트를 막는다. */
+    const root = canvasElement.ownerDocument.documentElement;
+    const styles = getComputedStyle(root);
+    const channels = (value) => {
+      const parsed = value.trim().startsWith('#')
+        ? [1, 3, 5].map((index) => parseInt(value.trim().slice(index, index + 2), 16))
+        : value.match(/\d+(\.\d+)?/g)?.slice(0, 3).map(Number);
+      if (!parsed || parsed.length !== 3) throw new Error(`색상 값을 해석하지 못했습니다: ${value}`);
+      return parsed;
+    };
+    const luminance = (value) => {
+      const [r, g, b] = channels(value).map((channel) => {
+        const ratio = channel / 255;
+        return ratio <= 0.03928 ? ratio / 12.92 : ((ratio + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    const contrast = (a, b) => {
+      const [high, low] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+      return (high + 0.05) / (low + 0.05);
+    };
+    const background = styles.getPropertyValue('--color-semantic-background-normal-normal');
+    const lightTheme = luminance(background) > 0.5;
+
+    for (const { role, vivid, text } of VIVID_STATUS_RULES) {
+      const vividValue = styles.getPropertyValue(vivid[0]).trim();
+      const textValue = styles.getPropertyValue(text[0]).trim();
+      if (!vividValue || !textValue) {
+        throw new Error(`${role} 상태 토큰이 해석되지 않았습니다.`);
+      }
+      /* 표가 가르치는 주장은 테마와 무관하게 성립해야 한다. */
+      if (contrast(vividValue, background) >= 4.5) {
+        throw new Error(`${role} 신호색이 본문 배경에서 AA를 통과합니다. 표의 "텍스트 금지" 설명이 더 이상 맞지 않습니다.`);
+      }
+      if (contrast(textValue, background) < 4.5) {
+        throw new Error(`${role} 텍스트색이 본문 배경에서 AA에 미달합니다.`);
+      }
+      /* 표에 적힌 hex와 대비값은 밝은 테마 기준으로 계산한 것이다. */
+      if (!lightTheme) continue;
+      for (const [token, documented, documentedRatio] of [vivid, text]) {
+        const resolved = styles.getPropertyValue(token).trim();
+        const hex = `#${channels(resolved).map((channel) => channel.toString(16).padStart(2, '0')).join('')}`;
+        if (hex.toUpperCase() !== documented.toUpperCase()) {
+          throw new Error(`${token}의 문서값 ${documented}이 실제 토큰 값 ${hex.toUpperCase()}과 다릅니다.`);
+        }
+        const measured = `${contrast(resolved, '#FFFFFF').toFixed(2)}:1`;
+        if (measured !== documentedRatio) {
+          throw new Error(`${token}의 문서 대비값 ${documentedRatio}이 실제 측정값 ${measured}과 다릅니다.`);
+        }
+      }
+    }
+  },
 };
 
 export const SpacingScale = {
@@ -94,12 +230,14 @@ export const SpacingScale = {
 // Pretendard weight ladder, the complete 7-tier scale (Display→Caption, 16 styles),
 // and applied usage examples. Every metric is read live from the rendered element
 // via getComputedStyle, so the spec labels can never drift from tokens/typography.css.
+/* 용도 설명은 tokens/typography.css의 실제 선언을 그대로 옮긴 것입니다.
+   .type-body1/.type-body2는 500(Medium)이며 400(Regular)이 아닙니다. */
 const TYPE_WEIGHTS = [
-  ['Regular', 'var(--fw-regular)', '본문 기본'],
-  ['Medium', 'var(--fw-medium)', '본문 강조 · 라벨'],
+  ['Regular', 'var(--fw-regular)', '타입 스케일 미사용 · 목록 비선택 항목 등에서 직접 지정'],
+  ['Medium', 'var(--fw-medium)', 'Body · Label · Caption (타입 스케일 기본)'],
   ['SemiBold', 'var(--fw-semibold)', 'Heading · Headline'],
   ['Bold', 'var(--fw-bold)', 'Title · Display'],
-  ['ExtraBold', 'var(--fw-extra)', '수치 · 강한 강조'],
+  ['ExtraBold', 'var(--fw-extra)', '타입 스케일 미사용 · 수치와 카드 표제에 직접 지정'],
 ];
 
 const TYPE_SCALE = [
@@ -157,6 +295,12 @@ function TypographySpecimen() {
 
       <section style={{ display: 'grid', gap: 14 }}>
         <h2 style={{ margin: 0 }} className="type-heading1">서체 · 굵기</h2>
+        <p style={{ margin: 0, maxWidth: 640, color: 'var(--color-semantic-label-neutral)' }} className="type-body2">
+          타입 스케일 유틸리티 클래스가 실제로 쓰는 굵기는 Medium(500) · SemiBold(600) · Bold(700) 세 가지입니다.
+          본문 기본값은 Regular가 아니라 <strong>Medium(500)</strong>입니다 — 한글 본문 가독성을 위해
+          <code style={{ fontSize: 12 }}> .type-body1</code>·<code style={{ fontSize: 12 }}>.type-body2</code>가
+          500으로 선언되어 있습니다. Regular(400)와 ExtraBold(800)는 스케일 밖에서 필요할 때만 직접 지정합니다.
+        </p>
         <div style={{ display: 'grid', gap: 0, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--color-semantic-background-elevated-normal)' }}>
           {TYPE_WEIGHTS.map(([label, weightVar, usage], i) => (
             <div key={label} style={{ display: 'grid', gridTemplateColumns: 'minmax(120px, 150px) minmax(0, 1fr) auto', gap: 16, alignItems: 'baseline', padding: '14px 18px', borderTop: i === 0 ? 'none' : '1px solid var(--color-semantic-line-normal-normal)' }}>
@@ -294,6 +438,8 @@ function ColorSystemSpecimen() {
           {Object.entries(STATUS_FAMILIES).map(([name, roles]) => <StatusFamily key={name} name={name} roles={roles} />)}
         </div>
       </section>
+
+      <VividStatusWarning />
 
       <section style={{ display: 'grid', gap: 14 }}>
         <h2 style={{ margin: 0 }} className="type-heading1">의미 색상</h2>

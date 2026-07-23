@@ -15,11 +15,27 @@ function isPressed(interaction) {
   return interaction === "pressed" || interaction === "active";
 }
 
+/* Material/Fluent convention: the focus ring belongs to keyboard focus only, so
+   a pointer press does not leave a ring behind. `:focus-visible` is unsupported
+   in some test DOMs — fall back to showing the ring rather than hiding it. */
+function isFocusVisible(node) {
+  if (!node || typeof node.matches !== "function") return true;
+  try {
+    return node.matches(":focus-visible");
+  } catch {
+    return true;
+  }
+}
+
 /**
  * LK ROBOTICS — ListCell
  * list row: optional leading content, text, trailing content, divider,
  * chevron, selection, disabled state, vertical padding/alignment, fill width,
  * ellipsis, and interaction-state preview.
+ *
+ * Rows are semantically flat on purpose — wrap repeated rows in `ul`/`li`
+ * (`<ul role="list"><li><ListCell …/></li></ul>`) so count and position are
+ * announced while the row keeps its own `role="button"`.
  */
 export function ListCell({
   leading,
@@ -128,7 +144,7 @@ export function ListCell({
         if (onMouseLeave) onMouseLeave(event);
       }}
       onFocus={(event) => {
-        setFocus(true);
+        setFocus(isFocusVisible(event.target));
         if (onFocus) onFocus(event);
       }}
       onBlur={(event) => {

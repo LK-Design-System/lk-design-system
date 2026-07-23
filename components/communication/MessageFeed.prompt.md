@@ -49,6 +49,7 @@
 - date separator는 `Divider` label에 `<time dateTime>`을 제공하고, unread separator는 제품이 계산한 첫 미읽음 message 바로 앞에 한 번 둡니다. 둘 다 named `role="separator"`이며 focus target이나 별도 announcement region이 아닙니다.
 - 최신 message action은 bottom으로 이동한 뒤 `onFollowingChange(true, "jump-to-latest")`와 `onJumpToLatest`를 호출합니다.
 - `liveStatus`는 log 바깥의 phase-level status입니다. streaming token을 반복 발표하는 용도로 사용하지 않습니다.
+- 그 status region은 문구가 생길 때 mount하지 않고 **feed 수명 내내 비어 있는 상태로 상시 mount**한 뒤 텍스트만 교체합니다. 텍스트와 함께 삽입된 status node는 기존 live region의 변경이 아니어서 첫 phase 알림이 누락됩니다. 비어 있는 region은 시각적으로 숨겨져 있고 절대 위치라 layout에 영향을 주지 않습니다.
 
 ## 내부 LDS 비교와 visual delta
 

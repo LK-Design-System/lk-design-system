@@ -17,11 +17,19 @@ LK theme tokens.
 - **size**: `sm`, `md`, `lg`.
 - **full**: fills the container width.
 - **loading**: prevents repeated activation, renders a spinner, and sets
-  `aria-busy`; use **loadingLabel** for the single screen-reader name. The
-  existing content keeps its width while visually hidden, so loading does not
-  move adjacent controls.
+  `aria-busy`; use **loadingLabel** for the single screen-reader name
+  (기본값 `불러오는 중`). The existing content keeps its width while visually
+  hidden, so loading does not move adjacent controls.
+- **loading은 native `disabled`를 사용하지 않습니다.** 대신 `aria-disabled="true"`
+  와 `aria-busy="true"`를 두고 activation만 차단합니다. native `disabled`로 만들면
+  방금 그 버튼을 누른 키보드 사용자의 focus가 즉시 `<body>`로 튕기기 때문이며,
+  Polaris·Carbon과 같은 처리입니다. 명시적인 `disabled`/`disable`만 tab 순서에서
+  제거합니다.
 - Native `disabled` removes a button from focus. `aria-disabled="true"` keeps it
   discoverable, applies the same unavailable treatment, and blocks activation.
+- **iconOnly**는 접근 가능한 이름이 없으면 이름 없는 버튼이 됩니다. `aria-label`
+  (또는 `aria-labelledby`)을 반드시 전달하세요. 누락 시 development 빌드에서만
+  console 경고가 출력되며 production 번들에서는 제거됩니다.
 - Disabled foreground, fill, and outlined border resolve semantic roles at the
   button's rendered theme scope, so nested dark surfaces do not inherit a
   root-resolved light alias.

@@ -49,7 +49,10 @@ export interface LineChartProps extends Omit<React.HTMLAttributes<HTMLDivElement
   formatY?: (v: number) => React.ReactNode;
   /** 차트가 무엇의 추이를 보여주는지 설명하는 스크린 리더용 문장. */
   description?: React.ReactNode;
-  /** 자동 생성되는 시리즈별 시작·최저·최고·마지막 값 요약을 재정의합니다. */
+  /**
+   * 자동 생성되는 요약을 재정의합니다. 자동 요약은 시리즈별 시작·최저·최고·마지막 값에
+   * 이어 그려진 `referenceLines`의 이름·값과 그 선을 넘긴 시리즈를 덧붙입니다.
+   */
   summary?: React.ReactNode;
 }
 

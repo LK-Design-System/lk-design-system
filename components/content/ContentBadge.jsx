@@ -13,8 +13,27 @@ const TONES = {
   negative: "var(--color-semantic-status-negative)",
 };
 
+// Solid fills carry reversed text, so the FILL itself must clear AA against
+// `--color-semantic-background-normal-normal`. The vivid `--color-semantic-
+// status-*` hues do not — all three land between 2:1 and 3.5:1 on white, and
+// only the accent hue passes (see the Foundation/Color story for the measured
+// table). Status solids therefore fill with the AA `*-text` tokens, which also
+// flip per theme — in dark mode the token is the light hue and
+// `background-normal-normal` is the dark ink, so the pairing stays reversed and
+// legible in both themes.
+const SOLID_TONES = {
+  signal: "var(--color-semantic-primary-normal)",
+  accent: "var(--color-semantic-primary-normal)",
+  navy: "var(--color-semantic-inverse-background)",
+  neutral: "var(--color-semantic-label-alternative)",
+  positive: "var(--color-semantic-status-positive-text)",
+  cautionary: "var(--color-semantic-status-cautionary-text)",
+  warning: "var(--color-semantic-status-cautionary-text)",
+  negative: "var(--color-semantic-status-negative-text)",
+};
+
 // Text on soft/outlined badges uses the AA status *text* tokens; the vivid
-// TONES hues remain for solid fills and border mixes.
+// TONES hues remain for soft backgrounds and border mixes.
 const TEXT_TONES = {
   signal: BRAND_FOREGROUND,
   accent: BRAND_FOREGROUND,
@@ -112,7 +131,10 @@ export function ContentBadge({
         ? "var(--color-semantic-fill-normal)"
         : `color-mix(in srgb, ${baseColor} 14%, var(--color-semantic-background-elevated-normal))`);
   const solidBg =
-    accentBackgroundColor || (neutralColor ? "var(--color-semantic-fill-strong)" : baseColor);
+    accentBackgroundColor ||
+    (neutralColor
+      ? "var(--color-semantic-fill-strong)"
+      : SOLID_TONES[resolvedTone] || baseColor);
   const solidFg =
     accentContentColor ||
     (neutralColor ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-background-normal-normal)");

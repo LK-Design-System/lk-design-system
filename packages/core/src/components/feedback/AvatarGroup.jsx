@@ -19,6 +19,10 @@ function resolveGroupSize(size) {
  * LK ROBOTICS — AvatarGroup
  * Overlapping avatars with a white ring. Preserves the legacy "+N" overflow
  * counter and also supports the Avatar Group trailingContent slot.
+ *
+ * Accessibility: a roleless `div` cannot expose an `aria-label`, so the root
+ * takes `role="group"` whenever the consumer names it. Unnamed groups stay
+ * roleless to avoid announcing an empty container.
  */
 export function AvatarGroup({
   items = [],
@@ -28,9 +32,12 @@ export function AvatarGroup({
   placeholder = "initials",
   trailingContent = false,
   trailingLabel,
+  role,
   style,
   ...rest
 }) {
+  const named = rest["aria-label"] != null || rest["aria-labelledby"] != null;
+  const resolvedRole = role ?? (named ? "group" : undefined);
   const resolvedSize = resolveGroupSize(size);
   const shown = items.slice(0, max);
   const extra = Math.max(0, items.length - shown.length);
@@ -80,6 +87,7 @@ export function AvatarGroup({
   };
   return (
     <div
+      role={resolvedRole}
       style={{
         display: "inline-flex",
         alignItems: "center",

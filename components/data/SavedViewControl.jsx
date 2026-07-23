@@ -9,6 +9,20 @@ const HEIGHTS = {
   lg: 'var(--control-h-lg)',
 };
 
+// Library-standard visually-hidden recipe (DataGrid, Chip, ToastStack): out of
+// flow, so the always-mounted announcer adds no grid track or gap.
+const SR_ONLY_STYLE = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
 /**
  * LK Product Data — SavedViewControl
  *
@@ -44,7 +58,10 @@ export function SavedViewControl({
   const autoId = React.useId();
   const controlId = selectId || `saved-view-${autoId}`;
   const labelId = `${controlId}-label`;
+  const statusId = `${controlId}-status`;
   const hasVisibleLabel = label != null;
+  // Saving wins over dirty because the visible slot shows the same precedence.
+  const statusText = saving ? savingLabel : dirty ? dirtyLabel : '';
   const normalizedSize = HEIGHTS[size] ? size : 'sm';
   const actions = [saveAction, saveAsAction, renameAction, deleteAction].filter((action) => action != null);
   const selectDisabled = disabled || views.length === 0 || typeof onChange !== 'function';
@@ -119,6 +136,10 @@ export function SavedViewControl({
             value={value ?? ''}
             disabled={selectDisabled}
             aria-label={!hasVisibleLabel ? (ariaLabel || '저장된 보기') : undefined}
+            /* Dirty/saving is otherwise only visible next to the control, so a
+               screen-reader user focused on the select would not know the
+               current view has unsaved changes. */
+            aria-describedby={statusId}
             onChange={(event) => onChange && onChange(event.currentTarget.value, event)}
             style={{
               appearance: 'none',
@@ -177,11 +198,18 @@ export function SavedViewControl({
           </span>
         </span>
 
+        {/* The visible slot is presentation only: both of these mount and
+            unmount with the state they describe, and the persistent announcer
+            below owns the announcement so it is never a brand-new live region.
+            Spinner's own status role is switched off here for the same reason
+            (it would otherwise announce the saving state a second time). */}
         {saving ? (
           <Spinner
             size={14}
             thickness={2}
             label={savingLabel}
+            role={undefined}
+            aria-live={undefined}
             style={{
               flex: '0 0 auto',
               color: 'var(--color-semantic-label-neutral)',
@@ -190,7 +218,7 @@ export function SavedViewControl({
             }}
           />
         ) : dirty ? (
-          <StatusBadge tone="cautionary" role="status" aria-live="polite" style={{ flex: '0 0 auto' }}>
+          <StatusBadge tone="cautionary" style={{ flex: '0 0 auto' }}>
             {dirtyLabel}
           </StatusBadge>
         ) : null}
@@ -215,6 +243,20 @@ export function SavedViewControl({
           </span>
         )}
       </div>
+
+      {/* Mounted for the whole life of the control; only its text changes. A
+          live region inserted together with its first message is not reliably
+          announced (same contract as ToastStack's persistent regions). */}
+      <span
+        id={statusId}
+        data-saved-view-status=""
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        style={SR_ONLY_STYLE}
+      >
+        {statusText}
+      </span>
     </div>
   );
 }

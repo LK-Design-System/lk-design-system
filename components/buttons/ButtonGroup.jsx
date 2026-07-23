@@ -1,6 +1,26 @@
 import React from 'react';
 import { SegmentedControl } from '../selection/SegmentedControl.jsx';
 
+/* Development-only guard: a grouping control with no accessible name is a
+   silent failure at runtime — assistive tech announces an anonymous group and
+   nothing explains what the toggles have in common. Bundlers replace
+   `process.env.NODE_ENV` at build time, so this branch disappears from
+   production builds; the try/catch keeps it inert where `process` is absent. */
+function isDevelopmentBuild() {
+  try {
+    return process.env.NODE_ENV !== 'production';
+  } catch {
+    return false;
+  }
+}
+
+function useMissingNameWarning(shouldWarn, message) {
+  React.useEffect(() => {
+    if (!shouldWarn || !isDevelopmentBuild()) return;
+    console.warn(message);
+  }, [shouldWarn, message]);
+}
+
 const SIZE_STYLES = {
   sm: {
     height: 'var(--component-button-height-sm)',
@@ -127,7 +147,10 @@ export function ButtonGroup({
   disable = false,
   style,
   className,
-  'aria-label': ariaLabel = '보기 또는 모드 선택',
+  // No generic fallback name: a silent "보기 또는 모드 선택" on every unlabelled
+  // group is a meaningless name, so the contract is an explicit label plus a
+  // development warning when it is missing.
+  'aria-label': ariaLabel,
   ...rest
 }) {
   const norm = options.map((option) => (
@@ -138,10 +161,17 @@ export function ButtonGroup({
   const normalizedSize = normalizeSize(size);
   const disabledState = disabled || disable;
   const isControlled = value !== undefined;
+  // Only the `multiple` branch owns selection state; single selection delegates
+  // it to SegmentedControl, so nothing is initialised for that path.
   const [internal, setInternal] = React.useState(
-    defaultValue != null ? defaultValue : multiple ? [] : norm[0]?.value,
+    () => (multiple ? (defaultValue != null ? defaultValue : []) : undefined),
   );
   const currentValue = isControlled ? value : internal;
+
+  useMissingNameWarning(
+    ariaLabel == null && rest['aria-labelledby'] == null,
+    '[LDS] ButtonGroup: 그룹의 목적을 설명하는 aria-label(또는 aria-labelledby)이 필요합니다. 이름이 없으면 보조 기술에 목적을 알 수 없는 그룹으로 노출됩니다.',
+  );
 
   if (!multiple) {
     return (

@@ -171,6 +171,15 @@ export const ModalFocusContract = {
     if (!mainDialog || mainDialog.getAttribute('aria-modal') !== 'true' || !labelledTitle?.textContent?.includes('현장 알림')) {
       throw new Error('Modal must expose a named modal dialog surface.');
     }
+    const describedBody = ownerDocument.getElementById(mainDialog.getAttribute('aria-describedby'));
+    if (!describedBody?.contains(canvasElement.querySelector('[data-testid="modal-initial-focus"]'))) {
+      throw new Error('Modal must describe itself from its body, like ConfirmDialog and Alert.');
+    }
+
+    // The page behind an open dialog must not scroll.
+    if (ownerDocument.defaultView.getComputedStyle(ownerDocument.body).overflow !== 'hidden') {
+      throw new Error('An open Modal must lock background page scrolling.');
+    }
 
     const firstTabStop = mainDialog.querySelector('button[aria-label="닫기"]');
     const lastTabStop = mainDialog.querySelector('[data-testid="modal-save"]');
@@ -212,6 +221,10 @@ export const ModalFocusContract = {
     await waitFor(() => {
       if (canvasElement.querySelector('[role="dialog"]') || ownerDocument.activeElement !== trigger) {
         throw new Error('Closing the base Modal must restore focus to its invoker.');
+      }
+      // Nested dialogs share one lock: it lifts only after the last one closes.
+      if (ownerDocument.defaultView.getComputedStyle(ownerDocument.body).overflow === 'hidden') {
+        throw new Error('Closing the last Modal must release the background scroll lock.');
       }
     });
 

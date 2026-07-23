@@ -11,6 +11,8 @@
 - Layer: LDS Product Selection and Input extension. It composes existing input, switch, and button behavior for settings panels rather than replacing primitive form fields.
 - text/number 입력은 semantic/component input token을 따르고, toggle은 `Switch`, 적용 액션은 `Button`을 사용합니다. Apply 핸들러가 없거나 disabled/readOnly면 적용 버튼은 비활성입니다.
 - compact input도 LDS focus ring과 AA text role을 유지합니다. `hint`는 모든 editor에, `unit`은 text/number editor에 `aria-describedby`로 연결합니다. toggle의 readOnly는 focus를 유지한 채 변경만 막습니다.
+- 접근 가능 이름은 **보이는 label 하나로 고정**합니다. text/number는 `<label htmlFor>` 네이티브 연결로 이름을 얻으므로 `aria-label`로 덮어쓰지 않고, `label`이 ReactNode여도 텍스트를 추출해 범용어로 붕괴하지 않습니다. toggle은 `Switch`가 자체 `<label>`로 input을 감싸므로 두 번째 label을 만들지 않고 보이는 label을 `aria-labelledby`로 연결하며, label을 클릭하면 toggle이 전환됩니다.
+- dirty는 이름이 아니라 상태 설명입니다. 노란 점은 `aria-hidden` 장식이고 `dirtyLabel` 문자열은 dirty일 때만 `aria-describedby`로 붙습니다. 이름이 조작 중에 바뀌지 않습니다.
 - 필드 단위로 즉시 커밋해야 하는 네비게이션 튜닝, 로봇 설정, 런타임 파라미터 패널에 사용합니다. 폼 전체 submit 흐름에는 `FormField` + `Input`/`Select` 조합을 우선합니다.
 
 ## External research basis

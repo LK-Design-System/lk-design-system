@@ -1,6 +1,21 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
 
+// Same visually-hidden recipe the rest of the library uses (DataGrid, Chip,
+// ToastStack): readable by assistive tech, absolutely positioned so it never
+// participates in the flex/grid flow it is dropped into.
+const SR_ONLY_STYLE = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
 function entryKey(entry) {
   return entry.id ?? entry.name;
 }
@@ -48,6 +63,8 @@ export function FileBrowser({
   error,
   disabled = false,
   navigationDisabled = false,
+  pathLabel = '현재 경로',
+  listLabel = '파일과 폴더',
   style,
   'aria-label': ariaLabel,
   ...rest
@@ -57,7 +74,7 @@ export function FileBrowser({
   return (
     <div
       role="group"
-      aria-label={ariaLabel ?? 'File browser'}
+      aria-label={ariaLabel ?? '파일 브라우저'}
       aria-busy={loading || undefined}
       aria-disabled={disabled || undefined}
       style={{ display: 'grid', gridTemplateRows: 'auto minmax(0, 1fr)', width: '100%', maxWidth: 440, minWidth: 0, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: 'var(--color-semantic-background-elevated-normal)', fontFamily: 'var(--font-sans)', boxSizing: 'border-box', ...style }}
@@ -67,16 +84,25 @@ export function FileBrowser({
         <button
           type="button"
           aria-label="상위 폴더로 이동"
-          disabled={upDisabled}
-          onClick={onUp}
+          /* Reaching the root disables this button as a result of the user's own
+             activation. A native `disabled` would drop keyboard focus to <body>
+             at that moment, so the control stays focusable and blocks activation
+             through aria-disabled instead — the same focusable-disabled contract
+             Button.jsx applies while loading. */
+          aria-disabled={upDisabled || undefined}
+          onClick={() => { if (!upDisabled) onUp?.(); }}
           style={{ width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-background-elevated-normal)', color: upDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', cursor: upDisabled ? 'not-allowed' : 'pointer' }}
         >
           <Icon name="arrow-up" size={15} aria-hidden="true" />
         </button>
-        <code aria-label={`현재 경로 ${path}`} title={path} style={{ minWidth: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--color-semantic-label-strong)', fontFamily: 'var(--font-mono)', fontSize: 'var(--label2-size)' }}>{path}</code>
+        {/* `code` is a naming-prohibited role, so an aria-label on it is dropped
+            or read instead of the visible path (ARIA in HTML, WCAG 2.5.3). The
+            context is supplied as real text next to the unchanged visible path. */}
+        <span style={SR_ONLY_STYLE}>{pathLabel}</span>
+        <code title={path} style={{ minWidth: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--color-semantic-label-strong)', fontFamily: 'var(--font-mono)', fontSize: 'var(--label2-size)' }}>{path}</code>
       </header>
 
-      <ul aria-label="Files and folders" style={{ display: 'grid', gap: 2, margin: 0, padding: 4, overflow: 'auto', maxHeight, listStyle: 'none' }}>
+      <ul aria-label={listLabel} style={{ display: 'grid', gap: 2, margin: 0, padding: 4, overflow: 'auto', maxHeight, listStyle: 'none' }}>
         {loading ? <StateRow role="status">{loadingMessage}</StateRow> : error != null ? <StateRow role="alert">{error}</StateRow> : entries.length === 0 ? <StateRow>{emptyMessage}</StateRow> : entries.map((entry) => {
           const key = entryKey(entry);
           const directory = entry.kind === 'directory';
@@ -93,7 +119,11 @@ export function FileBrowser({
               <button
                 type="button"
                 aria-pressed={primarySelects ? selected : undefined}
-                aria-label={`${entry.name}, ${directory ? '폴더' : '파일'}${selected ? ', 선택됨' : ''}`}
+                /* aria-pressed already carries the selection state, so the name
+                   must not repeat it. Without a toggle (no selection callback)
+                   the selected row would otherwise be signalled by colour only,
+                   so the text cue is kept for exactly that case (WCAG 1.4.1). */
+                aria-label={`${entry.name}, ${directory ? '폴더' : '파일'}${selected && !primarySelects ? ', 선택됨' : ''}`}
                 disabled={primaryDisabled}
                 onClick={() => {
                   if (primarySelects) onSelectionChange(entry);

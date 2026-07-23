@@ -100,10 +100,11 @@ export const UploadAndConversion = {
 
     const liveSummary = header.querySelector('.lk-file-upload-queue__live-summary[role="status"]');
     const liveSummaryStyle = liveSummary ? getComputedStyle(liveSummary) : null;
-    if (liveSummary?.getAttribute('aria-label') !== '진행 1개, 완료 1개, 실패 1개'
+    if (liveSummary?.textContent?.trim() !== '진행 1개, 완료 1개, 실패 1개'
+      || liveSummary.hasAttribute('aria-label')
       || liveSummaryStyle?.width !== '1px'
       || liveSummaryStyle?.height !== '1px') {
-      throw new Error('Queue counts must remain available to assistive technology without visible header badges.');
+      throw new Error('Queue counts must remain available to assistive technology as live region text, without a duplicate aria-label or visible header badges.');
     }
 
     const fileNames = Array.from(queue.querySelectorAll('.lk-file-upload-queue__item strong'))

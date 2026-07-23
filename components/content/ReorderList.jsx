@@ -45,6 +45,13 @@ function nodeLabel(node, fallback) {
   return fallback;
 }
 
+/*
+ * The move buttons use `aria-disabled` instead of the native `disabled`
+ * attribute: an item dragged to the top or bottom would otherwise disable the
+ * very button that holds focus, dropping focus to <body> mid-task. Keeping the
+ * control focusable preserves the keyboard position while still refusing the
+ * move (APG "focusable disabled control" convention).
+ */
 function MoveButton({ direction, label, disabled, onClick }) {
   const icon = direction === 'up' ? 'arrow-up' : 'arrow-down';
 
@@ -53,11 +60,15 @@ function MoveButton({ direction, label, disabled, onClick }) {
       type="button"
       aria-label={label}
       title={label}
-      disabled={disabled}
+      aria-disabled={disabled || undefined}
       draggable={false}
       onClick={(event) => {
         event.stopPropagation();
         if (!disabled) onClick(event);
+      }}
+      onKeyDown={(event) => {
+        if (!disabled) return;
+        if (event.key === 'Enter' || event.key === ' ') event.preventDefault();
       }}
       onMouseDown={(event) => event.stopPropagation()}
       style={{

@@ -62,6 +62,18 @@ export const Disclosure = {
         throw new Error('접힌 패널만 inert여야 합니다 — 열린 패널은 inert가 없고, 접힌 패널은 inert로 접근성 트리·탭 순서에서 제거되어야 합니다.');
       }
     }
+    const accordionTriggers = triggers.filter((t) => !t.textContent.includes('상세 로그'));
+    for (const trigger of accordionTriggers) {
+      if (trigger.parentElement?.tagName !== 'H3') {
+        throw new Error('APG Accordion — 각 헤더 트리거는 heading 요소 안에 있어야 합니다.');
+      }
+    }
+    for (const trigger of triggers) {
+      const panel = doc.getElementById(trigger.getAttribute('aria-controls'));
+      if (panel.getAttribute('role') !== 'region' || panel.getAttribute('aria-labelledby') !== trigger.id) {
+        throw new Error('Accordion과 Collapsible의 패널은 같은 계약(role="region" + aria-labelledby)을 공유해야 합니다.');
+      }
+    }
     const collapsibleTrigger = triggers.find((t) => t.textContent.includes('상세 로그'));
     await userEvent.click(collapsibleTrigger);
     const collapsedPanel = doc.getElementById(collapsibleTrigger.getAttribute('aria-controls'));

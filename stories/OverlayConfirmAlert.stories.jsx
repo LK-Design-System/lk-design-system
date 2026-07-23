@@ -96,10 +96,15 @@ export const AlertOpen = {
 
 function AlertKeyboardDemo() {
   const [open, setOpen] = React.useState(false);
+  const [defaultsOpen, setDefaultsOpen] = React.useState(false);
   return (
-    <div style={{ minHeight: 260, display: 'grid', placeItems: 'center' }}>
+    <div style={{ minHeight: 260, display: 'grid', placeItems: 'center', gap: 'var(--space-3)' }}>
       <Button onClick={() => setOpen(true)}>Alert 열기</Button>
+      <Button data-testid="alert-defaults-trigger" variant="outlined" color="assistive" onClick={() => setDefaultsOpen(true)}>
+        기본 레이블 Alert 열기
+      </Button>
       <Alert open={open} title="변경 사항을 게시할까요?" secondaryLabel="취소" primaryLabel="게시" onCancel={() => setOpen(false)} onConfirm={() => setOpen(false)} />
+      <Alert open={defaultsOpen} title="설정이 저장되었습니다" onConfirm={() => setDefaultsOpen(false)} onClose={() => setDefaultsOpen(false)} />
     </div>
   );
 }
@@ -117,14 +122,45 @@ export const AlertKeyboardContract = {
     await waitFor(() => {
       if (ownerDocument.activeElement?.textContent?.trim() !== '취소') throw new Error('Alert must focus the secondary action first.');
     });
+
+    // APG Alert Dialog: Alert always acquires a response, so the role is
+    // alertdialog regardless of the variant axis.
+    const alertDialog = canvasElement.querySelector('[role="alertdialog"]');
+    if (!alertDialog || alertDialog.getAttribute('aria-modal') !== 'true') {
+      throw new Error('Alert must render role="alertdialog" with aria-modal.');
+    }
+    if (canvasElement.querySelector('[role="dialog"]')) {
+      throw new Error('Alert must not fall back to the plain dialog role.');
+    }
+    if (ownerDocument.defaultView.getComputedStyle(ownerDocument.body).overflow !== 'hidden') {
+      throw new Error('An open Alert must lock background page scrolling.');
+    }
+
     await userEvent.tab();
     if (ownerDocument.activeElement?.textContent?.trim() !== '게시') throw new Error('Alert Tab must move to the primary action.');
     await userEvent.tab();
     if (ownerDocument.activeElement?.textContent?.trim() !== '취소') throw new Error('Alert Tab must wrap inside the dialog.');
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelector('[role="dialog"]')) throw new Error('Alert must close on Escape.');
+      if (canvasElement.querySelector('[role="alertdialog"]')) throw new Error('Alert must close on Escape.');
       if (ownerDocument.activeElement !== trigger) throw new Error('Alert must restore focus to its trigger.');
+      if (ownerDocument.defaultView.getComputedStyle(ownerDocument.body).overflow === 'hidden') {
+        throw new Error('Closing the Alert must release the background scroll lock.');
+      }
+    });
+
+    // Label defaults follow the system locale (확인 / 취소), not English.
+    const defaultsTrigger = canvasElement.querySelector('[data-testid="alert-defaults-trigger"]');
+    await userEvent.click(defaultsTrigger);
+    await waitFor(() => {
+      const primary = canvasElement.querySelector('[role="alertdialog"] [data-alert-primary]');
+      if (primary?.textContent?.trim() !== '확인') {
+        throw new Error('Alert primary label must default to the Korean 확인.');
+      }
+    });
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (canvasElement.querySelector('[role="alertdialog"]')) throw new Error('The defaults Alert must close on Escape.');
     });
   },
 };

@@ -69,7 +69,10 @@ export function FieldMessage({ id, message, error, status = 'normal' }) {
 export function FieldStack({ fieldId, labelId, label, required, messageId, message, error, status, fieldStyle, children }) {
   return React.createElement(
     'div',
-    { style: { display: 'grid', minWidth: 0, gap: 'var(--component-input-stack-gap)', ...fieldStyle } },
+    // `position: relative` anchors the absolutely positioned screen-reader live
+    // regions that fields render (Caps Lock warnings, copy results) to the field
+    // instead of the page, without adding a grid row.
+    { style: { position: 'relative', display: 'grid', minWidth: 0, gap: 'var(--component-input-stack-gap)', ...fieldStyle } },
     React.createElement(FieldLabel, { htmlFor: fieldId, id: labelId, label, required }),
     children,
     React.createElement(FieldMessage, { id: messageId, message, error, status }),

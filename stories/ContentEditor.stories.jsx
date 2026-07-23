@@ -61,6 +61,59 @@ export const WritingEditor = {
       <DraftEditorDemo />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const toolbar = canvasElement.querySelector('[role="toolbar"]');
+    if (!toolbar) throw new Error('기본 툴 행은 role="toolbar"로 선언되어야 합니다.');
+    if (toolbar.querySelector('[role="status"]')) {
+      throw new Error('저장 상태 live region은 툴바의 자식이 아니라 형제여야 합니다 — 툴바 자식은 컨트롤만.');
+    }
+    if (!canvasElement.querySelector('[role="status"]')) {
+      throw new Error('저장 상태는 polite live region으로 노출되어야 합니다.');
+    }
+
+    const tools = Array.from(toolbar.querySelectorAll('button'));
+    if (tools.length < 2) throw new Error('툴바 계약을 검증하려면 최소 두 개의 툴이 필요합니다.');
+    const tabStops = tools.filter((tool) => tool.getAttribute('tabindex') === '0');
+    if (tabStops.length !== 1) {
+      throw new Error('APG Toolbar는 Tab stop이 하나여야 합니다(roving tabindex).');
+    }
+    if (tools[0].getAttribute('aria-pressed') !== 'true') {
+      throw new Error('활성 토글은 aria-pressed="true"여야 합니다.');
+    }
+    const inactiveToggle = tools[3];
+    if (inactiveToggle.getAttribute('aria-pressed') !== 'false') {
+      throw new Error('비활성 토글도 aria-pressed="false"를 유지해야 토글 버튼임을 알 수 있습니다.');
+    }
+    if (tools[1].hasAttribute('aria-pressed')) {
+      throw new Error('일회성 액션 툴에는 aria-pressed를 붙이지 않습니다.');
+    }
+
+    // 하네스는 document.hasFocus() === false로 돌기 때문에 roving 이동은
+    // 활성 요소에 keydown을 직접 보내 검증한다(포커스 부기 의존 제거).
+    const press = (key) => {
+      doc.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+    };
+    tools[0].focus();
+    tools[0].dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    press('ArrowRight');
+    if (doc.activeElement !== tools[1]) throw new Error('→ 키로 다음 툴로 이동해야 합니다.');
+    press('End');
+    if (doc.activeElement !== tools[tools.length - 1]) throw new Error('End 키는 마지막 툴로 이동해야 합니다.');
+    press('Home');
+    if (doc.activeElement !== tools[0]) throw new Error('Home 키는 첫 툴로 이동해야 합니다.');
+    press('ArrowLeft');
+    if (doc.activeElement !== tools[tools.length - 1]) throw new Error('← 키는 첫 툴에서 마지막 툴로 순환해야 합니다.');
+
+    const titleInput = canvasElement.querySelector('input[id$="-title"]');
+    if (!titleInput) throw new Error('제목 입력이 label과 연결되어 있어야 합니다.');
+
+    // 이름난 상태로 복귀 — 첫 툴이 Tab stop인 초기 상태.
+    tools[0].focus();
+    tools[0].dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    tools[0].dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
+    tools[0].blur();
+  },
 };
 
 export const EditorStates = {
@@ -91,4 +144,27 @@ export const EditorStates = {
       />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const editors = Array.from(canvasElement.querySelectorAll('section'));
+    if (editors.length !== 2) throw new Error('읽기 전용과 오류 상태 두 에디터가 필요합니다.');
+    const [readOnlyEditor, invalidEditor] = editors;
+
+    const readOnlyTools = Array.from(readOnlyEditor.querySelectorAll('[role="toolbar"] button'));
+    if (readOnlyTools.length === 0) throw new Error('읽기 전용 에디터도 툴 행을 유지해야 합니다.');
+    if (readOnlyTools.some((tool) => !tool.disabled)) {
+      throw new Error('읽기 전용에서는 툴이 잠겨야 합니다.');
+    }
+    if (readOnlyTools.some((tool) => tool.getAttribute('tabindex') === '0')) {
+      throw new Error('전부 잠긴 툴바는 Tab 순서에 남지 않아야 합니다.');
+    }
+
+    const labels = Array.from(invalidEditor.querySelectorAll('label')).map((label) => label.textContent);
+    if (labels.length !== 2 || labels.some((label) => !label.includes('(필수)'))) {
+      throw new Error('필수 표시는 별표 색상만이 아니라 라벨 텍스트로도 전달되어야 합니다.');
+    }
+    const body = invalidEditor.querySelector('textarea');
+    if (body.getAttribute('aria-invalid') !== 'true') {
+      throw new Error('오류 상태는 aria-invalid로도 전달되어야 합니다.');
+    }
+  },
 };

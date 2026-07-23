@@ -44,6 +44,26 @@ export const ProductCards = {
       />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const cards = Array.from(canvasElement.querySelectorAll('a'));
+    if (cards.length !== 2) throw new Error('각 ProductCard는 하나의 링크로 렌더되어야 합니다.');
+    for (const card of cards) {
+      if (card.querySelector('a, button, input, select, textarea, [tabindex]')) {
+        throw new Error('카드 전체가 링크이므로 안에 또 다른 포커스 가능한 요소를 두면 안 됩니다(중첩 인터랙티브 금지).');
+      }
+      const heading = card.querySelector('h3');
+      if (!heading) throw new Error('제품 코드는 실제 heading(기본 h3)으로 렌더되어야 합니다(WCAG 1.3.1).');
+      if (card.getAttribute('aria-label') !== heading.textContent.trim()) {
+        throw new Error('링크의 접근 가능한 이름은 타일 전문이 아니라 제품 코드여야 합니다.');
+      }
+      if (card.id) throw new Error('id prop은 제품 코드이므로 DOM id를 점유하면 안 됩니다.');
+    }
+    cards[0].focus();
+    if (canvasElement.ownerDocument.activeElement !== cards[0]) {
+      throw new Error('제품 카드 링크는 키보드 포커스를 받아야 합니다.');
+    }
+    cards[0].blur();
+  },
 };
 
 export const ProductCardCard = { ...ProductCardCardStory, name: 'ProductCard card parity', tags: ['!dev', 'visual-parity'] };

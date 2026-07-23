@@ -87,7 +87,7 @@ export const TooltipPatterns = {
           <Tooltip open content="도움말 메시지" position="top" size="medium">
             <AnchorBox />
           </Tooltip>
-          <Tooltip open content="Small" position="top" size="small">
+          <Tooltip open content="Small" position="top" size="small" data-testid="tooltip-small">
             <AnchorBox />
           </Tooltip>
           <Tooltip open content="도움말 메시지" shortcut="Cmd C" position="top">
@@ -112,9 +112,9 @@ export const TooltipPatterns = {
           }}
         >
           <span />
-          <Tooltip open content="Top" position="top"><AnchorBox /></Tooltip>
+          <Tooltip open content="Top" position="top" data-testid="tooltip-top"><AnchorBox /></Tooltip>
           <span />
-          <Tooltip open content="Left" position="left"><AnchorBox /></Tooltip>
+          <Tooltip open content="Left" position="left" data-testid="tooltip-left"><AnchorBox /></Tooltip>
           <span />
           <Tooltip open content="Right" position="right"><AnchorBox /></Tooltip>
           <span />
@@ -139,6 +139,62 @@ export const TooltipPatterns = {
       </Section>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    /* The arrow is absolutely positioned inside the bubble and deliberately
+       hangs past its edge. Any non-visible `overflow` on the bubble therefore
+       turns that intended overhang into scrollable content and the platform
+       paints a real scrollbar inside every tooltip. The bubble must stay a
+       non-scrolling box; the maxHeight clamp for long content lives on the
+       inner content wrapper, which is where "no overflow" is measurable
+       (CSSOM counts an overhanging descendant in `scrollHeight` even for a
+       non-scroll container, so the bubble's own scrollHeight is not the
+       invariant — the absence of a scroll box and of a scrollbar gutter is). */
+    const cases = [
+      ['tooltip-top', 'top'],
+      ['tooltip-left', 'left'],
+      ['tooltip-small', 'top'],
+    ];
+    for (const [testId, expectedPlacement] of cases) {
+      const wrapper = canvasElement.querySelector(`[data-testid="${testId}"]`);
+      if (!wrapper) throw new Error(`Tooltip overflow contract requires the ${testId} target.`);
+      const bubble = wrapper.querySelector('[role="tooltip"]');
+      if (!bubble) throw new Error(`${testId} must render a tooltip bubble.`);
+      if (bubble.dataset.placement !== expectedPlacement) {
+        throw new Error(`${testId} resolved to placement "${bubble.dataset.placement}", expected "${expectedPlacement}".`);
+      }
+
+      const styles = getComputedStyle(bubble);
+      if (styles.overflowX !== 'visible' || styles.overflowY !== 'visible') {
+        throw new Error(`${testId}: the tooltip bubble must not clip or scroll (overflow ${styles.overflowX}/${styles.overflowY}); the arrow is meant to hang outside it.`);
+      }
+      if (bubble.offsetWidth !== bubble.clientWidth || bubble.offsetHeight !== bubble.clientHeight) {
+        throw new Error(`${testId}: the tooltip bubble is painting a scrollbar (offset ${bubble.offsetWidth}x${bubble.offsetHeight} vs client ${bubble.clientWidth}x${bubble.clientHeight}).`);
+      }
+      bubble.scrollTop = 32;
+      bubble.scrollLeft = 32;
+      if (bubble.scrollTop !== 0 || bubble.scrollLeft !== 0) {
+        throw new Error(`${testId}: the tooltip bubble must not be a scroll container.`);
+      }
+
+      const content = bubble.querySelector('[data-lds-tooltip-content]');
+      if (!content) throw new Error(`${testId} must route its content through the scroll wrapper.`);
+      if (content.scrollHeight > content.clientHeight || content.scrollWidth > content.clientWidth) {
+        throw new Error(`${testId}: tooltip content overflows its box (${content.scrollWidth}x${content.scrollHeight} in ${content.clientWidth}x${content.clientHeight}).`);
+      }
+
+      // The arrow must still hang outside the bubble, pointing at the trigger.
+      const arrow = bubble.querySelector(':scope > [aria-hidden="true"]');
+      if (!arrow) throw new Error(`${testId} must render its arrow.`);
+      const bubbleRect = bubble.getBoundingClientRect();
+      const arrowRect = arrow.getBoundingClientRect();
+      const overhang = expectedPlacement === 'left'
+        ? arrowRect.right - bubbleRect.right
+        : arrowRect.bottom - bubbleRect.bottom;
+      if (overhang < 1) {
+        throw new Error(`${testId}: the arrow must keep overhanging the bubble toward the trigger (overhang ${overhang}px).`);
+      }
+    }
+  },
 };
 
 export const TooltipInteractionContract = {
@@ -196,6 +252,60 @@ export const TooltipInteractionContract = {
     if (ownerDocument.defaultView.getComputedStyle(tooltip).visibility !== 'visible') {
       throw new Error('Tooltip must remain visible while the pointer moves over it.');
     }
+  },
+};
+
+export const TooltipTriggerAndDelay = {
+  name: '상호작용 · 트리거 연결과 표시 지연',
+  parameters: storyDescription(
+    'focusable한 control을 trigger로 쓴 경우와 일반 텍스트를 감싼 경우를 비교합니다. 텍스트를 감싼 래퍼가 탭 순서에 끼어들지 않고, 포인터 hover에는 enter 지연이 걸리지만 키보드 focus는 즉시 열리는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 620, padding: 'var(--space-8) 0' }}>
+      <Section title="focusable trigger — 권장">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <Tooltip content="장치 연결 정보" delay={{ open: 400 }}>
+            <IconButton variant="ghost" label="연결 정보"><Icon name="circle-info" size={20} /></IconButton>
+          </Tooltip>
+          <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)' }}>
+            hover 400ms 후 표시 · focus는 즉시 표시
+          </span>
+        </div>
+      </Section>
+
+      <Section title="비대화형 children — 래퍼는 탭 순서에 들어가지 않습니다">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <Tooltip content="이 설명은 포인터로만 도달합니다" data-testid="plain-tooltip">
+            평문 라벨
+          </Tooltip>
+          <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)' }}>
+            키보드 사용자에게 필요한 설명이라면 trigger를 실제 control로 바꾸세요
+          </span>
+        </div>
+      </Section>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const plainWrapper = canvasElement.querySelector('[data-testid="plain-tooltip"]');
+    if (!plainWrapper) throw new Error('Trigger 계약 스토리에는 평문 children 예시가 필요합니다.');
+    if (plainWrapper.hasAttribute('tabindex')) {
+      throw new Error('비대화형 children을 감싼 래퍼는 자동으로 탭 순서에 들어가면 안 됩니다(APG).');
+    }
+
+    const trigger = canvasElement.querySelector('button[aria-label="연결 정보"]');
+    const tooltip = trigger.closest('span').querySelector('[role="tooltip"]');
+    const view = canvasElement.ownerDocument.defaultView;
+    if (view.getComputedStyle(tooltip).visibility !== 'hidden') {
+      throw new Error('Tooltip의 초기 상태는 닫혀 있어야 합니다.');
+    }
+    // 키보드 focus는 지연 없이 즉시 열립니다.
+    trigger.focus();
+    trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await waitFor(() => {
+      if (view.getComputedStyle(tooltip).visibility !== 'visible') {
+        throw new Error('키보드 focus는 지연 없이 Tooltip을 열어야 합니다.');
+      }
+    }, { timeout: 200 });
   },
 };
 

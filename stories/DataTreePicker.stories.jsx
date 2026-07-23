@@ -1,7 +1,15 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
+import { userEvent, waitFor } from 'storybook/test';
 import { TreePicker } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
+
+const focusableSelector = 'a[href], button, input, select, textarea, [tabindex]';
+
+function focusableInside(element) {
+  const candidates = [...element.querySelectorAll(focusableSelector)];
+  if (element.matches(focusableSelector)) candidates.unshift(element);
+  return candidates.filter((candidate) => candidate.getAttribute('tabindex') !== '-1');
+}
 
 const nodes = [
   {
@@ -170,6 +178,71 @@ export const DisabledDescendantSelection = {
     if (disabledChild.getAttribute('aria-disabled') !== 'true') {
       throw new Error('A disabled descendant must remain disabled and outside the parent action set.');
     }
+  },
+};
+
+export const CheckIndicatorDecorationContract = {
+  name: '체크 표시기 장식 계약',
+  tags: ['!dev'],
+  args: {
+    nodes,
+    defaultSelectedIds: ['/scan'],
+    defaultExpandedIds: ['sensors', 'navigation'],
+    label: '장식 표시기 계약',
+  },
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const tree = canvasElement.querySelector('[role="tree"]');
+    if (!tree) throw new Error('The decoration fixture must render a tree.');
+
+    /* Axe aria-hidden-focus: aria-hidden 하위에 포커스 가능한 요소가 남아 있으면 안 된다. */
+    for (const hidden of canvasElement.querySelectorAll('[aria-hidden="true"]')) {
+      const focusable = focusableInside(hidden);
+      if (focusable.length > 0) {
+        throw new Error(`aria-hidden must not contain a focusable element, but <${focusable[0].tagName.toLowerCase()}> is still reachable.`);
+      }
+    }
+
+    /* 행 표시기는 순수 장식이므로 tree 안에 form control 자체가 없어야 한다. */
+    if (tree.querySelector('input, button, select, textarea')) {
+      throw new Error('A tree row must not mount a form control; the treeitem alone owns aria-checked.');
+    }
+
+    const tabbable = [...tree.querySelectorAll('[tabindex="0"], a[href], button, input, select, textarea')];
+    if (tabbable.length !== 1 || tabbable[0].getAttribute('role') !== 'treeitem') {
+      throw new Error(`The tree must keep exactly one roving Tab stop on a treeitem, but found ${tabbable.length} tabbable elements.`);
+    }
+
+    const leaf = tree.querySelector('[data-tree-picker-id="/scan"]');
+    const branch = tree.querySelector('[data-tree-picker-id="sensors"]');
+    const indicator = leaf?.querySelector('[data-tree-picker-check]');
+    const branchIndicator = branch?.querySelector('[data-tree-picker-check]');
+    if (!leaf || !branch || !indicator || !branchIndicator) throw new Error('The decoration fixture is incomplete.');
+    if (indicator.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('The row check indicator must stay aria-hidden so the treeitem is the single selection semantic.');
+    }
+    if (leaf.getAttribute('aria-checked') !== 'true' || indicator.dataset.treePickerCheckState !== 'checked') {
+      throw new Error('A selected leaf must expose aria-checked="true" and paint a checked indicator.');
+    }
+    if (branch.getAttribute('aria-checked') !== 'mixed' || branchIndicator.dataset.treePickerCheckState !== 'mixed') {
+      throw new Error('A partially selected branch must expose aria-checked="mixed" and paint the mixed indicator.');
+    }
+
+    /* 표시기가 장식이 되어도 pointer로 선택을 토글하는 행 동작은 유지되어야 한다. */
+    await userEvent.click(indicator);
+    await waitFor(() => {
+      if (leaf.getAttribute('aria-checked') !== 'false') {
+        throw new Error('Clicking the decorative indicator must still toggle the treeitem selection.');
+      }
+    });
+    /* 시각 스냅샷은 play 종료 상태를 캡처하므로 스토리의 이름난 상태로 복구한다. */
+    await userEvent.click(indicator);
+    await waitFor(() => {
+      if (leaf.getAttribute('aria-checked') !== 'true') {
+        throw new Error('The toggled row must be restored so the story finishes in its named state.');
+      }
+    });
+    doc.activeElement?.blur();
   },
 };
 

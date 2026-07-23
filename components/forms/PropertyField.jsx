@@ -2,8 +2,13 @@ import React from 'react';
 import { Button } from '../buttons/Button.jsx';
 import { Switch } from '../selection/Switch.jsx';
 
+/* label이 ReactNode여도 접근 가능 이름이 범용어로 붕괴하지 않도록 텍스트를 추출한다. */
 function getLabelText(label) {
-  return typeof label === 'string' ? label : '속성';
+  if (label == null || typeof label === 'boolean') return '';
+  if (typeof label === 'string' || typeof label === 'number') return String(label);
+  if (Array.isArray(label)) return label.map(getLabelText).join('');
+  if (React.isValidElement(label)) return getLabelText(label.props?.children);
+  return '';
 }
 
 function normalizeNumberValue(value) {
@@ -36,10 +41,11 @@ export function PropertyField({
 }) {
   const fieldId = React.useId();
   const inputId = `property-${fieldId}`;
+  const labelId = `${inputId}-label`;
   const hintId = hint != null ? `${inputId}-hint` : undefined;
   const unitId = type !== 'toggle' && unit != null ? `${inputId}-unit` : undefined;
-  const descriptionIds = [hintId, unitId].filter(Boolean).join(' ') || undefined;
-  const labelText = getLabelText(label);
+  const dirtyId = `${inputId}-dirty`;
+  const labelText = getLabelText(label).trim() || '속성';
   const applyText = typeof applyLabel === 'string' ? applyLabel : '적용';
   const [draft, setDraft] = React.useState(committed);
   const [focused, setFocused] = React.useState(false);
@@ -53,12 +59,20 @@ export function PropertyField({
   const canApply = dirty && !interactionDisabled && typeof onApply === 'function';
   const controlDisabled = disabled;
   const controlReadOnly = readOnly;
+  const isToggle = type === 'toggle';
+  /* 이름은 label 하나로 고정하고, dirty는 이름이 아니라 설명으로 노출한다(APG). */
+  const descriptionIds = [hintId, unitId, dirty ? dirtyId : null].filter(Boolean).join(' ') || undefined;
 
   const apply = () => {
     if (canApply) onApply(draft);
   };
 
-  const sharedControlLabel = `${labelText}${dirty ? `, ${dirtyLabel}` : ''}`;
+  /* Switch는 자체 <label>로 input을 감싸므로 두 번째 label을 만들지 않는다.
+     보이는 라벨은 aria-labelledby로 연결하고 클릭 시 네이티브 입력을 대신 활성화한다. */
+  const activateToggle = () => {
+    if (typeof document === 'undefined') return;
+    document.getElementById(inputId)?.click();
+  };
 
   return (
     <div data-disabled={disabled ? "" : undefined}
@@ -78,26 +92,32 @@ export function PropertyField({
       {...rest}
     >
       <div style={{ display: 'grid', gap: 2, minWidth: 0 }}>
-        <label
-          htmlFor={type === 'toggle' ? undefined : inputId}
-          style={{
-            minWidth: 0,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            fontSize: 'var(--label2-size)',
-            lineHeight: 'var(--label2-line)',
-            fontWeight: 'var(--fw-semibold)',
-            letterSpacing: 0,
-            color: disabled
-              ? 'var(--color-semantic-label-disable)'
-              : 'var(--color-semantic-label-normal)',
-          }}
-        >
-          {label}
-          {dirty && (
+        {React.createElement(
+          isToggle ? 'span' : 'label',
+          {
+            id: labelId,
+            htmlFor: isToggle ? undefined : inputId,
+            onClick: isToggle ? activateToggle : undefined,
+            style: {
+              minWidth: 0,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              fontSize: 'var(--label2-size)',
+              lineHeight: 'var(--label2-line)',
+              fontWeight: 'var(--fw-semibold)',
+              letterSpacing: 0,
+              cursor: isToggle && !disabled && !readOnly ? 'pointer' : undefined,
+              color: disabled
+                ? 'var(--color-semantic-label-disable)'
+                : 'var(--color-semantic-label-normal)',
+            },
+          },
+          label,
+          dirty && (
             <span
-              aria-label={dirtyLabel}
+              key="dirty-dot"
+              aria-hidden="true"
               title={dirtyLabel}
               style={{
                 marginLeft: 4,
@@ -106,8 +126,10 @@ export function PropertyField({
             >
               •
             </span>
-          )}
-        </label>
+          ),
+        )}
+        {/* dirty는 이름이 아니라 aria-describedby로 전달한다. */}
+        <span id={dirtyId} hidden>{dirtyLabel}</span>
         {hint != null && (
           <span
             id={hintId}
@@ -130,13 +152,14 @@ export function PropertyField({
         )}
       </div>
 
-      {type === 'toggle' ? (
+      {isToggle ? (
         <Switch
           size="sm"
+          id={inputId}
           checked={!!draft}
           disabled={disabled}
           readOnly={readOnly}
-          aria-label={sharedControlLabel}
+          aria-labelledby={labelId}
           aria-describedby={descriptionIds}
           onChange={(next) => setDraft(next)}
         />
@@ -159,7 +182,6 @@ export function PropertyField({
             step={step}
             disabled={controlDisabled}
             readOnly={controlReadOnly}
-            aria-label={sharedControlLabel}
             aria-describedby={descriptionIds}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}

@@ -1,9 +1,30 @@
 import React from "react";
 import { Icon } from "../icon/Icon.jsx";
+import { normalizeStatusTone, statusToneStyle } from "../status/status-presentation.js";
 
 // Default leading glyph comes from the shared Icon registry so Snackbar's
 // info mark matches Toast/Banner instead of a hand-drawn variant.
 const ICON = <Icon name="circle-info-fill" size={22} aria-hidden="true" />;
+
+// Severity axis shared with Toast: same names, same normalization, same
+// announcement rule — a failure must not be read politely just because it
+// landed on a Snackbar instead of a Toast.
+const TONE_ICON_COLOR = {
+  normal: "var(--color-semantic-inverse-label)",
+  positive: "var(--color-semantic-status-positive)",
+  cautionary: "var(--color-semantic-status-cautionary)",
+  negative: "var(--color-semantic-status-negative)",
+};
+
+function normalizeTone(value) {
+  const normalized = normalizeStatusTone(value || "normal");
+  return normalized === "signal" || normalized === "offline" ? "normal" : normalized;
+}
+
+function toneIcon(tone) {
+  if (tone === "normal") return ICON;
+  return <Icon name={statusToneStyle(tone).icon} size={22} aria-hidden="true" />;
+}
 
 /**
  * LDS Core - Snackbar
@@ -16,9 +37,11 @@ export function Snackbar({
   children,
   action,
   onAction,
-  icon = ICON,
+  tone = "normal",
+  variant,
+  icon,
   leadingIcon = false,
-  closeButton = false,
+  closeButton = true,
   onClose,
   closeLabel = "닫기",
   width = 384,
@@ -27,12 +50,18 @@ export function Snackbar({
 }) {
   const [actionHover, setActionHover] = React.useState(false);
   const hasDescription = description != null || children != null;
+  const normalized = normalizeTone(variant || tone);
+  const urgent = normalized === "negative";
+  // A close affordance with nothing to call is a dead control: the axis only
+  // decides whether an available `onClose` is exposed.
+  const showClose = closeButton !== false && typeof onClose === "function";
   const minHeight =
     heading != null && hasDescription ? 72 : hasDescription ? 68 : 54;
   return (
     <div
-      role="status"
-      aria-live="polite"
+      role={urgent ? "alert" : "status"}
+      aria-live={urgent ? "assertive" : "polite"}
+      data-tone={normalized}
       style={{
         display: "inline-flex",
         alignItems: hasDescription ? "flex-start" : "center",
@@ -54,13 +83,15 @@ export function Snackbar({
     >
       {leadingIcon && (
         <span
+          aria-hidden="true"
           style={{
             display: "inline-flex",
             flexShrink: 0,
             marginTop: hasDescription ? 1 : 0,
+            color: TONE_ICON_COLOR[normalized],
           }}
         >
-          {icon}
+          {icon ?? toneIcon(normalized)}
         </span>
       )}
       <span style={{ display: "grid", gap: 3, minWidth: 0, flex: 1 }}>
@@ -129,7 +160,7 @@ export function Snackbar({
           {action}
         </button>
       )}
-      {(closeButton || onClose) && (
+      {showClose && (
         <button
           type="button"
           aria-label={closeLabel}

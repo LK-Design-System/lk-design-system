@@ -11,6 +11,12 @@
 ```
 
 - Use for bottom action regions, confirmation footers, and mobile-safe primary actions.
+- **요소 계약** — 기본은 평범한 `div`입니다. 이름 없는 `<section>`은 landmark로도 노출되지 않아 보조기술에 아무 의미를 전달하지 못하므로, 의미 없는 요소를 기본값으로 두지 않습니다. `aria-label`(또는 `aria-labelledby`)로 영역 이름을 주면 `<section>`으로 렌더되어 이름 있는 `region` landmark가 됩니다. 화면에 bottom action 영역이 하나뿐이라면 굳이 landmark로 만들 필요가 없습니다.
+
+```jsx
+<ActionArea aria-label="주문 확정 액션">…</ActionArea>  // <section> = named region
+<ActionArea>…</ActionArea>                              // <div>
+```
 - Keep the button itself inside `Button`, `TextButton`, or `IconButton`; `ActionArea` owns placement, spacing, divider, caption, and safe-area padding.
 - Use `sticky` only when the action must remain attached to the viewport bottom.
 - Use `align="end"` to right-align persistent commit actions without rebuilding an action footer.

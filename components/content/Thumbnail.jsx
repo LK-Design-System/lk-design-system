@@ -31,6 +31,19 @@ const THUMBNAIL_RATIOS = {
   "9/21": "var(--ratio-9-21)",
 };
 
+/* Overlay text sits directly on unknown imagery, so a photo can slide the
+   effective contrast anywhere. A one-sided gradient scrim (the Material/YouTube
+   convention) guarantees a dark base under the overlay corner without dimming
+   the subject. Uses --material-control-dimmer so light and dark themes share
+   one ramp. */
+const SCRIM = {
+  "top-left": "linear-gradient(to bottom, var(--material-control-dimmer), transparent 46%)",
+  "top-right": "linear-gradient(to bottom, var(--material-control-dimmer), transparent 46%)",
+  "bottom-left": "linear-gradient(to top, var(--material-control-dimmer), transparent 46%)",
+  "bottom-right": "linear-gradient(to top, var(--material-control-dimmer), transparent 46%)",
+  center: "radial-gradient(closest-side, var(--material-control-dimmer), transparent)",
+};
+
 function resolveRatio(ratio) {
   if (typeof ratio === "number") return String(ratio);
   if (typeof ratio === "string")
@@ -52,6 +65,7 @@ export function Thumbnail({
   fit = "cover",
   overlay,
   overlayAlign = "top-left",
+  overlayScrim = "auto",
   placeholder = true,
   placeholderIcon = "image",
   style,
@@ -68,6 +82,9 @@ export function Thumbnail({
     border === true ? "1px solid var(--color-semantic-line-normal-normal)" : border || "0";
   const pos = ALIGN[overlayAlign] || ALIGN["top-left"];
   const hasOverlay = overlay || children;
+  /* "auto" scrims only when real imagery is behind the overlay — a placeholder
+     tile is a flat token surface whose contrast is already known. */
+  const showScrim = hasOverlay && (overlayScrim === "auto" ? !!src : !!overlayScrim);
 
   return (
     <div
@@ -110,6 +127,17 @@ export function Thumbnail({
         >
           <Icon name={placeholderIcon} size={Math.min(32, Math.max(18, 24))} />
         </span>
+      )}
+      {showScrim && (
+        <span
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: SCRIM[overlayAlign] || SCRIM["top-left"],
+          }}
+        />
       )}
       {hasOverlay && (
         <div

@@ -11,6 +11,13 @@ const ICON_TONES = {
  * LK ROBOTICS — FeatureCard
  * Tinted icon tile + title + supporting copy. The recurring capability cell
  * (핵심 기능 / 주요 기능). `boxed` wraps it in a white Card surface.
+ *
+ * Accessibility — mirrors the Core `Card` contract locally: `title` renders as
+ * a real heading whose level is caller-controlled (`headingLevel`, WCAG 1.3.1),
+ * and a card given an `onClick` becomes a real control (`role="button"`,
+ * `tabIndex=0`, Enter/Space activation) so the whole-card target is operable by
+ * keyboard (WCAG 2.1.1). An activatable card must not contain its own
+ * focusable elements.
  */
 export function FeatureCard({
   icon,
@@ -18,12 +25,28 @@ export function FeatureCard({
   children,
   tone = 'signal',
   boxed = false,
+  headingLevel = 4,
   style,
+  onClick,
+  onKeyDown,
   ...rest
 }) {
   const t = ICON_TONES[tone] || ICON_TONES.signal;
+  const activatable = typeof onClick === 'function';
+  const HeadingTag = headingLevel === false || headingLevel == null ? 'div' : `h${headingLevel}`;
+  const handleKeyDown = (e) => {
+    if (activatable && (e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+      e.preventDefault();
+      onClick(e);
+    }
+    onKeyDown && onKeyDown(e);
+  };
   return (
     <div
+      role={rest.role ?? (activatable ? 'button' : undefined)}
+      tabIndex={rest.tabIndex ?? (activatable ? 0 : undefined)}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
       style={{
         display: 'flex', flexDirection: 'column', gap: '16px',
         background: boxed ? 'var(--component-card-bg)' : 'transparent',
@@ -33,6 +56,7 @@ export function FeatureCard({
            previous var(--shadow-md), now tracked via the card token. */
         boxShadow: boxed ? 'var(--component-card-shadow-md)' : 'none',
         padding: boxed ? 'var(--component-card-padding)' : 0,
+        cursor: activatable ? 'pointer' : undefined,
         ...style,
       }}
       {...rest}
@@ -43,7 +67,7 @@ export function FeatureCard({
         </span>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <h4 style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-strong)', margin: 0, wordBreak: 'keep-all' }}>{title}</h4>
+        <HeadingTag style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-strong)', margin: 0, wordBreak: 'keep-all' }}>{title}</HeadingTag>
         <p style={{ fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-alternative)', margin: 0, wordBreak: 'keep-all' }}>{children}</p>
       </div>
     </div>

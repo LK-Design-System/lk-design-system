@@ -41,6 +41,7 @@ export function FileUpload({
   const [drag, setDrag] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const [names, setNames] = React.useState([]);
+  const [rejectedNames, setRejectedNames] = React.useState([]);
 
   const handle = (files) => {
     const candidates = Array.from(files ?? []);
@@ -53,9 +54,17 @@ export function FileUpload({
     ];
 
     setNames(accepted.map((file) => file.name));
+    setRejectedNames(rejected.map((file) => file.name));
     onFiles?.(accepted);
     if (rejected.length > 0) onRejectedFiles?.(rejected);
   };
+
+  // USWDS File input: a rejected file must reach assistive technology, not only
+  // the onRejectedFiles callback, so the status region carries both outcomes.
+  const statusMessage = [
+    names.length > 0 ? `${names.join(', ')}, 선택됨` : '',
+    rejectedNames.length > 0 ? `${rejectedNames.join(', ')}, 허용되지 않는 파일이라 제외됨` : '',
+  ].filter(Boolean).join('. ');
 
   return (
     <div
@@ -208,7 +217,7 @@ export function FileUpload({
           border: 0,
         }}
       >
-        {names.length > 0 ? `${names.join(', ')}, 선택됨` : ''}
+        {statusMessage}
       </span>
     </div>
   );

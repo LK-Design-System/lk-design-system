@@ -2,8 +2,14 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — Bubble
- * A callout / speech bubble with a tail — coach marks, map annotations, chat.
- * `navy` (solid) or `light` (white + hairline). Tail on any side.
+ * A callout with a tail that points at its subject — coach marks, map
+ * annotations, persistent explanations. `navy` (solid) or `light` (white +
+ * hairline). Tail on any side.
+ *
+ * Not a chat message. `tone` is surface styling only: it carries no speaker
+ * meaning, so using navy/light to tell two speakers apart would encode identity
+ * in colour alone (WCAG 1.4.1). Conversations belong to `ConversationMessage`
+ * inside a `MessageFeed`, which keep author name/role as text.
  */
 export function Bubble({ children, tone = 'navy', tail = 'bottom', style, ...rest }) {
   const dark = tone === 'navy';

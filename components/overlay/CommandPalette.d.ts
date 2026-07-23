@@ -17,6 +17,8 @@ export interface CommandPaletteProps {
   restoreFocus?: boolean;
   /** 다이얼로그의 접근 가능한 이름. @default "명령 팔레트" */
   ariaLabel?: string;
+  /** 필터 결과 요약 문구를 만드는 formatter. 결과 없음 문구도 여기서 나옵니다. @default (count) => count > 0 ? `명령 ${count}개` : "결과 없음" */
+  resultsLabel?: (count: number) => string;
   style?: React.CSSProperties;
 }
 

@@ -25,6 +25,10 @@ function addMonths(date, amount) {
   return new Date(target.getFullYear(), target.getMonth(), Math.min(date.getDate(), lastDay));
 }
 
+function startOfMonth(date) {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
 function formatDateLabel(date) {
   return new Intl.DateTimeFormat('ko-KR', {
     year: 'numeric',
@@ -62,7 +66,9 @@ function DayCell({ date, selected, today, disabled, tabIndex, buttonRef, onFocus
       ref={buttonRef}
       type="button"
       tabIndex={tabIndex}
-      aria-label={formatDateLabel(date)}
+      /* The focusable element is the button, not the gridcell, so the selected
+         state has to survive in its accessible name as well. */
+      aria-label={selected ? `${formatDateLabel(date)}, 선택됨` : formatDateLabel(date)}
       aria-current={today ? 'date' : undefined}
       aria-disabled={disabled || undefined}
       onClick={() => { if (!disabled) onPick(date); }}
@@ -109,10 +115,13 @@ export function Calendar({ value, defaultValue, onChange, isDateDisabled, minDat
     return isDateDisabled ? Boolean(isDateDisabled(date)) : false;
   }, [minDay, maxDay, isDateDisabled]);
   const initialDate = selected ?? today;
-  const [view, setView] = React.useState(() => new Date(initialDate.getFullYear(), initialDate.getMonth(), 1));
+  const [view, setView] = React.useState(() => startOfMonth(initialDate));
   const [focusDate, setFocusDate] = React.useState(initialDate);
   const dayRefs = React.useRef(new Map());
+  const gridRef = React.useRef(null);
   const pendingFocus = React.useRef(autoFocus);
+  const selectedKey = selected ? ymd(selected) : null;
+  const syncedSelectedKey = React.useRef(selectedKey);
 
   const startDay = new Date(view.getFullYear(), view.getMonth(), 1).getDay();
   const dayCount = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
@@ -132,18 +141,24 @@ export function Calendar({ value, defaultValue, onChange, isDateDisabled, minDat
     }
   }, [focusDate, view]);
 
+  /* The displayed month belongs to navigation, not to the selected value: only
+     an actual change of the selection re-points the view and the roving tab
+     stop. Re-deriving the view from `selected` on every render would snap the
+     grid back to the selected month and make the previous/next buttons,
+     PageUp/PageDown and month-crossing Arrow keys impossible to use. */
   React.useEffect(() => {
-    if (!selected || sameMonth(selected, view)) return;
-    pendingFocus.current = true;
-    setView(new Date(selected.getFullYear(), selected.getMonth(), 1));
+    if (syncedSelectedKey.current === selectedKey) return;
+    syncedSelectedKey.current = selectedKey;
+    if (!selected) return;
     setFocusDate(selected);
-  }, [selected, view]);
+    setView((current) => (sameMonth(selected, current) ? current : startOfMonth(selected)));
+  }, [selected, selectedKey]);
 
   const moveFocus = (nextDate) => {
     pendingFocus.current = true;
     setFocusDate(nextDate);
     if (!sameMonth(nextDate, view)) {
-      setView(new Date(nextDate.getFullYear(), nextDate.getMonth(), 1));
+      setView(startOfMonth(nextDate));
     }
   };
 
@@ -153,7 +168,18 @@ export function Calendar({ value, defaultValue, onChange, isDateDisabled, minDat
     onChange?.(date);
   };
 
-  const navigateMonth = (amount) => moveFocus(addMonths(focusDate, amount));
+  /* Header navigation keeps focus where the user left it: a day cell when the
+     grid is being driven from the keyboard, otherwise the month button itself
+     so several months can be stepped in a row (APG Date Picker Dialog). */
+  const navigateMonth = (amount) => {
+    const nextFocusDate = addMonths(focusDate, amount);
+    const activeElement = gridRef.current?.ownerDocument?.activeElement;
+    if (gridRef.current && activeElement && gridRef.current.contains(activeElement)) {
+      pendingFocus.current = true;
+    }
+    setFocusDate(nextFocusDate);
+    setView(startOfMonth(nextFocusDate));
+  };
   const navigationButtonStyle = {
     width: 32,
     height: 32,
@@ -194,7 +220,7 @@ export function Calendar({ value, defaultValue, onChange, isDateDisabled, minDat
         </div>
       </div>
 
-      <div role="grid" aria-label={`${view.getFullYear()}년 ${view.getMonth() + 1}월`}>
+      <div ref={gridRef} role="grid" aria-label={`${view.getFullYear()}년 ${view.getMonth() + 1}월`}>
         <div role="row" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2, marginBottom: 6 }}>
           {WEEKDAYS.map((weekday, index) => (
             <div
@@ -235,6 +261,13 @@ export function Calendar({ value, defaultValue, onChange, isDateDisabled, minDat
                     onFocus={() => setFocusDate(date)}
                     onPick={pick}
                     onKeyDown={(event) => {
+                      if (event.key === 'PageUp' || event.key === 'PageDown') {
+                        event.preventDefault();
+                        const step = event.key === 'PageUp' ? -1 : 1;
+                        /* Shift+PageUp/PageDown moves a year at a time. */
+                        moveFocus(addMonths(date, event.shiftKey ? step * 12 : step));
+                        return;
+                      }
                       const movement = {
                         ArrowLeft: -1,
                         ArrowRight: 1,
@@ -246,9 +279,6 @@ export function Calendar({ value, defaultValue, onChange, isDateDisabled, minDat
                       if (movement != null) {
                         event.preventDefault();
                         moveFocus(addDays(date, movement));
-                      } else if (event.key === 'PageUp' || event.key === 'PageDown') {
-                        event.preventDefault();
-                        moveFocus(addMonths(date, event.key === 'PageUp' ? -1 : 1));
                       }
                     }}
                   />

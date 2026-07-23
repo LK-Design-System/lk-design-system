@@ -34,11 +34,11 @@ export const InputsAndPickers = {
         <Input label="프로젝트 이름" defaultValue="로봇 관제 시스템" iconLeft={<Icon name="document" size={18} />} />
         <SearchField defaultValue="토큰" placeholder="항목 검색" />
         <PasswordInput defaultValue="design-system" />
-        <InputGroup prefix="ID" suffix="개" defaultValue="12" />
+        <InputGroup aria-label="자산 번호" prefix="ID" suffix="개" defaultValue="12" />
         <NumberField defaultValue={5} min={0} max={20} />
         <DatePicker defaultValue="2026-07-05" />
         <TimePicker defaultValue="09:30" />
-        <PinInput defaultValue="1205" length={6} />
+        <PinInput aria-label="본인 확인 코드" defaultValue="1205" length={6} />
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>

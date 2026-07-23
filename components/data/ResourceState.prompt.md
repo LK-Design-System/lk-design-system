@@ -24,6 +24,9 @@
   유지하는 `error`·`offline`은 작업을 중단하지 않으므로 `status`/polite이고, 콘텐츠가 없어
   `EmptyState`로 차단되는 `error`·`offline`만 `alert`/assertive입니다. `loading`·`empty`·`restricted`
   같은 예상 가능한 차단 상태와 모든 비차단 상태는 `status`/polite를 사용합니다.
+- 차단 상태(`EmptyState`) 제목의 heading 레벨은 `headingLevel`(기본 3)로 지정합니다. 감싸는 표면이
+  자신의 제목 레벨에 맞춰 내려주면 문서 위계(WCAG 1.3.1)가 유지됩니다. `ChartFrame`은 자기 제목
+  레벨 +1을 전달합니다.
 - 아이콘은 상태 토큰에 맞는 registry icon을 항상 포함합니다.
 - `circle-block`은 접근 차단·사용 불가에만 사용합니다. 오프라인은 Viewer와 같은 signal 글리프를 사용하고, 복구 문구는 원인 뒤에 `-해 주세요.` 형태의 다음 행동을 제공합니다.
 - `messageVariant="embedded"`는 부모 surface의 가장자리와 결합하는 Banner를 사용합니다. `standalone`은 독립 콘텐츠 흐름용입니다.

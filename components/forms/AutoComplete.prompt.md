@@ -3,8 +3,10 @@
 ## Interaction and reference basis
 
 - The editable input owns `role="combobox"`, `aria-expanded`, `aria-controls`, `aria-autocomplete="list"`, and `aria-activedescendant`; DOM focus stays on the input while Arrow keys move the active option, Enter commits, and Escape closes.
+- **수동 선택(manual selection)이 기본입니다.** 타이핑은 목록만 필터링하고 활성 옵션을 만들지 않습니다(`aria-activedescendant` 없음). 방향키를 누른 뒤에야 활성 옵션이 생기므로, 사용자가 이동한 적 없는 첫 후보를 `Enter`가 확정하는 일이 없습니다. 이전의 적극적 동작이 필요하면 **autoHighlight**를 켜세요.
+- **결과 수를 알립니다.** 컨트롤 안에 항상 존재하는 시각적 숨김 `role="status" aria-live="polite"` 영역이 `n개 결과`(**resultCountLabel**로 재정의)와 결과 없음 문구를 전달합니다. 팝업과 함께 마운트되는 라이브 리전은 자주 누락되므로, 보이는 빈 상태 행은 더 이상 라이브 리전이 아닙니다.
 - The small field is 32px, the default field follows `--component-input-height`, and trigger/option text uses the common 16px input typography.
-- Reference basis: [WAI-ARIA Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) and [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/). Visual styling remains LDS-token based.
+- Reference basis: [WAI-ARIA Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), [APG List Autocomplete example (manual selection)](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/), [MUI Autocomplete `autoHighlight` (기본 false)](https://mui.com/material-ui/react-autocomplete/), and [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/). Visual styling remains LDS-token based.
 
 ```jsx
 <AutoComplete options={['LKR-CP','LKR-T1','LKR-VisionX','LKR-SSAI','LKR-S1']}

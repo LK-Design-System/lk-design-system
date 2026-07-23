@@ -1,4 +1,5 @@
 import React from 'react';
+import { waitFor } from 'storybook/test';
 import { CircularProgress, ProgressBar } from '../src/index.js';
 import { CircularProgressCard as CircularProgressCardStory, ProgressBarCard as ProgressBarCardStory } from './SelectionStatus.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
@@ -53,6 +54,80 @@ export const ProgressIndicators = {
       </DemoCard>
     </main>
   ),
+};
+
+function reducedMotionRule(ownerDocument, styleId, selector) {
+  const node = ownerDocument.getElementById(styleId);
+  if (!node?.sheet) throw new Error(`${styleId} 스타일시트가 주입되지 않았습니다.`);
+  const media = [...node.sheet.cssRules].find((rule) => (
+    /prefers-reduced-motion/.test(rule.conditionText || rule.media?.mediaText || '')
+  ));
+  if (!media) throw new Error(`${styleId} must ship a prefers-reduced-motion guard.`);
+  const target = [...media.cssRules].find((rule) => rule.selectorText === selector);
+  if (!target) throw new Error(`${styleId} must stop ${selector} under reduced motion.`);
+  return target;
+}
+
+export const ProgressAriaAndMotionContract = {
+  name: '진행 표시 ARIA와 모션 계약',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    'determinate 진행은 valuenow를, indeterminate 진행은 aria-busy와 한국어 valuetext를 노출하는지, 그리고 인라인으로 지정된 애니메이션이 prefers-reduced-motion에서 실제로 멈추는지 확인하는 계약입니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 560 }}>
+      <ProgressBar data-testid="bar-determinate" label="펌웨어 업로드" value={3} max={5} showValue />
+      <ProgressBar data-testid="bar-indeterminate" label="처리 중" indeterminate />
+      <CircularProgress data-testid="ring-determinate" value={72} label="리포트 진행률" showValue />
+      <CircularProgress data-testid="ring-indeterminate" label="처리 중" indeterminate />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const find = (testId) => {
+      const host = canvasElement.querySelector(`[data-testid="${testId}"]`);
+      if (!host) throw new Error(`${testId} 픽스처가 렌더되지 않았습니다.`);
+      return host.getAttribute('role') === 'progressbar' ? host : host.querySelector('[role="progressbar"]');
+    };
+
+    for (const [testId, valuenow] of [['bar-determinate', '60'], ['ring-determinate', '72']]) {
+      const determinate = find(testId);
+      if (determinate.getAttribute('aria-valuenow') !== valuenow) {
+        throw new Error(`${testId} must report its progress through aria-valuenow.`);
+      }
+      if (determinate.hasAttribute('aria-busy')) {
+        throw new Error(`${testId} is determinate and must not claim aria-busy.`);
+      }
+    }
+
+    for (const testId of ['bar-indeterminate', 'ring-indeterminate']) {
+      const indeterminate = find(testId);
+      if (indeterminate.hasAttribute('aria-valuenow')) {
+        throw new Error(`${testId} must omit aria-valuenow while the duration is unknown.`);
+      }
+      if (indeterminate.getAttribute('aria-busy') !== 'true' || indeterminate.getAttribute('aria-valuetext') !== '진행 중') {
+        throw new Error(`${testId} must announce the Korean busy state instead of a numeric value.`);
+      }
+    }
+
+    /* The indeterminate sweep and the ring rotation are inline styles, so the
+       reduced-motion override only wins with `!important` — dropping it left the
+       animation running under prefers-reduced-motion (WCAG 2.3.3). */
+    for (const [styleId, selector] of [
+      ['lk-prog-kf', '[data-lds-progress-indeterminate]'],
+      ['lk-circular-kf', '[data-lds-circular-progress]'],
+    ]) {
+      /* 키프레임 style 태그는 effect에서 주입되므로 play가 먼저 도달할 수 있다. */
+      await waitFor(() => {
+        const rule = reducedMotionRule(ownerDocument, styleId, selector);
+        const value = rule.style.getPropertyValue('animation') || rule.style.getPropertyValue('animation-name');
+        const priority = rule.style.getPropertyPriority('animation') || rule.style.getPropertyPriority('animation-name');
+        if (!/\bnone\b/.test(value) || priority !== 'important') {
+          throw new Error(`${selector} takes its animation from an inline style, so the reduced-motion override must declare animation:none!important.`);
+        }
+      });
+    }
+  },
 };
 
 export const CircularProgressCard = { ...CircularProgressCardStory, name: 'CircularProgress card parity', tags: ['!dev', 'visual-parity'] };

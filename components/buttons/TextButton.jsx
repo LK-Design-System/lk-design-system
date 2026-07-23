@@ -20,7 +20,7 @@ export function TextButton({
   disabled = false,
   disable = false,
   loading = false,
-  loadingLabel = 'Loading',
+  loadingLabel = '불러오는 중',
   as = 'button',
   className,
   style,
@@ -53,7 +53,9 @@ export function TextButton({
   const fs = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 17 : 'var(--body1-size)';
   const ls = normalizedSize === 'sm' ? 'var(--label1-spacing)' : 'var(--body1-spacing)';
   const h = normalizedSize === 'sm' ? 28 : normalizedSize === 'lg' ? 36 : 32;
-  const disabledState = disabled || disable || loading;
+  /* `loading` must not remove the control from the tab order — see Button. */
+  const nativeDisabled = disabled || disable;
+  const disabledState = nativeDisabled || loading;
   const ariaBlocked = ariaDisabled === true || ariaDisabled === 'true';
   const blocked = disabledState || ariaBlocked;
   const Comp = as;
@@ -61,11 +63,11 @@ export function TextButton({
     <Comp
       {...rest}
       className={['lk-textbtn', className].filter(Boolean).join(' ')}
-      disabled={as === 'button' ? disabledState : undefined}
+      disabled={as === 'button' ? nativeDisabled : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
       aria-label={loading ? loadingLabel : ariaLabel}
       aria-busy={loading || undefined}
-      aria-disabled={ariaBlocked || (as !== 'button' && disabledState) || undefined}
+      aria-disabled={ariaBlocked || loading || (as !== 'button' && disabledState) || undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); setPressed(false); onMouseLeave && onMouseLeave(e); }}
       onMouseDown={(e) => { if (!blocked) setPressed(true); onMouseDown?.(e); }}

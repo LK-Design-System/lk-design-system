@@ -13,8 +13,10 @@ compact "more" actions.
 - **size**: `sm`, `md`, `lg`.
 - **underline** gives link-style emphasis; **as="a"** renders a link.
 - **loading** prevents repeated activation, renders a spinner, and sets
-  `aria-busy`; use **loadingLabel** for the single screen-reader name. Existing
-  content keeps its width while visually hidden.
+  `aria-busy`; use **loadingLabel** for the single screen-reader name
+  (기본값 `불러오는 중`). Existing content keeps its width while visually hidden.
+- loading은 native `disabled`가 아니라 `aria-disabled="true"` + `aria-busy="true"`로
+  처리해 focus를 유지합니다(Button과 동일한 계약).
 - Native `disabled` removes the action from focus. `aria-disabled="true"` keeps
   it discoverable while applying unavailable styling and blocking activation.
 - hover/pressed는 opacity tone만 낮추며 lift·scale·shadow를 사용하지 않습니다.

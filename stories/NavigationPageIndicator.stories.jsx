@@ -55,7 +55,7 @@ function InteractiveDotsDemo() {
 }
 
 export const InteractiveDots = {
-  name: '상호작용 도트 · 클릭 이동과 히트 영역',
+  name: '상호작용 · 도트 클릭 이동과 히트 영역',
   parameters: storyDescription(
     'onChange를 넘긴 도트는 버튼이 되어 특정 페이지로 바로 이동합니다. 각 도트가 "{n}페이지로 이동" 레이블과 24×24px 이상 히트 영역을 갖는지, 클릭 시 현재 페이지가 갱신되는지 확인하세요.',
   ),

@@ -435,17 +435,20 @@ export function MessageFeed({
         </div>
       )}
 
-      {liveStatus != null && liveStatus !== '' && (
-        <VisuallyHidden
-          as="div"
-          data-message-feed-live-status
-          role="status"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {liveStatus}
-        </VisuallyHidden>
-      )}
+      {/* Mounted for the feed's whole lifetime with only its text replaced. A
+          status node inserted into the DOM together with its message is not a
+          mutation of an existing live region, so the first phase announcement
+          would be dropped. VisuallyHidden is absolutely positioned, so an empty
+          region costs no layout. */}
+      <VisuallyHidden
+        as="div"
+        data-message-feed-live-status
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {liveStatus != null && liveStatus !== '' ? liveStatus : ''}
+      </VisuallyHidden>
     </section>
   );
 }

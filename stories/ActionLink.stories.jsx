@@ -25,8 +25,22 @@ export default meta;
 export const Links = {
   name: '개요',
   parameters: storyDescription(
-    '본문에서 관련 컴포넌트 안내와 외부 문서를 연결하는 상황입니다. 링크 문구만으로 목적지를 예측할 수 있고 외부 이동은 아이콘·새 탭·안전한 rel로 구분되는지 확인하세요.',
+    '본문에서 관련 컴포넌트 안내와 외부 문서를 연결하는 상황입니다. 링크 문구만으로 목적지를 예측할 수 있고, 외부 이동이 아이콘·새 탭·안전한 rel과 함께 "새 창에서 열림" 안내로도 전달되는지 확인하세요.',
   ),
+  play: async ({ canvasElement }) => {
+    const [internal, external] = Array.from(canvasElement.querySelectorAll('a'));
+    if (!internal || !external) throw new Error('Link contract targets are required.');
+
+    const name = (element) => element.textContent.replace(/\s+/g, ' ').trim();
+    if (name(internal) !== '관련 컴포넌트 안내') throw new Error('내부 링크 이름에 군더더기가 붙으면 안 됩니다.');
+    if (name(external) !== '외부 제품 문서 새 창에서 열림') {
+      throw new Error('외부 링크는 새 창에서 열린다는 사실이 접근 이름에 포함되어야 합니다.');
+    }
+    if (external.target !== '_blank' || external.rel !== 'noopener noreferrer') {
+      throw new Error('외부 링크는 새 탭과 안전한 rel을 함께 가져야 합니다.');
+    }
+    if (internal.hasAttribute('target')) throw new Error('내부 링크는 새 탭으로 열지 않습니다.');
+  },
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 680 }}>
       <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>

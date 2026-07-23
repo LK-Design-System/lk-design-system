@@ -4,6 +4,7 @@ import {
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
+  mergeIds,
   useFieldMetadata,
 } from './field-shared.js';
 
@@ -52,10 +53,15 @@ export function InputGroup({
     describedBy: ariaDescribedBy ?? inputProps['aria-describedby'],
   });
   const labelId = label != null ? `${metadata.fieldId}-label` : undefined;
+  /* 애드온은 편집 값이 아니지만 값 해석에 필수인 문맥이므로 input의 설명으로 연결한다.
+     form 모드 SR 사용자가 단위·프로토콜을 듣지 못하는 문제를 막는다. */
+  const prefixId = prefix != null ? `${metadata.fieldId}-prefix` : undefined;
+  const suffixId = suffix != null ? `${metadata.fieldId}-suffix` : undefined;
+  const describedBy = mergeIds(metadata.describedBy, prefixId, suffixId);
   const {
     onFocus: onInputFocus,
     onBlur: onInputBlur,
-    onChange: _inputOnChange,
+    onChange: onInputChange,
     style: inputStyle,
     ...inputRest
   } = inputProps;
@@ -73,9 +79,10 @@ export function InputGroup({
     onChange?.(nextValue);
   };
 
-  const Addon = ({ node, side }) => (
+  /* 노드 애드온은 자기 접근성 의미를 스스로 소유한다(장식이면 소비자가 aria-hidden을 건다). */
+  const Addon = ({ node, side, addonId }) => (
     <span
-      aria-hidden={typeof node === 'string' || typeof node === 'number' ? undefined : true}
+      id={addonId}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -133,7 +140,7 @@ export function InputGroup({
           ...style,
         }}
       >
-        {prefix != null && <Addon node={prefix} side="left" />}
+        {prefix != null && <Addon node={prefix} side="left" addonId={prefixId} />}
         <input
           {...inputRest}
           id={metadata.fieldId}
@@ -144,9 +151,13 @@ export function InputGroup({
           placeholder={placeholder}
           aria-label={ariaLabel ?? inputRest['aria-label'] ?? (!label && typeof placeholder === 'string' ? placeholder : undefined)}
           aria-labelledby={ariaLabelledBy ?? inputRest['aria-labelledby'] ?? (!ariaLabel && label ? labelId : undefined)}
-          aria-describedby={metadata.describedBy}
+          aria-describedby={describedBy}
           aria-invalid={isInvalid || undefined}
-          onChange={(event) => commitValue(event.target.value)}
+          onChange={(event) => {
+            /* inputProps는 패스스루 계약이므로 소비자 onChange를 먼저 실행한다. */
+            onInputChange?.(event);
+            commitValue(event.target.value);
+          }}
           onFocus={(event) => {
             setFocused(true);
             onInputFocus?.(event);
@@ -175,7 +186,7 @@ export function InputGroup({
             <FieldStatusIcon invalid={isInvalid} status={status} />
           </span>
         )}
-        {suffix != null && <Addon node={suffix} side="right" />}
+        {suffix != null && <Addon node={suffix} side="right" addonId={suffixId} />}
       </div>
     </FieldStack>
   );

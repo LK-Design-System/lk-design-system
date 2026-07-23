@@ -113,6 +113,68 @@ export const ChoiceCardInputContract = {
   },
 };
 
+export const ChoiceCardNamingContract = {
+  name: '이름과 설명 계약',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '카드의 제목이 이름을, 설명이 힌트(aria-describedby)가 되는지 확인합니다. 설명이 이름에도 설명에도 도달하지 못하면 안 됩니다.',
+  ),
+  render: function Naming() {
+    const [plan, setPlan] = React.useState('standard');
+    return (
+      <main style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 420 }}>
+        <div role="radiogroup" aria-label="플랜">
+          <ChoiceCard
+            data-contract="named-card"
+            name="naming-plan"
+            inputValue="standard"
+            title="기본 플랜"
+            description="필수 설정으로 시작합니다."
+            selected={plan === 'standard'}
+            onSelect={() => setPlan('standard')}
+          />
+          <ChoiceCard
+            data-contract="labelled-card"
+            name="naming-plan"
+            inputValue="review"
+            aria-label="검토 플랜 직접 지정"
+            title="검토 플랜"
+            description="승인 절차를 포함합니다."
+            selected={plan === 'review'}
+            onSelect={() => setPlan('review')}
+          />
+        </div>
+      </main>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const card = canvasElement.querySelector('[data-contract="named-card"]');
+    const input = card?.querySelector('input[type="radio"]');
+    if (!input) throw new Error('ChoiceCard must render a native radio.');
+    if (input.hasAttribute('aria-label')) {
+      throw new Error('A string title must not be forced onto the input as aria-label.');
+    }
+    const labelledBy = input.getAttribute('aria-labelledby');
+    const describedBy = input.getAttribute('aria-describedby');
+    const titleNode = labelledBy ? canvasElement.ownerDocument.getElementById(labelledBy) : null;
+    const descriptionNode = describedBy ? canvasElement.ownerDocument.getElementById(describedBy) : null;
+    if (titleNode?.textContent?.trim() !== '기본 플랜') {
+      throw new Error('The title element must supply the accessible name.');
+    }
+    if (descriptionNode?.textContent?.trim() !== '필수 설정으로 시작합니다.') {
+      throw new Error('The description must reach the input as aria-describedby.');
+    }
+
+    const explicit = canvasElement.querySelector('[data-contract="labelled-card"] input[type="radio"]');
+    if (explicit?.getAttribute('aria-label') !== '검토 플랜 직접 지정' || explicit.hasAttribute('aria-labelledby')) {
+      throw new Error('An explicit aria-label must win over the title element.');
+    }
+    if (!explicit.getAttribute('aria-describedby')) {
+      throw new Error('An explicitly named card must still expose its description.');
+    }
+  },
+};
+
 export const ChoiceCardCard = {
   ...ChoiceCardCardStory,
   name: 'ChoiceCard card parity',

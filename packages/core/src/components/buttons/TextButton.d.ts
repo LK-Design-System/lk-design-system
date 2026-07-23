@@ -14,9 +14,14 @@ export interface TextButtonProps extends React.HTMLAttributes<HTMLElement> {
   disabled?: boolean;
   /** Disable alias. */
   disable?: boolean;
-  /** Show the action loading state and prevent repeated activation. @default false */
+  /**
+   * Show the action loading state and prevent repeated activation. The control
+   * stays focusable while loading (`aria-disabled` + `aria-busy` rather than
+   * native `disabled`).
+   * @default false
+   */
   loading?: boolean;
-  /** Screen-reader label announced with the loading spinner. @default "Loading" */
+  /** Screen-reader label announced with the loading spinner. @default "불러오는 중" */
   loadingLabel?: string;
   /** Render with another element or component, such as "a". @default "button" */
   as?: React.ElementType;

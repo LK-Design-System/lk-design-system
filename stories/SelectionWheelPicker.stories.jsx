@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import { WheelPicker } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -188,6 +189,130 @@ export const DisabledOptions = {
       </PickerBlock>
     </Stage>
   ),
+};
+
+const keyboardOptions = [
+  { value: 'B2', label: 'B2' },
+  { value: 'B1', label: 'B1' },
+  { value: '1F', label: '1F' },
+  { value: '2F', label: '2F', disabled: true },
+  { value: '3F', label: '3F' },
+  { value: '4F', label: '4F' },
+  { value: '5F', label: '5F' },
+];
+
+function KeyboardContractFixture() {
+  const [floor, setFloor] = React.useState('1F');
+  return (
+    <Stage>
+      <PickerBlock label="층" value={floor}>
+        <WheelPicker
+          data-testid="keyboard-wheel"
+          options={keyboardOptions}
+          value={floor}
+          onChange={setFloor}
+          label="층 선택"
+        />
+      </PickerBlock>
+      <PickerBlock label="읽기" value="2F">
+        <WheelPicker
+          data-testid="readonly-wheel"
+          options={floorOptions}
+          defaultValue="2F"
+          label="읽기 전용 층 선택"
+          readOnly
+        />
+      </PickerBlock>
+      <PickerBlock label="비활성" value="1F">
+        <WheelPicker
+          data-testid="disabled-wheel"
+          options={floorOptions}
+          defaultValue="1F"
+          label="비활성 층 선택"
+          disabled
+        />
+      </PickerBlock>
+    </Stage>
+  );
+}
+
+export const KeyboardContract = {
+  name: '키보드 선택 계약',
+  tags: ['!dev'],
+  render: () => <KeyboardContractFixture />,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const wheel = canvasElement.querySelector('[data-testid="keyboard-wheel"]');
+    const list = wheel?.querySelector('[role="listbox"]');
+    if (!list) throw new Error('WheelPicker는 role="listbox"를 노출해야 합니다.');
+    if (list.getAttribute('aria-label') !== '층 선택') {
+      throw new Error('listbox에는 accessible name이 있어야 합니다.');
+    }
+
+    const activeLabel = () => {
+      const id = list.getAttribute('aria-activedescendant');
+      return id ? doc.getElementById(id)?.textContent : null;
+    };
+    const expectActive = async (expected, message) => {
+      await waitFor(() => {
+        if (activeLabel() !== expected) throw new Error(`${message} (현재: ${activeLabel()})`);
+        const selected = list.querySelector('[role="option"][aria-selected="true"]');
+        if (selected?.textContent !== expected) {
+          throw new Error(`${message} — aria-selected가 따라오지 않았습니다. (현재: ${selected?.textContent})`);
+        }
+      });
+    };
+
+    await expectActive('1F', 'aria-activedescendant는 선택된 옵션을 가리켜야 합니다.');
+
+    /* 초점 이벤트는 보내지 않는다. 키보드 경로는 activeElement만 사용하고, focus
+       상태를 켜면 캡처에 초점 링이 남아 이름난 상태가 오염된다. */
+    list.focus();
+    if (doc.activeElement !== list) throw new Error('활성 listbox는 Tab으로 진입할 수 있어야 합니다.');
+
+    await userEvent.keyboard('{ArrowDown}');
+    await expectActive('3F', 'ArrowDown은 disabled 옵션(2F)을 건너뛰어야 합니다.');
+    await userEvent.keyboard('{ArrowUp}');
+    await expectActive('1F', 'ArrowUp도 disabled 옵션을 건너뛰어야 합니다.');
+
+    await userEvent.keyboard('{Home}');
+    await expectActive('B2', 'Home은 첫 옵션으로 이동해야 합니다.');
+    await userEvent.keyboard('{End}');
+    await expectActive('5F', 'End는 마지막 옵션으로 이동해야 합니다.');
+    await userEvent.keyboard('{PageUp}');
+    await expectActive('3F', 'PageUp은 보이는 행의 절반만큼 위로 이동해야 합니다.');
+    await userEvent.keyboard('{PageDown}');
+    await expectActive('5F', 'PageDown은 보이는 행의 절반만큼 아래로 이동해야 합니다.');
+
+    await userEvent.keyboard('b');
+    await expectActive('B2', 'type-ahead는 label 앞부분이 일치하는 옵션으로 이동해야 합니다.');
+    await userEvent.keyboard('b');
+    await expectActive('B1', '같은 문자를 반복하면 다음 일치 옵션으로 순환해야 합니다.');
+
+    const readOnly = canvasElement.querySelector('[data-testid="readonly-wheel"] [role="listbox"]');
+    if (readOnly.getAttribute('aria-readonly') !== 'true') {
+      throw new Error('readOnly 휠은 aria-readonly를 노출해야 합니다.');
+    }
+    const readOnlyBefore = readOnly.getAttribute('aria-activedescendant');
+    readOnly.focus();
+    if (doc.activeElement !== readOnly) throw new Error('readOnly 휠은 읽기 위해 초점을 받을 수 있어야 합니다.');
+    await userEvent.keyboard('{ArrowDown}');
+    if (readOnly.getAttribute('aria-activedescendant') !== readOnlyBefore) {
+      throw new Error('readOnly 휠은 키보드로 값이 바뀌지 않아야 합니다.');
+    }
+
+    const disabledList = canvasElement.querySelector('[data-testid="disabled-wheel"] [role="listbox"]');
+    if (disabledList.getAttribute('tabindex') !== '-1' || disabledList.getAttribute('aria-disabled') !== 'true') {
+      throw new Error('disabled 휠은 Tab 진입을 막고 aria-disabled를 노출해야 합니다.');
+    }
+
+    // 이름난 상태로 복귀: 1F 선택, 초점 없음, 스크롤 원위치.
+    list.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await expectActive('1F', '이름난 상태(1F)로 복귀해야 합니다.');
+    doc.activeElement?.blur?.();
+    doc.defaultView?.scrollTo(0, 0);
+  },
 };
 
 export const Empty = {

@@ -213,7 +213,7 @@ export const ListCellAccordionCard = {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: '8px 16px', width: 340 }}>
           <ListCell leading={<Icon name="document" />} title="컴포넌트 검토 기록" description="2026.06.30 · PDF" chevron onClick={() => {}} divider selected />
-          <ListCell leading={<Icon name="bell" />} title="실시간 알림" trailing={<Switch defaultChecked size="sm" />} interaction="hovered" />
+          <ListCell leading={<Icon name="bell" />} title="실시간 알림" trailing={<Switch defaultChecked size="sm" aria-label="실시간 알림" />} interaction="hovered" />
         </div>
         <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', padding: '0 16px', width: 340 }}>
           <Accordion

@@ -1,4 +1,15 @@
 import React from 'react';
+import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+
+/* `muted` and `disabled` used to render identically (same label ink, same 0.45
+   swatch opacity), so the two contracted meanings were only distinguishable by
+   guessing. `disabled` now also strikes the label through, which is a shape
+   cue rather than a color cue (WCAG 1.4.1), and both states carry a short
+   spoken suffix because `aria-disabled` is not supported on `listitem`. */
+const STATE_LABEL = {
+  disabled: '표시 꺼짐',
+  muted: '강조 낮음',
+};
 
 const SIZE = {
   sm: {
@@ -109,7 +120,6 @@ export function Legend({
     >
       {!hasItems && emptyLabel != null && (
         <li
-          aria-disabled="true"
           style={{
             color: 'var(--color-semantic-label-alternative)',
             fontSize: cfg.fontSize,
@@ -129,10 +139,12 @@ export function Legend({
           ? 'var(--color-semantic-label-alternative)'
           : 'var(--color-semantic-label-neutral)';
 
+        const state = disabled ? 'disabled' : (item.muted ? 'muted' : undefined);
+
         return (
           <li
             key={getItemKey(item, index)}
-            aria-disabled={disabled ? 'true' : undefined}
+            data-legend-state={state}
             style={{
               display: vertical ? 'grid' : 'inline-flex',
               gridTemplateColumns: vertical ? `${cfg.line}px minmax(0, 1fr) auto` : undefined,
@@ -155,14 +167,17 @@ export function Legend({
               size={size}
             />
             <span
+              data-legend-label
               style={{
                 minWidth: 0,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
+                textDecoration: disabled ? 'line-through' : undefined,
               }}
             >
               {item.label}
+              {state && <VisuallyHidden>{` (${STATE_LABEL[state]})`}</VisuallyHidden>}
             </span>
             {item.value != null && (
               <span

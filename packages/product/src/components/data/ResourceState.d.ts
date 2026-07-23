@@ -27,6 +27,8 @@ export interface ResourceStateProps extends Omit<React.HTMLAttributes<HTMLElemen
   loadingContent?: React.ReactNode;
   /** 부모 표면과 결합되는 상태 메시지 모양. @default "embedded" */
   messageVariant?: 'standalone' | 'embedded';
+  /** 차단 상태 제목의 heading 단계. 감싸는 표면의 제목보다 한 단계 아래를 전달합니다. @default 3 */
+  headingLevel?: number;
   /** ready 상태의 콘텐츠 또는 refreshing/error/stale/offline에서 유지할 마지막 정상 콘텐츠입니다. 콘텐츠를 유지하면 오류·오프라인도 polite 상태로 알립니다. */
   children?: React.ReactNode;
 }

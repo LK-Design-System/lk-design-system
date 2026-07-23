@@ -1,5 +1,25 @@
 import React from 'react';
 
+/* Development-only guard: an icon-only control with no accessible name is
+   invisible to assistive tech and the failure is silent at runtime. Bundlers
+   replace `process.env.NODE_ENV` at build time — the same contract React itself
+   relies on — so this branch disappears from production builds. The try/catch
+   keeps it inert in environments that never define `process` at all. */
+function isDevelopmentBuild() {
+  try {
+    return process.env.NODE_ENV !== 'production';
+  } catch {
+    return false;
+  }
+}
+
+function useMissingNameWarning(shouldWarn, message) {
+  React.useEffect(() => {
+    if (!shouldWarn || !isDevelopmentBuild()) return;
+    console.warn(message);
+  }, [shouldWarn, message]);
+}
+
 /**
  * LK ROBOTICS — Fab (floating action button)
  * A round, elevated primary action — the one thing to do on a screen (문의,
@@ -22,11 +42,17 @@ export function Fab({
   onKeyUp,
   onBlur,
   className,
+  type,
+  'aria-label': ariaLabel,
   'aria-disabled': ariaDisabled,
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
+  useMissingNameWarning(
+    !label && !ariaLabel && rest['aria-labelledby'] == null,
+    '[LDS] Fab: label은 아이콘 전용 컨트롤의 접근 가능한 이름입니다. label(또는 aria-label / aria-labelledby)을 전달하세요.',
+  );
   // FAB diameters are intentionally larger than the Button height scale (32/40/48).
   const d = size === 'sm' ? 48 : size === 'lg' ? 64 : 56;
   const palettes = {
@@ -45,9 +71,13 @@ export function Fab({
       ? `color-mix(in srgb, ${p.bg} 96%, var(--color-semantic-label-normal))`
       : p.bg;
   return (
+    /* `rest` is spread FIRST — matching Button and IconButton — so the
+       component's own type, accessible name, disabled semantics, and handlers
+       cannot be silently clobbered by a consumer prop. */
     <button
-      type="button"
-      aria-label={label}
+      {...rest}
+      type={type ?? 'button'}
+      aria-label={label ?? ariaLabel}
       aria-disabled={ariaBlocked || undefined}
       disabled={disabled}
       className={['lk-fab', `lk-fab--${variant}`, className].filter(Boolean).join(' ')}
@@ -82,7 +112,6 @@ export function Fab({
         boxShadow: blocked ? 'none' : p.sh || 'var(--shadow-md)', transform: 'none',
         transition: 'var(--component-button-transition)', ...style,
       }}
-      {...rest}
     >
       {children}
     </button>

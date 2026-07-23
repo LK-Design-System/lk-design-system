@@ -11,6 +11,7 @@ import {
   Lockup,
   MetricCard,
   PageHeader,
+  RefreshControl,
   SideNav,
   TopBar,
   UserMenu,
@@ -139,16 +140,16 @@ function ShellContent({ headingLevel = 1 }) {
     >
       <PageHeader
         headingLevel={headingLevel}
-        eyebrow="Workspace overview"
+        eyebrow="워크스페이스 개요"
         title="운영 현황"
         description="현재 상태와 주의가 필요한 항목을 먼저 확인하고, 세부 업무로 이동합니다. 이 콘텐츠는 셸의 위계와 반응형 슬롯을 검증하기 위한 중립 fixture입니다."
-        actions={<Button size="sm" variant="outlined"><Icon name="refresh" size={16} aria-hidden="true" />새로고침</Button>}
+        actions={<RefreshControl lastUpdated="오늘 14:32" onRefresh={() => {}} />}
       />
 
       <DashboardGrid minCardWidth={190} fillLastRow data-testid="shell-dashboard-grid">
-        <MetricCard label="진행 중" value="24" unit="건" delta={9.1} period="현재" baseline="어제" caption="처리 중인 작업" />
+        <MetricCard label="진행 중" value="24" unit="건" delta={9.1} changeTone="neutral" period="현재" baseline="어제" caption="처리 중인 작업" />
         <MetricCard label="확인 필요" value="3" unit="건" delta={-25} changeTone="positive" period="현재" baseline="어제" caption="사용자 판단이 필요한 항목" />
-        <MetricCard label="완료율" value="92" unit="%" delta={2.2} period="최근 24시간" baseline="90%" />
+        <MetricCard label="완료율" value="92" unit="%" delta={2.2} changeTone="positive" period="최근 24시간" baseline="90%" />
       </DashboardGrid>
 
       <section aria-labelledby="dashboard-analysis-title" style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0 }}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { VisuallyHidden } from "../layout/VisuallyHidden.jsx";
 
 const PLACEHOLDER_PATHS = {
   person:
@@ -90,6 +91,30 @@ function resolveInteractionStyle(interaction) {
   return states[state] || {};
 }
 
+/* The status dot and the pushBadge are colour-only marks, so each needs a text
+   alternative (WCAG 1.4.1 / 1.1.1). These defaults are folded into the avatar's
+   accessible name; pass `statusLabel` / `pushBadgeLabel` to override, or `false`
+   when a neighbouring text already carries the same meaning. */
+const STATUS_LABELS = {
+  online: "온라인",
+  busy: "다른 용무 중",
+  offline: "오프라인",
+};
+
+function defaultPushBadgeLabel(pushBadge) {
+  if (pushBadge === true) return "새 알림 있음";
+  if (typeof pushBadge === "number") return `읽지 않음 ${pushBadge}건`;
+  const text = String(pushBadge).trim();
+  if (!text) return "새 알림 있음";
+  return /^\d+\+?$/.test(text) ? `읽지 않음 ${text}건` : text;
+}
+
+function resolveAlternative(explicit, fallback) {
+  if (explicit === false || explicit === null) return null;
+  if (explicit != null && explicit !== true) return explicit;
+  return fallback || null;
+}
+
 function PlaceholderGlyph({ kind, deactivated }) {
   return (
     <svg
@@ -118,6 +143,13 @@ function PlaceholderGlyph({ kind, deactivated }) {
  * LK ROBOTICS — Avatar
  * Round identity image with optional status dot. Falls back to initials or a
  * placeholder glyph and supports the deactivated treatment.
+ *
+ * Accessibility: the status dot and the pushBadge are colour-only marks, so
+ * each contributes a text alternative. When the avatar is named
+ * (`aria-label` / `aria-labelledby`) the alternatives are folded into that
+ * accessible name — "김한 아바타, 온라인, 읽지 않음 3건" — because a
+ * `role="img"` element hides its descendants. Otherwise they render as
+ * visually hidden text.
  */
 export function Avatar({
   src,
@@ -126,16 +158,21 @@ export function Avatar({
   variant = "person",
   size = "medium",
   status,
+  statusLabel,
   ring = false,
   placeholder = "initials",
   deactivated = false,
   interaction = false,
   pushBadge = false,
+  pushBadgeLabel,
   borderColor,
   borderWeight = 0,
   style,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
   ...rest
 }) {
+  const generatedId = React.useId();
   const resolvedSize = resolveAvatarSize(size);
   const normalizedVariant = normalizeVariant(variant);
   const initials = initialsFromName(name);
@@ -180,11 +217,36 @@ export function Avatar({
   const showPushBadge =
     pushBadge !== false && pushBadge != null && !deactivated;
   const pushBadgeSize = Math.max(10, Math.round(resolvedSize * 0.28));
-  const pushBadgeLabel = pushBadge === true ? "" : pushBadge;
+  const pushBadgeText = pushBadge === true ? "" : pushBadge;
+
+  const showStatus = Boolean(status) && !deactivated;
+  const statusAlternative = showStatus
+    ? resolveAlternative(statusLabel, STATUS_LABELS[status])
+    : null;
+  const pushBadgeAlternative = showPushBadge
+    ? resolveAlternative(pushBadgeLabel, defaultPushBadgeLabel(pushBadge))
+    : null;
+  const alternatives = [statusAlternative, pushBadgeAlternative].filter(Boolean);
+  /* A role="img" element hides its subtree, so a named avatar must carry the
+     colour-only alternatives inside its own accessible name. */
+  const named = ariaLabel != null || ariaLabelledBy != null;
+  const foldIntoLabel = typeof ariaLabel === "string" && ariaLabel !== "";
+  const alternativeIds = alternatives.map((_, index) => `${generatedId}-alt-${index}`);
+  const composedLabel = foldIntoLabel
+    ? [ariaLabel, ...alternatives].join(", ")
+    : ariaLabel;
+  const composedLabelledBy = named && !foldIntoLabel && alternativeIds.length
+    ? [ariaLabelledBy, ...alternativeIds].filter(Boolean).join(" ")
+    : ariaLabelledBy;
+  /* Named + folded: the text already lives in the name. Otherwise the hidden
+     text is either referenced by aria-labelledby or read in document order. */
+  const renderAlternativeText = alternatives.length > 0 && !foldIntoLabel;
 
   return (
     <span
-      role={rest['aria-label'] != null || rest['aria-labelledby'] != null ? 'img' : undefined}
+      role={named ? 'img' : undefined}
+      aria-label={composedLabel}
+      aria-labelledby={composedLabelledBy}
       aria-disabled={deactivated || undefined}
       data-variant={normalizedVariant}
       data-interaction={
@@ -264,8 +326,10 @@ export function Avatar({
           />
         </span>
       )}
-      {status && !deactivated && (
+      {showStatus && (
         <span
+          aria-hidden="true"
+          data-avatar-status={status}
           style={{
             position: "absolute",
             right: 0,
@@ -278,6 +342,12 @@ export function Avatar({
           }}
         />
       )}
+      {renderAlternativeText &&
+        alternatives.map((text, index) => (
+          <VisuallyHidden key={alternativeIds[index]} id={alternativeIds[index]}>
+            {text}
+          </VisuallyHidden>
+        ))}
       {showPushBadge && (
         <span
           aria-hidden="true"
@@ -287,7 +357,7 @@ export function Avatar({
             right: -2,
             minWidth: pushBadgeSize,
             height: pushBadgeSize,
-            paddingInline: pushBadgeLabel ? 4 : 0,
+            paddingInline: pushBadgeText ? 4 : 0,
             borderRadius: "var(--radius-pill)",
             border: "2px solid var(--color-semantic-background-elevated-normal)",
             boxSizing: "border-box",
@@ -301,7 +371,7 @@ export function Avatar({
             lineHeight: 1,
           }}
         >
-          {pushBadgeLabel}
+          {pushBadgeText}
         </span>
       )}
     </span>

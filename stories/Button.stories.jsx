@@ -145,7 +145,7 @@ function ButtonStateContractDemo() {
       <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
         <Button data-contract="interactive" onClick={() => setActivations((count) => count + 1)}>저장</Button>
         <Button data-contract="width-reference">저장</Button>
-        <Button data-contract="loading" loading loadingLabel="저장 중">저장</Button>
+        <Button data-contract="loading" loading loadingLabel="저장 중" onClick={() => setActivations((count) => count + 1)}>저장</Button>
         <Button data-contract="aria-disabled" aria-disabled="true" onClick={() => setActivations((count) => count + 1)}>
           권한 필요
         </Button>
@@ -161,7 +161,7 @@ function ButtonStateContractDemo() {
 export const InteractionContract = {
   name: '상호작용 · 상태와 처리',
   parameters: storyDescription(
-    '일반·hover·pressed·loading·ARIA disabled·danger 상태를 한 흐름에서 검증하는 상황입니다. hover와 pressed는 위치를 바꾸지 않는 tone 변화이며 loading은 폭을 유지하고 aria-disabled는 focus 가능하지만 실행되지 않아야 합니다.',
+    '일반·hover·pressed·loading·ARIA disabled·danger 상태를 한 흐름에서 검증하는 상황입니다. hover와 pressed는 위치를 바꾸지 않는 tone 변화이며, loading은 폭과 초점을 유지한 채 실행만 차단하고, aria-disabled는 focus 가능하지만 실행되지 않아야 합니다. 로딩 스피너는 prefers-reduced-motion 설정을 항상 존중해야 합니다.',
   ),
   render: () => <ButtonStateContractDemo />,
   play: async ({ canvasElement }) => {
@@ -193,6 +193,35 @@ export const InteractionContract = {
     const widthDelta = Math.abs(widthReference.getBoundingClientRect().width - loading.getBoundingClientRect().width);
     if (widthDelta > 0.5) throw new Error(`Button loading changed width by ${widthDelta}px.`);
     if (loading.getAttribute('aria-label') !== '저장 중') throw new Error('Button loading needs one accessible loading name.');
+
+    // Loading must not fold into native `disabled`: a focused control would lose
+    // focus to <body> the instant it starts loading. Keep it focusable and block
+    // activation through aria-disabled instead.
+    if (loading.hasAttribute('disabled')) {
+      throw new Error('A loading Button must stay focusable instead of using native disabled.');
+    }
+    if (loading.getAttribute('aria-disabled') !== 'true' || loading.getAttribute('aria-busy') !== 'true') {
+      throw new Error('A loading Button must expose aria-disabled and aria-busy.');
+    }
+    loading.focus();
+    loading.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    if (canvasElement.ownerDocument.activeElement !== loading) {
+      throw new Error('A loading Button must remain focusable.');
+    }
+    await userEvent.click(loading);
+    if (activations.textContent?.trim() !== '실행 횟수: 0') {
+      throw new Error('A loading Button must block activation.');
+    }
+
+    // The loading spinner animation is applied inline, so the reduced-motion
+    // override has to win with !important (WCAG 2.3.3).
+    const spinnerKeyframes = canvasElement.ownerDocument.getElementById('lk-spin-kf');
+    if (!spinnerKeyframes) throw new Error('The loading Button must inject the spinner keyframes.');
+    const reducedMotionRule = spinnerKeyframes.textContent
+      .split('@media (prefers-reduced-motion: reduce)')[1];
+    if (!reducedMotionRule || !/\[data-lds-spinner-ring\]\s*\{[^}]*animation\s*:\s*none\s*!important/.test(reducedMotionRule)) {
+      throw new Error('The spinner reduced-motion rule must use !important to beat the inline animation.');
+    }
 
     ariaDisabled.focus();
     if (canvasElement.ownerDocument.activeElement !== ariaDisabled) throw new Error('aria-disabled Button must remain focusable.');

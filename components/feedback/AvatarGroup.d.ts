@@ -28,7 +28,16 @@ export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   trailingContent?: boolean | React.ReactNode;
   /** Label used when trailingContent is true. */
   trailingLabel?: React.ReactNode;
+  /**
+   * Root role. Defaults to `"group"` when `aria-label` / `aria-labelledby` is
+   * supplied so the group summary label is exposed, and to no role otherwise.
+   */
+  role?: string;
 }
 
-/** Overlapping avatars with variants, sizes, and trailingContent support. */
+/**
+ * Overlapping avatars with variants, sizes, and trailingContent support.
+ * A named group exposes `role="group"` so its `aria-label` reaches assistive
+ * technology.
+ */
 export function AvatarGroup(props: AvatarGroupProps): React.JSX.Element;

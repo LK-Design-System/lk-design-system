@@ -66,6 +66,26 @@ function assertAtLeast(label, actual, expected) {
   }
 }
 
+// An edge-aligned bubble shorter than its trigger cannot both point exactly at
+// the trigger centre and keep the arrow on its flat edge. In that case the arrow
+// must still lean toward the trigger — never sit at the bubble centre, and never
+// overshoot past the trigger centre.
+function assertTowardTarget(label, measurement) {
+  const reach = measurement.targetHeight / 2 - measurement.bubbleHeight / 2;
+  if (reach <= tolerance) {
+    assertClose(`${label} points at target`, measurement.arrowCenterVsTargetCenterY);
+    return;
+  }
+  const fromBubbleCentre = measurement.arrowCenterVsBubbleCenterY;
+  const towardTarget = Math.sign(measurement.arrowCenterVsTargetCenterY) !== Math.sign(fromBubbleCentre);
+  if (Math.abs(fromBubbleCentre) <= tolerance || !towardTarget) {
+    throw new Error(
+      `${label} must lean toward the trigger centre, but it sits ${fromBubbleCentre}px from the bubble centre `
+      + `while the trigger centre is ${-measurement.arrowCenterVsTargetCenterY}px away`,
+    );
+  }
+}
+
 async function getTooltipStoryId() {
   const indexPath = path.join(staticDir, 'index.json');
   const index = JSON.parse(await readFile(indexPath, 'utf8'));
@@ -122,6 +142,13 @@ async function main() {
         const arrowRect = rect(arrow);
         return {
           label: tip.innerText.trim().replace(/\s+/g, ' '),
+          // How far the arrow pokes past the bubble edge it is attached to. A
+          // trigger taller than the bubble used to push the arrow onto (and
+          // past) a rounded corner, which reads as a detached floating wedge.
+          arrowOverhangY: Math.max(0, bubbleRect.top - arrowRect.top, arrowRect.bottom - bubbleRect.bottom),
+          arrowOverhangX: Math.max(0, bubbleRect.left - arrowRect.left, arrowRect.right - bubbleRect.right),
+          bubbleHeight: bubbleRect.height,
+          targetHeight: targetRect.height,
           bubbleWidth: bubbleRect.width,
           targetWidth: targetRect.width,
           arrowCenterVsBubbleCenterX: arrowRect.cx - bubbleRect.cx,
@@ -156,13 +183,30 @@ async function main() {
     assertAtLeast('vertical center bubble width makes alignment visible', center.bubbleWidth - center.targetWidth, 20);
     assertAtLeast('vertical trailing bubble width makes alignment visible', right.bubbleWidth - right.targetWidth, 20);
 
-    assertClose('horizontal top arrow points at target', top.arrowCenterVsTargetCenterY);
+    // The horizontal row pairs a 58px trigger with a one-line bubble, so the
+    // trigger centre of an edge-aligned bubble falls outside the flat span the
+    // arrow can occupy. Attachment wins over exact aim there (the same trade
+    // Floating UI's arrow padding makes), so the arrow is required to move
+    // toward the trigger centre without ever leaving the bubble edge.
+    assertTowardTarget('horizontal top arrow', top);
     assertClose('horizontal center arrow points at target', middle.arrowCenterVsTargetCenterY);
-    assertClose('horizontal bottom arrow points at target', bottom.arrowCenterVsTargetCenterY);
+    assertTowardTarget('horizontal bottom arrow', bottom);
     assertClose('horizontal center arrow centered in bubble', middle.arrowCenterVsBubbleCenterY);
     assertClose('horizontal top bubble top aligned to target', top.bubbleTopVsTargetTop);
     assertClose('horizontal center bubble centered to target', middle.bubbleCenterVsTargetCenterY);
     assertClose('horizontal bottom bubble bottom aligned to target', bottom.bubbleBottomVsTargetBottom);
+
+    // An arrow that slides past the end of the edge it is attached to reads as a
+    // detached wedge in mid-air. Only the along-edge axis counts: the arrow is
+    // supposed to protrude on the other one, that is how it points at the
+    // trigger. Top-placed bubbles carry the arrow on a horizontal edge, so the
+    // first row is measured across X and the left/right row across Y.
+    for (const measurement of [left, center, right]) {
+      assertClose(`${measurement.label} arrow stays on the bubble edge`, measurement.arrowOverhangX);
+    }
+    for (const measurement of [top, middle, bottom]) {
+      assertClose(`${measurement.label} arrow stays on the bubble edge`, measurement.arrowOverhangY);
+    }
 
     console.log('Validated Tooltip arrow alignment examples.');
   } finally {

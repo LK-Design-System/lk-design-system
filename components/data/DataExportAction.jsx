@@ -9,6 +9,20 @@ const DEFAULT_FORMATS = [
   { value: 'xlsx', label: 'Excel' },
 ];
 
+// Library-standard visually-hidden recipe (DataGrid, Chip, ToastStack): out of
+// flow, so the always-mounted announcers add no grid track or gap.
+const SR_ONLY_STYLE = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
 function defaultScopes(selectedCount, totalCount) {
   const scopes = [{ value: 'currentPage', label: '현재 페이지' }];
   if (selectedCount > 0) scopes.push({ value: 'selected', label: `선택한 ${selectedCount}개` });
@@ -115,7 +129,13 @@ export function DataExportAction({
           type="button"
           size={size}
           variant="ghost"
-          disabled={!allowed || typeof onExport !== 'function' || !format || !scope}
+          /* Focusable-disabled: a native `disabled` drops keyboard focus to
+             <body> the moment the product revokes the action, and it also hides
+             the aria-describedby reason from anyone navigating by Tab. The
+             action therefore stays reachable and blocks activation through
+             aria-disabled — the contract Button.jsx already applies to loading,
+             and what the Fluent Button guidance cited below asks for. */
+          aria-disabled={exportUnavailable || undefined}
           loading={processing}
           loadingLabel={`${exportLabel} 처리 중`}
           aria-describedby={!allowed ? reasonId : undefined}
@@ -145,11 +165,23 @@ export function DataExportAction({
       )}
 
       {(state === 'success' || state === 'error') && (
-        <span id={statusId} role={state === 'error' ? 'alert' : 'status'} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', color: state === 'error' ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-status-positive-text)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
+        <span id={statusId} data-export-status={state} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', color: state === 'error' ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-status-positive-text)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
           <Icon name={state === 'error' ? 'circle-close-fill' : 'circle-check-fill'} size={15} aria-hidden="true" />
           <span>{state === 'error' ? errorMessage : successMessage}</span>
         </span>
       )}
+
+      {/* Both announcers stay mounted for the whole life of the action and only
+          their text changes. A status/alert node inserted together with its
+          first message is not reliably announced, which is why the visible
+          completion line above is presentation only — the same split ToastStack
+          uses between the persistent live regions and the visible toast. */}
+      <span data-export-live="polite" role="status" aria-live="polite" aria-atomic="true" style={SR_ONLY_STYLE}>
+        {state === 'success' ? successMessage : ''}
+      </span>
+      <span data-export-live="assertive" role="alert" aria-live="assertive" aria-atomic="true" style={SR_ONLY_STYLE}>
+        {state === 'error' ? errorMessage : ''}
+      </span>
     </div>
   );
 }

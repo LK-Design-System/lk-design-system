@@ -29,6 +29,7 @@
 - `href`는 issue를 소유한 실제 field, 첫 radio/checkbox, 또는 field group의 focus target을 가리킵니다. 오류 문장 자체가 링크가 되어야 하며 반복되는 generic `이동` 링크를 주 정보로 사용하지 않습니다.
 - client-side navigation이 필요하면 `onIssueActivate(issue)`를 사용하고 제품이 같은 focus target으로 이동시킵니다. 복합 label이나 별도 action 이름이 필요한 호환 사례에는 `actionAriaLabel`을 제공합니다.
 - 실패한 submit 뒤에는 제품이 summary로 keyboard focus를 이동시켜야 합니다. 사용자가 issue link를 선택하면 제품은 연결된 field로 focus와 scroll을 이동합니다. 컴포넌트는 임의의 field를 추론하거나 mount 시 자동 focus하지 않습니다.
+- root의 `tabIndex`는 오류가 하나라도 있을 때만 `-1`로 자동 설정됩니다. warning-only 요약처럼 저장을 막지 않는 결과는 기본적으로 Tab 순서에도, 프로그래밍 focus 대상에도 들어가지 않습니다. warning 결과에도 submit 후 focus를 옮겨야 하는 흐름이라면 제품이 `tabIndex={-1}`을 명시적으로 넘겨 ref focus 대상을 만드세요 — 불필요한 focus 이동을 기본값으로 만들지 않기 위한 opt-in입니다.
 - `announce`는 submit 결과처럼 새로 나타난 결과를 알릴 때만 사용합니다. Error Summary는 assertive alert, warning-only와 valid 결과는 polite status이지만, live announcement가 위 focus 이동 계약을 대체하지 않습니다.
 - summary link의 focus indicator와 문장 전체는 좁은 폭에서도 보여야 합니다. 아이콘만 남기거나 action label을 시각적으로 숨겨 목적을 모호하게 만들지 않습니다.
 

@@ -17,6 +17,12 @@ function useKeyframes(id, css) {
  * LDS Core - Skeleton
  * Shimmering placeholder for loading content. `text` renders line bars;
  * `rect` and `circle` render a single block.
+ *
+ * Accessibility: the placeholder itself is always `aria-hidden` so its bars are
+ * never announced as content. The loading state is announced by the container
+ * that owns the pending region — mark it `aria-busy="true"` (and give it
+ * `role="status"` / `aria-live="polite"` with a short text label when the wait
+ * needs to be announced). See `ResourceState` for the composed convention.
  */
 export function Skeleton({
   variant = 'rect',
@@ -33,9 +39,11 @@ export function Skeleton({
   style,
   ...rest
 }) {
+  /* The shimmer is applied as an inline style, so the reduced-motion override
+     must carry `!important` to win over it (WCAG 2.3.3). */
   useKeyframes(
     'lk-skel-kf',
-    '@keyframes lk-skel{0%{background-position:200% 0}100%{background-position:-200% 0}}@media (prefers-reduced-motion: reduce){[data-lds-skeleton]{animation:none;background-position:0 0}}'
+    '@keyframes lk-skel{0%{background-position:200% 0}100%{background-position:-200% 0}}@media (prefers-reduced-motion: reduce){[data-lds-skeleton]{animation:none!important;background-position:0 0!important}}'
   );
   const normalizedTone = color === 'white' || tone === 'white' ? 'light' : tone;
   const customColor = color && color !== 'normal' && color !== 'white' ? color : undefined;

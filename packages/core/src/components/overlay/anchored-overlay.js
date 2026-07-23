@@ -29,6 +29,19 @@ export function useControllableOpen({ open, defaultOpen = false, onOpenChange })
  * Adds outside-press and topmost-Escape dismissal without trapping focus.
  * Escape restores the trigger; pointer dismissal lets the pointer target own
  * the next focus destination.
+ *
+ * Escape also has to leave the anchor *dismissed*. Surfaces built on this engine
+ * open on focus (HoverCard, Tooltip), so handing focus back to the trigger
+ * re-fires that rule and re-opens exactly what the user just closed — the APG
+ * tooltip dismiss contract and WCAG 2.2 SC 1.4.13 both require the content to
+ * stay gone. Two rules keep that promise:
+ *
+ * 1. Focus is only restored when this anchor actually owns it. A pointer-only
+ *    session leaves the caret wherever the user put it.
+ * 2. The trigger is latched: focus events inside the anchor are swallowed before
+ *    the consumer's open-on-focus handler can see them, until focus genuinely
+ *    leaves the anchor or the surface is deliberately opened again. Pointer
+ *    re-entry and a later Tab return therefore still open it as usual.
  */
 export function useLightDismiss({
   open,
@@ -39,9 +52,38 @@ export function useLightDismiss({
 }) {
   const optionsRef = React.useRef(null);
   optionsRef.current = { getTrigger, onDismiss, outsidePress };
+  const focusLatchRef = React.useRef(null);
+
+  const releaseFocusLatch = React.useCallback(() => {
+    const latch = focusLatchRef.current;
+    if (!latch) return;
+    focusLatchRef.current = null;
+    latch.root.removeEventListener('focusin', latch.onFocusIn, true);
+    latch.root.removeEventListener('focusout', latch.onFocusOut, true);
+  }, []);
+
+  const latchDismissedTrigger = React.useCallback(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    releaseFocusLatch();
+    // Capture phase on the anchor: the event is stopped before it can bubble to
+    // React's delegated listener, so no open-on-focus handler ever runs for it.
+    const onFocusIn = (event) => { event.stopPropagation(); };
+    const onFocusOut = (event) => {
+      if (event.relatedTarget && root.contains(event.relatedTarget)) return;
+      releaseFocusLatch();
+    };
+    root.addEventListener('focusin', onFocusIn, true);
+    root.addEventListener('focusout', onFocusOut, true);
+    focusLatchRef.current = { root, onFocusIn, onFocusOut };
+  }, [releaseFocusLatch, rootRef]);
+
+  React.useEffect(() => releaseFocusLatch, [releaseFocusLatch]);
 
   React.useEffect(() => {
     if (!open) return undefined;
+    // Opening again is a deliberate act, so it always clears a stale latch.
+    releaseFocusLatch();
     const root = rootRef.current;
     const ownerDocument = root?.ownerDocument ?? document;
     const view = ownerDocument.defaultView ?? window;
@@ -55,8 +97,13 @@ export function useLightDismiss({
     const onKeyDown = (event) => {
       if (lightDismissStack.at(-1) !== entry || event.defaultPrevented || event.key !== 'Escape') return;
       event.preventDefault();
+      const anchor = rootRef.current;
       const trigger = optionsRef.current.getTrigger?.();
+      const activeElement = ownerDocument.activeElement;
+      const ownsFocus = !!anchor && !!activeElement && anchor.contains(activeElement);
+      if (ownsFocus) latchDismissedTrigger();
       optionsRef.current.onDismiss?.('escape');
+      if (!ownsFocus || activeElement === trigger) return;
       view.requestAnimationFrame(() => {
         if (trigger?.isConnected && typeof trigger.focus === 'function') {
           trigger.focus({ preventScroll: true });
@@ -72,7 +119,7 @@ export function useLightDismiss({
       const index = lightDismissStack.indexOf(entry);
       if (index >= 0) lightDismissStack.splice(index, 1);
     };
-  }, [open, outsidePress, rootRef]);
+  }, [latchDismissedTrigger, open, outsidePress, releaseFocusLatch, rootRef]);
 }
 
 /**

@@ -5,7 +5,8 @@
 ```
 
 - **options**는 primitive 또는 `{ value, label, disabled }` 항목을 받습니다. **value / defaultValue / onChange**, **itemHeight**, 홀수로 보정되는 **visible**, **width**, **label**, **emptyLabel**, **disabled**, **readOnly**를 지원합니다.
-- `listbox`, `aria-activedescendant`, `aria-selected`를 사용하며 ArrowUp/ArrowDown, PageUp/PageDown, Home/End로 값을 이동합니다. disabled option은 건너뜁니다.
+- `listbox`, `aria-activedescendant`, `aria-selected`를 사용하며 ArrowUp/ArrowDown, PageUp/PageDown, Home/End로 값을 이동합니다. 문자 입력은 type-ahead로 option label 앞부분을 매칭하고(같은 문자를 반복하면 다음 매칭으로 순환) 짧은 시간이 지나면 검색어가 초기화됩니다. disabled option은 건너뜁니다.
+- 스크롤 값은 드럼이 멈춘 뒤에 커밋합니다. 관성 스크롤 중간 값을 프레임마다 커밋하면 선택 동기화가 `scrollTop`을 되돌려 사용자 스크롤과 충돌하므로, 스크롤이 잦아든 다음 스냅된 행 하나만 `onChange`로 올립니다.
 - `readOnly`는 focus와 읽기를 허용하지만 값 변경을 막습니다. `disabled`는 상호작용과 Tab 진입을 막습니다.
 - Layer: LDS Product extension. WDS `Presentation/Picker/Wheels`의 Date/Time variant parity를 주장하지 않습니다.
 - 외곽 카드, inset pane, 중앙 띠, fade mask를 추가하지 않습니다. 깊이는 선택 행과 주변 행의 type scale·weight·3D transform으로만 표현하며 모든 활성 option 텍스트는 대비를 유지합니다.

@@ -37,6 +37,13 @@ export interface ThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 오버레이 위치. @default "top-left" */
   overlayAlign?:
     "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
+  /**
+   * 오버레이 뒤에 대비 보장을 위한 그라디언트 스크림을 깝니다. `"auto"` 는
+   * 실제 이미지(`src`)가 있을 때만 적용하고, 플레이스홀더 타일에는 넣지
+   * 않습니다.
+   * @default "auto"
+   */
+  overlayScrim?: boolean | "auto";
   /** src가 없을 때 플레이스홀더 아이콘을 표시. @default true */
   placeholder?: boolean;
   /** 플레이스홀더 아이콘 이름. @default "image" */

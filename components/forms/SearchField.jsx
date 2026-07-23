@@ -9,6 +9,22 @@ import {
   useFieldMetadata,
 } from './field-shared.js';
 
+function useSearchFieldStyles() {
+  React.useEffect(() => {
+    if (typeof document === 'undefined' || document.getElementById('lk-searchfield-css')) return;
+    const el = document.createElement('style');
+    el.id = 'lk-searchfield-css';
+    // `type="search"` renders WebKit's own clear glyph next to the custom clear
+    // IconButton — two clear affordances, only one of which is announced.
+    el.textContent = `
+input.lk-searchfield::-webkit-search-cancel-button,
+input.lk-searchfield::-webkit-search-decoration,
+input.lk-searchfield::-webkit-search-results-button,
+input.lk-searchfield::-webkit-search-results-decoration{-webkit-appearance:none;appearance:none;display:none;}`;
+    document.head.appendChild(el);
+  }, []);
+}
+
 /** Search input with a leading search glyph and an optional clear action. */
 export function SearchField({
   value,
@@ -37,8 +53,10 @@ export function SearchField({
   onKeyDown,
   ...inputProps
 }) {
+  useSearchFieldStyles();
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue ?? '');
+  const inputRef = React.useRef(null);
   const [focused, setFocused] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
   const currentValue = isControlled ? value : internal;
@@ -108,6 +126,8 @@ export function SearchField({
         <Icon name="search" size={18} color="var(--component-input-icon-color)" aria-hidden="true" style={{ flex: '0 0 auto' }} />
         <input
           {...inputProps}
+          ref={inputRef}
+          className={['lk-searchfield', inputProps.className].filter(Boolean).join(' ')}
           id={metadata.fieldId}
           type="search"
           value={currentValue}
@@ -157,7 +177,13 @@ export function SearchField({
             size="small"
             label={resolvedClearLabel}
             disabled={disabled}
-            onClick={() => commitValue('')}
+            onClick={() => {
+              commitValue('');
+              // Clearing empties the value, which unmounts this button; without
+              // this, focus falls back to <body> (Carbon Search convention:
+              // focus returns to the input so the user can keep typing).
+              inputRef.current?.focus();
+            }}
             style={{ flex: '0 0 auto', marginInline: -8 }}
           >
             <Icon name="circle-close-fill" size={16} aria-hidden="true" />

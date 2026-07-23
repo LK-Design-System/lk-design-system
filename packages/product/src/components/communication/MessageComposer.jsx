@@ -81,6 +81,8 @@ export function MessageComposer({
 
   const generatedId = React.useId();
   const textareaRef = React.useRef(null);
+  const primaryActionRef = React.useRef(null);
+  const primaryActionHadFocusRef = React.useRef(false);
   const compositionSessionRef = React.useRef(false);
   const [focused, setFocused] = React.useState(false);
 
@@ -115,6 +117,7 @@ export function MessageComposer({
     normalizedMaxRows * LINE_HEIGHT + TEXTAREA_VERTICAL_INSET,
   );
   const nonIdle = state !== 'idle';
+  const previousNonIdleRef = React.useRef(nonIdle);
   const valueCanSubmit = String(value).trim().length > 0;
   const submitAllowed = !disabled
     && !readOnly
@@ -149,6 +152,39 @@ export function MessageComposer({
       textarea.focus();
     }
   }, [disabled]);
+
+  // The primary control swaps stop for send in place. When the request ends, the
+  // send control can be disabled by an empty draft, and the browser blurs a
+  // control the moment it becomes disabled — the caret of the person who just
+  // pressed stop would land on <body>. Hand the editing focus back instead, the
+  // same way an explicit submit does.
+  useSafeLayoutEffect(() => {
+    const wasNonIdle = previousNonIdleRef.current;
+    previousNonIdleRef.current = nonIdle;
+    if (nonIdle || !wasNonIdle || !primaryActionHadFocusRef.current) return;
+    const slot = primaryActionRef.current;
+    const ownerDocument = slot?.ownerDocument;
+    if (!slot || !ownerDocument) return;
+    const active = ownerDocument.activeElement;
+    const lostFocus = !active
+      || active === ownerDocument.body
+      || active === ownerDocument.documentElement;
+    // A replacement that refuses activation must not keep the caret either, so
+    // both the already-dropped and the about-to-drop case hand off.
+    const blockedInSlot = !lostFocus
+      && slot.contains(active)
+      && (active.disabled === true || active.getAttribute?.('aria-disabled') === 'true');
+    if (!lostFocus && !blockedInSlot) return;
+    restoreTextareaFocus();
+  }, [nonIdle, restoreTextareaFocus]);
+
+  // Recorded after every commit, and declared after the handoff above so the
+  // handoff still sees the previous commit's answer.
+  useSafeLayoutEffect(() => {
+    const slot = primaryActionRef.current;
+    const active = slot?.ownerDocument?.activeElement;
+    primaryActionHadFocusRef.current = !!(slot && active && slot.contains(active));
+  });
 
   const submitValue = React.useCallback((reason) => {
     if (!submitAllowed) return;
@@ -422,6 +458,7 @@ export function MessageComposer({
             )}
 
             <div
+              ref={primaryActionRef}
               data-composer-primary-action=""
               style={{
                 display: 'flex',
@@ -440,7 +477,12 @@ export function MessageComposer({
                   variant="primary"
                   iconOnly
                   aria-label={stopLabel}
-                  disabled={!stopAllowed}
+                  /* `stopping` still owns a stop control, but a native disabled
+                     button is blurred by the browser the instant it is disabled
+                     — the caret of the person who just pressed it would be
+                     dropped. aria-disabled refuses the duplicate request while
+                     the control keeps its place in the tab order. */
+                  aria-disabled={stopAllowed ? undefined : 'true'}
                   onClick={() => {
                     if (!stopAllowed) return;
                     onStop();
@@ -477,7 +519,9 @@ export function MessageComposer({
             lineHeight: 'var(--caption2-line)',
           }}
         >
-          <span id={statusId} role={resolvedStatusLabel != null ? 'status' : undefined}>
+          {/* Decoration: the always-mounted live region below owns this text for
+              assistive technology, so the visible copy must not repeat it. */}
+          <span id={statusId} aria-hidden="true">
             {resolvedStatusLabel}
           </span>
           {maxLength != null && (
@@ -487,6 +531,21 @@ export function MessageComposer({
           )}
         </div>
       )}
+
+      {/* Mounted for the composer's whole lifetime with only its text replaced.
+          A status node inserted into the DOM together with its message is not a
+          mutation of an existing live region, so the first idle → submitting
+          announcement would be dropped. Absolutely positioned, so it never
+          becomes a grid row of its own. */}
+      <div
+        data-composer-live-status=""
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        style={VISUALLY_HIDDEN_STYLE}
+      >
+        {resolvedStatusLabel}
+      </div>
     </form>
   );
 }

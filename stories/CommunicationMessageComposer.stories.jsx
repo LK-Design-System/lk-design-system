@@ -410,9 +410,20 @@ export const RequestStates = {
       throw new Error('Read-only content must remain keyboard focusable for review and copy.');
     }
     const stopping = canvasElement.querySelector('form[data-state="stopping"]');
-    if (!stopping?.querySelector('button[aria-label="응답 중지"]')?.disabled) {
+    const stoppingButton = stopping?.querySelector('button[aria-label="응답 중지"]');
+    if (stoppingButton?.getAttribute('aria-disabled') !== 'true') {
       throw new Error('Stopping must prevent a duplicate stop request.');
     }
+    /* native disabled는 방금 stop을 누른 사용자의 초점을 <body>로 떨어뜨린다. */
+    if (stoppingButton.disabled) {
+      throw new Error('Stopping must refuse the duplicate request without removing the control from the tab order.');
+    }
+    stoppingButton.focus();
+    if (document.activeElement !== stoppingButton) {
+      throw new Error('A stopping composer must keep its stop control focusable.');
+    }
+    stoppingButton.blur();
+    readOnlyInput.focus();
     for (const form of canvasElement.querySelectorAll('form[data-state]:not([data-state="idle"])')) {
       if (form.getAttribute('aria-busy') !== 'true') {
         throw new Error('Every non-idle composer must expose aria-busy.');
@@ -668,6 +679,76 @@ export const NarrowWidth = {
         throw new Error('A composer action escaped the narrow control row.');
       }
     }
+  },
+};
+
+function LifecycleFocusFixture() {
+  const [state, setState] = React.useState('streaming');
+  const [value, setValue] = React.useState('');
+  return (
+    <main data-lifecycle-fixture style={{ width: '100%', maxWidth: 720 }}>
+      <MessageComposer
+        value={value}
+        onValueChange={setValue}
+        onSubmit={() => {}}
+        state={state}
+        formLabel="중지 흐름 메시지 작성"
+        onStop={() => {
+          setState('stopping');
+          // 제품이 소유하는 transport가 취소를 확정하는 순간을 흉내 낸다.
+          window.setTimeout(() => setState('idle'), 60);
+        }}
+      />
+    </main>
+  );
+}
+
+export const LifecycleStatusAndFocusContract = {
+  name: '상태 알림과 중지 초점 계약',
+  tags: ['!dev'],
+  render: () => <LifecycleFocusFixture />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const form = canvasElement.querySelector('.lk-message-composer');
+    const live = form?.querySelector('[data-composer-live-status]');
+    const textarea = form?.querySelector('[data-composer-input]');
+    const stop = form?.querySelector('button[aria-label="응답 중지"]');
+    if (!form || !live || !textarea || !stop) throw new Error('중지 흐름 fixture가 불완전합니다.');
+    if (live.getAttribute('role') !== 'status' || live.getAttribute('aria-live') !== 'polite') {
+      throw new Error('상태 문구는 polite status region으로 전달해야 합니다.');
+    }
+    if (live.textContent !== '응답을 생성하는 중입니다.') {
+      throw new Error('live region은 현재 lifecycle 문구를 담아야 합니다.');
+    }
+
+    stop.focus();
+    if (ownerDocument.activeElement !== stop) throw new Error('streaming stop 컨트롤은 초점을 받을 수 있어야 합니다.');
+    await userEvent.click(stop);
+    await waitFor(() => {
+      if (form.dataset.state !== 'stopping') throw new Error('stop 요청은 stopping 상태로 이어져야 합니다.');
+    });
+    if (stop.getAttribute('aria-disabled') !== 'true' || stop.disabled) {
+      throw new Error('중복 stop 요청은 native disabled가 아니라 aria-disabled로 막아야 합니다.');
+    }
+    if (ownerDocument.activeElement !== stop) {
+      throw new Error('중지 요청 중에도 초점은 stop 컨트롤에 남아 있어야 합니다.');
+    }
+    if (live.textContent !== '응답 중지를 요청하는 중입니다.') {
+      throw new Error('상태 문구는 새 region을 mount하지 않고 같은 region에서 교체되어야 합니다.');
+    }
+
+    await waitFor(() => {
+      if (form.dataset.state !== 'idle') throw new Error('transport가 끝나면 idle로 돌아가야 합니다.');
+    });
+    await waitFor(() => {
+      if (ownerDocument.activeElement !== textarea) {
+        throw new Error('요청이 끝나 send로 바뀔 때 초점이 사라지지 않고 입력으로 돌아가야 합니다.');
+      }
+    });
+    if (!form.contains(live) || live.textContent !== '') {
+      throw new Error('idle에서도 같은 live region이 비어 있는 상태로 남아 있어야 합니다.');
+    }
+    textarea.blur();
   },
 };
 

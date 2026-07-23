@@ -25,7 +25,26 @@ function nextEnabledIndex(options, current, direction) {
   return enabled[(position + direction + enabled.length) % enabled.length];
 }
 
-/** Editable single-value combobox with filtered suggestions. */
+const visuallyHidden = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
+/**
+ * Editable single-value combobox with filtered suggestions.
+ *
+ * Follows APG list-autocomplete with *manual* selection: typing filters the
+ * list but does not pre-activate an option, so Enter never commits a suggestion
+ * the user did not arrow to. Set `autoHighlight` to restore the eager
+ * behaviour. The number of matches is announced politely.
+ */
 export function AutoComplete({
   options = [],
   value,
@@ -42,6 +61,8 @@ export function AutoComplete({
   readOnly = false,
   placeholder = '입력해 주세요.',
   emptyLabel = '조건에 맞는 항목이 없습니다.',
+  autoHighlight = false,
+  resultCountLabel = (count) => `${count}개 결과`,
   size = 'md',
   id,
   style,
@@ -201,7 +222,10 @@ export function AutoComplete({
               : normalized;
             commitText(nextValue);
             setOpen(true);
-            setActiveIndex(nextEnabledIndex(nextOptions, -1, 1));
+            // APG list-autocomplete uses manual selection: no option is active
+            // until the user presses an arrow key, so Enter cannot commit a
+            // suggestion that was merely the first match.
+            setActiveIndex(autoHighlight ? nextEnabledIndex(nextOptions, -1, 1) : -1);
           }}
           onFocus={(event) => {
             setFocused(true);
@@ -238,8 +262,11 @@ export function AutoComplete({
       {popupOpen && (
         <div
           id={listboxId}
-          role="listbox"
-          aria-labelledby={!ariaLabel && labelId ? labelId : undefined}
+          /* A listbox must own option children. With no matches the popup is a
+             plain message panel, so it drops the role rather than exposing an
+             empty listbox (axe aria-required-children). */
+          role={filtered.length ? 'listbox' : undefined}
+          aria-labelledby={filtered.length && !ariaLabel && labelId ? labelId : undefined}
           style={{
             position: 'absolute',
             top: 'calc(100% + 6px)',
@@ -292,12 +319,21 @@ export function AutoComplete({
               </div>
             );
           }) : (
-            <div role="status" aria-live="polite" style={{ padding: 'var(--space-4)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', textAlign: 'center' }}>
+            <div style={{ padding: 'var(--space-4)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', textAlign: 'center' }}>
               {emptyLabel}
             </div>
           )}
         </div>
       )}
+      {/*
+        Persistent polite region. It is mounted before the popup exists, so the
+        match count is actually announced — a role="status" that appears with
+        the popup is frequently missed. It carries the empty state too, which is
+        why the visible empty row is no longer a second live region.
+      */}
+      <div role="status" aria-live="polite" aria-atomic="true" style={visuallyHidden}>
+        {popupOpen ? (filtered.length ? resultCountLabel(filtered.length) : emptyLabel) : ''}
+      </div>
     </div>
   );
 

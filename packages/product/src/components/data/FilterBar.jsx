@@ -17,6 +17,33 @@ const VARIANT_STYLE = {
   },
 };
 
+// Library-standard visually-hidden recipe (DataGrid, Chip, ToastStack): out of
+// flow, so it never adds a grid track or gap to the surface it lives in.
+const SR_ONLY_STYLE = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
+// An applied filter reads as a token, so it reuses the selected chip surface.
+// It is not a toggle though: the button removes the filter, so it must not
+// carry aria-pressed (APG Button — toggle state belongs to controls that stay
+// in place and flip). Passing Chip's `selected` would add both aria-pressed on
+// the removable chip and a hidden "선택됨" on the read-only one, so the surface
+// is expressed through the same tokens instead.
+const APPLIED_CHIP_STYLE = {
+  maxWidth: '100%',
+  background: 'var(--component-chip-bg-selected)',
+  border: 'var(--component-chip-border-active)',
+  color: 'var(--color-semantic-label-normal)',
+};
+
 function textLabel(value) {
   return typeof value === 'string' || typeof value === 'number' ? String(value) : '';
 }
@@ -50,10 +77,43 @@ export function FilterBar({
   const hasSummary = filters.length > 0 || resultCount != null;
   const resultText = resultCountLabel ?? (resultCount != null ? `${resultCount}개 결과` : null);
 
+  const pendingRemovalRef = React.useRef(null);
+
+  // WCAG 2.4.3 / PatternFly Filters: removing a chip destroys the focused
+  // button, so focus is handed to the chip that took its place — then the last
+  // chip, the clear-all action, and finally the named region itself.
+  React.useEffect(() => {
+    const pending = pendingRemovalRef.current;
+    if (!pending?.root) return;
+    // The product owns the query state: wait until the removal actually landed.
+    if (filters.some((filter) => filter.id === pending.id)) return;
+    pendingRemovalRef.current = null;
+    const { root } = pending;
+    const chips = [...root.querySelectorAll('[data-removable="true"]')];
+    const next = chips[Math.min(pending.index, chips.length - 1)]
+      || root.querySelector('[data-filter-bar-clear]')
+      || root;
+    next.focus?.();
+  });
+
+  const removeFilter = (filter, index, event) => {
+    // The section element is read from the activated chip instead of a ref, so
+    // a consumer-supplied `ref` on the surface is never displaced.
+    pendingRemovalRef.current = {
+      id: filter.id,
+      index,
+      root: event?.currentTarget?.closest?.('[data-filter-bar-variant]') ?? null,
+    };
+    onRemoveFilter(filter.id);
+  };
+
   return (
     <section
       role="region"
       aria-label={ariaLabel}
+      /* Focus fallback target when the last applied filter is removed; -1 keeps
+         it out of the Tab sequence. */
+      tabIndex={-1}
       data-filter-bar-variant={resolvedVariant}
       style={{
         display: 'grid',
@@ -90,7 +150,7 @@ export function FilterBar({
               <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', whiteSpace: 'nowrap' }}>
                 {summaryLabel}
               </span>
-              {filters.map((filter) => {
+              {filters.map((filter, index) => {
                 const label = textLabel(filter.label);
                 const value = textLabel(filter.value);
                 const removeLabel = filter.removeLabel || `${label}${value ? ` ${value}` : ''} 필터 제거`;
@@ -101,11 +161,10 @@ export function FilterBar({
                     as={removable ? 'button' : 'span'}
                     type={removable ? 'button' : undefined}
                     size="sm"
-                    selected
                     aria-label={removable ? removeLabel : undefined}
-                    onClick={removable ? () => onRemoveFilter(filter.id) : undefined}
+                    onClick={removable ? (event) => removeFilter(filter, index, event) : undefined}
                     data-removable={removable ? 'true' : 'false'}
-                    style={{ maxWidth: '100%', color: 'var(--color-semantic-label-normal)' }}
+                    style={APPLIED_CHIP_STYLE}
                   >
                     <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {filter.label}{filter.value != null ? ': ' : ''}{filter.value}
@@ -115,19 +174,27 @@ export function FilterBar({
                 );
               })}
               {onClearFilters && filters.length > 1 && (
-                <TextButton size="sm" tone="neutral" onClick={onClearFilters}>
+                <TextButton size="sm" tone="neutral" data-filter-bar-clear="" onClick={onClearFilters}>
                   {clearLabel}
                 </TextButton>
               )}
             </div>
           )}
           {resultText != null && (
-            <span role="status" aria-live="polite" aria-atomic="true" style={{ marginLeft: 'auto', color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
+            <span data-filter-bar-result="" style={{ marginLeft: 'auto', color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>
               {resultText}
             </span>
           )}
         </div>
       )}
+
+      {/* The announcer is mounted for the whole life of the bar and only its
+          text changes. A live region inserted together with its first message is
+          not reliably announced (same contract as ToastStack), and the visible
+          count only appears once a filter or a result count exists. */}
+      <span data-filter-bar-result-live="" role="status" aria-live="polite" aria-atomic="true" style={SR_ONLY_STYLE}>
+        {resultText ?? ''}
+      </span>
     </section>
   );
 }

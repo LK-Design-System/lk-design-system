@@ -109,6 +109,82 @@ export const SelectKeyboardContract = {
   },
 };
 
+export const SelectTypeaheadContract = {
+  name: 'Select 타입어헤드 계약',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    'APG Select-Only Combobox가 요구하는 인쇄 문자 타입어헤드를 검증합니다. 닫힌 상태에서는 값이 확정되고, 열린 상태에서는 탐색 위치만 옮겨야 합니다.',
+  ),
+  render: () => (
+    <main style={{ width: 320, maxWidth: '100%' }}>
+      <Select
+        aria-label="담당 조직"
+        options={[
+          { value: 'seoul', label: '서울 본사' },
+          { value: 'daejeon', label: '대전 연구소' },
+          { value: 'daegu', label: '대구 공장' },
+          { value: 'busan', label: '부산 지사', disabled: true },
+        ]}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector('[role="combobox"][aria-label="담당 조직"]');
+    if (!trigger) throw new Error('Select must expose its trigger as an accessible combobox.');
+    // The typeahead buffer clears after 500ms. Only the open-listbox phase
+    // needs a guaranteed fresh buffer; the earlier phases hold either way.
+    const flushBuffer = () => new Promise((resolve) => { setTimeout(resolve, 600); });
+    trigger.focus();
+
+    // Closed: a printable character commits the first matching option.
+    await userEvent.keyboard('대');
+    await waitFor(() => {
+      if (!trigger.textContent?.includes('대전 연구소')) {
+        throw new Error('Typeahead on a closed Select must set the value to the first match.');
+      }
+      if (trigger.getAttribute('aria-expanded') !== 'false') {
+        throw new Error('Typeahead must not open the listbox.');
+      }
+    });
+
+    // Pressing the same character again advances to the next option that
+    // starts with it instead of re-matching the current one. This holds whether
+    // or not the 500ms buffer has lapsed: a repeated character cycles, and a
+    // fresh single character also searches from the option after the current.
+    await userEvent.keyboard('대');
+    await waitFor(() => {
+      if (!trigger.textContent?.includes('대구 공장')) {
+        throw new Error('Repeating a character must cycle to the next match.');
+      }
+    });
+
+    // Disabled options are skipped: 부산 never becomes the match.
+    await userEvent.keyboard('부');
+    if (trigger.textContent?.includes('부산 지사')) {
+      throw new Error('Typeahead must skip disabled options.');
+    }
+
+    // Open: typeahead moves the active option without committing.
+    await userEvent.keyboard('{ArrowDown}');
+    const before = trigger.textContent;
+    await flushBuffer();
+    await userEvent.keyboard('서');
+    await waitFor(() => {
+      const active = canvasElement.ownerDocument.getElementById(trigger.getAttribute('aria-activedescendant'));
+      if (active?.textContent?.trim() !== '서울 본사') {
+        throw new Error('Typeahead in an open Select must move the active option.');
+      }
+    });
+    if (trigger.textContent !== before) {
+      throw new Error('Typeahead in an open Select must not commit a value on its own.');
+    }
+    await userEvent.keyboard('{Enter}');
+    if (!trigger.textContent?.includes('서울 본사') || trigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Enter must commit the option the typeahead navigated to.');
+    }
+  },
+};
+
 function SelectDisabledOptionsFixture() {
   const [value, setValue] = React.useState('draft');
   const [reviewDisabled, setReviewDisabled] = React.useState(false);

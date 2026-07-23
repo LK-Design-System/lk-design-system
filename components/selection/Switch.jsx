@@ -5,6 +5,9 @@ import React from 'react';
  * Instant on/off toggle. The track fills with the LK signal ink when on and
  * the knob slides with the house emphasized ease — calm, no bounce. Track
  * geometry (52×32 / 40×24), LK identity (steel-azure fill, navy-tinted focus).
+ * A visually hidden native `<input type="checkbox" role="switch">` wrapped by
+ * its own `<label>` owns name, value and keyboard semantics; the track is a
+ * decorative `aria-hidden` indicator.
  * Controlled (`checked`) or uncontrolled (`defaultChecked`).
  */
 export function Switch({
@@ -21,6 +24,8 @@ export function Switch({
   disabled = false,
   disable = false,
   readOnly = false,
+  name,
+  value,
   labelStyle,
   style,
   id,
@@ -45,13 +50,22 @@ export function Switch({
     if (!isControlled) setInternal(!on);
     onChange && onChange(!on);
   };
+  const handleChange = (event) => {
+    if (disabledState || readOnly) {
+      /* readOnly는 포커스를 유지하되 값 변경만 막는다 — 네이티브 checkbox는 readonly를 무시하므로 되돌린다. */
+      event.target.checked = on;
+      return;
+    }
+    const next = event.target.checked;
+    if (!isControlled) setInternal(next);
+    onChange && onChange(next);
+  };
   const d = normalizedSize === 'sm' ? { w: 40, h: 24, k: 18, p: 3, tx: 16 } : { w: 52, h: 32, k: 24, p: 4, tx: 20 };
   const offBg = platform === 'ios' ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-interaction-inactive)';
   const trackBg = disabledState ? (on ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)') : on ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-strong)' : offBg;
   return (
     <label data-disabled={disabledState ? "" : undefined}
       htmlFor={id}
-      onClick={toggle}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
@@ -61,25 +75,36 @@ export function Switch({
         ...style,
       }}
     >
-      <span
+      <input
+        type="checkbox"
         {...rest}
         role="switch"
+        id={id}
+        name={name}
+        value={value}
+        checked={on}
+        disabled={disabledState}
         aria-checked={on}
         aria-disabled={disabledState ? true : undefined}
         aria-readonly={readOnly || undefined}
-        aria-label={ariaLabel ?? (typeof label === 'string' ? label : 'switch')}
-        id={id}
+        aria-label={ariaLabel}
         tabIndex={disabledState ? -1 : 0}
+        onChange={handleChange}
         onFocus={(event) => { setFocus(true); onFocus?.(event); }}
         onBlur={(event) => { setFocus(false); onBlur?.(event); }}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (event.defaultPrevented) return;
-          if (event.key === ' ' || event.key === 'Enter') {
+          /* Space는 네이티브 checkbox 활성화에 맡기고, Switch 계약상의 Enter만 직접 처리한다. */
+          if (event.key === 'Enter') {
             event.preventDefault();
             toggle();
           }
         }}
+        style={{ position: 'absolute', opacity: 0, width: 0, height: 0, margin: 0 }}
+      />
+      <span
+        aria-hidden="true"
         style={{
           position: 'relative', flexShrink: 0, width: d.w, height: d.h,
           borderRadius: 'var(--radius-pill)',

@@ -184,6 +184,20 @@ export const AvatarPatterns = {
           <ExampleTile label="true">
             <Avatar variant="person" placeholder pushBadge size="default" aria-label="푸시 배지가 있는 아바타" />
           </ExampleTile>
+          <ExampleTile label="count">
+            <Avatar data-testid="avatar-push-count" variant="person" placeholder pushBadge={3} size="default" aria-label="김한" />
+          </ExampleTile>
+        </MatrixRow>
+        <MatrixRow label="status">
+          <ExampleTile label="online">
+            <Avatar data-testid="avatar-status-named" variant="person" placeholder status="online" size="default" aria-label="박서" />
+          </ExampleTile>
+          <ExampleTile label="busy">
+            <Avatar data-testid="avatar-status-unnamed" variant="person" name="이" status="busy" size="default" />
+          </ExampleTile>
+          <ExampleTile label="statusLabel={false}">
+            <Avatar variant="person" placeholder status="offline" statusLabel={false} size="default" aria-label="최민 (오프라인)" />
+          </ExampleTile>
         </MatrixRow>
         <MatrixRow label="customize">
           <ExampleTile label="borderColor">
@@ -215,7 +229,7 @@ export const AvatarPatterns = {
         </MatrixRow>
         <MatrixRow label="trailingContent">
           <ExampleTile label="false" width={128}>
-            <AvatarGroup max={4} items={groupItems} aria-label="트레일링 콘텐츠가 없는 아바타 그룹" />
+            <AvatarGroup data-testid="avatar-group-named" max={4} items={groupItems} aria-label="트레일링 콘텐츠가 없는 아바타 그룹" />
           </ExampleTile>
           <ExampleTile label="true" width={150}>
             <AvatarGroup max={4} items={groupItems} trailingContent trailingLabel="외 0명" aria-label="트레일링 콘텐츠가 있는 아바타 그룹" />
@@ -226,6 +240,43 @@ export const AvatarPatterns = {
       <AvatarResourceComparison />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    // WCAG 1.4.1 / 1.1.1 — the status dot and the pushBadge are colour-only
+    // marks, so each must contribute a text alternative. A role="img" avatar
+    // hides its subtree, hence the fold into the accessible name.
+    const namedStatus = canvasElement.querySelector('[data-testid="avatar-status-named"]');
+    if (!namedStatus) throw new Error('Avatar status contract target is required.');
+    if (namedStatus.getAttribute('role') !== 'img') {
+      throw new Error('A named Avatar must expose role="img" so its label is announced.');
+    }
+    if (!(namedStatus.getAttribute('aria-label') || '').includes('온라인')) {
+      throw new Error('A named Avatar must fold the status alternative into its accessible name.');
+    }
+    if (namedStatus.querySelector('[data-avatar-status]')?.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('The status dot itself must stay decorative.');
+    }
+
+    const unnamedStatus = canvasElement.querySelector('[data-testid="avatar-status-unnamed"]');
+    if (!unnamedStatus) throw new Error('Unnamed Avatar status contract target is required.');
+    if (unnamedStatus.hasAttribute('role')) {
+      throw new Error('An unnamed Avatar must stay roleless so its hidden text is read in document order.');
+    }
+    if (!unnamedStatus.textContent.includes('다른 용무 중')) {
+      throw new Error('An unnamed Avatar must render the status alternative as visually hidden text.');
+    }
+
+    const pushCount = canvasElement.querySelector('[data-testid="avatar-push-count"]');
+    if (!(pushCount?.getAttribute('aria-label') || '').includes('읽지 않음 3건')) {
+      throw new Error('The Avatar pushBadge count must reach assistive technology.');
+    }
+
+    // A roleless div cannot expose aria-label, so a named group needs a role.
+    const group = canvasElement.querySelector('[data-testid="avatar-group-named"]');
+    if (!group) throw new Error('AvatarGroup contract target is required.');
+    if (group.getAttribute('role') !== 'group') {
+      throw new Error('A named AvatarGroup must expose role="group" so its summary label is announced.');
+    }
+  },
 };
 
 export const AvatarCard = { ...AvatarCardStory, name: 'Avatar card parity', tags: ['!dev', 'visual-parity'] };

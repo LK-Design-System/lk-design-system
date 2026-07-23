@@ -84,4 +84,89 @@ export const CommandPaletteKeyboardContract = {
     });
   },
 };
+const manyCommands = [
+  { label: '설정 열기' },
+  ...Array.from({ length: 19 }, (_, i) => ({ label: `명령 ${i + 1}` })),
+];
+
+function CommandPaletteFilterDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div style={{ minHeight: 260, display: 'grid', placeItems: 'center' }}>
+      <Button onClick={() => setOpen(true)}>명령 검색 열기</Button>
+      <CommandPalette open={open} onClose={() => setOpen(false)} commands={manyCommands} />
+    </div>
+  );
+}
+
+export const CommandPaletteFilterContract = {
+  name: '결과 알림과 Escape 레이어 계약',
+  tags: ['!dev'],
+  render: () => <CommandPaletteFilterDemo />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const trigger = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === '명령 검색 열기');
+    if (!trigger) throw new Error('CommandPalette 계약 스토리에는 트리거가 필요합니다.');
+    await userEvent.click(trigger);
+    const input = await waitFor(() => {
+      const current = canvasElement.querySelector('[role="combobox"]');
+      if (!current || ownerDocument.activeElement !== current) throw new Error('CommandPalette must focus its search field.');
+      return current;
+    });
+    const dialog = canvasElement.querySelector('[role="dialog"]');
+    const live = dialog?.querySelector('[data-command-palette-live]');
+    const listbox = dialog?.querySelector('[role="listbox"]');
+    if (!live || !listbox) throw new Error('CommandPalette는 결과 알림 region과 listbox를 제공해야 합니다.');
+    if (live.getAttribute('role') !== 'status' || live.getAttribute('aria-live') !== 'polite') {
+      throw new Error('결과 수 알림은 polite status region이어야 합니다.');
+    }
+    if (live.textContent !== `명령 ${manyCommands.length}개`) {
+      throw new Error('결과 알림은 현재 결과 수를 담아야 합니다.');
+    }
+    for (const child of listbox.children) {
+      if (child.getAttribute('role') !== 'option') throw new Error('listbox의 자식은 option만 허용됩니다.');
+    }
+
+    /* aria-activedescendant는 초점을 옮기지 않으므로 활성 항목을 스크롤 밖으로
+       내보내면 안 된다(APG listbox). */
+    await userEvent.keyboard('{End}');
+    await waitFor(() => {
+      const active = ownerDocument.getElementById(input.getAttribute('aria-activedescendant') || '');
+      if (active?.textContent?.trim() !== `명령 ${manyCommands.length - 1}`) throw new Error('End must activate the last command.');
+      const viewport = listbox.parentElement;
+      const viewportRect = viewport.getBoundingClientRect();
+      const activeRect = active.getBoundingClientRect();
+      if (activeRect.top < viewportRect.top - 1 || activeRect.bottom > viewportRect.bottom + 1) {
+        throw new Error('활성 명령은 목록 스크롤 안에 보이는 상태를 유지해야 합니다.');
+      }
+    });
+
+    await userEvent.type(input, '설정');
+    await waitFor(() => {
+      if (live.textContent !== '명령 1개') throw new Error('필터 결과 수가 바뀌면 알림도 갱신되어야 합니다.');
+    });
+
+    await userEvent.type(input, '없는값');
+    await waitFor(() => {
+      if (live.textContent !== '결과 없음') throw new Error('결과가 없을 때도 같은 region이 알려야 합니다.');
+      const empty = dialog.querySelector('[data-command-palette-empty]');
+      if (!empty || listbox.contains(empty)) throw new Error('결과 없음 문구는 listbox 바깥에 있어야 합니다.');
+      if (listbox.children.length !== 0) throw new Error('결과가 없으면 listbox는 비어 있어야 합니다.');
+    });
+
+    /* ⌘K 관습: 1차 Escape는 검색어만 지우고 팔레트는 열린 채로 둔다. */
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (input.value !== '') throw new Error('첫 Escape는 검색어를 비워야 합니다.');
+      if (!canvasElement.querySelector('[role="dialog"]')) throw new Error('첫 Escape가 팔레트를 닫으면 안 됩니다.');
+    });
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (canvasElement.querySelector('[role="dialog"]')) throw new Error('빈 검색어에서 누른 Escape는 팔레트를 닫아야 합니다.');
+      if (ownerDocument.activeElement !== trigger) throw new Error('CommandPalette must restore focus to its trigger.');
+    });
+    trigger.blur();
+  },
+};
+
 export const CommandPaletteCard = { ...CommandPaletteCardStory, name: 'CommandPalette card parity', tags: ['!dev', 'visual-parity'] };

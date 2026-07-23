@@ -37,7 +37,11 @@ export function ProgressBar({
   'aria-valuetext': ariaValueText,
   ...rest
 }) {
-  useKeyframes('lk-prog-kf', '@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none}}');
+  /* The indeterminate segment carries its animation as an inline style, so the
+     reduced-motion override needs `!important` to win over it — same fix as
+     Skeleton/Spinner (WCAG 2.3.3). Without it the rule never applies and the
+     segment keeps sweeping under `prefers-reduced-motion: reduce`. */
+  useKeyframes('lk-prog-kf', '@keyframes lk-prog-indet{0%{left:-45%;width:45%}50%{width:55%}100%{left:100%;width:45%}}@media (prefers-reduced-motion: reduce){[data-lds-progress-indeterminate]{animation:none!important}}');
   const c = color || TONES[tone] || TONES.signal;
   const h = size === 'sm' ? 4 : size === 'lg' ? 10 : 6;
   const pct = Math.max(0, Math.min(100, (value / max) * 100));

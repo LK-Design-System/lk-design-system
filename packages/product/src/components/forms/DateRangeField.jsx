@@ -72,7 +72,9 @@ export function DateRangeField({
     <div
       role="group"
       aria-label={groupLabel}
-      aria-invalid={resolvedInvalid || undefined}
+      /* `aria-invalid` is not supported on role="group" in ARIA 1.2, so the
+         error is carried by the two date fields (which do support it) and by
+         the group description. */
       aria-describedby={resolvedInvalid ? messageId : undefined}
       data-date-range-invalid={resolvedInvalid ? 'true' : 'false'}
       style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0, fontFamily: 'var(--font-sans)', ...style }}
@@ -95,6 +97,8 @@ export function DateRangeField({
             onChange={(nextDate) => update('start', nextDate)}
             placeholder={resolvedStartAccessibleLabel}
             aria-label={resolvedStartAccessibleLabel}
+            invalid={resolvedInvalid}
+            aria-describedby={resolvedInvalid ? messageId : undefined}
             size={size}
             disabled={disabled}
             full
@@ -112,6 +116,11 @@ export function DateRangeField({
             onChange={(nextDate) => update('end', nextDate)}
             placeholder={resolvedEndAccessibleLabel}
             aria-label={resolvedEndAccessibleLabel}
+            invalid={resolvedInvalid}
+            aria-describedby={resolvedInvalid ? messageId : undefined}
+            /* Start date constrains the end calendar so the reversed order is
+               prevented up front instead of only being reported afterwards. */
+            minDate={range.start || undefined}
             size={size}
             disabled={disabled}
             full

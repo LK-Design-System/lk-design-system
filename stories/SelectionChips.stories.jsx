@@ -1,3 +1,5 @@
+import React from 'react';
+import { userEvent } from 'storybook/test';
 import {
   Chip,
   FilterChip,
@@ -83,6 +85,80 @@ export const DarkThemeSelection = {
         throw new Error(`Selected chip foreground must resolve to the dark theme label (${styles.color}, ${scopedLabel}).`);
       }
     });
+  },
+};
+
+function ChipSemanticsFixture() {
+  const [pinned, setPinned] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  return (
+    <main style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center', maxWidth: 720 }}>
+      <Chip data-contract="chip-toggle" selected={pinned} onClick={() => setPinned((on) => !on)}>고정</Chip>
+      <Chip data-contract="chip-static" selected>선택된 필터</Chip>
+      <Chip data-contract="chip-link" as="a" href="#chip-link">링크 칩</Chip>
+      <FilterChip data-contract="filter-toggle" active>활성 패싯</FilterChip>
+      <FilterChip data-contract="filter-disclosure" caret expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>산업 전체</FilterChip>
+      <MultiSelectChip data-contract="multi-toggle">비전 AI</MultiSelectChip>
+    </main>
+  );
+}
+
+export const ChipSemanticsContract = {
+  name: '칩 역할·선택 계약',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '클릭 가능한 칩이 실제 버튼인지, 선택 상태가 색 외의 수단으로 전달되는지, 메뉴를 여는 필터가 토글이 아닌 disclosure로 노출되는지 검증합니다.',
+  ),
+  render: () => <ChipSemanticsFixture />,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const toggle = canvasElement.querySelector('[data-contract="chip-toggle"]');
+    const staticChip = canvasElement.querySelector('[data-contract="chip-static"]');
+    const link = canvasElement.querySelector('[data-contract="chip-link"]');
+    const filterToggle = canvasElement.querySelector('[data-contract="filter-toggle"]');
+    const disclosure = canvasElement.querySelector('[data-contract="filter-disclosure"]');
+    const multi = canvasElement.querySelector('[data-contract="multi-toggle"]');
+    if (!toggle || !staticChip || !link || !filterToggle || !disclosure || !multi) {
+      throw new Error('Chip semantics contract targets are required.');
+    }
+
+    // An interactive Chip is a real button with a toggle state.
+    if (toggle.tagName !== 'BUTTON') throw new Error('A Chip with onClick must render a real button.');
+    if (toggle.getAttribute('aria-pressed') !== 'false') {
+      throw new Error('An unselected toggle Chip must expose aria-pressed="false".');
+    }
+    toggle.focus();
+    if (doc.activeElement !== toggle) throw new Error('An interactive Chip must be reachable by keyboard.');
+    await userEvent.keyboard('{Enter}');
+    if (toggle.getAttribute('aria-pressed') !== 'true') {
+      throw new Error('Enter must toggle an interactive Chip and update aria-pressed.');
+    }
+
+    // A static selected Chip cannot own aria-pressed, so selection must still
+    // reach assistive tech through text rather than colour alone.
+    if (staticChip.tagName !== 'SPAN') throw new Error('A Chip without onClick must stay a plain span.');
+    if (!staticChip.textContent.includes('선택됨')) {
+      throw new Error('A non-interactive selected Chip must not convey selection by colour alone.');
+    }
+    if (link.tagName !== 'A') throw new Error('as="a" must still win over the interactive default.');
+
+    // FilterChip: toggle vs disclosure semantics are kept apart.
+    if (filterToggle.getAttribute('aria-pressed') !== 'true' || filterToggle.hasAttribute('aria-expanded')) {
+      throw new Error('A plain FilterChip must be a toggle, not a disclosure.');
+    }
+    if (disclosure.hasAttribute('aria-pressed')) {
+      throw new Error('A caret FilterChip opens a menu and must not claim aria-pressed.');
+    }
+    if (disclosure.getAttribute('aria-haspopup') !== 'menu' || disclosure.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('A caret FilterChip must expose aria-haspopup and a collapsed aria-expanded.');
+    }
+    await userEvent.click(disclosure);
+    if (disclosure.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('Opening the menu must update aria-expanded.');
+    }
+    if (multi.getAttribute('aria-pressed') !== 'false') {
+      throw new Error('MultiSelectChip must keep toggle semantics.');
+    }
   },
 };
 

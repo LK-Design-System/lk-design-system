@@ -61,6 +61,32 @@ export const Legends = {
       </section>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const map = canvasElement.querySelector('ul[aria-label="지도 레이어 범례"]');
+    const equipment = canvasElement.querySelector('ul[aria-label="설비 상태 범례"]');
+    if (!map || !equipment) throw new Error('Every legend must be a named list.');
+
+    /* ARIA 1.2에서 aria-disabled는 글로벌 상태가 아니고 listitem에서 지원되지 않는다. */
+    if (canvasElement.querySelector('li[aria-disabled]')) {
+      throw new Error('aria-disabled is not supported on listitem and must not be used to mark a legend state.');
+    }
+
+    const disabled = map.querySelector('[data-legend-state="disabled"]');
+    const muted = equipment.querySelector('[data-legend-state="muted"]');
+    if (!disabled || !muted) throw new Error('The legend fixture must cover both the disabled and the muted state.');
+
+    // 두 상태가 색·대비 차이만으로 갈리면 WCAG 1.4.1 위반이다.
+    const label = disabled.querySelector('[data-legend-label]');
+    if (canvasElement.ownerDocument.defaultView.getComputedStyle(label).textDecorationLine !== 'line-through') {
+      throw new Error('A disabled legend item needs a non-color cue that a muted item does not have.');
+    }
+    if (!disabled.textContent.includes('표시 꺼짐') || !muted.textContent.includes('강조 낮음')) {
+      throw new Error('Both legend states must reach assistive technology as text, not only as reduced contrast.');
+    }
+    if (muted.textContent.includes('표시 꺼짐')) {
+      throw new Error('A muted legend item must not be announced as switched off.');
+    }
+  },
 };
 
 export const CompactChartLegend = {

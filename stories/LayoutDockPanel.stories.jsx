@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import { Button, DescriptionList, DockPanel } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -233,4 +234,98 @@ export const Resizable = {
     '긴 속성 내용을 보기 위해 패널 너비를 포인터 또는 화살표 키로 조절하는 상황입니다. min·max 범위, 현재 폭 반영, 캔버스 overflow 방지를 확인하세요.',
   ),
   render: () => <ResizableExample />,
+};
+
+// min/max are whole multiples of the 16px resize step away from the start width
+// so the play can walk back to the story's named state exactly.
+function ContractExample() {
+  const [width, setWidth] = React.useState(320);
+
+  return (
+    <CanvasFrame label="속성 패널 계약">
+      <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0 }}>
+        <DockPanel
+          data-contract="dock"
+          side="right"
+          title="속성 패널"
+          width={width}
+          minWidth={240}
+          maxWidth={448}
+          resizable
+          onWidthChange={setWidth}
+        >
+          <PanelBody />
+        </DockPanel>
+      </div>
+    </CanvasFrame>
+  );
+}
+
+export const DockPanelKeyboardContract = {
+  name: '도킹 패널 리사이즈와 접기 계약',
+  tags: ['!dev'],
+  render: () => <ContractExample />,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const dock = canvasElement.querySelector('[data-contract="dock"]');
+    const panel = dock?.querySelector('aside');
+    const handle = dock?.querySelector('button[aria-expanded]');
+    const separator = dock?.querySelector('[role="separator"]');
+    if (!dock || !panel || !handle || !separator) throw new Error('DockPanel contract targets are required.');
+
+    const valueNow = () => Number(separator.getAttribute('aria-valuenow'));
+    const expectWidth = async (expected, message) => {
+      await waitFor(() => {
+        if (valueNow() !== expected) throw new Error(`${message} (aria-valuenow=${separator.getAttribute('aria-valuenow')})`);
+      });
+    };
+
+    if (separator.getAttribute('aria-orientation') !== 'vertical') throw new Error('separator는 세로 방향이어야 합니다.');
+    if (separator.getAttribute('aria-controls') !== panel.id) throw new Error('separator는 조절 대상 패널을 가리켜야 합니다.');
+    if (handle.getAttribute('aria-controls') !== panel.id) throw new Error('핸들도 같은 패널을 가리켜야 합니다.');
+    if (separator.getAttribute('aria-label') !== '속성 패널 너비 조절') throw new Error('separator에는 대상을 밝히는 한국어 이름이 필요합니다.');
+    if (separator.getAttribute('aria-valuemin') !== '240' || separator.getAttribute('aria-valuemax') !== '448') {
+      throw new Error('separator는 조절 범위를 노출해야 합니다.');
+    }
+    if (separator.getAttribute('tabindex') !== '0') throw new Error('separator는 키보드로 접근할 수 있어야 합니다.');
+    await expectWidth(320, '초기 너비가 aria-valuenow로 노출되어야 합니다.');
+
+    separator.focus();
+    if (doc.activeElement !== separator) throw new Error('separator가 포커스를 받아야 합니다.');
+    await userEvent.keyboard('{ArrowLeft}');
+    await expectWidth(336, '오른쪽 도킹에서 ArrowLeft는 패널을 넓혀야 합니다.');
+    await userEvent.keyboard('{ArrowRight}');
+    await expectWidth(320, 'ArrowRight는 패널을 좁혀야 합니다.');
+    await userEvent.keyboard('{Shift>}{ArrowLeft}{/Shift}');
+    await expectWidth(384, 'Shift와 함께 누르면 4배 폭으로 움직여야 합니다.');
+    await userEvent.keyboard('{Shift>}{ArrowRight}{/Shift}');
+    await expectWidth(320, 'Shift 반대 방향도 4배 폭이어야 합니다.');
+    await userEvent.keyboard('{Home}');
+    await expectWidth(240, 'Home은 최소 너비로 이동해야 합니다.');
+    await userEvent.keyboard('{ArrowLeft}{ArrowLeft}{ArrowLeft}{ArrowLeft}{ArrowLeft}');
+    await expectWidth(320, '최소 너비에서 다시 넓힐 수 있어야 합니다.');
+    await userEvent.keyboard('{End}');
+    await expectWidth(448, 'End는 최대 너비로 이동해야 합니다.');
+    await userEvent.keyboard('{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}');
+    await expectWidth(320, '최대 너비에서 다시 좁힐 수 있어야 합니다.');
+
+    // separator는 <aside>의 형제라, 여기서 누른 Escape도 패널을 접어야 합니다.
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (handle.getAttribute('aria-expanded') !== 'false') throw new Error('separator에서 Escape를 눌러도 패널이 접혀야 합니다.');
+      if (!panel.hasAttribute('hidden') || panel.getAttribute('aria-hidden') !== 'true') {
+        throw new Error('접힌 패널은 hidden과 aria-hidden으로 접근성 트리에서 빠져야 합니다.');
+      }
+      if (doc.activeElement !== handle) throw new Error('접힐 때 초점을 핸들로 복원해야 합니다.');
+    });
+
+    // Restore the story's named state: open, 320px, nothing focused.
+    await userEvent.click(handle);
+    await waitFor(() => {
+      if (handle.getAttribute('aria-expanded') !== 'true') throw new Error('핸들로 패널을 다시 펼칠 수 있어야 합니다.');
+      const reopened = dock.querySelector('[role="separator"]');
+      if (!reopened || reopened.getAttribute('aria-valuenow') !== '320') throw new Error('다시 열면 조절한 너비가 유지되어야 합니다.');
+    });
+    handle.blur();
+  },
 };

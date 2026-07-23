@@ -14,6 +14,8 @@ export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   /** @default "md" */
   size?: 'sm' | 'md';
   disabled?: boolean;
+  /** 검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false */
+  invalid?: boolean;
   /** 부모 폭을 채우고 고정 최소 폭을 제거합니다. @default false */
   full?: boolean;
   style?: React.CSSProperties;

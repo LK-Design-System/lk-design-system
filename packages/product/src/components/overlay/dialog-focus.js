@@ -19,6 +19,42 @@ const BASE_OVERLAY_Z_INDEX = 100;
 const overlayStack = [];
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
+// Body scroll lock is shared by every modal surface built on this engine, so
+// nesting has to be counted: only the first lock captures the previous inline
+// styles and only the last unlock restores them. Removing the page scrollbar
+// would otherwise reflow the layout by its width, so the same width is added
+// back as body padding while the lock is held.
+let scrollLockDepth = 0;
+let releaseScrollLock = null;
+
+function lockBodyScroll(ownerDocument) {
+  scrollLockDepth += 1;
+  if (scrollLockDepth > 1) return;
+  const view = ownerDocument.defaultView ?? window;
+  const body = ownerDocument.body;
+  if (!body || !view) return;
+  const previousOverflow = body.style.overflow;
+  const previousPaddingRight = body.style.paddingRight;
+  const scrollbarWidth = view.innerWidth - ownerDocument.documentElement.clientWidth;
+  body.style.overflow = 'hidden';
+  if (scrollbarWidth > 0) {
+    const currentPadding = Number.parseFloat(view.getComputedStyle(body).paddingRight) || 0;
+    body.style.paddingRight = `${currentPadding + scrollbarWidth}px`;
+  }
+  releaseScrollLock = () => {
+    body.style.overflow = previousOverflow;
+    body.style.paddingRight = previousPaddingRight;
+  };
+}
+
+function unlockBodyScroll() {
+  if (scrollLockDepth === 0) return;
+  scrollLockDepth -= 1;
+  if (scrollLockDepth > 0) return;
+  releaseScrollLock?.();
+  releaseScrollLock = null;
+}
+
 function isAvailable(element) {
   if (!element?.isConnected || typeof element.focus !== 'function') return false;
   if (element.matches?.(':disabled')) return false;
@@ -58,6 +94,11 @@ function syncOverlayLayers() {
  * Only the latest open overlay owns focus containment and Escape. When that
  * overlay closes, focus returns to its invoker (or `returnFocusRef`) while any
  * lower overlay remains registered and becomes active again.
+ *
+ * The engine also owns the body scroll lock, so every dialog surface built on
+ * it (Modal, Alert, ConfirmDialog, …) blocks background page scrolling for as
+ * long as at least one of them is open. Pass `lockScroll: false` for surfaces
+ * that intentionally leave the page scrollable.
  */
 export function useDialogFocus({
   open,
@@ -65,6 +106,7 @@ export function useDialogFocus({
   initialFocusRef,
   returnFocusRef,
   restoreFocus = true,
+  lockScroll = true,
 }) {
   const dialogRef = React.useRef(null);
   const [zIndex, setZIndex] = React.useState(BASE_OVERLAY_Z_INDEX);
@@ -74,6 +116,7 @@ export function useDialogFocus({
     initialFocusRef,
     returnFocusRef,
     restoreFocus,
+    lockScroll,
   };
 
   useSafeLayoutEffect(() => {
@@ -86,6 +129,8 @@ export function useDialogFocus({
     const entry = { dialogRef, setZIndex };
     overlayStack.push(entry);
     syncOverlayLayers();
+    const scrollLocked = optionsRef.current.lockScroll;
+    if (scrollLocked) lockBodyScroll(ownerDocument);
 
     const focusFrame = view.requestAnimationFrame(() => {
       if (isTopOverlay(entry)) {
@@ -141,6 +186,7 @@ export function useDialogFocus({
       view.cancelAnimationFrame(focusFrame);
       ownerDocument.removeEventListener('keydown', onKeyDown);
       ownerDocument.removeEventListener('focusin', onFocusIn);
+      if (scrollLocked) unlockBodyScroll();
 
       const wasTopOverlay = isTopOverlay(entry);
       const entryIndex = overlayStack.indexOf(entry);

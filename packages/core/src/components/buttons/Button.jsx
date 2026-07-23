@@ -4,6 +4,26 @@ import { Spinner } from '../status/Spinner.jsx';
 const pressedTone = (background) =>
   `color-mix(in srgb, ${background} 88%, var(--color-semantic-label-normal))`;
 
+/* Development-only guard: an icon-only control with no accessible name is
+   invisible to assistive tech and the failure is silent at runtime. Bundlers
+   replace `process.env.NODE_ENV` at build time — the same contract React itself
+   relies on — so this branch disappears from production builds. The try/catch
+   keeps it inert in environments that never define `process` at all. */
+function isDevelopmentBuild() {
+  try {
+    return process.env.NODE_ENV !== 'production';
+  } catch {
+    return false;
+  }
+}
+
+function useMissingNameWarning(shouldWarn, message) {
+  React.useEffect(() => {
+    if (!shouldWarn || !isDevelopmentBuild()) return;
+    console.warn(message);
+  }, [shouldWarn, message]);
+}
+
 /**
  * LK ROBOTICS — Button
  * Solid, rounded-rect CTAs driven entirely by design-system tokens.
@@ -26,7 +46,7 @@ export function Button({
   disable = false,
   iconOnly = false,
   loading = false,
-  loadingLabel = 'Loading',
+  loadingLabel = '불러오는 중',
   as = 'button',
   className,
   style,
@@ -46,6 +66,11 @@ export function Button({
 }) {
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
+
+  useMissingNameWarning(
+    iconOnly && !ariaLabel && rest['aria-labelledby'] == null,
+    '[LDS] Button: iconOnly 버튼에는 aria-label(또는 aria-labelledby)이 필요합니다. 접근 가능한 이름이 없으면 스크린 리더에 이름 없는 버튼으로 노출됩니다.',
+  );
 
   const heights = {
     sm: 'var(--component-button-height-sm)',
@@ -135,7 +160,12 @@ export function Button({
     'outlined-assistive': { bg: 'transparent', bgHover: 'var(--color-semantic-fill-normal)', fg: 'var(--color-semantic-label-normal)', bd: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)', bdHover: 'var(--border-thin) solid var(--color-semantic-line-solid-normal)', elevated: false },
   };
   const p = palettes[wdsVariant] || palettes.primary;
-  const disabledState = disabled || disable || loading;
+  /* Only an explicit `disabled`/`disable` removes the control from the tab
+     order. `loading` keeps it focusable (Polaris / Carbon) so a keyboard user
+     who just activated the button does not lose focus to <body>; activation is
+     blocked through aria-disabled + the click guard instead. */
+  const nativeDisabled = disabled || disable;
+  const disabledState = nativeDisabled || loading;
   const ariaBlocked = ariaDisabled === true || ariaDisabled === 'true';
   const blocked = disabledState || ariaBlocked;
   const active = !blocked;
@@ -192,11 +222,11 @@ export function Button({
       {...rest}
       className={['lk-btn', `lk-btn--${wdsVariant}`, className].filter(Boolean).join(' ')}
       style={composed}
-      disabled={as === 'button' ? disabledState : undefined}
+      disabled={as === 'button' ? nativeDisabled : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
       aria-label={loading ? loadingLabel : ariaLabel}
       aria-busy={loading || ariaBusy || undefined}
-      aria-disabled={ariaBlocked || (as !== 'button' && disabledState) || undefined}
+      aria-disabled={ariaBlocked || loading || (as !== 'button' && disabledState) || undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); setPressed(false); onMouseLeave && onMouseLeave(e); }}
       onMouseDown={(e) => { if (!blocked) setPressed(true); onMouseDown && onMouseDown(e); }}

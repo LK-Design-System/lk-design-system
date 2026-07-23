@@ -69,6 +69,7 @@ export function TimePicker({
   size = 'md',
   disabled = false,
   style,
+  'aria-label': ariaLabel,
   ...rest
 }) {
   const isControlled = value !== undefined;
@@ -96,6 +97,11 @@ export function TimePicker({
   return (
     <div
       {...rest}
+      /* The two selects are one time value: a named group gives them the
+         shared context that the hour/minute names alone cannot carry. */
+      role="group"
+      aria-label={ariaLabel ?? '시간 선택'}
+      aria-disabled={disabled || undefined}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontFamily: 'var(--font-sans)', ...style }}
     >
       <TimeSelect value={hour} options={hours} onChange={(nextHour) => commit(nextHour, minute)} height={height} ariaLabel={hourLabel} disabled={disabled} />

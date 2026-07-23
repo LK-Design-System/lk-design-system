@@ -172,3 +172,73 @@ export const EmptyAndReadOnly = {
     }
   },
 };
+
+function SavedViewStatusDemo() {
+  const [state, setState] = React.useState('clean');
+  return (
+    <main data-testid="saved-view-status" style={{ display: 'grid', gap: 'var(--space-4)', width: 'min(100%, 620px)' }}>
+      <span style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+        <button type="button" onClick={() => setState('dirty')}>변경 있음으로</button>
+        <button type="button" onClick={() => setState('saving')}>저장 진행으로</button>
+        <button type="button" onClick={() => setState('clean')}>저장 완료로</button>
+      </span>
+      <SavedViewControl
+        views={VIEWS}
+        value="operations"
+        onChange={() => {}}
+        dirty={state === 'dirty'}
+        saving={state === 'saving'}
+      />
+    </main>
+  );
+}
+
+export const SavedViewStatusRegionContract = {
+  name: '저장 상태 알림 리전 계약',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    'dirty/saving 상태 알림의 라이브 리전 수명 계약입니다. 리전이 상태 없이도 미리 마운트되어 텍스트만 바뀌는지, 보이는 배지·스피너가 두 번째 리전이 되어 상태를 중복 낭독하지 않는지, select가 그 상태를 describedby로 알 수 있는지 확인합니다.',
+  ),
+  render: () => <SavedViewStatusDemo />,
+  play: async ({ canvasElement }) => {
+    const press = async (label) => {
+      const trigger = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === label);
+      if (!trigger) throw new Error(`Fixture control "${label}" must exist.`);
+      await userEvent.click(trigger);
+    };
+    const savedView = canvasElement.querySelector('[data-saved-view-control]');
+    const live = savedView?.querySelector('[data-saved-view-status]');
+    if (live?.getAttribute('role') !== 'status' || live.getAttribute('aria-live') !== 'polite') {
+      throw new Error('저장 상태 알림 리전은 polite status로 미리 마운트되어 있어야 합니다.');
+    }
+    if (live.textContent?.trim() !== '') {
+      throw new Error('상태가 없을 때 리전은 비어 있는 채로 남아 있어야 합니다.');
+    }
+    const select = savedView.querySelector('select');
+    if (select?.getAttribute('aria-describedby') !== live.getAttribute('id')) {
+      throw new Error('select에 포커스한 사용자가 dirty/saving을 알 수 있도록 상태 리전이 aria-describedby로 연결되어야 합니다.');
+    }
+
+    await press('변경 있음으로');
+    if (savedView.querySelector('[data-saved-view-status]') !== live || live.textContent?.trim() !== '저장되지 않은 변경') {
+      throw new Error('dirty 전환은 새 리전을 삽입하지 않고 같은 리전의 텍스트만 바꿔야 합니다.');
+    }
+    if (savedView.querySelectorAll('[role="status"]').length !== 1) {
+      throw new Error('보이는 dirty 배지가 두 번째 status 리전이 되어 상태를 중복 낭독하면 안 됩니다.');
+    }
+
+    await press('저장 진행으로');
+    if (savedView.querySelector('[data-saved-view-status]') !== live || live.textContent?.trim() !== '저장 중') {
+      throw new Error('saving 전환도 같은 리전의 텍스트 갱신이어야 합니다.');
+    }
+    if (savedView.querySelectorAll('[role="status"]').length !== 1 || savedView.getAttribute('aria-busy') !== 'true') {
+      throw new Error('saving 표시는 aria-busy와 하나의 status 리전으로만 전달되어야 합니다.');
+    }
+
+    await press('저장 완료로');
+    if (live.textContent?.trim() !== '') {
+      throw new Error('상태가 해제되면 리전 텍스트도 비워져야 합니다.');
+    }
+    canvasElement.ownerDocument.activeElement?.blur?.();
+  },
+};

@@ -33,6 +33,8 @@ const firstFieldRef = useRef(null);
 - header/body는 `space-5 space-6`, footer는 `space-4 space-6`, action gap은 `space-2`를 사용합니다.
   같은 footer 역할의 취소·보조 액션은 WDS 문법인 `outlined` + `assistive`, 확정 액션은 primary로 둡니다.
 - `title`은 보이는 요소와 `aria-labelledby`로 연결합니다. 제목이 없으면 `ariaLabel`이 접근 가능한 이름을 제공합니다.
+- body(`children`)는 `aria-describedby`로 다이얼로그에 연결합니다. `ConfirmDialog`·`Alert`와 동일한 규칙이며,
+  이름(제목)만 읽히고 본문이 누락되는 상태를 막습니다.
 
 ## 상호작용 계약
 
@@ -40,6 +42,9 @@ const firstFieldRef = useRef(null);
 - `Tab`/`Shift+Tab`은 최상위 dialog 안에서 순환하고, 외부로 이동한 포커스도 최상위 dialog로 되돌립니다.
 - `Escape`, scrim, 닫기 버튼은 controlled `onClose`를 호출합니다. 키보드 사용자를 위해 `onClose`와 보이는 닫기/취소 액션을 함께 제공합니다.
 - 닫히면 기본적으로 실제 trigger로 복원합니다. 워크플로상 다음 요소가 더 적절하면 `returnFocusRef`, 복원이 의도적으로 불필요하면 `restoreFocus={false}`를 사용합니다.
+- 열려 있는 동안 **배경 페이지 스크롤이 잠깁니다**(`useDialogFocus` 공용 엔진이 소유). 중첩된 다이얼로그는
+  깊이를 세어 마지막 표면이 닫힐 때만 해제하고, 스크롤바가 사라지며 생기는 layout shift는 같은 폭의
+  body padding으로 보정합니다. Modal·`ConfirmDialog`·`Alert`가 모두 같은 계약을 상속합니다.
 - 여러 modal surface를 의도적으로 중첩하지 않습니다. 불가피하게 Drawer 안에서 확인 Modal 등이 열리면 가장 나중에 열린 surface만 Escape와 focus trap을 소유하며, 닫힌 뒤 바로 아래 surface의 호출 지점으로 돌아갑니다.
 
 ## 공식 근거

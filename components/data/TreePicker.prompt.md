@@ -14,7 +14,8 @@
 
 ## 재사용 계약
 
-- anatomy는 LDS `Input` 검색, border가 있는 `tree`, 행별 caret·`Checkbox`·label/description·optional meta입니다. 적용/저장 action, 선택 요약, 권한 요청은 제품 화면이 별도로 조합합니다.
+- anatomy는 LDS `Input` 검색, border가 있는 `tree`, 행별 caret·체크 표시기·label/description·optional meta입니다. 적용/저장 action, 선택 요약, 권한 요청은 제품 화면이 별도로 조합합니다.
+- 행의 체크 표시기는 `Checkbox` 인스턴스가 아니라 md `box` Checkbox의 시각 치수·토큰만 재현한 **장식용 `aria-hidden` 요소**입니다. 선택 상태는 `treeitem`의 `aria-checked`가 단독으로 소유하므로 tree 안에는 포커스 가능한 form control이 존재하지 않습니다. 네이티브 checkbox를 다시 마운트하면 `aria-hidden` 안에 포커스 가능한 요소가 생겨(Axe `aria-hidden-focus`) roving Tab stop 계약도 깨집니다. 표시기를 클릭하면 행의 선택 toggle이 그대로 실행됩니다.
 - focus와 selection은 서로 다른 상태입니다. tree 전체에는 roving Tab stop 하나만 있고, 선택은 `aria-checked`, 현재 focus는 LDS focus ring으로 표현합니다. 선택 색만으로 focus를 대신하지 않습니다.
 - `Arrow Up/Down`은 보이는 활성 행 사이를 이동하고, `Home/End`는 처음/끝, `Arrow Right/Left`는 펼침·자식·부모 이동, `Space`는 선택 toggle입니다. `Enter`도 LDS 호환 입력으로 같은 toggle을 제공합니다. printable key typeahead는 다음 일치 label로 이동합니다.
 - `treeitem` 하나가 `aria-expanded`, `aria-checked`, `aria-disabled`와 keyboard contract를 소유합니다. caret은 pointer hit target만 넓히는 시각 affordance이며 별도 Tab stop이나 중복 접근성 이름을 만들지 않습니다.
@@ -27,7 +28,7 @@
 
 ## 내부 일관성 점검
 
-- hierarchy와 roving focus는 LDS `Tree`/`TreeView`, 입력과 selection visual은 `Input`/`Checkbox`, caret 크기·hover·focus·disabled·spacing은 LDS icon control과 data-row token 관행을 기준으로 맞췄습니다.
+- hierarchy와 roving focus는 LDS `Tree`/`TreeView`, 검색 입력은 `Input`, selection visual은 `Checkbox`의 박스 토큰(18px 박스·16px check·`--radius-5`), caret 크기·hover·focus·disabled·spacing은 LDS icon control과 data-row token 관행을 기준으로 맞췄습니다. 시각 언어만 빌려오고 컨트롤은 마운트하지 않습니다.
 - `Tree`를 복제하지 않고 multi-select form contract만 추가합니다. navigation link, drag-and-drop reorder, lazy load, context action은 별도 component를 사용합니다.
 
 ## 외부 참고와 반영 결론

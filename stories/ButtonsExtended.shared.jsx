@@ -14,7 +14,7 @@ export const ActionControls = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
       <section style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-        <ButtonGroup options={['자동', '수동', '검토']} defaultValue="자동" />
+        <ButtonGroup aria-label="운전 모드 선택" options={['자동', '수동', '검토']} defaultValue="자동" />
         <SplitButton
           items={[
             { label: '초안으로 저장', icon: <Icon name="document" size={16} /> },

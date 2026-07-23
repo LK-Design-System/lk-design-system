@@ -145,9 +145,23 @@ export const TelemetryReference = {
     </main>
   ),
   play: async ({ canvasElement }) => {
-    const { summary } = lineSummary(canvasElement, '모터 상태 추이');
+    const { chart, summary } = lineSummary(canvasElement, '모터 상태 추이');
     if (!summary.includes('temperature: 12개 점') || !summary.includes('current: 12개 점')) {
       throw new Error('A multi-series telemetry chart must summarize each populated series.');
+    }
+    /* 기준선은 role="img" SVG 안 텍스트로만 존재하므로, 텍스트 대안이 임계값과
+       그 선을 넘긴 시리즈까지 말하지 않으면 AT 사용자는 이탈을 알 수 없다. */
+    if (chart.querySelectorAll('line[stroke-dasharray]').length < 2) {
+      throw new Error('The telemetry fixture must draw both reference lines.');
+    }
+    if (!summary.includes('기준선 2개.')) {
+      throw new Error('Reference lines must be part of the accessible summary, not only of the drawing.');
+    }
+    if (!summary.includes('주의 42: temperature 초과.') || !summary.includes('위험 46: temperature 초과.')) {
+      throw new Error('The summary must name each threshold and which series crossed it.');
+    }
+    if (summary.includes('current 초과')) {
+      throw new Error('A series that stays under every threshold must not be reported as crossing one.');
     }
   },
 };

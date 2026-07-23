@@ -1,3 +1,4 @@
+import { userEvent, waitFor } from 'storybook/test';
 import {
   FormField,
   TimePicker,
@@ -33,8 +34,37 @@ export const TimeInput = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
       <FormField label="시작 시간">
-        <TimePicker defaultValue="09:30" hourLabel="시작 시" minuteLabel="시작 분" />
+        <TimePicker defaultValue="09:30" aria-label="시작 시간" hourLabel="시작 시" minuteLabel="시작 분" />
       </FormField>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const group = canvasElement.querySelector('[role="group"][aria-label="시작 시간"]');
+    if (!group) throw new Error('시·분 select는 이름 있는 group으로 묶여 어느 필드의 시각인지 전달해야 합니다.');
+    const [hour, minute] = group.querySelectorAll('select');
+    if (!hour || !minute) throw new Error('시·분 native select가 렌더되어야 합니다.');
+    if (hour.getAttribute('aria-label') !== '시작 시' || minute.getAttribute('aria-label') !== '시작 분') {
+      throw new Error('두 select는 각자의 accessible name을 유지해야 합니다.');
+    }
+    if (hour.value !== '9' || minute.value !== '30') {
+      throw new Error(`defaultValue "09:30"이 두 select에 반영되어야 합니다. (${hour.value}:${minute.value})`);
+    }
+    const minuteValues = [...minute.options].map((option) => option.value);
+    if (minuteValues.length !== 12 || minuteValues[1] !== '5') {
+      throw new Error(`minuteStep 기본값 5는 12개의 분 option을 만들어야 합니다. (${minuteValues.length}개)`);
+    }
+
+    await userEvent.selectOptions(minute, '45');
+    await waitFor(() => {
+      if (minute.value !== '45') throw new Error('분 select 변경이 값으로 커밋되어야 합니다.');
+      if (hour.value !== '9') throw new Error('분만 바꿔도 시 값은 유지되어야 합니다.');
+    });
+
+    // 이름난 상태(09:30)로 복귀.
+    await userEvent.selectOptions(minute, '30');
+    await waitFor(() => {
+      if (minute.value !== '30') throw new Error('이름난 상태(09:30)로 복귀해야 합니다.');
+    });
+    minute.blur();
+  },
 };

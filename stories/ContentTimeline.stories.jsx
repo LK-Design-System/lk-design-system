@@ -29,6 +29,7 @@ export const TimelineEvents = {
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 560 }}>
       <Timeline
+        label="검토 기록"
         items={[
           { time: '09:12', title: '검토 시작', description: '초안이 담당자에게 전달됨', tone: 'signal' },
           { time: '09:18', title: '수정 요청', description: '설명 문구 보완 필요', tone: 'cautionary' },
@@ -37,4 +38,14 @@ export const TimelineEvents = {
       />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const list = canvasElement.querySelector('ol');
+    if (!list || list.querySelectorAll(':scope > li').length !== 3) {
+      throw new Error('시간순 사건은 ol/li로 렌더링되어야 순서와 개수가 전달됩니다(WCAG 1.3.1).');
+    }
+    const stamps = [...list.querySelectorAll('time')];
+    if (stamps.length !== 3 || !stamps.every((t) => t.getAttribute('datetime'))) {
+      throw new Error('각 시각 표기는 dateTime을 가진 <time> 요소여야 합니다.');
+    }
+  },
 };

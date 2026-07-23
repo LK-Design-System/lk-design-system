@@ -1,5 +1,5 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
+import { userEvent, waitFor } from 'storybook/test';
 import { Button, DateRangeField, FilterBar, FilterChip, Select } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -82,16 +82,25 @@ export const AppliedFiltersAndSavedView = {
   play: async ({ canvasElement }) => {
     const remove = canvasElement.querySelector('button[aria-label="상태 점검 필요 필터 제거"]');
     if (!remove) throw new Error('Each applied filter must expose an individually named remove button.');
+    if (remove.hasAttribute('aria-pressed')) {
+      throw new Error('"…필터 제거"는 토글이 아니라 액션 버튼이므로 aria-pressed를 가지면 안 됩니다(APG Button).');
+    }
     await userEvent.click(remove);
     if (canvasElement.querySelector('button[aria-label="상태 점검 필요 필터 제거"]')) {
       throw new Error('Removing one filter must preserve the remaining controlled filters.');
     }
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.activeElement !== canvasElement.querySelector('button[aria-label="담당 조직 수도권 현장 운영팀 필터 제거"]')) {
+        throw new Error('칩을 제거하면 포커스가 같은 자리의 다음 칩으로 이동해야 합니다(WCAG 2.4.3).');
+      }
+    });
     const clear = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.trim() === '모든 필터 지우기');
     if (!clear) throw new Error('Multiple filters must expose a clear-all action.');
     const result = canvasElement.querySelector('[role="status"]');
     if (!canvasElement.querySelector('[role="group"][aria-label="적용된 필터"]') || result?.textContent?.trim() !== '128개 결과') {
       throw new Error('Removing one filter must retain the remaining summary, clear-all action and result status.');
     }
+    canvasElement.ownerDocument.activeElement?.blur?.();
   },
 };
 
@@ -121,9 +130,82 @@ export const ReadOnlyAppliedFilters = {
   render: () => <FilterBar activeFilters={INITIAL_FILTERS.slice(0, 2)} resultCount={128} />,
   play: async ({ canvasElement }) => {
     const summary = canvasElement.querySelector('[role="group"][aria-label="적용된 필터"]');
-    const chips = summary?.querySelectorAll('[data-removable="false"]');
-    if (!summary || chips?.length !== 2 || summary.querySelector('button') || summary.querySelector('svg')) {
+    const chips = [...(summary?.querySelectorAll('[data-removable="false"]') ?? [])];
+    if (!summary || chips.length !== 2 || summary.querySelector('button') || summary.querySelector('svg')) {
       throw new Error('Filters without a removal callback must render as non-operable summaries without close icons.');
     }
+    if (chips.some((chip) => chip.hasAttribute('aria-pressed') || chip.textContent?.includes('선택됨'))) {
+      throw new Error('읽기 전용 요약 chip은 선택 상태를 주장하지 않아야 합니다. 적용된 조건일 뿐 토글이 아닙니다.');
+    }
+  },
+};
+
+function FilterFocusContractDemo() {
+  const [filters, setFilters] = React.useState(INITIAL_FILTERS);
+  return (
+    <div data-testid="filter-focus-surface" style={{ width: 'min(100%, 720px)', maxWidth: '100%' }}>
+      <FilterBar
+        size="sm"
+        activeFilters={filters}
+        onRemoveFilter={(id) => setFilters((current) => current.filter((filter) => filter.id !== id))}
+        onClearFilters={() => setFilters([])}
+        resultCount={filters.length ? 128 : 486}
+      />
+    </div>
+  );
+}
+
+export const FilterRemovalFocusContract = {
+  name: '필터 제거 포커스와 상태 계약',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '적용된 조건을 하나씩 제거할 때의 포커스 이동과 결과 수 라이브 리전의 수명 계약입니다. 포커스가 body로 떨어지지 않고, 결과 리전이 상태 전환마다 새로 마운트되지 않는지 확인합니다.',
+  ),
+  render: () => <FilterFocusContractDemo />,
+  play: async ({ canvasElement }) => {
+    const removeButton = (label) => canvasElement.querySelector(`button[aria-label="${label} 필터 제거"]`);
+    const clickRemove = async (label) => {
+      const button = removeButton(label);
+      if (!button) throw new Error(`적용된 필터 "${label}"은 이름 있는 제거 버튼을 노출해야 합니다.`);
+      await userEvent.click(button);
+    };
+    const liveBefore = canvasElement.querySelector('[data-filter-bar-result-live]');
+    if (liveBefore?.getAttribute('role') !== 'status' || liveBefore.getAttribute('aria-live') !== 'polite') {
+      throw new Error('결과 수 라이브 리전은 처음부터 polite status로 마운트되어 있어야 합니다.');
+    }
+    if (liveBefore.textContent?.trim() !== '128개 결과') {
+      throw new Error('라이브 리전은 현재 결과 수 텍스트를 담고 있어야 합니다.');
+    }
+
+    await clickRemove('담당 조직 수도권 현장 운영팀');
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.activeElement !== removeButton('기간 2026. 07. 01–07. 11')) {
+        throw new Error('가운데 칩을 제거하면 같은 자리를 이어받은 칩으로 포커스가 이동해야 합니다.');
+      }
+    });
+
+    await clickRemove('기간 2026. 07. 01–07. 11');
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.activeElement !== removeButton('상태 점검 필요')) {
+        throw new Error('마지막 자리의 칩을 제거하면 남은 마지막 칩으로 포커스가 이동해야 합니다.');
+      }
+    });
+
+    await clickRemove('상태 점검 필요');
+    const region = canvasElement.querySelector('[role="region"][aria-label="데이터 필터"]');
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.activeElement !== region) {
+        throw new Error('마지막 칩까지 제거하면 포커스가 body 대신 이름 있는 필터 region으로 복구되어야 합니다.');
+      }
+    });
+
+    const liveAfter = canvasElement.querySelector('[data-filter-bar-result-live]');
+    if (liveAfter !== liveBefore) {
+      throw new Error('결과 라이브 리전은 요약이 사라지거나 나타날 때 새로 마운트되면 안 됩니다. 텍스트만 바뀌어야 합니다.');
+    }
+    if (liveAfter.textContent?.trim() !== '486개 결과') {
+      throw new Error('필터를 모두 제거하면 상시 리전의 텍스트가 새 결과 수로 갱신되어야 합니다.');
+    }
+    canvasElement.ownerDocument.activeElement?.blur?.();
   },
 };

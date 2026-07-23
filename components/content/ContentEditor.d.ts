@@ -11,6 +11,14 @@ export interface ContentEditorToolbarItem {
   children?: React.ReactNode;
   /** 비활성 상태. */
   disabled?: boolean;
+  /**
+   * 두 상태를 오가는 서식/모드 토글이면 `true`. 토글은 켜짐·꺼짐 모두
+   * `aria-pressed`로 노출되고, 일회성 액션(첨부 열기 등)은 이 값을 주지 않아
+   * `aria-pressed`를 갖지 않습니다. `activeToolbarItems`에 들어가는 항목은
+   * 반드시 `toggle: true`여야 합니다.
+   * @default false
+   */
+  toggle?: boolean;
 }
 
 export interface ContentEditorProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title' | 'onChange'> {

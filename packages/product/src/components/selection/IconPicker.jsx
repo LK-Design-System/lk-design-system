@@ -65,6 +65,9 @@ export function IconPicker({
   const [focusIndex, setFocusIndex] = React.useState(tabStopIndex);
   const [focusedIndex, setFocusedIndex] = React.useState(-1);
   const [hoveredIndex, setHoveredIndex] = React.useState(-1);
+  /* APG roving tabindex: 그룹의 Tab stop은 항상 1개다. controlled 사용에서 onChange가
+     value를 갱신하지 않아 선택 위치와 이동 위치가 갈라져도 이동 위치 하나만 노출한다. */
+  const rovingIndex = focusIndex >= 0 && !options[focusIndex]?.disabled ? focusIndex : tabStopIndex;
 
   React.useEffect(() => {
     setFocusIndex(tabStopIndex);
@@ -84,20 +87,28 @@ export function IconPicker({
     window.requestAnimationFrame(() => optionRefs.current[index]?.focus());
   };
 
+  /* columns가 시각 그리드를 만들므로 상하 이동은 한 행(columnCount)씩 옮긴다.
+     같은 열에 활성 타일이 없으면 같은 방향으로 계속 찾고, 그리드 밖이면 제자리에 머문다. */
+  const rowNeighbourIndex = (index, direction) => {
+    for (let candidate = index + direction * columnCount; candidate >= 0 && candidate < options.length; candidate += direction * columnCount) {
+      if (!options[candidate]?.disabled) return candidate;
+    }
+    return -1;
+  };
+
   const handleKeyDown = (event, index) => {
     if (disabled || options[index]?.disabled) return;
 
-    const keyMap = {
-      ArrowRight: [index + 1, 1],
-      ArrowDown: [index + 1, 1],
-      ArrowLeft: [index - 1, -1],
-      ArrowUp: [index - 1, -1],
-    };
-
-    if (keyMap[event.key]) {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
       event.preventDefault();
-      const [startIndex, direction] = keyMap[event.key];
-      focusAndPick(findEnabledFrom(options, startIndex, direction));
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      focusAndPick(findEnabledFrom(options, index + direction, direction));
+      return;
+    }
+
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      focusAndPick(rowNeighbourIndex(index, event.key === 'ArrowDown' ? 1 : -1));
       return;
     }
 
@@ -132,7 +143,6 @@ export function IconPicker({
     >
       {options.length === 0 ? (
         <div
-          aria-disabled="true"
           style={{
             minHeight: tile,
             display: 'grid',
@@ -141,7 +151,9 @@ export function IconPicker({
             border: '1px solid var(--color-semantic-line-normal-normal)',
             borderRadius: radius,
             background: 'var(--color-semantic-fill-normal)',
-            color: 'var(--color-semantic-label-assistive)',
+            /* 빈 상태 문구는 장식이 아니라 유일한 정보이므로 assistive(1.7:1)가
+               아니라 본문 대비를 만족하는 토큰을 쓴다 (WCAG 1.4.3). */
+            color: 'var(--color-semantic-label-alternative)',
             fontSize: 'var(--caption1-size)',
             lineHeight: 'var(--caption1-line)',
             fontWeight: 'var(--fw-medium)',
@@ -169,7 +181,7 @@ export function IconPicker({
               aria-label={labelText}
               title={labelText}
               disabled={optionDisabled}
-              tabIndex={optionDisabled ? -1 : focusIndex === index || tabStopIndex === index ? 0 : -1}
+              tabIndex={optionDisabled ? -1 : index === rovingIndex ? 0 : -1}
               data-selected={selected ? '' : undefined}
               onClick={() => pick(option)}
               onFocus={() => {

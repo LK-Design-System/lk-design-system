@@ -7,12 +7,20 @@ import { pillChipStyle } from './pill-chip-style.js';
  * Rounded filter pill for facet toggles (산업, 제품군). Hairline at rest; the
  * active state fills with the 14% cyan wash + signal-ink text/border. Optional
  * trailing `count`, or a `caret` for a filter that opens a menu.
+ *
+ * Accessibility — the two roles are kept apart. A plain chip is an on/off
+ * toggle and owns `aria-pressed`. A `caret` chip does not toggle a facet, it
+ * discloses a menu, so it owns `aria-haspopup` + `aria-expanded` and never
+ * `aria-pressed` (mixing the two makes a screen reader read "pressed" for a
+ * control that only opened a popup).
  */
 export function FilterChip({
   children,
   active = false,
   count,
   caret = false,
+  expanded,
+  haspopup = 'menu',
   disabled = false,
   size = 'md',
   onClick,
@@ -20,10 +28,13 @@ export function FilterChip({
   ...rest
 }) {
   const [hover, setHover] = React.useState(false);
+  const isDisclosure = caret;
   return (
     <button
       type="button"
-      aria-pressed={active}
+      aria-pressed={isDisclosure ? undefined : active}
+      aria-haspopup={isDisclosure ? haspopup : undefined}
+      aria-expanded={isDisclosure ? Boolean(expanded ?? active) : undefined}
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
       onMouseEnter={() => setHover(true)}

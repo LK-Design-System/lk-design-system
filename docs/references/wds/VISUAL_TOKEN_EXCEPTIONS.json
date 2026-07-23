@@ -7,6 +7,9 @@
   },
   "allowedStoryFiles": {
     "stories/Content.shared.jsx": "The mini map preview is an encoded SVG media fixture. CSS variables do not resolve inside the encoded image payload, so its internal art colors are fixed sample asset data rather than component styling.",
+    "stories/ContentMedia.stories.jsx": "The floor plan is an encoded SVG data URI used as real image content for the alt-text example. CSS variables do not resolve inside the encoded image payload, so its art colors are fixed sample asset data rather than component styling.",
+    "stories/Foundations.shared.jsx": "The vivid-status warning table documents the raw value and measured white-background contrast of each status token so designers can see why the vivid hues fail AA. The values are documentation content, not styling, and the Color story play asserts every one of them against the resolved token.",
+    "stories/FoundationInteraction.stories.jsx": "The deprecation table documents the raw declared value of each retired --interaction-* token so consumers can recognize what they are replacing. The values are documentation content, not styling, and the InteractionTokens story play asserts every one of them against the resolved token.",
     "stories/CommunicationMessage.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
     "stories/CommunicationMessageComposer.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
     "stories/CommunicationMessageFeed.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling."

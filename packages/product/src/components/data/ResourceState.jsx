@@ -93,6 +93,7 @@ export function ResourceState({
   lastUpdatedLabel = '마지막 업데이트',
   loadingContent,
   messageVariant = 'embedded',
+  headingLevel = 3,
   children,
   style,
   ...rest
@@ -155,6 +156,7 @@ export function ResourceState({
             title={resolvedTitle}
             description={resolvedDescription}
             action={action}
+            headingLevel={headingLevel}
           />
         </div>
       )}

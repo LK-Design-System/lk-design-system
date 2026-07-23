@@ -1,14 +1,27 @@
 import React from 'react';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
 
 const DEFAULT_TOOLBAR_ITEMS = [
-  { value: 'body', label: '본문', icon: 'document' },
+  { value: 'body', label: '본문', icon: 'document', toggle: true },
   { value: 'tag', label: '태그', icon: 'tag' },
   { value: 'attachment', label: '첨부', icon: 'attachment' },
-  { value: 'preview', label: '미리보기', icon: 'eye' },
+  { value: 'preview', label: '미리보기', icon: 'eye', toggle: true },
 ];
 
-function ToolbarButton({ item, active, disabled, onAction }) {
+/* The red asterisk is a visual convention only — the requirement is also
+   published as label text so it does not depend on colour or on a screen
+   reader announcing punctuation. */
+function RequiredMark() {
+  return (
+    <>
+      <span aria-hidden="true" style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>
+      <VisuallyHidden> (필수)</VisuallyHidden>
+    </>
+  );
+}
+
+function ToolbarButton({ item, active, disabled, onAction, index, tabIndex, onFocus }) {
   const [hover, setHover] = React.useState(false);
   const isDisabled = disabled || item.disabled;
   const label = item.label || item.value;
@@ -16,9 +29,15 @@ function ToolbarButton({ item, active, disabled, onAction }) {
     <button
       type="button"
       aria-label={label}
-      aria-pressed={active || undefined}
+      /* Toggles keep aria-pressed in both states so assistive technology can
+         tell a two-state format control from a one-shot action; plain actions
+         never carry the attribute. */
+      aria-pressed={item.toggle ? Boolean(active) : undefined}
       title={label}
       disabled={isDisabled}
+      data-toolbar-index={index}
+      tabIndex={tabIndex}
+      onFocus={onFocus}
       onClick={(event) => { if (!isDisabled) onAction && onAction(item.value, item, event); }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -47,6 +66,12 @@ function ToolbarButton({ item, active, disabled, onAction }) {
  * Writing editor shell for notices, board posts, operation notes, and document
  * drafts. It defines title/body fields, editor toolbar placement, save status,
  * metadata, and action slots without bundling a rich-text engine.
+ *
+ * Accessibility — the built-in tool row implements the APG Toolbar pattern: one
+ * roving Tab stop, Left/Right arrows and Home/End across the tools. A custom
+ * `toolbar` slot owns its own keyboard model, so the row degrades to
+ * `role="group"` rather than promising arrow navigation it cannot deliver. The
+ * save-status live region is a sibling of the toolbar, never a toolbar child.
  */
 export function ContentEditor({
   'aria-label': ariaLabel = '글 작성 에디터',
@@ -97,6 +122,42 @@ export function ContentEditor({
   const currentTitle = isTitleControlled ? titleValue : internalTitle;
   const currentValue = isValueControlled ? value : internalValue;
   const activeSet = React.useMemo(() => new Set(activeToolbarItems), [activeToolbarItems]);
+  const toolbarRef = React.useRef(null);
+  const [toolbarTabStop, setToolbarTabStop] = React.useState(0);
+  const managedToolbar = toolbar == null;
+  const toolsDisabled = disabled || readOnly;
+  const focusableToolIndexes = React.useMemo(
+    () => toolbarItems.map((item, index) => (toolsDisabled || item.disabled ? -1 : index)).filter((index) => index >= 0),
+    [toolbarItems, toolsDisabled],
+  );
+  const resolvedTabStop = focusableToolIndexes.includes(toolbarTabStop)
+    ? toolbarTabStop
+    : (focusableToolIndexes[0] ?? -1);
+
+  const focusTool = (index) => {
+    const node = toolbarRef.current?.querySelector(`[data-toolbar-index="${index}"]`);
+    if (!node) return;
+    setToolbarTabStop(index);
+    node.focus();
+  };
+
+  /* APG Toolbar: one Tab stop, Left/Right across the tools, Home/End to the
+     boundaries. Disabled tools are skipped because they are natively disabled
+     and cannot take focus. */
+  const handleToolbarKeyDown = (event) => {
+    if (!managedToolbar || focusableToolIndexes.length === 0) return;
+    const owner = event.target.closest?.('[data-toolbar-index]');
+    const current = owner ? focusableToolIndexes.indexOf(Number(owner.getAttribute('data-toolbar-index'))) : -1;
+    const last = focusableToolIndexes.length - 1;
+    let next = null;
+    if (event.key === 'ArrowRight') next = focusableToolIndexes[current < 0 || current === last ? 0 : current + 1];
+    else if (event.key === 'ArrowLeft') next = focusableToolIndexes[current <= 0 ? last : current - 1];
+    else if (event.key === 'Home') next = focusableToolIndexes[0];
+    else if (event.key === 'End') next = focusableToolIndexes[last];
+    if (next == null) return;
+    event.preventDefault();
+    focusTool(next);
+  };
   const hasFooter = meta != null || status != null || helper != null || actions != null || footer != null || maxLength != null;
   const bodyLength = String(currentValue ?? '').length;
   const ring = invalid
@@ -141,7 +202,7 @@ export function ContentEditor({
     >
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4) var(--space-4) var(--space-3)' }}>
         <label htmlFor={resolvedTitleId} style={{ fontSize: 'var(--label2-size)', lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
-          {titleLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
+          {titleLabel}{required && <RequiredMark />}
         </label>
         <input
           id={resolvedTitleId}
@@ -171,8 +232,6 @@ export function ContentEditor({
         />
       </div>
       <div
-        role="toolbar"
-        aria-label="글 편집 도구"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -184,15 +243,24 @@ export function ContentEditor({
           background: 'var(--color-semantic-background-normal-alternative)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', minWidth: 0 }}>
+        <div
+          ref={toolbarRef}
+          role={managedToolbar ? 'toolbar' : 'group'}
+          aria-label="글 편집 도구"
+          onKeyDown={handleToolbarKeyDown}
+          style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', minWidth: 0 }}
+        >
           {toolbar != null
             ? toolbar
-            : toolbarItems.map((item) => (
+            : toolbarItems.map((item, index) => (
               <ToolbarButton
                 key={item.value}
                 item={item}
+                index={index}
                 active={activeSet.has(item.value)}
-                disabled={disabled || readOnly}
+                disabled={toolsDisabled}
+                tabIndex={index === resolvedTabStop ? 0 : -1}
+                onFocus={() => setToolbarTabStop(index)}
                 onAction={onToolbarAction}
               />
             ))}
@@ -205,7 +273,7 @@ export function ContentEditor({
       </div>
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4)' }}>
         <label htmlFor={resolvedBodyId} style={{ fontSize: 'var(--label2-size)', lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>
-          {bodyLabel}{required && <span style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>}
+          {bodyLabel}{required && <RequiredMark />}
         </label>
         <textarea
           id={resolvedBodyId}

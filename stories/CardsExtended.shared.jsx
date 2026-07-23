@@ -123,19 +123,23 @@ export const FeatureSpecAndStats = {
         </FeatureCard>
       </section>
 
-      <section style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: 560 }}>
-        <ChecklistItem>상태 라벨 표시</ChecklistItem>
-        <ChecklistItem>권한별 액션 분리</ChecklistItem>
-        <ChecklistItem cross muted>
-          임의 색상 사용
-        </ChecklistItem>
+      <section style={{ maxWidth: 560 }}>
+        <ul style={{ display: 'grid', gap: 'var(--space-3)', listStyle: 'none', margin: 0, padding: 0 }}>
+          <ChecklistItem>상태 라벨 표시</ChecklistItem>
+          <ChecklistItem>권한별 액션 분리</ChecklistItem>
+          <ChecklistItem cross muted>
+            임의 색상 사용
+          </ChecklistItem>
+        </ul>
       </section>
 
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
         <div style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
-          <SpecRow label="상태" value="active / review / disabled" />
-          <SpecRow label="밀도" value="compact / regular" />
-          <SpecRow label="테마" value="light / dark" divider={false} />
+          <dl style={{ margin: 0 }}>
+            <SpecRow grouped label="상태" value="active / review / disabled" />
+            <SpecRow grouped label="밀도" value="compact / regular" />
+            <SpecRow grouped label="테마" value="light / dark" divider={false} />
+          </dl>
         </div>
         <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
           <Stat value="24" label="컴포넌트" accent="signal" />
@@ -185,7 +189,9 @@ function SpecsBlock() {
           CORE
         </span>
       </div>
-      {specRows.map((row, i) => <SpecRow key={row.label} label={row.label} value={row.value} divider={i !== specRows.length - 1} />)}
+      <dl style={{ margin: 0 }}>
+        {specRows.map((row, i) => <SpecRow grouped key={row.label} label={row.label} value={row.value} divider={i !== specRows.length - 1} />)}
+      </dl>
     </div>
   );
 }
@@ -201,7 +207,9 @@ function DarkSpecsBlock() {
           CORE
         </span>
       </div>
-      {specRows.map((row, i) => <SpecRow key={row.label} label={row.label} value={row.value} divider={i !== specRows.length - 1} />)}
+      <dl style={{ margin: 0 }}>
+        {specRows.map((row, i) => <SpecRow grouped key={row.label} label={row.label} value={row.value} divider={i !== specRows.length - 1} />)}
+      </dl>
     </div>
   );
 }
@@ -229,11 +237,11 @@ export const ChecklistItemCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 320, height: 180, background: 'var(--color-semantic-background-normal-alternative)', padding: 24, boxSizing: 'border-box' }}>
       <Card elevation="sm" padding={22} style={{ width: 260 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <ul style={{ display: 'flex', flexDirection: 'column', gap: 12, listStyle: 'none', margin: 0, padding: 0 }}>
           <ChecklistItem>상태 라벨 표시</ChecklistItem>
           <ChecklistItem>키보드 접근성</ChecklistItem>
           <ChecklistItem cross muted>임의 색상 사용</ChecklistItem>
-        </div>
+        </ul>
       </Card>
     </div>
   ),
@@ -247,7 +255,7 @@ export const StatCard = {
       <Card elevation="sm" padding={22} style={{ width: 260 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <Stat value="173" label="구현 검증" accent="signal" />
-          <Stat value="328" label="공개 스토리" accent="ink" />
+          <Stat value="335" label="공개 스토리" accent="ink" />
         </div>
       </Card>
     </div>

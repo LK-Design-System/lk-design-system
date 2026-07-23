@@ -24,6 +24,7 @@ export function CheckboxGroup({ options = [], value, defaultValue = [], onChange
         return (
           <Checkbox
             key={o.value}
+            value={o.value}
             checked={on}
             disabled={o.disabled}
             onChange={() => toggle(o.value)}

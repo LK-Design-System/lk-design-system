@@ -99,9 +99,19 @@ export const ActionAreaStates = {
           <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
             {label('compact + divider={false} + align="end"')}
             <div style={frame}>
-              <ActionArea compact divider={false} align="end">
+              <ActionArea data-testid="action-area-plain" compact divider={false} align="end">
+                <Button data-action="dismiss" variant="outlined" color="assistive">취소</Button>
+                <Button data-action="commit" variant="solid" color="primary">저장</Button>
+              </ActionArea>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+            {label('aria-label — 이름 있는 region landmark')}
+            <div style={frame}>
+              <ActionArea data-testid="action-area-named" aria-label="주문 확정 액션" compact align="end">
                 <Button variant="outlined" color="assistive">취소</Button>
-                <Button variant="solid" color="primary">저장</Button>
+                <Button variant="solid" color="primary">주문 확정</Button>
               </ActionArea>
             </div>
           </div>
@@ -141,7 +151,7 @@ export const ActionAreaStates = {
                   <p key={i} style={{ margin: '0 0 var(--space-4)' }}>스크롤 콘텐츠 {i + 1} — 액션 영역이 아래에 고정된 상태로 유지됩니다.</p>
                 ))}
               </div>
-              <ActionArea sticky>
+              <ActionArea data-testid="action-area-sticky" sticky>
                 <Button variant="outlined" color="assistive" style={{ flex: 1 }}>나중에</Button>
                 <Button variant="solid" color="primary" style={{ flex: 1 }}>배차 시작</Button>
               </ActionArea>
@@ -150,5 +160,54 @@ export const ActionAreaStates = {
         </section>
       </main>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const plain = canvasElement.querySelector('[data-testid="action-area-plain"]');
+    const named = canvasElement.querySelector('[data-testid="action-area-named"]');
+    const sticky = canvasElement.querySelector('[data-testid="action-area-sticky"]');
+    if (!plain || !named || !sticky) {
+      throw new Error('ActionArea contract requires every target region.');
+    }
+
+    // Element contract: an unnamed action area must not render a meaningless
+    // <section>; a named one becomes a real region landmark.
+    if (plain.tagName !== 'DIV') {
+      throw new Error(`An unnamed ActionArea must render a plain div, not <${plain.tagName.toLowerCase()}>.`);
+    }
+    if (named.tagName !== 'SECTION' || named.getAttribute('aria-label') !== '주문 확정 액션') {
+      throw new Error('A named ActionArea must render a <section> carrying its aria-label as a region landmark.');
+    }
+
+    // DOM order contract: the dismissive action stays first and the commit
+    // action last, and flex wrapping never reorders them.
+    const actions = Array.from(plain.querySelectorAll('button'));
+    if (actions.length !== 2) throw new Error('ActionArea must preserve both wrapped actions.');
+    if (actions[0].dataset.action !== 'dismiss' || actions[1].dataset.action !== 'commit') {
+      throw new Error('ActionArea must preserve children DOM order: dismissive first, primary last.');
+    }
+    const dismissRect = actions[0].getBoundingClientRect();
+    const commitRect = actions[1].getBoundingClientRect();
+    if (commitRect.left < dismissRect.left) {
+      throw new Error('ActionArea must not visually reorder the primary action ahead of the dismissive action.');
+    }
+
+    // Keyboard order follows DOM order.
+    actions[0].focus();
+    actions[0].dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    if (canvasElement.ownerDocument.activeElement === actions[1]) {
+      throw new Error('ActionArea must not move keyboard focus ahead of the dismissive action.');
+    }
+
+    // Sticky contract.
+    const stickyStyle = getComputedStyle(sticky);
+    if (stickyStyle.position !== 'sticky' || parseFloat(stickyStyle.bottom) !== 0) {
+      throw new Error('A sticky ActionArea must stay attached to the bottom of its scroll container.');
+    }
+    if (getComputedStyle(plain).position === 'sticky') {
+      throw new Error('A non-sticky ActionArea must not be pinned.');
+    }
+    if (stickyStyle.boxShadow === 'none') {
+      throw new Error('A sticky ActionArea must separate itself from the scrolled content.');
+    }
   },
 };

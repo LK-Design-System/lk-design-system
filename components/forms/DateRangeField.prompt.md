@@ -13,7 +13,9 @@
 - `value/defaultValue/onChange`로 controlled 또는 uncontrolled 기간을 구성합니다.
 - 시작일과 종료일은 각각 명확한 label을 가집니다. `showFieldLabels={false}`인 조밀한 툴바에서도 trigger의 accessible name은 유지됩니다.
 - `startLabel`/`endLabel`에 복합 React node를 쓰면 `startAccessibleLabel`/`endAccessibleLabel`로 trigger와 placeholder의 평문 이름을 제공합니다. 이를 생략해도 `[object Object]`로 직렬화하지 않고 각각 `시작일`/`종료일`로 안전하게 대체합니다.
-- 종료일이 시작일보다 빠르면 group을 invalid로 표시하고 구체적인 `role="alert"` 순서 오류를 제공합니다. 제품이 `invalid`만 전달한 외부 검증에는 “기간 값을 확인해 주세요”라는 중립 문구를 쓰며, 서버 정책이나 timezone 오류는 `errorMessage`로 명시합니다. 외부 invalid를 종료일 순서 오류로 오인하지 않습니다.
+- 종료일이 시작일보다 빠르면 기간을 invalid로 표시하고 구체적인 `role="alert"` 순서 오류를 제공합니다. 제품이 `invalid`만 전달한 외부 검증에는 “기간 값을 확인해 주세요”라는 중립 문구를 쓰며, 서버 정책이나 timezone 오류는 `errorMessage`로 명시합니다. 외부 invalid를 종료일 순서 오류로 오인하지 않습니다.
+- 오류는 두 `DatePicker` trigger에 `invalid`와 `aria-describedby`로 직접 연결됩니다. `role="group"`은 ARIA 1.2에서 `aria-invalid`를 지원하지 않으므로 group에는 오류 메시지 설명(`aria-describedby`)만 남기고, 필드 단위 오류 표시는 각 trigger가 담당합니다. 시각 상태는 `data-date-range-invalid`로도 노출됩니다.
+- 시작일이 정해지면 종료일 달력에 `minDate`로 전달되어 잘못된 순서를 사전에 차단합니다. 순서 오류 자체는 preset이나 controlled 값처럼 외부에서 들어올 수 있으므로 사후 검증도 그대로 유지합니다.
 - `presets`는 오늘, 최근 7일, 이번 달 등의 control 슬롯입니다. 이 컴포넌트는 preset 선택에 따른 날짜 계산을 추측하지 않습니다.
 - 320px에서는 두 필드가 한 열로 재배치되며 `DatePicker full` 계약으로 부모 폭을 넘지 않습니다.
 

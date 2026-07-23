@@ -33,7 +33,11 @@ export function CircularProgress({
   style,
   ...rest
 }) {
-  useKeyframes('lk-circular-kf', '@keyframes lk-circular-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-circular-progress]{animation:none}}');
+  /* The ring rotation is applied as an inline style, so the reduced-motion
+     override needs `!important` to win over it — same fix as Skeleton/Spinner
+     (WCAG 2.3.3). Without it the ring keeps spinning under
+     `prefers-reduced-motion: reduce`. */
+  useKeyframes('lk-circular-kf', '@keyframes lk-circular-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-circular-progress]{animation:none!important}}');
   const c = TONES[tone] || TONES.signal;
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
   const r = (size - thickness) / 2;
@@ -49,7 +53,7 @@ export function CircularProgress({
       aria-valuenow={indeterminate ? undefined : Math.round(pct)}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-valuetext={indeterminate ? 'loading' : `${Math.round(pct)}%`}
+      aria-valuetext={indeterminate ? '진행 중' : `${Math.round(pct)}%`}
       style={{ position: 'relative', display: 'inline-flex', width: size, height: size, ...style }}
       {...rest}
     >

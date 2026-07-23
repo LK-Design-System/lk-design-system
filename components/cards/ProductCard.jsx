@@ -1,5 +1,17 @@
 import React from 'react';
 
+/* Material/Fluent convention: the hover affordance belongs to keyboard focus as
+   well, but a pointer press must not leave it behind. `:focus-visible` is
+   unsupported in some test DOMs — fall back to showing the affordance. */
+function isFocusVisible(node) {
+  if (!node || typeof node.matches !== 'function') return true;
+  try {
+    return node.matches(':focus-visible');
+  } catch {
+    return true;
+  }
+}
+
 /**
  * LK ROBOTICS — ProductCard
  * The signature dark product tile. The product photo occupies the TOP ~68% of
@@ -9,6 +21,13 @@ import React from 'react';
  * homogeneous product grid the card-as-link convention is the affordance
  * (promote the action to a section-level "전 제품 보기" link). Hover: image
  * zoom + deeper shadow only — the card itself stays put.
+ *
+ * Accessibility — mirrors the Core `Card` contract locally: the product code is
+ * a real heading whose level is caller-controlled (`headingLevel`, WCAG 1.3.1),
+ * the whole-card link takes the product code as its accessible name instead of
+ * the full tile prose, and keyboard focus reproduces the hover affordance (the
+ * ring itself comes from the global `tokens/focus.css` policy). The card is one
+ * link, so it must never contain another focusable element.
  */
 // Fade starts late (58%) so the product stays visible deep into the card, and
 // completes at 97% of the photo zone — just above the content block, keeping
@@ -31,15 +50,26 @@ export function ProductCard({
   imagePosition = '50% 30%',
   href = '#',
   cta,
+  headingLevel = 3,
   style,
+  onFocus,
+  onBlur,
+  'aria-label': ariaLabel,
   ...rest
 }) {
-  const [hover, setHover] = React.useState(false);
+  const [pointerHover, setPointerHover] = React.useState(false);
+  const [focusVisible, setFocusVisible] = React.useState(false);
+  const hover = pointerHover || focusVisible;
+  const HeadingTag = headingLevel === false || headingLevel == null ? 'div' : `h${headingLevel}`;
+  const resolvedLabel = ariaLabel ?? (typeof id === 'string' ? id : undefined);
   return (
     <a
       href={href}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      aria-label={resolvedLabel}
+      onMouseEnter={() => setPointerHover(true)}
+      onMouseLeave={() => setPointerHover(false)}
+      onFocus={(event) => { setFocusVisible(isFocusVisible(event.currentTarget)); onFocus && onFocus(event); }}
+      onBlur={(event) => { setFocusVisible(false); onBlur && onBlur(event); }}
       style={{
         position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
         aspectRatio: '4 / 5',
@@ -77,7 +107,7 @@ export function ProductCard({
           {/* inverse-primary: the stage is theme-invariant navy, so the accent
               must clear AA against it (primary-normal lands at 3.9:1). */}
           {category && <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-inverse-primary)' }}>{category}</span>}
-          <h3 style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 'var(--fw-extra)', letterSpacing: 'var(--ls-h5)', color: 'var(--color-semantic-inverse-label)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{id}</h3>
+          <HeadingTag style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 'var(--fw-extra)', letterSpacing: 'var(--ls-h5)', color: 'var(--color-semantic-inverse-label)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{id}</HeadingTag>
         </div>
         {/* 2-line clamp keeps the content block inside the bottom stage zone so
             long copy never grows up into the photo fade. */}

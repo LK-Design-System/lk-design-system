@@ -26,6 +26,8 @@
 - `Modal`, `Drawer`, `Sheet`와 같은 공통 overlay focus controller를 사용합니다. 열리면 기본적으로 취소 액션으로 초점을 이동하고, 필요하면 `initialFocusRef`로 다른 내부 요소를 지정할 수 있습니다.
 - `Tab`/`Shift+Tab`, 외부 focus containment, `Escape`는 현재 stack의 최상위 overlay만 소유합니다. ConfirmDialog가 다른 modal surface 위에서 닫히면 그 surface 내부의 호출 지점으로 돌아가며, base surface까지 닫힐 때 페이지 trigger로 복원합니다.
 - 닫힌 뒤 별도 위치로 이동해야 하면 `returnFocusRef`, 의도적으로 복원하지 않을 때만 `restoreFocus={false}`를 사용합니다.
+- 열려 있는 동안 배경 페이지 스크롤이 잠깁니다. 공용 `useDialogFocus` 엔진이 중첩 깊이를 세어 마지막
+  overlay가 닫힐 때만 해제하며, 스크롤바 제거로 인한 layout shift는 body padding으로 보정합니다.
 
 ## 근거와 범위
 

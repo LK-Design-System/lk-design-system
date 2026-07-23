@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import { ReorderList } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -73,6 +74,41 @@ export const ReorderLists = {
         />
       </main>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const titles = () => Array.from(canvasElement.querySelectorAll('li[aria-posinset]'))
+      .map((row) => row.getAttribute('aria-label'));
+    const initial = titles();
+    if (initial.length !== 4) throw new Error('재정렬 목록에는 네 개의 항목이 있어야 합니다.');
+
+    const up = canvasElement.querySelector('button[aria-label="로봇 상태 위로 이동"]');
+    if (!up) throw new Error('문맥명이 붙은 위로 이동 버튼이 필요합니다.');
+    if (up.disabled) throw new Error('이동 버튼은 native disabled 대신 aria-disabled를 써야 포커스를 잃지 않습니다.');
+
+    await userEvent.click(up);
+    await waitFor(() => {
+      if (!titles()[0].includes('로봇 상태')) throw new Error('위로 이동 버튼이 항목을 실제로 옮겨야 합니다.');
+    });
+    if (up.getAttribute('aria-disabled') !== 'true') {
+      throw new Error('맨 위에 도달하면 위로 이동은 aria-disabled로 거절되어야 합니다.');
+    }
+    if (doc.activeElement !== up) {
+      throw new Error('끝단에 도달해도 포커스가 body로 떨어지지 않고 이동 버튼에 남아 있어야 합니다.');
+    }
+    const live = canvasElement.querySelector('[role="status"]');
+    if (!live || !live.textContent.includes('위치로 이동')) {
+      throw new Error('이동 결과는 polite live region으로 공지되어야 합니다.');
+    }
+
+    // 이름난 상태로 복귀 — 원래 순서를 되돌린다.
+    const down = canvasElement.querySelector('button[aria-label="로봇 상태 아래로 이동"]');
+    if (!down) throw new Error('아래로 이동 버튼이 필요합니다.');
+    await userEvent.click(down);
+    await waitFor(() => {
+      if (titles().join('|') !== initial.join('|')) throw new Error('스토리는 원래 순서로 복귀해야 합니다.');
+    });
+    down.blur();
   },
 };
 

@@ -62,7 +62,13 @@ export function PageHeader({
           minWidth: 0,
         }}
       >
-        <div data-page-header-content style={{ display: 'grid', gap: compact ? 4 : 6, flex: '1 1 32rem', minWidth: 0 }}>
+        {/* The flex-basis is the point where actions stop sharing the title row
+            and drop below the content: the row wraps once basis + actions no
+            longer fit. 18rem keeps actions title-aligned on ordinary content
+            panes (~640px) and defers the drop to genuinely narrow layouts —
+            32rem pushed page-level actions below the description on plain
+            desktop splits, which read as detached from the header. */}
+        <div data-page-header-content style={{ display: 'grid', gap: compact ? 4 : 6, flex: '1 1 18rem', minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
             <Heading style={{ margin: 0, minWidth: 0, color: 'var(--color-semantic-label-strong)', fontSize: titleSize, lineHeight: titleLine, fontWeight: 'var(--fw-extra)', letterSpacing: titleSpacing, wordBreak: 'keep-all', overflowWrap: 'anywhere' }}>
               {title}
