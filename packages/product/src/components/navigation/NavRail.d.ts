@@ -23,5 +23,8 @@ export interface NavRailProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   renderLink?: (item: NavRailItem, props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => React.ReactElement;
 }
 
-/** 세로 아이콘+라벨 내비게이션 레일(데스크톱 사이드 내비). */
+/**
+ * 세로 아이콘+라벨 내비게이션 레일(데스크톱 사이드 내비).
+ * `nav`의 기본 `aria-label`은 `'주 탐색'`이며 소비자가 전달한 `aria-label`이 우선합니다.
+ */
 export function NavRail(props: NavRailProps): React.JSX.Element;

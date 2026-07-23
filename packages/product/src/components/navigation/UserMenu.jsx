@@ -66,6 +66,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
               <button key={i} type="button" role="menuitem" tabIndex={-1} disabled={it.disabled}
                 onClick={() => { closeMenu({ restoreFocus: true }); it.onClick?.(); }}
                 onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(-1)}
+                onFocus={() => setHov(i)} onBlur={() => setHov((current) => (current === i ? -1 : current))}
                 style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '8px 10px', border: 'none', borderRadius: 'var(--radius-8)', cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
                 {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--color-semantic-label-alternative)' }}>{it.icon}</span>}
                 <span style={{ flex: 1, minWidth: 0 }}>{it.label}</span>

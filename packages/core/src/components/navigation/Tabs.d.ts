@@ -6,10 +6,26 @@ export type TabItem =
       value: string;
       label: React.ReactNode;
       count?: number;
+      /**
+       * Uncontrolled INITIAL selection seed only. Ignored after mount and
+       * ignored when `value`/`defaultValue` is provided; it never forces a
+       * second selected tab at render time.
+       */
       active?: boolean;
       disabled?: boolean;
       trailing?: React.ReactNode;
       trailingIconButton?: boolean | React.ReactNode;
+      /**
+       * Overrides the auto-generated tab id (`useId()`-based). Set it when a
+       * panel needs a stable `aria-labelledby` reference to this tab.
+       */
+      tabId?: string;
+      /**
+       * Id of the consumer-rendered panel. Applied as `aria-controls` on the
+       * tab. The consumer marks the panel with `role="tabpanel"`,
+       * `id={panelId}`, `aria-labelledby={tab id}`, and `tabIndex={0}`.
+       */
+      panelId?: string;
       style?: React.CSSProperties;
     };
 

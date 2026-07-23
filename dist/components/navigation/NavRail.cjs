@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk7WLNAJPJcjs = require('../../chunk-7WLNAJPJ.cjs');
+var _chunkPAGR3CHWcjs = require('../../chunk-PAGR3CHW.cjs');
 
 
-exports.NavRail = _chunk7WLNAJPJcjs.NavRail;
+exports.NavRail = _chunkPAGR3CHWcjs.NavRail;
 //# sourceMappingURL=NavRail.cjs.map

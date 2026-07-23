@@ -39,8 +39,10 @@ export interface SideNavHeading {
 }
 
 export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> {
-  /** 내비 항목·서브메뉴·섹션 헤딩을 섞은 배열. */
+  /** 내비 항목·서브메뉴·섹션 헤딩을 섞은 배열. 항목은 native `ul`/`li` 리스트로 렌더되고 그룹의 자식은 중첩 리스트가 됩니다. */
   items: Array<SideNavItem | SideNavHeading>;
+  /** `nav` landmark의 접근 가능한 이름. @default '사이드 탐색' */
+  'aria-label'?: string;
   /** 상단 브랜드 영역(예: `<Lockup variant="inline" height={24} />`). */
   header?: React.ReactNode;
   /** 접힌 상태의 브랜드(예: `<Lockup variant="mark" height={20} />`). 없으면 header를 그대로 사용. */
@@ -51,9 +53,7 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   width?: number | string;
   /** 외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating' */
   surface?: 'floating' | 'docked';
-  /** persistent 표면은 논리적 끝 경계 안쪽에, overlay 표면은 기존 헤더 흐름에 명시적 접기/펼치기 토글을 표시합니다. @default false */
-  collapsible?: boolean;
-  /** 제어되는 접힘 상태. 상태 영속화는 SideNav가 아니라 소비 제품이 소유합니다. */
+  /** 제어되는 접힘 상태. 접기 토글은 셸의 상단 바에 두고 이 프롭으로 패널을 구동합니다. 상태 영속화는 SideNav가 아니라 소비 제품이 소유합니다. */
   collapsed?: boolean;
   /** 비제어 시 초기 접힘. @default false */
   defaultCollapsed?: boolean;

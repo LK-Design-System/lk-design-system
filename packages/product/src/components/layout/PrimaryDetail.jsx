@@ -106,7 +106,7 @@ export function PrimaryDetail({
             {detail}
           </div>
           {detailFooter != null && (
-            <footer style={{ padding: 'var(--space-3) var(--space-4)', borderTop: '1px solid var(--color-semantic-line-normal-normal)' }}>
+            <footer style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', padding: 'var(--space-3) var(--space-4)', borderTop: '1px solid var(--color-semantic-line-normal-normal)' }}>
               {detailFooter}
             </footer>
           )}

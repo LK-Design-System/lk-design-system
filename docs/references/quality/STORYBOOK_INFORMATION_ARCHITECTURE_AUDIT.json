@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "275d223e61107c37b40c9708c385384244fd58f13929e14bf309fb4b1b7542a9",
+    "storybookIndexSha256": "7e997a76b33681c76a5757e9abe40a108e22ad9ddc7fe911f5786074d269037e",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,27 +59,27 @@
   },
   "summary": {
     "pages": 149,
-    "stories": 429,
-    "publicStories": 327,
-    "hiddenStories": 102,
+    "stories": 432,
+    "publicStories": 328,
+    "hiddenStories": 104,
     "componentDescriptions": 145,
     "pagesWithVisibleCanvasIntroduction": 149,
     "pagesWithDecisionGuidance": 144,
-    "describedPublicStories": 327,
+    "describedPublicStories": 328,
     "reviewedPages": 149,
-    "reviewedStories": 429,
-    "staleReviewedPages": 0,
+    "reviewedStories": 428,
+    "staleReviewedPages": 18,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 142,
-      "usage": 20,
+      "usage": 21,
       "variants-states": 61,
       "interaction": 41,
       "responsive": 37,
       "scenario": 16,
       "visual-parity": 73,
-      "internal-contract": 29
+      "internal-contract": 31
     },
     "dispositions": {
       "keep": 149,
@@ -90,8 +90,8 @@
     "layers": {
       "Core": {
         "pages": 52,
-        "stories": 150,
-        "public": 85,
+        "stories": 152,
+        "public": 87,
         "hidden": 65,
         "guideReadyPages": 52
       },
@@ -104,9 +104,9 @@
       },
       "Product": {
         "pages": 87,
-        "stories": 262,
-        "public": 228,
-        "hidden": 34,
+        "stories": 263,
+        "public": 227,
+        "hidden": 36,
         "guideReadyPages": 87
       },
       "Theme": {
@@ -2234,20 +2234,20 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationCategory.stories.jsx",
-      "sourceSha256": "9fbee5b732bf21b42bb5dde7c51bd96c1075b20c50cdbaf2cf28aba4f118216d",
+      "sourceSha256": "2b82de0328e9c7ea0ead1252239f606da369ee861c194f54181b63dccd00df07",
       "primaryOwner": "Category",
       "ownerComponents": [
         "Category"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-navigation-category--category-patterns",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -2281,6 +2281,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-navigation-category--radio-group-semantics",
+          "name": "라디오그룹 시맨틱 · 제어형과 초기 선택 시드",
+          "exportName": "RadioGroupSemantics",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Category"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
@@ -2290,20 +2312,20 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationPageIndicator.stories.jsx",
-      "sourceSha256": "c75bb841fce7673fef5d59ccceb951efa9096fd417a510d85fb93db8fda5f01d",
+      "sourceSha256": "7f582fc43126ccedb717f52d008027f51817c32474b77596d4cccd729bec9d76",
       "primaryOwner": "PageIndicator",
       "ownerComponents": [
         "PageIndicator"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-navigation-page-indicator--counter-and-dots",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -2337,6 +2359,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-navigation-page-indicator--interactive-dots",
+          "name": "상호작용 도트 · 클릭 이동과 히트 영역",
+          "exportName": "InteractiveDots",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "PageIndicator"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
@@ -2429,7 +2473,7 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationTabs.stories.jsx",
-      "sourceSha256": "26bad0cd2be164c8a7b2ba98d0563820974a93ac5e79cd8b86f6e94d73ecc756",
+      "sourceSha256": "fc2f6291b1d12dc317a1d8ef27a54aed5d201871891aa3b393689081413d405f",
       "primaryOwner": "Tabs",
       "ownerComponents": [
         "Tabs"
@@ -7529,7 +7573,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/CardsExtended.stories.jsx",
-      "sourceSha256": "e208fea1f011754712799323a7d27ed25bdda552c7fd34495b80f03caac37a78",
+      "sourceSha256": "2d85c206765aca203500b493331d7dbdbbc77c325fc5d22154172726164148c2",
       "primaryOwner": "ProductCard",
       "ownerComponents": [
         "ProductCard"
@@ -9136,7 +9180,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataRefreshControl.stories.jsx",
-      "sourceSha256": "1413384891c6dfed8a8d28c4ce2179d36ff0b4eb656b8c57d2a6dc1de1c42e40",
+      "sourceSha256": "4cd50a3d752e27c63ee085fe104a68e753ba580a02cd39ec81627be8b7c4f961",
       "primaryOwner": "RefreshControl",
       "ownerComponents": [
         "RefreshControl"
@@ -9422,7 +9466,7 @@
       "layer": "Product",
       "family": "Visualization",
       "importPath": "./stories/DataAnnotatedImage.stories.jsx",
-      "sourceSha256": "4f4c606e5843da60fc32f4326155824985aa8f5fdac126359502261b4c5b60e3",
+      "sourceSha256": "49d6ac77267084c94a79f9a1c3893026aa12df457a7c47b51ff4617728a7a5d0",
       "primaryOwner": "AnnotatedImage",
       "ownerComponents": [
         "AnnotatedImage"
@@ -10502,7 +10546,7 @@
       "layer": "Product",
       "family": "Layout",
       "importPath": "./stories/LayoutPageHeader.stories.jsx",
-      "sourceSha256": "22914b218f7c0184d542b1fd1256735035855e8b6c68b3c3d193271a6988aea5",
+      "sourceSha256": "4ed496fe4e67bbfa99a295ecdbdeefbd8f5311b5507ab5bb206bf3068405e63c",
       "primaryOwner": "PageHeader",
       "ownerComponents": [
         "PageHeader"
@@ -10594,7 +10638,7 @@
       "layer": "Product",
       "family": "Layout",
       "importPath": "./stories/LayoutPrimaryDetail.stories.jsx",
-      "sourceSha256": "ce04785d2382d7340eadb14f47ad7ccadb33f513842d7721ebc405b9530d43a2",
+      "sourceSha256": "10be96b847190d8fdf08648035e0702b7fa4ffc26dce7a8c6f866c7e33cfeb98",
       "primaryOwner": "PrimaryDetail",
       "ownerComponents": [
         "PrimaryDetail"
@@ -10602,7 +10646,8 @@
       "supportingComponents": [
         "Button",
         "DescriptionList",
-        "StatusBadge"
+        "StatusBadge",
+        "TextButton"
       ],
       "visibility": {
         "public": 2,
@@ -10647,7 +10692,8 @@
           "supportingComponents": [
             "Button",
             "DescriptionList",
-            "StatusBadge"
+            "StatusBadge",
+            "TextButton"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
@@ -10674,7 +10720,8 @@
           "supportingComponents": [
             "Button",
             "DescriptionList",
-            "StatusBadge"
+            "StatusBadge",
+            "TextButton"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
@@ -10686,7 +10733,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationAdaptive.stories.jsx",
-      "sourceSha256": "e85bf952b6180dfc76a374c8e93551c8d5d1acaf4254dd9bffc6b0b797f9a945",
+      "sourceSha256": "99bea3c0c86ebf212cf936d7efadf94040317a56dac5561f52ccfbc793d30263",
       "primaryOwner": "NavRail",
       "ownerComponents": [
         "BottomNav",
@@ -10697,7 +10744,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 2
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -10766,6 +10813,28 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-product-navigation-adaptive-navigation--default-landmark-label",
+          "name": "기본 landmark 라벨",
+          "exportName": "DefaultLandmarkLabel",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "BottomNav",
+            "NavRail"
+          ],
+          "supportingComponents": []
+        },
+        {
           "id": "lds-product-navigation-adaptive-navigation--bottom-nav-card",
           "name": "BottomNav card parity",
           "exportName": "BottomNavCard",
@@ -10820,7 +10889,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationAnchor.stories.jsx",
-      "sourceSha256": "64aa5b3e8e117196be281aa749e47049b0654c86f3d2b180e06fcc72f436ab11",
+      "sourceSha256": "0b99065b43382fa41d0aad791b30487d1d94725104f3ba1de3c0f8c40bcfb2b3",
       "primaryOwner": "Anchor",
       "ownerComponents": [
         "Anchor"
@@ -10877,7 +10946,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationBreadcrumb.stories.jsx",
-      "sourceSha256": "2b15b678acae367280e27b00c8974d9bc1e3c65b78ef9feb407bfad39a5fba19",
+      "sourceSha256": "e352a6f2025dea4af785aa6e7a46e6b20da9dbe5cf52305c0eba84b333f5905e",
       "primaryOwner": "Breadcrumb",
       "ownerComponents": [
         "Breadcrumb"
@@ -10911,6 +10980,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -10955,7 +11025,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationDashboard.stories.jsx",
-      "sourceSha256": "dfabec31411afb4d00dd129a05a01c0e43a82a269e1cd6ce354f1a2b2862c169",
+      "sourceSha256": "6c7eb0fb5133b39caf545b7d00018cafb05ccaf1b0918d851a04027b781e1049",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"
@@ -11191,7 +11261,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationMenubar.stories.jsx",
-      "sourceSha256": "dfeae9fc0cc225fa90f9db64d31ff50d0fff6832a889d7bec4c91eb391e0aba1",
+      "sourceSha256": "ba9d88e85136a001127778c9a30bb65fdda73ca22fffac80ed16e1486a03a5e5",
       "primaryOwner": "Menubar",
       "ownerComponents": [
         "Menubar"
@@ -11316,7 +11386,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "60daaca7f14686e68020ed56b10c316c0d8312936063648d892bca3d6ce38709",
+      "sourceSha256": "117117029c2b8fbbbf8c45b003bb10eb761477786011b0faaeeb46ab4116b3ec",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -11327,13 +11397,13 @@
         "UserMenu"
       ],
       "visibility": {
-        "public": 8,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-navigation-side-nav--link-destinations",
-        "describedPublicStories": 8,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -11420,32 +11490,6 @@
             "Lockup"
           ],
           "reviewNote": "2026-07-22 verified the static 64px icon rail, selected parent state, and fully contained collapse control."
-        },
-        {
-          "id": "lds-product-navigation-side-nav--overlay-collapsible-regression",
-          "name": "상호작용 · 겹침형 명시적 토글",
-          "exportName": "OverlayCollapsibleRegression",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "interaction",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "SideNav"
-          ],
-          "supportingComponents": [
-            "Lockup",
-            "UserMenu"
-          ],
-          "reviewNote": "2026-07-22 verified that overlay mode retains its inline 28px control and keyboard collapse behavior without adopting the docked boundary control."
         },
         {
           "id": "lds-product-navigation-side-nav--overlay-peek",
@@ -11579,7 +11623,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSteps.stories.jsx",
-      "sourceSha256": "e3acf98cacb0baa2ea2914e85a37fabf1972d66d0d8cac4acf7630fb185d31f2",
+      "sourceSha256": "784fa63977aa63737c5536ae85fd00ad2e635f59355ba91e926eeb2e55a9f57c",
       "primaryOwner": "Steps",
       "ownerComponents": [
         "Steps"
@@ -11613,6 +11657,7 @@
           "tags": [
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -11657,7 +11702,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/Navigation.stories.jsx",
-      "sourceSha256": "44f8f4e7828b4980cd88d3ff4dcaf06dac4d7c5269dd77cf7369fd43c6968070",
+      "sourceSha256": "3c81d97004a42fc1c081f6ffc83f7292dc2d6d1d447128bbaca9f15b852baf2e",
       "primaryOwner": "TopBar",
       "ownerComponents": [
         "TopBar"
@@ -11828,7 +11873,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationUserMenu.stories.jsx",
-      "sourceSha256": "029aa77a3ab4ca81ad397a3e3bacb8dc5f7e75da13f13c8369280cc2f5db68f6",
+      "sourceSha256": "40e20a1e319fd06cd80d89e2221146b526ac9fb6e5d11d601bae497ccbbfaacb",
       "primaryOwner": "UserMenu",
       "ownerComponents": [
         "UserMenu"
@@ -11885,7 +11930,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationWizard.stories.jsx",
-      "sourceSha256": "90b8d729b9733135553b8da2aa8bc7ccf54361ad6c6cb3219d2a45b5aae90d68",
+      "sourceSha256": "a27703bb3003d4e60254d0fce0a96affc9d2a24b2b42792e6baecd5849b0fa2c",
       "primaryOwner": "Wizard",
       "ownerComponents": [
         "Wizard"
@@ -11893,7 +11938,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -11933,6 +11978,27 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-navigation-wizard--completion-contract",
+          "name": "완료 액션과 커스텀 푸터",
+          "exportName": "CompletionContract",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Wizard"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."

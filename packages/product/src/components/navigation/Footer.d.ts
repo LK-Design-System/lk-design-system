@@ -8,6 +8,7 @@ export interface FooterEntry {
 
 export interface FooterLink {
   label: React.ReactNode;
+  /** 생략하면 링크가 아닌 일반 텍스트로 렌더됩니다(`href="#"` 폴백 없음). */
   href?: string;
 }
 
@@ -38,5 +39,8 @@ export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
   style?: React.CSSProperties;
 }
 
-/** 사이트 푸터 — 실사이트(lkrobotics-homepage) LKFooter 미러: 네이비 밴드 + 연락·거점·저작권 정보 블록. 기본값이 실데이터라 `<Footer />`만으로 프로덕션 푸터를 재현. `compact`는 대시보드용 한 줄 버전. */
+/**
+ * 사이트 푸터 — 실사이트(lkrobotics-homepage) LKFooter 미러: 네이비 밴드 + 연락·거점·저작권 정보 블록. 기본값이 실데이터라 `<Footer />`만으로 프로덕션 푸터를 재현. `compact`는 대시보드용 한 줄 버전.
+ * 접근성 — 컬럼 헤딩은 `role="heading"`/`aria-level=3`, 링크 그룹은 `ul`/`li`로 렌더되고, `href` 없는 링크는 일반 텍스트로 렌더됩니다.
+ */
 export function Footer(props: FooterProps): React.JSX.Element;

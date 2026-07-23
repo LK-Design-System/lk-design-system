@@ -24,5 +24,8 @@ export interface BottomNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 
   renderLink?: (item: BottomNavItem, props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => React.ReactElement;
 }
 
-/** 모바일 하단 탭 바 — 아이콘 + 라벨, 시그널 잉크 활성 탭. */
+/**
+ * 모바일 하단 탭 바 — 아이콘 + 라벨, 시그널 잉크 활성 탭.
+ * `nav`의 기본 `aria-label`은 `'주 탐색'`이며 소비자가 전달한 `aria-label`이 우선합니다.
+ */
 export function BottomNav(props: BottomNavProps): React.JSX.Element;

@@ -21,6 +21,7 @@ function availableItems(menu) {
 export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
   const menuRef = React.useRef(null);
   const pendingFocusRef = React.useRef('first');
+  const entryFrameRef = React.useRef(null);
   const optionsRef = React.useRef(null);
   optionsRef.current = { onClose, getTrigger };
 
@@ -28,18 +29,34 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
     pendingFocusRef.current = position;
   }, []);
 
+  // The entry focus is queued a frame after the menu (or a drill level) renders.
+  // Keyboard navigation that lands first must win, otherwise the queued frame
+  // silently drags focus back to the edge item under the user's next keystroke.
+  const cancelEntryFocus = React.useCallback(() => {
+    const frame = entryFrameRef.current;
+    if (frame == null) return;
+    const view = menuRef.current?.ownerDocument?.defaultView ?? window;
+    view.cancelAnimationFrame(frame);
+    entryFrameRef.current = null;
+  }, []);
+
   useSafeLayoutEffect(() => {
     if (!open) return undefined;
     const menu = menuRef.current;
     const view = menu?.ownerDocument?.defaultView ?? window;
     const frame = view.requestAnimationFrame(() => {
+      entryFrameRef.current = null;
       const items = availableItems(menuRef.current);
       items.forEach((item) => { item.tabIndex = -1; });
       const target = pendingFocusRef.current === 'last' ? items.at(-1) : items[0];
       target?.focus({ preventScroll: true });
       pendingFocusRef.current = 'first';
     });
-    return () => view.cancelAnimationFrame(frame);
+    entryFrameRef.current = frame;
+    return () => {
+      view.cancelAnimationFrame(frame);
+      if (entryFrameRef.current === frame) entryFrameRef.current = null;
+    };
   }, [open, menuKey]);
 
   const closeMenu = React.useCallback(({ restoreFocus = false } = {}) => {
@@ -113,8 +130,9 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
 
     if (nextIndex === undefined) return;
     event.preventDefault();
+    cancelEntryFocus();
     items[nextIndex].focus({ preventScroll: true });
-  }, [closeMenu]);
+  }, [cancelEntryFocus, closeMenu]);
 
   return { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown };
 }

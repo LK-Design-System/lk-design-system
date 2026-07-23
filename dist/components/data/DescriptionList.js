@@ -1,7 +1,7 @@
 "use client";
 import {
   DescriptionList
-} from "../../chunk-3M5XZUB3.js";
+} from "../../chunk-UB4GTRKR.js";
 export {
   DescriptionList
 };

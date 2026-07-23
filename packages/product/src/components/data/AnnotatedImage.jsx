@@ -13,9 +13,61 @@ const ANNOTATION_TONE = {
   neutral: 'var(--color-semantic-label-neutral)',
 };
 
-function percent(value) {
-  return `${Math.max(0, Math.min(1, Number(value) || 0)) * 100}%`;
+// Text on a solid tone fill. The status hues stay mid-bright in both themes, where static black
+// keeps AA contrast; neutral flips light/dark per theme, so it follows the inverse label instead.
+function toneLabelColor(tone) {
+  return tone === 'neutral'
+    ? 'var(--color-semantic-inverse-label)'
+    : 'var(--color-semantic-static-black)';
 }
+
+function fraction(value) {
+  return Math.max(0, Math.min(1, Number(value) || 0));
+}
+
+function percent(value) {
+  return `${fraction(value) * 100}%`;
+}
+
+// Approximate rendered height of a region label (one caption line plus padding), used to test
+// whether the strip a label would occupy is clipped by the frame or covered by another region.
+const REGION_LABEL_BAND_HEIGHT = 28;
+
+function regionRect(region) {
+  const left = fraction(region.x);
+  const top = fraction(region.y);
+  return { left, top, right: Math.min(1, left + fraction(region.width)), bottom: Math.min(1, top + fraction(region.height)) };
+}
+
+function rectsOverlap(a, b) {
+  return a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+}
+
+// Region labels sit outside the box like detection-tool tags so they never occlude the annotated
+// content: above the top edge by default, inside the box when the frame leaves no room above, and
+// below the bottom edge when another region covers the top strip (overlapping boxes are common —
+// part inside whole). Best effort: inside-top when every strip is taken.
+function regionLabelPlacement(region, index, regions, overlay, frameHeight) {
+  if (!overlay.height || !frameHeight) return 'outside-top';
+  const band = REGION_LABEL_BAND_HEIGHT / overlay.height;
+  const rect = regionRect(region);
+  const others = regions.filter((_, i) => i !== index).map(regionRect);
+  if (overlay.top + rect.top * overlay.height < REGION_LABEL_BAND_HEIGHT) return 'inside-top';
+  const topStrip = { left: rect.left, right: rect.right, top: rect.top - band, bottom: rect.top };
+  if (!others.some((other) => rectsOverlap(topStrip, other))) return 'outside-top';
+  const bottomStrip = { left: rect.left, right: rect.right, top: rect.bottom, bottom: rect.bottom + band };
+  if (overlay.top + rect.bottom * overlay.height + REGION_LABEL_BAND_HEIGHT <= frameHeight
+    && !others.some((other) => rectsOverlap(bottomStrip, other))) return 'outside-bottom';
+  return 'inside-top';
+}
+
+const REGION_LABEL_POSITION = {
+  // The tag sits flush against the box outline, detection-tool style: sharing the box's fill
+  // color and touching its stroke is what visually binds the label to its region.
+  'outside-top': { left: 'calc(-1 * var(--border-thick))', bottom: 'calc(100% + var(--border-thick))', borderRadius: 'var(--radius-xs) var(--radius-xs) 0 0' },
+  'outside-bottom': { left: 'calc(-1 * var(--border-thick))', top: 'calc(100% + var(--border-thick))', borderRadius: '0 0 var(--radius-xs) var(--radius-xs)' },
+  'inside-top': { left: 0, top: 0, borderRadius: '0 0 var(--radius-xs) 0' },
+};
 
 function imageContentBox(frame, image, objectFit) {
   if (!frame.width || !frame.height || !image.width || !image.height) {
@@ -189,9 +241,10 @@ export function AnnotatedImage({
               const color = ANNOTATION_TONE[region.tone] ?? ANNOTATION_TONE.signal;
               const label = annotationLabel(region, `영역 ${index + 1}`);
               const marker = index + 1;
+              const placement = regionLabelPlacement(region, index, regions, overlayBox, frameSize.height);
               return (
                 <span key={region.id ?? index} style={{ position: 'absolute', left: percent(region.x), top: percent(region.y), width: percent(region.width), height: percent(region.height), boxSizing: 'border-box', border: `var(--border-thick) solid ${color}`, borderRadius: 'var(--radius-xs)' }}>
-                  <span style={{ position: 'absolute', left: 'var(--space-1)', top: 'var(--space-1)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', maxWidth: 'min(12.5rem, calc(100% - var(--space-2)))', padding: 'var(--space-1) var(--space-2)', overflow: 'hidden', boxSizing: 'border-box', borderLeft: `var(--border-thick) solid ${color}`, borderRadius: 'var(--radius-xs)', background: 'color-mix(in srgb, var(--color-semantic-inverse-background) 88%, transparent)', color: 'var(--color-semantic-inverse-label)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)' }}>
+                  <span style={{ position: 'absolute', ...REGION_LABEL_POSITION[placement], display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', maxWidth: placement === 'inside-top' ? 'min(12.5rem, 100%)' : '12.5rem', padding: 'var(--space-1) var(--space-2)', overflow: 'hidden', boxSizing: 'border-box', background: color, color: toneLabelColor(region.tone ?? 'signal'), fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)' }}>
                     <span style={{ flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>{marker}</span>
                     <span
                       className="lk-annotated-image__label-text"
@@ -211,7 +264,7 @@ export function AnnotatedImage({
               return (
                 <span key={point.id ?? index} style={{ position: 'absolute', left: percent(point.x), top: percent(point.y), width: percent((point.radius ?? 0.03) * 2), minWidth: 18, aspectRatio: '1', transform: 'translate(-50%, -50%)', display: 'grid', placeItems: 'center', border: `var(--border-thick) solid ${color}`, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-semantic-inverse-background) 82%, transparent)', color: 'var(--color-semantic-inverse-label)', fontSize: 'var(--caption2-size)', lineHeight: 1, fontWeight: 'var(--fw-bold)', fontVariantNumeric: 'tabular-nums' }}>
                   {marker}
-                  {labelDisplay !== 'index' && <span className="lk-annotated-image__point-label" data-collapse={labelDisplay === 'auto' ? 'true' : undefined} style={{ position: 'absolute', ...pointLabelPosition(point), alignItems: 'center', maxWidth: '10rem', padding: 'var(--space-1) var(--space-2)', overflow: 'hidden', borderLeft: `var(--border-thick) solid ${color}`, borderRadius: 'var(--radius-xs)', background: 'color-mix(in srgb, var(--color-semantic-inverse-background) 88%, transparent)', color: 'var(--color-semantic-inverse-label)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)' }}>
+                  {labelDisplay !== 'index' && <span className="lk-annotated-image__point-label" data-collapse={labelDisplay === 'auto' ? 'true' : undefined} style={{ position: 'absolute', ...pointLabelPosition(point), alignItems: 'center', maxWidth: '10rem', padding: 'var(--space-1) var(--space-2)', overflow: 'hidden', borderRadius: 'var(--radius-xs)', background: color, color: toneLabelColor(point.tone ?? 'cautionary'), fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)' }}>
                     <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {pointText}
                     </span>

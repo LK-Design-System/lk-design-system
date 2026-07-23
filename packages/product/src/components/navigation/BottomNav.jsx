@@ -13,7 +13,7 @@ export function BottomNav({ items = [], value, defaultValue, onChange, renderLin
   const val = isControlled ? value : internal;
   const pick = (v) => { if (!isControlled) setInternal(v); onChange && onChange(v); };
   return (
-    <nav style={{ display: 'flex', alignItems: 'stretch', width: '100%', maxWidth: '100%', minWidth: 0, overflow: 'hidden', background: 'var(--color-semantic-background-elevated-normal)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', ...style }} {...rest}>
+    <nav aria-label="주 탐색" style={{ display: 'flex', alignItems: 'stretch', width: '100%', maxWidth: '100%', minWidth: 0, overflow: 'hidden', background: 'var(--color-semantic-background-elevated-normal)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', ...style }} {...rest}>
       {items.map((o) => {
         const active = o.value === val;
         const disabled = !!o.disabled;

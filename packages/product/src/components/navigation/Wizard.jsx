@@ -1,41 +1,34 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Steps } from './Steps.jsx';
 
 /**
  * LK ROBOTICS — Wizard
  * A multi-step flow: a Steps indicator on top, step content in the middle, and
  * back/next controls. `children` may be a node or a render fn `(current) => …`.
  * Controlled (`current`) or uncontrolled (`defaultCurrent`).
+ * The indicator reuses the Steps component (ol/li + aria-current="step");
+ * the step content region is wrapped in `aria-live="polite"` so step changes
+ * are announced. `footer`: null hides the controls, a node replaces them,
+ * undefined keeps the default 이전/다음 pair. On the last step, providing
+ * `onComplete` turns the next button into a primary complete action
+ * (`completeLabel`, default '완료').
  */
-export function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, children, footer, style, ...rest }) {
+export function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, onComplete, completeLabel = '완료', children, footer, style, ...rest }) {
   const isControlled = current !== undefined;
   const [internal, setInternal] = React.useState(defaultCurrent);
   const cur = isControlled ? current : internal;
   const go = (n) => { const c = Math.max(0, Math.min(steps.length - 1, n)); if (!isControlled) setInternal(c); onStepChange && onStepChange(c); };
+  const isLast = cur === steps.length - 1;
+  const nextIsComplete = isLast && typeof onComplete === 'function';
+  const nextDisabled = isLast && !nextIsComplete;
   return (
     <div style={{ fontFamily: 'var(--font-sans)', ...style }} {...rest}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 28 }}>
-        {steps.map((s, i) => {
-          const label = typeof s === 'string' ? s : s.label;
-          const done = i < cur; const active = i === cur;
-          return (
-            <React.Fragment key={i}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-                <span style={{ width: 32, height: 32, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: done ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)', border: `2px solid ${done || active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, color: done ? 'var(--color-semantic-static-white)' : active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-assistive)', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-bold)' }}>
-                  {done ? <Icon name="check" size={16} aria-hidden="true" /> : (i + 1)}
-                </span>
-                <span style={{ fontSize: 'var(--label2-size)', fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', whiteSpace: 'nowrap' }}>{label}</span>
-              </div>
-              {i < steps.length - 1 && <span style={{ flex: 1, height: 2, marginTop: 15, background: i < cur ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)', minWidth: 24 }} />}
-            </React.Fragment>
-          );
-        })}
-      </div>
-      <div>{typeof children === 'function' ? children(cur) : children}</div>
-      {footer !== null && (
+      <Steps steps={steps} current={cur} style={{ marginBottom: 28 }} />
+      <div aria-live="polite">{typeof children === 'function' ? children(cur) : children}</div>
+      {footer === null ? null : footer !== undefined ? footer : (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
           <button type="button" onClick={() => go(cur - 1)} disabled={cur === 0} style={{ height: 44, padding: '0 18px', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-normal)', cursor: cur === 0 ? 'not-allowed' : 'pointer', opacity: cur === 0 ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)' }}>이전</button>
-          <button type="button" onClick={() => go(cur + 1)} disabled={cur === steps.length - 1} style={{ height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-primary-normal)', color: 'var(--color-semantic-static-white)', cursor: cur === steps.length - 1 ? 'not-allowed' : 'pointer', opacity: cur === steps.length - 1 ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)' }}>다음</button>
+          <button type="button" onClick={() => { if (nextIsComplete) { onComplete(); } else { go(cur + 1); } }} disabled={nextDisabled} style={{ height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-primary-normal)', color: 'var(--color-semantic-static-white)', cursor: nextDisabled ? 'not-allowed' : 'pointer', opacity: nextDisabled ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)' }}>{nextIsComplete ? completeLabel : '다음'}</button>
         </div>
       )}
     </div>

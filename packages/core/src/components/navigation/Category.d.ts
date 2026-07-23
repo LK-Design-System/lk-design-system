@@ -5,6 +5,11 @@ export type CategoryItem =
   | {
       value: string;
       label: React.ReactNode;
+      /**
+       * Uncontrolled INITIAL selection seed only. Ignored after mount and
+       * ignored when `value`/`defaultValue` is provided; it never forces a
+       * second checked chip at render time.
+       */
       active?: boolean;
       disabled?: boolean;
       style?: React.CSSProperties;
@@ -25,8 +30,15 @@ export interface CategoryProps extends Omit<React.HTMLAttributes<HTMLDivElement>
   verticalPadding?: boolean;
   /** scroll axis. @default "auto" */
   scroll?: "auto" | boolean;
+  /** Accessible name of the radiogroup container. @default "카테고리" */
+  ariaLabel?: string;
   itemStyle?: React.CSSProperties;
 }
 
-/** navigation category chip group. */
+/**
+ * navigation category chip group. Single-select `role="radiogroup"`:
+ * chips are `role="radio"` with `aria-checked`, the selected (or first
+ * enabled) chip is the single Tab stop, and Arrow/Home/End keys move focus
+ * and select, skipping disabled chips.
+ */
 export function Category(props: CategoryProps): React.JSX.Element;

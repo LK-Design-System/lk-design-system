@@ -134,7 +134,15 @@ export function TopBar({ brand, children, actions, navigationLabel = '주 탐색
       {children != null
         ? (
           <TopBarToneContext.Provider value={tone}>
-            <nav aria-label={navigationLabel} data-top-bar-nav style={{ display: 'flex', alignItems: 'center', alignSelf: 'stretch', gap: 4, flex: '1 1 auto', minWidth: 0, overflowX: 'auto', overflowY: 'hidden', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', justifyContent: navAlign === 'center' ? 'safe center' : 'flex-start' }}>{children}</nav>
+            <nav aria-label={navigationLabel} data-top-bar-nav style={{ display: 'flex', alignItems: 'center', alignSelf: 'stretch', flex: '1 1 auto', minWidth: 0, overflowX: 'auto', overflowY: 'hidden', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', justifyContent: navAlign === 'center' ? 'safe center' : 'flex-start' }}>
+              <ul style={{ display: 'flex', alignItems: 'center', alignSelf: 'stretch', gap: 4, margin: 0, padding: 0, listStyle: 'none' }}>
+                {React.Children.map(children, (child) => (
+                  child == null || typeof child === 'boolean'
+                    ? child
+                    : <li style={{ display: 'flex', alignSelf: 'stretch', gap: 4, minWidth: 0 }}>{child}</li>
+                ))}
+              </ul>
+            </nav>
           </TopBarToneContext.Provider>
         )
         : <div style={{ flex: 1 }} />}
@@ -448,7 +456,7 @@ export function TopBarNavItem({
           {menuItems.map((item, index) => {
             const ItemComp = item.href ? 'a' : 'button';
             return (
-              <li key={item.label} style={{ display: 'block' }}>
+              <li key={`${item.href ?? ''}:${index}`} style={{ display: 'block' }}>
                 <ItemComp
                   ref={(node) => { menuItemRefs.current[index] = node; }}
                   href={item.href}

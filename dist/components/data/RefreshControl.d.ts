@@ -10,7 +10,8 @@ export interface RefreshControlProps extends React.HTMLAttributes<HTMLDivElement
   onRefresh?: () => void;
   lastUpdated?: React.ReactNode;
   lastUpdatedLabel?: React.ReactNode;
-  refreshLabel?: React.ReactNode;
+  /** Accessible name and tooltip of the icon-only refresh action. */
+  refreshLabel?: string;
   /** 제품이 제어하는 polling interval 값. */
   autoRefreshValue?: string;
   autoRefreshOptions?: RefreshControlOption[];

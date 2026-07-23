@@ -1,7 +1,7 @@
 "use client";
 import {
   Anchor
-} from "../../chunk-R3FBUN43.js";
+} from "../../chunk-6ZPLSFFF.js";
 export {
   Anchor
 };

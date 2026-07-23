@@ -32,16 +32,28 @@ export function Tabs({
   ...rest
 }) {
   const listRef = React.useRef(null);
+  const idBase = React.useId();
   const norm = items.map((o) =>
     typeof o === "string" ? { value: o, label: o } : o,
   );
   const isControlled = value !== undefined;
-  const [internal, setInternal] = React.useState(
-    defaultValue != null ? defaultValue : norm.find((item) => !item.disabled)?.value,
-  );
+  const [internal, setInternal] = React.useState(() => {
+    if (defaultValue != null) return defaultValue;
+    /* item.active only seeds the uncontrolled initial selection. */
+    const seeded = norm.find((item) => item.active && !item.disabled);
+    return (seeded ?? norm.find((item) => !item.disabled))?.value;
+  });
   const selected = isControlled ? value : internal;
   const s = SIZE[size] || SIZE.medium;
   const fill = resize === "fill" || full;
+
+  /* Exactly one tab is the Tab stop. If the selected tab is disabled
+   * (or nothing is selected), fall back to the first enabled tab. */
+  const selectedItem = norm.find((item) => item.value === selected);
+  const tabStopValue =
+    selectedItem && !selectedItem.disabled
+      ? selectedItem.value
+      : norm.find((item) => !item.disabled)?.value;
 
   const pick = (item) => {
     if (item.disabled) return;
@@ -94,7 +106,7 @@ export function Tabs({
         }
       `}</style>
       {norm.map((item) => {
-        const active = item.value === selected || item.active;
+        const active = item.value === selected;
         const trailing =
           item.trailingIconButton ?? item.trailing ?? trailingIconButton;
         return (
@@ -103,8 +115,10 @@ export function Tabs({
             className="lk-tabs__tab"
             type="button"
             role="tab"
+            id={item.tabId ?? `${idBase}-tab-${item.value}`}
             aria-selected={active}
-            tabIndex={!item.disabled && active ? 0 : -1}
+            aria-controls={item.panelId ?? undefined}
+            tabIndex={item.value === tabStopValue ? 0 : -1}
             data-tab-value={item.value}
             disabled={item.disabled}
             onClick={() => pick(item)}

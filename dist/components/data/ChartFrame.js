@@ -1,7 +1,7 @@
 "use client";
 import {
   ChartFrame
-} from "../../chunk-BOTKZHXY.js";
+} from "../../chunk-C6K6FEYU.js";
 import "../../chunk-KCHJT4EA.js";
 import "../../chunk-A25AGPST.js";
 import "../../chunk-76EKP7FV.js";

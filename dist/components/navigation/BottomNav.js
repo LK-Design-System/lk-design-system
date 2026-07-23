@@ -1,7 +1,7 @@
 "use client";
 import {
   BottomNav
-} from "../../chunk-FD73EFSQ.js";
+} from "../../chunk-SVEGHB7T.js";
 export {
   BottomNav
 };

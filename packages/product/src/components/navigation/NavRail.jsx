@@ -12,7 +12,7 @@ export function NavRail({ items = [], value, defaultValue, onChange, renderLink,
   const val = isControlled ? value : internal;
   const pick = (v) => { if (!isControlled) setInternal(v); onChange && onChange(v); };
   return (
-    <nav style={{ display: 'inline-flex', flexDirection: 'column', width: 'fit-content', maxWidth: '100%', boxSizing: 'border-box', gap: 6, padding: 10, background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', ...style }} {...rest}>
+    <nav aria-label="주 탐색" style={{ display: 'inline-flex', flexDirection: 'column', width: 'fit-content', maxWidth: '100%', boxSizing: 'border-box', gap: 6, padding: 10, background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-xl)', ...style }} {...rest}>
       {items.map((o) => {
         const active = o.value === val;
         const disabled = !!o.disabled;
