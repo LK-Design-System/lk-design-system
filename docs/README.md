@@ -32,6 +32,7 @@
 | [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) | LK Robotics/Product 도메인 컴포넌트 경계와 상태 의미 |
 | [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | AI가 사용하는 token·composition·copy 규칙 |
 | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 독립 설계 근거와 제품 coverage mapping |
+| [`BENCHMARK_SEED_DESIGN.md`](BENCHMARK_SEED_DESIGN.md) | seed-design 정면 비교와 계층·파이프라인 채택 로드맵(트리거 포함) |
 
 ## Current registers and coverage
 
