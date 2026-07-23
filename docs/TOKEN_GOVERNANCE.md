@@ -156,6 +156,27 @@ Automation backlog:
 - Figma Variables export script or documented plugin preset
 - Token-change report for reviews
 
+## Elevation (shadow) usage rules
+
+`--shadow-*` 토큰은 "이 표면 아래로 콘텐츠가 지나간다"는 깊이 신호이며, 표면의
+부착 방식에 따라 적용 범위가 달라진다. 표면은 세 부류로 나뉜다:
+
+| 표면 부류 | 그림자 규칙 | 예 |
+| --- | --- | --- |
+| 부유 팝업 (어디에도 부착되지 않은 분리 레이어) | 사방 그림자 (`shadow-md`~`xl` 그대로) | DropdownMenu, Menubar 패널, UserMenu 메뉴, Tooltip, Toast/Snackbar, Modal/Alert, CommandPalette, 플로팅 버튼 |
+| 엣지 부착 오버레이 (한 변이 셸·캔버스 경계에 붙은 채 콘텐츠를 덮음) | **덮는 쪽에만** 그림자 — 나머지 변은 `clip-path`로 잘라낸다 | SideNav overlay (`inset(0 -120px 0 0)`), 전체 높이 Drawer(위·아래·부착면이 뷰포트 밖이면 클립 생략 가능), DockPanel(풀하이트 부착이면 동등) |
+| in-flow 표면 (콘텐츠를 밀어내며 배치에 참여) | 그림자 없음 — 경계는 divider 한 줄 | SideNav docked, TopBar/NavRail/BottomNav 바, 카드·패널의 기본 상태 |
+
+Rules:
+
+- 엣지 부착 오버레이에 사방 그림자를 그대로 두면 표면이 페이지에서 분리된
+  모달처럼 읽힌다. 실제로 콘텐츠를 덮는 변에만 elevation을 남긴다
+  (`components/navigation/SideNav.jsx`의 overlay 표면이 기준 구현).
+- in-flow 표면에 그림자를 추가하지 않는다. 밀어내는 표면의 경계는 elevation이
+  아니라 divider의 책임이다.
+- 접힘/펼침처럼 상태에 따라 덮기 여부가 바뀌는 표면은 그림자도 상태와 함께
+  전환한다(덮지 않는 상태 = `none`).
+
 ## Change impact levels
 
 | Level | Example | Requirement |

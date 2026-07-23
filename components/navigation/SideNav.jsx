@@ -1,11 +1,28 @@
 import React from 'react';
-import { IconButton } from '../buttons/IconButton.jsx';
 import { Tooltip } from '../content/Tooltip.jsx';
 import { Icon } from '../icon/Icon.jsx';
 
 const Chevron = ({ open }) => (
   <Icon name="chevron-down-small" size={14} aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />
 );
+
+const LIST_ITEM_STYLE = { display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 };
+
+/**
+ * Collapsed-rail label surface. The wrapper stays mounted in both rail states so
+ * the item control keeps its DOM identity (and focus) across collapse
+ * transitions; the tooltip itself only ever opens while the rail is collapsed.
+ */
+function RailItemTooltip({ label, collapsed, children }) {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => { if (!collapsed) setOpen(false); }, [collapsed]);
+  if (label == null) return children;
+  return (
+    <Tooltip content={label} placement="right" size="small" open={collapsed ? open : false} onOpenChange={setOpen} style={{ width: '100%' }}>
+      {children}
+    </Tooltip>
+  );
+}
 
 /**
  * LK ROBOTICS — SideNav
@@ -21,8 +38,10 @@ export function SideNav({
   items = [], value, defaultValue, onChange,
   header, headerCollapsed, footer, width = 240,
   surface = 'floating',
-  collapsible = false, collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
-  renderLink, className, style, onBlur, onFocus, ...rest
+  collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
+  renderLink, className, style, onBlur, onFocus,
+  'aria-label': ariaLabel = '사이드 탐색',
+  ...rest
 }) {
   const isControlled = value !== undefined;
   const flat = [];
@@ -82,7 +101,9 @@ export function SideNav({
     document.addEventListener('mousedown', down);
     document.addEventListener('keydown', key);
     return () => { document.removeEventListener('mousedown', down); document.removeEventListener('keydown', key); };
-  });
+    // The handlers only read refs plus the latest collapse state, so the
+    // subscription only needs to follow the overlay/collapsed lifecycle.
+  }, [overlay, col]);
 
   const [open, setOpen] = React.useState(() => {
     const o = {};
@@ -163,54 +184,22 @@ export function SideNav({
 
   const resolvedSurface = surface === 'docked' ? 'docked' : 'floating';
   const docked = resolvedSurface === 'docked';
-  const persistentCollapse = collapsible && !overlay;
-  const inlineCollapse = collapsible && overlay;
-  const collapseLabel = col ? '사이드바 펼치기' : '사이드바 접기';
   const shell = { position: 'relative', display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--radius-xl)', boxShadow: docked ? 'none' : undefined, padding: 10, transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
-  const sideNavStyles = `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}.lk-sidenav__collapse-control{position:absolute;inset-block-start:10px;inset-inline-end:0;z-index:2;display:inline-flex;line-height:0}@media(prefers-reduced-motion:reduce){.lk-sidenav__surface,.lk-sidenav__collapse-control,.lk-sidenav__collapse-control .lk-iconbtn,.lk-sidenav__collapse-control svg{transition-duration:0s!important;animation-duration:0s!important}}`;
-  const persistentCollapseControl = persistentCollapse ? (
-    <div className="lk-sidenav__collapse-control">
-      <Tooltip content={collapseLabel} placement="right" size="small">
-        <IconButton
-          className="lk-sidenav__collapse-button"
-          data-sidenav-collapse-toggle=""
-          variant="ghost"
-          size={36}
-          round={false}
-          label={collapseLabel}
-          title={collapseLabel}
-          aria-expanded={!col}
-          aria-controls={panelId}
-          onClick={() => setCol(!col)}
-        >
-          <Icon name={col ? 'chevron-right' : 'chevron-left'} size={16} aria-hidden="true" />
-        </IconButton>
-      </Tooltip>
-    </div>
-  ) : null;
-  const inlineCollapseControl = inlineCollapse ? (
-    <button type="button" data-sidenav-collapse-toggle="" onClick={() => setCol(!col)} title={collapseLabel} aria-label={collapseLabel}
-      style={{ position: col ? 'static' : 'absolute', right: col ? 'auto' : 2, top: col ? 'auto' : 12, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, padding: 0, border: 'none', borderRadius: 'var(--radius-8)', background: 'transparent', color: 'var(--color-semantic-label-neutral)', cursor: 'pointer' }}>
-      <Icon name="left-side" size={16} aria-hidden="true" style={{ transform: col ? 'rotate(180deg)' : 'none' }} />
-    </button>
-  ) : null;
-  const brandRegionStyle = persistentCollapse
-    ? { position: 'relative', display: 'flex', alignItems: 'center', justifyContent: col ? 'center' : 'flex-start', gap: 8, width: 'calc(100% + 20px)', minHeight: 36, marginInline: -10, padding: col ? '54px 4px 14px' : '10px 44px 14px 4px', boxSizing: 'border-box' }
-    : { position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 24, padding: col ? '14px 10px 10px' : '14px 10px 18px' };
+  const sideNavStyles = `.lk-sidenav__scroll{scrollbar-width:none;-ms-overflow-style:none}.lk-sidenav__scroll::-webkit-scrollbar{display:none;width:0;height:0}@media(prefers-reduced-motion:reduce){.lk-sidenav__surface{transition-duration:0s!important;animation-duration:0s!important}}`;
+  const brandRegionStyle = { position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 24, padding: col ? '14px 10px 10px' : '14px 10px 18px' };
   const panelContent = (
     <div id={panelId} className="lk-sidenav__panel-content" data-collapsed={col ? 'true' : 'false'} style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: 0 }}>
       <style>{sideNavStyles}</style>
-      {(brand != null || collapsible) && (
+      {brand != null && (
         <div className="lk-sidenav__brand" style={brandRegionStyle}>
           {brand}
-          {inlineCollapseControl}
         </div>
       )}
-      <div className="lk-sidenav__scroll" style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: '1 1 auto', minHeight: 0, overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <ul className="lk-sidenav__scroll" style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: '1 1 auto', minHeight: 0, margin: 0, padding: 0, listStyle: 'none', overflowX: col ? 'visible' : 'hidden', overflowY: col ? 'visible' : 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {items.map((o, i) => {
           if (o.heading) return col
-            ? <div key={'h' + i} style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} />
-            : <div key={'h' + i} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div>;
+            ? <li key={'h' + i} style={LIST_ITEM_STYLE}><div aria-hidden="true" style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} /></li>
+            : <li key={'h' + i} style={LIST_ITEM_STYLE}><div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div></li>;
 
           const kids = o.children || [];
           const title = typeof o.label === 'string' ? o.label : undefined;
@@ -221,21 +210,23 @@ export function SideNav({
             const childActive = kids.some((c) => c.value === val);
             const onParent = () => { if (col) { setCol(false); setOpen((s) => ({ ...s, [o.value]: true })); } else { setOpen((s) => ({ ...s, [o.value]: !s[o.value] })); } };
             return (
-              <React.Fragment key={o.value}>
-                <button type="button" data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={accessibleLabel} {...hoverProps(o.value)}
-                  style={row(false, o.disabled, { color: childActive ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
-                  {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
-                  {!col && labelSpan(childActive, o.label)}
-                  {!col && <Chevron open={isOpen} />}
-                  {col && childActive && dot}
-                </button>
+              <li key={o.value} style={LIST_ITEM_STYLE}>
+                <RailItemTooltip label={accessibleLabel} collapsed={col}>
+                  <button type="button" data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={col ? undefined : accessibleLabel} {...hoverProps(o.value)}
+                    style={row(false, o.disabled, { color: childActive ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
+                    {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
+                    {!col && labelSpan(childActive, o.label)}
+                    {!col && <Chevron open={isOpen} />}
+                    {col && childActive && dot}
+                  </button>
+                </RailItemTooltip>
                 {!col && isOpen && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2, margin: '0 0 4px' }}>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: 2, margin: '0 0 4px', padding: 0, listStyle: 'none' }}>
                     {kids.map((c) => {
                       const ca = c.value === val;
                       const childTitle = typeof c.label === 'string' ? c.label : c.ariaLabel;
                       return (
-                        <React.Fragment key={c.value}>
+                        <li key={c.value} style={LIST_ITEM_STYLE}>
                           {renderLeafControl(c, {
                             active: ca,
                             parentValue: o.value,
@@ -249,36 +240,38 @@ export function SideNav({
                               </React.Fragment>
                             ),
                           })}
-                        </React.Fragment>
+                        </li>
                       );
                     })}
-                  </div>
+                  </ul>
                 )}
-              </React.Fragment>
+              </li>
             );
           }
 
           const active = o.value === val;
           return (
-            <React.Fragment key={o.value}>
-              {renderLeafControl(o, {
-                active,
-                ariaLabel: col || o.ariaLabel ? accessibleLabel : undefined,
-                title: accessibleLabel,
-                itemStyle: row(active, o.disabled, null, hovKey === o.value),
-                content: (
-                  <React.Fragment>
-                    {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
-                    {!col && labelSpan(active, o.label)}
-                    {!col && o.badge != null && pill(active, o.badge)}
-                    {col && o.badge != null && dot}
-                  </React.Fragment>
-                ),
-              })}
-            </React.Fragment>
+            <li key={o.value} style={LIST_ITEM_STYLE}>
+              <RailItemTooltip label={accessibleLabel} collapsed={col}>
+                {renderLeafControl(o, {
+                  active,
+                  ariaLabel: col || o.ariaLabel ? accessibleLabel : undefined,
+                  title: col ? undefined : accessibleLabel,
+                  itemStyle: row(active, o.disabled, null, hovKey === o.value),
+                  content: (
+                    <React.Fragment>
+                      {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
+                      {!col && labelSpan(active, o.label)}
+                      {!col && o.badge != null && pill(active, o.badge)}
+                      {col && o.badge != null && dot}
+                    </React.Fragment>
+                  ),
+                })}
+              </RailItemTooltip>
+            </li>
           );
         })}
-      </div>
+      </ul>
       <div style={{ marginTop: 'auto', paddingTop: 8 }}>
         {footer != null && (
           <div style={{ paddingTop: 10, marginLeft: 2, marginRight: 2, borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
@@ -287,7 +280,7 @@ export function SideNav({
     </div>
   );
   return (
-    <nav ref={navRef} onClick={overlay && col ? (e) => { if (!e.target.closest('[data-sidenav-value], button')) setCol(false); } : undefined}
+    <nav ref={navRef} aria-label={ariaLabel} onClick={overlay && col ? (e) => { if (!e.target.closest('[data-sidenav-value], button')) setCol(false); } : undefined}
       onMouseEnter={overlay ? () => { pointerInside.current = true; peek(true); } : undefined}
       onMouseLeave={overlay ? () => { pointerInside.current = false; peek(false); } : undefined}
       onFocus={overlay ? (e) => {
@@ -301,13 +294,10 @@ export function SideNav({
       className={['lk-sidenav', !overlay && 'lk-sidenav__surface', className].filter(Boolean).join(' ')}
       style={overlay ? { position: 'relative', width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style }} {...rest} data-surface={resolvedSurface}>
       {overlay ? (
-        <div className="lk-sidenav__surface" style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : 'var(--shadow-lg)', clipPath: col || !docked ? undefined : 'inset(0 -120px 0 0)' }}>{panelContent}</div>
-      ) : (
-        <React.Fragment>
-          {panelContent}
-          {persistentCollapseControl}
-        </React.Fragment>
-      )}
+        /* The elevation shadow only makes sense where the expanded panel actually covers content,
+           so clip it to the inline-end overhang on both surfaces instead of blooming on all sides. */
+        <div className="lk-sidenav__surface" style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : 'var(--shadow-lg)', clipPath: col ? undefined : 'inset(0 -120px 0 0)' }}>{panelContent}</div>
+      ) : panelContent}
     </nav>
   );
 }

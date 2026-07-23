@@ -187,7 +187,7 @@ const targets = [
     match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedCollapsed' },
     viewport: { width: 900, height: 620 },
     reducedMotion: 'reduce',
-    reducedMotionSelectors: ['.lk-sidenav__surface', '.lk-sidenav__collapse-control .lk-iconbtn'],
+    reducedMotionSelectors: ['.lk-sidenav__surface'],
   },
   {
     name: 'product-dashboard-shell-normal',
