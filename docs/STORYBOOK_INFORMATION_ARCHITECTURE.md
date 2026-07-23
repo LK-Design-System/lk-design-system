@@ -16,23 +16,22 @@
 
 ## 현재 기준선
 
-2026-07-22 현재 소스에서 재생성한 정적 빌드 기준으로 149개 페이지와 432개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-07-22 현재 소스에서 재생성한 정적 빌드 기준으로 149개 페이지와 480개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 328개
-- 숨김 스토리: 104개
+- 공개 스토리: 335개
+- 숨김 스토리: 145개
 - 숨김 visual parity: 73개
-- 숨김 internal contract: 31개
-- 검토 완료 페이지 149/149개, 스토리 428/432개. 신규 `LDS Product/Navigation/Dashboard Navigation` 페이지와 feat(menu) 추가 스토리 10개, stale 7개 페이지는 2026-07-22 owner 위임 검토(Claude 수행, 감사 원장 reviewNote에 근거 기록)로 완료했다.
-- **미검토 잔여(2026-07-23 navigation 접근성 작업분)**: 신규 스토리 4개(`Category 라디오그룹 시맨틱`, `Page Indicator 상호작용 도트`, `Adaptive Navigation 기본 landmark 라벨`, `Wizard 완료 액션과 커스텀 푸터`)와 검토 후 소스가 바뀐 18개 페이지가 owner 검토 대기 상태다. 이 중 `Product Card`·`Page Header` 2개는 해당 작업이 아니라 직전 릴리스 커밋의 변경분이다.
+- 숨김 internal contract: 72개
+- 검토 완료 페이지 149/149개, 스토리 480/480개. 2026-07-23~24 navigation·core·product 접근성 일괄 작업분(신규 스토리 43개, 소스가 바뀐 95개 페이지)은 2026-07-24 owner 검토로 완료했다 — 소유자가 로컬 Storybook에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선순위)을 따라 직접 확인했고, 근거는 감사 원장 reviewNote에 있다. 검토 과정에서 공개 표시명 규약 위반 5건(일반 영문 solid·trigger/hover·announce 노출, 역할 접두어 불일치 2건)을 정정했다.
 
-2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 149개 페이지와 432개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
+2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 149개 페이지와 480개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 
 - 컴포넌트 설명이 있는 페이지: 145개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 149개
-- 사용/비사용 판단 기준이 확인되는 페이지: 144개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 328개
+- 사용/비사용 판단 기준이 확인되는 페이지: 145개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
+- 목적 설명이 있는 공개 스토리: 335개
 - Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
-- Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 87/87개
+- Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 94/94개
 - Product 진입 가이드: 87/87페이지, 공개 스토리 설명: 227/227개
 - Theme 진입 가이드: 3/3페이지, 공개 스토리 설명: 3/3개
 - 공개 스토리 표시명 계약: 317/317개(`개요` 또는 역할 접두어)
@@ -57,7 +56,7 @@
 - `Manual Control Session`은 준비, 권한, 입력, stop, recovery가 하나의 안전 상태 머신이므로 stop 전용 페이지로 끊지 않는다.
 - `HistoryToolbar`는 Command Bar가 합성하더라도 독립 public API, prompt, keyboard contract를 가지므로 병합하지 않는다.
 - `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`는 수락된 `.fig` 내부 component-set에서 독립 WDS 축을 확인할 수 없어 WDS 분리 근거로 승격하지 않는다.
-- `Meter`는 Progress와 학습 소유권을 분리했지만 현재 `ProgressBar` 합성으로 `role="progressbar"`가 노출되는 호환성 한계를 스토리에 명시하며, 엄격한 meter semantics가 필요한 제품에는 해소 전 권장하지 않는다.
+- `Meter`는 Progress와 학습 소유권을 분리하고, 2026-07-23 Product 정비에서 `ProgressBar` 합성을 걷어내고 `role="meter"`를 직접 노출하도록 고쳤다. 값은 caller의 단위를 그대로 쓰고 임계 대역은 색 외에 낱말로도 전달한다.
 
 상세한 페이지별 소유자, 스토리 역할, 공개 여부와 검토 해시는 감사 원장을 기준으로 한다. `npm run check:storybook-ia`는 전 레이어의 첫 진입 가이드, 사용·비사용 기준(Foundation은 원리·제약), 모든 공개 스토리 설명, 공개 이름·역할 순서, 공개·숨김 권고 일치를 회귀 방지한다.
 
