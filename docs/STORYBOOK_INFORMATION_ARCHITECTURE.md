@@ -16,23 +16,24 @@
 
 ## 현재 기준선
 
-2026-07-22 현재 소스에서 재생성한 정적 빌드 기준으로 149개 페이지와 429개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-07-22 현재 소스에서 재생성한 정적 빌드 기준으로 149개 페이지와 432개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 327개
-- 숨김 스토리: 102개
+- 공개 스토리: 328개
+- 숨김 스토리: 104개
 - 숨김 visual parity: 73개
-- 숨김 internal contract: 29개
-- 검토 완료 페이지 149/149개, 스토리 429/429개. 신규 `LDS Product/Navigation/Dashboard Navigation` 페이지와 feat(menu) 추가 스토리 10개, stale 7개 페이지는 2026-07-22 owner 위임 검토(Claude 수행, 감사 원장 reviewNote에 근거 기록)로 완료했다.
+- 숨김 internal contract: 31개
+- 검토 완료 페이지 149/149개, 스토리 428/432개. 신규 `LDS Product/Navigation/Dashboard Navigation` 페이지와 feat(menu) 추가 스토리 10개, stale 7개 페이지는 2026-07-22 owner 위임 검토(Claude 수행, 감사 원장 reviewNote에 근거 기록)로 완료했다.
+- **미검토 잔여(2026-07-23 navigation 접근성 작업분)**: 신규 스토리 4개(`Category 라디오그룹 시맨틱`, `Page Indicator 상호작용 도트`, `Adaptive Navigation 기본 landmark 라벨`, `Wizard 완료 액션과 커스텀 푸터`)와 검토 후 소스가 바뀐 18개 페이지가 owner 검토 대기 상태다. 이 중 `Product Card`·`Page Header` 2개는 해당 작업이 아니라 직전 릴리스 커밋의 변경분이다.
 
-2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 149개 페이지와 429개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
+2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 149개 페이지와 432개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 
-- 컴포넌트 설명이 있는 페이지: 144개
-- Canvas에서 안내 서문을 직접 보여 주는 페이지: 148개
-- 사용/비사용 판단 기준이 확인되는 페이지: 143개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 327개
+- 컴포넌트 설명이 있는 페이지: 145개
+- Canvas에서 안내 서문을 직접 보여 주는 페이지: 149개
+- 사용/비사용 판단 기준이 확인되는 페이지: 144개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
+- 목적 설명이 있는 공개 스토리: 328개
 - Foundation 진입 가이드: 7/7페이지, 공개 스토리 설명: 11/11개
-- Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 83/83개
-- Product 진입 가이드: 86/86페이지, 공개 스토리 설명: 220/220개
+- Core 진입 가이드: 52/52페이지, 공개 스토리 설명: 87/87개
+- Product 진입 가이드: 87/87페이지, 공개 스토리 설명: 227/227개
 - Theme 진입 가이드: 3/3페이지, 공개 스토리 설명: 3/3개
 - 공개 스토리 표시명 계약: 317/317개(`개요` 또는 역할 접두어)
 - 이름을 바꾼 페이지의 기존 story id 보존: 4/4페이지
