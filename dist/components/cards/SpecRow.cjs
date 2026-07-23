@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk4IBEPLGZcjs = require('../../chunk-4IBEPLGZ.cjs');
+var _chunkPGBTAKSUcjs = require('../../chunk-PGBTAKSU.cjs');
 
 
-exports.SpecRow = _chunk4IBEPLGZcjs.SpecRow;
+exports.SpecRow = _chunkPGBTAKSUcjs.SpecRow;
 //# sourceMappingURL=SpecRow.cjs.map

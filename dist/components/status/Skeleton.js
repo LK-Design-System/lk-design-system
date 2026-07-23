@@ -1,7 +1,7 @@
 "use client";
 import {
   Skeleton
-} from "../../chunk-D3D5ODOC.js";
+} from "../../chunk-2355T5DN.js";
 export {
   Skeleton
 };

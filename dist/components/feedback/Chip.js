@@ -1,7 +1,7 @@
 "use client";
 import {
   Chip
-} from "../../chunk-3OKVA7NT.js";
+} from "../../chunk-YWI3XRCL.js";
 export {
   Chip
 };

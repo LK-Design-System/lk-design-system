@@ -1,7 +1,8 @@
 "use client";
 import {
   Legend
-} from "../../chunk-F76K6Z4L.js";
+} from "../../chunk-5UU3A4OL.js";
+import "../../chunk-LSN3BTKD.js";
 export {
   Legend
 };

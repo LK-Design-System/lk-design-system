@@ -1,7 +1,7 @@
 "use client";
 import {
   Dimmer
-} from "../../chunk-JCVSQENT.js";
+} from "../../chunk-YWLV36JR.js";
 export {
   Dimmer
 };

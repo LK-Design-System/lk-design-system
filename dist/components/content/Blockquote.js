@@ -1,7 +1,7 @@
 "use client";
 import {
   Blockquote
-} from "../../chunk-VMFRKWUX.js";
+} from "../../chunk-PLTZYEVI.js";
 export {
   Blockquote
 };

@@ -1,7 +1,7 @@
 "use client";
 import {
   FeatureCard
-} from "../../chunk-ROXKURUX.js";
+} from "../../chunk-M7GKW56T.js";
 export {
   FeatureCard
 };

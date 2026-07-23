@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkS4GTXTUScjs = require('../../chunk-S4GTXTUS.cjs');
+var _chunkE7SX237Kcjs = require('../../chunk-E7SX237K.cjs');
 require('../../chunk-KYDCOGHR.cjs');
-require('../../chunk-BTI7KWGX.cjs');
+require('../../chunk-JRW2QDVC.cjs');
 
 
-exports.HoverCard = _chunkS4GTXTUScjs.HoverCard;
+exports.HoverCard = _chunkE7SX237Kcjs.HoverCard;
 //# sourceMappingURL=HoverCard.cjs.map

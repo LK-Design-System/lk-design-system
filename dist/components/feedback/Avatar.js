@@ -1,7 +1,8 @@
 "use client";
 import {
   Avatar
-} from "../../chunk-G6ZLDL4C.js";
+} from "../../chunk-D3LFYXJ5.js";
+import "../../chunk-LSN3BTKD.js";
 export {
   Avatar
 };

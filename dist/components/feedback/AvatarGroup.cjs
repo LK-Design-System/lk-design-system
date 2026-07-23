@@ -1,9 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkCJSE54CDcjs = require('../../chunk-CJSE54CD.cjs');
-require('../../chunk-77QMSMN6.cjs');
+var _chunkTTKE76BOcjs = require('../../chunk-TTKE76BO.cjs');
+require('../../chunk-QV6BZEQ3.cjs');
+require('../../chunk-677EM4M2.cjs');
 
 
-exports.AvatarGroup = _chunkCJSE54CDcjs.AvatarGroup;
+exports.AvatarGroup = _chunkTTKE76BOcjs.AvatarGroup;
 //# sourceMappingURL=AvatarGroup.cjs.map

@@ -7,6 +7,11 @@ export interface TagInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>
   onChange?: (value: string[]) => void;
   placeholder?: string;
   disabled?: boolean;
+  /**
+   * 각 태그 삭제 버튼의 접근 가능한 이름을 만듭니다.
+   * @default (tag) => `${tag} 삭제`
+   */
+  removeLabel?: (tag: string) => string;
 }
 
 /** 입력한 항목을 제거 가능한 칩으로; 값은 string[]. */

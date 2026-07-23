@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkBYBT5LVLcjs = require('../../chunk-BYBT5LVL.cjs');
-require('../../chunk-VGM7HVYY.cjs');
+var _chunkKY7U47KCcjs = require('../../chunk-KY7U47KC.cjs');
+require('../../chunk-X5XHQEI5.cjs');
 
 
-exports.Checkbox = _chunkBYBT5LVLcjs.Checkbox;
+exports.Checkbox = _chunkKY7U47KCcjs.Checkbox;
 //# sourceMappingURL=Checkbox.cjs.map

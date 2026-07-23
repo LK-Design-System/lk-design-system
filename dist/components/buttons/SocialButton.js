@@ -1,8 +1,8 @@
 "use client";
 import {
   SocialButton
-} from "../../chunk-XRCDLXZJ.js";
-import "../../chunk-RMLNM52T.js";
+} from "../../chunk-B4IUSU64.js";
+import "../../chunk-EKVHKFPY.js";
 export {
   SocialButton
 };

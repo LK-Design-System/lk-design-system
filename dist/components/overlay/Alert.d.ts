@@ -20,6 +20,7 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
     | "error";
   /** variant axis. @default "normal" */
   variant?: "normal" | "assistive" | "negative";
+  /** primary 액션 레이블. @default "확인" */
   confirmLabel?: React.ReactNode;
   cancelLabel?: React.ReactNode;
   primaryLabel?: React.ReactNode;
@@ -39,5 +40,8 @@ export interface AlertProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
   ariaLabel?: string;
 }
 
-/** modal feedback alert with iOS, Android, and Web treatments. */
+/**
+ * modal feedback alert with iOS, Android, and Web treatments.
+ * 항상 `role="alertdialog"`로 렌더링됩니다(APG Alert Dialog: 흐름을 멈추고 응답을 받는 표면).
+ */
 export function Alert(props: AlertProps): React.JSX.Element | null;

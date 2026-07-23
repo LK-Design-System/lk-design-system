@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkORXEQBFRcjs = require('../../chunk-ORXEQBFR.cjs');
+var _chunkLRACKP3Dcjs = require('../../chunk-LRACKP3D.cjs');
 
 
-exports.ActionArea = _chunkORXEQBFRcjs.ActionArea;
+exports.ActionArea = _chunkLRACKP3Dcjs.ActionArea;
 //# sourceMappingURL=ActionArea.cjs.map

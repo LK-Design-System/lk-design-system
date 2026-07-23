@@ -1,7 +1,8 @@
 "use client";
 import {
   PushBadge
-} from "../../chunk-FYF5GOSV.js";
+} from "../../chunk-GXYHTEHD.js";
+import "../../chunk-LSN3BTKD.js";
 export {
   PushBadge
 };

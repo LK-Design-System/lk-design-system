@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkIPPBHGJPcjs = require('../../chunk-IPPBHGJP.cjs');
+var _chunkOW3QSDFCcjs = require('../../chunk-OW3QSDFC.cjs');
 
 
-exports.Divider = _chunkIPPBHGJPcjs.Divider;
+exports.Divider = _chunkOW3QSDFCcjs.Divider;
 //# sourceMappingURL=Divider.cjs.map

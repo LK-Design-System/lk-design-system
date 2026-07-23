@@ -1,7 +1,7 @@
 "use client";
 import {
   Divider
-} from "../../chunk-5V24OP2A.js";
+} from "../../chunk-5YNOCZDF.js";
 export {
   Divider
 };

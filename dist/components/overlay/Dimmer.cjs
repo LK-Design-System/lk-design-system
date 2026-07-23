@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkAO4FBVJNcjs = require('../../chunk-AO4FBVJN.cjs');
+var _chunkKZ4D3HWUcjs = require('../../chunk-KZ4D3HWU.cjs');
 
 
-exports.Dimmer = _chunkAO4FBVJNcjs.Dimmer;
+exports.Dimmer = _chunkKZ4D3HWUcjs.Dimmer;
 //# sourceMappingURL=Dimmer.cjs.map

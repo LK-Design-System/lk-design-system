@@ -1,8 +1,8 @@
 "use client";
 import {
   Carousel
-} from "../../chunk-V2D77FQL.js";
-import "../../chunk-LMQSX5BW.js";
+} from "../../chunk-FKZAOELW.js";
+import "../../chunk-JNVDI5OO.js";
 export {
   Carousel
 };

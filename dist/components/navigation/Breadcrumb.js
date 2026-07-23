@@ -1,8 +1,8 @@
 "use client";
 import {
   Breadcrumb
-} from "../../chunk-G3MWCWP2.js";
-import "../../chunk-LMQSX5BW.js";
+} from "../../chunk-J4IUGXLI.js";
+import "../../chunk-JNVDI5OO.js";
 export {
   Breadcrumb
 };

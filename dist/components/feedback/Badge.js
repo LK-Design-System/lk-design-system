@@ -1,7 +1,7 @@
 "use client";
 import {
   Badge
-} from "../../chunk-OGY4T4I6.js";
+} from "../../chunk-JHNM7O6T.js";
 export {
   Badge
 };

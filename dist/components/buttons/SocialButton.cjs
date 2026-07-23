@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk6IBZZTF6cjs = require('../../chunk-6IBZZTF6.cjs');
-require('../../chunk-3MQBCMZR.cjs');
+var _chunkWFBOA5IYcjs = require('../../chunk-WFBOA5IY.cjs');
+require('../../chunk-UTM2KZOS.cjs');
 
 
-exports.SocialButton = _chunk6IBZZTF6cjs.SocialButton;
+exports.SocialButton = _chunkWFBOA5IYcjs.SocialButton;
 //# sourceMappingURL=SocialButton.cjs.map

@@ -1,7 +1,7 @@
 "use client";
 import {
   ContentBadge
-} from "../../chunk-6QTEHHAJ.js";
+} from "../../chunk-245JN6RT.js";
 export {
   ContentBadge
 };

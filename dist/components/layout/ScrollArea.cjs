@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkZY7UIJZOcjs = require('../../chunk-ZY7UIJZO.cjs');
+var _chunk4JC6OVVKcjs = require('../../chunk-4JC6OVVK.cjs');
 
 
-exports.ScrollArea = _chunkZY7UIJZOcjs.ScrollArea;
+exports.ScrollArea = _chunk4JC6OVVKcjs.ScrollArea;
 //# sourceMappingURL=ScrollArea.cjs.map

@@ -2,6 +2,59 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+Repository-wide accessibility and convention sweep across the Core (55 areas) and Product (69 areas) layers, audited against WAI-ARIA APG, WCAG 2.2, and current industry systems, with every fix pinned by a hidden contract story. 480 stories are Axe-clean with 261 play contracts.
+
+### Added
+
+- Cross-repository contract governance for the editor/viz/robotics seam: `check:robotics-contract-drift` compares this repository's `.prompt.md` contracts against the implementations in the external Robotics repository (ratcheted via `docs/references/robotics/CONTRACT_DRIFT_BASELINE.json`), and `check:robotics-semantics` resolves type/story paths across both checkouts instead of failing on the split.
+- `Table` semantics: `caption`, `tableLabel`, `tableLabelledBy`, `rowHeaderKey` (renders `<th scope="row">` at unchanged pixels), and `getRowId`. Column headers always carry `scope="col"`.
+- Form autofill contracts: `PasswordInput autoComplete` (default `current-password`) with Caps Lock warning (`capsLockLabel`), spell-check/auto-correct suppression, and re-masking on form submit; `PinInput autoComplete` (default `one-time-code`) with full-code distribution across cells, `charset` filtering, `invalid`, and Arrow/Home/End cell navigation.
+- `NumberField label/helper/error/invalid/fieldStyle` via the shared field metadata engine, plus a draft-edit model: typing may hold out-of-range values and clamping happens on commit (blur/Enter/steppers).
+- `Calendar` Shift+PageUp/PageDown year navigation; `DatePicker invalid` (trigger `aria-invalid` + negative border) and focus-out close; `DateRangeField` feeds the start date as the end calendar's `minDate`.
+- `Carousel` APG contract: `role="region"` + `aria-roledescription="carousel"`, per-slide `group`/`slide` roles with "N / 전체" labels, offscreen slides removed from the tab order via `inert`, opt-in `autoPlay` with a pause control and hover/focus suspension, and Korean control labels (all overridable).
+- `Lightbox` slide announcements through a persistent polite region, visible position indicator, Korean `closeLabel`/`previousLabel`/`nextLabel`/`positionLabel`, and controls that stay mounted (`aria-disabled`) while an image loads.
+- `LogViewer` follow-mode announcements (`announceNewLines`): only newly arrived lines are announced while tailing, the virtualized container is keyboard-scrollable with an accessible name, and copy results are announced.
+- `Rating` rewrite: interactive mode is an APG slider (single tab stop, Arrow/Home/End, `aria-valuetext` "5점 만점에 N점"), read-only mode is `role="img"` named by its value, with `label`/`valueText` props. Fractional values fill by floor instead of rounding a 4.5 up to five stars.
+- `ColorSwatch` rewrite as a `radiogroup`: roving tabindex, four-direction Arrow navigation, per-option labels/disabled, and a non-color selection cue (check glyph + halo) closing the WCAG 1.4.1 gap.
+- `ChecklistItem stateLabel` (visually hidden 포함/제외 text) and `as` for list semantics; `SpecRow` renders `dl`/`dt`/`dd` with a `grouped` mode for composed spec tables.
+- `FeatureCard`/`NewsCard`/`ProductCard` inherit the Card improvements: real headings with `headingLevel`, keyboard activation for interactive cards, links named by their headline instead of the full card text, and focus-visible affordances matching hover.
+- `ResourceState headingLevel` (ChartFrame passes its own level + 1); `Fab type`; `TimePicker` labelled group; `WheelPicker` type-ahead and settle-commit (one commit per drum stop instead of per scroll frame); `IconPicker` grid-aware 2D keyboard movement with a single tab stop; `PropertyField`/`InputGroup` label and describedby wiring with consumer `onChange` passthrough.
+- 43 hidden contract stories pinning the keyboard/ARIA/live-region contracts above; inventory grew to 480 implementation stories (public surface unchanged at 335).
+- `docs/BENCHMARK_SEED_DESIGN.md`: head-to-head comparison against seed-design with a trigger-based adoption roadmap (internal engine promotion, strangler-mode behavior/appearance separation, token IR deferral, pattern-guide genres, and a licensing policy for reuse).
+
+### Fixed
+
+- `Calendar` could not leave the selected month: the view snapped back on every render, disabling previous/next, PageUp/PageDown, and month-boundary arrows (also through `DatePicker`). The displayed month is now owned by user navigation, and the header buttons keep focus so they can be pressed repeatedly.
+- `CopyButton` reported "복사됨" even when the clipboard write failed; failures now render and announce a distinct error state through an always-mounted status region.
+- `HoverCard` could not be dismissed with Escape: restoring focus to the trigger re-fired the open-on-focus rule and reopened the card. The shared dismiss engine now latches the trigger until focus actually leaves, which also hardens `Tooltip` and `Popover`.
+- `ProgressBar` and `CircularProgress` ignored `prefers-reduced-motion` because the sweep/rotation is an inline style; the override now declares `animation: none !important` (same fix Skeleton/Spinner received).
+- `TreePicker` regression from the native Checkbox rewrite (`aria-hidden` around a focusable input): the row indicator is now a purely decorative element that replicates the Checkbox visuals, so no form control exists inside the tree.
+- `NumberField` clamped on every keystroke (typing 25 under max 20 or clearing the field was impossible) and remounted its steppers on each render, dropping focus mid-interaction.
+- `Tooltip` bubbles no longer grow a scrollbar at their preferred size, and the arrow stays attached to the bubble edge while leaning toward the trigger when an edge-aligned bubble is shorter than its target (`check:tooltip-alignment` now guards attachment per axis).
+- `PageHeader` pushed its actions below the description on ordinary desktop panes; the title-row wrap threshold dropped from 32rem to 18rem so page actions stay title-aligned until genuinely narrow layouts.
+- Conditionally mounted live regions across `DataExportAction`, `FilterBar`, `SavedViewControl`, `MessageComposer`, `MessageFeed`, and `CommandPalette` are now persistently mounted so assistive technology hears every transition; `CommandPalette` also moved "결과 없음" out of the listbox (axe `aria-required-children`) and gained two-stage Escape (clear query, then close).
+- End-of-range focus loss when a control disables itself after activation: `ReorderList` move buttons, `DataExportAction` export, `FileBrowser` up-navigation, and the `MessageComposer` stop control keep or hand off focus instead of dropping to `<body>`.
+- Core-layer sweep: `Checkbox`/`Switch` are native inputs wrapped in labels (pixel-identical), `Dimmer` makes covered content `inert`, `Alert` exposes `alertdialog`, `Toast`/`Snackbar` use persistent live regions with duration/pause contracts, `DropdownMenu` drill re-entry no longer loses the first keystroke and typeahead accumulates multi-character queries, `Icon` is decorative by default, `ContentBadge` solid fills meet AA via status text tokens, and `IconPicker`'s empty-state text meets contrast (was 1.67:1).
+
+### Changed
+
+- `BrandLogo` is decorative by default and exposes `role="img"` only with an explicit `aria-label`/`title`, eliminating double announcements such as "google logo Google로 계속하기" in `SocialButton`.
+- `ButtonGroup` no longer injects the generic default group name '보기 또는 모드 선택'; missing names warn in development builds.
+- `Meter` exposes `role="meter"` with values in the caller's units, and threshold bands announce and render a word (위험/주의/양호, overridable) instead of relying on color alone.
+- `SpeedDial` renders trigger-then-actions in DOM order (visual stacking unchanged via `column-reverse`) and restores focus to the trigger on Escape or action activation.
+- `Bubble` is scoped to non-conversational annotations; chat surfaces belong to `ConversationMessage`/`MessageFeed`.
+- Visual baselines updated for the intended changes only: dashboard-shell header (Korean eyebrow + RefreshControl + change tone), card titles as real headings, the new ActionArea sticky-footer tile, tooltip arrows now attached, and ColorSwatch selection checks. Checkbox/Switch scenes are pixel-identical to their pre-rewrite baselines.
+
+### Migration
+
+- `BrandLogo`: pass `aria-label` (or `title`) where the logo itself is the information; compositions like `SocialButton` need no change.
+- `ButtonGroup`: provide a purpose-specific `aria-label`; the silent generic default is gone.
+- `Meter` consumers targeting `role="progressbar"` should target `role="meter"`; `aria-valuenow` is now in caller units rather than a 0–100 projection.
+- `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
+- `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
+
 ## 0.1.0-rc.1 - 2026-07-22
 
 ### Added

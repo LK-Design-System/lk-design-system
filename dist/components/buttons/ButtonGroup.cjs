@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkTB4UBMSYcjs = require('../../chunk-TB4UBMSY.cjs');
+var _chunkBDIYJZDEcjs = require('../../chunk-BDIYJZDE.cjs');
 require('../../chunk-BVPNECL7.cjs');
 
 
-exports.ButtonGroup = _chunkTB4UBMSYcjs.ButtonGroup;
+exports.ButtonGroup = _chunkBDIYJZDEcjs.ButtonGroup;
 //# sourceMappingURL=ButtonGroup.cjs.map

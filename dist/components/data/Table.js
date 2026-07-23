@@ -1,7 +1,7 @@
 "use client";
 import {
   Table
-} from "../../chunk-6FV3WXHI.js";
+} from "../../chunk-GZDESDRO.js";
 import "../../chunk-22ESLNNA.js";
 export {
   Table

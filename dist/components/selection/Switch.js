@@ -1,7 +1,7 @@
 "use client";
 import {
   Switch
-} from "../../chunk-JJBPUVTR.js";
+} from "../../chunk-7SSCOKPJ.js";
 export {
   Switch
 };

@@ -1,7 +1,7 @@
 "use client";
 import {
   ScrollArea
-} from "../../chunk-K5ZQ5N2D.js";
+} from "../../chunk-SGRR2FMO.js";
 export {
   ScrollArea
 };

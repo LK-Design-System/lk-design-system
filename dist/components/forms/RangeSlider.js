@@ -1,7 +1,7 @@
 "use client";
 import {
   RangeSlider
-} from "../../chunk-OPC3BASY.js";
+} from "../../chunk-VBH4TFXU.js";
 export {
   RangeSlider
 };

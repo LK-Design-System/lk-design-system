@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk2K4LDUEUcjs = require('../../chunk-2K4LDUEU.cjs');
-require('../../chunk-SDHSC2JC.cjs');
+var _chunkM2ELDEZ5cjs = require('../../chunk-M2ELDEZ5.cjs');
+require('../../chunk-F525T53P.cjs');
 
 
-exports.Alert = _chunk2K4LDUEUcjs.Alert;
+exports.Alert = _chunkM2ELDEZ5cjs.Alert;
 //# sourceMappingURL=Alert.cjs.map

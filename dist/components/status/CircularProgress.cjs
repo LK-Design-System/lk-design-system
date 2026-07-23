@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkLMXUBKLUcjs = require('../../chunk-LMXUBKLU.cjs');
+var _chunkXSTCNZBDcjs = require('../../chunk-XSTCNZBD.cjs');
 
 
-exports.CircularProgress = _chunkLMXUBKLUcjs.CircularProgress;
+exports.CircularProgress = _chunkXSTCNZBDcjs.CircularProgress;
 //# sourceMappingURL=CircularProgress.cjs.map

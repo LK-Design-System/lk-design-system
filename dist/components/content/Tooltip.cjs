@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkEBCBZ7WPcjs = require('../../chunk-EBCBZ7WP.cjs');
-require('../../chunk-BTI7KWGX.cjs');
+var _chunkYPBHYJQ4cjs = require('../../chunk-YPBHYJQ4.cjs');
+require('../../chunk-JRW2QDVC.cjs');
 
 
-exports.Tooltip = _chunkEBCBZ7WPcjs.Tooltip;
+exports.Tooltip = _chunkYPBHYJQ4cjs.Tooltip;
 //# sourceMappingURL=Tooltip.cjs.map

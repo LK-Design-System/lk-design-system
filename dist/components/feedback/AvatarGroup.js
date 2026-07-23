@@ -1,8 +1,9 @@
 "use client";
 import {
   AvatarGroup
-} from "../../chunk-2A4HJITG.js";
-import "../../chunk-G6ZLDL4C.js";
+} from "../../chunk-ZDTEDZDL.js";
+import "../../chunk-D3LFYXJ5.js";
+import "../../chunk-LSN3BTKD.js";
 export {
   AvatarGroup
 };

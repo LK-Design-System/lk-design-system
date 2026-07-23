@@ -15,6 +15,13 @@ export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLSpanElement>
   shortcut?: React.ReactNode;
   /** Show arrow. @default true */
   arrow?: boolean;
+  /**
+   * 포인터 hover 로 열고 닫을 때의 지연(ms). 숫자를 주면 enter 지연으로,
+   * 객체를 주면 `{ open, close }` 로 적용합니다. 키보드 focus 는 항상 즉시
+   * 열립니다(APG).
+   * @default { open: 250, close: 0 }
+   */
+  delay?: number | { open?: number; close?: number };
   /** 제어된 열림 상태. */
   open?: boolean;
   /** 비제어 초기 열림 상태. @default false */

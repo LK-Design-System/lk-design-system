@@ -1,7 +1,7 @@
 "use client";
 import {
   Bubble
-} from "../../chunk-4OU5K2KB.js";
+} from "../../chunk-A54Q6N72.js";
 export {
   Bubble
 };

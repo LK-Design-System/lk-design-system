@@ -12,6 +12,13 @@ export interface AccordionProps {
   multiple?: boolean;
   /** 마운트 시 열려 있는 인덱스. @default [] */
   defaultOpen?: number[];
+  /**
+   * 각 헤더 트리거를 감싸는 heading 레벨(APG: "each accordion header is
+   * contained in an element with role heading"). `false` 면 heading 래퍼 없이
+   * 버튼만 렌더링합니다.
+   * @default 3
+   */
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6 | false;
   style?: React.CSSProperties;
 }
 

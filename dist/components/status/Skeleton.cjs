@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkA53UKC2Rcjs = require('../../chunk-A53UKC2R.cjs');
+var _chunkXLRNY734cjs = require('../../chunk-XLRNY734.cjs');
 
 
-exports.Skeleton = _chunkA53UKC2Rcjs.Skeleton;
+exports.Skeleton = _chunkXLRNY734cjs.Skeleton;
 //# sourceMappingURL=Skeleton.cjs.map

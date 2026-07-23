@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkPWINR6DKcjs = require('../../chunk-PWINR6DK.cjs');
+var _chunk6EWWOHKAcjs = require('../../chunk-6EWWOHKA.cjs');
 require('../../chunk-3UPIIXAK.cjs');
-require('../../chunk-VGM7HVYY.cjs');
+require('../../chunk-X5XHQEI5.cjs');
 
 
-exports.Callout = _chunkPWINR6DKcjs.Callout;
+exports.Callout = _chunk6EWWOHKAcjs.Callout;
 //# sourceMappingURL=Callout.cjs.map

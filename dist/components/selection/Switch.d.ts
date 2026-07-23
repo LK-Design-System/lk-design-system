@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface SwitchProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'onChange'> {
+export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'size' | 'checked' | 'defaultChecked' | 'disabled' | 'readOnly' | 'value' | 'type'> {
   /** 제어되는 on/off 상태. */
   checked?: boolean;
   /** 비제어 초기 상태. @default false */
@@ -26,6 +26,10 @@ export interface SwitchProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,
   disable?: boolean;
   /** Focusable inspection state that prevents value changes. */
   readOnly?: boolean;
+  /** 네이티브 폼 컨트롤 이름 — 켜진 상태로 폼과 함께 전송됩니다. */
+  name?: string;
+  /** 켜졌을 때 전송되는 값. @default "on" */
+  value?: string;
   labelStyle?: React.CSSProperties;
   style?: React.CSSProperties;
   id?: string;
