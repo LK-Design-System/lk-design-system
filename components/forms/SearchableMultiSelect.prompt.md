@@ -17,7 +17,7 @@
 - 선택 chip의 명시적인 제거 버튼은 키보드 사용자를 위해 별도 Tab stop을 유지합니다. 제거 후에는 검색 input으로 focus가 돌아갑니다. 따라서 input을 "유일한 Tab stop"으로 설명하지 않습니다.
 - `label`, `helper`, `error`, `required`는 `Input`/`FormField`와 같은 정보 계층을 사용합니다. `error`는 invalid styling과 한 개의 연결된 메시지를 제공하지만 검색이나 수정 자체를 막지 않습니다.
 - `readOnly`는 focus와 값 읽기를 유지하면서 검색·선택·chip 제거를 막고 popup을 열지 않습니다. `disabled`는 input과 action을 Tab 순서에서 제거합니다.
-- loading/empty는 `option`으로 위장하지 않습니다. combobox가 제어하는 빈 `listbox`는 유지하고, 보이는 안내는 그 옆의 live status로 분리합니다. 최대 선택 안내도 listbox 바깥 footer status에 둡니다.
+- loading/empty는 `option`으로 위장하지 않습니다. combobox가 제어하는 빈 `listbox`는 유지하고, 보이는 안내는 그 옆의 표현 전용 notice로 분리합니다. 낭독은 컨트롤 루트의 **상시 마운트된 숨김 status region**이 담당합니다 — popup 안 notice는 메시지와 함께 삽입되어 live region으로는 신뢰성 있게 낭독되지 않기 때문입니다. 최대 선택 안내도 같은 region이 공지합니다.
 - 선택 항목은 field 안의 LDS `Chip`과 option의 check 상태에 함께 남습니다. 선택 뒤에도 popup을 유지하며, disabled option과 최대 수로 잠긴 option은 active descendant와 pointer selection에서 제외합니다.
 - 자유 입력 태그에는 `TagInput`을 사용합니다. 기존 `Combobox`는 검색이 필요 없는 소규모 다중 선택의 호환 API이며, 검색·비동기 데이터·설명·disabled option이 필요하면 `SearchableMultiSelect`를 사용합니다.
 

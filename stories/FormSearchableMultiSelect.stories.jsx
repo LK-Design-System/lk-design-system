@@ -73,7 +73,7 @@ export const ResourceStates = {
     await settle();
     const popupId = input.getAttribute('aria-controls');
     const listbox = popupId ? canvasElement.ownerDocument.getElementById(popupId) : null;
-    const status = listbox?.parentElement?.querySelector('[role="status"]');
+    const status = canvasElement.querySelector('[role="status"]');
     if (listbox?.getAttribute('role') !== 'listbox' || listbox.querySelector('[role="option"]') || status?.textContent?.trim() !== '불러오는 중') {
       throw new Error('Loading must keep an empty controlled listbox and expose a separate status.');
     }

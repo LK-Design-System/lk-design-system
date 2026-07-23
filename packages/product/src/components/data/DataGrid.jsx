@@ -495,6 +495,16 @@ export function DataGrid({
       style={{ overflowX: 'auto', ...(variant === 'embedded' ? null : { border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)' }), ...style }}
       {...rest}
     >
+      {/* Mounted for the grid's whole life; only their text changes. A live
+          region inserted together with its first message (the bulk-action bar,
+          the loading/empty row) is not reliably announced, so the visible
+          surfaces stay presentational and these carry the announcements. */}
+      <span role="status" aria-live="polite" aria-atomic="true" style={visuallyHiddenStyle}>
+        {selectedCount > 0 ? `${selectedCount}개 선택됨` : ''}
+      </span>
+      <span role="status" aria-live="polite" aria-atomic="true" style={visuallyHiddenStyle}>
+        {loading ? loadingLabel : error == null && sorted.length === 0 ? emptyLabel : ''}
+      </span>
       <table
         aria-label={tableLabel}
         aria-colcount={logicalColumnCount || undefined}
@@ -551,7 +561,7 @@ export function DataGrid({
                 }}
               >
                 <div role="group" aria-label={`${selectionEntityLabel} 일괄 작업`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minHeight: headerH, padding: size === 'sm' ? '0 8px 0 12px' : '0 8px 0 16px' }}>
-                  <span role="status" aria-live="polite" aria-atomic="true" style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{selectedCount}개 선택됨</span>
+                  <span data-grid-selection-count style={{ color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{selectedCount}개 선택됨</span>
                   <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', marginLeft: 'auto' }}>
                     {renderedBulkActions}
                     <IconButton variant="plain" size="small" round={false} label={`${selectionEntityLabel} 선택 모두 해제`} title={`${selectionEntityLabel} 선택 모두 해제`} onClick={clearSelection}>
@@ -641,7 +651,10 @@ export function DataGrid({
           {(loading || error != null || sorted.length === 0) && (
             <tr>
               <td colSpan={colSpan} style={{ padding: 'var(--space-8) var(--space-4)', textAlign: 'center', borderBottom: 0 }}>
-                <div role={error != null ? 'alert' : 'status'} aria-live="polite" style={{ display: 'inline-grid', justifyItems: 'center', gap: 'var(--space-2)', color: error != null ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
+                {/* role="alert" announces on insertion by spec, so the error
+                    branch keeps it; loading/empty announce through the
+                    persistent status region above the table instead. */}
+                <div role={error != null ? 'alert' : undefined} style={{ display: 'inline-grid', justifyItems: 'center', gap: 'var(--space-2)', color: error != null ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
                   <span>{loading ? loadingLabel : error ?? emptyLabel}</span>
                   {stateActions}
                 </div>

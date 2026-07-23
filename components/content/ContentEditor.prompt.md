@@ -18,7 +18,7 @@
 - 맵/좌표 편집에는 `CanvasEditorShell`, 글 작성과 게시판 수정에는 `ContentEditor`를 사용하세요.
 - 본문만 필요한 짧은 메모는 `Textarea`를 쓰고, 제목/본문/저장 상태/액션이 함께 필요한 작성 화면은 `ContentEditor`를 쓰세요.
 - 실제 bold, link, markdown, mention 같은 편집 엔진은 제품 앱에서 연결하고, 디자인 시스템은 toolbar 위치와 상태 표시 계약만 제공합니다.
-- 슬롯과 상태: **titleLabel/titlePlaceholder/titleValue/defaultTitleValue/onTitleChange**(제목), **bodyLabel/placeholder/value/defaultValue/onValueChange/rows/maxLength/textareaProps/titleInputProps**(본문), **meta/helper/footer/actions**(하단), **status**(툴바 우측), **required/invalid/disabled/readOnly/busy**(상태), **titleId/bodyId/aria-label**(식별).
+- 슬롯과 상태: **titleLabel/titlePlaceholder/titleValue/defaultTitleValue/onTitleChange**(제목), **bodyLabel/placeholder/value/defaultValue/onValueChange/rows/maxLength/textareaProps/titleInputProps**(본문), **meta/helper/footer/actions**(하단), **status**(툴바 우측, 상시 마운트된 polite status region이라 텍스트 교체가 그대로 낭독됨), **required/invalid/disabled/readOnly/busy**(상태), **titleId/bodyId/aria-label**(식별).
 - 타입 스케일 정합: 푸터 메타 12.5px → `--caption1-size`(12px)로 스냅했습니다(−0.5px, 아래 스냅). 제목(heading1)·본문(body2)·라벨/상태(label2)와 함께 전 사이트가 토큰 스케일 위에 있으며, 메타 lineHeight 1.45는 유지했습니다.
 
 ## 툴바 계약

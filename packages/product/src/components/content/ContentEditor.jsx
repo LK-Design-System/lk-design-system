@@ -265,11 +265,12 @@ export function ContentEditor({
               />
             ))}
         </div>
-        {status != null && (
-          <div role="status" aria-live="polite" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 1.35 }}>
-            {status}
-          </div>
-        )}
+        {/* Mounted for the whole life of the editor; only the text changes. A
+            live region inserted together with its first message is not
+            reliably announced. */}
+        <div role="status" aria-live="polite" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 1.35 }}>
+          {status}
+        </div>
       </div>
       <div style={{ display: 'grid', gap: 'var(--space-2)', padding: 'var(--space-4)' }}>
         <label htmlFor={resolvedBodyId} style={{ fontSize: 'var(--label2-size)', lineHeight: 1.4, fontWeight: 'var(--fw-bold)', color: invalid ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-alternative)' }}>

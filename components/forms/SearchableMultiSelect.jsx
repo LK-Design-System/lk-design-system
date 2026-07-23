@@ -129,6 +129,13 @@ export function SearchableMultiSelect({
       data-readonly={readOnly ? 'true' : undefined}
       style={{ position: 'relative', display: 'grid', minWidth: 0, gap: 'var(--component-input-stack-gap)', fontFamily: 'var(--font-sans)', ...style }}
     >
+      {/* Mounted for the control's whole life; only the text changes. The
+          popup notices below are inserted together with their message, which
+          screen readers do not reliably announce, so they stay presentational
+          and this region carries the loading/empty/max announcements. */}
+      <span role="status" aria-live="polite" aria-atomic="true" style={{ position: 'absolute', width: 1, height: 1, margin: -1, padding: 0, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 }}>
+        {popupOpen ? (loading ? loadingLabel : !hasOptionList ? emptyLabel : maxReached ? resolvedMaxLabel : '') : ''}
+      </span>
       {label != null && (
         <label htmlFor={inputId} style={{ color: 'var(--component-input-label-color)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', fontWeight: 'var(--component-input-label-font-weight)' }}>
           {label}{required && <span style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>}
@@ -234,8 +241,8 @@ export function SearchableMultiSelect({
             );
               })}
             </div>
-            {!hasOptionList && <div role="status" aria-live="polite" style={{ padding: 'var(--space-4)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', textAlign: 'center' }}>{loading ? loadingLabel : emptyLabel}</div>}
-            {hasOptionList && maxReached && <div role="status" aria-live="polite" style={{ padding: 'var(--space-2) var(--space-3)', borderTop: '1px solid var(--color-semantic-line-normal-neutral)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{resolvedMaxLabel}</div>}
+            {!hasOptionList && <div data-multi-select-notice style={{ padding: 'var(--space-4)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', textAlign: 'center' }}>{loading ? loadingLabel : emptyLabel}</div>}
+            {hasOptionList && maxReached && <div data-multi-select-notice style={{ padding: 'var(--space-2) var(--space-3)', borderTop: '1px solid var(--color-semantic-line-normal-neutral)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>{resolvedMaxLabel}</div>}
           </div>
         )}
       </div>

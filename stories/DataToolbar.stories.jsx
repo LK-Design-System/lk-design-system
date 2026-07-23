@@ -120,7 +120,7 @@ export const ToolbarWithGrid = {
   play: async ({ canvasElement }) => {
     const initialToggle = canvasElement.querySelector('input[aria-label="전체 결과 사용자 128개 선택"]');
     const initialGroup = canvasElement.querySelector('[role="group"][aria-label="사용자 일괄 작업"]');
-    const initialStatus = initialGroup?.querySelector('[role="status"]');
+    const initialStatus = initialGroup?.querySelector('[data-grid-selection-count]');
     const initialRow = canvasElement.querySelector('input[aria-label="사용자 USR-104 선택 해제"]');
     if (!initialToggle || !initialGroup || !initialRow || initialStatus?.textContent?.trim() !== '2개 선택됨') {
       throw new Error('Explicit IDs must render entity labels and the two-item bulk band.');
@@ -131,7 +131,7 @@ export const ToolbarWithGrid = {
 
     await userEvent.click(initialToggle);
     const allToggle = canvasElement.querySelector('input[aria-label="전체 결과 사용자 128개 선택 해제"]');
-    const allStatus = canvasElement.querySelector('[role="group"][aria-label="사용자 일괄 작업"] [role="status"]');
+    const allStatus = canvasElement.querySelector('[role="group"][aria-label="사용자 일괄 작업"] [data-grid-selection-count]');
     if (!allToggle?.checked || allToggle.indeterminate || allStatus?.textContent?.trim() !== '128개 선택됨') {
       throw new Error('Select all must switch to allMatching and use totalCount for the band count.');
     }
@@ -142,7 +142,7 @@ export const ToolbarWithGrid = {
 
     const excludedRow = canvasElement.querySelector('input[aria-label="사용자 USR-104 선택"]');
     const partialToggle = canvasElement.querySelector('input[aria-label="전체 결과 사용자 128개 선택"]');
-    const partialStatus = canvasElement.querySelector('[role="group"][aria-label="사용자 일괄 작업"] [role="status"]');
+    const partialStatus = canvasElement.querySelector('[role="group"][aria-label="사용자 일괄 작업"] [data-grid-selection-count]');
     const contextualAction = canvasElement.querySelector('[aria-label="선택한 사용자 127명의 권한 변경"]');
     if (!excludedRow || excludedRow.checked || !partialToggle?.indeterminate || partialStatus?.textContent?.trim() !== '127개 선택됨' || !contextualAction) {
       throw new Error('Deselecting one allMatching row must add an exclusion and update the bulk context.');

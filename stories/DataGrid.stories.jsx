@@ -124,7 +124,7 @@ export const ControlledCollectionStates = {
 
     await userEvent.click(pageToggle);
     const bulkGroup = canvasElement.querySelector('[role="group"][aria-label="작업 일괄 작업"]');
-    if (bulkGroup?.querySelector('[role="status"]')?.textContent?.trim() !== '3개 선택됨') {
+    if (bulkGroup?.querySelector('[data-grid-selection-count]')?.textContent?.trim() !== '3개 선택됨') {
       throw new Error('The legacy page select-all callback must still receive all visible IDs.');
     }
 
@@ -489,7 +489,7 @@ export const DashboardCollectionContracts = {
     const selectAll = table.querySelector('input[aria-label="전체 결과 장비 8개 선택"]');
     if (!selectAll) throw new Error('The all-results selection control is missing.');
     await userEvent.click(selectAll);
-    if (table.querySelector('[role="status"]')?.textContent?.trim() !== '8개 선택됨') {
+    if (root.querySelector('[role="status"]')?.textContent?.trim() !== '8개 선택됨') {
       throw new Error('All-matching selection must use the collection total before paging.');
     }
     const next = root.querySelector('button[aria-label="next page"]');
@@ -498,7 +498,7 @@ export const DashboardCollectionContracts = {
     const pageTwoRow = table.querySelector('input[aria-label="장비 RBT-105 선택 해제"]');
     if (!pageTwoRow?.checked) throw new Error('All-matching selection must persist on the next page.');
     await userEvent.click(pageTwoRow);
-    if (table.querySelector('[role="status"]')?.textContent?.trim() !== '7개 선택됨') {
+    if (root.querySelector('[role="status"]')?.textContent?.trim() !== '7개 선택됨') {
       throw new Error('A page-two exclusion must update the lossless collection count.');
     }
     const previous = root.querySelector('button[aria-label="previous page"]');

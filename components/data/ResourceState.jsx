@@ -126,6 +126,18 @@ export function ResourceState({
       }}
       {...rest}
     >
+      {/* Mounted for the surface's whole life; only the text changes. The
+          state branches below are inserted together with their message, which
+          screen readers only announce reliably for role="alert" (announced on
+          insertion by spec). Alert-band states therefore stay silent here to
+          avoid double announcements, and every polite-band state (loading,
+          empty, restricted, first entry into a preserved stale/error band)
+          announces through this region. */}
+      <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
+        {resolvedState !== 'ready' && !assertive
+          ? `${resolvedTitle}${resolvedDescription ? `. ${resolvedDescription}` : ''}`
+          : ''}
+      </VisuallyHidden>
       {preservesContent && (
         <Banner
           role={statusRole}
@@ -141,16 +153,13 @@ export function ResourceState({
       )}
 
       {isLoading && (
-        <div role="status" aria-live="polite" style={{ minWidth: 0 }}>
-          <VisuallyHidden>
-            {resolvedTitle}{resolvedDescription ? `. ${resolvedDescription}` : ''}
-          </VisuallyHidden>
+        <div style={{ minWidth: 0 }}>
           {loadingContent ?? <DefaultLoadingContent />}
         </div>
       )}
 
       {isBlocking && (
-        <div role={statusRole} aria-live={statusLive} style={{ minWidth: 0 }}>
+        <div role={assertive ? 'alert' : undefined} aria-live={assertive ? 'assertive' : undefined} style={{ minWidth: 0 }}>
           <EmptyState
             icon={<Icon name={presentation.icon} size={26} aria-hidden="true" />}
             title={resolvedTitle}

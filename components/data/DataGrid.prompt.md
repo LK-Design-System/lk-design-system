@@ -80,6 +80,10 @@ DataGrid가 소유하는 것:
 
 ## 선택과 bulk band
 
+- 선택 수량과 loading/empty 전환은 표 위에 **상시 마운트된 숨김 status region** 두 개가
+  공지합니다. bulk band와 상태 행은 메시지와 함께 삽입되므로 그 자체는 표현 전용이고,
+  오류만 삽입 시 낭독이 명세로 보장되는 `role="alert"`를 상태 행이 직접 사용합니다.
+
 - `selectionModel`은 `{ mode: 'explicit', selectedIds }` 또는 `{ mode: 'allMatching', excludedIds }`입니다. 후자는 현재 서버 query 전체에서 일부 ID만 제외합니다.
 - `totalCount`는 현재 query의 전체 결과 수이며 `allMatching` band 수량은 `totalCount - excludedIds.length`입니다.
 - `selectAllScope="page"`는 현재 `rows`만 토글합니다. `selectAllScope="allMatching"`은 페이지를 넘어 전체 query 결과를 토글하므로 lossless model API와 함께 사용합니다.

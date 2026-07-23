@@ -14,12 +14,8 @@
       "components/navigation/TopBar.jsx": 1
     },
     "conditionalAriaLiveMount": {
-      "components/content/ContentEditor.jsx": 1,
-      "components/content/LogViewer.jsx": 1,
-      "components/data/DataGrid.jsx": 2,
-      "components/data/ResourceState.jsx": 3,
+      "components/data/ResourceState.jsx": 2,
       "components/data/SavedViewControl.jsx": 1,
-      "components/forms/SearchableMultiSelect.jsx": 2,
       "components/forms/ValidationSummary.jsx": 1,
       "components/overlay/ToastStack.jsx": 2
     },

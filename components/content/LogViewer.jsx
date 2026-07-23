@@ -199,6 +199,16 @@ export function LogViewer({
     setAnnouncement(arrivals.length === 1 ? latest : `새 로그 ${arrivals.length}줄, 마지막 ${latest}`);
   }, [lines, announceNewLines, following, matchesFilters]);
 
+  /* 스트림 상태 변화는 상시 마운트된 announcer로 알린다. 메타 행 자체를 live
+     region으로 두면 행이 상태와 함께 삽입되는 첫 전환을 놓친다. */
+  const prevStreamStatus = React.useRef(streamStatus);
+  React.useEffect(() => {
+    if (prevStreamStatus.current === streamStatus) return;
+    prevStreamStatus.current = streamStatus;
+    const label = streamStatus != null ? (STREAM_STATUS[streamStatus] || STREAM_STATUS.online).label : null;
+    if (label) setAnnouncement(`스트림 상태: ${label}`);
+  }, [streamStatus]);
+
   React.useEffect(() => {
     if (!paused && autoScroll && tailLocked) {
       window.requestAnimationFrame(scrollToLatest);
@@ -265,8 +275,10 @@ export function LogViewer({
 
   return (
     <div style={{ display: 'grid', gap: 'var(--space-2)', width: '100%', maxWidth: '100%', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+      {/* Presentational: stream-status changes are announced through the
+          persistent hidden announcer below, not by this conditional row. */}
       {(streamStatus != null || lastUpdatedAt != null || droppedCount > 0) && (
-        <div role="status" aria-live="polite" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
             {streamStatus != null && (() => {
               const cfg = STREAM_STATUS[streamStatus] || STREAM_STATUS.online;
