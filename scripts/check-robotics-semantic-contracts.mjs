@@ -2,6 +2,21 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
+// Robotics contracts live in this repository, but their implementations,
+// type surfaces, and pilot stories live in the external Robotics repository —
+// the same split check:robotics-storybook-browser handles with --root.
+const roboticsRootArg = process.argv.find((arg) => arg.startsWith('--root='))?.slice('--root='.length);
+const roboticsRoot = path.resolve(root, roboticsRootArg || '../lk-design-system-robotics');
+const contractRoots = [root, path.join(roboticsRoot, 'src'), roboticsRoot];
+
+function resolveContractPath(rel) {
+  for (const base of contractRoots) {
+    const candidate = path.join(base, rel);
+    if (existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
 const registryPath = path.join(root, 'docs/references/robotics/SEMANTIC_CONTRACTS.json');
 const productAuditPath = path.join(root, 'docs/references/product-frontends/COVERAGE_AUDIT.json');
 const allowedTones = new Set(['neutral', 'signal', 'positive', 'cautionary', 'negative']);
@@ -71,8 +86,12 @@ assert(axes.operability.values.some((value) => value.id === 'available'), 'Opera
 assert(axes.urgency.values.some((value) => value.id === 'critical'), 'Urgency must own critical.');
 
 for (const mapping of registry.componentMappings || []) {
-  const typePath = path.join(root, mapping.path);
-  assert(existsSync(typePath), `${mapping.component} type contract does not exist at ${mapping.path}.`);
+  const typePath = resolveContractPath(mapping.path);
+  assert(
+    typePath,
+    `${mapping.component} type contract does not exist at ${mapping.path} `
+    + `(searched this repository and ${path.relative(root, roboticsRoot)}; pass --root=<robotics checkout> if it lives elsewhere).`,
+  );
   assert(Array.isArray(mapping.axes) && mapping.axes.length > 0, `${mapping.component} must map at least one semantic axis.`);
   assert(mapping.axes.every((axis) => axisNames.includes(axis)), `${mapping.component} maps an unknown semantic axis.`);
   assert((mapping.doesNotOwn || []).every((axis) => axisNames.includes(axis)), `${mapping.component} excludes an unknown semantic axis.`);
@@ -86,8 +105,8 @@ for (const mapping of registry.componentMappings || []) {
   }
 
   if (mapping.promptPath) {
-    const promptPath = path.join(root, mapping.promptPath);
-    assert(existsSync(promptPath), `${mapping.component} prompt is missing.`);
+    const promptPath = resolveContractPath(mapping.promptPath);
+    assert(promptPath, `${mapping.component} prompt is missing at ${mapping.promptPath}.`);
     const prompt = readFileSync(promptPath, 'utf8');
     for (const asset of mapping.requiredProductAssets || []) {
       assert(prompt.includes(asset), `${mapping.component} prompt must record the ${asset} workflow decision.`);
@@ -98,8 +117,8 @@ for (const mapping of registry.componentMappings || []) {
   }
 
   if (mapping.storyPath && mapping.typeExport) {
-    const storyPath = path.join(root, mapping.storyPath);
-    assert(existsSync(storyPath), `${mapping.component} story is missing.`);
+    const storyPath = resolveContractPath(mapping.storyPath);
+    assert(storyPath, `${mapping.component} story is missing at ${mapping.storyPath}.`);
     const story = readFileSync(storyPath, 'utf8');
     for (const value of axes[mapping.axes[0]].values) {
       assert(story.includes(`connectionState=\"${value.id}\"`), `${mapping.component} story must render ${value.id}.`);

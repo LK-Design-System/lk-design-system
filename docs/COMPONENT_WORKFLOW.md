@@ -142,6 +142,7 @@ Storybook 표면의 LDS 자체 규칙:
 - 새 코드는 소유 계층의 `/core`, `/theme`, `/product`, `/robotics` 진입점으로 공개한다. Aggregate root는 호환용 합집합이며 별도 소유권을 만들지 않는다.
 - Core→Product/Robotics, Product→Robotics와 계층 순환을 만들지 않는다. 내부 helper도 `PUBLIC_EXPORT_CLASSIFICATION.json`에 owner를 등록하고 `npm run check:layers`를 통과한다.
 - 앱 route, 권한 정책, API 호출, transport 상태 머신은 public component contract에 넣지 않는다.
+- `editor`·`viz`·`robotics` 그룹은 계약(`.prompt.md`)이 이 저장소에, 구현·타입·스토리가 외부 Robotics 저장소에 있다. 이 이음새는 in-repo `check:api-drift`가 닿지 않으므로, 공개 prop을 바꾸면 `npm run check:robotics-contract-drift`(형제 checkout 대상, `--root=`로 위치 지정)를 통과해야 한다. 기존 드리프트는 `docs/references/robotics/CONTRACT_DRIFT_BASELINE.json` 래칫에 기록되어 있으며 새 드리프트만 실패한다.
 
 API와 상태 증거는 [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md), 접근성 증거는 [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)에 반영한다.
 
