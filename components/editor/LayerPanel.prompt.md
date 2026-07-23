@@ -23,8 +23,12 @@ Classification: **LK Robotics Extension**. Use it only when a workflow has a rea
 
 ## Contract
 
-- `activeLayerId` is the shared editor selection identifier for a layer/display node. It is not a selected waypoint, crop box, annotation, or other canvas object.
+- `activeLayerId` is the shared editor selection identifier for a layer/display node. It is not a selected waypoint, crop box, annotation, or other canvas object. Selection may also run uncontrolled via `defaultActiveLayerId`; with neither prop the first focusable layer starts active.
 - Expansion is controlled with `expandedLayerIds` or uncontrolled with `defaultExpandedLayerIds`. With neither prop, groups are expanded unless their layer data sets `expanded: false`.
+- Visibility and lock follow the same controlled/uncontrolled pattern: `visibleLayerIds`/`defaultVisibleLayerIds` and `lockedLayerIds`/`defaultLockedLayerIds`. With none of these, the initial sets derive from each layer's own `visible` (default true) and `locked` flags — do not mix per-layer flags with the panel-level props, one side owns the state. `onVisibleLayerIdsChange` and `onLockedLayerIdsChange` fire with `(ids, changedId, nextState)` so products can sync a single toggle without diffing the whole array.
+- `title` (default `레이어`) is the visible panel heading, rendered with the total node count; `label` (default `레이어 목록`) is the tree's accessible name. Keep both meaning the same hierarchy.
+- An empty `layers` array renders `emptyLabel` (default `레이어가 없습니다.`) as a polite status region instead of the tree. Use it for genuinely empty documents, not for loading states.
+- `disabled` freezes the entire panel: rows stay listed for context but selection, visibility, lock, and expansion changes are all rejected. Prefer per-layer `disabled` when only part of the hierarchy is off-limits.
 - Tree rows use a roving Tab stop. Up/Down move through visible nodes, Home/End move to the boundaries, Right expands or enters a group, Left collapses or returns to the parent, and printable-character typeahead moves focus by label. Enter/Space selects the focused node.
 - Focus and selection remain visually distinct: arrow navigation moves focus; Enter/Space or pointer activation changes selection. An externally changed `activeLayerId` restores the corresponding visible row as the roving Tab stop.
 - Visibility and lock are named `IconButton` actions. From a focused row, F2 enters its two-action mode, Left/Right moves between actions, and Escape returns to the row. Do not assign single-letter `V`/`L` shortcuts at the component layer; those collide with editor tools and text entry.

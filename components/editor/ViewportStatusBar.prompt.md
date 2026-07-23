@@ -14,6 +14,7 @@
 
 - `items` are persistent passive readouts. They are deliberately not a live region, so cursor, camera, and FPS updates do not continuously interrupt screen-reader users.
 - `message` is for a short viewport-local outcome or hint and uses a polite, atomic `status` live region. Persistent connection or document state belongs in the owning shell/header instead.
+- `messageTone` (default `default`) keeps a plain-text message unless the outcome is genuinely semantic; any non-default tone wraps the message in a status badge with a visible tone word (`messageToneLabel`, or the standard 활성/정상/주의/위험 default), so tone is never color-only. Do not use a toned message for routine confirmations.
 - `priority="high"` items render first and resist shrinking; `low` items render last and yield first. Source order is preserved within each priority tier.
 - The bar never wraps. It uses spacing instead of independent divider nodes, preventing orphaned separators when space contracts.
 - Use `mono` for coordinates, camera values, and frequently changing numeric telemetry. Toned values always include a visible semantic label; customize it with `toneLabel`/`messageToneLabel`.

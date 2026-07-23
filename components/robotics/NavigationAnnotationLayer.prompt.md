@@ -17,6 +17,7 @@ Classification: **LK Robotics Extension**. `NavigationAnnotationLayer`는 한 `<
 
 ## Contract
 
+- `children`은 조정에 참여할 내비게이션 오버레이 형제들입니다. layer는 SVG `<g>`이므로 반드시 소유 `<svg>` 안에서 합성하며, 자식은 위 오버레이 목록처럼 이 layer의 참여 계약을 구현한 fragment여야 합니다. 참여하지 않는 임의 SVG 노드는 그대로 통과 렌더되며 조정 대상도, 장애물도 되지 않습니다.
 - **라벨만 움직입니다.** 마커, 상태 badge, pin, focus/selection ring, hit target, 접근 가능한 이름, semantic mirror는 절대 이동·숨김 대상이 아닙니다. 오버레이가 등록한 마커·badge footprint는 불변 장애물로 참여합니다.
 - 충돌한 라벨은 수직으로만 밀리며(최대 `maxLabelDisplacementPx`, 기본 56 CSS px), 그 안에서 빈 슬롯이 없으면 **우선순위 낮은 라벨만** `visibility: hidden`으로 숨깁니다. 라벨은 모든 오버레이에서 `aria-hidden` 장식이므로 숨김은 접근성 트리·이름·24px target을 바꾸지 않습니다. MapLibre가 `text-allow-overlap`·`symbol-sort-key`로 map-wide symbol collision을 layer 정책에 두는 것과 같은 계층입니다.
 - 우선순위는 상태 우선입니다: selected(400) > focused(300) > alarm·invalid·unavailable·conflict(200) > active·current(100) > 기본(0). 동률은 페인트 순서 계약(`docs/ROBOTICS_PATTERNS.md`)을 미러한 kind 가중(region < lane < route < trajectory < waypoint < facility), 그다음 annotation id 사전순으로 갈립니다. 같은 입력은 항상 같은 배치를 냅니다.

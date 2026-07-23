@@ -24,6 +24,10 @@
 ## 컴포넌트 계약
 
 - 상태 축은 `linkState`, 서버가 부여한 `authority`, 사용자의 `armed`, 선택적인 외부 `deadmanActive`, focus/window 상태로 분리합니다. 하나의 `enabled` boolean으로 합치지 않습니다.
+- `children`은 이동 조작기 영역입니다. 정적 노드도 허용하지만, 권장 형태는 `{ interactionEnabled, blockReason, focused, controlMode, stopRequestState }` context를 받는 render function입니다 — 조작기의 disabled 여부를 세션의 게이트 판정과 어긋나게 소비자가 재계산하지 않게 합니다.
+- `controlMode`(기본 `pointer`)는 이 세션의 입력 방식 선언이며 footer의 `입력 방식` 표기와 focus 게이트 판정에 쓰입니다. `keyboard`/`hybrid`는 키보드 명령이 세션 밖으로 새지 않도록 focus 계약과 함께 사용합니다.
+- `focusRequired`(기본 `false`)는 `controlMode`가 `keyboard`/`hybrid`일 때만 의미가 있습니다. 켜면 세션 영역이 tab focus를 받고, focus를 잃는 순간 `focus-lost` 사유로 입력이 차단되며 `onSafetyReleaseRequest('focus-lost')`가 요청됩니다. pointer 모드에서는 focus를 요구하지 않습니다.
+- `onFocusChange(focused)`는 세션 영역의 focus 진입/이탈을 알립니다. 제품이 focus 상태를 별도 텔레메트리나 안내 문구에 반영할 때 쓰며, 입력 차단 자체는 세션이 소유하므로 이 callback으로 게이트를 재구현하지 않습니다.
 - 화면의 읽기·DOM·키보드 순서는 **세션 이름과 설정된 제어 한도 → 연결/권한 전제조건 → 독립된 운행 정지 요청 → 세션 전체 상태 Banner → 이동 입력 → arm/입력 방식**입니다.
 - 제목은 실제 heading이며 `section`의 `aria-labelledby`가 됩니다. `headingLevel`은 주변 문서 구조에 맞춰 2–6으로 조정합니다.
 - `sessionMeta`는 안전 인증 한계가 아니라 제품이 설정한 제어 한도/정책임을 명시하는 문구로 씁니다. `0.4 m/s`가 안전한지는 질량, 제동거리, 시야, 환경을 포함한 현장 위험성 평가 없이는 판단할 수 없습니다.

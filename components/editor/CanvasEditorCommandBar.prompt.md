@@ -17,7 +17,10 @@ Use it in the shell `toolbar` slot for history and document-lifecycle commands. 
 ```
 
 - The visual order is history → document actions → custom document work. Semantic separators divide those groups.
+- The history group is the built-in `HistoryToolbar` and renders by default; set `showHistory={false}` only when the owning editor has no undo model at all. Supplying `onReset` adds a reset-changes command to that group — reserve it for editors where discarding all pending changes is a real, recoverable operation.
 - A history command is enabled only when both its `can*` state and handler permit it. A document action without a handler is ignored unless it is explicitly supplied as a disabled state.
+- `children` is the escape hatch for document work that needs a real component instead of an icon action — a labelled save `Button`, a status chip. It renders as the trailing group; commands that fit the icon-action shape belong in `documentActions`.
+- Each group carries its own accessible name: `historyLabel` (default `편집 이력`) for the history toolbar, `documentLabel` (default `문서 명령`) for the document-action toolbar, and `extraLabel` (default `문서 작업`) for the `children` group. Override them per product domain; screen-reader users navigate between groups by these names.
 - Named action groups use toolbar semantics and Arrow/Home/End roving focus. Add `ariaKeyShortcuts` to document actions, or `undoKeyShortcuts`/`redoKeyShortcuts` to history, only when the product implements those shortcuts.
 - Every built-in action group shares the same private focus engine as the editor and viewer toolbars so dynamic disabled/removed actions cannot create multiple Tab stops or lose the remembered command.
 - `size="sm"` uses the 32px LDS `IconButton`; `size="md"` uses 40px.

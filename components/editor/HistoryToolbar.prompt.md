@@ -17,6 +17,7 @@
 - Dynamic availability, focus memory, and Arrow/Home/End behavior use the same private roving-focus engine as `EditorToolbar`, `ViewerToolbar`, and `CanvasEditorCommandBar`; do not reimplement index-based focus state in individual toolbars. If the last available command becomes unavailable while focus is inside, focus moves to the toolbar fallback; when a command returns, it moves to the preferred command again.
 - Consumer `onKeyDown` and `onFocusCapture` handlers are composed before the internal roving behavior. Calling `preventDefault()` intentionally cancels the internal key/focus update without replacing the handler itself.
 - `size="sm"` uses the 32px LDS `IconButton`; `size="md"` uses 40px.
+- `label` (default `편집 이력`) is the toolbar's accessible name; screen-reader users identify the group by it, so override it only with a name that still means edit history. The individual command names (`실행 취소`, `다시 실행`, `변경사항 초기화`) are fixed.
 - This component owns edit history only. View reset belongs in a viewport-local viewer toolbar.
 
 ## Research basis

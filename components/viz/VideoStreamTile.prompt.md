@@ -13,11 +13,14 @@ Pass a `<video>`, WebRTC renderer, iframe, or image as `children`. The DS owns t
 </VideoStreamTile>
 ```
 
-- The default state is `idle`, never an unverified `live` claim.
+- The default state is `idle`, never an unverified `live` claim. `state` is the normalized-state prop for new code; `status` is a compatibility alias that `state` always wins over — do not supply both in new work.
+- The region's accessible name comes from `ariaLabel` when supplied; otherwise a string `label` derives `"{label} 영상 스트림"` and a missing/non-string label falls back to `영상 스트림`. Set `ariaLabel` explicitly whenever `label` is a non-string node or several tiles would otherwise share one name.
+- `aspectRatio` (default `16 / 9`) is a CSS `aspect-ratio` value that sizes the tile from its width. Match it to the real stream ratio (`4 / 3`, `1 / 1`) instead of letterboxing inside the child renderer; give the tile an explicit height only when the owning grid requires it.
+- The chrome slots follow the shared `ViewerFrame` contract: `badges` is passive identity context beside `label`, `hud` carries a few essential stream readouts, and `overlay` is a non-interactive layer above the video (crosshair, privacy mask) — controls belong in `toolbar` only.
 - `live` uses both icon and text. Loading/connecting states include visible text and `aria-busy`; they do not rely on a spinner alone.
 - `degraded`, `stale`, `frozen`, and user-requested `paused` are distinct non-blocking states. They preserve the last frame with an edge message.
 - `no-source`, `unavailable`, `disconnected`, `no-signal`, and `error` are blocking. Child media controls and local toolbar controls become `inert` and `aria-hidden`, while source identity remains visible.
-- A retry/resume control may be supplied through `stateAction`; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked.
+- A retry/resume control may be supplied through `stateAction`; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked. `stateLabel`, `stateDescription`, and `stateIcon` override only the normalized state's wording and glyph per `ViewerFrame`'s rules — never its blocking or live-region behavior.
 - Use the local toolbar for mute, captions, snapshot, and fullscreen. Recording archives, timelines, playback-session controls, and retry policy are intentionally omitted from this DS component.
 - `variant="embedded"`는 이 타일을 다른 표면 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. source·HUD·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 `standalone`은 자체 외곽선을 그립니다.
 

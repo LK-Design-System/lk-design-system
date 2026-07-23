@@ -14,16 +14,19 @@
 
 ## Contract
 
+- `children`은 pan/zoom transform을 함께 타는 공간 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지)입니다. 정적 노드 외에 `{ viewport, setViewport }`를 받는 render function도 지원하므로, renderer가 현재 배율에 반응하거나 자체 fit 로직에서 viewport를 갱신할 때 제어형 상태를 중복 소유하지 않아도 됩니다.
 - 기본 `contentOrigin="top-left"`는 일반 이미지, SVG, canvas의 `(0, 0)`을 viewport 좌상단에 놓습니다. 세계 좌표 원점을 화면 중심에 두어야 하는 renderer만 `contentOrigin="center"`를 명시하고 자체 콘텐츠 offset을 제공합니다.
+- 줌 배율은 `minZoom`(기본 0.25)–`maxZoom`(기본 8) 사이로 clamp되며 휠·키보드·컨트롤 모든 입력 경로에 동일하게 적용됩니다. 픽셀 지도가 깨지는 배율이나 의미 없는 축소를 막을 때만 범위를 좁히고, 두 값이 곧 컨트롤의 disabled 경계가 됩니다.
 - 휠/trackpad 줌은 포인터 아래의 맵 좌표를 유지합니다. `wheelZoom={false}`로 끌 수 있습니다.
 - `panEnabled={false}`에서는 drag와 `touch-action: none`을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.
-- 키보드 shortcut은 viewport 자체에 포커스했을 때만 동작합니다: `+`/`-` 줌, `0` 초기화, 방향키 팬, `Shift+방향키` 큰 폭 팬. Toolbar, input, slider 등 자식 컨트롤의 방향키는 가로채지 않습니다.
+- 키보드 shortcut은 viewport 자체에 포커스했을 때만 동작합니다: `+`/`-` 줌, `0` 초기화, 방향키 팬, `Shift+방향키` 큰 폭 팬. Toolbar, input, slider 등 자식 컨트롤의 방향키는 가로채지 않습니다. `keyboard={false}`는 이 shortcut과 viewport의 tab stop을 함께 제거하므로, 앱이 자체 키보드 pan/zoom 대안을 제공할 때만 끕니다.
 - button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.
 - `defaultViewport`는 초기값인 동시에 **보기 초기화**가 복귀할 값입니다. `viewport` + `onViewportChange`로 제어형 사용도 지원합니다.
 - `onFit`을 제공하면 built-in toolbar에 **전체 보기** command가 추가됩니다. bounds 계산은 앱/renderer가 소유하고 callback에서 제어형 viewport를 갱신합니다. `toolbar`를 제공하면 built-in toolbar를 명시적으로 대체합니다.
 - `onWheel`은 pointer-focal zoom에 필요한 non-passive native `WheelEvent` callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.
 - `overlay`는 passive visual slot이며 포인터 입력을 받지 않습니다. 별도 조작은 viewport-local toolbar 또는 앱 소유 UI로 구성합니다.
-- 공통 `ViewerFrame`을 합성하므로 `state`, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. 지도 전용 loading/error chrome을 별도로 만들지 않습니다.
+- 공통 `ViewerFrame`을 합성하므로 `state`, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. `source` 옆의 passive `badges`, 소수의 필수 readout만 담는 `hud`, 상태 문구·글리프·복구 액션 오버라이드(`stateLabel`, `stateDescription`, `stateIcon`, `stateAction`)는 모두 `ViewerFrame` 계약을 그대로 통과시키는 prop입니다. 지도 전용 loading/error chrome을 별도로 만들지 않습니다.
+- `label`(기본 `2D 맵 캔버스`)은 region의 접근 가능한 이름입니다. 한 화면에 viewport가 여럿이면 소스가 드러나는 이름(`1층 점유 지도`)으로 반드시 구분합니다.
 - `appearance="light"`가 기본이지만 `appearance="dark"`도 동일한 공개 계약입니다. 지도 renderer와 overlay는 `--viewer-*` 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.
 - `variant="embedded"`는 이 캔버스를 다른 표면(Card, 패널 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. pan/zoom·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 `standalone`은 자체 외곽선을 그립니다.
 

@@ -15,7 +15,10 @@ Use it for point clouds, digital twins, Three.js, or React Three Fiber output. T
 </Scene3DFrame>
 ```
 
+- `children` is the renderer output itself (a Three.js/R3F `Canvas`, point-cloud viewer). The frame never touches the render loop; it only removes the content from focus and accessibility trees while a blocking state is active.
 - Use `ready` for a usable static scene and `live` only when the source is actually advancing.
+- The chrome slots follow the shared `ViewerFrame` contract: `badges` is passive identity context beside `title`, `hud` is a few essential readouts (point count, FPS budget), and `overlay` is a non-interactive render layer above the content — none of them accept controls, which belong in `toolbar`.
+- `stateLabel`, `stateDescription`, `stateIcon`, and `stateAction` override the normalized state's default copy, glyph, and recovery action per `ViewerFrame`'s rules; they refine wording for the product domain without changing blocking or live-region behavior.
 - `appearance="dark"` is the contextual default, not a restriction. Use `appearance="light"` when the surrounding product or renderer needs a light inspection surface; custom scene/HUD content must use the scoped `--viewer-*` roles so both variants remain legible.
 - `degraded`, `stale`, and `frozen` keep the last scene visible with an edge status. Loading, unavailable, disconnected, and error states block and remove renderer/tool controls from the focus and accessibility trees.
 - Keep orbit, pan, zoom, focus, home, orientation, and display controls in the local `toolbar` slot. Keep document/history commands in `CanvasEditorShell`.

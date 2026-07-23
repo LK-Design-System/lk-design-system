@@ -13,6 +13,7 @@
 - `precision`은 소비자가 명시적으로 고정 소수 자릿수를 원할 때만 사용합니다. `formatter`는 string/number를 반환하며 주변 공백을 정규화한 결과가 화면과 기본 `aria-valuetext`에 함께 반영됩니다. 도메인 문구가 더 필요할 때 `valueText`로 명시합니다.
 - meter arc는 light/dark surface 모두에서 비텍스트 그래픽 대비를 확보하는 semantic status text role을 사용하고, 상태 의미는 별도 text badge로도 제공합니다.
 - 보이는 `label`이 meter의 accessible name이 됩니다. 라벨이 없으면 `aria-label`을 제공해야 합니다.
+- `size`(지름 px, 기본 120)와 `thickness`(링 두께 px, 기본 10)는 밀도 조정용 크기 축입니다. 중앙 값·단위 typography는 `size`에 비례해 함께 조정되므로 대시보드 격자에 맞춰 지름만 바꾸면 됩니다. 두께는 arc의 비텍스트 대비 면적을 좌우하므로 지름을 크게 키울 때 외에는 기본값을 유지합니다.
 - 제품 도메인이 severity를 판정해 `tone`과 구체적인 `statusLabel`을 전달하는 방식을 우선합니다. 상태는 색과 함께 텍스트 badge로 항상 표시됩니다.
 - `thresholds`는 기존 사용처 호환용입니다. 새 사용처에서는 `direction: "higher-is-better" | "lower-is-better"`를 반드시 명시하며, 가능하면 제품에서 threshold를 계산하고 `tone`을 전달하세요.
 - meter는 읽기 전용이므로 키보드 상호작용과 live announcement가 없습니다. 측정값을 매 갱신마다 `aria-live`로 읽지 않습니다.

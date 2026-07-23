@@ -13,6 +13,7 @@
 
 ## Contract
 
+- Toolbar의 `children`은 `ViewerToolbarButton` 컨트롤 목록입니다. roving focus는 enabled 버튼만 등록하므로, 임의 컴포넌트를 끼워 넣으면 키보드 시퀀스에서 제외됩니다 — 다른 형태의 컨트롤이 필요하면 toolbar 밖에서 조합합니다. 버튼 쪽 `children`은 16px 아이콘 glyph 슬롯입니다.
 - `ViewerToolbarButton`은 icon-only control이므로 `label`이 필수이며 icon은 16px, control은 LDS small icon-control과 같은 32px입니다.
 - 일회성 zoom/reset/fit은 기본 `kind="command"`이며 `aria-pressed`를 노출하지 않습니다. 유지되는 visibility/mode만 `kind="toggle"` + `pressed/defaultPressed`를 사용하고, 꺼짐도 `aria-pressed="false"`로 명시합니다.
 - Toolbar는 EditorToolbar와 같은 private roving-focus engine을 사용하지만 enabled `ViewerToolbarButton`만 대상으로 삼습니다. 내부 Popover·field·nested toolbar의 버튼을 섞지 않습니다. `role="presentation"`/`role="none"` 래퍼는 소유권을 바꾸지 않지만, nested toolbar처럼 자체 semantic role을 가진 composite는 자기 roving sequence를 소유합니다. Editor의 설명 가능한 `aria-disabled` mode와 달리 Viewer의 unavailable command는 방향키 탐색에서도 제외합니다.
