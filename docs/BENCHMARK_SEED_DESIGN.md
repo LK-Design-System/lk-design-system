@@ -73,8 +73,17 @@ rootage(토큰 IR)·qvism(zero-runtime recipe) 상당물은 **두 번째 스킨 
 
 ### 병행 채택 (publish 준비와 함께)
 
-- **비주얼 회귀 전 스토리 확대** — Chromatic 또는 자체 캡처 확장. 36장면 감시는 이번 정비
-  에서 감시 밖 마크업 변경("픽셀 동일" 주장)을 측정 없이 신뢰하게 만든 원인이었다.
+- **비주얼 회귀 전 스토리 확대** — 36장면 감시는 이번 정비에서 감시 밖 마크업 변경("픽셀
+  동일" 주장)을 측정 없이 신뢰하게 만든 원인이었다. 2026-07-24 스코핑 실측:
+  현행 36장면 = 2.2MB(평균 58KB/장), 전 스토리(480장) 확장 시 베이스라인 약 30~50MB가
+  저장소에 추가되고 갱신마다 히스토리가 그만큼 자란다(pack 131MB 기준 유의미 — Git LFS 또는
+  아티팩트 저장 검토). 캡처 시간은 스토리당 ~2초 × 480 ≈ 16분, a11y 하네스의 `A11Y_SHARD`
+  선례로 4분할 시 ~5분. 간헐 흔들림(툴팁 0.005% 사례)이 표면적 13배로 늘므로 재캡처-재대조
+  재시도가 필수다. 대안 Chromatic은 저장소 부담 0·리뷰 UI 제공이지만 무료 5천 스냅샷/월로는
+  월 ~10회 push가 한계라 유료 단계 진입이 전제고, 내부 DS 화면의 외부 업로드 정책 판단이
+  필요하다. **권고: 자체 확장(비용 0, 기존 Playwright 인프라 재사용)을 먼저 하고, Chromatic은
+  다중 소비자·PR 리뷰 수요가 생기는 시점에 재평가.** 실행은 저장소 용량 정책(LFS 여부) 결정과
+  함께 착수한다.
 - **changesets 기반 릴리스 + codemod** — 외부 publish를 여는 시점에 도입. BrandLogo 장식
   기본값 전환, ButtonGroup 기본 라벨 제거 같은 소비자 가시 변경은 codemod 대상이다.
 - **AI 소비 표면** — prompt.md 계약을 llms.txt 형태로 노출하는 것은 저비용이며, seed의
@@ -89,15 +98,14 @@ seed의 [Loading 패턴 문서](https://seed-design.io/patterns/loading)가 보�
 보여주는가" — 는 어느 prompt.md도 소유하지 않는다. 이 장르는 엔지니어만이 아니라
 디자이너·PM이 소비하는 결정 가이드다.
 
-- 계획할 패턴 문서(우선순위순): **Loading**(Skeleton·Spinner·ProgressBar·CircularProgress·
-  Dimmer·ResourceState 중재 + 시간 임계 + 단계별 피드백), **Empty·Error 상태**(EmptyState·
+- 계획할 패턴 문서(우선순위순): **Loading**(Skeleton·Spinner·ProgressBar·CircularProgress·Dimmer·ResourceState 중재 + 시간 임계 + 단계별 피드백 — v1을 [`LOADING_PATTERN.md`](LOADING_PATTERN.md)로 2026-07-24 작성했고, 디자이너 소비자가 붙으면 Storybook 라이브 렌더 페이지로 승격), **Empty·Error 상태**(EmptyState·
   Banner·Callout·ResourceState), **알림·피드백 선택**(Toast·Snackbar·Notification·Banner·
   Dialog), **폼 검증 흐름**(inline·summary·submit 시점).
 - LDS판의 우위 요소를 살린다: 정적 이미지 대신 **Storybook 페이지에서 실제 컴포넌트를
   렌더**하고, 시간 임계는 외부 연구(Nielsen 응답 시간 한계 등)를 인용하며, 시나리오는 당근
   앱 대신 **로보틱스 운영 도메인**(텔레메트리 스트림 진입, 맵 로딩, 명령 제출, 내보내기)
-  에서 가져온다. 이미 코드가 강제하는 계약(1초 지연 규칙, reduced-motion, ResourceState의
-  상태 머신)은 문서가 코드를 가리키게 한다.
+  에서 가져온다. 이미 코드가 강제하는 계약(reduced-motion 정지, ResourceState의 상태 머신, Dimmer의
+  aria-busy·inert)은 문서가 코드를 가리키게 한다.
 - 흉내 낼 수 없는 것도 기록해 둔다: seed의 시나리오는 실사용 데이터에서 나온 것이다. LDS
   패턴 문서의 시나리오는 소비 제품이 생기기 전까지는 설계 가설이며, 그렇게 표기한다.
 

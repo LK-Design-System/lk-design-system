@@ -33,6 +33,7 @@
 | [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | AI가 사용하는 token·composition·copy 규칙 |
 | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 독립 설계 근거와 제품 coverage mapping |
 | [`BENCHMARK_SEED_DESIGN.md`](BENCHMARK_SEED_DESIGN.md) | seed-design 정면 비교와 계층·파이프라인 채택 로드맵(트리거 포함) |
+| [`LOADING_PATTERN.md`](LOADING_PATTERN.md) | 로딩 요소 6종 사이의 선택·시간 기준·단계별 피드백을 중재하는 수평 패턴 가이드 |
 
 ## Current registers and coverage
 
