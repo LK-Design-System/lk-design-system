@@ -48,26 +48,29 @@ export function ChartFrame({
       }}
       {...rest}
     >
-      <header style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0, padding: 'var(--space-4) var(--space-5)', borderBottom: preservesData ? 'none' : '1px solid var(--color-semantic-line-normal-normal)', flexWrap: 'wrap' }}>
-        <div style={{ display: 'grid', gap: 'var(--space-1)', flex: '1 1 240px', minWidth: 0 }}>
-          <Heading id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere' }}>
-            {title}
-          </Heading>
-          {description != null && (
-            <p id={descriptionId} style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', overflowWrap: 'anywhere' }}>
-              {description}
-            </p>
-          )}
-          {meta != null && (
-            <div style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
-              {meta}
+      <header style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0, padding: 'var(--space-4) var(--space-5)', borderBottom: preservesData ? 'none' : '1px solid var(--color-semantic-line-normal-normal)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-2)', flex: '1 1 240px', minWidth: 0, flexWrap: 'wrap' }}>
+            <Heading id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', overflowWrap: 'anywhere' }}>
+              {title}
+            </Heading>
+            {meta != null && (
+              <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-2)', minWidth: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
+                <span aria-hidden="true">·</span>
+                {meta}
+              </div>
+            )}
+          </div>
+          {actions != null && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
+              {actions}
             </div>
           )}
         </div>
-        {actions != null && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
-            {actions}
-          </div>
+        {description != null && (
+          <p id={descriptionId} style={{ margin: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', overflowWrap: 'anywhere' }}>
+            {description}
+          </p>
         )}
       </header>
 

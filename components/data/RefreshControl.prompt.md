@@ -13,6 +13,8 @@
 />
 ```
 
+- 정렬 순서는 **freshness 텍스트 → 자동 간격 select → 새로고침 icon action**입니다. 대시보드 카드 코너에 놓였을 때 수동 정보가 아니라 action이 최외곽(코너 쪽)에 오는 업계 관행(AWS 콘솔·Grafana)을 따릅니다.
+- 새로고침은 icon-only `Button`이며 `refreshLabel`이 접근 가능한 이름과 tooltip을 제공합니다. 텍스트 라벨 버튼은 empty/error 상태의 복구 CTA에서만 사용합니다.
 - `refreshing`은 중복 실행을 막고 loading label을 제공합니다. `onRefresh`가 없으면 no-op action을 남기지 않고 수동 control을 비활성화합니다.
 - `lastUpdated`는 마지막 정상 데이터 시각입니다. stale 판단은 제품이 수행하고 `ResourceState state="stale"`에 전달합니다.
 - 자동 간격은 controlled `Select`일 뿐 timer를 만들지 않습니다. `onAutoRefreshChange`가 없으면 선택 가능한 것처럼 보이는 no-op select 대신 read-only 의미로 비활성화합니다.

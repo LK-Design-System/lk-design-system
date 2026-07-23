@@ -55,7 +55,7 @@ export const ControlledRefresh = {
   ),
   render: () => <RefreshDemo />,
   play: async ({ canvasElement }) => {
-    const refreshButton = [...canvasElement.querySelectorAll('button')].find((button) => button.textContent?.includes('새로고침'));
+    const refreshButton = [...canvasElement.querySelectorAll('button')].find((button) => button.getAttribute('aria-label') === '새로고침');
     const event = canvasElement.querySelector('[data-testid="operation-event"]');
     if (!refreshButton || !event) throw new Error('Refresh must expose a normal focusable control and a product status target.');
     await userEvent.click(refreshButton);

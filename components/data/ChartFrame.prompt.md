@@ -15,7 +15,8 @@
 </ChartFrame>
 ```
 
-- 읽기 순서는 **title/description/meta → actions → resource message → chart → legend → freshness**입니다.
+- 읽기 순서는 **title/meta → actions → description → resource message → chart → legend → freshness**입니다.
+- header는 2단 구조입니다: 첫 행에 title과 보조 meta(구분점으로 연결)를 두고 actions를 그 행에 세로 중앙 정렬하며, description은 아래 행에서 전체 폭을 씁니다. 세로 스택 옆에 툴바가 떠 있는 형태를 만들지 않습니다.
 - `ResourceState`를 embedded로 조합해 initial loading은 Skeleton으로 대체하고, refreshing/stale/error는 마지막 정상 chart와 legend를 유지합니다.
 - 한 개의 card surface만 만듭니다. 차트나 상태 안에 추가 card를 넣지 않습니다.
 - frame region은 title과 description에 연결됩니다. 차트는 별도의 `aria-label`, description, deterministic summary를 계속 제공해야 합니다.
