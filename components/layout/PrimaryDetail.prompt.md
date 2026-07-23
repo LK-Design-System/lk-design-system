@@ -19,6 +19,7 @@
 - `closeLabel`은 inline close와 overlay Drawer close에 동일하게 전달되어 presentation 전환 뒤에도 명령 이름이 바뀌지 않습니다.
 - `detailOpen`, 선택된 항목, URL/history, breakpoint 판정은 controlled 제품 state입니다. 레이아웃이 임의로 선택이나 route를 바꾸지 않습니다.
 - inline 닫기 역시 `returnFocusRef`가 가리키는 선택 trigger로 초점을 돌립니다.
+- `detailFooter`는 inline과 overlay(Drawer) 모두에서 우측 정렬 action 행입니다. 패널의 핵심 action은 여기에 강조 variant로 두고, "전체 보기" 같은 이동은 본문에서 `TextButton`/link로 낮춥니다.
 - 제품은 normal/narrow breakpoint에서 같은 상세 콘텐츠를 두 presentation에 전달해야 합니다.
 
 ## 비교와 결정 근거

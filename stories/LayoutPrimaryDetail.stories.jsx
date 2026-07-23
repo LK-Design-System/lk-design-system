@@ -1,6 +1,6 @@
 import React from 'react';
 import { userEvent } from 'storybook/test';
-import { Button, DescriptionList, PrimaryDetail, StatusBadge } from '../src/index.js';
+import { Button, DescriptionList, PrimaryDetail, StatusBadge, TextButton } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const ITEMS = [
@@ -9,23 +9,31 @@ const ITEMS = [
   { id: 'AMR-12', name: '검수 구역 로봇', zone: 'B-09', state: '대기' },
 ];
 
+const stateTone = (state) => (state === '운행 중' ? 'positive' : state === '점검 필요' ? 'cautionary' : 'neutral');
+
 function ItemList({ selectedId, onSelect, refs }) {
   return (
     <div role="list" aria-label="로봇 목록" style={{ display: 'grid', minWidth: 0 }}>
+      <style>
+        {`.lk-story-primary-item { background: transparent; }
+        .lk-story-primary-item:hover { background: var(--color-semantic-fill-normal); }
+        .lk-story-primary-item[aria-current="true"] { background: var(--color-semantic-primary-surface-normal); box-shadow: inset 2px 0 0 var(--color-semantic-primary-normal); }`}
+      </style>
       {ITEMS.map((item) => (
         <div key={item.id} role="listitem" style={{ minWidth: 0 }}>
           <button
             ref={(node) => { refs.current[item.id] = node; }}
             type="button"
+            className="lk-story-primary-item"
             aria-current={selectedId === item.id ? 'true' : undefined}
             onClick={() => onSelect(item.id)}
-            style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto', gap: 'var(--space-2)', width: '100%', minWidth: 0, padding: 'var(--space-4)', border: 'none', borderBottom: '1px solid var(--color-semantic-line-normal-normal)', background: selectedId === item.id ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', color: 'var(--color-semantic-label-normal)', textAlign: 'left', cursor: 'pointer' }}
+            style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto', alignItems: 'center', gap: 'var(--space-2)', width: '100%', minWidth: 0, padding: 'var(--space-4)', border: 'none', borderBottom: '1px solid var(--color-semantic-line-normal-normal)', color: 'var(--color-semantic-label-normal)', textAlign: 'left', cursor: 'pointer' }}
           >
             <span style={{ display: 'grid', gap: 3, minWidth: 0 }}>
               <strong style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--body2-size)' }}>{item.name}</strong>
               <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)' }}>{item.id} · {item.zone}</span>
             </span>
-            <StatusBadge tone={item.state === '운행 중' ? 'positive' : item.state === '점검 필요' ? 'cautionary' : 'neutral'}>{item.state}</StatusBadge>
+            <StatusBadge tone={stateTone(item.state)}>{item.state}</StatusBadge>
           </button>
         </div>
       ))}
@@ -38,14 +46,15 @@ function Detail({ item, actionRef }) {
   return (
     <div style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0 }}>
       <DescriptionList
+        variant="stacked"
         items={[
           { term: 'ID', description: item.id },
           { term: '운영 구역', description: item.zone },
-          { term: '현재 상태', description: item.state },
+          { term: '현재 상태', description: <StatusBadge tone={stateTone(item.state)}>{item.state}</StatusBadge> },
           { term: '마지막 통신', description: '오늘 14:32' },
         ]}
       />
-      <Button ref={actionRef} size="sm" variant="ghost">전체 기록 보기</Button>
+      <TextButton ref={actionRef} size="sm" style={{ justifySelf: 'start' }}>전체 기록 보기</TextButton>
     </div>
   );
 }
@@ -72,7 +81,7 @@ function PrimaryDetailDemo({ mode = 'inline' }) {
         returnFocusRef={returnFocusRef}
         primary={<ItemList selectedId={selectedId} onSelect={setSelectedId} refs={itemRefs} />}
         detail={<Detail item={selected} actionRef={detailActionRef} />}
-        detailFooter={<Button size="sm" variant="ghost">정비 요청</Button>}
+        detailFooter={<Button size="sm" variant="secondary">정비 요청</Button>}
         style={{ minHeight: 300 }}
       />
     </div>
