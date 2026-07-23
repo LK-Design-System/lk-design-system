@@ -1,17 +1,17 @@
-"use client";
-import {
-  Chip
-} from "./chunk-YWI3XRCL.js";
-import {
-  IconButton
-} from "./chunk-5B7KHE4A.js";
-import {
-  Icon
-} from "./chunk-JNVDI5OO.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkBCWCCXJXcjs = require('./chunk-BCWCCXJX.cjs');
+
+
+var _chunkITIFTVTBcjs = require('./chunk-ITIFTVTB.cjs');
+
+
+var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
 
 // components/forms/SearchableMultiSelect.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 function optionText(option) {
   if (typeof option.label === "string" || typeof option.label === "number") return String(option.label);
   return String(option.value);
@@ -57,41 +57,41 @@ function SearchableMultiSelect({
 }) {
   const controlled = value !== void 0;
   const searchControlled = searchValue !== void 0;
-  const [internalValue, setInternalValue] = React.useState(defaultValue);
-  const [internalSearch, setInternalSearch] = React.useState(defaultSearchValue);
-  const [open, setOpen] = React.useState(false);
-  const [focused, setFocused] = React.useState(false);
-  const listboxId = React.useId();
-  const inputId = React.useId();
-  const messageId = React.useId();
-  const inputRef = React.useRef(null);
+  const [internalValue, setInternalValue] = _react2.default.useState(defaultValue);
+  const [internalSearch, setInternalSearch] = _react2.default.useState(defaultSearchValue);
+  const [open, setOpen] = _react2.default.useState(false);
+  const [focused, setFocused] = _react2.default.useState(false);
+  const listboxId = _react2.default.useId();
+  const inputId = _react2.default.useId();
+  const messageId = _react2.default.useId();
+  const inputRef = _react2.default.useRef(null);
   const selected = controlled ? value : internalValue;
   const search = searchControlled ? searchValue : internalSearch;
   const locked = disabled || readOnly;
   const selectedSet = new Set(selected);
-  const selectedOptions = selected.map((selectedValue) => options.find((option) => option.value === selectedValue) ?? { value: selectedValue, label: String(selectedValue) });
+  const selectedOptions = selected.map((selectedValue) => _nullishCoalesce(options.find((option) => option.value === selectedValue), () => ( { value: selectedValue, label: String(selectedValue) })));
   const maxReached = maxSelections != null && selected.length >= maxSelections;
-  const resolvedMaxLabel = maxSelectionLabel ?? `\uCD5C\uB300 ${maxSelections}\uAC1C\uB97C \uC120\uD0DD\uD588\uC2B5\uB2C8\uB2E4.`;
+  const resolvedMaxLabel = _nullishCoalesce(maxSelectionLabel, () => ( `\uCD5C\uB300 ${maxSelections}\uAC1C\uB97C \uC120\uD0DD\uD588\uC2B5\uB2C8\uB2E4.`));
   const filteredOptions = options.filter((option) => filterOption ? filterOption(option, search) : [option.label, option.description, option.value].filter(Boolean).join(" ").toLowerCase().includes(String(search).trim().toLowerCase())).map((option) => ({ ...option, effectiveDisabled: Boolean(option.disabled || maxReached && !selectedSet.has(option.value)) }));
   const optionsKey = JSON.stringify(filteredOptions.map((option) => [option.value, option.effectiveDisabled]));
-  const [activeIndex, setActiveIndex] = React.useState(() => firstEnabledIndex(filteredOptions));
+  const [activeIndex, setActiveIndex] = _react2.default.useState(() => firstEnabledIndex(filteredOptions));
   const popupOpen = open && !locked;
   const hasOptionList = !loading && filteredOptions.length > 0;
   const activeOption = popupOpen && hasOptionList && filteredOptions[activeIndex] && !filteredOptions[activeIndex].effectiveDisabled ? filteredOptions[activeIndex] : void 0;
-  const message = error ?? helper;
-  React.useEffect(() => {
+  const message = _nullishCoalesce(error, () => ( helper));
+  _react2.default.useEffect(() => {
     setActiveIndex((index) => filteredOptions[index] && !filteredOptions[index].effectiveDisabled ? index : firstEnabledIndex(filteredOptions));
   }, [optionsKey]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (locked) setOpen(false);
   }, [locked]);
   const commit = (next) => {
     if (!controlled) setInternalValue(next);
-    onChange?.(next);
+    _optionalChain([onChange, 'optionalCall', _ => _(next)]);
   };
   const setSearch = (next) => {
     if (!searchControlled) setInternalSearch(next);
-    onSearchChange?.(next);
+    _optionalChain([onSearchChange, 'optionalCall', _2 => _2(next)]);
     setActiveIndex(-1);
   };
   const toggle = (option) => {
@@ -99,14 +99,14 @@ function SearchableMultiSelect({
     if (selectedSet.has(option.value)) commit(selected.filter((item) => item !== option.value));
     else if (!maxReached) commit([...selected, option.value]);
     setOpen(true);
-    inputRef.current?.focus();
+    _optionalChain([inputRef, 'access', _3 => _3.current, 'optionalAccess', _4 => _4.focus, 'call', _5 => _5()]);
   };
   const remove = (selectedValue) => {
     if (locked) return;
     commit(selected.filter((item) => item !== selectedValue));
-    inputRef.current?.focus();
+    _optionalChain([inputRef, 'access', _6 => _6.current, 'optionalAccess', _7 => _7.focus, 'call', _8 => _8()]);
   };
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ...rest,
@@ -116,22 +116,23 @@ function SearchableMultiSelect({
           setFocused(false);
           setOpen(false);
         }
-        onBlur?.(event);
+        _optionalChain([onBlur, 'optionalCall', _9 => _9(event)]);
       },
       "data-readonly": readOnly ? "true" : void 0,
       style: { position: "relative", display: "grid", minWidth: 0, gap: "var(--component-input-stack-gap)", fontFamily: "var(--font-sans)", ...style },
       children: [
-        label != null && /* @__PURE__ */ jsxs("label", { htmlFor: inputId, style: { color: "var(--component-input-label-color)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", fontWeight: "var(--component-input-label-font-weight)" }, children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: { position: "absolute", width: 1, height: 1, margin: -1, padding: 0, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 }, children: popupOpen ? loading ? loadingLabel : !hasOptionList ? emptyLabel : maxReached ? resolvedMaxLabel : "" : "" }),
+        label != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "label", { htmlFor: inputId, style: { color: "var(--component-input-label-color)", fontSize: "var(--component-input-label-font-size)", lineHeight: "var(--component-input-label-line-height)", fontWeight: "var(--component-input-label-font-weight)" }, children: [
           label,
-          required && /* @__PURE__ */ jsx("span", { style: { color: "var(--color-semantic-status-negative-text)" }, children: " *" })
+          required && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-status-negative-text)" }, children: " *" })
         ] }),
-        /* @__PURE__ */ jsxs("div", { style: { position: "relative", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative", minWidth: 0 }, children: [
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "div",
             {
               onMouseDown: (event) => {
                 if (event.target !== inputRef.current && !event.target.closest("button")) event.preventDefault();
-                inputRef.current?.focus();
+                _optionalChain([inputRef, 'access', _10 => _10.current, 'optionalAccess', _11 => _11.focus, 'call', _12 => _12()]);
                 if (!locked) setOpen(true);
               },
               style: {
@@ -150,10 +151,10 @@ function SearchableMultiSelect({
                 cursor: disabled ? "not-allowed" : readOnly ? "default" : "text"
               },
               children: [
-                selectedOptions.map((option) => /* @__PURE__ */ jsxs(Chip, { size: "sm", variant: "outlined", disabled, style: { maxWidth: "100%", paddingRight: locked ? void 0 : "var(--space-0)" }, children: [
-                  /* @__PURE__ */ jsx("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }, children: option.label }),
-                  !locked && /* @__PURE__ */ jsx(
-                    IconButton,
+                selectedOptions.map((option) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkBCWCCXJXcjs.Chip, { size: "sm", variant: "outlined", disabled, style: { maxWidth: "100%", paddingRight: locked ? void 0 : "var(--space-0)" }, children: [
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }, children: option.label }),
+                  !locked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    _chunkITIFTVTBcjs.IconButton,
                     {
                       variant: "soft",
                       round: false,
@@ -161,11 +162,11 @@ function SearchableMultiSelect({
                       label: `${optionText(option)} \uC120\uD0DD \uD574\uC81C`,
                       onClick: () => remove(option.value),
                       style: { flex: "0 0 auto", background: "transparent" },
-                      children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 14, "aria-hidden": "true" })
+                      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "close", size: 14, "aria-hidden": "true" })
                     }
                   )
                 ] }, String(option.value))),
-                /* @__PURE__ */ jsx(
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "input",
                   {
                     ref: inputRef,
@@ -225,10 +226,10 @@ function SearchableMultiSelect({
               ]
             }
           ),
-          popupOpen && /* @__PURE__ */ jsxs("div", { style: { position: "absolute", zIndex: 40, left: 0, right: 0, top: "calc(100% + 6px)", padding: 6, display: "grid", gap: 2, boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", background: "var(--color-semantic-background-elevated-normal)", boxShadow: "var(--shadow-md)" }, children: [
-            /* @__PURE__ */ jsx("div", { id: listboxId, role: "listbox", "aria-multiselectable": "true", "aria-busy": loading || void 0, style: { maxHeight: 248, overflowY: "auto", display: "flex", flexDirection: "column", gap: 2 }, children: hasOptionList && filteredOptions.map((option, index) => {
+          popupOpen && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "absolute", zIndex: 40, left: 0, right: 0, top: "calc(100% + 6px)", padding: 6, display: "grid", gap: 2, boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", background: "var(--color-semantic-background-elevated-normal)", boxShadow: "var(--shadow-md)" }, children: [
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: listboxId, role: "listbox", "aria-multiselectable": "true", "aria-busy": loading || void 0, style: { maxHeight: 248, overflowY: "auto", display: "flex", flexDirection: "column", gap: 2 }, children: hasOptionList && filteredOptions.map((option, index) => {
               const selectedOption = selectedSet.has(option.value);
-              return /* @__PURE__ */ jsxs(
+              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   id: optionDomId(listboxId, option),
@@ -242,27 +243,27 @@ function SearchableMultiSelect({
                   onClick: () => toggle(option),
                   style: { display: "grid", gridTemplateColumns: "18px minmax(0, 1fr)", alignItems: "center", gap: "var(--space-2)", width: "100%", padding: "var(--space-2) var(--space-3)", borderRadius: "var(--radius-md)", background: index === activeIndex ? "var(--color-semantic-fill-alternative)" : "transparent", color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)", textAlign: "left", cursor: option.effectiveDisabled ? "not-allowed" : "pointer", fontFamily: "inherit", boxSizing: "border-box" },
                   children: [
-                    /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { display: "grid", placeItems: "center", width: 18, height: 18, boxSizing: "border-box", border: `1.5px solid ${selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-5)", background: selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-static-white)" }, children: selectedOption && /* @__PURE__ */ jsx(Icon, { name: "check", size: 12, "aria-hidden": "true" }) }),
-                    /* @__PURE__ */ jsxs("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
-                      /* @__PURE__ */ jsx("span", { style: { overflowWrap: "anywhere", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", fontWeight: "var(--fw-semibold)" }, children: option.label }),
-                      option.description != null && /* @__PURE__ */ jsx("span", { style: { overflowWrap: "anywhere", color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: option.description })
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { display: "grid", placeItems: "center", width: 18, height: 18, boxSizing: "border-box", border: `1.5px solid ${selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, borderRadius: "var(--radius-5)", background: selectedOption ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-static-white)" }, children: selectedOption && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "check", size: 12, "aria-hidden": "true" }) }),
+                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { overflowWrap: "anywhere", fontSize: "var(--component-input-font-size)", lineHeight: "var(--component-input-line-height)", fontWeight: "var(--fw-semibold)" }, children: option.label }),
+                      option.description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { overflowWrap: "anywhere", color: option.effectiveDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: option.description })
                     ] })
                   ]
                 },
                 String(option.value)
               );
             }) }),
-            !hasOptionList && /* @__PURE__ */ jsx("div", { role: "status", "aria-live": "polite", style: { padding: "var(--space-4)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", textAlign: "center" }, children: loading ? loadingLabel : emptyLabel }),
-            hasOptionList && maxReached && /* @__PURE__ */ jsx("div", { role: "status", "aria-live": "polite", style: { padding: "var(--space-2) var(--space-3)", borderTop: "1px solid var(--color-semantic-line-normal-neutral)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: resolvedMaxLabel })
+            !hasOptionList && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-multi-select-notice": true, style: { padding: "var(--space-4)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", textAlign: "center" }, children: loading ? loadingLabel : emptyLabel }),
+            hasOptionList && maxReached && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-multi-select-notice": true, style: { padding: "var(--space-2) var(--space-3)", borderTop: "1px solid var(--color-semantic-line-normal-neutral)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: resolvedMaxLabel })
           ] })
         ] }),
-        message != null && /* @__PURE__ */ jsx("span", { id: messageId, role: error != null ? "alert" : void 0, style: { color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: message })
+        message != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: messageId, role: error != null ? "alert" : void 0, style: { color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: message })
       ]
     }
   );
 }
 
-export {
-  SearchableMultiSelect
-};
-//# sourceMappingURL=chunk-WSR6PGN3.js.map
+
+
+exports.SearchableMultiSelect = SearchableMultiSelect;
+//# sourceMappingURL=chunk-O7YKPOPV.cjs.map

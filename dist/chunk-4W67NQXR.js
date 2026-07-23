@@ -432,255 +432,259 @@ function DataGrid({
   const selectionColumnIndex = selectable ? expandable ? 2 : 1 : null;
   const expansionOffset = 0;
   const selectionOffset = expandable ? 44 : 0;
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       "aria-busy": loading || void 0,
       style: { overflowX: "auto", ...variant === "embedded" ? null : { border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)" }, ...style },
       ...rest,
-      children: /* @__PURE__ */ jsxs(
-        "table",
-        {
-          "aria-label": tableLabel,
-          "aria-colcount": logicalColumnCount || void 0,
-          style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" },
-          children: [
-            /* @__PURE__ */ jsxs("thead", { children: [
-              selecting && /* @__PURE__ */ jsxs("tr", { style: { height: 0 }, children: [
-                expandable && /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": expansionColumnIndex, style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" }),
-                selectable && /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": selectionColumnIndex, style: visuallyHiddenStyle, children: "\uC120\uD0DD" }),
-                visibleColumns.map((column) => /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": column.logicalIndex, style: visuallyHiddenStyle, children: columnLabelText(column) }, column.key))
-              ] }),
-              selecting ? /* @__PURE__ */ jsxs("tr", { style: { height: headerH }, children: [
-                expandable && /* @__PURE__ */ jsx(
-                  "td",
-                  {
-                    "aria-colindex": expansionColumnIndex,
-                    style: {
-                      padding: pad,
-                      width: 44,
-                      borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
-                      ...utilityCellStyle({ offset: expansionOffset, header: true, stickyHeader, stickyHeaderOffset, background: bandBackground })
+      children: [
+        /* @__PURE__ */ jsx("span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: visuallyHiddenStyle, children: selectedCount > 0 ? `${selectedCount}\uAC1C \uC120\uD0DD\uB428` : "" }),
+        /* @__PURE__ */ jsx("span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: visuallyHiddenStyle, children: loading ? loadingLabel : error == null && sorted.length === 0 ? emptyLabel : "" }),
+        /* @__PURE__ */ jsxs(
+          "table",
+          {
+            "aria-label": tableLabel,
+            "aria-colcount": logicalColumnCount || void 0,
+            style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" },
+            children: [
+              /* @__PURE__ */ jsxs("thead", { children: [
+                selecting && /* @__PURE__ */ jsxs("tr", { style: { height: 0 }, children: [
+                  expandable && /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": expansionColumnIndex, style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" }),
+                  selectable && /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": selectionColumnIndex, style: visuallyHiddenStyle, children: "\uC120\uD0DD" }),
+                  visibleColumns.map((column) => /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": column.logicalIndex, style: visuallyHiddenStyle, children: columnLabelText(column) }, column.key))
+                ] }),
+                selecting ? /* @__PURE__ */ jsxs("tr", { style: { height: headerH }, children: [
+                  expandable && /* @__PURE__ */ jsx(
+                    "td",
+                    {
+                      "aria-colindex": expansionColumnIndex,
+                      style: {
+                        padding: pad,
+                        width: 44,
+                        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+                        ...utilityCellStyle({ offset: expansionOffset, header: true, stickyHeader, stickyHeaderOffset, background: bandBackground })
+                      }
                     }
-                  }
-                ),
-                selectable && /* @__PURE__ */ jsx(
-                  "td",
-                  {
-                    "aria-colindex": selectionColumnIndex,
-                    style: {
-                      padding: pad,
-                      width: 44,
-                      textAlign: "left",
-                      borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
-                      ...utilityCellStyle({ offset: selectionOffset, header: true, stickyHeader, stickyHeaderOffset, background: bandBackground })
-                    },
-                    children: /* @__PURE__ */ jsx(SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
-                  }
-                ),
-                /* @__PURE__ */ jsx(
-                  "td",
-                  {
-                    colSpan: Math.max(1, visibleColumns.length),
-                    style: {
-                      padding: 0,
-                      background: bandBackground,
-                      borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
-                      position: stickyHeader ? "sticky" : void 0,
-                      top: stickyHeader ? stickyHeaderOffset : void 0,
-                      zIndex: stickyHeader ? 3 : void 0
-                    },
-                    children: /* @__PURE__ */ jsxs("div", { role: "group", "aria-label": `${selectionEntityLabel} \uC77C\uAD04 \uC791\uC5C5`, style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 8px 0 12px" : "0 8px 0 16px" }, children: [
-                      /* @__PURE__ */ jsxs("span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
-                        selectedCount,
-                        "\uAC1C \uC120\uD0DD\uB428"
-                      ] }),
-                      /* @__PURE__ */ jsxs("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
-                        renderedBulkActions,
-                        /* @__PURE__ */ jsx(IconButton, { variant: "plain", size: "small", round: false, label: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, title: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, onClick: clearSelection, children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
+                  ),
+                  selectable && /* @__PURE__ */ jsx(
+                    "td",
+                    {
+                      "aria-colindex": selectionColumnIndex,
+                      style: {
+                        padding: pad,
+                        width: 44,
+                        textAlign: "left",
+                        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+                        ...utilityCellStyle({ offset: selectionOffset, header: true, stickyHeader, stickyHeaderOffset, background: bandBackground })
+                      },
+                      children: /* @__PURE__ */ jsx(SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
+                    }
+                  ),
+                  /* @__PURE__ */ jsx(
+                    "td",
+                    {
+                      colSpan: Math.max(1, visibleColumns.length),
+                      style: {
+                        padding: 0,
+                        background: bandBackground,
+                        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+                        position: stickyHeader ? "sticky" : void 0,
+                        top: stickyHeader ? stickyHeaderOffset : void 0,
+                        zIndex: stickyHeader ? 3 : void 0
+                      },
+                      children: /* @__PURE__ */ jsxs("div", { role: "group", "aria-label": `${selectionEntityLabel} \uC77C\uAD04 \uC791\uC5C5`, style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 8px 0 12px" : "0 8px 0 16px" }, children: [
+                        /* @__PURE__ */ jsxs("span", { "data-grid-selection-count": true, style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+                          selectedCount,
+                          "\uAC1C \uC120\uD0DD\uB428"
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
+                          renderedBulkActions,
+                          /* @__PURE__ */ jsx(IconButton, { variant: "plain", size: "small", round: false, label: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, title: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, onClick: clearSelection, children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
+                        ] })
                       ] })
-                    ] })
-                  }
-                )
-              ] }) : /* @__PURE__ */ jsxs("tr", { style: { height: headerH }, children: [
-                expandable && /* @__PURE__ */ jsx(
-                  "th",
-                  {
-                    scope: "col",
-                    "aria-colindex": expansionColumnIndex,
-                    style: {
-                      padding: pad,
-                      width: 44,
-                      borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
-                      ...utilityCellStyle({ offset: expansionOffset, header: true, stickyHeader, stickyHeaderOffset, background: headerBackground })
-                    },
-                    children: /* @__PURE__ */ jsx("span", { style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" })
-                  }
-                ),
-                selectable && /* @__PURE__ */ jsx(
-                  "th",
-                  {
-                    scope: "col",
-                    "aria-colindex": selectionColumnIndex,
-                    style: {
-                      padding: pad,
-                      width: 44,
-                      textAlign: "left",
-                      borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
-                      ...utilityCellStyle({ offset: selectionOffset, header: true, stickyHeader, stickyHeaderOffset, background: headerBackground })
-                    },
-                    children: /* @__PURE__ */ jsx(SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
-                  }
-                ),
-                visibleColumns.map((column) => {
-                  const sortIndex = sortModel.findIndex((entry) => entry.key === column.key);
-                  const sortEntry = sortIndex >= 0 ? sortModel[sortIndex] : null;
-                  const label = columnLabelText(column);
-                  const directionLabel = sortEntry?.dir === "desc" ? "\uB0B4\uB9BC\uCC28\uC21C" : "\uC624\uB984\uCC28\uC21C";
-                  const sortButtonLabel = sortEntry ? sortModel.length > 1 ? `${label}, ${sortIndex + 1}\uC21C\uC704 ${directionLabel} \uC815\uB82C, \uC815\uB82C \uBCC0\uACBD` : `${label}, ${directionLabel} \uC815\uB82C, \uC815\uB82C \uBCC0\uACBD` : `${label}, \uC815\uB82C`;
-                  return /* @__PURE__ */ jsx(
+                    }
+                  )
+                ] }) : /* @__PURE__ */ jsxs("tr", { style: { height: headerH }, children: [
+                  expandable && /* @__PURE__ */ jsx(
                     "th",
                     {
                       scope: "col",
-                      "aria-colindex": column.logicalIndex,
-                      "aria-sort": column.sortable && primarySort?.key === column.key ? primarySort.dir === "desc" ? "descending" : "ascending" : void 0,
-                      "data-column-key": column.key,
-                      "data-pinned": column.pinSide || void 0,
+                      "aria-colindex": expansionColumnIndex,
                       style: {
-                        ...thStyle(pad),
-                        textAlign: column.align || "left",
-                        userSelect: "none",
-                        ...columnPositionStyle(column, { header: true, stickyHeader, stickyHeaderOffset })
+                        padding: pad,
+                        width: 44,
+                        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+                        ...utilityCellStyle({ offset: expansionOffset, header: true, stickyHeader, stickyHeaderOffset, background: headerBackground })
                       },
-                      children: column.sortable ? /* @__PURE__ */ jsxs(
-                        "button",
-                        {
-                          type: "button",
-                          "aria-label": sortButtonLabel,
-                          onClick: () => toggleSort(column),
-                          style: { display: "inline-flex", alignItems: "center", gap: 5, padding: 0, border: 0, background: "transparent", cursor: "pointer", font: "inherit", letterSpacing: "inherit", textTransform: "inherit", color: "inherit" },
-                          children: [
-                            column.label,
-                            /* @__PURE__ */ jsx(Icon, { name: sortEntry?.dir === "desc" ? "chevron-down-small" : "chevron-up-small", size: 12, "aria-hidden": "true", style: { opacity: sortEntry ? 1 : 0.3 } }),
-                            sortEntry && sortModel.length > 1 && /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { fontSize: 10, fontVariantNumeric: "tabular-nums" }, children: sortIndex + 1 })
-                          ]
-                        }
-                      ) : /* @__PURE__ */ jsx("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: column.label })
-                    },
-                    column.key
-                  );
-                })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("tbody", { children: [
-              (loading || error != null || sorted.length === 0) && /* @__PURE__ */ jsx("tr", { children: /* @__PURE__ */ jsx("td", { colSpan, style: { padding: "var(--space-8) var(--space-4)", textAlign: "center", borderBottom: 0 }, children: /* @__PURE__ */ jsxs("div", { role: error != null ? "alert" : "status", "aria-live": "polite", style: { display: "inline-grid", justifyItems: "center", gap: "var(--space-2)", color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: [
-                /* @__PURE__ */ jsx("span", { children: loading ? loadingLabel : error ?? emptyLabel }),
-                stateActions
-              ] }) }) }),
-              !loading && error == null && sorted.map(({ row, id, sourceIndex, canSelect }) => {
-                const selected = rowIsSelected(id);
-                const rowLabel = getRowSelectionLabel ? getRowSelectionLabel(row, id) : `${selectionEntityLabel} ${String(id)}`;
-                const rowExpandable = expandable && (getRowCanExpand ? getRowCanExpand(row, id) : true);
-                const expanded = rowExpandable && expandedIdSet.has(id);
-                const detailId = `${instanceId}-detail-${sourceIndex}`;
-                const activate = (event) => {
-                  if (!onRowActivate) return;
-                  if (isInteractiveRowTarget(event.target)) return;
-                  onRowActivate(row, id, event);
-                };
-                return /* @__PURE__ */ jsxs(React.Fragment, { children: [
-                  /* @__PURE__ */ jsxs(
-                    "tr",
-                    {
-                      "aria-selected": selectable ? selected : void 0,
-                      tabIndex: onRowActivate ? 0 : void 0,
-                      onClick: activate,
-                      onKeyDown: onRowActivate ? (event) => {
-                        if (isInteractiveRowTarget(event.target)) return;
-                        if (event.key === "Enter" || event.key === " ") {
-                          event.preventDefault();
-                          onRowActivate(row, id, event);
-                        }
-                      } : void 0,
-                      style: { background: selected ? "var(--color-semantic-primary-surface-normal)" : "transparent", cursor: onRowActivate ? "pointer" : void 0 },
-                      children: [
-                        expandable && /* @__PURE__ */ jsx(
-                          "td",
-                          {
-                            "aria-colindex": expansionColumnIndex,
-                            style: {
-                              padding: size === "sm" ? "9px 6px" : "12px 6px",
-                              width: 44,
-                              textAlign: "center",
-                              borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
-                              ...utilityCellStyle({ offset: expansionOffset, background: selected ? "var(--color-semantic-primary-surface-normal)" : headerBackground })
-                            },
-                            children: rowExpandable && /* @__PURE__ */ jsx(
-                              IconButton,
-                              {
-                                variant: "plain",
-                                size: "small",
-                                round: false,
-                                label: `${rowLabel} \uC138\uBD80 \uC815\uBCF4 ${expanded ? "\uC811\uAE30" : "\uD3BC\uCE58\uAE30"}`,
-                                "aria-expanded": expanded,
-                                "aria-controls": detailId,
-                                onClick: () => toggleExpandedRow(id),
-                                children: /* @__PURE__ */ jsx(Icon, { name: expanded ? "chevron-up-small" : "chevron-down-small", size: 16, "aria-hidden": "true" })
-                              }
-                            )
-                          }
-                        ),
-                        selectable && /* @__PURE__ */ jsx(
-                          "td",
-                          {
-                            "aria-colindex": selectionColumnIndex,
-                            style: {
-                              padding: pad,
-                              width: 44,
-                              borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
-                              ...utilityCellStyle({ offset: selectionOffset, background: selected ? "var(--color-semantic-primary-surface-normal)" : headerBackground })
-                            },
-                            children: /* @__PURE__ */ jsx(
-                              SelectionCheckbox,
-                              {
-                                checked: selected,
-                                disabled: !canSelect,
-                                onChange: () => toggleRow(id, canSelect),
-                                "aria-label": canSelect ? `${rowLabel} ${selected ? "\uC120\uD0DD \uD574\uC81C" : "\uC120\uD0DD"}` : `${rowLabel} \uC120\uD0DD\uD560 \uC218 \uC5C6\uC74C`
-                              }
-                            )
-                          }
-                        ),
-                        visibleColumns.map((column) => {
-                          const cellEditing = editingCell?.rowId === id && editingCell?.columnKey === column.key && typeof column.editor === "function";
-                          const content = cellEditing ? column.editor(row, id) : typeof column.render === "function" ? column.render(row, id) : row[column.key];
-                          return /* @__PURE__ */ jsx(
-                            "td",
-                            {
-                              "aria-colindex": column.logicalIndex,
-                              "data-column-key": column.key,
-                              "data-editing": cellEditing || void 0,
-                              "data-pinned": column.pinSide || void 0,
-                              style: {
-                                ...tdStyle(pad),
-                                textAlign: column.align || "left",
-                                ...columnPositionStyle(column, { selected })
-                              },
-                              children: content
-                            },
-                            column.key
-                          );
-                        })
-                      ]
+                      children: /* @__PURE__ */ jsx("span", { style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" })
                     }
                   ),
-                  expanded && /* @__PURE__ */ jsx("tr", { "data-expanded-row-for": String(id), children: /* @__PURE__ */ jsx("td", { colSpan, style: { padding: 0, borderBottom: "1px solid var(--color-semantic-line-solid-normal)", background: "var(--color-semantic-background-elevated-normal)" }, children: /* @__PURE__ */ jsx("div", { id: detailId, role: "region", "aria-label": `${rowLabel} \uC138\uBD80 \uC815\uBCF4`, style: { padding: size === "sm" ? "var(--space-3) var(--space-4)" : "var(--space-4)" }, children: renderExpandedRow(row, id) }) }) })
-                ] }, id);
-              })
-            ] })
-          ]
-        }
-      )
+                  selectable && /* @__PURE__ */ jsx(
+                    "th",
+                    {
+                      scope: "col",
+                      "aria-colindex": selectionColumnIndex,
+                      style: {
+                        padding: pad,
+                        width: 44,
+                        textAlign: "left",
+                        borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+                        ...utilityCellStyle({ offset: selectionOffset, header: true, stickyHeader, stickyHeaderOffset, background: headerBackground })
+                      },
+                      children: /* @__PURE__ */ jsx(SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
+                    }
+                  ),
+                  visibleColumns.map((column) => {
+                    const sortIndex = sortModel.findIndex((entry) => entry.key === column.key);
+                    const sortEntry = sortIndex >= 0 ? sortModel[sortIndex] : null;
+                    const label = columnLabelText(column);
+                    const directionLabel = sortEntry?.dir === "desc" ? "\uB0B4\uB9BC\uCC28\uC21C" : "\uC624\uB984\uCC28\uC21C";
+                    const sortButtonLabel = sortEntry ? sortModel.length > 1 ? `${label}, ${sortIndex + 1}\uC21C\uC704 ${directionLabel} \uC815\uB82C, \uC815\uB82C \uBCC0\uACBD` : `${label}, ${directionLabel} \uC815\uB82C, \uC815\uB82C \uBCC0\uACBD` : `${label}, \uC815\uB82C`;
+                    return /* @__PURE__ */ jsx(
+                      "th",
+                      {
+                        scope: "col",
+                        "aria-colindex": column.logicalIndex,
+                        "aria-sort": column.sortable && primarySort?.key === column.key ? primarySort.dir === "desc" ? "descending" : "ascending" : void 0,
+                        "data-column-key": column.key,
+                        "data-pinned": column.pinSide || void 0,
+                        style: {
+                          ...thStyle(pad),
+                          textAlign: column.align || "left",
+                          userSelect: "none",
+                          ...columnPositionStyle(column, { header: true, stickyHeader, stickyHeaderOffset })
+                        },
+                        children: column.sortable ? /* @__PURE__ */ jsxs(
+                          "button",
+                          {
+                            type: "button",
+                            "aria-label": sortButtonLabel,
+                            onClick: () => toggleSort(column),
+                            style: { display: "inline-flex", alignItems: "center", gap: 5, padding: 0, border: 0, background: "transparent", cursor: "pointer", font: "inherit", letterSpacing: "inherit", textTransform: "inherit", color: "inherit" },
+                            children: [
+                              column.label,
+                              /* @__PURE__ */ jsx(Icon, { name: sortEntry?.dir === "desc" ? "chevron-down-small" : "chevron-up-small", size: 12, "aria-hidden": "true", style: { opacity: sortEntry ? 1 : 0.3 } }),
+                              sortEntry && sortModel.length > 1 && /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { fontSize: 10, fontVariantNumeric: "tabular-nums" }, children: sortIndex + 1 })
+                            ]
+                          }
+                        ) : /* @__PURE__ */ jsx("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: column.label })
+                      },
+                      column.key
+                    );
+                  })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("tbody", { children: [
+                (loading || error != null || sorted.length === 0) && /* @__PURE__ */ jsx("tr", { children: /* @__PURE__ */ jsx("td", { colSpan, style: { padding: "var(--space-8) var(--space-4)", textAlign: "center", borderBottom: 0 }, children: /* @__PURE__ */ jsxs("div", { role: error != null ? "alert" : void 0, style: { display: "inline-grid", justifyItems: "center", gap: "var(--space-2)", color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: [
+                  /* @__PURE__ */ jsx("span", { children: loading ? loadingLabel : error ?? emptyLabel }),
+                  stateActions
+                ] }) }) }),
+                !loading && error == null && sorted.map(({ row, id, sourceIndex, canSelect }) => {
+                  const selected = rowIsSelected(id);
+                  const rowLabel = getRowSelectionLabel ? getRowSelectionLabel(row, id) : `${selectionEntityLabel} ${String(id)}`;
+                  const rowExpandable = expandable && (getRowCanExpand ? getRowCanExpand(row, id) : true);
+                  const expanded = rowExpandable && expandedIdSet.has(id);
+                  const detailId = `${instanceId}-detail-${sourceIndex}`;
+                  const activate = (event) => {
+                    if (!onRowActivate) return;
+                    if (isInteractiveRowTarget(event.target)) return;
+                    onRowActivate(row, id, event);
+                  };
+                  return /* @__PURE__ */ jsxs(React.Fragment, { children: [
+                    /* @__PURE__ */ jsxs(
+                      "tr",
+                      {
+                        "aria-selected": selectable ? selected : void 0,
+                        tabIndex: onRowActivate ? 0 : void 0,
+                        onClick: activate,
+                        onKeyDown: onRowActivate ? (event) => {
+                          if (isInteractiveRowTarget(event.target)) return;
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            onRowActivate(row, id, event);
+                          }
+                        } : void 0,
+                        style: { background: selected ? "var(--color-semantic-primary-surface-normal)" : "transparent", cursor: onRowActivate ? "pointer" : void 0 },
+                        children: [
+                          expandable && /* @__PURE__ */ jsx(
+                            "td",
+                            {
+                              "aria-colindex": expansionColumnIndex,
+                              style: {
+                                padding: size === "sm" ? "9px 6px" : "12px 6px",
+                                width: 44,
+                                textAlign: "center",
+                                borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+                                ...utilityCellStyle({ offset: expansionOffset, background: selected ? "var(--color-semantic-primary-surface-normal)" : headerBackground })
+                              },
+                              children: rowExpandable && /* @__PURE__ */ jsx(
+                                IconButton,
+                                {
+                                  variant: "plain",
+                                  size: "small",
+                                  round: false,
+                                  label: `${rowLabel} \uC138\uBD80 \uC815\uBCF4 ${expanded ? "\uC811\uAE30" : "\uD3BC\uCE58\uAE30"}`,
+                                  "aria-expanded": expanded,
+                                  "aria-controls": detailId,
+                                  onClick: () => toggleExpandedRow(id),
+                                  children: /* @__PURE__ */ jsx(Icon, { name: expanded ? "chevron-up-small" : "chevron-down-small", size: 16, "aria-hidden": "true" })
+                                }
+                              )
+                            }
+                          ),
+                          selectable && /* @__PURE__ */ jsx(
+                            "td",
+                            {
+                              "aria-colindex": selectionColumnIndex,
+                              style: {
+                                padding: pad,
+                                width: 44,
+                                borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+                                ...utilityCellStyle({ offset: selectionOffset, background: selected ? "var(--color-semantic-primary-surface-normal)" : headerBackground })
+                              },
+                              children: /* @__PURE__ */ jsx(
+                                SelectionCheckbox,
+                                {
+                                  checked: selected,
+                                  disabled: !canSelect,
+                                  onChange: () => toggleRow(id, canSelect),
+                                  "aria-label": canSelect ? `${rowLabel} ${selected ? "\uC120\uD0DD \uD574\uC81C" : "\uC120\uD0DD"}` : `${rowLabel} \uC120\uD0DD\uD560 \uC218 \uC5C6\uC74C`
+                                }
+                              )
+                            }
+                          ),
+                          visibleColumns.map((column) => {
+                            const cellEditing = editingCell?.rowId === id && editingCell?.columnKey === column.key && typeof column.editor === "function";
+                            const content = cellEditing ? column.editor(row, id) : typeof column.render === "function" ? column.render(row, id) : row[column.key];
+                            return /* @__PURE__ */ jsx(
+                              "td",
+                              {
+                                "aria-colindex": column.logicalIndex,
+                                "data-column-key": column.key,
+                                "data-editing": cellEditing || void 0,
+                                "data-pinned": column.pinSide || void 0,
+                                style: {
+                                  ...tdStyle(pad),
+                                  textAlign: column.align || "left",
+                                  ...columnPositionStyle(column, { selected })
+                                },
+                                children: content
+                              },
+                              column.key
+                            );
+                          })
+                        ]
+                      }
+                    ),
+                    expanded && /* @__PURE__ */ jsx("tr", { "data-expanded-row-for": String(id), children: /* @__PURE__ */ jsx("td", { colSpan, style: { padding: 0, borderBottom: "1px solid var(--color-semantic-line-solid-normal)", background: "var(--color-semantic-background-elevated-normal)" }, children: /* @__PURE__ */ jsx("div", { id: detailId, role: "region", "aria-label": `${rowLabel} \uC138\uBD80 \uC815\uBCF4`, style: { padding: size === "sm" ? "var(--space-3) var(--space-4)" : "var(--space-4)" }, children: renderExpandedRow(row, id) }) }) })
+                  ] }, id);
+                })
+              ] })
+            ]
+          }
+        )
+      ]
     }
   );
 }
@@ -688,4 +692,4 @@ function DataGrid({
 export {
   DataGrid
 };
-//# sourceMappingURL=chunk-NRDCTTWO.js.map
+//# sourceMappingURL=chunk-4W67NQXR.js.map

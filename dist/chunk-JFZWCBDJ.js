@@ -1,14 +1,14 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
-
-
-var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
+"use client";
+import {
+  VisuallyHidden
+} from "./chunk-LSN3BTKD.js";
+import {
+  Icon
+} from "./chunk-JNVDI5OO.js";
 
 // components/content/ContentEditor.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var DEFAULT_TOOLBAR_ITEMS = [
   { value: "body", label: "\uBCF8\uBB38", icon: "document", toggle: true },
   { value: "tag", label: "\uD0DC\uADF8", icon: "tag" },
@@ -16,16 +16,16 @@ var DEFAULT_TOOLBAR_ITEMS = [
   { value: "preview", label: "\uBBF8\uB9AC\uBCF4\uAE30", icon: "eye", toggle: true }
 ];
 function RequiredMark() {
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { color: "var(--color-semantic-status-negative)" }, children: " *" }),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { children: " (\uD544\uC218)" })
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { color: "var(--color-semantic-status-negative)" }, children: " *" }),
+    /* @__PURE__ */ jsx(VisuallyHidden, { children: " (\uD544\uC218)" })
   ] });
 }
 function ToolbarButton({ item, active, disabled, onAction, index, tabIndex, onFocus }) {
-  const [hover, setHover] = _react2.default.useState(false);
+  const [hover, setHover] = React.useState(false);
   const isDisabled = disabled || item.disabled;
   const label = item.label || item.value;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ jsx(
     "button",
     {
       type: "button",
@@ -55,7 +55,7 @@ function ToolbarButton({ item, active, disabled, onAction, index, tabIndex, onFo
         opacity: isDisabled ? 0.45 : 1,
         transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)"
       },
-      children: item.icon ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: item.icon, size: 17, "aria-hidden": "true" }) : item.children
+      children: item.icon ? /* @__PURE__ */ jsx(Icon, { name: item.icon, size: 17, "aria-hidden": "true" }) : item.children
     }
   );
 }
@@ -95,37 +95,37 @@ function ContentEditor({
   style,
   ...rest
 }) {
-  const generatedId = _react2.default.useId();
+  const generatedId = React.useId();
   const rootId = id || `content-editor-${generatedId}`;
   const resolvedTitleId = titleId || `${rootId}-title`;
   const resolvedBodyId = bodyId || `${rootId}-body`;
-  const [titleFocus, setTitleFocus] = _react2.default.useState(false);
-  const [bodyFocus, setBodyFocus] = _react2.default.useState(false);
-  const [internalTitle, setInternalTitle] = _react2.default.useState(defaultTitleValue);
-  const [internalValue, setInternalValue] = _react2.default.useState(defaultValue);
+  const [titleFocus, setTitleFocus] = React.useState(false);
+  const [bodyFocus, setBodyFocus] = React.useState(false);
+  const [internalTitle, setInternalTitle] = React.useState(defaultTitleValue);
+  const [internalValue, setInternalValue] = React.useState(defaultValue);
   const isTitleControlled = titleValue !== void 0;
   const isValueControlled = value !== void 0;
   const currentTitle = isTitleControlled ? titleValue : internalTitle;
   const currentValue = isValueControlled ? value : internalValue;
-  const activeSet = _react2.default.useMemo(() => new Set(activeToolbarItems), [activeToolbarItems]);
-  const toolbarRef = _react2.default.useRef(null);
-  const [toolbarTabStop, setToolbarTabStop] = _react2.default.useState(0);
+  const activeSet = React.useMemo(() => new Set(activeToolbarItems), [activeToolbarItems]);
+  const toolbarRef = React.useRef(null);
+  const [toolbarTabStop, setToolbarTabStop] = React.useState(0);
   const managedToolbar = toolbar == null;
   const toolsDisabled = disabled || readOnly;
-  const focusableToolIndexes = _react2.default.useMemo(
+  const focusableToolIndexes = React.useMemo(
     () => toolbarItems.map((item, index) => toolsDisabled || item.disabled ? -1 : index).filter((index) => index >= 0),
     [toolbarItems, toolsDisabled]
   );
-  const resolvedTabStop = focusableToolIndexes.includes(toolbarTabStop) ? toolbarTabStop : _nullishCoalesce(focusableToolIndexes[0], () => ( -1));
+  const resolvedTabStop = focusableToolIndexes.includes(toolbarTabStop) ? toolbarTabStop : focusableToolIndexes[0] ?? -1;
   const focusTool = (index) => {
-    const node = _optionalChain([toolbarRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.querySelector, 'call', _3 => _3(`[data-toolbar-index="${index}"]`)]);
+    const node = toolbarRef.current?.querySelector(`[data-toolbar-index="${index}"]`);
     if (!node) return;
     setToolbarTabStop(index);
     node.focus();
   };
   const handleToolbarKeyDown = (event) => {
     if (!managedToolbar || focusableToolIndexes.length === 0) return;
-    const owner = _optionalChain([event, 'access', _4 => _4.target, 'access', _5 => _5.closest, 'optionalCall', _6 => _6("[data-toolbar-index]")]);
+    const owner = event.target.closest?.("[data-toolbar-index]");
     const current = owner ? focusableToolIndexes.indexOf(Number(owner.getAttribute("data-toolbar-index"))) : -1;
     const last = focusableToolIndexes.length - 1;
     let next = null;
@@ -138,7 +138,7 @@ function ContentEditor({
     focusTool(next);
   };
   const hasFooter = meta != null || status != null || helper != null || actions != null || footer != null || maxLength != null;
-  const bodyLength = String(_nullishCoalesce(currentValue, () => ( ""))).length;
+  const bodyLength = String(currentValue ?? "").length;
   const ring = invalid ? "var(--color-semantic-status-negative)" : titleFocus || bodyFocus ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-normal-normal)";
   const handleTitleChange = (event) => {
     const next = event.target.value;
@@ -152,7 +152,7 @@ function ContentEditor({
     onValueChange && onValueChange(next, event);
     textareaProps && textareaProps.onChange && textareaProps.onChange(event);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "section",
     {
       id: rootId,
@@ -175,12 +175,12 @@ function ContentEditor({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4) var(--space-4) var(--space-3)" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "label", { htmlFor: resolvedTitleId, style: { fontSize: "var(--label2-size)", lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
+        /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4) var(--space-4) var(--space-3)" }, children: [
+          /* @__PURE__ */ jsxs("label", { htmlFor: resolvedTitleId, style: { fontSize: "var(--label2-size)", lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
             titleLabel,
-            required && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RequiredMark, {})
+            required && /* @__PURE__ */ jsx(RequiredMark, {})
           ] }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ jsx(
             "input",
             {
               id: resolvedTitleId,
@@ -211,12 +211,12 @@ function ContentEditor({
                 fontWeight: "var(--fw-extra)",
                 letterSpacing: 0,
                 opacity: disabled ? 0.45 : 1,
-                ..._optionalChain([titleInputProps, 'optionalAccess', _7 => _7.style])
+                ...titleInputProps?.style
               }
             }
           )
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ jsxs(
           "div",
           {
             style: {
@@ -230,7 +230,7 @@ function ContentEditor({
               background: "var(--color-semantic-background-normal-alternative)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ jsx(
                 "div",
                 {
                   ref: toolbarRef,
@@ -238,7 +238,7 @@ function ContentEditor({
                   "aria-label": "\uAE00 \uD3B8\uC9D1 \uB3C4\uAD6C",
                   onKeyDown: handleToolbarKeyDown,
                   style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", minWidth: 0 },
-                  children: toolbar != null ? toolbar : toolbarItems.map((item, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  children: toolbar != null ? toolbar : toolbarItems.map((item, index) => /* @__PURE__ */ jsx(
                     ToolbarButton,
                     {
                       item,
@@ -253,16 +253,16 @@ function ContentEditor({
                   ))
                 }
               ),
-              status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "status", "aria-live": "polite", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: 1.35 }, children: status })
+              /* @__PURE__ */ jsx("div", { role: "status", "aria-live": "polite", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: 1.35 }, children: status })
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4)" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "label", { htmlFor: resolvedBodyId, style: { fontSize: "var(--label2-size)", lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
+        /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: "var(--space-2)", padding: "var(--space-4)" }, children: [
+          /* @__PURE__ */ jsxs("label", { htmlFor: resolvedBodyId, style: { fontSize: "var(--label2-size)", lineHeight: 1.4, fontWeight: "var(--fw-bold)", color: invalid ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)" }, children: [
             bodyLabel,
-            required && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RequiredMark, {})
+            required && /* @__PURE__ */ jsx(RequiredMark, {})
           ] }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ jsx(
             "textarea",
             {
               id: resolvedBodyId,
@@ -297,12 +297,12 @@ function ContentEditor({
                 letterSpacing: 0,
                 boxSizing: "border-box",
                 opacity: disabled ? 0.45 : 1,
-                ..._optionalChain([textareaProps, 'optionalAccess', _8 => _8.style])
+                ...textareaProps?.style
               }
             }
           )
         ] }),
-        hasFooter && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        hasFooter && /* @__PURE__ */ jsxs(
           "div",
           {
             style: {
@@ -316,17 +316,17 @@ function ContentEditor({
               background: "var(--color-semantic-background-normal-alternative)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: 1.45 }, children: [
-                meta != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: meta }),
-                helper != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: helper }),
-                maxLength != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { children: [
+              /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: 1.45 }, children: [
+                meta != null && /* @__PURE__ */ jsx("span", { children: meta }),
+                helper != null && /* @__PURE__ */ jsx("span", { children: helper }),
+                maxLength != null && /* @__PURE__ */ jsxs("span", { children: [
                   bodyLength,
                   "/",
                   maxLength
                 ] }),
                 footer
               ] }),
-              actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: actions })
+              actions != null && /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap" }, children: actions })
             ]
           }
         )
@@ -335,7 +335,7 @@ function ContentEditor({
   );
 }
 
-
-
-exports.ContentEditor = ContentEditor;
-//# sourceMappingURL=chunk-EHCQG644.cjs.map
+export {
+  ContentEditor
+};
+//# sourceMappingURL=chunk-JFZWCBDJ.js.map

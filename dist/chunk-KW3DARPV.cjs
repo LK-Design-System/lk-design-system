@@ -179,6 +179,13 @@ function LogViewer({
     const latest = formatLine(arrivals[arrivals.length - 1]);
     setAnnouncement(arrivals.length === 1 ? latest : `\uC0C8 \uB85C\uADF8 ${arrivals.length}\uC904, \uB9C8\uC9C0\uB9C9 ${latest}`);
   }, [lines, announceNewLines, following, matchesFilters]);
+  const prevStreamStatus = _react2.default.useRef(streamStatus);
+  _react2.default.useEffect(() => {
+    if (prevStreamStatus.current === streamStatus) return;
+    prevStreamStatus.current = streamStatus;
+    const label = streamStatus != null ? (STREAM_STATUS[streamStatus] || STREAM_STATUS.online).label : null;
+    if (label) setAnnouncement(`\uC2A4\uD2B8\uB9BC \uC0C1\uD0DC: ${label}`);
+  }, [streamStatus]);
   _react2.default.useEffect(() => {
     if (!paused && autoScroll && tailLocked) {
       window.requestAnimationFrame(scrollToLatest);
@@ -239,7 +246,7 @@ function LogViewer({
     }
   };
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-2)", width: "100%", maxWidth: "100%", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    (streamStatus != null || lastUpdatedAt != null || droppedCount > 0) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { role: "status", "aria-live": "polite", style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: [
+    (streamStatus != null || lastUpdatedAt != null || droppedCount > 0) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)" }, children: [
       /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap" }, children: [
         streamStatus != null && (() => {
           const cfg = STREAM_STATUS[streamStatus] || STREAM_STATUS.online;
@@ -336,4 +343,4 @@ function LogViewer({
 
 
 exports.LogViewer = LogViewer;
-//# sourceMappingURL=chunk-G25R4JSL.cjs.map
+//# sourceMappingURL=chunk-KW3DARPV.cjs.map
