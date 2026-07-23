@@ -31,6 +31,7 @@ function normalizeItem(item) {
 /**
  * LDS Core - Category
  * navigation category chips for grouping content by topic.
+ * Single-select radiogroup semantics per the WAI-ARIA radio group pattern.
  */
 export function Category({
   items = [],
@@ -42,11 +43,14 @@ export function Category({
   padding = false,
   verticalPadding = false,
   scroll = "auto",
+  ariaLabel = "카테고리",
   style,
   itemStyle,
   ...rest
 }) {
+  const groupRef = React.useRef(null);
   const normalized = items.map(normalizeItem);
+  /* item.active only seeds the uncontrolled initial selection. */
   const initial =
     defaultValue ??
     normalized.find((item) => item.active)?.value ??
@@ -57,14 +61,52 @@ export function Category({
   const s = SIZE[size] || SIZE.medium;
   const alternative = variant === "alternative";
 
+  /* Roving tabindex: the selected enabled chip is the single Tab stop;
+   * otherwise fall back to the first enabled chip. */
+  const selectedItem = normalized.find((item) => item.value === selected);
+  const tabStopValue =
+    selectedItem && !selectedItem.disabled
+      ? selectedItem.value
+      : normalized.find((item) => !item.disabled)?.value;
+
   const pick = (item) => {
     if (item.disabled) return;
     if (!controlled) setInternal(item.value);
     onChange?.(item.value, item);
   };
 
+  /* APG radio behavior: arrows move focus AND select, skipping disabled. */
+  const move = (event, item) => {
+    const prevKeys = ["ArrowLeft", "ArrowUp"];
+    const nextKeys = ["ArrowRight", "ArrowDown"];
+    if (
+      !prevKeys.includes(event.key) &&
+      !nextKeys.includes(event.key) &&
+      event.key !== "Home" &&
+      event.key !== "End"
+    )
+      return;
+    const enabledItems = normalized.filter((candidate) => !candidate.disabled);
+    const currentIndex = enabledItems.findIndex((candidate) => candidate.value === item.value);
+    if (currentIndex < 0 || enabledItems.length === 0) return;
+    event.preventDefault();
+    let nextIndex = currentIndex;
+    if (prevKeys.includes(event.key)) nextIndex = (currentIndex - 1 + enabledItems.length) % enabledItems.length;
+    if (nextKeys.includes(event.key)) nextIndex = (currentIndex + 1) % enabledItems.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = enabledItems.length - 1;
+    const nextItem = enabledItems[nextIndex];
+    pick(nextItem);
+    Array.from(groupRef.current?.querySelectorAll('[role="radio"]') ?? [])
+      .find((chip) => chip.dataset.categoryValue === String(nextItem.value))
+      ?.focus();
+  };
+
   return (
     <div
+      ref={groupRef}
+      role="radiogroup"
+      aria-label={ariaLabel}
       style={{
         display: "flex",
         alignItems: "center",
@@ -79,7 +121,7 @@ export function Category({
       {...rest}
     >
       {normalized.map((item) => {
-        const active = item.value === selected || item.active;
+        const active = item.value === selected;
         const colors = alternative
           ? {
               bg: active ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)",
@@ -96,9 +138,13 @@ export function Category({
           <button
             key={item.value}
             type="button"
-            aria-pressed={active}
+            role="radio"
+            aria-checked={active}
+            tabIndex={item.value === tabStopValue ? 0 : -1}
+            data-category-value={item.value}
             disabled={item.disabled}
             onClick={() => pick(item)}
+            onKeyDown={(event) => move(event, item)}
             style={{
               flex: "0 0 auto",
               display: "inline-flex",

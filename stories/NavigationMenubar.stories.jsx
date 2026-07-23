@@ -295,6 +295,7 @@ export const DrillSubmenus = {
     await waitFor(() => {
       branch = doc.activeElement;
       if (branch?.getAttribute('aria-haspopup') !== 'menu') throw new Error('내보내기는 서브메뉴 트리거여야 합니다.');
+      if (branch.getAttribute('aria-expanded') !== 'false') throw new Error('drill 서브메뉴 트리거는 flyout처럼 aria-expanded를 노출해야 합니다.');
     });
     const widthBefore = bar.querySelector('[role="menu"]')?.getBoundingClientRect().width;
 
@@ -303,9 +304,22 @@ export const DrillSubmenus = {
       if (doc.activeElement?.textContent?.trim() !== 'PDF로 내보내기') throw new Error('drill in 후 하위 첫 항목에 포커스해야 합니다.');
     });
     if (doc.querySelector('[data-menu-portal]')) throw new Error('drill 모드는 별도 서브 패널을 띄우지 않아야 합니다.');
-    if (!bar.querySelector('button[aria-label^="뒤로"]')) throw new Error('drill 하위 레벨에는 뒤로 컨트롤이 있어야 합니다.');
+    const backControl = bar.querySelector('button[aria-label^="뒤로"]');
+    if (!backControl) throw new Error('drill 하위 레벨에는 뒤로 컨트롤이 있어야 합니다.');
+    if (backControl.getAttribute('role') !== 'menuitem' || backControl.closest('[role="menu"]') !== bar.querySelector('[role="menu"]')) {
+      throw new Error('drill 뒤로 컨트롤은 menu 안의 role="menuitem"이어야 합니다.');
+    }
     const widthAfter = bar.querySelector('[role="menu"]')?.getBoundingClientRect().width;
     if (Math.abs(widthAfter - widthBefore) > 1) throw new Error('drill 전환은 패널 폭을 늘리지 않아야 합니다.');
+
+    await userEvent.keyboard('{ArrowUp}'); // 첫 명령 위로 순회
+    await waitFor(() => {
+      if (doc.activeElement !== backControl) throw new Error('뒤로 컨트롤은 다른 항목처럼 화살표 roving 탐색으로 도달해야 합니다.');
+    });
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => {
+      if (doc.activeElement?.textContent?.trim() !== 'PDF로 내보내기') throw new Error('뒤로 컨트롤에서 아래 화살표로 첫 명령에 복귀해야 합니다.');
+    });
 
     await userEvent.keyboard('{ArrowLeft}'); // 상위 복귀
     await waitFor(() => {

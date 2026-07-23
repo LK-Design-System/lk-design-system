@@ -318,6 +318,13 @@ export const NarrowWidth = {
     if (!topBar || !brand || !actions || !nav) {
       throw new Error('Narrow TopBar must preserve brand, navigation, and actions.');
     }
+    const navList = nav.querySelector(':scope > ul');
+    if (!navList
+      || getComputedStyle(navList).listStyleType !== 'none'
+      || navList.querySelectorAll(':scope > li').length !== 2
+      || !navList.querySelector(':scope > li [data-top-bar-primary]')) {
+      throw new Error('TopBar primary navigation must render its items inside a native unstyled ul/li list.');
+    }
 
     const barRect = topBar.getBoundingClientRect();
     const brandRect = brand.getBoundingClientRect();

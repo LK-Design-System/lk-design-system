@@ -25,6 +25,6 @@ Classification: **LK Product Extension**. 동등한 중요도의 평면형 주�
 
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage) — 주 목적지는 실제 link로 제공하고 짧고 스캔 가능한 이름을 사용하며 좁은 화면에서는 다른 표면으로 전환합니다.
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/) — shell 탐색과 global utility를 분리합니다. NavRail은 제품 내부의 평면 주 탐색만 담당합니다.
-- [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/) — `<nav>` landmark와 `aria-current="page"`를 유지합니다.
+- [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/) — `<nav>` landmark와 `aria-current="page"`를 유지합니다. `nav`의 기본 `aria-label`은 `'주 탐색'`이며 소비자가 전달한 `aria-label`이 우선합니다.
 
 라우터 인스턴스, 목적지 권한 판정, NavRail↔BottomNav 전환은 소비자 셸이 소유합니다.

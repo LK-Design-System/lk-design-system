@@ -27,7 +27,9 @@ const [col, setCol] = React.useState(false);
 - 키보드 계약: Enter/Space/Arrow Down은 첫 항목, Arrow Up은 마지막 항목으로 열립니다.
   열린 메뉴에서는 Arrow Up/Down, Home/End, 문자 탐색을 지원하고 Escape는 닫은 뒤 계정
   trigger로 초점을 복원합니다. menu는 trigger id를 `aria-labelledby`로 참조하고 Tab은 메뉴를
-  닫고 다음 문서 순서로 이동합니다.
+  닫고 다음 문서 순서로 이동합니다. 항목 하이라이트는 hover와 키보드 focus에서 동일하게
+  적용되어 초점 위치가 시각적으로 드러납니다. `collapsed`(아바타 전용) trigger도 같은 키보드
+  계약으로 열립니다.
 - SideNav footer라는 위치 근거 때문에 Dropdown Menu와 달리 위쪽을 선호합니다. 공간이 부족하면
   아래로 flip하고 좌우 viewport를 clamp하지만, 이 배치 차이는 계정 메뉴의 고정 위치 때문에 유지합니다.
 - Menu shell은 Dropdown Menu와 같은 elevated surface, r16, 8px/20px padding, shadow-md를 사용합니다.

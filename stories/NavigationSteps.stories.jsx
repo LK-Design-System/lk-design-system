@@ -33,6 +33,22 @@ export const StepProgress = {
       <Steps steps={['작성', '검토', '게시']} current={1} />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const list = canvasElement.querySelector('ol');
+    if (!list) throw new Error('Steps must render as an ordered list.');
+    const items = list.querySelectorAll('li');
+    if (items.length !== 3) throw new Error('Steps must render one list item per step.');
+    const current = list.querySelector('li[aria-current="step"]');
+    if (!current || !current.textContent.includes('검토')) {
+      throw new Error('The current step list item must carry aria-current="step".');
+    }
+    const stateTexts = ['완료', '현재 단계', '예정'];
+    items.forEach((item, i) => {
+      if (!item.textContent.includes(stateTexts[i])) {
+        throw new Error(`Step ${i} must expose the visually-hidden state text "${stateTexts[i]}".`);
+      }
+    });
+  },
 };
 
 export const StepsCard = { ...StepsCardStory, name: 'Steps card parity', tags: ['!dev', 'visual-parity'] };

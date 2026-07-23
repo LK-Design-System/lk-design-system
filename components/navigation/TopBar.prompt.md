@@ -18,7 +18,7 @@ Classification: **LK Product Extension**. 랜딩·콘텐츠 사이트에서는 �
 <TopBar dark sticky brand={<Lockup variant="inline" tone="white" height={22} />} />
 ```
 
-- 내비는 기본적으로 `TopBarNavItem`을 사용하면 기존 TopBar 카드의 active underline/dropdown 처리를 유지한다. 액션은 `Button`/`IconButton`/`Avatar`로 구성. **height** 기본 64px. **bordered={false}**로 하단 헤어라인 제거.
+- 내비는 기본적으로 `TopBarNavItem`을 사용하면 기존 TopBar 카드의 active underline/dropdown 처리를 유지한다. children으로 준 주 내비 항목은 드롭다운과 동일하게 navigation landmark 안의 native `<ul>`/`<li>` 리스트로 감싸 렌더된다(list-style 없음, 시각 동일). 액션은 `Button`/`IconButton`/`Avatar`로 구성. **height** 기본 64px. **bordered={false}**로 하단 헤어라인 제거.
 - **navigationLabel**은 children으로 렌더되는 navigation landmark의 이름입니다. 기본은 `주 탐색`이며, 비교 fixture처럼 같은 문서에 TopBar가 여러 개 있으면 각각 고유한 이름을 제공합니다.
 - `href`와 `menuItems`를 함께 주면 주 레이블은 목적지를 유지하는 실제 링크이고, 바로 옆의 별도 disclosure button이 드롭다운을 엽니다. 복합 children에는 **menuTriggerLabel**을 명시합니다. 드롭다운은 application menu가 아니라 native `<ul>` 안의 링크/버튼이므로 `role="menu"`를 쓰지 않고 자연스러운 `Tab` 순서를 유지합니다.
 - 드롭다운은 disclosure 클릭·hover·focus로 열리고 브라우저 top layer에서 trigger를 기준으로 위·아래를 선택한 뒤 viewport 안으로 정렬합니다. trigger와 panel 사이의 4px 간격은 160ms pointer grace로 건널 수 있고, panel 바깥의 mouse/touch `pointerdown`, 항목 선택, `Escape`는 닫습니다. 따라서 TopBar의 가로 스크롤 영역이나 셸의 clip에 메뉴를 가두지 않습니다.

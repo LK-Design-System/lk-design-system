@@ -57,5 +57,28 @@ export const UserMenus = {
       if (canvasElement.querySelector('[role="menu"]')) throw new Error('UserMenu must close on Escape.');
       if (ownerDocument.activeElement !== trigger) throw new Error('UserMenu must restore focus to its trigger.');
     });
+
+    const collapsedTrigger = canvasElement.querySelectorAll('button[aria-haspopup="menu"]')[1];
+    if (!collapsedTrigger || collapsedTrigger.getAttribute('title') !== '운영자') {
+      throw new Error('The collapsed UserMenu must keep an avatar-only trigger named by its name tooltip.');
+    }
+    collapsedTrigger.focus();
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      if (collapsedTrigger.getAttribute('aria-expanded') !== 'true') throw new Error('The collapsed trigger must open its menu with the keyboard.');
+      if (ownerDocument.activeElement?.textContent?.trim() !== '프로필') throw new Error('The collapsed UserMenu must focus its first item on keyboard open.');
+    });
+    /* 문서가 OS 포커스를 갖지 않은 환경에서는 focus()가 focus 이벤트를 내지 않으므로 직접 전달한다. */
+    ownerDocument.activeElement.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    await waitFor(() => {
+      if (!ownerDocument.activeElement.style.background.includes('--component-menu-item-hover-bg')) {
+        throw new Error('Keyboard focus must apply the same item highlight as hover.');
+      }
+    });
+    await userEvent.tab();
+    await waitFor(() => {
+      if (canvasElement.querySelector('[role="menu"]')) throw new Error('Tab must close the UserMenu per the documented contract.');
+      if (collapsedTrigger.getAttribute('aria-expanded') !== 'false') throw new Error('Tab must reset the collapsed trigger disclosure state.');
+    });
   },
 };

@@ -212,6 +212,9 @@ function MenubarDrillHeader({ title, onBack }) {
   return (
     <button
       type="button"
+      role="menuitem"
+      data-menubar-drill-back=""
+      tabIndex={-1}
       aria-label={`뒤로 (${typeof title === "string" ? title : "상위 메뉴"})`}
       onClick={onBack}
       onKeyDown={(event) => { if (event.key === "ArrowLeft") { event.preventDefault(); onBack(); } }}
@@ -272,51 +275,90 @@ function MenubarBranch({ item, variant, close }) {
   );
 }
 
-function renderMenubarDrillItems(items, ctx) {
-  return items.map((item, index) => {
-    if (item.divider) {
-      return (
-        <div
-          key={index}
-          role="separator"
-          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
-        />
-      );
+/**
+ * Wraps consecutive runs of menuitemradio rows in `role="group"` so radio sets
+ * follow the ARIA menu content model. Layout-neutral: the group div stays in
+ * normal block flow, so visuals are unchanged.
+ */
+function renderGroupedMenuItems(items, renderItem, resolveVariant) {
+  const rendered = [];
+  let radioRun = [];
+  const flushRadioRun = () => {
+    if (!radioRun.length) return;
+    rendered.push(
+      <div key={`radio-group-${radioRun[0].key}`} role="group">
+        {radioRun}
+      </div>,
+    );
+    radioRun = [];
+  };
+  items.forEach((item, index) => {
+    const node = renderItem(item, index);
+    if (!item.divider && resolveVariant(item) === 'radio') {
+      radioRun.push(node);
+    } else {
+      flushRadioRun();
+      rendered.push(node);
     }
-    if (item.items && item.items.length) {
-      return (
-        <MenuItem
-          key={index}
-          item={item}
-          variant={item.variant || ctx.variant}
-          close={ctx.close}
-          haspopup="menu"
-          trailing={MENUBAR_CHEVRON}
-          onTriggerClick={() => ctx.drillIn(item)}
-          onTriggerKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); ctx.drillIn(item); } }}
-        />
-      );
-    }
-    return <MenuItem key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
   });
+  flushRadioRun();
+  return rendered;
+}
+
+function renderMenubarDrillItems(items, ctx) {
+  return renderGroupedMenuItems(
+    items,
+    (item, index) => {
+      if (item.divider) {
+        return (
+          <div
+            key={index}
+            role="separator"
+            style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+          />
+        );
+      }
+      if (item.items && item.items.length) {
+        return (
+          <MenuItem
+            key={index}
+            item={item}
+            variant={item.variant || ctx.variant}
+            close={ctx.close}
+            haspopup="menu"
+            expanded={false}
+            trailing={MENUBAR_CHEVRON}
+            onTriggerClick={() => ctx.drillIn(item)}
+            onTriggerKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); ctx.drillIn(item); } }}
+          />
+        );
+      }
+      return <MenuItem key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
+    },
+    (item) => item.variant || ctx.variant,
+  );
 }
 
 function renderMenubarItems(items, ctx) {
-  return items.map((item, index) => {
-    if (item.divider) {
-      return (
-        <div
-          key={index}
-          role="separator"
-          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
-        />
-      );
-    }
-    if (item.items && item.items.length) {
-      return <MenubarBranch key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
-    }
-    return <MenuItem key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
-  });
+  return renderGroupedMenuItems(
+    items,
+    (item, index) => {
+      if (item.divider) {
+        return (
+          <div
+            key={index}
+            role="separator"
+            style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+          />
+        );
+      }
+      if (item.items && item.items.length) {
+        return <MenubarBranch key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
+      }
+      return <MenuItem key={index} item={item} variant={item.variant || ctx.variant} close={ctx.close} />;
+    },
+    (item) => item.variant || ctx.variant,
+  );
 }
 
 /**
@@ -355,8 +397,27 @@ export function Menubar({
     open: open >= 0,
     onClose: () => setOpen(-1),
     getTrigger: () => triggerRefs.current[open],
-    menuKey: drill ? open * 1000 + drillPath.length : open,
+    menuKey: open,
   });
+  // Drill transitions swap the panel content without reopening the menu, so the
+  // shared engine's open-focus does not run. Focus the first command of the new
+  // level ourselves — skipping the back control, which stays reachable with
+  // Arrow Up/Down like any other menuitem.
+  const drillDepthRef = React.useRef(0);
+  React.useEffect(() => {
+    if (!drill) return undefined;
+    if (open < 0) { drillDepthRef.current = 0; return undefined; }
+    const previousDepth = drillDepthRef.current;
+    drillDepthRef.current = drillPath.length;
+    if (previousDepth === drillPath.length) return undefined;
+    const view = ref.current?.ownerDocument?.defaultView ?? window;
+    const frame = view.requestAnimationFrame(() => {
+      const items = availableMenuItems(menuRef.current);
+      const target = items.find((item) => !item.hasAttribute('data-menubar-drill-back')) ?? items[0];
+      target?.focus({ preventScroll: true });
+    });
+    return () => view.cancelAnimationFrame(frame);
+  }, [drill, open, drillPath, menuRef]);
   const position = useFloatingPosition({
     open: open >= 0,
     anchorRef: floatingAnchorRef,
@@ -508,6 +569,11 @@ export function Menubar({
             tabIndex={activeTop === index ? 0 : -1}
             onFocus={() => setActiveTop(index)}
             onKeyDown={(event) => handleTopKeyDown(event, index)}
+            onPointerEnter={() => {
+              // Native menubar hover transfer: while any menu is open, entering a
+              // sibling top-level item opens that sibling's menu.
+              if (open >= 0 && open !== index) openMenu(index, 'first');
+            }}
             onClick={() => {
               if (open === index) setOpen(-1);
               else openMenu(index, 'first');

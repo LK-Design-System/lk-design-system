@@ -1,4 +1,6 @@
+import React from 'react';
 import { PageIndicator } from '../src/index.js';
+import { userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -38,4 +40,37 @@ export const CounterAndDots = {
       </span>
     </main>
   ),
+};
+
+function InteractiveDotsDemo() {
+  const [page, setPage] = React.useState(2);
+  return (
+    <div style={{ display: 'grid', gap: 10, justifyItems: 'start' }}>
+      <PageIndicator variant="dot" page={page} count={6} onChange={setPage} groupLabel="배너 페이지 표시기" />
+      <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', color: 'var(--color-semantic-label-neutral)' }}>
+        현재 페이지: {page}
+      </span>
+    </div>
+  );
+}
+
+export const InteractiveDots = {
+  name: '상호작용 도트 · 클릭 이동과 히트 영역',
+  parameters: storyDescription(
+    'onChange를 넘긴 도트는 버튼이 되어 특정 페이지로 바로 이동합니다. 각 도트가 "{n}페이지로 이동" 레이블과 24×24px 이상 히트 영역을 갖는지, 클릭 시 현재 페이지가 갱신되는지 확인하세요.',
+  ),
+  render: () => <InteractiveDotsDemo />,
+  play: async ({ canvasElement }) => {
+    const group = canvasElement.querySelector('[role="group"][aria-label="배너 페이지 표시기"]');
+    const target = group?.querySelector('button[aria-label="4페이지로 이동"]');
+    if (!target) throw new Error('Interactive dots must be buttons labeled "{n}페이지로 이동".');
+    const box = target.getBoundingClientRect();
+    if (box.width < 24 || box.height < 24) {
+      throw new Error('Each interactive dot needs a minimum 24x24px hit area (WCAG 2.5.8).');
+    }
+    await userEvent.click(target);
+    if (group.querySelector('[aria-current="page"]')?.getAttribute('aria-label') !== '4페이지로 이동') {
+      throw new Error('Clicking a dot must call onChange with that page and move aria-current.');
+    }
+  },
 };

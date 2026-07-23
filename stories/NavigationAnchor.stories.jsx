@@ -1,5 +1,8 @@
 import { Anchor } from '../src/index.js';
+import { fn, userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
+
+const onChangeSpy = fn();
 
 const meta = {
   title: 'LDS Product/Navigation/Anchor',
@@ -32,6 +35,7 @@ export const PageTableOfContents = {
       <Anchor
         aria-label="페이지 내 목차"
         active="#summary"
+        onChange={onChangeSpy}
         style={{ maxWidth: 280 }}
         items={[
           { href: '#summary', label: '요약' },
@@ -45,5 +49,17 @@ export const PageTableOfContents = {
   play: async ({ canvasElement }) => {
     const toc = canvasElement.querySelector('nav[aria-label="페이지 내 목차"]');
     if (!toc) throw new Error('Anchor must expose a named in-page navigation landmark.');
+    const current = toc.querySelector('a[aria-current="location"]');
+    if (!current || current.getAttribute('href') !== '#summary') {
+      throw new Error('The active anchor item must carry aria-current="location".');
+    }
+    const nested = toc.querySelector('ul > li > ul > li > a[href="#component-tokens"]');
+    if (!nested) throw new Error('Level-1 items must render inside a nested list (ul > li > ul).');
+    onChangeSpy.mockClear();
+    const target = toc.querySelector('a[href="#components"]');
+    await userEvent.click(target);
+    if (!onChangeSpy.mock.calls.some((call) => call[0] === '#components')) {
+      throw new Error('Clicking an anchor item must fire onChange with its href.');
+    }
   },
 };

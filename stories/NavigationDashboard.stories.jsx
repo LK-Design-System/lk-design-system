@@ -213,6 +213,7 @@ function TopBarToggleFixture() {
                 label={collapsed ? '사이드바 펼치기' : '사이드바 접기'}
                 title={collapsed ? '사이드바 펼치기' : '사이드바 접기'}
                 aria-expanded={!collapsed}
+                aria-controls="dashboard-primary-navigation"
                 onClick={() => setCollapsed((value) => !value)}
                 style={{ marginInlineStart: -8 }}
               >
@@ -233,6 +234,7 @@ function TopBarToggleFixture() {
       )}
       navigation={(
         <SideNav
+          id="dashboard-primary-navigation"
           aria-label="제품 주 탐색"
           surface="docked"
           items={destinations}
@@ -271,6 +273,9 @@ export const TopBarToggle = {
       || navigation.contains(toggle)
       || toggle.getAttribute('aria-label') !== '사이드바 접기') {
       throw new Error('The collapse toggle must live in the top bar, never inside the side panel.');
+    }
+    if (!navigation.id || toggle.getAttribute('aria-controls') !== navigation.id) {
+      throw new Error('The top bar toggle must reference the SideNav panel it controls through aria-controls.');
     }
     await waitForWidth(navigation, 244);
     await userEvent.click(toggle);

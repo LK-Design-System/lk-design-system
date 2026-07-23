@@ -106,6 +106,25 @@ export const NativeDestinations = {
   },
 };
 
+export const DefaultLandmarkLabel = {
+  name: '기본 landmark 라벨',
+  tags: ['!dev'],
+  render: () => (
+    <div style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 720 }}>
+      <NavRail items={destinations.slice(0, 3)} defaultValue="summary" />
+      <div style={{ width: 320 }}>
+        <BottomNav items={destinations.slice(0, 3)} defaultValue="summary" />
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const navs = canvasElement.querySelectorAll('nav[aria-label="주 탐색"]');
+    if (navs.length !== 2) {
+      throw new Error('NavRail and BottomNav must default their nav landmark label to 주 탐색.');
+    }
+  },
+};
+
 export const RouterRenderer = {
   name: 'router link 렌더 훅',
   tags: ['!dev'],

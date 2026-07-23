@@ -26,6 +26,6 @@ Classification: **LK Product Extension**. 동등한 중요도의 평면형 주�
 
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage) — 좁은 화면에서 주 탐색 표면을 전환하고 label을 짧고 스캔 가능하게 유지합니다.
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/) — responsive shell은 좁은 폭에서 desktop navigation을 대체 표면으로 옮깁니다. LDS는 DashboardShell에서 NavRail/SideNav를 숨기고 BottomNav를 보입니다.
-- [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/) — native `<nav>`와 현재 페이지 link의 `aria-current="page"`를 유지합니다.
+- [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/) — native `<nav>`와 현재 페이지 link의 `aria-current="page"`를 유지합니다. `nav`의 기본 `aria-label`은 `'주 탐색'`이며 소비자가 전달한 `aria-label`이 우선합니다.
 
 라우터, 현재 URL 계산, safe-area 적용, sticky/fixed 위치와 권한 판정은 소비자 셸이 소유합니다.

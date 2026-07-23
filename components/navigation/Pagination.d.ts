@@ -6,9 +6,18 @@ export interface PaginationProps extends Omit<React.HTMLAttributes<HTMLElement>,
   /** Total pages. @default 1 */
   count?: number;
   onChange?: (page: number) => void;
-  /** Number of sibling pages around the current page. @default 1 */
+  /**
+   * Number of sibling pages around the current page. Only applies to
+   * `variant="extended"`; the `compact` variant ignores it and always shows
+   * a fixed window of up to two pages on each side of the current page.
+   * @default 1
+   */
   siblingCount?: number;
-  /** navigation variant. @default "extended" */
+  /**
+   * navigation variant. `compact` ignores `siblingCount` and omits the
+   * first/last page jump (no leading `1` / trailing `count` shortcuts or
+   * ellipses); `minimize` shows only the current page. @default "extended"
+   */
   variant?: "extended" | "compact" | "minimize";
   leadingContent?: React.ReactNode;
   trailingContent?: React.ReactNode;

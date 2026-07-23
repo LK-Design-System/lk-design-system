@@ -137,6 +137,7 @@ export function Pagination({
           typeof p === "string" ? (
             <span
               key={p + i}
+              aria-hidden="true"
               style={{
                 minWidth: 24,
                 textAlign: "center",
@@ -144,7 +145,7 @@ export function Pagination({
                 fontSize: "var(--body2-size)",
               }}
             >
-              ...
+              …
             </span>
           ) : (
             <button
