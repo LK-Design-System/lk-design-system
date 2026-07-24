@@ -57,6 +57,15 @@ export const ProductCards = {
         throw new Error('링크의 접근 가능한 이름은 타일 전문이 아니라 제품 코드여야 합니다.');
       }
       if (card.id) throw new Error('id prop은 제품 코드이므로 DOM id를 점유하면 안 됩니다.');
+      const photo = card.querySelector('img');
+      if (!photo) throw new Error('image를 주면 제품 사진이 렌더되어야 합니다.');
+      if (photo.getAttribute('loading') !== 'lazy' || photo.getAttribute('decoding') !== 'async') {
+        throw new Error('제품 사진은 그리드 비용을 낮추도록 loading="lazy"·decoding="async"로 렌더되어야 합니다.');
+      }
+      // The photo is a decorative stage element: empty alt, hidden from the tree.
+      if (photo.getAttribute('alt') !== '' || !photo.closest('[aria-hidden="true"]')) {
+        throw new Error('제품 사진은 장식이므로 alt=""이고 aria-hidden 영역 안에 있어야 합니다.');
+      }
     }
     cards[0].focus();
     if (canvasElement.ownerDocument.activeElement !== cards[0]) {

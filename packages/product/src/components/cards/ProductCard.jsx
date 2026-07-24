@@ -90,9 +90,16 @@ export function ProductCard({
             WebkitMaskImage: PC_FADE, maskImage: PC_FADE,
           }}
         >
+          {/* The photo is a decorative stage element (the wrapper is
+              aria-hidden and the product code names the card), so it stays
+              alt="". lazy/decoding keep product grids cheap; the card's 4/5
+              aspect-ratio reserves layout and a failed image degrades to the
+              navy stage showing through. */}
           <img
             src={image}
             alt=""
+            loading="lazy"
+            decoding="async"
             style={{
               width: '100%', height: '100%', objectFit: 'cover', objectPosition: imagePosition, display: 'block',
               filter: 'brightness(1.06)',
