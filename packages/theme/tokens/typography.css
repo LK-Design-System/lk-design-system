@@ -27,7 +27,6 @@
   --fs-h5:       21px;  /* small heading                                */
   --fs-lead:     19px;  /* large body / intro                           */
   --fs-body:     17px;  /* default body                                 */
-  --fs-small:    15px;  /* secondary body, form text                    */
   --fs-caption:  13px;  /* overline / tag / meta                        */
   --fs-tiny:     12px;  /* fine print                                   */
 
@@ -40,7 +39,6 @@
   --lh-h5:       1.45;  /* @kind other */
   --lh-lead:     1.7;   /* @kind other */
   --lh-body:     1.7;   /* @kind other */
-  --lh-small:    1.6;   /* @kind other */
   --lh-caption:  1.2;   /* @kind other */
 
   /* ---- Letter spacing (tracking) --------------------------------------- */
@@ -81,6 +79,7 @@
   --label1-size: 14px;    --label1-line: 20px;    --label1-spacing: 0.0145em;
   --label1-reading-line: 22px;
   --label2-size: 13px;    --label2-line: 18px;    --label2-spacing: 0.0194em;
+  --label2-reading-line: 20px;
 
   --caption1-size: 12px;  --caption1-line: 16px;  --caption1-spacing: 0.0252em;
   --caption2-size: 11px;  --caption2-line: 14px;  --caption2-spacing: 0.0311em;

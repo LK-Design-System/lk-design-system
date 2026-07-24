@@ -63,9 +63,21 @@ jobs:
             dist
             src
             packages/core/src
+            packages/core/tokens
+            packages/core/assets
+            packages/core/styles.css
             packages/theme/src
+            packages/theme/tokens
+            packages/theme/assets
+            packages/theme/styles.css
             packages/product/src
+            packages/product/tokens
+            packages/product/assets
+            packages/product/styles.css
             packages/compat/src
+            packages/compat/tokens
+            packages/compat/assets
+            packages/compat/styles.css
           if-no-files-found: error
 
   design-system:
