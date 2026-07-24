@@ -1,7 +1,7 @@
 "use client";
 import {
   SpecRow
-} from "../../chunk-YQSW5FNQ.js";
+} from "../../chunk-IFTIBH5Y.js";
 export {
   SpecRow
 };

@@ -1,7 +1,7 @@
 "use client";
 import {
   StatusBadge
-} from "../../chunk-BNPFEXZC.js";
+} from "../../chunk-2PA4HK2B.js";
 export {
   StatusBadge
 };

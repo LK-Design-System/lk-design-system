@@ -9,6 +9,7 @@ import React from 'react';
 export function NavRail({ items = [], value, defaultValue, onChange, renderLink, style, ...rest }) {
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue != null ? defaultValue : (items[0] && items[0].value));
+  const [hoveredValue, setHoveredValue] = React.useState(null);
   const val = isControlled ? value : internal;
   const pick = (v) => { if (!isControlled) setInternal(v); onChange && onChange(v); };
   return (
@@ -27,7 +28,11 @@ export function NavRail({ items = [], value, defaultValue, onChange, renderLink,
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5,
           width: 68, height: 60, padding: 0, boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
           cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textDecoration: 'none', textAlign: 'center',
-          background: active ? 'var(--color-semantic-primary-surface-strong)' : 'transparent',
+          background: active
+            ? 'var(--color-semantic-primary-surface-strong)'
+            : hoveredValue === o.value && !disabled
+              ? 'var(--color-semantic-primary-surface-normal)'
+              : 'transparent',
           color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
           transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)',
         };
@@ -51,6 +56,8 @@ export function NavRail({ items = [], value, defaultValue, onChange, renderLink,
             tabIndex: disabled ? -1 : undefined,
             title: accessibleLabel,
             onClick: activate,
+            onMouseEnter: () => setHoveredValue(o.value),
+            onMouseLeave: () => setHoveredValue(null),
             style: itemStyle,
             children: content,
           };
@@ -62,7 +69,7 @@ export function NavRail({ items = [], value, defaultValue, onChange, renderLink,
         }
 
         return (
-          <button key={o.value} type="button" aria-label={o.ariaLabel} aria-current={active ? 'page' : undefined} disabled={disabled} onClick={activate} title={accessibleLabel} style={itemStyle}>
+          <button key={o.value} type="button" aria-label={o.ariaLabel} aria-current={active ? 'page' : undefined} disabled={disabled} onClick={activate} onMouseEnter={() => setHoveredValue(o.value)} onMouseLeave={() => setHoveredValue(null)} title={accessibleLabel} style={itemStyle}>
             {content}
           </button>
         );

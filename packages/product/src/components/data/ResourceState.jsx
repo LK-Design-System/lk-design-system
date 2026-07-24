@@ -162,6 +162,7 @@ export function ResourceState({
         <div role={assertive ? 'alert' : undefined} aria-live={assertive ? 'assertive' : undefined} style={{ minWidth: 0 }}>
           <EmptyState
             icon={<Icon name={presentation.icon} size={26} aria-hidden="true" />}
+            tone={presentation.tone}
             title={resolvedTitle}
             description={resolvedDescription}
             action={action}

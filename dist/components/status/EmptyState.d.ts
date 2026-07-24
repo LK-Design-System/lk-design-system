@@ -9,6 +9,8 @@ export interface EmptyStateProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   description?: React.ReactNode;
   /** 액션 노드(예: Button). */
   action?: React.ReactNode;
+  /** 아이콘 타일의 semantic status tone. @default "signal" */
+  tone?: 'signal' | 'info' | 'positive' | 'success' | 'cautionary' | 'warning' | 'negative' | 'error' | 'offline';
   /**
    * `title`이 렌더되는 heading 레벨. 주변 문서 개요에 맞춰 h2–h6 중 선택합니다.
    * @default 2

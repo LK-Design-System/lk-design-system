@@ -68,8 +68,8 @@ export function NewsCard({ image, imageAlt = '', category, title, excerpt, sourc
           <img src={image} alt={imageAlt} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', transform: hover ? 'scale(1.03)' : 'scale(1)', transition: 'transform 520ms var(--ease-out)' }} />
         </div>
       )}
-      <div style={{ padding: '18px 20px 20px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
-        {category && <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)' }}>{category}</span>}
+      <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
+        {category && <span style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)' }}>{category}</span>}
         {title && <HeadingTag style={{ margin: 0, fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, lineHeight: 1.36, color: 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>{title}</HeadingTag>}
         {excerpt && <p style={{ margin: 0, fontSize: 'var(--label1-size)', lineHeight: 1.62, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{excerpt}</p>}
         {(source || date || cta) && (

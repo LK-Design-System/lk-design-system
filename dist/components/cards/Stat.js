@@ -1,7 +1,7 @@
 "use client";
 import {
   Stat
-} from "../../chunk-VN2RLOVF.js";
+} from "../../chunk-TLHFUDF3.js";
 export {
   Stat
 };

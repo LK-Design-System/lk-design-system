@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** 색상 톤. @default "signal" */
-  tone?: 'signal' | 'navy' | 'steel' | 'amber' | 'red';
+  tone?: 'signal' | 'positive' | 'cautionary' | 'negative' | 'navy' | 'steel' | 'amber' | 'red';
   /**
    * 톤 색상의 상태 점을 라벨 앞에 붙입니다. `children`이 있으면 텍스트가 점 옆에
    * 그대로 보이며, `children`이 없는 단독 점은 장식(`aria-hidden`)입니다.

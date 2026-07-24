@@ -28,7 +28,7 @@ export function SpecRow({ label, value, labelWidth = '34%', divider = true, grou
       {...rest}
     >
       <dt style={{ fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-semibold)', letterSpacing: 'var(--ls-small)', color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{label}</dt>
-      <dd style={{ margin: 0, fontSize: 'var(--fs-small)', fontWeight: 'var(--fw-semibold)', lineHeight: 'var(--lh-small)', letterSpacing: 'var(--ls-small)', color: 'var(--color-semantic-label-normal)', fontVariantNumeric: 'tabular-nums', wordBreak: 'keep-all' }}>{value}</dd>
+      <dd style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-semibold)', lineHeight: 'var(--body2-line)', letterSpacing: 'var(--body2-spacing)', color: 'var(--color-semantic-label-normal)', fontVariantNumeric: 'tabular-nums', wordBreak: 'keep-all' }}>{value}</dd>
     </Row>
   );
 }
