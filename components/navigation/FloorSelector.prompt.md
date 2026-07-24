@@ -5,4 +5,4 @@
   floors={[{ value: 'B1', label: 'B1' }, { value: '1F', label: '1F' }, { value: '2F', label: '2F' }]} />
 ```
 
-- **floors** 문자열 또는 `{ value, label }`(위→아래 순서) · 제어(`value`)/비제어(`defaultValue`). ARIA listbox.
+- **floors** 문자열 또는 `{ value, label }`(위→아래 순서) · 제어(`value`)/비제어(`defaultValue`). ARIA radio group(단일 선택): 단일 tab stop(roving tabindex), 화살표로 이동+선택, Home/End. 각 층은 `role="radio"`·`aria-checked`.

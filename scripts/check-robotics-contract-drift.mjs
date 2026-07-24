@@ -17,7 +17,57 @@ const roboticsRootArg = process.argv.find((arg) => arg.startsWith('--root='))?.s
 const roboticsRoot = path.resolve(root, roboticsRootArg || '../lk-design-system-robotics');
 const updateBaseline = process.argv.includes('--update-baseline');
 const baselinePath = path.join(root, 'docs/references/robotics/CONTRACT_DRIFT_BASELINE.json');
-const CONTRACT_GROUPS = ['editor', 'viz', 'robotics'];
+// Full groups are entirely implemented in the Robotics repository, so every
+// prompt must have an implementation and vice versa. Sparse groups share their
+// name with main-repo components (navigation holds SideNav here but FloorSelector
+// there), so only the components present in BOTH repositories are checked.
+const FULL_GROUPS = ['editor', 'viz', 'robotics'];
+const SPARSE_GROUPS = ['navigation'];
+const CONTRACT_GROUPS = [...FULL_GROUPS, ...SPARSE_GROUPS];
+
+// DOM/React attributes that legitimately appear in prompt code fences without
+// being a component's own contracted prop.
+const STANDARD_ATTRS = new Set([
+  'children', 'className', 'style', 'key', 'ref', 'id', 'role', 'title', 'value',
+  'type', 'name', 'onClick', 'onChange', 'onKeyDown', 'onFocus', 'onBlur', 'tabIndex', 'hidden',
+]);
+
+// Props a prompt's JSX examples set on the documented component itself but the
+// .d.ts does not declare — the doc→impl direction the impl→doc scan cannot see
+// (e.g. a prompt promoting a `model` prop the component never implemented).
+// Only the component's OWN opening tags are scanned: attributes on child
+// components or SVG elements inside the example belong to those elements.
+function phantomPropsFromPrompt(prompt, component, props) {
+  const declared = new Set(props);
+  const phantom = new Set();
+  for (const fence of prompt.matchAll(/```[\s\S]*?```/g)) {
+    // The opening `<Component` tag, read to its matching `>` at brace depth 0 so
+    // a slot prop whose value contains nested JSX (icon={<Icon size={16}/>}) is
+    // captured whole rather than truncated at the child element's `>`.
+    const source = fence[0];
+    const openPattern = new RegExp(`<${component}\\b`, 'g');
+    for (let open = openPattern.exec(source); open; open = openPattern.exec(source)) {
+      let depth = 0;
+      let end = open.index + open[0].length;
+      while (end < source.length) {
+        const ch = source[end];
+        if (ch === '{') depth += 1;
+        else if (ch === '}') depth -= 1;
+        else if (ch === '>' && depth === 0) break;
+        end += 1;
+      }
+      // Strip every brace-delimited value so nested child attributes disappear,
+      // leaving only this component's own top-level attribute names.
+      const attrs = source.slice(open.index + open[0].length, end).replace(/\{[^{}]*(\{[^{}]*\}[^{}]*)*\}/g, '=');
+      for (const attr of attrs.matchAll(/(?:^|\s)([a-z][A-Za-z0-9]*)=/g)) {
+        const name = attr[1];
+        if (declared.has(name) || STANDARD_ATTRS.has(name) || name.includes('-')) continue;
+        phantom.add(name);
+      }
+    }
+  }
+  return [...phantom].sort();
+}
 
 function fail(message) {
   throw new Error(message);
@@ -76,6 +126,7 @@ function record(component, kind, value) {
 }
 
 for (const group of CONTRACT_GROUPS) {
+  const sparse = SPARSE_GROUPS.includes(group);
   const contractDir = path.join(root, 'components', group);
   const implementationDir = path.join(roboticsRoot, 'src', 'components', group);
   const prompts = new Set(listFiles(contractDir, '.prompt.md').map((name) => name.replace('.prompt.md', '')));
@@ -84,7 +135,9 @@ for (const group of CONTRACT_GROUPS) {
   for (const component of prompts) {
     const key = `${group}/${component}`;
     if (!implementations.has(component)) {
-      record(key, 'missingImplementation', true);
+      // In a sparse group a prompt without a robotics impl is a main-repo
+      // component, not drift.
+      if (!sparse) record(key, 'missingImplementation', true);
       continue;
     }
     const dtsPath = path.join(implementationDir, `${component}.d.ts`);
@@ -96,10 +149,16 @@ for (const group of CONTRACT_GROUPS) {
     const props = ownPropsFromDts(readFileSync(dtsPath, 'utf8'), `${component}.d.ts`);
     const undocumented = wordsMentioned(prompt, props).sort();
     if (undocumented.length > 0) record(key, 'undocumentedProps', undocumented);
+    const phantom = phantomPropsFromPrompt(prompt, component, props);
+    if (phantom.length > 0) record(key, 'phantomProps', phantom);
   }
 
-  for (const component of implementations) {
-    if (!prompts.has(component)) record(`${group}/${component}`, 'missingPrompt', true);
+  // A robotics impl with no main-repo prompt is missing its contract — but only
+  // in full groups, where the whole group is robotics-owned.
+  if (!sparse) {
+    for (const component of implementations) {
+      if (!prompts.has(component)) record(`${group}/${component}`, 'missingPrompt', true);
+    }
   }
 }
 
@@ -127,9 +186,9 @@ const regressions = [];
 for (const [component, kinds] of Object.entries(findings)) {
   for (const [kind, value] of Object.entries(kinds)) {
     const knownValue = known[component]?.[kind];
-    if (kind === 'undocumentedProps') {
+    if (kind === 'undocumentedProps' || kind === 'phantomProps') {
       const fresh = value.filter((prop) => !(knownValue || []).includes(prop));
-      if (fresh.length > 0) regressions.push(`${component} undocumentedProps: ${fresh.join(', ')}`);
+      if (fresh.length > 0) regressions.push(`${component} ${kind}: ${fresh.join(', ')}`);
     } else if (!knownValue) {
       regressions.push(`${component} ${kind}`);
     }
