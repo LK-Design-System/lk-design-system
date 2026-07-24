@@ -116,7 +116,7 @@ function App() {
         <TopBarNavItem>로봇</TopBarNavItem>
       </TopBar>
       <section style={{ display: 'grid', gap: 24, maxWidth: 960, margin: '0 auto', padding: 32 }}>
-        <Card interactive>
+        <Card>
           <h1 style={{ marginTop: 0 }}>LK 디자인 시스템 소비 앱 스모크</h1>
           <p>패키지명 import, styles.css export, React 컴포넌트 조합이 소비 앱 번들에서 동작해야 합니다.</p>
           <Button>운영 화면 열기</Button>
@@ -165,7 +165,7 @@ async function main() {
     await page.goto(`${origin}/index.html`, { waitUntil: 'networkidle' });
     await page.waitForSelector('[data-testid="consumer-smoke"]', { timeout: 15000 });
     await page.getByText('LK 디자인 시스템 소비 앱 스모크').waitFor({ timeout: 5000 });
-    await page.getByRole('button', { name: '운영 화면 열기' }).waitFor({ timeout: 5000 });
+    await page.getByRole('button', { name: '운영 화면 열기', exact: true }).waitFor({ timeout: 5000 });
     await page.locator('text=RB-01').first().waitFor({ timeout: 5000 });
     const bodyText = await page.locator('body').innerText();
     assert(bodyText.includes('소비 앱 스모크 빌드가 완료되었습니다.'), 'Consumer smoke page did not render Toast content.');

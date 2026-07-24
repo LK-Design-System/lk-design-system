@@ -77,6 +77,7 @@
     "stories/ContentListsMedia.stories.jsx": "LDS Core/Components/Content/Lists",
     "stories/ContentLogViewer.stories.jsx": "LDS Product/Content/Log Viewer",
     "stories/ContentMedia.stories.jsx": "LDS Core/Components/Content/Media Patterns",
+    "stories/ContentProse.stories.jsx": "LDS Core/Components/Content/Prose",
     "stories/ContentReorderList.stories.jsx": "LDS Product/Content/Reorder List",
     "stories/ContentSourceDisclosure.stories.jsx": "LDS Product/Content/Source Disclosure",
     "stories/ContentStepList.stories.jsx": "LDS Core/Components/Content/Step List",

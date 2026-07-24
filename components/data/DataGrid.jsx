@@ -632,7 +632,7 @@ export function DataGrid({
                         type="button"
                         aria-label={sortButtonLabel}
                         onClick={() => toggleSort(column)}
-                        style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: 0, border: 0, background: 'transparent', cursor: 'pointer', font: 'inherit', letterSpacing: 'inherit', textTransform: 'inherit', color: 'inherit' }}
+                        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 5, minWidth: 24, minHeight: 24, padding: 0, border: 0, background: 'transparent', cursor: 'pointer', font: 'inherit', letterSpacing: 'inherit', textTransform: 'inherit', color: 'inherit' }}
                       >
                         {column.label}
                         <Icon name={sortEntry?.dir === 'desc' ? 'chevron-down-small' : 'chevron-up-small'} size={12} aria-hidden="true" style={{ opacity: sortEntry ? 1 : 0.3 }} />

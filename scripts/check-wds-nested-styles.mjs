@@ -28,12 +28,12 @@ const deep = JSON.parse(readFileSync('docs/references/wds/COMPONENT_STYLES_DEEP.
 
 // name -> { deepKey, JSX, inner selector (scoped to the wrapper), dims to diff }
 const TARGETS = [
-  { name: 'CheckboxMd', deepKey: 'Checkbox/box@md', jsx: '<Checkbox defaultChecked aria-label="c" />', sel: '[role="checkbox"]', dims: ['radius', 'height'] },
-  { name: 'CheckboxSm', deepKey: 'Checkbox/box@sm', jsx: '<Checkbox size="sm" defaultChecked aria-label="c" />', sel: '[role="checkbox"]', dims: ['radius', 'height'] },
+  { name: 'CheckboxMd', deepKey: 'Checkbox/box@md', jsx: '<Checkbox defaultChecked aria-label="c" />', sel: 'span[aria-hidden="true"]', dims: ['radius', 'height'] },
+  { name: 'CheckboxSm', deepKey: 'Checkbox/box@sm', jsx: '<Checkbox size="sm" defaultChecked aria-label="c" />', sel: 'span[aria-hidden="true"]', dims: ['radius', 'height'] },
   { name: 'RadioMd', deepKey: 'Radio/box@md', jsx: '<Radio defaultChecked aria-label="r" />', sel: 'span[aria-hidden="true"]', dims: ['radius', 'height'] },
   { name: 'RadioSm', deepKey: 'Radio/box@sm', jsx: '<Radio size="sm" defaultChecked aria-label="r" />', sel: 'span[aria-hidden="true"]', dims: ['radius', 'height'] },
   { name: 'Tooltip', deepKey: 'Tooltip/bubble', jsx: '<Tooltip defaultOpen content="메시지"><button>t</button></Tooltip>', sel: '[role="tooltip"]', dims: ['radius', 'padX'] },
-  { name: 'Alert', deepKey: 'Alert/modal@web', jsx: '<Alert open platform="web" title="제목" description="내용" />', sel: '[role="dialog"]', dims: ['radius'] },
+  { name: 'Alert', deepKey: 'Alert/modal@web', jsx: '<Alert open platform="web" title="제목" description="내용" />', sel: '[role="alertdialog"]', dims: ['radius'] },
   { name: 'ListCell', deepKey: 'ListCell/interaction', jsx: '<ListCell title="제목" onClick={() => {}} />', sel: ':scope > *', dims: ['radius', 'height'] },
 ];
 

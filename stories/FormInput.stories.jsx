@@ -8,6 +8,17 @@ const fieldGrid = {
   alignItems: 'start',
 };
 
+const inlineActionStyle = {
+  minWidth: 24,
+  minHeight: 24,
+  padding: '0 2px',
+  border: 0,
+  background: 'transparent',
+  color: 'var(--color-semantic-primary-normal)',
+  fontWeight: 'var(--fw-bold)',
+  cursor: 'pointer',
+};
+
 const meta = {
   title: 'LDS Core/Components/Selection and Input/Input',
   component: Input,
@@ -60,7 +71,7 @@ export const TimerAndActions = {
         <Input
           label="인증 코드 (만료됨)"
           placeholder="6자리 코드"
-          actionRight={<button type="button" style={{ border: 0, background: 'transparent', color: 'var(--color-semantic-primary-normal)', fontWeight: 'var(--fw-bold)', cursor: 'pointer' }}>재전송</button>}
+          actionRight={<button type="button" style={inlineActionStyle}>재전송</button>}
           helper="만료 후 actionRight를 재전송 버튼으로 전환합니다."
         />
       </section>
@@ -86,7 +97,7 @@ export const InputStateMatrix = {
         <Input
           label="우측 액션"
           defaultValue="검색어"
-          actionRight={<button type="button" style={{ border: 'none', background: 'transparent', color: 'var(--color-semantic-primary-normal)', fontWeight: 'var(--fw-bold)', cursor: 'pointer' }}>확인</button>}
+          actionRight={<button type="button" style={inlineActionStyle}>확인</button>}
         />
       </section>
     </main>
@@ -111,7 +122,7 @@ export const InputInteractionMatrix = {
           label="trailing button"
           defaultValue="선택된 키워드"
           leadingIcon={<Icon name="search" size={16} />}
-          trailingButton={<button type="button" style={{ border: 0, background: 'transparent', color: 'var(--color-semantic-primary-normal)', fontWeight: 'var(--fw-bold)' }}>지우기</button>}
+          trailingButton={<button type="button" style={inlineActionStyle}>지우기</button>}
         />
         <Input label="disable alias" placeholder="비활성" disable />
       </section>
